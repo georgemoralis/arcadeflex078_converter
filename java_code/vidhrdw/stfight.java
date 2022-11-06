@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class stfight
 	
 	 */
 	
-	public static PaletteInitHandlerPtr palette_init_stfight  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_stfight  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -96,7 +95,7 @@ public class stfight
 	
 	static UINT32 fg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x70) << 4) + ((row & 0xf0) << 7);
 	}
 	
@@ -117,7 +116,7 @@ public class stfight
 	
 	static UINT32 bg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col & 0x0e) >> 1) + ((row & 0x0f) << 3) + ((col & 0x70) << 3) +
 				((row & 0x80) << 3) + ((row & 0x10) << 7) + ((col & 0x01) << 12) +
 				((row & 0x60) << 8);
@@ -157,8 +156,7 @@ public class stfight
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_stfight  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stfight  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,bg_scan,TILEMAP_OPAQUE,     16,16,128,256);
 		fg_tilemap = tilemap_create(get_fg_tile_info,fg_scan,TILEMAP_TRANSPARENT,16,16,128,256);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,
@@ -181,8 +179,7 @@ public class stfight
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr stfight_text_char_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_text_char_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (stfight_text_char_ram[offset] != data)
 		{
 			stfight_text_char_ram[offset] = data;
@@ -190,8 +187,7 @@ public class stfight
 		}
 	} };
 	
-	public static WriteHandlerPtr stfight_text_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_text_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (stfight_text_attr_ram[offset] != data)
 		{
 			stfight_text_attr_ram[offset] = data;
@@ -199,14 +195,12 @@ public class stfight
 		}
 	} };
 	
-	public static WriteHandlerPtr stfight_sprite_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_sprite_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stfight_sprite_base = ( ( data & 0x04 ) << 7 ) |
 					          ( ( data & 0x01 ) << 8 );
 	} };
 	
-	public static WriteHandlerPtr stfight_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int scroll;
 	
 	
@@ -276,11 +270,11 @@ public class stfight
 				// a sign extension bit in the sprite attribute
 				if( sx >= 0xf0 )
 				{
-					if ((attr & 0x80) != 0)
+					if (attr & 0x80)
 					    sx -= 0x100;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -289,7 +283,7 @@ public class stfight
 	
 				code = stfight_sprite_base + stfight_sprite_ram[offs];
 	
-				pdrawgfx(bitmap,Machine.gfx[4],
+				pdrawgfx(bitmap,Machine->gfx[4],
 					     code,
 						 color,
 						 flipx,flip_screen(),
@@ -301,8 +295,7 @@ public class stfight
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_stfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_stfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		fillbitmap(bitmap,Machine.pens[0],cliprect);	/* in case bg_tilemap is disabled */

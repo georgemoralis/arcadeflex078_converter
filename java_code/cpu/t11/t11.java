@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.t11;
 
@@ -231,11 +231,11 @@ public class t11
 		int priority = PSW & 0xe0;
 	
 		/* compare the priority of the interrupt to the PSW */
-		if (irq.priority > priority)
+		if (irq->priority > priority)
 		{
 			/* get the priority of this interrupt */
-			int new_pc = RWORD(irq.vector);
-			int new_psw = RWORD(irq.vector + 2);
+			int new_pc = RWORD(irq->vector);
+			int new_psw = RWORD(irq->vector + 2);
 			
 			/* call the callback */
 			if (t11.irq_callback)
@@ -287,7 +287,7 @@ public class t11
 	
 	unsigned t11_get_context(void *dst)
 	{
-		if (dst != 0)
+		if (dst)
 			*(t11_Regs *)dst = t11;
 		return sizeof(t11_Regs);
 	}
@@ -302,7 +302,7 @@ public class t11
 	
 	void t11_set_context(void *src)
 	{
-		if (src != 0)
+		if (src)
 			t11 = *(t11_Regs *)src;
 		t11_check_irqs();
 	}
@@ -442,7 +442,7 @@ public class t11
 		SP = 0x00fe;
 		
 		/* initial PC comes from the setup word */
-		PC = initial_pc[setup.mode >> 13];
+		PC = initial_pc[setup->mode >> 13];
 	
 		/* PSW starts off at highest priority */
 		PSW = 0xe0;
@@ -537,42 +537,42 @@ public class t11
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if( !context )
 			r = &t11;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+T11_PC: sprintf(buffer[which], "PC:%04X", r.reg[7].w.l); break;
-			case CPU_INFO_REG+T11_SP: sprintf(buffer[which], "SP:%04X", r.reg[6].w.l); break;
-			case CPU_INFO_REG+T11_PSW: sprintf(buffer[which], "PSW:%02X", r.psw.b.l); break;
-			case CPU_INFO_REG+T11_R0: sprintf(buffer[which], "R0:%04X", r.reg[0].w.l); break;
-			case CPU_INFO_REG+T11_R1: sprintf(buffer[which], "R1:%04X", r.reg[1].w.l); break;
-			case CPU_INFO_REG+T11_R2: sprintf(buffer[which], "R2:%04X", r.reg[2].w.l); break;
-			case CPU_INFO_REG+T11_R3: sprintf(buffer[which], "R3:%04X", r.reg[3].w.l); break;
-			case CPU_INFO_REG+T11_R4: sprintf(buffer[which], "R4:%04X", r.reg[4].w.l); break;
-			case CPU_INFO_REG+T11_R5: sprintf(buffer[which], "R5:%04X", r.reg[5].w.l); break;
-			case CPU_INFO_REG+T11_IRQ0_STATE: sprintf(buffer[which], "IRQ0:%X", (r.irq_state & 1) ? ASSERT_LINE : CLEAR_LINE); break;
-			case CPU_INFO_REG+T11_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", (r.irq_state & 2) ? ASSERT_LINE : CLEAR_LINE); break;
-			case CPU_INFO_REG+T11_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", (r.irq_state & 4) ? ASSERT_LINE : CLEAR_LINE); break;
-			case CPU_INFO_REG+T11_IRQ3_STATE: sprintf(buffer[which], "IRQ3:%X", (r.irq_state & 8) ? ASSERT_LINE : CLEAR_LINE); break;
-			case CPU_INFO_REG+T11_BANK0: sprintf(buffer[which], "B0:%06X", (unsigned)(r.bank[0] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK1: sprintf(buffer[which], "B1:%06X", (unsigned)(r.bank[1] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK2: sprintf(buffer[which], "B2:%06X", (unsigned)(r.bank[2] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK3: sprintf(buffer[which], "B3:%06X", (unsigned)(r.bank[3] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK4: sprintf(buffer[which], "B4:%06X", (unsigned)(r.bank[4] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK5: sprintf(buffer[which], "B5:%06X", (unsigned)(r.bank[5] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK6: sprintf(buffer[which], "B6:%06X", (unsigned)(r.bank[6] - OP_RAM)); break;
-			case CPU_INFO_REG+T11_BANK7: sprintf(buffer[which], "B7:%06X", (unsigned)(r.bank[7] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_PC: sprintf(buffer[which], "PC:%04X", r->reg[7].w.l); break;
+			case CPU_INFO_REG+T11_SP: sprintf(buffer[which], "SP:%04X", r->reg[6].w.l); break;
+			case CPU_INFO_REG+T11_PSW: sprintf(buffer[which], "PSW:%02X", r->psw.b.l); break;
+			case CPU_INFO_REG+T11_R0: sprintf(buffer[which], "R0:%04X", r->reg[0].w.l); break;
+			case CPU_INFO_REG+T11_R1: sprintf(buffer[which], "R1:%04X", r->reg[1].w.l); break;
+			case CPU_INFO_REG+T11_R2: sprintf(buffer[which], "R2:%04X", r->reg[2].w.l); break;
+			case CPU_INFO_REG+T11_R3: sprintf(buffer[which], "R3:%04X", r->reg[3].w.l); break;
+			case CPU_INFO_REG+T11_R4: sprintf(buffer[which], "R4:%04X", r->reg[4].w.l); break;
+			case CPU_INFO_REG+T11_R5: sprintf(buffer[which], "R5:%04X", r->reg[5].w.l); break;
+			case CPU_INFO_REG+T11_IRQ0_STATE: sprintf(buffer[which], "IRQ0:%X", (r->irq_state & 1) ? ASSERT_LINE : CLEAR_LINE); break;
+			case CPU_INFO_REG+T11_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", (r->irq_state & 2) ? ASSERT_LINE : CLEAR_LINE); break;
+			case CPU_INFO_REG+T11_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", (r->irq_state & 4) ? ASSERT_LINE : CLEAR_LINE); break;
+			case CPU_INFO_REG+T11_IRQ3_STATE: sprintf(buffer[which], "IRQ3:%X", (r->irq_state & 8) ? ASSERT_LINE : CLEAR_LINE); break;
+			case CPU_INFO_REG+T11_BANK0: sprintf(buffer[which], "B0:%06X", (unsigned)(r->bank[0] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK1: sprintf(buffer[which], "B1:%06X", (unsigned)(r->bank[1] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK2: sprintf(buffer[which], "B2:%06X", (unsigned)(r->bank[2] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK3: sprintf(buffer[which], "B3:%06X", (unsigned)(r->bank[3] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK4: sprintf(buffer[which], "B4:%06X", (unsigned)(r->bank[4] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK5: sprintf(buffer[which], "B5:%06X", (unsigned)(r->bank[5] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK6: sprintf(buffer[which], "B6:%06X", (unsigned)(r->bank[6] - OP_RAM)); break;
+			case CPU_INFO_REG+T11_BANK7: sprintf(buffer[which], "B7:%06X", (unsigned)(r->bank[7] - OP_RAM)); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.psw.b.l & 0x80 ? '?':'.',
-					r.psw.b.l & 0x40 ? 'I':'.',
-					r.psw.b.l & 0x20 ? 'I':'.',
-					r.psw.b.l & 0x10 ? 'T':'.',
-					r.psw.b.l & 0x08 ? 'N':'.',
-					r.psw.b.l & 0x04 ? 'Z':'.',
-					r.psw.b.l & 0x02 ? 'V':'.',
-					r.psw.b.l & 0x01 ? 'C':'.');
+					r->psw.b.l & 0x80 ? '?':'.',
+					r->psw.b.l & 0x40 ? 'I':'.',
+					r->psw.b.l & 0x20 ? 'I':'.',
+					r->psw.b.l & 0x10 ? 'T':'.',
+					r->psw.b.l & 0x08 ? 'N':'.',
+					r->psw.b.l & 0x04 ? 'Z':'.',
+					r->psw.b.l & 0x02 ? 'V':'.',
+					r->psw.b.l & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "T11";
 			case CPU_INFO_FAMILY: return "DEC T-11";

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -13,20 +13,17 @@ public class deadang
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr deadang_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deadang_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		deadang_video_data[offset]=data;
 		tilemap_mark_tile_dirty( pf1_layer, offset/2 );
 	} };
 	
-	public static WriteHandlerPtr deadang_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deadang_text_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( text_layer, offset/2 );
 	} };
 	
-	public static WriteHandlerPtr deadang_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deadang_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		deadangle_tilebank = data&1;
 		if (deadangle_tilebank!=deadangle_oldtilebank) {
 			deadangle_oldtilebank = deadangle_tilebank;
@@ -74,8 +71,7 @@ public class deadang
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_deadang  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_deadang  = new VideoStartHandlerPtr() { public int handler(){
 		pf3_layer = tilemap_create(get_pf3_tile_info,bg_scan,          TILEMAP_OPAQUE,     16,16,128,256);
 		pf2_layer = tilemap_create(get_pf2_tile_info,bg_scan,          TILEMAP_TRANSPARENT,16,16,128,256);
 		pf1_layer = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16, 32, 32);
@@ -112,28 +108,27 @@ public class deadang
 			fy= spriteram.read(offs+1)&0x40;
 			y = spriteram.read(offs+0);
 			x = spriteram.read(offs+4);
-			if (fy != 0) fy=0; else fy=1;
+			if (fy) fy=0; else fy=1;
 			if (spriteram.read(offs+5)&1) x=0-(0xff-x);
 	
 			color = (spriteram.read(offs+3)>>4)&0xf;
 			sprite = (spriteram.read(offs+2)+(spriteram.read(offs+3)<<8))&0xfff;
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				x=240-x;
 				y=240-y;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 			}
 	
-			pdrawgfx(bitmap,Machine.gfx[1],
+			pdrawgfx(bitmap,Machine->gfx[1],
 					sprite,
 					color,fx,fy,x,y,
-					Machine.visible_area,TRANSPARENCY_PEN,15,pri);
+					Machine->visible_area,TRANSPARENCY_PEN,15,pri);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_deadang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_deadang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps */
 		tilemap_set_scrolly( pf3_layer,0, ((deadang_scroll_ram[0x02]&0xf0)<<4)+((deadang_scroll_ram[0x04]&0x7f)<<1)+((deadang_scroll_ram[0x04]&0x80)>>7) );
 		tilemap_set_scrollx( pf3_layer,0, ((deadang_scroll_ram[0x12]&0xf0)<<4)+((deadang_scroll_ram[0x14]&0x7f)<<1)+((deadang_scroll_ram[0x14]&0x80)>>7) );

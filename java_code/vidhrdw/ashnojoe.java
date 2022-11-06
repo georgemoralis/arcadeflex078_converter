@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -190,8 +190,7 @@ public class ashnojoe
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_ashnojoe  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ashnojoe  = new VideoStartHandlerPtr() { public int handler(){
 		joetilemap  =  tilemap_create(get_joe_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		joetilemap2 =  tilemap_create(get_joe_tile_info_2,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		joetilemap3 =  tilemap_create(get_joe_tile_info_3,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
@@ -212,8 +211,7 @@ public class ashnojoe
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ashnojoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ashnojoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 	//	ashnojoe_tilemap_reg[0] & 0x10 // ?? on coin insertion
 	

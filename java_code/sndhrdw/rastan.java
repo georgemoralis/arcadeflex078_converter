@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -8,8 +8,7 @@ public class rastan
 {
 	
 	/* Game writes here to set ADPCM ROM address */
-	public static WriteHandlerPtr rastan_adpcm_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rastan_adpcm_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_SOUND1);
 		int len = memory_region_length(REGION_SOUND1);
 		int start = data << 8;
@@ -24,15 +23,13 @@ public class rastan
 	} };
 	
 	/* Game writes here to START ADPCM_voice playing */
-	public static WriteHandlerPtr rastan_c000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rastan_c000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	/* Game writes here to STOP ADPCM_voice playing */
-	public static WriteHandlerPtr rastan_d000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rastan_d000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if 0
-		if (Machine.samples == 0) return;
+		if (Machine->samples == 0) return;
 		if (data==0)
 			mixer_stop_sample(channel);
 	#endif

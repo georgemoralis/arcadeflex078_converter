@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -62,7 +62,7 @@ public class k051649
 	
 		/* allocate memory */
 		mixer_table = malloc(512 * voices * sizeof(INT16));
-		if (mixer_table == 0)
+		if (!mixer_table)
 			return 1;
 	
 		/* find the middle of the table */
@@ -129,16 +129,16 @@ public class k051649
 	{
 		const char *snd_name = "K051649";
 		k051649_sound_channel *voice=channel_list;
-		const struct k051649_interface *intf = msound.sound_interface;
+		const struct k051649_interface *intf = msound->sound_interface;
 		int i;
 	
 		/* get stream channels */
-		stream = stream_init(snd_name, intf.volume, Machine.sample_rate, 0, K051649_update);
-		mclock = intf.master_clock;
-		rate = Machine.sample_rate;
+		stream = stream_init(snd_name, intf->volume, Machine->sample_rate, 0, K051649_update);
+		mclock = intf->master_clock;
+		rate = Machine->sample_rate;
 	
 		/* allocate a buffer to mix into - 1 second's worth should be more than enough */
-		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine.sample_rate)) == 0)
+		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine->sample_rate)) == 0)
 			return 1;
 	
 		/* build the mixer table */
@@ -166,8 +166,7 @@ public class k051649
 	
 	/********************************************************************************/
 	
-	public static WriteHandlerPtr K051649_waveform_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051649_waveform_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(stream,0);
 		channel_list[offset>>5].waveform[offset&0x1f]=data;
 		/* SY 20001114: Channel 5 shares the waveform with channel 4 */
@@ -176,20 +175,17 @@ public class k051649
 	} };
 	
 	/* SY 20001114: Channel 5 doesn't share the waveform with channel 4 on this chip */
-	public static WriteHandlerPtr K052539_waveform_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K052539_waveform_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(stream,0);
 		channel_list[offset>>5].waveform[offset&0x1f]=data;
 	} };
 	
-	public static WriteHandlerPtr K051649_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051649_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(stream,0);
 		channel_list[offset&0x7].volume=data&0xf;
 	} };
 	
-	public static WriteHandlerPtr K051649_frequency_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051649_frequency_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int f[10];
 		f[offset]=data;
 	
@@ -197,8 +193,7 @@ public class k051649
 		channel_list[offset>>1].frequency=(f[offset&0xe] + (f[offset|1]<<8))&0xfff;
 	} };
 	
-	public static WriteHandlerPtr K051649_keyonoff_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051649_keyonoff_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(stream,0);
 		channel_list[0].key=data&1;
 		channel_list[1].key=data&2;

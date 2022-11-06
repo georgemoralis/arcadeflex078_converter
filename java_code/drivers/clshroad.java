@@ -19,7 +19,7 @@ XTAL        :	18.432 MHz
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,19 +38,17 @@ public class clshroad
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_clshroad  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_clshroad  = new MachineInitHandlerPtr() { public void handler(){
 		flip_screen_set(0);
 	} };
 	
 	
 	/* Shared RAM with the sound CPU */
 	
-	public static ReadHandlerPtr clshroad_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{	return clshroad_sharedram[offset];	} };
-	public static WriteHandlerPtr clshroad_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{	clshroad_sharedram[offset] = data;	} };
+	public static ReadHandlerPtr clshroad_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	return clshroad_sharedram[offset];	}
+	public static WriteHandlerPtr clshroad_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	clshroad_sharedram[offset] = data;	}
 	
-	public static ReadHandlerPtr clshroad_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr clshroad_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return	((~readinputport(0) & (1 << offset)) ? 1 : 0) |
 				((~readinputport(1) & (1 << offset)) ? 2 : 0) |
 				((~readinputport(2) & (1 << offset)) ? 4 : 0) |
@@ -104,7 +102,7 @@ public class clshroad
 	
 	
 	
-	static InputPortPtr input_ports_clshroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_clshroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( clshroad )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -188,7 +186,7 @@ public class clshroad
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_firebatl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_firebatl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( firebatl )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -323,8 +321,7 @@ public class clshroad
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_firebatl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( firebatl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* ? */
@@ -355,12 +352,9 @@ public class clshroad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_clshroad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( clshroad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/6)	/* ? */
@@ -390,9 +384,7 @@ public class clshroad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -436,7 +428,7 @@ public class clshroad
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "rom05",       0x0000, 0x2000, CRC(21544cd6) SHA1(b9644ab3c4393cd2669d2b5b3c80d7a9f1c91ca6) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
 		ROM_LOAD( "prom3.bpr",   0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "prom2.bpr",   0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END(); }}; 
@@ -473,13 +465,12 @@ public class clshroad
 		ROM_REGION( 0x2000, REGION_SOUND1, 0 )	/* samples */
 		ROM_LOAD( "clashr1.bin", 0x0000, 0x2000, CRC(0d0a8068) SHA1(529878d0c5f078590e07ec0fffc27b212843c0ad) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
 		ROM_LOAD( "clashrd.g8",  0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "clashrd.g7",  0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT ( firebatl )
-	{
+	public static DriverInitHandlerPtr init_firebatl  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 	Pugsy> firebatl:0:05C6:C3:100:Fix the Game:It's a hack but seems to make it work!
 	Pugsy> firebatl:0:05C7:8D:600:Fix the Game (2/3)
@@ -494,8 +485,8 @@ public class clshroad
 		ROM[0x05C6] = 0xc3;
 		ROM[0x05C7] = 0x8d;
 		ROM[0x05C8] = 0x23;
-	}
+	} };
 	
-	public static GameDriver driver_firebatl	   = new GameDriver("1984"	,"firebatl"	,"clshroad.java"	,rom_firebatl,null	,machine_driver_firebatl	,input_ports_firebatl	,init_firebatl	,ROT90	,	"Taito", "Fire Battle", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_clshroad	   = new GameDriver("1986"	,"clshroad"	,"clshroad.java"	,rom_clshroad,null	,machine_driver_clshroad	,input_ports_clshroad	,null	,ROT0	,	"Woodplace Inc.", "Clash-Road" )
+	GAMEX( 1984, firebatl, 0, firebatl, firebatl, firebatl, ROT90, "Taito", "Fire Battle", GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1986, clshroad, 0, clshroad, clshroad, 0, ROT0,  "Woodplace Inc.", "Clash-Road" )
 }

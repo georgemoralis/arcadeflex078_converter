@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.e132xs;
 
@@ -313,7 +313,7 @@ public class _32xsdasm
 	{
 		INT32 ret;
 	
-		if ((op & 0x80) != 0) //bit 7 = 1
+		if( op & 0x80 ) //bit 7 = 1
 		{
 			UINT16 next;
 	
@@ -325,14 +325,14 @@ public class _32xsdasm
 	
 			ret |= (next & 0xfffe);
 	
-			if ((next & 1) != 0)
+			if( next & 1 )
 				ret |= 0xff800000; //ok?
 		}
 		else
 		{
 			ret = op & 0x7e;
 	
-			if ((op & 1) != 0)
+			if( op & 1 )
 				ret |= 0xffffff80; //ok?
 		}
 	
@@ -1004,7 +1004,7 @@ public class _32xsdasm
 	
 						case 2:
 							// LDHS.A
-							if ((dis & 1) != 0)
+							if( dis & 1 )
 							{
 								buffer += sprintf(buffer, "LDHS.A 0, %s, %x", source, dis);
 							}
@@ -1057,7 +1057,7 @@ public class _32xsdasm
 	
 						case 2:
 							// LDHS.D
-							if ((dis & 1) != 0)
+							if( dis & 1 )
 							{
 								buffer += sprintf(buffer, "LDHS.D %s, %s, %x", dest, source, dis);
 							}
@@ -1126,7 +1126,7 @@ public class _32xsdasm
 	
 					case 2:
 						// LDHS.N
-						if ((dis & 1) != 0)
+						if( dis & 1 )
 						{
 							buffer += sprintf(buffer, "LDHS.N %s, %s, %x", dest, source, dis);
 						}
@@ -1191,7 +1191,7 @@ public class _32xsdasm
 	
 						case 2:
 							// STHS.A
-							if ((dis & 1) != 0)
+							if( dis & 1 )
 							{
 								buffer += sprintf(buffer, "STHS.A 0, %s, %x", source, dis);
 							}
@@ -1244,7 +1244,7 @@ public class _32xsdasm
 	
 						case 2:
 							// STHS.D
-							if ((dis & 1) != 0)
+							if( dis & 1 )
 							{
 								buffer += sprintf(buffer, "STHS.D %s, %s, %x", dest, source, dis);
 							}
@@ -1313,7 +1313,7 @@ public class _32xsdasm
 	
 					case 2:
 						// STHS.N
-						if ((dis & 1) != 0)
+						if( dis & 1 )
 						{
 							buffer += sprintf(buffer, "STHS.N %s, %s, %x", dest, source, dis);
 						}

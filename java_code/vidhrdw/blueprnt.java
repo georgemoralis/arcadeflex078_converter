@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class blueprnt
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_blueprnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_blueprnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -67,8 +66,7 @@ public class blueprnt
 	
 	
 	
-	public static WriteHandlerPtr blueprnt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blueprnt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (~data & 2))
 		{
 			flipscreen = ~data & 2;
@@ -91,8 +89,7 @@ public class blueprnt
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_blueprnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blueprnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int scroll[32];
 	
@@ -110,7 +107,7 @@ public class blueprnt
 	
 				sx = 31 - offs / 32;
 				sy = offs % 32;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -131,7 +128,7 @@ public class blueprnt
 			int i;
 	
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				for (i = 0;i < 32;i++)
 				{
@@ -160,7 +157,7 @@ public class blueprnt
 			sy = 240 - spriteram.read(offs + 0);
 			flipx = spriteram.read(offs + 2)& 0x40;
 			flipy = spriteram.read(offs + 2 - 4)& 0x80;	/* -4? Awkward, isn't it? */
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 248 - sx;
 				sy = 240 - sy;
@@ -187,7 +184,7 @@ public class blueprnt
 	
 				sx = 31 - offs / 32;
 				sy = offs % 32;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

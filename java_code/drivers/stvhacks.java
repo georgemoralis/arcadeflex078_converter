@@ -6,18 +6,16 @@ to be honest i think some of these cause more problems than they're worth ...
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class stvhacks
 {
 	
-	DRIVER_INIT ( stv );
 	
 	/* Hack the boot vectors .. not right but allows several IC13 games (which fail the checksums before hacking) to boot */
-	public static DriverInitHandlerPtr init_ic13  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ic13  = new DriverInitHandlerPtr() { public void handler(){
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
 		rom[0xf10/4] = (rom[0xf10/4] & 0xff000000)|((rom[0xf10/4]/2)&0x00ffffff);
@@ -85,13 +83,12 @@ public class stvhacks
 	}
 	
 	
-	DRIVER_INIT(shienryu)
-	{
+	public static DriverInitHandlerPtr init_shienryu  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x60ae8e0, 0x60ae8e3, shienryu_speedup_r ); // after you enable sound cpu
 		install_mem_read32_handler(1, 0x60ae8e4, 0x60ae8e7, shienryu_slave_speedup_r ); // after you enable sound cpu
 	
 		init_stv();
-	}
+	} };
 	
 	static READ32_HANDLER( prikura_speedup_r )
 	{
@@ -100,8 +97,7 @@ public class stvhacks
 	}
 	
 	
-	DRIVER_INIT(prikura)
-	{
+	public static DriverInitHandlerPtr init_prikura  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 	 06018640: MOV.B   @R14,R0  // 60b9228
 	 06018642: TST     R0,R0
@@ -112,7 +108,7 @@ public class stvhacks
 		install_mem_read32_handler(0, 0x60b9228, 0x60b922b, prikura_speedup_r );
 	
 		init_stv();
-	}
+	} };
 	
 	
 	static READ32_HANDLER( hanagumi_speedup_r )
@@ -130,8 +126,7 @@ public class stvhacks
 		return stv_workram_h[0x015438/4];
 	}
 	
-	DRIVER_INIT(hanagumi)
-	{
+	public static DriverInitHandlerPtr init_hanagumi  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 		06013E1E: NOP
 		0601015E: MOV.L   @($6C,PC),R3
@@ -153,7 +148,7 @@ public class stvhacks
 	   	install_mem_read32_handler(1, 0x6015438, 0x601543b, hanagumi_slave_off );
 	
 	  	init_stv();
-	}
+	} };
 	
 	
 	
@@ -194,13 +189,12 @@ public class stvhacks
 		return stv_workram_h[0x023700/4];
 	}
 	
-	DRIVER_INIT(puyosun)
-	{
+	public static DriverInitHandlerPtr init_puyosun  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x60ffc10, 0x60ffc13, puyosun_speedup_r ); // idle loop of main cpu
 	   	install_mem_read32_handler(1, 0x6023700, 0x6023703, puyosun_speedup2_r ); // UGLY hack for second cpu
 	
 		init_ic13();
-	}
+	} };
 	
 	/* mausuke
 	
@@ -219,12 +213,11 @@ public class stvhacks
 		return stv_workram_h[0x0ffc10/4];
 	}
 	
-	DRIVER_INIT(mausuke)
-	{
+	public static DriverInitHandlerPtr init_mausuke  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x60ffc10, 0x60ffc13, mausuke_speedup_r ); // idle loop of main cpu
 	
 		init_ic13();
-	}
+	} };
 	
 	static READ32_HANDLER( cottonbm_speedup_r )
 	{
@@ -262,13 +255,12 @@ public class stvhacks
 		return stv_workram_h[0x032b50/4];
 	}
 	
-	DRIVER_INIT(cottonbm)
-	{
+	public static DriverInitHandlerPtr init_cottonbm  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x60ffc10, 0x60ffc13, cottonbm_speedup_r ); // idle loop of main cpu
 	   	install_mem_read32_handler(1, 0x6032b50, 0x6032b53, cottonbm_speedup2_r ); // UGLY hack for second cpu
 	
 		init_stv();
-	}
+	} };
 	
 	static READ32_HANDLER( cotton2_speedup_r )
 	{
@@ -306,13 +298,12 @@ public class stvhacks
 		return stv_workram_h[0x0338ec/4];
 	}
 	
-	DRIVER_INIT(cotton2)
-	{
+	public static DriverInitHandlerPtr init_cotton2  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x60ffc10, 0x60ffc13, cotton2_speedup_r ); // idle loop of main cpu
 	   	install_mem_read32_handler(1, 0x60338ec, 0x60338ef, cotton2_speedup2_r ); // UGLY hack for second cpu
 	
 		init_stv();
-	}
+	} };
 	
 	static READ32_HANDLER( dnmtdeka_speedup_r )
 	{
@@ -322,12 +313,11 @@ public class stvhacks
 	}
 	
 	
-	DRIVER_INIT(dnmtdeka)
-	{
+	public static DriverInitHandlerPtr init_dnmtdeka  = new DriverInitHandlerPtr() { public void handler(){
 	//   	install_mem_read32_handler(0, 0x60985a0, 0x60985a3, dnmtdeka_speedup_r ); // idle loop of main cpu
 	
 		init_ic13();
-	}
+	} };
 	
 	
 	static READ32_HANDLER( fhboxers_speedup_r )
@@ -347,13 +337,12 @@ public class stvhacks
 	
 	/* fhboxers ... doesn't seem to work properly anyway .. even without the speedups, timing issues / interrupt order .. who knows */
 	
-	DRIVER_INIT(fhboxers)
-	{
+	public static DriverInitHandlerPtr init_fhboxers  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x600420c, 0x600420f, fhboxers_speedup_r ); // idle loop of main cpu
 	   	install_mem_read32_handler(1, 0x6090740, 0x6090743, fhboxers_speedup2_r ); // idle loop of second cpu
 	
 		init_ic13();
-	}
+	} };
 	
 	
 	static READ32_HANDLER( bakubaku_speedup_r )
@@ -377,12 +366,11 @@ public class stvhacks
 		return stv_workram_h[0x033660/4];
 	}
 	
-	DRIVER_INIT(bakubaku)
-	{
+	public static DriverInitHandlerPtr init_bakubaku  = new DriverInitHandlerPtr() { public void handler(){
 	   	install_mem_read32_handler(0, 0x60833f0, 0x60833f3, bakubaku_speedup_r ); // idle loop of main cpu
 	   	install_mem_read32_handler(1, 0x60fdfe8, 0x60fdfeb, bakubaku_speedup2_r ); // turn off slave sh2, is it needed after boot ??
 	   	install_mem_read32_handler(0, 0x6033660, 0x6033663, bakubaku_hangskip_r ); // it waits for a ram address to chamge what should change it?
 	
 		init_ic13();
-	}
+	} };
 }

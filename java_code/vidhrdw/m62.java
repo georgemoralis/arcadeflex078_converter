@@ -15,7 +15,7 @@ Tile/sprite priority system (for the Kung Fu Master M62 board):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -56,8 +56,7 @@ public class m62
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_irem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_irem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -95,8 +94,7 @@ public class m62
 		sprite_height_prom = color_prom;	/* we'll need this at run time */
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_battroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_battroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -158,8 +156,7 @@ public class m62
 		sprite_height_prom = color_prom;	/* we'll need this at run time */
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_spelunk2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_spelunk2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -243,13 +240,12 @@ public class m62
 		state_save_register_UINT8("video", 0, "irem_textram",            irem_textram,   irem_textram_size);
 	}
 	
-	public static WriteHandlerPtr m62_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
 	
 		flipscreen = data & 0x01;
-		if (flipscreen != 0)
+		if (flipscreen)
 			tilemap_set_flip(ALL_TILEMAPS, TILEMAP_FLIPX | TILEMAP_FLIPY);
 		else
 			tilemap_set_flip(ALL_TILEMAPS, 0);
@@ -258,34 +254,28 @@ public class m62
 		coin_counter_w(1,data & 4);
 	} };
 	
-	public static WriteHandlerPtr m62_hscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_hscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_background_hscroll = ( m62_background_hscroll & 0xff00 ) | data;
 	} };
 	
-	public static WriteHandlerPtr m62_hscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_hscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_background_hscroll = ( m62_background_hscroll & 0xff ) | ( data << 8 );
 	} };
 	
-	public static WriteHandlerPtr m62_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_background_vscroll = ( m62_background_vscroll & 0xff00 ) | data;
 	} };
 	
-	public static WriteHandlerPtr m62_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_background_vscroll = ( m62_background_vscroll & 0xff ) | ( data << 8 );
 	} };
 	
-	public static WriteHandlerPtr m62_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_tileram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_background, offset >> 1 );
 	} };
 	
-	public static WriteHandlerPtr m62_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m62_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_textram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_foreground, offset >> 1 );
 	} };
@@ -327,7 +317,7 @@ public class m62
 					sy -= 3*16;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 496 - sx;
 					sy = 242 - i*16 - sy;	/* sprites are slightly misplaced by the hardware */
@@ -335,7 +325,7 @@ public class m62
 					flipy = NOT(flipy);
 				}
 	
-				if (flipy != 0)
+				if (flipy)
 				{
 					incr = -1;
 					code += i;
@@ -344,11 +334,11 @@ public class m62
 	
 				do
 				{
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code + i * incr,col,
 							flipx,flipy,
 							sx,sy + 16 * i,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					i--;
 				} while (i >= 0);
@@ -359,7 +349,7 @@ public class m62
 	int m62_start( void (*tile_get_info)( int memory_offset ), int rows, int cols, int x1, int y1, int x2, int y2 )
 	{
 		m62_background = tilemap_create( tile_get_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, x1, y1, x2, y2 );
-		if (m62_background == 0)
+		if( !m62_background )
 		{
 			return 1;
 		}
@@ -384,7 +374,7 @@ public class m62
 	int m62_textlayer( void (*tile_get_info)( int memory_offset ), int rows, int cols, int x1, int y1, int x2, int y2 )
 	{
 		m62_foreground = tilemap_create( tile_get_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, x1, y1, x2, y2 );
-		if (m62_foreground == 0)
+		if( !m62_foreground )
 		{
 			return 1;
 		}
@@ -401,8 +391,7 @@ public class m62
 		return 0;
 	}
 	
-	public static WriteHandlerPtr kungfum_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kungfum_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_tileram[ offset ] = data;
 		tilemap_mark_tile_dirty( m62_background, offset & 0x7ff );
 	} };
@@ -432,8 +421,7 @@ public class m62
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kungfum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kungfum  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		for( i = 0; i < 6; i++ )
 		{
@@ -448,8 +436,7 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_background, 1, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_kungfum  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kungfum  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_kungfum_bg_tile_info, 32, 0, 8, 8, 64, 32 );
 	} };
 	
@@ -477,8 +464,7 @@ public class m62
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ldrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ldrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrolly( m62_background, 0, m62_background_vscroll );
 	
@@ -488,8 +474,7 @@ public class m62
 		draw_sprites( bitmap, 0x0f, 0x10, 0x10 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ldrun  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ldrun  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_ldrun_bg_tile_info, 1, 1, 8, 8, 64, 32 );
 	} };
 	
@@ -526,8 +511,7 @@ public class m62
 		SET_TILE_INFO( 2, code | ( ( color & 0x40 ) << 3 ) | ( ( color & 0x10 ) << 4 ), color & 0x0f, 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_battroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_battroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrolly( m62_background, 0, m62_background_vscroll );
 		tilemap_set_scrollx( m62_foreground, 0, 128 );
@@ -541,8 +525,7 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_battroad  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battroad  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_battroad_bg_tile_info, 1, 1, 8, 8, 64, 32 ) ||
 			m62_textlayer( get_battroad_fg_tile_info, 1, 1, 8, 8, 32, 32 );
 	} };
@@ -559,16 +542,14 @@ public class m62
 		SET_TILE_INFO( 0, code | ( ( color & 0xc0 ) << 2 ) | ( ( color & 0x20 ) << 5 ), color & 0x1f, 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ldrun4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ldrun4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 	
 		tilemap_draw( bitmap, cliprect, m62_background, 0, 0 );
 		draw_sprites( bitmap, 0x1f, 0x00, 0x00 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ldrun4  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ldrun4  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_ldrun4_bg_tile_info, 1, 0, 8, 8, 64, 32 );
 	} };
 	
@@ -597,8 +578,7 @@ public class m62
 		SET_TILE_INFO( 2, code | ( ( color & 0xc0 ) << 2 ), color & 0x1f, 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lotlot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lotlot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll - 64 );
 		tilemap_set_scrolly( m62_background, 0, m62_background_vscroll + 32 );
 		tilemap_set_scrollx( m62_foreground, 0, -64 );
@@ -610,25 +590,21 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_lotlot  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lotlot  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_lotlot_bg_tile_info, 1, 1, 12, 10, 32, 64 ) ||
 			m62_textlayer( get_lotlot_fg_tile_info, 1, 1, 12, 10, 32, 64 );
 	} };
 	
 	
-	public static WriteHandlerPtr kidniki_text_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kidniki_text_vscroll_low_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		kidniki_text_vscroll = (kidniki_text_vscroll & 0xff00) | data;
 	} };
 	
-	public static WriteHandlerPtr kidniki_text_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kidniki_text_vscroll_high_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		kidniki_text_vscroll = (kidniki_text_vscroll & 0xff) | (data << 8);
 	} };
 	
-	public static WriteHandlerPtr kidniki_background_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kidniki_background_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kidniki_background_bank != (data & 1))
 		{
 			kidniki_background_bank = data & 1;
@@ -654,8 +630,7 @@ public class m62
 		SET_TILE_INFO( 2, code | ( ( color & 0xc0 ) << 2 ), color & 0x1f, 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kidniki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kidniki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrollx( m62_foreground, 0, -64 );
 		tilemap_set_scrolly( m62_foreground, 0, kidniki_text_vscroll + 128 );
@@ -666,15 +641,13 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_kidniki  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kidniki  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_kidniki_bg_tile_info, 1, 0, 8, 8, 64, 32 ) ||
 			m62_textlayer( get_kidniki_fg_tile_info, 1, 1, 12, 8, 32, 64 );
 	} };
 	
 	
-	public static WriteHandlerPtr spelunkr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spelunkr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (spelunkr_palbank != (data & 0x01))
 		{
 			spelunkr_palbank = data & 0x01;
@@ -700,8 +673,7 @@ public class m62
 		SET_TILE_INFO( 2, code | ( ( color & 0x10 ) << 4 ), ( color & 0x0f ) | ( spelunkr_palbank << 4 ), 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_spelunkr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spelunkr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrolly( m62_background, 0, m62_background_vscroll + 128 );
 		tilemap_set_scrollx( m62_foreground, 0, -64 );
@@ -713,15 +685,13 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_spelunkr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spelunkr  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_spelunkr_bg_tile_info, 1, 1, 8, 8, 64, 64 ) ||
 			m62_textlayer( get_spelunkr_fg_tile_info, 1, 1, 12, 8, 32, 32 );
 	} };
 	
 	
-	public static WriteHandlerPtr spelunk2_gfxport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spelunk2_gfxport_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m62_hscroll_high_w(0,(data&2)>>1);
 		m62_vscroll_high_w(0,(data&1));
 		if (spelunkr_palbank != ((data & 0x0c) >> 2))
@@ -740,8 +710,7 @@ public class m62
 		SET_TILE_INFO( 0, code | ( ( color & 0xf0 ) << 4 ), ( color & 0x0f ) | ( spelunkr_palbank << 4 ), 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_spelunk2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spelunk2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrolly( m62_background, 0, m62_background_vscroll + 128 );
 		tilemap_set_scrollx( m62_foreground, 0, -64 );
@@ -753,8 +722,7 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_spelunk2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spelunk2  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_spelunk2_bg_tile_info, 1, 1, 8, 8, 64, 64 ) ||
 			m62_textlayer( get_spelunkr_fg_tile_info, 1, 1, 12, 8, 32, 32 );
 	} };
@@ -786,8 +754,7 @@ public class m62
 		SET_TILE_INFO( 2, code | ( ( color & 0xc0 ) << 2 ), ( color & 0x0f ), 0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_youjyudn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_youjyudn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( m62_background, 0, m62_background_hscroll );
 		tilemap_set_scrollx( m62_foreground, 0, -64 );
 		tilemap_set_scrolly( m62_foreground, 0, 0 );
@@ -799,15 +766,13 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_foreground, 0, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_youjyudn  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_youjyudn  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_youjyudn_bg_tile_info, 1, 0, 8, 16, 64, 16 ) ||
 			m62_textlayer( get_youjyudn_fg_tile_info, 1, 1, 12, 8, 32, 32 );
 	} };
 	
 	
-	public static WriteHandlerPtr horizon_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr horizon_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horizon_scrollram[ offset ] = data;
 	} };
 	
@@ -828,8 +793,7 @@ public class m62
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_horizon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_horizon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		for( i = 0; i < 32; i++ )
 		{
@@ -840,8 +804,7 @@ public class m62
 		tilemap_draw( bitmap, cliprect, m62_background, 1, 0 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_horizon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_horizon  = new VideoStartHandlerPtr() { public int handler(){
 		return m62_start( get_horizon_bg_tile_info, 32, 0, 8, 8, 64, 32 );
 	} };
 }

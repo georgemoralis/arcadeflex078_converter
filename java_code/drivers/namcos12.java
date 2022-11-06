@@ -39,7 +39,7 @@ X101: M53.693 KDS 745 (near CXD8654Q)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -77,8 +77,7 @@ public class namcos12
 	
 	#define SHRAM( x ) namcos12_sharedram[ ( x ) / 4 ]
 	
-	public static InterruptHandlerPtr namcos12_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos12_vblank = new InterruptHandlerPtr() {public void handler(){
 		UINT16 n_coin;
 		static UINT16 n_oldcoin = 0;
 	
@@ -118,7 +117,7 @@ public class namcos12
 		psx_vblank();
 	
 		/* kludge: protection hacks */
-		if( strcmp( Machine.gamedrv.name, "fgtlayer" ) == 0 )
+		if( strcmp( Machine->gamedrv->name, "fgtlayer" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_CPU1 );
 			if( *( (data32_t *)&RAM[ 0x2ac494 ] ) == 0x080ab125 )
@@ -126,7 +125,7 @@ public class namcos12
 				*( (data32_t *)&RAM[ 0x2ac494 ] ) = 0;
 			}
 		}
-		else if( strcmp( Machine.gamedrv.name, "pacapp" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "pacapp" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_CPU1 );
 			if( *( (data32_t *)&RAM[ 0x16d50 ] ) == 0x08005b54 )
@@ -151,7 +150,7 @@ public class namcos12
 	
 	static WRITE32_HANDLER( dmaoffset_w )
 	{
-		if (ACCESSING_LSW32 != 0)
+		if( ACCESSING_LSW32 )
 		{
 			m_n_dmaoffset = ( offset * 4 ) + ( data << 16 );
 		}
@@ -246,8 +245,7 @@ public class namcos12
 		{ 0xbfc00000, 0xbfffffff, MRA32_BANK6 },  /* bios */
 	MEMORY_END
 	
-	public static DriverInitHandlerPtr init_namcos12  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_namcos12  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank( 1, memory_region( REGION_USER1 ) );
 		cpu_setbank( 2, memory_region( REGION_USER2 ) );
 		cpu_setbank( 3, memory_region( REGION_CPU1 ) );
@@ -263,11 +261,11 @@ public class namcos12
 		state_save_register_UINT32( "namcos12", 0, "m_n_bankoffset", &m_n_bankoffset, 1 );
 	
 		/* kludge: some kind of protection? */
-		if( strcmp( Machine.gamedrv.name, "tekkentt" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "fgtlayer" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "golgo13" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "mrdrillr" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "pacapp" ) == 0 )
+		if( strcmp( Machine->gamedrv->name, "tekkentt" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "fgtlayer" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "golgo13" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "mrdrillr" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "pacapp" ) == 0 )
 		{
 			data8_t *RAM = memory_region( REGION_USER2 );
 	
@@ -277,13 +275,11 @@ public class namcos12
 		}
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_namcos12  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_namcos12  = new MachineInitHandlerPtr() { public void handler(){
 		psx_machine_init();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_coh700 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( coh700 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD( PSXCPU, 33868800 / 2 ) /* 33MHz ?? */
 		MDRV_CPU_MEMORY( namcos12_readmem, namcos12_writemem )
@@ -313,11 +309,9 @@ public class namcos12
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES( SOUND_SUPPORTS_STEREO )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_namcos12 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcos12 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcos12 )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BITX( 0x8000, IP_ACTIVE_HIGH, 0, "Test Switch", KEYCODE_F2, IP_JOY_NONE );
@@ -660,15 +654,15 @@ public class namcos12
 		ROM_LOAD( "teg3wav1.12",  0x0800000, 0x800000, CRC(dbc74fff) SHA1(601b7e7361ea744b34e3fa1fc39d88641de7f4c6) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_tekken3	   = new GameDriver("1996"	,"tekken3"	,"namcos12.java"	,rom_tekken3,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Tekken 3 (TET1/VER.E)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_soulclbr	   = new GameDriver("1998"	,"soulclbr"	,"namcos12.java"	,rom_soulclbr,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Soul Calibur (SOC1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_ehrgeiz	   = new GameDriver("1998"	,"ehrgeiz"	,"namcos12.java"	,rom_ehrgeiz,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Square/Namco",  "Ehrgeiz (EG3/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_mdhorse	   = new GameDriver("1998"	,"mdhorse"	,"namcos12.java"	,rom_mdhorse,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Derby Quiz My Dream Horse (MDH1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_fgtlayer	   = new GameDriver("1998"	,"fgtlayer"	,"namcos12.java"	,rom_fgtlayer,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Arika/Namco",   "Fighting Layer (FTL1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_pacapp	   = new GameDriver("1999"	,"pacapp"	,"namcos12.java"	,rom_pacapp,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Produce/Namco", "Paca Paca Passion (PPP1/VERA)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_sws99	   = new GameDriver("1999"	,"sws99"	,"namcos12.java"	,rom_sws99,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Super World Stadium '99 (SS91/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_tekkentt	   = new GameDriver("1999"	,"tekkentt"	,"namcos12.java"	,rom_tekkentt,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Tekken Tag Tournament (TEG3/VER.B)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_mrdrillr	   = new GameDriver("1999"	,"mrdrillr"	,"namcos12.java"	,rom_mrdrillr,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Mr Driller (DRI1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_aquarush	   = new GameDriver("1999"	,"aquarush"	,"namcos12.java"	,rom_aquarush,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Namco",         "Aqua Rush (AQ1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_golgo13	   = new GameDriver("1999"	,"golgo13"	,"namcos12.java"	,rom_golgo13,null	,machine_driver_coh700	,input_ports_namcos12	,init_namcos12	,ROT0	,	"Raizing/Namco", "Golgo 13 (GLG1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1996, tekken3,   0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Tekken 3 (TET1/VER.E)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1998, soulclbr,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Soul Calibur (SOC1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1998, ehrgeiz,   0,        coh700, namcos12, namcos12, ROT0, "Square/Namco",  "Ehrgeiz (EG3/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1998, mdhorse,   0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Derby Quiz My Dream Horse (MDH1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1998, fgtlayer,  0,        coh700, namcos12, namcos12, ROT0, "Arika/Namco",   "Fighting Layer (FTL1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1999, pacapp,    0,        coh700, namcos12, namcos12, ROT0, "Produce/Namco", "Paca Paca Passion (PPP1/VERA)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1999, sws99,     0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Super World Stadium '99 (SS91/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1999, tekkentt,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Tekken Tag Tournament (TEG3/VER.B)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1999, mrdrillr,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Mr Driller (DRI1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1999, aquarush,  0,        coh700, namcos12, namcos12, ROT0, "Namco",         "Aqua Rush (AQ1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1999, golgo13,   0,        coh700, namcos12, namcos12, ROT0, "Raizing/Namco", "Golgo 13 (GLG1/VER.A)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

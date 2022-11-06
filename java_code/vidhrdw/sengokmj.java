@@ -6,7 +6,7 @@ Sengoku Mahjong Video Hardware section
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,46 +16,38 @@ public class sengokmj
 	static struct tilemap *bg_tilemap,*md_tilemap,*tx_tilemap,*fg_tilemap;
 	data8_t *bg_vram,*md_vram,*tx_vram,*fg_vram;
 	
-	public static ReadHandlerPtr sengoku_bg_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sengoku_bg_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bg_vram[offset];
 	} };
 	
-	public static ReadHandlerPtr sengoku_md_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sengoku_md_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return md_vram[offset];
 	} };
 	
-	public static ReadHandlerPtr sengoku_tx_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sengoku_tx_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tx_vram[offset];
 	} };
 	
-	public static ReadHandlerPtr sengoku_fg_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sengoku_fg_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fg_vram[offset];
 	} };
 	
-	public static WriteHandlerPtr sengoku_bg_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sengoku_bg_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_vram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr sengoku_md_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sengoku_md_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		md_vram[offset] = data;
 		tilemap_mark_tile_dirty(md_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr sengoku_tx_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sengoku_tx_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tx_vram[offset] = data;
 		tilemap_mark_tile_dirty(tx_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr sengoku_fg_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sengoku_fg_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fg_vram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
 	} };
@@ -131,9 +123,9 @@ public class sengokmj
 			y = (spriteram.read(offs+6))+(spriteram.read(offs+7)<<8);
 			x = 128 + (spriteram.read(offs+4))+(spriteram.read(offs+5)<<8);
 	
-			if ((x & 0x8000) != 0) x=0-(0x200-(x&0x1ff));
+			if (x&0x8000) x=0-(0x200-(x&0x1ff));
 			//else x&=0x1ff;
-			if ((y & 0x8000) != 0) y=0-(0x200-(y&0x1ff));
+			if (y&0x8000) y=0-(0x200-(y&0x1ff));
 			//else y&=0x1ff;
 	
 			color = (spriteram.read(offs+0)&0x3f);
@@ -144,13 +136,13 @@ public class sengokmj
 	
 			for (ax=0; ax<dx; ax++)
 				for (ay=0; ay<dy; ay++) {
-					if (fx == 0)
-						drawgfx(bitmap,Machine.gfx[0],
+					if (!fx)
+						drawgfx(bitmap,Machine->gfx[0],
 							sprite++,
 							color,fx,fy,x+ax*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);
 					else
-						drawgfx(bitmap,Machine.gfx[0],
+						drawgfx(bitmap,Machine->gfx[0],
 							sprite++,
 							color,fx,fy,x+(dx-1-ax)*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);
@@ -158,8 +150,7 @@ public class sengokmj
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_sengokmj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sengokmj  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(sengoku_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
 		md_tilemap = tilemap_create(sengoku_md_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
 		fg_tilemap = tilemap_create(sengoku_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -175,8 +166,7 @@ public class sengokmj
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sengokmj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sengokmj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect, 2);

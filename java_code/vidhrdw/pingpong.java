@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class pingpong
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_pingpong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pingpong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -101,8 +100,7 @@ public class pingpong
 			COLOR(0,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	public static WriteHandlerPtr pingpong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pingpong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -110,8 +108,7 @@ public class pingpong
 		}
 	} };
 	
-	public static WriteHandlerPtr pingpong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pingpong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -129,12 +126,11 @@ public class pingpong
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_pingpong  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pingpong  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -157,7 +153,7 @@ public class pingpong
 			color = spriteram.read(offs)& 0x1F;
 			schar = spriteram.read(offs + 2)& 0x7F;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					schar,
 					color,
 					flipx,flipy,
@@ -166,8 +162,7 @@ public class pingpong
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pingpong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pingpong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		pingpong_draw_sprites(bitmap);
 	} };

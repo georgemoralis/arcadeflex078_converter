@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class spcforce
 	unsigned char *spcforce_scrollram;
 	
 	
-	public static WriteHandlerPtr spcforce_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spcforce_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 0x01);
 	} };
 	
@@ -31,8 +30,7 @@ public class spcforce
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_spcforce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spcforce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -52,7 +50,7 @@ public class spcforce
 			code = videoram.read(offs)+ ((colorram.read(offs)& 0x01) << 8);
 			col  = (~colorram.read(offs)>> 4) & 0x07;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;

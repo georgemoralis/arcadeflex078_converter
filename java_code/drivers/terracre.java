@@ -82,7 +82,7 @@ AT-2
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -155,8 +155,7 @@ public class terracre
 		soundlatch_w(0,((data & 0x7f) << 1) | 1);
 	}
 	
-	public static ReadHandlerPtr soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset){
 		soundlatch_clear_w(0,0);
 		return 0;
 	} };
@@ -168,7 +167,7 @@ public class terracre
 		{
 			data16_t data;
 			data = mpProtData[offset/2];
-			if ((offset & 1) != 0) return data&0xff;
+			if( offset&1 ) return data&0xff;
 			return data>>8;
 		}
 		return 0;
@@ -176,7 +175,7 @@ public class terracre
 	
 	static WRITE16_HANDLER( amazon_protection_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if( ACCESSING_LSB )
 		{
 			if( offset==1 )
 			{
@@ -281,7 +280,7 @@ public class terracre
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_terracre = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_terracre = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( terracre )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -359,7 +358,7 @@ public class terracre
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_amazon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amazon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amazon )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -437,7 +436,7 @@ public class terracre
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_horekid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_horekid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( horekid )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Lives") );
 		PORT_DIPSETTING(      0x0003, "3" );
@@ -592,8 +591,7 @@ public class terracre
 		{ 50, 50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_amazon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( amazon )
 		MDRV_CPU_ADD(M68000, 8000000 )
 		MDRV_CPU_MEMORY(amazon_readmem,amazon_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -620,12 +618,9 @@ public class terracre
 	
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ym3526 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ym3526 )
 		MDRV_CPU_ADD(M68000, 8000000 )
 		MDRV_CPU_MEMORY(terracre_readmem,terracre_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -652,12 +647,9 @@ public class terracre
 	
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ym2203 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ym2203 )
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
 		MDRV_CPU_MEMORY(terracre_readmem,terracre_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -684,9 +676,7 @@ public class terracre
 	
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_terracre = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128K for 68000 code */
@@ -956,28 +946,25 @@ public class terracre
 		ROM_LOAD( "kid_prom.4e",  0x400, 0x100, CRC(e4fb54ee) SHA1(aba89d347b24dc6680e6f25b4a6c0d6657bb6a83) ) /* ctable */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_amazon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_amazon  = new DriverInitHandlerPtr() { public void handler(){
 		mpProtData = mAmazonProtData;
 	} };
 	
-	public static DriverInitHandlerPtr init_amatelas  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_amatelas  = new DriverInitHandlerPtr() { public void handler(){
 		mpProtData = mAmatelasProtData;
 	} };
 	
-	public static DriverInitHandlerPtr init_horekid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_horekid  = new DriverInitHandlerPtr() { public void handler(){
 		mpProtData = mHoreKidProtData;
 		install_mem_read16_handler(0, 0x44004, 0x44005, horekid_IN2_r);
 	} };
 	
 	/*    YEAR, NAME,   PARENT,     MACHINE, INPUT,    INIT,     MONITOR,  COMPANY,      FULLNAME, FLAGS */
-	public static GameDriver driver_terracre	   = new GameDriver("1985"	,"terracre"	,"terracre.java"	,rom_terracre,null	,machine_driver_ym3526	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM3526 set 1)" )
-	public static GameDriver driver_terracrb	   = new GameDriver("1985"	,"terracrb"	,"terracre.java"	,rom_terracrb,driver_terracre	,machine_driver_ym3526	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM3526 set 2)" )
-	public static GameDriver driver_terracra	   = new GameDriver("1985"	,"terracra"	,"terracre.java"	,rom_terracra,driver_terracre	,machine_driver_ym2203	,input_ports_terracre	,null	,ROT270	,	"Nichibutsu", "Terra Cresta (YM2203)" )
-	public static GameDriver driver_amazon	   = new GameDriver("1986"	,"amazon"	,"terracre.java"	,rom_amazon,null	,machine_driver_amazon	,input_ports_amazon	,init_amazon	,ROT270	,	"Nichibutsu", "Soldier Girl Amazon" )
-	public static GameDriver driver_amatelas	   = new GameDriver("1986"	,"amatelas"	,"terracre.java"	,rom_amatelas,driver_amazon	,machine_driver_amazon	,input_ports_amazon	,init_amatelas	,ROT270	,	"Nichibutsu", "Sei Senshi Amatelass" )
-	public static GameDriver driver_horekid	   = new GameDriver("1987"	,"horekid"	,"terracre.java"	,rom_horekid,null	,machine_driver_amazon	,input_ports_horekid	,init_horekid	,ROT270	,	"Nichibutsu", "Kid no Hore Hore Daisakusen" )
-	public static GameDriver driver_horekidb	   = new GameDriver("1987"	,"horekidb"	,"terracre.java"	,rom_horekidb,driver_horekid	,machine_driver_amazon	,input_ports_horekid	,init_horekid	,ROT270	,	"bootleg", "Kid no Hore Hore Daisakusen (bootleg)" )
+	GAME( 1985, terracre, 0,        ym3526,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM3526 set 1)" )
+	GAME( 1985, terracrb, terracre, ym3526,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM3526 set 2)" )
+	GAME( 1985, terracra, terracre, ym2203,  terracre, 0,        ROT270,  "Nichibutsu", "Terra Cresta (YM2203)" )
+	GAME( 1986, amazon,   0,        amazon,  amazon,   amazon,   ROT270,  "Nichibutsu", "Soldier Girl Amazon" )
+	GAME( 1986, amatelas, amazon,   amazon,  amazon,   amatelas, ROT270,  "Nichibutsu", "Sei Senshi Amatelass" )
+	GAME( 1987, horekid,  0,        amazon,  horekid,  horekid,  ROT270,  "Nichibutsu", "Kid no Hore Hore Daisakusen" )
+	GAME( 1987, horekidb, horekid,  amazon,  horekid,  horekid,  ROT270,  "bootleg", "Kid no Hore Hore Daisakusen (bootleg)" )
 }

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -70,8 +70,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_thunderj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_thunderj  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			1,					/* index to which gfx system */
@@ -111,12 +110,12 @@ public class thunderj
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the second playfield */
 		atarigen_playfield2_tilemap = tilemap_create(get_playfield2_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8,8, 64,64);
-		if (atarigen_playfield2_tilemap == 0)
+		if (!atarigen_playfield2_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_playfield2_tilemap, 0);
 	
@@ -126,7 +125,7 @@ public class thunderj
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -149,7 +148,7 @@ public class thunderj
 		#define END_MARKER		((4 << ATARIMO_PRIORITY_SHIFT) | 4)
 		int offnext = 0;
 	
-		for ( ; x < bitmap.width; x++)
+		for ( ; x < bitmap->width; x++)
 		{
 			pf[x] |= 0x400;
 			if (offnext && (mo[x] & START_MARKER) != START_MARKER)
@@ -166,8 +165,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_thunderj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_thunderj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -256,7 +254,7 @@ public class thunderj
 						int pfm = 0;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 							continue;
 	
 						/* determine pf/m signal */
@@ -272,7 +270,7 @@ public class thunderj
 						}
 	
 						/* if pfm is low, we display the mo */
-						if (pfm == 0)
+						if (!pfm)
 							pf[x] = mo[x] & ATARIMO_DATA_MASK;
 	
 						/* don't erase yet -- we need to make another pass later */
@@ -295,7 +293,7 @@ public class thunderj
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

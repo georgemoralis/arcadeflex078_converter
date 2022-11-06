@@ -7,7 +7,7 @@ driver by Nicola Salmoria
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,15 +36,14 @@ public class xmen
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_xmen  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_xmen  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -63,7 +62,7 @@ public class xmen
 		/* bit 7 is EEPROM ready */
 		/* bit 14 is service button */
 		res = (EEPROM_read_bit() << 6) | input_port_2_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xbfff;
@@ -74,7 +73,7 @@ public class xmen
 	static WRITE16_HANDLER( eeprom_w )
 	{
 	logerror("%06x: write %04x to 108000\n",activecpu_get_pc(),data);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -86,7 +85,7 @@ public class xmen
 			EEPROM_set_cs_line((data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 			EEPROM_set_clock_line((data & 0x08) ? ASSERT_LINE : CLEAR_LINE);
 		}
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* bit 8 = enable sprite ROM reading */
 			K053246_set_OBJCHA_line((data & 0x0100) ? ASSERT_LINE : CLEAR_LINE);
@@ -102,10 +101,10 @@ public class xmen
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 			data &= 0xff;
 			soundlatch_w(0, data);
-			if(!Machine.sample_rate)
+			if(!Machine->sample_rate)
 				if(data == 0xfc || data == 0xfe)
 					soundlatch2_w(0, 0x7f);
 		}
@@ -118,7 +117,7 @@ public class xmen
 	
 	static WRITE16_HANDLER( xmen_18fa00_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			/* bit 2 is interrupt enable */
 			interrupt_enable_w(0,data & 0x04);
 		}
@@ -131,8 +130,7 @@ public class xmen
 		cpu_setbank(4, memory_region(REGION_CPU2) + 0x10000 + (sound_curbank & 0x07) * 0x4000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_curbank = data;
 		sound_reset_bank();
 	} };
@@ -195,7 +193,7 @@ public class xmen
 	
 	
 	
-	static InputPortPtr input_ports_xmen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xmen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xmen )
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
@@ -245,7 +243,7 @@ public class xmen
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_xmen2p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xmen2p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xmen2p )
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
@@ -322,14 +320,12 @@ public class xmen
 	
 	
 	
-	public static InterruptHandlerPtr xmen_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr xmen_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) irq5_line_hold();
 		else irq3_line_hold();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_xmen = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xmen )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* ? */
@@ -358,9 +354,7 @@ public class xmen
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -472,8 +466,7 @@ public class xmen
 	
 	
 	
-	public static DriverInitHandlerPtr init_xmen  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xmen  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
 	
@@ -481,8 +474,7 @@ public class xmen
 		state_save_register_func_postload(sound_reset_bank);
 	} };
 	
-	public static DriverInitHandlerPtr init_xmen6p  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xmen6p  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		rom[0x21a6/2] = 0x4e71;
@@ -494,8 +486,8 @@ public class xmen
 	
 	
 	
-	public static GameDriver driver_xmen	   = new GameDriver("1992"	,"xmen"	,"xmen.java"	,rom_xmen,null	,machine_driver_xmen	,input_ports_xmen	,init_xmen	,ROT0	,	"Konami", "X-Men (US 4 Players)" )
-	public static GameDriver driver_xmen2p	   = new GameDriver("1992"	,"xmen2p"	,"xmen.java"	,rom_xmen2p,driver_xmen	,machine_driver_xmen	,input_ports_xmen2p	,init_xmen	,ROT0	,	"Konami", "X-Men (World 2 Players)" )
-	public static GameDriver driver_xmen2pj	   = new GameDriver("1992"	,"xmen2pj"	,"xmen.java"	,rom_xmen2pj,driver_xmen	,machine_driver_xmen	,input_ports_xmen2p	,init_xmen	,ROT0	,	"Konami", "X-Men (Japan 2 Players)" )
-	public static GameDriver driver_xmen6p	   = new GameDriver("1992"	,"xmen6p"	,"xmen.java"	,rom_xmen6p,driver_xmen	,machine_driver_xmen	,input_ports_xmen	,init_xmen6p	,ROT0	,	"Konami", "X-Men (US 6 Players)", GAME_NOT_WORKING )
+	GAME ( 1992, xmen,    0,    xmen, xmen,   xmen,   ROT0, "Konami", "X-Men (US 4 Players)" )
+	GAME ( 1992, xmen2p,  xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (World 2 Players)" )
+	GAME ( 1992, xmen2pj, xmen, xmen, xmen2p, xmen,   ROT0, "Konami", "X-Men (Japan 2 Players)" )
+	GAMEX( 1992, xmen6p,  xmen, xmen, xmen,   xmen6p, ROT0, "Konami", "X-Men (US 6 Players)", GAME_NOT_WORKING )
 }

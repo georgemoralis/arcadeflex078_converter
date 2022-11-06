@@ -77,7 +77,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -94,8 +94,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr kick_dial_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kick_dial_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) & 0x0f) | ((readinputport(6) << 4) & 0xf0);
 	} };
 	
@@ -107,24 +106,22 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr solarfox_input_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr solarfox_input_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* This is a kludge; according to the wiring diagram, the player 2 */
 		/* controls are hooked up as documented below. If you go into test */
 		/* mode, they will respond. However, if you try it in a 2-player   */
 		/* game in cocktail mode, they don't work at all. So we fake-mux   */
 		/* the controls through player 1's ports */
-		if (mcr_cocktail_flip != 0)
+		if (mcr_cocktail_flip)
 			return readinputport(0) | 0x08;
 		else
 			return ((readinputport(0) & ~0x14) | 0x08) | ((readinputport(0) & 0x08) >> 1) | ((readinputport(2) & 0x01) << 4);
 	} };
 	
 	
-	public static ReadHandlerPtr solarfox_input_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr solarfox_input_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/*  same deal as above */
-		if (mcr_cocktail_flip != 0)
+		if (mcr_cocktail_flip)
 			return readinputport(1) | 0xf0;
 		else
 			return (readinputport(1) >> 4) | 0xf0;
@@ -138,15 +135,14 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_mcr1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_mcr1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		unsigned char *ram = memory_region(REGION_CPU1);
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, &ram[0x7000], 0x800);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, &ram[0x7000], 0x800);
-		else if (nvram_init != 0)
+		else if (nvram_init)
 			memcpy(&ram[0x7000], nvram_init, 16);
 	} };
 	
@@ -211,7 +207,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_solarfox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_solarfox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( solarfox )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -261,7 +257,7 @@ public class mcr1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_kick = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kick = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kick )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -295,7 +291,7 @@ public class mcr1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_kicka = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kicka = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kicka )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -356,8 +352,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_mcr1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcr1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_OSC_MCR_I/8)
@@ -383,9 +378,7 @@ public class mcr1
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -492,8 +485,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_solarfox  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_solarfox  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 hiscore_init[] = { 0,0,1,1,1,1,1,3,3,3,7 };
 		nvram_init = hiscore_init;
 	
@@ -507,8 +499,7 @@ public class mcr1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_kick  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kick  = new DriverInitHandlerPtr() { public void handler(){
 		nvram_init = NULL;
 	
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
@@ -527,7 +518,7 @@ public class mcr1
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_solarfox	   = new GameDriver("1981"	,"solarfox"	,"mcr1.java"	,rom_solarfox,null	,machine_driver_mcr1	,input_ports_solarfox	,init_solarfox	,ROT90	,	ORIENTATION_FLIP_Y, "Bally Midway", "Solar Fox" )
-	public static GameDriver driver_kick	   = new GameDriver("1981"	,"kick"	,"mcr1.java"	,rom_kick,null	,machine_driver_mcr1	,input_ports_kick	,init_kick	,ORIENTATION_SWAP_XY	,	"Midway", "Kick (upright)" )
-	public static GameDriver driver_kicka	   = new GameDriver("1981"	,"kicka"	,"mcr1.java"	,rom_kicka,driver_kick	,machine_driver_mcr1	,input_ports_kicka	,init_kick	,ROT90	,	"Midway", "Kick (cocktail)" )
+	GAME( 1981, solarfox, 0,    mcr1, solarfox, solarfox, ROT90 ^ ORIENTATION_FLIP_Y, "Bally Midway", "Solar Fox" )
+	GAME( 1981, kick,     0,    mcr1, kick,     kick,     ORIENTATION_SWAP_XY,        "Midway", "Kick (upright)" )
+	GAME( 1981, kicka,    kick, mcr1, kicka,    kick,     ROT90,                      "Midway", "Kick (cocktail)" )
 }

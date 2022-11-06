@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -87,9 +87,9 @@ public class winalloc
 	
 	INLINE void free_entry(memory_entry *entry)
 	{
-		entry.size = 0;
-		entry.base = NULL;
-		entry.vbase = NULL;
+		entry->size = 0;
+		entry->base = NULL;
+		entry->vbase = NULL;
 	}
 	
 	
@@ -125,9 +125,9 @@ public class winalloc
 	#endif
 	
 		// fill in the entry
-		entry.size = size;
-		entry.base = block_base;
-		entry.vbase = page_base - PAGE_SIZE;
+		entry->size = size;
+		entry->base = block_base;
+		entry->vbase = page_base - PAGE_SIZE;
 		return block_base;
 	}
 	
@@ -162,7 +162,7 @@ public class winalloc
 			{
 				memory_entry *entry = find_entry(memory);
 				if (entry != NULL)
-					memcpy(newmemory, memory, (size < entry.size) ? size : entry.size);
+					memcpy(newmemory, memory, (size < entry->size) ? size : entry->size);
 				else
 					fprintf(stderr, "Error: realloc a non-existant block\n");
 			}
@@ -192,7 +192,7 @@ public class winalloc
 		}
 	
 		// free the memory
-		VirtualFree(entry.vbase, 0, MEM_RELEASE);
+		VirtualFree(entry->vbase, 0, MEM_RELEASE);
 		free_entry(entry);
 	}
 	
@@ -206,7 +206,7 @@ public class winalloc
 			fprintf(stderr, "Error: msize a non-existant block\n");
 			return 0;
 		}
-		return entry.size;
+		return entry->size;
 	}
 	
 	

@@ -126,7 +126,7 @@ out:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -152,62 +152,52 @@ public class wardner
 	
 	
 	
-	public static InterruptHandlerPtr wardner_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (twincobr_intenable != 0) {
+	public static InterruptHandlerPtr wardner_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (twincobr_intenable) {
 			twincobr_intenable = 0;
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr CRTC_reg_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr CRTC_reg_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		crtc6845_address_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr CRTC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr CRTC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		crtc6845_register_w(0, data);
 		twincobr_display_on = 1;
 	} };
 	
-	public static ReadHandlerPtr wardner_sprite_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_sprite_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int shift = (offset & 1) * 8;
 		return spriteram16[offset/2] >> shift;
 	} };
 	
-	public static WriteHandlerPtr wardner_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 1) != 0)
+	public static WriteHandlerPtr wardner_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 1)
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0x00ff) | (data << 8);
 		else
 			spriteram16[offset/2] = (spriteram16[offset/2] & 0xff00) | data;
 	} };
 	
-	public static ReadHandlerPtr wardner_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wardner_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr wardner_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wardner_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr wardner_spare_pal_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_spare_pal_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wardner_spare_pal_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr wardner_spare_pal_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_spare_pal_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wardner_spare_pal_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr wardner_ram_rom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_ram_rom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int wardner_data = 0;
 	
 		if (wardner_membank == 0)
@@ -236,8 +226,7 @@ public class wardner
 		return wardner_data;
 	} };
 	
-	public static WriteHandlerPtr wardner_ramrom_banks_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_ramrom_banks_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wardner_membank = data;
 	} };
 	
@@ -442,7 +431,7 @@ public class wardner
 	
 	
 	
-	static InputPortPtr input_ports_wardner = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wardner = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wardner )
 		WARDNER_SYSTEM_INPUTS
 		WARDNER_PLAYER_INPUT( IPF_PLAYER1 )
 		WARDNER_PLAYER_INPUT( IPF_PLAYER2 )
@@ -474,7 +463,7 @@ public class wardner
 		WARDNER_DSW_B
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pyros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pyros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pyros )
 		WARDNER_SYSTEM_INPUTS
 		WARDNER_PLAYER_INPUT( IPF_PLAYER1 )
 		WARDNER_PLAYER_INPUT( IPF_PLAYER2 )
@@ -504,7 +493,7 @@ public class wardner
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wardnerj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wardnerj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wardnerj )
 		WARDNER_SYSTEM_INPUTS
 		WARDNER_PLAYER_INPUT( IPF_PLAYER1 )
 		WARDNER_PLAYER_INPUT( IPF_PLAYER2 )
@@ -574,8 +563,7 @@ public class wardner
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_wardner = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wardner )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000/4)			/* 6MHz ??? - Real board crystal is 24MHz */
@@ -610,9 +598,7 @@ public class wardner
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -784,8 +770,7 @@ public class wardner
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_wardner  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wardner  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *source = memory_region(REGION_USER1);
 		data16_t *dest = (data16_t *)&memory_region(REGION_CPU3)[TMS32010_PGM_OFFSET];
 		int A;
@@ -797,7 +782,7 @@ public class wardner
 	
 	
 	
-	public static GameDriver driver_wardner	   = new GameDriver("1987"	,"wardner"	,"wardner.java"	,rom_wardner,null	,machine_driver_wardner	,input_ports_wardner	,init_wardner	,ROT0	,	"[Toaplan] Taito Corporation Japan", "Wardner (World)" )
-	public static GameDriver driver_pyros	   = new GameDriver("1987"	,"pyros"	,"wardner.java"	,rom_pyros,driver_wardner	,machine_driver_wardner	,input_ports_pyros	,init_wardner	,ROT0	,	"[Toaplan] Taito America Corporation", "Pyros (US)" )
-	public static GameDriver driver_wardnerj	   = new GameDriver("1987"	,"wardnerj"	,"wardner.java"	,rom_wardnerj,driver_wardner	,machine_driver_wardner	,input_ports_wardnerj	,init_wardner	,ROT0	,	"[Toaplan] Taito Corporation", "Wardner no Mori (Japan)" )
+	GAME( 1987, wardner,  0,       wardner, wardner,  wardner, ROT0, "[Toaplan] Taito Corporation Japan", "Wardner (World)" )
+	GAME( 1987, pyros,    wardner, wardner, pyros,    wardner, ROT0, "[Toaplan] Taito America Corporation", "Pyros (US)" )
+	GAME( 1987, wardnerj, wardner, wardner, wardnerj, wardner, ROT0, "[Toaplan] Taito Corporation", "Wardner no Mori (Japan)" )
 }

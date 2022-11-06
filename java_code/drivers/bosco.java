@@ -68,7 +68,7 @@ CPU #3 NMI (@120Hz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -178,7 +178,7 @@ public class bosco
 	
 	
 	
-	static InputPortPtr input_ports_bosco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bosco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bosco )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "4C_1C") );
@@ -261,7 +261,7 @@ public class bosco
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_boscomd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boscomd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boscomd )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "4C_1C") );
@@ -425,8 +425,7 @@ public class bosco
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_bosco = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bosco )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3125000)	/* 3.125 MHz */
@@ -463,9 +462,7 @@ public class bosco
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -679,9 +676,9 @@ public class bosco
 	
 	
 	
-	public static GameDriver driver_bosco	   = new GameDriver("1981"	,"bosco"	,"bosco.java"	,rom_bosco,null	,machine_driver_bosco	,input_ports_bosco	,null	,ROT0	,	"Namco", "Bosconian (new version)" )
-	public static GameDriver driver_boscoo	   = new GameDriver("1981"	,"boscoo"	,"bosco.java"	,rom_boscoo,driver_bosco	,machine_driver_bosco	,input_ports_bosco	,null	,ROT0	,	"Namco", "Bosconian (old version)" )
-	public static GameDriver driver_boscoo2	   = new GameDriver("1981"	,"boscoo2"	,"bosco.java"	,rom_boscoo2,driver_bosco	,machine_driver_bosco	,input_ports_bosco	,null	,ROT0	,	"Namco", "Bosconian (older version)" )
-	public static GameDriver driver_boscomd	   = new GameDriver("1981"	,"boscomd"	,"bosco.java"	,rom_boscomd,driver_bosco	,machine_driver_bosco	,input_ports_boscomd	,null	,ROT0	,	"[Namco] (Midway license)", "Bosconian (Midway, new version)" )
-	public static GameDriver driver_boscomdo	   = new GameDriver("1981"	,"boscomdo"	,"bosco.java"	,rom_boscomdo,driver_bosco	,machine_driver_bosco	,input_ports_boscomd	,null	,ROT0	,	"[Namco] (Midway license)", "Bosconian (Midway, old version)" )
+	GAME( 1981, bosco,    0,     bosco, bosco,   0, ROT0, "Namco", "Bosconian (new version)" )
+	GAME( 1981, boscoo,   bosco, bosco, bosco,   0, ROT0, "Namco", "Bosconian (old version)" )
+	GAME( 1981, boscoo2,  bosco, bosco, bosco,   0, ROT0, "Namco", "Bosconian (older version)" )
+	GAME( 1981, boscomd,  bosco, bosco, boscomd, 0, ROT0, "[Namco] (Midway license)", "Bosconian (Midway, new version)" )
+	GAME( 1981, boscomdo, bosco, bosco, boscomd, 0, ROT0, "[Namco] (Midway license)", "Bosconian (Midway, old version)" )
 }

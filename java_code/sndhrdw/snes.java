@@ -12,7 +12,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -94,7 +94,7 @@ public class snes
 		const int volume[2] = { MIXER( 50, MIXER_PAN_LEFT ), MIXER( 50, MIXER_PAN_RIGHT ) };
 	
 		/* If sound is disabled then we'd better use the SPC skipper */
-		if( Machine.sample_rate == 0 )
+		if( Machine->sample_rate == 0 )
 		{
 			spc_usefakeapu = 1;
 			return 0;
@@ -125,7 +125,7 @@ public class snes
 			snes_dsp.voice[ii].pos = 0;
 		}
 	
-		channel = stream_init_multi( 2, names, volume, Machine.sample_rate, 0, snes_sh_update );
+		channel = stream_init_multi( 2, names, volume, Machine->sample_rate, 0, snes_sh_update );
 	
 		/* Initialize the timers */
 		timers[0].timer = timer_alloc( snes_spc_timer );
@@ -166,14 +166,12 @@ public class snes
 		/* FIXME: Need to fill this in! */
 		}
 	
-	public static ReadHandlerPtr snes_dsp_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_dsp_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* FIXME: Need to fill this in! */
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr snes_dsp_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snes_dsp_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( offset )
 		{
 			case DSP_V0_VOLL:	/* Voice volume (left) */
@@ -290,42 +288,42 @@ public class snes
 				break;
 			case DSP_KON:		/* Key On */
 				snes_dsp.key_on = data;
-				if ((data & 0x1) != 0)
+				if( data & 0x1 )
 				{
 					snes_dsp.voice[0].key = 1;
 					snes_dsp_decode_sample( 0 );
 				}
-				if ((data & 0x2) != 0)
+				if( data & 0x2 )
 				{
 					snes_dsp.voice[1].key = 1;
 					snes_dsp_decode_sample( 1 );
 				}
-				if ((data & 0x4) != 0)
+				if( data & 0x4 )
 				{
 					snes_dsp.voice[2].key = 1;
 					snes_dsp_decode_sample( 2 );
 				}
-				if ((data & 0x8) != 0)
+				if( data & 0x8 )
 				{
 					snes_dsp.voice[3].key = 1;
 					snes_dsp_decode_sample( 3 );
 				}
-				if ((data & 0x10) != 0)
+				if( data & 0x10 )
 				{
 					snes_dsp.voice[4].key = 1;
 					snes_dsp_decode_sample( 4 );
 				}
-				if ((data & 0x20) != 0)
+				if( data & 0x20 )
 				{
 					snes_dsp.voice[5].key = 1;
 					snes_dsp_decode_sample( 5 );
 				}
-				if ((data & 0x40) != 0)
+				if( data & 0x40 )
 				{
 					snes_dsp.voice[6].key = 1;
 					snes_dsp_decode_sample( 6 );
 				}
-				if ((data & 0x80) != 0)
+				if( data & 0x80 )
 				{
 					snes_dsp.voice[7].key = 1;
 					snes_dsp_decode_sample( 7 );
@@ -333,14 +331,14 @@ public class snes
 				break;
 			case DSP_KOF:		/* Key Off */
 				snes_dsp.key_off = data;
-				if ((data & 0x1) != 0) snes_dsp.voice[0].key = 0;
-				if ((data & 0x2) != 0) snes_dsp.voice[1].key = 0;
-				if ((data & 0x4) != 0) snes_dsp.voice[2].key = 0;
-				if ((data & 0x8) != 0) snes_dsp.voice[3].key = 0;
-				if ((data & 0x10) != 0) snes_dsp.voice[4].key = 0;
-				if ((data & 0x20) != 0) snes_dsp.voice[5].key = 0;
-				if ((data & 0x40) != 0) snes_dsp.voice[6].key = 0;
-				if ((data & 0x80) != 0) snes_dsp.voice[7].key = 0;
+				if( data & 0x1 ) snes_dsp.voice[0].key = 0;
+				if( data & 0x2 ) snes_dsp.voice[1].key = 0;
+				if( data & 0x4 ) snes_dsp.voice[2].key = 0;
+				if( data & 0x8 ) snes_dsp.voice[3].key = 0;
+				if( data & 0x10 ) snes_dsp.voice[4].key = 0;
+				if( data & 0x20 ) snes_dsp.voice[5].key = 0;
+				if( data & 0x40 ) snes_dsp.voice[6].key = 0;
+				if( data & 0x80 ) snes_dsp.voice[7].key = 0;
 				break;
 			case DSP_FLG:		/* Flags (reset,mute,ecen,nck) */
 				snes_dsp.flags = data;
@@ -376,8 +374,7 @@ public class snes
 	/***************************
 	 *     I/O for SPC700      *
 	 ***************************/
-	public static ReadHandlerPtr spc_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spc_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( offset )	/* Offset is from 0x00f0 */
 		{
 			case 0x2:		/* Register address */
@@ -405,8 +402,7 @@ public class snes
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr spc_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spc_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( offset )	/* Offset is from 0x00f0 */
 		{
 			case 0x1:		/* Control */
@@ -431,12 +427,12 @@ public class snes
 				timer_enable( timers[1].timer, timers[1].enabled );
 				timers[2].enabled = (data & 0x4) >> 2;
 				timer_enable( timers[2].timer, timers[2].enabled );
-				if ((data & 0x10) != 0)
+				if( data & 0x10 )
 				{
 					spc_port_in[0] = spc_port_out[0] = 0;
 					spc_port_in[1] = spc_port_out[1] = 0;
 				}
-				if ((data & 0x20) != 0)
+				if( data & 0x20 )
 				{
 					spc_port_in[2] = spc_port_out[2] = 0;
 					spc_port_in[3] = spc_port_out[3] = 0;
@@ -465,9 +461,8 @@ public class snes
 				spc_ram[0xf0 + offset] = data;
 	} };
 	
-	public static ReadHandlerPtr spc_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (spc_showrom != 0)
+	public static ReadHandlerPtr spc_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if( spc_showrom )
 		{
 			return spc_iplrom[offset];
 		}
@@ -477,8 +472,7 @@ public class snes
 		}
 	} };
 	
-	public static WriteHandlerPtr spc_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spc_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spc_ram[0xffc0 + offset] = data;
 	} };
 	
@@ -488,8 +482,7 @@ public class snes
 	 * When sound is disabled the SPC700 is stopped so we need to      *
 	 * simulate the behaviour of the ROM in the SPC700 as best we can. *
 	 *******************************************************************/
-	public static WriteHandlerPtr fakespc_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fakespc_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( offset == 0 )
 		{
 			fakeapu_port[2]++;
@@ -499,8 +492,7 @@ public class snes
 		fakeapu_port[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr fakespc_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fakespc_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/*  G65816_PC=1, G65816_S, G65816_P, G65816_A, G65816_X, G65816_Y,
 	 *  G65816_PB, G65816_DB, G65816_D, G65816_E,
 	 *  G65816_NMI_STATE, G65816_IRQ_STATE

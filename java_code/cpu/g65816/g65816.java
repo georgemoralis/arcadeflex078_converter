@@ -82,7 +82,7 @@ TODO general:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.g65816;
 
@@ -181,7 +181,7 @@ public class g65816
 			REGISTER_S = (REGISTER_S & 0xff) | 0x100;
 			REGISTER_X &= 0xff;
 			REGISTER_Y &= 0xff;
-			if (FLAG_M == 0)
+			if(!FLAG_M)
 			{
 				REGISTER_B = REGISTER_A & 0xff00;
 				REGISTER_A &= 0xff;
@@ -227,7 +227,7 @@ public class g65816
 	/* Get the current CPU context */
 	unsigned g65816_get_context(void *dst_context)
 	{
-		if (dst_context != 0)
+		if(dst_context)
 			*(g65816i_cpu_struct*)dst_context = g65816i_cpu;
 		return sizeof(g65816i_cpu);
 	}
@@ -235,7 +235,7 @@ public class g65816
 	/* Set the current CPU context */
 	void g65816_set_context(void *src_context)
 	{
-		if (src_context != 0)
+		if(src_context)
 		{
 			g65816i_cpu = *(g65816i_cpu_struct*)src_context;
 			g65816i_jumping(REGISTER_PB | REGISTER_PC);
@@ -321,41 +321,41 @@ public class g65816
 	
 		which = (which + 1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if(!context)
 			r = &g65816i_cpu;
 	
 		switch(regnum)
 		{
-			case CPU_INFO_REG+G65816_PC:		sprintf(buffer[which], "PC:%04X", r.pc); break;
-			case CPU_INFO_REG+G65816_PB:		sprintf(buffer[which], "PB:%02X", r.pb>>16); break;
-			case CPU_INFO_REG+G65816_DB:		sprintf(buffer[which], "DB:%02X", r.db>>16); break;
-			case CPU_INFO_REG+G65816_D:			sprintf(buffer[which], "D:%04X", r.d); break;
-			case CPU_INFO_REG+G65816_S:			sprintf(buffer[which], "S:%04X", r.s); break;
+			case CPU_INFO_REG+G65816_PC:		sprintf(buffer[which], "PC:%04X", r->pc); break;
+			case CPU_INFO_REG+G65816_PB:		sprintf(buffer[which], "PB:%02X", r->pb>>16); break;
+			case CPU_INFO_REG+G65816_DB:		sprintf(buffer[which], "DB:%02X", r->db>>16); break;
+			case CPU_INFO_REG+G65816_D:			sprintf(buffer[which], "D:%04X", r->d); break;
+			case CPU_INFO_REG+G65816_S:			sprintf(buffer[which], "S:%04X", r->s); break;
 			case CPU_INFO_REG+G65816_P:			sprintf(buffer[which], "P:%02X",
-												 (r.flag_n&0x80)		|
-												((r.flag_v>>1)&0x40)	|
-												r.flag_m				|
-												r.flag_x				|
-												r.flag_d				|
-												r.flag_i				|
-												((!r.flag_z)<<1)		|
-												((r.flag_c>>8)&1)); break;
-			case CPU_INFO_REG+G65816_E:			sprintf(buffer[which], "E:%d", r.flag_e); break;
-			case CPU_INFO_REG+G65816_A:			sprintf(buffer[which], "A:%04X", r.a | r.b); break;
-			case CPU_INFO_REG+G65816_X:			sprintf(buffer[which], "X:%04X", r.x); break;
-			case CPU_INFO_REG+G65816_Y:			sprintf(buffer[which], "Y:%04X", r.y); break;
-			case CPU_INFO_REG+G65816_NMI_STATE:	sprintf(buffer[which], "NMI:%X", r.line_nmi); break;
-			case CPU_INFO_REG+G65816_IRQ_STATE:	sprintf(buffer[which], "IRQ:%X", r.line_irq); break;
+												 (r->flag_n&0x80)		|
+												((r->flag_v>>1)&0x40)	|
+												r->flag_m				|
+												r->flag_x				|
+												r->flag_d				|
+												r->flag_i				|
+												((!r->flag_z)<<1)		|
+												((r->flag_c>>8)&1)); break;
+			case CPU_INFO_REG+G65816_E:			sprintf(buffer[which], "E:%d", r->flag_e); break;
+			case CPU_INFO_REG+G65816_A:			sprintf(buffer[which], "A:%04X", r->a | r->b); break;
+			case CPU_INFO_REG+G65816_X:			sprintf(buffer[which], "X:%04X", r->x); break;
+			case CPU_INFO_REG+G65816_Y:			sprintf(buffer[which], "Y:%04X", r->y); break;
+			case CPU_INFO_REG+G65816_NMI_STATE:	sprintf(buffer[which], "NMI:%X", r->line_nmi); break;
+			case CPU_INFO_REG+G65816_IRQ_STATE:	sprintf(buffer[which], "IRQ:%X", r->line_irq); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.flag_n & NFLAG_SET ? 'N':'.',
-					r.flag_v & VFLAG_SET ? 'V':'.',
-					r.flag_m & MFLAG_SET ? 'M':'.',
-					r.flag_x & XFLAG_SET ? 'X':'.',
-					r.flag_d & DFLAG_SET ? 'D':'.',
-					r.flag_i & IFLAG_SET ? 'I':'.',
-					r.flag_z == 0        ? 'Z':'.',
-					r.flag_c & CFLAG_SET ? 'C':'.');
+					r->flag_n & NFLAG_SET ? 'N':'.',
+					r->flag_v & VFLAG_SET ? 'V':'.',
+					r->flag_m & MFLAG_SET ? 'M':'.',
+					r->flag_x & XFLAG_SET ? 'X':'.',
+					r->flag_d & DFLAG_SET ? 'D':'.',
+					r->flag_i & IFLAG_SET ? 'I':'.',
+					r->flag_z == 0        ? 'Z':'.',
+					r->flag_c & CFLAG_SET ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "G65C816";
 			case CPU_INFO_FAMILY: return "6500";

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -94,8 +94,7 @@ public class lwings
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_lwings  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lwings  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg1_tilemap = tilemap_create(lwings_get_bg1_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 	
@@ -107,8 +106,7 @@ public class lwings
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_trojan  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_trojan  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap  = tilemap_create(get_fg_tile_info,        tilemap_scan_rows,    TILEMAP_TRANSPARENT,8, 8,32,32);
 		bg1_tilemap = tilemap_create(trojan_get_bg1_tile_info,tilemap_scan_cols,    TILEMAP_SPLIT,     16,16,32,32);
 		bg2_tilemap = tilemap_create(get_bg2_tile_info,       get_bg2_memory_offset,TILEMAP_OPAQUE,    16,16,32,16);
@@ -125,8 +123,7 @@ public class lwings
 		return 1; /* error */
 	} };
 	
-	public static VideoStartHandlerPtr video_start_avengers  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avengers  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_trojan();
 		bAvengersHardware = 1;
 		return result;
@@ -138,42 +135,36 @@ public class lwings
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr lwings_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lwings_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lwings_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr lwings_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lwings_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lwings_bg1videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg1_tilemap,offset & 0x3ff);
 	} };
 	
 	
-	public static WriteHandlerPtr lwings_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lwings_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrollx(bg1_tilemap,0,scroll[0] | (scroll[1] << 8));
 	} };
 	
-	public static WriteHandlerPtr lwings_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lwings_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrolly(bg1_tilemap,0,scroll[0] | (scroll[1] << 8));
 	} };
 	
-	public static WriteHandlerPtr trojan_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trojan_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg2_tilemap,0,data);
 	} };
 	
-	public static WriteHandlerPtr trojan_bg2_image_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trojan_bg2_image_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bg2_image != data)
 		{
 			bg2_image = data;
@@ -219,7 +210,7 @@ public class lwings
 				flipx = buffered_spriteram[offs + 1] & 0x02;
 				flipy = buffered_spriteram[offs + 1] & 0x04;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -227,7 +218,7 @@ public class lwings
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code,color,
 						flipx,flipy,
 						sx,sy,
@@ -257,7 +248,7 @@ public class lwings
 					   ((buffered_spriteram[offs + 1] & 0x80) << 3);
 				color = (buffered_spriteram[offs + 1] & 0x0e) >> 1;
 	
-				if (bAvengersHardware != 0)
+				if( bAvengersHardware )
 				{
 					flipx = 0;										/* Avengers */
 					flipy = ~buffered_spriteram[offs + 1] & 0x10;
@@ -268,7 +259,7 @@ public class lwings
 					flipy = 1;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -276,7 +267,7 @@ public class lwings
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code,color,
 						flipx,flipy,
 						sx,sy,
@@ -285,15 +276,13 @@ public class lwings
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lwings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lwings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg1_tilemap,0,0);
 		lwings_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_trojan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_trojan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg2_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,bg1_tilemap,TILEMAP_BACK,0);
 		trojan_draw_sprites(bitmap,cliprect);
@@ -301,8 +290,7 @@ public class lwings
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_lwings  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_lwings  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 }

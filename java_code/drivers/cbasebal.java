@@ -14,7 +14,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -30,8 +30,7 @@ public class cbasebal
 	
 	static int rambank;
 	
-	public static WriteHandlerPtr cbasebal_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -47,8 +46,7 @@ public class cbasebal
 	} };
 	
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (rambank == 2)
 			return cbasebal_textram_r(offset);	/* VRAM */
 		else if (rambank == 1)
@@ -63,8 +61,7 @@ public class cbasebal
 		}
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rambank == 2)
 			cbasebal_textram_w(offset,data);
 		else if (rambank == 1)
@@ -76,8 +73,7 @@ public class cbasebal
 			cbasebal_scrollram_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr cbasebal_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0,~data & 0x04);
 		coin_lockout_w(1,~data & 0x08);
 		coin_counter_w(0,data & 0x01);
@@ -102,21 +98,19 @@ public class cbasebal
 	};
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_cbasebal  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_cbasebal  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 		}
 	} };
 	
-	public static ReadHandlerPtr eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bit;
 	
 		bit = EEPROM_read_bit() << 7;
@@ -124,18 +118,15 @@ public class cbasebal
 		return (input_port_2_r.handler(0) & 0x7f) | bit;
 	} };
 	
-	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_set_cs_line(data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_set_clock_line(data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_write_bit(data);
 	} };
 	
@@ -184,7 +175,7 @@ public class cbasebal
 	};
 	
 	
-	static InputPortPtr input_ports_cbasebal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cbasebal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cbasebal )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON3 );
@@ -283,8 +274,7 @@ public class cbasebal
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_cbasebal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cbasebal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* ??? */
@@ -310,9 +300,7 @@ public class cbasebal
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -344,11 +332,10 @@ public class cbasebal
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_cbasebal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cbasebal  = new DriverInitHandlerPtr() { public void handler(){
 		pang_decode();
 	} };
 	
 	
-	public static GameDriver driver_cbasebal	   = new GameDriver("1989"	,"cbasebal"	,"cbasebal.java"	,rom_cbasebal,null	,machine_driver_cbasebal	,input_ports_cbasebal	,init_cbasebal	,ROT0	,	"Capcom", "Capcom Baseball (Japan)" )
+	GAME( 1989, cbasebal, 0, cbasebal, cbasebal, cbasebal, ROT0, "Capcom", "Capcom Baseball (Japan)" )
 }

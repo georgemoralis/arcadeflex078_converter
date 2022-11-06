@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -97,14 +97,12 @@ public class gcpinbal
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_gcpinbal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gcpinbal  = new VideoStartHandlerPtr() { public int handler(){
 		return (gcpinbal_core_vh_start());
 	} };
 	
-	VIDEO_STOP (void)
-	{
-	}
+	public static VideoStopHandlerPtr video_stop_void  = new VideoStopHandlerPtr() { public void handler(){
+	} };
 	
 	
 	/******************************************************************
@@ -234,8 +232,8 @@ public class gcpinbal
 				y = ((spriteram16[offs+2]) &0xff) + (((spriteram16[offs+3]) &0xff) << 8);
 	
 				/* Treat coords as signed */
-				if ((x & 0x8000) != 0)  x -= 0x10000;
-				if ((y & 0x8000) != 0)  y -= 0x10000;
+				if (x & 0x8000)  x -= 0x10000;
+				if (y & 0x8000)  y -= 0x10000;
 	
 				col  =   ((spriteram16[offs+7]) &0x0f) | 0x60;
 				chain =   (spriteram16[offs+4]) &0x07;
@@ -250,7 +248,7 @@ public class gcpinbal
 	
 				for (chain_pos = chain;chain_pos >= 0;chain_pos--)
 				{
-					pdrawgfx(bitmap, Machine.gfx[0],
+					pdrawgfx(bitmap, Machine->gfx[0],
 							code,
 							col,
 							flipx, flipy,
@@ -262,7 +260,7 @@ public class gcpinbal
 	
 					if ((spriteram16[offs+4]) &0x08)	/* Y chain */
 					{
-						if (flipy != 0)	cury -= 16;
+						if (flipy)	cury -= 16;
 						else cury += 16;
 					}
 					else	/* X chain */
@@ -273,7 +271,7 @@ public class gcpinbal
 			}
 		}
 	#if 0
-		if (rotate != 0)
+		if (rotate)
 		{
 			char buf[80];
 			sprintf(buf,"sprite rotate offs %04x ?",rotate);
@@ -289,8 +287,7 @@ public class gcpinbal
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gcpinbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static UINT16 tile_sets = 0;
 		int i;
 		UINT8 layer[3];

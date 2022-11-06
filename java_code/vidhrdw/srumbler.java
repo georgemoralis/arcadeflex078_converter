@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -55,8 +55,7 @@ public class srumbler
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_srumbler  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_srumbler  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,    16,16,64,64);
 	
@@ -79,8 +78,7 @@ public class srumbler
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr srumbler_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srumbler_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (srumbler_foregroundram[offset] != data)
 		{
 			srumbler_foregroundram[offset] = data;
@@ -88,8 +86,7 @@ public class srumbler
 		}
 	} };
 	
-	public static WriteHandlerPtr srumbler_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srumbler_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (srumbler_backgroundram[offset] != data)
 		{
 			srumbler_backgroundram[offset] = data;
@@ -98,8 +95,7 @@ public class srumbler
 	} };
 	
 	
-	public static WriteHandlerPtr srumbler_4009_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srumbler_4009_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 flips screen */
 		flip_screen_set(data & 1);
 	
@@ -111,8 +107,7 @@ public class srumbler
 	} };
 	
 	
-	public static WriteHandlerPtr srumbler_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srumbler_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int scroll[4];
 	
 		scroll[offset] = data;
@@ -159,14 +154,14 @@ public class srumbler
 			sx = buffered_spriteram[offs + 3] + 0x100 * ( attr & 0x01);
 			flipy = attr & 0x02;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					code,
 					colour,
 					flip_screen(),flipy,
@@ -176,16 +171,14 @@ public class srumbler
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_srumbler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_srumbler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_srumbler  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_srumbler  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 }

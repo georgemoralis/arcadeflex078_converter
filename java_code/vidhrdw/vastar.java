@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -77,8 +77,7 @@ public class vastar
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_vastar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vastar  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap  = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg2_tilemap = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -103,32 +102,27 @@ public class vastar
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr vastar_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vastar_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vastar_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr vastar_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vastar_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vastar_bg1videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg1_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr vastar_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vastar_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vastar_bg2videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg2_tilemap,offset & 0x3ff);
 	} };
 	
 	
-	public static ReadHandlerPtr vastar_bg1videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vastar_bg1videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vastar_bg1videoram[offset];
 	} };
 	
-	public static ReadHandlerPtr vastar_bg2videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vastar_bg2videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vastar_bg2videoram[offset];
 	} };
 	
@@ -158,7 +152,7 @@ public class vastar
 			flipx = spriteram_3.read(offs)& 0x02;
 			flipy = spriteram_3.read(offs)& 0x01;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -166,17 +160,17 @@ public class vastar
 	
 			if (spriteram_2.read(offs)& 0x08)	/* double width */
 			{
-				if (flip_screen == 0)
+				if (!flip_screen())
 					sy = 224 - sy;
 	
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code/2,
 						color,
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code/2,
 						color,
 						flipx,flipy,
@@ -185,10 +179,10 @@ public class vastar
 			}
 			else
 			{
-				if (flip_screen == 0)
+				if (!flip_screen())
 					sy = 240 - sy;
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,
 						color,
 						flipx,flipy,
@@ -198,8 +192,7 @@ public class vastar
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vastar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vastar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	

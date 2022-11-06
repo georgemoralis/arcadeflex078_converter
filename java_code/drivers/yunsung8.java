@@ -30,7 +30,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,8 +48,7 @@ public class yunsung8
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_yunsung8  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_yunsung8  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1) + 0x24000;
 	
 		yunsung8_videoram_0 = RAM + 0x0000;	// Ram is banked
@@ -67,8 +66,7 @@ public class yunsung8
 	***************************************************************************/
 	
 	
-	public static WriteHandlerPtr yunsung8_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		int bank			=	data & 7;		// ROM bank
@@ -144,8 +142,7 @@ public class yunsung8
 	
 	static int adpcm;
 	
-	public static WriteHandlerPtr yunsung8_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bank = data & 7;
 	
@@ -159,8 +156,7 @@ public class yunsung8
 		MSM5205_reset_w(0,data & 0x20);
 	} };
 	
-	public static WriteHandlerPtr yunsung8_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Swap the nibbles */
 		adpcm = ((data&0xf)<<4) | ((data >>4)&0xf);
 	} };
@@ -203,7 +199,7 @@ public class yunsung8
 										Magix
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_magix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_magix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( magix )
 	
 		PORT_START(); 	// IN0 - Coins
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN  );
@@ -291,7 +287,7 @@ public class yunsung8
 									Cannon Ball
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_cannball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cannball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cannball )
 	
 		PORT_START(); 	// IN0 - Coins
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN  );
@@ -434,7 +430,7 @@ public class yunsung8
 		adpcm<<=4;
 	
 		toggle ^= 1;
-		if (toggle != 0)
+		if (toggle)
 			cpu_set_nmi_line(1,PULSE_LINE);
 	}
 	
@@ -456,8 +452,7 @@ public class yunsung8
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_yunsung8 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yunsung8 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)			/* Z80B */
@@ -489,9 +484,7 @@ public class yunsung8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, yunsung8_ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, yunsung8_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -586,6 +579,6 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_cannball	   = new GameDriver("1995"	,"cannball"	,"yunsung8.java"	,rom_cannball,null	,machine_driver_yunsung8	,input_ports_cannball	,null	,ROT0	,	"Yun Sung / Soft Vision", "Cannon Ball",  GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_magix	   = new GameDriver("1995"	,"magix"	,"yunsung8.java"	,rom_magix,null	,machine_driver_yunsung8	,input_ports_magix	,null	,ROT0	,	"Yun Sung",               "Magix / Rock", GAME_IMPERFECT_SOUND ) // Title: DSW
+	GAMEX( 1995, cannball, 0, yunsung8, cannball, 0, ROT0, "Yun Sung / Soft Vision", "Cannon Ball",  GAME_IMPERFECT_SOUND )
+	GAMEX( 1995, magix,    0, yunsung8, magix,    0, ROT0, "Yun Sung",               "Magix / Rock", GAME_IMPERFECT_SOUND ) // Title: DSW
 }

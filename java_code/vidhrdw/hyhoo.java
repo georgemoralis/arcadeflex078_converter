@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,8 +42,7 @@ public class hyhoo
 	
 	
 	******************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_hyhoo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_hyhoo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 655 RGB lookup */
@@ -63,8 +62,7 @@ public class hyhoo
 		}
 	} };
 	
-	public static WriteHandlerPtr hyhoo_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyhoo_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hyhoo_palette[offset & 0x0f] = (data ^ 0xff);
 	} };
 	
@@ -133,7 +131,7 @@ public class hyhoo
 	{
 		hyhoo_drawy = (data ^ 0xff);
 	
-		if (hyhoo_flipscreen != 0) hyhoo_scrolly = -2;
+		if (hyhoo_flipscreen) hyhoo_scrolly = -2;
 		else hyhoo_scrolly = 0;
 	}
 	
@@ -159,19 +157,19 @@ public class hyhoo
 		int x, y;
 		unsigned short color1, color2;
 	
-		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
+		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine.drv.screen_width; x++)
+			for (x = 0; x < Machine->drv->screen_width; x++)
 			{
-				color1 = hyhoo_videoram[(y * Machine.drv.screen_width) + x];
-				color2 = hyhoo_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)];
-				hyhoo_videoram[(y * Machine.drv.screen_width) + x] = color2;
-				hyhoo_videoram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)] = color1;
+				color1 = hyhoo_videoram[(y * Machine->drv->screen_width) + x];
+				color2 = hyhoo_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)];
+				hyhoo_videoram[(y * Machine->drv->screen_width) + x] = color2;
+				hyhoo_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)] = color1;
 	
-				color1 = hyhoo_videoworkram[(y * Machine.drv.screen_width) + x];
-				color2 = hyhoo_videoworkram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)];
-				hyhoo_videoworkram[(y * Machine.drv.screen_width) + x] = color2;
-				hyhoo_videoworkram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)] = color1;
+				color1 = hyhoo_videoworkram[(y * Machine->drv->screen_width) + x];
+				color2 = hyhoo_videoworkram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)];
+				hyhoo_videoworkram[(y * Machine->drv->screen_width) + x] = color2;
+				hyhoo_videoworkram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)] = color1;
 			}
 		}
 	}
@@ -194,7 +192,7 @@ public class hyhoo
 	
 		hyhoo_gfxrom |= ((nb1413m3_sndrombank1 & 0x02) << 3);
 	
-		if (hyhoo_flipx != 0)
+		if (hyhoo_flipx)
 		{
 			hyhoo_drawx -= (hyhoo_sizex << 1);
 			startx = hyhoo_sizex;
@@ -209,7 +207,7 @@ public class hyhoo
 			skipx = 1;
 		}
 	
-		if (hyhoo_flipy != 0)
+		if (hyhoo_flipy)
 		{
 			hyhoo_drawy -= ((hyhoo_sizey << 1) + 1);
 			starty = hyhoo_sizey;
@@ -240,7 +238,7 @@ public class hyhoo
 	
 				color = GFX[gfxaddr++];
 	
-				if (hyhoo_flipscreen != 0)
+				if (hyhoo_flipscreen)
 				{
 					dx1 = (((((hyhoo_drawx + x) * 2) + 0) ^ 0x1ff) & 0x1ff);
 					dx2 = (((((hyhoo_drawx + x) * 2) + 1) ^ 0x1ff) & 0x1ff);
@@ -253,11 +251,11 @@ public class hyhoo
 					dy = ((hyhoo_drawy + y) & 0xff);
 				}
 	
-				if ((hyhoo_gfxflag2 & 0x04) != 0)
+				if (hyhoo_gfxflag2 & 0x04)
 				{
 					// 65536 colors mode
 	
-					if ((hyhoo_gfxflag2 & 0x20) != 0)
+					if (hyhoo_gfxflag2 & 0x20)
 					{
 						// 65536 colors (lower)
 	
@@ -268,8 +266,8 @@ public class hyhoo
 						b = (((color & 0xe0) >> 5) & 0x07);
 						drawcolor1 = drawcolor2 = ((b << (11 + 0)) | (g << (6 + 0)) | (r << (0 + 0)));
 	
-						drawcolor1 |= hyhoo_videoworkram[(dy * Machine.drv.screen_width) + dx1];
-						drawcolor2 |= hyhoo_videoworkram[(dy * Machine.drv.screen_width) + dx2];
+						drawcolor1 |= hyhoo_videoworkram[(dy * Machine->drv->screen_width) + dx1];
+						drawcolor2 |= hyhoo_videoworkram[(dy * Machine->drv->screen_width) + dx2];
 	
 						tflag1 = (drawcolor1 != 0xffff) ? 1 : 0;
 						tflag2 = (drawcolor2 != 0xffff) ? 1 : 0;
@@ -287,8 +285,8 @@ public class hyhoo
 						b = (((color & 0xc0) >> 6) & 0x03);
 						drawcolor1 = drawcolor2 = ((b << (11 + 3)) | (g << (6 + 2)) | (r << (0 + 3)));
 	
-						hyhoo_videoworkram[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-						hyhoo_videoworkram[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+						hyhoo_videoworkram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+						hyhoo_videoworkram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 	
 						continue;
 					}
@@ -297,7 +295,7 @@ public class hyhoo
 				{
 					// Palettized picture mode
 	
-					if (hyhoo_flipx != 0)
+					if (hyhoo_flipx)
 					{
 						// flip
 						color1 = (color & 0xf0) >> 4;
@@ -334,15 +332,15 @@ public class hyhoo
 	
 				nb1413m3_busyctr++;
 	
-				if (tflag1 != 0)
+				if (tflag1)
 				{
-					hyhoo_videoram[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-					plot_pixel(hyhoo_tmpbitmap, dx1, dy, Machine.pens[drawcolor1]);
+					hyhoo_videoram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+					plot_pixel(hyhoo_tmpbitmap, dx1, dy, Machine->pens[drawcolor1]);
 				}
-				if (tflag2 != 0)
+				if (tflag2)
 				{
-					hyhoo_videoram[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
-					plot_pixel(hyhoo_tmpbitmap, dx2, dy, Machine.pens[drawcolor2]);
+					hyhoo_videoram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+					plot_pixel(hyhoo_tmpbitmap, dx2, dy, Machine->pens[drawcolor2]);
 				}
 	
 				nb1413m3_busyctr++;
@@ -356,8 +354,7 @@ public class hyhoo
 	
 	
 	******************************************************************************/
-	public static VideoStartHandlerPtr video_start_hyhoo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hyhoo  = new VideoStartHandlerPtr() { public int handler(){
 		if ((hyhoo_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((hyhoo_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
 		if ((hyhoo_videoworkram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
@@ -370,8 +367,7 @@ public class hyhoo
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_hyhoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hyhoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		unsigned short color;
 	
@@ -383,12 +379,12 @@ public class hyhoo
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = hyhoo_videoram[(y * Machine.drv.screen_width) + x];
-					plot_pixel.handler(hyhoo_tmpbitmap, x, y, Machine.pens[color]);
+					plot_pixel(hyhoo_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
 	
-		if (hyhoo_dispflag != 0)
+		if (hyhoo_dispflag)
 		{
 			copyscrollbitmap(bitmap, hyhoo_tmpbitmap, 0, 0, 1, &hyhoo_scrolly, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}

@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -30,26 +30,23 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exerion_port01_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exerion_port01_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* the cocktail flip bit muxes between ports 0 and 1 */
 		return exerion_cocktail_flip ? input_port_1_r.handler(offset) : input_port_0_r.handler(offset);
 	} };
 	
 	
-	public static ReadHandlerPtr exerion_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exerion_port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit 0 is VBLANK, which we simulate manually */
 		int result = input_port_3_r.handler(offset);
 		int ybeam = cpu_getscanline();
-		if (ybeam > Machine.visible_area.max_y)
+		if (ybeam > Machine->visible_area.max_y)
 			result |= 1;
 		return result;
 	} };
 	
 	
-	public static InterruptHandlerPtr exerion_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr exerion_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Exerion triggers NMIs on coin insertion */
 		if (readinputport(4) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -68,15 +65,13 @@ public class exerion
 	static UINT8 porta;
 	static UINT8 portb;
 	
-	public static ReadHandlerPtr exerion_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exerion_porta_r  = new ReadHandlerPtr() { public int handler(int offset){
 		porta ^= 0x40;
 		return porta;
 	} };
 	
 	
-	public static WriteHandlerPtr exerion_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exerion_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* pull the expected value from the ROM */
 		porta = memory_region(REGION_CPU1)[0x5f76];
 		portb = data;
@@ -85,8 +80,7 @@ public class exerion
 	} };
 	
 	
-	public static ReadHandlerPtr exerion_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exerion_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		if (activecpu_get_pc() == 0x4143)
@@ -167,7 +161,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_exerion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exerion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exerion )
 		PORT_START();       /* player 1 inputs (muxed on 0xa000) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -321,8 +315,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_exerion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exerion )
 	
 		MDRV_CPU_ADD(Z80, 10000000/3)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -347,9 +340,7 @@ public class exerion
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -456,14 +447,13 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_exerion  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_exerion  = new DriverInitHandlerPtr() { public void handler(){
 		UINT32 oldaddr, newaddr, length;
 		UINT8 *src, *dst, *temp;
 	
 		/* allocate some temporary space */
 		temp = malloc(0x10000);
-		if (temp == 0)
+		if (!temp)
 			return;
 	
 		/* make a temporary copy of the character data */
@@ -507,8 +497,7 @@ public class exerion
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_exerionb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_exerionb  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *ram = memory_region(REGION_CPU1);
 		int addr;
 	
@@ -528,7 +517,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_exerion	   = new GameDriver("1983"	,"exerion"	,"exerion.java"	,rom_exerion,null	,machine_driver_exerion	,input_ports_exerion	,init_exerion	,ROT90	,	"Jaleco", "Exerion" )
-	public static GameDriver driver_exeriont	   = new GameDriver("1983"	,"exeriont"	,"exerion.java"	,rom_exeriont,driver_exerion	,machine_driver_exerion	,input_ports_exerion	,init_exerion	,ROT90	,	"Jaleco (Taito America license)", "Exerion (Taito)" )
-	public static GameDriver driver_exerionb	   = new GameDriver("1983"	,"exerionb"	,"exerion.java"	,rom_exerionb,driver_exerion	,machine_driver_exerion	,input_ports_exerion	,init_exerionb	,ROT90	,	"Jaleco", "Exerion (bootleg)" )
+	GAME( 1983, exerion,  0,       exerion, exerion, exerion,  ROT90, "Jaleco", "Exerion" )
+	GAME( 1983, exeriont, exerion, exerion, exerion, exerion,  ROT90, "Jaleco (Taito America license)", "Exerion (Taito)" )
+	GAME( 1983, exerionb, exerion, exerion, exerion, exerionb, ROT90, "Jaleco", "Exerion (bootleg)" )
 }

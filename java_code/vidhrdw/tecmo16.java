@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,8 +29,8 @@ public class tecmo16
 	
 	static void fg_get_tile_info(int tile_index)
 	{
-		int tile = tecmo16_videoram.read(tile_index)& 0x1fff;
-		int color = tecmo16_colorram.read(tile_index)& 0x0f;
+		int tile = tecmo16_videoram[tile_index] & 0x1fff;
+		int color = tecmo16_colorram[tile_index] & 0x0f;
 	
 		SET_TILE_INFO(
 				1,
@@ -41,8 +41,8 @@ public class tecmo16
 	
 	static void bg_get_tile_info(int tile_index)
 	{
-		int tile = tecmo16_videoram2.read(tile_index)& 0x1fff;
-		int color = (tecmo16_colorram2.read(tile_index)& 0x0f)+0x10;
+		int tile = tecmo16_videoram2[tile_index] & 0x1fff;
+		int color = (tecmo16_colorram2[tile_index] & 0x0f)+0x10;
 	
 		SET_TILE_INFO(
 				1,
@@ -63,8 +63,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_fstarfrc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fstarfrc  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(fg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		tx_tilemap = tilemap_create(tx_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -81,8 +80,7 @@ public class tecmo16
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ginkun  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ginkun  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(fg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		tx_tilemap = tilemap_create(tx_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -101,33 +99,33 @@ public class tecmo16
 	
 	WRITE16_HANDLER( tecmo16_videoram_w )
 	{
-		int oldword = tecmo16_videoram.read(offset);
-		COMBINE_DATA(&tecmo16_videoram.read(offset));
-		if (oldword != tecmo16_videoram.read(offset))
+		int oldword = tecmo16_videoram[offset];
+		COMBINE_DATA(&tecmo16_videoram[offset]);
+		if (oldword != tecmo16_videoram[offset])
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_colorram_w )
 	{
-		int oldword = tecmo16_colorram.read(offset);
-		COMBINE_DATA(&tecmo16_colorram.read(offset));
-		if (oldword != tecmo16_colorram.read(offset))
+		int oldword = tecmo16_colorram[offset];
+		COMBINE_DATA(&tecmo16_colorram[offset]);
+		if (oldword != tecmo16_colorram[offset])
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_videoram2_w )
 	{
-		int oldword = tecmo16_videoram2.read(offset);
-		COMBINE_DATA(&tecmo16_videoram2.read(offset));
-		if (oldword != tecmo16_videoram2.read(offset))
+		int oldword = tecmo16_videoram2[offset];
+		COMBINE_DATA(&tecmo16_videoram2[offset]);
+		if (oldword != tecmo16_videoram2[offset])
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 	}
 	
 	WRITE16_HANDLER( tecmo16_colorram2_w )
 	{
-		int oldword = tecmo16_colorram2.read(offset);
-		COMBINE_DATA(&tecmo16_colorram2.read(offset));
-		if (oldword != tecmo16_colorram2.read(offset))
+		int oldword = tecmo16_colorram2[offset];
+		COMBINE_DATA(&tecmo16_colorram2[offset]);
+		if (oldword != tecmo16_colorram2[offset])
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 	}
 	
@@ -242,7 +240,7 @@ public class tecmo16
 					{
 						int sx = xpos + 8*(flipx?(sizex-1-x):x);
 						int sy = ypos + 8*(flipy?(sizey-1-y):y);
-						pdrawgfx(bitmap,Machine.gfx[2],
+						pdrawgfx(bitmap,Machine->gfx[2],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -257,8 +255,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_tecmo16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tecmo16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine.pens[0x300],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,1);

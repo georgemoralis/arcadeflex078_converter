@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -27,13 +27,11 @@ public class arkanoid
 	
 	FILE *thelog;
 	
-	public static MachineInitHandlerPtr machine_init_arkanoid  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_arkanoid  = new MachineInitHandlerPtr() { public void handler(){
 		portA_in = portA_out = z80write = m68705write = 0;
 	} };
 	
-	public static ReadHandlerPtr arkanoid_Z80_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr arkanoid_Z80_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* return the last value the 68705 wrote, and mark that we've read it */
 		m68705write = 0;
 		return toz80;
@@ -45,44 +43,38 @@ public class arkanoid
 		fromz80 = param;
 	}
 	
-	public static WriteHandlerPtr arkanoid_Z80_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_Z80_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, test);
 		/* boost the interleave for a few usecs to make sure it is read successfully */
 		cpu_boost_interleave(0, TIME_IN_USEC(10));
 	} };
 	
-	public static ReadHandlerPtr arkanoid_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr arkanoid_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (portA_out & ddrA) | (portA_in & ~ddrA);
 	} };
 	
-	public static WriteHandlerPtr arkanoid_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		portA_out = data;
 	} };
 	
-	public static WriteHandlerPtr arkanoid_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrA = data;
 	} };
 	
 	
-	public static ReadHandlerPtr arkanoid_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr arkanoid_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res=0;
 	
 		/* bit 0 is high on a write strobe; clear it once we've detected it */
-		if (z80write != 0) res |= 0x01;
+		if (z80write) res |= 0x01;
 	
 		/* bit 1 is high if the previous write has been read */
-		if (m68705write == 0) res |= 0x02;
+		if (!m68705write) res |= 0x02;
 	
 		return (portC_out & ddrC) | (res & ~ddrC);
 	} };
 	
-	public static WriteHandlerPtr arkanoid_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((ddrC & 0x04) && (~data & 0x04) && (portC_out & 0x04))
 		{
 			/* return the last value the Z80 wrote */
@@ -99,29 +91,26 @@ public class arkanoid
 		portC_out = data;
 	} };
 	
-	public static WriteHandlerPtr arkanoid_68705_ddrC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_68705_ddrC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrC = data;
 	} };
 	
 	
 	
-	public static ReadHandlerPtr arkanoid_68705_input_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr arkanoid_68705_input_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = input_port_0_r.handler(offset) & 0x3f;
 	
 		/* bit 0x40 comes from the sticky bit */
-		if (z80write == 0) res |= 0x40;
+		if (!z80write) res |= 0x40;
 	
 		/* bit 0x80 comes from a write latch */
-		if (m68705write == 0) res |= 0x80;
+		if (!m68705write) res |= 0x80;
 	
 		return res;
 	} };
 	
-	public static ReadHandlerPtr arkanoid_input_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (arkanoid_paddle_select != 0)
+	public static ReadHandlerPtr arkanoid_input_2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (arkanoid_paddle_select)
 		{
 			return input_port_3_r.handler(offset);
 		}

@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -84,19 +84,17 @@ public class liberatr
 	{
 		int pen;
 	
-		liberatr_videoram.write(data & 0xe0,data & 0xe0);
+		liberatr_videoram[(y<<8) | x] = data & 0xe0;
 	
-		pen = Machine.pens[(data >> 5) + 0x10];
+		pen = Machine->pens[(data >> 5) + 0x10];
 		plot_pixel(tmpbitmap, x, y, pen);
 	}
 	
-	public static WriteHandlerPtr liberatr_bitmap_xy_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberatr_bitmap_xy_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bitmap_common_w(*liberatr_x, *liberatr_y, data);
 	} };
 	
-	public static WriteHandlerPtr liberatr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberatr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x = (offset & 0x3f) << 2;
 		UINT8 y = (offset >> 6);
 	
@@ -109,14 +107,12 @@ public class liberatr
 	} };
 	
 	
-	public static ReadHandlerPtr liberatr_bitmap_xy_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return liberatr_videoram.read(((*liberatr_y)<<8) | (*liberatr_x));
+	public static ReadHandlerPtr liberatr_bitmap_xy_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return liberatr_videoram[((*liberatr_y)<<8) | (*liberatr_x)];
 	} };
 	
 	
-	public static WriteHandlerPtr liberatr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberatr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 r,g,b;
 	
 		/* handle the hardware flip of the bit order from 765 to 576 that
@@ -129,7 +125,7 @@ public class liberatr
 		g = ((~data     ) & 0x07) * 0x24 + 3;  if (g == 3)  g = 0;
 		b = ((~data >> 5) & 0x06) * 0x24 + 3;  if (b == 3)  b = 0;
 	
-		if ((offset & 0x10) != 0)
+		if (offset & 0x10)
 		{
 			/* bitmap colorram values */
 			offset = penmap[offset & 0x07];
@@ -198,7 +194,7 @@ public class liberatr
 					   latitude and longitude scaled from the scaling PROMS
 					*/
 					address = (latitude << 5) + segment;
-					if (planet_select != 0)
+					if (planet_select)
 						planet_data = (planet_rom[0x0000+address] << 8) + planet_rom[0x1000+address];
 					else
 						planet_data = (planet_rom[0x2000+address] << 8) + planet_rom[0x3000+address];
@@ -210,7 +206,7 @@ public class liberatr
 					/* scale the longitude limit (adding the starting longitude) */
 					address = longitude + ( length >> 1 ) + ( length & 1 );		/* shift with rounding */
 					visible_array[segment] = (( address & 0x100 ) ? 1 : 0);
-					if ((address & 0x80) != 0)
+					if (address & 0x80)
 					{
 						longitude_scale_factor = 0xff;
 					}
@@ -232,9 +228,9 @@ public class liberatr
 					if (visible_array[segment]) break;
 	
 				/* transfer from the temporary arrays to the structure */
-				line.max_x = (latitude_scale_factor * 0xc0) >> 8;
-				if (line.max_x & 1)
-					line.max_x += 1; 				/* make it even */
+				line->max_x = (latitude_scale_factor * 0xc0) >> 8;
+				if (line->max_x & 1)
+					line->max_x += 1; 				/* make it even */
 	
 				/*
 				   as part of the quest to reduce memory usage (and to a lesser degree
@@ -253,14 +249,14 @@ public class liberatr
 						if (segment == start_segment)
 							break;
 					}
-					line.color_array[ i ] = color;
-					line.x_array[ i ]     = (x > line.max_x) ? line.max_x : x;
+					line->color_array[ i ] = color;
+					line->x_array[ i ]     = (x > line->max_x) ? line->max_x : x;
 					i++;
 					segment_count++;
-				} while ((i < 32) && (x <= line.max_x));
+				} while ((i < 32) && (x <= line->max_x));
 	
 				total_segment_count += segment_count;
-				line.segment_count = segment_count;
+				line->segment_count = segment_count;
 			}
 	
 			/* now that the all the lines have been processed, and we know how
@@ -270,7 +266,7 @@ public class liberatr
 			if ((buffer = (UINT8 *)auto_malloc(2*(128 + total_segment_count))) == 0)
 				return 1;
 	
-			liberatr_planet_segs[ planet_select ].frame[ longitude ] = buffer;
+			liberatr_planet_segs[ planet_select ]->frame[ longitude ] = buffer;
 	
 			for (latitude = 0; latitude < 0x80; latitude++)
 			{
@@ -278,18 +274,18 @@ public class liberatr
 	
 	
 				line = &frame.line[ latitude ];
-				segment_count = line.segment_count;
+				segment_count = line->segment_count;
 				*buffer++ = segment_count;
 				last_x = 0;
 	
 				/* calculate the bitmap's x coordinate for the western horizon
 				   center of bitmap - (the number of planet pixels) / 4 */
-				*buffer++ = Machine.drv.screen_width/2 - (line.max_x + 2) / 4;
+				*buffer++ = Machine->drv->screen_width/2 - (line->max_x + 2) / 4;
 	
 				for (i = 0; i < segment_count; i++)
 				{
-					UINT8 current_x = (line.x_array[ i ] + 1) / 2;
-					*buffer++ = line.color_array[ i ];
+					UINT8 current_x = (line->x_array[ i ] + 1) / 2;
+					*buffer++ = line->color_array[ i ];
 					*buffer++ = current_x - last_x;
 					last_x = current_x;
 				}
@@ -306,8 +302,7 @@ public class liberatr
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_liberatr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_liberatr  = new VideoStartHandlerPtr() { public int handler(){
 	    liberatr_videoram = 0;
 	    liberatr_planet_segs[0] = 0;
 	    liberatr_planet_segs[1] = 0;
@@ -349,7 +344,7 @@ public class liberatr
 		UINT8 *buffer;
 	
 	
-		buffer = liberatr_planet_segs[ (*liberatr_planet_select >> 4) & 0x01 ].frame[ *liberatr_planet_frame ];
+		buffer = liberatr_planet_segs[ (*liberatr_planet_select >> 4) & 0x01 ]->frame[ *liberatr_planet_frame ];
 	
 		/* for each latitude */
 		for (latitude = 0; latitude < 0x80; latitude++)
@@ -373,14 +368,14 @@ public class liberatr
 				if ((color & 0x0c) == 0x0c)
 					color = base_color;
 	
-				pen = Machine.pens[color];
+				pen = Machine->pens[color];
 	
 				segment_length = *buffer++;
 	
 				for (i = 0; i < segment_length; i++, x++)
 				{
 					/* only plot pixels that don't cover the foreground up */
-					if (!liberatr_videoram.read((y<<8) | x))
+					if (!liberatr_videoram[(y<<8) | x])
 						plot_pixel(bitmap, x, y, pen);
 				}
 			}
@@ -388,9 +383,8 @@ public class liberatr
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_liberatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			UINT8 liberatr_y_save = *liberatr_y;
 			UINT8 liberatr_x_save = *liberatr_x;

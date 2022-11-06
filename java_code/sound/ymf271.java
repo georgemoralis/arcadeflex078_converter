@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -106,38 +106,38 @@ public class ymf271
 	
 		memset(mix, 0, sizeof(mix[0])*length*2);
 	
-		rombase = chip.rom;
+		rombase = chip->rom;
 	
 		for (j = 0; j < 48; j++)
 		{
-			slot = &chip.slots[j];
+			slot = &chip->slots[j];
 			mixp = &mix[0];
 			// PCM
-			if (slot.active && slot.waveform == 7)
+			if (slot->active && slot->waveform == 7)
 			{
 				for (i = 0; i < length; i++)
 				{
-					if (slot.bits == 8)
+					if (slot->bits == 8)
 					{
-						sample = rombase[slot.startaddr + (slot.stepptr>>16)]<<8;
+						sample = rombase[slot->startaddr + (slot->stepptr>>16)]<<8;
 					}
 					else
 					{
-						if (slot.stepptr & 1)
-							sample = rombase[slot.startaddr + (slot.stepptr>>17)*3 + 2]<<8 | ((rombase[slot.startaddr + (slot.stepptr>>17)*3 + 1] << 4) & 0xf0);
+						if (slot->stepptr & 1)
+							sample = rombase[slot->startaddr + (slot->stepptr>>17)*3 + 2]<<8 | ((rombase[slot->startaddr + (slot->stepptr>>17)*3 + 1] << 4) & 0xf0);
 						else
-							sample = rombase[slot.startaddr + (slot.stepptr>>17)*3]<<8 | (rombase[slot.startaddr + (slot.stepptr>>17)*3 + 1] & 0xf0);
+							sample = rombase[slot->startaddr + (slot->stepptr>>17)*3]<<8 | (rombase[slot->startaddr + (slot->stepptr>>17)*3 + 1] & 0xf0);
 					}
 	
-					*mixp++ += (sample * volume[slot.tl])>>16;
-					*mixp++ += (sample * volume[slot.tl])>>16;
+					*mixp++ += (sample * volume[slot->tl])>>16;
+					*mixp++ += (sample * volume[slot->tl])>>16;
 	
-					slot.stepptr += slot.step;
-					if ((slot.stepptr>>16) > slot.endaddr)
+					slot->stepptr += slot->step;
+					if ((slot->stepptr>>16) > slot->endaddr)
 					{
 						// kill non-frac
-						slot.stepptr &= 0xffff;
-						slot.stepptr |= (slot.loopaddr<<16);
+						slot->stepptr &= 0xffff;
+						slot->stepptr |= (slot->loopaddr<<16);
 					}
 				}
 			}
@@ -158,22 +158,22 @@ public class ymf271
 	
 		slotnum = 12*grp;
 		slotnum += fm_tab[adr & 0xf];
-		slot = &chip.slots[slotnum];
+		slot = &chip->slots[slotnum];
 	
 		switch ((adr>>4)&0xf)
 		{
 			case 0:
-				slot.extout = (data>>3)&0xf;
+				slot->extout = (data>>3)&0xf;
 	
-				if ((data & 1) != 0)
+				if (data & 1)
 				{
-					slot.active = 1;
+					slot->active = 1;
 	
 					// key on
-					slot.step = 0;
-					slot.stepptr = 0;
-	//				logerror("start %x end %x loop %x\n", slot.startaddr, slot.endaddr, slot.loopaddr);
-					if (slot.waveform != 7)
+					slot->step = 0;
+					slot->stepptr = 0;
+	//				logerror("start %x end %x loop %x\n", slot->startaddr, slot->endaddr, slot->loopaddr);
+					if (slot->waveform != 7)
 					{
 	//					logerror("UNSUPPORTED FM! on slot %d\n", slotnum);
 					}
@@ -181,25 +181,25 @@ public class ymf271
 					{
 						int step, oct; 
 	
-	//					logerror("oct %d fns %x fs %x srcnote %x srcb %x TL %x\n", slot.block, slot.fns, slot.fs, slot.srcnote, slot.srcb, slot.tl);
+	//					logerror("oct %d fns %x fs %x srcnote %x srcb %x TL %x\n", slot->block, slot->fns, slot->fs, slot->srcnote, slot->srcb, slot->tl);
 	
-						oct = slot.block;
-						if ((oct & 8) != 0)
+						oct = slot->block;
+						if (oct & 8)
 						{
 							oct |= -8;
 						}
 	
-						step = ((slot.fns/2) | 1024) << (oct + 7);
-						slot.step = (UINT32) ((((INT64)step)*(44100/4)) / Machine.sample_rate);
+						step = ((slot->fns/2) | 1024) << (oct + 7);
+						slot->step = (UINT32) ((((INT64)step)*(44100/4)) / Machine->sample_rate);
 	
-	//					logerror("step %x\n", slot.step);
+	//					logerror("step %x\n", slot->step);
 					}
 				}
 				else
 				{
-					if (slot.active)
+					if (slot->active)
 					{
-						slot.active = 0;
+						slot->active = 0;
 					}
 				}
 	
@@ -207,71 +207,71 @@ public class ymf271
 				break;
 	
 			case 1:
-				slot.lfoFreq = data;
+				slot->lfoFreq = data;
 				break;
 	
 			case 2:
-				slot.lfowave = data & 3;
-				slot.pms = (data >> 3) & 0x7;
-				slot.ams = (data >> 6) & 0x7;
+				slot->lfowave = data & 3;
+				slot->pms = (data >> 3) & 0x7;
+				slot->ams = (data >> 6) & 0x7;
 				break;
 	
 			case 3:
-				slot.multiple = data & 0xf;
-				slot.detune = (data >> 4) & 0x7;
+				slot->multiple = data & 0xf;
+				slot->detune = (data >> 4) & 0x7;
 				break;
 	
 			case 4:
-				slot.tl = data & 0x7f;
+				slot->tl = data & 0x7f;
 				break;
 	
 			case 5:
-				slot.ar = data & 0x1f;
-				slot.keyscale = (data>>5)&0x7;
+				slot->ar = data & 0x1f;
+				slot->keyscale = (data>>5)&0x7;
 				break;
 	
 			case 6:
-				slot.decay1rate = data & 0x1f;
+				slot->decay1rate = data & 0x1f;
 				break;
 	
 			case 7:
-				slot.decay2rate = data & 0x1f;
+				slot->decay2rate = data & 0x1f;
 				break;
 	
 			case 8:
-				slot.relrate = data & 0xf;
-				slot.decay1lvl = (data >> 4) & 0xf;
+				slot->relrate = data & 0xf;
+				slot->decay1lvl = (data >> 4) & 0xf;
 				break;
 	
 			case 9:
-				slot.fns &= ~0xff;
-				slot.fns |= data;
+				slot->fns &= ~0xff;
+				slot->fns |= data;
 				break;
 	
 			case 10:
-				slot.fns &= ~0xff0000;
-				slot.fns |= (data & 0xf)<<8;
-				slot.block = (data>>4)&0xf;
+				slot->fns &= ~0xff0000;
+				slot->fns |= (data & 0xf)<<8;
+				slot->block = (data>>4)&0xf;
 				break;
 	
 			case 11:
-				slot.waveform = data & 0x7;
-				slot.feedback = (data >> 4) & 0x7;
-				slot.accon = (data & 0x80) ? 1 : 0;
+				slot->waveform = data & 0x7;
+				slot->feedback = (data >> 4) & 0x7;
+				slot->accon = (data & 0x80) ? 1 : 0;
 				break;
 	
 			case 12:
-				slot.algorithm = data & 0xf;
+				slot->algorithm = data & 0xf;
 				break;
 	
 			case 13:
-				slot.ch0lvl = data>>4;
-				slot.ch1lvl = data & 0xf;
+				slot->ch0lvl = data>>4;
+				slot->ch1lvl = data & 0xf;
 				break;
 	
 			case 14:
-				slot.ch2lvl = data>>4;
-				slot.ch3lvl = data & 0xf;
+				slot->ch2lvl = data>>4;
+				slot->ch3lvl = data & 0xf;
 				break;
 	
 		}
@@ -282,52 +282,52 @@ public class ymf271
 		int slotnum;
 		YMF271Slot *slot;
 	
-		slotnum = pcm_tab[chip.pcmreg&0xf];
-		slot = &chip.slots[slotnum];
+		slotnum = pcm_tab[chip->pcmreg&0xf];
+		slot = &chip->slots[slotnum];
 	
-		switch ((chip.pcmreg>>4)&0xf)
+		switch ((chip->pcmreg>>4)&0xf)
 		{
 			case 0:
-				slot.startaddr &= ~0xff;
-				slot.startaddr |= data;
+				slot->startaddr &= ~0xff;
+				slot->startaddr |= data;
 				break;
 			case 1:
-				slot.startaddr &= ~0xff00;
-				slot.startaddr |= data<<8;
+				slot->startaddr &= ~0xff00;
+				slot->startaddr |= data<<8;
 				break;
 			case 2:
-				slot.startaddr &= ~0xff0000;
-				slot.startaddr |= data<<16;
+				slot->startaddr &= ~0xff0000;
+				slot->startaddr |= data<<16;
 				break;
 			case 3:
-				slot.endaddr &= ~0xff;
-				slot.endaddr |= data;
+				slot->endaddr &= ~0xff;
+				slot->endaddr |= data;
 				break;
 			case 4:
-				slot.endaddr &= ~0xff00;
-				slot.endaddr |= data<<8;
+				slot->endaddr &= ~0xff00;
+				slot->endaddr |= data<<8;
 				break;
 			case 5:
-				slot.endaddr &= ~0xff0000;
-				slot.endaddr |= data<<16;
+				slot->endaddr &= ~0xff0000;
+				slot->endaddr |= data<<16;
 				break;
 			case 6:
-				slot.loopaddr &= ~0xff;
-				slot.loopaddr |= data;
+				slot->loopaddr &= ~0xff;
+				slot->loopaddr |= data;
 				break;
 			case 7:
-				slot.loopaddr &= ~0xff00;
-				slot.loopaddr |= data<<8;
+				slot->loopaddr &= ~0xff00;
+				slot->loopaddr |= data<<8;
 				break;
 			case 8:
-				slot.loopaddr &= ~0xff0000;
-				slot.loopaddr |= data<<16;
+				slot->loopaddr &= ~0xff0000;
+				slot->loopaddr |= data<<16;
 				break;
 			case 9:
-				slot.fs = data & 0x3;
-				slot.bits = (data & 0x4) ? 12 : 8;
-				slot.srcnote = (data >> 3) & 0x3;
-				slot.srcb = (data >> 5) & 0x7;
+				slot->fs = data & 0x3;
+				slot->bits = (data & 0x4) ? 12 : 8;
+				slot->srcnote = (data >> 3) & 0x3;
+				slot->srcb = (data >> 5) & 0x7;
 				break;
 		}
 	}
@@ -338,12 +338,12 @@ public class ymf271
 		
 		chip = &YMF271[num];	
 	
-		chip.status |= 1;
+		chip->status |= 1;
 	
-		if (chip.enable & 4)
+		if (chip->enable & 4)
 		{
-			chip.irqstate |= 1;
-			if (chip.irq_callback) chip.irq_callback(1);
+			chip->irqstate |= 1;
+			if (chip->irq_callback) chip->irq_callback(1);
 		}
 	}
 	
@@ -353,12 +353,12 @@ public class ymf271
 		
 		chip = &YMF271[num];	
 	
-		chip.status |= 2;
+		chip->status |= 2;
 	
-		if (chip.enable & 8)
+		if (chip->enable & 8)
 		{
-			chip.irqstate |= 2;
-			if (chip.irq_callback) chip.irq_callback(1);
+			chip->irqstate |= 2;
+			if (chip->irq_callback) chip->irq_callback(1);
 		}
 	}
 	
@@ -371,72 +371,72 @@ public class ymf271
 	
 		chip = &YMF271[chipnum];
 	
-		slotnum = fm_tab[chip.timerreg & 0xf];
-		group = &chip.groups[slotnum];
+		slotnum = fm_tab[chip->timerreg & 0xf];
+		group = &chip->groups[slotnum];
 	
-		if ((chip.timerreg & 0xf0) == 0)
+		if ((chip->timerreg & 0xf0) == 0)
 		{
-			group.sync = data & 0x3;
-			group.pfm = data >> 7;
+			group->sync = data & 0x3;
+			group->pfm = data >> 7;
 		}
 		else
 		{
-			switch (chip.timerreg)
+			switch (chip->timerreg)
 			{
 				case 0x10:
-					chip.timerA &= ~0xff;
-					chip.timerA |= data;
+					chip->timerA &= ~0xff;
+					chip->timerA |= data;
 					break;
 	
 				case 0x11:
-					chip.timerA &= ~0x300;
-					chip.timerA |= (data & 0x3)<<8;
+					chip->timerA &= ~0x300;
+					chip->timerA |= (data & 0x3)<<8;
 					break;
 	
 				case 0x12:
-					chip.timerB = data;
+					chip->timerB = data;
 					break;
 	
 				case 0x13:
-					if ((data & 1) != 0)
+					if (data & 1)
 					{	// timer A load
-						chip.timerAVal = chip.timerA;
+						chip->timerAVal = chip->timerA;
 					}
-					if ((data & 2) != 0)
+					if (data & 2)
 					{	// timer B load
-						chip.timerBVal = chip.timerB;
+						chip->timerBVal = chip->timerB;
 					}
-					if ((data & 4) != 0)
+					if (data & 4)
 					{
 						// timer A IRQ enable
-						chip.enable |= 4;
+						chip->enable |= 4;
 					}
-					if ((data & 8) != 0)
+					if (data & 8)
 					{
 						// timer B IRQ enable
-						chip.enable |= 8;
+						chip->enable |= 8;
 					}
-					if ((data & 0x10) != 0)
+					if (data & 0x10)
 					{	// timer A reset
-						chip.irqstate &= ~1;
-						chip.status &= ~1;
+						chip->irqstate &= ~1;
+						chip->status &= ~1;
 	
-						if (chip.irq_callback) chip.irq_callback(0);
+						if (chip->irq_callback) chip->irq_callback(0);
 	
-						period = 384.0 * (1024.0 - (double)chip.timerAVal) / (double)CLOCK;
+						period = 384.0 * (1024.0 - (double)chip->timerAVal) / (double)CLOCK;
 	
-						timer_adjust(chip.timA, TIME_IN_SEC(period), chipnum, TIME_IN_SEC(period));
+						timer_adjust(chip->timA, TIME_IN_SEC(period), chipnum, TIME_IN_SEC(period));
 					}
-					if ((data & 0x20) != 0)
+					if (data & 0x20)
 					{	// timer B reset
-						chip.irqstate &= ~2;
-						chip.status &= ~2;
+						chip->irqstate &= ~2;
+						chip->status &= ~2;
 	
-						if (chip.irq_callback) chip.irq_callback(0);
+						if (chip->irq_callback) chip->irq_callback(0);
 	
-						period = 6144.0 * (256.0 - (double)chip.timerBVal) / (double)CLOCK;
+						period = 6144.0 * (256.0 - (double)chip->timerBVal) / (double)CLOCK;
 	
-						timer_adjust(chip.timB, TIME_IN_SEC(period), chipnum, TIME_IN_SEC(period));
+						timer_adjust(chip->timB, TIME_IN_SEC(period), chipnum, TIME_IN_SEC(period));
 					}
 	
 					break;
@@ -451,37 +451,37 @@ public class ymf271
 		switch (offset)
 		{
 			case 0:
-				chip.reg0 = data;
+				chip->reg0 = data;
 				break;
 			case 1:
-				ymf271_write_fm(chip, 0, chip.reg0, data);
+				ymf271_write_fm(chip, 0, chip->reg0, data);
 				break;
 			case 2:
-				chip.reg1 = data;
+				chip->reg1 = data;
 				break;
 			case 3:
-				ymf271_write_fm(chip, 1, chip.reg1, data);
+				ymf271_write_fm(chip, 1, chip->reg1, data);
 				break;
 			case 4:
-				chip.reg2 = data;
+				chip->reg2 = data;
 				break;
 			case 5:
-				ymf271_write_fm(chip, 2, chip.reg2, data);
+				ymf271_write_fm(chip, 2, chip->reg2, data);
 				break;
 			case 6:
-				chip.reg3 = data;
+				chip->reg3 = data;
 				break;
 			case 7:
-				ymf271_write_fm(chip, 3, chip.reg3, data);
+				ymf271_write_fm(chip, 3, chip->reg3, data);
 				break;
 			case 8:
-				chip.pcmreg = data;
+				chip->pcmreg = data;
 				break;
 			case 9:
 				ymf271_write_pcm(chip, data); 
 				break;
 			case 0xc:
-				chip.timerreg = data;
+				chip->timerreg = data;
 				break;
 			case 0xd:
 				ymf271_write_timer(chipnum, data);
@@ -493,9 +493,9 @@ public class ymf271
 	{
 		YMF271Chip *chip = &YMF271[chipnum];
 	
-		if (offset == 0)
+		if (!offset)
 		{
-			return chip.status;
+			return chip->status;
 		}
 	
 		return 0;
@@ -520,18 +520,18 @@ public class ymf271
 		struct YMF271interface *intf;
 		int i;
 	
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
-		for(i=0; i<intf.num; i++)
+		for(i=0; i<intf->num; i++)
 		{
 			sprintf(buf[0], "YMF271 %d L", i);
 			sprintf(buf[1], "YMF271 %d R", i);
 			name[0] = buf[0];
 			name[1] = buf[1];
-			vol[0]=intf.mixing_level[i] >> 16;
-			vol[1]=intf.mixing_level[i] & 0xffff;
-			ymf271_init(i, memory_region(intf.region[0]), intf.irq_callback[i]);
-			stream_init_multi(2, name, vol, Machine.sample_rate, i, ymf271_pcm_update);
+			vol[0]=intf->mixing_level[i] >> 16;
+			vol[1]=intf->mixing_level[i] & 0xffff;
+			ymf271_init(i, memory_region(intf->region[0]), intf->irq_callback[i]);
+			stream_init_multi(2, name, vol, Machine->sample_rate, i, ymf271_pcm_update);
 		}
 	
 		// Volume table, 1 = -0.375dB, 8 = -3dB, 256 = -96dB
@@ -547,23 +547,19 @@ public class ymf271
 	{
 	}
 	
-	public static ReadHandlerPtr YMF271_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YMF271_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ymf271_r(0, offset);
 	} };
 	
-	public static WriteHandlerPtr YMF271_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YMF271_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ymf271_w(0, offset, data);
 	} };
 	
-	public static ReadHandlerPtr YMF271_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YMF271_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ymf271_r(1, offset);
 	} };
 	
-	public static WriteHandlerPtr YMF271_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YMF271_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ymf271_w(1, offset, data);
 	} };
 	

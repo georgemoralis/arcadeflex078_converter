@@ -17,7 +17,7 @@ ernesto@imagina.com
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,35 +34,32 @@ public class jailbrek
 	static int irq_enable,nmi_enable;
 	
 	
-	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enable = data & 0x01;
 		irq_enable = data & 0x02;
 		flip_screen_set(data & 0x08);
 	} };
 	
-	public static InterruptHandlerPtr jb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (irq_enable != 0)
+	public static InterruptHandlerPtr jb_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr jb_interrupt_nmi = new InterruptHandlerPtr() {public void handler()
-	{
-		if (nmi_enable != 0)
+	public static InterruptHandlerPtr jb_interrupt_nmi = new InterruptHandlerPtr() {public void handler(){
+		if (nmi_enable)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	
-	public static ReadHandlerPtr jailbrek_speech_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr jailbrek_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return ( VLM5030_BSY() ? 1 : 0 );
-	} };
+	}
 	
-	public static WriteHandlerPtr jailbrek_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr jailbrek_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/* bit 0 could be latch direction like in yiear */
 		VLM5030_ST( ( data >> 1 ) & 1 );
 		VLM5030_RST( ( data >> 2 ) & 1 );
-	} };
+	}
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -109,7 +106,7 @@ public class jailbrek
 	
 	
 	
-	static InputPortPtr input_ports_jailbrek = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jailbrek = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jailbrek )
 		PORT_START(); 	/* IN0 - $3300 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -253,8 +250,7 @@ public class jailbrek
 		0           /* memory size of speech rom */
 	};
 	
-	public static MachineHandlerPtr machine_driver_jailbrek = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jailbrek )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 3000000)        /* 3 MHz ??? */
@@ -280,9 +276,7 @@ public class jailbrek
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -342,12 +336,11 @@ public class jailbrek
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_jailbrek  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jailbrek  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_jailbrek	   = new GameDriver("1986"	,"jailbrek"	,"jailbrek.java"	,rom_jailbrek,null	,machine_driver_jailbrek	,input_ports_jailbrek	,init_jailbrek	,ROT0	,	"Konami", "Jail Break" )
-	public static GameDriver driver_manhatan	   = new GameDriver("1986"	,"manhatan"	,"jailbrek.java"	,rom_manhatan,driver_jailbrek	,machine_driver_jailbrek	,input_ports_jailbrek	,init_jailbrek	,ROT0	,	"Konami", "Manhattan 24 Bunsyo (Japan)" )
+	GAME( 1986, jailbrek, 0,        jailbrek, jailbrek, jailbrek, ROT0, "Konami", "Jail Break" )
+	GAME( 1986, manhatan, jailbrek, jailbrek, jailbrek, jailbrek, ROT0, "Konami", "Manhattan 24 Bunsyo (Japan)" )
 }

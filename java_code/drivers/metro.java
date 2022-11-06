@@ -78,7 +78,7 @@ Compared to the real PCB, MAME is too fast, so 60fps needs to be changed to 58fp
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -174,8 +174,7 @@ public class metro
 		return metro_irq_vectors[int_level]&0xff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_metro  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_metro  = new MachineInitHandlerPtr() { public void handler(){
 		if (irq_line == -1)
 			cpu_set_irq_callback(0, metro_irq_callback);
 	} };
@@ -185,25 +184,24 @@ public class metro
 	{
 	//if (data & ~0x15)	logerror("CPU #0 PC %06X : unknown bits of irqcause written: %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= ~*metro_irq_enable;
-			if ((data & 0x01) != 0)	requested_int[0] = 0;
-			if ((data & 0x02) != 0)	requested_int[1] = 0;	// DAITORIDE, BALCUBE, KARATOUR, MOUJA
-			if ((data & 0x04) != 0)	requested_int[2] = 0;
-			if ((data & 0x08) != 0)	requested_int[3] = 0;	// KARATOUR
-			if ((data & 0x10) != 0)	requested_int[4] = 0;
-			if ((data & 0x20) != 0)	requested_int[5] = 0;	// KARATOUR, BLZNTRND
-			if ((data & 0x40) != 0)	requested_int[6] = 0;
-			if ((data & 0x80) != 0)	requested_int[7] = 0;
+			if (data & 0x01)	requested_int[0] = 0;
+			if (data & 0x02)	requested_int[1] = 0;	// DAITORIDE, BALCUBE, KARATOUR, MOUJA
+			if (data & 0x04)	requested_int[2] = 0;
+			if (data & 0x08)	requested_int[3] = 0;	// KARATOUR
+			if (data & 0x10)	requested_int[4] = 0;
+			if (data & 0x20)	requested_int[5] = 0;	// KARATOUR, BLZNTRND
+			if (data & 0x40)	requested_int[6] = 0;
+			if (data & 0x80)	requested_int[7] = 0;
 		}
 	
 		update_irq_state();
 	}
 	
 	
-	public static InterruptHandlerPtr metro_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr metro_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -219,8 +217,7 @@ public class metro
 	} };
 	
 	/* Lev 1. Lev 2 seems sound related */
-	public static InterruptHandlerPtr bangball_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bangball_interrupt = new InterruptHandlerPtr() {public void handler(){
 		requested_int[0] = 1;	// set scroll regs if a flag is set
 		requested_int[4] = 1;	// clear that flag
 		update_irq_state();
@@ -233,8 +230,7 @@ public class metro
 	}
 	
 	/* lev 2-7 (lev 1 seems sound related) */
-	public static InterruptHandlerPtr karatour_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr karatour_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -251,8 +247,7 @@ public class metro
 		}
 	} };
 	
-	public static InterruptHandlerPtr mouja_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mouja_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -267,8 +262,7 @@ public class metro
 		}
 	} };
 	
-	public static InterruptHandlerPtr gakusai_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gakusai_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -278,8 +272,7 @@ public class metro
 		}
 	} };
 	
-	public static InterruptHandlerPtr dokyusei_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr dokyusei_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -328,7 +321,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundlatch_w )
 	{
-		if ( ACCESSING_LSB && (Machine.sample_rate != 0) )
+		if ( ACCESSING_LSB && (Machine->sample_rate != 0) )
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_nmi_line( 1, PULSE_LINE );
@@ -340,7 +333,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundstatus_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			metro_soundstatus = (~data) & 1;
 		}
@@ -359,8 +352,7 @@ public class metro
 		return readinputport(0) | (metro_soundstatus ? 0x80 : 0);
 	}
 	
-	public static WriteHandlerPtr daitorid_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr daitorid_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU2);
 		int bank = (data >> 4) & 0x07;
 	
@@ -374,18 +366,15 @@ public class metro
 	
 	static int porta,portb;
 	
-	public static ReadHandlerPtr daitorid_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr daitorid_porta_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return porta;
 	} };
 	
-	public static WriteHandlerPtr daitorid_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr daitorid_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		porta = data;
 	} };
 	
-	public static WriteHandlerPtr daitorid_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr daitorid_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* port B layout:
 		   7 !clock latch for message to main CPU
 		   6 !clock YM2151 I/O
@@ -400,14 +389,14 @@ public class metro
 	if (!BIT(data,0) || !BIT(data,5))
 		logerror("%04x: daitorid_port_b_w %02x\n",activecpu_get_pc(),data);
 	
-		if (BIT(portb,7) && !BIT(data,7))	/* clock 1.0 */
+		if (BIT(portb,7) && !BIT(data,7))	/* clock 1->0 */
 		{
 	//		metro_soundstatus = porta;
 			metro_soundstatus = 0;	// ???
 	logerror("%04x: to_cpu = %02x\n",activecpu_get_pc(),porta);
 		}
 	
-		if (BIT(portb,6) && !BIT(data,6))	/* clock 1.0 */
+		if (BIT(portb,6) && !BIT(data,6))	/* clock 1->0 */
 		{
 			if (!BIT(data,2))
 			{
@@ -431,7 +420,7 @@ public class metro
 			}
 		}
 	
-		if (BIT(portb,4) && !BIT(data,4))	/* clock 1.0 */
+		if (BIT(portb,4) && !BIT(data,4))	/* clock 1->0 */
 		{
 			if (!BIT(data,2))
 			{
@@ -499,7 +488,7 @@ public class metro
 	#else
 	WRITE16_HANDLER( metro_soundlatch_w )
 	{
-		if ( ACCESSING_LSB && (Machine.sample_rate != 0) )
+		if ( ACCESSING_LSB && (Machine->sample_rate != 0) )
 		{
 	//		soundlatch_w(0,data & 0xff);
 		}
@@ -509,7 +498,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_soundstatus_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			metro_soundstatus = (~data) & 1;
 		}
@@ -539,7 +528,7 @@ public class metro
 	
 	static WRITE16_HANDLER( ymf278b_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			switch(offset)
 			{
 				case 0:
@@ -613,7 +602,7 @@ public class metro
 	
 	WRITE16_HANDLER( metro_coin_lockout_1word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 	//		coin_lockout_w(0, data & 1);
 	//		coin_lockout_w(1, data & 2);
@@ -1283,7 +1272,7 @@ public class metro
 	
 	static WRITE16_HANDLER( gakusai_oki_bank_hi_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			gakusai_oki_bank_hi = data & 0xff;
 			gakusai_oki_bank_set();
@@ -1292,7 +1281,7 @@ public class metro
 	
 	static WRITE16_HANDLER( gakusai_oki_bank_lo_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			gakusai_oki_bank_lo = data & 0xff;
 			gakusai_oki_bank_set();
@@ -1305,11 +1294,11 @@ public class metro
 	{
 		data16_t input_sel = (*gakusai_input_sel) ^ 0x3e;
 		// Bit 0 ??
-		if ((input_sel & 0x0002) != 0)	return readinputport(0);
-		if ((input_sel & 0x0004) != 0)	return readinputport(1);
-		if ((input_sel & 0x0008) != 0)	return readinputport(2);
-		if ((input_sel & 0x0010) != 0)	return readinputport(3);
-		if ((input_sel & 0x0020) != 0)	return readinputport(4);
+		if (input_sel & 0x0002)	return readinputport(0);
+		if (input_sel & 0x0004)	return readinputport(1);
+		if (input_sel & 0x0008)	return readinputport(2);
+		if (input_sel & 0x0010)	return readinputport(3);
+		if (input_sel & 0x0020)	return readinputport(4);
 		return 0xffff;
 	}
 	
@@ -1320,7 +1309,7 @@ public class metro
 	
 	WRITE16_HANDLER( gakusai_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x01);
@@ -1452,7 +1441,7 @@ public class metro
 	
 	WRITE16_HANDLER( dokyusp_eeprom_bit_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x01);
@@ -1465,7 +1454,7 @@ public class metro
 	
 	WRITE16_HANDLER( dokyusp_eeprom_reset_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// reset line asserted: reset.
 			EEPROM_set_cs_line((data & 0x01) ? CLEAR_LINE : ASSERT_LINE);
@@ -1822,8 +1811,7 @@ public class metro
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	}
 	
-	public static WriteHandlerPtr blzntrnd_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blzntrnd_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bankaddress;
 	
@@ -2058,7 +2046,7 @@ public class metro
 										Bal Cube
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_balcube = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_balcube = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( balcube )
 		PORT_START(); 	// IN0 - $500000
 		COINS
 	
@@ -2102,7 +2090,7 @@ public class metro
 									Bang Bang Ball
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bangball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bangball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bangball )
 		PORT_START(); 	// IN0 - $d00000
 		COINS
 	
@@ -2145,7 +2133,7 @@ public class metro
 								Blazing Tornado
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blzntrnd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blzntrnd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blzntrnd )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0004, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0007, "Beginner" );
@@ -2262,7 +2250,7 @@ public class metro
 								Grand Striker 2
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gstrik2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gstrik2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gstrik2 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0003, 0x0003, "Player Vs Com" );
 		PORT_DIPSETTING(      0x0003, "1:00" );
@@ -2407,7 +2395,7 @@ public class metro
 	     On  On    Continue, Retry level
 	
 	*/
-	static InputPortPtr input_ports_daitorid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_daitorid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( daitorid )
 		PORT_START(); 	// IN0 - $c00000
 		COINS
 	
@@ -2458,7 +2446,7 @@ public class metro
 	
 	   Even if there are 4 "tables" the 2 first ones and the 2 last ones
 	   contains the same values for the timer. */
-	static InputPortPtr input_ports_dharma = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dharma = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dharma )
 		PORT_START(); 	// IN0 - $c00000
 		COINS
 	
@@ -2501,7 +2489,7 @@ public class metro
 									Karate Tournament
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_karatour = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_karatour = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( karatour )
 		PORT_START(); 	// IN0 - $400002
 		JOY_LSB(2, BUTTON1, BUTTON2, UNKNOWN, UNKNOWN)
 	
@@ -2565,7 +2553,7 @@ public class metro
 									Lady Killer
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_ladykill = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ladykill = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ladykill )
 		PORT_START(); 	// IN0 - $400002
 		JOY_LSB(2, BUTTON1, BUTTON2, UNKNOWN, UNKNOWN)
 	
@@ -2625,7 +2613,7 @@ public class metro
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'ladykill' but NO "Nudity" Dip Switch */
-	static InputPortPtr input_ports_moegonta = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moegonta = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moegonta )
 		PORT_START(); 	// IN0 - $400002
 		JOY_LSB(2, BUTTON1, BUTTON2, UNKNOWN, UNKNOWN)
 	
@@ -2693,7 +2681,7 @@ public class metro
 	   So WHY can't the game display cards instead of mahjong tiles ?
 	   Is it due to different GFX ROMS or to an emulation bug ?
 	*/
-	static InputPortPtr input_ports_lastfort = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastfort = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastfort )
 		PORT_START(); 	// IN0 - $c00004
 		COINS
 	
@@ -2741,7 +2729,7 @@ public class metro
 	***************************************************************************/
 	
 	/* Same as 'lastfort' but WORKING "Tiles" Dip Switch */
-	static InputPortPtr input_ports_lastfero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastfero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastfero )
 		PORT_START(); 	// IN0 - $c00004
 		COINS
 	
@@ -2788,7 +2776,7 @@ public class metro
 								Mahjong Doukyuusei
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_dokyusei = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dokyusei = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dokyusei )
 		PORT_START(); 	// IN0 - $478880.w
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BITX(0x0002, IP_ACTIVE_LOW, 0, "A",   KEYCODE_A,        IP_JOY_NONE );
@@ -2904,7 +2892,7 @@ public class metro
 	
 	/* Same as dokyusei, without the DSWs (these games have an eeprom) */
 	
-	static InputPortPtr input_ports_gakusai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gakusai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gakusai )
 		PORT_START(); 	// IN0 - $278880.w
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BITX(0x0002, IP_ACTIVE_LOW, 0, "A",   KEYCODE_A,        IP_JOY_NONE );
@@ -2969,7 +2957,7 @@ public class metro
 										Mouja
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_mouja = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mouja = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mouja )
 		PORT_START(); 	// IN0 - $478880
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -3054,7 +3042,7 @@ public class metro
 									Pang Poms
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_pangpoms = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pangpoms = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pangpoms )
 		PORT_START(); 	// IN0 - $800004
 		COINS
 	
@@ -3099,7 +3087,7 @@ public class metro
 									Poitto!
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_poitto = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_poitto = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( poitto )
 		PORT_START(); 	// IN0 - $800000
 		COINS
 	
@@ -3143,7 +3131,7 @@ public class metro
 									Puzzli
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_puzzli = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_puzzli = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puzzli )
 		PORT_START(); 	// IN0 - $c00000
 		COINS
 	
@@ -3187,7 +3175,7 @@ public class metro
 									Sankokushi
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_3kokushi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_3kokushi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 3kokushi )
 		PORT_START(); 	// IN0 - $c00000
 		COINS
 	
@@ -3249,7 +3237,7 @@ public class metro
 									Pururun
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_pururun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pururun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pururun )
 		PORT_START(); 	// IN0 - $400000
 		COINS
 	
@@ -3308,7 +3296,7 @@ public class metro
 	       "none"       "none"
 	
 	*/
-	static InputPortPtr input_ports_skyalert = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyalert = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyalert )
 		PORT_START(); 	// IN0 - $400004
 		COINS
 	
@@ -3357,7 +3345,7 @@ public class metro
 	   All I can tell is that is that it affects the levels which are
 	   proposed, but there is no evidence that one "table" is harder
 	   than another. */
-	static InputPortPtr input_ports_toride2g = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toride2g = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toride2g )
 		PORT_START(); 	// IN0 - $800000
 		COINS
 	
@@ -3529,8 +3517,7 @@ public class metro
 	
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_balcube = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( balcube )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3555,13 +3542,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bangball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bangball )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3586,9 +3570,7 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	#ifdef TEST_SOUND
@@ -3602,8 +3584,7 @@ public class metro
 	#endif
 	
 	
-	public static MachineHandlerPtr machine_driver_daitorid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( daitorid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3638,13 +3619,10 @@ public class metro
 		MDRV_SOUND_ADD(YM2151, daitorid_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz) /* wrong */
 	#endif
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dharma = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dharma )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3671,13 +3649,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_karatour = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( karatour )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3704,13 +3679,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_3kokushi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 3kokushi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3737,13 +3709,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lastfort = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lastfort )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3770,13 +3739,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dokyusei = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dokyusei )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3802,26 +3768,22 @@ public class metro
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz)
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static NVRAMHandlerPtr nvram_handler_dokyusp  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_dokyusp  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		data8_t def_data[] = {0x00,0xe0};
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
-			if (file != 0)	EEPROM_load(file);
+			if (file)	EEPROM_load(file);
 			else		EEPROM_set_data(def_data,sizeof(def_data)/sizeof(def_data[0]));
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_dokyusp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dokyusp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3848,13 +3810,10 @@ public class metro
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_16kHz)
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gakusai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gakusai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3881,13 +3840,10 @@ public class metro
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_16kHz)
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gakusai2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gakusai2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -3914,13 +3870,10 @@ public class metro
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_16kHz)
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pangpoms = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pangpoms )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3947,13 +3900,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_poitto = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( poitto )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3980,13 +3930,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pururun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pururun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -4013,13 +3960,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2151, Y3012
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_skyalert = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skyalert )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -4046,13 +3990,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_toride2g = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toride2g )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -4079,13 +4020,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		// M6295, YM2413
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mouja = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mouja )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* ??? */
@@ -4111,13 +4049,10 @@ public class metro
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_12kHz)
 		MDRV_SOUND_ADD(YM2413, ym2413_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_blzntrnd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blzntrnd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -4147,13 +4082,10 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, blzntrnd_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* like blzntrnd but new vidstart / gfxdecode for the different bg tilemap */
-	public static MachineHandlerPtr machine_driver_gstrik2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gstrik2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -4183,9 +4115,7 @@ public class metro
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, blzntrnd_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -4196,8 +4126,7 @@ public class metro
 	
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_metro  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_metro  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/*
@@ -4230,8 +4159,7 @@ public class metro
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_karatour  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_karatour  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *) memory_region( REGION_USER1 );
 	int i;
 		metro_vram_0 = RAM + (0x20000/2) * 0;
@@ -4243,8 +4171,7 @@ public class metro
 	} };
 	
 	/* Unscramble the GFX ROMs */
-	public static DriverInitHandlerPtr init_balcube  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_balcube  = new DriverInitHandlerPtr() { public void handler(){
 		const int region	=	REGION_GFX1;
 	
 		const size_t len	=	memory_region_length(region);
@@ -4268,21 +4195,18 @@ public class metro
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blzntrnd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blzntrnd  = new DriverInitHandlerPtr() { public void handler(){
 		init_metro();
 		irq_line = 1;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_mouja  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mouja  = new DriverInitHandlerPtr() { public void handler(){
 		init_metro();
 		irq_line = -1;	/* split interrupt handlers */
 	} };
 	
-	public static DriverInitHandlerPtr init_gakusai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gakusai  = new DriverInitHandlerPtr() { public void handler(){
 		init_metro();
 		irq_line = -1;
 		blitter_bit = 3;
@@ -5291,29 +5215,29 @@ public class metro
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_karatour	   = new GameDriver("1992"	,"karatour"	,"metro.java"	,rom_karatour,null	,machine_driver_karatour	,input_ports_karatour	,init_karatour	,ROT0	,	"Mitchell",                   "The Karate Tournament",           GAME_NO_SOUND )
-	public static GameDriver driver_pangpoms	   = new GameDriver("1992"	,"pangpoms"	,"metro.java"	,rom_pangpoms,null	,machine_driver_pangpoms	,input_ports_pangpoms	,init_metro	,ROT0	,	"Metro",                      "Pang Poms",                       GAME_NO_SOUND )
-	public static GameDriver driver_pangpomm	   = new GameDriver("1992"	,"pangpomm"	,"metro.java"	,rom_pangpomm,driver_pangpoms	,machine_driver_pangpoms	,input_ports_pangpoms	,init_metro	,ROT0	,	"Metro (Mitchell license)",   "Pang Poms (Mitchell)",            GAME_NO_SOUND )
-	public static GameDriver driver_skyalert	   = new GameDriver("1992"	,"skyalert"	,"metro.java"	,rom_skyalert,null	,machine_driver_skyalert	,input_ports_skyalert	,init_metro	,ROT270	,	"Metro",                      "Sky Alert",                       GAME_NO_SOUND )
-	public static GameDriver driver_ladykill	   = new GameDriver("1993?"	,"ladykill"	,"metro.java"	,rom_ladykill,null	,machine_driver_karatour	,input_ports_ladykill	,init_karatour	,ROT90	,	"Yanyaka (Mitchell license)", "Lady Killer",                     GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_moegonta	   = new GameDriver("1993?"	,"moegonta"	,"metro.java"	,rom_moegonta,driver_ladykill	,machine_driver_karatour	,input_ports_moegonta	,init_karatour	,ROT90	,	"Yanyaka",                    "Moeyo Gonta!! (Japan)",           GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_poitto	   = new GameDriver("1993"	,"poitto"	,"metro.java"	,rom_poitto,null	,machine_driver_poitto	,input_ports_poitto	,init_metro	,ROT0	,	"Metro / Able Corp.",         "Poitto!",                         GAME_NO_SOUND )
-	public static GameDriver driver_dharma	   = new GameDriver("1994"	,"dharma"	,"metro.java"	,rom_dharma,null	,machine_driver_dharma	,input_ports_dharma	,init_metro	,ROT0	,	"Metro",                      "Dharma Doujou",                   GAME_NO_SOUND )
-	public static GameDriver driver_lastfort	   = new GameDriver("1994"	,"lastfort"	,"metro.java"	,rom_lastfort,null	,machine_driver_lastfort	,input_ports_lastfort	,init_metro	,ROT0	,	"Metro",                      "Last Fortress - Toride",          GAME_NO_SOUND )
-	public static GameDriver driver_lastfero	   = new GameDriver("1994"	,"lastfero"	,"metro.java"	,rom_lastfero,driver_lastfort	,machine_driver_lastfort	,input_ports_lastfero	,init_metro	,ROT0	,	"Metro",                      "Last Fortress - Toride (Erotic)", GAME_NO_SOUND )
-	public static GameDriver driver_toride2g	   = new GameDriver("1994"	,"toride2g"	,"metro.java"	,rom_toride2g,null	,machine_driver_toride2g	,input_ports_toride2g	,init_metro	,ROT0	,	"Metro",                      "Toride II Adauchi Gaiden",        GAME_NO_SOUND )
-	public static GameDriver driver_daitorid	   = new GameDriver("1995"	,"daitorid"	,"metro.java"	,rom_daitorid,null	,machine_driver_daitorid	,input_ports_daitorid	,init_metro	,ROT0	,	"Metro",                      "Daitoride",                       GAME_NO_SOUND )
-	public static GameDriver driver_dokyusei	   = new GameDriver("1995"	,"dokyusei"	,"metro.java"	,rom_dokyusei,null	,machine_driver_dokyusei	,input_ports_dokyusei	,init_gakusai	,ROT0	,	"Make Software / Elf / Media Trading", "Mahjong Doukyuusei"                    )
-	public static GameDriver driver_dokyusp	   = new GameDriver("1995"	,"dokyusp"	,"metro.java"	,rom_dokyusp,null	,machine_driver_dokyusp	,input_ports_gakusai	,init_gakusai	,ROT0	,	"Make Software / Elf / Media Trading", "Mahjong Doukyuusei Special"            )
-	public static GameDriver driver_pururun	   = new GameDriver("1995"	,"pururun"	,"metro.java"	,rom_pururun,null	,machine_driver_pururun	,input_ports_pururun	,init_metro	,ROT0	,	"Metro / Banpresto",          "Pururun",                         GAME_NO_SOUND )
-	public static GameDriver driver_puzzli	   = new GameDriver("1995"	,"puzzli"	,"metro.java"	,rom_puzzli,null	,machine_driver_daitorid	,input_ports_puzzli	,init_metro	,ROT0	,	"Metro / Banpresto",          "Puzzli",                          GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_3kokushi	   = new GameDriver("1996"	,"3kokushi"	,"metro.java"	,rom_3kokushi,null	,machine_driver_3kokushi	,input_ports_3kokushi	,init_karatour	,ROT0	,	"Mitchell",                   "Sankokushi (Japan)",              GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_balcube	   = new GameDriver("1996"	,"balcube"	,"metro.java"	,rom_balcube,null	,machine_driver_balcube	,input_ports_balcube	,init_balcube	,ROT0	,	"Metro",                      "Bal Cube"                                       )
-	public static GameDriver driver_bangball	   = new GameDriver("1996"	,"bangball"	,"metro.java"	,rom_bangball,null	,machine_driver_bangball	,input_ports_bangball	,init_balcube	,ROT0	,	"Banpresto / Kunihiko Tashiro+Goodhouse", "Bang Bang Ball (v1.05)"             )
-	public static GameDriver driver_mouja	   = new GameDriver("1996"	,"mouja"	,"metro.java"	,rom_mouja,null	,machine_driver_mouja	,input_ports_mouja	,init_mouja	,ROT0	,	"Etona",                      "Mouja (Japan)",                   GAME_NO_COCKTAIL )
-	public static GameDriver driver_gakusai	   = new GameDriver("1997"	,"gakusai"	,"metro.java"	,rom_gakusai,null	,machine_driver_gakusai	,input_ports_gakusai	,init_gakusai	,ROT0	,	"MakeSoft",                   "Mahjong Gakuensai (Japan)",       GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gakusai2	   = new GameDriver("1998"	,"gakusai2"	,"metro.java"	,rom_gakusai2,null	,machine_driver_gakusai2	,input_ports_gakusai	,init_gakusai	,ROT0	,	"MakeSoft",                   "Mahjong Gakuensai 2 (Japan)"                    )
+	GAMEX( 1992, karatour, 0,        karatour, karatour, karatour, ROT0,   "Mitchell",                   "The Karate Tournament",           GAME_NO_SOUND )
+	GAMEX( 1992, pangpoms, 0,        pangpoms, pangpoms, metro,    ROT0,   "Metro",                      "Pang Poms",                       GAME_NO_SOUND )
+	GAMEX( 1992, pangpomm, pangpoms, pangpoms, pangpoms, metro,    ROT0,   "Metro (Mitchell license)",   "Pang Poms (Mitchell)",            GAME_NO_SOUND )
+	GAMEX( 1992, skyalert, 0,        skyalert, skyalert, metro,    ROT270, "Metro",                      "Sky Alert",                       GAME_NO_SOUND )
+	GAMEX( 1993?,ladykill, 0,        karatour, ladykill, karatour, ROT90,  "Yanyaka (Mitchell license)", "Lady Killer",                     GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993?,moegonta, ladykill, karatour, moegonta, karatour, ROT90,  "Yanyaka",                    "Moeyo Gonta!! (Japan)",           GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, poitto,   0,        poitto,   poitto,   metro,    ROT0,   "Metro / Able Corp.",         "Poitto!",                         GAME_NO_SOUND )
+	GAMEX( 1994, dharma,   0,        dharma,   dharma,   metro,    ROT0,   "Metro",                      "Dharma Doujou",                   GAME_NO_SOUND )
+	GAMEX( 1994, lastfort, 0,        lastfort, lastfort, metro,    ROT0,   "Metro",                      "Last Fortress - Toride",          GAME_NO_SOUND )
+	GAMEX( 1994, lastfero, lastfort, lastfort, lastfero, metro,    ROT0,   "Metro",                      "Last Fortress - Toride (Erotic)", GAME_NO_SOUND )
+	GAMEX( 1994, toride2g, 0,        toride2g, toride2g, metro,    ROT0,   "Metro",                      "Toride II Adauchi Gaiden",        GAME_NO_SOUND )
+	GAMEX( 1995, daitorid, 0,        daitorid, daitorid, metro,    ROT0,   "Metro",                      "Daitoride",                       GAME_NO_SOUND )
+	GAME ( 1995, dokyusei, 0,        dokyusei, dokyusei, gakusai,  ROT0,   "Make Software / Elf / Media Trading", "Mahjong Doukyuusei"                    )
+	GAME ( 1995, dokyusp,  0,        dokyusp,  gakusai,  gakusai,  ROT0,   "Make Software / Elf / Media Trading", "Mahjong Doukyuusei Special"            )
+	GAMEX( 1995, pururun,  0,        pururun,  pururun,  metro,    ROT0,   "Metro / Banpresto",          "Pururun",                         GAME_NO_SOUND )
+	GAMEX( 1995, puzzli,   0,        daitorid, puzzli,   metro,    ROT0,   "Metro / Banpresto",          "Puzzli",                          GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, 3kokushi, 0,        3kokushi, 3kokushi, karatour, ROT0,   "Mitchell",                   "Sankokushi (Japan)",              GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1996, balcube,  0,        balcube,  balcube,  balcube,  ROT0,   "Metro",                      "Bal Cube"                                       )
+	GAME ( 1996, bangball, 0,        bangball, bangball, balcube,  ROT0,   "Banpresto / Kunihiko Tashiro+Goodhouse", "Bang Bang Ball (v1.05)"             )
+	GAMEX( 1996, mouja,    0,        mouja,    mouja,    mouja,    ROT0,   "Etona",                      "Mouja (Japan)",                   GAME_NO_COCKTAIL )
+	GAMEX( 1997, gakusai,  0,        gakusai,  gakusai,  gakusai,  ROT0,   "MakeSoft",                   "Mahjong Gakuensai (Japan)",       GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1998, gakusai2, 0,        gakusai2, gakusai,  gakusai,  ROT0,   "MakeSoft",                   "Mahjong Gakuensai 2 (Japan)"                    )
 	
-	public static GameDriver driver_blzntrnd	   = new GameDriver("1994"	,"blzntrnd"	,"metro.java"	,rom_blzntrnd,null	,machine_driver_blzntrnd	,input_ports_blzntrnd	,init_blzntrnd	,ROT0	,	"Human Amusement",            "Blazing Tornado",                 GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gstrik2	   = new GameDriver("1996"	,"gstrik2"	,"metro.java"	,rom_gstrik2,null	,machine_driver_gstrik2	,input_ports_gstrik2	,init_blzntrnd	,ROT0	,	"Human Amusement",            "Grand Striker 2 (Japan)",			GAME_IMPERFECT_GRAPHICS ) // priority between rounds
+	GAMEX( 1994, blzntrnd, 0,        blzntrnd, blzntrnd, blzntrnd, ROT0,   "Human Amusement",            "Blazing Tornado",                 GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, gstrik2,  0,        gstrik2,  gstrik2,  blzntrnd, ROT0,   "Human Amusement",            "Grand Striker 2 (Japan)",			GAME_IMPERFECT_GRAPHICS ) // priority between rounds
 }

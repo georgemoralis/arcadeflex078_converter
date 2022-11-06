@@ -70,7 +70,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -103,20 +103,17 @@ public class dynax
 		cpu_set_irq_line_and_vector(0, 0, irq ? ASSERT_LINE : CLEAR_LINE, 0xc7 | irq); /* rst $xx */
 	}
 	
-	public static WriteHandlerPtr dynax_vblank_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_vblank_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_vblank_irq = 0;
 		sprtmtch_update_irq();
 	} };
 	
-	public static WriteHandlerPtr dynax_blitter_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blitter_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_blitter_irq = 0;
 		sprtmtch_update_irq();
 	} };
 	
-	public static InterruptHandlerPtr sprtmtch_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sprtmtch_vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		dynax_vblank_irq = 1;
 		sprtmtch_update_irq();
 	} };
@@ -139,26 +136,23 @@ public class dynax
 									Sports Match
 	***************************************************************************/
 	
-	public static WriteHandlerPtr dynax_coincounter_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_coincounter_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 1);
 		if (data & ~1)
 			logerror("CPU#0 PC %06X: Warning, coin counter 0 <- %02X\n", activecpu_get_pc(), data);
 	} };
-	public static WriteHandlerPtr dynax_coincounter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_coincounter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(1, data & 1);
 		if (data & ~1)
 			logerror("CPU#0 PC %06X: Warning, coin counter 1 <- %02X\n", activecpu_get_pc(), data);
 	} };
 	
-	public static ReadHandlerPtr ret_ff  = new ReadHandlerPtr() { public int handler(int offset)	{	return 0xff;	} };
+	public static ReadHandlerPtr ret_ff  = new ReadHandlerPtr() { public int handler(int offset)	return 0xff;	}
 	
 	
 	static int keyb;
 	
-	public static ReadHandlerPtr hanamai_keyboard_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hanamai_keyboard_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 0x3f;
 	
 		/* the game reads all rows at once (keyb = 0) to check if a key is pressed */
@@ -171,19 +165,16 @@ public class dynax
 		return res;
 	} };
 	
-	public static ReadHandlerPtr hanamai_keyboard_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hanamai_keyboard_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x3f;
 	} };
 	
-	public static WriteHandlerPtr hanamai_keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanamai_keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		keyb = data;
 	} };
 	
 	
-	public static WriteHandlerPtr dynax_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&ROM[0x08000+0x8000*(data & 0x0f)]);
 	} };
@@ -191,8 +182,7 @@ public class dynax
 	
 	static int hnoridur_bank;
 	
-	public static WriteHandlerPtr hnoridur_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hnoridur_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU1) + 0x10000 + 0x8000*data;
 	//logerror("%04x: rom bank = %02x\n",activecpu_get_pc(),data);
 		cpu_setbank(1,ROM);
@@ -202,14 +192,12 @@ public class dynax
 	static data8_t palette_ram[16*256*2];
 	static int palbank;
 	
-	public static WriteHandlerPtr hnoridur_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hnoridur_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		palbank = data & 0x0f;
 		dynax_blit_palbank_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr hnoridur_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hnoridur_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (hnoridur_bank)
 		{
 			case 0x10:
@@ -248,8 +236,7 @@ public class dynax
 		}
 	} };
 	
-	public static WriteHandlerPtr yarunara_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int addr = 512*palbank + offset;
 	
 		switch (hnoridur_bank)
@@ -279,8 +266,7 @@ public class dynax
 		}
 	} };
 	
-	public static WriteHandlerPtr nanajign_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nanajign_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (hnoridur_bank)
 		{
 			case 0x10:
@@ -320,41 +306,35 @@ public class dynax
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle != 0)
+		if (toggle)
 		{
-			if (resetkludge != 0)	// don't know what's wrong, but NMIs when the 5205 is reset make the game crash
+			if (resetkludge)	// don't know what's wrong, but NMIs when the 5205 is reset make the game crash
 			cpu_set_nmi_line(0,PULSE_LINE);
 		}
 	}
 	
-	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next = data;
 	} };
 	
-	public static WriteHandlerPtr adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		resetkludge = data & 1;
 		MSM5205_reset_w(0,~data & 1);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_adpcm  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_adpcm  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with the MSM5205 reset */
 		resetkludge = 0;
 		MSM5205_reset_w(0,1);
 	} };
 	
-	public static WriteHandlerPtr yarunara_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hanamai_layer_half_w(0,data >> 1);
 	} };
-	public static WriteHandlerPtr yarunara_layer_half2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_layer_half2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hnoridur_layer_half2_w(0,data >> 1);
 	} };
-	public static WriteHandlerPtr nanajign_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nanajign_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hanamai_layer_half_w(0,~data);
 	} };
 	
@@ -716,8 +696,7 @@ public class dynax
 	***************************************************************************/
 	
 	static data8_t yarunara_select, yarunara_ip;
-	public static WriteHandlerPtr yarunara_input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_input_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:	yarunara_select = data;
@@ -729,8 +708,7 @@ public class dynax
 	
 	} };
 	
-	public static ReadHandlerPtr yarunara_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr yarunara_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:
@@ -770,8 +748,7 @@ public class dynax
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr yarunara_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_CPU1) + 0x10000 + 0x8000 * data;
 		cpu_setbank(1, rom);
 	
@@ -780,8 +757,7 @@ public class dynax
 			rom[0x0d] = 0x00;	// RTC
 	} };
 	
-	public static WriteHandlerPtr yarunara_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yarunara_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_flipscreen_w(0,(data&2)?1:0);
 	} };
 	
@@ -882,7 +858,7 @@ public class dynax
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_hanamai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hanamai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hanamai )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -984,7 +960,7 @@ public class dynax
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hnkochou = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hnkochou = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hnkochou )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1089,7 +1065,7 @@ public class dynax
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hnoridur = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hnoridur = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hnoridur )
 		PORT_START(); 	/* note that these are in reverse order wrt the others */
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
@@ -1244,7 +1220,7 @@ public class dynax
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sprtmtch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprtmtch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprtmtch )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -1325,7 +1301,7 @@ public class dynax
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjfriday = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjfriday = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjfriday )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
@@ -1427,7 +1403,7 @@ public class dynax
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mjdialq2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjdialq2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjdialq2 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1531,7 +1507,7 @@ public class dynax
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_yarunara = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yarunara = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yarunara )
 		PORT_START(); 	// IN0 - DSW
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
@@ -1643,7 +1619,7 @@ public class dynax
 		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quiztvqq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quiztvqq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quiztvqq )
 		PORT_START(); 	// IN0 - DSW
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
@@ -1738,7 +1714,7 @@ public class dynax
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mcnpshnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mcnpshnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mcnpshnt )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1839,7 +1815,7 @@ public class dynax
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nanajign = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nanajign = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nanajign )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
@@ -2013,8 +1989,7 @@ public class dynax
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_hanamai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hanamai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,22000000 / 4)	/* 5.5MHz */
@@ -2042,9 +2017,7 @@ public class dynax
 		MDRV_SOUND_ADD(AY8910, hanamai_ay8910_interface)
 		MDRV_SOUND_ADD(YM2203, hanamai_ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, hanamai_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2070,8 +2043,7 @@ public class dynax
 		{ YM2413_VOL(100,MIXER_PAN_CENTER,100,MIXER_PAN_CENTER) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_hnoridur = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hnoridur )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,22000000 / 4)	/* 5.5MHz */
@@ -2098,9 +2070,7 @@ public class dynax
 		MDRV_SOUND_ADD(AY8910, hnoridur_ay8910_interface)
 		MDRV_SOUND_ADD(YM2413, hnoridur_ym2413_interface)
 		MDRV_SOUND_ADD(MSM5205, hanamai_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2119,8 +2089,7 @@ public class dynax
 		{ sprtmtch_sound_callback },	/* IRQ handler */
 	};
 	
-	public static MachineHandlerPtr machine_driver_sprtmtch = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprtmtch )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,22000000 / 4)	/* 5.5MHz */
@@ -2145,17 +2114,14 @@ public class dynax
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, sprtmtch_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Lady Frog
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_roldfrog = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( roldfrog )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,22000000 / 4)	/* 5.5MHz */
@@ -2188,9 +2154,7 @@ public class dynax
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, sprtmtch_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2205,8 +2169,7 @@ public class dynax
 		{ YM2413_VOL(100,MIXER_PAN_CENTER,100,MIXER_PAN_CENTER) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_mjfriday = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjfriday )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,24000000/4)	/* 6 MHz? */
@@ -2231,33 +2194,27 @@ public class dynax
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, mjfriday_ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 								Mahjong Dial Q2
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_mjdialq2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjdialq2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( mjfriday )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(mjdialq2_readmem,mjdialq2_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 						Yarunara / Quiz TV Q&Q / Mahjong Angels
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr yarunara_clock_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr yarunara_clock_interrupt = new InterruptHandlerPtr() {public void handler(){
 		dynax_sound_irq = 1;
 		sprtmtch_update_irq();
 	
@@ -2265,8 +2222,7 @@ public class dynax
 		sprtmtch_update_irq();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_yarunara = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yarunara )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( hnoridur )
@@ -2277,17 +2233,14 @@ public class dynax
 	
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER)
 		MDRV_VISIBLE_AREA(0, 336-1, 8, 256-1-8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 								Mahjong Campus Hunting
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_mcnpshnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcnpshnt )
 	
 		MDRV_IMPORT_FROM( hnoridur )
 		MDRV_CPU_MODIFY("main")
@@ -2295,25 +2248,20 @@ public class dynax
 		MDRV_CPU_PORTS(mcnpshnt_readport,mcnpshnt_writeport)
 	
 		MDRV_VIDEO_START(mcnpshnt)	// different priorities
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 								7jigen
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_nanajign = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nanajign )
 	
 		MDRV_IMPORT_FROM( hnoridur )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(nanajign_readmem,nanajign_writemem)
 		MDRV_CPU_PORTS(nanajign_readport,nanajign_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2653,8 +2601,7 @@ public class dynax
 		ROM_LOAD( "prom1.6b",  0x200, 0x200, CRC(e38eb360) SHA1(739960dd57ec3305edd57aa63816a81ddfbebf3e) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_maya  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_maya  = new DriverInitHandlerPtr() { public void handler(){
 		/* Address lines scrambling on 1 z80 rom */
 		int i;
 		data8_t	*gfx = (data8_t *)memory_region(REGION_GFX1);
@@ -3039,22 +2986,22 @@ public class dynax
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_hanamai	   = new GameDriver("1988"	,"hanamai"	,"dynax.java"	,rom_hanamai,null	,machine_driver_hanamai	,input_ports_hanamai	,null	,ROT180	,	"Dynax",                  "Hana no Mai (Japan)"                                   )
-	public static GameDriver driver_hnkochou	   = new GameDriver("1989"	,"hnkochou"	,"dynax.java"	,rom_hnkochou,driver_hanamai	,machine_driver_hanamai	,input_ports_hnkochou	,null	,ROT180	,	"Dynax",                  "Hana Kochou [BET] (Japan)"                             )
-	public static GameDriver driver_hnoridur	   = new GameDriver("1989"	,"hnoridur"	,"dynax.java"	,rom_hnoridur,null	,machine_driver_hnoridur	,input_ports_hnoridur	,null	,ROT180	,	"Dynax",                  "Hana Oriduru (Japan)",                                 GAME_IMPERFECT_GRAPHICS ) // 1 rom is bad
-	public static GameDriver driver_drgpunch	   = new GameDriver("1989"	,"drgpunch"	,"dynax.java"	,rom_drgpunch,null	,machine_driver_sprtmtch	,input_ports_sprtmtch	,null	,ROT0	,	"Dynax",                  "Dragon Punch (Japan)"                                  )
-	public static GameDriver driver_sprtmtch	   = new GameDriver("1989"	,"sprtmtch"	,"dynax.java"	,rom_sprtmtch,driver_drgpunch	,machine_driver_sprtmtch	,input_ports_sprtmtch	,null	,ROT0	,	"Dynax (Fabtek license)", "Sports Match"                                          )
-	public static GameDriver driver_mjfriday	   = new GameDriver("1989"	,"mjfriday"	,"dynax.java"	,rom_mjfriday,null	,machine_driver_mjfriday	,input_ports_mjfriday	,null	,ROT180	,	"Dynax",                  "Mahjong Friday (Japan)"                                )
-	public static GameDriver driver_mcnpshnt	   = new GameDriver("1990"	,"mcnpshnt"	,"dynax.java"	,rom_mcnpshnt,null	,machine_driver_mcnpshnt	,input_ports_mcnpshnt	,null	,ROT0	,	"Dynax",                  "Mahjong Campus Hunting (Japan)"                        )
-	public static GameDriver driver_7jigen	   = new GameDriver("1990"	,"7jigen"	,"dynax.java"	,rom_7jigen,null	,machine_driver_nanajign	,input_ports_nanajign	,null	,ROT180	,	"Dynax",                  "7jigen no Youseitachi - Mahjong 7 Dimensions (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mjdialq2	   = new GameDriver("1991"	,"mjdialq2"	,"dynax.java"	,rom_mjdialq2,null	,machine_driver_mjdialq2	,input_ports_mjdialq2	,null	,ROT180	,	"Dynax",                  "Mahjong Dial Q2 (Japan)",                              GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_yarunara	   = new GameDriver("1991"	,"yarunara"	,"dynax.java"	,rom_yarunara,null	,machine_driver_yarunara	,input_ports_yarunara	,null	,ROT180	,	"Dynax",                  "Mahjong Yarunara (Japan)"                              )
-	public static GameDriver driver_mjangels	   = new GameDriver("1991"	,"mjangels"	,"dynax.java"	,rom_mjangels,null	,machine_driver_yarunara	,input_ports_yarunara	,null	,ROT180	,	"Dynax",                  "Mahjong Angels - Comic Theater Vol.2 (Japan)",         GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_quiztvqq	   = new GameDriver("1992"	,"quiztvqq"	,"dynax.java"	,rom_quiztvqq,null	,machine_driver_yarunara	,input_ports_quiztvqq	,null	,ROT180	,	"Dynax",                  "Quiz TV Gassyuukoku Q&Q (Japan)"                       )
-	public static GameDriver driver_maya	   = new GameDriver("1994"	,"maya"	,"dynax.java"	,rom_maya,null	,machine_driver_sprtmtch	,input_ports_sprtmtch	,init_maya	,ROT0	,	"Promat",                 "Maya"                                                  )
+	GAME ( 1988, hanamai,  0,        hanamai,  hanamai,  0,    ROT180, "Dynax",                  "Hana no Mai (Japan)"                                   )
+	GAME ( 1989, hnkochou, hanamai,  hanamai,  hnkochou, 0,    ROT180, "Dynax",                  "Hana Kochou [BET] (Japan)"                             )
+	GAMEX( 1989, hnoridur, 0,        hnoridur, hnoridur, 0,    ROT180, "Dynax",                  "Hana Oriduru (Japan)",                                 GAME_IMPERFECT_GRAPHICS ) // 1 rom is bad
+	GAME ( 1989, drgpunch, 0,        sprtmtch, sprtmtch, 0,    ROT0,   "Dynax",                  "Dragon Punch (Japan)"                                  )
+	GAME ( 1989, sprtmtch, drgpunch, sprtmtch, sprtmtch, 0,    ROT0,   "Dynax (Fabtek license)", "Sports Match"                                          )
+	GAME ( 1989, mjfriday, 0,        mjfriday, mjfriday, 0,    ROT180, "Dynax",                  "Mahjong Friday (Japan)"                                )
+	GAME ( 1990, mcnpshnt, 0,        mcnpshnt, mcnpshnt, 0,    ROT0,   "Dynax",                  "Mahjong Campus Hunting (Japan)"                        )
+	GAMEX( 1990, 7jigen,   0,        nanajign, nanajign, 0,    ROT180, "Dynax",                  "7jigen no Youseitachi - Mahjong 7 Dimensions (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1991, mjdialq2, 0,        mjdialq2, mjdialq2, 0,    ROT180, "Dynax",                  "Mahjong Dial Q2 (Japan)",                              GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1991, yarunara, 0,        yarunara, yarunara, 0,    ROT180, "Dynax",                  "Mahjong Yarunara (Japan)"                              )
+	GAMEX( 1991, mjangels, 0,        yarunara, yarunara, 0,    ROT180, "Dynax",                  "Mahjong Angels - Comic Theater Vol.2 (Japan)",         GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1992, quiztvqq, 0,        yarunara, quiztvqq, 0,    ROT180, "Dynax",                  "Quiz TV Gassyuukoku Q&Q (Japan)"                       )
+	GAME ( 1994, maya,     0,        sprtmtch, sprtmtch, maya, ROT0,   "Promat",                 "Maya"                                                  )
 	
 	
 	// should move these to splash.c, its a protected bootleg of splash, not dynax stuff */
-	public static GameDriver driver_roldfrog	   = new GameDriver("1993"	,"roldfrog"	,"dynax.java"	,rom_roldfrog,null	,machine_driver_roldfrog	,input_ports_sprtmtch	,null	,ROT0	,	"Microhard", "The Return of Lady Frog", GAME_NOT_WORKING )
-	public static GameDriver driver_roldfrga	   = new GameDriver("1993"	,"roldfrga"	,"dynax.java"	,rom_roldfrga,driver_roldfrog	,machine_driver_roldfrog	,input_ports_sprtmtch	,null	,ROT0	,	"Microhard", "The Return of Lady Frog (set 2)", GAME_NOT_WORKING )
+	GAMEX(1993, roldfrog, 0,        roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog", GAME_NOT_WORKING )
+	GAMEX(1993, roldfrga, roldfrog, roldfrog, sprtmtch, 0,    ROT0,   "Microhard", "The Return of Lady Frog (set 2)", GAME_NOT_WORKING )
 }

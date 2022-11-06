@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,10 +50,10 @@ public class relief
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -67,8 +67,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_relief  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_relief  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);
 		atarigen_interrupt_reset(update_interrupts);
@@ -90,7 +89,7 @@ public class relief
 	static READ16_HANDLER( special_port2_r )
 	{
 		int result = readinputport(2);
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0020;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0020;
 		if (!(result & 0x0080) || atarigen_get_hblank()) result ^= 0x0001;
 		return result;
 	}
@@ -105,13 +104,13 @@ public class relief
 	
 	static WRITE16_HANDLER( audio_control_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			ym2413_volume = (data >> 1) & 15;
 			atarigen_set_ym2413_vol((ym2413_volume * overall_volume * 100) / (127 * 15));
 			adpcm_bank_base = (0x040000 * ((data >> 6) & 3)) | (adpcm_bank_base & 0x100000);
 		}
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			adpcm_bank_base = (0x100000 * ((data >> 8) & 1)) | (adpcm_bank_base & 0x0c0000);
 	
 		OKIM6295_set_bank_base(0, adpcm_bank_base);
@@ -120,7 +119,7 @@ public class relief
 	
 	static WRITE16_HANDLER( audio_volume_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			overall_volume = data & 127;
 			atarigen_set_ym2413_vol((ym2413_volume * overall_volume * 100) / (127 * 15));
@@ -144,7 +143,7 @@ public class relief
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_data_0_w(offset, data & 0xff);
 	}
 	
@@ -158,9 +157,9 @@ public class relief
 	
 	static WRITE16_HANDLER( ym2413_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if ((offset & 1) != 0)
+			if (offset & 1)
 				YM2413_data_port_0_w(0, data & 0xff);
 			else
 				YM2413_register_port_0_w(0, data & 0xff);
@@ -220,7 +219,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_relief = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_relief = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( relief )
 		PORT_START(); 	/* 260000 */
 		PORT_BITX(0x0001, IP_ACTIVE_LOW, IPT_SERVICE, "Button D0", KEYCODE_Z, JOYCODE_NONE );
 		PORT_BITX(0x0002, IP_ACTIVE_LOW, IPT_SERVICE, "Button D1", KEYCODE_X, JOYCODE_NONE );
@@ -360,8 +359,7 @@ public class relief
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_relief = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( relief )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -387,9 +385,7 @@ public class relief
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413,   ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -478,8 +474,7 @@ public class relief
 	}
 	
 	
-	public static DriverInitHandlerPtr init_relief  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_relief  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t default_eeprom[] =
 		{
 			0x0001,0x0166,0x0128,0x01E6,0x0100,0x012C,0x0300,0x0144,
@@ -494,8 +489,7 @@ public class relief
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_relief2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_relief2  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t default_eeprom[] =
 		{
 			0x0001,0x01FD,0x019F,0x015E,0x01FF,0x019E,0x03FF,0x015F,
@@ -524,6 +518,6 @@ public class relief
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_relief	   = new GameDriver("1992"	,"relief"	,"relief.java"	,rom_relief,null	,machine_driver_relief	,input_ports_relief	,init_relief	,ROT0	,	"Atari Games", "Relief Pitcher (set 1)" )
-	public static GameDriver driver_relief2	   = new GameDriver("1992"	,"relief2"	,"relief.java"	,rom_relief2,driver_relief	,machine_driver_relief	,input_ports_relief	,init_relief2	,ROT0	,	"Atari Games", "Relief Pitcher (set 2)" )
+	GAME( 1992, relief,  0,      relief, relief, relief,  ROT0, "Atari Games", "Relief Pitcher (set 1)" )
+	GAME( 1992, relief2, relief, relief, relief, relief2, ROT0, "Atari Games", "Relief Pitcher (set 2)" )
 }

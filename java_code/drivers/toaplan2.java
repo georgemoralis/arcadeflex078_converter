@@ -220,7 +220,7 @@ To Do / Unknowns:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -313,13 +313,12 @@ public class toaplan2
 	***************************************************************************/
 	
 	
-	public static MachineInitHandlerPtr machine_init_toaplan2  = new MachineInitHandlerPtr() { public void handler()		/* machine_init_toaplan2(); */
+	public static MachineInitHandlerPtr machine_init_toaplan2  = new MachineInitHandlerPtr() { public void handler()/* machine_init_toaplan2(); */
 	{
 		mcu_data = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_ghox  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ghox  = new MachineInitHandlerPtr() { public void handler(){
 		old_p1_paddle_h = 0;
 		old_p1_paddle_v = 0;
 		old_p2_paddle_h = 0;
@@ -328,43 +327,37 @@ public class toaplan2
 		machine_init_toaplan2();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_batrider  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_batrider  = new MachineInitHandlerPtr() { public void handler(){
 		current_bank = 2;
 	
 		machine_init_toaplan2();
 	} };
 	
-	public static DriverInitHandlerPtr init_T2_Z80  = new DriverInitHandlerPtr() { public void handler()		/* init_t2_Z80(); */
+	public static DriverInitHandlerPtr init_T2_Z80  = new DriverInitHandlerPtr() { public void handler()/* init_t2_Z80(); */
 	{
 		toaplan2_sub_cpu = CPU_2_Z80;
 	} };
 	
-	public static DriverInitHandlerPtr init_T2_Z180  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_T2_Z180  = new DriverInitHandlerPtr() { public void handler(){
 		toaplan2_sub_cpu = CPU_2_HD647180;
 	} };
 	
-	public static DriverInitHandlerPtr init_T2_Zx80  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_T2_Zx80  = new DriverInitHandlerPtr() { public void handler(){
 		toaplan2_sub_cpu = CPU_2_Zx80;
 	} };
 	
-	public static DriverInitHandlerPtr init_T2_noZ80  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_T2_noZ80  = new DriverInitHandlerPtr() { public void handler(){
 		toaplan2_sub_cpu = CPU_2_NONE;
 	} };
 	
-	public static DriverInitHandlerPtr init_fixeight  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fixeight  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x28f002, 0x28fbff, MRA16_RAM );
 		install_mem_write16_handler(0, 0x28f002, 0x28fbff, MWA16_RAM );
 	
 		toaplan2_sub_cpu = CPU_2_Zx80;
 	} };
 	
-	public static DriverInitHandlerPtr init_pipibibi  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pipibibi  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		int oldword, newword;
 	
@@ -444,8 +437,7 @@ public class toaplan2
 		toaplan2_sub_cpu = CPU_2_Z80;
 	} };
 	
-	public static DriverInitHandlerPtr init_battleg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_battleg  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *Z80 = (data8_t *)memory_region(REGION_CPU2);
 	
 		/* Set Z80 bank switch */
@@ -454,14 +446,12 @@ public class toaplan2
 		toaplan2_sub_cpu = CPU_2_Z80;
 	} };
 	
-	public static DriverInitHandlerPtr init_bbakraid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bbakraid  = new DriverInitHandlerPtr() { public void handler(){
 		bbakraid_unlimited_ver = 1;
 		toaplan2_sub_cpu = CPU_2_Z80;
 	} };
 	
-	public static DriverInitHandlerPtr init_bbakrada  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bbakrada  = new DriverInitHandlerPtr() { public void handler(){
 		bbakraid_unlimited_ver = 0;
 		toaplan2_sub_cpu = CPU_2_Z80;
 	} };
@@ -496,9 +486,9 @@ public class toaplan2
 		}
 	}
 	
-	public static InterruptHandlerPtr toaplan2_vblank_irq2 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(2);} };
-	public static InterruptHandlerPtr toaplan2_vblank_irq3 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(3);} };
-	public static InterruptHandlerPtr toaplan2_vblank_irq4 = new InterruptHandlerPtr() {public void handler() {toaplan2_irq(4);} };
+	public static InterruptHandlerPtr toaplan2_vblank_irq2 = new InterruptHandlerPtr() {public void handler()toaplan2_irq(2);}
+	public static InterruptHandlerPtr toaplan2_vblank_irq3 = new InterruptHandlerPtr() {public void handler()toaplan2_irq(3);}
+	public static InterruptHandlerPtr toaplan2_vblank_irq4 = new InterruptHandlerPtr() {public void handler()toaplan2_irq(4);}
 	
 	static READ16_HANDLER( video_count_r )
 	{
@@ -515,13 +505,13 @@ public class toaplan2
 		video_status = 0xff00;						/* Set signals inactive */
 		video_status |= (current_scanline & 0xff);	/* Scanline */
 	
-		if (vblank_irq != 0) {
+		if (vblank_irq) {
 			video_status &= ~0x0100;
-		}
+		} };
 		if (prev_scanline != current_scanline) {
 			video_status &= ~0x8000;				/* Activate V-Sync Clk */
 		}
-	//	if (current_beampos != 0) {
+	//	if (current_beampos) {
 	//		video_status &= ~0x4000;
 	//	}
 	//	current_beampos = ~current_beampos;
@@ -532,13 +522,12 @@ public class toaplan2
 		return video_status;
 	}
 	
-	public static WriteHandlerPtr toaplan2_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toaplan2_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* +----------------+------ Bits 7-5 not used ------+--------------+ */
 		/* | Coin Lockout 2 | Coin Lockout 1 | Coin Count 2 | Coin Count 1 | */
 		/* |     Bit 3      |     Bit 2      |     Bit 1    |     Bit 0    | */
 	
-		if ((data & 0x0f) != 0)
+		if (data & 0x0f)
 		{
 			coin_lockout_w( 0, ((data & 4) ? 0 : 1) );
 			coin_lockout_w( 1, ((data & 8) ? 0 : 1) );
@@ -549,19 +538,19 @@ public class toaplan2
 		{
 			coin_lockout_global_w(1); /* Lock all coin slots */
 		}
-		if ((data & 0xe0) != 0)
+		if (data & 0xe0)
 		{
 			logerror("Writing unknown upper bits (%02x) to coin control\n",data);
 		}
 	} };
 	static WRITE16_HANDLER( toaplan2_coin_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan2_coin_w(offset, data & 0xff);
 			if (toaplan2_sub_cpu == CPU_2_Z80)
 			{
-				if (Machine.drv.sound[1].sound_type == SOUND_OKIM6295)
+				if (Machine->drv->sound[1].sound_type == SOUND_OKIM6295)
 				{
 					OKIM6295_set_bank_base(0, (((data & 0x10) >> 4) * 0x40000));
 				}
@@ -580,7 +569,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( toaplan2_shared_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan2_shared_ram[offset] = data & 0xff;
 		}
@@ -591,7 +580,7 @@ public class toaplan2
 		/* Command sent to secondary CPU. Support for HD647180 will be
 		   required when a ROM dump becomes available for this hardware */
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (toaplan2_sub_cpu == CPU_2_Z80)			/* Whoopee */
 			{
@@ -628,7 +617,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( pipibibi_z80_task_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan2_shared_ram[0] = data & 0xff;
 		}
@@ -693,7 +682,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( ghox_mcu_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			mcu_data = data;
 			if ((data >= 0xd0) && (data < 0xe0))
@@ -751,7 +740,7 @@ public class toaplan2
 	}
 	static WRITE16_HANDLER( ghox_shared_ram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan2_shared_ram16[offset] = data & 0xff;
 		}
@@ -782,7 +771,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( shared_ram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xff;
 			switch (offset * 2)
@@ -845,7 +834,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( Zx80_command_port_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			mcu_data = data;
 		logerror("PC:%08x Writing command (%04x) to Zx80 secondary CPU command/status port\n",activecpu_get_previouspc(),mcu_data);
@@ -859,7 +848,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( Zx80_sharedram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			Zx80_shared_ram[offset] = data & 0xff;
 		}
@@ -867,7 +856,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( oki_bankswitch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 		}
@@ -886,7 +875,7 @@ public class toaplan2
 	
 	static WRITE16_HANDLER( raizing_shared_ram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			raizing_shared_ram[offset] = data & 0xff;
 		}
@@ -904,15 +893,13 @@ public class toaplan2
 		if (offset == 0) cpu_yield();	/* Command issued so switch control */
 	}
 	
-	public static ReadHandlerPtr battleg_commram_check_r0  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battleg_commram_check_r0  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *battleg_common_RAM = (data8_t *)battleg_commram16;
 	
 		return battleg_common_RAM[BYTE_XOR_BE(offset * 2 + 1)];
 	} };
 	
-	public static WriteHandlerPtr battleg_commram_check_w0 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battleg_commram_check_w0 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *battleg_common_RAM = (data8_t *)battleg_commram16;
 	
 		battleg_common_RAM[BYTE_XOR_BE(0)] = data;
@@ -924,8 +911,7 @@ public class toaplan2
 		return raizing_shared_ram[offset + 0x10] & 0xff;
 	}
 	
-	public static WriteHandlerPtr battleg_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battleg_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = (data8_t *)memory_region(REGION_CPU2);
 		int bankaddress;
 		int bank;
@@ -957,32 +943,27 @@ public class toaplan2
 	}
 	
 	
-	public static WriteHandlerPtr raizing_okim6295_bankselect_0 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_okim6295_bankselect_0 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raizing_oki6295_set_bankbase( 0, 0,  (data       & 0x0f) * 0x10000);
 		raizing_oki6295_set_bankbase( 0, 1, ((data >> 4) & 0x0f) * 0x10000);
 	} };
 	
-	public static WriteHandlerPtr raizing_okim6295_bankselect_1 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_okim6295_bankselect_1 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raizing_oki6295_set_bankbase( 0, 2,  (data       & 0x0f) * 0x10000);
 		raizing_oki6295_set_bankbase( 0, 3, ((data >> 4) & 0x0f) * 0x10000);
 	} };
 	
-	public static WriteHandlerPtr raizing_okim6295_bankselect_2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_okim6295_bankselect_2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raizing_oki6295_set_bankbase( 1, 0,  (data       & 0x0f) * 0x10000);
 		raizing_oki6295_set_bankbase( 1, 1, ((data >> 4) & 0x0f) * 0x10000);
 	} };
 	
-	public static WriteHandlerPtr raizing_okim6295_bankselect_3 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_okim6295_bankselect_3 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raizing_oki6295_set_bankbase( 1, 2,  (data       & 0x0f) * 0x10000);
 		raizing_oki6295_set_bankbase( 1, 3, ((data >> 4) & 0x0f) * 0x10000);
 	} };
 	
-	public static WriteHandlerPtr batrider_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr batrider_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = (data8_t *)memory_region(REGION_CPU2);
 		int bankaddress;
 		int bank;
@@ -1013,7 +994,7 @@ public class toaplan2
 	}
 	static WRITE16_HANDLER( batrider_z80_busreq_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			raizing_Z80_busreq = (data & 0xff);
 		}
@@ -1088,17 +1069,16 @@ public class toaplan2
 	};
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_bbakraid  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_bbakraid  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		/* Pin 6 of 93C66 is connected to Gnd! */
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C66);
 	
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 			else
 			{
 				if (bbakraid_unlimited_ver == 1)
@@ -1127,7 +1107,7 @@ public class toaplan2
 		if (data & ~0x001f)
 			logerror("CPU #0 PC:%06X - Unknown EEPROM data being written %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_LSB != 0)
+		if ( ACCESSING_LSB )
 		{
 			// chip select
 			EEPROM_set_cs_line((data & 0x01) ? CLEAR_LINE : ASSERT_LINE );
@@ -1158,34 +1138,29 @@ public class toaplan2
 	}
 	
 	/****** Battle Bakraid Z80 handlers ******/
-	static public static ReadHandlerPtr raizing_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raizing_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *raizing_cpu_comm = (data8_t *)raizing_cpu_comm16;
 	
 		logerror("Z80 (PC:%04x) reading %02x from $48\n",activecpu_get_pc(),raizing_cpu_comm[BYTE_XOR_BE(1)]);
 		return raizing_cpu_comm[BYTE_XOR_BE(1)];
 	} };
-	static public static ReadHandlerPtr raizing_request_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raizing_request_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *raizing_cpu_comm = (data8_t *)raizing_cpu_comm16;
 	
 		logerror("Z80 (PC:%04x) reading %02x from $4A\n",activecpu_get_pc(),raizing_cpu_comm[BYTE_XOR_BE(3)]);
 		return raizing_cpu_comm[BYTE_XOR_BE(3)];
 	} };
-	static public static WriteHandlerPtr raizing_command_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_command_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Z80 (PC:%04x) writing %02x to $40\n",activecpu_get_pc(),data);
 		raizing_cpu_reply[0] = data;
 	} };
-	static public static WriteHandlerPtr raizing_request_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_request_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Z80 (PC:%04x) writing %02x to $42\n",activecpu_get_pc(),data);
 		raizing_cpu_reply[1] = data;
 	} };
 	
 	
-	static public static WriteHandlerPtr raizing_clear_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raizing_clear_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Clear NMI on the Z80 (Z80 PC:%06x writing %04x)\n",activecpu_get_pc(),data);
 		cpu_set_nmi_line(1, CLEAR_LINE);
 		cpu_yield();
@@ -1204,8 +1179,7 @@ public class toaplan2
 		logerror("YMZ280 is generating an interrupt. State=%08x\n",state);
 	}
 	
-	public static InterruptHandlerPtr bbakraid_snd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bbakraid_snd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
@@ -2171,7 +2145,7 @@ public class toaplan2
 	
 	
 	
-	static InputPortPtr input_ports_tekipaki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tekipaki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tekipaki )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2221,7 +2195,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ghox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ghox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ghox )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2283,7 +2257,7 @@ public class toaplan2
 		PORT_ANALOG( 0xff,	0x00, IPT_DIAL_V | IPF_PLAYER2, 15, 0, 0, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dogyuun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dogyuun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dogyuun )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2347,7 +2321,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kbash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kbash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kbash )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2408,7 +2382,7 @@ public class toaplan2
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_truxton2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_truxton2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( truxton2 )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2465,7 +2439,7 @@ public class toaplan2
 		PORT_DIPSETTING(	0x04, "Korea" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pipibibs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pipibibs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pipibibs )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2511,7 +2485,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_whoopee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_whoopee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( whoopee )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2557,7 +2531,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pipibibi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pipibibi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pipibibi )
 		PORT_START(); 		/* (0) VBlank */
 	//	PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );	/* This video HW */
 	//	PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );	/* doesnt wait for VBlank */
@@ -2614,7 +2588,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fixeight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fixeight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fixeight )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2696,7 +2670,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_grindstm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grindstm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grindstm )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2760,7 +2734,7 @@ public class toaplan2
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vfive = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vfive = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vfive )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2805,7 +2779,7 @@ public class toaplan2
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_batsugun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_batsugun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( batsugun )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2867,7 +2841,7 @@ public class toaplan2
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* bit 0x10 sound ready */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_snowbro2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snowbro2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snowbro2 )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2936,7 +2910,7 @@ public class toaplan2
 		PORT_BIT( 0xc3ff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sstriker = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sstriker = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sstriker )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2991,7 +2965,7 @@ public class toaplan2
 		PORT_BIT( 0xfff1, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mahoudai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mahoudai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mahoudai )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3037,7 +3011,7 @@ public class toaplan2
 		PORT_BIT( 0xffff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kingdmgp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kingdmgp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kingdmgp )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3095,7 +3069,7 @@ public class toaplan2
 		PORT_BIT( 0xfff1, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shippumd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shippumd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shippumd )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3144,7 +3118,7 @@ public class toaplan2
 		PORT_BIT( 0xffff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battleg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battleg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battleg )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3233,7 +3207,7 @@ public class toaplan2
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battlega = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlega = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlega )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3321,7 +3295,7 @@ public class toaplan2
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battlegb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlegb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlegb )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3410,7 +3384,7 @@ public class toaplan2
 		PORT_BIT( 0xfff0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_batrider = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_batrider = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( batrider )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3535,7 +3509,7 @@ public class toaplan2
 		PORT_DIPSETTING(		0xc000, "None" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bbakraid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bbakraid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bbakraid )
 		PORT_START(); 		/* (0) VBlank */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3852,8 +3826,7 @@ public class toaplan2
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tekipaki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tekipaki )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -3883,13 +3856,10 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ghox = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ghox )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -3920,13 +3890,10 @@ public class toaplan2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dogyuun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dogyuun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -3959,13 +3926,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kbash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kbash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -3998,13 +3962,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_truxton2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( truxton2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -4031,13 +3992,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pipibibs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pipibibs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4066,13 +4024,10 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_whoopee = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( whoopee )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4102,13 +4057,10 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pipibibi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pipibibi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4137,13 +4089,10 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fixeight = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fixeight )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)			/* 16MHz Oscillator */
@@ -4177,13 +4126,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vfive = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vfive )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)			/* 10MHz Oscillator */
@@ -4215,13 +4161,10 @@ public class toaplan2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_batsugun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( batsugun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4254,13 +4197,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_snowbro2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( snowbro2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -4287,13 +4227,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mahoudai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mahoudai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4324,13 +4261,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, raizing_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shippumd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shippumd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4361,13 +4295,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, raizing_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_battleg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battleg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4398,13 +4329,10 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, raizing_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, battleg_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_batrider = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( batrider )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)			/* 16MHz , 32MHz Oscillator */
@@ -4436,12 +4364,9 @@ public class toaplan2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, raizing_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, batrider_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bbakraid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bbakraid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)
@@ -4471,9 +4396,7 @@ public class toaplan2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -5027,31 +4950,31 @@ public class toaplan2
 	/* Whoopee  init   to be changed to T2_Z180   when (if) HD647180 is dumped */
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR COMPANY    FULLNAME     FLAGS ) */
-	public static GameDriver driver_tekipaki	   = new GameDriver("1991"	,"tekipaki"	,"toaplan2.java"	,rom_tekipaki,null	,machine_driver_tekipaki	,input_ports_tekipaki	,init_T2_Z180	,ROT0	,	"Toaplan", "Teki Paki", GAME_NO_SOUND )
-	public static GameDriver driver_ghox	   = new GameDriver("1991"	,"ghox"	,"toaplan2.java"	,rom_ghox,null	,machine_driver_ghox	,input_ports_ghox	,init_T2_Z180	,ROT270	,	"Toaplan", "Ghox", GAME_NO_SOUND )
-	public static GameDriver driver_dogyuun	   = new GameDriver("1992"	,"dogyuun"	,"toaplan2.java"	,rom_dogyuun,null	,machine_driver_dogyuun	,input_ports_dogyuun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Dogyuun", GAME_NO_SOUND )
-	public static GameDriver driver_kbash	   = new GameDriver("1993"	,"kbash"	,"toaplan2.java"	,rom_kbash,null	,machine_driver_kbash	,input_ports_kbash	,init_T2_Zx80	,ROT0	,	"Toaplan", "Knuckle Bash", GAME_NO_SOUND )
-	public static GameDriver driver_truxton2	   = new GameDriver("1992"	,"truxton2"	,"toaplan2.java"	,rom_truxton2,null	,machine_driver_truxton2	,input_ports_truxton2	,init_T2_noZ80	,ROT270	,	"Toaplan", "Truxton II / Tatsujin II / Tatsujin Oh (Japan)" )
-	public static GameDriver driver_pipibibs	   = new GameDriver("1991"	,"pipibibs"	,"toaplan2.java"	,rom_pipibibs,null	,machine_driver_pipibibs	,input_ports_pipibibs	,init_T2_Z80	,ROT0	,	"Toaplan", "Pipi & Bibis / Whoopee!!" )
-	public static GameDriver driver_whoopee	   = new GameDriver("1991"	,"whoopee"	,"toaplan2.java"	,rom_whoopee,driver_pipibibs	,machine_driver_whoopee	,input_ports_whoopee	,init_T2_Z80	,ROT0	,	"Toaplan", "Whoopee!! / Pipi & Bibis" )
-	public static GameDriver driver_pipibibi	   = new GameDriver("1991"	,"pipibibi"	,"toaplan2.java"	,rom_pipibibi,driver_pipibibs	,machine_driver_pipibibi	,input_ports_pipibibi	,init_pipibibi	,ROT0	,	"[Toaplan] Ryouta Kikaku", "Pipi & Bibis / Whoopee!! (bootleg ?)" )
-	public static GameDriver driver_fixeight	   = new GameDriver("1992"	,"fixeight"	,"toaplan2.java"	,rom_fixeight,null	,machine_driver_fixeight	,input_ports_fixeight	,init_fixeight	,ROT270	,	"Toaplan", "FixEight", GAME_NOT_WORKING )
-	public static GameDriver driver_grindstm	   = new GameDriver("1992"	,"grindstm"	,"toaplan2.java"	,rom_grindstm,driver_vfive	,machine_driver_vfive	,input_ports_grindstm	,init_T2_Zx80	,ROT270	,	"Toaplan", "Grind Stormer", GAME_NO_SOUND )
-	public static GameDriver driver_grindsta	   = new GameDriver("1992"	,"grindsta"	,"toaplan2.java"	,rom_grindsta,driver_vfive	,machine_driver_vfive	,input_ports_grindstm	,init_T2_Zx80	,ROT270	,	"Toaplan", "Grind Stormer (older set)", GAME_NO_SOUND )
-	public static GameDriver driver_vfive	   = new GameDriver("1993"	,"vfive"	,"toaplan2.java"	,rom_vfive,null	,machine_driver_vfive	,input_ports_vfive	,init_T2_Zx80	,ROT270	,	"Toaplan", "V-Five (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_batsugun	   = new GameDriver("1993"	,"batsugun"	,"toaplan2.java"	,rom_batsugun,null	,machine_driver_batsugun	,input_ports_batsugun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Batsugun", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_batugnsp	   = new GameDriver("1993"	,"batugnsp"	,"toaplan2.java"	,rom_batugnsp,driver_batsugun	,machine_driver_batsugun	,input_ports_batsugun	,init_T2_Zx80	,ROT270	,	"Toaplan", "Batsugun (Special Ver.)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_snowbro2	   = new GameDriver("1994"	,"snowbro2"	,"toaplan2.java"	,rom_snowbro2,null	,machine_driver_snowbro2	,input_ports_snowbro2	,init_T2_noZ80	,ROT0	,	"[Toaplan] Hanafram", "Snow Bros. 2 - With New Elves / Otenki Paradise" )
-	public static GameDriver driver_mahoudai	   = new GameDriver("1993"	,"mahoudai"	,"toaplan2.java"	,rom_mahoudai,null	,machine_driver_mahoudai	,input_ports_mahoudai	,init_T2_Z80	,ROT270	,	"Raizing (Able license)", "Mahou Daisakusen (Japan)" )
-	public static GameDriver driver_sstriker	   = new GameDriver("1993"	,"sstriker"	,"toaplan2.java"	,rom_sstriker,driver_mahoudai	,machine_driver_mahoudai	,input_ports_sstriker	,init_T2_Z80	,ROT270	,	"Raizing", "Sorcer Striker (World)" ) // from korean board
-	public static GameDriver driver_shippumd	   = new GameDriver("1994"	,"shippumd"	,"toaplan2.java"	,rom_shippumd,null	,machine_driver_shippumd	,input_ports_shippumd	,init_T2_Z80	,ROT270	,	"Raizing / Eighting", "Shippu Mahou Daisakusen (Japan)" )
-	public static GameDriver driver_kingdmgp	   = new GameDriver("1994"	,"kingdmgp"	,"toaplan2.java"	,rom_kingdmgp,driver_shippumd	,machine_driver_shippumd	,input_ports_kingdmgp	,init_T2_Z80	,ROT270	,	"Raizing / Eighting", "Kingdom Grandprix (World)" ) // from korean board, missing letters on credits screen but this is correct
-	public static GameDriver driver_battleg	   = new GameDriver("1996"	,"battleg"	,"toaplan2.java"	,rom_battleg,null	,machine_driver_battleg	,input_ports_battleg	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1996)" )
-	public static GameDriver driver_battlega	   = new GameDriver("1996"	,"battlega"	,"toaplan2.java"	,rom_battlega,driver_battleg	,machine_driver_battleg	,input_ports_battlega	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)" )
-	public static GameDriver driver_battlegb	   = new GameDriver("1996"	,"battlegb"	,"toaplan2.java"	,rom_battlegb,driver_battleg	,machine_driver_battleg	,input_ports_battlegb	,init_battleg	,ROT270	,	"Raizing / Eighting", "Battle Garegga (Austria / Hong Kong) (Sat Mar 2 1996)" ) // displays New Version when set to HK
-	public static GameDriver driver_batrider	   = new GameDriver("1998"	,"batrider"	,"toaplan2.java"	,rom_batrider,null	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Japan, version B)" )
-	public static GameDriver driver_batridra	   = new GameDriver("1998"	,"batridra"	,"toaplan2.java"	,rom_batridra,driver_batrider	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Japan, version A)" )
-	public static GameDriver driver_batridrk	   = new GameDriver("1998"	,"batridrk"	,"toaplan2.java"	,rom_batridrk,driver_batrider	,machine_driver_batrider	,input_ports_batrider	,init_battleg	,ROT270	,	"Raizing / Eighting", "Armed Police Batrider (Korea, version B)" )
-	public static GameDriver driver_bbakraid	   = new GameDriver("1999"	,"bbakraid"	,"toaplan2.java"	,rom_bbakraid,null	,machine_driver_bbakraid	,input_ports_bbakraid	,init_bbakraid	,ROT270	,	"Eighting", "Battle Bakraid (Japan) (Wed Apr 7 1999)")
-	public static GameDriver driver_bbakradu	   = new GameDriver("1999"	,"bbakradu"	,"toaplan2.java"	,rom_bbakradu,driver_bbakraid	,machine_driver_bbakraid	,input_ports_bbakraid	,init_bbakrada	,ROT270	,	"Eighting", "Battle Bakraid - Unlimited version (Japan) (Tue Jun 8 1999)")
+	GAMEX( 1991, tekipaki, 0,        tekipaki, tekipaki, T2_Z180,  ROT0,   "Toaplan", "Teki Paki", GAME_NO_SOUND )
+	GAMEX( 1991, ghox,     0,        ghox,     ghox,     T2_Z180,  ROT270, "Toaplan", "Ghox", GAME_NO_SOUND )
+	GAMEX( 1992, dogyuun,  0,        dogyuun,  dogyuun,  T2_Zx80,  ROT270, "Toaplan", "Dogyuun", GAME_NO_SOUND )
+	GAMEX( 1993, kbash,    0,        kbash,    kbash,    T2_Zx80,  ROT0,   "Toaplan", "Knuckle Bash", GAME_NO_SOUND )
+	GAME ( 1992, truxton2, 0,        truxton2, truxton2, T2_noZ80, ROT270, "Toaplan", "Truxton II / Tatsujin II / Tatsujin Oh (Japan)" )
+	GAME ( 1991, pipibibs, 0,        pipibibs, pipibibs, T2_Z80,   ROT0,   "Toaplan", "Pipi & Bibis / Whoopee!!" )
+	GAME ( 1991, whoopee,  pipibibs, whoopee,  whoopee,  T2_Z80,   ROT0,   "Toaplan", "Whoopee!! / Pipi & Bibis" )
+	GAME ( 1991, pipibibi, pipibibs, pipibibi, pipibibi, pipibibi, ROT0,   "[Toaplan] Ryouta Kikaku", "Pipi & Bibis / Whoopee!! (bootleg ?)" )
+	GAMEX( 1992, fixeight, 0,        fixeight, fixeight, fixeight, ROT270, "Toaplan", "FixEight", GAME_NOT_WORKING )
+	GAMEX( 1992, grindstm, vfive,    vfive,    grindstm, T2_Zx80,  ROT270, "Toaplan", "Grind Stormer", GAME_NO_SOUND )
+	GAMEX( 1992, grindsta, vfive,    vfive,    grindstm, T2_Zx80,  ROT270, "Toaplan", "Grind Stormer (older set)", GAME_NO_SOUND )
+	GAMEX( 1993, vfive,    0,        vfive,    vfive,    T2_Zx80,  ROT270, "Toaplan", "V-Five (Japan)", GAME_NO_SOUND )
+	GAMEX( 1993, batsugun, 0,        batsugun, batsugun, T2_Zx80,  ROT270, "Toaplan", "Batsugun", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, batugnsp, batsugun, batsugun, batsugun, T2_Zx80,  ROT270, "Toaplan", "Batsugun (Special Ver.)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1994, snowbro2, 0,        snowbro2, snowbro2, T2_noZ80, ROT0,   "[Toaplan] Hanafram", "Snow Bros. 2 - With New Elves / Otenki Paradise" )
+	GAME ( 1993, mahoudai, 0,        mahoudai, mahoudai, T2_Z80,   ROT270, "Raizing (Able license)", "Mahou Daisakusen (Japan)" )
+	GAME ( 1993, sstriker, mahoudai, mahoudai, sstriker, T2_Z80,   ROT270, "Raizing", "Sorcer Striker (World)" ) // from korean board
+	GAME ( 1994, shippumd, 0,        shippumd, shippumd, T2_Z80,   ROT270, "Raizing / Eighting", "Shippu Mahou Daisakusen (Japan)" )
+	GAME ( 1994, kingdmgp, shippumd, shippumd, kingdmgp, T2_Z80,   ROT270, "Raizing / Eighting", "Kingdom Grandprix (World)" ) // from korean board, missing letters on credits screen but this is correct
+	GAME ( 1996, battleg,  0,        battleg,  battleg,  battleg,  ROT270, "Raizing / Eighting", "Battle Garegga - Type 2 (Denmark / China) (Tue Apr 2 1996)" )
+	GAME ( 1996, battlega, battleg,  battleg,  battlega, battleg,  ROT270, "Raizing / Eighting", "Battle Garegga (Europe / USA / Japan / Asia) (Sat Feb 3 1996)" )
+	GAME ( 1996, battlegb, battleg,  battleg,  battlegb, battleg,  ROT270, "Raizing / Eighting", "Battle Garegga (Austria / Hong Kong) (Sat Mar 2 1996)" ) // displays New Version when set to HK
+	GAME ( 1998, batrider, 0,        batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Japan, version B)" )
+	GAME ( 1998, batridra, batrider, batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Japan, version A)" )
+	GAME ( 1998, batridrk, batrider, batrider, batrider, battleg,  ROT270, "Raizing / Eighting", "Armed Police Batrider (Korea, version B)" )
+	GAME ( 1999, bbakraid, 0,        bbakraid, bbakraid, bbakraid, ROT270, "Eighting", "Battle Bakraid (Japan) (Wed Apr 7 1999)")
+	GAME ( 1999, bbakradu, bbakraid, bbakraid, bbakraid, bbakrada, ROT270, "Eighting", "Battle Bakraid - Unlimited version (Japan) (Tue Jun 8 1999)")
 }

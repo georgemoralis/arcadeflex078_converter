@@ -32,7 +32,7 @@ ask.  - Mike Balfour (mab22@po.cwru.edu)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -44,23 +44,20 @@ public class redalert
 	static int sound_register_IC1 = 0;
 	static int sound_register_IC2 = 0;
 	
-	public static WriteHandlerPtr redalert_c030_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_c030_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		c030_data = data & 0x3F;
 	
 		/* Is this some type of sound command? */
-		if ((data & 0x80) != 0)
+		if (data & 0x80)
 			/* Cause an NMI on the voice CPU here? */
 			cpu_set_irq_line(2,I8085_RST75_LINE,HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr redalert_voicecommand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redalert_voicecommand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return c030_data;
 	} };
 	
-	public static WriteHandlerPtr redalert_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* The byte is connected to Port A of the AY8910 */
 		AY8910_A_input_data = data;
 	
@@ -69,13 +66,11 @@ public class redalert
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr redalert_AY8910_A_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redalert_AY8910_A_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return AY8910_A_input_data;
 	} };
 	
-	public static WriteHandlerPtr redalert_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* BC2 is connected to a pull-up resistor, so BC2=1 always */
 		switch (data)
 		{
@@ -100,18 +95,15 @@ public class redalert
 		}
 	} };
 	
-	public static ReadHandlerPtr redalert_sound_register_IC1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redalert_sound_register_IC1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_register_IC1;
 	} };
 	
-	public static WriteHandlerPtr redalert_sound_register_IC2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_sound_register_IC2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_register_IC2 = data;
 	} };
 	
-	public static WriteHandlerPtr redalert_AY8910_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_AY8910_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* I'm fairly certain this port triggers analog sounds */
 		logerror("Port B Trigger: %02X\n",data);
 		/* D0 = Formation Aircraft? */

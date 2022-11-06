@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6800;
 
@@ -220,7 +220,7 @@ public class _6800dasm
 		size = table[code][3];
 		invalid = table[code][4];
 	
-		if ((invalid & invalid_mask) != 0)	/* invalid for this cpu type ? */
+		if ( invalid & invalid_mask )	/* invalid for this cpu type ? */
 		{
 			strcpy(buf, "illegal");
 			return 1;

@@ -18,7 +18,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -241,27 +241,27 @@ public class memory
 		unmap_value = 0;
 	
 		/* init the static handlers */
-		if (init_static() == 0)
+		if (!init_static())
 			return 0;
 	
 		/* init the CPUs */
-		if (init_cpudata() == 0)
+		if (!init_cpudata())
 			return 0;
 	
 		/* verify the memory handlers and check banks */
-		if (verify_memory() == 0)
+		if (!verify_memory())
 			return 0;
-		if (verify_ports() == 0)
+		if (!verify_ports())
 			return 0;
 	
 		/* allocate memory for sparse address spaces */
-		if (allocate_memory() == 0)
+		if (!allocate_memory())
 			return 0;
 	
 		/* then fill in the tables */
-		if (populate_memory() == 0)
+		if (!populate_memory())
 			return 0;
-		if (populate_ports() == 0)
+		if (!populate_ports())
 			return 0;
 	
 		register_banks();
@@ -303,7 +303,7 @@ public class memory
 		ext = ext_memory;
 		for( ext_entry = 0; ext_entry < ext_entries; ext_entry++ )
 		{
-			free( ext.data );
+			free( ext->data );
 			ext++;
 		}
 		memset(ext_memory, 0, sizeof(ext_memory));
@@ -760,9 +760,9 @@ public class memory
 		ext = ext_memory;
 		for( ext_entry = 0; ext_entry < ext_entries; ext_entry++ )
 		{
-			if (ext.region == region && ext.start <= offset && ext.end >= offset)
+			if (ext->region == region && ext->start <= offset && ext->end >= offset)
 			{
-				return (void *)((UINT8 *)ext.data + (offset - ext.start));
+				return (void *)((UINT8 *)ext->data + (offset - ext->start));
 			}
 			ext++;
 		}
@@ -780,15 +780,15 @@ public class memory
 	void *memory_get_read_ptr(int cpunum, offs_t offset)
 	{
 		struct memport_data *memport = &cpudata[cpunum].mem;
-		struct handler_data *handlist = (memport.dbits == 32) ? rmemhandler32 : (memport.dbits == 16) ? rmemhandler16 : rmemhandler8;
-		UINT8 minbits = memport.abits - memport.ebits;
+		struct handler_data *handlist = (memport->dbits == 32) ? rmemhandler32 : (memport->dbits == 16) ? rmemhandler16 : rmemhandler8;
+		UINT8 minbits = memport->abits - memport->ebits;
 		UINT8 entry;
 	
 		/* perform the lookup */
-		offset &= memport.mask;
-		entry = memport.read.table[LEVEL1_INDEX(offset, memport.abits, minbits)];
+		offset &= memport->mask;
+		entry = memport->read.table[LEVEL1_INDEX(offset, memport->abits, minbits)];
 		if (entry >= SUBTABLE_BASE)
-			entry = memport.read.table[LEVEL2_INDEX(entry, offset, memport.abits, minbits)];
+			entry = memport->read.table[LEVEL2_INDEX(entry, offset, memport->abits, minbits)];
 	
 		/* 8-bit case: RAM/ROM/RAMROM */
 		if (entry > STATIC_RAM || (minbits == 0 && entry != STATIC_RAM))
@@ -807,15 +807,15 @@ public class memory
 	void *memory_get_write_ptr(int cpunum, offs_t offset)
 	{
 		struct memport_data *memport = &cpudata[cpunum].mem;
-		struct handler_data *handlist = (memport.dbits == 32) ? wmemhandler32 : (memport.dbits == 16) ? wmemhandler16 : wmemhandler8;
-		UINT8 minbits = memport.abits - memport.ebits;
+		struct handler_data *handlist = (memport->dbits == 32) ? wmemhandler32 : (memport->dbits == 16) ? wmemhandler16 : wmemhandler8;
+		UINT8 minbits = memport->abits - memport->ebits;
 		UINT8 entry;
 	
 		/* perform the lookup */
-		offset &= memport.mask;
-		entry = memport.write.table[LEVEL1_INDEX(offset, memport.abits, minbits)];
+		offset &= memport->mask;
+		entry = memport->write.table[LEVEL1_INDEX(offset, memport->abits, minbits)];
 		if (entry >= SUBTABLE_BASE)
-			entry = memport.write.table[LEVEL2_INDEX(entry, offset, memport.abits, minbits)];
+			entry = memport->write.table[LEVEL2_INDEX(entry, offset, memport->abits, minbits)];
 	
 		/* 8-bit case: RAM/ROM/RAMROM */
 		if (entry > STATIC_RAM || (minbits == 0 && entry != STATIC_RAM))
@@ -860,27 +860,27 @@ public class memory
 	
 	UINT8 alloc_new_subtable(const struct memport_data *memport, struct table_data *tabledata, UINT8 previous_value)
 	{
-		int l1bits = LEVEL1_BITS(memport.ebits);
-		int l2bits = LEVEL2_BITS(memport.ebits);
+		int l1bits = LEVEL1_BITS(memport->ebits);
+		int l2bits = LEVEL2_BITS(memport->ebits);
 	
 		/* make sure we don't run out */
-		if (tabledata.subtable_count + 1 == SUBTABLE_COUNT)
+		if (tabledata->subtable_count + 1 == SUBTABLE_COUNT)
 			fatalerror("error: ran out of memory subtables\n");
 	
 		/* allocate more memory if we need to */
-		if (tabledata.subtable_count <= tabledata.subtable_alloc)
+		if (tabledata->subtable_count <= tabledata->subtable_alloc)
 		{
-			tabledata.subtable_alloc += SUBTABLE_ALLOC;
-			tabledata.table = realloc(tabledata.table, (1 << l1bits) + (tabledata.subtable_alloc << l2bits));
-			if (!tabledata.table)
+			tabledata->subtable_alloc += SUBTABLE_ALLOC;
+			tabledata->table = realloc(tabledata->table, (1 << l1bits) + (tabledata->subtable_alloc << l2bits));
+			if (!tabledata->table)
 				fatalerror("error: ran out of memory allocating memory subtable\n");
 		}
 	
 		/* initialize the table entries */
-		memset(&tabledata.table[(1 << l1bits) + (tabledata.subtable_count << l2bits)], previous_value, 1 << l2bits);
+		memset(&tabledata->table[(1 << l1bits) + (tabledata->subtable_count << l2bits)], previous_value, 1 << l2bits);
 	
 		/* return the new index */
-		return SUBTABLE_BASE + tabledata.subtable_count++;
+		return SUBTABLE_BASE + tabledata->subtable_count++;
 	}
 	
 	
@@ -891,11 +891,11 @@ public class memory
 	
 	void populate_table(struct memport_data *memport, int iswrite, offs_t start, offs_t stop, UINT8 handler)
 	{
-		struct table_data *tabledata = iswrite ? &memport.write : &memport.read;
-		int minbits = DATABITS_TO_SHIFT(memport.dbits);
-		int l1bits = LEVEL1_BITS(memport.ebits);
-		int l2bits = LEVEL2_BITS(memport.ebits);
-		offs_t l2mask = LEVEL2_MASK(memport.ebits);
+		struct table_data *tabledata = iswrite ? &memport->write : &memport->read;
+		int minbits = DATABITS_TO_SHIFT(memport->dbits);
+		int l1bits = LEVEL1_BITS(memport->ebits);
+		int l2bits = LEVEL2_BITS(memport->ebits);
+		offs_t l2mask = LEVEL2_MASK(memport->ebits);
 		offs_t l1start = start >> (l2bits + minbits);
 		offs_t l2start = (start >> minbits) & l2mask;
 		offs_t l1stop = stop >> (l2bits + minbits);
@@ -909,14 +909,14 @@ public class memory
 		/* set the base for non RAM/ROM cases */
 		if (handler != STATIC_RAM && handler != STATIC_ROM && handler != STATIC_RAMROM)
 		{
-			tabledata.handlers[handler].offset = start;
-			tabledata.handlers[handler].top = stop;
+			tabledata->handlers[handler].offset = start;
+			tabledata->handlers[handler].top = stop;
 		}
 	
 		/* remember the base for banks */
 		if (handler >= STATIC_BANK1 && handler <= STATIC_BANKMAX)
 		{
-			if (iswrite != 0)
+			if (iswrite)
 				bankdata[handler].writeoffset = start;
 			else
 				bankdata[handler].readoffset = start;
@@ -926,20 +926,20 @@ public class memory
 		if (l2start != 0)
 		{
 			/* get the subtable index */
-			subindex = tabledata.table[l1start];
+			subindex = tabledata->table[l1start];
 			if (subindex < SUBTABLE_BASE)
-				subindex = tabledata.table[l1start] = alloc_new_subtable(memport, tabledata, subindex);
+				subindex = tabledata->table[l1start] = alloc_new_subtable(memport, tabledata, subindex);
 			subindex &= SUBTABLE_MASK;
 	
 			/* if the start and stop end within the same block, handle that */
 			if (l1start == l1stop)
 			{
-				memset(&tabledata.table[(1 << l1bits) + (subindex << l2bits) + l2start], handler, l2stop - l2start + 1);
+				memset(&tabledata->table[(1 << l1bits) + (subindex << l2bits) + l2start], handler, l2stop - l2start + 1);
 				return;
 			}
 	
 			/* otherwise, fill until the end */
-			memset(&tabledata.table[(1 << l1bits) + (subindex << l2bits) + l2start], handler, (1 << l2bits) - l2start);
+			memset(&tabledata->table[(1 << l1bits) + (subindex << l2bits) + l2start], handler, (1 << l2bits) - l2start);
 			if (l1start != (offs_t)~0) l1start++;
 		}
 	
@@ -947,13 +947,13 @@ public class memory
 		if (l2stop != l2mask)
 		{
 			/* get the subtable index */
-			subindex = tabledata.table[l1stop];
+			subindex = tabledata->table[l1stop];
 			if (subindex < SUBTABLE_BASE)
-				subindex = tabledata.table[l1stop] = alloc_new_subtable(memport, tabledata, subindex);
+				subindex = tabledata->table[l1stop] = alloc_new_subtable(memport, tabledata, subindex);
 			subindex &= SUBTABLE_MASK;
 	
 			/* fill from the beginning */
-			memset(&tabledata.table[(1 << l1bits) + (subindex << l2bits)], handler, l2stop + 1);
+			memset(&tabledata->table[(1 << l1bits) + (subindex << l2bits)], handler, l2stop + 1);
 	
 			/* if the start and stop end within the same block, handle that */
 			if (l1start == l1stop)
@@ -963,7 +963,7 @@ public class memory
 	
 		/* now fill in the middle tables */
 		if (l1start <= l1stop)
-			memset(&tabledata.table[l1start], handler, l1stop - l1start + 1);
+			memset(&tabledata->table[l1start], handler, l1stop - l1start + 1);
 	}
 	
 	
@@ -1004,25 +1004,25 @@ public class memory
 	
 	void install_mem_handler(struct memport_data *memport, int iswrite, offs_t start, offs_t end, void *handler)
 	{
-		struct table_data *tabledata = iswrite ? &memport.write : &memport.read;
+		struct table_data *tabledata = iswrite ? &memport->write : &memport->read;
 		UINT8 idx;
 	
 		/* translate ROM and RAMROM to RAM here for read cases */
-		if (iswrite == 0)
+		if (!iswrite)
 			if (HANDLER_IS_ROM(handler) || HANDLER_IS_RAMROM(handler))
 				handler = (void *)MRA_RAM;
 	
 		/* assign banks for sparse memory spaces */
-		if (IS_SPARSE(memport.abits) && HANDLER_IS_RAM(handler))
-			handler = (void *)assign_dynamic_bank(memport.cpunum, start);
+		if (IS_SPARSE(memport->abits) && HANDLER_IS_RAM(handler))
+			handler = (void *)assign_dynamic_bank(memport->cpunum, start);
 	
 		/* set the handler */
-		idx = get_handler_index(tabledata.handlers, handler, start);
+		idx = get_handler_index(tabledata->handlers, handler, start);
 		populate_table(memport, iswrite, start, end, idx);
 	
 		/* if this is a bank, set the bankbase as well */
 		if (HANDLER_IS_BANK(handler))
-			cpu_bankbase[HANDLER_TO_BANK(handler)] = memory_find_base(memport.cpunum, start);
+			cpu_bankbase[HANDLER_TO_BANK(handler)] = memory_find_base(memport->cpunum, start);
 	}
 	
 	
@@ -1033,8 +1033,8 @@ public class memory
 	
 	void install_port_handler(struct memport_data *memport, int iswrite, offs_t start, offs_t end, void *handler)
 	{
-		struct table_data *tabledata = iswrite ? &memport.write : &memport.read;
-		UINT8 idx = get_handler_index(tabledata.handlers, handler, start);
+		struct table_data *tabledata = iswrite ? &memport->write : &memport->read;
+		UINT8 idx = get_handler_index(tabledata->handlers, handler, start);
 		populate_table(memport, iswrite, start, end, idx);
 	}
 	
@@ -1082,7 +1082,7 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			int cputype = Machine.drv.cpu[cpunum].cpu_type;
+			int cputype = Machine->drv->cpu[cpunum].cpu_type;
 	
 			/* set the RAM/ROM base */
 			cpudata[cpunum].rambase = cpudata[cpunum].op_ram = cpudata[cpunum].op_rom = memory_region(REGION_CPU1 + cpunum);
@@ -1104,13 +1104,13 @@ public class memory
 	#if HAS_Z80
 			/* Z80 port mask kludge */
 			if (cputype == CPU_Z80)
-				if (!(Machine.drv.cpu[cpunum].cpu_flags & CPU_16BIT_PORT))
+				if (!(Machine->drv->cpu[cpunum].cpu_flags & CPU_16BIT_PORT))
 					cpudata[cpunum].port.mask = 0xff;
 	#endif
 	#if HAS_Z180
 			/* Z180 port mask kludge */
 			if (cputype == CPU_Z180)
-				if (!(Machine.drv.cpu[cpunum].cpu_flags & CPU_16BIT_PORT))
+				if (!(Machine->drv->cpu[cpunum].cpu_flags & CPU_16BIT_PORT))
 					cpudata[cpunum].port.mask = 0xff;
 	#endif
 		}
@@ -1126,34 +1126,34 @@ public class memory
 	static int init_memport(int cpunum, struct memport_data *data, int abits, int dbits, int ismemory)
 	{
 		/* determine the address and data bits */
-		data.cpunum = cpunum;
-		data.abits = abits;
-		data.dbits = dbits;
-		data.ebits = abits - DATABITS_TO_SHIFT(dbits);
-		data.mask = 0xffffffffUL >> (32 - abits);
+		data->cpunum = cpunum;
+		data->abits = abits;
+		data->dbits = dbits;
+		data->ebits = abits - DATABITS_TO_SHIFT(dbits);
+		data->mask = 0xffffffffUL >> (32 - abits);
 	
 		/* allocate memory */
-		data.read.table = malloc(1 << LEVEL1_BITS(data.ebits));
-		data.write.table = malloc(1 << LEVEL1_BITS(data.ebits));
-		if (!data.read.table)
+		data->read.table = malloc(1 << LEVEL1_BITS(data->ebits));
+		data->write.table = malloc(1 << LEVEL1_BITS(data->ebits));
+		if (!data->read.table)
 			return fatalerror("cpu #%d couldn't allocate read table\n", cpunum);
-		if (!data.write.table)
+		if (!data->write.table)
 			return fatalerror("cpu #%d couldn't allocate write table\n", cpunum);
 	
 		/* initialize everything to unmapped */
-		memset(data.read.table, STATIC_UNMAP, 1 << LEVEL1_BITS(data.ebits));
-		memset(data.write.table, STATIC_UNMAP, 1 << LEVEL1_BITS(data.ebits));
+		memset(data->read.table, STATIC_UNMAP, 1 << LEVEL1_BITS(data->ebits));
+		memset(data->write.table, STATIC_UNMAP, 1 << LEVEL1_BITS(data->ebits));
 	
 		/* initialize the pointers to the handlers */
-		if (ismemory != 0)
+		if (ismemory)
 		{
-			data.read.handlers = (dbits == 32) ? rmemhandler32 : (dbits == 16) ? rmemhandler16 : rmemhandler8;
-			data.write.handlers = (dbits == 32) ? wmemhandler32 : (dbits == 16) ? wmemhandler16 : wmemhandler8;
+			data->read.handlers = (dbits == 32) ? rmemhandler32 : (dbits == 16) ? rmemhandler16 : rmemhandler8;
+			data->write.handlers = (dbits == 32) ? wmemhandler32 : (dbits == 16) ? wmemhandler16 : wmemhandler8;
 		}
 		else
 		{
-			data.read.handlers = (dbits == 32) ? rporthandler32 : (dbits == 16) ? rporthandler16 : rporthandler8;
-			data.write.handlers = (dbits == 32) ? wporthandler32 : (dbits == 16) ? wporthandler16 : wporthandler8;
+			data->read.handlers = (dbits == 32) ? rporthandler32 : (dbits == 16) ? rporthandler16 : rporthandler8;
+			data->write.handlers = (dbits == 32) ? wporthandler32 : (dbits == 16) ? wporthandler16 : wporthandler8;
 		}
 		return 1;
 	}
@@ -1174,8 +1174,8 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			const struct Memory_ReadAddress *mra = Machine.drv.cpu[cpunum].memory_read;
-			const struct Memory_WriteAddress *mwa = Machine.drv.cpu[cpunum].memory_write;
+			const struct Memory_ReadAddress *mra = Machine->drv->cpu[cpunum].memory_read;
+			const struct Memory_WriteAddress *mwa = Machine->drv->cpu[cpunum].memory_write;
 			UINT32 width;
 			int bank;
 	
@@ -1189,50 +1189,50 @@ public class memory
 			}
 	
 			/* verify the read handlers */
-			if (mra != 0)
+			if (mra)
 			{
 				/* verify the MEMPORT_READ_START header */
-				if (mra.start == MEMPORT_MARKER && mra.end != 0)
+				if (mra->start == MEMPORT_MARKER && mra->end != 0)
 				{
-					if ((mra.end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_MEM)
+					if ((mra->end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_MEM)
 						return fatalerror("cpu #%d has port handlers in place of memory read handlers!\n", cpunum);
-					if ((mra.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
+					if ((mra->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
 						return fatalerror("cpu #%d has memory write handlers in place of memory read handlers!\n", cpunum);
-					if ((mra.end & MEMPORT_WIDTH_MASK) != width)
-						return fatalerror("cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mra.end);
+					if ((mra->end & MEMPORT_WIDTH_MASK) != width)
+						return fatalerror("cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mra->end);
 					mra++;
 				}
 	
 				/* track banks used */
 				for ( ; !IS_MEMPORT_END(mra); mra++)
-					if (!IS_MEMPORT_MARKER(mra) && HANDLER_IS_BANK(mra.handler))
+					if (!IS_MEMPORT_MARKER(mra) && HANDLER_IS_BANK(mra->handler))
 					{
-						bank = HANDLER_TO_BANK(mra.handler);
+						bank = HANDLER_TO_BANK(mra->handler);
 						bankdata[bank].used = 1;
 						bankdata[bank].cpunum = -1;
 					}
 			}
 	
 			/* verify the write handlers */
-			if (mwa != 0)
+			if (mwa)
 			{
 				/* verify the MEMPORT_WRITE_START header */
-				if (mwa.start == MEMPORT_MARKER && mwa.end != 0)
+				if (mwa->start == MEMPORT_MARKER && mwa->end != 0)
 				{
-					if ((mwa.end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_MEM)
+					if ((mwa->end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_MEM)
 						return fatalerror("cpu #%d has port handlers in place of memory write handlers!\n", cpunum);
-					if ((mwa.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
+					if ((mwa->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
 						return fatalerror("cpu #%d has memory read handlers in place of memory write handlers!\n", cpunum);
-					if ((mwa.end & MEMPORT_WIDTH_MASK) != width)
-						return fatalerror("cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mwa.end);
+					if ((mwa->end & MEMPORT_WIDTH_MASK) != width)
+						return fatalerror("cpu #%d uses wrong data width memory handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mwa->end);
 					mwa++;
 				}
 	
 				/* track banks used */
 				for (; !IS_MEMPORT_END(mwa); mwa++)
-					if (!IS_MEMPORT_MARKER(mwa) && HANDLER_IS_BANK(mwa.handler))
+					if (!IS_MEMPORT_MARKER(mwa) && HANDLER_IS_BANK(mwa->handler))
 					{
-						bank = HANDLER_TO_BANK(mwa.handler);
+						bank = HANDLER_TO_BANK(mwa->handler);
 						bankdata[bank].used = 1;
 						bankdata[bank].cpunum = -1;
 					}
@@ -1254,8 +1254,8 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			const struct IO_ReadPort *mra = Machine.drv.cpu[cpunum].port_read;
-			const struct IO_WritePort *mwa = Machine.drv.cpu[cpunum].port_write;
+			const struct IO_ReadPort *mra = Machine->drv->cpu[cpunum].port_read;
+			const struct IO_WritePort *mwa = Machine->drv->cpu[cpunum].port_write;
 			UINT32 width;
 	
 			/* determine the desired width */
@@ -1268,32 +1268,32 @@ public class memory
 			}
 	
 			/* verify the read handlers */
-			if (mra != 0)
+			if (mra)
 			{
 				/* verify the PORT_READ_START header */
-				if (mra.start == MEMPORT_MARKER && mra.end != 0)
+				if (mra->start == MEMPORT_MARKER && mra->end != 0)
 				{
-					if ((mra.end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_IO)
+					if ((mra->end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_IO)
 						return fatalerror("cpu #%d has memory handlers in place of I/O read handlers!\n", cpunum);
-					if ((mra.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
+					if ((mra->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_READ)
 						return fatalerror("cpu #%d has port write handlers in place of port read handlers!\n", cpunum);
-					if ((mra.end & MEMPORT_WIDTH_MASK) != width)
-						return fatalerror("cpu #%d uses wrong data width port handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mra.end);
+					if ((mra->end & MEMPORT_WIDTH_MASK) != width)
+						return fatalerror("cpu #%d uses wrong data width port handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mra->end);
 				}
 			}
 	
 			/* verify the write handlers */
-			if (mwa != 0)
+			if (mwa)
 			{
 				/* verify the PORT_WRITE_START header */
-				if (mwa.start == MEMPORT_MARKER && mwa.end != 0)
+				if (mwa->start == MEMPORT_MARKER && mwa->end != 0)
 				{
-					if ((mwa.end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_IO)
+					if ((mwa->end & MEMPORT_TYPE_MASK) != MEMPORT_TYPE_IO)
 						return fatalerror("cpu #%d has memory handlers in place of I/O write handlers!\n", cpunum);
-					if ((mwa.end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
+					if ((mwa->end & MEMPORT_DIRECTION_MASK) != MEMPORT_DIRECTION_WRITE)
 						return fatalerror("cpu #%d has port read handlers in place of port write handlers!\n", cpunum);
-					if ((mwa.end & MEMPORT_WIDTH_MASK) != width)
-						return fatalerror("cpu #%d uses wrong data width port handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mwa.end);
+					if ((mwa->end & MEMPORT_WIDTH_MASK) != width)
+						return fatalerror("cpu #%d uses wrong data width port handlers! (width = %d, memory = %08x)\n", cpunum,cpunum_databus_width(cpunum),mwa->end);
 				}
 			}
 		}
@@ -1335,7 +1335,7 @@ public class memory
 		ext_entries = 0;
 	
 		/* don't do it for drivers that don't have ROM (MESS needs this) */
-		if (Machine.gamedrv.rom == 0)
+		if (Machine->gamedrv->rom == 0)
 			return 1;
 	
 		/* loop over all CPUs */
@@ -1348,20 +1348,20 @@ public class memory
 			/* keep going until we break out */
 			while (1)
 			{
-				const struct Memory_ReadAddress *mra = Machine.drv.cpu[cpunum].memory_read;
-				const struct Memory_WriteAddress *mwa = Machine.drv.cpu[cpunum].memory_write;
+				const struct Memory_ReadAddress *mra = Machine->drv->cpu[cpunum].memory_read;
+				const struct Memory_WriteAddress *mwa = Machine->drv->cpu[cpunum].memory_write;
 				offs_t lowest = ~0, end, lastend;
 	
 				/* find the base of the lowest memory region that extends past the end */
-				for (mra = Machine.drv.cpu[cpunum].memory_read; !IS_MEMPORT_END(mra); mra++)
+				for (mra = Machine->drv->cpu[cpunum].memory_read; !IS_MEMPORT_END(mra); mra++)
 					if (!IS_MEMPORT_MARKER(mra))
-						if (mra.end >= size && mra.start < lowest && needs_ram(cpunum, (void *)mra.handler))
-							lowest = mra.start;
+						if (mra->end >= size && mra->start < lowest && needs_ram(cpunum, (void *)mra->handler))
+							lowest = mra->start;
 	
-				for (mwa = Machine.drv.cpu[cpunum].memory_write; !IS_MEMPORT_END(mwa); mwa++)
+				for (mwa = Machine->drv->cpu[cpunum].memory_write; !IS_MEMPORT_END(mwa); mwa++)
 					if (!IS_MEMPORT_MARKER(mwa))
-						if (mwa.end >= size && mwa.start < lowest && (mwa.base || needs_ram(cpunum, (void *)mwa.handler)))
-							lowest = mwa.start;
+						if (mwa->end >= size && mwa->start < lowest && (mwa->base || needs_ram(cpunum, (void *)mwa->handler)))
+							lowest = mwa->start;
 	
 				/* done if nothing found */
 				if (lowest == ~0)
@@ -1375,15 +1375,15 @@ public class memory
 					lastend = end;
 	
 					/* find the end of the contiguous block of memory */
-					for (mra = Machine.drv.cpu[cpunum].memory_read; !IS_MEMPORT_END(mra); mra++)
+					for (mra = Machine->drv->cpu[cpunum].memory_read; !IS_MEMPORT_END(mra); mra++)
 						if (!IS_MEMPORT_MARKER(mra))
-							if (mra.start <= end+1 && mra.end > end && needs_ram(cpunum, (void *)mra.handler))
-								end = mra.end;
+							if (mra->start <= end+1 && mra->end > end && needs_ram(cpunum, (void *)mra->handler))
+								end = mra->end;
 	
-					for (mwa = Machine.drv.cpu[cpunum].memory_write; !IS_MEMPORT_END(mwa); mwa++)
+					for (mwa = Machine->drv->cpu[cpunum].memory_write; !IS_MEMPORT_END(mwa); mwa++)
 						if (!IS_MEMPORT_MARKER(mwa))
-							if (mwa.start <= end+1 && mwa.end > end && (mwa.base || needs_ram(cpunum, (void *)mwa.handler)))
-								end = mwa.end;
+							if (mwa->start <= end+1 && mwa->end > end && (mwa->base || needs_ram(cpunum, (void *)mwa->handler)))
+								end = mwa->end;
 				}
 	
 				ext_entries++;
@@ -1393,23 +1393,23 @@ public class memory
 				}
 	
 				/* fill in the data structure */
-				ext.start = lowest;
-				ext.end = end;
-				ext.region = region;
+				ext->start = lowest;
+				ext->end = end;
+				ext->region = region;
 	
 				/* allocate memory */
-				ext.data = malloc(end+1 - lowest);
-				if (!ext.data)
+				ext->data = malloc(end+1 - lowest);
+				if (!ext->data)
 					fatalerror("malloc(%d) failed (lowest: %x - end: %x)\n", end + 1 - lowest, lowest, end);
 	
 				/* reset the memory */
-				memset(ext.data, 0, end+1 - lowest);
+				memset(ext->data, 0, end+1 - lowest);
 	
 				/* prepare for the next loop */
-				size = ext.end + 1;
+				size = ext->end + 1;
 	
 				/* check for wraparound */
-				if (size < ext.end)
+				if (size < ext->end)
 					break;
 	
 				ext++;
@@ -1431,38 +1431,38 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			const struct Memory_ReadAddress *mra, *mra_start = Machine.drv.cpu[cpunum].memory_read;
-			const struct Memory_WriteAddress *mwa, *mwa_start = Machine.drv.cpu[cpunum].memory_write;
+			const struct Memory_ReadAddress *mra, *mra_start = Machine->drv->cpu[cpunum].memory_read;
+			const struct Memory_WriteAddress *mwa, *mwa_start = Machine->drv->cpu[cpunum].memory_write;
 	
 			/* install the read handlers */
-			if (mra_start != 0)
+			if (mra_start)
 			{
 				/* first find the end and check for address bits */
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++)
-					if (IS_MEMPORT_MARKER(mra) && (mra.end & MEMPORT_ABITS_MASK))
-						cpudata[cpunum].mem.mask = 0xffffffffUL >> (32 - (mra.end & MEMPORT_ABITS_VAL_MASK));
+					if (IS_MEMPORT_MARKER(mra) && (mra->end & MEMPORT_ABITS_MASK))
+						cpudata[cpunum].mem.mask = 0xffffffffUL >> (32 - (mra->end & MEMPORT_ABITS_VAL_MASK));
 	
 				/* then work backwards */
 				for (mra--; mra >= mra_start; mra--)
 					if (!IS_MEMPORT_MARKER(mra))
-						install_mem_handler(&cpudata[cpunum].mem, 0, mra.start, mra.end, (void *)mra.handler);
+						install_mem_handler(&cpudata[cpunum].mem, 0, mra->start, mra->end, (void *)mra->handler);
 			}
 	
 			/* install the write handlers */
-			if (mwa_start != 0)
+			if (mwa_start)
 			{
 				/* first find the end and check for address bits */
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++)
-					if (IS_MEMPORT_MARKER(mwa) && (mwa.end & MEMPORT_ABITS_MASK))
-						cpudata[cpunum].mem.mask = 0xffffffffUL >> (32 - (mwa.end & MEMPORT_ABITS_VAL_MASK));
+					if (IS_MEMPORT_MARKER(mwa) && (mwa->end & MEMPORT_ABITS_MASK))
+						cpudata[cpunum].mem.mask = 0xffffffffUL >> (32 - (mwa->end & MEMPORT_ABITS_VAL_MASK));
 	
 				/* then work backwards */
 				for (mwa--; mwa >= mwa_start; mwa--)
 					if (!IS_MEMPORT_MARKER(mwa))
 					{
-						install_mem_handler(&cpudata[cpunum].mem, 1, mwa.start, mwa.end, (void *)mwa.handler);
-						if (mwa.base) *mwa.base = memory_find_base(cpunum, mwa.start);
-						if (mwa.size) *mwa.size = mwa.end - mwa.start + 1;
+						install_mem_handler(&cpudata[cpunum].mem, 1, mwa->start, mwa->end, (void *)mwa->handler);
+						if (mwa->base) *mwa->base = memory_find_base(cpunum, mwa->start);
+						if (mwa->size) *mwa->size = mwa->end - mwa->start + 1;
 					}
 			}
 		}
@@ -1482,35 +1482,35 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			const struct IO_ReadPort *mra, *mra_start = Machine.drv.cpu[cpunum].port_read;
-			const struct IO_WritePort *mwa, *mwa_start = Machine.drv.cpu[cpunum].port_write;
+			const struct IO_ReadPort *mra, *mra_start = Machine->drv->cpu[cpunum].port_read;
+			const struct IO_WritePort *mwa, *mwa_start = Machine->drv->cpu[cpunum].port_write;
 	
 			/* install the read handlers */
-			if (mra_start != 0)
+			if (mra_start)
 			{
 				/* first find the end and check for address bits */
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++)
-					if (IS_MEMPORT_MARKER(mra) && (mra.end & MEMPORT_ABITS_MASK))
-						cpudata[cpunum].port.mask = 0xffffffffUL >> (32 - (mra.end & MEMPORT_ABITS_VAL_MASK));
+					if (IS_MEMPORT_MARKER(mra) && (mra->end & MEMPORT_ABITS_MASK))
+						cpudata[cpunum].port.mask = 0xffffffffUL >> (32 - (mra->end & MEMPORT_ABITS_VAL_MASK));
 	
 				/* then work backwards */
 				for (mra--; mra != mra_start; mra--)
 					if (!IS_MEMPORT_MARKER(mra))
-						install_port_handler(&cpudata[cpunum].port, 0, mra.start, mra.end, (void *)mra.handler);
+						install_port_handler(&cpudata[cpunum].port, 0, mra->start, mra->end, (void *)mra->handler);
 			}
 	
 			/* install the write handlers */
-			if (mwa_start != 0)
+			if (mwa_start)
 			{
 				/* first find the end and check for address bits */
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++)
-					if (IS_MEMPORT_MARKER(mwa) && (mwa.end & MEMPORT_ABITS_MASK))
-						cpudata[cpunum].port.mask = 0xffffffffUL >> (32 - (mwa.end & MEMPORT_ABITS_VAL_MASK));
+					if (IS_MEMPORT_MARKER(mwa) && (mwa->end & MEMPORT_ABITS_MASK))
+						cpudata[cpunum].port.mask = 0xffffffffUL >> (32 - (mwa->end & MEMPORT_ABITS_VAL_MASK));
 	
 				/* then work backwards */
 				for (mwa--; mwa != mwa_start; mwa--)
 					if (!IS_MEMPORT_MARKER(mwa))
-						install_port_handler(&cpudata[cpunum].port, 1, mwa.start, mwa.end, (void *)mwa.handler);
+						install_port_handler(&cpudata[cpunum].port, 1, mwa->start, mwa->end, (void *)mwa->handler);
 			}
 		}
 		return 1;
@@ -1544,61 +1544,61 @@ public class memory
 	{
 		rg_map_entry **cur;
 		cur = &rg_map;
-		while(*cur && ((*cur).end < start))
-			cur = &(*cur).next;
+		while(*cur && ((*cur)->end < start))
+			cur = &(*cur)->next;
 	
 		while(start <= end)
 		{
 			int mask;
-			if(!*cur || ((*cur).start > start))
+			if(!*cur || ((*cur)->start > start))
 			{
 				rg_map_entry *e = malloc(sizeof(rg_map_entry));
-				e.start = start;
-				e.end = *cur && (*cur).start <= end ? (*cur).start - 1 : end;
-				e.flags = mode;
-				e.next = *cur;
+				e->start = start;
+				e->end = *cur && (*cur)->start <= end ? (*cur)->start - 1 : end;
+				e->flags = mode;
+				e->next = *cur;
 				*cur = e;
-				cur = &(*cur).next;
-				start = e.end + 1;
+				cur = &(*cur)->next;
+				start = e->end + 1;
 	
 				/* check for wraparound */
 				if(start == 0 || start > end)
 					return;
 			}
 	
-			if((*cur).start < start)
+			if((*cur)->start < start)
 			{
 				rg_map_entry *e = malloc(sizeof(rg_map_entry));
-				e.start = (*cur).start;
-				e.end = start - 1;
-				e.flags = (*cur).flags;
-				e.next = *cur;
-				(*cur).start = start;
+				e->start = (*cur)->start;
+				e->end = start - 1;
+				e->flags = (*cur)->flags;
+				e->next = *cur;
+				(*cur)->start = start;
 				*cur = e;
-				cur = &(*cur).next;
+				cur = &(*cur)->next;
 			}
 	
-			if((*cur).end > end)
+			if((*cur)->end > end)
 			{
 				rg_map_entry *e = malloc(sizeof(rg_map_entry));
-				e.start = start;
-				e.end = end;
-				e.flags = (*cur).flags;
-				e.next = *cur;
-				(*cur).start = end+1;
+				e->start = start;
+				e->end = end;
+				e->flags = (*cur)->flags;
+				e->next = *cur;
+				(*cur)->start = end+1;
 				*cur = e;
 			}
 	
 			mask = 0;
 	
-			if ((mode & RG_READ_MASK) != 0)
+			if (mode & RG_READ_MASK)
 				mask |= RG_READ_MASK;
-			if ((mode & RG_WRITE_MASK) != 0)
+			if (mode & RG_WRITE_MASK)
 				mask |= RG_WRITE_MASK;
 	
-			(*cur).flags = ((*cur).flags & ~mask) | mode;
-			start = (*cur).end + 1;
-			cur = &(*cur).next;
+			(*cur)->flags = ((*cur)->flags & ~mask) | mode;
+			start = (*cur)->end + 1;
+			cur = &(*cur)->next;
 	
 			/* check for wraparound */
 			if (start == 0)
@@ -1611,7 +1611,7 @@ public class memory
 		rg_map_entry *e = rg_map;
 		while(e)
 		{
-			rg_map_entry *n = e.next;
+			rg_map_entry *n = e->next;
 			free(e);
 			e = n;
 		}
@@ -1651,8 +1651,8 @@ public class memory
 		/* loop over CPUs */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			const struct Memory_ReadAddress *mra, *mra_start = Machine.drv.cpu[cpunum].memory_read;
-			const struct Memory_WriteAddress *mwa, *mwa_start = Machine.drv.cpu[cpunum].memory_write;
+			const struct Memory_ReadAddress *mra, *mra_start = Machine->drv->cpu[cpunum].memory_read;
+			const struct Memory_WriteAddress *mwa, *mwa_start = Machine->drv->cpu[cpunum].memory_write;
 			int bits = cpudata[cpunum].mem.abits;
 	//		int width = cpunum_databus_width(cpunum);
 	
@@ -1665,7 +1665,7 @@ public class memory
 			}
 	
 	
-			if (mra_start != 0)
+			if (mra_start)
 			{
 				for (mra = mra_start; !IS_MEMPORT_END(mra); mra++);
 				mra--;
@@ -1674,7 +1674,7 @@ public class memory
 					if (!IS_MEMPORT_MARKER (mra))
 					{
 						int mode;
-						mem_read_handler h = mra.handler;
+						mem_read_handler h = mra->handler;
 						if (!HANDLER_IS_STATIC (h))
 							mode = RG_DROP_READ;
 						else if (HANDLER_IS_RAM(h))
@@ -1687,7 +1687,7 @@ public class memory
 							mode = RG_DROP_READ;
 						else if (HANDLER_IS_BANK(h))
 						{
-							int size = mra.end-mra.start+1;
+							int size = mra->end-mra->start+1;
 							if (banksize[HANDLER_TO_BANK(h)] < size)
 								banksize[HANDLER_TO_BANK(h)] = size;
 							bankcpu[HANDLER_TO_BANK(h)] = cpunum;
@@ -1695,11 +1695,11 @@ public class memory
 						}
 						else
 							abort();
-						rg_add_entry(mra.start, mra.end, mode);
+						rg_add_entry(mra->start, mra->end, mode);
 					}
 				}
 			}
-			if (mwa_start != 0)
+			if (mwa_start)
 			{
 				for (mwa = mwa_start; !IS_MEMPORT_END(mwa); mwa++);
 				mwa--;
@@ -1708,9 +1708,9 @@ public class memory
 					if (!IS_MEMPORT_MARKER (mwa))
 					{
 						int mode;
-						mem_write_handler h = mwa.handler;
+						mem_write_handler h = mwa->handler;
 						if (!HANDLER_IS_STATIC (h))
-							mode = mwa.base ? RG_SAVE_WRITE : RG_DROP_WRITE;
+							mode = mwa->base ? RG_SAVE_WRITE : RG_DROP_WRITE;
 						else if (HANDLER_IS_RAM(h))
 							mode = RG_SAVE_WRITE;
 						else if (HANDLER_IS_ROM(h))
@@ -1721,7 +1721,7 @@ public class memory
 							mode = RG_DROP_WRITE;
 						else if (HANDLER_IS_BANK(h))
 						{
-							int size = mwa.end-mwa.start+1;
+							int size = mwa->end-mwa->start+1;
 							if (banksize[HANDLER_TO_BANK(h)] < size)
 								banksize[HANDLER_TO_BANK(h)] = size;
 							bankcpu[HANDLER_TO_BANK(h)] = cpunum;
@@ -1729,7 +1729,7 @@ public class memory
 						}
 						else
 							abort();
-						rg_add_entry(mwa.start, mwa.end, mode);
+						rg_add_entry(mwa->start, mwa->end, mode);
 					}
 				}
 			}
@@ -1740,27 +1740,27 @@ public class memory
 				int active = 0;
 				while (e)
 				{
-					if(e && (e.flags & (RG_SAVE_READ|RG_SAVE_WRITE)))
+					if(e && (e->flags & (RG_SAVE_READ|RG_SAVE_WRITE)))
 					{
-						if (active == 0)
+						if (!active)
 						{
 							active = 1;
-							start = e.start;
+							start = e->start;
 						}
-						end = e.end;
+						end = e->end;
 					}
-					else if (active != 0)
+					else if (active)
 					{
 						register_zone (cpunum, start, end);
 						active = 0;
 					}
 	
-					if (active && (!e.next || (e.end+1 != e.next.start)))
+					if (active && (!e->next || (e->end+1 != e->next->start)))
 					{
 						register_zone (cpunum, start, end);
 						active = 0;
 					}
-					e = e.next;
+					e = e->next;
 				}
 			}
 	
@@ -2300,7 +2300,7 @@ public class memory
 		UINT8 entry;																		\
 																							\
 		/* allow overrides */																\
-		if (opbasefunc != 0) 																	\
+		if (opbasefunc) 																	\
 		{																					\
 			pc = (*opbasefunc)(pc);															\
 			if (pc == ~0)																	\
@@ -2554,7 +2554,7 @@ public class memory
 	
 	int mem_address_bits_of_cpu(int cputype)
 	{
-		read8_handler handler = cputype_get_interface(cputype).memory_read;
+		read8_handler handler = cputype_get_interface(cputype)->memory_read;
 		int	idx;
 	
 		/* scan the table */
@@ -2596,8 +2596,7 @@ public class memory
 			return offset << shift;
 	}
 	
-	public static ReadHandlerPtr mrh8_bad  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mrh8_bad  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("cpu #%d (PC=%08X): unmapped memory byte read from %08X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset));
 		if (activecpu_address_bits() <= SPARSE_THRESH && unmap_value == 0) return cpu_bankbase[STATIC_RAM][offset];
 		return unmap_value;
@@ -2615,8 +2614,7 @@ public class memory
 		return unmap_value;
 	}
 	
-	public static WriteHandlerPtr mwh8_bad = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mwh8_bad = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("cpu #%d (PC=%08X): unmapped memory byte write to %08X = %02X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset), data);
 		if (activecpu_address_bits() <= SPARSE_THRESH) cpu_bankbase[STATIC_RAM][offset] = data;
 	} };
@@ -2631,8 +2629,7 @@ public class memory
 		if (activecpu_address_bits() <= SPARSE_THRESH) COMBINE_DATA(&((data32_t *)cpu_bankbase[STATIC_RAM])[offset]);
 	}
 	
-	public static ReadHandlerPtr prh8_bad  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr prh8_bad  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("cpu #%d (PC=%08X): unmapped port byte read from %08X\n", cpu_getactivecpu(), activecpu_get_pc(), offset);
 		return unmap_value;
 	} };
@@ -2647,8 +2644,7 @@ public class memory
 		return unmap_value;
 	}
 	
-	public static WriteHandlerPtr pwh8_bad = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pwh8_bad = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("cpu #%d (PC=%08X): unmapped port byte write to %08X = %02X\n", cpu_getactivecpu(), activecpu_get_pc(), offset, data);
 	} };
 	static WRITE16_HANDLER( pwh16_bad )
@@ -2660,74 +2656,74 @@ public class memory
 		logerror("cpu #%d (PC=%08X): unmapped port dword write to %08X = %08X & %08X\n", cpu_getactivecpu(), activecpu_get_pc(), offset*4, data, mem_mask ^ 0xffffffff);
 	}
 	
-	public static WriteHandlerPtr mwh8_rom = new WriteHandlerPtr() {public void handler(int offset, int data)       { logerror("cpu #%d (PC=%08X): byte write to ROM %08X = %02X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset), data); } };
+	public static WriteHandlerPtr mwh8_rom = new WriteHandlerPtr() {public void handler(int offset, int data)     { logerror("cpu #%d (PC=%08X): byte write to ROM %08X = %02X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset), data); } };
 	static WRITE16_HANDLER( mwh16_rom )    { logerror("cpu #%d (PC=%08X): word write to %08X = %04X & %04X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset*2), data, mem_mask ^ 0xffff); }
 	static WRITE32_HANDLER( mwh32_rom )    { logerror("cpu #%d (PC=%08X): dword write to %08X = %08X & %08X\n", cpu_getactivecpu(), activecpu_get_pc(), effective_offset(offset*4), data, mem_mask ^ 0xffffffff); }
 	
-	public static ReadHandlerPtr mrh8_nop  = new ReadHandlerPtr() { public int handler(int offset)        { return 0; } };
+	public static ReadHandlerPtr mrh8_nop  = new ReadHandlerPtr() { public int handler(int offset)      { return 0; } };
 	static READ16_HANDLER( mrh16_nop )     { return 0; }
 	static READ32_HANDLER( mrh32_nop )     { return 0; }
 	
-	public static WriteHandlerPtr mwh8_nop = new WriteHandlerPtr() {public void handler(int offset, int data)       {  } };
+	public static WriteHandlerPtr mwh8_nop = new WriteHandlerPtr() {public void handler(int offset, int data)     {  } };
 	static WRITE16_HANDLER( mwh16_nop )    {  }
 	static WRITE32_HANDLER( mwh32_nop )    {  }
 	
-	public static ReadHandlerPtr mrh8_ram  = new ReadHandlerPtr() { public int handler(int offset)        { return cpu_bankbase[STATIC_RAM][offset]; } };
-	public static WriteHandlerPtr mwh8_ram = new WriteHandlerPtr() {public void handler(int offset, int data)       { cpu_bankbase[STATIC_RAM][offset] = data; } };
+	public static ReadHandlerPtr mrh8_ram  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[STATIC_RAM][offset]; } };
+	public static WriteHandlerPtr mwh8_ram = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[STATIC_RAM][offset] = data; } };
 	
-	public static WriteHandlerPtr mwh8_ramrom = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[STATIC_RAM][offset] = cpu_bankbase[STATIC_RAM][offset + (OP_ROM - OP_RAM)] = data; } };
+	public static WriteHandlerPtr mwh8_ramrom = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[STATIC_RAM][offset] = cpu_bankbase[STATIC_RAM][offset + (OP_ROM - OP_RAM)] = data; } };
 	static WRITE16_HANDLER( mwh16_ramrom ) { COMBINE_DATA(&cpu_bankbase[STATIC_RAM][offset*2]); COMBINE_DATA(&cpu_bankbase[0][offset*2 + (OP_ROM - OP_RAM)]); }
 	static WRITE32_HANDLER( mwh32_ramrom ) { COMBINE_DATA(&cpu_bankbase[STATIC_RAM][offset*4]); COMBINE_DATA(&cpu_bankbase[0][offset*4 + (OP_ROM - OP_RAM)]); }
 	
-	public static ReadHandlerPtr mrh8_bank1  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[1][offset]; } };
-	public static ReadHandlerPtr mrh8_bank2  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[2][offset]; } };
-	public static ReadHandlerPtr mrh8_bank3  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[3][offset]; } };
-	public static ReadHandlerPtr mrh8_bank4  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[4][offset]; } };
-	public static ReadHandlerPtr mrh8_bank5  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[5][offset]; } };
-	public static ReadHandlerPtr mrh8_bank6  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[6][offset]; } };
-	public static ReadHandlerPtr mrh8_bank7  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[7][offset]; } };
-	public static ReadHandlerPtr mrh8_bank8  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[8][offset]; } };
-	public static ReadHandlerPtr mrh8_bank9  = new ReadHandlerPtr() { public int handler(int offset)      { return cpu_bankbase[9][offset]; } };
-	public static ReadHandlerPtr mrh8_bank10  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[10][offset]; } };
-	public static ReadHandlerPtr mrh8_bank11  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[11][offset]; } };
-	public static ReadHandlerPtr mrh8_bank12  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[12][offset]; } };
-	public static ReadHandlerPtr mrh8_bank13  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[13][offset]; } };
-	public static ReadHandlerPtr mrh8_bank14  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[14][offset]; } };
-	public static ReadHandlerPtr mrh8_bank15  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[15][offset]; } };
-	public static ReadHandlerPtr mrh8_bank16  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[16][offset]; } };
-	public static ReadHandlerPtr mrh8_bank17  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[17][offset]; } };
-	public static ReadHandlerPtr mrh8_bank18  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[18][offset]; } };
-	public static ReadHandlerPtr mrh8_bank19  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[19][offset]; } };
-	public static ReadHandlerPtr mrh8_bank20  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[20][offset]; } };
-	public static ReadHandlerPtr mrh8_bank21  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[21][offset]; } };
-	public static ReadHandlerPtr mrh8_bank22  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[22][offset]; } };
-	public static ReadHandlerPtr mrh8_bank23  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[23][offset]; } };
-	public static ReadHandlerPtr mrh8_bank24  = new ReadHandlerPtr() { public int handler(int offset)     { return cpu_bankbase[24][offset]; } };
+	public static ReadHandlerPtr mrh8_bank1  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[1][offset]; } };
+	public static ReadHandlerPtr mrh8_bank2  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[2][offset]; } };
+	public static ReadHandlerPtr mrh8_bank3  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[3][offset]; } };
+	public static ReadHandlerPtr mrh8_bank4  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[4][offset]; } };
+	public static ReadHandlerPtr mrh8_bank5  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[5][offset]; } };
+	public static ReadHandlerPtr mrh8_bank6  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[6][offset]; } };
+	public static ReadHandlerPtr mrh8_bank7  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[7][offset]; } };
+	public static ReadHandlerPtr mrh8_bank8  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[8][offset]; } };
+	public static ReadHandlerPtr mrh8_bank9  = new ReadHandlerPtr() { public int handler(int offset)    { return cpu_bankbase[9][offset]; } };
+	public static ReadHandlerPtr mrh8_bank10  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[10][offset]; } };
+	public static ReadHandlerPtr mrh8_bank11  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[11][offset]; } };
+	public static ReadHandlerPtr mrh8_bank12  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[12][offset]; } };
+	public static ReadHandlerPtr mrh8_bank13  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[13][offset]; } };
+	public static ReadHandlerPtr mrh8_bank14  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[14][offset]; } };
+	public static ReadHandlerPtr mrh8_bank15  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[15][offset]; } };
+	public static ReadHandlerPtr mrh8_bank16  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[16][offset]; } };
+	public static ReadHandlerPtr mrh8_bank17  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[17][offset]; } };
+	public static ReadHandlerPtr mrh8_bank18  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[18][offset]; } };
+	public static ReadHandlerPtr mrh8_bank19  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[19][offset]; } };
+	public static ReadHandlerPtr mrh8_bank20  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[20][offset]; } };
+	public static ReadHandlerPtr mrh8_bank21  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[21][offset]; } };
+	public static ReadHandlerPtr mrh8_bank22  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[22][offset]; } };
+	public static ReadHandlerPtr mrh8_bank23  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[23][offset]; } };
+	public static ReadHandlerPtr mrh8_bank24  = new ReadHandlerPtr() { public int handler(int offset)   { return cpu_bankbase[24][offset]; } };
 	
-	public static WriteHandlerPtr mwh8_bank1 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[1][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank2 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[2][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank3 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[3][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank4 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[4][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank5 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[5][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank6 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[6][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank7 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[7][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank8 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[8][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank9 = new WriteHandlerPtr() {public void handler(int offset, int data)     { cpu_bankbase[9][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank10 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[10][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank11 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[11][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank12 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[12][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank13 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[13][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank14 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[14][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank15 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[15][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank16 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[16][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank17 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[17][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank18 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[18][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank19 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[19][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank20 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[20][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank21 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[21][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank22 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[22][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank23 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[23][offset] = data; } };
-	public static WriteHandlerPtr mwh8_bank24 = new WriteHandlerPtr() {public void handler(int offset, int data)    { cpu_bankbase[24][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank1 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[1][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank2 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[2][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank3 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[3][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank4 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[4][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank5 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[5][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank6 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[6][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank7 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[7][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank8 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[8][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank9 = new WriteHandlerPtr() {public void handler(int offset, int data)   { cpu_bankbase[9][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank10 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[10][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank11 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[11][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank12 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[12][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank13 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[13][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank14 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[14][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank15 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[15][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank16 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[16][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank17 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[17][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank18 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[18][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank19 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[19][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank20 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[20][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank21 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[21][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank22 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[22][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank23 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[23][offset] = data; } };
+	public static WriteHandlerPtr mwh8_bank24 = new WriteHandlerPtr() {public void handler(int offset, int data)  { cpu_bankbase[24][offset] = data; } };
 	
 	
 	/*-------------------------------------------------
@@ -2815,33 +2811,33 @@ public class memory
 			"nop",			"unused 1",		"unused 2",		"unmapped"
 		};
 	
-		int minbits = DATABITS_TO_SHIFT(memport.dbits);
-		int l1bits = LEVEL1_BITS(memport.ebits);
-		int l2bits = LEVEL2_BITS(memport.ebits);
+		int minbits = DATABITS_TO_SHIFT(memport->dbits);
+		int l1bits = LEVEL1_BITS(memport->ebits);
+		int l2bits = LEVEL2_BITS(memport->ebits);
 		int l1count = 1 << l1bits;
 		int l2count = 1 << l2bits;
 		int i, j;
 	
-		fprintf(file, "  Address bits = %d\n", memport.abits);
-		fprintf(file, "     Data bits = %d\n", memport.dbits);
-		fprintf(file, "Effective bits = %d\n", memport.ebits);
+		fprintf(file, "  Address bits = %d\n", memport->abits);
+		fprintf(file, "     Data bits = %d\n", memport->dbits);
+		fprintf(file, "Effective bits = %d\n", memport->ebits);
 		fprintf(file, "       L1 bits = %d\n", l1bits);
 		fprintf(file, "       L2 bits = %d\n", l2bits);
-		fprintf(file, "  Address mask = %X\n", memport.mask);
+		fprintf(file, "  Address mask = %X\n", memport->mask);
 		fprintf(file, "\n");
 	
 		for (i = 0; i < l1count; i++)
 		{
-			UINT8 entry = table.table[i];
+			UINT8 entry = table->table[i];
 			if (entry != STATIC_UNMAP)
 			{
 				fprintf(file, "%05X  %08X-%08X    = %02X: ", i,
 						i << (l2bits + minbits),
 						((i+1) << (l2bits + minbits)) - 1, entry);
 				if (entry < STATIC_COUNT)
-					fprintf(file, "%s [offset=%08X]\n", strings[entry], table.handlers[entry].offset);
+					fprintf(file, "%s [offset=%08X]\n", strings[entry], table->handlers[entry].offset);
 				else if (entry < SUBTABLE_BASE)
-					fprintf(file, "handler(%08X) [offset=%08X]\n", (UINT32)table.handlers[entry].handler, table.handlers[entry].offset);
+					fprintf(file, "handler(%08X) [offset=%08X]\n", (UINT32)table->handlers[entry].handler, table->handlers[entry].offset);
 				else
 				{
 					fprintf(file, "subtable %d\n", entry & SUBTABLE_MASK);
@@ -2849,16 +2845,16 @@ public class memory
 	
 					for (j = 0; j < l2count; j++)
 					{
-						UINT8 entry2 = table.table[(1 << l1bits) + (entry << l2bits) + j];
+						UINT8 entry2 = table->table[(1 << l1bits) + (entry << l2bits) + j];
 						if (entry2 != STATIC_UNMAP)
 						{
 							fprintf(file, "   %05X  %08X-%08X = %02X: ", j,
 									(i << (l2bits + minbits)) | (j << minbits),
 									((i << (l2bits + minbits)) | ((j+1) << minbits)) - 1, entry2);
 							if (entry2 < STATIC_COUNT)
-								fprintf(file, "%s [offset=%08X]\n", strings[entry2], table.handlers[entry2].offset);
+								fprintf(file, "%s [offset=%08X]\n", strings[entry2], table->handlers[entry2].offset);
 							else if (entry2 < SUBTABLE_BASE)
-								fprintf(file, "handler(%08X) [offset=%08X]\n", (UINT32)table.handlers[entry2].handler, table.handlers[entry2].offset);
+								fprintf(file, "handler(%08X) [offset=%08X]\n", (UINT32)table->handlers[entry2].handler, table->handlers[entry2].offset);
 							else
 								fprintf(file, "subtable %d???????????\n", entry2 & SUBTABLE_MASK);
 						}
@@ -2874,7 +2870,7 @@ public class memory
 		int cpunum;
 	
 		/* skip if we can't open the file */
-		if (file == 0)
+		if (!file)
 			return;
 	
 		/* loop over CPUs */
@@ -2938,123 +2934,123 @@ public class memory
 	
 		for (i = 0;drivers[i];i++)
 		{
-			const struct RomModule *romp = drivers[i].rom;
-			if (romp != 0)
+			const struct RomModule *romp = drivers[i]->rom;
+			if (romp)
 			{
 				for (cpunum = 0;cpunum < MAX_CPU;cpunum++)
 				{
-					if (drivers[i].drv.cpu[cpunum].cpu_type)
+					if (drivers[i]->drv->cpu[cpunum].cpu_type)
 					{
-						const struct Memory_ReadAddress *mra = drivers[i].drv.cpu[cpunum].memory_read;
-						const struct Memory_WriteAddress *mwa = drivers[i].drv.cpu[cpunum].memory_write;
-						const struct IO_ReadPort *iora = drivers[i].drv.cpu[cpunum].port_read;
-						const struct IO_WritePort *iowa = drivers[i].drv.cpu[cpunum].port_write;
+						const struct Memory_ReadAddress *mra = drivers[i]->drv->cpu[cpunum].memory_read;
+						const struct Memory_WriteAddress *mwa = drivers[i]->drv->cpu[cpunum].memory_write;
+						const struct IO_ReadPort *iora = drivers[i]->drv->cpu[cpunum].port_read;
+						const struct IO_WritePort *iowa = drivers[i]->drv->cpu[cpunum].port_write;
 	
-						if (mra != 0)
+						if (mra)
 							for ( ; !IS_MEMPORT_END(mra); mra++)
 								if (!IS_MEMPORT_MARKER(mra))
 								{
-									size_t size = mra.end - mra.start + 1;
-									if (size != 0)
+									size_t size = mra->end - mra->start + 1;
+									if (size)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
 										{
-											if (!track_entry((void *)mra, (void *)mra.handler))
-												printf("%s: %s cpu %d readmem inval size  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mra.start, mra.end);
+											if (!track_entry((void *)mra, (void *)mra->handler))
+												printf("%s: %s cpu %d readmem inval size  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mra->start, mra->end);
 										}
 									}
 									size--;
-									if ((mra.start & size) != 0)
+									if ((mra->start & size) != 0)
 									{
-										if (!track_entry((void *)mra, (void *)mra.handler))
-											printf("%s: %s cpu %d readmem inval start { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mra.start, mra.end);
+										if (!track_entry((void *)mra, (void *)mra->handler))
+											printf("%s: %s cpu %d readmem inval start { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mra->start, mra->end);
 									}
-									if ((mra.end & size) != size)
+									if ((mra->end & size) != size)
 									{
-										if (!track_entry((void *)mra, (void *)mra.handler))
-											printf("%s: %s cpu %d readmem inval end  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mra.start, mra.end);
+										if (!track_entry((void *)mra, (void *)mra->handler))
+											printf("%s: %s cpu %d readmem inval end  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mra->start, mra->end);
 									}
 								}
 	
-						if (mwa != 0)
+						if (mwa)
 							for ( ; !IS_MEMPORT_END(mwa); mwa++)
 								if (!IS_MEMPORT_MARKER(mwa))
 								{
-									size_t size = mwa.end - mwa.start + 1;
-									if (size != 0)
+									size_t size = mwa->end - mwa->start + 1;
+									if (size)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
 										{
-											if (!track_entry((void *)mwa, (void *)mwa.handler))
-												printf("%s: %s cpu %d writemem inval size  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mwa.start, mwa.end);
+											if (!track_entry((void *)mwa, (void *)mwa->handler))
+												printf("%s: %s cpu %d writemem inval size  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mwa->start, mwa->end);
 										}
 									}
 									size--;
-									if ((mwa.start & size) != 0)
+									if ((mwa->start & size) != 0)
 									{
-										if (!track_entry((void *)mwa, (void *)mwa.handler))
-											printf("%s: %s cpu %d writemem inval start { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mwa.start, mwa.end);
+										if (!track_entry((void *)mwa, (void *)mwa->handler))
+											printf("%s: %s cpu %d writemem inval start { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mwa->start, mwa->end);
 									}
-									if ((mwa.end & size) != size)
+									if ((mwa->end & size) != size)
 									{
-										if (!track_entry((void *)mwa, (void *)mwa.handler))
-											printf("%s: %s cpu %d writemem inval end  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, mwa.start, mwa.end);
+										if (!track_entry((void *)mwa, (void *)mwa->handler))
+											printf("%s: %s cpu %d writemem inval end  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, mwa->start, mwa->end);
 									}
 								}
 	
-						if (iora != 0)
+						if (iora)
 							for ( ; !IS_MEMPORT_END(iora); iora++)
 								if (!IS_MEMPORT_MARKER(iora))
 								{
-									size_t size = iora.end - iora.start + 1;
-									if (size != 0)
+									size_t size = iora->end - iora->start + 1;
+									if (size)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
 										{
-											if (!track_entry((void *)iora, (void *)iora.handler))
-												printf("%s: %s cpu %d readmem inval size  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iora.start, iora.end);
+											if (!track_entry((void *)iora, (void *)iora->handler))
+												printf("%s: %s cpu %d readmem inval size  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iora->start, iora->end);
 										}
 									}
 									size--;
-									if ((iora.start & size) != 0)
+									if ((iora->start & size) != 0)
 									{
-										if (!track_entry((void *)iora, (void *)iora.handler))
-											printf("%s: %s cpu %d readmem inval start { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iora.start, iora.end);
+										if (!track_entry((void *)iora, (void *)iora->handler))
+											printf("%s: %s cpu %d readmem inval start { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iora->start, iora->end);
 									}
-									if ((iora.end & size) != size)
+									if ((iora->end & size) != size)
 									{
-										if (!track_entry((void *)iora, (void *)iora.handler))
-											printf("%s: %s cpu %d readmem inval end  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iora.start, iora.end);
+										if (!track_entry((void *)iora, (void *)iora->handler))
+											printf("%s: %s cpu %d readmem inval end  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iora->start, iora->end);
 									}
 								}
 	
-						if (iowa != 0)
+						if (iowa)
 							for ( ; !IS_MEMPORT_END(iowa); iowa++)
 								if (!IS_MEMPORT_MARKER(iowa))
 								{
-									size_t size = iowa.end - iowa.start + 1;
-									if (size != 0)
+									size_t size = iowa->end - iowa->start + 1;
+									if (size)
 									{
 										while (!(size & 1)) size >>= 1;
 										if (size != 1)
 										{
-											if (!track_entry((void *)iowa, (void *)iowa.handler))
-												printf("%s: %s cpu %d writemem inval size  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iowa.start, iowa.end);
+											if (!track_entry((void *)iowa, (void *)iowa->handler))
+												printf("%s: %s cpu %d writemem inval size  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iowa->start, iowa->end);
 										}
 									}
 									size--;
-									if ((iowa.start & size) != 0)
+									if ((iowa->start & size) != 0)
 									{
-										if (!track_entry((void *)iowa, (void *)iowa.handler))
-											printf("%s: %s cpu %d writemem inval start { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iowa.start, iowa.end);
+										if (!track_entry((void *)iowa, (void *)iowa->handler))
+											printf("%s: %s cpu %d writemem inval start { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iowa->start, iowa->end);
 									}
-									if ((iowa.end & size) != size)
+									if ((iowa->end & size) != size)
 									{
-										if (!track_entry((void *)iowa, (void *)iowa.handler))
-											printf("%s: %s cpu %d writemem inval end  { %08X, %08X }\n", drivers[i].source_file, drivers[i].name, cpunum, iowa.start, iowa.end);
+										if (!track_entry((void *)iowa, (void *)iowa->handler))
+											printf("%s: %s cpu %d writemem inval end  { %08X, %08X }\n", drivers[i]->source_file, drivers[i]->name, cpunum, iowa->start, iowa->end);
 									}
 								}
 					}

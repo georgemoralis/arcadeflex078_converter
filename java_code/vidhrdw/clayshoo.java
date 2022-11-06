@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_clayshoo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_clayshoo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff);  /* white */
 	} };
@@ -35,8 +34,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr clayshoo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr clayshoo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y;
 		int i;
 	
@@ -46,7 +44,7 @@ public class clayshoo
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel.handler(tmpbitmap, x, y, (data & 0x80) ? Machine.pens[1] : Machine.pens[0]);
+			plot_pixel(tmpbitmap, x, y, (data & 0x80) ? Machine->pens[1] : Machine->pens[0]);
 	
 			x++;
 			data <<= 1;

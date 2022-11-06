@@ -332,8 +332,7 @@ int K054338_vh_start(void);
 WRITE16_HANDLER( K054338_word_w ); // "CLCT" registers
 WRITE32_HANDLER( K054338_long_w );
 int K054338_read_register(int reg);
-void K054338_update_all_shadows(void);								// called at the beginning of public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-void K054338_fill_solid_bg(struct mame_bitmap *bitmap);				// solid backcolor fill
+void K054338_update_all_shadows(void);								// called at the beginning of public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)void K054338_fill_solid_bg(struct mame_bitmap *bitmap);				// solid backcolor fill
 void K054338_fill_backcolor(struct mame_bitmap *bitmap, int mode);	// unified fill, 0=solid, 1=gradient
 int  K054338_set_alpha_level(int pblend);							// blend style 0-2
 void K054338_invert_alpha(int invert);								// 0=0x00(invis)-0x1f(solid), 1=0x1f(invis)-0x00(solod)

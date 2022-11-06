@@ -38,7 +38,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,26 +47,19 @@ public class freekick
 	
 	
 	
-	VIDEO_START(freekick);
-	VIDEO_UPDATE(gigas);
-	VIDEO_UPDATE(pbillrd);
-	VIDEO_UPDATE(freekick);
 	
 	static int oigas_inval,oigas_outval,oigas_cnt;//oigas
 	static int romaddr;
 	
-	public static WriteHandlerPtr snd_rom_addr_l_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snd_rom_addr_l_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		romaddr = (romaddr & 0xff00) | data;
 	} };
 	
-	public static WriteHandlerPtr snd_rom_addr_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snd_rom_addr_h_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		romaddr = (romaddr & 0x00ff) | (data << 8);
 	} };
 	
-	public static ReadHandlerPtr snd_rom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snd_rom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_USER1)[romaddr & 0x7fff];
 	} };
 	
@@ -81,62 +74,53 @@ public class freekick
 		{ NULL,             NULL },				/* Port C write */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_freekckb  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_freekckb  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
 	
-	public static WriteHandlerPtr flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* flip Y/X could be the other way round... */
-		if (offset != 0)
+		if (offset)
 			flip_screen_y_set(~data & 1);
 		else
 			flip_screen_x_set(~data & 1);
 	} };
 	
-	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,~data & 1);
 	} };
 	
 	
 	static int spinner;
 	
-	public static WriteHandlerPtr spinner_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spinner_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spinner = data & 1;
 	} };
 	
-	public static ReadHandlerPtr spinner_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spinner_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(5 + spinner);
 	} };
 	
-	public static ReadHandlerPtr gigas_spinner_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gigas_spinner_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport( spinner );
 	} };
 	
 	
 	
-	public static WriteHandlerPtr pbillrd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pbillrd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x10000 + 0x4000 * (data & 1));
 	} };
 	
 	
 	static int nmi_en;
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_en = data & 1;
 	} };
 	
-	public static InterruptHandlerPtr freekick_irqgen = new InterruptHandlerPtr() {public void handler()
-	{
-		if (nmi_en != 0) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
+	public static InterruptHandlerPtr freekick_irqgen = new InterruptHandlerPtr() {public void handler(){
+		if (nmi_en) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
 	public static Memory_ReadAddress gigas_readmem[]={
@@ -184,18 +168,16 @@ public class freekick
 	
 	
 	
-	static WRITE_HANDLER(oigas_5_w)
-	{
+	public static WriteHandlerPtr oigas_5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(data>0xc0&&data<0xe0)oigas_cnt=1;
 		switch(oigas_cnt)
 		{
 		  case 1: oigas_inval=data<<8;break;
 		  case 2: oigas_inval|=data;break;
 		}
-	}
+	} };
 	
-	static READ_HANDLER(oigas_3_r)
-	{
+	public static ReadHandlerPtr oigas_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(++oigas_cnt)
 		{
 		  case 2: return ~(oigas_inval>>8);
@@ -228,12 +210,11 @@ public class freekick
 		   case 5: oigas_cnt=0;return oigas_outval&0xff;
 		}
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER(oigas_2_r)
-	{
+	public static ReadHandlerPtr oigas_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 1;
-	}
+	} };
 	
 	public static IO_ReadPort oigas_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -321,15 +302,13 @@ public class freekick
 	
 	static int ff_data;
 	
-	static READ_HANDLER (freekick_ff_r)
-	{
+	public static ReadHandlerPtr freekick_ff_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ff_data;
-	}
+	} };
 	
-	static WRITE_HANDLER (freekick_ff_w)
-	{
+	public static WriteHandlerPtr freekick_ff_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ff_data = data;
-	}
+	} };
 	
 	public static IO_ReadPort freekckb_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -343,7 +322,7 @@ public class freekick
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_gigas = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gigas = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gigas )
 	
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_REVERSE, 30, 15, 0, 0 );
@@ -435,7 +414,7 @@ public class freekick
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gigasm2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gigasm2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gigasm2 )
 	
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_REVERSE, 30, 15, 0, 0 );
@@ -527,7 +506,7 @@ public class freekick
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pbillrd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pbillrd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pbillrd )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -610,7 +589,7 @@ public class freekick
 		PORT_DIPSETTING(    0xd0, DEF_STR( "1C_5C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_freekckb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_freekckb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( freekckb )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x01, "3" );
@@ -770,8 +749,7 @@ public class freekick
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_pbillrd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pbillrd )
 		MDRV_CPU_ADD(Z80, 12000000/2)	/* 6 MHz? */
 		MDRV_CPU_MEMORY(pbillrd_readmem,pbillrd_writemem)
 		MDRV_CPU_PERIODIC_INT(irq0_line_pulse,60*3) //??
@@ -793,12 +771,9 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_freekckb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( freekckb )
 		MDRV_CPU_ADD(Z80, 12000000/2)	/* 6 MHz? */
 		MDRV_CPU_MEMORY(freekckb_readmem,freekckb_writemem)
 		MDRV_CPU_PORTS(freekckb_readport,freekckb_writeport)
@@ -822,12 +797,9 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gigas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gigas )
 		MDRV_CPU_ADD_TAG("main",Z80, 18432000/6)	//confirmed
 		MDRV_CPU_MEMORY(gigas_readmem,gigas_writemem)
 		MDRV_CPU_PORTS(gigas_readport,gigas_writeport)
@@ -850,18 +822,13 @@ public class freekick
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_oigas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( oigas )
 		MDRV_IMPORT_FROM(gigas)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(oigas_readport,oigas_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* roms */
 	
@@ -1117,20 +1084,19 @@ public class freekick
 		ROM_LOAD( "3.pr",    0x0500, 0x0100, CRC(28b5ee4c) SHA1(e21b9c38f433dca1e8894619b1d9f0389a81b48a) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT(gigas)
-	{
+	public static DriverInitHandlerPtr init_gigas  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 		memory_set_opcode_base(0,rom+diff);
-	}
+	} };
 	
-	public static GameDriver driver_gigasb	   = new GameDriver("1986"	,"gigasb"	,"freekick.java"	,rom_gigasb,null	,machine_driver_gigas	,input_ports_gigas	,init_gigas	,ROT270	,	"bootleg", "Gigas (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_oigas	   = new GameDriver("1986"	,"oigas"	,"freekick.java"	,rom_oigas,driver_gigasb	,machine_driver_oigas	,input_ports_gigas	,init_gigas	,ROT270	,	"bootleg", "Oigas (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gigasm2b	   = new GameDriver("1986"	,"gigasm2b"	,"freekick.java"	,rom_gigasm2b,null	,machine_driver_gigas	,input_ports_gigasm2	,init_gigas	,ROT270	,	"bootleg", "Gigas Mark II (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_pbillrd	   = new GameDriver("1987"	,"pbillrd"	,"freekick.java"	,rom_pbillrd,null	,machine_driver_pbillrd	,input_ports_pbillrd	,null	,ROT0	,	"Nihon System", "Perfect Billiard" )
-	public static GameDriver driver_pbillrds	   = new GameDriver("1987"	,"pbillrds"	,"freekick.java"	,rom_pbillrds,driver_pbillrd	,machine_driver_pbillrd	,input_ports_pbillrd	,null	,ROT0	,	"Nihon System", "Perfect Billiard (Sega)", GAME_UNEMULATED_PROTECTION )	// encrypted
-	public static GameDriver driver_freekick	   = new GameDriver("1987"	,"freekick"	,"freekick.java"	,rom_freekick,null	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT270	,	"Nihon System (Sega license)", "Free Kick", GAME_NOT_WORKING )
-	public static GameDriver driver_freekckb	   = new GameDriver("1987"	,"freekckb"	,"freekick.java"	,rom_freekckb,driver_freekick	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT270	,	"bootleg", "Free Kick (bootleg)" )
-	public static GameDriver driver_countrun	   = new GameDriver("198?"	,"countrun"	,"freekick.java"	,rom_countrun,null	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT0	,	"Nihon System (Sega license)", "Counter Run", GAME_NOT_WORKING )
-	public static GameDriver driver_countrnb	   = new GameDriver("198?"	,"countrnb"	,"freekick.java"	,rom_countrnb,driver_countrun	,machine_driver_freekckb	,input_ports_freekckb	,null	,ROT0	,	"bootleg", "Counter Run (bootleg)", GAME_NOT_WORKING )
+	GAMEX(1986, gigasb,   0,        gigas,    gigas,    gigas, ROT270, "bootleg", "Gigas (bootleg)", GAME_NO_COCKTAIL )
+	GAMEX(1986, oigas,    gigasb,   oigas,    gigas,    gigas, ROT270, "bootleg", "Oigas (bootleg)", GAME_NO_COCKTAIL )
+	GAMEX(1986, gigasm2b, 0,        gigas,    gigasm2,  gigas, ROT270, "bootleg", "Gigas Mark II (bootleg)", GAME_NO_COCKTAIL )
+	GAME( 1987, pbillrd,  0,        pbillrd,  pbillrd,  0,     ROT0,   "Nihon System", "Perfect Billiard" )
+	GAMEX(1987, pbillrds, pbillrd,  pbillrd,  pbillrd,  0,     ROT0,   "Nihon System", "Perfect Billiard (Sega)", GAME_UNEMULATED_PROTECTION )	// encrypted
+	GAMEX(1987, freekick, 0,        freekckb, freekckb, 0,     ROT270, "Nihon System (Sega license)", "Free Kick", GAME_NOT_WORKING )
+	GAME( 1987, freekckb, freekick, freekckb, freekckb, 0,     ROT270, "bootleg", "Free Kick (bootleg)" )
+	GAMEX(198?, countrun, 0,        freekckb, freekckb, 0,     ROT0,   "Nihon System (Sega license)", "Counter Run", GAME_NOT_WORKING )
+	GAMEX(198?, countrnb, countrun, freekckb, freekckb, 0,     ROT0,   "bootleg", "Counter Run (bootleg)", GAME_NOT_WORKING )
 }

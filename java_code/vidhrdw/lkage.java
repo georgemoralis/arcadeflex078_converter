@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class lkage
 	
 	struct tilemap *bg_tilemap, *fg_tilemap, *tx_tilemap;
 	
-	public static WriteHandlerPtr lkage_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lkage_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
@@ -85,8 +84,7 @@ public class lkage
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_lkage  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lkage  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tile_bank = fg_tile_bank = 0;
 	
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
@@ -110,7 +108,7 @@ public class lkage
 	{
 		const unsigned char *finish = spriteram;
 		const unsigned char *source = spriteram+0x60-4;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		while( source>=finish )
 		{
@@ -135,7 +133,7 @@ public class lkage
 				int sy = 256 -16*height -source[1];
 				int sprite_number = source[3] + ((attributes & 0x04) << 6);
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 240 - sx - 6;
 					flipx = NOT(flipx);
@@ -143,7 +141,7 @@ public class lkage
 				else
 					sx -= 23;
 				sx = ((sx + 8) & 0xff) - 8;
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 256 - 16*height - sy;
 					flipy = NOT(flipy);
@@ -183,8 +181,7 @@ public class lkage
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lkage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flip_screen_x_set(~lkage_vreg[2] & 0x01);
 		flip_screen_y_set(~lkage_vreg[2] & 0x02);
 	

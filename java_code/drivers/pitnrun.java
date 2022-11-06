@@ -65,53 +65,37 @@ K1000233A
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class pitnrun
 {
 	
-	WRITE_HANDLER (pitnrun_68705_portA_w);
-	WRITE_HANDLER (pitnrun_68705_portB_w);
-	
-	READ_HANDLER (pitnrun_68705_portA_r);
-	READ_HANDLER (pitnrun_68705_portB_r);
-	READ_HANDLER (pitnrun_68705_portC_r);
 	
 	
 	
 	
-	WRITE_HANDLER(pitnrun_ha_w);
-	WRITE_HANDLER(pitnrun_h_heed_w);
-	WRITE_HANDLER(pitnrun_v_heed_w);
-	WRITE_HANDLER(pitnrun_color_select_w);
 	
-	PALETTE_INIT(pitnrun);
-	VIDEO_START(pitnrun);
-	VIDEO_UPDATE(pitnrun);
+	
 	
 	static int pitnrun_nmi;
 	
-	public static InterruptHandlerPtr pitnrun_nmi_source = new InterruptHandlerPtr() {public void handler()
-	{
-		 if (pitnrun_nmi != 0) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
+	public static InterruptHandlerPtr pitnrun_nmi_source = new InterruptHandlerPtr() {public void handler(){
+		 if(pitnrun_nmi) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        pitnrun_nmi=data&1;
 	} };
 	
-	static WRITE_HANDLER(pitnrun_hflip_w)
-	{
+	public static WriteHandlerPtr pitnrun_hflip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data);
-	}
+	} };
 	
-	static WRITE_HANDLER(pitnrun_vflip_w)
-	{
+	public static WriteHandlerPtr pitnrun_vflip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data);
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -209,7 +193,7 @@ public class pitnrun
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_pitnrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pitnrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pitnrun )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1  );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SERVICE1 );
@@ -297,8 +281,7 @@ public class pitnrun
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_pitnrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pitnrun )
 		MDRV_CPU_ADD(Z80,8000000/2)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(pitnrun_nmi_source,1)
@@ -331,9 +314,7 @@ public class pitnrun
 		MDRV_VIDEO_UPDATE(pitnrun)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_pitnrun = new RomLoadPtr(){ public void handler(){ 
@@ -371,6 +352,6 @@ public class pitnrun
 		ROM_LOAD( "clr.3",  0x0040, 0x0020, CRC(25e70e5e) SHA1(fdb9c69e9568a725dd0e3ac25835270fb4f49280) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_pitnrun	   = new GameDriver("1984"	,"pitnrun"	,"pitnrun.java"	,rom_pitnrun,null	,machine_driver_pitnrun	,input_ports_pitnrun	,null	,ROT90	,	"Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
+	GAMEX( 1984, pitnrun, 0, pitnrun, pitnrun, 0, ROT90, "Taito Corporation", "Pit & Run", GAME_IMPERFECT_SOUND )
 	
 }

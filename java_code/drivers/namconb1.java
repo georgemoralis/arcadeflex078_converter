@@ -289,7 +289,7 @@ GFX:                Custom 145     ( 80 pin PQFP)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -303,10 +303,10 @@ public class namconb1
 	data32_t *namconb1_spritebank32;
 	data32_t *namconb1_scrollram32;
 	
-	public static NVRAMHandlerPtr nvram_handler_namconb1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+	public static NVRAMHandlerPtr nvram_handler_namconb1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
 		int i;
 		data8_t data[4];
-		if (read_or_write != 0)
+		if( read_or_write )
 		{
 			for( i=0; i<NB1_NVMEM_SIZE/4; i++ )
 			{
@@ -317,10 +317,10 @@ public class namconb1
 				data[3] = dword&0xff;
 				mame_fwrite( file, data, 4 );
 			}
-		}
+		} };
 		else
 		{
-			if (file != 0)
+			if (file)
 			{
 				for( i=0; i<NB1_NVMEM_SIZE/4; i++ )
 				{
@@ -337,40 +337,33 @@ public class namconb1
 				}
 			}
 		}
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_nebulray  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nebulray  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_NEBULRAY;
 	} };
 	
-	public static DriverInitHandlerPtr init_gslgr94u  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gslgr94u  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_GSLGR94U;
 	} };
 	
-	public static DriverInitHandlerPtr init_sws95  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sws95  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_SWS95;
 	} };
 	
-	public static DriverInitHandlerPtr init_sws96  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sws96  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_SWS96;
 	} };
 	
-	public static DriverInitHandlerPtr init_sws97  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sws97  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_SWS97;
 	} };
 	
-	public static DriverInitHandlerPtr init_gunbulet  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunbulet  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_GUNBULET;
 	} };
 	
-	public static DriverInitHandlerPtr init_vshoot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vshoot  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB1_VSHOOT;
 	} };
 	
@@ -390,14 +383,12 @@ public class namconb1
 		cpu_setbank( 1, pMem32 );
 	}
 	
-	public static DriverInitHandlerPtr init_machbrkr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_machbrkr  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB2_MACH_BREAKERS;
 		ShuffleDataROMs();
 	} };
 	
-	public static DriverInitHandlerPtr init_outfxies  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_outfxies  = new DriverInitHandlerPtr() { public void handler(){
 		namcos2_gametype = NAMCONB2_OUTFOXIES;
 		ShuffleDataROMs();
 	} };
@@ -650,8 +641,7 @@ public class namconb1
 		{ 0xf00000, 0xf0001f, MWA32_RAM }, /* misc cpu control registers */
 	MEMORY_END /* namconb2_writemem */
 	
-	public static InterruptHandlerPtr namconb1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namconb1_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( namcos2_gametype == NAMCONB1_GUNBULET )
 		{
 			cpu_set_irq_line(0, 5, HOLD_LINE);
@@ -662,8 +652,7 @@ public class namconb1
 		}
 	} };
 	
-	public static InterruptHandlerPtr namconb2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namconb2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			cpu_set_irq_line(0, 1, HOLD_LINE);
@@ -674,8 +663,7 @@ public class namconb1
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_namconb1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namconb1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000/2) /* 25 MHz? */
@@ -700,12 +688,9 @@ public class namconb1
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		/* similar to C140?  managed by MCU */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_namconb2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namconb2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000) /* 25 MHz? */
@@ -727,9 +712,7 @@ public class namconb1
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************/
 	
@@ -1113,7 +1096,7 @@ public class namconb1
 	
 	/***************************************************************/
 	
-	static InputPortPtr input_ports_gunbulet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunbulet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunbulet )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1146,7 +1129,7 @@ public class namconb1
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 50, 4, 0, 255 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_machbrkr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_machbrkr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( machbrkr )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1198,7 +1181,7 @@ public class namconb1
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_namconb1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namconb1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namconb1 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1248,18 +1231,18 @@ public class namconb1
 	
 	
 	
-	public static GameDriver driver_nebulray	   = new GameDriver("1994"	,"nebulray"	,"namconb1.java"	,rom_nebulray,null	,machine_driver_namconb1	,input_ports_namconb1	,init_nebulray	,ROT90	,	"Namco", "Nebulas Ray (World)", GAME_NO_SOUND )
-	public static GameDriver driver_nebulryj	   = new GameDriver("1994"	,"nebulryj"	,"namconb1.java"	,rom_nebulryj,driver_nebulray	,machine_driver_namconb1	,input_ports_namconb1	,init_nebulray	,ROT90	,	"Namco", "Nebulas Ray (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_ptblank	   = new GameDriver("1994"	,"ptblank"	,"namconb1.java"	,rom_ptblank,null	,machine_driver_namconb1	,input_ports_gunbulet	,init_gunbulet	,ROT0	,	"Namco", "Point Blank", GAME_NO_SOUND )
-	public static GameDriver driver_gunbulet	   = new GameDriver("1994"	,"gunbulet"	,"namconb1.java"	,rom_gunbulet,driver_ptblank	,machine_driver_namconb1	,input_ports_gunbulet	,init_gunbulet	,ROT0	,	"Namco", "Gun Bullet (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_gslgr94u	   = new GameDriver("1994"	,"gslgr94u"	,"namconb1.java"	,rom_gslgr94u,null	,machine_driver_namconb1	,input_ports_namconb1	,init_gslgr94u	,ROT0	,	"Namco", "Great Sluggers '94", GAME_NO_SOUND )
-	public static GameDriver driver_sws95	   = new GameDriver("1995"	,"sws95"	,"namconb1.java"	,rom_sws95,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws95	,ROT0	,	"Namco", "Super World Stadium '95 (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_sws96	   = new GameDriver("1996"	,"sws96"	,"namconb1.java"	,rom_sws96,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws96	,ROT0	,	"Namco", "Super World Stadium '96 (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_sws97	   = new GameDriver("1997"	,"sws97"	,"namconb1.java"	,rom_sws97,null	,machine_driver_namconb1	,input_ports_namconb1	,init_sws97	,ROT0	,	"Namco", "Super World Stadium '97 (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_vshoot	   = new GameDriver("1994"	,"vshoot"	,"namconb1.java"	,rom_vshoot,null	,machine_driver_namconb1	,input_ports_namconb1	,init_vshoot	,ROT0	,	"Namco", "J-League Soccer V-Shoot", GAME_NO_SOUND )
+	GAMEX( 1994, nebulray, 0,        namconb1, namconb1, nebulray, ROT90, "Namco", "Nebulas Ray (World)", GAME_NO_SOUND )
+	GAMEX( 1994, nebulryj, nebulray, namconb1, namconb1, nebulray, ROT90, "Namco", "Nebulas Ray (Japan)", GAME_NO_SOUND )
+	GAMEX( 1994, ptblank,  0,        namconb1, gunbulet, gunbulet, ROT0,  "Namco", "Point Blank", GAME_NO_SOUND )
+	GAMEX( 1994, gunbulet, ptblank,  namconb1, gunbulet, gunbulet, ROT0,  "Namco", "Gun Bullet (Japan)", GAME_NO_SOUND )
+	GAMEX( 1994, gslgr94u, 0,        namconb1, namconb1, gslgr94u, ROT0,  "Namco", "Great Sluggers '94", GAME_NO_SOUND )
+	GAMEX( 1995, sws95,    0,        namconb1, namconb1, sws95,    ROT0,  "Namco", "Super World Stadium '95 (Japan)", GAME_NO_SOUND )
+	GAMEX( 1996, sws96,    0,        namconb1, namconb1, sws96,    ROT0,  "Namco", "Super World Stadium '96 (Japan)", GAME_NO_SOUND )
+	GAMEX( 1997, sws97,    0,        namconb1, namconb1, sws97,    ROT0,  "Namco", "Super World Stadium '97 (Japan)", GAME_NO_SOUND )
+	GAMEX( 1994, vshoot,   0,        namconb1, namconb1, vshoot,   ROT0,  "Namco", "J-League Soccer V-Shoot", GAME_NO_SOUND )
 	
 	//     YEAR, NAME,     PARENT,   MACHINE,  INPUT,    INIT,     MNTR,  COMPANY, FULLNAME,   FLAGS)
-	public static GameDriver driver_outfxies	   = new GameDriver("1994"	,"outfxies"	,"namconb1.java"	,rom_outfxies,null	,machine_driver_namconb2	,input_ports_namconb1	,init_outfxies	,ROT0	,	"Namco", "Outfoxies", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
-	public static GameDriver driver_outfxesj	   = new GameDriver("1994"	,"outfxesj"	,"namconb1.java"	,rom_outfxesj,driver_outfxies	,machine_driver_namconb2	,input_ports_namconb1	,init_outfxies	,ROT0	,	"Namco", "Outfoxies (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
-	public static GameDriver driver_machbrkr	   = new GameDriver("1995"	,"machbrkr"	,"namconb1.java"	,rom_machbrkr,null	,machine_driver_namconb2	,input_ports_namconb1	,init_machbrkr	,ROT0	,	"Namco", "Mach Breakers (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	GAMEX( 1994, outfxies, 0,		 namconb2, namconb1, outfxies, ROT0, "Namco", "Outfoxies", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	GAMEX( 1994, outfxesj, outfxies, namconb2, namconb1, outfxies, ROT0, "Namco", "Outfoxies (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
+	GAMEX( 1995, machbrkr, 0,		 namconb2, namconb1, machbrkr, ROT0, "Namco", "Mach Breakers (Japan)", GAME_IMPERFECT_GRAPHICS|GAME_NO_SOUND )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -72,8 +72,8 @@ public class wgp
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,x_offs,y_offs,0,0,0,0,0))
 			return 1;
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
 		wgp_piv_xoffs = piv_xoffs;
@@ -102,13 +102,11 @@ public class wgp
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_wgp  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wgp  = new VideoStartHandlerPtr() { public int handler(){
 		return (wgp_core_vh_start(0,0,32,16));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_wgp2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wgp2  = new VideoStartHandlerPtr() { public int handler(){
 		return (wgp_core_vh_start(4,2,32,16));
 	} };
 	
@@ -387,14 +385,14 @@ public class wgp
 		UINT8 small_sprite,col,flipx,flipy;
 		UINT16 code,bigsprite,map_index;
 		UINT16 rotate=0;
-		UINT16 tile_mask = (Machine.gfx[0].total_elements) - 1;
+		UINT16 tile_mask = (Machine->gfx[0]->total_elements) - 1;
 		int primasks[2] = {0x0, 0xfffc};	/* fff0 => under rhs of road only */
 	
 		for (offs = 0x1ff;offs >= 0;offs--)
 		{
 			code = (spriteram16[0xe00+offs]);
 	
-			if (code != 0)	/* do we have an active sprite ? */
+			if (code)	/* do we have an active sprite ? */
 			{
 				i = (code << 3) &0xfff;	/* yes, so we look up its sprite entry */
 	
@@ -427,8 +425,8 @@ public class wgp
 		/****** end zoom kludge *******/
 	
 				/* Treat coords as signed */
-				if ((x & 0x8000) != 0)  x -= 0x10000;
-				if ((y & 0x8000) != 0)  y -= 0x10000;
+				if (x & 0x8000)  x -= 0x10000;
+				if (y & 0x8000)  y -= 0x10000;
 	
 				map_index = bigsprite << 1;	/* now we access sprite tilemap */
 	
@@ -439,7 +437,7 @@ public class wgp
 				j = wgp_spritemap[map_index + 0xc];
 				small_sprite = ((i > 0) & (i <=8) & (j > 0) & (j <=8));
 	
-				if (small_sprite != 0)
+				if (small_sprite)
 				{
 					for (i=0;i<4;i++)
 					{
@@ -461,7 +459,7 @@ public class wgp
 						zx = x + (((k+1)*zoomx)/2) - curx;
 						zy = y + (((j+1)*zoomy)/2) - cury;
 	
-						pdrawgfxzoom(bitmap, Machine.gfx[0],
+						pdrawgfxzoom(bitmap, Machine->gfx[0],
 								code,
 								col,
 								flipx, flipy,
@@ -493,7 +491,7 @@ public class wgp
 						zx = x + (((k+1)*zoomx)/4) - curx;
 						zy = y + (((j+1)*zoomy)/4) - cury;
 	
-						pdrawgfxzoom(bitmap, Machine.gfx[0],
+						pdrawgfxzoom(bitmap, Machine->gfx[0],
 								code,
 								col,
 								flipx, flipy,
@@ -507,7 +505,7 @@ public class wgp
 	
 		}
 	#if 0
-		if (rotate != 0)
+		if (rotate)
 		{
 			char buf[80];
 			sprintf(buf,"sprite rotate offs %04x ?",rotate);
@@ -525,12 +523,12 @@ public class wgp
 	
 	#undef ADJUST_FOR_ORIENTATION
 	#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-		type *dsti = &((type *)bitmapi.line[y])[x];							\
-		UINT8 *dstp = &((UINT8 *)bitmapp.line[y])[x];							\
+		type *dsti = &((type *)bitmapi->line[y])[x];							\
+		UINT8 *dstp = &((UINT8 *)bitmapp->line[y])[x];							\
 		int xadv = 1;															\
-		if (orientation != 0)														\
+		if (orientation)														\
 		{																		\
-			int dy = (type *)bitmap.line[1] - (type *)bitmap.line[0];			\
+			int dy = (type *)bitmap->line[1] - (type *)bitmap->line[0];			\
 			int tx = x, ty = y, temp;											\
 			if ((orientation) & ORIENTATION_SWAP_XY)							\
 			{																	\
@@ -539,25 +537,25 @@ public class wgp
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_X)								\
 			{																	\
-				tx = bitmap.width - 1 - tx;									\
+				tx = bitmap->width - 1 - tx;									\
 				if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_Y)								\
 			{																	\
-				ty = bitmap.height - 1 - ty;									\
+				ty = bitmap->height - 1 - ty;									\
 				if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 			}																	\
 			/* can't lookup line because it may be negative! */					\
-			dsti = (type *)((type *)bitmapi.line[0] + dy * ty) + tx;			\
-			dstp = (UINT8 *)((UINT8 *)bitmapp.line[0] + dy * ty / sizeof(type)) + tx;	\
+			dsti = (type *)((type *)bitmapi->line[0] + dy * ty) + tx;			\
+			dstp = (UINT8 *)((UINT8 *)bitmapp->line[0] + dy * ty / sizeof(type)) + tx;	\
 		}
 	
 	INLINE void bryan2_drawscanline(
 			struct mame_bitmap *bitmap,int x,int y,int length,
 			const UINT16 *src,int transparent,UINT32 orient,int pri)
 	{
-		ADJUST_FOR_ORIENTATION(UINT16, Machine.orientation ^ orient, bitmap, priority_bitmap, x, y);
-		if (transparent != 0) {
+		ADJUST_FOR_ORIENTATION(UINT16, Machine->orientation ^ orient, bitmap, priority_bitmap, x, y);
+		if (transparent) {
 			while (length--) {
 				UINT32 spixel = *src++;
 				if (spixel<0x7fff) {
@@ -593,16 +591,16 @@ public class wgp
 		   falling through from max +ve to max -ve quite a lot in this routine */
 		int sx,x_index,x_step,x_max;
 	
-		UINT32 zoomx,zoomy,rot=Machine.orientation;
+		UINT32 zoomx,zoomy,rot=Machine->orientation;
 		UINT16 scanline[512];
 		UINT16 row_colbank,row_scroll;
 		int flipscreen = 0;	/* n/a */
 		int machine_flip = 0;	/* for  ROT 180 ? */
 	
-		UINT16 screen_width = cliprect.max_x -
-								cliprect.min_x + 1;
-		UINT16 min_y = cliprect.min_y;
-		UINT16 max_y = cliprect.max_y;
+		UINT16 screen_width = cliprect->max_x -
+								cliprect->min_x + 1;
+		UINT16 min_y = cliprect->min_y;
+		UINT16 max_y = cliprect->max_y;
 	
 		int width_mask=0x3ff;
 	
@@ -618,7 +616,7 @@ public class wgp
 		/* This calculation may be wrong, the y_index one too */
 		zoomy = 0x10000 - (((wgp_piv_ctrlram[0x08 + layer] &0xff) - 0x7f) * 512);
 	
-		if (flipscreen == 0)
+		if (!flipscreen)
 		{
 			sx = ((wgp_piv_scrollx[layer]) << 16);
 			sx += (wgp_piv_xoffs) * zoomx;		/* may be imperfect */
@@ -632,7 +630,7 @@ public class wgp
 			y_index = 0;
 		}
 	
-		if (machine_flip == 0) y=min_y; else y=max_y;
+		if (!machine_flip) y=min_y; else y=max_y;
 	
 		do
 		{
@@ -664,11 +662,11 @@ public class wgp
 			}
 	
 			x_max = x_index + screen_width * x_step;
-			src16 = (UINT16 *)srcbitmap.line[src_y_index];
-			tsrc  = (UINT8 *)transbitmap.line[src_y_index];
+			src16 = (UINT16 *)srcbitmap->line[src_y_index];
+			tsrc  = (UINT8 *)transbitmap->line[src_y_index];
 			dst16 = scanline;
 	
-			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
+			if (flags & TILEMAP_IGNORE_TRANSPARENCY)
 			{
 				for (i=0; i<screen_width; i++)
 				{
@@ -688,13 +686,13 @@ public class wgp
 				}
 			}
 	
-			if ((flags & TILEMAP_IGNORE_TRANSPARENCY) != 0)
+			if (flags & TILEMAP_IGNORE_TRANSPARENCY)
 				bryan2_drawscanline(bitmap,0,y,screen_width,scanline,0,rot,priority);
 			else
 				bryan2_drawscanline(bitmap,0,y,screen_width,scanline,1,rot,priority);
 	
 			y_index += zoomy;
-			if (machine_flip == 0) y++; else y--;
+			if (!machine_flip) y++; else y--;
 		}
 		while ( (!machine_flip && y<=max_y) || (machine_flip && y>=min_y) );
 	
@@ -706,8 +704,7 @@ public class wgp
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_wgp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wgp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		UINT8 layer[3];
 	

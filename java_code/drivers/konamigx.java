@@ -58,7 +58,7 @@
  * d50000: K055555 8-bit-per-pixel priority encoder (PCUCS)
  * d52000: shared RAM with audio 68000      (SOUNDCS)
  * d56000: EEPROM comms, bit 7 is watchdog, bit 5 is frame?? (WRPOR1)
- * d56001: IRQ acknowledge (bits 0.3 = irq 1.4), IRQ enable in hi nibble (bits 4.7 = irq 1.4)
+ * d56001: IRQ acknowledge (bits 0->3 = irq 1->4), IRQ enable in hi nibble (bits 4->7 = irq 1->4)
  * d58000: control register (OBJCHA, 68000 enable/disable, probably more) (WRPOR2)
  * d5a000: dipswitch bank 1		    (RDPORT1)
  * d5a001: dipswitch bank 2
@@ -99,7 +99,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -107,19 +107,7 @@ public class konamigx
 {
 	
 	
-	VIDEO_START(konamigx_5bpp);
-	VIDEO_START(konamigx_6bpp);
-	VIDEO_START(konamigx_6bpp_2);
-	VIDEO_START(konamigx_type3);
-	VIDEO_START(konamigx_type4);
-	VIDEO_START(le2);
-	VIDEO_START(dragoonj);
-	VIDEO_START(winspike);
-	VIDEO_START(opengolf);
-	VIDEO_START(racinfrc);
-	VIDEO_UPDATE(konamigx);
 	
-	MACHINE_INIT(konamigx);
 	
 	WRITE32_HANDLER( konamigx_palette_w );
 	WRITE32_HANDLER( konamigx_palette2_w );
@@ -206,7 +194,7 @@ public class konamigx
 	
 	static int pri_comp(const void *s1, const void *s2)
 	{
-		return ((struct sprite_entry *)s1).pri - ((struct sprite_entry *)s2).pri;
+		return ((struct sprite_entry *)s1)->pri - ((struct sprite_entry *)s2)->pri;
 	}
 	
 	static void generate_sprites(UINT32 src, UINT32 spr, int count)
@@ -234,7 +222,7 @@ public class konamigx
 	
 		for(i=0; i<ecount; i++) {
 			unsigned int adr = sprites[i].adr;
-			if (adr != 0) {
+			if(adr) {
 				unsigned int set =(cpu_readmem24bedw_word(adr) << 16)|cpu_readmem24bedw_word(adr+2);
 				unsigned short glob_x = cpu_readmem24bedw_word(adr+4);
 				unsigned short glob_y = cpu_readmem24bedw_word(adr+8);
@@ -250,32 +238,32 @@ public class konamigx
 				unsigned short v;
 	
 				v = cpu_readmem24bedw_word(adr+24);
-				if ((v & 0x8000) != 0) {
+				if(v & 0x8000) {
 					color_mask = 0xf3ff;
 					color_val |= (v & 3) << 10;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+26);
-				if ((v & 0x8000) != 0) {
+				if(v & 0x8000) {
 					color_mask &= 0xfcff;
 					color_val  |= (v & 3) << 8;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+18);
-				if ((v & 0x8000) != 0) {
+				if(v & 0x8000) {
 					color_mask &= 0xff1f;
 					color_val  |= v & 0xe0;
 				}
 	
 				v = cpu_readmem24bedw_word(adr+16);
-				if ((v & 0x8000) != 0)
+				if(v & 0x8000)
 					color_set = v & 0x1f;
-				if ((v & 0x4000) != 0)
+				if(v & 0x4000)
 					color_rotate = v & 0x1f;
 	
-				if (zoom_x == 0)
+				if(!zoom_x)
 					zoom_x = 0x40;
-				if (zoom_y == 0)
+				if(!zoom_y)
 					zoom_y = 0x40;
 	
 				if(set >= 0x200000 && set < 0xd00000)
@@ -302,14 +290,14 @@ public class konamigx
 						if(zoom_x != 0x40)
 							x = x*0x40/zoom_x;
 	
-						if (flip_x != 0)
+						if(flip_x)
 							x = glob_x - x;
 						else
 							x = glob_x + x;
 						if(x < -256 || x > 512+32)
 							goto next;
 	
-						if (flip_y != 0)
+						if(flip_y)
 							y = glob_y - y;
 						else
 							y = glob_y + y;
@@ -317,9 +305,9 @@ public class konamigx
 							goto next;
 	
 						col = (col & color_mask) | color_val;
-						if (color_set != 0)
+						if(color_set)
 							col = (col & 0xffe0) | color_set;
-						if (color_rotate != 0)
+						if(color_rotate)
 							col = (col & 0xffe0) | ((col + color_rotate) & 0x1f);
 	
 						cpu_writemem24bedw_word(spr   , (flip ^ glob_f) | sprites[i].pri);
@@ -387,7 +375,7 @@ public class konamigx
 		unsigned int params;
 	
 		/* ignore NULL writes to the ESC (these appear to be "keepalives" on the real hardware) */
-		if (data == 0)
+		if (!data)
 		{
 			return;
 		}
@@ -429,7 +417,7 @@ public class konamigx
 	*/
 				break;
 			case 1: // Run program
-				if (esc_cb != 0) {
+				if(esc_cb) {
 					UINT32 p1 = (cpu_readmem24bedw_word(params+0)<<16) | cpu_readmem24bedw_word(params+2);
 					UINT32 p2 = (cpu_readmem24bedw_word(params+4)<<16) | cpu_readmem24bedw_word(params+6);
 					UINT32 p3 = (cpu_readmem24bedw_word(params+8)<<16) | cpu_readmem24bedw_word(params+10);
@@ -443,7 +431,7 @@ public class konamigx
 			}
 			cpu_writemem24bedw(data+9, ESTATE_END);
 	
-			if ((konamigx_wrport1_1 & 0x10) != 0)
+			if (konamigx_wrport1_1 & 0x10)
 			{
 				gx_rdport1_3 &= ~8;
 				cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -469,15 +457,14 @@ public class konamigx
 	
 	static int init_eeprom_count;
 	
-	static NVRAM_HANDLER(konamigx_93C46)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_konamigx_93C46  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -485,7 +472,7 @@ public class konamigx
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ32_HANDLER( eeprom_r )
 	{
@@ -541,7 +528,7 @@ public class konamigx
 	//		logerror("write %x to IRQ register (PC=%x)\n", konamigx_wrport1_1, activecpu_get_pc());
 	
 			// gx_syncen is to ensure each IRQ is trigger at least once after being enabled
-			if ((konamigx_wrport1_1 & 0x80) != 0) gx_syncen |= konamigx_wrport1_1 & 0x1f;
+			if (konamigx_wrport1_1 & 0x80) gx_syncen |= konamigx_wrport1_1 & 0x1f;
 		}
 	}
 	
@@ -562,7 +549,7 @@ public class konamigx
 		// bit 16 = DOTSEL0
 		if (!(mem_mask & 0x00ff0000))
 		{
-			if ((data & 0x400000) != 0)
+			if (data & 0x400000)
 			{
 				// enable 68k
 				// clear the halt condition and reset the 68000
@@ -706,13 +693,12 @@ public class konamigx
 	}
 	
 	
-	static INTERRUPT_GEN(konamigx_vbinterrupt)
-	{
+	public static InterruptHandlerPtr konamigx_vbinterrupt = new InterruptHandlerPtr() {public void handler(){
 		// lift idle suspension
 		if (resume_trigger && suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		// IRQ 1 is the main 60hz vblank interrupt
-		if ((gx_syncen & 0x20) != 0)
+		if (gx_syncen & 0x20)
 		{
 			gx_syncen &= ~0x20;
 	
@@ -724,17 +710,16 @@ public class konamigx
 		}
 	
 		dmastart_callback(0);
-	}
+	} };
 	
-	static INTERRUPT_GEN(konamigx_vbinterrupt_type4)
-	{
+	public static InterruptHandlerPtr konamigx_vbinterrupt_type4 = new InterruptHandlerPtr() {public void handler(){
 		// lift idle suspension
 		if (resume_trigger && suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		// IRQ 1 is the main 60hz vblank interrupt
 		// the gx_syncen & 0x20 test doesn't work on type 3 or 4 ROM boards, likely because the ROM board
 		// generates the timing in those cases.  With this change, rushing heroes and rng2 boot :)
-		if (1 != 0) // gx_syncen & 0x20)
+		if (1) // gx_syncen & 0x20)
 		{
 			gx_syncen &= ~0x20;
 	
@@ -746,18 +731,17 @@ public class konamigx
 		}
 	
 		dmastart_callback(0);
-	}
+	} };
 	
-	static INTERRUPT_GEN(konamigx_hbinterrupt)
-	{
-		if (cpu_getiloops() == 0)
+	public static InterruptHandlerPtr konamigx_hbinterrupt = new InterruptHandlerPtr() {public void handler(){
+		if (!cpu_getiloops())
 		{
 			konamigx_vbinterrupt_type4();
 		}
 		else	// hblank
 		{
 			// IRQ 2 is a programmable interrupt with scanline resolution
-			if ((gx_syncen & 0x40) != 0)
+			if (gx_syncen & 0x40)
 			{
 				gx_syncen &= ~0x40;
 	
@@ -768,7 +752,7 @@ public class konamigx
 				}
 			}
 		}
-	}
+	} };
 	
 	
 	/**********************************************************************************/
@@ -879,7 +863,7 @@ public class konamigx
 		cs = ((data >> 26)^1)&1;	// chip select
 	
 		// resync states if CS drops
-		if (cs == 0)
+		if (!cs)
 		{
 			analog_state = 0;
 			analog_prevclk = 0;
@@ -902,7 +886,7 @@ public class konamigx
 					break;
 	
 				case 5:	// got command, latch in the proper analog read
-					if ((analog_cmd & 4) != 0)
+					if (analog_cmd & 4)
 					{
 						analog_latch = readinputport(10);	// gas
 					}
@@ -945,7 +929,7 @@ public class konamigx
 	{
 		int res = (readinputport(1)<<24) | (readinputport(8)<<8);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= ~0x08000000;
@@ -1009,7 +993,7 @@ public class konamigx
 		RnG2's is used to generate the sprite list just like the ESC, among other tasks.  (RnG2 sends many commands per frame to the protection).
 	
 		Rushing Heroes is much simpler and uses only 1 command during gameplay.  They set up a giant table of pointers
-		at C10200.C102EF (see the routine at 2043CE.  C10001 contains which monitor they want to update (main or sub)
+		at C10200->C102EF (see the routine at 2043CE.  C10001 contains which monitor they want to update (main or sub)
 		and it changes the pointers accordingly).  This sets up the palettes, the sprite list, and the ROZ tilemap, from the looks of things.
 	
 		Here are the lists constructed by Rushing Heroes (I've reordered the original code so it's in linear address order).
@@ -1114,7 +1098,7 @@ public class konamigx
 						logerror("GXT4: unknown protection command %x (PC=%x)\n", last_prot_op, activecpu_get_pc());
 					}
 	
-					if ((konamigx_wrport1_1 & 0x10) != 0)
+					if (konamigx_wrport1_1 & 0x10)
 					{
 						gx_rdport1_3 &= ~8;
 						cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -1348,9 +1332,9 @@ public class konamigx
 	{
 		data16_t ret = 0;
 	
-		if (ACCESSING_LSB16 != 0)
+		if (ACCESSING_LSB16)
 			ret |= K054539_1_r(offset);
-		if (ACCESSING_MSB16 != 0)
+		if (ACCESSING_MSB16)
 			ret |= K054539_0_r(offset)<<8;
 	
 		return ret;
@@ -1358,9 +1342,9 @@ public class konamigx
 	
 	static WRITE16_HANDLER( dual539_w )
 	{
-		if (ACCESSING_LSB16 != 0)
+		if (ACCESSING_LSB16)
 			K054539_1_w(offset, data);
-		if (ACCESSING_MSB16 != 0)
+		if (ACCESSING_MSB16)
 			K054539_0_w(offset, data>>8);
 	}
 	
@@ -1395,10 +1379,9 @@ public class konamigx
 	MEMORY_END
 	
 	/* 68000 timer interrupt controller */
-	static INTERRUPT_GEN(gxaudio_interrupt)
-	{
+	public static InterruptHandlerPtr gxaudio_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, 2, HOLD_LINE);
-	}
+	} };
 	
 	static struct K054539interface k054539_interface =
 	{
@@ -1475,8 +1458,7 @@ public class konamigx
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_konamigx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( konamigx )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68EC020, 24000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -1509,46 +1491,31 @@ public class konamigx
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dragoonj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dragoonj )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_CPU_REPLACE("main", M68EC020, 26400000) // needs higher clock to stop sprite flickerings
 		MDRV_VISIBLE_AREA(40, 40+384-1, 16, 16+224-1)
 		MDRV_VIDEO_START(dragoonj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_le2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( le2 )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(le2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_konamigx_6bpp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( konamigx_6bpp )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(konamigx_6bpp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_konamigx_6bpp_2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( konamigx_6bpp_2 )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VIDEO_START(konamigx_6bpp_2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_opengolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( opengolf )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VISIBLE_AREA(40, 40+384-1, 16, 16+224-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_opengolf)
@@ -1556,12 +1523,9 @@ public class konamigx
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type1readmem, type1writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_racinfrc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( racinfrc )
 		MDRV_IMPORT_FROM(konamigx)
 		MDRV_VISIBLE_AREA(32, 32+384-1, 16, 16+224-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_racinfrc)
@@ -1569,12 +1533,9 @@ public class konamigx
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type1readmem, type1writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gxtype3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gxtype3 )
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1585,12 +1546,9 @@ public class konamigx
 		MDRV_PALETTE_LENGTH(16384)
 		MDRV_VISIBLE_AREA(0, 64*8-1, 0, 32*8-1)
 		MDRV_GFXDECODE(gfxdecodeinfo_type34)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gxtype4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gxtype4 )
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1601,24 +1559,19 @@ public class konamigx
 		MDRV_PALETTE_LENGTH(16384)
 		MDRV_GFXDECODE(gfxdecodeinfo_type34)
 		MDRV_VIDEO_START(konamigx_type4)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_winspike = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( winspike )
 		MDRV_IMPORT_FROM(konamigx)
 	
 		MDRV_VISIBLE_AREA(38, 38+384-1, 16, 16+224-1)
 		MDRV_VIDEO_START(winspike)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	/* port maps */
 	
-	static InputPortPtr input_ports_konamigx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_konamigx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( konamigx )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1745,7 +1698,7 @@ public class konamigx
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_racinfrc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_racinfrc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( racinfrc )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1879,7 +1832,7 @@ public class konamigx
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_le2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_le2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( le2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2004,7 +1957,7 @@ public class konamigx
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gokuparo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gokuparo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gokuparo )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2104,7 +2057,7 @@ public class konamigx
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_puzldama = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_puzldama = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puzldama )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2204,7 +2157,7 @@ public class konamigx
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dragoonj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dragoonj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dragoonj )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2304,7 +2257,7 @@ public class konamigx
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_type3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_type3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( type3 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -3218,8 +3171,7 @@ public class konamigx
 	/**********************************************************************************/
 	/* initializers */
 	
-	MACHINE_INIT(konamigx)
-	{
+	public static MachineInitHandlerPtr machine_init_konamigx  = new MachineInitHandlerPtr() { public void handler(){
 		konamigx_wrport1_0 = konamigx_wrport1_1 = 0;
 		konamigx_wrport2 = 0;
 	
@@ -3239,10 +3191,9 @@ public class konamigx
 	
 		// sound CPU initially disabled?
 		cpu_set_halt_line(1, ASSERT_LINE);
-	}
+	} };
 	
-	static DRIVER_INIT(konamigx)
-	{
+	public static DriverInitHandlerPtr init_konamigx  = new DriverInitHandlerPtr() { public void handler(){
 	#define BPP5  1
 	#define BPP6  2
 	#define BPP66 3
@@ -3265,17 +3216,17 @@ public class konamigx
 		dmadelay_timer = timer_alloc(dmaend_callback);
 	
 		// running down the list is not a good idea but easier than maintaining individual drivers
-		if (!strcmp(Machine.gamedrv.name, "racinfrc"))
+		if (!strcmp(Machine->gamedrv->name, "racinfrc"))
 		{
 			konamigx_cfgport = 11;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "opengolf"))
+		else if (!strcmp(Machine->gamedrv->name, "opengolf"))
 		{
 			konamigx_cfgport = 11;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "le2") || !strcmp(Machine.gamedrv.name, "le2u"))
+		else if (!strcmp(Machine->gamedrv->name, "le2") || !strcmp(Machine->gamedrv->name, "le2u"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x2010f0, 0xc00000, 0xfe, 0x13f, -1, 0xff)
@@ -3285,7 +3236,7 @@ public class konamigx
 			konamigx_cfgport = 13;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "gokuparo") || !strcmp(Machine.gamedrv.name, "fantjour"))
+		else if (!strcmp(Machine->gamedrv->name, "gokuparo") || !strcmp(Machine->gamedrv->name, "fantjour"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x2a0a66, 0xc00000, 0xd400, 0xd400, 0, 0xffff0000)
@@ -3295,7 +3246,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "puzldama"))
+		else if (!strcmp(Machine->gamedrv->name, "puzldama"))
 		{
 			#if GX_SKIPIDLE
 			#endif
@@ -3305,7 +3256,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "tbyahhoo"))
+		else if (!strcmp(Machine->gamedrv->name, "tbyahhoo"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x297b9a, 0xc00000, 0xf800, 0xf800, 0, 0xffff0000)
@@ -3316,7 +3267,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "tkmmpzdm"))
+		else if (!strcmp(Machine->gamedrv->name, "tkmmpzdm"))
 		{
 			data32_t *rom = (data32_t*)memory_region(REGION_CPU1);
 	
@@ -3340,7 +3291,7 @@ public class konamigx
 			for (i=3; i<=7; i++) K054539_set_gain(1, i, 2.0);
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "dragoonj"))
+		else if (!strcmp(Machine->gamedrv->name, "dragoonj"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x202f48, 0xc00000, 0x1020, 0x1020, 0xff00, 0x0000ff00)
@@ -3357,7 +3308,7 @@ public class konamigx
 			}
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "sexyparo"))
+		else if (!strcmp(Machine->gamedrv->name, "sexyparo"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x289baa, 0xc00000, 0x10204, 0x10204, 0, 0xffff0000)
@@ -3368,7 +3319,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "daiskiss"))
+		else if (!strcmp(Machine->gamedrv->name, "daiskiss"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x28707e, 0xc00000, 0x8400, 0x8400, 0, 0xffff0000)
@@ -3379,7 +3330,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "tokkae"))
+		else if (!strcmp(Machine->gamedrv->name, "tokkae"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x206b94, 0xc00000, 0x142ac, 0x142ac, 0, 0xff000000)
@@ -3389,7 +3340,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "salmndr2"))
+		else if (!strcmp(Machine->gamedrv->name, "salmndr2"))
 		{
 			#if GX_SKIPIDLE
 				ADD_SKIPPER32(0x220070, 0xc00000, 0xbe8, 0xbe8, 0, 0x0000ffff)
@@ -3400,7 +3351,7 @@ public class konamigx
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "winspike"))
+		else if (!strcmp(Machine->gamedrv->name, "winspike"))
 		{
 			snd020_hack = 2;
 			konamigx_cfgport = 8;
@@ -3408,30 +3359,30 @@ public class konamigx
 			install_mem_write32_handler(0, 0xcc0000, 0xcc0007, type4_prot_w );
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "soccerss"))
+		else if (!strcmp(Machine->gamedrv->name, "soccerss"))
 		{
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "vsnetscr"))
+		else if (!strcmp(Machine->gamedrv->name, "vsnetscr"))
 		{
 			snd020_hack = 5;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "rungun2"))
+		else if (!strcmp(Machine->gamedrv->name, "rungun2"))
 		{
 			snd020_hack = 3;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "slamdnk2"))
+		else if (!strcmp(Machine->gamedrv->name, "slamdnk2"))
 		{
 			snd020_hack = 6;
 			konamigx_cfgport = 7;
 		}
 	
-		else if (!strcmp(Machine.gamedrv.name, "rushhero"))
+		else if (!strcmp(Machine->gamedrv->name, "rushhero"))
 		{
 			snd020_hack = 4;
 			konamigx_cfgport = 7;
@@ -3454,48 +3405,48 @@ public class konamigx
 	#undef BPP5
 	#undef BPP6
 	#undef BPP66
-	}
+	} };
 	
 	/**********************************************************************************/
 	/*     year  ROM       parent    machine   inp    	 init */
 	
 	/* dummy parent for the BIOS */
-	public static GameDriver driver_konamigx	   = new GameDriver("1994"	,"konamigx"	,"konamigx.java"	,rom_konamigx,null	,machine_driver_konamigx	,input_ports_konamigx	,init_konamigx	,ROT0	,	"Konami", "System GX", NOT_A_DRIVER )
+	GAMEX(1994, konamigx, 0, konamigx, konamigx, konamigx, ROT0, "Konami", "System GX", NOT_A_DRIVER )
 	
 	
 	/* Type 1: standard with an add-on 53936 on the ROM board, analog inputs, and LAN (link) capability */
 	/* needs the 53936 to be playable */
-	public static GameDriver driver_racinfrc	   = new GameDriver("1994"	,"racinfrc"	,"konamigx.java"	,rom_racinfrc,driver_konamigx	,machine_driver_racinfrc	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Racin' Force (ver UAB)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
-	public static GameDriver driver_opengolf	   = new GameDriver("1994"	,"opengolf"	,"konamigx.java"	,rom_opengolf,driver_konamigx	,machine_driver_opengolf	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Konami's Open Golf Championship (ver EAD)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
-	public static GameDriver driver_ggreats2	   = new GameDriver("1994"	,"ggreats2"	,"konamigx.java"	,rom_ggreats2,driver_opengolf	,machine_driver_opengolf	,input_ports_racinfrc	,init_konamigx	,ROT0	,	"Konami", "Golfing Greats 2 (ver JAC)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	GAMEX( 1994, racinfrc, konamigx, racinfrc, racinfrc, konamigx, ROT0, "Konami", "Racin' Force (ver UAB)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	GAMEX( 1994, opengolf, konamigx, opengolf,  racinfrc, konamigx, ROT0, "Konami", "Konami's Open Golf Championship (ver EAD)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	GAMEX( 1994, ggreats2, opengolf, opengolf,  racinfrc, konamigx, ROT0, "Konami", "Golfing Greats 2 (ver JAC)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
 	
 	
 	/* Type 2: totally stock, sometimes with funny protection chips on the ROM board */
 	/* these games work and are playable with minor graphics glitches */
-	public static GameDriver driver_le2	   = new GameDriver("1994"	,"le2"	,"konamigx.java"	,rom_le2,driver_konamigx	,machine_driver_le2	,input_ports_le2	,init_konamigx	,ROT0	,	"Konami", "Lethal Enforcers II: Gun Fighters (ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_le2u	   = new GameDriver("1994"	,"le2u"	,"konamigx.java"	,rom_le2u,driver_le2	,machine_driver_le2	,input_ports_le2	,init_konamigx	,ROT0	,	"Konami", "Lethal Enforcers II: Gun Fighters (ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gokuparo	   = new GameDriver("1994"	,"gokuparo"	,"konamigx.java"	,rom_gokuparo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Gokujyou Parodius (ver JAD)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_puzldama	   = new GameDriver("1994"	,"puzldama"	,"konamigx.java"	,rom_puzldama,driver_konamigx	,machine_driver_konamigx	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Taisen Puzzle-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_tbyahhoo	   = new GameDriver("1995"	,"tbyahhoo"	,"konamigx.java"	,rom_tbyahhoo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Twin Bee Yahhoo! (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_tkmmpzdm	   = new GameDriver("1995"	,"tkmmpzdm"	,"konamigx.java"	,rom_tkmmpzdm,driver_konamigx	,machine_driver_konamigx_6bpp	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Tokimeki Memorial Taisen Puzzle-dama (ver JAB)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_dragoonj	   = new GameDriver("1995"	,"dragoonj"	,"konamigx.java"	,rom_dragoonj,driver_konamigx	,machine_driver_dragoonj	,input_ports_dragoonj	,init_konamigx	,ROT0	,	"Konami", "Dragoon Might (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sexyparo	   = new GameDriver("1996"	,"sexyparo"	,"konamigx.java"	,rom_sexyparo,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Sexy Parodius (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_daiskiss	   = new GameDriver("1996"	,"daiskiss"	,"konamigx.java"	,rom_daiskiss,driver_konamigx	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Daisu-Kiss (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_tokkae	   = new GameDriver("1996"	,"tokkae"	,"konamigx.java"	,rom_tokkae,driver_konamigx	,machine_driver_konamigx_6bpp	,input_ports_puzldama	,init_konamigx	,ROT0	,	"Konami", "Taisen Tokkae-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_salmndr2	   = new GameDriver("1996"	,"salmndr2"	,"konamigx.java"	,rom_salmndr2,driver_konamigx	,machine_driver_konamigx_6bpp_2	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Salamander 2 (ver JAA)", GAME_IMPERFECT_GRAPHICS|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1994, le2,      konamigx, le2,      le2,      konamigx, ROT0, "Konami", "Lethal Enforcers II: Gun Fighters (ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, le2u,     le2,      le2,      le2,      konamigx, ROT0, "Konami", "Lethal Enforcers II: Gun Fighters (ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, gokuparo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Gokujyou Parodius (ver JAD)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, puzldama, konamigx, konamigx, puzldama, konamigx, ROT0, "Konami", "Taisen Puzzle-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, tbyahhoo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Twin Bee Yahhoo! (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, tkmmpzdm, konamigx, konamigx_6bpp, puzldama, konamigx, ROT0, "Konami", "Tokimeki Memorial Taisen Puzzle-dama (ver JAB)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, dragoonj, konamigx, dragoonj, dragoonj, konamigx, ROT0, "Konami", "Dragoon Might (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, sexyparo, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Sexy Parodius (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, daiskiss, konamigx, konamigx, gokuparo, konamigx, ROT0, "Konami", "Daisu-Kiss (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, tokkae,   konamigx, konamigx_6bpp, puzldama, konamigx, ROT0, "Konami", "Taisen Tokkae-dama (ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, salmndr2, konamigx, konamigx_6bpp_2, gokuparo, konamigx, ROT0, "Konami", "Salamander 2 (ver JAA)", GAME_IMPERFECT_GRAPHICS|GAME_UNEMULATED_PROTECTION )
 	
 	/* these games are unplayable due to protection (winspike has the same FPGA protection as the type 4 games) */
-	public static GameDriver driver_fantjour	   = new GameDriver("1994"	,"fantjour"	,"konamigx.java"	,rom_fantjour,driver_gokuparo	,machine_driver_konamigx	,input_ports_gokuparo	,init_konamigx	,ROT0	,	"Konami", "Fantastic Journey", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_winspike	   = new GameDriver("1997"	,"winspike"	,"konamigx.java"	,rom_winspike,driver_konamigx	,machine_driver_winspike	,input_ports_konamigx	,init_konamigx	,ROT0	,	"Konami", "Winning Spike (ver JAA)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
+	GAMEX( 1994, fantjour, gokuparo, konamigx, gokuparo, konamigx, ROT0, "Konami", "Fantastic Journey", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1997, winspike, konamigx, winspike, konamigx, konamigx, ROT0, "Konami", "Winning Spike (ver JAA)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING  )
 	
 	
 	/* Type 3: dual monitor output and 53936 on the ROM board, external palette RAM */
-	public static GameDriver driver_soccerss	   = new GameDriver("1994"	,"soccerss"	,"konamigx.java"	,rom_soccerss,driver_konamigx	,machine_driver_gxtype3	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Soccer Superstars (ver JAA)", GAME_NOT_WORKING )
+	GAMEX( 1994, soccerss, konamigx, gxtype3,  type3, konamigx, ROT0, "Konami", "Soccer Superstars (ver JAA)", GAME_NOT_WORKING )
 	
 	
 	/* Type 4: dual monitor output and 53936 on the ROM board, external palette RAM, DMA protection */
-	public static GameDriver driver_vsnetscr	   = new GameDriver("1996"	,"vsnetscr"	,"konamigx.java"	,rom_vsnetscr,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Versus Net Soccer (ver UAB)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_rungun2	   = new GameDriver("1996"	,"rungun2"	,"konamigx.java"	,rom_rungun2,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Run and Gun 2 (ver UAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_slamdnk2	   = new GameDriver("1996"	,"slamdnk2"	,"konamigx.java"	,rom_slamdnk2,driver_rungun2	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Slam Dunk 2 (ver JAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_rushhero	   = new GameDriver("1996"	,"rushhero"	,"konamigx.java"	,rom_rushhero,driver_konamigx	,machine_driver_gxtype4	,input_ports_type3	,init_konamigx	,ROT0	,	"Konami", "Rushing Heroes (ver UAB)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
+	GAMEX( 1996, vsnetscr, konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Versus Net Soccer (ver UAB)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1996, rungun2,  konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Run and Gun 2 (ver UAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1996, slamdnk2, rungun2,  gxtype4, type3, konamigx, ROT0, "Konami", "Slam Dunk 2 (ver JAA)", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1996, rushhero, konamigx, gxtype4, type3, konamigx, ROT0, "Konami", "Rushing Heroes (ver UAB)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
 }

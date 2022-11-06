@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -13,8 +13,7 @@ public class mexico86
 	
 	
 	
-	public static WriteHandlerPtr mexico86_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if ((data & 7) > 5)
@@ -27,8 +26,7 @@ public class mexico86
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mexico86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mexico86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy,xc,yc;
 		int gfx_num,gfx_attr,gfx_offs;
@@ -75,7 +73,7 @@ public class mexico86
 			else
 			{
 				sx = mexico86_objectram[offs + 2];
-	//          if ((gfx_attr & 0x40) != 0) sx -= 256;
+	//          if (gfx_attr & 0x40) sx -= 256;
 			}
 			sy = 256 - height*8 - (mexico86_objectram[offs + 0]);
 	
@@ -107,8 +105,7 @@ public class mexico86
 	} };
 	//AT
 	#if 0 // old code
-	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy,xc,yc;
 		int gfx_num,gfx_attr,gfx_offs;
@@ -155,7 +152,7 @@ public class mexico86
 			else
 			{
 				sx = mexico86_objectram[offs + 2];
-	//          if ((gfx_attr & 0x40) != 0) sx -= 256;
+	//          if (gfx_attr & 0x40) sx -= 256;
 			}
 			sy = 256 - height*8 - (mexico86_objectram[offs + 0]);
 	
@@ -186,8 +183,7 @@ public class mexico86
 	} };
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kikikai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy,yc;
 		int gfx_num,gfx_attr,gfx_offs;
@@ -206,11 +202,11 @@ public class mexico86
 			tx = mexico86_objectram[offs + 2];
 			gfx_attr = mexico86_objectram[offs + 3];
 	
-			if ((gfx_num & 0x80) != 0)
+			if (gfx_num & 0x80)
 			{
 				gfx_offs = ((gfx_num & 0x3f) << 7);
 				height = 32;
-				if ((gfx_num & 0x40) != 0) sx += 16;
+				if (gfx_num & 0x40) sx += 16;
 				else sx = tx;
 			}
 			else

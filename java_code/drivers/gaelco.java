@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -71,7 +71,7 @@ public class gaelco
 	
 	WRITE16_HANDLER( bigkarnk_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,M6809_FIRQ_LINE,HOLD_LINE);
 		}
@@ -79,7 +79,7 @@ public class gaelco
 	
 	WRITE16_HANDLER( bigkarnk_coin_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:
@@ -128,7 +128,7 @@ public class gaelco
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_bigkarnk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigkarnk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigkarnk )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "4C_1C") );
@@ -230,8 +230,7 @@ public class gaelco
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_bigkarnk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigkarnk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* MC68000P10, 10 MHz */
@@ -259,9 +258,7 @@ public class gaelco
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, bigkarnk_ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, bigkarnk_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_bigkarnk = new RomLoadPtr(){ public void handler(){ 
@@ -310,7 +307,7 @@ public class gaelco
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
@@ -328,7 +325,7 @@ public class gaelco
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_maniacsq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maniacsq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maniacsq )
 	
 	PORT_START(); 	/* DSW #2 */
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
@@ -403,7 +400,7 @@ public class gaelco
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_biomtoy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_biomtoy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( biomtoy )
 		PORT_START(); 	/* DSW #2 */
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Unknown") );
@@ -484,8 +481,7 @@ public class gaelco
 		{ 100 }				/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_maniacsq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( maniacsq )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -507,9 +503,7 @@ public class gaelco
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, maniacsq_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_maniacsp = new RomLoadPtr(){ public void handler(){ 
@@ -572,7 +566,7 @@ public class gaelco
 	
 	
 	
-	public static GameDriver driver_bigkarnk	   = new GameDriver("1991"	,"bigkarnk"	,"gaelco.java"	,rom_bigkarnk,null	,machine_driver_bigkarnk	,input_ports_bigkarnk	,null	,ROT0	,	"Gaelco", "Big Karnak" )
-	public static GameDriver driver_biomtoy	   = new GameDriver("1995"	,"biomtoy"	,"gaelco.java"	,rom_biomtoy,null	,machine_driver_maniacsq	,input_ports_biomtoy	,null	,ROT0	,	"Gaelco", "Biomechanical Toy (unprotected)" )
-	public static GameDriver driver_maniacsp	   = new GameDriver("1996"	,"maniacsp"	,"gaelco.java"	,rom_maniacsp,driver_maniacsq	,machine_driver_maniacsq	,input_ports_maniacsq	,null	,ROT0	,	"Gaelco", "Maniac Square (prototype)" )
+	GAME( 1991, bigkarnk, 0,        bigkarnk, bigkarnk, 0, ROT0, "Gaelco", "Big Karnak" )
+	GAME( 1995, biomtoy,  0,        maniacsq, biomtoy,  0, ROT0, "Gaelco", "Biomechanical Toy (unprotected)" )
+	GAME( 1996, maniacsp, maniacsq, maniacsq, maniacsq, 0, ROT0, "Gaelco", "Maniac Square (prototype)" )
 }

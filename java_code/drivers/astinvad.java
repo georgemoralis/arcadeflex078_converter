@@ -14,7 +14,7 @@ Space Intruder emulation by Lee Taylor (lee@defender.demon.co.uk),
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,8 +27,7 @@ public class astinvad
 	
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_astinvad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_astinvad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 8; i++)
@@ -119,7 +118,7 @@ public class astinvad
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );\
 	
 	
-	static InputPortPtr input_ports_astinvad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astinvad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astinvad )
 		COMMON_INPUT_BITS
 	
 		PORT_START();       /* IN1 */
@@ -150,7 +149,7 @@ public class astinvad
 		PORT_DIPSETTING(    0xff, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kamikaze = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kamikaze = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kamikaze )
 		COMMON_INPUT_BITS
 	
 		PORT_START();       /* IN1 */
@@ -181,7 +180,7 @@ public class astinvad
 		PORT_DIPSETTING(    0xff, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spcking2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spcking2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spcking2 )
 		COMMON_INPUT_BITS
 	
 		PORT_START();       /* IN1 */
@@ -213,7 +212,7 @@ public class astinvad
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spaceint = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spaceint = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spaceint )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -246,8 +245,7 @@ public class astinvad
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static InterruptHandlerPtr spaceint_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr spaceint_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(2) & 1)	/* coin */
 			cpu_set_nmi_line(0, PULSE_LINE);
 	
@@ -255,8 +253,7 @@ public class astinvad
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_astinvad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( astinvad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)
@@ -279,13 +276,10 @@ public class astinvad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astinvad_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spcking2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spcking2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(astinvad)
@@ -294,13 +288,10 @@ public class astinvad
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 2*8, 30*8-1)
 	
 		MDRV_VIDEO_START( spcking2 )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spaceint = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spaceint )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)        /* 2 MHz? */
@@ -322,9 +313,7 @@ public class astinvad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astinvad_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_astinvad = new RomLoadPtr(){ public void handler(){ 
@@ -379,8 +368,8 @@ public class astinvad
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_astinvad	   = new GameDriver("1980"	,"astinvad"	,"astinvad.java"	,rom_astinvad,null	,machine_driver_astinvad	,input_ports_astinvad	,null	,ROT270	,	"Stern",  "Astro Invader" )
-	public static GameDriver driver_kamikaze	   = new GameDriver("1979"	,"kamikaze"	,"astinvad.java"	,rom_kamikaze,driver_astinvad	,machine_driver_astinvad	,input_ports_kamikaze	,null	,ROT270	,	"Leijac", "Kamikaze" )
-	public static GameDriver driver_spcking2	   = new GameDriver("1979"	,"spcking2"	,"astinvad.java"	,rom_spcking2,null	,machine_driver_spcking2	,input_ports_spcking2	,null	,ROT270	,	"Konami", "Space King 2" )
-	public static GameDriver driver_spaceint	   = new GameDriver("1980"	,"spaceint"	,"astinvad.java"	,rom_spaceint,null	,machine_driver_spaceint	,input_ports_spaceint	,null	,ROT90	,	"Shoei",  "Space Intruder", GAME_WRONG_COLORS )
+	GAME ( 1980, astinvad, 0,        astinvad, astinvad, 0, ROT270, "Stern",  "Astro Invader" )
+	GAME ( 1979, kamikaze, astinvad, astinvad, kamikaze, 0, ROT270, "Leijac", "Kamikaze" )
+	GAME ( 1979, spcking2, 0,        spcking2, spcking2, 0, ROT270, "Konami", "Space King 2" )
+	GAMEX( 1980, spaceint, 0,        spaceint, spaceint, 0, ROT90,  "Shoei",  "Space Intruder", GAME_WRONG_COLORS )
 }

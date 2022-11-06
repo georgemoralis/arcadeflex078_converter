@@ -62,7 +62,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -105,20 +105,17 @@ public class suna8
 	
 	
 	
-	public static ReadHandlerPtr suna8_banked_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr suna8_banked_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset += suna8_palettebank * 0x200;
 		return paletteram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr suna8_banked_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr suna8_banked_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset += suna8_spritebank * 0x2000;
 		return spriteram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr suna8_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr suna8_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (spriteram.read(offset)!= data)
 		{
 			spriteram.write(offset,data);
@@ -126,8 +123,7 @@ public class suna8
 		}
 	} };
 	
-	public static WriteHandlerPtr suna8_banked_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr suna8_banked_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset += suna8_spritebank * 0x2000;
 		if (spriteram.read(offset)!= data)
 		{
@@ -139,13 +135,12 @@ public class suna8
 	/*
 		Banked Palette RAM. The data is scrambled
 	*/
-	public static WriteHandlerPtr brickzn_banked_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_banked_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		UINT16 rgb;
 		offset += suna8_palettebank * 0x200;
-		paletteram[offset] = data;
-		rgb = (paletteram[offset&~1] << 8) + paletteram[offset|1];
+		paletteram.write(offset,data);
+		rgb = (paletteram.read(offset&~1)<< 8) + paletteram.read(offset|1);
 		r	=	(((rgb & (1<<0xc))?1:0)<<0) |
 				(((rgb & (1<<0xb))?1:0)<<1) |
 				(((rgb & (1<<0xe))?1:0)<<2) |
@@ -188,9 +183,9 @@ public class suna8
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_suna8_textdim0  = new VideoStartHandlerPtr() { public int handler()	{ return suna8_vh_start_common(0);  } };
-	public static VideoStartHandlerPtr video_start_suna8_textdim8  = new VideoStartHandlerPtr() { public int handler()	{ return suna8_vh_start_common(8);  } };
-	public static VideoStartHandlerPtr video_start_suna8_textdim12  = new VideoStartHandlerPtr() { public int handler()	{ return suna8_vh_start_common(12); } };
+	public static VideoStartHandlerPtr video_start_suna8_textdim0  = new VideoStartHandlerPtr() { public int handler() return suna8_vh_start_common(0);  }
+	public static VideoStartHandlerPtr video_start_suna8_textdim8  = new VideoStartHandlerPtr() { public int handler() return suna8_vh_start_common(8);  }
+	public static VideoStartHandlerPtr video_start_suna8_textdim12  = new VideoStartHandlerPtr() { public int handler() return suna8_vh_start_common(12); }
 	
 	/***************************************************************************
 	
@@ -288,7 +283,7 @@ public class suna8
 			y = (0x100 - y - dimy*8 ) & 0xff;
 	
 			/* Multi Sprite */
-			if (multisprite != 0)	{	mx += dimx*8;	x = mx;	}
+			if ( multisprite )	{	mx += dimx*8;	x = mx;	}
 			else					mx = x;
 	
 			gfxbank	*= 0x400;
@@ -310,10 +305,10 @@ public class suna8
 					int sx		=	 x + tx * 8;
 					int sy		=	(y + ty * 8) & 0xff;
 	
-					if (flipx != 0)	tile_flipx = !tile_flipx;
-					if (flipy != 0)	tile_flipy = !tile_flipy;
+					if (flipx)	tile_flipx = !tile_flipx;
+					if (flipy)	tile_flipy = !tile_flipy;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{	sx = max_x - sx;	tile_flipx = !tile_flipx;
 						sy = max_y - sy;	tile_flipy = !tile_flipy;	}
 	
@@ -326,15 +321,15 @@ public class suna8
 				}
 			}
 	
-		}
+		} };
 	}
 	
 	void suna8_draw_text_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
 		int i;
 	
-		int max_x	=	Machine.drv.screen_width	- 8;
-		int max_y	=	Machine.drv.screen_height - 8;
+		int max_x	=	Machine->drv->screen_width	- 8;
+		int max_y	=	Machine->drv->screen_height - 8;
 	
 		/* Earlier games only */
 		if (!(suna8_text_dim > 0))	return;
@@ -378,11 +373,11 @@ public class suna8
 					int sx		=	 x + tx * 8;
 					int sy		=	(y + real_ty * 8) & 0xff;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{	sx = max_x - sx;	flipx = NOT(flipx);
 						sy = max_y - sy;	flipy = NOT(flipy);	}
 	
-					drawgfx(	bitmap,Machine.gfx[0],
+					drawgfx(	bitmap,Machine->gfx[0],
 								tile + (attr & 0x3)*0x100 + bank,
 								(attr >> 2) & 0xf,
 								flipx, flipy,
@@ -413,8 +408,7 @@ public class suna8
 	*/
 	#define TILEMAPS 0
 	
-	public static VideoUpdateHandlerPtr video_update_suna8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_suna8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#ifdef MAME_DEBUG
 	#if TILEMAPS
 	{

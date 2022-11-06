@@ -16,7 +16,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,7 +73,7 @@ public class superqix
 	
 	
 	
-	static InputPortPtr input_ports_superqix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superqix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superqix )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -203,8 +203,7 @@ public class superqix
 		new WriteHandlerPtr[] { 0 }	/* port Bwrite */
 	);
 	
-	public static InterruptHandlerPtr sqix_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sqix_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int loop=0;
 	
 		loop++;
@@ -215,8 +214,7 @@ public class superqix
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_superqix = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( superqix )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz ? */
@@ -242,9 +240,7 @@ public class superqix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -305,8 +301,7 @@ public class superqix
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT(perestro)
-	{
+	public static DriverInitHandlerPtr init_perestro  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *src;
 		int len;
 		data8_t temp[16];
@@ -365,10 +360,10 @@ public class superqix
 				src[i+j] = temp[BITSWAP8(j,7,6,5,4,1,0,3,2)];
 			}
 		}
-	}
+	} };
 	
 	
-	public static GameDriver driver_superqix	   = new GameDriver("1987"	,"superqix"	,"superqix.java"	,rom_superqix,null	,machine_driver_superqix	,input_ports_superqix	,null	,ROT90	,	"Taito", "Super Qix", GAME_NOT_WORKING )
-	public static GameDriver driver_sqixbl	   = new GameDriver("1987"	,"sqixbl"	,"superqix.java"	,rom_sqixbl,driver_superqix	,machine_driver_superqix	,input_ports_superqix	,null	,ROT90	,	"bootleg", "Super Qix (bootleg)" )
-	public static GameDriver driver_perestro	   = new GameDriver("1993"	,"perestro"	,"superqix.java"	,rom_perestro,null	,machine_driver_superqix	,input_ports_superqix	,init_perestro	,ROT90	,	"Promat / Fuuki", "Perestroika Girls" )
+	GAMEX(1987, superqix, 0,        superqix, superqix, 0,        ROT90, "Taito", "Super Qix", GAME_NOT_WORKING )
+	GAME( 1987, sqixbl,   superqix, superqix, superqix, 0,        ROT90, "bootleg", "Super Qix (bootleg)" )
+	GAME( 1993, perestro, 0,        superqix, superqix, perestro, ROT90, "Promat / Fuuki", "Perestroika Girls" )
 }

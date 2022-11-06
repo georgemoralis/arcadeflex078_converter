@@ -18,7 +18,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -76,7 +76,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_carpolo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_carpolo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( carpolo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT (0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT (0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -244,8 +244,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_carpolo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( carpolo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/12)		/* 940.75 kHz */
@@ -270,9 +269,7 @@ public class carpolo
 		MDRV_VIDEO_START(carpolo)
 		MDRV_VIDEO_UPDATE(carpolo)
 		MDRV_VIDEO_EOF(carpolo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -322,8 +319,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_carpolo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_carpolo  = new DriverInitHandlerPtr() { public void handler(){
 		size_t i;
 		UINT8 *ROM;
 	
@@ -334,5 +330,5 @@ public class carpolo
 			ROM[i] ^= 0x0f;
 	} };
 	
-	public static GameDriver driver_carpolo	   = new GameDriver("1977"	,"carpolo"	,"carpolo.java"	,rom_carpolo,null	,machine_driver_carpolo	,input_ports_carpolo	,init_carpolo	,ROT0	,	"Exidy", "Car Polo", GAME_NO_SOUND)
+	GAMEX(1977, carpolo, 0, carpolo, carpolo, carpolo, ROT0, "Exidy", "Car Polo", GAME_NO_SOUND)
 }

@@ -135,7 +135,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -153,14 +153,12 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr liberatr_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberatr_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,~data & 0x10);
 	} };
 	
 	
-	public static WriteHandlerPtr liberatr_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberatr_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset ^ 0x01, data);
 	} };
 	
@@ -172,8 +170,7 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr liberatr_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr liberatr_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int	res ;
 		int xdelta, ydelta;
 	
@@ -301,7 +298,7 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_liberatr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_liberatr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( liberatr )
 		PORT_START(); 			/* IN0 - $5000 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -413,8 +410,7 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_liberatr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( liberatr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1250000)
@@ -437,21 +433,16 @@ public class liberatr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_liberat2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( liberat2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(liberatr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(liberat2_readmem,liberat2_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -525,7 +516,7 @@ public class liberatr
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_liberatr	   = new GameDriver("1982"	,"liberatr"	,"liberatr.java"	,rom_liberatr,null	,machine_driver_liberatr	,input_ports_liberatr	,null	,ROT0	,	"Atari", "Liberator (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_liberat2	   = new GameDriver("1982"	,"liberat2"	,"liberatr.java"	,rom_liberat2,driver_liberatr	,machine_driver_liberat2	,input_ports_liberatr	,null	,ROT0	,	"Atari", "Liberator (set 2)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1982, liberatr, 0,        liberatr, liberatr, 0, ROT0, "Atari", "Liberator (set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, liberat2, liberatr, liberat2, liberatr, 0, ROT0, "Atari", "Liberator (set 2)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 	
 }

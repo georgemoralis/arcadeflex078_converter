@@ -65,7 +65,7 @@ zooming might be wrong
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -93,7 +93,7 @@ public class taotaido
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -144,13 +144,11 @@ public class taotaido
 	/* sound cpu - same as aerofgt */
 	
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
-	public static WriteHandlerPtr taotaido_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taotaido_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x03) * 0x8000);
@@ -193,7 +191,7 @@ public class taotaido
 	
 	
 	
-	static InputPortPtr input_ports_taotaido = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_taotaido = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( taotaido )
 		PORT_START(); 	/* Player 1 controls (0xffff81.b) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -236,7 +234,7 @@ public class taotaido
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_SERVICE1 );// see notes - SERVICE in "test mode"
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );// VBLANK ? The game freezes when ON
 	
-		PORT_START(); 	/* DSW A (0xffff87.b . !0xfe2f6c.w or !0xfe30d0) */
+		PORT_START(); 	/* DSW A (0xffff87.b -> !0xfe2f6c.w or !0xfe30d0) */
 		PORT_DIPNAME( 0x01, 0x01, "Coin Slot" );
 		PORT_DIPSETTING(    0x01, "Same" );
 		PORT_DIPSETTING(    0x00, "Individual" );
@@ -262,7 +260,7 @@ public class taotaido
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW B (0xffff89.b . !0xfe73c2.w or !0xfe751c.w) */
+		PORT_START(); 	/* DSW B (0xffff89.b -> !0xfe73c2.w or !0xfe751c.w) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Flip_Screen") );	// check code at 0x0963e2 or 0x845e2
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -285,7 +283,7 @@ public class taotaido
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW C (0xffff8b.b . !0xfe2f94.w or !0xfe30f8.w) */
+		PORT_START(); 	/* DSW C (0xffff8b.b -> !0xfe2f94.w or !0xfe30f8.w) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );	// doesn't seem to be demo sounds
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
@@ -389,8 +387,7 @@ public class taotaido
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_taotaido = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( taotaido )
 		MDRV_CPU_ADD(M68000, 32000000/2)
 		MDRV_CPU_MEMORY(taotaido_readmem,taotaido_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -418,9 +415,7 @@ public class taotaido
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_taotaido = new RomLoadPtr(){ public void handler(){ 
@@ -471,6 +466,6 @@ public class taotaido
 		ROM_LOAD( "u15.bin", 0x000000, 0x200000, CRC(e95823e9) SHA1(362583944ad4fdde4f9e29928cf34376c7ad931f) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_taotaido	   = new GameDriver("1993"	,"taotaido"	,"taotaido.java"	,rom_taotaido,null	,machine_driver_taotaido	,input_ports_taotaido	,null	,ROT0	,	"Video System Co.", "Tao Taido (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_taotaida	   = new GameDriver("1993"	,"taotaida"	,"taotaido.java"	,rom_taotaida,driver_taotaido	,machine_driver_taotaido	,input_ports_taotaido	,null	,ROT0	,	"Video System Co.", "Tao Taido (set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, taotaido, 0,        taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, taotaida, taotaido, taotaido, taotaido, 0, ROT0, "Video System Co.", "Tao Taido (set 2)", GAME_NO_COCKTAIL )
 }

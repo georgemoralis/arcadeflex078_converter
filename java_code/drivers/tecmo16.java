@@ -18,7 +18,7 @@ buttons 1 and 2 during P.O.S.T.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -45,7 +45,7 @@ public class tecmo16
 	
 	static WRITE16_HANDLER( tecmo16_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0x00,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -150,7 +150,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_fstarfrc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fstarfrc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fstarfrc )
 		PORT_START(); 			/* DIP SW 1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "1C_1C") );
@@ -216,7 +216,7 @@ public class tecmo16
 		PORT_BIT( 0x8000, IP_ACTIVE_HIGH, IPT_COIN2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ginkun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ginkun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ginkun )
 		PORT_START(); 			/* DIP SW 1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "1C_1C") );
@@ -354,8 +354,7 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_fstarfrc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fstarfrc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12MHz */
@@ -384,13 +383,10 @@ public class tecmo16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ginkun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ginkun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12MHz */
@@ -419,9 +415,7 @@ public class tecmo16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -473,6 +467,6 @@ public class tecmo16
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_fstarfrc	   = new GameDriver("1992"	,"fstarfrc"	,"tecmo16.java"	,rom_fstarfrc,null	,machine_driver_fstarfrc	,input_ports_fstarfrc	,null	,ROT90	,	"Tecmo", "Final Star Force (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_ginkun	   = new GameDriver("1995"	,"ginkun"	,"tecmo16.java"	,rom_ginkun,null	,machine_driver_ginkun	,input_ports_ginkun	,null	,ROT0	,	"Tecmo", "Ganbare Ginkun", GAME_NO_COCKTAIL )
+	GAMEX( 1992, fstarfrc, 0, fstarfrc, fstarfrc, 0, ROT90, "Tecmo", "Final Star Force (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1995, ginkun,   0, ginkun,   ginkun,   0, ROT0,  "Tecmo", "Ganbare Ginkun", GAME_NO_COCKTAIL )
 }

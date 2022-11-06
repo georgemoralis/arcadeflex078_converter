@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -73,15 +73,13 @@ public class chaknpop
 	  Memory handlers
 	***************************************************************************/
 	
-	public static ReadHandlerPtr chaknpop_mcu_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr chaknpop_mcu_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("%04x: MCU portA read\n", activecpu_get_pc());
 		return mcu_result;
 	} };
 	
 	
-	public static ReadHandlerPtr chaknpop_mcu_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr chaknpop_mcu_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("%04x: MCU portB read\n", activecpu_get_pc());
 	
 		if (--mcu_wait)
@@ -90,14 +88,12 @@ public class chaknpop
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr chaknpop_mcu_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr chaknpop_mcu_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("%04x: MCU portC read\n", activecpu_get_pc());
 		return 0x00;
 	} };
 	
-	public static WriteHandlerPtr chaknpop_mcu_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_mcu_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		data8_t mcu_command;
 	
@@ -145,13 +141,11 @@ public class chaknpop
 		}
 	} };
 	
-	public static WriteHandlerPtr chaknpop_mcu_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_mcu_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("%04x: MCU portB write 0x%02x\n", activecpu_get_pc(), data);
 	} };
 	
-	public static WriteHandlerPtr chaknpop_mcu_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_mcu_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("%04x: MCU portC write 0x%02x\n", activecpu_get_pc(), data);
 	} };
 	
@@ -160,16 +154,14 @@ public class chaknpop
 	  Initialize mcu emulation
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_chaknpop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chaknpop  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_UINT8("chankpop", 0, "mcu_seed",    &mcu_seed,    1);
 		state_save_register_UINT8("chankpop", 0, "mcu_result",  &mcu_result,  1);
 		state_save_register_UINT8("chankpop", 0, "mcu_select",  &mcu_select,  1);
 		state_save_register_UINT8("chankpop", 0, "mcu_wait",    &mcu_wait,    1);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_chaknpop  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_chaknpop  = new MachineInitHandlerPtr() { public void handler(){
 		mcu_seed = MCU_INITIAL_SEED;
 		mcu_wait = 0;
 	} };

@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,7 +28,7 @@ public class system18
 	static data16_t sys16_coinctrl;
 	
 	static WRITE16_HANDLER( sys18_refreshenable_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			sys16_coinctrl = data&0xff;
 			sys16_refreshenable = sys16_coinctrl & 0x02;
 			/* bit 2 is also used (0 in shadow dancer) */
@@ -70,9 +70,9 @@ public class system18
 	
 	static UINT8 *sys18_SoundMemBank;
 	
-	public static ReadHandlerPtr system18_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr system18_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return sys18_SoundMemBank[offset];
-	} };
+	}
 	
 	public static Memory_ReadAddress sound_readmem_18[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -94,7 +94,7 @@ public class system18
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr sys18_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr sys18_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/* select access bank for a000~bfff */
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int Bank=0;
@@ -111,9 +111,9 @@ public class system18
 			case 0xc0:
 				Bank = ((data&0x1f) + (512+128)/8)<<13;
 				break;
-		}
+		} };
 		sys18_SoundMemBank = &RAM[Bank+0x10000];
-	} };
+	}
 	
 	public static IO_ReadPort sound_readport_18[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -140,7 +140,7 @@ public class system18
 	};
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -216,12 +216,12 @@ public class system18
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_shdancer  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancer  = new MachineInitHandlerPtr() { public void handler()
 		sys16_spritelist_end=0x8000;
 		sys16_update_proc = shdancer_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shdancer  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_shdancer  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		machine_init_sys16_onetime();
 		sys18_splittab_fg_x=&sys16_textram[0x0f80/2];
@@ -230,15 +230,15 @@ public class system18
 		sys16_MaxShadowColors=0; // doesn't seem to use transparent shadows
 	
 		memcpy(RAM,&RAM[0x10000],0xa000);
-	} };
+	}
 	
 	/***************************************************************************/
 	
 	/*
-	public static ReadHandlerPtr shdancer_skip_r  = new ReadHandlerPtr() { public int handler(int offset){
-		if (activecpu_get_pc()==0x2f76) {cpu_spinuntil_int(); return 0xffff;}
+	public static ReadHandlerPtr shdancer_skip_r  = new ReadHandlerPtr() { public int handler(int offset)
+		if (activecpu_get_pc()==0x2f76) {cpu_spinuntil_int(); return 0xffff;} };
 		return (*(UINT16 *)(&sys16_workingram[0x0000]));
-	} };
+	}
 	*/
 	
 	static MEMORY_READ16_START( shdancbl_readmem )
@@ -309,14 +309,14 @@ public class system18
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_shdancbl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancbl  = new MachineInitHandlerPtr() { public void handler()
 		sys16_spritelist_end=0x8000;
 		sys16_sprxoffset = -0xbc+0x77;
 	
 		sys16_update_proc = shdancbl_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shdancbl  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_shdancbl  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM= memory_region(REGION_CPU2);
 		int i;
 	
@@ -331,23 +331,23 @@ public class system18
 		/* invert the graphics bits on the tiles */
 		for (i = 0; i < 0xc0000; i++)
 			memory_region(REGION_GFX1)[i] ^= 0xff;
-	} };
+	}
 	
 	/***************************************************************************/
 	#if 0
 	static READ16_HANDLER( shdancrj_skip_r ){
-		if (activecpu_get_pc()==0x2f70) {cpu_spinuntil_int(); return 0xffff;}
+		if (activecpu_get_pc()==0x2f70) {cpu_spinuntil_int(); return 0xffff;} };
 		return sys16_workingram[0xc000/2];
 	}
 	#endif
 	
-	public static MachineInitHandlerPtr machine_init_shdancrj  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shdancrj  = new MachineInitHandlerPtr() { public void handler()
 		sys16_spritelist_end=0x8000;
 		sys16_patch_code(0x6821, 0xdf);
 		sys16_update_proc = shdancer_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shdancrj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_shdancrj  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM= memory_region(REGION_CPU2);
 		machine_init_sys16_onetime();
 		sys18_splittab_fg_x=&sys16_textram[0x0f80/2];
@@ -355,12 +355,12 @@ public class system18
 	//	install_mem_read_handler(0, 0xffc000, 0xffc001, shdancrj_skip_r );
 	
 		memcpy(RAM,&RAM[0x10000],0xa000);
-	} };
+	}
 	
 	/***************************************************************************/
 	
 	static READ16_HANDLER( moonwlkb_skip_r ){
-		if (activecpu_get_pc()==0x308a) {cpu_spinuntil_int(); return 0xffff;}
+		if (activecpu_get_pc()==0x308a) {cpu_spinuntil_int(); return 0xffff;} };
 		return sys16_workingram[0x202c/2];
 	}
 	
@@ -433,7 +433,7 @@ public class system18
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_moonwalk  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_moonwalk  = new MachineInitHandlerPtr() { public void handler()
 		sys16_bg_priority_value=0x1000;
 		sys16_sprxoffset = -0x238;
 		sys16_spritelist_end=0x8000;
@@ -478,21 +478,21 @@ public class system18
 		sys16_patch_code( 0x70213, 0x71);
 	
 		sys16_update_proc = moonwalk_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_moonwalk  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_moonwalk  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM= memory_region(REGION_CPU2);
 		machine_init_sys16_onetime();
 		sys18_splittab_fg_x=&sys16_textram[0x0f80/2];
 		sys18_splittab_bg_x=&sys16_textram[0x0fc0/2];
 	
 		memcpy(RAM,&RAM[0x10000],0xa000);
-	} };
+	}
 	
 	/***************************************************************************/
 	
 	static READ16_HANDLER( astorm_skip_r ){
-		if (activecpu_get_pc()==0x3d4c) {cpu_spinuntil_int(); return 0xffff;}
+		if (activecpu_get_pc()==0x3d4c) {cpu_spinuntil_int(); return 0xffff;} };
 		return sys16_workingram[0x2c2c/2];
 	}
 	
@@ -583,7 +583,7 @@ public class system18
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_astorm  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_astorm  = new MachineInitHandlerPtr() { public void handler()
 		sys16_fgxoffset = sys16_bgxoffset = -9;
 	
 		sys16_patch_code( 0x2D6E, 0x32 );
@@ -647,9 +647,9 @@ public class system18
 		sys16_patch_code( 0x3f9b, 0x36 );
 	
 		sys16_update_proc = astorm_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_astorm  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_astorm  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM= memory_region(REGION_CPU2);
 		machine_init_sys16_onetime();
 		sys18_splittab_fg_x=&sys16_textram[0x0f80/2];
@@ -657,12 +657,11 @@ public class system18
 	
 		memcpy(RAM,&RAM[0x10000],0xa000);
 		sys16_MaxShadowColors = 0; // doesn't seem to use transparent shadows
-	} };
+	}
 	
 	/*****************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_system18 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system18 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 10000000)
@@ -690,13 +689,10 @@ public class system18
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("3438", YM3438, sys18_ym3438_interface)
 		MDRV_SOUND_ADD_TAG("5c68", RF5C68, sys18_rf5c68_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_astorm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( astorm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -704,13 +700,10 @@ public class system18
 		MDRV_CPU_MEMORY(astorm_readmem,astorm_writemem)
 	
 		MDRV_MACHINE_INIT(astorm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_moonwalk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moonwalk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -718,13 +711,10 @@ public class system18
 		MDRV_CPU_MEMORY(moonwalk_readmem,moonwalk_writemem)
 	
 		MDRV_MACHINE_INIT(moonwalk)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shdancer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shdancer )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -732,13 +722,10 @@ public class system18
 		MDRV_CPU_MEMORY(shdancer_readmem,shdancer_writemem)
 	
 		MDRV_MACHINE_INIT(shdancer)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shdancbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shdancbl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system18)
@@ -746,26 +733,21 @@ public class system18
 		MDRV_CPU_MEMORY(shdancbl_readmem,shdancbl_writemem)
 	
 		MDRV_MACHINE_INIT(shdancbl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shdancrj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shdancrj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(shdancer)
 	
 		MDRV_MACHINE_INIT(shdancrj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_astorm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astorm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astorm )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -830,7 +812,7 @@ public class system18
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER3 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_moonwalk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moonwalk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moonwalk )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -895,7 +877,7 @@ public class system18
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER3 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shdancer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shdancer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shdancer )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1359,19 +1341,19 @@ public class system18
 	
 	/*****************************************************************************/
 	
-	public static GameDriver driver_astorm	   = new GameDriver("1990"	,"astorm"	,"system18.java"	,rom_astorm,null	,machine_driver_astorm	,input_ports_astorm	,init_astorm	,ROT0	,	"Sega",    "Alien Storm", GAME_NOT_WORKING )
-	public static GameDriver driver_astorm2p	   = new GameDriver("1990"	,"astorm2p"	,"system18.java"	,rom_astorm2p,driver_astorm	,machine_driver_astorm	,input_ports_astorm	,init_astorm	,ROT0	,	"Sega",    "Alien Storm (2 Player)", GAME_NOT_WORKING )
-	public static GameDriver driver_astormbl	   = new GameDriver("1990"	,"astormbl"	,"system18.java"	,rom_astormbl,driver_astorm	,machine_driver_astorm	,input_ports_astorm	,init_astorm	,ROT0	,	"bootleg", "Alien Storm (bootleg)" )
-	public static GameDriver driver_moonwalk	   = new GameDriver("1990"	,"moonwalk"	,"system18.java"	,rom_moonwalk,null	,machine_driver_moonwalk	,input_ports_moonwalk	,init_moonwalk	,ROT0	,	"Sega",    "Michael Jackson's Moonwalker (Set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_moonwlka	   = new GameDriver("1990"	,"moonwlka"	,"system18.java"	,rom_moonwlka,driver_moonwalk	,machine_driver_moonwalk	,input_ports_moonwalk	,init_moonwalk	,ROT0	,	"Sega",    "Michael Jackson's Moonwalker (Set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_moonwlkb	   = new GameDriver("1990"	,"moonwlkb"	,"system18.java"	,rom_moonwlkb,driver_moonwalk	,machine_driver_moonwalk	,input_ports_moonwalk	,init_moonwalk	,ROT0	,	"bootleg", "Michael Jackson's Moonwalker (bootleg)" )
-	public static GameDriver driver_shdancer	   = new GameDriver("1989"	,"shdancer"	,"system18.java"	,rom_shdancer,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega",    "Shadow Dancer (US)" )
-	public static GameDriver driver_shdancbl	   = new GameDriver("1989"	,"shdancbl"	,"system18.java"	,rom_shdancbl,driver_shdancer	,machine_driver_shdancbl	,input_ports_shdancer	,init_shdancbl	,ROT0	,	"bootleg", "Shadow Dancer (bootleg)", GAME_NOT_WORKING )
-	public static GameDriver driver_shdancrj	   = new GameDriver("1989"	,"shdancrj"	,"system18.java"	,rom_shdancrj,driver_shdancer	,machine_driver_shdancrj	,input_ports_shdancer	,init_shdancrj	,ROT0	,	"Sega",    "Shadow Dancer (Japan)" )
+	GAMEX(1990, astorm,   0,        astorm,   astorm,   astorm,   ROT0, "Sega",    "Alien Storm", GAME_NOT_WORKING )
+	GAMEX(1990, astorm2p, astorm,   astorm,   astorm,   astorm,   ROT0, "Sega",    "Alien Storm (2 Player)", GAME_NOT_WORKING )
+	GAME( 1990, astormbl, astorm,   astorm,   astorm,   astorm,   ROT0, "bootleg", "Alien Storm (bootleg)" )
+	GAMEX(1990, moonwalk, 0,        moonwalk, moonwalk, moonwalk, ROT0, "Sega",    "Michael Jackson's Moonwalker (Set 1)", GAME_NOT_WORKING )
+	GAMEX(1990, moonwlka, moonwalk, moonwalk, moonwalk, moonwalk, ROT0, "Sega",    "Michael Jackson's Moonwalker (Set 2)", GAME_NOT_WORKING )
+	GAME( 1990, moonwlkb, moonwalk, moonwalk, moonwalk, moonwalk, ROT0, "bootleg", "Michael Jackson's Moonwalker (bootleg)" )
+	GAME( 1989, shdancer, 0,        shdancer, shdancer, shdancer, ROT0, "Sega",    "Shadow Dancer (US)" )
+	GAMEX(1989, shdancbl, shdancer, shdancbl, shdancer, shdancbl, ROT0, "bootleg", "Shadow Dancer (bootleg)", GAME_NOT_WORKING )
+	GAME( 1989, shdancrj, shdancer, shdancrj, shdancer, shdancrj, ROT0, "Sega",    "Shadow Dancer (Japan)" )
 	
-	public static GameDriver driver_aceattac	   = new GameDriver("19??"	,"aceattac"	,"system18.java"	,rom_aceattac,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega", "Ace Attacker", GAME_NOT_WORKING )
-	public static GameDriver driver_bloxeed	   = new GameDriver("1990"	,"bloxeed"	,"system18.java"	,rom_bloxeed,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega", "Bloxeed", GAME_NOT_WORKING )
-	public static GameDriver driver_cltchitr	   = new GameDriver("19??"	,"cltchitr"	,"system18.java"	,rom_cltchitr,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega", "Clutch Hitter", GAME_NOT_WORKING )
-	public static GameDriver driver_ddcrew	   = new GameDriver("19??"	,"ddcrew"	,"system18.java"	,rom_ddcrew,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega", "DD Crew", GAME_NOT_WORKING )
-	public static GameDriver driver_lghost	   = new GameDriver("19??"	,"lghost"	,"system18.java"	,rom_lghost,null	,machine_driver_shdancer	,input_ports_shdancer	,init_shdancer	,ROT0	,	"Sega", "Laser Ghost", GAME_NOT_WORKING )
+	GAMEX(19??, aceattac, 0,        shdancer, shdancer, shdancer, ROT0, "Sega", "Ace Attacker", GAME_NOT_WORKING )
+	GAMEX(1990, bloxeed,  0,        shdancer, shdancer, shdancer, ROT0, "Sega", "Bloxeed", GAME_NOT_WORKING )
+	GAMEX(19??, cltchitr, 0,        shdancer, shdancer, shdancer, ROT0, "Sega", "Clutch Hitter", GAME_NOT_WORKING )
+	GAMEX(19??, ddcrew,   0,        shdancer, shdancer, shdancer, ROT0, "Sega", "DD Crew", GAME_NOT_WORKING )
+	GAMEX(19??, lghost,   0,        shdancer, shdancer, shdancer, ROT0, "Sega", "Laser Ghost", GAME_NOT_WORKING )
 }

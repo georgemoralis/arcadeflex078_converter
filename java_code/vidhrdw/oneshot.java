@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,16 +21,16 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_bg_videoram.read(tile_index*2+1);
+		tileno = oneshot_bg_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,0,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_bg_videoram_w )
 	{
-		if (oneshot_bg_videoram.read(offset)!= data)
+		if (oneshot_bg_videoram[offset] != data)
 		{
-			COMBINE_DATA(&oneshot_bg_videoram.read(offset));
+			COMBINE_DATA(&oneshot_bg_videoram[offset]);
 			tilemap_mark_tile_dirty(oneshot_bg_tilemap,offset/2);
 		}
 	}
@@ -40,16 +40,16 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_mid_videoram.read(tile_index*2+1);
+		tileno = oneshot_mid_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,2,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_mid_videoram_w )
 	{
-		if (oneshot_mid_videoram.read(offset)!= data)
+		if (oneshot_mid_videoram[offset] != data)
 		{
-			COMBINE_DATA(&oneshot_mid_videoram.read(offset));
+			COMBINE_DATA(&oneshot_mid_videoram[offset]);
 			tilemap_mark_tile_dirty(oneshot_mid_tilemap,offset/2);
 		}
 	}
@@ -60,22 +60,21 @@ public class oneshot
 	{
 		int tileno;
 	
-		tileno = oneshot_fg_videoram.read(tile_index*2+1);
+		tileno = oneshot_fg_videoram[tile_index*2+1];
 	
 		SET_TILE_INFO(0,tileno,3,0)
 	}
 	
 	WRITE16_HANDLER( oneshot_fg_videoram_w )
 	{
-		if (oneshot_fg_videoram.read(offset)!= data)
+		if (oneshot_fg_videoram[offset] != data)
 		{
-			COMBINE_DATA(&oneshot_fg_videoram.read(offset));
+			COMBINE_DATA(&oneshot_fg_videoram[offset]);
 			tilemap_mark_tile_dirty(oneshot_fg_tilemap,offset/2);
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_oneshot  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_oneshot  = new VideoStartHandlerPtr() { public int handler(){
 		oneshot_bg_tilemap = tilemap_create(get_oneshot_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		oneshot_mid_tilemap = tilemap_create(get_oneshot_mid_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		oneshot_fg_tilemap = tilemap_create(get_oneshot_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
@@ -127,7 +126,7 @@ public class oneshot
 	{
 		const UINT16 *source = oneshot_sprites;
 		const UINT16 *finish = source+(0x1000/2);
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		int xpos,ypos;
 	
@@ -183,8 +182,7 @@ public class oneshot
 	
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_oneshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_oneshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		tilemap_set_scrollx(oneshot_mid_tilemap,0, oneshot_scroll[0]-0x1f5);
@@ -197,8 +195,7 @@ public class oneshot
 		oneshot_drawcrosshairs(bitmap,cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_maddonna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_maddonna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		tilemap_set_scrolly(oneshot_mid_tilemap,0, oneshot_scroll[1]); // other registers aren't used so we don't know which layers they relate to

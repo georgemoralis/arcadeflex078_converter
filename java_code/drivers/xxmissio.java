@@ -10,7 +10,7 @@ XX Mission (c) 1986 UPL
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,31 +27,26 @@ public class xxmissio
 	
 	
 	
-	public static WriteHandlerPtr shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_workram[offset ^ 0x1000] = data;
 	} };
 	
-	public static ReadHandlerPtr shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_workram[offset ^ 0x1000];
 	} };
 	
-	public static WriteHandlerPtr xxmissio_bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *BANK = memory_region(REGION_USER1);
 		UINT32 bank_address = (data & 0x07) * 0x4000;
 		cpu_setbank(1, &BANK[bank_address]);
 	} };
 	
-	public static ReadHandlerPtr xxmissio_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xxmissio_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		xxmissio_status = (xxmissio_status | 2) & ( readinputport(4) | 0xfd );
 		return xxmissio_status;
 	} };
 	
-	public static WriteHandlerPtr xxmissio_status_m_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_status_m_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (data)
 		{
 			case 0x00:
@@ -69,8 +64,7 @@ public class xxmissio
 		}
 	} };
 	
-	public static WriteHandlerPtr xxmissio_status_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_status_s_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (data)
 		{
 			case 0x00:
@@ -88,14 +82,12 @@ public class xxmissio
 		}
 	} };
 	
-	public static InterruptHandlerPtr xxmissio_interrupt_m = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr xxmissio_interrupt_m = new InterruptHandlerPtr() {public void handler(){
 		xxmissio_status &= ~0x20;
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr xxmissio_interrupt_s = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr xxmissio_interrupt_s = new InterruptHandlerPtr() {public void handler(){
 		xxmissio_status &= ~0x10;
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
@@ -203,7 +195,7 @@ public class xxmissio
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_xxmissio = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xxmissio = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xxmissio )
 		PORT_START(); 
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 );
@@ -335,8 +327,7 @@ public class xxmissio
 		{ 0,xxmissio_scroll_y_w }
 	};
 	
-	public static MachineHandlerPtr machine_driver_xxmissio = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xxmissio )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/4)	/* 3.0MHz */
@@ -363,9 +354,7 @@ public class xxmissio
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -392,5 +381,5 @@ public class xxmissio
 		ROM_LOAD16_BYTE( "xx11.4b", 0x0001,  0x8000, CRC(d9dd827c) SHA1(aea3a5abd871adf7f75ad4d6cc57eff0833135c7) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_xxmissio	   = new GameDriver("1986"	,"xxmissio"	,"xxmissio.java"	,rom_xxmissio,null	,machine_driver_xxmissio	,input_ports_xxmissio	,null	,ROT90	,	"UPL", "XX Mission" )
+	GAME( 1986, xxmissio, 0, xxmissio, xxmissio, 0, ROT90, "UPL", "XX Mission" )
 }

@@ -15,7 +15,7 @@ Sound:	YM2151
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,7 +43,7 @@ public class amspdwy
 		Or last value when wheel delta = 0
 	*/
 	#define AMSPDWY_WHEEL_R( _n_ ) \
-	public static ReadHandlerPtr amspdwy_wheel_##_n_##_r  = new ReadHandlerPtr() { public int handler(int offset) \
+	public static ReadHandlerPtr amspdwy_wheel_##_n_##_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ \
 		static data8_t wheel_old, ret; \
 		data8_t wheel = readinputport(5 + _n_); \
@@ -60,13 +60,11 @@ public class amspdwy
 	AMSPDWY_WHEEL_R( 1 )
 	
 	
-	public static ReadHandlerPtr amspdwy_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr amspdwy_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (YM2151_status_port_0_r(0) & ~ 0x30) | readinputport(4);
 	} };
 	
-	public static WriteHandlerPtr amspdwy_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr amspdwy_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(1,PULSE_LINE);
 	} };
@@ -107,8 +105,7 @@ public class amspdwy
 	};
 	
 	
-	public static ReadHandlerPtr amspdwy_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr amspdwy_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *Tracks = memory_region(REGION_CPU1)+0x10000;
 		return Tracks[offset];
 	} };
@@ -159,7 +156,7 @@ public class amspdwy
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_amspdwy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amspdwy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amspdwy )
 	
 		PORT_START(); 	// IN0 - DSW 1
 		PORT_DIPNAME( 0x01, 0x00, "Character Test" );
@@ -268,8 +265,7 @@ public class amspdwy
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_amspdwy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( amspdwy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,3000000)
@@ -297,9 +293,7 @@ public class amspdwy
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, amspdwy_ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -393,6 +387,6 @@ public class amspdwy
 	
 	/* (C) 1987 ETI 8402 MAGNOLIA ST. #C SANTEE, CA 92071 */
 	
-	public static GameDriver driver_amspdwy	   = new GameDriver("1987"	,"amspdwy"	,"amspdwy.java"	,rom_amspdwy,null	,machine_driver_amspdwy	,input_ports_amspdwy	,null	,ROT0	,	"Enerdyne Technologies, Inc.", "American Speedway (set 1)" )
-	public static GameDriver driver_amspdwya	   = new GameDriver("1987"	,"amspdwya"	,"amspdwy.java"	,rom_amspdwya,driver_amspdwy	,machine_driver_amspdwy	,input_ports_amspdwy	,null	,ROT0	,	"Enerdyne Technologies, Inc.", "American Speedway (set 2)" )
+	GAME( 1987, amspdwy,  0,       amspdwy, amspdwy, 0, ROT0, "Enerdyne Technologies, Inc.", "American Speedway (set 1)" )
+	GAME( 1987, amspdwya, amspdwy, amspdwy, amspdwy, 0, ROT0, "Enerdyne Technologies, Inc.", "American Speedway (set 2)" )
 }

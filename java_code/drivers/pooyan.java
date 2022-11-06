@@ -64,7 +64,7 @@ standard NMI at 0x66
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -104,7 +104,7 @@ public class pooyan
 	};
 	
 	
-	static InputPortPtr input_ports_pooyan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pooyan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pooyan )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -233,8 +233,7 @@ public class pooyan
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_pooyan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pooyan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -262,9 +261,7 @@ public class pooyan
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -351,7 +348,7 @@ public class pooyan
 	
 	
 	
-	public static GameDriver driver_pooyan	   = new GameDriver("1982"	,"pooyan"	,"pooyan.java"	,rom_pooyan,null	,machine_driver_pooyan	,input_ports_pooyan	,null	,ROT270	,	"Konami", "Pooyan" )
-	public static GameDriver driver_pooyans	   = new GameDriver("1982"	,"pooyans"	,"pooyan.java"	,rom_pooyans,driver_pooyan	,machine_driver_pooyan	,input_ports_pooyan	,null	,ROT270	,	"[Konami] (Stern license)", "Pooyan (Stern)" )
-	public static GameDriver driver_pootan	   = new GameDriver("1982"	,"pootan"	,"pooyan.java"	,rom_pootan,driver_pooyan	,machine_driver_pooyan	,input_ports_pooyan	,null	,ROT270	,	"bootleg", "Pootan" )
+	GAME( 1982, pooyan,  0,      pooyan, pooyan, 0, ROT270, "Konami", "Pooyan" )
+	GAME( 1982, pooyans, pooyan, pooyan, pooyan, 0, ROT270, "[Konami] (Stern license)", "Pooyan (Stern)" )
+	GAME( 1982, pootan,  pooyan, pooyan, pooyan, 0, ROT270, "bootleg", "Pootan" )
 }

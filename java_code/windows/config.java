@@ -11,8 +11,8 @@
  * Suggestions
  * - norotate? funny, leads to option -nonorotate ...
  *   fix when rotation options take turnable LCD's in account
- * - win_switch_res -. switch_resolution, swres
- * - win_switch_bpp -. switch_bpp, swbpp
+ * - win_switch_res --> switch_resolution, swres
+ * - win_switch_bpp --> switch_bpp, swbpp
  * - give up distinction between vector_width and win_gfx_width
  *   eventually introduce options.width, options.height
  * - new core options:
@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -90,7 +90,7 @@ public class config
 			options.beam = 0x00010000;
 		if (options.beam > 0x00100000)
 			options.beam = 0x00100000;
-		option.priority = priority;
+		option->priority = priority;
 		return 0;
 	}
 	
@@ -101,14 +101,14 @@ public class config
 			options.vector_flicker = 0;
 		if (options.vector_flicker > 255)
 			options.vector_flicker = 255;
-		option.priority = priority;
+		option->priority = priority;
 		return 0;
 	}
 	
 	static int video_set_intensity(struct rc_option *option, const char *arg, int priority)
 	{
 		options.vector_intensity = f_intensity;
-		option.priority = priority;
+		option->priority = priority;
 		return 0;
 	}
 	
@@ -124,7 +124,7 @@ public class config
 			fprintf(stderr, "error: invalid value for debugres: %s\n", arg);
 			return -1;
 		}
-		option.priority = priority;
+		option->priority = priority;
 		return 0;
 	}
 	
@@ -135,13 +135,13 @@ public class config
 		{
 			logfile = fopen("error.log","wa");
 			curlogsize = 0;
-			if (logfile == 0)
+			if (!logfile)
 			{
 				perror("unable to open log file\n");
 				exit (1);
 			}
 		}
-		option.priority = priority;
+		option->priority = priority;
 		return 0;
 	}
 	
@@ -245,13 +245,13 @@ public class config
 			else
 				match = 0;
 	
-			if (match != 0)
+			if (match)
 				s++;
 	
 			if (match != last)
 			{
 				last = match;
-				if (match == 0)
+				if (!match)
 					gaps++;
 			}
 		}
@@ -283,8 +283,8 @@ public class config
 		{
 			int tmp;
 	
-			penalty = penalty_compare (gamename, drivers[i].description);
-			tmp = penalty_compare (gamename, drivers[i].name);
+			penalty = penalty_compare (gamename, drivers[i]->description);
+			tmp = penalty_compare (gamename, drivers[i]->name);
 			if (tmp < penalty) penalty = tmp;
 	
 			/* eventually insert into table of approximate matches */
@@ -304,15 +304,15 @@ public class config
 		for (i = 9; i >= 0; i--)
 		{
 			if (topten[i].index != -1)
-				fprintf (stderr, "%-10s%s\n", drivers[topten[i].index].name, drivers[topten[i].index].description);
+				fprintf (stderr, "%-10s%s\n", drivers[topten[i].index]->name, drivers[topten[i].index]->description);
 		}
 	}
 	
 	/*
-	 * gamedrv  = NULL -. parse named configfile
-	 * gamedrv != NULL -. parse gamename.ini and all parent.ini's (recursively)
-	 * return 0 -. no problem
-	 * return 1 -. something went wrong
+	 * gamedrv  = NULL --> parse named configfile
+	 * gamedrv != NULL --> parse gamename.ini and all parent.ini's (recursively)
+	 * return 0 --> no problem
+	 * return 1 --> something went wrong
 	 */
 	int parse_config (const char* filename, const struct GameDriver *gamedrv)
 	{
@@ -320,48 +320,48 @@ public class config
 		char buffer[128];
 		int retval = 0;
 	
-		if (readconfig == 0) return 0;
+		if (!readconfig) return 0;
 	
-		if (gamedrv != 0)
+		if (gamedrv)
 		{
-			if (gamedrv.clone_of && strlen(gamedrv.clone_of.name))
+			if (gamedrv->clone_of && strlen(gamedrv->clone_of->name))
 			{
-				retval = parse_config (NULL, gamedrv.clone_of);
-				if (retval != 0)
+				retval = parse_config (NULL, gamedrv->clone_of);
+				if (retval)
 					return retval;
 			}
-			sprintf(buffer, "%s.ini", gamedrv.name);
+			sprintf(buffer, "%s.ini", gamedrv->name);
 		}
 		else
 		{
 			sprintf(buffer, "%s", filename);
 		}
 	
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "parsing %s...", buffer);
 	
 		f = mame_fopen (buffer, NULL, FILETYPE_INI, 0);
-		if (f != 0)
+		if (f)
 		{
 			if(osd_rc_read(rc, f, buffer, 1, 1))
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf (stderr, "problem parsing %s\n", buffer);
 				retval = 1;
 			}
 			else
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf (stderr, "OK.\n");
 			}
 		}
 		else
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf (stderr, "N/A\n");
 		}
 	
-		if (f != 0)
+		if (f)
 			mame_fclose (f);
 	
 		return retval;
@@ -372,7 +372,7 @@ public class config
 		struct rc_struct *result;
 	
 		result = rc_create();
-		if (result == 0)
+		if (!result)
 			return NULL;
 	
 		if (rc_register(result, opts))
@@ -400,7 +400,7 @@ public class config
 	
 		/* create the rc object */
 		rc = cli_rc_create();
-		if (rc == 0)
+		if (!rc)
 		{
 			fprintf (stderr, "error on rc creation\n");
 			exit(1);
@@ -415,7 +415,7 @@ public class config
 	
 		/* determine global configfile name */
 		cmd_name = win_strip_extension(win_basename(argv[0]));
-		if (cmd_name == 0)
+		if (!cmd_name)
 		{
 			fprintf (stderr, "who am I? cannot determine the name I was called with\n");
 			exit(1);
@@ -448,20 +448,20 @@ public class config
 	#endif
 	
 		/* if requested, write out cmd_name.ini (normally "mame.ini") */
-		if (createconfig != 0)
+		if (createconfig)
 		{
 			rc_save(rc, buffer, 0);
 			exit(0);
 		}
 	
-		if (showconfig != 0)
+		if (showconfig)
 		{
 			sprintf (buffer, " %s running parameters", cmd_name);
 			rc_write(rc, stdout, buffer);
 			exit(0);
 		}
 	
-		if (showusage != 0)
+		if (showusage)
 		{
 			fprintf(stdout, "Usage: %s [" GAMENOUN "] [options]\n" "Options:\n", cmd_name);
 	
@@ -498,12 +498,12 @@ public class config
 			{
 				for (i = 0; (drivers[i] != 0); i++) /* find game and play it */
 				{
-					if (strcmp(drivers[i].name, inp_header.name) == 0)
+					if (strcmp(drivers[i]->name, inp_header.name) == 0)
 					{
 						game_index = i;
-						gamename = (char *)drivers[i].name;
+						gamename = (char *)drivers[i]->name;
 						printf("Playing back previously recorded " GAMENOUN " %s (%s) [press return]\n",
-								drivers[game_index].name,drivers[game_index].description);
+								drivers[game_index]->name,drivers[game_index]->description);
 						getchar();
 						break;
 					}
@@ -523,7 +523,7 @@ public class config
 		{
 			/* do we have a driver for this? */
 			for (i = 0; drivers[i]; i++)
-				if (stricmp(gamename,drivers[i].name) == 0)
+				if (stricmp(gamename,drivers[i]->name) == 0)
 				{
 					game_index = i;
 					break;
@@ -544,7 +544,7 @@ public class config
 				rand();
 				game_index = rand() % i;
 	
-				fprintf(stderr, "running %s (%s) [press return]",drivers[game_index].name,drivers[game_index].description);
+				fprintf(stderr, "running %s (%s) [press return]",drivers[game_index]->name,drivers[game_index]->description);
 				getchar();
 			}
 		}
@@ -562,7 +562,7 @@ public class config
 		/* ok, got a gamename */
 	
 		/* if this is a vector game, parse vector.ini first */
-		expand_machine_driver(drivers[game_index].drv, &drv);
+		expand_machine_driver(drivers[game_index]->drv, &drv);
 		if (drv.video_attributes & VIDEO_TYPE_VECTOR)
 			if (parse_config ("vector.ini", NULL))
 				exit(1);
@@ -571,14 +571,14 @@ public class config
 		{
 			const struct GameDriver *tmp_gd;
 	
-			sprintf(buffer, "%s", drivers[game_index].source_file+12);
+			sprintf(buffer, "%s", drivers[game_index]->source_file+12);
 			buffer[strlen(buffer) - 2] = 0;
 	
 			tmp_gd = drivers[game_index];
 			while (tmp_gd != NULL)
 			{
-				if (strcmp(tmp_gd.name, buffer) == 0) break;
-				tmp_gd = tmp_gd.clone_of;
+				if (strcmp(tmp_gd->name, buffer) == 0) break;
+				tmp_gd = tmp_gd->clone_of;
 			}
 	
 			if (tmp_gd == NULL)
@@ -596,7 +596,7 @@ public class config
 			exit(1);
 	
 		/* handle record option */
-		if (recordname != 0)
+		if (recordname)
 		{
 			options.record = mame_fopen(recordname,0,FILETYPE_INPUTLOG,1);
 			if (!options.record)
@@ -611,7 +611,7 @@ public class config
 			INP_HEADER inp_header;
 	
 			memset(&inp_header, '\0', sizeof(INP_HEADER));
-			strcpy(inp_header.name, drivers[game_index].name);
+			strcpy(inp_header.name, drivers[game_index]->name);
 			/* MAME32 stores the MAME version numbers at bytes 9 - 11
 			 * MAME DOS keeps this information in a string, the
 			 * Windows code defines them in the Makefile.
@@ -632,7 +632,7 @@ public class config
 		options.debug_depth = 8;
 	
 		/* no sound is indicated by a 0 samplerate */
-		if (enable_sound == 0)
+		if (!enable_sound)
 			options.samplerate = 0;
 	
 		/* set the artwork options */
@@ -643,12 +643,12 @@ public class config
 			options.use_artwork &= ~ARTWORK_USE_OVERLAYS;
 		if (use_bezels == 0)
 			options.use_artwork &= ~ARTWORK_USE_BEZELS;
-		if (use_artwork == 0)
+		if (!use_artwork)
 			options.use_artwork = ARTWORK_USE_NONE;
 	
 	{
 		/* first start with the game's built in orientation */
-		int orientation = drivers[game_index].flags & ORIENTATION_MASK;
+		int orientation = drivers[game_index]->flags & ORIENTATION_MASK;
 		options.ui_orientation = orientation;
 	
 		if (options.ui_orientation & ORIENTATION_SWAP_XY)
@@ -660,11 +660,11 @@ public class config
 		}
 	
 		/* override if no rotation requested */
-		if (video_norotate != 0)
+		if (video_norotate)
 			orientation = options.ui_orientation = ROT0;
 	
 		/* rotate right */
-		if (video_ror != 0)
+		if (video_ror)
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -675,7 +675,7 @@ public class config
 		}
 	
 		/* rotate left */
-		if (video_rol != 0)
+		if (video_rol)
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -686,7 +686,7 @@ public class config
 		}
 	
 		/* auto-rotate right (e.g. for rotating lcds), based on original orientation */
-		if (video_autoror && (drivers[game_index].flags & ORIENTATION_SWAP_XY) )
+		if (video_autoror && (drivers[game_index]->flags & ORIENTATION_SWAP_XY) )
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -697,7 +697,7 @@ public class config
 		}
 	
 		/* auto-rotate left (e.g. for rotating lcds), based on original orientation */
-		if (video_autorol && (drivers[game_index].flags & ORIENTATION_SWAP_XY) )
+		if (video_autorol && (drivers[game_index]->flags & ORIENTATION_SWAP_XY) )
 		{
 			/* if only one of the components is inverted, switch them */
 			if ((orientation & ROT180) == ORIENTATION_FLIP_X ||
@@ -708,9 +708,9 @@ public class config
 		}
 	
 		/* flip X/Y */
-		if (video_flipx != 0)
+		if (video_flipx)
 			orientation ^= ORIENTATION_FLIP_X;
-		if (video_flipy != 0)
+		if (video_flipy)
 			orientation ^= ORIENTATION_FLIP_Y;
 	
 		blit_flipx = ((orientation & ORIENTATION_FLIP_X) != 0);
@@ -722,7 +722,7 @@ public class config
 			options.vector_width = 640;
 			options.vector_height = 480;
 		}
-		if (blit_swapxy != 0)
+		if( blit_swapxy )
 		{
 			int temp;
 			temp = options.vector_width;
@@ -737,15 +737,15 @@ public class config
 	void cli_frontend_exit(void)
 	{
 		/* close open files */
-		if (logfile != 0) fclose(logfile);
+		if (logfile) fclose(logfile);
 	
 		if (options.playback) mame_fclose(options.playback);
 		if (options.record)   mame_fclose(options.record);
 		if (options.language_file) mame_fclose(options.language_file);
 	
 	#ifdef MESS
-		if (win_write_config != 0)
-			write_config(NULL, Machine.gamedrv);
+		if (win_write_config)
+			write_config(NULL, Machine->gamedrv);
 	#endif /* MESS */
 	}
 	
@@ -754,7 +754,7 @@ public class config
 		static int got_gamename = 0;
 	
 		/* notice: for MESS game means system */
-		if (got_gamename != 0)
+		if (got_gamename)
 		{
 			fprintf(stderr,"error: duplicate gamename: %s\n", arg);
 			return -1;
@@ -798,7 +798,7 @@ public class config
 			}
 		}
 	
-		if (erroroslog != 0)
+		if (erroroslog)
 		{
 			//		char buffer[2048];
 			_vsnprintf(buffer, sizeof(buffer) / sizeof(buffer[0]), text, arg);
@@ -848,7 +848,7 @@ public class config
 		char *c;
 	
 		// NULL begets NULL
-		if (filename == 0)
+		if (!filename)
 			return NULL;
 	
 		// start at the end and return when we hit a slash or colon
@@ -872,12 +872,12 @@ public class config
 		char *c;
 	
 		// NULL begets NULL
-		if (filename == 0)
+		if (!filename)
 			return NULL;
 	
 		// allocate space for it
 		dirname = malloc(strlen(filename) + 1);
-		if (dirname == 0)
+		if (!dirname)
 		{
 			fprintf(stderr, "error: malloc failed in win_dirname\n");
 			return NULL;
@@ -912,12 +912,12 @@ public class config
 		char *c;
 	
 		// NULL begets NULL
-		if (filename == 0)
+		if (!filename)
 			return NULL;
 	
 		// allocate space for it
 		newname = malloc(strlen(filename) + 1);
-		if (newname == 0)
+		if (!newname)
 		{
 			fprintf(stderr, "error: malloc failed in win_strip_extension\n");
 			return NULL;

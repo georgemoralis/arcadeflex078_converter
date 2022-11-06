@@ -15,7 +15,7 @@ Credits:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,8 +27,7 @@ public class contra
 	
 	
 	
-	public static WriteHandlerPtr contra_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr contra_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -38,19 +37,16 @@ public class contra
 			cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr contra_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr contra_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr contra_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x01) != 0) coin_counter_w(0,data & 0x01);
-		if ((data & 0x02) != 0) coin_counter_w(1,(data & 0x02) >> 1);
+	public static WriteHandlerPtr contra_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x01) coin_counter_w(0,data & 0x01);
+		if (data & 0x02) coin_counter_w(1,(data & 0x02) >> 1);
 	} };
 	
-	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 	} };
 	
@@ -119,7 +115,7 @@ public class contra
 	
 	
 	
-	static InputPortPtr input_ports_contra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_contra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( contra )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -254,8 +250,7 @@ public class contra
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_contra = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( contra )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(M6809, 1500000)
@@ -285,9 +280,7 @@ public class contra
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -434,9 +427,9 @@ public class contra
 	
 	
 	
-	public static GameDriver driver_contra	   = new GameDriver("1987"	,"contra"	,"contra.java"	,rom_contra,null	,machine_driver_contra	,input_ports_contra	,null	,ROT90	,	"Konami", "Contra (US)" )
-	public static GameDriver driver_contrab	   = new GameDriver("1987"	,"contrab"	,"contra.java"	,rom_contrab,driver_contra	,machine_driver_contra	,input_ports_contra	,null	,ROT90	,	"bootleg", "Contra (US bootleg)" )
-	public static GameDriver driver_contraj	   = new GameDriver("1987"	,"contraj"	,"contra.java"	,rom_contraj,driver_contra	,machine_driver_contra	,input_ports_contra	,null	,ROT90	,	"Konami", "Contra (Japan)" )
-	public static GameDriver driver_contrajb	   = new GameDriver("1987"	,"contrajb"	,"contra.java"	,rom_contrajb,driver_contra	,machine_driver_contra	,input_ports_contra	,null	,ROT90	,	"bootleg", "Contra (Japan bootleg)" )
-	public static GameDriver driver_gryzor	   = new GameDriver("1987"	,"gryzor"	,"contra.java"	,rom_gryzor,driver_contra	,machine_driver_contra	,input_ports_contra	,null	,ROT90	,	"Konami", "Gryzor" )
+	GAME( 1987, contra,   0,      contra, contra, 0, ROT90, "Konami", "Contra (US)" )
+	GAME( 1987, contrab,  contra, contra, contra, 0, ROT90, "bootleg", "Contra (US bootleg)" )
+	GAME( 1987, contraj,  contra, contra, contra, 0, ROT90, "Konami", "Contra (Japan)" )
+	GAME( 1987, contrajb, contra, contra, contra, 0, ROT90, "bootleg", "Contra (Japan bootleg)" )
+	GAME( 1987, gryzor,   contra, contra, contra, 0, ROT90, "Konami", "Gryzor" )
 }

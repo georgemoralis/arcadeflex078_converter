@@ -55,7 +55,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -88,14 +88,14 @@ public class c6280
 	    for(i = 0; i < 4096; i += 1)
 	    {
 	        step = ((clk / rate) * 4096) / (i+1);
-	        p.wave_freq_tab[(1 + i) & 0xFFF] = (UINT32)step;
+	        p->wave_freq_tab[(1 + i) & 0xFFF] = (UINT32)step;
 	    }
 	
 	    /* Make noise frequency table */
 	    for(i = 0; i < 32; i += 1)
 	    {
 	        step = ((clk / rate) * 32) / (i+1);
-	        p.noise_freq_tab[i] = (UINT32)step;
+	        p->noise_freq_tab[i] = (UINT32)step;
 	    }
 	
 	    /* Make volume table */
@@ -103,17 +103,17 @@ public class c6280
 	    step = 48.0 / 32.0;
 	    for(i = 0; i < 31; i++)
 	    {
-	        p.volume_table[i] = (UINT16)level;
+	        p->volume_table[i] = (UINT16)level;
 	        level /= pow(10.0, step / 20.0);
 	    }
-	    p.volume_table[31] = 0;
+	    p->volume_table[31] = 0;
 	}
 	
 	
 	void c6280_write(int which, int offset, int data)
 	{
 	    c6280_t *p = &c6280[which];
-	    t_channel *q = &p.channel[p.select];
+	    t_channel *q = &p->channel[p->select];
 	
 	    /* Update stream */
 	    stream_update(stream[which], 0);
@@ -121,71 +121,71 @@ public class c6280
 	    switch(offset & 0x0F)
 	    {
 	        case 0x00: /* Channel select */
-	            p.select = data & 0x07;
+	            p->select = data & 0x07;
 	            break;
 	
 	        case 0x01: /* Global balance */
-	            p.balance  = data;
+	            p->balance  = data;
 	            break;
 	
 	        case 0x02: /* Channel frequency (LSB) */
-	            q.frequency = (q.frequency & 0x0F00) | data;
-	            q.frequency &= 0x0FFF;
+	            q->frequency = (q->frequency & 0x0F00) | data;
+	            q->frequency &= 0x0FFF;
 	            break;
 	
 	        case 0x03: /* Channel frequency (MSB) */
-	            q.frequency = (q.frequency & 0x00FF) | (data << 8);
-	            q.frequency &= 0x0FFF;
+	            q->frequency = (q->frequency & 0x00FF) | (data << 8);
+	            q->frequency &= 0x0FFF;
 	            break;
 	
 	        case 0x04: /* Channel control (key-on, DDA mode, volume) */
 	
 	            /* 1-to-0 transition of DDA bit resets waveform index */
-	            if((q.control & 0x40) && ((data & 0x40) == 0))
+	            if((q->control & 0x40) && ((data & 0x40) == 0))
 	            {
-	                q.index = 0;
+	                q->index = 0;
 	            }
-	            q.control = data;
+	            q->control = data;
 	            break;
 	
 	        case 0x05: /* Channel balance */
-	            q.balance = data;
+	            q->balance = data;
 	            break;
 	
 	        case 0x06: /* Channel waveform data */
 	
-	            switch(q.control & 0xC0)
+	            switch(q->control & 0xC0)
 	            {
 	                case 0x00:
-	                    q.waveform[q.index & 0x1F] = data & 0x1F;
-	                    q.index = (q.index + 1) & 0x1F;
+	                    q->waveform[q->index & 0x1F] = data & 0x1F;
+	                    q->index = (q->index + 1) & 0x1F;
 	                    break;
 	
 	                case 0x40:
 	                    break;
 	
 	                case 0x80:
-	                    q.waveform[q.index & 0x1F] = data & 0x1F;
-	                    q.index = (q.index + 1) & 0x1F;
+	                    q->waveform[q->index & 0x1F] = data & 0x1F;
+	                    q->index = (q->index + 1) & 0x1F;
 	                    break;
 	
 	                case 0xC0:
-	                    q.dda = data & 0x1F;
+	                    q->dda = data & 0x1F;
 	                    break;
 	            }
 	
 	            break;
 	
 	        case 0x07: /* Noise control (enable, frequency) */
-	            q.noise_control = data;
+	            q->noise_control = data;
 	            break;
 	
 	        case 0x08: /* LFO frequency */
-	            p.lfo_frequency = data;
+	            p->lfo_frequency = data;
 	            break;
 	
 	        case 0x09: /* LFO control (enable, mode) */
-	            p.lfo_control = data;
+	            p->lfo_control = data;
 	            break;
 	
 	        default:
@@ -204,8 +204,8 @@ public class c6280
 	    int i;
 	    c6280_t *p = &c6280[num];
 	
-	    int lmal = (p.balance >> 4) & 0x0F;
-	    int rmal = (p.balance >> 0) & 0x0F;
+	    int lmal = (p->balance >> 4) & 0x0F;
+	    int rmal = (p->balance >> 0) & 0x0F;
 	    int vll, vlr;
 	
 	    lmal = scale_tab[lmal];
@@ -221,11 +221,11 @@ public class c6280
 	    for(ch = 0; ch < 6; ch++)
 	    {
 	        /* Only look at enabled channels */
-	        if(p.channel[ch].control & 0x80)
+	        if(p->channel[ch].control & 0x80)
 	        {
-	            int lal = (p.channel[ch].balance >> 4) & 0x0F;
-	            int ral = (p.channel[ch].balance >> 0) & 0x0F;
-	            int al  = p.channel[ch].control & 0x1F;
+	            int lal = (p->channel[ch].balance >> 4) & 0x0F;
+	            int ral = (p->channel[ch].balance >> 0) & 0x0F;
+	            int al  = p->channel[ch].control & 0x1F;
 	
 	            lal = scale_tab[lal];
 	            ral = scale_tab[ral];
@@ -237,49 +237,49 @@ public class c6280
 	            vlr = (0x1F - ral) + (0x1F - al) + (0x1F - rmal);
 	            if(vlr > 0x1F) vlr = 0x1F;
 	
-	            vll = p.volume_table[vll];
-	            vlr = p.volume_table[vlr];
+	            vll = p->volume_table[vll];
+	            vlr = p->volume_table[vlr];
 	
 	            /* Check channel mode */
-	            if((ch >= 4) && (p.channel[ch].noise_control & 0x80))
+	            if((ch >= 4) && (p->channel[ch].noise_control & 0x80))
 	            {
 	                /* Noise mode */
-	                UINT32 step = p.noise_freq_tab[(p.channel[ch].noise_control & 0x1F) ^ 0x1F];
+	                UINT32 step = p->noise_freq_tab[(p->channel[ch].noise_control & 0x1F) ^ 0x1F];
 	                for(i = 0; i < length; i += 1)
 	                {
 	                    static int data = 0;
-	                    p.channel[ch].noise_counter += step;
-	                    if(p.channel[ch].noise_counter >= 0x800)
+	                    p->channel[ch].noise_counter += step;
+	                    if(p->channel[ch].noise_counter >= 0x800)
 	                    {
 	                        data = (rand() & 1) ? 0x1F : 0;
 	                    }
-	                    p.channel[ch].noise_counter &= 0x7FF;
+	                    p->channel[ch].noise_counter &= 0x7FF;
 	                    buffer[0][i] += (INT16)(vll * (data - 16));
 	                    buffer[1][i] += (INT16)(vlr * (data - 16));
 	                }
 	            }
 	            else
-	            if(p.channel[ch].control & 0x40)
+	            if(p->channel[ch].control & 0x40)
 	            {
 	                /* DDA mode */
 	                for(i = 0; i < length; i++)
 	                {
-	                    buffer[0][i] += (INT16)(vll * (p.channel[ch].dda - 16));
-	                    buffer[1][i] += (INT16)(vlr * (p.channel[ch].dda - 16));
+	                    buffer[0][i] += (INT16)(vll * (p->channel[ch].dda - 16));
+	                    buffer[1][i] += (INT16)(vlr * (p->channel[ch].dda - 16));
 	                }
 	            }
 	            else
 	            {
 	                /* Waveform mode */
-	                UINT32 step = p.wave_freq_tab[p.channel[ch].frequency];
+	                UINT32 step = p->wave_freq_tab[p->channel[ch].frequency];
 	                for(i = 0; i < length; i += 1)
 	                {
 	                    int offset;
 	                    INT16 data;
-	                    offset = (p.channel[ch].counter >> 12) & 0x1F;
-	                    p.channel[ch].counter += step;
-	                    p.channel[ch].counter &= 0x1FFFF;
-	                    data = p.channel[ch].waveform[offset];
+	                    offset = (p->channel[ch].counter >> 12) & 0x1F;
+	                    p->channel[ch].counter += step;
+	                    p->channel[ch].counter &= 0x1FFFF;
+	                    data = p->channel[ch].waveform[offset];
 	                    buffer[0][i] += (INT16)(vll * (data - 16));
 	                    buffer[1][i] += (INT16)(vlr * (data - 16));
 	                }
@@ -295,16 +295,16 @@ public class c6280
 	
 	int c6280_sh_start(const struct MachineSound *msound)
 	{
-	    const struct C6280_interface *intf = msound.sound_interface;
+	    const struct C6280_interface *intf = msound->sound_interface;
 		char buf[2][64];
 	    const char *name[2];
 	    int volume[2];
 		int i;
 	
-	    for (i = 0; i < intf.num; i++)
+	    for (i = 0; i < intf->num; i++)
 	    {
 	        /* Initialize PSG emulator */
-	        c6280_init(i, intf.clock[i], Machine.sample_rate, intf.volume[i]&0xff);
+	        c6280_init(i, intf->clock[i], Machine->sample_rate, intf->volume[i]&0xff);
 	
 	        /* Set up device name */
 	        sprintf(buf[0], "HuC6280 #%d", i);
@@ -313,11 +313,11 @@ public class c6280
 	        name[1] = buf[1];
 	
 	        /* Set up volume */
-			volume[0] = MIXER(intf.volume[i], MIXER_PAN_LEFT);
-			volume[1] = MIXER(intf.volume[i], MIXER_PAN_RIGHT);
+			volume[0] = MIXER(intf->volume[i], MIXER_PAN_LEFT);
+			volume[1] = MIXER(intf->volume[i], MIXER_PAN_RIGHT);
 	
 	        /* Create stereo stream */
-	        stream[i] = stream_init_multi(2, name, volume, Machine.sample_rate, i, c6280_update);
+	        stream[i] = stream_init_multi(2, name, volume, Machine->sample_rate, i, c6280_update);
 	        if(stream[i] == -1)
 	            return 1;
 	    }
@@ -329,7 +329,7 @@ public class c6280
 	{
 	}
 	
-	public static WriteHandlerPtr C6280_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {  c6280_write(0,offset,data); } };
-	public static WriteHandlerPtr C6280_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {  c6280_write(1,offset,data); } };
+	public static WriteHandlerPtr C6280_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)  c6280_write(0,offset,data); }
+	public static WriteHandlerPtr C6280_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)  c6280_write(1,offset,data); }
 	
 }

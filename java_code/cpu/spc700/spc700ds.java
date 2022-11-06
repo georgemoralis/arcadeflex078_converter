@@ -18,7 +18,7 @@ author (Karl Stenerud) at karl@higashiyama-unet.ocn.ne.jp.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.spc700;
 
@@ -359,18 +359,18 @@ public class spc700ds
 		g_pc = pc;
 		opcode = g_opcodes + read_8_immediate();
 	
-		sprintf(buff, "%s ", g_opnames[opcode.name]);
+		sprintf(buff, "%s ", g_opnames[opcode->name]);
 		ptr = buff + strlen(buff);
 	
 		for(i=0;i<2;i++)
 		{
-			if(i == 1 && opcode.args[0] != IMP && opcode.args[1] != IMP)
+			if(i == 1 && opcode->args[0] != IMP && opcode->args[1] != IMP)
 			{
 				sprintf(ptr, ",");
 				ptr += strlen(ptr);
 			}
 	
-			switch(opcode.args[i])
+			switch(opcode->args[i])
 			{
 				case IMP:  break;
 				case A:    sprintf(ptr, "A"); break;

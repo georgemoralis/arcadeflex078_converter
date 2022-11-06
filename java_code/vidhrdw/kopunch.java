@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -14,8 +14,7 @@ public class kopunch
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_kopunch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_kopunch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		color_prom+=24;	/* first 24 colors are black */
@@ -44,8 +43,7 @@ public class kopunch
 		}
 	} };
 	
-	public static WriteHandlerPtr kopunch_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -53,8 +51,7 @@ public class kopunch
 		}
 	} };
 	
-	public static WriteHandlerPtr kopunch_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kopunch_videoram2[offset] != data)
 		{
 			kopunch_videoram2[offset] = data;
@@ -62,20 +59,17 @@ public class kopunch
 		}
 	} };
 	
-	public static WriteHandlerPtr kopunch_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll[0] = data; // REMOVE
 		tilemap_set_scrollx(fg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr kopunch_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll[1] = data; // REMOVE
 		tilemap_set_scrolly(fg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr kopunch_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxbank != (data & 0x07))
 		{
 			gfxbank = data & 0x07;
@@ -101,18 +95,17 @@ public class kopunch
 		SET_TILE_INFO(1, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_kopunch  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kopunch  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 16, 16);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -120,8 +113,7 @@ public class kopunch
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_kopunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kopunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);

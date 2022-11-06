@@ -1,16 +1,16 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class mnight
 {
 	
-	#define COLORTABLE_START(gfxn,color)	Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + \
-						color * Machine.gfx[gfxn].color_granularity
-	#define GFX_COLOR_CODES(gfxn) 		Machine.gfx[gfxn].total_colors
-	#define GFX_ELEM_COLORS(gfxn) 		Machine.gfx[gfxn].color_granularity
+	#define COLORTABLE_START(gfxn,color)	Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + \
+						color * Machine->gfx[gfxn]->color_granularity
+	#define GFX_COLOR_CODES(gfxn) 		Machine->gfx[gfxn]->total_colors
+	#define GFX_ELEM_COLORS(gfxn) 		Machine->gfx[gfxn]->color_granularity
 	
 	unsigned char   *mnight_scrolly_ram;
 	unsigned char   *mnight_scrollx_ram;
@@ -28,8 +28,7 @@ public class mnight
 	static int       bg_enable = 1;
 	static int       sp_overdraw = 0;
 	
-	public static VideoStartHandlerPtr video_start_mnight  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mnight  = new VideoStartHandlerPtr() { public int handler(){
 		if ((bg_dirtybuffer = auto_malloc(1024)) == 0)
 			return 1;
 	
@@ -45,40 +44,36 @@ public class mnight
 	} };
 	
 	
-	public static WriteHandlerPtr mnight_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (mnight_background_videoram.read(offset)!= data)
+	public static WriteHandlerPtr mnight_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (mnight_background_videoram[offset] != data)
 		{
 			bg_dirtybuffer[offset >> 1] = 1;
-			mnight_background_videoram.write(data,data);
+			mnight_background_videoram[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr mnight_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (mnight_foreground_videoram.read(offset)!= data)
-			mnight_foreground_videoram.write(data,data);
+	public static WriteHandlerPtr mnight_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (mnight_foreground_videoram[offset] != data)
+			mnight_foreground_videoram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr mnight_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnight_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bg_enable!=data)
 		{
 			mnight_bgenable_ram[offset] = data;
 			bg_enable = data;
-			if (bg_enable != 0)
+			if (bg_enable)
 				memset(bg_dirtybuffer, 1, mnight_backgroundram_size / 2);
 			else
-				fillbitmap(bitmap_bg, Machine.pens[0],0);
+				fillbitmap(bitmap_bg, Machine->pens[0],0);
 		}
 	} };
 	
-	public static WriteHandlerPtr mnight_sprite_overdraw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnight_sprite_overdraw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (sp_overdraw != (data&1))
 		{
 			mnight_spoverdraw_ram[offset] = data;
-			fillbitmap(bitmap_sp,15,Machine.visible_area);
+			fillbitmap(bitmap_sp,15,Machine->visible_area);
 			sp_overdraw = data & 1;
 		}
 	} };
@@ -93,24 +88,24 @@ public class mnight
 		{
 			int sx,sy,tile,palette,flipx,flipy,lo,hi;
 	
-			if (mnight_foreground_videoram.read(offs*2)| mnight_foreground_videoram.read(offs*2+1))
+			if (mnight_foreground_videoram[offs*2] | mnight_foreground_videoram[offs*2+1])
 			{
 				sx = (offs % 32) << 3;
 				sy = (offs >> 5) << 3;
 	
-				lo = mnight_foreground_videoram.read(offs*2);
-				hi = mnight_foreground_videoram.read(offs*2+1);
+				lo = mnight_foreground_videoram[offs*2];
+				hi = mnight_foreground_videoram[offs*2+1];
 				tile = ((hi & 0xc0) << 2) | lo;
 				flipx = hi & 0x10;
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
 	
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						tile,
 						palette,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN, 15);
+						Machine->visible_area,TRANSPARENCY_PEN, 15);
 			}
 	
 		}
@@ -135,12 +130,12 @@ public class mnight
 	
 				bg_dirtybuffer[offs] = 0;
 	
-				lo = mnight_background_videoram.read(offs*2);
-				hi = mnight_background_videoram.read(offs*2+1);
+				lo = mnight_background_videoram[offs*2];
+				hi = mnight_background_videoram[offs*2+1];
 				tile = ((hi & 0x10) << 6) | ((hi & 0xc0) << 2) | lo;
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						tile,
 						palette,
 						0,flipy,
@@ -168,16 +163,16 @@ public class mnight
 				if (spriteram.read(offs+2)& 1) sx-=256;
 				tile = spriteram.read(offs+3)+((spriteram.read(offs+2)& 0xc0)<<2) + ((spriteram.read(offs+2)& 0x08)<<7);
 				big  = spriteram.read(offs+2)& 4;
-				if (big != 0) tile /= 4;
+				if (big) tile /= 4;
 				flipx = spriteram.read(offs+2)& 0x10;
 				flipy = spriteram.read(offs+2)& 0x20;
 				palette = spriteram.read(offs+4)& 0x0f;
-				drawgfx(bitmap,Machine.gfx[(big)?2:1],
+				drawgfx(bitmap,Machine->gfx[(big)?2:1],
 						tile,
 						palette,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,
+						Machine->visible_area,
 						TRANSPARENCY_PEN, 15);
 	
 				/* kludge to clear shots */
@@ -195,18 +190,17 @@ public class mnight
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_mnight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mnight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx,scrolly;
 	
 	
-		if (bg_enable != 0)
+		if (bg_enable)
 			mnight_draw_background(bitmap_bg);
 	
 		scrollx = -((mnight_scrollx_ram[0]+mnight_scrollx_ram[1]*256) & 0x1FF);
 		scrolly = -((mnight_scrolly_ram[0]+mnight_scrolly_ram[1]*256) & 0x1FF);
 	
-		if (sp_overdraw != 0)	/* overdraw sprite mode */
+		if (sp_overdraw)	/* overdraw sprite mode */
 		{
 			copyscrollbitmap(bitmap,bitmap_bg,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
 			mnight_draw_sprites(bitmap_sp);

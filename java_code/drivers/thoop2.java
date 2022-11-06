@@ -11,7 +11,7 @@ The DS5002FP has up to 128 KB undumped gameplay code
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -74,14 +74,14 @@ public class thoop2
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
 	
 	WRITE16_HANDLER( thoop2_coin_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:
@@ -112,7 +112,7 @@ public class thoop2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_thoop2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thoop2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thoop2 )
 	
 	PORT_START(); 	/* DSW #2 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
@@ -203,8 +203,7 @@ public class thoop2
 		{ 100 }				/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_thoop2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thoop2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -226,9 +225,7 @@ public class thoop2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, thoop2_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_thoop2 = new RomLoadPtr(){ public void handler(){ 
@@ -246,5 +243,5 @@ public class thoop2
 		/* 0x00000-0x2ffff is fixed, 0x30000-0x3ffff is bank switched */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_thoop2	   = new GameDriver("1994"	,"thoop2"	,"thoop2.java"	,rom_thoop2,null	,machine_driver_thoop2	,input_ports_thoop2	,null	,ROT0	,	"Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1994, thoop2,  0, thoop2, thoop2,  0, ROT0, "Gaelco", "TH Strikes Back", GAME_UNEMULATED_PROTECTION )
 }

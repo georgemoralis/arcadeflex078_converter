@@ -94,7 +94,7 @@
 
 		4.w								? 0000, 05ff, 057f
 
-		6.w		fed- ---- ---- ----		Tilemap width (games only use 1 . $200, 2 . $400)
+		6.w		fed- ---- ---- ----		Tilemap width (games only use 1 -> $200, 2 -> $400)
 				---c ---- ---- ----		?
 				---- b--- ---- ----		Shadow (Highlight?)
 				---- -a98 ---- ----		Each bit enables 2 bitplanes*
@@ -131,15 +131,14 @@ Note: press Z to show some info on each sprite (debug builds only)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class ssv
 {
 	
-	public static VideoStartHandlerPtr video_start_ssv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ssv  = new VideoStartHandlerPtr() { public int handler(){
 		Machine.gfx[0].color_granularity = 64; /* 256 colour sprites with palette selectable on 64 colour boundaries */
 	
 		alpha_set_level(0x80);	// until proper shadows are implemented
@@ -164,7 +163,7 @@ public class ssv
 	
 					1c0000 (wait for bit .. to become ..)
 	
-		keithlcy:	bit D, 0 . 1
+		keithlcy:	bit D, 0 -> 1
 	
 		mslider:	bit A, 0
 	
@@ -175,7 +174,7 @@ public class ssv
 		ultrax:		bit F, 0
 	
 		twineag2:
-		hypreac2:	bit C, 1 . 0
+		hypreac2:	bit C, 1 -> 0
 					bit F, 0
 	
 		janjans1:
@@ -183,7 +182,7 @@ public class ssv
 		survarts:	No checks
 	
 		ryorioh:
-		drifto94:	bit D, 0 . 1
+		drifto94:	bit D, 0 -> 1
 					bit A, 0
 	
 	
@@ -248,7 +247,7 @@ public class ssv
 	
 	READ16_HANDLER( ssv_vblank_r )
 	{
-		if (cpu_getvblank() != 0)
+		if (cpu_getvblank())
 			return 0x2000 | 0x1000;
 		else
 			return 0x0000;
@@ -280,7 +279,7 @@ public class ssv
 	
 		palette_set_color(offset>>1, r, g, b);
 	
-		if (!(Machine.drv.video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
+		if (!(Machine->drv->video_attributes & VIDEO_NEEDS_6BITS_PER_GUN))
 			usrintf_showmessage("driver should use VIDEO_NEEDS_6BITS_PER_GUN flag");
 	}
 	
@@ -488,17 +487,17 @@ public class ssv
 	
 		/* .. and clip it against the visible screen */
 	
-		if (clip.min_x > Machine.visible_area.max_x)	return;
-		if (clip.min_y > Machine.visible_area.max_y)	return;
+		if (clip.min_x > Machine->visible_area.max_x)	return;
+		if (clip.min_y > Machine->visible_area.max_y)	return;
 	
-		if (clip.max_x < Machine.visible_area.min_x)	return;
-		if (clip.max_y < Machine.visible_area.min_y)	return;
+		if (clip.max_x < Machine->visible_area.min_x)	return;
+		if (clip.max_y < Machine->visible_area.min_y)	return;
 	
-		if (clip.min_x < Machine.visible_area.min_x)	clip.min_x = Machine.visible_area.min_x;
-		if (clip.max_x > Machine.visible_area.max_x)	clip.max_x = Machine.visible_area.max_x;
+		if (clip.min_x < Machine->visible_area.min_x)	clip.min_x = Machine->visible_area.min_x;
+		if (clip.max_x > Machine->visible_area.max_x)	clip.max_x = Machine->visible_area.max_x;
 	
-		if (clip.min_y < Machine.visible_area.min_y)	clip.min_y = Machine.visible_area.min_y;
-		if (clip.max_y > Machine.visible_area.max_y)	clip.max_y = Machine.visible_area.max_y;
+		if (clip.min_y < Machine->visible_area.min_y)	clip.min_y = Machine->visible_area.min_y;
+		if (clip.max_y > Machine->visible_area.max_y)	clip.max_y = Machine->visible_area.max_y;
 	
 		/* Get the scroll data */
 	
@@ -556,10 +555,10 @@ public class ssv
 				gfx	=	((mode & 0x0100) ? 0 : 1);
 	
 				/* Force 16x16 tiles ? */
-				if (flipx != 0)	{ xstart = 1-1;  xend = -1; xinc = -1; }
+				if (flipx)	{ xstart = 1-1;  xend = -1; xinc = -1; }
 				else		{ xstart = 0;    xend = 1;  xinc = +1; }
 	
-				if (flipy != 0)	{ ystart = 2-1;  yend = -1; yinc = -1; }
+				if (flipy)	{ ystart = 2-1;  yend = -1; yinc = -1; }
 				else		{ ystart = 0;    yend = 2;  yinc = +1; }
 	
 				transparency = shadow ? TRANSPARENCY_ALPHA : TRANSPARENCY_PEN;
@@ -569,7 +568,7 @@ public class ssv
 				{
 					for (ty = ystart; ty != yend; ty += yinc)
 					{
-						drawgfx( bitmap,	Machine.gfx[gfx],
+						drawgfx( bitmap,	Machine->gfx[gfx],
 											code++,
 											color,
 											flipx, flipy,
@@ -589,7 +588,7 @@ public class ssv
 	static void ssv_draw_layer(struct mame_bitmap *bitmap)
 	{
 		int sy;
-		for ( sy = 0; sy <= Machine.visible_area.max_y; sy += 0x40 )
+		for ( sy = 0; sy <= Machine->visible_area.max_y; sy += 0x40 )
 			ssv_draw_row(bitmap, 0, sy, 0);
 	}
 	
@@ -617,7 +616,7 @@ public class ssv
 			yoffs	=		s1[ 3 ];
 	
 			/* Last sprite */
-			if ((sprite & 0x8000) != 0) break;
+			if (sprite & 0x8000) break;
 	
 			/* Single-sprite address */
 			s2		=		&spriteram16[ (sprite & 0x7fff) * 4 ];
@@ -706,10 +705,10 @@ public class ssv
 					xnum = 1 << (xnum >> 10);	// 1, 2, 4 or 8 tiles
 					ynum = 1 << (ynum >> 10);	// 1, 2, 4 tiles (8 means tilemap sprite?)
 	
-					if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+					if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 					else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-					if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+					if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 					else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 					/* Apply global offsets */
@@ -737,12 +736,12 @@ public class ssv
 					{
 						for (y = ystart; y != yend; y += yinc)
 						{
-							drawgfx( bitmap,	Machine.gfx[gfx],
+							drawgfx( bitmap,	Machine->gfx[gfx],
 												code++,
 												color,
 												flipx, flipy,
 												sx + x * 16, sy + y * 8,
-												Machine.visible_area,
+												Machine->visible_area,
 												transparency, 0 );
 						}
 					}
@@ -754,7 +753,7 @@ public class ssv
 						dt[0].text = buf;	dt[0].color = ((s1[0] & 0x0200) ? UI_COLOR_INVERSE : UI_COLOR_NORMAL);
 						dt[0].x = sx;		dt[0].y = sy;
 						dt[1].text = 0;	/* terminate array */
-						displaytext(Machine.scrbitmap,dt);		}
+						displaytext(Machine->scrbitmap,dt);		}
 					#endif
 	
 				}		/* sprite type */
@@ -780,12 +779,11 @@ public class ssv
 		enable_video = enable;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ssv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* The background color is the first one in the palette */
 		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
-		if (enable_video == 0)	return;
+		if (!enable_video)	return;
 	
 		ssv_draw_layer(bitmap);		// "background layer"
 		ssv_draw_sprites(bitmap);	// sprites list

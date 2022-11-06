@@ -56,7 +56,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,18 +69,15 @@ public class sprcros2
 	int sprcros2_m_port7 = 0;
 	static int sprcros2_s_port3 = 0;
 	
-	public static ReadHandlerPtr sprcros2_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprcros2_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sprcros2_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr sprcros2_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprcros2_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sprcros2_sharedram[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr sprcros2_m_port7_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprcros2_m_port7_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		//76543210
@@ -100,8 +97,7 @@ public class sprcros2
 		sprcros2_m_port7 = data;
 	} };
 	
-	public static WriteHandlerPtr sprcros2_s_port3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprcros2_s_port3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		//76543210
@@ -187,7 +183,7 @@ public class sprcros2
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_sprcros2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprcros2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprcros2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -288,28 +284,25 @@ public class sprcros2
 		{ 50, 50, 50 }
 	};
 	
-	public static InterruptHandlerPtr sprcros2_m_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sprcros2_m_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
-			if ((sprcros2_m_port7 & 0x01) != 0)
+			if(sprcros2_m_port7&0x01)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else
 		{
-			if ((sprcros2_m_port7 & 0x08) != 0)
+			if(sprcros2_m_port7&0x08)
 				cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 	} };
 	
-	public static InterruptHandlerPtr sprcros2_s_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if ((sprcros2_s_port3 & 0x01) != 0)
+	public static InterruptHandlerPtr sprcros2_s_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if(sprcros2_s_port3&0x01)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_sprcros2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprcros2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2)
@@ -339,12 +332,9 @@ public class sprcros2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sprcros2_sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static DriverInitHandlerPtr init_sprcros2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sprcros2  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("main", 0, "m_cpu_port7", &sprcros2_m_port7);
 		state_save_register_int("main", 0, "s_cpu_port3", &sprcros2_s_port3);
 	} };
@@ -385,5 +375,5 @@ public class sprcros2
 		ROM_LOAD( "sc-60.4k",    0x0320, 0x0100, CRC(d7a4e57d) SHA1(6db02ec6aa55b05422cb505e63c71e36b4b11b4a) )	//fg clut
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_sprcros2	   = new GameDriver("1986"	,"sprcros2"	,"sprcros2.java"	,rom_sprcros2,null	,machine_driver_sprcros2	,input_ports_sprcros2	,init_sprcros2	,ROT0	,	"GM Shoji", "Super Cross 2 (Japan)" )
+	GAME( 1986, sprcros2, 0, sprcros2, sprcros2, sprcros2, ROT0, "GM Shoji", "Super Cross 2 (Japan)" )
 }

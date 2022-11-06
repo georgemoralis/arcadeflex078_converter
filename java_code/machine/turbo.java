@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -53,10 +53,10 @@ public class turbo
 	static void turbo_update_samples(void)
 	{
 		/* accelerator sounds */
-		/* BSEL == 3 -. off */
-		/* BSEL == 2 -. standard */
-		/* BSEL == 1 -. tunnel */
-		/* BSEL == 0 -. ??? */
+		/* BSEL == 3 --> off */
+		/* BSEL == 2 --> standard */
+		/* BSEL == 1 --> tunnel */
+		/* BSEL == 0 --> ??? */
 		if (bsel == 3 && sample_playing(6))
 			sample_stop(6);
 		else if (bsel != 3 && !sample_playing(6))
@@ -91,44 +91,37 @@ public class turbo
 		3 = IC6 - CPU Board, Sheet 5, D7
 	*/
 	
-	public static WriteHandlerPtr turbo_opa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_opa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_opa = data;	/* signals 0PA0 to 0PA7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_opb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_opb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_opb = data;	/* signals 0PB0 to 0PB7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_opc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_opc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_opc = data;	/* signals 0PC0 to 0PC7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_ipa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_ipa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_ipa = data;	/* signals 1PA0 to 1PA7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_ipb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_ipb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_ipb = data;	/* signals 1PB0 to 1PB7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_ipc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_ipc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_ipc = data;	/* signals 1PC0 to 1PC7 */
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			2PA0 = /CRASH
 			2PA1 = /TRIG1
@@ -151,8 +144,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			2PB0 = ACC0
 			2PB1 = ACC1
@@ -178,8 +170,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			2PC0 = OSEL1
 			2PC1 = OSEL2
@@ -198,8 +189,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_pla_col_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_pla_col_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0-3 = signals PLA0 to PLA3 */
 		/* bit 4-6 = signals COL0 to COL2 */
 		/* bit 7 = unused */
@@ -227,14 +217,12 @@ public class turbo
 	
 	*******************************************/
 	
-	public static WriteHandlerPtr subroc3d_sprite_pri_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_sprite_pri_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		subroc3d_ply = data & 0x0f;
 	} };
 	
 	
-	public static WriteHandlerPtr subroc3d_coin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_coin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
 		set_led_status(0, data & 0x04);
@@ -242,14 +230,12 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr subroc3d_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		subroc3d_col = data & 0x0f;
 	} };
 	
 	
-	public static WriteHandlerPtr subroc3d_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 4 to 6 control balance */
 	
 		subroc3d_volume = (data & 0x0f);
@@ -257,8 +243,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr subroc3d_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 last = 0;
 	
 		int volume = 16 * (15 - subroc3d_volume);
@@ -276,8 +261,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr subroc3d_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subroc3d_sound_C_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 last = 0;
 	
 		if ((data & 0x01) && !(last & 0x01))
@@ -316,34 +300,29 @@ public class turbo
 	
 	*******************************************/
 	
-	public static ReadHandlerPtr buckrog_cpu2_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr buckrog_cpu2_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return buckrog_status;
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_cpu2_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_cpu2_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buckrog_status &= ~0x80;
 		buckrog_command = data;
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_back_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_back_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buckrog_mov = data & 0x1f;
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_fore_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_fore_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buckrog_fchg = data & 0x07;
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_sound_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound controls */
 		static int last = -1;
 	
@@ -366,8 +345,7 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_sound_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound controls */
 		static int last = -1;
 	
@@ -392,13 +370,12 @@ public class turbo
 	} };
 	
 	
-	public static WriteHandlerPtr buckrog_extra_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_extra_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buckrog_obch = data & 0x07;
 		coin_counter_w(0, data & 0x10);
 		coin_counter_w(1, data & 0x20);
 		set_led_status(0, data & 0x40);
-		// NOUSE = data & 0x80 . body sonic???
+		// NOUSE = data & 0x80 -> body sonic???
 	} };
 	
 	
@@ -421,8 +398,7 @@ public class turbo
 	
 	*******************************************/
 	
-	public static MachineInitHandlerPtr machine_init_turbo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_turbo  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&turbo_8255_intf);
 		segment_address = segment_increment = 0;
 		segment_init = 1;
@@ -430,8 +406,7 @@ public class turbo
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_subroc3d  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_subroc3d  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&subroc3d_8255_intf);
 		segment_address = segment_increment = 0;
 		segment_init = 1;
@@ -442,8 +417,7 @@ public class turbo
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_buckrog  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_buckrog  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&buckrog_8255_intf);
 		segment_address = segment_increment = 0;
 		segment_init = 1;
@@ -461,8 +435,7 @@ public class turbo
 	
 	*******************************************/
 	
-	public static ReadHandlerPtr turbo_8279_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr turbo_8279_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((offset & 1) == 0)
 			return readinputport(1);  /* DSW 1 */
 		else
@@ -472,8 +445,7 @@ public class turbo
 		}
 	} };
 	
-	public static WriteHandlerPtr turbo_8279_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_8279_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 1)
 		{
 			case 0x00:
@@ -536,20 +508,17 @@ public class turbo
 	
 	*******************************************/
 	
-	public static ReadHandlerPtr turbo_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr turbo_collision_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(3) | (turbo_collision & 15);
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_collision_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_collision_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		turbo_collision = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr turbo_coin_and_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbo_coin_and_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 7)
 		{
 			case 0:
@@ -641,7 +610,7 @@ public class turbo
 			{ 0x00,0x44,0x18,0x5c,0x14,0x50,0x0c,0x48,
 			  0x28,0x6c,0x30,0x74,0x3c,0x78,0x24,0x60,
 			  0x60,0x24,0x78,0x3c,0x74,0x30,0x6c,0x28,
-			  0x48,0x0c,0x50,0x14,0x5c,0x18,0x44,0x00 }, //0x00 -. 0x10 ?
+			  0x48,0x0c,0x50,0x14,0x5c,0x18,0x44,0x00 }, //0x00 --> 0x10 ?
 	
 			/* Table 2 */
 			/* 0x1000-0x13ff */
@@ -683,7 +652,7 @@ public class turbo
 			src = RAM[offs];
 			i = findtable[offs >> 10];
 			j = src >> 2;
-			if ((src & 0x80) != 0) j ^= 0x3f;
+			if (src & 0x80) j ^= 0x3f;
 			RAM[offs] = src ^ xortable[i][j];
 		}
 	}
@@ -702,15 +671,13 @@ public class turbo
 	
 	*******************************************/
 	
-	public static ReadHandlerPtr buckrog_cpu2_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr buckrog_cpu2_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		buckrog_status |= 0x80;
 		return buckrog_command;
 	} };
 	
 	
-	public static ReadHandlerPtr buckrog_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr buckrog_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int inp1 = readinputport(2);
 		int inp2 = readinputport(3);
 	
@@ -725,8 +692,7 @@ public class turbo
 	} };
 	
 	
-	public static ReadHandlerPtr buckrog_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr buckrog_port_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int inp1 = readinputport(2);
 		int inp2 = readinputport(3);
 	

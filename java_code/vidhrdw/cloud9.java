@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,14 +29,13 @@ public class cloud9
 	  Cloud 9 uses 9-bit color, in the form RRRGGGBB, with the LSB of B stored
 	  in the $40 bit of the address.
 	***************************************************************************/
-	public static WriteHandlerPtr cloud9_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloud9_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit0,bit1,bit2;
 		int r,g,b;
 		int blue;
 	
 	
-		paletteram[(offset & 0x3f)] = data;
+		paletteram.write((offset & 0x3f),data);
 		blue = (offset & 0x40);
 	
 		/* red component */
@@ -130,8 +129,7 @@ public class cloud9
 	/***************************************************************************
 	  cloud9_bitmap_regs_r
 	***************************************************************************/
-	public static ReadHandlerPtr cloud9_bitmap_regs_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cloud9_bitmap_regs_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *vptr;
 		int vpixel;
 		unsigned int x, y;
@@ -165,8 +163,7 @@ public class cloud9
 	/***************************************************************************
 	  cloud9_bitmap_regs_w
 	***************************************************************************/
-	public static WriteHandlerPtr cloud9_bitmap_regs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloud9_bitmap_regs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int x, y;
 	
 		cloud9_bitmap_regs[offset] = data;
@@ -201,7 +198,7 @@ public class cloud9
 			}
 	
 			/* If color_bank is set, add 0x20 to the color */
-			plot_pixel.handler(tmpbitmap, x, y, Machine.pens[(data & 0x0f) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x0f) + ((*cloud9_color_bank & 0x80) >> 2)]);
 	
 			if ((*cloud9_auto_inc_x) < 0x80)
 				cloud9_bitmap_regs[0]++;
@@ -214,8 +211,7 @@ public class cloud9
 	/***************************************************************************
 	  cloud9_bitmap_w
 	***************************************************************************/
-	public static WriteHandlerPtr cloud9_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloud9_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x, y;
 	
 		y = ((offset + 0x600) >> 6);
@@ -226,24 +222,24 @@ public class cloud9
 			videoram.write(offset,data);
 			cloud9_vram2[offset] = data;
 	
-			plot_pixel.handler(tmpbitmap, x,   y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel.handler(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel.handler(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x,   y, Machine->pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+1, y, Machine->pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+2, y, Machine->pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+3, y, Machine->pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 		else if (*cloud9_vram_bank & 0x80)
 		{
 			cloud9_vram2[offset] = data;
 	
-			plot_pixel.handler(tmpbitmap, x+2, y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel.handler(tmpbitmap, x+3, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+2, y, Machine->pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+3, y, Machine->pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 		else
 		{
 			videoram.write(offset,data);
 	
-			plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
-			plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x  , y, Machine->pens[((data & 0x0f) >> 0) + ((*cloud9_color_bank & 0x80) >> 2)]);
+			plot_pixel(tmpbitmap, x+1, y, Machine->pens[((data & 0xf0) >> 4) + ((*cloud9_color_bank & 0x80) >> 2)]);
 		}
 	} };
 	
@@ -254,8 +250,7 @@ public class cloud9
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_cloud9  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cloud9  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
@@ -285,8 +280,7 @@ public class cloud9
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cloud9  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cloud9  = new VideoStartHandlerPtr() { public int handler(){
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		cloud9_vram2 = auto_malloc(videoram_size[0]);
 	

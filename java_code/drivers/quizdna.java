@@ -10,7 +10,7 @@ Quiz Gekiretsu Scramble (Gakuen Paradise 2) (c) 1993 Face
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,14 +23,12 @@ public class quizdna
 	
 	
 	
-	public static WriteHandlerPtr quizdna_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&ROM[0x10000+0x4000*(data & 0x3f)]);
 	} };
 	
-	public static WriteHandlerPtr gekiretu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gekiretu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&ROM[0x10000+0x4000*((data & 0x3f) ^ 0x0a)]);
 	} };
@@ -123,7 +121,7 @@ public class quizdna
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_quizdna = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizdna = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizdna )
 		PORT_START();   /* sw2 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "9C_1C") );
@@ -217,7 +215,7 @@ public class quizdna
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gakupara = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gakupara = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gakupara )
 	    PORT_START();   /* sw2 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, "10 Coins/1 Credit" );
@@ -313,7 +311,7 @@ public class quizdna
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gekiretu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gekiretu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gekiretu )
 		PORT_START();   /* dsw2 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "9C_1C") );
@@ -472,8 +470,7 @@ public class quizdna
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_quizdna = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizdna )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, MCLK/2) /* 8.000 MHz */
@@ -498,12 +495,9 @@ public class quizdna
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gakupara = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gakupara )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(quizdna)
@@ -511,12 +505,9 @@ public class quizdna
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(quizdna_readport,gakupara_writeport)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gekiretu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gekiretu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(quizdna)
@@ -525,9 +516,7 @@ public class quizdna
 		MDRV_CPU_MEMORY(quizdna_readmem,gekiretu_writemem)
 		MDRV_CPU_PORTS(quizdna_readport,gekiretu_writeport)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/****************************************************************************/
@@ -610,7 +599,7 @@ public class quizdna
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_gakupara	   = new GameDriver("1991"	,"gakupara"	,"quizdna.java"	,rom_gakupara,null	,machine_driver_gakupara	,input_ports_gakupara	,null	,ROT0	,	"NMK",  "Quiz Gakuen Paradise (Japan)" )
-	public static GameDriver driver_quizdna	   = new GameDriver("1992"	,"quizdna"	,"quizdna.java"	,rom_quizdna,null	,machine_driver_quizdna	,input_ports_quizdna	,null	,ROT0	,	"Face", "Quiz DNA no Hanran (Japan)" )
-	public static GameDriver driver_gekiretu	   = new GameDriver("1992"	,"gekiretu"	,"quizdna.java"	,rom_gekiretu,null	,machine_driver_gekiretu	,input_ports_gekiretu	,null	,ROT0	,	"Face", "Quiz Gekiretsu Scramble (Japan)" )
+	GAME( 1991, gakupara, 0, gakupara, gakupara, 0, ROT0, "NMK",  "Quiz Gakuen Paradise (Japan)" )
+	GAME( 1992, quizdna,  0, quizdna,  quizdna,  0, ROT0, "Face", "Quiz DNA no Hanran (Japan)" )
+	GAME( 1992, gekiretu, 0, gekiretu, gekiretu, 0, ROT0, "Face", "Quiz Gekiretsu Scramble (Japan)" )
 }

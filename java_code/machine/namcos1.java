@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -70,24 +70,24 @@ public class namcos1
 	static int key_id;
 	static int key_id_query;
 	
-	public static ReadHandlerPtr rev1_key_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr rev1_key_r  = new ReadHandlerPtr() { public int handler(int offset)
 		//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip read %04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
 			return 0;
-		}
+		} };
 		return key[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr rev1_key_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr rev1_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		static unsigned short divider, divide_32 = 0;
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip write %04x=%04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 			return;
-		}
+		} };
 	
 		key[offset] = data;
 	
@@ -102,7 +102,7 @@ public class namcos1
 				unsigned short  v1, v2;
 				unsigned long   l=0;
 	
-				if (divide_32 != 0)
+				if ( divide_32 )
 					l = d << 16;
 	
 				d = ( key[2] << 8 ) + key[3];
@@ -111,7 +111,7 @@ public class namcos1
 					v1 = 0xffff;
 					v2 = 0;
 				} else {
-					if (divide_32 != 0) {
+					if ( divide_32 ) {
 						l |= d;
 	
 						v1 = l / divider;
@@ -138,7 +138,7 @@ public class namcos1
 				divide_32 = 0;
 			break;
 		}
-	} };
+	}
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -146,8 +146,7 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr rev2_key_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rev2_key_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
@@ -157,8 +156,7 @@ public class namcos1
 		return key[offset];
 	} };
 	
-	public static WriteHandlerPtr rev2_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rev2_key_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
@@ -230,24 +228,24 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr dangseed_key_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr dangseed_key_r  = new ReadHandlerPtr() { public int handler(int offset)
 		//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip read %04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
 			return 0;
-		}
+		} };
 		return key[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr dangseed_key_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr dangseed_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		int i;
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip write %04x=%04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 			return;
-		}
+		} };
 	
 		key[offset] = data;
 	
@@ -264,7 +262,7 @@ public class namcos1
 				key[3] = key_id;
 				break;
 		}
-	} };
+	}
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -272,8 +270,7 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr dspirit_key_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dspirit_key_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
@@ -283,8 +280,7 @@ public class namcos1
 		return key[offset];
 	} };
 	
-	public static WriteHandlerPtr dspirit_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dspirit_key_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned short divisor;
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
@@ -372,8 +368,7 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr blazer_key_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blazer_key_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
@@ -383,8 +378,7 @@ public class namcos1
 		return key[offset];
 	} };
 	
-	public static WriteHandlerPtr blazer_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blazer_key_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned short divisor;
 		logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
@@ -453,24 +447,24 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr ws_key_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr ws_key_r  = new ReadHandlerPtr() { public int handler(int offset)
 		//logerror("CPU #%d PC %08x: keychip read %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,key[offset]);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip read %04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset);
 			return 0;
-		}
+		} };
 		return key[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr ws_key_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr ws_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		static unsigned short divider;
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		if(offset >= NAMCOS1_MAX_KEY)
 		{
 			logerror("CPU #%d PC %08x: unmapped keychip write %04x=%04x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 			return;
-		}
+		} };
 	
 		key[offset] = data;
 	
@@ -504,7 +498,7 @@ public class namcos1
 			key[4] = key_id;
 			break;
 		}
-	} };
+	}
 	
 	/*******************************************************************************
 	*                                                                              *
@@ -578,7 +572,7 @@ public class namcos1
 	
 	#endif
 	
-	public static ReadHandlerPtr splatter_key_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr splatter_key_r  = new ReadHandlerPtr() { public int handler(int offset)
 	
 		unsigned long data;
 	
@@ -616,16 +610,16 @@ public class namcos1
 					return (data);
 				}
 				break;
-		}
+		} };
 	
 		/* make compiler happy */
 		return 0;
-	} };
+	}
 	
-	public static WriteHandlerPtr splatter_key_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr splatter_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		//logerror("CPU #%d PC %08x: keychip write %04X=%02x\n",cpu_getactivecpu(),activecpu_get_pc(),offset,data);
 		/* ignored */
-	} };
+	}
 	
 	
 	/*******************************************************************************
@@ -634,8 +628,7 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static ReadHandlerPtr soundram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(offset<0x100)
 			return namcos1_wavedata_r(offset);
 		if(offset<0x140)
@@ -645,8 +638,7 @@ public class namcos1
 		return namco_wavedata[offset];
 	} };
 	
-	public static WriteHandlerPtr soundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(offset<0x100)
 		{
 			namcos1_wavedata_w(offset,data);
@@ -666,19 +658,19 @@ public class namcos1
 	
 	/* ROM handlers */
 	
-	public static WriteHandlerPtr rom_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr rom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		logerror("CPU #%d PC %04x: warning - write %02x to rom address %04x\n",cpu_getactivecpu(),activecpu_get_pc(),data,offset);
-	} };
+	}
 	
 	/* error handlers */
-	public static ReadHandlerPtr unknown_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr unknown_r  = new ReadHandlerPtr() { public int handler(int offset)
 		logerror("CPU #%d PC %04x: warning - read from unknown chip\n",cpu_getactivecpu(),activecpu_get_pc() );
 		return 0;
-	} };
+	}
 	
-	public static WriteHandlerPtr unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		logerror("CPU #%d PC %04x: warning - wrote to unknown chip\n",cpu_getactivecpu(),activecpu_get_pc() );
-	} };
+	}
 	
 	/* Main bankswitching routine */
 	void namcos1_bankswitch(int cpu, offs_t offset, data8_t data)
@@ -688,7 +680,7 @@ public class namcos1
 		mem_write_handler handler_w;
 		offs_t offs;
 	
-		if ((offset & 1) != 0) {
+		if ( offset & 1 ) {
 			int bank = (cpu*8) + ( ( offset >> 9 ) & 0x07 );
 	
 			chip &= 0x0300;
@@ -702,7 +694,7 @@ public class namcos1
 	
 			/* read hardware */
 			handler_r = namcos1_bank_element[chip].bank_handler_r;
-			if (handler_r != 0)
+			if( handler_r )
 				/* I/O handler */
 				memory_set_bankhandler_r( bank+1,offs,handler_r);
 			else    /* memory direct */
@@ -710,7 +702,7 @@ public class namcos1
 	
 			/* write hardware */
 			handler_w = namcos1_bank_element[chip].bank_handler_w;
-			if (handler_w != 0)
+			if( handler_w )
 				/* I/O handler */
 				memory_set_bankhandler_w( bank+1,offs,handler_w);
 			else    /* memory direct */
@@ -724,19 +716,18 @@ public class namcos1
 	
 			/* renew pc base */
 		//change_pc16(activecpu_get_pc());
-		} else {
+		} }; else {
 			chip &= 0x00ff;
 			chip |= ( data & 0xff ) << 8;
 		}
 	}
 	
-	public static WriteHandlerPtr namcos1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr namcos1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		namcos1_bankswitch(cpu_getactivecpu(), offset, data);
-	} };
+	}
 	
 	/* Sub cpu set start bank port */
-	public static WriteHandlerPtr namcos1_subcpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_subcpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("cpu1 bank selected %02x=%02x\n",offset,data);
 		namcos1_cpu1_banklatch = (namcos1_cpu1_banklatch&0x300)|data;
 		/* Prepare code for Cpu 1 */
@@ -754,13 +745,12 @@ public class namcos1
 	
 	static int mcu_patch_data;
 	
-	public static WriteHandlerPtr namcos1_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("reset control pc=%04x %02x\n",activecpu_get_pc(),data);
 		if( (data&1)^namcos1_reset)
 		{
 			namcos1_reset = data&1;
-			if (namcos1_reset != 0)
+			if (namcos1_reset)
 			{
 				cpu_set_reset_line(1,CLEAR_LINE);
 				cpu_set_reset_line(2,CLEAR_LINE);
@@ -782,8 +772,7 @@ public class namcos1
 	*                                                                              *
 	*******************************************************************************/
 	
-	public static WriteHandlerPtr namcos1_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 		int bank = ( data >> 4 ) & 0x07;
 	
@@ -799,8 +788,7 @@ public class namcos1
 	static int sound_spinlock_pc;
 	
 	/* sound cpu */
-	public static ReadHandlerPtr namcos1_sound_spinlock_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos1_sound_spinlock_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(activecpu_get_pc()==sound_spinlock_pc && *sound_spinlock_ram == 0)
 			cpu_spinuntil_int();
 		return *sound_spinlock_ram;
@@ -813,8 +801,7 @@ public class namcos1
 	*******************************************************************************/
 	
 	/* mcu banked rom area select */
-	public static WriteHandlerPtr namcos1_mcu_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_mcu_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int addr;
 		/* bit 2-7 : chip select line of ROM chip */
 		switch(data&0xfc)
@@ -849,8 +836,7 @@ public class namcos1
 	/* I found set $A6 only initialize in MCU                       */
 	/* This patch kill write this data by MCU case $A6 to xx(clear) */
 	
-	public static WriteHandlerPtr namcos1_mcu_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_mcu_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("mcu C000 write pc=%04x data=%02x\n",activecpu_get_pc(),data);
 		if(mcu_patch_data == 0xa6) return;
 		mcu_patch_data = data;
@@ -874,7 +860,7 @@ public class namcos1
 			namcos1_bank_element[i].bank_offset    = offset;
 			namcos1_bank_element[i].bank_pointer   = pointer;
 			offset  += 0x2000;
-			if (pointer != 0) pointer += 0x2000;
+			if(pointer) pointer += 0x2000;
 		}
 	}
 	
@@ -932,7 +918,7 @@ public class namcos1
 		namcos1_install_rom_bank(0x3c0,0x3ff,0x20000 , 0x00000);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_namcos1  = new MachineInitHandlerPtr() { public void handler() {
+	public static MachineInitHandlerPtr machine_init_namcos1  = new MachineInitHandlerPtr() { public void handler()
 	
 		int bank;
 	
@@ -942,7 +928,7 @@ public class namcos1
 			/* set bank pointer & handler for cpu interface */
 			memory_set_bankhandler_r( bank+1,0,unknown_r);
 			memory_set_bankhandler_w( bank+1,0,unknown_w);
-		}
+		} };
 	
 		/* Prepare code for Cpu 0 */
 		namcos1_bankswitch(0, 0x0e00, 0x03 ); /* bank7 = 0x3ff(PRG7) */
@@ -971,7 +957,7 @@ public class namcos1
 		mcu_patch_data = 0;
 	
 		berabohm_input_counter = 4; /* for berabohm pressure sensitive buttons */
-	} };
+	}
 	
 	
 	/*******************************************************************************
@@ -1000,11 +986,11 @@ public class namcos1
 	static void namcos1_driver_init(const struct namcos1_specific *specific )
 	{
 		/* keychip id */
-		key_id_query = specific.key_id_query;
-		key_id       = specific.key_id;
+		key_id_query = specific->key_id_query;
+		key_id       = specific->key_id;
 	
 		/* build bank elements */
-		namcos1_build_banks(specific.key_r,specific.key_w);
+		namcos1_build_banks(specific->key_r,specific->key_w);
 	
 		/* sound cpu speedup optimize (auto detect) */
 		{
@@ -1032,12 +1018,12 @@ public class namcos1
 		/* all cpu's does not need synchronization to all timers */
 		cpu_set_full_synchronize(SYNC_NO_CPU);
 		{
-			const struct namcos1_slice_timer *slice = specific.slice_timer;
-			while(slice.sync_cpu != SYNC_NO_CPU)
+			const struct namcos1_slice_timer *slice = specific->slice_timer;
+			while(slice->sync_cpu != SYNC_NO_CPU)
 			{
 				/* start CPU slice timer */
-				cpu_start_extend_time_slice(slice.sync_cpu,
-					TIME_IN_HZ(slice.delayHz),TIME_IN_HZ(slice.sliceHz) );
+				cpu_start_extend_time_slice(slice->sync_cpu,
+					TIME_IN_HZ(slice->delayHz),TIME_IN_HZ(slice->sliceHz) );
 				slice++;
 			}
 		}
@@ -1062,8 +1048,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Shadowland / Youkai Douchuuki specific                                     *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_shadowld  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shadowld  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific shadowld_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1077,8 +1062,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Dragon Spirit specific                                                     *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_dspirit  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dspirit  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific dspirit_specific=
 		{
 			0x00,0x36,                      /* key query , key id */
@@ -1092,8 +1076,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Quester specific                                                           *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_quester  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_quester  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific quester_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1107,8 +1090,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Blazer specific                                                            *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_blazer  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blazer  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific blazer_specific=
 		{
 			0x00,0x13,                  /* key query , key id */
@@ -1122,8 +1104,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Pac-Mania / Pac-Mania (Japan) specific                                     *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_pacmania  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pacmania  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific pacmania_specific=
 		{
 			0x4b,0x12,              /* key query , key id */
@@ -1137,8 +1118,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Galaga '88 / Galaga '88 (Japan) specific                                   *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_galaga88  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_galaga88  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific galaga88_specific=
 		{
 			0x2d,0x31,              /* key query , key id */
@@ -1152,8 +1132,7 @@ public class namcos1
 	/*******************************************************************************
 	*   World Stadium specific                                                     *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_ws  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ws  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific ws_specific=
 		{
 			0xd3,0x07,              /* key query , key id */
@@ -1167,8 +1146,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Beraboh Man specific                                                       *
 	*******************************************************************************/
-	public static ReadHandlerPtr berabohm_buttons_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr berabohm_buttons_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 	
@@ -1180,18 +1158,18 @@ public class namcos1
 				static int counter[4];
 	
 				res = readinputport(4 + (berabohm_input_counter-1));
-				if ((res & 0x80) != 0)
+				if (res & 0x80)
 				{
 					if (counter[berabohm_input_counter-1] >= 0)
 	//                  res = 0x40 | counter[berabohm_input_counter-1]; I can't get max power with this...
 						res = 0x40 | (counter[berabohm_input_counter-1]>>1);
 					else
 					{
-						if ((res & 0x40) != 0) res = 0x40;
+						if (res & 0x40) res = 0x40;
 						else res = 0x00;
 					}
 				}
-				else if ((res & 0x40) != 0)
+				else if (res & 0x40)
 				{
 					if (counter[berabohm_input_counter-1] < 0x3f)
 					{
@@ -1211,7 +1189,7 @@ public class namcos1
 	
 			res = 0;
 			clk++;
-			if ((clk & 1) != 0) res |= 0x40;
+			if (clk & 1) res |= 0x40;
 			else if (berabohm_input_counter == 4) res |= 0x10;
 	
 			res |= (readinputport(1) & 0x8f);
@@ -1219,8 +1197,7 @@ public class namcos1
 	
 		return res;
 	} };
-	public static DriverInitHandlerPtr init_berabohm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_berabohm  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific berabohm_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1235,8 +1212,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Alice in Wonderland / Marchen Maze specific                                *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_alice  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alice  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific alice_specific=
 		{
 			0x5b,0x25,              /* key query , key id */
@@ -1250,8 +1226,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Bakutotsu Kijuutei specific                                                *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_bakutotu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bakutotu  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific bakutotu_specific=
 		{
 			0x03,0x22,              /* key query , key id */
@@ -1288,8 +1263,7 @@ public class namcos1
 	/*******************************************************************************
 	*   World Court specific                                                       *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_wldcourt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wldcourt  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific worldcourt_specific=
 		{
 			0x00,0x35,              /* key query , key id */
@@ -1303,8 +1277,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Splatter House specific                                                    *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_splatter  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_splatter  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific splatter_specific=
 		{
 			0x00,0x00,                      /* key query , key id */
@@ -1324,8 +1297,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Face Off specific                                                          *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_faceoff  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_faceoff  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific faceoff_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1339,8 +1311,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Rompers specific                                                           *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_rompers  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rompers  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific rompers_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1355,8 +1326,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Blast Off specific                                                         *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_blastoff  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blastoff  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific blastoff_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1371,8 +1341,7 @@ public class namcos1
 	/*******************************************************************************
 	*   World Stadium '89 specific                                                 *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_ws89  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ws89  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific ws89_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1388,8 +1357,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Dangerous Seed specific                                                    *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_dangseed  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dangseed  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific dangseed_specific=
 		{
 			0x00,0x34,                      /* key query , key id */
@@ -1403,8 +1371,7 @@ public class namcos1
 	/*******************************************************************************
 	*   World Stadium '90 specific                                                 *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_ws90  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ws90  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific ws90_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1421,8 +1388,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Pistol Daimyo no Bouken specific                                           *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_pistoldm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pistoldm  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific pistoldm_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1439,8 +1405,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Souko Ban DX specific                                                      *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_soukobdx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_soukobdx  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific soukobdx_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1457,8 +1422,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Puzzle Club specific                                                       *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_puzlclub  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_puzlclub  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific puzlclub_specific=
 		{
 			0x00,0x00,              /* key query , key id */
@@ -1473,8 +1437,7 @@ public class namcos1
 	/*******************************************************************************
 	*   Tank Force specific                                                        *
 	*******************************************************************************/
-	public static DriverInitHandlerPtr init_tankfrce  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tankfrce  = new DriverInitHandlerPtr() { public void handler(){
 		const struct namcos1_specific tankfrce_specific=
 		{
 			0x00,0x00,              /* key query , key id */

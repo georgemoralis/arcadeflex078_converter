@@ -13,7 +13,7 @@ Devil Zone      - 8022
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -29,8 +29,7 @@ public class cosmic
 	
 	/* Schematics show 12 triggers for discrete sound circuits */
 	
-	public static WriteHandlerPtr panic_sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr panic_sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    static int sound_enabled=1;
 	
 	    /* Sound Enable / Disable */
@@ -44,13 +43,13 @@ public class cosmic
 	    	sound_enabled = data;
 	    }
 	
-	    if (sound_enabled != 0)
+	    if (sound_enabled)
 	    {
 	        switch (offset)
 	        {
-			case 0:  if (data != 0) sample_start(0, 0, 0); break;  	/* Walk */
-	        case 1:  if (data != 0) sample_start(0, 5, 0); break;  	/* Enemy Die 1 */
-	        case 2:  if (data != 0)								  	/* Drop 1 */
+			case 0:  if (data) sample_start(0, 0, 0); break;  	/* Walk */
+	        case 1:  if (data) sample_start(0, 5, 0); break;  	/* Enemy Die 1 */
+	        case 2:  if (data)								  	/* Drop 1 */
 					 {
 						 if (!sample_playing(1))
 						 {
@@ -67,12 +66,12 @@ public class cosmic
 	                 break;
 	
 	        case 4:  break;										/* Drop 2 */
-	        case 5:  if (data != 0) sample_start(0, 5, 0); break;	/* Enemy Die 2 (use same sample as 1) */
+	        case 5:  if (data) sample_start(0, 5, 0); break;	/* Enemy Die 2 (use same sample as 1) */
 	        case 6:  if (data && !sample_playing(1) && !sample_playing(3))   /* Hang */
 	                 	sample_start(2, 2, 0);
 	                    break;
 	
-			case 7:  if (data != 0) 									/* Escape */
+			case 7:  if (data) 									/* Escape */
 					 {
 						 sample_stop(2);
 						 sample_start(3, 4, 0);
@@ -81,17 +80,17 @@ public class cosmic
 					 	 sample_stop(3);
 	                     break;
 	
-	    	case 8:  if (data != 0) sample_start(0, 1, 0); break;	/* Stairs */
-	    	case 9:  if (data != 0)									/* Extend */
+	    	case 8:  if (data) sample_start(0, 1, 0); break;	/* Stairs */
+	    	case 9:  if (data)									/* Extend */
 					 	sample_start(4, 8, 0);
 					 else
 						sample_stop(4);
 		  			 break;
 	
 	        case 10: DAC_data_w(0, data); break;				/* Bonus */
-			case 15: if (data != 0) sample_start(0, 6, 0); break;	/* Player Die */
-			case 16: if (data != 0) sample_start(5, 7, 0); break;	/* Enemy Laugh */
-	        case 17: if (data != 0) sample_start(0, 10, 0); break;	/* Coin - Not triggered by software */
+			case 15: if (data) sample_start(0, 6, 0); break;	/* Player Die */
+			case 16: if (data) sample_start(5, 7, 0); break;	/* Enemy Laugh */
+	        case 17: if (data) sample_start(0, 10, 0); break;	/* Coin - Not triggered by software */
 	        }
 	    }
 	
@@ -100,13 +99,11 @@ public class cosmic
 		#endif
 	} };
 	
-	public static WriteHandlerPtr panic_sound_output2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr panic_sound_output2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		panic_sound_output_w(offset+15, data);
 	} };
 	
-	public static WriteHandlerPtr cosmicg_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cosmicg_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int march_select;
 	    static int gun_die_select;
 	    static int sound_enabled;
@@ -122,7 +119,7 @@ public class cosmic
 	        	for(count=0;count<9;count++) sample_stop(count);
 	    }
 	
-	    if (sound_enabled != 0)
+	    if (sound_enabled)
 	    {
 	        switch (offset)
 	        {
@@ -131,25 +128,25 @@ public class cosmic
 			/* be used for anything. It is implemented for sake of */
 			/* completness. Maybe it plays a tune if you win ?     */
 			case 1:  DAC_data_w(0, -data); break;
-			case 2:  if (data != 0) sample_start (0, march_select, 0); break;	/* March Sound */
+			case 2:  if (data) sample_start (0, march_select, 0); break;	/* March Sound */
 			case 3:  march_select = (march_select & 0xfe) | data; break;
 	        case 4:  march_select = (march_select & 0xfd) | (data << 1); break;
 	        case 5:  march_select = (march_select & 0xfb) | (data << 2); break;
 	
-	        case 6:  if (data != 0)  							/* Killer Attack (crawly thing at bottom of screen) */
+	        case 6:  if (data)  							/* Killer Attack (crawly thing at bottom of screen) */
 						sample_start(1, 8, 1);
 					 else
 						sample_stop(1);
 					 break;
 	
-			case 7:  if (data != 0)								/* Bonus Chance & Got Bonus */
+			case 7:  if (data)								/* Bonus Chance & Got Bonus */
 					 {
 						 sample_stop(4);
 						 sample_start(4, 10, 0);
 					 }
 					 break;
 	
-			case 8:  if (data != 0)
+			case 8:  if (data)
 					 {
 						 if (!sample_playing(4)) sample_start(4, 9, 1);
 					 }
@@ -157,11 +154,11 @@ public class cosmic
 					 	sample_stop(4);
 					 break;
 	
-			case 9:  if (data != 0) sample_start(3, 11, 0); break;	/* Got Ship */
+			case 9:  if (data) sample_start(3, 11, 0); break;	/* Got Ship */
 	//		case 11: watchdog_reset_w(0, 0); break;				/* Watchdog */
-			case 13: if (data != 0) sample_start(8, 13-gun_die_select, 0); break;  /* Got Monster / Gunshot */
+			case 13: if (data) sample_start(8, 13-gun_die_select, 0); break;  /* Got Monster / Gunshot */
 			case 14: gun_die_select = data; break;
-			case 15: if (data != 0) sample_start(5, 14, 0); break;	/* Coin Extend (extra base) */
+			case 15: if (data) sample_start(5, 14, 0); break;	/* Coin Extend (extra base) */
 	        }
 	    }
 	
@@ -170,8 +167,7 @@ public class cosmic
 	    #endif
 	} };
 	
-	public static InterruptHandlerPtr panic_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr panic_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0)
 		{
 	    	/* Coin insert - Trigger Sample */
@@ -190,8 +186,7 @@ public class cosmic
 	    }
 	} };
 	
-	public static InterruptHandlerPtr cosmica_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cosmica_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    pixel_clock = (pixel_clock + 2) & 0x3f;
 	
 	    if (pixel_clock == 0)
@@ -201,8 +196,7 @@ public class cosmic
 	    }
 	} };
 	
-	public static InterruptHandlerPtr cosmicg_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cosmicg_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    /* Insert Coin */
 	
 		/* R Nabet : fixed to make this piece of code sensible.
@@ -221,8 +215,7 @@ public class cosmic
 		}
 	} };
 	
-	public static InterruptHandlerPtr magspot2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr magspot2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Coin 1 causes an IRQ, Coin 2 an NMI */
 		if (input_port_4_r(0) & 0x01)
 		{
@@ -234,8 +227,7 @@ public class cosmic
 		}
 	} };
 	
-	public static InterruptHandlerPtr nomnlnd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr nomnlnd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Coin causes an NMI */
 		if (input_port_4_r(0) & 0x01)
 		{
@@ -245,32 +237,28 @@ public class cosmic
 	
 	
 	
-	public static ReadHandlerPtr cosmica_pixel_clock_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cosmica_pixel_clock_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pixel_clock;
 	} };
 	
-	public static ReadHandlerPtr cosmicg_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cosmicg_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* The top four address lines from the CRTC are bits 0-3 */
 	
 		return (input_port_0_r.handler(0) & 0xf0) | ((cpu_getscanline() & 0xf0) >> 4);
 	} };
 	
-	public static ReadHandlerPtr magspot2_coinage_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr magspot2_coinage_dip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (input_port_5_r.handler(0) & (1 << (7 - offset))) ? 0 : 1;
 	} };
 	
 	
 	/* Has 8 way joystick, remap combinations to missing directions */
 	
-	public static ReadHandlerPtr nomnlnd_port_0_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nomnlnd_port_0_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int control;
 	    int fire = input_port_3_r.handler(0);
 	
-		if (offset != 0)
+		if (offset)
 			control = input_port_1_r.handler(0);
 	    else
 			control = input_port_0_r.handler(0);
@@ -291,8 +279,7 @@ public class cosmic
 	
 	
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data&0x80);
 	} };
 	
@@ -396,7 +383,7 @@ public class cosmic
 	};
 	
 	
-	static InputPortPtr input_ports_panic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_panic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( panic )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -453,7 +440,7 @@ public class cosmic
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cosmica = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cosmica = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cosmica )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -510,7 +497,7 @@ public class cosmic
 	
 	/* Offsets are in BYTES, so bits 0-7 are at offset 0 etc.   */
 	
-	static InputPortPtr input_ports_cosmicg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cosmicg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cosmicg )
 		PORT_START();  /* 4-7 */
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_SPECIAL );/* pixel clock */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_START1 );
@@ -560,7 +547,7 @@ public class cosmic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_magspot2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_magspot2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( magspot2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -649,7 +636,7 @@ public class cosmic
 		PORT_DIPSETTING(    0x40, DEF_STR( "1C_5C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_devzone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_devzone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( devzone )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -733,7 +720,7 @@ public class cosmic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_devzone2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_devzone2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( devzone2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -817,7 +804,7 @@ public class cosmic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nomnlnd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nomnlnd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nomnlnd )
 		PORT_START(); 	/* Controls - Remapped for game */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -865,7 +852,7 @@ public class cosmic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nomnlndg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nomnlndg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nomnlndg )
 		PORT_START(); 	/* Controls - Remapped for game */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -1018,8 +1005,7 @@ public class cosmic
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_cosmic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cosmic )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80,10816000/6)	/* 1.802 MHz*/
@@ -1031,13 +1017,10 @@ public class cosmic
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER)
 		MDRV_SCREEN_SIZE(32*8, 32*8)
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 4*8, 28*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_panic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( panic )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1057,13 +1040,10 @@ public class cosmic
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, panic_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cosmica = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cosmica )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1079,13 +1059,10 @@ public class cosmic
 	
 		MDRV_PALETTE_INIT(cosmica)
 		MDRV_VIDEO_UPDATE(cosmica)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cosmicg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cosmicg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS9980, 1228500)
@@ -1112,13 +1089,10 @@ public class cosmic
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, cosmicg_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_magspot2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( magspot2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1137,26 +1111,20 @@ public class cosmic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_devzone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( devzone )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(magspot2)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(devzone)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nomnlnd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nomnlnd )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cosmic)
@@ -1175,9 +1143,7 @@ public class cosmic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_panic = new RomLoadPtr(){ public void handler(){ 
@@ -1498,8 +1464,7 @@ public class cosmic
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_cosmicg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cosmicg  = new DriverInitHandlerPtr() { public void handler(){
 		/* Program ROMs have data pins connected different from normal */
 	
 		offs_t offs;
@@ -1525,32 +1490,30 @@ public class cosmic
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_devzone  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_devzone  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x4807, 0x4807, cosmic_background_enable_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_nomnlnd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nomnlnd  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x5000, 0x5001, nomnlnd_port_0_1_r);
 	
 		install_mem_write_handler(0, 0x4807, 0x4807, cosmic_background_enable_w);
 	} };
 	
 	
-	public static GameDriver driver_cosmicg	   = new GameDriver("1979"	,"cosmicg"	,"cosmic.java"	,rom_cosmicg,null	,machine_driver_cosmicg	,input_ports_cosmicg	,init_cosmicg	,ROT270	,	"Universal", "Cosmic Guerilla", GAME_NO_COCKTAIL )
-	public static GameDriver driver_cosmica	   = new GameDriver("1979"	,"cosmica"	,"cosmic.java"	,rom_cosmica,null	,machine_driver_cosmica	,input_ports_cosmica	,null	,ROT270	,	"Universal", "Cosmic Alien", GAME_NO_SOUND )
-	public static GameDriver driver_cosmica2	   = new GameDriver("1979"	,"cosmica2"	,"cosmic.java"	,rom_cosmica2,driver_cosmica	,machine_driver_cosmica	,input_ports_cosmica	,null	,ROT270	,	"Universal", "Cosmic Alien (older)", GAME_NO_SOUND )
-	public static GameDriver driver_panic	   = new GameDriver("1980"	,"panic"	,"cosmic.java"	,rom_panic,null	,machine_driver_panic	,input_ports_panic	,null	,ROT270	,	"Universal", "Space Panic (version E)" )
-	public static GameDriver driver_panic2	   = new GameDriver("1980"	,"panic2"	,"cosmic.java"	,rom_panic2,driver_panic	,machine_driver_panic	,input_ports_panic	,null	,ROT270	,	"Universal", "Space Panic (set 2)" )
-	public static GameDriver driver_panic3	   = new GameDriver("1980"	,"panic3"	,"cosmic.java"	,rom_panic3,driver_panic	,machine_driver_panic	,input_ports_panic	,null	,ROT270	,	"Universal", "Space Panic (set 3)" )
-	public static GameDriver driver_panich	   = new GameDriver("1980"	,"panich"	,"cosmic.java"	,rom_panich,driver_panic	,machine_driver_panic	,input_ports_panic	,null	,ROT270	,	"Universal", "Space Panic (harder)" )
-	public static GameDriver driver_panicger	   = new GameDriver("1980"	,"panicger"	,"cosmic.java"	,rom_panicger,driver_panic	,machine_driver_panic	,input_ports_panic	,null	,ROT270	,	"Universal (ADP Automaten license)", "Space Panic (German)" )
-	public static GameDriver driver_magspot	   = new GameDriver("1980"	,"magspot"	,"cosmic.java"	,rom_magspot,null	,machine_driver_magspot2	,input_ports_magspot2	,null	,ROT270	,	"Universal", "Magical Spot", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_magspot2	   = new GameDriver("1980"	,"magspot2"	,"cosmic.java"	,rom_magspot2,null	,machine_driver_magspot2	,input_ports_magspot2	,null	,ROT270	,	"Universal", "Magical Spot II", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_devzone	   = new GameDriver("1980"	,"devzone"	,"cosmic.java"	,rom_devzone,null	,machine_driver_devzone	,input_ports_devzone	,init_devzone	,ROT270	,	"Universal", "Devil Zone", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_devzone2	   = new GameDriver("1980"	,"devzone2"	,"cosmic.java"	,rom_devzone2,driver_devzone	,machine_driver_devzone	,input_ports_devzone2	,init_devzone	,ROT270	,	"Universal", "Devil Zone (easier)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_nomnlnd	   = new GameDriver("1980"	,"nomnlnd"	,"cosmic.java"	,rom_nomnlnd,null	,machine_driver_nomnlnd	,input_ports_nomnlnd	,init_nomnlnd	,ROT270	,	"Universal", "No Man's Land", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_nomnlndg	   = new GameDriver("1980"	,"nomnlndg"	,"cosmic.java"	,rom_nomnlndg,driver_nomnlnd	,machine_driver_nomnlnd	,input_ports_nomnlndg	,init_nomnlnd	,ROT270	,	"Universal (Gottlieb license)", "No Man's Land (Gottlieb)", GAME_IMPERFECT_SOUND )
+	GAMEX(1979, cosmicg,  0,       cosmicg,  cosmicg,  cosmicg, ROT270, "Universal", "Cosmic Guerilla", GAME_NO_COCKTAIL )
+	GAMEX(1979, cosmica,  0,       cosmica,  cosmica,  0,       ROT270, "Universal", "Cosmic Alien", GAME_NO_SOUND )
+	GAMEX(1979, cosmica2, cosmica, cosmica,  cosmica,  0,       ROT270, "Universal", "Cosmic Alien (older)", GAME_NO_SOUND )
+	GAME( 1980, panic,    0,       panic,    panic,    0,       ROT270, "Universal", "Space Panic (version E)" )
+	GAME( 1980, panic2,   panic,   panic,    panic,    0,       ROT270, "Universal", "Space Panic (set 2)" )
+	GAME( 1980, panic3,   panic,   panic,    panic,    0,       ROT270, "Universal", "Space Panic (set 3)" )
+	GAME( 1980, panich,   panic,   panic,    panic,    0,       ROT270, "Universal", "Space Panic (harder)" )
+	GAME( 1980, panicger, panic,   panic,    panic,    0,       ROT270, "Universal (ADP Automaten license)", "Space Panic (German)" )
+	GAMEX(1980, magspot,  0,	   magspot2, magspot2, 0,       ROT270, "Universal", "Magical Spot", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, magspot2, 0,       magspot2, magspot2, 0,       ROT270, "Universal", "Magical Spot II", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, devzone,  0,       devzone,  devzone,  devzone, ROT270, "Universal", "Devil Zone", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, devzone2, devzone, devzone,  devzone2, devzone, ROT270, "Universal", "Devil Zone (easier)", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, nomnlnd,  0,       nomnlnd,  nomnlnd,  nomnlnd, ROT270, "Universal", "No Man's Land", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, nomnlndg, nomnlnd, nomnlnd,  nomnlndg, nomnlnd, ROT270, "Universal (Gottlieb license)", "No Man's Land (Gottlieb)", GAME_IMPERFECT_SOUND )
 }

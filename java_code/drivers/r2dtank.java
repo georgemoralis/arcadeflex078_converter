@@ -38,7 +38,7 @@ Should be very similar to Sigma's Spiders hardware.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,23 +46,20 @@ public class r2dtank
 {
 	
 	static int dipsw_bank;
-	public static WriteHandlerPtr dipsw_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dipsw_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	printf("bank = %x\n",data);
 		dipsw_bank = data;
 	} };
 	
 	static int r2dtank_video_flip;
-	public static WriteHandlerPtr r2dtank_video_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		/*	0 . flipped
-			1 . not flipped */
+	public static WriteHandlerPtr r2dtank_video_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		/*	0 -> flipped
+			1 -> not flipped */
 	
 		r2dtank_video_flip = !data;
 	} };
 	
-	public static ReadHandlerPtr dipsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dipsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( dipsw_bank )
 		{
 		case 0xff: // @ $154
@@ -109,13 +106,11 @@ public class r2dtank
 		}
 	} };
 	
-	public static WriteHandlerPtr r2dtank_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr r2dtank_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pia_0_w(offset, ~data);
 	} };
 	
-	public static WriteHandlerPtr r2dtank_pia_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr r2dtank_pia_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pia_1_w(offset, ~data);
 	} };
 	
@@ -164,7 +159,7 @@ public class r2dtank
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_r2dtank = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_r2dtank = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( r2dtank )
 	
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -265,8 +260,7 @@ public class r2dtank
 	
 	INPUT_PORTS_END(); }}; 
 	
-	public static PaletteInitHandlerPtr palette_init_r2dtank  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_r2dtank  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* colours derived from tim's screenshots */
 	
 		palette_set_color(0x0,0,0,0);		// background
@@ -280,8 +274,7 @@ public class r2dtank
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_r2dtank  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_r2dtank  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int loop, data0, data1;
 	
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -302,7 +295,7 @@ public class r2dtank
 	
 				col = (data0 & 0x80) ? ((data1 & 0xe0) >> 5) : ((data1 & 0x0e)>> 1);
 	
-				plot_pixel.handler(tmpbitmap, x, y, Machine.pens[col]);
+				plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
 				data0 <<= 1;
 	
 			}
@@ -330,21 +323,18 @@ public class r2dtank
 		/*irqs   : A/B             */ 0, 0
 	};
 	
-	public static MachineInitHandlerPtr machine_init_r2dtank  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_r2dtank  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia_1_intf);
 		pia_reset();
 	} };
 	
-	public static InterruptHandlerPtr r2dtank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr r2dtank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_r2dtank = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( r2dtank )
 		MDRV_CPU_ADD(M6809,3000000)		 /* ?? too fast ? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(r2dtank_interrupt,2)
@@ -372,9 +362,7 @@ public class r2dtank
 		MDRV_VIDEO_UPDATE(r2dtank)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_r2dtank = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -387,5 +375,5 @@ public class r2dtank
 		ROM_LOAD( "r2d5.7l",      0xf800, 0x0800, CRC(c49bed15) SHA1(ffa635a65c024c532bb13fb91bbd3e54923e81bf) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_r2dtank	   = new GameDriver("1980"	,"r2dtank"	,"r2dtank.java"	,rom_r2dtank,null	,machine_driver_r2dtank	,input_ports_r2dtank	,null	,ROT270	,	"Sigma Enterprises Inc.", "R2D Tank", GAME_NO_SOUND )
+	GAMEX( 1980, r2dtank, 0, r2dtank, r2dtank, 0, ROT270, "Sigma Enterprises Inc.", "R2D Tank", GAME_NO_SOUND )
 }

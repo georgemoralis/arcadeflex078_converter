@@ -25,7 +25,7 @@ added external port callback, and functions to set the volume of the channels
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -300,20 +300,20 @@ public class k007232
 	{
 	  int i,j;
 	
-	  intf = msound.sound_interface;
+	  intf = msound->sound_interface;
 	
 	  /* Set up the chips */
-	  for (j=0; j<intf.num_chips; j++)
+	  for (j=0; j<intf->num_chips; j++)
 	    {
 	      char buf[2][40];
 	      const char *name[2];
 	      int vol[2];
 	
-	      kpcm[j].pcmbuf[0] = (unsigned char *)memory_region(intf.bank[j]);
-	      kpcm[j].pcmbuf[1] = (unsigned char *)memory_region(intf.bank[j]);
-	      kpcm[j].pcmlimit  = (unsigned int)memory_region_length(intf.bank[j]);
+	      kpcm[j].pcmbuf[0] = (unsigned char *)memory_region(intf->bank[j]);
+	      kpcm[j].pcmbuf[1] = (unsigned char *)memory_region(intf->bank[j]);
+	      kpcm[j].pcmlimit  = (unsigned int)memory_region_length(intf->bank[j]);
 	
-		kpcm[j].clock = intf.baseclock;
+		kpcm[j].clock = intf->baseclock;
 	
 	      for( i = 0; i < KDAC_A_PCM_MAX; i++ )
 		{
@@ -329,7 +329,7 @@ public class k007232
 	
 	      for( i = 0; i < 0x10; i++ )  kpcm[j].wreg[i] = 0;
 	
-	      if( (intf.volume[j]&0xff00) == MIXER_PAN_CENTER ){
+	      if( (intf->volume[j]&0xff00) == MIXER_PAN_CENTER ){
 		for (i = 0;i < 2;i++){
 		  name[i] = buf[i];
 		  sprintf(buf[i],"007232 #%d Ch %c",j,'A'+i);
@@ -342,10 +342,10 @@ public class k007232
 		}
 	      }
 	
-	      vol[0]=intf.volume[j] & 0xffff;
-	      vol[1]=intf.volume[j] >> 16;
+	      vol[0]=intf->volume[j] & 0xffff;
+	      vol[1]=intf->volume[j] >> 16;
 	
-	      pcm_chan[j] = stream_init_multi(2,name,vol,Machine.sample_rate,
+	      pcm_chan[j] = stream_init_multi(2,name,vol,Machine->sample_rate,
 					      j,KDAC_A_update);
 	    }
 	
@@ -361,7 +361,7 @@ public class k007232
 	{
 	  int  data;
 	
-	  if (Machine.sample_rate == 0) return;
+	  if (Machine->sample_rate == 0) return;
 	
 	  stream_update(pcm_chan[chip],0);
 	
@@ -369,7 +369,7 @@ public class k007232
 	
 	  if (r == 0x0c){
 	    /* external port, usually volume control */
-	    if (intf.portwritehandler[chip]) (*intf.portwritehandler[chip])(v);
+	    if (intf->portwritehandler[chip]) (*intf->portwritehandler[chip])(v);
 	    return;
 	  }
 	  else if( r == 0x0d ){
@@ -396,7 +396,7 @@ public class k007232
 	#endif
 	
 	      kpcm[chip].step[reg_port] =
-		( (7850.0 / (float)Machine.sample_rate) ) *
+		( (7850.0 / (float)Machine->sample_rate) ) *
 		fncode[data] *
 		( (float)kpcm[chip].clock / (float)4000000 ) *
 		(1<<BASE_SHIFT);
@@ -449,33 +449,27 @@ public class k007232
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr K007232_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007232_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  K007232_WriteReg(offset,data,0);
 	} };
 	
-	public static ReadHandlerPtr K007232_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007232_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return K007232_ReadReg(offset,0);
 	} };
 	
-	public static WriteHandlerPtr K007232_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007232_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  K007232_WriteReg(offset,data,1);
 	} };
 	
-	public static ReadHandlerPtr K007232_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007232_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return K007232_ReadReg(offset,1);
 	} };
 	
-	public static WriteHandlerPtr K007232_write_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007232_write_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  K007232_WriteReg(offset,data,2);
 	} };
 	
-	public static ReadHandlerPtr K007232_read_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007232_read_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return K007232_ReadReg(offset,2);
 	} };
 	

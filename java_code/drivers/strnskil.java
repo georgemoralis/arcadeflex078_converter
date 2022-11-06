@@ -10,7 +10,7 @@ Strength & Skill (c) 1984 Sun Electronics
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,18 +23,15 @@ public class strnskil
 	
 	
 	
-	public static WriteHandlerPtr strnskil_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strnskil_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		strnskil_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr strnskil_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr strnskil_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return strnskil_sharedram[offset];
 	} };
 	
-	public static ReadHandlerPtr strnskil_d800_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr strnskil_d800_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/* bit0: interrupt type?, bit1: CPU2 busack? */
 	
 		if (cpu_getiloops() == 0)
@@ -44,8 +41,7 @@ public class strnskil
 	
 	/****************************************************************************/
 	
-	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		switch (activecpu_get_pc())
@@ -59,12 +55,11 @@ public class strnskil
 			default:		res = 0xff; break;
 		}
 	
-		logerror("%04x: protection_r . %02x\n",activecpu_get_pc(),res);
+		logerror("%04x: protection_r -> %02x\n",activecpu_get_pc(),res);
 		return res;
 	} };
 	
-	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%04x: protection_w %02x\n",activecpu_get_pc(),data);
 	} };
 	
@@ -128,7 +123,7 @@ public class strnskil
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_strnskil = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_strnskil = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( strnskil )
 		PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -217,7 +212,7 @@ public class strnskil
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pettanp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pettanp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pettanp )
 		PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -347,8 +342,7 @@ public class strnskil
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_strnskil = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( strnskil )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2) /* 4.000MHz */
@@ -377,9 +371,7 @@ public class strnskil
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -484,7 +476,7 @@ public class strnskil
 		ROM_LOAD( "tvg12-16.2", 0x0000,  0x1000, CRC(3abc6ba8) SHA1(15e0b0f9d068f6094e2be4f4f1dea0ff6e85686b) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_strnskil	   = new GameDriver("1984"	,"strnskil"	,"strnskil.java"	,rom_strnskil,null	,machine_driver_strnskil	,input_ports_strnskil	,null	,ROT0	,	"Sun Electronics", "Strength & Skill" )
-	public static GameDriver driver_guiness	   = new GameDriver("1984"	,"guiness"	,"strnskil.java"	,rom_guiness,driver_strnskil	,machine_driver_strnskil	,input_ports_strnskil	,null	,ROT0	,	"Sun Electronics", "The Guiness (Japan)" )
-	public static GameDriver driver_pettanp	   = new GameDriver("1984"	,"pettanp"	,"strnskil.java"	,rom_pettanp,null	,machine_driver_strnskil	,input_ports_pettanp	,null	,ROT0	,	"Sun Electronics", "Pettan Pyuu (Japan)", GAME_UNEMULATED_PROTECTION )
+	GAME(  1984, strnskil, 0,        strnskil, strnskil, 0, ROT0, "Sun Electronics", "Strength & Skill" )
+	GAME(  1984, guiness,  strnskil, strnskil, strnskil, 0, ROT0, "Sun Electronics", "The Guiness (Japan)" )
+	GAMEX( 1984, pettanp,  0,        strnskil, pettanp,  0, ROT0, "Sun Electronics", "Pettan Pyuu (Japan)", GAME_UNEMULATED_PROTECTION )
 }

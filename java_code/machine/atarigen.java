@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -179,8 +179,7 @@ public class atarigen
 		which sets the scanline interrupt state.
 	---------------------------------------------------------------*/
 	
-	public static InterruptHandlerPtr atarigen_scanline_int_gen = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr atarigen_scanline_int_gen = new InterruptHandlerPtr() {public void handler(){
 		atarigen_scanline_int_state = 1;
 		(*update_int_callback)();
 	} };
@@ -209,8 +208,7 @@ public class atarigen
 		sets the sound interrupt state.
 	---------------------------------------------------------------*/
 	
-	public static InterruptHandlerPtr atarigen_sound_int_gen = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr atarigen_sound_int_gen = new InterruptHandlerPtr() {public void handler(){
 		atarigen_sound_int_state = 1;
 		(*update_int_callback)();
 	} };
@@ -239,8 +237,7 @@ public class atarigen
 		sets the video interrupt state.
 	---------------------------------------------------------------*/
 	
-	public static InterruptHandlerPtr atarigen_video_int_gen = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr atarigen_video_int_gen = new InterruptHandlerPtr() {public void handler(){
 		atarigen_video_int_state = 1;
 		(*update_int_callback)();
 	} };
@@ -274,7 +271,7 @@ public class atarigen
 		atarigen_scanline_int_gen();
 	
 		/* set a new timer to go off at the same scan line next frame */
-		timer_adjust(scanline_interrupt_timer, TIME_IN_HZ(Machine.drv.frames_per_second), 0, 0);
+		timer_adjust(scanline_interrupt_timer, TIME_IN_HZ(Machine->drv->frames_per_second), 0, 0);
 	}
 	
 	
@@ -320,7 +317,7 @@ public class atarigen
 	
 	WRITE16_HANDLER( atarigen_eeprom_w )
 	{
-		if (eeprom_unlocked == 0)
+		if (!eeprom_unlocked)
 			return;
 	
 		COMBINE_DATA(&atarigen_eeprom[offset]);
@@ -329,7 +326,7 @@ public class atarigen
 	
 	WRITE32_HANDLER( atarigen_eeprom32_w )
 	{
-		if (eeprom_unlocked == 0)
+		if (!eeprom_unlocked)
 			return;
 	
 		COMBINE_DATA(&atarigen_eeprom[offset * 2 + 1]);
@@ -365,11 +362,10 @@ public class atarigen
 		nvram_handler_atarigen: Loads the EEPROM data.
 	---------------------------------------------------------------*/
 	
-	public static NVRAMHandlerPtr nvram_handler_atarigen  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_atarigen  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, atarigen_eeprom, atarigen_eeprom_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, atarigen_eeprom, atarigen_eeprom_size);
 		else
 		{
@@ -377,7 +373,7 @@ public class atarigen
 			memset(atarigen_eeprom, 0xff, atarigen_eeprom_size);
 	
 			/* anything else must be decompressed */
-			if (atarigen_eeprom_default != 0)
+			if (atarigen_eeprom_default)
 			{
 				if (atarigen_eeprom_default[0] == 0)
 					decompress_eeprom_byte(atarigen_eeprom_default + 1);
@@ -463,7 +459,7 @@ public class atarigen
 		atarigen_slapstic = NULL;
 	
 		/* if we have a chip, install it */
-		if (chipnum != 0)
+		if (chipnum)
 		{
 			/* initialize the slapstic */
 			slapstic_init(chipnum);
@@ -474,7 +470,7 @@ public class atarigen
 	
 			/* allocate memory for a copy of bank 0 */
 			atarigen_slapstic_bank0 = auto_malloc(0x2000);
-			if (atarigen_slapstic_bank0 != 0)
+			if (atarigen_slapstic_bank0)
 				memcpy(atarigen_slapstic_bank0, atarigen_slapstic, 0x2000);
 		}
 	}
@@ -487,7 +483,7 @@ public class atarigen
 	
 	void atarigen_slapstic_reset(void)
 	{
-		if (atarigen_slapstic_num != 0)
+		if (atarigen_slapstic_num)
 		{
 			slapstic_reset();
 			update_bank(slapstic_bank());
@@ -551,8 +547,7 @@ public class atarigen
 		sound processor.
 	---------------------------------------------------------------*/
 	
-	public static InterruptHandlerPtr atarigen_6502_irq_gen = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr atarigen_6502_irq_gen = new InterruptHandlerPtr() {public void handler(){
 		timed_int = 1;
 		update_6502_irq();
 	} };
@@ -563,15 +558,13 @@ public class atarigen
 		sound processor. Both reads and writes can be used.
 	---------------------------------------------------------------*/
 	
-	public static ReadHandlerPtr atarigen_6502_irq_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarigen_6502_irq_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		timed_int = 0;
 		update_6502_irq();
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr atarigen_6502_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarigen_6502_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timed_int = 0;
 		update_6502_irq();
 	} };
@@ -620,19 +613,19 @@ public class atarigen
 	
 	WRITE16_HANDLER( atarigen_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
 	}
 	
 	WRITE16_HANDLER( atarigen_sound_upper_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			timer_set(TIME_NOW, (data >> 8) & 0xff, delayed_sound_w);
 	}
 	
 	WRITE32_HANDLER( atarigen_sound_upper32_w )
 	{
-		if (ACCESSING_MSB32 != 0)
+		if (ACCESSING_MSB32)
 			timer_set(TIME_NOW, (data >> 24) & 0xff, delayed_sound_w);
 	}
 	
@@ -671,8 +664,7 @@ public class atarigen
 		CPU to the main CPU.
 	---------------------------------------------------------------*/
 	
-	public static WriteHandlerPtr atarigen_6502_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarigen_6502_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, delayed_6502_sound_w);
 	} };
 	
@@ -682,8 +674,7 @@ public class atarigen
 		from the main CPU to the sound CPU.
 	---------------------------------------------------------------*/
 	
-	public static ReadHandlerPtr atarigen_6502_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarigen_6502_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		atarigen_cpu_to_sound_ready = 0;
 		cpu_set_nmi_line(sound_cpu_num, CLEAR_LINE);
 		return atarigen_cpu_to_sound;
@@ -748,7 +739,7 @@ public class atarigen
 	static void delayed_sound_w(int param)
 	{
 		/* warn if we missed something */
-		if (atarigen_cpu_to_sound_ready != 0)
+		if (atarigen_cpu_to_sound_ready)
 			logerror("Missed command from 68010\n");
 	
 		/* set up the states and signal an NMI to the sound CPU */
@@ -770,7 +761,7 @@ public class atarigen
 	static void delayed_6502_sound_w(int param)
 	{
 		/* warn if we missed something */
-		if (atarigen_sound_to_cpu_ready != 0)
+		if (atarigen_sound_to_cpu_ready)
 			logerror("Missed result from 6502\n");
 	
 		/* set up the states and signal the sound interrupt to the main CPU */
@@ -870,8 +861,7 @@ public class atarigen
 		m6502_speedup_r: Handles speeding up the 6502.
 	---------------------------------------------------------------*/
 	
-	public static ReadHandlerPtr m6502_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6502_speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = speed_b[0];
 	
 		if (activecpu_get_previouspc() == speed_pc && speed_a[0] == speed_a[1] && result == speed_b[1])
@@ -898,10 +888,10 @@ public class atarigen
 		scanlines_per_callback = frequency;
 	
 		/* compute the last scanline */
-		last_scanline = (int)(TIME_IN_HZ(Machine.drv.frames_per_second) / cpu_getscanlineperiod());
+		last_scanline = (int)(TIME_IN_HZ(Machine->drv->frames_per_second) / cpu_getscanlineperiod());
 	
 		/* set a timer to go off on the next VBLANK */
-		timer_set(cpu_getscanlinetime(Machine.drv.screen_height), 0, vblank_timer);
+		timer_set(cpu_getscanlinetime(Machine->drv->screen_height), 0, vblank_timer);
 	}
 	
 	
@@ -913,10 +903,10 @@ public class atarigen
 	static void vblank_timer(int param)
 	{
 		/* set a timer to go off at scanline 0 */
-		timer_set(TIME_IN_USEC(Machine.drv.vblank_duration), 0, scanline_timer);
+		timer_set(TIME_IN_USEC(Machine->drv->vblank_duration), 0, scanline_timer);
 	
 		/* set a timer to go off on the next VBLANK */
-		timer_set(cpu_getscanlinetime(Machine.drv.screen_height), 1, vblank_timer);
+		timer_set(cpu_getscanlinetime(Machine->drv->screen_height), 1, vblank_timer);
 	}
 	
 	
@@ -928,7 +918,7 @@ public class atarigen
 	static void scanline_timer(int scanline)
 	{
 		/* callback */
-		if (scanline_callback != 0)
+		if (scanline_callback)
 		{
 			(*scanline_callback)(scanline);
 	
@@ -976,7 +966,7 @@ public class atarigen
 		actual_vc_latch0 = actual_vc_latch1 = -1;
 	
 		/* start a timer to go off a little before scanline 0 */
-		if (atarivc_eof_data != 0)
+		if (atarivc_eof_data)
 			timer_set(cpu_getscanlinetime(0), 0, atarivc_eof_update);
 	}
 	
@@ -1013,8 +1003,8 @@ public class atarigen
 		if (keyboard_pressed(KEYCODE_8))
 		{
 			static FILE *out;
-			if (out == 0) out = fopen("scroll.log", "w");
-			if (out != 0)
+			if (!out) out = fopen("scroll.log", "w");
+			if (out)
 			{
 				for (i = 0; i < 64; i++)
 					fprintf(out, "%04X ", data[i]);
@@ -1165,7 +1155,7 @@ public class atarigen
 	
 			if (result > 255)
 				result = 255;
-			if (result > Machine.visible_area.max_y)
+			if (result > Machine->visible_area.max_y)
 				result |= 0x4000;
 	
 			return result;
@@ -1355,7 +1345,7 @@ public class atarigen
 	
 	int atarigen_get_hblank(void)
 	{
-		return (cpu_gethorzbeampos() > (Machine.drv.screen_width * 9 / 10));
+		return (cpu_gethorzbeampos() > (Machine->drv->screen_width * 9 / 10));
 	}
 	
 	
@@ -1368,15 +1358,15 @@ public class atarigen
 	{
 		/* halt the CPU until the next HBLANK */
 		int hpos = cpu_gethorzbeampos();
-		int hblank = Machine.drv.screen_width * 9 / 10;
+		int hblank = Machine->drv->screen_width * 9 / 10;
 		double fraction;
 	
 		/* if we're in hblank, set up for the next one */
 		if (hpos >= hblank)
-			hblank += Machine.drv.screen_width;
+			hblank += Machine->drv->screen_width;
 	
 		/* halt and set a timer to wake up */
-		fraction = (double)(hblank - hpos) / (double)Machine.drv.screen_width;
+		fraction = (double)(hblank - hpos) / (double)Machine->drv->screen_width;
 		timer_set(cpu_getscanlineperiod() * fraction, 0, unhalt_cpu);
 		cpu_set_halt_line(0, ASSERT_LINE);
 	}
@@ -1414,7 +1404,7 @@ public class atarigen
 	{
 		COMBINE_DATA(&paletteram16[offset]);
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			int palentry = offset / 2;
 			int newword = (paletteram16[palentry * 2] & 0xff00) | (paletteram16[palentry * 2 + 1] >> 8);
@@ -1444,7 +1434,7 @@ public class atarigen
 	
 		COMBINE_DATA(&paletteram32[offset]);
 	
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			newword = paletteram32[offset] >> 16;
 	
@@ -1459,7 +1449,7 @@ public class atarigen
 			palette_set_color(offset * 2, r, g, b);
 		}
 	
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 		{
 			newword = paletteram32[offset] & 0xffff;
 	
@@ -1515,37 +1505,37 @@ public class atarigen
 	
 	void atarigen_blend_gfx(int gfx0, int gfx1, int mask0, int mask1)
 	{
-		struct GfxElement *gx0 = Machine.gfx[gfx0];
-		struct GfxElement *gx1 = Machine.gfx[gfx1];
+		struct GfxElement *gx0 = Machine->gfx[gfx0];
+		struct GfxElement *gx1 = Machine->gfx[gfx1];
 		int c, x, y;
 	
 		/* loop over elements */
-		for (c = 0; c < gx0.total_elements; c++)
+		for (c = 0; c < gx0->total_elements; c++)
 		{
-			UINT8 *c0base = gx0.gfxdata + gx0.char_modulo * c;
-			UINT8 *c1base = gx1.gfxdata + gx1.char_modulo * c;
+			UINT8 *c0base = gx0->gfxdata + gx0->char_modulo * c;
+			UINT8 *c1base = gx1->gfxdata + gx1->char_modulo * c;
 			UINT32 usage = 0;
 	
 			/* loop over height */
-			for (y = 0; y < gx0.height; y++)
+			for (y = 0; y < gx0->height; y++)
 			{
 				UINT8 *c0 = c0base, *c1 = c1base;
 	
-				for (x = 0; x < gx0.width; x++, c0++, c1++)
+				for (x = 0; x < gx0->width; x++, c0++, c1++)
 				{
 					*c0 = (*c0 & mask0) | (*c1 & mask1);
 					usage |= 1 << *c0;
 				}
-				c0base += gx0.line_modulo;
-				c1base += gx1.line_modulo;
-				if (gx0.pen_usage)
-					gx0.pen_usage[c] = usage;
+				c0base += gx0->line_modulo;
+				c1base += gx1->line_modulo;
+				if (gx0->pen_usage)
+					gx0->pen_usage[c] = usage;
 			}
 		}
 	
 		/* free the second graphics element */
 		freegfx(gx1);
-		Machine.gfx[gfx1] = NULL;
+		Machine->gfx[gfx1] = NULL;
 	}
 	
 	

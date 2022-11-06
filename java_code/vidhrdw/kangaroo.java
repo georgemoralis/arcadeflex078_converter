@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_kangaroo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_kangaroo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -64,8 +63,7 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_kangaroo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kangaroo  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -80,8 +78,7 @@ public class kangaroo
 	
 	
 	
-	public static WriteHandlerPtr kangaroo_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* A & B bitmap control latch (A=playfield B=motion)
 			  bit 5 FLIP A
 			  bit 4 FLIP B
@@ -99,14 +96,13 @@ public class kangaroo
 	} };
 	
 	
-	public static WriteHandlerPtr kangaroo_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_GFX1);
 	
 	
 		/* this is a VERY crude way to handle the banked ROMs - but it's */
 		/* correct enough to pass the self test */
-		if ((data & 0x05) != 0)
+		if (data & 0x05)
 			cpu_setbank(1,&RAM[0x0000]);
 		else
 			cpu_setbank(1,&RAM[0x2000]);
@@ -116,8 +112,7 @@ public class kangaroo
 	
 	
 	
-	public static WriteHandlerPtr kangaroo_color_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_color_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 	
@@ -150,8 +145,7 @@ public class kangaroo
 	
 	
 	
-	public static WriteHandlerPtr kangaroo_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		kangaroo_blitter[offset] = data;
 	
 		if (offset == 5)    /* trigger DMA */
@@ -167,8 +161,8 @@ public class kangaroo
 	
 			old_bank_select = new_bank_select = *kangaroo_bank_select;
 	
-			if ((new_bank_select & 0x0c) != 0)  new_bank_select |= 0x0c;
-			if ((new_bank_select & 0x03) != 0)  new_bank_select |= 0x03;
+			if (new_bank_select & 0x0c)  new_bank_select |= 0x0c;
+			if (new_bank_select & 0x03)  new_bank_select |= 0x03;
 			kangaroo_bank_select_w(0, new_bank_select & 0x05);
 	
 			for (x = 0;x <= xb;x++)
@@ -204,13 +198,13 @@ public class kangaroo
 	
 	INLINE void kangaroo_plot_pixel(struct mame_bitmap *bitmap, int x, int y, int col, int color_base, int flip)
 	{
-		if (flip != 0)
+		if (flip)
 		{
-			x = bitmap.width - 1 - x;
-			y = bitmap.height - 1 - y;
+			x = bitmap->width - 1 - x;
+			y = bitmap->height - 1 - y;
 		}
 	
-		plot_pixel(bitmap, x, y, Machine.pens[((col & 0x08) ? 0 : color_base) + (col & 0x07)]);
+		plot_pixel(bitmap, x, y, Machine->pens[((col & 0x08) ? 0 : color_base) + (col & 0x07)]);
 	}
 	
 	INLINE void kangaroo_redraw_4pixels(int x, int y)
@@ -233,8 +227,7 @@ public class kangaroo
 		kangaroo_plot_pixel(tmpbitmap2, x+3, y, videoram.read(offs+3)>> 4,   16, flipB);
 	}
 	
-	public static WriteHandlerPtr kangaroo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a_Z_R,a_G_B,b_Z_R,b_G_B;
 		int sx, sy, offs;
 	
@@ -248,7 +241,7 @@ public class kangaroo
 		sy = offset % 256;
 		offs = sy * 256 + sx;
 	
-		if (a_G_B != 0)
+		if (a_G_B)
 		{
 			videoram.write(offs  ,(videoram[offs  ] & 0xfc) | ((data & 0x10) >> 3) | ((data & 0x01) >> 0));
 			videoram.write(offs+1,(videoram[offs+1] & 0xfc) | ((data & 0x20) >> 4) | ((data & 0x02) >> 1));
@@ -256,7 +249,7 @@ public class kangaroo
 			videoram.write(offs+3,(videoram[offs+3] & 0xfc) | ((data & 0x80) >> 6) | ((data & 0x08) >> 3));
 		}
 	
-		if (a_Z_R != 0)
+		if (a_Z_R)
 		{
 			videoram.write(offs  ,(videoram[offs  ] & 0xf3) | ((data & 0x10) >> 1) | ((data & 0x01) << 2));
 			videoram.write(offs+1,(videoram[offs+1] & 0xf3) | ((data & 0x20) >> 2) | ((data & 0x02) << 1));
@@ -264,7 +257,7 @@ public class kangaroo
 			videoram.write(offs+3,(videoram[offs+3] & 0xf3) | ((data & 0x80) >> 4) | ((data & 0x08) >> 1));
 		}
 	
-		if (b_G_B != 0)
+		if (b_G_B)
 		{
 			videoram.write(offs  ,(videoram[offs  ] & 0xcf) | ((data & 0x10) << 1) | ((data & 0x01) << 4));
 			videoram.write(offs+1,(videoram[offs+1] & 0xcf) | ((data & 0x20) >> 0) | ((data & 0x02) << 3));
@@ -272,7 +265,7 @@ public class kangaroo
 			videoram.write(offs+3,(videoram[offs+3] & 0xcf) | ((data & 0x80) >> 2) | ((data & 0x08) << 1));
 		}
 	
-		if (b_Z_R != 0)
+		if (b_Z_R)
 		{
 			videoram.write(offs  ,(videoram[offs  ] & 0x3f) | ((data & 0x10) << 3) | ((data & 0x01) << 6));
 			videoram.write(offs+1,(videoram[offs+1] & 0x3f) | ((data & 0x20) << 2) | ((data & 0x02) << 5));
@@ -293,11 +286,10 @@ public class kangaroo
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kangaroo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx, scrolly;
 	
-		if (screen_flipped != 0)
+		if (screen_flipped)
 		{
 			int x, y;
 	

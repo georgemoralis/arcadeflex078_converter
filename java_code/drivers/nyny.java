@@ -35,7 +35,7 @@ fedcba98
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,12 +52,11 @@ public class nyny
 	static unsigned char dac_enable = 0 ;
 	
 	
-	public static WriteHandlerPtr nyny_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data) ;
+	public static WriteHandlerPtr nyny_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 	
 	
-	public static InterruptHandlerPtr nyny_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr nyny_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* this is not accurate */
 		/* pia1_ca1 should be toggled by output of LS123 */
 		pia1_ca1 ^= 0x80 ;
@@ -79,19 +78,16 @@ public class nyny
 	}
 	
 	
-	public static ReadHandlerPtr pia1_ca1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pia1_ca1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pia1_ca1;
 	} };
 	
 	
-	public static WriteHandlerPtr pia1_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pia1_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-7 control a timer (low 8 bits) - is this for a starfield? */
 	} };
 	
-	public static WriteHandlerPtr pia1_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pia1_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-3 control a timer (high 4 bits) - is this for a starfield? */
 		/* bit 4 enables the starfield? */
 	
@@ -114,8 +110,7 @@ public class nyny
 		/*irqs   : A/B             */ 0, 0
 	};
 	
-	public static MachineInitHandlerPtr machine_init_nyny  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_nyny  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_ALTERNATE_ORDERING, &pia1_intf);
@@ -124,15 +119,13 @@ public class nyny
 	
 	
 	
-	public static WriteHandlerPtr ay8910_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* dac sounds like crap most likely bad implementation */
 		dac_volume = data ;
 		DAC_1_data_w( 0, dac_enable * dac_volume ) ;
 	} };
 	
-	public static WriteHandlerPtr ay8910_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int v = (data & 7) << 5 ;
 		DAC_0_data_w( 0, v ) ;
 	
@@ -140,8 +133,7 @@ public class nyny
 		DAC_1_data_w( 0, dac_enable * dac_volume ) ;
 	} };
 	
-	public static WriteHandlerPtr shared_w_irq = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_w_irq = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,M6802_IRQ_LINE,HOLD_LINE);
 	} };
@@ -149,13 +141,11 @@ public class nyny
 	
 	static unsigned char snd_w = 0;
 	
-	public static ReadHandlerPtr snd_answer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snd_answer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return snd_w;
 	} };
 	
-	public static WriteHandlerPtr snd_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snd_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_w = data;
 	} };
 	
@@ -242,7 +232,7 @@ public class nyny
 	
 	
 	
-	static InputPortPtr input_ports_nyny = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nyny = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nyny )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );	/* PIA0 PA0 */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SERVICE1 );/* PIA0 PA1 */
@@ -341,8 +331,7 @@ public class nyny
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_nyny = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nyny )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1400000)	/* 1.40 MHz */
@@ -374,9 +363,7 @@ public class nyny
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	  Game driver(s)
@@ -452,7 +439,7 @@ public class nyny
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_nyny	   = new GameDriver("1980"	,"nyny"	,"nyny.java"	,rom_nyny,null	,machine_driver_nyny	,input_ports_nyny	,null	,ROT270	,	"Sigma Enterprises Inc.", "New York New York", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_nynyg	   = new GameDriver("1980"	,"nynyg"	,"nyny.java"	,rom_nynyg,driver_nyny	,machine_driver_nyny	,input_ports_nyny	,null	,ROT270	,	"Sigma Enterprises Inc. (Gottlieb license)", "New York New York (Gottlieb)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_arcadia	   = new GameDriver("1980"	,"arcadia"	,"nyny.java"	,rom_arcadia,driver_nyny	,machine_driver_nyny	,input_ports_nyny	,null	,ROT270	,	"Sigma Enterprises Inc.", "Waga Seishun no Arcadia", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, nyny,    0,    nyny, nyny, 0, ROT270, "Sigma Enterprises Inc.", "New York New York", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, nynyg,   nyny, nyny, nyny, 0, ROT270, "Sigma Enterprises Inc. (Gottlieb license)", "New York New York (Gottlieb)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, arcadia, nyny, nyny, nyny, 0, ROT270, "Sigma Enterprises Inc.", "Waga Seishun no Arcadia", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 }

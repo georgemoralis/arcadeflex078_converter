@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,8 +25,7 @@ public class wiping
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_wiping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wiping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -69,8 +68,7 @@ public class wiping
 	
 	
 	
-	public static WriteHandlerPtr wiping_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiping_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = (data & 1);
@@ -87,8 +85,7 @@ public class wiping
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_wiping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wiping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		for (offs = videoram_size[0] - 1; offs > 0; offs--)
@@ -118,7 +115,7 @@ public class wiping
 					sy = my - 2;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -147,7 +144,7 @@ public class wiping
 			flipy = spriteram.read(offs)& 0x40;
 			flipx = spriteram.read(offs)& 0x80;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sy = 208 - sy;
 				flipx = NOT(flipx);
@@ -188,7 +185,7 @@ public class wiping
 					sy = my - 2;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

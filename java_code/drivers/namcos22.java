@@ -121,7 +121,7 @@
 				0x20000008 = 0x0172 (= 370)
 			 Rave Racer
 				hacked temporarily:
-				0x00018200 = 0x60 (. BRA instruction) (RV2-B)
+				0x00018200 = 0x60 (-> BRA instruction) (RV2-B)
 			 Cyber Cycles
 				0x20000002 = 0x0185 (= 389)
 			 Ace Driver Victory Lap
@@ -202,9 +202,9 @@
 	40000015	? (cyc1)
 	40000016	Watchdog timer reset
 	40000017
-	40000018	0 or 1 . DSP control (reset?)
+	40000018	0 or 1 -> DSP control (reset?)
 	40000019	sub cpu reset?
-	4000001a	0 or 1 or 0xff . DSP control
+	4000001a	0 or 1 or 0xff -> DSP control
 	4000001b	?
 	4000001c
 	4000001d
@@ -551,7 +551,7 @@ CUSTOM: 304 (x4, 120 PIN PQFP)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -684,9 +684,9 @@ public class namcos22
 			40000015	? (cyc1)
 			40000016	Watchdog timer reset
 			40000017
-			40000018	0 or 1 . DSP control (reset?)
+			40000018	0 or 1 -> DSP control (reset?)
 			40000019	?
-			4000001a	0 or 1 or 0xff . DSP control
+			4000001a	0 or 1 or 0xff -> DSP control
 			4000001b	?
 			4000001c
 			4000001d
@@ -799,7 +799,7 @@ public class namcos22
 		/* 0x860002: write */
 		if( offset==0 )
 		{
-			if ((mem_mask & 0xffff0000) != 0)
+			if( mem_mask&0xffff0000 )
 			{
 				if( mSpotRAM.portW>=SPOTRAM_SIZE ) mSpotRAM.portW = 0;
 				mSpotRAM.RAM[mSpotRAM.portW++] = data;
@@ -967,8 +967,7 @@ public class namcos22
 	//	namcos22_shareram[(0xa0b000 - 0xa04000)/4] ^= 0x00800000;
 	}
 	
-	public static InterruptHandlerPtr namcos22s_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos22s_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch( namcos22_gametype )
 		{
 		case NAMCOS22_ALPINE_RACER:
@@ -1009,8 +1008,7 @@ public class namcos22
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_namcos22s = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcos22s )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020,25000000) /* 25 MHz? */
 		MDRV_CPU_MEMORY(namcos22s_readmem,namcos22s_writemem)
@@ -1028,9 +1026,7 @@ public class namcos22
 	
 		MDRV_VIDEO_START(namcos22s)
 		MDRV_VIDEO_UPDATE(namcos22s)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*********************************************************************************/
 	
@@ -1084,8 +1080,7 @@ public class namcos22
 		{ 0x900a0000, 0x900a000f, MWA32_RAM },	/* bg control register */
 	MEMORY_END
 	
-	public static InterruptHandlerPtr namcos22_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos22_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int i;
 		for( i=0; i<5; i++ )
 		{
@@ -1126,8 +1121,7 @@ public class namcos22
 	
 	} };
 	
-	public static MachineHandlerPtr machine_driver_namcos22 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcos22 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68020,25000000) /* 25 MHz? */
 		MDRV_CPU_MEMORY(namcos22_readmem,namcos22_writemem)
@@ -1145,9 +1139,7 @@ public class namcos22
 	
 		MDRV_VIDEO_START(namcos22s)
 		MDRV_VIDEO_UPDATE(namcos22)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*********************************************************************************/
 	
@@ -1688,7 +1680,7 @@ public class namcos22
 		ROM_LOAD( "ts1waveb.1l", 0x400000, 0x200000, CRC(bf4d7272) SHA1(c7c7b3620e7b3176644b6784ee36e679c9e31cc1) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_alpiner = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alpiner = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alpiner )
 		PORT_START();  /* DIP4 */
 		PORT_DIPNAME( 0x01, 0x00, "DIP1" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -1732,7 +1724,7 @@ public class namcos22
 		PORT_ANALOG( 0xffff, 0x8000, IPT_AD_STICK_Y|IPF_CENTER, 100, 4, 0x00, 0xffff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cybrcycc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cybrcycc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cybrcycc )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1 (test mode"));
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -1802,7 +1794,7 @@ public class namcos22
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_TILT );	/* motion stop (unused) */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_propcycl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_propcycl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( propcycl )
 		PORT_START();  /* DIP4 */
 		PORT_DIPNAME( 0x01, 0x01, "DIP1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1854,7 +1846,7 @@ public class namcos22
 	//	PORT_ANALOG( 0xffff, 0x8000, IPT_AD_STICK_Y|IPF_CENTER, 100, 4, 0x00, 0xffff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_victlap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_victlap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( victlap )
 		PORT_START();  /* 0: DIP2 and DIP3 */
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1" );
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -1966,7 +1958,7 @@ public class namcos22
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ridgera = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ridgera = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ridgera )
 		PORT_START();  /* 0: DIP2 and DIP3 */
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1" );
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -2077,7 +2069,7 @@ public class namcos22
 		PORT_DIPSETTING(    0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_raveracw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raveracw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raveracw )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1" );
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -2147,7 +2139,7 @@ public class namcos22
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_TILT );	/* motion stop (unused) */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cybrcomm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cybrcomm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cybrcomm )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1" );
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -2199,7 +2191,7 @@ public class namcos22
 		PORT_DIPSETTING(    0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_timecris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timecris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timecris )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "DIP2-1" );
 		PORT_DIPSETTING(    0x0001, DEF_STR( "Off") );
@@ -2335,7 +2327,7 @@ public class namcos22
 				for( i=3+8; i<3+12+8; i++ )
 				{
 					UINT32 data = GetPolyData(addr+i);
-					if ((data & 0x800000) != 0) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
+					if( data&0x800000 ) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
 					PutPolyData( addr+i, data );
 				}
 				break;
@@ -2344,7 +2336,7 @@ public class namcos22
 				for( i=4+8; i<4+12+8; i++ )
 				{
 					UINT32 data = GetPolyData(addr+i);
-					if ((data & 0x800000) != 0) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
+					if( data&0x800000 ) data |= 0x00ff00; else data &= 0xff00ff; /* replace middle byte with -1 or 0 */
 					PutPolyData( addr+i, data );
 				}
 				break;
@@ -2423,16 +2415,14 @@ public class namcos22
 		PutPolyData( 0x0077d0+24, 0x000000 );
 	}
 	
-	public static DriverInitHandlerPtr init_alpiner  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alpiner  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_ALPINE_RACER;
 		DecryptPointROMs();
 	} };
 	
 	/*****************************************************************************************************/
 	
-	public static DriverInitHandlerPtr init_airco22  = new DriverInitHandlerPtr() { public void handler()
-	{ /* patch DSP RAM test */
+	public static DriverInitHandlerPtr init_airco22  = new DriverInitHandlerPtr() { public void handler(){ /* patch DSP RAM test */
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x6d74/4] &= 0x0000ffff;
 		pROM[0x6d74/4] |= 0x4e710000;
@@ -2447,8 +2437,7 @@ public class namcos22
 		/* int7 rte */
 	} };
 	
-	public static DriverInitHandlerPtr init_propcycl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_propcycl  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 	
 		/* patch out protection */
@@ -2469,33 +2458,27 @@ public class namcos22
 		namcos22_gametype = NAMCOS22_PROP_CYCLE;
 	} };
 	
-	public static DriverInitHandlerPtr init_ridgeraj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ridgeraj  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_RIDGE_RACER;
 	} };
 	
-	public static DriverInitHandlerPtr init_ridger2j  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ridger2j  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_RIDGE_RACER;
 	} };
 	
-	public static DriverInitHandlerPtr init_acedrvr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_acedrvr  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_ACE_DRIVER;
 	} };
 	
-	public static DriverInitHandlerPtr init_victlap  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_victlap  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_VICTORY_LAP;
 	} };
 	
-	public static DriverInitHandlerPtr init_raveracw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_raveracw  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_RAVE_RACER;
 	} };
 	
-	public static DriverInitHandlerPtr init_cybrcomm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cybrcomm  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x18ade8/4] = 0x4e714e71;
 		pROM[0x18ae38/4] = 0x4e714e71;
@@ -2506,8 +2489,7 @@ public class namcos22
 		namcos22_gametype = NAMCOS22_CYBER_COMMANDO;
 	} };
 	
-	public static DriverInitHandlerPtr init_cybrcyc  = new DriverInitHandlerPtr() { public void handler()
-	{ /* patch DSP RAM test */
+	public static DriverInitHandlerPtr init_cybrcyc  = new DriverInitHandlerPtr() { public void handler(){ /* patch DSP RAM test */
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		pROM[0x355C/4] &= 0x0000ffff;
 		pROM[0x355C/4] |= 0x4e710000;
@@ -2515,33 +2497,32 @@ public class namcos22
 		namcos22_gametype = NAMCOS22_CYBER_CYCLES;
 	} };
 	
-	public static DriverInitHandlerPtr init_timecris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_timecris  = new DriverInitHandlerPtr() { public void handler(){
 		namcos22_gametype = NAMCOS22_TIME_CRISIS;
 	} };
 	
 	/*     YEAR, NAME,    PARENT,    MACHINE,   INPUT,    INIT,     MNTR,  COMPANY, FULLNAME,                                    FLAGS */
 	/* System22 games */
-	public static GameDriver driver_cybrcomm	   = new GameDriver("1995"	,"cybrcomm"	,"namcos22.java"	,rom_cybrcomm,null	,machine_driver_namcos22	,input_ports_cybrcomm	,init_cybrcomm	,ROT0	,	"Namco", "Cyber Commando (Rev. CY1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	public static GameDriver driver_raveracw	   = new GameDriver("1995"	,"raveracw"	,"namcos22.java"	,rom_raveracw,null	,machine_driver_namcos22	,input_ports_raveracw	,init_raveracw	,ROT0	,	"Namco", "Rave Racer (Rev. RV2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	public static GameDriver driver_ridgeraj	   = new GameDriver("1993"	,"ridgeraj"	,"namcos22.java"	,rom_ridgeraj,null	,machine_driver_namcos22	,input_ports_ridgera	,init_ridgeraj	,ROT0	,	"Namco", "Ridge Racer (Rev. RR1, Japan)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
-	public static GameDriver driver_ridger2j	   = new GameDriver("1994"	,"ridger2j"	,"namcos22.java"	,rom_ridger2j,null	,machine_driver_namcos22	,input_ports_ridgera	,init_ridger2j	,ROT0	,	"Namco", "Ridge Racer 2 (Rev. RRS1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
-	public static GameDriver driver_acedrvrw	   = new GameDriver("1994"	,"acedrvrw"	,"namcos22.java"	,rom_acedrvrw,null	,machine_driver_namcos22	,input_ports_victlap	,init_acedrvr	,ROT0	,	"Namco", "Ace Driver (Rev. AD2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	public static GameDriver driver_victlapw	   = new GameDriver("1996"	,"victlapw"	,"namcos22.java"	,rom_victlapw,null	,machine_driver_namcos22	,input_ports_victlap	,init_victlap	,ROT0	,	"Namco", "Ace Driver: Victory Lap (Rev. ADV2, World)", GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	GAMEX( 1995, cybrcomm, 0,        namcos22,  cybrcomm, cybrcomm, ROT0, "Namco", "Cyber Commando (Rev. CY1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	GAMEX( 1995, raveracw, 0,        namcos22,  raveracw, raveracw, ROT0, "Namco", "Rave Racer (Rev. RV2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	GAMEX( 1993, ridgeraj, 0,        namcos22,  ridgera,  ridgeraj, ROT0, "Namco", "Ridge Racer (Rev. RR1, Japan)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
+	GAMEX( 1994, ridger2j, 0,        namcos22,  ridgera,  ridger2j, ROT0, "Namco", "Ridge Racer 2 (Rev. RRS1, Japan)"          , GAME_NO_SOUND|GAME_NOT_WORKING ) /* ? */
+	GAMEX( 1994, acedrvrw, 0,        namcos22,  victlap,  acedrvr,  ROT0, "Namco", "Ace Driver (Rev. AD2, World)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	GAMEX( 1996, victlapw, 0,        namcos22,  victlap,  victlap,  ROT0, "Namco", "Ace Driver: Victory Lap (Rev. ADV2, World)", GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
 	
 	/* Super System22 games */
-	public static GameDriver driver_airco22b	   = new GameDriver("1995"	,"airco22b"	,"namcos22.java"	,rom_airco22b,null	,machine_driver_namcos22s	,input_ports_victlap	,init_airco22	,ROT0	,	"Namco", "Air Combat 22 (Rev. ACS1 Ver.B)"           , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	public static GameDriver driver_alpinerd	   = new GameDriver("1995"	,"alpinerd"	,"namcos22.java"	,rom_alpinerd,null	,machine_driver_namcos22s	,input_ports_alpiner	,init_alpiner	,ROT0	,	"Namco", "Alpine Racer (Rev. AR2 Ver.D)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
-	public static GameDriver driver_alpinerc	   = new GameDriver("1995"	,"alpinerc"	,"namcos22.java"	,rom_alpinerc,driver_alpinerd	,machine_driver_namcos22s	,input_ports_alpiner	,init_alpiner	,ROT0	,	"Namco", "Alpine Racer (Rev. AR2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
-	public static GameDriver driver_cybrcycc	   = new GameDriver("1995"	,"cybrcycc"	,"namcos22.java"	,rom_cybrcycc,null	,machine_driver_namcos22s	,input_ports_cybrcycc	,init_cybrcyc	,ROT0	,	"Namco", "Cyber Cycles (Rev. CB2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
-	//public static GameDriver driver_dirtdshx	   = new GameDriver("1995"	,"dirtdshx"	,"namcos22.java"	,rom_dirtdshx,driver_	,machine_driver_Dirt	,input_ports_Dash	,init_	,	,	
-	public static GameDriver driver_timecrsa	   = new GameDriver("1995"	,"timecrsa"	,"namcos22.java"	,rom_timecrsa,null	,machine_driver_namcos22s	,input_ports_timecris	,init_timecris	,ROT0	,	"Namco", "Time Crisis (Rev. TS2 Ver.A)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* locks up */
-	//public static GameDriver driver_timecris	   = new GameDriver("1995"	,"timecris"	,"namcos22.java"	,rom_timecris,null	,machine_driver_namcos22s	,input_ports_timecris	,init_timecris	,ROT0	,	"Namco", "Time Crisis (Rev. TS2 Ver.B)"              , GAME_NO_SOUND|GAME_NOT_WORKING )
-	public static GameDriver driver_propcycl	   = new GameDriver("1996"	,"propcycl"	,"namcos22.java"	,rom_propcycl,null	,machine_driver_namcos22s	,input_ports_propcycl	,init_propcycl	,ROT0	,	"Namco", "Prop Cycle (Rev PR2 Ver.A)"                , GAME_NO_SOUND|GAME_IMPERFECT_GRAPHICS )
-	//public static GameDriver driver_tokyowrx	   = new GameDriver("1996"	,"tokyowrx"	,"namcos22.java"	,rom_tokyowrx,driver_	,machine_driver_Tokyo	,input_ports_Wars	,init_	,	,	
-	//public static GameDriver driver_alpinr2x	   = new GameDriver("1996"	,"alpinr2x"	,"namcos22.java"	,rom_alpinr2x,driver_	,machine_driver_Alpine	,input_ports_Racer	,init_2	,	,	
-	//public static GameDriver driver_alpinesx	   = new GameDriver("1996"	,"alpinesx"	,"namcos22.java"	,rom_alpinesx,driver_	,machine_driver_Alpine	,input_ports_Surfer	,init_	,	,	
-	//public static GameDriver driver_aquajetx	   = new GameDriver("1996"	,"aquajetx"	,"namcos22.java"	,rom_aquajetx,driver_	,machine_driver_Aqua	,input_ports_Jet	,init_	,	,	
-	//public static GameDriver driver_armdilox	   = new GameDriver("1997"	,"armdilox"	,"namcos22.java"	,rom_armdilox,driver_	,machine_driver_Armidillo	,input_ports_Racing	,init_	,	,	
-	//public static GameDriver driver_downhbkx	   = new GameDriver("199?"	,"downhbkx"	,"namcos22.java"	,rom_downhbkx,driver_	,machine_driver_Downhill	,input_ports_Bikers	,init_	,	,	
+	GAMEX( 1995, airco22b, 0,        namcos22s, victlap,  airco22,  ROT0, "Namco", "Air Combat 22 (Rev. ACS1 Ver.B)"           , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	GAMEX( 1995, alpinerd, 0,        namcos22s, alpiner,  alpiner,  ROT0, "Namco", "Alpine Racer (Rev. AR2 Ver.D)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
+	GAMEX( 1995, alpinerc, alpinerd, namcos22s, alpiner,  alpiner,  ROT0, "Namco", "Alpine Racer (Rev. AR2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* encrypted gfx */
+	GAMEX( 1995, cybrcycc, 0,        namcos22s, cybrcycc, cybrcyc,  ROT0, "Namco", "Cyber Cycles (Rev. CB2 Ver.C)"             , GAME_NO_SOUND|GAME_NOT_WORKING ) /* almost */
+	//GAMEX( 1995, dirtdshx, "Dirt Dash")
+	GAMEX( 1995, timecrsa, 0,        namcos22s, timecris, timecris, ROT0, "Namco", "Time Crisis (Rev. TS2 Ver.A)"              , GAME_NO_SOUND|GAME_NOT_WORKING ) /* locks up */
+	//GAMEX( 1995, timecris, 0, namcos22s, timecris, timecris, ROT0, "Namco", "Time Crisis (Rev. TS2 Ver.B)"              , GAME_NO_SOUND|GAME_NOT_WORKING )
+	GAMEX( 1996, propcycl, 0,        namcos22s, propcycl, propcycl, ROT0, "Namco", "Prop Cycle (Rev PR2 Ver.A)"                , GAME_NO_SOUND|GAME_IMPERFECT_GRAPHICS )
+	//GAMEX( 1996, tokyowrx, "Tokyo Wars")
+	//GAMEX( 1996, alpinr2x, "Alpine Racer 2")
+	//GAMEX( 1996, alpinesx, "Alpine Surfer")
+	//GAMEX( 1996, aquajetx, "Aqua Jet")
+	//GAMEX( 1997, armdilox, "Armidillo Racing")
+	//GAMEX( 199?, downhbkx, "Downhill Bikers")
 }

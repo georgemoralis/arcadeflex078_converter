@@ -101,7 +101,7 @@ $8000 - $ffff	ROM
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -112,8 +112,7 @@ public class renegade
 	
 	/********************************************************************************************/
 	
-	public static WriteHandlerPtr adpcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs;
 		int len;
 	
@@ -130,8 +129,7 @@ public class renegade
 			logerror("out of range adpcm command: 0x%02x\n",data);
 	} };
 	
-	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
 	} };
@@ -160,14 +158,12 @@ public class renegade
 		0xca,0xd0,0xed,0x68,0x85,0x01,0x68,0xaa,0x68,0x60
 	};
 	
-	public static DriverInitHandlerPtr init_kuniokun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kuniokun  = new DriverInitHandlerPtr() { public void handler(){
 		mcu_type = 0x85;
 		mcu_encrypt_table = kuniokun_xor_table;
 		mcu_encrypt_table_len = 0x2a;
 	} };
-	public static DriverInitHandlerPtr init_renegade  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_renegade  = new DriverInitHandlerPtr() { public void handler(){
 		mcu_type = 0xda;
 		mcu_encrypt_table = renegade_xor_table;
 		mcu_encrypt_table_len = 0x37;
@@ -179,16 +175,14 @@ public class renegade
 	static int mcu_output_byte;
 	static int mcu_key;
 	
-	public static ReadHandlerPtr mcu_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		mcu_key = -1;
 		mcu_input_size = 0;
 		mcu_output_byte = 0;
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mcu_output_byte = 0;
 	
 		if( mcu_key<0 ){
@@ -213,7 +207,7 @@ public class renegade
 			mcu_buffer[0] = mcu_type;
 			break;
 	
-			case 0x26: /* sound code . sound command */
+			case 0x26: /* sound code -> sound command */
 			{
 				int sound_code = mcu_buffer[1];
 				static const UINT8 sound_command_table[256] = {
@@ -239,7 +233,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x33: /* joy bits . joy dir */
+			case 0x33: /* joy bits -> joy dir */
 			{
 				int joy_bits = mcu_buffer[2];
 				static const UINT8 joy_table[0x10] = {
@@ -250,7 +244,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x44: /* 0x44,0xff,DSW2,stage# . difficulty */
+			case 0x44: /* 0x44,0xff,DSW2,stage# -> difficulty */
 			{
 				int difficulty = mcu_buffer[2]&0x3;
 				int stage = mcu_buffer[3];
@@ -262,7 +256,7 @@ public class renegade
 				mcu_buffer[1] = result;
 			}
 	
-			case 0x55: /* 0x55,0x00,0x00,0x00,DSW2 . timer */
+			case 0x55: /* 0x55,0x00,0x00,0x00,DSW2 -> timer */
 			{
 				int difficulty = mcu_buffer[4]&0x3;
 				const UINT16 table[4] = {
@@ -275,7 +269,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x41: { /* 0x41,0x00,0x00,stage# . ? */
+			case 0x41: { /* 0x41,0x00,0x00,stage# -> ? */
 	//			int stage = mcu_buffer[3];
 				mcu_buffer[0] = 2;
 				mcu_buffer[1] = 0x20;
@@ -283,7 +277,7 @@ public class renegade
 			}
 			break;
 	
-			case 0x40: /* 0x40,0x00,difficulty,enemy_type . enemy health */
+			case 0x40: /* 0x40,0x00,difficulty,enemy_type -> enemy health */
 			{
 				int difficulty = mcu_buffer[2];
 				int enemy_type = mcu_buffer[3];
@@ -291,13 +285,13 @@ public class renegade
 	
 				if( enemy_type<=4 || (enemy_type&1)==0 ) health = 0x18 + difficulty*8;
 				else health = 0x06 + difficulty*2;
-				logerror("e_type:0x%02x diff:0x%02x . 0x%02x\n", enemy_type, difficulty, health );
+				logerror("e_type:0x%02x diff:0x%02x -> 0x%02x\n", enemy_type, difficulty, health );
 				mcu_buffer[0] = 1;
 				mcu_buffer[1] = health;
 			}
 			break;
 	
-			case 0x42: /* 0x42,0x00,stage#,character# . enemy_type */
+			case 0x42: /* 0x42,0x00,stage#,character# -> enemy_type */
 			{
 				int stage = mcu_buffer[2]&0x3;
 				int indx = mcu_buffer[3];
@@ -336,11 +330,10 @@ public class renegade
 		}
 	}
 	
-	public static ReadHandlerPtr mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 1;
 	
-		if (mcu_input_size != 0) mcu_process_command();
+		if( mcu_input_size ) mcu_process_command();
 	
 		if( mcu_output_byte<MCU_BUFFER_MAX )
 			result = mcu_buffer[mcu_output_byte++];
@@ -352,8 +345,7 @@ public class renegade
 	
 	static int bank;
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( (data&1)!=bank )
 		{
 			UINT8 *RAM = memory_region(REGION_CPU1);
@@ -362,8 +354,7 @@ public class renegade
 		}
 	} };
 	
-	public static InterruptHandlerPtr renegade_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr renegade_interrupt = new InterruptHandlerPtr() {public void handler(){
 	/*
 		static int coin;
 		int port = readinputport(1) & 0xc0;
@@ -378,14 +369,13 @@ public class renegade
 	
 		static int count;
 		count = !count;
-		if (count != 0)
+		if( count )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr renegade_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//coin_counter_w(offset,data);
 	} };
 	
@@ -449,7 +439,7 @@ public class renegade
 	
 	
 	
-	static InputPortPtr input_ports_renegade = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_renegade = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( renegade )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -666,8 +656,7 @@ public class renegade
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_renegade = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( renegade )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz? */
@@ -694,9 +683,7 @@ public class renegade
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -828,7 +815,7 @@ public class renegade
 	
 	
 	
-	public static GameDriver driver_renegade	   = new GameDriver("1986"	,"renegade"	,"renegade.java"	,rom_renegade,null	,machine_driver_renegade	,input_ports_renegade	,init_renegade	,ROT0	,	"Technos (Taito America license)", "Renegade (US)" )
-	public static GameDriver driver_kuniokun	   = new GameDriver("1986"	,"kuniokun"	,"renegade.java"	,rom_kuniokun,driver_renegade	,machine_driver_renegade	,input_ports_renegade	,init_kuniokun	,ROT0	,	"Technos", "Nekketsu Kouha Kunio-kun (Japan)" )
-	public static GameDriver driver_kuniokub	   = new GameDriver("1986"	,"kuniokub"	,"renegade.java"	,rom_kuniokub,driver_renegade	,machine_driver_renegade	,input_ports_renegade	,null	,ROT0	,	"bootleg", "Nekketsu Kouha Kunio-kun (Japan bootleg)" )
+	GAME( 1986, renegade, 0,		 renegade, renegade, renegade, ROT0, "Technos (Taito America license)", "Renegade (US)" )
+	GAME( 1986, kuniokun, renegade, renegade, renegade, kuniokun, ROT0, "Technos", "Nekketsu Kouha Kunio-kun (Japan)" )
+	GAME( 1986, kuniokub, renegade, renegade, renegade, 0, 	   ROT0, "bootleg", "Nekketsu Kouha Kunio-kun (Japan bootleg)" )
 }

@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -45,8 +45,7 @@ public class tnzs
 	
 	
 	
-	public static ReadHandlerPtr mcu_tnzs_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_tnzs_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char data;
 	
 		if (offset == 0)
@@ -65,8 +64,7 @@ public class tnzs
 		return data;
 	} };
 	
-	public static WriteHandlerPtr mcu_tnzs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_tnzs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("PC %04x: write %02x to mcu $c00%01x\n", activecpu_get_previouspc(), data, offset);
 	
 		if (offset == 0)
@@ -76,8 +74,7 @@ public class tnzs
 	} };
 	
 	
-	public static ReadHandlerPtr tnzs_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tnzs_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (tnzs_input_select & 0x0f)
@@ -93,8 +90,7 @@ public class tnzs
 		return data;
 	} };
 	
-	public static ReadHandlerPtr tnzs_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tnzs_port2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = input_port_4_r.handler(0);
 	
 	//	logerror("I8742:%04x  Read %02x from port 2\n", activecpu_get_previouspc(), data);
@@ -102,8 +98,7 @@ public class tnzs
 		return data;
 	} };
 	
-	public static WriteHandlerPtr tnzs_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("I8742:%04x  Write %02x to port 2\n", activecpu_get_previouspc(), data);
 	
 		coin_lockout_w( 0, (data & 0x40) );
@@ -116,14 +111,13 @@ public class tnzs
 	
 	
 	
-	public static ReadHandlerPtr arknoid2_sh_f000_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr arknoid2_sh_f000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
 		logerror("PC %04x: read input %04x\n", activecpu_get_pc(), 0xf000 + offset);
 	
 		val = readinputport(7 + offset/2);
-		if ((offset & 1) != 0)
+		if (offset & 1)
 		{
 			return ((val >> 8) & 0xff);
 		}
@@ -158,11 +152,11 @@ public class tnzs
 		/* Credits are limited to 9, so more coins should be rejected */
 		/* Coin/Play settings must also be taken into consideration */
 	
-		if ((coin & 0x08) != 0)	/* tilt */
+		if (coin & 0x08)	/* tilt */
 			mcu_reportcoin = coin;
 		else if (coin && coin != insertcoin)
 		{
-			if ((coin & 0x01) != 0)	/* coin A */
+			if (coin & 0x01)	/* coin A */
 			{
 				logerror("Coin dropped into slot A\n");
 				coin_counter_w(0,1); coin_counter_w(0,0); /* Count slot A */
@@ -182,7 +176,7 @@ public class tnzs
 					}
 				}
 			}
-			if ((coin & 0x02) != 0)	/* coin B */
+			if (coin & 0x02)	/* coin B */
 			{
 				logerror("Coin dropped into slot B\n");
 				coin_counter_w(1,1); coin_counter_w(1,0); /* Count slot B */
@@ -202,7 +196,7 @@ public class tnzs
 					}
 				}
 			}
-			if ((coin & 0x04) != 0)	/* service */
+			if (coin & 0x04)	/* service */
 			{
 				logerror("Coin dropped into service slot C\n");
 				mcu_credits++;
@@ -220,8 +214,7 @@ public class tnzs
 	
 	
 	
-	public static ReadHandlerPtr mcu_arknoid2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_arknoid2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const char *mcu_startup = "\x55\xaa\x5a";
 	
 	//	logerror("PC %04x: read mcu %04x\n", activecpu_get_pc(), 0xc000 + offset);
@@ -229,7 +222,7 @@ public class tnzs
 		if (offset == 0)
 		{
 			/* if the mcu has just been reset, return startup code */
-			if (mcu_initializing != 0)
+			if (mcu_initializing)
 			{
 				mcu_initializing--;
 				return mcu_startup[2 - mcu_initializing];
@@ -245,7 +238,7 @@ public class tnzs
 					if (mcu_readcredits == 0)
 					{
 						mcu_readcredits = 1;
-						if ((mcu_reportcoin & 0x08) != 0)
+						if (mcu_reportcoin & 0x08)
 						{
 							mcu_initializing = 3;
 							return 0xee;	/* tilt */
@@ -274,16 +267,15 @@ public class tnzs
 			      1,2,3 = coin switch pressed
 			      e = tilt
 			*/
-			if ((mcu_reportcoin & 0x08) != 0) return 0xe1;	/* tilt */
-			if ((mcu_reportcoin & 0x01) != 0) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
-			if ((mcu_reportcoin & 0x02) != 0) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
-			if ((mcu_reportcoin & 0x04) != 0) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x08) return 0xe1;	/* tilt */
+			if (mcu_reportcoin & 0x01) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x02) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
 	} };
 	
-	public static WriteHandlerPtr mcu_arknoid2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_arknoid2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 	//		logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
@@ -305,7 +297,7 @@ public class tnzs
 			*/
 	//		logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
 	
-			if (mcu_initializing != 0)
+			if (mcu_initializing)
 			{
 				/* set up coin/credit settings */
 				mcu_coinage[mcu_coinage_init++] = data;
@@ -325,8 +317,7 @@ public class tnzs
 	} };
 	
 	
-	public static ReadHandlerPtr mcu_extrmatn_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_extrmatn_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const char *mcu_startup = "\x5a\xa5\x55";
 	
 		logerror("PC %04x (re %04x): read mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), 0xc000 + offset);
@@ -334,7 +325,7 @@ public class tnzs
 		if (offset == 0)
 		{
 			/* if the mcu has just been reset, return startup code */
-			if (mcu_initializing != 0)
+			if (mcu_initializing)
 			{
 				mcu_initializing--;
 				return mcu_startup[2 - mcu_initializing];
@@ -359,7 +350,7 @@ public class tnzs
 	
 				case 0xa0:
 					/* Read the credit counter */
-					if ((mcu_reportcoin & 0x08) != 0)
+					if (mcu_reportcoin & 0x08)
 					{
 						mcu_initializing = 3;
 						return 0xee;	/* tilt */
@@ -371,7 +362,7 @@ public class tnzs
 					if (mcu_readcredits == 0)
 					{
 						mcu_readcredits = 1;
-						if ((mcu_reportcoin & 0x08) != 0)
+						if (mcu_reportcoin & 0x08)
 						{
 							mcu_initializing = 3;
 							return 0xee;	/* tilt */
@@ -402,16 +393,15 @@ public class tnzs
 			      1,2,3 = coin switch pressed
 			      e = tilt
 			*/
-			if ((mcu_reportcoin & 0x08) != 0) return 0xe1;	/* tilt */
-			if ((mcu_reportcoin & 0x01) != 0) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
-			if ((mcu_reportcoin & 0x02) != 0) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
-			if ((mcu_reportcoin & 0x04) != 0) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x08) return 0xe1;	/* tilt */
+			if (mcu_reportcoin & 0x01) return 0x11;	/* coin 1 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x02) return 0x21;	/* coin 2 (will trigger "coin inserted" sound) */
+			if (mcu_reportcoin & 0x04) return 0x31;	/* coin 3 (will trigger "coin inserted" sound) */
 			return 0x01;
 		}
 	} };
 	
-	public static WriteHandlerPtr mcu_extrmatn_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_extrmatn_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
@@ -438,7 +428,7 @@ public class tnzs
 	
 			logerror("PC %04x (re %04x): write %02x to mcu %04x\n", activecpu_get_pc(), cpu_geturnpc(), data, 0xc000 + offset);
 	
-			if (mcu_initializing != 0)
+			if (mcu_initializing)
 			{
 				/* set up coin/credit settings */
 				mcu_coinage[mcu_coinage_init++] = data;
@@ -460,8 +450,7 @@ public class tnzs
 	
 	
 	
-	public static DriverInitHandlerPtr init_extrmatn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_extrmatn  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		mcu_type = MCU_EXTRMATN;
@@ -471,8 +460,7 @@ public class tnzs
 		memcpy(&RAM[0x08000],&RAM[0x2c000],0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_arknoid2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arknoid2  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		mcu_type = MCU_ARKANOID;
@@ -482,8 +470,7 @@ public class tnzs
 		memcpy(&RAM[0x08000],&RAM[0x18000],0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_drtoppel  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_drtoppel  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		mcu_type = MCU_DRTOPPEL;
@@ -496,8 +483,7 @@ public class tnzs
 		install_mem_write_handler(0, 0xf800, 0xfbff, MWA_NOP);
 	} };
 	
-	public static DriverInitHandlerPtr init_chukatai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chukatai  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		mcu_type = MCU_CHUKATAI;
@@ -507,8 +493,7 @@ public class tnzs
 		memcpy(&RAM[0x08000],&RAM[0x18000],0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_tnzs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tnzs  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		mcu_type = MCU_TNZS;
 	
@@ -517,8 +502,7 @@ public class tnzs
 		memcpy(&RAM[0x08000],&RAM[0x18000],0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_tnzsb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tnzsb  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		mcu_type = MCU_NONE_TNZSB;
 	
@@ -527,8 +511,7 @@ public class tnzs
 		memcpy(&RAM[0x08000],&RAM[0x18000],0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_insectx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_insectx  = new DriverInitHandlerPtr() { public void handler(){
 		mcu_type = MCU_NONE_INSECTX;
 	
 		/* this game has no mcu, replace the handler with plain input port handlers */
@@ -537,14 +520,12 @@ public class tnzs
 		install_mem_read_handler(1, 0xc002, 0xc002, input_port_4_r );
 	} };
 	
-	public static DriverInitHandlerPtr init_kageki  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kageki  = new DriverInitHandlerPtr() { public void handler(){
 		mcu_type = MCU_NONE_KAGEKI;
 	} };
 	
 	
-	public static ReadHandlerPtr tnzs_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tnzs_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (mcu_type)
 		{
 			case MCU_TNZS:
@@ -564,8 +545,7 @@ public class tnzs
 		}
 	} };
 	
-	public static WriteHandlerPtr tnzs_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (mcu_type)
 		{
 			case MCU_TNZS:
@@ -584,8 +564,7 @@ public class tnzs
 		}
 	} };
 	
-	public static InterruptHandlerPtr arknoid2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr arknoid2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int coin;
 	
 		switch (mcu_type)
@@ -607,8 +586,7 @@ public class tnzs
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_tnzs  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tnzs  = new MachineInitHandlerPtr() { public void handler(){
 		/* initialize the mcu simulation */
 		switch (mcu_type)
 		{
@@ -636,8 +614,7 @@ public class tnzs
 	} };
 	
 	
-	public static ReadHandlerPtr tnzs_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tnzs_workram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Location $EF10 workaround required to stop TNZS getting */
 		/* caught in and endless loop due to shared ram sync probs */
 	
@@ -661,13 +638,11 @@ public class tnzs
 		return tnzs_workram[offset];
 	} };
 	
-	public static ReadHandlerPtr tnzs_workram_sub_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tnzs_workram_sub_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tnzs_workram[offset];
 	} };
 	
-	public static WriteHandlerPtr tnzs_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Location $EF10 workaround required to stop TNZS getting */
 		/* caught in and endless loop due to shared ram sync probs */
 	
@@ -695,19 +670,17 @@ public class tnzs
 			tnzs_workram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr tnzs_workram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_workram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tnzs_workram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr tnzs_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	//	logerror("PC %04x: writing %02x to bankswitch\n", activecpu_get_pc(),data);
 	
 		/* bit 4 resets the second CPU */
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -716,8 +689,7 @@ public class tnzs
 		cpu_setbank (1, &RAM[0x10000 + 0x4000 * (data & 0x07)]);
 	} };
 	
-	public static WriteHandlerPtr tnzs_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzs_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		logerror("PC %04x: writing %02x to bankswitch 1\n", activecpu_get_pc(),data);
@@ -727,9 +699,9 @@ public class tnzs
 			case MCU_TNZS:
 			case MCU_CHUKATAI:
 					/* bit 2 resets the mcu */
-					if ((data & 0x04) != 0)
+					if (data & 0x04)
 					{
-						if (Machine.drv.cpu[2].cpu_type == CPU_I8X41)
+						if (Machine->drv->cpu[2].cpu_type == CPU_I8X41)
 							cpu_set_reset_line(2,PULSE_LINE);
 					}
 					/* Coin count and lockout is handled by the i8742 */
@@ -755,7 +727,7 @@ public class tnzs
 			case MCU_EXTRMATN:
 			case MCU_DRTOPPEL:
 					/* bit 2 resets the mcu */
-					if ((data & 0x04) != 0)
+					if (data & 0x04)
 						mcu_reset();
 					break;
 			default:

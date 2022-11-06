@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,8 +45,7 @@ public class pirates
 	
 	/* video start / update */
 	
-	VIDEO_START(pirates)
-	{
+	public static VideoStartHandlerPtr video_start_pirates  = new VideoStartHandlerPtr() { public int handler(){
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,36,32);
 	
 		/* Not sure how big they can be, Pirates uses only 32 columns, Genix 44 */
@@ -60,7 +59,7 @@ public class pirates
 		tilemap_set_transparent_pen(fg_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
@@ -86,7 +85,7 @@ public class pirates
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data16_t *source = pirates_spriteram + 4;
 		data16_t *finish = source + 0x800/2-4;
 	
@@ -97,7 +96,7 @@ public class pirates
 			xpos = source[1] - 32;
 			ypos = source[-1];	// indeed...
 	
-			if ((ypos & 0x8000) != 0) break;	/* end-of-list marker */
+			if (ypos & 0x8000) break;	/* end-of-list marker */
 	
 			code = source[2] >> 2;
 			color = source[0] & 0xff;
@@ -117,13 +116,12 @@ public class pirates
 		}
 	}
 	
-	VIDEO_UPDATE(pirates)
-	{
+	public static VideoUpdateHandlerPtr video_update_pirates  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,pirates_scroll[0]);
 		tilemap_set_scrollx(fg_tilemap,0,pirates_scroll[0]);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
-	}
+	} };
 }

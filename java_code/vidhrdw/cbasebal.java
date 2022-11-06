@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,8 +50,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_cbasebal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cbasebal  = new VideoStartHandlerPtr() { public int handler(){
 		cbasebal_textram = auto_malloc(0x1000);
 		cbasebal_scrollram = auto_malloc(0x1000);
 	
@@ -79,8 +78,7 @@ public class cbasebal
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr cbasebal_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (cbasebal_textram[offset] != data)
 		{
 			cbasebal_textram[offset] = data;
@@ -88,13 +86,11 @@ public class cbasebal
 		}
 	} };
 	
-	public static ReadHandlerPtr cbasebal_textram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cbasebal_textram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cbasebal_textram[offset];
 	} };
 	
-	public static WriteHandlerPtr cbasebal_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (cbasebal_scrollram[offset] != data)
 		{
 			cbasebal_scrollram[offset] = data;
@@ -102,13 +98,11 @@ public class cbasebal
 		}
 	} };
 	
-	public static ReadHandlerPtr cbasebal_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cbasebal_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cbasebal_scrollram[offset];
 	} };
 	
-	public static WriteHandlerPtr cbasebal_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 is unknown - toggles continuously */
 	
 		/* bit 1 is flip screen */
@@ -137,16 +131,14 @@ public class cbasebal
 		/* other bits unknown, but used */
 	} };
 	
-	public static WriteHandlerPtr cbasebal_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrollx(bg_tilemap,0,scroll[0] + 256 * scroll[1]);
 	} };
 	
-	public static WriteHandlerPtr cbasebal_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cbasebal_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
@@ -178,14 +170,14 @@ public class cbasebal
 			code += (attr & 0xe0) << 3;
 			code += spritebank * 0x800;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
 				flipx = NOT(flipx);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					code,
 					color,
 					flipx,flipscreen,
@@ -194,17 +186,16 @@ public class cbasebal
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (bg_on != 0)
+	public static VideoUpdateHandlerPtr video_update_cbasebal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (bg_on)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		else
 			fillbitmap(bitmap,Machine.pens[768],cliprect);
 	
-		if (obj_on != 0)
+		if (obj_on)
 			draw_sprites(bitmap,cliprect);
 	
-		if (text_on != 0)
+		if (text_on)
 			tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 }

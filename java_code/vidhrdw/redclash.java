@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class redclash
 	  schematics show a different resistor network.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_redclash  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_redclash  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -80,8 +79,7 @@ public class redclash
 		}
 	} };
 	
-	public static WriteHandlerPtr redclash_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redclash_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -89,8 +87,7 @@ public class redclash
 		}
 	} };
 	
-	public static WriteHandlerPtr redclash_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redclash_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxbank != (data & 0x01))
 		{
 			gfxbank = data & 0x01;
@@ -98,8 +95,7 @@ public class redclash
 		}
 	} };
 	
-	public static WriteHandlerPtr redclash_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redclash_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 	} };
 	
@@ -114,10 +110,10 @@ public class redclash
 	6 = backwards medium
 	7 = backwards fast
 	*/
-	public static WriteHandlerPtr redclash_star0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~1) | ((data & 1) << 0); } };
-	public static WriteHandlerPtr redclash_star1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~2) | ((data & 1) << 1); } };
-	public static WriteHandlerPtr redclash_star2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { star_speed = (star_speed & ~4) | ((data & 1) << 2); } };
-	public static WriteHandlerPtr redclash_star_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data) { } };
+	public static WriteHandlerPtr redclash_star0_w = new WriteHandlerPtr() {public void handler(int offset, int data) star_speed = (star_speed & ~1) | ((data & 1) << 0); }
+	public static WriteHandlerPtr redclash_star1_w = new WriteHandlerPtr() {public void handler(int offset, int data) star_speed = (star_speed & ~2) | ((data & 1) << 1); }
+	public static WriteHandlerPtr redclash_star2_w = new WriteHandlerPtr() {public void handler(int offset, int data) star_speed = (star_speed & ~4) | ((data & 1) << 2); }
+	public static WriteHandlerPtr redclash_star_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data) }
 	
 	static void get_fg_tile_info(int tile_index)
 	{
@@ -127,12 +123,11 @@ public class redclash
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_redclash  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_redclash  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -167,19 +162,19 @@ public class redclash
 						{
 							int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
-							drawgfx(bitmap,Machine.gfx[3],
+							drawgfx(bitmap,Machine->gfx[3],
 									code,
 									color,
 									0,0,
 									sx,sy - 16,
-									Machine.visible_area,TRANSPARENCY_PEN,0);
+									Machine->visible_area,TRANSPARENCY_PEN,0);
 							/* wraparound */
-							drawgfx(bitmap,Machine.gfx[3],
+							drawgfx(bitmap,Machine->gfx[3],
 									code,
 									color,
 									0,0,
 									sx - 256,sy - 16,
-									Machine.visible_area,TRANSPARENCY_PEN,0);
+									Machine->visible_area,TRANSPARENCY_PEN,0);
 							break;
 						}
 	
@@ -189,33 +184,33 @@ public class redclash
 								int code = ((spriteram.read(offs + i + 1)& 0xf8) >> 3) + ((gfxbank & 1) << 5);
 								int bank = (spriteram.read(offs + i + 1)& 0x02) >> 1;
 	
-								drawgfx(bitmap,Machine.gfx[4+bank],
+								drawgfx(bitmap,Machine->gfx[4+bank],
 										code,
 										color,
 										0,0,
 										sx,sy - 16,
-										Machine.visible_area,TRANSPARENCY_PEN,0);
+										Machine->visible_area,TRANSPARENCY_PEN,0);
 							}
 							else
 							{
 								int code = ((spriteram.read(offs + i + 1)& 0xf0) >> 4) + ((gfxbank & 1) << 4);
 	
-								drawgfx(bitmap,Machine.gfx[2],
+								drawgfx(bitmap,Machine->gfx[2],
 										code,
 										color,
 										0,0,
 										sx,sy - 16,
-										Machine.visible_area,TRANSPARENCY_PEN,0);
+										Machine->visible_area,TRANSPARENCY_PEN,0);
 							}
 							break;
 	
 						case 1:	/* 8x8 */
-							drawgfx(bitmap,Machine.gfx[1],
+							drawgfx(bitmap,Machine->gfx[1],
 									spriteram.read(offs + i + 1),// + 4 * (spriteram.read(offs + i + 2)& 0x10),
 									color,
 									0,0,
 									sx,sy - 16,
-									Machine.visible_area,TRANSPARENCY_PEN,0);
+									Machine->visible_area,TRANSPARENCY_PEN,0);
 							break;
 	
 						case 0:
@@ -237,19 +232,18 @@ public class redclash
 			int sx = 8 * offs + (videoram.read(offs)& 0x07);	/* ?? */
 			int sy = 0xff - videoram.read(offs + 0x20);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 			}
 	
-			if (sx >= Machine.visible_area.min_x && sx <= Machine.visible_area.max_x &&
-					sy >= Machine.visible_area.min_y && sy <= Machine.visible_area.max_y)
-				plot_pixel(bitmap, sx, sy, Machine.pens[0x0e]);
+			if (sx >= Machine->visible_area.min_x && sx <= Machine->visible_area.max_x &&
+					sy >= Machine->visible_area.min_y && sy <= Machine->visible_area.max_y)
+				plot_pixel(bitmap, sx, sy, Machine->pens[0x0e]);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_redclash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_redclash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 		redclash_draw_sprites(bitmap);
 		redclash_draw_bullets(bitmap);

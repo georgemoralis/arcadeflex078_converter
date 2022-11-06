@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -82,14 +82,12 @@ public class llander
 		DISCRETE_OUTPUT(NODE_91, 100)															// Take the output from the mixer
 	DISCRETE_SOUND_END
 	
-	public static WriteHandlerPtr llander_snd_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr llander_snd_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Resets the LFSR that is used for the white noise generator       */
 		discrete_sound_w(4, 0);				/* Reset */
 	} };
 	
-	public static WriteHandlerPtr llander_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr llander_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(0,data&0x07);		/* Thrust volume */
 		discrete_sound_w(1,data&0x10);		/* Tone 3KHz enable */
 		discrete_sound_w(2,data&0x20);		/* Tone 6KHz enable */

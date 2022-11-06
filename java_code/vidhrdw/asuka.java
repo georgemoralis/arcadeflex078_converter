@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,24 +20,21 @@ public class asuka
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,x_offs,0,0,0,0,0,0))
 			return 1;
 	
-		if (TC0110PCR_vh_start() != 0)
+		if (TC0110PCR_vh_start())
 			return 1;
 	
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_asuka  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_asuka  = new VideoStartHandlerPtr() { public int handler(){
 		return (asuka_core_video_start(0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_galmedes  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_galmedes  = new VideoStartHandlerPtr() { public int handler(){
 		return (asuka_core_video_start(1,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cadash  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cadash  = new VideoStartHandlerPtr() { public int handler(){
 		return (asuka_core_video_start(1,1));
 	} };
 	
@@ -56,8 +53,7 @@ public class asuka
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_asuka  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -80,8 +76,7 @@ public class asuka
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bonzeadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bonzeadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();

@@ -175,7 +175,7 @@ NEP-16
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -201,9 +201,6 @@ public class suprnova
 	WRITE32_HANDLER ( skns_tilemapA_w );
 	WRITE32_HANDLER ( skns_tilemapB_w );
 	WRITE32_HANDLER ( skns_v3_regs_w );
-	VIDEO_START(skns);
-	VIDEO_EOF(skns);
-	VIDEO_UPDATE(skns);
 	
 	/* hit.c */
 	
@@ -282,7 +279,7 @@ public class suprnova
 		hit.flag |= hit.z_in >= 0 && hit.x_in >= 0                  ? 4 : 0;
 		hit.flag |= hit.y_in >= 0 && hit.z_in >= 0                  ? 2 : 0;
 		hit.flag |= hit.x_in >= 0 && hit.y_in >= 0                  ? 1 : 0;
-	/*  if (0 != 0)
+	/*  if(0)
 	    log_event("HIT", "Recalc, (%d,%d)-(%d,%d)-(%d,%d):(%d,%d)-(%d,%d)-(%d,%d):%04x, (%d,%d,%d), %04x",
 		      hit.x1p, hit.x1s, hit.y1p, hit.y1s, hit.z1p, hit.z1s,
 		      hit.x2p, hit.x2s, hit.y2p, hit.y2s, hit.z2p, hit.z2s,
@@ -459,18 +456,16 @@ public class suprnova
 		cpu_set_irq_line(0,param,HOLD_LINE);
 	}
 	
-	static MACHINE_INIT(skns)
-	{
+	public static MachineInitHandlerPtr machine_init_skns  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(TIME_IN_MSEC(2), 15, interrupt_callback);
 		timer_pulse(TIME_IN_MSEC(8), 11, interrupt_callback);
 		timer_pulse(TIME_IN_CYCLES(0,1824), 9, interrupt_callback);
 	
 		cpu_setbank(1,memory_region(REGION_USER1));
-	}
+	} };
 	
 	
-	static INTERRUPT_GEN(skns_interrupt)
-	{
+	public static InterruptHandlerPtr skns_interrupt = new InterruptHandlerPtr() {public void handler(){
 		UINT8 interrupt = 5;
 		switch(cpu_getiloops())
 		{
@@ -482,9 +477,9 @@ public class suprnova
 				break;
 		}
 		cpu_set_irq_line(0,interrupt,HOLD_LINE);
-	}
+	} };
 	
-	static InputPortPtr input_ports_skns = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skns = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skns )
 	
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -564,7 +559,7 @@ public class suprnova
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jjparads = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jjparads = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jjparads )
 	
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -697,28 +692,28 @@ public class suprnova
 		case 3:
 			if(((mem_mask & 0x0000ff00) == 0))
 			{ /* Interrupt Clear, do we need these? */
-	/*			if ((data & 0x01) != 0)
+	/*			if(data&0x01)
 					cpu_set_irq_line(0,1,CLEAR_LINE);
-				if ((data & 0x02) != 0)
+				if(data&0x02)
 					cpu_set_irq_line(0,3,CLEAR_LINE);
-				if ((data & 0x04) != 0)
+				if(data&0x04)
 					cpu_set_irq_line(0,5,CLEAR_LINE);
-				if ((data & 0x08) != 0)
+				if(data&0x08)
 					cpu_set_irq_line(0,7,CLEAR_LINE);
-				if ((data & 0x10) != 0)
+				if(data&0x10)
 					cpu_set_irq_line(0,9,CLEAR_LINE);
-				if ((data & 0x20) != 0)
+				if(data&0x20)
 					cpu_set_irq_line(0,0xb,CLEAR_LINE);
-				if ((data & 0x40) != 0)
+				if(data&0x40)
 					cpu_set_irq_line(0,0xd,CLEAR_LINE);
-				if ((data & 0x80) != 0)
+				if(data&0x80)
 					cpu_set_irq_line(0,0xf,CLEAR_LINE);*/
 	
 				/* idle skip for vblokbrk/sarukani, i can't find a better place to put it :-( but i think it works ok unless its making the game too fast */
 				if (activecpu_get_pc()==0x04013B44)
 				{
-					if (!strcmp(Machine.gamedrv.name,"vblokbrk") ||
-						!strcmp(Machine.gamedrv.name,"sarukani"))
+					if (!strcmp(Machine->gamedrv->name,"vblokbrk") ||
+						!strcmp(Machine->gamedrv->name,"sarukani"))
 						cpu_spinuntil_int();
 				}
 	
@@ -747,30 +742,30 @@ public class suprnova
 		time(&tms);
 		tm = localtime(&tms);
 		// The clock is not y2k-compatible, wrap back 10 years, screw the leap years
-		//  tm.tm_year -= 10;
+		//  tm->tm_year -= 10;
 	
 		switch(offset) {
 		case 0:
-			value  = (tm.tm_sec % 10)<<24;
-			value |= (tm.tm_sec / 10)<<16;
-			value |= (tm.tm_min % 10)<<8;
-			value |= (tm.tm_min / 10);
+			value  = (tm->tm_sec % 10)<<24;
+			value |= (tm->tm_sec / 10)<<16;
+			value |= (tm->tm_min % 10)<<8;
+			value |= (tm->tm_min / 10);
 			break;
 		case 1:
-			value  = (tm.tm_hour % 10)<<24;
-			value |= ((tm.tm_hour / 10) /*| (tm.tm_hour >= 12 ? 4 : 0)*/)<<16;
-			value |= (tm.tm_mday % 10)<<8;
-			value |= (tm.tm_mday / 10);
+			value  = (tm->tm_hour % 10)<<24;
+			value |= ((tm->tm_hour / 10) /*| (tm->tm_hour >= 12 ? 4 : 0)*/)<<16;
+			value |= (tm->tm_mday % 10)<<8;
+			value |= (tm->tm_mday / 10);
 			break;
 		case 2:
-			value  = ((tm.tm_mon + 1) % 10)<<24;
-			value |= ((tm.tm_mon + 1) / 10)<<16;
-			value |= (tm.tm_year % 10)<<8;
-			value |= ((tm.tm_year / 10) % 10);
+			value  = ((tm->tm_mon + 1) % 10)<<24;
+			value |= ((tm->tm_mon + 1) / 10)<<16;
+			value |= (tm->tm_year % 10)<<8;
+			value |= ((tm->tm_year / 10) % 10);
 			break;
 		case 3:
 		default:
-			value  = (tm.tm_wday)<<24;
+			value  = (tm->tm_wday)<<24;
 			value |= (1)<<16;
 			value |= (6)<<8;
 			value |= (4);
@@ -796,12 +791,12 @@ public class suprnova
 			use_bright = use_v3_bright;
 		}
 	
-		if (use_bright != 0) {
-			if (brightness_b != 0) b = ((b<<3) * (brightness_b+1))>>8;
+		if(use_bright) {
+			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
 			else b = 0;
-			if (brightness_g != 0) g = ((g<<3) * (brightness_g+1))>>8;
+			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
 			else g = 0;
-			if (brightness_r != 0) r = ((r<<3) * (brightness_r+1))>>8;
+			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
 			else r = 0;
 		} else {
 			b <<= 3;
@@ -877,11 +872,11 @@ public class suprnova
 	{
 		int i;
 	
-		if (spc_changed != 0)
+		if(spc_changed)
 			for(i=0; i<=((0x40*256)-1); i++)
 				palette_set_rgb_brightness (i, bright_spc_r, bright_spc_g, bright_spc_b);
 	
-		if (v3_changed != 0)
+		if(v3_changed)
 			for(i=(0x40*256); i<=((0x80*256)-1); i++)
 				palette_set_rgb_brightness (i, bright_v3_r, bright_v3_g, bright_v3_b);
 	}
@@ -913,12 +908,12 @@ public class suprnova
 			brightness_r = bright_v3_r;
 		}
 	
-		if (use_bright != 0) {
-			if (brightness_b != 0) b = ((b<<3) * (brightness_b+1))>>8;
+		if(use_bright) {
+			if(brightness_b) b = ((b<<3) * (brightness_b+1))>>8;
 			else b = 0;
-			if (brightness_g != 0) g = ((g<<3) * (brightness_g+1))>>8;
+			if(brightness_g) g = ((g<<3) * (brightness_g+1))>>8;
 			else g = 0;
-			if (brightness_r != 0) r = ((r<<3) * (brightness_r+1))>>8;
+			if(brightness_r) r = ((r<<3) * (brightness_r+1))>>8;
 			else r = 0;
 		} else {
 			b <<= 3;
@@ -1075,9 +1070,7 @@ public class suprnova
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***** BIOS SKIPPING *****/
 	
@@ -1194,24 +1187,24 @@ public class suprnova
 		return skns_main_ram[0xb7380/4];
 	}
 	
-	public static DriverInitHandlerPtr init_skns  = new DriverInitHandlerPtr() { public void handler()     { install_mem_read32_handler(0, 0x6000028, 0x600002b, bios_skip_r );  } };
-	public static DriverInitHandlerPtr init_galpani4  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-5,-1); init_skns();  } }; // Idle Loop caught by sh-2 core
-	public static DriverInitHandlerPtr init_galpanis  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-5,-1); init_skns();  } }; // Idle Loop caught by sh-2 core
-	public static DriverInitHandlerPtr init_cyvern  = new DriverInitHandlerPtr() { public void handler()   { skns_sprite_kludge(+0,+2); init_skns(); install_mem_read32_handler(0, 0x604d3c8, 0x604d3cb, cyvern_speedup_r );   } };
-	public static DriverInitHandlerPtr init_galpans2  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60fb6bc, 0x60fb6bf, galpans2_speedup_r );  } };
-	public static DriverInitHandlerPtr init_gutsn  = new DriverInitHandlerPtr() { public void handler()    { skns_sprite_kludge(+0,+0); init_skns(); install_mem_read32_handler(0, 0x600c780, 0x600c783, gutsn_speedup_r );  } };
-	public static DriverInitHandlerPtr init_panicstr  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60f19e4, 0x60f19e7, panicstr_speedup_r );  } };
-	public static DriverInitHandlerPtr init_senknow  = new DriverInitHandlerPtr() { public void handler()  { skns_sprite_kludge(+1,+1); init_skns(); install_mem_read32_handler(0, 0x60000dc, 0x60000df, senknow_speedup_r );  } };
-	public static DriverInitHandlerPtr init_puzzloop  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6081d38, 0x6081d3b, puzzloop_speedup_r ); } };
-	public static DriverInitHandlerPtr init_puzloopj  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6086714, 0x6086717, puzloopj_speedup_r ); } };
-	public static DriverInitHandlerPtr init_puzloopu  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6085cec, 0x6085cef, puzloopu_speedup_r ); } };
-	public static DriverInitHandlerPtr init_jjparads  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000994, 0x6000997, jjparads_speedup_r );  } };
-	public static DriverInitHandlerPtr init_jjparad2  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000984, 0x6000987, jjparad2_speedup_r );  } };
-	public static DriverInitHandlerPtr init_ryouran  = new DriverInitHandlerPtr() { public void handler()  { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000a14, 0x6000a17, ryouran_speedup_r );  } };
-	public static DriverInitHandlerPtr init_teljan  = new DriverInitHandlerPtr() { public void handler()   { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6002fb4, 0x6002fb7, teljan_speedup_r );  } };
-	public static DriverInitHandlerPtr init_sengekis  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b74bc, 0x60b74bf, sengekis_speedup_r ); } };
-	public static DriverInitHandlerPtr init_sengekij  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b7380, 0x60b7383, sengekij_speedup_r ); } };
-	public static DriverInitHandlerPtr init_sarukani  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(-1,-1); init_skns();  } }; // Speedup is in skns_io_w()
+	public static DriverInitHandlerPtr init_skns  = new DriverInitHandlerPtr() { public void handler()   { install_mem_read32_handler(0, 0x6000028, 0x600002b, bios_skip_r );  } };
+	public static DriverInitHandlerPtr init_galpani4  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-5,-1); init_skns();  } // Idle Loop caught by sh-2 core
+	public static DriverInitHandlerPtr init_galpanis  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-5,-1); init_skns();  } // Idle Loop caught by sh-2 core
+	public static DriverInitHandlerPtr init_cyvern  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+0,+2); init_skns(); install_mem_read32_handler(0, 0x604d3c8, 0x604d3cb, cyvern_speedup_r );   } };
+	public static DriverInitHandlerPtr init_galpans2  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60fb6bc, 0x60fb6bf, galpans2_speedup_r );  }
+	public static DriverInitHandlerPtr init_gutsn  = new DriverInitHandlerPtr() { public void handler()  { skns_sprite_kludge(+0,+0); init_skns(); install_mem_read32_handler(0, 0x600c780, 0x600c783, gutsn_speedup_r );  } };
+	public static DriverInitHandlerPtr init_panicstr  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-1,-1); init_skns(); install_mem_read32_handler(0, 0x60f19e4, 0x60f19e7, panicstr_speedup_r );  }
+	public static DriverInitHandlerPtr init_senknow  = new DriverInitHandlerPtr() { public void handler(){ skns_sprite_kludge(+1,+1); init_skns(); install_mem_read32_handler(0, 0x60000dc, 0x60000df, senknow_speedup_r );  } };
+	public static DriverInitHandlerPtr init_puzzloop  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6081d38, 0x6081d3b, puzzloop_speedup_r ); }
+	public static DriverInitHandlerPtr init_puzloopj  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6086714, 0x6086717, puzloopj_speedup_r ); }
+	public static DriverInitHandlerPtr init_puzloopu  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-9,-1); init_skns(); install_mem_read32_handler(0, 0x6085cec, 0x6085cef, puzloopu_speedup_r ); }
+	public static DriverInitHandlerPtr init_jjparads  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000994, 0x6000997, jjparads_speedup_r );  }
+	public static DriverInitHandlerPtr init_jjparad2  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000984, 0x6000987, jjparad2_speedup_r );  }
+	public static DriverInitHandlerPtr init_ryouran  = new DriverInitHandlerPtr() { public void handler(){ skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6000a14, 0x6000a17, ryouran_speedup_r );  } };
+	public static DriverInitHandlerPtr init_teljan  = new DriverInitHandlerPtr() { public void handler() { skns_sprite_kludge(+5,+1); init_skns(); install_mem_read32_handler(0, 0x6002fb4, 0x6002fb7, teljan_speedup_r );  } };
+	public static DriverInitHandlerPtr init_sengekis  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b74bc, 0x60b74bf, sengekis_speedup_r ); }
+	public static DriverInitHandlerPtr init_sengekij  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-192,-272); init_skns(); install_mem_read32_handler(0, 0x60b7380, 0x60b7383, sengekij_speedup_r ); }
+	public static DriverInitHandlerPtr init_sarukani  = new DriverInitHandlerPtr() { public void handler() skns_sprite_kludge(-1,-1); init_skns();  } // Speedup is in skns_io_w()
 	
 	
 	
@@ -1668,25 +1661,25 @@ public class suprnova
 	
 	/***** GAME DRIVERS *****/
 	
-	public static GameDriver driver_skns	   = new GameDriver("1996"	,"skns"	,"suprnova.java"	,rom_skns,null	,machine_driver_skns	,input_ports_skns	,null	,ROT0	,	"Kaneko", "Super Kaneko Nova System BIOS", NOT_A_DRIVER )
+	GAMEX( 1996, skns,     0,    skns, skns, 0,        ROT0,  "Kaneko", "Super Kaneko Nova System BIOS", NOT_A_DRIVER )
 	
-	public static GameDriver driver_galpani4	   = new GameDriver("1996"	,"galpani4"	,"suprnova.java"	,rom_galpani4,driver_skns	,machine_driver_skns	,input_ports_skns	,init_galpani4	,ROT0	,	"Kaneko", "Gals Panic 4 (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galpanis	   = new GameDriver("1997"	,"galpanis"	,"suprnova.java"	,rom_galpanis,driver_skns	,machine_driver_skns	,input_ports_skns	,init_galpanis	,ROT0	,	"Kaneko", "Gals Panic S - Extra Edition (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_cyvern	   = new GameDriver("1998"	,"cyvern"	,"suprnova.java"	,rom_cyvern,driver_skns	,machine_driver_skns	,input_ports_skns	,init_cyvern	,ROT90	,	"Kaneko", "Cyvern (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galpans2	   = new GameDriver("1999"	,"galpans2"	,"suprnova.java"	,rom_galpans2,driver_skns	,machine_driver_skns	,input_ports_skns	,init_galpans2	,ROT0	,	"Kaneko", "Gals Panic S2 (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_panicstr	   = new GameDriver("1999"	,"panicstr"	,"suprnova.java"	,rom_panicstr,driver_skns	,machine_driver_skns	,input_ports_skns	,init_panicstr	,ROT0	,	"Kaneko", "Panic Street (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_senknow	   = new GameDriver("1999"	,"senknow"	,"suprnova.java"	,rom_senknow,driver_	,machine_driver_skns	,input_ports_skns	,init_skns	,senknow	,	ROT0,  "Kaneko / Kouyousha", "Sen-Know (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gutsn	   = new GameDriver("2000"	,"gutsn"	,"suprnova.java"	,rom_gutsn,driver_skns	,machine_driver_skns	,input_ports_skns	,init_gutsn	,ROT0	,	"Kaneko / Kouyousha", "Guts'n (Japan)", GAME_IMPERFECT_GRAPHICS ) // quite fragile, started working of it's own accord in 0.69 :)
-	public static GameDriver driver_puzzloop	   = new GameDriver("1998"	,"puzzloop"	,"suprnova.java"	,rom_puzzloop,driver_skns	,machine_driver_skns	,input_ports_skns	,init_puzzloop	,ROT0	,	"Mitchell", "Puzz Loop (Europe)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_puzloopj	   = new GameDriver("1998"	,"puzloopj"	,"suprnova.java"	,rom_puzloopj,driver_puzzloop	,machine_driver_skns	,input_ports_skns	,init_puzloopj	,ROT0	,	"Mitchell", "Puzz Loop (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_puzloopu	   = new GameDriver("1998"	,"puzloopu"	,"suprnova.java"	,rom_puzloopu,driver_puzzloop	,machine_driver_skns	,input_ports_skns	,init_puzloopu	,ROT0	,	"Mitchell", "Puzz Loop (USA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_jjparads	   = new GameDriver("1996"	,"jjparads"	,"suprnova.java"	,rom_jjparads,driver_skns	,machine_driver_skns	,input_ports_jjparads	,init_jjparads	,ROT0	,	"Electro Design", "Jan Jan Paradise", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_jjparad2	   = new GameDriver("1997"	,"jjparad2"	,"suprnova.java"	,rom_jjparad2,driver_skns	,machine_driver_skns	,input_ports_jjparads	,init_jjparad2	,ROT0	,	"Electro Design", "Jan Jan Paradise 2", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ryouran	   = new GameDriver("1998"	,"ryouran"	,"suprnova.java"	,rom_ryouran,driver_	,machine_driver_skns	,input_ports_skns	,init_jjparads	,ryouran	,	ROT0,  "Electro Design", "VS Mahjong Otome Ryouran", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_teljan	   = new GameDriver("1999"	,"teljan"	,"suprnova.java"	,rom_teljan,driver_	,machine_driver_skns	,input_ports_skns	,init_jjparads	,teljan	,	ROT0,  "Electro Design", "Tel Jan", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sengekis	   = new GameDriver("1997"	,"sengekis"	,"suprnova.java"	,rom_sengekis,driver_skns	,machine_driver_skns	,input_ports_skns	,init_sengekis	,ROT90	,	"Kaneko / Warashi", "Sengeki Striker (Asia)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sengekij	   = new GameDriver("1997"	,"sengekij"	,"suprnova.java"	,rom_sengekij,driver_sengekis	,machine_driver_skns	,input_ports_skns	,init_sengekij	,ROT90	,	"Kaneko / Warashi", "Sengeki Striker (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_vblokbrk	   = new GameDriver("1997"	,"vblokbrk"	,"suprnova.java"	,rom_vblokbrk,driver_skns	,machine_driver_skns	,input_ports_skns	,init_sarukani	,ROT0	,	"Kaneko / Mediaworks", "VS Block Breaker (Asia)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sarukani	   = new GameDriver("1997"	,"sarukani"	,"suprnova.java"	,rom_sarukani,driver_vblokbrk	,machine_driver_skns	,input_ports_skns	,init_sarukani	,ROT0	,	"Kaneko / Mediaworks", "Saru-Kani-Hamu-Zou (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, galpani4, skns,    skns, skns,     galpani4, ROT0,  "Kaneko", "Gals Panic 4 (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, galpanis, skns,    skns, skns,     galpanis, ROT0,  "Kaneko", "Gals Panic S - Extra Edition (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, cyvern,   skns,    skns, skns,     cyvern,   ROT90, "Kaneko", "Cyvern (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1999, galpans2, skns,    skns, skns,     galpans2, ROT0,  "Kaneko", "Gals Panic S2 (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1999, panicstr, skns,    skns, skns,     panicstr, ROT0,  "Kaneko", "Panic Street (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1999, senknow , skns,    skns, skns,     senknow,  ROT0,  "Kaneko / Kouyousha", "Sen-Know (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 2000, gutsn,    skns,    skns, skns,     gutsn,    ROT0,  "Kaneko / Kouyousha", "Guts'n (Japan)", GAME_IMPERFECT_GRAPHICS ) // quite fragile, started working of it's own accord in 0.69 :)
+	GAMEX( 1998, puzzloop, skns,    skns, skns,     puzzloop, ROT0,  "Mitchell", "Puzz Loop (Europe)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, puzloopj, puzzloop,skns, skns,     puzloopj, ROT0,  "Mitchell", "Puzz Loop (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, puzloopu, puzzloop,skns, skns,     puzloopu, ROT0,  "Mitchell", "Puzz Loop (USA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, jjparads, skns,    skns, jjparads, jjparads, ROT0,  "Electro Design", "Jan Jan Paradise", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, jjparad2, skns,    skns, jjparads, jjparad2, ROT0,  "Electro Design", "Jan Jan Paradise 2", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, ryouran , skns,    skns, jjparads, ryouran,  ROT0,  "Electro Design", "VS Mahjong Otome Ryouran", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1999, teljan  , skns,    skns, jjparads, teljan,   ROT0,  "Electro Design", "Tel Jan", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, sengekis, skns,    skns, skns,     sengekis, ROT90, "Kaneko / Warashi", "Sengeki Striker (Asia)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, sengekij, sengekis,skns, skns,     sengekij, ROT90, "Kaneko / Warashi", "Sengeki Striker (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, vblokbrk, skns,    skns, skns,     sarukani, ROT0,  "Kaneko / Mediaworks", "VS Block Breaker (Asia)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, sarukani, vblokbrk,skns, skns,     sarukani, ROT0,  "Kaneko / Mediaworks", "Saru-Kani-Hamu-Zou (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
 }

@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -62,8 +62,7 @@ public class twincobr
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_toaplan0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_toaplan0  = new VideoStartHandlerPtr() { public int handler(){
 		/* the video RAM is accessed via ports, it's not memory mapped */
 		videoram_size[0] = 0x800;
 		twincobr_bgvideoram_size = 0x2000;	/* banked two times 0x1000 */
@@ -203,46 +202,39 @@ public class twincobr
 	}
 	
 	/******************** Wardner interface to this hardware ********************/
-	public static WriteHandlerPtr wardner_txlayer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_txlayer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_txoffs_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
-	public static WriteHandlerPtr wardner_bglayer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_bglayer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_bgoffs_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
-	public static WriteHandlerPtr wardner_fglayer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_fglayer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_fgoffs_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
 	
-	public static WriteHandlerPtr wardner_txscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_txscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_txscroll_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
-	public static WriteHandlerPtr wardner_bgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_bgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_bgscroll_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
-	public static WriteHandlerPtr wardner_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		twincobr_fgscroll_w(offset / 2, data << shift, 0xff00 >> shift);
 	} };
 	
-	public static WriteHandlerPtr wardner_exscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)	/* Extra unused video layer */
+	public static WriteHandlerPtr wardner_exscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)* Extra unused video layer */
 	{
 		if (offset == 0) logerror("PC - write %04x to unknown video scroll Y register\n",data);
 		else logerror("PC - write %04x to unknown video scroll X register\n",data);
 	} };
 	
-	public static ReadHandlerPtr wardner_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int shift = 8 * (offset & 1);
 		switch (offset/2) {
 			case 0: return twincobr_txram_r(0,0) >> shift; break;
@@ -252,8 +244,7 @@ public class twincobr
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr wardner_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int shift = 8 * (offset & 1);
 		switch (offset/2) {
 			case 0: twincobr_txram_w(0,data << shift, 0xff00 >> shift); break;
@@ -279,14 +270,14 @@ public class twincobr
 					color  = attribute & 0x3f;
 					sx = buffered_spriteram16[offs + 2] >> 7;
 					flipx = attribute & 0x100;
-					if (flipx != 0) sx -= 14;		/* should really be 15 */
+					if (flipx) sx -= 14;		/* should really be 15 */
 					flipy = attribute & 0x200;
-					drawgfx(bitmap,Machine.gfx[3],
+					drawgfx(bitmap,Machine->gfx[3],
 						sprite,
 						color,
 						flipx,flipy,
 						sx-32,sy-16,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -294,8 +285,7 @@ public class twincobr
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toaplan0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int offs,code,tile,color;
 	
 	
@@ -321,7 +311,7 @@ public class twincobr
 				code = twincobr_bgvideoram16[offs+twincobr_bg_ram_bank];
 				tile  = (code & 0x0fff);
 				color = (code & 0xf000) >> 12;
-				if (twincobr_flip_screen != 0) { sx=63-sx; sy=63-sy; }
+				if (twincobr_flip_screen) { sx=63-sx; sy=63-sy; }
 				drawgfx(tmpbitmap,Machine.gfx[2],
 					tile,
 					color,
@@ -333,7 +323,7 @@ public class twincobr
 	
 		/* copy the background graphics */
 		{
-			if (twincobr_flip_screen != 0) {
+			if (twincobr_flip_screen) {
 				scroll_x = (twincobr_flip_x_base + bgscrollx + 0x141) & 0x1ff;
 				scroll_y = (twincobr_flip_y_base + bgscrolly + 0xf1) & 0x1ff;
 			}
@@ -368,7 +358,7 @@ public class twincobr
 			code  = twincobr_fgvideoram16[vidramaddr & 0xfff];
 			tile  = (code & 0x0fff) | twincobr_fg_rom_bank;
 			color = (code & 0xf000) >> 12;
-			if (twincobr_flip_screen != 0) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
+			if (twincobr_flip_screen) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
 			else { xpos=(sx*8) - (scroll_x&7); ypos=(sy*8) - (scroll_y&7); }
 			drawgfx(bitmap,Machine.gfx[1],
 				tile,
@@ -425,7 +415,7 @@ public class twincobr
 			code  = videoram16[vidramaddr & 0x7ff];
 			tile  = (code & 0x07ff);
 			color = (code & 0xf800) >> 11;
-			if (twincobr_flip_screen != 0) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
+			if (twincobr_flip_screen) { sx=40-sx; sy=30-sy; xpos=(sx*8) - (7-(scroll_x&7)); ypos=(sy*8) - (7-(scroll_y&7)); }
 			else { xpos=(sx*8) - (scroll_x&7); ypos=(sy*8) - (scroll_y&7); }
 			drawgfx(bitmap,Machine.gfx[0],
 				tile,
@@ -439,8 +429,7 @@ public class twincobr
 		twincobr_draw_sprites (bitmap, 0x0c00);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_toaplan0  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_toaplan0  = new VideoEofHandlerPtr() { public void handler(){
 		/*  Spriteram is always 1 frame ahead, suggesting spriteram buffering.
 			There are no CPU output registers that control this so we
 			assume it happens automatically every frame, at the end of vblank */

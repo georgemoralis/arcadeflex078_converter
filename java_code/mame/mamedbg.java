@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -41,11 +41,11 @@ public class mamedbg
 	#define INSTL	activecpu_max_inst_len()
 	#define ENDIAN	activecpu_endianess()
 	
-	#define RDMEM(a)	(*cputype_get_interface(cputype).memory_read)(a)
-	#define WRMEM(a,v)	(*cputype_get_interface(cputype).memory_write)(a,v)
-	#define RDINT(a)	(*cputype_get_interface(cputype).internal_read)(a)
-	#define WRINT(a,v)	(*cputype_get_interface(cputype).internal_write)(a,v)
-	#define PGM_MEMORY	cputype_get_interface(cputype).pgm_memory_base
+	#define RDMEM(a)	(*cputype_get_interface(cputype)->memory_read)(a)
+	#define WRMEM(a,v)	(*cputype_get_interface(cputype)->memory_write)(a,v)
+	#define RDINT(a)	(*cputype_get_interface(cputype)->internal_read)(a)
+	#define WRINT(a,v)	(*cputype_get_interface(cputype)->internal_write)(a,v)
+	#define PGM_MEMORY	cputype_get_interface(cputype)->pgm_memory_base
 	
 	/****************************************************************************
 	 * Globals
@@ -528,10 +528,10 @@ public class mamedbg
 	
 		font = decodegfx(fontdata,&fontlayout);
 	
-		if (font != 0)
+		if (font)
 		{
-			font.colortable = Machine.debug_remapped_colortable;
-			font.total_colors = DEBUGGER_TOTAL_COLORS*DEBUGGER_TOTAL_COLORS;
+			font->colortable = Machine->debug_remapped_colortable;
+			font->total_colors = DEBUGGER_TOTAL_COLORS*DEBUGGER_TOTAL_COLORS;
 		}
 	
 		return font;
@@ -541,19 +541,19 @@ public class mamedbg
 	{
 		int sx, sy, x, y;
 	
-		sx = cursor_x * font.width;
-		sy = cursor_y * font.height;
-		for (y = 0; y < font.height; y++)
+		sx = cursor_x * font->width;
+		sy = cursor_y * font->height;
+		for (y = 0; y < font->height; y++)
 		{
-			for (x = 0; x < font.width; x++)
+			for (x = 0; x < font->width; x++)
 			{
 				int i;
 				int pen = read_pixel(bitmap, sx+x, sy+y);
 				for (i = 0;i < DEBUGGER_TOTAL_COLORS;i++)
 				{
-					if (pen == Machine.debug_pens[i])
+					if (pen == Machine->debug_pens[i])
 					{
-						pen = Machine.debug_pens[DEBUGGER_TOTAL_COLORS-1 - i];
+						pen = Machine->debug_pens[DEBUGGER_TOTAL_COLORS-1 - i];
 						break;
 					}
 				}
@@ -567,11 +567,11 @@ public class mamedbg
 	
 	void dbg_put_screen_char(int ch, int attr, int x, int y)
 	{
-		struct mame_bitmap *bitmap = Machine.debug_bitmap;
-		struct GfxElement *font = Machine.debugger_font;
+		struct mame_bitmap *bitmap = Machine->debug_bitmap;
+		struct GfxElement *font = Machine->debugger_font;
 	
 		drawgfx(bitmap, font,
-			ch, attr, 0, 0, x*font.width, y*font.height,
+			ch, attr, 0, 0, x*font->width, y*font->height,
 			0, TRANSPARENCY_NONE, 0);
 	
 		debugger_bitmap_changed = 1;
@@ -585,8 +585,8 @@ public class mamedbg
 	
 	static void get_screen_size( unsigned *width, unsigned *height )
 	{
-		*width = Machine.debug_bitmap.width / Machine.debugger_font.width;
-		*height = Machine.debug_bitmap.height / Machine.debugger_font.height;
+		*width = Machine->debug_bitmap->width / Machine->debugger_font->width;
+		*height = Machine->debug_bitmap->height / Machine->debugger_font->height;
 	}
 	
 	static int readkey(void)
@@ -599,7 +599,7 @@ public class mamedbg
 		do
 		{
 			if ((cursor_flash++ & 15) == 0)
-				toggle_cursor(Machine.debug_bitmap, Machine.debugger_font);
+				toggle_cursor(Machine->debug_bitmap, Machine->debugger_font);
 			reset_partial_updates();
 			draw_screen();	/* so we can change stuff in RAM and see the effect on screen */
 			update_video_and_audio();
@@ -710,8 +710,8 @@ public class mamedbg
 	
 		} while (k == KEYCODE_NONE);
 		debugger_idle = 0;
-		if (cursor_on != 0)
-			toggle_cursor(Machine.debug_bitmap, Machine.debugger_font);
+		if (cursor_on)
+			toggle_cursor(Machine->debug_bitmap, Machine->debugger_font);
 	
 		return k;
 	}
@@ -1090,12 +1090,12 @@ public class mamedbg
 	{
 		unsigned val = 0, digit;
 	
-		if (size != 0) *size = 0;
+		if (size) *size = 0;
 		while( isdigit( *(*parg) ) )
 		{
 			digit = *(*parg) - '0';
 			val = (val * 10) + digit;
-			if (size != 0) (*size)++;
+			if( size ) (*size)++;
 			(*parg) += 1;
 		}
 		while( isspace(*(*parg)) ) *parg += 1;
@@ -1113,13 +1113,13 @@ public class mamedbg
 	{
 		unsigned val = 0, digit;
 	
-		if (size != 0) *size = 0;
+		if (size) *size = 0;
 		while( isxdigit( *(*parg) ) )
 		{
 			digit = toupper(*(*parg)) - '0';
 			if( digit > 9 ) digit -= 7;
 			val = (val << 4) | digit;
-			if (size != 0) (*size)++;
+			if( size ) (*size)++;
 			(*parg) += 1;
 		}
 		while( isspace(*(*parg)) ) *parg += 1;
@@ -1220,7 +1220,7 @@ public class mamedbg
 			break;
 	
 		case EA_REL_PC: /* Relative program counter change */
-			if (dbg_dasm_relative_jumps != 0)
+			if( dbg_dasm_relative_jumps )
 			{
 				if( size == 0 )
 					return "$";
@@ -1370,7 +1370,7 @@ public class mamedbg
 			}
 		}
 	
-		if (length != 0)
+		if( length )
 		{
 			while( isspace(*(*parg)) ) *parg += 1;
 		}
@@ -1380,7 +1380,7 @@ public class mamedbg
 			result = xtou( parg, &length );
 		}
 	
-		if (size != 0) *size += length;
+		if( size ) *size += length;
 	
 		return result;
 	}
@@ -1408,14 +1408,14 @@ public class mamedbg
 			if( strncmp(*parg, opt, length) == 0 )
 			{
 				*parg = p;
-				if (size != 0) *size = length;
+				if( size ) *size = length;
 				return opt_count;
 			}
 			opt_count++;
 		}
 	
 		result = xtou( parg, &length );
-		if (size != 0) *size += length;
+		if( size ) *size += length;
 	
 		return result;
 	}
@@ -1433,7 +1433,7 @@ public class mamedbg
 		while( isspace(*s) ) s++;
 		*parg = s;
 	
-		if (size != 0) *size = l;
+		if( size ) *size = l;
 	
 		return filename;
 	}
@@ -1519,14 +1519,14 @@ public class mamedbg
 			{
 				if( !isalnum( (*parg)[l] ) )
 				{
-					if (size != 0) *size = l;
+					if( size ) *size = l;
 					*parg += l;
 					while( isspace(*(*parg)) ) *parg += 1;
 					return DBGREGS.id[i];
 				}
 			}
 		}
-		if (size != 0) *size = 0;
+		if( size ) *size = 0;
 		return 0;
 	}
 	
@@ -1559,7 +1559,7 @@ public class mamedbg
 		regnum = get_register_id( parg, &l );
 		if( regnum > 0 )
 		{
-			if (size != 0) *size = l;
+			if( size ) *size = l;
 			return activecpu_get_reg( regnum );
 		}
 		/* default to hex value */
@@ -1575,7 +1575,7 @@ public class mamedbg
 	{
 		char name[100];
 	
-		if (trace_on != 0)
+		if( trace_on )
 			return;
 	
 		for( tracecpu = 0; tracecpu < total_cpu; tracecpu++ )
@@ -1600,7 +1600,7 @@ public class mamedbg
 	 **************************************************************************/
 	void trace_done(void)
 	{
-		if (trace_on == 0)
+		if( !trace_on )
 			return;
 	
 		for( tracecpu = 0; tracecpu < total_cpu; tracecpu++ )
@@ -1807,7 +1807,7 @@ public class mamedbg
 		const struct RomModule *region, *rom, *chunk;
 		unsigned offset = *base;
 	
-		for (region = rom_first_region(Machine.gamedrv); region; region = rom_next_region(region))
+		for (region = rom_first_region(Machine->gamedrv); region; region = rom_next_region(region))
 			if (ROMREGION_GETTYPE(region) == regnum)
 			{
 				for (rom = rom_first_file(region); rom; rom = rom_next_file(rom))
@@ -1844,8 +1844,8 @@ public class mamedbg
 	{
 		static char buffer[16][79+1];
 		static int which = 0;
-		const struct MachineCPU *cpu = Machine.drv.cpu[active_cpu];
-		const struct Memory_ReadAddress *mr = cpu.memory_read;
+		const struct MachineCPU *cpu = Machine->drv->cpu[active_cpu];
+		const struct Memory_ReadAddress *mr = cpu->memory_read;
 		int ram_cnt = 1, nop_cnt = 1;
 		const char *name;
 		char *dst;
@@ -1858,32 +1858,32 @@ public class mamedbg
 		{
 			if (!IS_MEMPORT_MARKER(mr))
 			{
-				if( base >= mr.start && base <= mr.end )
+				if( base >= mr->start && base <= mr->end )
 				{
-					unsigned offset = base - mr.start;
+					unsigned offset = base - mr->start;
 	
 	#if 0
-	/* Won't work since the MemoryWrite doesn't support .base anymore */
-					if( mr.description )
-						sprintf(dst, "%s+%04X", mr.description, lshift(offset) );
+	/* Won't work since the MemoryWrite doesn't support ->base anymore */
+					if( mr->description )
+						sprintf(dst, "%s+%04X", mr->description, lshift(offset) );
 					else
-					if( mr.base && *mr.base == videoram )
+					if( mr->base && *mr->base == videoram )
 						sprintf(dst, "video+%04X", lshift(offset) );
 					else
-					if( mr.base && *mr.base == colorram )
+					if( mr->base && *mr->base == colorram )
 						sprintf(dst, "color+%04X", lshift(offset) );
 					else
-					if( mr.base && *mr.base == spriteram )
+					if( mr->base && *mr->base == spriteram )
 						sprintf(dst, "sprite+%04X", lshift(offset) );
 					else
 	#endif
-					switch( (FPTR)mr.handler )
+					switch( (FPTR)mr->handler )
 					{
 					case (FPTR)MRA_RAM:
 						sprintf(dst, "RAM%d+%04X", ram_cnt, lshift(offset) );
 						break;
 					case (FPTR)MRA_ROM:
-						name = name_rom("ROM", REGION_CPU1+active_cpu, &base, mr.start );
+						name = name_rom("ROM", REGION_CPU1+active_cpu, &base, mr->start );
 						sprintf(dst, "%s+%04X", name, lshift(base) );
 						break;
 					case (FPTR)MRA_BANK1: case (FPTR)MRA_BANK2:
@@ -1894,62 +1894,62 @@ public class mamedbg
 					case (FPTR)MRA_BANK11: case (FPTR)MRA_BANK12:
 					case (FPTR)MRA_BANK13: case (FPTR)MRA_BANK14:
 					case (FPTR)MRA_BANK15: case (FPTR)MRA_BANK16:
-						sprintf(dst, "BANK%d+%04X", 1 + (int)(MRA_BANK1) - (int)(mr.handler), lshift(offset) );
+						sprintf(dst, "BANK%d+%04X", 1 + (int)(MRA_BANK1) - (int)(mr->handler), lshift(offset) );
 						break;
 					case (FPTR)MRA_NOP:
 						sprintf(dst, "NOP%d+%04X", nop_cnt, lshift(offset) );
 						break;
 					default:
-						if( (FPTR)mr.handler == (FPTR)input_port_0_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_0_r )
 							sprintf(dst, "input_port_0+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_1_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_1_r )
 							sprintf(dst, "input_port_1+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_2_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_2_r )
 							sprintf(dst, "input_port_2+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_3_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_3_r )
 							sprintf(dst, "input_port_3+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_4_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_4_r )
 							sprintf(dst, "input_port_4+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_5_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_5_r )
 							sprintf(dst, "input_port_5+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_6_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_6_r )
 							sprintf(dst, "input_port_6+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_7_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_7_r )
 							sprintf(dst, "input_port_7+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_8_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_8_r )
 							sprintf(dst, "input_port_8+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_9_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_9_r )
 							sprintf(dst, "input_port_9+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_10_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_10_r )
 							sprintf(dst, "input_port_10+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_11_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_11_r )
 							sprintf(dst, "input_port_11+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_12_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_12_r )
 							sprintf(dst, "input_port_12+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_13_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_13_r )
 							sprintf(dst, "input_port_13+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_14_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_14_r )
 							sprintf(dst, "input_port_14+%04X", lshift(offset) );
 						else
-						if( (FPTR)mr.handler == (FPTR)input_port_15_r )
+						if( (FPTR)mr->handler == (FPTR)input_port_15_r )
 							sprintf(dst, "input_port_15+%04X", lshift(offset) );
 					}
 				}
-				switch( (FPTR)mr.handler )
+				switch( (FPTR)mr->handler )
 				{
 				case (FPTR)MRA_RAM: ram_cnt++; break;
 				case (FPTR)MRA_NOP: nop_cnt++; break;
@@ -1969,8 +1969,8 @@ public class mamedbg
 	{
 		static char buffer[16][79+1];
 		static int which = 0;
-		const struct MachineCPU *cpu = Machine.drv.cpu[active_cpu];
-		const struct Memory_WriteAddress *mw = cpu.memory_write;
+		const struct MachineCPU *cpu = Machine->drv->cpu[active_cpu];
+		const struct Memory_WriteAddress *mw = cpu->memory_write;
 		int ram_cnt = 1, nop_cnt = 1;
 		const char *name;
 		char *dst;
@@ -1984,36 +1984,36 @@ public class mamedbg
 		{
 			if (!IS_MEMPORT_MARKER(mw))
 			{
-				if( base >= mw.start && base <= mw.end )
+				if( base >= mw->start && base <= mw->end )
 				{
 	#if 0
-	/* Won't work since the MemoryRead doesn't support .description anymore */
-					if( mw.description )
-						sprintf(dst, "%s+%04X", mw.description, lshift(base - mw.start) );
+	/* Won't work since the MemoryRead doesn't support ->description anymore */
+					if( mw->description )
+						sprintf(dst, "%s+%04X", mw->description, lshift(base - mw->start) );
 					else
 	#endif
 	#if 0
-					if( mw.base && *mw.base == videoram )
-						sprintf(dst, "video+%04X", lshift(base - mw.start) );
+					if( mw->base && *mw->base == videoram )
+						sprintf(dst, "video+%04X", lshift(base - mw->start) );
 					else
-					if( mw.base && *mw.base == colorram )
-						sprintf(dst, "color+%04X", lshift(base - mw.start) );
+					if( mw->base && *mw->base == colorram )
+						sprintf(dst, "color+%04X", lshift(base - mw->start) );
 					else
-					if( mw.base && *mw.base == spriteram )
-						sprintf(dst, "sprite+%04X", lshift(base - mw.start) );
+					if( mw->base && *mw->base == spriteram )
+						sprintf(dst, "sprite+%04X", lshift(base - mw->start) );
 					else
 	#endif
-					switch( (FPTR)mw.handler )
+					switch( (FPTR)mw->handler )
 					{
 					case (FPTR)MWA_RAM:
-						sprintf(dst, "RAM%d+%04X", ram_cnt, lshift(base - mw.start) );
+						sprintf(dst, "RAM%d+%04X", ram_cnt, lshift(base - mw->start) );
 						break;
 					case (FPTR)MWA_ROM:
-						name = name_rom("ROM", REGION_CPU1+active_cpu, &base, mw.start );
+						name = name_rom("ROM", REGION_CPU1+active_cpu, &base, mw->start );
 						sprintf(dst, "%s+%04X", name, lshift(base) );
 						break;
 					case (FPTR)MWA_RAMROM:
-						name = name_rom("RAMROM", REGION_CPU1+active_cpu, &base, mw.start);
+						name = name_rom("RAMROM", REGION_CPU1+active_cpu, &base, mw->start);
 						sprintf(dst, "%s+%04X", name, lshift(base) );
 						break;
 					case (FPTR)MWA_BANK1: case (FPTR)MWA_BANK2:
@@ -2024,14 +2024,14 @@ public class mamedbg
 					case (FPTR)MWA_BANK11: case (FPTR)MWA_BANK12:
 					case (FPTR)MWA_BANK13: case (FPTR)MWA_BANK14:
 					case (FPTR)MWA_BANK15: case (FPTR)MWA_BANK16:
-						sprintf(dst, "BANK%d+%04X", 1 + (int)(MWA_BANK1) - (int)(mw.handler), lshift(base - mw.start) );
+						sprintf(dst, "BANK%d+%04X", 1 + (int)(MWA_BANK1) - (int)(mw->handler), lshift(base - mw->start) );
 						break;
 					case (FPTR)MWA_NOP:
-						sprintf(dst, "NOP%d+%04X", nop_cnt, lshift(base - mw.start) );
+						sprintf(dst, "NOP%d+%04X", nop_cnt, lshift(base - mw->start) );
 						break;
 					}
 				}
-				switch( (FPTR)mw.handler )
+				switch( (FPTR)mw->handler )
 				{
 				case (FPTR)MRA_RAM: ram_cnt++; break;
 				case (FPTR)MRA_NOP: nop_cnt++; break;
@@ -2131,10 +2131,10 @@ public class mamedbg
 	 **************************************************************************/
 	INLINE void dbg_set_rect( struct rectangle *r, int x, int y, int w, int h )
 	{
-		r.min_x = x;
-		r.max_x = x + w - 1;
-		r.min_y = y;
-		r.max_y = y + h - 1;
+		r->min_x = x;
+		r->max_x = x + w - 1;
+		r->min_y = y;
+		r->max_y = y + h - 1;
 	}
 	
 	/**************************************************************************
@@ -2344,8 +2344,8 @@ public class mamedbg
 	/**************************************************************************
 	 * dump_regs
 	 * Update the register display
-	 * Compare register values against the ones stored in reg.backup[]
-	 * Store new values in reg.newval[] which is copied to reg.backup[]
+	 * Compare register values against the ones stored in reg->backup[]
+	 * Store new values in reg->newval[] which is copied to reg->backup[]
 	 * before the next instruction is executed (at the end of MAME_Debug).
 	 **************************************************************************/
 	static void dump_regs( void )
@@ -2353,9 +2353,9 @@ public class mamedbg
 		char title[80+1];
 		UINT32 win = WIN_REGS(active_cpu);
 		s_regs *regs = &DBGREGS;
-		s_edit *pedit = regs.edit;
-		UINT32 *old = regs.backup;
-		UINT32 *val = regs.newval;
+		s_edit *pedit = regs->edit;
+		UINT32 *old = regs->backup;
+		UINT32 *val = regs->newval;
 		UINT32 width;
 		const char *name = activecpu_name(), *flags = activecpu_flags();
 		int w = win_get_w(win);
@@ -2365,15 +2365,15 @@ public class mamedbg
 		const INT8 *reg = (INT8*)activecpu_reg_layout();
 	
 		/* Called the very first time: find max_width */
-		if( regs.count == 0 )
+		if( regs->count == 0 )
 		{
 			for(i = 0; reg[i]; i++)
 			{
 				if( reg[i] == -1 )
 					continue;		/* skip row breaks */
 				width = strlen( activecpu_dump_reg(reg[i]) );
-				if( width >= regs.max_width )
-					regs.max_width = width + 1;
+				if( width >= regs->max_width )
+					regs->max_width = width + 1;
 			}
 		}
 	
@@ -2454,20 +2454,20 @@ public class mamedbg
 		}
 	
 		/* show the scanline position, if appropriate */
-		if (dbg_show_scanline != 0)
+		if (dbg_show_scanline)
 		{
 			win_printf( win, "Scanline: %d Horz: %d\n", cpu_getscanline(), cpu_gethorzbeampos());
 			y++;
 		}
 	
-		regs.top = y;
+		regs->top = y;
 		y = 0;
 	
 		for( i = 0, j = 0; *reg; i++, reg++ )
 		{
 			if( *reg == -1 )
 			{
-				if( y >= regs.base && y < regs.base + h - regs.top )
+				if( y >= regs->base && y < regs->base + h - regs->top )
 				{
 					win_erase_eol( win, ' ' );
 					win_putc( win, '\n');
@@ -2481,53 +2481,53 @@ public class mamedbg
 				if( *name == '\0' )
 					continue;
 	
-				regs.id[j] = *reg;
-				*val = activecpu_get_reg(regs.id[j]);
+				regs->id[j] = *reg;
+				*val = activecpu_get_reg(regs->id[j]);
 				color = cur_col[E_REGS];
 				if( DBG.brk_regs == *reg )
 					color = cur_col[E_BRK_REGS];
 				if( *val != *old )
 				{
-					regs.changed = 1;
+					regs->changed = 1;
 					color = (color & 0xf0) | cur_col[E_CHANGES];
 				}
 				win_set_color( win, color );
 	
 				/* edit structure not yet initialized? */
-				if( regs.count == 0 )
+				if( regs->count == 0 )
 				{
 					const char *p;
 					/* Get the cursor position */
-					pedit.x = x;
-					pedit.y = y + regs.base;
-					if( strlen(name) >= regs.max_width )
-						regs.max_width = strlen(name) + 1;
+					pedit->x = x;
+					pedit->y = y + regs->base;
+					if( strlen(name) >= regs->max_width )
+						regs->max_width = strlen(name) + 1;
 					/* Find a colon */
 					p = strchr( name, ':' );
-					if (p != 0)
+					if( p )
 					{
-						pedit.w = strlen( p + 1 );
+						pedit->w = strlen( p + 1 );
 					}
 					else
 					{
 						/* Or else find an apostrophe */
 						p = strchr( name, '\'' );
-						if (p != 0)
+						if( p )
 						{
 							/* Include the apostrophe in the name! */
 							++p;
-							pedit.w = strlen( p );
+							pedit->w = strlen( p );
 						}
 						else
 						{
 							/* TODO: other characters to delimit a register name from it's value? */
 							/* this is certainly wrong :( */
 							p = name;
-							pedit.w = strlen( p );
+							pedit->w = strlen( p );
 						}
 					}
 					/* length of the name (total length - length of nibbles) */
-					pedit.n = strlen( name ) - pedit.w;
+					pedit->n = strlen( name ) - pedit->w;
 	
 					/* strip trailing spaces */
 					l = p - name;
@@ -2535,30 +2535,30 @@ public class mamedbg
 					{
 						l--;
 					}
-					if( l > sizeof( regs.name[ j ] ) - 1 )
+					if( l > sizeof( regs->name[ j ] ) - 1 )
 					{
-						l = sizeof( regs.name[ j ] ) - 1;
+						l = sizeof( regs->name[ j ] ) - 1;
 					}
-					memcpy( regs.name[ j ], name, l );
-					regs.name[ j ][ l ] = 0;
+					memcpy( regs->name[ j ], name, l );
+					regs->name[ j ][ l ] = 0;
 				}
-				if( y >= regs.base && y < regs.base + h - regs.top )
+				if( y >= regs->base && y < regs->base + h - regs->top )
 				{
 					win_printf( win, "%s", name );
 	
 					win_set_color( win, cur_col[E_REGS] );
 					/* If no row break follows, advance to the next tab stop */
 					if( reg[1] != -1 )
-						win_printf( win, "%*s", regs.max_width - pedit.w - pedit.n, "" );
+						win_printf( win, "%*s", regs->max_width - pedit->w - pedit->n, "" );
 				}
-				x += strlen( name ) + regs.max_width - pedit.w - pedit.n;
+				x += strlen( name ) + regs->max_width - pedit->w - pedit->n;
 				pedit++;
 				val++;
 				old++;
 				j++;
 			}
 		}
-		while( y >= regs.base && y < regs.base + h - regs.top )
+		while( y >= regs->base && y < regs->base + h - regs->top )
 		{
 			win_erase_eol( win, ' ' );
 			win_putc( win, '\n' );
@@ -2566,7 +2566,7 @@ public class mamedbg
 		}
 	
 		/* Set the total count of registers */
-		regs.count = j;
+		regs->count = j;
 	}
 	
 	/**************************************************************************
@@ -2615,7 +2615,7 @@ public class mamedbg
 				if( DBGDASM.pc_cur == pc )
 					win_set_title( win, "%s", get_ea_info(pc) );
 	
-				if (dbg_dasm_opcodes != 0)
+				if( dbg_dasm_opcodes )
 				{
 					unsigned p = rshift(pc);
 					unsigned n = rshift(pc_next);
@@ -2693,7 +2693,7 @@ public class mamedbg
 	 * dump_mem_hex
 	 * Update a memory window using the cpu_readmemXXX function
 	 * Changed values are displayed using foreground color cur_col[E_CHANGES]
-	 * The new values are stored into mem.newval[] of the active_cpu
+	 * The new values are stored into mem->newval[] of the active_cpu
 	 **************************************************************************/
 	static void dump_mem_hex( int which, unsigned len_addr, unsigned len_data )
 	{
@@ -2792,10 +2792,10 @@ public class mamedbg
 				color ^= dim_bright;
 	
 			/* store memory edit x,y */
-			pedit.x = win_get_cx( win );
-			pedit.y = win_get_cy( win );
-			pedit.w = 2;
-			pedit.n = order(column % (len_data / 2), len_data / 2);
+			pedit->x = win_get_cx( win );
+			pedit->y = win_get_cy( win );
+			pedit->w = 2;
+			pedit->n = order(column % (len_data / 2), len_data / 2);
 			pedit++;
 	
 			win_set_color( win, color );
@@ -2842,7 +2842,7 @@ public class mamedbg
 	{
 		unsigned len_addr = (ABITS + ASHIFT + 3) / 4;
 	
-		if (set_title != 0)
+		if( set_title )
 		{
 			if( DBGMEM[which].internal )
 				win_set_title( WIN_MEM(active_cpu,which), "CPU internal" );
@@ -2866,7 +2866,7 @@ public class mamedbg
 	{
 		UINT32 win = WIN_REGS(active_cpu);
 		s_regs *regs = &DBGREGS;
-		s_edit *pedit = regs.edit;
+		s_edit *pedit = regs->edit;
 		unsigned shift, mask, val;
 		const char *k;
 		int i, x, y;
@@ -2874,24 +2874,24 @@ public class mamedbg
 		/* Eventually update the cmdline window caption */
 		edit_cmds_info();
 	
-		if( regs.base > pedit[ regs.idx ].y )
+		if( regs->base > pedit[ regs->idx ].y )
 		{
-			regs.base = pedit[ regs.idx ].y;
+			regs->base = pedit[ regs->idx ].y;
 			dump_regs();
 		}
 		else
-		if( pedit[ regs.idx ].y >= regs.base + win_get_h( win ) - regs.top )
+		if( pedit[ regs->idx ].y >= regs->base + win_get_h( win ) - regs->top )
 		{
-			regs.base = pedit[ regs.idx ].y - win_get_h( win ) + regs.top + 1;
+			regs->base = pedit[ regs->idx ].y - win_get_h( win ) + regs->top + 1;
 			dump_regs();
 		}
-		win_set_curpos( win, pedit[regs.idx].x + pedit[regs.idx].n + regs.nibble, pedit[regs.idx].y - regs.base + regs.top);
+		win_set_curpos( win, pedit[regs->idx].x + pedit[regs->idx].n + regs->nibble, pedit[regs->idx].y - regs->base + regs->top);
 		set_screen_curpos( win_get_cx_abs(win), win_get_cy_abs(win) );
 	
 		i = readkey();
 		k = keyboard_name(i);
 	
-		shift = ( pedit[ regs.idx ].w - 1 - regs.nibble ) * 4;
+		shift = ( pedit[ regs->idx ].w - 1 - regs->nibble ) * 4;
 		mask = ~(0x0000000f << shift);
 	
 		if( strlen(k) == 1 )
@@ -2906,8 +2906,8 @@ public class mamedbg
 				if( val > 9 ) val -= 7;
 				val <<= shift;
 				/* now modify the register */
-				activecpu_set_reg( regs.id[regs.idx],
-					( activecpu_get_reg( regs.id[regs.idx] ) & mask ) | val );
+				activecpu_set_reg( regs->id[regs->idx],
+					( activecpu_get_reg( regs->id[regs->idx] ) & mask ) | val );
 				dump_regs();
 				i = KEYCODE_RIGHT;	/* advance to next nibble */
 			}
@@ -2916,72 +2916,72 @@ public class mamedbg
 		switch( i )
 		{
 		case KEYCODE_LEFT:
-			if( --regs.nibble < 0 )
+			if( --regs->nibble < 0 )
 			{
-				if( --regs.idx < 0 )
+				if( --regs->idx < 0 )
 				{
-					regs.idx = regs.count - 1;
+					regs->idx = regs->count - 1;
 				}
-				regs.nibble = pedit[regs.idx].w - 1;
+				regs->nibble = pedit[regs->idx].w - 1;
 			}
 			break;
 	
 		case KEYCODE_RIGHT:
-			if( ++regs.nibble >= pedit[regs.idx].w )
+			if( ++regs->nibble >= pedit[regs->idx].w )
 			{
-				regs.nibble = 0;
-				if( ++regs.idx >= regs.count )
+				regs->nibble = 0;
+				if( ++regs->idx >= regs->count )
 				{
-					regs.idx = 0;
+					regs->idx = 0;
 				}
 			}
 			break;
 	
 		case KEYCODE_UP:
-			i = regs.idx;
-			x = pedit[regs.idx].x;
-			y = pedit[regs.idx].y;
+			i = regs->idx;
+			x = pedit[regs->idx].x;
+			y = pedit[regs->idx].y;
 			while( x != pedit[i].x || pedit[i].y == y )
 			{
 				if( --i < 0 )
 				{
-					i = regs.count - 1;
+					i = regs->count - 1;
 					if( pedit[i].y == y )
 					{
-						i = regs.idx;
+						i = regs->idx;
 						break;
 					}
 				}
 			}
-			if( i != regs.idx )
+			if( i != regs->idx )
 			{
-				if( regs.nibble >= pedit[i].w )
-					regs.nibble = pedit[i].w - 1;
-				regs.idx = i;
+				if( regs->nibble >= pedit[i].w )
+					regs->nibble = pedit[i].w - 1;
+				regs->idx = i;
 			}
 			break;
 	
 		case KEYCODE_DOWN:
-			i = regs.idx;
-			x = pedit[regs.idx].x;
-			y = pedit[regs.idx].y;
+			i = regs->idx;
+			x = pedit[regs->idx].x;
+			y = pedit[regs->idx].y;
 			while( x != pedit[i].x || pedit[i].y == y )
 			{
-				if( ++i >= regs.count )
+				if( ++i >= regs->count )
 				{
 					i = 0;
 					if( pedit[i].y == y )
 					{
-						i = regs.idx;
+						i = regs->idx;
 						break;
 					}
 				}
 			}
-			if( i != regs.idx )
+			if( i != regs->idx )
 			{
-				if( regs.nibble >= pedit[i].w )
-					regs.nibble = pedit[i].w - 1;
-				regs.idx = i;
+				if( regs->nibble >= pedit[i].w )
+					regs->nibble = pedit[i].w - 1;
+				regs->idx = i;
 			}
 			break;
 	
@@ -3047,7 +3047,7 @@ public class mamedbg
 		default:
 			cmd_default( i );
 		}
-		if (update_window != 0)
+		if( update_window )
 		{
 			DBGDASM.pc_end = dump_dasm( DBGDASM.pc_top );
 		}
@@ -3106,7 +3106,7 @@ public class mamedbg
 				/* now modify the register */
 				if( DBGMEM[which].internal )
 				{
-					if( cputype_get_interface(cputype).internal_write )
+					if( cputype_get_interface(cputype)->internal_write )
 						WRINT( DBGMEM[which].address, ( RDINT( DBGMEM[which].address ) & mask ) | val );
 				}
 				else
@@ -3208,7 +3208,7 @@ public class mamedbg
 			break;
 	
 		case KEYCODE_I: /* internal memory */
-			if( cputype_get_interface(cputype).internal_read )
+			if( cputype_get_interface(cputype)->internal_read )
 			{
 				DBGMEM[which].internal ^= 1;
 				/* Reset cursor coordinates and sizes of the edit info */
@@ -3226,7 +3226,7 @@ public class mamedbg
 			update_window = 1;
 		}
 	
-		if (update_window != 0)
+		if( update_window )
 		{
 			memcpy( DBGMEM[which].backup, DBGMEM[which].newval, DBGMEM[which].size );
 			dump_mem( which, 0 );
@@ -3275,7 +3275,7 @@ public class mamedbg
 				}
 			}
 		}
-		if (dbg_info_once != 0)
+		if( dbg_info_once )
 		{
 			win_set_title( WIN_CMDS(active_cpu), "%s%s", dbg_info_once, hist_info );
 			dbg_info_once = NULL;
@@ -3435,7 +3435,7 @@ public class mamedbg
 		int cmd = INVALID;
 		int i, k, l, top, lines;
 	
-		if (help == 0)
+		if( !help )
 		{
 			win_msgbox( cur_col[E_ERROR],
 				"Memory problem!", "Couldn't allocate help text buffer" );
@@ -3486,9 +3486,9 @@ public class mamedbg
 			dst += sprintf( dst, "Code align unit: %d byte(s)", activecpu_align_unit() ) + 1;
 			dst += sprintf( dst, "This CPU is    : %s endian", (ENDIAN == CPU_IS_LE) ? "little" : "big") + 1;
 			dst += sprintf( dst, "Source file    : %s", activecpu_core_file() ) + 1;
-			dst += sprintf( dst, "Internal read  : %s", cputype_get_interface(cputype).internal_read ? "yes" : "no" ) + 1;
-			dst += sprintf( dst, "Internal write : %s", cputype_get_interface(cputype).internal_write ? "yes" : "no" ) + 1;
-			dst += sprintf( dst, "Program / Data : %s", cputype_get_interface(cputype).pgm_memory_base ? "yes" : "no" ) + 1;
+			dst += sprintf( dst, "Internal read  : %s", cputype_get_interface(cputype)->internal_read ? "yes" : "no" ) + 1;
+			dst += sprintf( dst, "Internal write : %s", cputype_get_interface(cputype)->internal_write ? "yes" : "no" ) + 1;
+			dst += sprintf( dst, "Program / Data : %s", cputype_get_interface(cputype)->pgm_memory_base ? "yes" : "no" ) + 1;
 			dst += sprintf( dst, "%s", activecpu_core_credits() ) + 1;
 			break;
 		case EDIT_DASM:
@@ -3640,13 +3640,13 @@ public class mamedbg
 		int length;
 	
 		element = get_option_or_value( &cmd, &length, ELEMENT_NAMES );
-		if (length != 0)
+		if( length )
 		{
 			fg = get_option_or_value( &cmd, &length, COLOR_NAMES );
-			if (length != 0)
+			if( length )
 			{
 				bg = get_option_or_value( &cmd, &length, COLOR_NAMES );
-				if (length == 0) bg = 0;	/* BLACK is default background */
+				if( !length ) bg = 0;	/* BLACK is default background */
 			}
 			else
 			{
@@ -3694,11 +3694,11 @@ public class mamedbg
 		{
 			DBG.brk_regs_oldval = activecpu_get_reg(DBG.brk_regs);
 			data = get_register_or_value( &cmd, &length );
-			if (length != 0)
+			if( length )
 			{
 				DBG.brk_regs_newval = data;
 				data = get_register_or_value( &cmd, &length );
-				if (length != 0)
+				if( length )
 				{
 					DBG.brk_regs_mask = data;
 					/* Remove masked bits from the new value too ;-) */
@@ -3751,14 +3751,14 @@ public class mamedbg
 	
 		DBG.brk_data = rshift(DBG.brk_data) & AMASK; /* EHC 11/14/99: Need to shift + mask otherwise we die */
 	
-		if (length != 0)
+		if( length )
 		{
 			data = RDMEM(DBG.brk_data);
 	
 			DBG.brk_data_oldval = data;
 			data = get_register_or_value( &cmd, &length );
 	
-			if (length != 0)
+			if( length )
 			{
 				DBG.brk_data_newval = data;
 			}
@@ -3799,10 +3799,10 @@ public class mamedbg
 		int length;
 	
 		DBG.brk_exec = get_register_or_value( &cmd, &length );
-		if (length != 0)
+		if( length )
 		{
 			times = get_register_or_value( &cmd, &length );
-			if (length != 0)
+			if( length )
 			{
 				DBG.brk_exec_times = times;
 				DBG.brk_exec_reset = times;
@@ -3850,10 +3850,10 @@ public class mamedbg
 		int length;
 	
 		which = xtou( &cmd, &length );
-		if (length != 0)
+		if( length )
 		{
 			address = get_register_or_value( &cmd, &length );
-			if (length != 0)
+			if( length )
 			{
 				which = (which - 1) % MAX_MEM;
 			}
@@ -3882,7 +3882,7 @@ public class mamedbg
 		unsigned i, pc, size, start, end, width, opcodes;
 	
 		filename = get_file_name( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DASM arguments",
 				"Filename missing");
@@ -3890,7 +3890,7 @@ public class mamedbg
 			return;
 		}
 		start = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DASM arguments",
 				"Start address missing");
@@ -3898,7 +3898,7 @@ public class mamedbg
 			return;
 		}
 		end = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DASM arguments",
 				"End address missing");
@@ -3909,7 +3909,7 @@ public class mamedbg
 		if( length == 4 ) opcodes = 1; 	/* default to display opcodes */
 	
 		file = fopen(filename, "w");
-		if (file == 0)
+		if( !file )
 		{
 			win_msgbox( cur_col[E_ERROR], "DASM to file",
 				"Could not create %s", filename);
@@ -3928,7 +3928,7 @@ public class mamedbg
 	
 			fprintf(file, "%0*X: ", width, pc );
 	
-			if (opcodes != 0)
+			if( opcodes )
 			{
 				switch( ALIGN )
 				{
@@ -3991,7 +3991,7 @@ public class mamedbg
 		unsigned datasize, asciimode, pgm_memory_base;
 	
 		filename = get_file_name( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DUMP arguments",
 				"<filename> missing");
@@ -3999,7 +3999,7 @@ public class mamedbg
 			return;
 		}
 		start = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DUMP arguments",
 				"<start> address missing");
@@ -4008,7 +4008,7 @@ public class mamedbg
 		}
 		start = rshift(start);
 		end = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "DUMP arguments",
 				"<end> address missing");
@@ -4020,7 +4020,7 @@ public class mamedbg
 		pgm_memory_base = 0;	/* default to data mode (offset 0) */
 		datasize = ALIGN*2; 	/* default to align unit of that CPU */
 		data = get_option_or_value( &cmd, &length, "BYTE\0WORD\0DWORD\0");
-		if (length != 0)
+		if( length )
 		{
 			if( data > 2 )
 			{
@@ -4034,7 +4034,7 @@ public class mamedbg
 			}
 			/* look if there's also an ASCII mode specified */
 			data = get_option_or_value( &cmd, &length, "OFF\0TRANSLATE\0FULL\0" );
-			if (length != 0)
+			if( length )
 			{
 				if( data > 2 )
 				{
@@ -4045,7 +4045,7 @@ public class mamedbg
 				asciimode = data;
 				/* look if there's also an PROG/DATA mode specified */
 				data = get_option_or_value( &cmd, &length, "PROG\0DATA\0" );
-				if (length != 0)
+				if( length )
 				{
 					if( data > 1 )
 					{
@@ -4058,11 +4058,11 @@ public class mamedbg
 			}
 		}
 	
-		if (pgm_memory_base != 0)
+		if( pgm_memory_base )
 			pgm_memory_base = PGM_MEMORY;
 	
 		file = fopen(filename, "w");
-		if (file == 0)
+		if( !file )
 		{
 			win_msgbox( cur_col[E_ERROR], "DUMP to file",
 				"Could not create %s", filename);
@@ -4093,7 +4093,7 @@ public class mamedbg
 			if( (offs & 15) == 15 )
 			{
 				unsigned o;
-				if (asciimode != 0)
+				if( asciimode )
 				{
 					fputc( ' ', file );
 					if( asciimode == 1 )
@@ -4135,7 +4135,7 @@ public class mamedbg
 		unsigned save_what;
 	
 		filename = get_file_name( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "SAVE arguments",
 				"<filename> missing");
@@ -4143,7 +4143,7 @@ public class mamedbg
 			return;
 		}
 		start = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "SAVE arguments",
 				"<start> address missing");
@@ -4151,7 +4151,7 @@ public class mamedbg
 			return;
 		}
 		end = get_register_or_value( &cmd, &length );
-		if (length == 0)
+		if( !length )
 		{
 			win_msgbox( cur_col[E_ERROR], "SAVE arguments",
 				"<end> address missing");
@@ -4160,10 +4160,10 @@ public class mamedbg
 		}
 	
 		save_what = get_option_or_value( &cmd, &length, "OPCODES\0DATA\0");
-		if (length == 0) save_what = 0;	/* default to OP_ROM */
+		if( !length ) save_what = 0;	/* default to OP_ROM */
 	
 		file = fopen(filename, "wb");
-		if (file == 0)
+		if( !file )
 		{
 			win_msgbox( cur_col[E_ERROR], "SAVE to file",
 				"Could not create %s", filename);
@@ -4171,7 +4171,7 @@ public class mamedbg
 			return;
 		}
 	
-		if (save_what != 0)
+		if( save_what )
 			save_what = PGM_MEMORY;
 	
 		for( offs = 0; offs + start <= end; offs++ )
@@ -4196,12 +4196,12 @@ public class mamedbg
 		int length;
 	
 		which = xtou( &cmd, &length );
-		if (length != 0)
+		if( length )
 		{
 			which = (which - 1) % MAX_MEM;
 			address = get_register_or_value( &cmd, &length );
 			address = rshift(address) & AMASK;
-			if (length != 0)
+			if( length )
 			{
 				DBGMEM[which].offset = address % DBGMEM[which].size;
 				DBGMEM[which].base = address - DBGMEM[which].offset;
@@ -4421,7 +4421,7 @@ public class mamedbg
 		int length;
 	
 		brk = get_register_or_value( &cmd, &length );
-		if (length != 0)
+		if( length )
 			DBG.brk_temp = brk;
 	
 		dbg_update = 0;
@@ -4546,7 +4546,7 @@ public class mamedbg
 		if( regnum > 0 )
 		{
 			address = get_register_or_value( &cmd, &length );
-			if (length != 0)
+			if( length )
 			{
 				activecpu_set_reg( regnum, address );
 				if( regnum > 1 )
@@ -4583,11 +4583,11 @@ public class mamedbg
 		int length;
 	
 		which = dtou( &cmd, &length );
-		if (length != 0)
+		if( length )
 		{
 			which = (which - 1) % 2;
 			mode = get_option_or_value( &cmd, &length, "BYTE\0WORD\0DWORD\0" );
-			if (length == 0) mode = 0; /* default to BYTE */
+			if( !length ) mode = 0; /* default to BYTE */
 			DBGMEM[which].mode = mode;
 		}
 		else
@@ -5016,7 +5016,7 @@ public class mamedbg
 		unsigned data;
 		int length;
 		data = dtou( &cmd, &length );
-		if (length != 0)
+		if( length )
 			dbg_trace_delay = data;
 		else
 			dbg_trace_delay = 0x7fffffff;
@@ -5083,7 +5083,7 @@ public class mamedbg
 	
 		dbg_key_repeat = dtou( &cmd, NULL );
 		if( dbg_key_repeat == 0 )
-			dbg_key_repeat = Machine.drv.frames_per_second / 15;
+			dbg_key_repeat = Machine->drv->frames_per_second / 15;
 	
 		edit_cmds_reset();
 		dbg_update = 1;
@@ -5144,7 +5144,7 @@ public class mamedbg
 		if( dbg_dasm_opcodes != state )
 		{
 			dbg_dasm_opcodes = state;
-			if (state != 0)
+			if( state )
 			{
 				win_set_prio( win, 0 );
 				win_set_w( win, w + dw	);
@@ -5224,7 +5224,7 @@ public class mamedbg
 		}
 	
 		/* set keyboard repeat rate based on the game's frame rate */
-		dbg_key_repeat = Machine.drv.frames_per_second / 15;
+		dbg_key_repeat = Machine->drv->frames_per_second / 15;
 	
 		/* create windows for the active CPU */
 		dbg_open_windows();
@@ -5232,7 +5232,7 @@ public class mamedbg
 		/* See if there is an existing global mamedbg config file */
 		strcpy( filename, "mamedbg.cfg" );
 		file = fopen( filename, "r" );
-		if (file != 0)
+		if( file )
 		{
 			char *cmdline = CMD, *p;
 			int cmd;
@@ -5244,9 +5244,9 @@ public class mamedbg
 				if( *cmdline == ';' || *cmdline == '#' )
 					continue;
 				p = strchr( cmdline, '\r' );
-				if (p != 0) *p = '\0';
+				if( p ) *p = '\0';
 				p = strchr( cmdline, '\n' );
-				if (p != 0) *p = '\0';
+				if( p ) *p = '\0';
 				/* Make it all upper case */
 				strcpy( cmdline, upper(cmdline) );
 				cmd = edit_cmds_parse( cmdline );
@@ -5258,9 +5258,9 @@ public class mamedbg
 		for( active_cpu = 0; active_cpu < total_cpu; active_cpu++ )
 		{
 			/* See if there is an existing startup file <game>.cf<cpunum> */
-			sprintf( filename, "%s.cf%d", Machine.gamedrv.name, active_cpu );
+			sprintf( filename, "%s.cf%d", Machine->gamedrv->name, active_cpu );
 			file = fopen( filename, "r" );
-			if (file != 0)
+			if( file )
 			{
 				char *cmdline = CMD, *p;
 				int cmd;
@@ -5272,9 +5272,9 @@ public class mamedbg
 					if( *cmdline == ';' || *cmdline == '#' )
 						continue;
 					p = strchr( cmdline, '\r' );
-					if (p != 0) *p = '\0';
+					if( p ) *p = '\0';
 					p = strchr( cmdline, '\n' );
-					if (p != 0) *p = '\0';
+					if( p ) *p = '\0';
 					/* Make it all upper case */
 					strcpy( cmdline, upper(cmdline) );
 					cmd = edit_cmds_parse( cmdline );
@@ -5312,13 +5312,13 @@ public class mamedbg
 		if( ++debug_key_delay == 0x7fff )
 		{
 			debug_key_delay = 0;
-			if (debug_key_pressed == 0)
+			if (!debug_key_pressed)
 				debug_key_pressed = seq_pressed(input_port_type_seq(IPT_UI_ON_SCREEN_DISPLAY));
 		}
 	
-		if (dbg_fast != 0)
+		if( dbg_fast )
 		{
-			if (debug_key_pressed == 0) return;
+			if( !debug_key_pressed ) return;
 			dbg_fast = 0;
 		}
 	
@@ -5327,9 +5327,9 @@ public class mamedbg
 		/* If this CPU shall be ignored, just return */
 		if( DBG.ignore ) return;
 	
-		cputype = Machine.drv.cpu[active_cpu].cpu_type;
+		cputype = Machine->drv->cpu[active_cpu].cpu_type;
 	
-		if (trace_on != 0)
+		if( trace_on )
 		{
 			trace_select();
 			trace_output();
@@ -5358,7 +5358,7 @@ public class mamedbg
 		{
 			debug_key_pressed = 0;
 	
-			if (first_time == 0)
+			if( !first_time )
 			{
 				osd_sound_enable(0);
 			}
@@ -5375,7 +5375,7 @@ public class mamedbg
 			dbg_trace = 0;
 		}
 	
-		if (dbg_step != 0)
+		if( dbg_step )
 		{
 			DBGDASM.pc_cur = activecpu_get_pc();
 			dbg_step = 0;
@@ -5386,7 +5386,7 @@ public class mamedbg
 	
 		while( dbg_active && !dbg_step )
 		{
-			if (dbg_trace != 0)
+			if( dbg_trace )
 			{
 				dbg_step = 1;
 				if( --debug_trace_delay > 0 )
@@ -5398,7 +5398,7 @@ public class mamedbg
 					if (dbg_trace_delay != 0x7fffffff)
 						update_video_and_audio();
 					debug_trace_delay = dbg_trace_delay;
-					if (debug_key_pressed != 0)
+					if( debug_key_pressed )
 					{
 						dbg_trace = 0;
 						dbg_step = 0;
@@ -5407,7 +5407,7 @@ public class mamedbg
 				}
 			}
 	
-			if (dbg_update != 0)
+			if( dbg_update )
 			{
 				if( active_cpu != previous_active_cpu )
 				{
@@ -5443,7 +5443,7 @@ public class mamedbg
 				dbg_update = 0;
 			}
 	
-			if (dbg_trace == 0)
+			if( !dbg_trace )
 			{
 				switch( DBG.window )
 				{

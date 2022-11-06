@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,8 +20,7 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr beaminv_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beaminv_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y;
 		int i;
 	
@@ -33,7 +32,7 @@ public class beaminv
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel.handler(tmpbitmap, x, y, data & 0x01);
+			plot_pixel(tmpbitmap, x, y, data & 0x01);
 	
 			y--;
 			data >>= 1;

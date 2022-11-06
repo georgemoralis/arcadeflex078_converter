@@ -41,7 +41,7 @@ TODO: cocktail mode
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -131,7 +131,7 @@ public class phozon
 	};
 	
 	/* The dipswitches and player inputs are not memory mapped, they are handled by an I/O chip. */
-	static InputPortPtr input_ports_phozon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phozon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phozon )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "3C_1C") );
@@ -250,8 +250,7 @@ public class phozon
 		REGION_SOUND1	/* memory region */
 	};
 	
-	public static MachineHandlerPtr machine_driver_phozon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( phozon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* MAIN CPU, same as Gaplus? */
@@ -286,9 +285,7 @@ public class phozon
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -328,5 +325,5 @@ public class phozon
 	
 	
 	
-	public static GameDriver driver_phozon	   = new GameDriver("1983"	,"phozon"	,"phozon.java"	,rom_phozon,null	,machine_driver_phozon	,input_ports_phozon	,null	,ROT90	,	"Namco", "Phozon (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1983, phozon, 0, phozon, phozon, 0, ROT90, "Namco", "Phozon (Japan)", GAME_NO_COCKTAIL )
 }

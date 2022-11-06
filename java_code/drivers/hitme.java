@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -32,11 +32,8 @@ public class hitme
 	static const float tock = .0189;
 	data8_t *hitme_vidram;
 	
-	VIDEO_START (hitme);
-	VIDEO_START (brickyrd);
-	VIDEO_UPDATE (hitme);
 	
-	static InputPortPtr input_ports_hitme = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hitme = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hitme )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );/* Start button */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
@@ -102,7 +99,7 @@ public class hitme
 		PORT_DIPSETTING(    0x07, "40 Hands" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_brickyrd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brickyrd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brickyrd )
 		PORT_START(); 
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );/* Start button */
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* Always high */
@@ -191,8 +188,7 @@ public class hitme
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static public static ReadHandlerPtr hitme_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hitme_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
 			return input_port_0_r.handler (offset) - ((rand()%2) << 2) - 0x80;
@@ -201,8 +197,7 @@ public class hitme
 			return input_port_0_r.handler (offset) - ((rand()%2) << 2);
 	} };
 	
-	static public static ReadHandlerPtr hitme_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hitme_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
 			return input_port_1_r.handler (offset) - 0x80;
@@ -211,8 +206,7 @@ public class hitme
 			return input_port_1_r.handler (offset);
 	} };
 	
-	static public static ReadHandlerPtr hitme_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hitme_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
 			return input_port_2_r.handler (offset) - ((rand()%2) << 2) - 0x80;
@@ -221,8 +215,7 @@ public class hitme
 			return input_port_2_r.handler (offset) - ((rand()%2) << 2);
 	} };
 	
-	static public static ReadHandlerPtr hitme_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hitme_port_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((timer_get_time() - timeout_time) > (timeout_counter * tock))
 		{
 			return input_port_3_r.handler (offset) - 0x80;
@@ -231,15 +224,13 @@ public class hitme
 			return input_port_3_r.handler (offset);
 	} };
 	
-	static public static WriteHandlerPtr output_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr output_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timeout_counter = (data);
 		timeout_time = timer_get_time();
 	} };
 	
 	#if 0
-	static public static ReadHandlerPtr hitme_unknown_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hitme_unknown_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x00;
 	} };
 	#endif
@@ -283,8 +274,7 @@ public class hitme
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_hitme = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hitme )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 8945000/16 )	/* .559 MHz */
@@ -306,9 +296,7 @@ public class hitme
 		MDRV_VIDEO_START(hitme)
 		MDRV_VIDEO_UPDATE(hitme)
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 		/*	The Barricade rom is using a resolution of 32x24 which suggests slightly
 	   	different hardware from HitMe (40x19) however the screenshot on the arcade
@@ -318,8 +306,7 @@ public class hitme
 	      */
 	
 	
-	public static MachineHandlerPtr machine_driver_brickyrd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( brickyrd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 8945000/16 )	/* .559 MHz */
@@ -340,9 +327,7 @@ public class hitme
 		MDRV_VIDEO_START(brickyrd)
 		MDRV_VIDEO_UPDATE(hitme)
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_hitme = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, ROMREGION_INVERT ) /* 64k for code */
@@ -388,8 +373,8 @@ public class hitme
 	   ROM_LOAD( "barricad.7h", 0x0000, 0x0200, CRC(c676fd22) SHA1(c37bf92f5a146a93bd977b2a05485addc00ab066) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_hitme	   = new GameDriver("1976"	,"hitme"	,"hitme.java"	,rom_hitme,null	,machine_driver_hitme	,input_ports_hitme	,null	,ROT0	,	"RamTek", "Hit Me", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mblkjack	   = new GameDriver("197?"	,"mblkjack"	,"hitme.java"	,rom_mblkjack,driver_hitme	,machine_driver_hitme	,input_ports_hitme	,null	,ROT0	,	"Mirco", "Black Jack (Mirco)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_barricad	   = new GameDriver("1976"	,"barricad"	,"hitme.java"	,rom_barricad,null	,machine_driver_brickyrd	,input_ports_brickyrd	,null	,ROT0	,	"RamTek", "Barricade", GAME_NO_SOUND  )
-	public static GameDriver driver_brickyrd	   = new GameDriver("1976"	,"brickyrd"	,"hitme.java"	,rom_brickyrd,driver_barricad	,machine_driver_brickyrd	,input_ports_brickyrd	,null	,ROT0	,	"RamTek", "Brickyard", GAME_NO_SOUND  )
+	GAMEX( 1976, hitme,    0,        hitme,    hitme,    0, ROT0, "RamTek", "Hit Me", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 197?, mblkjack, hitme,    hitme,    hitme,    0, ROT0, "Mirco", "Black Jack (Mirco)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1976, barricad, 0,        brickyrd, brickyrd, 0, ROT0, "RamTek", "Barricade", GAME_NO_SOUND  )
+	GAMEX( 1976, brickyrd, barricad, brickyrd, brickyrd, 0, ROT0, "RamTek", "Brickyard", GAME_NO_SOUND  )
 }

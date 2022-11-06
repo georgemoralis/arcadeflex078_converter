@@ -12,7 +12,7 @@ Japan). It has no sound.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,7 +39,7 @@ public class minivadr
 	};
 	
 	
-	static InputPortPtr input_ports_minivadr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_minivadr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( minivadr )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
@@ -52,8 +52,7 @@ public class minivadr
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_minivadr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( minivadr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000 / 6)		 /* 4 MHz ? */
@@ -74,9 +73,7 @@ public class minivadr
 		MDRV_VIDEO_UPDATE(minivadr)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -91,5 +88,5 @@ public class minivadr
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_minivadr	   = new GameDriver("1990"	,"minivadr"	,"minivadr.java"	,rom_minivadr,null	,machine_driver_minivadr	,input_ports_minivadr	,null	,ROT0	,	"Taito Corporation", "Minivader" )
+	GAME( 1990, minivadr, 0, minivadr, minivadr, 0, ROT0, "Taito Corporation", "Minivader" )
 }

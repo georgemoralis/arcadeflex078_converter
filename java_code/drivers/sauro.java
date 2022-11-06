@@ -75,7 +75,7 @@ Addition by Reip
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -87,27 +87,23 @@ public class sauro
 	
 	
 	
-	public static WriteHandlerPtr sauro_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sauro_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data |= 0x80;
 		soundlatch_w.handler(offset, data);
 	} };
 	
-	public static ReadHandlerPtr sauro_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sauro_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret	= soundlatch_r(offset);
 		soundlatch_clear_w(offset, 0);
 		return ret;
 	} };
 	
-	public static WriteHandlerPtr sauro_coin1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sauro_coin1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data);
 		coin_counter_w(0, 0); // to get the coin counter working in sauro, as it doesn't write 0
 	} };
 	
-	public static WriteHandlerPtr sauro_coin2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sauro_coin2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(1, data);
 		coin_counter_w(1, 0); // to get the coin counter working in sauro, as it doesn't write 0
 	} };
@@ -207,7 +203,7 @@ public class sauro
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_tecfri = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tecfri = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tecfri )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 );
@@ -330,8 +326,7 @@ public class sauro
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static InterruptHandlerPtr sauro_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sauro_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
@@ -343,8 +338,7 @@ public class sauro
 		{ 100 } 	/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_tecfri = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tecfri )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4000000)        // 4 MHz???
 		MDRV_CPU_VBLANK_INT(irq0_line_hold, 1)
@@ -361,12 +355,9 @@ public class sauro
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_trckydoc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trckydoc )
 		MDRV_IMPORT_FROM(tecfri)
 	
 		MDRV_CPU_MODIFY("main")
@@ -376,12 +367,9 @@ public class sauro
 	
 		MDRV_VIDEO_START(trckydoc)
 		MDRV_VIDEO_UPDATE(trckydoc)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sauro = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sauro )
 		MDRV_IMPORT_FROM(tecfri)
 	
 		MDRV_CPU_MODIFY("main")
@@ -397,9 +385,7 @@ public class sauro
 	
 		MDRV_VIDEO_START(sauro)
 		MDRV_VIDEO_UPDATE(sauro)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -459,8 +445,7 @@ public class sauro
 		ROM_LOAD( "tdprm.prm",    0x0000, 0x0200,  CRC(5261bc11) SHA1(1cc7a9a7376e65f4587b75ef9382049458656372) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_tecfri  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tecfri  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game doesn't like all memory to be initialized to zero, it won't
 		   initialize the high scores */
 	
@@ -470,6 +455,6 @@ public class sauro
 		RAM[0xe000] = 1;
 	} };
 	
-	public static GameDriver driver_sauro	   = new GameDriver("1987"	,"sauro"	,"sauro.java"	,rom_sauro,null	,machine_driver_sauro	,input_ports_tecfri	,init_tecfri	,ROT0	,	"Tecfri", "Sauro", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_trckydoc	   = new GameDriver("1987"	,"trckydoc"	,"sauro.java"	,rom_trckydoc,null	,machine_driver_trckydoc	,input_ports_tecfri	,init_tecfri	,ROT0	,	"Tecfri", "Tricky Doc" )
+	GAMEX( 1987, sauro,    0, sauro,    tecfri, tecfri, ROT0, "Tecfri", "Sauro", GAME_IMPERFECT_SOUND )
+	GAME ( 1987, trckydoc, 0, trckydoc, tecfri, tecfri, ROT0, "Tecfri", "Tricky Doc" )
 }

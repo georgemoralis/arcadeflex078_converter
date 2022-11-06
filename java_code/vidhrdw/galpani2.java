@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -70,7 +70,7 @@ public class galpani2
 		pen	=	newword & 0xff; \
 		x	=	(offset % 512);	/* 512 x 256 */ \
 		y	=	(offset / 512); \
-		plot_pixel( galpani2_bg8_bitmap_##_n_, x, y, Machine.pens[0x4000 + pen] ); \
+		plot_pixel( galpani2_bg8_bitmap_##_n_, x, y, Machine->pens[0x4000 + pen] ); \
 	}
 	
 	#define galpani2_BG8_PALETTE_W( _n_ ) \
@@ -116,7 +116,7 @@ public class galpani2
 		int x = (offset % 256) + (offset / (256*256)) * 256 ;
 		int y = (offset / 256) % 256;
 	
-		plot_pixel( galpani2_bg15_bitmap, x, y, Machine.pens[0x4200 + (newword & 0x7fff)] );
+		plot_pixel( galpani2_bg15_bitmap, x, y, Machine->pens[0x4200 + (newword & 0x7fff)] );
 	}
 	
 	
@@ -128,8 +128,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_galpani2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_galpani2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		/* first $4200 colors are dynamic */
 	
@@ -148,8 +147,7 @@ public class galpani2
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_galpani2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_galpani2  = new VideoStartHandlerPtr() { public int handler(){
 		if ((galpani2_bg15_bitmap  = auto_bitmap_alloc_depth(256*8, 256, 16)) == 0)	return 1;
 	
 		if ((galpani2_bg8_bitmap_0 = auto_bitmap_alloc_depth(512, 256, 16)) == 0)	return 1;
@@ -167,8 +165,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galpani2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		galpani2_mcu_run();
@@ -186,7 +183,7 @@ public class galpani2
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if ((layers_ctrl & 0x1) != 0)
+		if (layers_ctrl & 0x1)
 		{
 			int x = 0;
 			int y = 0;
@@ -201,7 +198,7 @@ public class galpani2
 		16c0/40 = 5b		200/40 = 8
 		scrollx = f5, on screen x should be 0 (f5+5b = 150)	*/
 	
-		if ((layers_ctrl & 0x2) != 0)
+		if (layers_ctrl & 0x2)
 		{
 			int x = - ( *galpani2_bg8_0_scrollx + 0x200 - 0x0f5 );
 			int y = - ( *galpani2_bg8_0_scrolly + 0x200 - 0x1be );
@@ -210,7 +207,7 @@ public class galpani2
 								cliprect,TRANSPARENCY_PEN,Machine.pens[0x4000 + 0]);
 		}
 	
-		if ((layers_ctrl & 0x4) != 0)
+		if (layers_ctrl & 0x4)
 		{
 			int x = - ( *galpani2_bg8_1_scrollx + 0x200 - 0x0f5 );
 			int y = - ( *galpani2_bg8_1_scrolly + 0x200 - 0x1be );
@@ -219,6 +216,6 @@ public class galpani2
 								cliprect,TRANSPARENCY_PEN,Machine.pens[0x4000 + 0]);
 		}
 	
-		if ((layers_ctrl & 0x8) != 0)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
+		if (layers_ctrl & 0x8)	kaneko16_draw_sprites(bitmap, cliprect, 0xf);
 	} };
 }

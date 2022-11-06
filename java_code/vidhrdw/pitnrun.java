@@ -18,7 +18,7 @@ In debug build press 'w' for spotlight and 'e' for lightning
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,31 +58,26 @@ public class pitnrun
 			0)
 	}
 	
-	public static WriteHandlerPtr pitnrun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_all_tiles_dirty( fg );
 	} };
 	
-	public static WriteHandlerPtr pitnrun_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram2[offset] = data;
 		tilemap_mark_all_tiles_dirty( bg );
 	} };
 	
 	
-	public static ReadHandlerPtr pitnrun_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr pitnrun_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram2[offset];
 	} };
 	
-	public static WriteHandlerPtr pitnrun_char_bank_select = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_char_bank_select = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(pitnrun_char_bank!=data)
 		{
 			tilemap_mark_all_tiles_dirty( bg );
@@ -91,32 +86,27 @@ public class pitnrun
 	} };
 	
 	
-	public static WriteHandlerPtr pitnrun_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pitnrun_scroll = (pitnrun_scroll & (0xff<<((offset)?0:8))) |( data<<((offset)?8:0));
 		tilemap_set_scrollx( bg, 0, pitnrun_scroll);
 	} };
 	
-	WRITE_HANDLER(pitnrun_ha_w)
-	{
+	public static WriteHandlerPtr pitnrun_ha_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pitnrun_ha=data;
-	}
+	} };
 	
-	WRITE_HANDLER(pitnrun_h_heed_w)
-	{
+	public static WriteHandlerPtr pitnrun_h_heed_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pitnrun_h_heed=data;
-	}
+	} };
 	
-	WRITE_HANDLER(pitnrun_v_heed_w)
-	{
+	public static WriteHandlerPtr pitnrun_v_heed_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pitnrun_v_heed=data;
-	}
+	} };
 	
-	WRITE_HANDLER(pitnrun_color_select_w)
-	{
+	public static WriteHandlerPtr pitnrun_color_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pitnrun_color_select=data;
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
-	}
+	} };
 	
 	void pitnrun_spotlights(void)
 	{
@@ -136,8 +126,7 @@ public class pitnrun
 	}
 	
 	
-	PALETTE_INIT (pitnrun)
-	{
+	public static PaletteInitHandlerPtr palette_init_pitnrun  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int bit0,bit1,bit2,r,g,b;
 		for (i = 0;i < 32*3; i++)
@@ -180,10 +169,9 @@ public class pitnrun
 			palette_set_color(i+16,(r>0xff)?0xff:r,(g>0xff)?0xff:g,(b>0xff)?0xff:b);	
 		
 		}
-	}
+	} };
 	
-	VIDEO_START(pitnrun)
-	{
+	public static VideoStartHandlerPtr video_start_pitnrun  = new VideoStartHandlerPtr() { public int handler(){
 		fg = tilemap_create( get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
 		bg = tilemap_create( get_tile_info2,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32*4,32 );
 		tilemap_set_transparent_pen( fg, 0 );
@@ -193,7 +181,7 @@ public class pitnrun
 		tmp_bitmap[3] = auto_bitmap_alloc(128,128);
 		pitnrun_spotlights();
 		return video_start_generic.handler();
-	}
+	} };
 	
 	static void pitnrun_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -209,18 +197,18 @@ public class pitnrun
 			flipy = (spriteram.read(offs+1)&0x80)>>7;
 			flipx = (spriteram.read(offs+1)&0x40)>>6;
 			
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 256 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 			
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 	 			(spriteram.read(offs+1)&0x3f)+((spriteram.read(offs+2)&0x80)>>1)+((spriteram.read(offs+2)&0x40)<<1),
 				pal,
 				flipx,flipy,
@@ -229,8 +217,7 @@ public class pitnrun
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pitnrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pitnrun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int dx=0,dy=0;
 		struct rectangle myclip=*cliprect; 
 	
@@ -264,10 +251,10 @@ public class pitnrun
 			dx=128-pitnrun_h_heed+((pitnrun_ha&8)<<5)+3;
 			dy=128-pitnrun_v_heed+((pitnrun_ha&0x10)<<4);
 			
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 				dx=128-dx+16;
 				
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 				dy=128-dy;
 	
 			myclip.min_x=dx;
@@ -287,7 +274,7 @@ public class pitnrun
 		
 		pitnrun_draw_sprites(bitmap,&myclip);
 	
-		if ((pitnrun_ha & 4) != 0)
+		if(pitnrun_ha&4)
 			copybitmap(bitmap,tmp_bitmap[pitnrun_ha&3],flip_screen_x,flip_screen_y,dx,dy,&myclip,TRANSPARENCY_PEN, 1);
 		tilemap_draw(bitmap,cliprect,fg, 0,0);
 	} };	

@@ -47,7 +47,7 @@ sprite RAM
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -79,24 +79,21 @@ public class taito_h
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_syvalion  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_syvalion  = new VideoStartHandlerPtr() { public int handler(){
 		if ( TC0080VCO_vh_start(0,1,1,1,-2))
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_recordbr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_recordbr  = new VideoStartHandlerPtr() { public int handler(){
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_dleague  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dleague  = new VideoStartHandlerPtr() { public int handler(){
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
@@ -129,7 +126,7 @@ public class taito_h
 			tile_offs = (TC0080VCO_spriteram[offs + 3] & 0x1fff) << 2;
 			ysize     = size[ ( TC0080VCO_spriteram[ offs ] & 0x0c00 ) >> 10 ];
 	
-			if (tile_offs != 0)
+			if (tile_offs)
 			{
 				/* The increasing ratio of expansion is different whether zoom value */
 				/* is less or more than 63.                                          */
@@ -149,7 +146,7 @@ public class taito_h
 				if (x0 >= 0x200) x0 -= 0x400;
 				if (y0 >= 0x200) y0 -= 0x400;
 	
-				if (TC0080VCO_flipscreen != 0)
+				if (TC0080VCO_flipscreen)
 				{
 					x0 = 497 - x0;
 					y0 = 498 - y0;
@@ -176,13 +173,13 @@ public class taito_h
 							flipx = TC0080VCO_chain_ram_1[tile_offs] & 0x0040;
 							flipy = TC0080VCO_chain_ram_1[tile_offs] & 0x0080;
 	
-							if (TC0080VCO_flipscreen != 0)
+							if (TC0080VCO_flipscreen)
 							{
 								flipx ^= 0x0040;
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine . gfx[0],
+							drawgfxzoom( bitmap, Machine -> gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -226,7 +223,7 @@ public class taito_h
 			tile_offs = (TC0080VCO_spriteram[offs + 3] & 0x1fff) << 2;
 			ysize     = size[ ( TC0080VCO_spriteram[ offs ] & 0x0c00 ) >> 10 ];
 	
-			if (tile_offs != 0)
+			if (tile_offs)
 			{
 				/* Convert zoomy value to real value as zoomx */
 				zoomy = zoomy_conv_table[zoomy];
@@ -260,7 +257,7 @@ public class taito_h
 				if (x0 >= 0x200) x0 -= 0x400;
 				if (y0 >= 0x200) y0 -= 0x400;
 	
-				if (TC0080VCO_flipscreen != 0)
+				if (TC0080VCO_flipscreen)
 				{
 					x0 = 497 - x0;
 					y0 = 498 - y0;
@@ -288,13 +285,13 @@ public class taito_h
 							flipx = TC0080VCO_chain_ram_1[tile_offs] & 0x0040;
 							flipy = TC0080VCO_chain_ram_1[tile_offs] & 0x0080;
 	
-							if (TC0080VCO_flipscreen != 0)
+							if (TC0080VCO_flipscreen)
 							{
 								flipx ^= 0x0040;
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine . gfx[0],
+							drawgfxzoom( bitmap, Machine -> gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -336,7 +333,7 @@ public class taito_h
 			pribit    = (TC0080VCO_spriteram[offs + 0] & 0x1000) >> 12;
 			ysize     = size[ ( TC0080VCO_spriteram[ offs ] & 0x0c00 ) >> 10 ];
 	
-			if (tile_offs != 0)
+			if (tile_offs)
 			{
 				/* The increasing ratio of expansion is different whether zoom value */
 				/* is less or more than 63.                                          */
@@ -360,7 +357,7 @@ public class taito_h
 				if (x0 >= 0x200) x0 -= 0x400;
 				if (y0 >= 0x200) y0 -= 0x400;
 	
-				if (TC0080VCO_flipscreen != 0)
+				if (TC0080VCO_flipscreen)
 				{
 					x0 = 497 - x0;
 					y0 = 498 - y0;
@@ -389,13 +386,13 @@ public class taito_h
 								flipx = TC0080VCO_chain_ram_1[tile_offs] & 0x0040;
 								flipy = TC0080VCO_chain_ram_1[tile_offs] & 0x0080;
 	
-								if (TC0080VCO_flipscreen != 0)
+								if (TC0080VCO_flipscreen)
 								{
 									flipx ^= 0x0040;
 									flipy ^= 0x0080;
 								}
 	
-								drawgfxzoom( bitmap, Machine . gfx[0],
+								drawgfxzoom( bitmap, Machine -> gfx[0],
 										 tile,
 										 color,
 										 flipx, flipy,
@@ -430,8 +427,7 @@ public class taito_h
 	
 	/**************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_syvalion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		TC0080VCO_tilemap_update();
 	
 	#ifdef MAME_DEBUG
@@ -447,8 +443,7 @@ public class taito_h
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_recordbr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		TC0080VCO_tilemap_update();
 	
 	#ifdef MAME_DEBUG
@@ -477,8 +472,7 @@ public class taito_h
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dleague  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		TC0080VCO_tilemap_update();
 	
 	#ifdef MAME_DEBUG

@@ -8,7 +8,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,16 +21,14 @@ public class parodius
 	static int videobank;
 	static unsigned char *ram;
 	
-	public static InterruptHandlerPtr parodius_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
+	public static InterruptHandlerPtr parodius_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled()) cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((videobank & 0x01) != 0)
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (videobank & 0x01)
 		{
-			if ((videobank & 0x04) != 0)
+			if (videobank & 0x04)
 				return paletteram_r(offset + 0x0800);
 			else
 				return paletteram_r(offset);
@@ -39,11 +37,10 @@ public class parodius
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((videobank & 0x01) != 0)
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (videobank & 0x01)
 		{
-			if ((videobank & 0x04) != 0)
+			if (videobank & 0x04)
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset + 0x0800,data);
 			else
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
@@ -52,25 +49,22 @@ public class parodius
 			ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr parodius_052109_053245_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((videobank & 0x02) != 0)
+	public static ReadHandlerPtr parodius_052109_053245_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (videobank & 0x02)
 			return K053245_r(offset);
 		else
 			return K052109_r(offset);
 	} };
 	
-	public static WriteHandlerPtr parodius_052109_053245_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((videobank & 0x02) != 0)
+	public static WriteHandlerPtr parodius_052109_053245_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (videobank & 0x02)
 			K053245_w(offset,data);
 		else
 			K052109_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr parodius_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((videobank & 0xf8) != 0) logerror("%04x: videobank = %02x\n",activecpu_get_pc(),data);
+	public static WriteHandlerPtr parodius_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (videobank & 0xf8) logerror("%04x: videobank = %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 0 = select palette or work RAM at 0000-07ff */
 		/* bit 1 = select 052109 or 053245 at 2000-27ff */
@@ -78,8 +72,7 @@ public class parodius
 		videobank = data;
 	} };
 	
-	public static WriteHandlerPtr parodius_3fc0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr parodius_3fc0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0xf4) != 0x10) logerror("%04x: 3fc0 = %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 0/1 = coin counters */
@@ -92,16 +85,14 @@ public class parodius
 		/* other bits unknown */
 	} };
 	
-	public static ReadHandlerPtr parodius_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr parodius_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return offset ? 0x00 : 0x80;
 	} };
 	
-	public static WriteHandlerPtr parodius_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr parodius_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
@@ -121,15 +112,13 @@ public class parodius
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	sound_nmi_enabled = 1;
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
 	} };
 	
-	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = memory_region(REGION_CPU1)[0x1837];
 	
 		if ( activecpu_get_pc() == 0xa400 && data == 0 )
@@ -203,7 +192,7 @@ public class parodius
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_parodius = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_parodius = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( parodius )
 		PORT_START(); 	/* PLAYER 1 INPUTS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -327,8 +316,7 @@ public class parodius
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_parodius = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( parodius )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* 053248 */
@@ -357,9 +345,7 @@ public class parodius
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -420,15 +406,14 @@ public class parodius
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int offs = 0;
 	
-		if ((lines & 0xf0) != 0) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
+		if (lines & 0xf0) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
 	
 		offs = 0x10000 + (((lines & 0x0f)^0x0f) * 0x4000);
 		if (offs >= 0x48000) offs -= 0x40000;
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_parodius  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_parodius  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = parodius_banking;
@@ -442,14 +427,13 @@ public class parodius
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_parodius  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_parodius  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_parodius	   = new GameDriver("1990"	,"parodius"	,"parodius.java"	,rom_parodius,null	,machine_driver_parodius	,input_ports_parodius	,init_parodius	,ROT0	,	"Konami", "Parodius DA! (World)" )
-	public static GameDriver driver_parodisj	   = new GameDriver("1990"	,"parodisj"	,"parodius.java"	,rom_parodisj,driver_parodius	,machine_driver_parodius	,input_ports_parodius	,init_parodius	,ROT0	,	"Konami", "Parodius DA! (Japan)" )
+	GAME( 1990, parodius, 0,        parodius, parodius, parodius, ROT0, "Konami", "Parodius DA! (World)" )
+	GAME( 1990, parodisj, parodius, parodius, parodius, parodius, ROT0, "Konami", "Parodius DA! (Japan)" )
 }

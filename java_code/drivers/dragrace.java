@@ -6,7 +6,7 @@ Atari Drag Race Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,8 +38,7 @@ public class dragrace
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_dragrace  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_dragrace  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(cpu_getscanlinetime(0), 0, dragrace_frame_callback);
 	} };
 	
@@ -96,11 +95,10 @@ public class dragrace
 		discrete_sound_w(0x03, (dragrace_misc_flags & 0x20000000) ? 1: 0);	// HiTone enable
 	}
 	
-	public static WriteHandlerPtr dragrace_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dragrace_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Set/clear individual bit */
 		UINT32 mask = 1 << offset;
-		if ((data & 0x01) != 0)
+		if (data & 0x01)
 			dragrace_misc_flags |= mask;
 		else
 			dragrace_misc_flags &= (~mask);
@@ -108,8 +106,7 @@ public class dragrace
 		dragrace_update_misc_flags();
 		} };
 	
-	public static WriteHandlerPtr dragrace_misc_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dragrace_misc_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Clear 8 bits */
 		UINT32 mask = 0xff << (((offset >> 3) & 0x03) * 8);
 		dragrace_misc_flags &= (~mask);
@@ -117,8 +114,7 @@ public class dragrace
 		dragrace_update_misc_flags();
 	} };
 	
-	public static ReadHandlerPtr dragrace_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dragrace_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val = readinputport(2);
 	
 		UINT8 maskA = 1 << (offset % 8);
@@ -135,7 +131,7 @@ public class dragrace
 				in &= ~(1 << dragrace_gear[i]);
 			}
 	
-			if ((in & maskA) != 0)
+			if (in & maskA)
 			{
 				val |= 1 << i;
 			}
@@ -145,8 +141,7 @@ public class dragrace
 	} };
 	
 	
-	public static ReadHandlerPtr dragrace_steering_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dragrace_steering_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bitA[2];
 		int bitB[2];
 	
@@ -166,8 +161,7 @@ public class dragrace
 	} };
 	
 	
-	public static ReadHandlerPtr dragrace_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dragrace_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (cpu_getscanline() ^ 0xf0) | 0x0f;
 	} };
 	
@@ -197,7 +191,7 @@ public class dragrace
 	};
 	
 	
-	static InputPortPtr input_ports_dragrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dragrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dragrace )
 		PORT_START();  /* IN0 */
 		PORT_BITX( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1, "Player 1 Gas",  IP_KEY_DEFAULT, IP_JOY_DEFAULT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );/* player 1 gear 1 */
@@ -304,8 +298,7 @@ public class dragrace
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_dragrace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dragrace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0xFF, 0xFF, 0xFF);   /* 2 color tiles */
 		palette_set_color(1, 0x00, 0x00, 0x00);
 		palette_set_color(2, 0x00, 0x00, 0x00);
@@ -523,8 +516,7 @@ public class dragrace
 	DISCRETE_SOUND_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dragrace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dragrace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 12096000 / 12)
@@ -549,9 +541,7 @@ public class dragrace
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, dragrace_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_dragrace = new RomLoadPtr(){ public void handler(){ 
@@ -573,5 +563,5 @@ public class dragrace
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_dragrace	   = new GameDriver("1977"	,"dragrace"	,"dragrace.java"	,rom_dragrace,null	,machine_driver_dragrace	,input_ports_dragrace	,null	,0	,	"Atari", "Drag Race" )
+	GAME( 1977, dragrace, 0, dragrace, dragrace, 0, 0, "Atari", "Drag Race" )
 }

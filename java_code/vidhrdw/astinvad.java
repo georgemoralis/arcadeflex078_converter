@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class astinvad
 	}
 	
 	
-	public static WriteHandlerPtr spaceint_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceint_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spaceint_color = data & 15;
 	} };
 	
@@ -36,7 +35,7 @@ public class astinvad
 	
 		for (i = 0; i < 8; i++)
 		{
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				plot_pixel(tmpbitmap, 255 - (x + i), 255 - y, (data & 1) ? col : 0);
 			}
@@ -70,7 +69,7 @@ public class astinvad
 	
 		int col;
 	
-		if (flip_screen == 0)
+		if (!flip_screen())
 		{
 			col = memory_region(REGION_PROMS)[(~n + astinvad_adjust) & 0x3ff];
 		}
@@ -83,8 +82,7 @@ public class astinvad
 	}
 	
 	
-	public static WriteHandlerPtr spaceint_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceint_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		colorram.write(offset,spaceint_color);
 	
@@ -92,32 +90,28 @@ public class astinvad
 	} };
 	
 	
-	public static WriteHandlerPtr astinvad_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astinvad_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 	
 		astinvad_refresh(offset);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_astinvad  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_astinvad  = new VideoStartHandlerPtr() { public int handler(){
 		astinvad_adjust = 0x80;
 	
 		return video_start_generic_bitmapped();
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_spcking2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spcking2  = new VideoStartHandlerPtr() { public int handler(){
 		astinvad_adjust = 0;
 	
 		return video_start_generic_bitmapped();
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_spaceint  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spaceint  = new VideoStartHandlerPtr() { public int handler(){
 		colorram = auto_malloc(0x2000);
 	
 		if (colorram == NULL)
@@ -131,9 +125,8 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_spaceint  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offset;
 	
@@ -147,15 +140,14 @@ public class astinvad
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (astinvad_flash != 0)
+	public static VideoUpdateHandlerPtr video_update_astinvad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (astinvad_flash)
 		{
 			fillbitmap(bitmap, 1, cliprect);
 		}
 		else
 		{
-			if (get_vh_global_attribute_changed() != 0)
+			if (get_vh_global_attribute_changed())
 			{
 				int offset;
 	

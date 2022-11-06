@@ -27,7 +27,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,19 +42,17 @@ public class paradise
 	
 	static data8_t paradise_palbank, paradise_priority;
 	
-	public static WriteHandlerPtr paradise_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data ? 0 : 1);
 	} };
 	
 	/* 800 bytes for red, followed by 800 bytes for green & 800 bytes for blue */
-	public static WriteHandlerPtr paradise_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		paletteram[offset] = data;
+	public static WriteHandlerPtr paradise_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		paletteram.write(offset,data);
 		offset %= 0x800;
-		palette_set_color(offset,	paletteram[offset + 0x800 * 0],
-									paletteram[offset + 0x800 * 1],
-									paletteram[offset + 0x800 * 2]	);
+		palette_set_color(offset,	paletteram.read(offset + 0x800 * 0),
+									paletteram.read(offset + 0x800 * 1),
+									paletteram.read(offset + 0x800 * 2));
 	} };
 	
 	/***************************************************************************
@@ -71,8 +69,7 @@ public class paradise
 	static struct tilemap *tilemap_0,*tilemap_1,*tilemap_2;
 	
 	/* Background */
-	public static WriteHandlerPtr paradise_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (paradise_vram_0[offset] != data)
 		{
 			paradise_vram_0[offset] = data;
@@ -81,16 +78,15 @@ public class paradise
 	} };
 	
 	/* 16 color tiles with paradise_palbank as color code */
-	public static WriteHandlerPtr paradise_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		int bank1 = (data & 0x0e) | 1;
 		int bank2 = (data & 0xf0);
 	
 		for (i = 0; i < 15; i++)
-			palette_set_color(0x800+i,	paletteram[0x200 + bank2 + i + 0x800 * 0],
-										paletteram[0x200 + bank2 + i + 0x800 * 1],
-										paletteram[0x200 + bank2 + i + 0x800 * 2]	);
+			palette_set_color(0x800+i,	paletteram.read(0x200 + bank2 + i + 0x800 * 0),
+										paletteram.read(0x200 + bank2 + i + 0x800 * 1),
+										paletteram.read(0x200 + bank2 + i + 0x800 * 2));
 		if (paradise_palbank != bank1)
 		{
 			paradise_palbank = bank1;
@@ -106,8 +102,7 @@ public class paradise
 	
 	
 	/* Midground */
-	public static WriteHandlerPtr paradise_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (paradise_vram_1[offset] != data)
 		{
 			paradise_vram_1[offset] = data;
@@ -123,8 +118,7 @@ public class paradise
 	
 	
 	/* Foreground */
-	public static WriteHandlerPtr paradise_vram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_vram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (paradise_vram_2[offset] != data)
 		{
 			paradise_vram_2[offset] = data;
@@ -140,8 +134,7 @@ public class paradise
 	
 	/* 256 x 256 bitmap. 4 bits per pixel so every byte encodes 2 pixels */
 	
-	public static WriteHandlerPtr paradise_pixmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_pixmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y;
 	
 		videoram.write(offset,data);
@@ -149,8 +142,8 @@ public class paradise
 		x = (offset & 0x7f) << 1;
 		y = (offset >> 7);
 	
-		plot_pixel.handler(tmpbitmap, x+0,y, 0x80f - (data >> 4));
-		plot_pixel.handler(tmpbitmap, x+1,y, 0x80f - (data & 0x0f));
+		plot_pixel(tmpbitmap, x+0,y, 0x80f - (data >> 4));
+		plot_pixel(tmpbitmap, x+1,y, 0x80f - (data & 0x0f));
 	} };
 	
 	
@@ -160,8 +153,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_paradise  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_paradise  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 8,8, 0x20,0x20 );
 	
@@ -196,8 +188,7 @@ public class paradise
 	***************************************************************************/
 	
 	/* Sprites / Layers priority */
-	public static WriteHandlerPtr paradise_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		paradise_priority = data;
 	} };
 	
@@ -214,10 +205,10 @@ public class paradise
 			int flipx	=	0;	// ?
 			int flipy	=	0;
 	
-			if (flip_screen != 0)	{	x = 0xf0 - x;	flipx = NOT(flipx);
+			if (flip_screen())	{	x = 0xf0 - x;	flipx = NOT(flipx);
 									y = 0xf0 - y;	flipy = NOT(flipy);	}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code + (attr << 8),
 					0,
 					flipx, flipy,
@@ -233,8 +224,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_paradise  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_paradise  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 	#ifdef MAME_DEBUG
@@ -255,24 +245,24 @@ public class paradise
 		if (!(paradise_priority & 4))	/* Screen blanking */
 			return;
 	
-		if ((paradise_priority & 1) != 0)
-			if ((layers_ctrl & 16) != 0)	draw_sprites(bitmap,cliprect);
+		if (paradise_priority & 1)
+			if (layers_ctrl&16)	draw_sprites(bitmap,cliprect);
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
-		if ((layers_ctrl & 4) != 0)	copybitmap(bitmap,tmpbitmap,flip_screen(),flip_screen(),0,0,cliprect,TRANSPARENCY_PEN, 0x80f);
+		if (layers_ctrl&1)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
+		if (layers_ctrl&2)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
+		if (layers_ctrl&4)	copybitmap(bitmap,tmpbitmap,flip_screen(),flip_screen(),0,0,cliprect,TRANSPARENCY_PEN, 0x80f);
 	
-		if ((paradise_priority & 2) != 0)
+		if (paradise_priority & 2)
 		{
 			if (!(paradise_priority & 1))
-				if ((layers_ctrl & 16) != 0)	draw_sprites(bitmap,cliprect);
-			if ((layers_ctrl & 8) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2, 0,0);
+				if (layers_ctrl&16)	draw_sprites(bitmap,cliprect);
+			if (layers_ctrl&8)	tilemap_draw(bitmap,cliprect, tilemap_2, 0,0);
 		}
 		else
 		{
-			if ((layers_ctrl & 8) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2, 0,0);
+			if (layers_ctrl&8)	tilemap_draw(bitmap,cliprect, tilemap_2, 0,0);
 			if (!(paradise_priority & 1))
-				if ((layers_ctrl & 16) != 0)	draw_sprites(bitmap,cliprect);
+				if (layers_ctrl&16)	draw_sprites(bitmap,cliprect);
 		}
 	} };
 }

@@ -13,7 +13,7 @@ a 68000 to create the background image.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -132,7 +132,7 @@ public class toypop
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_toypop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toypop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toypop )
 		// FAKE
 		/* The player inputs and the dipswitches are not memory mapped, they are handled by an I/O chip. */
 		/* These fake input ports are read by toypop_customio_r() */
@@ -203,7 +203,7 @@ public class toypop
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_liblrabl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_liblrabl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( liblrabl )
 		// FAKE
 		/* The player inputs and the dipswitches are not memory mapped, they are handled by an I/O chip. */
 		/* These fake input ports are read by liblrabl_customio_r() */
@@ -356,8 +356,7 @@ public class toypop
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_toypop = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toypop )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1536000)	/* 1.536 MHz (measured on Libble Rabble board) */
@@ -392,9 +391,7 @@ public class toypop
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -473,8 +470,7 @@ public class toypop
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_liblrabl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_liblrabl  = new DriverInitHandlerPtr() { public void handler(){
 		/* install the custom I/O chip */
 		install_mem_read_handler(0, 0x6800, 0x683f, liblrabl_customio_r);
 		toypop_customio = install_mem_write_handler(0, 0x6800, 0x683f, MWA_RAM);
@@ -486,8 +482,7 @@ public class toypop
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_toypop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_toypop  = new DriverInitHandlerPtr() { public void handler(){
 		/* install the custom I/O chip */
 		install_mem_read_handler(0, 0x6000, 0x603f, toypop_customio_r);
 		toypop_customio = install_mem_write_handler(0, 0x6000, 0x603f, MWA_RAM);
@@ -506,6 +501,6 @@ public class toypop
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_liblrabl	   = new GameDriver("1983"	,"liblrabl"	,"toypop.java"	,rom_liblrabl,null	,machine_driver_toypop	,input_ports_liblrabl	,init_liblrabl	,ROT0	,	"Namco", "Libble Rabble" )
-	public static GameDriver driver_toypop	   = new GameDriver("1986"	,"toypop"	,"toypop.java"	,rom_toypop,null	,machine_driver_toypop	,input_ports_toypop	,init_toypop	,ROT0	,	"Namco", "Toypop" )
+	GAME( 1983, liblrabl, 0, toypop,   liblrabl, liblrabl, ROT0, "Namco", "Libble Rabble" )
+	GAME( 1986, toypop,   0, toypop,   toypop,   toypop,   ROT0, "Namco", "Toypop" )
 }

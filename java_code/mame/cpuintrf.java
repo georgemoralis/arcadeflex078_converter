@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -1013,10 +1013,10 @@ public class cpuintrf
 	static unsigned internal_dasm(int cpunum, char *buffer, unsigned pc)
 	{
 		unsigned result;
-		if (cpu_dasm_override != 0)
+		if (cpu_dasm_override)
 		{
 			result = cpu_dasm_override(cpunum, buffer, pc);
-			if (result != 0)
+			if (result)
 				return result;
 		}
 		return (*cpu[cpunum].intf.cpu_dasm)(buffer, pc);
@@ -1161,7 +1161,7 @@ public class cpuintrf
 		cpuintrf_push_context(cpunum);
 		(*cpu[cpunum].intf.set_op_base)(0);
 		(*cpu[cpunum].intf.reset)(param);
-		if (irqack != 0)
+		if (irqack)
 			(*cpu[cpunum].intf.set_irq_callback)(irqack);
 		cpuintrf_pop_context();
 	}

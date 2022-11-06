@@ -37,7 +37,7 @@ TO DO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -87,8 +87,7 @@ public class mazerbla
 	
 	static double weights_r[2], weights_g[3], weights_b[3];
 	
-	static public static PaletteInitHandlerPtr palette_init_mazerbla  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mazerbla  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	
 		const int resistances_r[2]  = { 4700, 2200 };
 		const int resistances_gb[3] = { 10000, 4700, 2200 };
@@ -106,8 +105,7 @@ public class mazerbla
 	
 	static struct mame_bitmap * tmpbitmaps[4];
 	
-	public static VideoStartHandlerPtr video_start_mazerbla  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mazerbla  = new VideoStartHandlerPtr() { public int handler(){
 		tmpbitmaps[0] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		tmpbitmaps[1] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
 		tmpbitmaps[2] = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height);
@@ -133,8 +131,7 @@ public class mazerbla
 	#endif
 	
 	#if 0
-	public static VideoUpdateHandlerPtr video_update_test_vcu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_test_vcu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int j,trueorientation;
 		char buf[128];
 	
@@ -212,7 +209,7 @@ public class mazerbla
 		}
 	
 	
-		if (dbg_info != 0)
+		if (dbg_info)
 		{
 			trueorientation = Machine.orientation;
 			Machine.orientation = ROT0;
@@ -255,9 +252,8 @@ public class mazerbla
 	#endif
 	
 	
-	/* these two public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)s will be joined one day */
-	public static VideoUpdateHandlerPtr video_update_greatgun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	/* these two public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)will be joined one day */
+	public static VideoUpdateHandlerPtr video_update_greatgun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		UINT32 color_base=0;
 	
@@ -275,8 +271,7 @@ public class mazerbla
 		copybitmap(bitmap,tmpbitmaps[0],0,0,0,0,Machine.visible_area,TRANSPARENCY_PEN, Machine.pens[color_base] );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mazerbla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		UINT32 color_base=0;
 	
@@ -297,15 +292,13 @@ public class mazerbla
 	
 	static UINT8 zpu_int_vector;
 	
-	public static WriteHandlerPtr cfb_zpu_int_req_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cfb_zpu_int_req_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		zpu_int_vector &= ~2;	/* clear D1 on INTA (interrupt acknowledge) */
 	
 		cpu_set_irq_line(0, 0, ASSERT_LINE);	/* main cpu interrupt (comes from CFB (generated at the start of INT routine on CFB) - vblank?) */
 	} };
 	
-	public static ReadHandlerPtr cfb_zpu_int_req_clr  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cfb_zpu_int_req_clr  = new ReadHandlerPtr() { public int handler(int offset){
 		zpu_int_vector |= 2;
 	
 		/* clear the INT line when there are no more interrupt requests */
@@ -330,18 +323,16 @@ public class mazerbla
 	note:
 	1111 11110 (0xfe) - cannot happen and is not handled by game */
 	
-		return (zpu_int_vector & ~1);	/* D0.GND is performed on CFB board */
+		return (zpu_int_vector & ~1);	/* D0->GND is performed on CFB board */
 	}
 	
 	
 	
 	static data8_t *cfb_zpu_sharedram;
-	static public static WriteHandlerPtr sharedram_CFB_ZPU_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sharedram_CFB_ZPU_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cfb_zpu_sharedram[offset] = data;
 	} };
-	static public static ReadHandlerPtr sharedram_CFB_ZPU_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sharedram_CFB_ZPU_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cfb_zpu_sharedram[offset];
 	} };
 	
@@ -350,8 +341,7 @@ public class mazerbla
 	static UINT8 ls670_0[4];
 	static UINT8 ls670_1[4];
 	
-	public static ReadHandlerPtr ls670_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ls670_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 	
@@ -366,16 +356,14 @@ public class mazerbla
 		ls670_0[offset] = data;
 	}
 	
-	public static WriteHandlerPtr ls670_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ls670_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* do this on a timer to let the CPUs synchronize */
 		timer_set(TIME_NOW, (offset<<8) | data, deferred_ls670_0_w);
 	} };
 	
 	
 	
-	public static ReadHandlerPtr ls670_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ls670_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 	
@@ -390,8 +378,7 @@ public class mazerbla
 		ls670_1[offset] = data;
 	}
 	
-	public static WriteHandlerPtr ls670_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ls670_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* do this on a timer to let the CPUs synchronize */
 		timer_set(TIME_NOW, (offset<<8) | data, deferred_ls670_1_w);
 	} };
@@ -400,8 +387,7 @@ public class mazerbla
 	/* bcd decoder used a input select (a mux) for reads from port 0x62 */
 	static UINT8 bcd_7445 = 0;
 	
-	static WRITE_HANDLER(zpu_bcd_decoder_w)
-	{
+	public static WriteHandlerPtr zpu_bcd_decoder_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	/*
 	name:			Strobe(bcd_value)	BIT
@@ -449,10 +435,9 @@ public class mazerbla
 	
 	*/
 		bcd_7445 = data & 15;
-	}
+	} };
 	
-	public static ReadHandlerPtr zpu_inputs_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zpu_inputs_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 ret = 0;
 	
 		if (bcd_7445<10)
@@ -466,26 +451,23 @@ public class mazerbla
 	
 	
 	
-	static WRITE_HANDLER(zpu_led_w)
-	{
+	public static WriteHandlerPtr zpu_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0x6e - reset (offset = 0)*/
 		/* 0x6f - set */
 		set_led_status(0, offset&1 );
-	}
-	static WRITE_HANDLER(zpu_lamps_w)
-	{
+	} };
+	public static WriteHandlerPtr zpu_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 4 = /LAMP0 */
 		/* bit 5 = /LAMP1 */
 	
 		/*set_led_status(0, (data&0x10)>>4 );*/
 		/*set_led_status(1, (data&0x20)>>4 );*/
-	}
+	} };
 	
-	static WRITE_HANDLER(zpu_coin_counter_w)
-	{
+	public static WriteHandlerPtr zpu_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 6 = coin counter */
 		coin_counter_w(offset, (data&0x40)>>6 );
-	}
+	} };
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -526,8 +508,7 @@ public class mazerbla
 	
 	
 	static UINT8 vsb_ls273;
-	public static WriteHandlerPtr vsb_ls273_audio_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsb_ls273_audio_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vsb_ls273 = data;
 	
 		/* bit 5 - led on */
@@ -569,26 +550,22 @@ public class mazerbla
 	
 	
 	/* Color Frame Buffer PCB */
-	static public static WriteHandlerPtr cfb_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cfb_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cfb_ram[offset] = data;
 	} };
-	static public static ReadHandlerPtr cfb_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cfb_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cfb_ram[offset];
 	} };
 	
 	
-	static WRITE_HANDLER(cfb_led_w)
-	{
+	public static WriteHandlerPtr cfb_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7 - led on */
 		set_led_status(2,(data&0x80)>>7);
-	}
+	} };
 	
 	
 	static UINT8 bknd_col = 0xaa;
-	static WRITE_HANDLER(cfb_backgnd_color_w)
-	{
+	public static WriteHandlerPtr cfb_backgnd_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		if (bknd_col != data)
 		{
@@ -616,38 +593,36 @@ public class mazerbla
 			palette_set_color(255, r, g, b);
 			//logerror("background color (port 01) write=%02x\n",data);
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER(cfb_vbank_w)
-	{
+	public static WriteHandlerPtr cfb_vbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data = (data & 0x40)>>6;	/* only bit 6 connected */
 		if (vbank != data)
 		{
 			vbank = data;
 			//logerror("vbank=%1x\n",vbank);
 		}
-	}
+	} };
 	
 	
-	static WRITE_HANDLER(cfb_rom_bank_sel_w)	/* mazer blazer */
+	public static WriteHandlerPtr cfb_rom_bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)* mazer blazer */
 	{
 		gfx_rom_bank = data;
 	
 		cpu_setbank( 1, memory_region(REGION_CPU3) + (gfx_rom_bank * 0x2000) + 0x10000 );
-	}
-	static WRITE_HANDLER(cfb_rom_bank_sel_w_gg)	/* great guns */
+	} };
+	public static WriteHandlerPtr cfb_rom_bank_sel_w_gg = new WriteHandlerPtr() {public void handler(int offset, int data)* great guns */
 	{
 		gfx_rom_bank = data>>1;
 	
 		cpu_setbank( 1, memory_region(REGION_CPU3) + (gfx_rom_bank * 0x2000) + 0x10000 );
-	}
+	} };
 	
 	
 	/* ????????????? */
 	static UINT8 port02_status = 0;
-	public static ReadHandlerPtr cfb_port_02_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cfb_port_02_r  = new ReadHandlerPtr() { public int handler(int offset){
 		port02_status ^= 0xff;
 		return (port02_status);
 	} };
@@ -683,8 +658,7 @@ public class mazerbla
 	
 	
 	static UINT8 VCU_video_reg[4];
-	public static WriteHandlerPtr VCU_video_reg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr VCU_video_reg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (VCU_video_reg[offset] != data)
 		{
 			VCU_video_reg[offset] = data;
@@ -693,8 +667,7 @@ public class mazerbla
 		}
 	} };
 	
-	public static ReadHandlerPtr VCU_set_cmd_param_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr VCU_set_cmd_param_r  = new ReadHandlerPtr() { public int handler(int offset){
 		VCU_gfx_param_addr = offset;
 	
 									/* offset  = 0 is not known */
@@ -712,8 +685,7 @@ public class mazerbla
 	} };
 	
 	
-	public static ReadHandlerPtr VCU_set_gfx_addr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr VCU_set_gfx_addr_r  = new ReadHandlerPtr() { public int handler(int offset){
 	int offs;
 	int x,y;
 	int bits = 0;
@@ -754,7 +726,7 @@ public class mazerbla
 		case 0x0e:
 		case 0x0d:
 		case 0x0c:
-	//if (dbg_gfx_e != 0)
+	//if (dbg_gfx_e)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -805,7 +777,7 @@ public class mazerbla
 		case 0x0a:/* verified - 1bpp */
 		case 0x09:/* verified - 1bpp: gun crosshair */
 		case 0x08:/* */
-	//if (dbg_gfx_e != 0)
+	//if (dbg_gfx_e)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -839,7 +811,7 @@ public class mazerbla
 		case 0x03:
 		case 0x01:
 		case 0x00:
-	//if (dbg_gfx_e != 0)
+	//if (dbg_gfx_e)
 	//{
 		//if (vbank==dbg_vbank)
 		{
@@ -877,8 +849,7 @@ public class mazerbla
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr VCU_set_clr_addr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr VCU_set_clr_addr_r  = new ReadHandlerPtr() { public int handler(int offset){
 	int offs;
 	int x,y;
 	int bits = 0;
@@ -888,7 +859,7 @@ public class mazerbla
 	unsigned char * rom = memory_region(REGION_CPU3) + (gfx_rom_bank * 0x2000) + 0x10000;
 	
 	/*
-		//if (0 != 0) //(mode != 0x07)
+		//if (0) //(mode != 0x07)
 		{
 			logerror("paladr=");
 			logerror("%3x ",VCU_gfx_param_addr );
@@ -926,7 +897,7 @@ public class mazerbla
 		case 0x03:
 	/* ... this may proove that there is really only one area and that
 	 the draw command/palette selector is done via the 'mode' only ... */
-		//if (dbg_clr_e != 0)
+		//if (dbg_clr_e)
 		{
 			offs = VCU_gfx_addr;
 	
@@ -1105,8 +1076,7 @@ public class mazerbla
 	
 	static UINT8 soundlatch;
 	
-	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return soundlatch;
 	} };
 	
@@ -1119,8 +1089,7 @@ public class mazerbla
 	}
 	
 	
-	public static WriteHandlerPtr main_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr main_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
 	} };
 	
@@ -1145,22 +1114,18 @@ public class mazerbla
 	
 	
 	/* frequency is 14.318 MHz/16/16/16/16 */
-	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr sound_int_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_int_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 0, CLEAR_LINE);
 	} };
-	public static WriteHandlerPtr sound_nmi_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_nmi_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line(1, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr gg_led_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gg_led_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0, bit 1 - led on */
 		set_led_status(1,data&0x01);
 	} };
@@ -1193,7 +1158,7 @@ public class mazerbla
 	
 	
 	
-	static InputPortPtr input_ports_mazerbla = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mazerbla = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mazerbla )
 		PORT_START(); 	/* Strobe 0: ZPU Switches */
 		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
@@ -1335,7 +1300,7 @@ public class mazerbla
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 7, 0, 255);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_greatgun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_greatgun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( greatgun )
 		PORT_START(); 	/* Strobe 0: ZPU Switches */
 		PORT_DIPNAME( 0x40, 0x40, "ZPU Switch 1" );
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
@@ -1485,16 +1450,14 @@ public class mazerbla
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_mazerbla  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mazerbla  = new MachineInitHandlerPtr() { public void handler(){
 		game_id = MAZERBLA;
 		zpu_int_vector = 0xff;
 		cpu_set_irq_callback(0, irq_callback);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_greatgun  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_greatgun  = new MachineInitHandlerPtr() { public void handler(){
 		game_id = GREATGUN;
 		zpu_int_vector = 0xff;
 		cpu_set_irq_callback(0, irq_callback);
@@ -1523,8 +1486,7 @@ public class mazerbla
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_mazerbla = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mazerbla )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz, no NMI, IM2 - vectors at 0xf8, 0xfa, 0xfc */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -1562,13 +1524,10 @@ public class mazerbla
 		MDRV_VIDEO_UPDATE(mazerbla)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_greatgun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( greatgun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz, no NMI, IM2 - vectors at 0xf8, 0xfa, 0xfc */
@@ -1607,9 +1566,7 @@ public class mazerbla
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1677,6 +1634,6 @@ public class mazerbla
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_mazerbla	   = new GameDriver("1983"	,"mazerbla"	,"mazerbla.java"	,rom_mazerbla,null	,machine_driver_mazerbla	,input_ports_mazerbla	,null	,ROT0	,	"Stern", "Mazer Blazer", GAME_IMPERFECT_GRAPHICS |GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_greatgun	   = new GameDriver("1983"	,"greatgun"	,"mazerbla.java"	,rom_greatgun,null	,machine_driver_greatgun	,input_ports_greatgun	,null	,ROT0	,	"Stern", "Great Guns", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1983, mazerbla, 0, mazerbla,  mazerbla, 0, ROT0, "Stern", "Mazer Blazer", GAME_IMPERFECT_GRAPHICS |GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1983, greatgun, 0, greatgun,  greatgun, 0, ROT0, "Stern", "Great Guns", GAME_IMPERFECT_GRAPHICS )
 }

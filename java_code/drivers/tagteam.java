@@ -26,7 +26,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,8 +35,7 @@ public class tagteam
 	
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	} };
@@ -94,8 +93,7 @@ public class tagteam
 	
 	
 	
-	public static InterruptHandlerPtr tagteam_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tagteam_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int coin;
 		int port;
 	
@@ -113,7 +111,7 @@ public class tagteam
 	} };
 	
 	
-	static InputPortPtr input_ports_bigprowr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigprowr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigprowr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -183,7 +181,7 @@ public class tagteam
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'bigprowr', but additional "Coin Mode" Dip Switch */
-	static InputPortPtr input_ports_tagteam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tagteam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tagteam )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -300,8 +298,7 @@ public class tagteam
 		{ 255 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_tagteam = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tagteam )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ?? */
@@ -331,9 +328,7 @@ public class tagteam
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -401,6 +396,6 @@ public class tagteam
 	
 	
 	
-	public static GameDriver driver_bigprowr	   = new GameDriver("1983"	,"bigprowr"	,"tagteam.java"	,rom_bigprowr,null	,machine_driver_tagteam	,input_ports_bigprowr	,null	,ROT270	,	"Technos", "The Big Pro Wrestling!" )
-	public static GameDriver driver_tagteam	   = new GameDriver("1983"	,"tagteam"	,"tagteam.java"	,rom_tagteam,driver_bigprowr	,machine_driver_tagteam	,input_ports_tagteam	,null	,ROT270	,	"Technos (Data East license)", "Tag Team Wrestling" )
+	GAME( 1983, bigprowr, 0,        tagteam, bigprowr, 0, ROT270, "Technos", "The Big Pro Wrestling!" )
+	GAME( 1983, tagteam,  bigprowr, tagteam, tagteam,  0, ROT270, "Technos (Data East license)", "Tag Team Wrestling" )
 }

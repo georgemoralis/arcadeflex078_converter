@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -107,11 +107,11 @@ public class glass
 						for (i = 0; i < 320; i++){
 							int color = *gfx;
 							gfx++;
-							plot_pixel(screen, i, j, Machine.pens[color & 0xff]);
+							plot_pixel(screen, i, j, Machine->pens[color & 0xff]);
 						}
 					}
 				} else {
-					fillbitmap(screen, Machine.pens[0], 0);
+					fillbitmap(screen, Machine->pens[0], 0);
 				}
 			}
 		}
@@ -139,8 +139,7 @@ public class glass
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_glass  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_glass  = new VideoStartHandlerPtr() { public int handler(){
 		pant[0] = tilemap_create(get_tile_info_glass_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		pant[1] = tilemap_create(get_tile_info_glass_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		screen = auto_bitmap_alloc (320, 200);
@@ -181,7 +180,7 @@ public class glass
 	static void glass_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		for (i = 3; i < (0x1000 - 6)/2; i += 4){
 			int sx = glass_spriteram[i+2] & 0x01ff;
@@ -198,7 +197,7 @@ public class glass
 			drawgfx(bitmap,gfx,number,
 					0x10 + (color & 0x0f),xflip,yflip,
 					sx-0x0f,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -208,8 +207,7 @@ public class glass
 	
 	****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_glass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_glass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, glass_vregs[0]);
 		tilemap_set_scrollx(pant[0], 0, glass_vregs[1] + 0x04);

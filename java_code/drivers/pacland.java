@@ -29,7 +29,7 @@ f000-ffff MCU internal ROM
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,18 +43,15 @@ public class pacland
 	
 	
 	
-	public static ReadHandlerPtr sharedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sharedram1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram1[offset];
 	} };
 	
-	public static WriteHandlerPtr sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram1[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr pacland_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
@@ -63,8 +60,7 @@ public class pacland
 	
 	
 	/* Stubs to pass the correct Dip Switch setup to the MCU */
-	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Hi 4 bits = DSWA Hi 4 bits */
 		/* Lo 4 bits = DSWB Hi 4 bits */
 		int r = readinputport( 0 );
@@ -73,8 +69,7 @@ public class pacland
 		return ~r; /* Active Low */
 	} };
 	
-	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Hi 4 bits = DSWA Lo 4 bits */
 		/* Lo 4 bits = DSWB Lo 4 bits */
 		int r = ( readinputport( 0 ) & 0x0f ) << 4;
@@ -82,15 +77,13 @@ public class pacland
 		return ~r; /* Active Low */
 	} };
 	
-	public static WriteHandlerPtr pacland_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(data & 1);
 		coin_counter_w(0,~data & 2);
 		coin_counter_w(1,~data & 4);
 	} };
 	
-	public static WriteHandlerPtr pacland_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
 	} };
@@ -164,8 +157,7 @@ public class pacland
 	};
 	
 	
-	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -185,7 +177,7 @@ public class pacland
 	
 	
 	
-	static InputPortPtr input_ports_pacland = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pacland = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pacland )
 		PORT_START();       /* DSWA */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -311,8 +303,7 @@ public class pacland
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_pacland = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pacland )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)	/* 1.500 MHz (?) */
@@ -343,9 +334,7 @@ public class pacland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -500,8 +489,8 @@ public class pacland
 	
 	
 	
-	public static GameDriver driver_pacland	   = new GameDriver("1984"	,"pacland"	,"pacland.java"	,rom_pacland,null	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 1)" )
-	public static GameDriver driver_pacland2	   = new GameDriver("1984"	,"pacland2"	,"pacland.java"	,rom_pacland2,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 2)" )
-	public static GameDriver driver_pacland3	   = new GameDriver("1984"	,"pacland3"	,"pacland.java"	,rom_pacland3,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"Namco", "Pac-Land (set 3)" )
-	public static GameDriver driver_paclandm	   = new GameDriver("1984"	,"paclandm"	,"pacland.java"	,rom_paclandm,driver_pacland	,machine_driver_pacland	,input_ports_pacland	,null	,ROT0	,	"[Namco] (Bally Midway license)", "Pac-Land (Midway)" )
+	GAME( 1984, pacland,  0,       pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 1)" )
+	GAME( 1984, pacland2, pacland, pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 2)" )
+	GAME( 1984, pacland3, pacland, pacland, pacland, 0, ROT0, "Namco", "Pac-Land (set 3)" )
+	GAME( 1984, paclandm, pacland, pacland, pacland, 0, ROT0, "[Namco] (Bally Midway license)", "Pac-Land (Midway)" )
 }

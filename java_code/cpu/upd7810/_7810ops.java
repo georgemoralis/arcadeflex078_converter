@@ -98,7 +98,7 @@ static void SK_Z(void)
 /* 48 18: 0100 1000 0001 1000 */
 static void SKN_NV(void)
 {
-	/* skip not never . skip always ;-) */
+	/* skip not never -> skip always ;-) */
 	PSW |= SK;
 }
 
@@ -298,7 +298,7 @@ static void HALT(void)
 /* 48 3d: 0100 1000 0011 1101 */
 static void DIV_A(void)
 {
-	if (A != 0)
+	if (A)
 	{
 		UINT8 remainder;
 		remainder = EA % A;
@@ -312,7 +312,7 @@ static void DIV_A(void)
 /* 48 3e: 0100 1000 0011 1110 */
 static void DIV_B(void)
 {
-	if (B != 0)
+	if (B)
 	{
 		UINT8 remainder;
 		remainder = EA % B;
@@ -326,7 +326,7 @@ static void DIV_B(void)
 /* 48 3f: 0100 1000 0011 1111 */
 static void DIV_C(void)
 {
-	if (C != 0)
+	if (C)
 	{
 		UINT8 remainder;
 		remainder = EA % C;
@@ -340,7 +340,7 @@ static void DIV_C(void)
 /* 48 40: 0100 1000 0100 0000 */
 static void SKIT_NMI(void)
 {
-	if ((IRR & INTNMI) != 0)
+	if (IRR & INTNMI)
 		PSW |= SK;
 	IRR &= ~INTNMI;
 }
@@ -348,7 +348,7 @@ static void SKIT_NMI(void)
 /* 48 41: 0100 1000 0100 0001 */
 static void SKIT_FT0(void)
 {
-	if ((IRR & INTFT0) != 0)
+	if (IRR & INTFT0)
 		PSW |= SK;
 	IRR &= ~INTFT0;
 }
@@ -356,7 +356,7 @@ static void SKIT_FT0(void)
 /* 48 42: 0100 1000 0100 0010 */
 static void SKIT_FT1(void)
 {
-	if ((IRR & INTFT1) != 0)
+	if (IRR & INTFT1)
 		PSW |= SK;
 	IRR &= ~INTFT1;
 }
@@ -364,7 +364,7 @@ static void SKIT_FT1(void)
 /* 48 43: 0100 1000 0100 0011 */
 static void SKIT_F1(void)
 {
-	if ((IRR & INTF1) != 0)
+	if (IRR & INTF1)
 		PSW |= SK;
 	IRR &= ~INTF1;
 }
@@ -372,7 +372,7 @@ static void SKIT_F1(void)
 /* 48 44: 0100 1000 0100 0100 */
 static void SKIT_F2(void)
 {
-	if ((IRR & INTF2) != 0)
+	if (IRR & INTF2)
 		PSW |= SK;
 	IRR &= ~INTF2;
 }
@@ -380,7 +380,7 @@ static void SKIT_F2(void)
 /* 48 45: 0100 1000 0100 0101 */
 static void SKIT_FE0(void)
 {
-	if ((IRR & INTFE0) != 0)
+	if (IRR & INTFE0)
 		PSW |= SK;
 	IRR &= ~INTFE0;
 }
@@ -388,7 +388,7 @@ static void SKIT_FE0(void)
 /* 48 46: 0100 1000 0100 0110 */
 static void SKIT_FE1(void)
 {
-	if ((IRR & INTFE1) != 0)
+	if (IRR & INTFE1)
 		PSW |= SK;
 	IRR &= ~INTFE1;
 }
@@ -396,7 +396,7 @@ static void SKIT_FE1(void)
 /* 48 47: 0100 1000 0100 0111 */
 static void SKIT_FEIN(void)
 {
-	if ((IRR & INTFEIN) != 0)
+	if (IRR & INTFEIN)
 		PSW |= SK;
 	IRR &= ~INTFEIN;
 }
@@ -404,7 +404,7 @@ static void SKIT_FEIN(void)
 /* 48 48: 0100 1000 0100 1000 */
 static void SKIT_FAD(void)
 {
-	if ((IRR & INTFAD) != 0)
+	if (IRR & INTFAD)
 		PSW |= SK;
 	IRR &= ~INTFAD;
 }
@@ -412,7 +412,7 @@ static void SKIT_FAD(void)
 /* 48 49: 0100 1000 0100 1001 */
 static void SKIT_FSR(void)
 {
-	if ((IRR & INTFSR) != 0)
+	if (IRR & INTFSR)
 		PSW |= SK;
 	IRR &= ~INTFSR;
 }
@@ -420,7 +420,7 @@ static void SKIT_FSR(void)
 /* 48 4a: 0100 1000 0100 1010 */
 static void SKIT_FST(void)
 {
-	if ((IRR & INTFST) != 0)
+	if (IRR & INTFST)
 		PSW |= SK;
 	IRR &= ~INTFST;
 }
@@ -428,7 +428,7 @@ static void SKIT_FST(void)
 /* 48 4b: 0100 1000 0100 1011 */
 static void SKIT_ER(void)
 {
-	if ((IRR & INTER) != 0)
+	if (IRR & INTER)
 		PSW |= SK;
 	IRR &= ~INTER;
 }
@@ -436,7 +436,7 @@ static void SKIT_ER(void)
 /* 48 4c: 0100 1000 0100 1100 */
 static void SKIT_OV(void)
 {
-	if ((IRR & INTOV) != 0)
+	if (IRR & INTOV)
 		PSW |= SK;
 	IRR &= ~INTOV;
 }
@@ -444,7 +444,7 @@ static void SKIT_OV(void)
 /* 48 50: 0100 1000 0101 0000 */
 static void SKIT_AN4(void)
 {
-	if ((ITF & INTAN4) != 0)
+	if (ITF & INTAN4)
 		PSW |= SK;
 	ITF &= ~INTAN4;
 }
@@ -452,7 +452,7 @@ static void SKIT_AN4(void)
 /* 48 51: 0100 1000 0101 0001 */
 static void SKIT_AN5(void)
 {
-	if ((ITF & INTAN5) != 0)
+	if (ITF & INTAN5)
 		PSW |= SK;
 	ITF &= ~INTAN5;
 }
@@ -460,7 +460,7 @@ static void SKIT_AN5(void)
 /* 48 52: 0100 1000 0101 0010 */
 static void SKIT_AN6(void)
 {
-	if ((ITF & INTAN6) != 0)
+	if (ITF & INTAN6)
 		PSW |= SK;
 	ITF &= ~INTAN6;
 }
@@ -468,7 +468,7 @@ static void SKIT_AN6(void)
 /* 48 53: 0100 1000 0101 0011 */
 static void SKIT_AN7(void)
 {
-	if ((ITF & INTAN7) != 0)
+	if (ITF & INTAN7)
 		PSW |= SK;
 	ITF &= ~INTAN7;
 }
@@ -476,7 +476,7 @@ static void SKIT_AN7(void)
 /* 48 54: 0100 1000 0101 0100 */
 static void SKIT_SB(void)
 {
-	if ((ITF & INTSB) != 0)
+	if (ITF & INTSB)
 		PSW |= SK;
 	ITF &= ~INTSB;
 }
@@ -2383,7 +2383,7 @@ static void ADD_A_L(void)
 /* 60 c8: 0110 0000 1100 1000 */
 static void ONA_A_V(void)
 {
-	if ((A & V) != 0)
+	if (A & V)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2392,7 +2392,7 @@ static void ONA_A_V(void)
 /* 60 c9: 0110 0000 1100 1001 */
 static void ONA_A_A(void)
 {
-	if ((A & A) != 0)
+	if (A & A)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2401,7 +2401,7 @@ static void ONA_A_A(void)
 /* 60 ca: 0110 0000 1100 1010 */
 static void ONA_A_B(void)
 {
-	if ((A & B) != 0)
+	if (A & B)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2410,7 +2410,7 @@ static void ONA_A_B(void)
 /* 60 cb: 0110 0000 1100 1011 */
 static void ONA_A_C(void)
 {
-	if ((A & C) != 0)
+	if (A & C)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2419,7 +2419,7 @@ static void ONA_A_C(void)
 /* 60 cc: 0110 0000 1100 1100 */
 static void ONA_A_D(void)
 {
-	if ((A & D) != 0)
+	if (A & D)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2428,7 +2428,7 @@ static void ONA_A_D(void)
 /* 60 cd: 0110 0000 1100 1101 */
 static void ONA_A_E(void)
 {
-	if ((A & E) != 0)
+	if (A & E)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2437,7 +2437,7 @@ static void ONA_A_E(void)
 /* 60 ce: 0110 0000 1100 1110 */
 static void ONA_A_H(void)
 {
-	if ((A & H) != 0)
+	if (A & H)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2446,7 +2446,7 @@ static void ONA_A_H(void)
 /* 60 cf: 0110 0000 1100 1111 */
 static void ONA_A_L(void)
 {
-	if ((A & L) != 0)
+	if (A & L)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -2514,7 +2514,7 @@ static void ADC_A_L(void)
 /* 60 d8: 0110 0000 1101 1000 */
 static void OFFA_A_V(void)
 {
-	if ((A & V) != 0)
+	if ( A & V )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2523,7 +2523,7 @@ static void OFFA_A_V(void)
 /* 60 d9: 0110 0000 1101 1001 */
 static void OFFA_A_A(void)
 {
-	if ((A & A) != 0)
+	if ( A & A )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2532,7 +2532,7 @@ static void OFFA_A_A(void)
 /* 60 da: 0110 0000 1101 1010 */
 static void OFFA_A_B(void)
 {
-	if ((A & B) != 0)
+	if ( A & B )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2541,7 +2541,7 @@ static void OFFA_A_B(void)
 /* 60 db: 0110 0000 1101 1011 */
 static void OFFA_A_C(void)
 {
-	if ((A & C) != 0)
+	if ( A & C )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2550,7 +2550,7 @@ static void OFFA_A_C(void)
 /* 60 dc: 0110 0000 1101 1100 */
 static void OFFA_A_D(void)
 {
-	if ((A & D) != 0)
+	if ( A & D )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2559,7 +2559,7 @@ static void OFFA_A_D(void)
 /* 60 dd: 0110 0000 1101 1101 */
 static void OFFA_A_E(void)
 {
-	if ((A & E) != 0)
+	if ( A & E )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2568,7 +2568,7 @@ static void OFFA_A_E(void)
 /* 60 de: 0110 0000 1101 1110 */
 static void OFFA_A_H(void)
 {
-	if ((A & H) != 0)
+	if ( A & H )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -2577,7 +2577,7 @@ static void OFFA_A_H(void)
 /* 60 df: 0110 0000 1101 1111 */
 static void OFFA_A_L(void)
 {
-	if ((A & L) != 0)
+	if ( A & L )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -3505,7 +3505,7 @@ static void ONI_PA_xx(void)
 	UINT8 pa = RP( UPD7810_PORTA ), imm;
 
 	RDOPARG( imm );
-	if ((pa & imm) != 0)
+	if (pa & imm)
 		PSW |= SK;
 }
 
@@ -3515,7 +3515,7 @@ static void ONI_PB_xx(void)
 	UINT8 pb = RP( UPD7810_PORTB ), imm;
 
 	RDOPARG( imm );
-	if ((pb & imm) != 0)
+	if (pb & imm)
 		PSW |= SK;
 }
 
@@ -3525,7 +3525,7 @@ static void ONI_PC_xx(void)
 	UINT8 pc = RP( UPD7810_PORTC ), imm;
 
 	RDOPARG( imm );
-	if ((pc & imm) != 0)
+	if (pc & imm)
 		PSW |= SK;
 }
 
@@ -3535,7 +3535,7 @@ static void ONI_PD_xx(void)
 	UINT8 pd = RP( UPD7810_PORTD ), imm;
 
 	RDOPARG( imm );
-	if ((pd & imm) != 0)
+	if (pd & imm)
 		PSW |= SK;
 }
 
@@ -3545,7 +3545,7 @@ static void ONI_PF_xx(void)
 	UINT8 pf = RP( UPD7810_PORTF ), imm;
 
 	RDOPARG( imm );
-	if ((pf & imm) != 0)
+	if (pf & imm)
 		PSW |= SK;
 }
 
@@ -3555,7 +3555,7 @@ static void ONI_MKH_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((MKH & imm) != 0)
+	if (MKH & imm)
 		PSW |= SK;
 }
 
@@ -3565,7 +3565,7 @@ static void ONI_MKL_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((MKL & imm) != 0)
+	if (MKL & imm)
 		PSW |= SK;
 }
 
@@ -4456,7 +4456,7 @@ static void ONI_ANM_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((ANM & imm) != 0)
+	if (ANM & imm)
 		PSW |= SK;
 }
 
@@ -4466,7 +4466,7 @@ static void ONI_SMH_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((SMH & imm) != 0)
+	if (SMH & imm)
 		PSW |= SK;
 }
 
@@ -4478,7 +4478,7 @@ static void ONI_EOM_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((eom & imm) != 0)
+	if (eom & imm)
 		PSW |= SK;
 }
 
@@ -4488,7 +4488,7 @@ static void ONI_TMM_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((TMM & imm) != 0)
+	if (TMM & imm)
 		PSW |= SK;
 }
 
@@ -6708,7 +6708,7 @@ static void ONI_V_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((V & imm) != 0)
+	if (V & imm)
 		PSW |= SK;
 }
 
@@ -6718,7 +6718,7 @@ static void ONI_A_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((A & imm) != 0)
+	if (A & imm)
 		PSW |= SK;
 }
 
@@ -6728,7 +6728,7 @@ static void ONI_B_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((B & imm) != 0)
+	if (B & imm)
 		PSW |= SK;
 }
 
@@ -6738,7 +6738,7 @@ static void ONI_C_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((C & imm) != 0)
+	if (C & imm)
 		PSW |= SK;
 }
 
@@ -6748,7 +6748,7 @@ static void ONI_D_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((D & imm) != 0)
+	if (D & imm)
 		PSW |= SK;
 }
 
@@ -6758,7 +6758,7 @@ static void ONI_E_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((E & imm) != 0)
+	if (E & imm)
 		PSW |= SK;
 }
 
@@ -6768,7 +6768,7 @@ static void ONI_H_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((H & imm) != 0)
+	if (H & imm)
 		PSW |= SK;
 }
 
@@ -6778,7 +6778,7 @@ static void ONI_L_xx(void)
 	UINT8 imm;
 
 	RDOPARG( imm );
-	if ((L & imm) != 0)
+	if (L & imm)
 		PSW |= SK;
 }
 
@@ -7601,7 +7601,7 @@ static void ONAW_wa(void)
 /* 74 cd: 0111 0100 1100 1101 */
 static void DON_EA_BC(void)
 {
-	if ((EA & BC) != 0)
+	if (EA & BC)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -7610,7 +7610,7 @@ static void DON_EA_BC(void)
 /* 74 ce: 0111 0100 1100 1110 */
 static void DON_EA_DE(void)
 {
-	if ((EA & DE) != 0)
+	if (EA & DE)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -7619,7 +7619,7 @@ static void DON_EA_DE(void)
 /* 74 cf: 0111 0100 1100 1111 */
 static void DON_EA_HL(void)
 {
-	if ((EA & HL) != 0)
+	if (EA & HL)
 		PSW = (PSW & ~Z) | SK;
 	else
 		PSW |= Z;
@@ -7673,7 +7673,7 @@ static void OFFAW_wa(void)
 /* 74 dd: 0111 0100 1101 1101 */
 static void DOFF_EA_BC(void)
 {
-	if ((EA & BC) != 0)
+	if ( EA & BC )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -7682,7 +7682,7 @@ static void DOFF_EA_BC(void)
 /* 74 de: 0111 0100 1101 1110 */
 static void DOFF_EA_DE(void)
 {
-	if ((EA & DE) != 0)
+	if ( EA & DE )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -7691,7 +7691,7 @@ static void DOFF_EA_DE(void)
 /* 74 df: 0111 0100 1101 1111 */
 static void DOFF_EA_HL(void)
 {
-	if ((EA & HL) != 0)
+	if ( EA & HL )
 		PSW &= ~Z;
 	else
 		PSW = PSW | Z | SK;
@@ -8219,7 +8219,7 @@ static void DCX_HL(void)
 /* 34: 0011 0100 llll llll hhhh hhhh */
 static void LXI_H_w(void)
 {
-	if ((PSW & L0) != 0) { /* overlay active? */
+	if (PSW & L0) { /* overlay active? */
 		PC+=2;
 		return;
 	}
@@ -8421,7 +8421,7 @@ static void JRE(void)
 {
 	UINT8 offs;
 	RDOPARG( offs );
-	if ((OP & 0x01) != 0)
+	if (OP & 0x01)
 		PC -= 256 - offs;
 	else
 		PC += offs;
@@ -8890,7 +8890,7 @@ static void MVI_V_xx(void)
 /* 69: 0110 1001 xxxx xxxx */
 static void MVI_A_xx(void)
 {
-	if ((PSW & L1) != 0) {	/* overlay active? */
+	if (PSW & L1) {	/* overlay active? */
 		PC++;
 		return; 	/* NOP */
 	}
@@ -8931,7 +8931,7 @@ static void MVI_H_xx(void)
 /* 6f: 0110 1111 xxxx xxxx */
 static void MVI_L_xx(void)
 {
-	if ((PSW & L0) != 0) {	/* overlay active? */
+	if (PSW & L0) {	/* overlay active? */
 		PC++;
 		return; 	/* NOP */
 	}

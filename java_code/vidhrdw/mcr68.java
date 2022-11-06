@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,7 +37,7 @@ public class mcr68
 		int code = (data & 0x3ff) | ((data >> 4) & 0xc00);
 		int color = (~data >> 12) & 3;
 		SET_TILE_INFO(0, code, color, TILE_FLIPYX((data >> 10) & 3));
-		if (Machine.gfx[0].total_elements < 0x1000)
+		if (Machine->gfx[0]->total_elements < 0x1000)
 			tile_info.priority = (data >> 15) & 1;
 	}
 	
@@ -66,27 +66,25 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_mcr68  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mcr68  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(bg_tilemap, 0);
 		return 0;
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_zwackery  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_zwackery  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(zwackery_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,32);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		/* initialize the foreground tilemap */
 		fg_tilemap = tilemap_create(zwackery_get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (fg_tilemap == 0)
+		if (!fg_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
@@ -101,8 +99,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_zwackery  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_zwackery  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		const UINT8 *colordatabase = (const UINT8 *)memory_region(REGION_GFX3);
 		struct GfxElement *gfx0 = Machine.gfx[0];
 		struct GfxElement *gfx2 = Machine.gfx[2];
@@ -233,7 +230,7 @@ public class mcr68
 	
 	static void mcr68_update_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int priority)
 	{
-		struct rectangle sprite_clip = Machine.visible_area;
+		struct rectangle sprite_clip = Machine->visible_area;
 		int offs;
 	
 		/* adjust for clipping */
@@ -273,11 +270,11 @@ public class mcr68
 				The color 8 is used to cover over other sprites. */
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 					&sprite_clip, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 					&sprite_clip, TRANSPARENCY_PENS, 0xfeff, 0x02);
 		}
 	}
@@ -304,7 +301,7 @@ public class mcr68
 			color = ((~flags >> 2) & 0x0f) | ((flags & 0x02) << 3);
 	
 			/* for low priority, draw everything but color 7 */
-			if (priority == 0)
+			if (!priority)
 			{
 				if (color == 7)
 					continue;
@@ -329,11 +326,11 @@ public class mcr68
 				The color 8 is used to cover over other sprites. */
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 					cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, x, y,
+			pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, x, y,
 					cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 		}
 	}
@@ -346,8 +343,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mcr68  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY | 0, 0);
 		tilemap_draw(bitmap, cliprect, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY | 1, 0);
@@ -363,8 +359,7 @@ public class mcr68
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zwackery  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,24 +39,20 @@ public class psychic5
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
 	
-	public static MachineInitHandlerPtr machine_init_psychic5  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_psychic5  = new MachineInitHandlerPtr() { public void handler(){
 		bg_clip_mode = -10;
 		flip_screen_set(0);
 	} };
 	
-	public static WriteHandlerPtr psychic5_vram_page_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_vram_page_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ps5_vram_page = data;
 	} };
 	
-	public static ReadHandlerPtr psychic5_vram_page_select_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psychic5_vram_page_select_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ps5_vram_page;
 	} };
 	
-	public static WriteHandlerPtr psychic5_title_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_title_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		title_screen = data & 0x01;
 	} };
 	
@@ -153,7 +149,7 @@ public class psychic5
 	
 				/* background intensity enable  TO DO BETTER !!! */
 	
-				if (title_screen == 0)
+				if (!title_screen)
 				{
 					r = (r>>4) * ir;
 		 		  	g = (g>>4) * ig;
@@ -165,8 +161,7 @@ public class psychic5
 	}
 	
 	
-	public static WriteHandlerPtr psychic5_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (psychic5_bg_videoram[offset] != data)
 		{
 			psychic5_bg_videoram[offset] = data;
@@ -174,8 +169,7 @@ public class psychic5
 		}
 	} };
 	
-	public static WriteHandlerPtr psychic5_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (psychic5_fg_videoram[offset] != data)
 		{
 			psychic5_fg_videoram[offset] = data;
@@ -183,11 +177,10 @@ public class psychic5
 		}
 	} };
 	
-	public static ReadHandlerPtr psychic5_paged_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psychic5_paged_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
-		if (ps5_vram_page == 0)
+		if (!ps5_vram_page)
 		{
 			if (offset < 0x1000)
 				return psychic5_bg_videoram[offset];
@@ -233,9 +226,8 @@ public class psychic5
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr psychic5_paged_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (ps5_vram_page == 0)
+	public static WriteHandlerPtr psychic5_paged_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (!ps5_vram_page)
 		{
 			if (offset < 0x1000)
 				psychic5_bg_videoram_w(offset,data);
@@ -297,8 +289,7 @@ public class psychic5
 		SET_TILE_INFO(2, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_psychic5  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_psychic5  = new VideoStartHandlerPtr() { public int handler(){
 		if ((psychic5_bg_videoram = auto_malloc(0x1000)) == 0)
 			return 1;
 	
@@ -323,13 +314,13 @@ public class psychic5
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 16, 16, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 15);
@@ -337,13 +328,13 @@ public class psychic5
 	    return 0;
 	} };
 	
-	#define DRAW_SPRITE(code, sx, sy) drawgfx(bitmap, Machine.gfx[0], code, color, flipx, flipy, sx, sy, cliprect, TRANSPARENCY_PEN, 15);
+	#define DRAW_SPRITE(code, sx, sy) drawgfx(bitmap, Machine->gfx[0], code, color, flipx, flipy, sx, sy, cliprect, TRANSPARENCY_PEN, 15);
 	
 	void psychic5_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		int offs;
 	
-		if (title_screen != 0)
+		if (title_screen)
 			return;
 		else
 			bg_clip_mode = -10;
@@ -360,10 +351,10 @@ public class psychic5
 			int sy = spriteram.read(offs);
 			int size32 = attr & 0x08;
 	
-			if ((attr & 0x01) != 0) sx -= 256;
-			if ((attr & 0x04) != 0) sy -= 256;
+			if (attr & 0x01) sx -= 256;
+			if (attr & 0x04) sy -= 256;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 224 - sx;
 				sy = 224 - sy;
@@ -371,7 +362,7 @@ public class psychic5
 				flipy = NOT(flipy);
 			}
 	
-			if (flipy != 0)
+			if (flipy)
 			{
 				tileofs0 = 1; tileofs1 = 0;	tileofs2 = 3; tileofs3 = 2;
 			}
@@ -380,7 +371,7 @@ public class psychic5
 				tileofs0 = 0; tileofs1 = 1;	tileofs2 = 2; tileofs3 = 3;
 			}
 	
-			if (flipx != 0)
+			if (flipx)
 			{
 				temp1 = tileofs0;
 				temp2 = tileofs1;
@@ -390,7 +381,7 @@ public class psychic5
 				tileofs3 = temp2;
 			}
 	
-			if (size32 != 0)
+			if (size32)
 			{
 				DRAW_SPRITE(code + tileofs0, sx, sy)
 				DRAW_SPRITE(code + tileofs1, sx, sy + 16)
@@ -399,7 +390,7 @@ public class psychic5
 			}
 			else
 			{
-				if (flip_screen != 0)
+				if (flip_screen())
 					DRAW_SPRITE(code, sx + 16, sy + 16)
 				else
 					DRAW_SPRITE(code, sx, sy)
@@ -419,7 +410,7 @@ public class psychic5
 	
 		if (ps5_io_ram[BG_SCREEN_MODE] & 0x01)  /* background enable */
 		{
-			if (title_screen != 0)
+			if (title_screen)
 			{
 				struct rectangle clip = *cliprect;
 	
@@ -465,7 +456,7 @@ public class psychic5
 						bg_clip_mode = 8;
 				}
 	
-				if (bg_clip_mode != 0)
+				if (bg_clip_mode)
 				{
 					if (bg_clip_mode == 1)
 						clip.min_y = sy1;
@@ -504,8 +495,7 @@ public class psychic5
 			fillbitmap(bitmap, get_black_pen(), cliprect);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_psychic5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_psychic5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		psychic5_draw_background(bitmap, cliprect);
 		psychic5_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);

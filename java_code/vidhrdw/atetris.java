@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,8 +39,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr atetris_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atetris_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap, offset / 2);
 	} };
@@ -53,10 +52,9 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_atetris  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_atetris  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 		return 0;
 	} };
@@ -69,8 +67,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atetris  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, tilemap, 0,0);
 	} };
 }

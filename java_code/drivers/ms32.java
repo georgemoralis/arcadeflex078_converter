@@ -166,7 +166,7 @@ Games marked * need dumping / redumping
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -277,7 +277,7 @@ public class ms32
 	
 	static WRITE32_HANDLER( reset_sub_w )
 	{
-		if (data != 0) cpu_set_reset_line(1,PULSE_LINE); // 0 too ?
+		if(data) cpu_set_reset_line(1,PULSE_LINE); // 0 too ?
 	}
 	
 	
@@ -350,7 +350,7 @@ public class ms32
 	
 	static WRITE32_HANDLER( pip_w )
 	{
-		if (data != 0)
+		if (data)
 			usrintf_showmessage("fce00a7c = %02x",data);
 	}
 	
@@ -471,7 +471,7 @@ public class ms32
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 	
 	
-	static InputPortPtr input_ports_ms32 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ms32 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ms32 )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -539,7 +539,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bbbxing = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bbbxing = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bbbxing )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -629,7 +629,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_desertwr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_desertwr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( desertwr )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -695,7 +695,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gametngk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gametngk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gametngk )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -762,7 +762,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tetrisp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tetrisp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tetrisp )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -830,7 +830,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tp2m32 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tp2m32 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tp2m32 )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -895,7 +895,7 @@ public class ms32
 	INPUT_PORTS_END(); }}; 
 	
 	/* The Dip Switches for this game are completely wrong in the "test mode" ! */
-	static InputPortPtr input_ports_p47aces = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_p47aces = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( p47aces )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -960,7 +960,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gratia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gratia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gratia )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -1027,7 +1027,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hayaosi1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hayaosi1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hayaosi1 )
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -1119,7 +1119,7 @@ public class ms32
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kirarast = new InputPortPtr(){ public void handler() { 	// player 1 inputs done? others?
+	static InputPortPtr input_ports_kirarast = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kirarast )	// player 1 inputs done? others?
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -1252,7 +1252,7 @@ public class ms32
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_f1superb = new InputPortPtr(){ public void handler() { 	// Mostly wrong !
+	static InputPortPtr input_ports_f1superb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1superb )	// Mostly wrong !
 		MS32_UNKNOWN_INPUTS
 	
 		MS32_SYSTEM_INPUTS
@@ -1433,7 +1433,7 @@ public class ms32
 		int i;
 		for(i=15; i>=0 && !(irqreq & (1<<i)); i--);
 		irqreq &= ~(1<<i);
-		if (irqreq == 0)
+		if(!irqreq)
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		return i;
 	}
@@ -1451,8 +1451,7 @@ public class ms32
 		cpu_set_irq_line(0, 0, ASSERT_LINE);
 	}
 	
-	static INTERRUPT_GEN(ms32_interrupt)
-	{
+	public static InterruptHandlerPtr ms32_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( cpu_getiloops() == 0 ) irq_raise(10);
 		if( cpu_getiloops() == 1 ) irq_raise(9);
 		/* hayaosi1 needs at least 12 IRQ 0 per frame to work (see code at FFE02289)
@@ -1464,7 +1463,7 @@ public class ms32
 		   p47aces
 		   */
 		if( cpu_getiloops() >= 3 && cpu_getiloops() <= 32 ) irq_raise(0);
-	}
+	} };
 	
 	/********** SOUND **********/
 	
@@ -1489,20 +1488,17 @@ public class ms32
 	 code at $38 reads the 2nd command latch ??
 	*/
 	
-	public static ReadHandlerPtr latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
 		return soundlatch_r(0)^0xff;
 	} };
 	
-	public static WriteHandlerPtr ms32_snd_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ms32_snd_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			cpu_setbank(4, memory_region(REGION_CPU2) + 0x14000+0x4000*(data&0xf));
 			cpu_setbank(5, memory_region(REGION_CPU2) + 0x14000+0x4000*(data>>4));
 	} };
 	
-	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			to_main=data;
 			irq_raise(1);
 	} };
@@ -1543,8 +1539,7 @@ public class ms32
 	
 	/********** MACHINE INIT **********/
 	
-	public static MachineInitHandlerPtr machine_init_ms32  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ms32  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		cpu_setbank(4, memory_region(REGION_CPU2) + 0x14000);
 		cpu_setbank(5, memory_region(REGION_CPU2) + 0x18000);
@@ -1553,8 +1548,7 @@ public class ms32
 	
 	/********** MACHINE DRIVER **********/
 	
-	public static MachineHandlerPtr machine_driver_ms32 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ms32 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V70, 20000000/9) // 20MHz
@@ -1584,9 +1578,7 @@ public class ms32
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF271, ymf271_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/********** ROM LOADING **********/
@@ -2114,7 +2106,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX1 );
 	
 		result_data = malloc(source_size);
-		if (result_data == 0) return;
+		if (!result_data) return;
 	
 		for(i=0; i<source_size; i++)
 		{
@@ -2140,7 +2132,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX4 );
 	
 		result_data = malloc(source_size);
-		if (result_data == 0) return;
+		if (!result_data) return;
 	
 		addr_xor ^= 0x1005d;
 	
@@ -2195,7 +2187,7 @@ public class ms32
 		source_size = memory_region_length( REGION_GFX3 );
 	
 		result_data = malloc(source_size);
-		if (result_data == 0) return;
+		if (!result_data) return;
 	
 		addr_xor ^= 0xc1c5b;
 	
@@ -2242,85 +2234,77 @@ public class ms32
 	
 	
 	/* SS91022-10: desertwr, gratiaa, tp2m32, gametngk */
-	static DRIVER_INIT (ss91022_10)
-	{
+	public static DriverInitHandlerPtr init_ss91022_10  = new DriverInitHandlerPtr() { public void handler(){
 		rearrange_sprites();
 		decrypt_ms32_tx(0x00000,0x35);
 		decrypt_ms32_bg(0x00000,0xa3);
-	}
+	} };
 	
 	/* SS92046_01: bbbxing, f1superb, tetrisp, hayaosi1 */
-	static DRIVER_INIT (ss92046_01)
-	{
+	public static DriverInitHandlerPtr init_ss92046_01  = new DriverInitHandlerPtr() { public void handler(){
 		rearrange_sprites();
 		decrypt_ms32_tx(0x00020,0x7e);
 		decrypt_ms32_bg(0x00001,0x9b);
-	}
+	} };
 	
 	/* SS92047-01: gratia, kirarast */
-	static DRIVER_INIT (ss92047_01)
-	{
+	public static DriverInitHandlerPtr init_ss92047_01  = new DriverInitHandlerPtr() { public void handler(){
 		rearrange_sprites();
 		decrypt_ms32_tx(0x24000,0x18);
 		decrypt_ms32_bg(0x24000,0x55);
-	}
+	} };
 	
 	/* SS92048-01: p47aces, 47pie2, 47pie2o */
-	static DRIVER_INIT (ss92048_01)
-	{
+	public static DriverInitHandlerPtr init_ss92048_01  = new DriverInitHandlerPtr() { public void handler(){
 		rearrange_sprites();
 		decrypt_ms32_tx(0x20400,0xd6);
 		decrypt_ms32_bg(0x20400,0xd4);
-	}
+	} };
 	
-	static DRIVER_INIT (kirarast)
-	{
+	public static DriverInitHandlerPtr init_kirarast  = new DriverInitHandlerPtr() { public void handler(){
 	//	{ 0xfcc00004, 0xfcc00007, ms32_mahjong_read_inputs1 }
 		install_mem_read32_handler(0, 0xfcc00004, 0xfcc00007, ms32_mahjong_read_inputs1 );
 	
 		init_ss92047_01();
-	}
+	} };
 	
-	static DRIVER_INIT (47pie2)
-	{
+	public static DriverInitHandlerPtr init_47pie2  = new DriverInitHandlerPtr() { public void handler(){
 	//	{ 0xfcc00004, 0xfcc00007, ms32_mahjong_read_inputs1 }
 		install_mem_read32_handler(0, 0xfcc00004, 0xfcc00007, ms32_mahjong_read_inputs1 );
 	
 		init_ss92048_01();
-	}
+	} };
 	
-	static DRIVER_INIT (tp2m32)
-	{
+	public static DriverInitHandlerPtr init_tp2m32  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
 		/* fix SBR register */
 		pROM[0x1b848/4] &= 0x0000ffff;
 	
 		init_ss91022_10();
-	}
+	} };
 	
-	static DRIVER_INIT (f1superb)
-	{
+	public static DriverInitHandlerPtr init_f1superb  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *pROM = (data32_t *)memory_region(REGION_CPU1);
-		pROM[0x19d04/4]=0x167a021a; // bne.br  : sprite Y offset table is always copied to RAM
+		pROM[0x19d04/4]=0x167a021a; // bne->br  : sprite Y offset table is always copied to RAM
 		init_ss92046_01();
-	}
+	} };
 	
 	/********** GAME DRIVERS **********/
 	
-	public static GameDriver driver_hayaosi1	   = new GameDriver("1994"	,"hayaosi1"	,"ms32.java"	,rom_hayaosi1,null	,machine_driver_ms32	,input_ports_hayaosi1	,init_ss92046_01	,ROT0	,	"Jaleco", "Hayaoshi Quiz Ouza Ketteisen", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_bbbxing	   = new GameDriver("1994"	,"bbbxing"	,"ms32.java"	,rom_bbbxing,null	,machine_driver_ms32	,input_ports_bbbxing	,init_ss92046_01	,ROT0	,	"Jaleco", "Best Bout Boxing", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_47pie2	   = new GameDriver("1994"	,"47pie2"	,"ms32.java"	,rom_47pie2,null	,machine_driver_ms32	,input_ports_kirarast	,init_47pie2	,ROT0	,	"Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.1)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_47pie2o	   = new GameDriver("1994"	,"47pie2o"	,"ms32.java"	,rom_47pie2o,driver_47pie2	,machine_driver_ms32	,input_ports_kirarast	,init_47pie2	,ROT0	,	"Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.0)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_desertwr	   = new GameDriver("1995"	,"desertwr"	,"ms32.java"	,rom_desertwr,null	,machine_driver_ms32	,input_ports_desertwr	,init_ss91022_10	,ROT270	,	"Jaleco", "Desert War / Wangan Sensou", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND  )
-	public static GameDriver driver_gametngk	   = new GameDriver("1995"	,"gametngk"	,"ms32.java"	,rom_gametngk,null	,machine_driver_ms32	,input_ports_gametngk	,init_ss91022_10	,ROT270	,	"Jaleco", "The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tetrisp	   = new GameDriver("1995"	,"tetrisp"	,"ms32.java"	,rom_tetrisp,null	,machine_driver_ms32	,input_ports_tetrisp	,init_ss92046_01	,ROT0	,	"Jaleco / BPS", "Tetris Plus", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_p47aces	   = new GameDriver("1995"	,"p47aces"	,"ms32.java"	,rom_p47aces,null	,machine_driver_ms32	,input_ports_p47aces	,init_ss92048_01	,ROT0	,	"Jaleco", "P-47 Aces", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_akiss	   = new GameDriver("1995"	,"akiss"	,"ms32.java"	,rom_akiss,null	,machine_driver_ms32	,input_ports_kirarast	,init_kirarast	,ROT0	,	"Jaleco", "Mahjong Angel Kiss", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_gratia	   = new GameDriver("1996"	,"gratia"	,"ms32.java"	,rom_gratia,null	,machine_driver_ms32	,input_ports_gratia	,init_ss92047_01	,ROT0	,	"Jaleco", "Gratia - Second Earth (92047-01 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_gratiaa	   = new GameDriver("1996"	,"gratiaa"	,"ms32.java"	,rom_gratiaa,driver_gratia	,machine_driver_ms32	,input_ports_gratia	,init_ss91022_10	,ROT0	,	"Jaleco", "Gratia - Second Earth (91022-10 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_kirarast	   = new GameDriver("1996"	,"kirarast"	,"ms32.java"	,rom_kirarast,null	,machine_driver_ms32	,input_ports_kirarast	,init_kirarast	,ROT0	,	"Jaleco", "Ryuusei Janshi Kirara Star", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tp2m32	   = new GameDriver("1997"	,"tp2m32"	,"ms32.java"	,rom_tp2m32,driver_tetrisp2	,machine_driver_ms32	,input_ports_tp2m32	,init_tp2m32	,ROT0	,	"Jaleco", "Tetris Plus 2 (MegaSystem 32 Version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1994, hayaosi1, 0,        ms32, hayaosi1, ss92046_01, ROT0,   "Jaleco", "Hayaoshi Quiz Ouza Ketteisen", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1994, bbbxing,  0,        ms32, bbbxing,  ss92046_01, ROT0,   "Jaleco", "Best Bout Boxing", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1994, 47pie2,   0,        ms32, kirarast, 47pie2,     ROT0,   "Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.1)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1994, 47pie2o,  47pie2,   ms32, kirarast, 47pie2,     ROT0,   "Jaleco", "Idol Janshi Su-Chi-Pie 2 (v1.0)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1995, desertwr, 0,        ms32, desertwr, ss91022_10, ROT270, "Jaleco", "Desert War / Wangan Sensou", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND  )
+	GAMEX( 1995, gametngk, 0,        ms32, gametngk, ss91022_10, ROT270, "Jaleco", "The Game Paradise - Master of Shooting! / Game Tengoku - The Game Paradise", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1995, tetrisp,  0,        ms32, tetrisp,  ss92046_01, ROT0,   "Jaleco / BPS", "Tetris Plus", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1995, p47aces,  0,        ms32, p47aces,  ss92048_01, ROT0,   "Jaleco", "P-47 Aces", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1995, akiss,    0,        ms32, kirarast, kirarast,   ROT0,   "Jaleco", "Mahjong Angel Kiss", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1996, gratia,   0,        ms32, gratia,   ss92047_01, ROT0,   "Jaleco", "Gratia - Second Earth (92047-01 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1996, gratiaa,  gratia,   ms32, gratia,   ss91022_10, ROT0,   "Jaleco", "Gratia - Second Earth (91022-10 version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1996, kirarast, 0,        ms32, kirarast, kirarast,   ROT0,   "Jaleco", "Ryuusei Janshi Kirara Star", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1997, tp2m32,   tetrisp2, ms32, tp2m32,   tp2m32,     ROT0,   "Jaleco", "Tetris Plus 2 (MegaSystem 32 Version)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 	
 	/* these boot and show something */
-	public static GameDriver driver_f1superb	   = new GameDriver("1994"	,"f1superb"	,"ms32.java"	,rom_f1superb,null	,machine_driver_ms32	,input_ports_f1superb	,init_f1superb	,ROT0	,	"Jaleco", "F1 Super Battle", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1994, f1superb, 0,        ms32, f1superb, f1superb, ROT0,   "Jaleco", "F1 Super Battle", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

@@ -35,7 +35,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,14 +46,12 @@ public class ambush
 	
 	
 	
-	public static WriteHandlerPtr ambush_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ambush_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -99,7 +97,7 @@ public class ambush
 	};
 	
 	
-	static InputPortPtr input_ports_ambush = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ambush = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ambush )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -191,8 +189,7 @@ public class ambush
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_ambush = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ambush )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.00 MHz??? */
@@ -216,9 +213,7 @@ public class ambush
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -266,6 +261,6 @@ public class ambush
 		ROM_LOAD( "14.bpr",		  0x0300, 0x0100, CRC(622a8ce7) SHA1(6834f67874251f2ef3a33aec893311f5d10e496f) )  /* They don't look like color PROMs */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ambush	   = new GameDriver("1983"	,"ambush"	,"ambush.java"	,rom_ambush,null	,machine_driver_ambush	,input_ports_ambush	,null	,ROT0	,	"Nippon Amuse Co-Ltd", "Ambush" )
-	public static GameDriver driver_ambusht	   = new GameDriver("1983"	,"ambusht"	,"ambush.java"	,rom_ambusht,driver_ambush	,machine_driver_ambush	,input_ports_ambush	,null	,ROT0	,	"Tecfri", "Ambush (Tecfri)" )
+	GAME( 1983, ambush, 0,      ambush, ambush, 0, ROT0, "Nippon Amuse Co-Ltd", "Ambush" )
+	GAME( 1983, ambusht,ambush, ambush, ambush, 0, ROT0, "Tecfri", "Ambush (Tecfri)" )
 }

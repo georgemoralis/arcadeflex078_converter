@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,8 +20,7 @@ public class hcastle
 	static int pf2_bankbase,pf1_bankbase;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_hcastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_hcastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,chip,pal,clut;
 	
 		for (chip = 0;chip < 2;chip++)
@@ -56,7 +55,7 @@ public class hcastle
 	
 	static UINT32 tilemap_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);	/* skip 0x400 */
 	}
 	
@@ -66,8 +65,8 @@ public class hcastle
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
 		int bit3 = (K007121_ctrlram[0][0x05] >> 6) & 0x03;
-		int attr = hcastle_pf1_videoram.read(tile_index);
-		int tile = hcastle_pf1_videoram.read(tile_index + 0x400);
+		int attr = hcastle_pf1_videoram[tile_index];
+		int tile = hcastle_pf1_videoram[tile_index + 0x400];
 		int color = attr & 0x7;
 		int bank =  ((attr & 0x80) >> 7) |
 					((attr >> (bit0+2)) & 0x02) |
@@ -88,8 +87,8 @@ public class hcastle
 		int bit1 = (K007121_ctrlram[1][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[1][0x05] >> 4) & 0x03;
 		int bit3 = (K007121_ctrlram[1][0x05] >> 6) & 0x03;
-		int attr = hcastle_pf2_videoram.read(tile_index);
-		int tile = hcastle_pf2_videoram.read(tile_index + 0x400);
+		int attr = hcastle_pf2_videoram[tile_index];
+		int tile = hcastle_pf2_videoram[tile_index + 0x400];
 		int color = attr & 0x7;
 		int bank =  ((attr & 0x80) >> 7) |
 					((attr >> (bit0+2)) & 0x02) |
@@ -112,8 +111,7 @@ public class hcastle
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_hcastle  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hcastle  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan,TILEMAP_OPAQUE,     8,8,64,32);
 	
@@ -133,36 +131,31 @@ public class hcastle
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr hcastle_pf1_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (hcastle_pf1_videoram.read(offset)!= data)
+	public static WriteHandlerPtr hcastle_pf1_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (hcastle_pf1_videoram[offset] != data)
 		{
-			hcastle_pf1_videoram.write(data,data);
+			hcastle_pf1_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset & 0xbff);
 		}
 	} };
 	
-	public static WriteHandlerPtr hcastle_pf2_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (hcastle_pf2_videoram.read(offset)!= data)
+	public static WriteHandlerPtr hcastle_pf2_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (hcastle_pf2_videoram[offset] != data)
 		{
-			hcastle_pf2_videoram.write(data,data);
+			hcastle_pf2_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset & 0xbff);
 		}
 	} };
 	
-	public static WriteHandlerPtr hcastle_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gfx_bank = data;
 	} };
 	
-	public static ReadHandlerPtr hcastle_gfxbank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hcastle_gfxbank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gfx_bank;
 	} };
 	
-	public static WriteHandlerPtr hcastle_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==3)
 		{
 			if ((data&0x8)==0)
@@ -177,8 +170,7 @@ public class hcastle
 		K007121_ctrl_0_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr hcastle_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==3)
 		{
 			if ((data&0x8)==0)
@@ -203,8 +195,7 @@ public class hcastle
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hcastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int old_pf1,old_pf2;
 	
 	

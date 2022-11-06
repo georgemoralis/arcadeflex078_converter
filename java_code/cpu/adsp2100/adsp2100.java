@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.adsp2100;
 
@@ -424,7 +424,7 @@ public class adsp2100
 	unsigned adsp2100_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(adsp2100_Regs *)dst = adsp2100;
 	
 		/* return the context size */
@@ -435,7 +435,7 @@ public class adsp2100
 	void adsp2100_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			adsp2100 = *(adsp2100_Regs *)src;
 	
 		/* reset the chip type */
@@ -454,7 +454,7 @@ public class adsp2100
 	void adsp2100_init(void)
 	{
 		/* create the tables */
-		if (create_tables() == 0)
+		if (!create_tables())
 			exit(-1);
 	}
 	
@@ -536,11 +536,11 @@ public class adsp2100
 		int i;
 	
 		/* allocate the tables */
-		if (reverse_table == 0)
+		if (!reverse_table)
 			reverse_table = (UINT16 *)malloc(0x4000 * sizeof(UINT16));
-		if (mask_table == 0)
+		if (!mask_table)
 			mask_table = (UINT16 *)malloc(0x4000 * sizeof(UINT16));
-		if (condition_table == 0)
+		if (!condition_table)
 			condition_table = (UINT8 *)malloc(0x1000 * sizeof(UINT8));
 	
 		/* handle errors */
@@ -622,15 +622,15 @@ public class adsp2100
 	
 	void adsp2100_exit(void)
 	{
-		if (reverse_table != 0)
+		if (reverse_table)
 			free(reverse_table);
 		reverse_table = NULL;
 	
-		if (mask_table != 0)
+		if (mask_table)
 			free(mask_table);
 		mask_table = NULL;
 	
-		if (condition_table != 0)
+		if (condition_table)
 			free(condition_table);
 		condition_table = NULL;
 	
@@ -717,7 +717,7 @@ public class adsp2100
 					/* 00000010 0000xxxx xxxxxxxx  modify flag out */
 					/* 00000010 10000000 00000000  idle */
 					/* 00000010 10000000 0000xxxx  idle (n) */
-					if ((op & 0x008000) != 0)
+					if (op & 0x008000)
 					{
 						adsp2100.idle = 1;
 						adsp2100_icount = 0;
@@ -758,11 +758,11 @@ public class adsp2100
 					break;
 				case 0x03:
 					/* 00000011 xxxxxxxx xxxxxxxx  call or jump on flag in */
-					if ((op & 0x000002) != 0)
+					if (op & 0x000002)
 					{
 						if (adsp2100.flagin)
 						{
-							if ((op & 0x000001) != 0)
+							if (op & 0x000001)
 								pc_stack_push();
 							adsp2100.pc = ((op >> 4) & 0x0fff) | ((op << 10) & 0x3000);
 						}
@@ -771,7 +771,7 @@ public class adsp2100
 					{
 						if (!adsp2100.flagin)
 						{
-							if ((op & 0x000001) != 0)
+							if (op & 0x000001)
 								pc_stack_push();
 							adsp2100.pc = ((op >> 4) & 0x0fff) | ((op << 10) & 0x3000);
 						}
@@ -779,18 +779,18 @@ public class adsp2100
 					break;
 				case 0x04:
 					/* 00000100 00000000 000xxxxx  stack control */
-					if ((op & 0x000010) != 0) pc_stack_pop_val();
-					if ((op & 0x000008) != 0) loop_stack_pop();
-					if ((op & 0x000004) != 0) cntr_stack_pop();
-					if ((op & 0x000002) != 0)
+					if (op & 0x000010) pc_stack_pop_val();
+					if (op & 0x000008) loop_stack_pop();
+					if (op & 0x000004) cntr_stack_pop();
+					if (op & 0x000002)
 					{
-						if ((op & 0x000001) != 0) stat_stack_pop();
+						if (op & 0x000001) stat_stack_pop();
 						else stat_stack_push();
 					}
 					break;
 				case 0x05:
 					/* 00000101 00000000 00000000  saturate MR */
-					if (GET_MV != 0)
+					if (GET_MV)
 					{
 						if (adsp2100.core.mr.mrx.mr2.u & 0x80)
 							adsp2100.core.mr.mrx.mr2.u = 0xffff, adsp2100.core.mr.mrx.mr1.u = 0x8000, adsp2100.core.mr.mrx.mr0.u = 0x0000;
@@ -821,7 +821,7 @@ public class adsp2100
 	
 						xop = ALU_GETXREG_UNSIGNED(xop);
 	
-						if (GET_Q != 0)
+						if (GET_Q)
 							res = adsp2100.core.af.u + xop;
 						else
 							res = adsp2100.core.af.u - xop;
@@ -847,7 +847,7 @@ public class adsp2100
 						pc_stack_pop();
 	
 						/* RTI case */
-						if ((op & 0x000010) != 0)
+						if (op & 0x000010)
 							stat_stack_pop();
 					}
 					break;
@@ -855,7 +855,7 @@ public class adsp2100
 					/* 00001011 00000000 xxxxxxxx  conditional jump (indirect address) */
 					if (CONDITION(op & 15))
 					{
-						if ((op & 0x000010) != 0)
+						if (op & 0x000010)
 							pc_stack_push();
 						adsp2100.pc = adsp2100.i[4 + ((op >> 6) & 3)] & 0x3fff;
 					}
@@ -865,14 +865,14 @@ public class adsp2100
 					temp = adsp2100.mstat;
 					if (chip_type >= CHIP_TYPE_ADSP2101)
 					{
-						if ((op & 0x000008) != 0) temp = (temp & ~MSTAT_GOMODE) | ((op << 5) & MSTAT_GOMODE);
-						if ((op & 0x002000) != 0) temp = (temp & ~MSTAT_INTEGER) | ((op >> 8) & MSTAT_INTEGER);
-						if ((op & 0x008000) != 0) temp = (temp & ~MSTAT_TIMER) | ((op >> 9) & MSTAT_TIMER);
+						if (op & 0x000008) temp = (temp & ~MSTAT_GOMODE) | ((op << 5) & MSTAT_GOMODE);
+						if (op & 0x002000) temp = (temp & ~MSTAT_INTEGER) | ((op >> 8) & MSTAT_INTEGER);
+						if (op & 0x008000) temp = (temp & ~MSTAT_TIMER) | ((op >> 9) & MSTAT_TIMER);
 					}
-					if ((op & 0x000020) != 0) temp = (temp & ~MSTAT_BANK) | ((op >> 4) & MSTAT_BANK);
-					if ((op & 0x000080) != 0) temp = (temp & ~MSTAT_REVERSE) | ((op >> 5) & MSTAT_REVERSE);
-					if ((op & 0x000200) != 0) temp = (temp & ~MSTAT_STICKYV) | ((op >> 6) & MSTAT_STICKYV);
-					if ((op & 0x000800) != 0) temp = (temp & ~MSTAT_SATURATE) | ((op >> 7) & MSTAT_SATURATE);
+					if (op & 0x000020) temp = (temp & ~MSTAT_BANK) | ((op >> 4) & MSTAT_BANK);
+					if (op & 0x000080) temp = (temp & ~MSTAT_REVERSE) | ((op >> 5) & MSTAT_REVERSE);
+					if (op & 0x000200) temp = (temp & ~MSTAT_STICKYV) | ((op >> 6) & MSTAT_STICKYV);
+					if (op & 0x000800) temp = (temp & ~MSTAT_SATURATE) | ((op >> 7) & MSTAT_SATURATE);
 					set_mstat(temp);
 					break;
 				case 0x0d:
@@ -895,7 +895,7 @@ public class adsp2100
 					break;
 				case 0x11:
 					/* 00010001 xxxxxxxx xxxxxxxx  shift with pgm memory read/write */
-					if ((op & 0x8000) != 0)
+					if (op & 0x8000)
 					{
 						pgm_write_dag2(op, READ_REG(0, (op >> 4) & 15));
 						shift_op(op);
@@ -908,7 +908,7 @@ public class adsp2100
 					break;
 				case 0x12:
 					/* 00010010 xxxxxxxx xxxxxxxx  shift with data memory read/write DAG1 */
-					if ((op & 0x8000) != 0)
+					if (op & 0x8000)
 					{
 						data_write_dag1(op, READ_REG(0, (op >> 4) & 15));
 						shift_op(op);
@@ -921,7 +921,7 @@ public class adsp2100
 					break;
 				case 0x13:
 					/* 00010011 xxxxxxxx xxxxxxxx  shift with data memory read/write DAG2 */
-					if ((op & 0x8000) != 0)
+					if (op & 0x8000)
 					{
 						data_write_dag2(op, READ_REG(0, (op >> 4) & 15));
 						shift_op(op);
@@ -1668,12 +1668,12 @@ public class adsp2100
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &adsp2100;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+ADSP2100_PC:  	sprintf(buffer[which], "PC:  %04X", r.pc); break;
+			case CPU_INFO_REG+ADSP2100_PC:  	sprintf(buffer[which], "PC:  %04X", r->pc); break;
 	
 			case CPU_INFO_REG+ADSP2100_AX0:		sprintf(buffer[which], "AX0: %04X", adsp2100.core.ax0.u); break;
 			case CPU_INFO_REG+ADSP2100_AX1:		sprintf(buffer[which], "AX1: %04X", adsp2100.core.ax1.u); break;
@@ -1772,14 +1772,14 @@ public class adsp2100
 	
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.astat & 0x80 ? 'X':'.',
-					r.astat & 0x40 ? 'M':'.',
-					r.astat & 0x20 ? 'Q':'.',
-					r.astat & 0x10 ? 'S':'.',
-					r.astat & 0x08 ? 'C':'.',
-					r.astat & 0x04 ? 'V':'.',
-					r.astat & 0x02 ? 'N':'.',
-					r.astat & 0x01 ? 'Z':'.');
+					r->astat & 0x80 ? 'X':'.',
+					r->astat & 0x40 ? 'M':'.',
+					r->astat & 0x20 ? 'Q':'.',
+					r->astat & 0x10 ? 'S':'.',
+					r->astat & 0x08 ? 'C':'.',
+					r->astat & 0x04 ? 'V':'.',
+					r->astat & 0x02 ? 'N':'.',
+					r->astat & 0x01 ? 'Z':'.');
 				break;
 			case CPU_INFO_NAME: return "ADSP2100";
 			case CPU_INFO_FAMILY: return "ADSP2100";

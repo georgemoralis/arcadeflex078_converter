@@ -12,7 +12,7 @@ TO-DO: - Fix the input ports of Kaos
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,10 +22,9 @@ public class gameplan
 	
 	static int gameplan_current_port;
 	
-	public static WriteHandlerPtr gameplan_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gameplan_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef VERY_VERBOSE
-		logerror("VIA 2: PC %04x: %x . reg%X\n",activecpu_get_pc(), data, offset);
+		logerror("VIA 2: PC %04x: %x -> reg%X\n",activecpu_get_pc(), data, offset);
 	#endif /* VERY_VERBOSE */
 	
 		switch (offset)
@@ -76,14 +75,13 @@ public class gameplan
 				break;
 	
 			default:
-				logerror("  VIA 2: unexpected register written to in VIA 2: %02x . %02x\n",
+				logerror("  VIA 2: unexpected register written to in VIA 2: %02x -> %02x\n",
 							data, offset);
 				break;
 		}
 	} };
 	
-	public static ReadHandlerPtr gameplan_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gameplan_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(gameplan_current_port);
 	} };
 	
@@ -148,7 +146,7 @@ public class gameplan
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_kaos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kaos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kaos )
 		PORT_START();       /* IN0 - from "TEST NO.7 - status locator - coin-door" */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
@@ -245,7 +243,7 @@ public class gameplan
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_killcom = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_killcom = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( killcom )
 		PORT_START();       /* IN0 - from "TEST NO.7 - status locator - coin-door" */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
@@ -316,7 +314,7 @@ public class gameplan
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_megatack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_megatack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megatack )
 		PORT_START();       /* IN0 - from "TEST NO.7 - status locator - coin-door" */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
@@ -398,7 +396,7 @@ public class gameplan
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_challeng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_challeng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( challeng )
 		PORT_START();       /* IN0 - from "TEST NO.7 - status locator - coin-door" */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
@@ -482,8 +480,7 @@ public class gameplan
 	
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_gameplan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gameplan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0xff,0xff,0xff); /* 0 WHITE   */
 		palette_set_color(1,0x20,0xff,0xff); /* 1 CYAN    */
 		palette_set_color(2,0xff,0x20,0xff); /* 2 MAGENTA */
@@ -507,8 +504,7 @@ public class gameplan
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_gameplan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gameplan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,3579000 / 4)		/* 3.579 / 4 MHz */
@@ -534,9 +530,7 @@ public class gameplan
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -631,8 +625,8 @@ public class gameplan
 	
 	
 	
-	public static GameDriver driver_kaos	   = new GameDriver("1981"	,"kaos"	,"gameplan.java"	,rom_kaos,null	,machine_driver_gameplan	,input_ports_kaos	,null	,ROT270	,	"GamePlan", "Kaos" )
-	public static GameDriver driver_killcom	   = new GameDriver("1980"	,"killcom"	,"gameplan.java"	,rom_killcom,null	,machine_driver_gameplan	,input_ports_killcom	,null	,ROT0	,	"GamePlan (Centuri license)", "Killer Comet" )
-	public static GameDriver driver_megatack	   = new GameDriver("1980"	,"megatack"	,"gameplan.java"	,rom_megatack,null	,machine_driver_gameplan	,input_ports_megatack	,null	,ROT0	,	"GamePlan (Centuri license)", "MegaTack" )
-	public static GameDriver driver_challeng	   = new GameDriver("1981"	,"challeng"	,"gameplan.java"	,rom_challeng,null	,machine_driver_gameplan	,input_ports_challeng	,null	,ROT0	,	"GamePlan (Centuri license)", "Challenger" )
+	GAME( 1981, kaos,     0, gameplan, kaos,     0, ROT270, "GamePlan", "Kaos" )
+	GAME( 1980, killcom,  0, gameplan, killcom,  0, ROT0,   "GamePlan (Centuri license)", "Killer Comet" )
+	GAME( 1980, megatack, 0, gameplan, megatack, 0, ROT0,   "GamePlan (Centuri license)", "MegaTack" )
+	GAME( 1981, challeng, 0, gameplan, challeng, 0, ROT0,   "GamePlan (Centuri license)", "Challenger" )
 }

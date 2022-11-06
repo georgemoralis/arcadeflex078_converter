@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -112,7 +112,7 @@ public class fileio
 	#ifndef MESS
 			case FILETYPE_INI:
 	#endif
-				if (openforwrite != 0)
+				if (openforwrite)
 				{
 					logerror("mame_fopen: type %02x write not supported\n", filetype);
 					return NULL;
@@ -121,7 +121,7 @@ public class fileio
 	
 			/* write-only cases */
 			case FILETYPE_SCREENSHOT:
-				if (openforwrite == 0)
+				if (!openforwrite)
 				{
 					logerror("mame_fopen: type %02x read not supported\n", filetype);
 					return NULL;
@@ -176,14 +176,14 @@ public class fileio
 			/* NVRAM files */
 			case FILETYPE_NVRAM:
 	#ifdef MESS
-				if (filename != 0)
+				if (filename)
 					return generic_fopen(filetype, gamename, filename, 0, openforwrite ? FILEFLAG_OPENWRITE | FILEFLAG_CREATE_GAMEDIR : FILEFLAG_OPENREAD);
 	#endif
 				return generic_fopen(filetype, NULL, gamename, 0, openforwrite ? FILEFLAG_OPENWRITE : FILEFLAG_OPENREAD);
 	
 			/* high score files */
 			case FILETYPE_HIGHSCORE:
-				if (mame_highscore_enabled() == 0)
+				if (!mame_highscore_enabled())
 					return NULL;
 				return generic_fopen(filetype, NULL, gamename, 0, openforwrite ? FILEFLAG_OPENWRITE : FILEFLAG_OPENREAD);
 	
@@ -273,21 +273,21 @@ public class fileio
 	void mame_fclose(mame_file *file)
 	{
 	#ifdef DEBUG_COOKIE
-		assert(file.debug_cookie == DEBUG_COOKIE);
-		file.debug_cookie = 0;
+		assert(file->debug_cookie == DEBUG_COOKIE);
+		file->debug_cookie = 0;
 	#endif
 	
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				osd_fclose(file.file);
+				osd_fclose(file->file);
 				break;
 	
 			case ZIPPED_FILE:
 			case RAM_FILE:
-				if (file.data)
-					free(file.data);
+				if (file->data)
+					free(file->data);
 				break;
 		}
 	
@@ -310,10 +310,10 @@ public class fileio
 	
 		/* copy the filename and add an extension */
 		strcpy(modified_filename, filename);
-		if (extension != 0)
+		if (extension)
 		{
 			char *p = strchr(modified_filename, '.');
-			if (p != 0)
+			if (p)
 				strcpy(p, extension);
 			else
 			{
@@ -359,22 +359,22 @@ public class fileio
 	UINT32 mame_fread(mame_file *file, void *buffer, UINT32 length)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				return osd_fread(file.file, buffer, length);
+				return osd_fread(file->file, buffer, length);
 	
 			case ZIPPED_FILE:
 			case RAM_FILE:
-				if (file.data)
+				if (file->data)
 				{
-					if (file.offset + length > file.length)
+					if (file->offset + length > file->length)
 					{
-						length = file.length - file.offset;
-						file.eof = 1;
+						length = file->length - file->offset;
+						file->eof = 1;
 					}
-					memcpy(buffer, file.data + file.offset, length);
-					file.offset += length;
+					memcpy(buffer, file->data + file->offset, length);
+					file->offset += length;
 					return length;
 				}
 				break;
@@ -392,10 +392,10 @@ public class fileio
 	UINT32 mame_fwrite(mame_file *file, const void *buffer, UINT32 length)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				return osd_fwrite(file.file, buffer, length);
+				return osd_fwrite(file->file, buffer, length);
 		}
 	
 		return 0;
@@ -412,26 +412,26 @@ public class fileio
 		int err = 0;
 	
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				return osd_fseek(file.file, offset, whence);
+				return osd_fseek(file->file, offset, whence);
 	
 			case ZIPPED_FILE:
 			case RAM_FILE:
 				switch (whence)
 				{
 					case SEEK_SET:
-						file.offset = offset;
+						file->offset = offset;
 						break;
 					case SEEK_CUR:
-						file.offset += offset;
+						file->offset += offset;
 						break;
 					case SEEK_END:
-						file.offset = file.length + offset;
+						file->offset = file->length + offset;
 						break;
 				}
-				file.eof = 0;
+				file->eof = 0;
 				break;
 		}
 	
@@ -453,12 +453,12 @@ public class fileio
 		file = generic_fopen(FILETYPE_ROM, gamename, filename, hash, FILEFLAG_OPENREAD | FILEFLAG_HASH | FILEFLAG_VERIFY_ONLY);
 	
 		/* if we didn't succeed return -1 */
-		if (file == 0)
+		if (!file)
 			return -1;
 	
 		/* close the file and save the length & checksum */
-		hash_data_copy(hash, file.hash);
-		*length = file.length;
+		hash_data_copy(hash, file->hash);
+		*length = file->length;
 		mame_fclose(file);
 		return 0;
 	}
@@ -472,21 +472,21 @@ public class fileio
 	UINT64 mame_fsize(mame_file *file)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
 			{
 				int size, offs;
-				offs = osd_ftell(file.file);
-				osd_fseek(file.file, 0, SEEK_END);
-				size = osd_ftell(file.file);
-				osd_fseek(file.file, offs, SEEK_SET);
+				offs = osd_ftell(file->file);
+				osd_fseek(file->file, 0, SEEK_END);
+				size = osd_ftell(file->file);
+				osd_fseek(file->file, offs, SEEK_SET);
 				return size;
 			}
 	
 			case RAM_FILE:
 			case ZIPPED_FILE:
-				return file.length;
+				return file->length;
 		}
 	
 		return 0;
@@ -500,7 +500,7 @@ public class fileio
 	
 	const char* mame_fhash(mame_file *file)
 	{
-		return file.hash;
+		return file->hash;
 	}
 	
 	
@@ -514,19 +514,19 @@ public class fileio
 		unsigned char buffer;
 	
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				if (osd_fread(file.file, &buffer, 1) == 1)
+				if (osd_fread(file->file, &buffer, 1) == 1)
 					return buffer;
 				return EOF;
 	
 			case RAM_FILE:
 			case ZIPPED_FILE:
-				if (file.offset < file.length)
-					return file.data[file.offset++];
+				if (file->offset < file->length)
+					return file->data[file->offset++];
 				else
-					file.eof = 1;
+					file->eof = 1;
 				return EOF;
 		}
 		return EOF;
@@ -541,28 +541,28 @@ public class fileio
 	int mame_ungetc(int c, mame_file *file)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				if (osd_feof(file.file))
+				if (osd_feof(file->file))
 				{
-					if (osd_fseek(file.file, 0, SEEK_CUR))
+					if (osd_fseek(file->file, 0, SEEK_CUR))
 						return c;
 				}
 				else
 				{
-					if (osd_fseek(file.file, -1, SEEK_CUR))
+					if (osd_fseek(file->file, -1, SEEK_CUR))
 						return c;
 				}
 				return EOF;
 	
 			case RAM_FILE:
 			case ZIPPED_FILE:
-				if (file.eof)
-					file.eof = 0;
-				else if (file.offset > 0)
+				if (file->eof)
+					file->eof = 0;
+				else if (file->offset > 0)
 				{
-					file.offset--;
+					file->offset--;
 					return c;
 				}
 				return EOF;
@@ -630,14 +630,14 @@ public class fileio
 	int mame_feof(mame_file *file)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				return osd_feof(file.file);
+				return osd_feof(file->file);
 	
 			case RAM_FILE:
 			case ZIPPED_FILE:
-				return (file.eof);
+				return (file->eof);
 		}
 	
 		return 1;
@@ -652,14 +652,14 @@ public class fileio
 	UINT64 mame_ftell(mame_file *file)
 	{
 		/* switch off the file type */
-		switch (file.type)
+		switch (file->type)
 		{
 			case PLAIN_FILE:
-				return osd_ftell(file.file);
+				return osd_ftell(file->file);
 	
 			case RAM_FILE:
 			case ZIPPED_FILE:
-				return file.offset;
+				return file->offset;
 		}
 	
 		return -1L;
@@ -747,10 +747,10 @@ public class fileio
 	#endif
 	
 		/* if there's a gamename, add that; only add a '/' if there is a filename as well */
-		if (gamename != 0)
+		if (gamename)
 		{
 			strcat(output, gamename);
-			if (filename != 0)
+			if (filename)
 			{
 				strcat(output, "/");
 				filename_base = &output[strlen(output)];
@@ -758,7 +758,7 @@ public class fileio
 		}
 	
 		/* if there's a filename, add that */
-		if (filename != 0)
+		if (filename)
 			strcat(output, filename);
 	
 		/* if there's no extension in the filename, add the extension */
@@ -869,7 +869,7 @@ public class fileio
 	
 	#ifdef MESS
 		int is_absolute_path = osd_is_absolute_path(filename);
-		if (is_absolute_path != 0)
+		if (is_absolute_path)
 		{
 			if ((flags & FILEFLAG_ALLOW_ABSOLUTE) == 0)
 				return NULL;
@@ -912,11 +912,11 @@ public class fileio
 			LOG(("Trying %s\n", name));
 	
 	#ifdef MESS
-			if (is_absolute_path != 0)
+			if (is_absolute_path)
 			{
 				*name = 0;
 			}
-			else if ((flags & FILEFLAG_CREATE_GAMEDIR) != 0)
+			else if (flags & FILEFLAG_CREATE_GAMEDIR)
 			{
 				if (osd_get_path_info(pathtype, pathindex, name) == PATH_NOT_FOUND)
 					osd_create_directory(pathtype, pathindex, name);
@@ -930,7 +930,7 @@ public class fileio
 				compose_path(name, gamename, filename, extension);
 	
 				/* if we need checksums, load it into RAM and compute it along the way */
-				if ((flags & FILEFLAG_HASH) != 0)
+				if (flags & FILEFLAG_HASH)
 				{
 					if (checksum_file(pathtype, pathindex, name, &file.data, &file.length, file.hash) == 0)
 					{
@@ -958,7 +958,7 @@ public class fileio
 				}
 	
 	#ifdef MESS
-				if ((flags & FILEFLAG_ZIP_PATHS) != 0)
+				if (flags & FILEFLAG_ZIP_PATHS)
 				{
 					int path_info = PATH_NOT_FOUND;
 					const char *oldname = name;
@@ -977,10 +977,10 @@ public class fileio
 						if (newname && !strcmp(oldname, newname))
 							newname = NULL;
 	
-						if (oldnewname != 0)
+						if (oldnewname)
 							free(oldnewname);
 						oldname = oldnewname = newname;
-						if (newname == 0)
+						if (!newname)
 							break;
 	
 						/* remove any trailing path separator if needed */
@@ -988,7 +988,7 @@ public class fileio
 							*s = '\0';
 					}
 	
-					if (newname != 0)
+					if (newname)
 					{
 						if ((oldname[0]) &&(path_info == PATH_IS_FILE))
 						{
@@ -1010,7 +1010,7 @@ public class fileio
 						free(newname);
 					}
 				}
-				if (is_absolute_path != 0)
+				if (is_absolute_path)
 					continue;
 	#endif
 			}
@@ -1033,7 +1033,7 @@ public class fileio
 					compose_path(tempname, NULL, filename, extension);
 	
 					/* verify-only case */
-					if ((flags & FILEFLAG_VERIFY_ONLY) != 0)
+					if (flags & FILEFLAG_VERIFY_ONLY)
 					{
 						UINT8 crcs[4];
 						UINT32 crc = 0;
@@ -1119,11 +1119,11 @@ public class fileio
 	
 		/* otherwise, duplicate the file */
 		newfile = malloc(sizeof(file));
-		if (newfile != 0)
+		if (newfile)
 		{
 			*newfile = file;
 	#ifdef DEBUG_COOKIE
-			newfile.debug_cookie = DEBUG_COOKIE;
+			newfile->debug_cookie = DEBUG_COOKIE;
 	#endif
 		}
 	
@@ -1145,7 +1145,7 @@ public class fileio
 	
 		/* open the file */
 		f = osd_fopen(pathtype, pathindex, file, "rb");
-		if (f == 0)
+		if (!f)
 			return -1;
 	
 		/* determine length of file */
@@ -1164,7 +1164,7 @@ public class fileio
 	
 		/* allocate space for entire file */
 		data = malloc(length);
-		if (data == 0)
+		if (!data)
 		{
 			osd_fclose(f);
 			return -1;
@@ -1197,7 +1197,7 @@ public class fileio
 		hash_compute(hash, data, length, functions);
 	
 		/* if the caller wants the data, give it away, otherwise free it */
-		if (p != 0)
+		if (p)
 			*p = data;
 		else
 			free(data);

@@ -21,7 +21,7 @@ it will crash shortly afterwards tho
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,7 +39,7 @@ public class raiden2
 		const UINT8 *source = spriteram+0x1000-8;
 		const UINT8 *finish = spriteram;
 	
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		while( source>=finish ){
 			int tile_number = source[0];
@@ -64,26 +64,22 @@ public class raiden2
 	
 	/* VIDEO RELATED WRITE HANDLERS (move to vidhrdw file) */
 	
-	public static WriteHandlerPtr raiden2_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden2_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		back_data[offset]=data;
 		tilemap_mark_tile_dirty( background_layer,offset/2 );
 	} };
 	
-	public static WriteHandlerPtr raiden2_midground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden2_midground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mid_data[offset]=data;
 		tilemap_mark_tile_dirty( midground_layer,offset/2 );
 	} };
 	
-	public static WriteHandlerPtr raiden2_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden2_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fore_data[offset]=data;
 		tilemap_mark_tile_dirty( foreground_layer,offset/2 );
 	} };
 	
-	public static WriteHandlerPtr raiden2_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden2_text_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( text_layer,offset/2 );
 	} };
@@ -136,8 +132,7 @@ public class raiden2
 	
 	/* VIDEO START (move to vidhrdw file) */
 	
-	VIDEO_START(raiden2)
-	{
+	public static VideoStartHandlerPtr video_start_raiden2  = new VideoStartHandlerPtr() { public int handler(){
 		text_layer       = tilemap_create( get_text_tile_info,tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8,  64,64 );
 		background_layer = tilemap_create( get_back_tile_info,tilemap_scan_rows, TILEMAP_OPAQUE,      16,16,32,32 );
 		midground_layer  = tilemap_create( get_mid_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,16,32,32 );
@@ -148,23 +143,21 @@ public class raiden2
 		tilemap_set_transparent_pen(text_layer,15);
 	
 		return 0;
-	}
+	} };
 	
 	/* VIDEO UPDATE (move to vidhrdw file) */
 	
-	VIDEO_UPDATE (raiden2)
-	{
+	public static VideoUpdateHandlerPtr video_update_raiden2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,background_layer,0,0);
 		tilemap_draw(bitmap,cliprect,midground_layer,0,0);
 		tilemap_draw(bitmap,cliprect,foreground_layer,0,0);
 		draw_sprites(bitmap,cliprect,0);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
-	}
+	} };
 	
 	/* MISC READ HANDLERS */
 	
-	static public static ReadHandlerPtr raiden2_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiden2_kludge_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -226,7 +219,7 @@ public class raiden2
 	
 	/* INPUT PORTS */
 	
-	static InputPortPtr input_ports_raiden2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raiden2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raiden2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY | IPF_PLAYER1 );
@@ -331,15 +324,13 @@ public class raiden2
 	
 	/* INTERRUPTS */
 	
-	public static InterruptHandlerPtr raiden2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr raiden2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc0/4);	/* VBL */
 	} };
 	
 	/* MACHINE DRIVERS */
 	
-	public static MachineHandlerPtr machine_driver_raiden2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raiden2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/2) /* NEC V30 CPU, 32? Mhz */
@@ -358,9 +349,7 @@ public class raiden2
 	
 		MDRV_VIDEO_START(raiden2)
 		MDRV_VIDEO_UPDATE(raiden2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROM LOADING */
 	
@@ -393,16 +382,15 @@ public class raiden2
 	/* INIT */
 	
 	
-	static DRIVER_INIT (raiden2)
-	{
+	public static DriverInitHandlerPtr init_raiden2  = new DriverInitHandlerPtr() { public void handler(){
 		/* wrong , there must be some banking this just stops it crashing */
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1,&RAM[0x100000]);
 		cpu_setbank(2,&RAM[0x140000]);
-	}
+	} };
 	
 	/* GAME DRIVERS */
 	
-	public static GameDriver driver_raiden2	   = new GameDriver("1993"	,"raiden2"	,"raiden2.java"	,rom_raiden2,null	,machine_driver_raiden2	,input_ports_raiden2	,init_raiden2	,ROT270	,	"Seibu Kaihatsu", "Raiden 2", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1993, raiden2,  0,      raiden2,  raiden2, raiden2,  ROT270, "Seibu Kaihatsu", "Raiden 2", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

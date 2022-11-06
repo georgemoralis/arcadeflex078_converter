@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,7 +24,7 @@ public class bigstrkb
 			( rest unused )
 		**- End of Comments -*/
 	
-		const struct GfxElement *gfx = Machine.gfx[2];
+		const struct GfxElement *gfx = Machine->gfx[2];
 		data16_t *source = bigstrkb_spriteram;
 		data16_t *finish = source + 0x800/2;
 	
@@ -89,17 +89,17 @@ public class bigstrkb
 	{
 		int tileno,col;
 	
-		tileno = bsb_videoram2.read(tile_index)& 0x0fff;
-		col= 	bsb_videoram2.read(tile_index)& 0xf000;
+		tileno = bsb_videoram2[tile_index] & 0x0fff;
+		col= 	bsb_videoram2[tile_index] & 0xf000;
 	
 		SET_TILE_INFO(1,tileno,col>>12,0)
 	}
 	
 	WRITE16_HANDLER( bsb_videoram2_w )
 	{
-		if (bsb_videoram2.read(offset)!= data)
+		if (bsb_videoram2[offset] != data)
 		{
-			bsb_videoram2.write(offset,data);
+			bsb_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bsb_tilemap2,offset);
 		}
 	}
@@ -126,8 +126,7 @@ public class bigstrkb
 	
 	/* Video Start / Update */
 	
-	VIDEO_START(bigstrkb)
-	{
+	public static VideoStartHandlerPtr video_start_bigstrkb  = new VideoStartHandlerPtr() { public int handler(){
 		bsb_tilemap = tilemap_create(get_bsb_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		bsb_tilemap2 = tilemap_create(get_bsb_tile2_info,bsb_bg_scan,TILEMAP_OPAQUE, 16, 16,128,64);
 		bsb_tilemap3 = tilemap_create(get_bsb_tile3_info,bsb_bg_scan,TILEMAP_TRANSPARENT, 16, 16,128,64);
@@ -140,10 +139,9 @@ public class bigstrkb
 		tilemap_set_transparent_pen(bsb_tilemap3,15);
 	
 	 	return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(bigstrkb)
-	{
+	public static VideoUpdateHandlerPtr video_update_bigstrkb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	//	fillbitmap(bitmap,get_black_pen(),cliprect);
 	
 		tilemap_set_scrollx(bsb_tilemap2,0, bsb_vidreg1[0]+(256-14));
@@ -159,5 +157,5 @@ public class bigstrkb
 		tilemap_draw(bitmap,cliprect,bsb_tilemap,0,0);
 	
 	//	usrintf_showmessage	("Regs %08x %08x %08x %08x",bsb_vidreg2[0],bsb_vidreg2[1],bsb_vidreg2[2],bsb_vidreg2[3]);
-	}
+	} };
 }

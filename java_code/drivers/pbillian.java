@@ -95,46 +95,40 @@ DSW1 stored @ $f236
 		
 DSW2 stored @ $f237 
 ---4---- code @ $03b4, stored @ $f290  (3/4 lives ?)
-----32-- code @ $03d8, stored @ $f293 (3600/5400/2400/1200  . bonus  ?)
-------10 code @ $03be, stored @ $f291/92 (8,8/0,12/16,6/24,4 . difficulty ? )
+----32-- code @ $03d8, stored @ $f293 (3600/5400/2400/1200  -> bonus  ?)
+------10 code @ $03be, stored @ $f291/92 (8,8/0,12/16,6/24,4 -> difficulty ? )
 
 ******************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class pbillian
 {
-	WRITE_HANDLER(data_41a_w);
 	
 	int pbillian_sh_start(const struct MachineSound*);
 	
-	VIDEO_START(pbillian);
-	VIDEO_UPDATE(pbillian);
 	
 	data8_t select_403,select_407,select_408,is_pbillian;
 	data8_t *pb_videoram;
 	
-	static WRITE_HANDLER(select_408_w)
-	{
+	public static WriteHandlerPtr select_408_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		select_408=data;
-	}  
+	} };  
 	
-	static WRITE_HANDLER(data_410_w)
-	{
+	public static WriteHandlerPtr data_410_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data&2);
 		coin_counter_w(1,data&4);
 		interrupt_enable_w(0,data&0x10);
 		flip_screen_set(data&0x20);
-	}
+	} };
 	
-	static READ_HANDLER(data_408_r)
-	{
+	public static ReadHandlerPtr data_408_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* 
 			Hot Smash
-			select_408=1 && bit 7==1 . protection related ?
+			select_408=1 && bit 7==1 -> protection related ?
 	 		Setting this bit to high cause win/lose/game over etc
 	 		(see below)
 	  */		
@@ -142,7 +136,7 @@ public class pbillian
 		switch(select_408)
 		{
 			case    0: return 0; //pb?
-			case    1: return is_pbillian?input_port_3_r(0):((spriteram.read(0x20)&1)?0x8c:input_port_3_r(0));
+			case    1: return is_pbillian?input_port_3_r.handler(0):((spriteram.read(0x20)&1)?0x8c:input_port_3_r.handler(0));
 		
 								/* 
 									written by mcu ? (bit 7=1) (should be sequence of writes , 0x88+0x8c for example)
@@ -160,9 +154,9 @@ public class pbillian
 									
 								*/
 								 
-			case    2: return input_port_4_r(0);	
-			case    4: return input_port_0_r(0);
-			case    8: return input_port_1_r(0);
+			case    2: return input_port_4_r.handler(0);	
+			case    4: return input_port_0_r.handler(0);
+			case    8: return input_port_1_r.handler(0);
 			case 0x20: return 0; //pb ? 
 			case 0x80: return 0; //pb?
 			case 0xf0: return 0; //hs? 
@@ -170,13 +164,12 @@ public class pbillian
 		}
 		logerror("408[%x] r at %x\n",select_408,activecpu_get_previouspc());
 		return 0;
-	}
+	} };
 	
-	static READ_HANDLER(ay_port_a_r)
-	{
+	public static ReadHandlerPtr ay_port_a_r  = new ReadHandlerPtr() { public int handler(int offset){
 		 /* bits 76------  latches ?  0x40 should be ok for prebillian but not for hot smash*/
-		 return (rand()&0xc0)|input_port_5_r(0);
-	}
+		 return (rand()&0xc0)|input_port_5_r.handler(0);
+	} };
 	
 	
 	static struct CustomSound_interface custom_interface =
@@ -243,7 +236,7 @@ public class pbillian
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_pbillian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pbillian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pbillian )
 	
 		PORT_START(); 	
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coin_A") );
@@ -317,7 +310,7 @@ public class pbillian
 	
 	
 	
-	static InputPortPtr input_ports_hotsmash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotsmash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotsmash )
 	
 		PORT_START(); 	
 		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Flip_Screen") );
@@ -383,8 +376,7 @@ public class pbillian
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_pbillian = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pbillian )
 		MDRV_CPU_ADD(Z80,6000000)		 /* 6 MHz */
 		MDRV_CPU_PORTS(readport,writeport)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -407,9 +399,7 @@ public class pbillian
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_pbillian = new RomLoadPtr(){ public void handler(){ 
@@ -446,9 +436,9 @@ public class pbillian
 		ROM_LOAD( "b18-03",  0x14000, 0x04000, CRC(1c82717d) SHA1(6942c8877e24ac51ed71036e771a1655d82f3491) )
 	ROM_END(); }}; 	
 	
-	public static DriverInitHandlerPtr init_pbillian  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=1;} };
-	public static DriverInitHandlerPtr init_hotsmash  = new DriverInitHandlerPtr() { public void handler(){	is_pbillian=0;} };
+	public static DriverInitHandlerPtr init_pbillian  = new DriverInitHandlerPtr() { public void handler()is_pbillian=1;}
+	public static DriverInitHandlerPtr init_hotsmash  = new DriverInitHandlerPtr() { public void handler()is_pbillian=0;}
 	
-	public static GameDriver driver_pbillian	   = new GameDriver("1986"	,"pbillian"	,"pbillian.java"	,rom_pbillian,null	,machine_driver_pbillian	,input_ports_pbillian	,init_pbillian	,ROT0	,	"Taito", "Prebillian",GAME_IMPERFECT_SOUND)
-	public static GameDriver driver_hotsmash	   = new GameDriver("1987"	,"hotsmash"	,"pbillian.java"	,rom_hotsmash,null	,machine_driver_pbillian	,input_ports_hotsmash	,init_hotsmash	,ROT90	,	"Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1986, pbillian, 0, pbillian, pbillian, pbillian, ROT0, "Taito", "Prebillian",GAME_IMPERFECT_SOUND)
+	GAMEX( 1987, hotsmash, 0, pbillian, hotsmash, hotsmash, ROT90, "Taito", "Hot Smash",GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION )
 }

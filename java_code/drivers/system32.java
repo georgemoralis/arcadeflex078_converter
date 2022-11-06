@@ -351,7 +351,7 @@ Stephh's notes (based on some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -444,9 +444,9 @@ public class system32
 	
 	static WRITE16_HANDLER(irq_ack_w)
 	{
-		if (ACCESSING_MSB != 0) {
+		if(ACCESSING_MSB) {
 			irq_status &= data >> 8;
-			if (irq_status == 0)
+			if(!irq_status)
 				cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
 	}
@@ -458,14 +458,13 @@ public class system32
 		cpu_set_irq_callback(0, irq_callback);
 	}
 	
-	public static NVRAMHandlerPtr nvram_handler_system32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_system32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 			{
@@ -488,7 +487,7 @@ public class system32
 	
 	static WRITE16_HANDLER(system32_eeprom_w)
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			EEPROM_write_bit(data & 0x80);
 			EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 			EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -523,7 +522,7 @@ public class system32
 	// and can write things into work RAM.  we simulate that here for burning rival.
 	static READ16_HANDLER(brival_protection_r)
 	{
-		if (mem_mask == 0)	// only trap on word-wide reads
+		if (!mem_mask)	// only trap on word-wide reads
 		{
 			switch (offset)
 			{
@@ -659,7 +658,7 @@ public class system32
 	static WRITE16_HANDLER( system32_io_analog_w )
 	{
 		if (offset<=3) {
-			if (analogSwitch != 0) analogRead[offset*2+1]=readinputport(offset*2+5);
+			if (analogSwitch) analogRead[offset*2+1]=readinputport(offset*2+5);
 			else analogRead[offset*2]=readinputport(offset*2+4);
 		}
 	}
@@ -716,7 +715,7 @@ public class system32
 	*/
 		switch(offset) {
 		case 0x03:
-			if (ACCESSING_LSB != 0) {
+			if(ACCESSING_LSB) {
 				EEPROM_write_bit(data & 0x80);
 				EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 				EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -931,21 +930,18 @@ public class system32
 	
 	static UINT8 *sys32_SoundMemBank;
 	
-	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sys32_SoundMemBank[offset];
 	} };
 	
 	// the Z80's work RAM is fully shared with the V60 or V70 and battery backed up.
-	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		return RAM[offset];
 	} };
 	
-	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		RAM[offset] = data;
@@ -953,13 +949,11 @@ public class system32
 	
 	// some games require that port f1 be a magic echo-back latch.
 	// thankfully, it's not required to do any math or anything on the values.
-	public static ReadHandlerPtr sys32_sound_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sys32_sound_prot_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return s32_f1_prot;
 	} };
 	
-	public static WriteHandlerPtr sys32_sound_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_sound_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		s32_f1_prot = data;
 	} };
 	
@@ -1008,14 +1002,12 @@ public class system32
 		sys32_SoundMemBank = &RAM[Bank+0x100000];
 	}
 	
-	public static WriteHandlerPtr sys32_soundbank_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_soundbank_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		s32_blo = data;
 		s32_recomp_bank();
 	} };
 	
-	public static WriteHandlerPtr sys32_soundbank_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_soundbank_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		s32_bhi = data;
 		s32_recomp_bank();
 	} };
@@ -1045,8 +1037,7 @@ public class system32
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();
 	
@@ -1056,8 +1047,7 @@ public class system32
 		system32_screen_old_mode = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_s32hi  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_s32hi  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();
 	
@@ -1068,9 +1058,8 @@ public class system32
 	} };
 	
 	
-	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if(cpu_getiloops())
 			irq_raise(1);
 		else
 			irq_raise(0);
@@ -1078,8 +1067,7 @@ public class system32
 	
 	/* jurassic park moving cab - not working yet */
 	
-	public static ReadHandlerPtr jpcab_z80_read  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jpcab_z80_read  = new ReadHandlerPtr() { public int handler(int offset){
 		return tocab;
 	} };
 	
@@ -1232,7 +1220,7 @@ public class system32
 	
 	
 	/* Generic entry for 2 players games - to be used for games which haven't been tested yet */
-	static InputPortPtr input_ports_system32 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_system32 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( system32 )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );// EEPROM data
@@ -1264,7 +1252,7 @@ public class system32
 	INPUT_PORTS_END(); }}; 
 	
 	/* Generic entry for 4 players games - to be used for games which haven't been tested yet */
-	static InputPortPtr input_ports_sys32_4p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sys32_4p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sys32_4p )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );// EEPROM data
@@ -1300,7 +1288,7 @@ public class system32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_holo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_holo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( holo )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1333,7 +1321,7 @@ public class system32
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_svf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_svf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( svf )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1366,7 +1354,7 @@ public class system32
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ga2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ga2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ga2 )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1403,7 +1391,7 @@ public class system32
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ga2j = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ga2j = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ga2j )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1440,7 +1428,7 @@ public class system32
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spidey = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spidey = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spidey )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1477,7 +1465,7 @@ public class system32
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spideyj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spideyj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spideyj )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1512,7 +1500,7 @@ public class system32
 		PORT_BIT( 0xfc, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_brival = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brival = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brival )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1552,7 +1540,7 @@ public class system32
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_f1en = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1en = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1en )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1612,7 +1600,7 @@ public class system32
 		PORT_BIT( 0x00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_radm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_radm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( radm )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1673,7 +1661,7 @@ public class system32
 		PORT_BIT( 0x00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_radr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_radr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( radr )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1732,7 +1720,7 @@ public class system32
 		PORT_BIT( 0x00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_alien3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alien3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alien3 )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1780,7 +1768,7 @@ public class system32
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 35, 15, 0, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sonic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sonic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sonic )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );// EEPROM data
@@ -1833,7 +1821,7 @@ public class system32
 		PORT_ANALOG( 0xff, 0, IPT_TRACKBALL_Y | IPF_PLAYER3, 100, 15, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jpark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jpark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jpark )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1880,7 +1868,7 @@ public class system32
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 35, 15, 0x39, 0xbf );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_f1lap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1lap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1lap )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -1930,7 +1918,7 @@ public class system32
 		PORT_BIT( 0x00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_darkedge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darkedge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darkedge )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_SERVICE3 );// PSW1
@@ -2024,8 +2012,7 @@ public class system32
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_system32 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system32 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V60, OSC_A/2/12) // Reality is 16.somethingMHz, use magic /12 factor to get approximate speed
@@ -2056,25 +2043,19 @@ public class system32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3438, sys32_ym3438_interface)
 		MDRV_SOUND_ADD(RF5C68, sys32_rf5c68_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	// system 32 hi-res mode is 416x224.  Yes that's TRUSTED.
-	public static MachineHandlerPtr machine_driver_sys32_hi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sys32_hi )
 		MDRV_IMPORT_FROM( system32 )
 	
 		MDRV_MACHINE_INIT(s32hi)
 	
 		MDRV_SCREEN_SIZE(52*8, 28*8)
 		MDRV_VISIBLE_AREA(0*8, 52*8-1, 0*8, 28*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_jpark = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jpark )
 		MDRV_IMPORT_FROM( system32 )
 	
 		MDRV_CPU_ADD_TAG("cabinet", Z80, OSC_A/8)	// ???
@@ -2082,9 +2063,7 @@ public class system32
 		MDRV_CPU_PORTS( jpcab_readport, jpcab_writeport )
 	//	MDRV_CPU_VBLANK_INT(irq0_line_pulse,1)		// CPU has an IRQ handler, it appears to be periodic
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ga2 = new RomLoadPtr(){ public void handler(){ 
@@ -2895,26 +2874,23 @@ public class system32
 	//	printf("Write %x to magic (mask=%x) at PC=%x\n", data, mem_mask, activecpu_get_pc());
 	}
 	
-	static DRIVER_INIT ( s32 )
-	{
+	public static DriverInitHandlerPtr init_s32  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_temp_kludge = 0;
 		system32_mixerShift = 4;
 	
 		install_mem_write16_handler(0, 0x20f4e0, 0x20f4e1, trap_w);
-	}
+	} };
 	
-	static DRIVER_INIT ( driving )
-	{
+	public static DriverInitHandlerPtr init_driving  = new DriverInitHandlerPtr() { public void handler(){
 		multi32 = 0;
 	
 		install_mem_read16_handler (0, 0xc00050, 0xc00057, system32_io_analog_r);
 		install_mem_write16_handler(0, 0xc00050, 0xc00057, system32_io_analog_w);
-	}
+	} };
 	
-	static DRIVER_INIT ( alien3 )
-	{
+	public static DriverInitHandlerPtr init_alien3  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_ALIEN3;
 		multi32 = 0;
 		system32_temp_kludge = 0;
@@ -2929,10 +2905,9 @@ public class system32
 		install_mem_write16_handler(0, 0xc00052, 0xc00053, sys32_gun_p1_y_c00052_w);
 		install_mem_write16_handler(0, 0xc00054, 0xc00055, sys32_gun_p2_x_c00054_w);
 		install_mem_write16_handler(0, 0xc00056, 0xc00057, sys32_gun_p2_y_c00056_w);
-	}
+	} };
 	
-	static DRIVER_INIT ( brival )
-	{
+	public static DriverInitHandlerPtr init_brival  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_temp_kludge = 0;
@@ -2940,10 +2915,9 @@ public class system32
 	
 		install_mem_read16_handler (0, 0x20ba00, 0x20ba07, brival_protection_r);
 		install_mem_write16_handler(0, 0xa000000, 0xa00fff, brival_protboard_w);
-	}
+	} };
 	
-	static DRIVER_INIT ( ga2 )
-	{
+	public static DriverInitHandlerPtr init_ga2  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_temp_kludge = 0;
@@ -2953,25 +2927,22 @@ public class system32
 		/* still problems with enemies in level2, protection related? */
 		install_mem_read16_handler (0, 0xa00000, 0xa0001f, ga2_sprite_protection_r); /* main sprite colours */
 		install_mem_read16_handler (0, 0xa00100, 0xa0015f, ga2_wakeup_protection_r);
-	}
+	} };
 	
-	static DRIVER_INIT ( spidey )
-	{
+	public static DriverInitHandlerPtr init_spidey  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_mixerShift = 3;
-	}
+	} };
 	
-	static DRIVER_INIT ( f1sl )
-	{
+	public static DriverInitHandlerPtr init_f1sl  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_mixerShift = 6;
 		init_driving();
-	}
+	} };
 	
-	static DRIVER_INIT ( arf )
-	{
+	public static DriverInitHandlerPtr init_arf  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_temp_kludge = 0;
@@ -2980,55 +2951,49 @@ public class system32
 		install_mem_read16_handler (0, 0xa00000, 0xa000ff, arabfgt_protboard_r);
 		install_mem_read16_handler (0, 0xa00100, 0xa0011f, arf_wakeup_protection_r);
 		install_mem_write16_handler(0, 0xa00000, 0xa00fff, arabfgt_protboard_w);
-	}
+	} };
 	
-	static DRIVER_INIT ( holo )
-	{
+	public static DriverInitHandlerPtr init_holo  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_mixerShift = 4;
 		system32_temp_kludge = 1;	// holoseum requires the tx tilemap to be flipped
-	}
+	} };
 	
-	static DRIVER_INIT ( sonic )
-	{
+	public static DriverInitHandlerPtr init_sonic  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_mixerShift = 5;
 	
 		install_mem_write16_handler(0, 0xc00040, 0xc00055, sonic_track_reset_w);
 		install_mem_read16_handler (0, 0xc00040, 0xc00055, sonic_track_r);
-	}
+	} };
 	
-	static DRIVER_INIT ( radm )
-	{
+	public static DriverInitHandlerPtr init_radm  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_RADM;
 		multi32 = 0;
 		system32_mixerShift = 5;
 	
 		init_driving();
-	}
+	} };
 	
-	static DRIVER_INIT ( radr )
-	{
+	public static DriverInitHandlerPtr init_radr  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_RADR;
 		multi32 = 0;
 		system32_mixerShift = 5;
 	
 		init_driving();
-	}
+	} };
 	
-	static DRIVER_INIT ( f1en )
-	{
+	public static DriverInitHandlerPtr init_f1en  = new DriverInitHandlerPtr() { public void handler(){
 		system32_use_default_eeprom = EEPROM_SYS32_0;
 		multi32 = 0;
 		system32_mixerShift = 5;
 	
 		init_driving();
-	}
+	} };
 	
-	static DRIVER_INIT ( jpark )
-	{
+	public static DriverInitHandlerPtr init_jpark  = new DriverInitHandlerPtr() { public void handler(){
 		/* Temp. Patch until we emulate the 'Drive Board', thanks to Malice */
 		data16_t *pROM = (data16_t *)memory_region(REGION_CPU1);
 		pROM[0xC15A8/2] = 0xCD70;
@@ -3046,34 +3011,34 @@ public class system32
 		install_mem_write16_handler(0, 0xc00052, 0xc00053, sys32_gun_p1_y_c00052_w);
 		install_mem_write16_handler(0, 0xc00054, 0xc00055, sys32_gun_p2_x_c00054_w);
 		install_mem_write16_handler(0, 0xc00056, 0xc00057, sys32_gun_p2_y_c00056_w);
-	}
+	} };
 	
 	/* this one is pretty much ok since it doesn't use backgrounds tilemaps */
-	public static GameDriver driver_holo	   = new GameDriver("1992"	,"holo"	,"system32.java"	,rom_holo,null	,machine_driver_system32	,input_ports_holo	,init_holo	,ROT0	,	"Sega", "Holosseum" )
+	GAME( 1992, holo,     0,        system32, holo,     holo,     ROT0, "Sega", "Holosseum" )
 	
 	/* these have a range of issues, mainly with the backgrounds */
-	public static GameDriver driver_radm	   = new GameDriver("1991"	,"radm"	,"system32.java"	,rom_radm,null	,machine_driver_system32	,input_ports_radm	,init_radm	,ROT0	,	"Sega", "Rad Mobile", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_radr	   = new GameDriver("1991"	,"radr"	,"system32.java"	,rom_radr,null	,machine_driver_sys32_hi	,input_ports_radr	,init_radr	,ROT0	,	"Sega", "Rad Rally", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_spidey	   = new GameDriver("1991"	,"spidey"	,"system32.java"	,rom_spidey,null	,machine_driver_system32	,input_ports_spidey	,init_spidey	,ROT0	,	"Sega", "Spider-Man: The Videogame (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_spideyj	   = new GameDriver("1991"	,"spideyj"	,"system32.java"	,rom_spideyj,driver_spidey	,machine_driver_system32	,input_ports_spideyj	,init_spidey	,ROT0	,	"Sega", "Spider-Man: The Videogame (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_f1en	   = new GameDriver("1991"	,"f1en"	,"system32.java"	,rom_f1en,null	,machine_driver_system32	,input_ports_f1en	,init_f1en	,ROT0	,	"Sega", "F1 Exhaust Note", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_arabfgt	   = new GameDriver("1992"	,"arabfgt"	,"system32.java"	,rom_arabfgt,null	,machine_driver_system32	,input_ports_spidey	,init_arf	,ROT0	,	"Sega", "Arabian Fight", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ga2	   = new GameDriver("1992"	,"ga2"	,"system32.java"	,rom_ga2,null	,machine_driver_system32	,input_ports_ga2	,init_ga2	,ROT0	,	"Sega", "Golden Axe: The Revenge of Death Adder (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ga2j	   = new GameDriver("1992"	,"ga2j"	,"system32.java"	,rom_ga2j,driver_ga2	,machine_driver_system32	,input_ports_ga2j	,init_ga2	,ROT0	,	"Sega", "Golden Axe: The Revenge of Death Adder (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_brival	   = new GameDriver("1992"	,"brival"	,"system32.java"	,rom_brival,null	,machine_driver_sys32_hi	,input_ports_brival	,init_brival	,ROT0	,	"Sega", "Burning Rival (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sonic	   = new GameDriver("1992"	,"sonic"	,"system32.java"	,rom_sonic,null	,machine_driver_sys32_hi	,input_ports_sonic	,init_sonic	,ROT0	,	"Sega", "Segasonic the Hedgehog (Japan rev. C)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_sonicp	   = new GameDriver("1992"	,"sonicp"	,"system32.java"	,rom_sonicp,driver_sonic	,machine_driver_sys32_hi	,input_ports_sonic	,init_sonic	,ROT0	,	"Sega", "Segasonic the Hedgehog (Japan prototype)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_alien3	   = new GameDriver("1993"	,"alien3"	,"system32.java"	,rom_alien3,null	,machine_driver_system32	,input_ports_alien3	,init_alien3	,ROT0	,	"Sega", "Alien³: The Gun", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_jpark	   = new GameDriver("1994"	,"jpark"	,"system32.java"	,rom_jpark,null	,machine_driver_jpark	,input_ports_jpark	,init_jpark	,ROT0	,	"Sega", "Jurassic Park", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_svf	   = new GameDriver("1994"	,"svf"	,"system32.java"	,rom_svf,null	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "Super Visual Football: European Sega Cup", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_svs	   = new GameDriver("1994"	,"svs"	,"system32.java"	,rom_svs,driver_svf	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "Super Visual Soccer: Sega Cup (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_jleague	   = new GameDriver("1994"	,"jleague"	,"system32.java"	,rom_jleague,driver_svf	,machine_driver_system32	,input_ports_svf	,init_s32	,ROT0	,	"Sega", "The J.League 1994 (Japan)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	GAMEX(1991, radm,     0,        system32, radm,     radm,     ROT0, "Sega", "Rad Mobile", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, radr,     0,        sys32_hi, radr,     radr,     ROT0, "Sega", "Rad Rally", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, spidey,   0,        system32, spidey,   spidey,   ROT0, "Sega", "Spider-Man: The Videogame (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, spideyj,  spidey,   system32, spideyj,  spidey,   ROT0, "Sega", "Spider-Man: The Videogame (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, f1en,     0,        system32, f1en,     f1en,     ROT0, "Sega", "F1 Exhaust Note", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, arabfgt,  0,        system32, spidey,   arf,      ROT0, "Sega", "Arabian Fight", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, ga2,      0,        system32, ga2,      ga2,      ROT0, "Sega", "Golden Axe: The Revenge of Death Adder (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, ga2j,     ga2,      system32, ga2j,     ga2,      ROT0, "Sega", "Golden Axe: The Revenge of Death Adder (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, brival,   0,        sys32_hi, brival,   brival,   ROT0, "Sega", "Burning Rival (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, sonic,    0,        sys32_hi, sonic,    sonic,    ROT0, "Sega", "Segasonic the Hedgehog (Japan rev. C)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	GAMEX(1992, sonicp,   sonic,    sys32_hi, sonic,    sonic,    ROT0, "Sega", "Segasonic the Hedgehog (Japan prototype)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, alien3,   0,        system32, alien3,   alien3,   ROT0, "Sega", "Alien³: The Gun", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, jpark,    0,        jpark,    jpark,    jpark,    ROT0, "Sega", "Jurassic Park", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, svf,      0,        system32, svf,      s32,      ROT0, "Sega", "Super Visual Football: European Sega Cup", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, svs,	  svf,		system32, svf,		s32,	  ROT0, "Sega", "Super Visual Soccer: Sega Cup (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, jleague,  svf,      system32, svf,      s32,      ROT0, "Sega", "The J.League 1994 (Japan)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
 	
 	/* not really working */
-	public static GameDriver driver_darkedge	   = new GameDriver("1993"	,"darkedge"	,"system32.java"	,rom_darkedge,null	,machine_driver_sys32_hi	,input_ports_darkedge	,init_s32	,ROT0	,	"Sega", "Dark Edge", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION ) /* locks up on some levels, sprites are submerged, protected */
-	public static GameDriver driver_f1lap	   = new GameDriver("1993"	,"f1lap"	,"system32.java"	,rom_f1lap,null	,machine_driver_system32	,input_ports_f1lap	,init_f1sl	,ROT0	,	"Sega", "F1 Super Lap", GAME_NOT_WORKING ) /* blank screen, also requires 2 linked sys32 boards to function */
-	public static GameDriver driver_dbzvrvs	   = new GameDriver("1994"	,"dbzvrvs"	,"system32.java"	,rom_dbzvrvs,null	,machine_driver_sys32_hi	,input_ports_system32	,init_s32	,ROT0	,	"Sega / Banpresto", "Dragon Ball Z V.R.V.S.", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION) /* does nothing useful, known to be heavily protected */
-	public static GameDriver driver_slipstrm	   = new GameDriver("1995"	,"slipstrm"	,"system32.java"	,rom_slipstrm,null	,machine_driver_sys32_hi	,input_ports_system32	,init_f1en	,ROT0	,	"Capcom", "Slipstream", GAME_NOT_WORKING ) /* unhandled v60 opcodes .... */
+	GAMEX(1993, darkedge, 0,        sys32_hi, darkedge, s32,      ROT0, "Sega", "Dark Edge", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION ) /* locks up on some levels, sprites are submerged, protected */
+	GAMEX(1993, f1lap,    0,        system32, f1lap,	f1sl,     ROT0, "Sega", "F1 Super Lap", GAME_NOT_WORKING ) /* blank screen, also requires 2 linked sys32 boards to function */
+	GAMEX(1994, dbzvrvs,  0,        sys32_hi, system32,	s32,      ROT0, "Sega / Banpresto", "Dragon Ball Z V.R.V.S.", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION) /* does nothing useful, known to be heavily protected */
+	GAMEX(1995, slipstrm, 0,        sys32_hi, system32,	f1en,     ROT0, "Capcom", "Slipstream", GAME_NOT_WORKING ) /* unhandled v60 opcodes .... */
 	/* Air Rescue */
 	/* Loony Toons (maybe) */
 }

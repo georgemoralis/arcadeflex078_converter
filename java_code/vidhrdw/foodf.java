@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,11 +40,10 @@ public class foodf
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_foodf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_foodf  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 32,32);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* adjust the playfield for the 8 pixel offset */
@@ -113,8 +112,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_foodf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_foodf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		/* draw the playfield */

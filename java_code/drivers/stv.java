@@ -93,7 +93,7 @@ Preliminary Memory map:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -105,16 +105,6 @@ public class stv
 	
 	/* stvhacks.c */
 	void install_stvbios_speedups(void);
-	DRIVER_INIT(bakubaku);
-	DRIVER_INIT(mausuke);
-	DRIVER_INIT(puyosun);
-	DRIVER_INIT(shienryu);
-	DRIVER_INIT(prikura);
-	DRIVER_INIT(hanagumi);
-	DRIVER_INIT(cottonbm);
-	DRIVER_INIT(cotton2);
-	DRIVER_INIT(fhboxers);
-	DRIVER_INIT(dnmtdeka);
 	
 	
 	/**************************************************************************************/
@@ -434,7 +424,7 @@ public class stv
 							default: logerror("ERROR: invalid drive speed\n");
 						}
 	
-						if ((CR1 & 0x01) != 0){ 				// software reset
+						if(CR1 & 0x01){ 				// software reset
 	
 							// not enough info
 						}
@@ -465,8 +455,8 @@ public class stv
 							if(CD_ecc > 6) CD_ecc = 6;
 					}
 	
-					if ((CR4 & 0x80) != 0){ CD_repeat_max = 0xfe; }else		// infinite retry
-					if ((CR4 & 0x40) != 0){ CD_repeat_max = 0xff; }else		// ignore errors
+					if(CR4 & 0x80){ CD_repeat_max = 0xfe; }else		// infinite retry
+					if(CR4 & 0x40){ CD_repeat_max = 0xff; }else		// ignore errors
 					{
 						switch(CR4 & 15){
 							case 0x0f: break;									// retry no change
@@ -576,7 +566,7 @@ public class stv
 							idx0 = CR2 & 0xff;
 							idx1 = CR4 & 0xff;
 	
-							logerror("play : pm=%02x track=%i idx=%i . track=%i idx=%i\n", pm, tn0, idx0, tn1, idx1);
+							logerror("play : pm=%02x track=%i idx=%i -> track=%i idx=%i\n", pm, tn0, idx0, tn1, idx1);
 	
 							if(tn1 < tn0 || (tn1 == tn0 && idx1 < idx0)){
 								logerror("ERROR: play track negative range\n");
@@ -594,7 +584,7 @@ public class stv
 								CD_cur_fid		= 0;
 							}
 	
-							if ((CD_cur_ctrl & 0x40) != 0){
+							if(CD_cur_ctrl & 0x40){
 								logerror("ERROR: play data track\n");
 								exit(1);
 							}
@@ -613,7 +603,7 @@ public class stv
 						}
 	
 					}else
-					if ((CR1 & 0x80) != 0){
+					if(CR1 & 0x80){
 	
 						// play fad
 	
@@ -706,7 +696,7 @@ public class stv
 							CD_status = CDB_STAT_PAUSE;
 							CD_flag = 0;
 	
-							if ((CD_cur_ctrl & 0x40) != 0){
+							if(CD_cur_ctrl & 0x40){
 								logerror("ERROR: seek data track\n");
 								exit(1);
 							}
@@ -716,7 +706,7 @@ public class stv
 						}
 	
 					}else
-					if ((CR1 & 0x80) != 0){
+					if(CR1 & 0x80){
 	
 						// seek fad
 	
@@ -922,7 +912,7 @@ public class stv
 						logerror("ERROR: invalid selector\n");
 					}
 	
-					if ((CR1 & 0x80) != 0){
+					if(CR1 & 0x80){
 	
 						// init filter
 	
@@ -969,8 +959,8 @@ public class stv
 						logerror("ERROR: invalid selector\n");
 					}
 	
-					if ((CR1 & 0x01) != 0){ CD_filt[fn].true = CR2 >> 8; }
-					if ((CR1 & 0x02) != 0){ CD_filt[fn].false = CR2 & 0xff; }
+					if(CR1 & 0x01){ CD_filt[fn].true = CR2 >> 8; }
+					if(CR1 & 0x02){ CD_filt[fn].false = CR2 & 0xff; }
 	
 					CDB_SEND_REPORT();
 	
@@ -1001,7 +991,7 @@ public class stv
 					//
 					// b7		init false output connectors
 					// b6		init true output connectors
-					// b5		init input connectors			used for host . cdb ?
+					// b5		init input connectors			used for host -> cdb ?
 					// b4		init filter conditions
 					// b3		init partition output connectors	?
 					// b2		init partition data
@@ -1016,13 +1006,13 @@ public class stv
 					// all partitions are reset
 	
 					for(i = 0; i < CDB_SEL_NUM; i++){
-						if ((rf & 0x80) != 0){ CD_filt[i].false = 0xff; }
-						if ((rf & 0x40) != 0){ CD_filt[i].true = i; }
-						if ((rf & 0x20) != 0){
+						if(rf & 0x80){ CD_filt[i].false = 0xff; }
+						if(rf & 0x40){ CD_filt[i].true = i; }
+						if(rf & 0x20){
 							CD_filt_num = 0xff;
 							CD_mpeg_filt_num = 0xff;
 						}
-						if ((rf & 0x10) != 0){
+						if(rf & 0x10){
 							CD_filt[i].mode = 0x00;
 							CD_filt[i].fad = 0;
 							CD_filt[i].range = 0;
@@ -1033,8 +1023,8 @@ public class stv
 							CD_filt[i].cod_val = 0;
 							CD_filt[i].cod_mask = 0;
 						}
-						if ((rf & 0x08) != 0){ } // ?
-							if ((rf & 0x04) != 0){
+						if(rf & 0x08){ } // ?
+							if(rf & 0x04){
 								/*
 								int j;
 								for(j = 0; j < 200; j++){
@@ -1059,10 +1049,10 @@ public class stv
 								//exit(1);
 							}
 	
-							if ((rf & 0x80) != 0){ CD_filt[pn].false = 0xff; }
-							if ((rf & 0x40) != 0){ CD_filt[pn].true = pn; }
-							if ((rf & 0x20) != 0){ }
-							if ((rf & 0x10) != 0){
+							if(rf & 0x80){ CD_filt[pn].false = 0xff; }
+							if(rf & 0x40){ CD_filt[pn].true = pn; }
+							if(rf & 0x20){ }
+							if(rf & 0x10){
 								CD_filt[pn].mode = 0x00;
 								CD_filt[pn].fad = 0;
 								CD_filt[pn].range = 0;
@@ -1073,8 +1063,8 @@ public class stv
 								CD_filt[pn].cod_val = 0;
 								CD_filt[pn].cod_mask = 0;
 							}
-							if ((rf & 0x08) != 0){ }
-							if ((rf & 0x04) != 0){
+							if(rf & 0x08){ }
+							if(rf & 0x04){
 								/*
 								*/
 							}
@@ -1182,10 +1172,10 @@ public class stv
 	
 					s = CD_part[pn].sect[sn];
 	
-					CR1 = (CD_status << 8) | (s.fad >> 16);
-					CR2 = s.fad;
-					CR3 = (s.fid << 8) | s.chan;
-					CR4 = (s.sub << 8) | s.cod;
+					CR1 = (CD_status << 8) | (s->fad >> 16);
+					CR2 = s->fad;
+					CR3 = (s->fid << 8) | s->chan;
+					CR4 = (s->sub << 8) | s->cod;
 	
 					break;
 			case 0x55:
@@ -1215,7 +1205,7 @@ public class stv
 					j = (sp - 1) % CD_part[pn].size;
 					while(i != j){
 	
-						if(CD_part[pn].sect[i].fad == fad){
+						if(CD_part[pn].sect[i]->fad == fad){
 	
 							// matching sector fad found!
 	
@@ -1225,13 +1215,13 @@ public class stv
 							break;
 	
 						}else
-						if((CD_part[pn].sect[i].fad < fad) &&
-						   (CD_part[pn].sect[i].fad > nearest)){
+						if((CD_part[pn].sect[i]->fad < fad) &&
+						   (CD_part[pn].sect[i]->fad > nearest)){
 	
 							// adjusting to nearest sector
 	
 							nearest = i;
-							fad2 = CD_part[pn].sect[i].fad;
+							fad2 = CD_part[pn].sect[i]->fad;
 						}
 	
 						i = (i + 1) % CD_part[pn].size;
@@ -1339,7 +1329,7 @@ public class stv
 	//					exit(1);
 					}
 	
-	/*				CD_part[pn].sect[sp].size = 0;
+	/*				CD_part[pn].sect[sp]->size = 0;
 					CD_part[pn].sect[sp] = (sect_t *)NULL;
 					CD_part[pn].size--;
 					CD_free_space++;
@@ -1882,11 +1872,11 @@ public class stv
 			EEPROM_set_cs_line((data & 0x04) ? CLEAR_LINE : ASSERT_LINE);
 	
 	
-	//		if ((data & 0x01) != 0)
+	//		if (data & 0x01)
 	//			logerror("bit 0 active\n");
-	//		if ((data & 0x02) != 0)
+	//		if (data & 0x02)
 	//			logerror("bit 1 active\n");
-	//		if ((data & 0x10) != 0)
+	//		if (data & 0x10)
 				//logerror("bit 4 active\n");//LOT
 			PDR1 = (data & 0x60);
 		}
@@ -1990,13 +1980,13 @@ public class stv
 					logerror ("SMPC: Status Acquire\n");
 					smpc_ram[0x5f]=0x10;
 					smpc_ram[0x21]=0x80;
-				  	smpc_ram[0x23] = DectoBCD((today.tm_year + 1900)/100);
-			    	smpc_ram[0x25] = DectoBCD((today.tm_year + 1900)%100);
-		    		smpc_ram[0x27] = (today.tm_wday << 4) | (today.tm_mon+1);
-			    	smpc_ram[0x29] = DectoBCD(today.tm_mday);
-			    	smpc_ram[0x2b] = DectoBCD(today.tm_hour);
-			    	smpc_ram[0x2d] = DectoBCD(today.tm_min);
-			    	smpc_ram[0x2f] = DectoBCD(today.tm_sec);
+				  	smpc_ram[0x23] = DectoBCD((today->tm_year + 1900)/100);
+			    	smpc_ram[0x25] = DectoBCD((today->tm_year + 1900)%100);
+		    		smpc_ram[0x27] = (today->tm_wday << 4) | (today->tm_mon+1);
+			    	smpc_ram[0x29] = DectoBCD(today->tm_mday);
+			    	smpc_ram[0x2b] = DectoBCD(today->tm_hour);
+			    	smpc_ram[0x2d] = DectoBCD(today->tm_min);
+			    	smpc_ram[0x2f] = DectoBCD(today->tm_sec);
 	
 					smpc_ram[0x31]=0x00;  //BHOOOOO
 	
@@ -2134,8 +2124,7 @@ public class stv
 	/* to do, update bios idle skips so they work better with this arrangement.. */
 	
 	
-	public static InterruptHandlerPtr stv_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr stv_interrupt = new InterruptHandlerPtr() {public void handler(){
 		scanline = 261-cpu_getiloops();
 	
 	
@@ -2315,7 +2304,7 @@ public class stv
 		switch(offset)
 		{
 			case 1:
-				if (LO_WORD_ACCESS != 0)
+				if(LO_WORD_ACCESS)
 				{
 					/*Why does the BIOS tests these as ACTIVE HIGH?A program bug?*/
 					ioga[1] = (data) & 0xff;
@@ -2329,24 +2318,24 @@ public class stv
 				}
 			break;
 			case 2:
-				if (HI_WORD_ACCESS != 0)
+				if(HI_WORD_ACCESS)
 				{
 					ioga[2] = data >> 16;
 					mux_data = ioga[2];
 				}
-				else if (LO_WORD_ACCESS != 0)
+				else if(LO_WORD_ACCESS)
 					ioga[2] = data;
 			break;
 			case 3:
-				if (HI_WORD_ACCESS != 0)
+				if(HI_WORD_ACCESS)
 					ioga[3] = data;
 			break;
 			case 4:
-				if (HI_WORD_ACCESS != 0)
+				if(HI_WORD_ACCESS)
 					port_sel = (data & 0xffff0000) >> 16;
 			break;
 			case 5:
-				if (HI_WORD_ACCESS != 0)
+				if(HI_WORD_ACCESS)
 					ioga[5] = data;
 			break;
 		}
@@ -2475,9 +2464,9 @@ public class stv
 	#define SET_D0MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x10))    DMA_STATUS^=0x10
 	#define SET_D1MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x100))   DMA_STATUS^=0x100
 	#define SET_D2MV_FROM_0_TO_1	if(!(DMA_STATUS & 0x1000))  DMA_STATUS^=0x1000
-	#define SET_D0MV_FROM_1_TO_0	if ((DMA_STATUS & 0x10) != 0) 	    DMA_STATUS^=0x10
-	#define SET_D1MV_FROM_1_TO_0	if ((DMA_STATUS & 0x100) != 0) 	    DMA_STATUS^=0x100
-	#define SET_D2MV_FROM_1_TO_0	if ((DMA_STATUS & 0x1000) != 0)     DMA_STATUS^=0x1000
+	#define SET_D0MV_FROM_1_TO_0	if(DMA_STATUS & 0x10) 	    DMA_STATUS^=0x10
+	#define SET_D1MV_FROM_1_TO_0	if(DMA_STATUS & 0x100) 	    DMA_STATUS^=0x100
+	#define SET_D2MV_FROM_1_TO_0	if(DMA_STATUS & 0x1000)     DMA_STATUS^=0x1000
 	
 	READ32_HANDLER( stv_scu_r32 )
 	{
@@ -2820,7 +2809,7 @@ public class stv
 			scu_dst_0 =  cpu_readmem32bedw_dword(scu_dst_0+4);
 	
 			/*Indirect Mode end factor*/
-			if ((scu_src_0 & 0x80000000) != 0)
+			if(scu_src_0 & 0x80000000)
 				job_done = 1;
 	
 			logerror("DMA lv 0 indirect mode transfer START\n"
@@ -2880,7 +2869,7 @@ public class stv
 			scu_dst_1 =  cpu_readmem32bedw_dword(scu_dst_1+4);
 	
 			/*Indirect Mode end factor*/
-			if ((scu_src_1 & 0x80000000) != 0)
+			if(scu_src_1 & 0x80000000)
 				job_done = 1;
 	
 			logerror("DMA lv 1 indirect mode transfer START\n"
@@ -2942,7 +2931,7 @@ public class stv
 			scu_dst_2 =  cpu_readmem32bedw_dword(scu_dst_2+4);
 	
 			/*Indirect Mode end factor*/
-			if ((scu_src_2 & 0x80000000) != 0)
+			if(scu_src_2 & 0x80000000)
 				job_done = 1;
 	
 			logerror("DMA lv 2 indirect mode transfer START\n"
@@ -3166,7 +3155,7 @@ public class stv
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER##_n_ );\
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER##_n_ );
 	
-	static InputPortPtr input_ports_stv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stv )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, "PDR1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3290,7 +3279,7 @@ public class stv
 	INPUT_PORTS_END(); }}; 
 	
 	/*Same as the regular one,but with an additional & optional mahjong panel*/
-	static InputPortPtr input_ports_stvmp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stvmp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stvmp )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, "PDR1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3504,8 +3493,7 @@ public class stv
 	}
 	
 	
-	DRIVER_INIT ( stv )
-	{
+	public static DriverInitHandlerPtr init_stv  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_USER1);
 	
 		time_t ltime;
@@ -3537,20 +3525,19 @@ public class stv
 		install_mem_write32_handler(1, 0x60ffc44, 0x60ffc47, w60ffc44_write );
 		install_mem_write32_handler(1, 0x60ffc48, 0x60ffc4b, w60ffc48_write );
 	
-	  	smpc_ram[0x23] = DectoBCD((today.tm_year + 1900)/100);
-	    smpc_ram[0x25] = DectoBCD((today.tm_year + 1900)%100);
-	    smpc_ram[0x27] = (today.tm_wday << 4) | (today.tm_mon+1);
-	    smpc_ram[0x29] = DectoBCD(today.tm_mday);
-	    smpc_ram[0x2b] = DectoBCD(today.tm_hour);
-	    smpc_ram[0x2d] = DectoBCD(today.tm_min);
-	    smpc_ram[0x2f] = DectoBCD(today.tm_sec);
+	  	smpc_ram[0x23] = DectoBCD((today->tm_year + 1900)/100);
+	    smpc_ram[0x25] = DectoBCD((today->tm_year + 1900)%100);
+	    smpc_ram[0x27] = (today->tm_wday << 4) | (today->tm_mon+1);
+	    smpc_ram[0x29] = DectoBCD(today->tm_mday);
+	    smpc_ram[0x2b] = DectoBCD(today->tm_hour);
+	    smpc_ram[0x2d] = DectoBCD(today->tm_min);
+	    smpc_ram[0x2f] = DectoBCD(today->tm_sec);
 	    smpc_ram[0x31] = 0x00; //CTG1=0 CTG0=0 (correct??)
 	//  smpc_ram[0x33] = readinputport(7);
 	 	smpc_ram[0x5f] = 0x10;
-	}
+	} };
 	
-	public static MachineInitHandlerPtr machine_init_stv  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_stv  = new MachineInitHandlerPtr() { public void handler(){
 	
 		unsigned char *SH2ROM = memory_region(REGION_USER1);
 		unsigned char *SNDRAM = memory_region(REGION_CPU3);
@@ -3570,8 +3557,8 @@ public class stv
 		sinit_boost = 400;
 	
 		/* puyosun doesn't seem to care */
-		if ((!strcmp(Machine.gamedrv.name,"puyosun")) ||
-		    (!strcmp(Machine.gamedrv.name,"mausuke")))
+		if ((!strcmp(Machine->gamedrv->name,"puyosun")) ||
+		    (!strcmp(Machine->gamedrv->name,"mausuke")))
 		{
 			minit_boost = 0;
 			sinit_boost = 0;
@@ -3662,12 +3649,12 @@ public class stv
 	static void scsp_irq(int irq)
 	{
 		// don't bother the 68k if it's off
-		if (en_68k == 0)
+		if (!en_68k)
 		{
 			return;
 		}
 	
-		if (irq != 0)
+		if (irq)
 		{
 			scsp_last_line = irq;
 			cpu_set_irq_line(2, irq, ASSERT_LINE);
@@ -3686,8 +3673,7 @@ public class stv
 		{ scsp_irq, },
 	};
 	
-	public static MachineHandlerPtr machine_driver_stv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(SH2, 28000000) // 28MHz
@@ -3720,9 +3706,7 @@ public class stv
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(SCSP, scsp_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	#define ROM_LOAD16_WORD_SWAP_BIOS(bios,name,offset,length,hash) \
 			ROMX_LOAD(name, offset, length, hash, ROM_GROUPWORD | ROM_REVERSE | ROM_BIOS(bios+1)) /* Note '+1' */
@@ -4515,8 +4499,7 @@ public class stv
 	
 	
 	
-	public static DriverInitHandlerPtr init_sfish2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sfish2  = new DriverInitHandlerPtr() { public void handler(){
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
 		rom[0xf10/4] = (rom[0xf10/4] & 0xff000000)|((rom[0xf10/4]/2)&0x00ffffff);
@@ -4527,8 +4510,7 @@ public class stv
 		init_stv();
 	} };
 	
-	public static DriverInitHandlerPtr init_sfish2j  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sfish2j  = new DriverInitHandlerPtr() { public void handler(){
 		/* this is WRONG but works for some games */
 		data32_t *rom = (data32_t *)memory_region(REGION_USER1);
 		rom[0xf10/4] = (rom[0xf10/4] & 0xff000000)|((rom[0xf10/4]/2)&0x00ffffff);

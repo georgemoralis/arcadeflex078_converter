@@ -38,7 +38,7 @@ To do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -58,30 +58,25 @@ public class dec8
 	/******************************************************************************/
 	
 	/* Only used by ghostb, gondo, garyoret, other games can control buffering */
-	static public static VideoEofHandlerPtr video_eof_dec8  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_dec8  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 	
-	public static ReadHandlerPtr i8751_h_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr i8751_h_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return i8751_return>>8; /* MSB */
 	} };
 	
-	public static ReadHandlerPtr i8751_l_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr i8751_l_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return i8751_return&0xff; /* LSB */
 	} };
 	
-	public static WriteHandlerPtr i8751_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8751_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		i8751_return=0;
 	} };
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr gondo_player_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gondo_player_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset) {
 			case 0: /* Rotary low byte */
 				return ~((1 << (readinputport(5) * 12 / 256))&0xff);
@@ -91,8 +86,7 @@ public class dec8
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr gondo_player_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gondo_player_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset) {
 			case 0: /* Rotary low byte */
 				return ~((1 << (readinputport(6) * 12 / 256))&0xff);
@@ -104,8 +98,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr ghostb_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ghostb_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		i8751_return=0;
 	
 		switch (offset) {
@@ -122,8 +115,7 @@ public class dec8
 		if (i8751_value==0x021b) i8751_return=0x6e4; /* Meikyuu Hunter G ID */
 	} };
 	
-	public static WriteHandlerPtr srdarwin_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srdarwin_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coins,latch;
 		i8751_return=0;
 	
@@ -195,15 +187,14 @@ public class dec8
 		if (i8751_value==0x800a) i8751_return=0xf580 + 42; /* End Game(bad address?) */
 	} };
 	
-	public static WriteHandlerPtr gondo_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gondo_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coin1,coin2,latch,snd;
 		i8751_return=0;
 	
 		switch (offset) {
 		case 0: /* High byte */
 			i8751_value=(i8751_value&0xff) | (data<<8);
-			if (int_enable != 0) cpu_set_irq_line (0, M6809_IRQ_LINE, HOLD_LINE); /* IRQ on *high* byte only */
+			if (int_enable) cpu_set_irq_line (0, M6809_IRQ_LINE, HOLD_LINE); /* IRQ on *high* byte only */
 			break;
 		case 1: /* Low byte */
 			i8751_value=(i8751_value&0xff00) | data;
@@ -225,11 +216,10 @@ public class dec8
 		if ((i8751_value>>8)==0x07) {i8751_return=0x700 | ((coin2 / 10) << 4) | (coin2 % 10);  } /* Coin 2 */
 		if ((i8751_value>>8)==0x08 && coin2 && !offset) {i8751_return=0x800; coin2--; } /* Coin 2 clear */
 		/* Commands 0x9xx do nothing */
-		if ((i8751_value>>8)==0x0a) {i8751_return=0xa00 | snd; if (snd != 0) snd=0; }
+		if ((i8751_value>>8)==0x0a) {i8751_return=0xa00 | snd; if (snd) snd=0; }
 	} };
 	
-	public static WriteHandlerPtr shackled_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shackled_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coin1,coin2,latch=0;
 		i8751_return=0;
 	
@@ -256,8 +246,7 @@ public class dec8
 				((((coin1 / 10) << 4) | (coin1 % 10))<<8); /* Coins */
 	} };
 	
-	public static WriteHandlerPtr lastmiss_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lastmiss_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coin,latch=0,snd;
 		i8751_return=0;
 	
@@ -284,8 +273,7 @@ public class dec8
 		if ((i8751_value>>8)==0x03) {i8751_return=0; coin--; } /* Coin clear */
 	} };
 	
-	public static WriteHandlerPtr csilver_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csilver_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coin,latch=0,snd;
 		i8751_return=0;
 	
@@ -309,8 +297,7 @@ public class dec8
 		if (i8751_value==0x0003 && coin) {i8751_return=0; coin--;} /* Coin Clear */
 	} };
 	
-	public static WriteHandlerPtr garyoret_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr garyoret_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int coin1,coin2,latch;
 		i8751_return=0;
 	
@@ -338,8 +325,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr dec8_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -348,8 +334,7 @@ public class dec8
 	} };
 	
 	/* Used by Ghostbusters, Meikyuu Hunter G & Gondomania */
-	public static WriteHandlerPtr ghostb_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ghostb_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -363,13 +348,12 @@ public class dec8
 		bankaddress = 0x10000 + (data >> 4) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
 	
-		if ((data & 1) != 0) int_enable=1; else int_enable=0;
-		if ((data & 2) != 0) nmi_enable=1; else nmi_enable=0;
+		if (data&1) int_enable=1; else int_enable=0;
+		if (data&2) nmi_enable=1; else nmi_enable=0;
 		flip_screen_set(data & 0x08);
 	} };
 	
-	public static WriteHandlerPtr csilver_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csilver_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/*
@@ -382,14 +366,12 @@ public class dec8
 		cpu_setbank(1,&RAM[0x10000 + (data & 0x0f) * 0x4000]);
 	} };
 	
-	public static WriteHandlerPtr dec8_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr oscar_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr oscar_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	soundlatch_w.handler(0,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -399,36 +381,32 @@ public class dec8
 		static int toggle =0;
 	
 		toggle ^= 1;
-		if (toggle != 0)
+		if (toggle)
 			cpu_set_irq_line(2,M6502_IRQ_LINE,HOLD_LINE);
 	
 		MSM5205_data_w (0,msm5205next>>4);
 		msm5205next<<=4;
 	}
 	
-	public static ReadHandlerPtr csilver_adpcm_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr csilver_adpcm_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		MSM5205_reset_w(0,0);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr csilver_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csilver_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next = data;
 	} };
 	
-	public static WriteHandlerPtr csilver_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csilver_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 	
-		if ((data & 8) != 0) { cpu_setbank(3,&RAM[0x14000]); }
+		if (data&8) { cpu_setbank(3,&RAM[0x14000]); }
 		else { cpu_setbank(3,&RAM[0x10000]); }
 	} };
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr oscar_int_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr oscar_int_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Deal with interrupts, coins also generate NMI to CPU 0 */
 		switch (offset) {
 			case 0: /* IRQ2 */
@@ -447,8 +425,7 @@ public class dec8
 	} };
 	
 	/* Used by Shackled, Last Mission, Captain Silver */
-	public static WriteHandlerPtr shackled_int_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shackled_int_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if 0
 	/* This is correct, but the cpus in Shackled need an interleave of about 5000!
 		With lower interleave CPU 0 misses an interrupt at the start of the game
@@ -489,13 +466,13 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr dec8_share_r  = new ReadHandlerPtr() { public int handler(int offset) { return dec8_shared_ram[offset]; } };
-	public static ReadHandlerPtr dec8_share2_r  = new ReadHandlerPtr() { public int handler(int offset) { return dec8_shared2_ram[offset]; } };
-	public static WriteHandlerPtr dec8_share_w = new WriteHandlerPtr() {public void handler(int offset, int data) { dec8_shared_ram[offset]=data; } };
-	public static WriteHandlerPtr dec8_share2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { dec8_shared2_ram[offset]=data; } };
-	public static ReadHandlerPtr shackled_sprite_r  = new ReadHandlerPtr() { public int handler(int offset) { return spriteram.read(offset); } };
-	public static WriteHandlerPtr shackled_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data) { spriteram.write(offset,data); } };
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	flip_screen_set(data); } };
+	public static ReadHandlerPtr dec8_share_r  = new ReadHandlerPtr() { public int handler(int offset) return dec8_shared_ram[offset]; }
+	public static ReadHandlerPtr dec8_share2_r  = new ReadHandlerPtr() { public int handler(int offset) return dec8_shared2_ram[offset]; }
+	public static WriteHandlerPtr dec8_share_w = new WriteHandlerPtr() {public void handler(int offset, int data) dec8_shared_ram[offset]=data; }
+	public static WriteHandlerPtr dec8_share2_w = new WriteHandlerPtr() {public void handler(int offset, int data) dec8_shared2_ram[offset]=data; }
+	public static ReadHandlerPtr shackled_sprite_r  = new ReadHandlerPtr() { public int handler(int offset) return spriteram.read(offset); }
+	public static WriteHandlerPtr shackled_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data) spriteram.write(offset,data); }
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)	flip_screen_set(data); }
 	
 	/******************************************************************************/
 	
@@ -1058,7 +1035,7 @@ public class dec8
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );\
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL );
 	
-	static InputPortPtr input_ports_cobracom = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cobracom = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cobracom )
 		PORT_START();  /* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1132,7 +1109,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ghostb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ghostb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ghostb )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1205,7 +1182,7 @@ public class dec8
 		PORT_DIPSETTING(    0x80, "Normal" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_meikyuh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_meikyuh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( meikyuh )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1276,7 +1253,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_srdarwin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_srdarwin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( srdarwin )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1349,7 +1326,7 @@ public class dec8
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );/* Fake */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gondo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gondo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gondo )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		/* Top 4 bits are rotary controller */
@@ -1437,7 +1414,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_oscar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_oscar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( oscar )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1510,7 +1487,7 @@ public class dec8
 		PORT_DIPSETTING(    0x80, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lastmisn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastmisn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastmisn )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1584,7 +1561,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lastmsnj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastmsnj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastmsnj )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1658,7 +1635,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shackled = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shackled = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shackled )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1737,7 +1714,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_csilver = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_csilver = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( csilver )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1811,7 +1788,7 @@ public class dec8
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_garyoret = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_garyoret = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( garyoret )
 		PORT_START(); 	/* Player 1 controls */
 		PLAYER1_JOYSTICK
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -2089,8 +2066,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static InterruptHandlerPtr ghostb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ghostb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch[4];
 		int i8751_out=readinputport(4);
 	
@@ -2105,18 +2081,16 @@ public class dec8
 		if (((i8751_out & 0x2) != 0x2) && latch[2]) {latch[2]=0; cpu_set_irq_line(0,M6809_IRQ_LINE,HOLD_LINE); i8751_return=0x2001; } /* Player 3 coin */
 		if (((i8751_out & 0x1) != 0x1) && latch[3]) {latch[3]=0; cpu_set_irq_line(0,M6809_IRQ_LINE,HOLD_LINE); i8751_return=0x1001; } /* Service */
 	
-		if (nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
+		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
 	} };
 	
-	public static InterruptHandlerPtr gondo_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (nmi_enable != 0)
+	public static InterruptHandlerPtr gondo_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (nmi_enable)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE); /* VBL */
 	} };
 	
 	/* Coins generate NMI's */
-	public static InterruptHandlerPtr oscar_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr oscar_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch=1;
 	
 		if ((readinputport(2) & 0x7) == 0x7) latch=1;
@@ -2128,8 +2102,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_cobracom = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cobracom )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -2156,12 +2129,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ghostb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ghostb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)
@@ -2190,12 +2160,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_srdarwin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( srdarwin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,2000000)  /* MC68A09EP */
@@ -2222,12 +2189,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gondo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gondo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309,3000000) /* HD63C09EP */
@@ -2255,12 +2219,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_oscar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( oscar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 2000000)
@@ -2291,12 +2252,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, oscar_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_lastmiss = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lastmiss )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -2326,12 +2284,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, oscar_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_shackled = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shackled )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -2361,12 +2316,9 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, oscar_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_csilver = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( csilver )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -2398,12 +2350,9 @@ public class dec8
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, oscar_ym3526_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_garyoret = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( garyoret )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309,3000000) /* HD63C09EP */
@@ -2431,9 +2380,7 @@ public class dec8
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -3111,14 +3058,13 @@ public class dec8
 	/******************************************************************************/
 	
 	/* Ghostbusters, Darwin, Oscar use a "Deco 222" custom 6502 for sound. */
-	public static DriverInitHandlerPtr init_deco222  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_deco222  = new DriverInitHandlerPtr() { public void handler(){
 		int A,sound_cpu,diff;
 		unsigned char *rom;
 	
 		sound_cpu = 1;
 		/* Oscar has three CPUs */
-		if (Machine.drv.cpu[2].cpu_type != 0) sound_cpu = 2;
+		if (Machine->drv->cpu[2].cpu_type != 0) sound_cpu = 2;
 	
 		/* bits 5 and 6 of the opcodes are swapped */
 		rom = memory_region(REGION_CPU1+sound_cpu);
@@ -3130,39 +3076,37 @@ public class dec8
 			rom[A + diff] = (rom[A] & 0x9f) | ((rom[A] & 0x20) << 1) | ((rom[A] & 0x40) >> 1);
 	} };
 	
-	public static DriverInitHandlerPtr init_meikyuh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_meikyuh  = new DriverInitHandlerPtr() { public void handler(){
 		/* Blank out unused garbage in colour prom to avoid colour overflow */
 		unsigned char *RAM = memory_region(REGION_PROMS);
 		memset(RAM+0x20,0,0xe0);
 	} };
 	
-	public static DriverInitHandlerPtr init_ghostb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ghostb  = new DriverInitHandlerPtr() { public void handler(){
 		init_deco222();
 		init_meikyuh();
 	} };
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_cobracom	   = new GameDriver("1988"	,"cobracom"	,"dec8.java"	,rom_cobracom,null	,machine_driver_cobracom	,input_ports_cobracom	,null	,ROT0	,	"Data East Corporation", "Cobra-Command (World revision 5)" )
-	public static GameDriver driver_cobracmj	   = new GameDriver("1988"	,"cobracmj"	,"dec8.java"	,rom_cobracmj,driver_cobracom	,machine_driver_cobracom	,input_ports_cobracom	,null	,ROT0	,	"Data East Corporation", "Cobra-Command (Japan)" )
-	public static GameDriver driver_ghostb	   = new GameDriver("1987"	,"ghostb"	,"dec8.java"	,rom_ghostb,null	,machine_driver_ghostb	,input_ports_ghostb	,init_ghostb	,ROT0	,	"Data East USA", "The Real Ghostbusters (US 2 Players)" )
-	public static GameDriver driver_ghostb3	   = new GameDriver("1987"	,"ghostb3"	,"dec8.java"	,rom_ghostb3,driver_ghostb	,machine_driver_ghostb	,input_ports_ghostb	,init_ghostb	,ROT0	,	"Data East USA", "The Real Ghostbusters (US 3 Players)" )
-	public static GameDriver driver_meikyuh	   = new GameDriver("1987"	,"meikyuh"	,"dec8.java"	,rom_meikyuh,driver_ghostb	,machine_driver_ghostb	,input_ports_meikyuh	,init_meikyuh	,ROT0	,	"Data East Corporation", "Meikyuu Hunter G (Japan)" )
-	public static GameDriver driver_srdarwin	   = new GameDriver("1987"	,"srdarwin"	,"dec8.java"	,rom_srdarwin,null	,machine_driver_srdarwin	,input_ports_srdarwin	,init_deco222	,ROT270	,	"Data East Corporation", "Super Real Darwin (World)" )
-	public static GameDriver driver_srdarwnj	   = new GameDriver("1987"	,"srdarwnj"	,"dec8.java"	,rom_srdarwnj,driver_srdarwin	,machine_driver_srdarwin	,input_ports_srdarwin	,init_deco222	,ROT270	,	"Data East Corporation", "Super Real Darwin (Japan)" )
-	public static GameDriver driver_gondo	   = new GameDriver("1987"	,"gondo"	,"dec8.java"	,rom_gondo,null	,machine_driver_gondo	,input_ports_gondo	,null	,ROT270	,	"Data East USA", "Gondomania (US)" )
-	public static GameDriver driver_makyosen	   = new GameDriver("1987"	,"makyosen"	,"dec8.java"	,rom_makyosen,driver_gondo	,machine_driver_gondo	,input_ports_gondo	,null	,ROT270	,	"Data East Corporation", "Makyou Senshi (Japan)" )
-	public static GameDriver driver_oscar	   = new GameDriver("1988"	,"oscar"	,"dec8.java"	,rom_oscar,null	,machine_driver_oscar	,input_ports_oscar	,init_deco222	,ROT0	,	"Data East USA", "Psycho-Nics Oscar (US)" )
-	public static GameDriver driver_oscarj	   = new GameDriver("1987"	,"oscarj"	,"dec8.java"	,rom_oscarj,driver_oscar	,machine_driver_oscar	,input_ports_oscar	,init_deco222	,ROT0	,	"Data East Corporation", "Psycho-Nics Oscar (Japan revision 2)" )
-	public static GameDriver driver_oscarj1	   = new GameDriver("1987"	,"oscarj1"	,"dec8.java"	,rom_oscarj1,driver_oscar	,machine_driver_oscar	,input_ports_oscar	,init_deco222	,ROT0	,	"Data East Corporation", "Psycho-Nics Oscar (Japan revision 1)" )
-	public static GameDriver driver_oscarj0	   = new GameDriver("1987"	,"oscarj0"	,"dec8.java"	,rom_oscarj0,driver_oscar	,machine_driver_oscar	,input_ports_oscar	,init_deco222	,ROT0	,	"Data East Corporation", "Psycho-Nics Oscar (Japan revision 0)" )
-	public static GameDriver driver_lastmisn	   = new GameDriver("1986"	,"lastmisn"	,"dec8.java"	,rom_lastmisn,null	,machine_driver_lastmiss	,input_ports_lastmisn	,null	,ROT270	,	"Data East USA", "Last Mission (US revision 6)" )
-	public static GameDriver driver_lastmsno	   = new GameDriver("1986"	,"lastmsno"	,"dec8.java"	,rom_lastmsno,driver_lastmisn	,machine_driver_lastmiss	,input_ports_lastmisn	,null	,ROT270	,	"Data East USA", "Last Mission (US revision 5)" )
-	public static GameDriver driver_lastmsnj	   = new GameDriver("1986"	,"lastmsnj"	,"dec8.java"	,rom_lastmsnj,driver_lastmisn	,machine_driver_lastmiss	,input_ports_lastmsnj	,null	,ROT270	,	"Data East Corporation", "Last Mission (Japan)" )
-	public static GameDriver driver_shackled	   = new GameDriver("1986"	,"shackled"	,"dec8.java"	,rom_shackled,null	,machine_driver_shackled	,input_ports_shackled	,null	,ROT0	,	"Data East USA", "Shackled (US)" )
-	public static GameDriver driver_breywood	   = new GameDriver("1986"	,"breywood"	,"dec8.java"	,rom_breywood,driver_shackled	,machine_driver_shackled	,input_ports_shackled	,null	,ROT0	,	"Data East Corporation", "Breywood (Japan revision 2)" )
-	public static GameDriver driver_csilver	   = new GameDriver("1987"	,"csilver"	,"dec8.java"	,rom_csilver,null	,machine_driver_csilver	,input_ports_csilver	,null	,ROT0	,	"Data East Corporation", "Captain Silver (Japan)" )
-	public static GameDriver driver_garyoret	   = new GameDriver("1987"	,"garyoret"	,"dec8.java"	,rom_garyoret,null	,machine_driver_garyoret	,input_ports_garyoret	,null	,ROT0	,	"Data East Corporation", "Garyo Retsuden (Japan)" )
+	GAME(1988, cobracom, 0,        cobracom, cobracom, 0,       ROT0,   "Data East Corporation", "Cobra-Command (World revision 5)" )
+	GAME(1988, cobracmj, cobracom, cobracom, cobracom, 0,       ROT0,   "Data East Corporation", "Cobra-Command (Japan)" )
+	GAME(1987, ghostb,   0,        ghostb,   ghostb,   ghostb,  ROT0,   "Data East USA", "The Real Ghostbusters (US 2 Players)" )
+	GAME(1987, ghostb3,  ghostb,   ghostb,   ghostb,   ghostb,  ROT0,   "Data East USA", "The Real Ghostbusters (US 3 Players)" )
+	GAME(1987, meikyuh,  ghostb,   ghostb,   meikyuh,  meikyuh, ROT0,   "Data East Corporation", "Meikyuu Hunter G (Japan)" )
+	GAME(1987, srdarwin, 0,        srdarwin, srdarwin, deco222, ROT270, "Data East Corporation", "Super Real Darwin (World)" )
+	GAME(1987, srdarwnj, srdarwin, srdarwin, srdarwin, deco222, ROT270, "Data East Corporation", "Super Real Darwin (Japan)" )
+	GAME(1987, gondo,    0,        gondo,    gondo,    0,       ROT270, "Data East USA", "Gondomania (US)" )
+	GAME(1987, makyosen, gondo,    gondo,    gondo,    0,       ROT270, "Data East Corporation", "Makyou Senshi (Japan)" )
+	GAME(1988, oscar,    0,        oscar,    oscar,    deco222, ROT0,   "Data East USA", "Psycho-Nics Oscar (US)" )
+	GAME(1987, oscarj,   oscar,    oscar,    oscar,    deco222, ROT0,   "Data East Corporation", "Psycho-Nics Oscar (Japan revision 2)" )
+	GAME(1987, oscarj1,  oscar,    oscar,    oscar,    deco222, ROT0,   "Data East Corporation", "Psycho-Nics Oscar (Japan revision 1)" )
+	GAME(1987, oscarj0,  oscar,    oscar,    oscar,    deco222, ROT0,   "Data East Corporation", "Psycho-Nics Oscar (Japan revision 0)" )
+	GAME(1986, lastmisn, 0,        lastmiss, lastmisn, 0,       ROT270, "Data East USA", "Last Mission (US revision 6)" )
+	GAME(1986, lastmsno, lastmisn, lastmiss, lastmisn, 0,       ROT270, "Data East USA", "Last Mission (US revision 5)" )
+	GAME(1986, lastmsnj, lastmisn, lastmiss, lastmsnj, 0,       ROT270, "Data East Corporation", "Last Mission (Japan)" )
+	GAME(1986, shackled, 0,        shackled, shackled, 0,       ROT0,   "Data East USA", "Shackled (US)" )
+	GAME(1986, breywood, shackled, shackled, shackled, 0,       ROT0,   "Data East Corporation", "Breywood (Japan revision 2)" )
+	GAME(1987, csilver,  0,        csilver,  csilver,  0,       ROT0,   "Data East Corporation", "Captain Silver (Japan)" )
+	GAME(1987, garyoret, 0,        garyoret, garyoret, 0,       ROT0,   "Data East Corporation", "Garyo Retsuden (Japan)" )
 }

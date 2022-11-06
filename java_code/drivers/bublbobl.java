@@ -14,35 +14,35 @@ CPU Board
 ---------
            | Taito  |Romstar | ?????  |Romstar |
            |        |        |missing |mode sel|
-17  CU1    | A78-01 |   .   |   .   |   .   |   protection mcu
-49  PAL1   | A78-02 |   .   |   .   |   .   |   address decoder
-43  PAL2   | A78-03 |   .   |   .   |   .   |   address decoder
-12  PAL3   | A78-04 |   .   |   .   |   .   |   address decoder
+17  CU1    | A78-01 |   ->   |   ->   |   ->   |   protection mcu
+49  PAL1   | A78-02 |   ->   |   ->   |   ->   |   address decoder
+43  PAL2   | A78-03 |   ->   |   ->   |   ->   |   address decoder
+12  PAL3   | A78-04 |   ->   |   ->   |   ->   |   address decoder
 53  empty  |        |        |        |        |   main prg
 52  ROM1   | A78-05 | A78-21 | A78-22 | A78-24 |   main prg
-51  ROM2   | A78-06 |   .   | A78-23 | A78-25 |   main prg
-46  ROM4   | A78-07 |   .   |   .   |   .   |   sound prg
-37  ROM3   | A78-08 |   .   |   .   |   .   |   sub prg
+51  ROM2   | A78-06 |   ->   | A78-23 | A78-25 |   main prg
+46  ROM4   | A78-07 |   ->   |   ->   |   ->   |   sound prg
+37  ROM3   | A78-08 |   ->   |   ->   |   ->   |   sub prg
 
 Video Board
 -----------
-12  ROM1   | A78-09 |   .   |   .   |   .   |   gfx
-13  ROM2   | A78-10 |   .   |   .   |   .   |   gfx
-14  ROM3   | A78-11 |   .   |   .   |   .   |   gfx
-15  ROM4   | A78-12 |   .   |   .   |   .   |   gfx
-16  ROM5   | A78-13 |   .   |   .   |   .   |   gfx
-17  ROM6   | A78-14 |   .   |   .   |   .   |   gfx
+12  ROM1   | A78-09 |   ->   |   ->   |   ->   |   gfx
+13  ROM2   | A78-10 |   ->   |   ->   |   ->   |   gfx
+14  ROM3   | A78-11 |   ->   |   ->   |   ->   |   gfx
+15  ROM4   | A78-12 |   ->   |   ->   |   ->   |   gfx
+16  ROM5   | A78-13 |   ->   |   ->   |   ->   |   gfx
+17  ROM6   | A78-14 |   ->   |   ->   |   ->   |   gfx
 18  empty  |        |        |        |        |   gfx
 19  empty  |        |        |        |        |   gfx
-30  ROM7   | A78-15 |   .   |   .   |   .   |   gfx
-31  ROM8   | A78-16 |   .   |   .   |   .   |   gfx
-32  ROM9   | A78-17 |   .   |   .   |   .   |   gfx
-33  ROM10  | A78-18 |   .   |   .   |   .   |   gfx
-34  ROM11  | A78-19 |   .   |   .   |   .   |   gfx
-35  ROM12  | A78-20 |   .   |   .   |   .   |   gfx
+30  ROM7   | A78-15 |   ->   |   ->   |   ->   |   gfx
+31  ROM8   | A78-16 |   ->   |   ->   |   ->   |   gfx
+32  ROM9   | A78-17 |   ->   |   ->   |   ->   |   gfx
+33  ROM10  | A78-18 |   ->   |   ->   |   ->   |   gfx
+34  ROM11  | A78-19 |   ->   |   ->   |   ->   |   gfx
+35  ROM12  | A78-20 |   ->   |   ->   |   ->   |   gfx
 36  empty  |        |        |        |        |   gfx
 37  empty  |        |        |        |        |   gfx
-41  ROM13  | A71-25 |   .   |   .   |   .   |   video timing
+41  ROM13  | A71-25 |   ->   |   ->   |   ->   |   video timing
 
 
 Bobble Bobble memory map
@@ -134,7 +134,7 @@ CPU 3
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -346,7 +346,7 @@ public class bublbobl
 	
 	
 	
-	static InputPortPtr input_ports_bublbobl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bublbobl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bublbobl )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_TILT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -420,7 +420,7 @@ public class bublbobl
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_boblbobl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boblbobl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boblbobl )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -486,7 +486,7 @@ public class bublbobl
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sboblbob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sboblbob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sboblbob )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, "Game" );
 		PORT_DIPSETTING(    0x01, "Bobble Bobble" );
@@ -552,7 +552,7 @@ public class bublbobl
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tokio = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tokio = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tokio )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -694,8 +694,7 @@ public class bublbobl
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_bublbobl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bublbobl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_XTAL/4)	/* 6 MHz */
@@ -732,12 +731,9 @@ public class bublbobl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_boblbobl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( boblbobl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_XTAL/4)	/* 6 MHz */
@@ -769,12 +765,9 @@ public class bublbobl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tokio = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tokio )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_XTAL/4)	/* 6 MHz */
@@ -807,9 +800,7 @@ public class bublbobl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, tokio_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1073,8 +1064,7 @@ public class bublbobl
 	
 	
 	
-	public static DriverInitHandlerPtr init_bublbobl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bublbobl  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
 		/* in Bubble Bobble, bank 0 has code falling from 7fff to 8000, */
@@ -1083,8 +1073,7 @@ public class bublbobl
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_boblbobl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_boblbobl  = new DriverInitHandlerPtr() { public void handler(){
 	#define MOD_PAGE(page,addr,data) memory_region(REGION_CPU1)[addr-0x8000+0x10000+0x4000*page] = data;
 	    /* these shouldn't be necessary, surely - this is a bootleg ROM
 	     * with the protection removed - so what are all these JP's to
@@ -1100,8 +1089,7 @@ public class bublbobl
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tokio  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tokio  = new DriverInitHandlerPtr() { public void handler(){
 		
 		/* preemptively enable video, the bit is not mapped for this game and */
 		/* I don't know if it even has it. */
@@ -1109,11 +1097,11 @@ public class bublbobl
 	} };
 	
 	
-	public static GameDriver driver_bublbobl	   = new GameDriver("1986"	,"bublbobl"	,"bublbobl.java"	,rom_bublbobl,null	,machine_driver_bublbobl	,input_ports_bublbobl	,init_bublbobl	,ROT0	,	"Taito Corporation", "Bubble Bobble" )
-	public static GameDriver driver_bublbobr	   = new GameDriver("1986"	,"bublbobr"	,"bublbobl.java"	,rom_bublbobr,driver_bublbobl	,machine_driver_bublbobl	,input_ports_bublbobl	,init_bublbobl	,ROT0	,	"Taito America Corporation (Romstar license)", "Bubble Bobble (US with mode select)" )
-	public static GameDriver driver_bubbobr1	   = new GameDriver("1986"	,"bubbobr1"	,"bublbobl.java"	,rom_bubbobr1,driver_bublbobl	,machine_driver_bublbobl	,input_ports_bublbobl	,init_bublbobl	,ROT0	,	"Taito America Corporation (Romstar license)", "Bubble Bobble (US)" )
-	public static GameDriver driver_boblbobl	   = new GameDriver("1986"	,"boblbobl"	,"bublbobl.java"	,rom_boblbobl,driver_bublbobl	,machine_driver_boblbobl	,input_ports_boblbobl	,init_boblbobl	,ROT0	,	"bootleg", "Bobble Bobble" )
-	public static GameDriver driver_sboblbob	   = new GameDriver("1986"	,"sboblbob"	,"bublbobl.java"	,rom_sboblbob,driver_bublbobl	,machine_driver_boblbobl	,input_ports_sboblbob	,init_bublbobl	,ROT0	,	"bootleg", "Super Bobble Bobble" )
-	public static GameDriver driver_tokio	   = new GameDriver("1986"	,"tokio"	,"bublbobl.java"	,rom_tokio,null	,machine_driver_tokio	,input_ports_tokio	,init_tokio	,ROT90	,	"Taito", "Tokio / Scramble Formation", GAME_NOT_WORKING )
-	public static GameDriver driver_tokiob	   = new GameDriver("1986"	,"tokiob"	,"bublbobl.java"	,rom_tokiob,driver_tokio	,machine_driver_tokio	,input_ports_tokio	,init_tokio	,ROT90	,	"bootleg", "Tokio / Scramble Formation (bootleg)" )
+	GAME( 1986, bublbobl, 0,        bublbobl, bublbobl, bublbobl, ROT0,  "Taito Corporation", "Bubble Bobble" )
+	GAME( 1986, bublbobr, bublbobl, bublbobl, bublbobl, bublbobl, ROT0,  "Taito America Corporation (Romstar license)", "Bubble Bobble (US with mode select)" )
+	GAME( 1986, bubbobr1, bublbobl, bublbobl, bublbobl, bublbobl, ROT0,  "Taito America Corporation (Romstar license)", "Bubble Bobble (US)" )
+	GAME( 1986, boblbobl, bublbobl, boblbobl, boblbobl, boblbobl, ROT0,  "bootleg", "Bobble Bobble" )
+	GAME( 1986, sboblbob, bublbobl, boblbobl, sboblbob, bublbobl, ROT0,  "bootleg", "Super Bobble Bobble" )
+	GAMEX(1986, tokio,    0,        tokio,    tokio,    tokio,    ROT90, "Taito", "Tokio / Scramble Formation", GAME_NOT_WORKING )
+	GAME( 1986, tokiob,   tokio,    tokio,    tokio,    tokio,    ROT90, "bootleg", "Tokio / Scramble Formation (bootleg)" )
 }

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -43,27 +43,24 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr cyberbal_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cyberbal_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int temp = readinputport(3);
 		if (!(readinputport(0) & 0x8000)) temp ^= 0x80;
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x40;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x20;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x40;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x20;
 		return temp;
 	} };
 	
 	
-	public static ReadHandlerPtr cyberbal_sound_6502_stat_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cyberbal_sound_6502_stat_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int temp = 0xff;
-		if (sound_data_from_6502_ready != 0) temp ^= 0x80;
-		if (sound_data_from_68k_ready != 0) temp ^= 0x40;
+		if (sound_data_from_6502_ready) temp ^= 0x80;
+		if (sound_data_from_68k_ready) temp ^= 0x40;
 		return temp;
 	} };
 	
 	
-	public static WriteHandlerPtr cyberbal_sound_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cyberbal_sound_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(8, &bank_base[0x1000 * ((data >> 6) & 3)]);
 		coin_counter_w(1, (data >> 5) & 1);
 		coin_counter_w(0, (data >> 4) & 1);
@@ -73,19 +70,17 @@ public class cyberbal
 	} };
 	
 	
-	public static ReadHandlerPtr cyberbal_sound_68k_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cyberbal_sound_68k_6502_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sound_data_from_68k_ready = 0;
 		return sound_data_from_68k;
 	} };
 	
 	
-	public static WriteHandlerPtr cyberbal_sound_68k_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cyberbal_sound_68k_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_data_from_6502 = data;
 		sound_data_from_6502_ready = 1;
 	
-		if (io_68k_int == 0)
+		if (!io_68k_int)
 		{
 			io_68k_int = 1;
 			update_sound_68k_interrupts();
@@ -104,21 +99,20 @@ public class cyberbal
 	{
 		int newstate = 0;
 	
-		if (fast_68k_int != 0)
+		if (fast_68k_int)
 			newstate |= 6;
-		if (io_68k_int != 0)
+		if (io_68k_int)
 			newstate |= 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(3, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(3, 7, CLEAR_LINE);
 	}
 	
 	
-	public static InterruptHandlerPtr cyberbal_sound_68k_irq_gen = new InterruptHandlerPtr() {public void handler()
-	{
-		if (fast_68k_int == 0)
+	public static InterruptHandlerPtr cyberbal_sound_68k_irq_gen = new InterruptHandlerPtr() {public void handler(){
+		if (!fast_68k_int)
 		{
 			fast_68k_int = 1;
 			update_sound_68k_interrupts();
@@ -128,7 +122,7 @@ public class cyberbal
 	
 	WRITE16_HANDLER( cyberbal_io_68k_irq_ack_w )
 	{
-		if (io_68k_int != 0)
+		if (io_68k_int)
 		{
 			io_68k_int = 0;
 			update_sound_68k_interrupts();
@@ -142,15 +136,15 @@ public class cyberbal
 	
 		sound_data_from_6502_ready = 0;
 	
-		if (sound_data_from_6502_ready != 0) temp ^= 0x08;
-		if (sound_data_from_68k_ready != 0) temp ^= 0x04;
+		if (sound_data_from_6502_ready) temp ^= 0x08;
+		if (sound_data_from_68k_ready) temp ^= 0x04;
 		return temp;
 	}
 	
 	
 	WRITE16_HANDLER( cyberbal_sound_68k_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			sound_data_from_68k = (data >> 8) & 0xff;
 			sound_data_from_68k_ready = 1;
@@ -162,7 +156,7 @@ public class cyberbal
 	{
 		DAC_data_16_w((offset >> 3) & 1, (((data >> 3) & 0x800) | ((data >> 2) & 0x7ff)) << 4);
 	
-		if (fast_68k_int != 0)
+		if (fast_68k_int)
 		{
 			fast_68k_int = 0;
 			update_sound_68k_interrupts();

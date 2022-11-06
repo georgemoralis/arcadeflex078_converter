@@ -32,7 +32,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,14 +50,12 @@ public class clshroad
 	
 	
 	
-	public static WriteHandlerPtr clshroad_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr clshroad_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set( data & 1 );
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_clshroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_clshroad  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0;i < 256;i++)
 			palette_set_color(i,	color_prom.read(i + 256 * 0)* 0x11,
@@ -65,8 +63,7 @@ public class clshroad
 									color_prom.read(i + 256 * 2)* 0x11	);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_firebatl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -157,14 +154,13 @@ public class clshroad
 				0)
 	}
 	
-	public static WriteHandlerPtr clshroad_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr clshroad_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (clshroad_vram_0[offset] != data)
 		{
 			int tile_index = offset / 2;
 			int tile = (tile_index & 0x1f) + (tile_index & ~0x3f)/2;
 			clshroad_vram_0[offset] = data;
-			if ((tile_index & 0x20) != 0)	tilemap_mark_tile_dirty(tilemap_0a, tile);
+			if (tile_index & 0x20)	tilemap_mark_tile_dirty(tilemap_0a, tile);
 			else					tilemap_mark_tile_dirty(tilemap_0b, tile);
 		}
 	} };
@@ -187,7 +183,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	/* logical (col,row) . memory offset */
+	/* logical (col,row) -> memory offset */
 	static UINT32 tilemap_scan_rows_extra( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
 		// The leftmost columns come from the bottom rows
@@ -226,8 +222,7 @@ public class clshroad
 				0)
 	}
 	
-	public static WriteHandlerPtr clshroad_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr clshroad_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (clshroad_vram_1[offset] != data)
 		{
 			clshroad_vram_1[offset] = data;
@@ -236,8 +231,7 @@ public class clshroad
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_firebatl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_firebatl  = new VideoStartHandlerPtr() { public int handler(){
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
 		tilemap_0b = tilemap_create(get_tile_info_0b,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,0x20,0x10);
@@ -265,8 +259,7 @@ public class clshroad
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_clshroad  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_clshroad  = new VideoStartHandlerPtr() { public int handler(){
 		/* These 2 use the graphics and scroll value */
 		tilemap_0a = tilemap_create(get_tile_info_0a,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,0x20,0x10);
 		tilemap_0b = tilemap_create(get_tile_info_0b,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,0x20,0x10);
@@ -339,14 +332,14 @@ public class clshroad
 			int flipy	=	0;
 	
 			x -= 0x4a/2;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				y = 240 - y;
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					attr & 0x0f,
 					flipx,flipy,
@@ -364,8 +357,7 @@ public class clshroad
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_clshroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx  = clshroad_vregs[ 0 ] + (clshroad_vregs[ 1 ] << 8);
 	//	int priority = clshroad_vregs[ 2 ];
 	

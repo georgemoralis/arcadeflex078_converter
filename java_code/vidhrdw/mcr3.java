@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -68,7 +68,7 @@ public class mcr3
 	
 	static UINT32 spyhunt_bg_scan(UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x0f) | ((col & 0x3f) << 4) | ((row & 0x10) << 6);
 	}
 	
@@ -94,36 +94,33 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_mcr3  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mcr3  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 		return 0;
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_mcrmono  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mcrmono  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(mcrmono_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,16, 32,30);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 		return 0;
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_spyhunt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spyhunt  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the background tilemap */
 		bg_tilemap = tilemap_create(spyhunt_get_bg_tile_info, spyhunt_bg_scan, TILEMAP_OPAQUE, 64,32, 64,32);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		/* initialize the text tilemap */
 		alpha_tilemap = tilemap_create(spyhunt_get_alpha_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT, 16,16, 32,32);
-		if (alpha_tilemap == 0)
+		if (!alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(alpha_tilemap, 0);
 		tilemap_set_scrollx(alpha_tilemap, 0, 16);
@@ -138,11 +135,10 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mcr3_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcr3_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 		offset &= 0x7f;
 	
 		/* high bit of red comes from low bit of address */
@@ -166,22 +162,19 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mcr3_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcr3_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 	} };
 	
 	
-	public static WriteHandlerPtr spyhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spyhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
 	
 	
-	public static WriteHandlerPtr spyhunt_alpharam_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spyhunt_alpharam_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spyhunt_alpharam[offset] = data;
 		tilemap_mark_tile_dirty(alpha_tilemap, offset);
 	} };
@@ -225,24 +218,24 @@ public class mcr3
 	
 			/* sprites use color 0 for background pen and 8 for the 'under tile' pen.
 				The color 8 is used to cover over other sprites. */
-			if (mcr_cocktail_flip == 0)
+			if (!mcr_cocktail_flip)
 			{
 				/* first draw the sprite, visible */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, sx, sy,
+				pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, sx, sy,
 						cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 				/* then draw the mask, behind the background but obscuring following sprites */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, flipx, flipy, sx, sy,
+				pdrawgfx(bitmap, Machine->gfx[1], code, color, flipx, flipy, sx, sy,
 						cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 			}
 			else
 			{
 				/* first draw the sprite, visible */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine->gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0x0101, 0x00);
 	
 				/* then draw the mask, behind the background but obscuring following sprites */
-				pdrawgfx(bitmap, Machine.gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
+				pdrawgfx(bitmap, Machine->gfx[1], code, color, NOT(flipx), NOT(flipy), 480 - sx, 452 - sy,
 						cliprect, TRANSPARENCY_PENS, 0xfeff, 0x02);
 			}
 		}
@@ -256,8 +249,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mcr3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mcr3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* update the flip state */
 		tilemap_set_flip(bg_tilemap, mcr_cocktail_flip ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0);
 	
@@ -269,8 +261,7 @@ public class mcr3
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spyhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spyhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* for every character in the Video RAM, check if it has been modified */
 		/* since last time and update it accordingly. */
 		tilemap_set_scrollx(bg_tilemap, 0, spyhunt_scrollx * 2 + spyhunt_scroll_offset);
@@ -292,8 +283,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_spyhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_spyhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* add some colors for the alpha RAM */
 		palette_set_color(4*16+0,0x00,0x00,0x00);
 		palette_set_color(4*16+1,0x00,0xff,0x00);

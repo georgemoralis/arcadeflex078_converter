@@ -124,7 +124,7 @@ Kickstart Wheelie King :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -139,15 +139,13 @@ public class taitosj
 	
 	static int sndnmi_disable = 1;
 	
-	public static WriteHandlerPtr taitosj_sndnmi_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_sndnmi_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sndnmi_disable = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr taitosj_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
-		if (sndnmi_disable == 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (!sndnmi_disable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
 	
@@ -254,8 +252,7 @@ public class taitosj
 	/* seems the most logical way to do the gears */
 	static int kikstart_gear;
 	
-	static public static ReadHandlerPtr kikstart_gears_read  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kikstart_gears_read  = new ReadHandlerPtr() { public int handler(int offset){
 		/* gear MUST be 1, 2 or 3 */
 	
 		int portreturn = readinputport(3) & 0xf4;
@@ -411,7 +408,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x70, DEF_STR( "1C_8C") );
 	
 	
-	static InputPortPtr input_ports_spaceskr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spaceskr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spaceskr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -509,7 +506,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacecr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacecr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacecr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -609,7 +606,7 @@ public class taitosj
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_junglek = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_junglek = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( junglek )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -704,7 +701,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_piratpet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_piratpet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( piratpet )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -799,7 +796,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_alpine = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alpine = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alpine )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_COCKTAIL );
@@ -891,7 +888,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_alpinea = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alpinea = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alpinea )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_COCKTAIL );
@@ -981,7 +978,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_timetunl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timetunl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timetunl )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1080,7 +1077,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wwestern = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wwestern = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wwestern )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_RIGHT | IPF_8WAY );
@@ -1178,7 +1175,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_frontlin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_frontlin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( frontlin )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_RIGHT | IPF_8WAY );
@@ -1278,7 +1275,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_elevator = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_elevator = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( elevator )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -1375,7 +1372,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tinstar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tinstar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tinstar )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_RIGHT | IPF_8WAY );
@@ -1478,7 +1475,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_waterski = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_waterski = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( waterski )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -1577,7 +1574,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bioatack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bioatack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bioatack )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -1672,7 +1669,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sfposeid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sfposeid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sfposeid )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -1771,7 +1768,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hwrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hwrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hwrace )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -1868,7 +1865,7 @@ public class taitosj
 		PORT_DIPSETTING(    0x00, "A only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kikstart = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kikstart = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kikstart )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -2011,8 +2008,7 @@ public class taitosj
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_nomcu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nomcu )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,8000000/2)      /* 4 MHz */
@@ -2049,14 +2045,11 @@ public class taitosj
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* same as above, but with additional 68705 MCU */
-	public static MachineHandlerPtr machine_driver_mcu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nomcu)
@@ -2065,12 +2058,9 @@ public class taitosj
 	
 		MDRV_CPU_ADD(M68705,3000000/4)      /* xtal is 3MHz, divided by 4 internally */
 		MDRV_CPU_MEMORY(m68705_readmem,m68705_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_kikstart = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kikstart )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nomcu)
@@ -2079,9 +2069,7 @@ public class taitosj
 	
 		MDRV_CPU_ADD(M68705,3000000/4)      /* xtal is 3MHz, divided by 4 internally */
 		MDRV_CPU_MEMORY(m68705_readmem,m68705_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2707,50 +2695,46 @@ public class taitosj
 	
 	
 	
-	public static DriverInitHandlerPtr init_alpine  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alpine  = new DriverInitHandlerPtr() { public void handler(){
 		/* install protection handlers */
 		install_mem_read_handler (0, 0xd40b, 0xd40b, alpine_port_2_r);
 		install_mem_write_handler(0, 0xd50f, 0xd50f, alpine_protection_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_alpinea  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alpinea  = new DriverInitHandlerPtr() { public void handler(){
 		/* install protection handlers */
 		install_mem_read_handler (0, 0xd40b, 0xd40b, alpine_port_2_r);
 		install_mem_write_handler(0, 0xd50e, 0xd50e, alpinea_bankswitch_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_junglhbr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_junglhbr  = new DriverInitHandlerPtr() { public void handler(){
 		/* inverter on bits 0 and 1 */
 		install_mem_write_handler (0, 0x9000, 0xbfff, junglhbr_characterram_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_kikstart  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kikstart  = new DriverInitHandlerPtr() { public void handler(){
 		kikstart_gear = 1;
 	} };
 	
-	public static GameDriver driver_spaceskr	   = new GameDriver("1981"	,"spaceskr"	,"taitosj.java"	,rom_spaceskr,null	,machine_driver_nomcu	,input_ports_spaceskr	,null	,ROT180	,	"Taito Corporation", "Space Seeker" )
-	public static GameDriver driver_spacecr	   = new GameDriver("1981"	,"spacecr"	,"taitosj.java"	,rom_spacecr,null	,machine_driver_nomcu	,input_ports_spacecr	,null	,ROT90	,	"Taito Corporation", "Space Cruiser" )
-	public static GameDriver driver_junglek	   = new GameDriver("1982"	,"junglek"	,"taitosj.java"	,rom_junglek,null	,machine_driver_nomcu	,input_ports_junglek	,null	,ROT0	,	"Taito Corporation", "Jungle King (Japan)" )
-	public static GameDriver driver_junglkj2	   = new GameDriver("1982"	,"junglkj2"	,"taitosj.java"	,rom_junglkj2,driver_junglek	,machine_driver_nomcu	,input_ports_junglek	,null	,ROT0	,	"Taito Corporation", "Jungle King (Japan, earlier)" )
-	public static GameDriver driver_jungleh	   = new GameDriver("1982"	,"jungleh"	,"taitosj.java"	,rom_jungleh,driver_junglek	,machine_driver_nomcu	,input_ports_junglek	,null	,ROT0	,	"Taito America Corporation", "Jungle Hunt (US)" )
-	public static GameDriver driver_junglhbr	   = new GameDriver("1983"	,"junglhbr"	,"taitosj.java"	,rom_junglhbr,driver_junglek	,machine_driver_nomcu	,input_ports_junglek	,init_junglhbr	,ROT0	,	"Taito do Brasil",   "Jungle Hunt (Brazil)" )
-	public static GameDriver driver_piratpet	   = new GameDriver("1982"	,"piratpet"	,"taitosj.java"	,rom_piratpet,driver_junglek	,machine_driver_nomcu	,input_ports_piratpet	,null	,ROT0	,	"Taito America Corporation", "Pirate Pete" )
-	public static GameDriver driver_alpine	   = new GameDriver("1982"	,"alpine"	,"taitosj.java"	,rom_alpine,null	,machine_driver_nomcu	,input_ports_alpine	,init_alpine	,ROT270	,	"Taito Corporation", "Alpine Ski (set 1)" )
-	public static GameDriver driver_alpinea	   = new GameDriver("1982"	,"alpinea"	,"taitosj.java"	,rom_alpinea,driver_alpine	,machine_driver_nomcu	,input_ports_alpinea	,init_alpinea	,ROT270	,	"Taito Corporation", "Alpine Ski (set 2)" )
-	public static GameDriver driver_timetunl	   = new GameDriver("1982"	,"timetunl"	,"taitosj.java"	,rom_timetunl,null	,machine_driver_nomcu	,input_ports_timetunl	,null	,ROT0	,	"Taito Corporation", "Time Tunnel" )
-	public static GameDriver driver_wwestern	   = new GameDriver("1982"	,"wwestern"	,"taitosj.java"	,rom_wwestern,null	,machine_driver_nomcu	,input_ports_wwestern	,null	,ROT270	,	"Taito Corporation", "Wild Western (set 1)" )
-	public static GameDriver driver_wwester1	   = new GameDriver("1982"	,"wwester1"	,"taitosj.java"	,rom_wwester1,driver_wwestern	,machine_driver_nomcu	,input_ports_wwestern	,null	,ROT270	,	"Taito Corporation", "Wild Western (set 2)" )
-	public static GameDriver driver_frontlin	   = new GameDriver("1982"	,"frontlin"	,"taitosj.java"	,rom_frontlin,null	,machine_driver_mcu	,input_ports_frontlin	,null	,ROT270	,	"Taito Corporation", "Front Line" )
-	public static GameDriver driver_elevator	   = new GameDriver("1983"	,"elevator"	,"taitosj.java"	,rom_elevator,null	,machine_driver_mcu	,input_ports_elevator	,null	,ROT0	,	"Taito Corporation", "Elevator Action" )
-	public static GameDriver driver_elevatob	   = new GameDriver("1983"	,"elevatob"	,"taitosj.java"	,rom_elevatob,driver_elevator	,machine_driver_nomcu	,input_ports_elevator	,null	,ROT0	,	"bootleg", "Elevator Action (bootleg)" )
-	public static GameDriver driver_tinstar	   = new GameDriver("1983"	,"tinstar"	,"taitosj.java"	,rom_tinstar,null	,machine_driver_mcu	,input_ports_tinstar	,null	,ROT0	,	"Taito Corporation", "The Tin Star" )
-	public static GameDriver driver_waterski	   = new GameDriver("1983"	,"waterski"	,"taitosj.java"	,rom_waterski,null	,machine_driver_nomcu	,input_ports_waterski	,null	,ROT270	,	"Taito Corporation", "Water Ski" )
-	public static GameDriver driver_bioatack	   = new GameDriver("1983"	,"bioatack"	,"taitosj.java"	,rom_bioatack,null	,machine_driver_nomcu	,input_ports_bioatack	,null	,ROT270	,	"Taito Corporation (Fox Video Games license)", "Bio Attack" )
-	public static GameDriver driver_sfposeid	   = new GameDriver("1984"	,"sfposeid"	,"taitosj.java"	,rom_sfposeid,null	,machine_driver_mcu	,input_ports_sfposeid	,null	,ROT0	,	"Taito Corporation", "Sea Fighter Poseidon" )
-	public static GameDriver driver_hwrace	   = new GameDriver("1983"	,"hwrace"	,"taitosj.java"	,rom_hwrace,null	,machine_driver_nomcu	,input_ports_hwrace	,null	,ROT270	,	"Taito Corporation", "High Way Race" )
-	public static GameDriver driver_kikstart	   = new GameDriver("1984"	,"kikstart"	,"taitosj.java"	,rom_kikstart,null	,machine_driver_kikstart	,input_ports_kikstart	,init_kikstart	,ROT0	,	"Taito Corporation", "Kick Start Wheelie King" )
+	GAME( 1981, spaceskr, 0,        nomcu,    spaceskr,   0,       ROT180, "Taito Corporation", "Space Seeker" )
+	GAME( 1981, spacecr,  0,        nomcu,    spacecr,    0,       ROT90,  "Taito Corporation", "Space Cruiser" )
+	GAME( 1982, junglek,  0,        nomcu,    junglek,    0,       ROT0,   "Taito Corporation", "Jungle King (Japan)" )
+	GAME( 1982, junglkj2, junglek,  nomcu,    junglek,    0,       ROT0,   "Taito Corporation", "Jungle King (Japan, earlier)" )
+	GAME( 1982, jungleh,  junglek,  nomcu,    junglek,    0,       ROT0,   "Taito America Corporation", "Jungle Hunt (US)" )
+	GAME( 1983, junglhbr, junglek,  nomcu,    junglek,    junglhbr,ROT0,   "Taito do Brasil",   "Jungle Hunt (Brazil)" )
+	GAME( 1982, piratpet, junglek,  nomcu,    piratpet,   0,       ROT0,   "Taito America Corporation", "Pirate Pete" )
+	GAME( 1982, alpine,   0,        nomcu,    alpine,     alpine,  ROT270, "Taito Corporation", "Alpine Ski (set 1)" )
+	GAME( 1982, alpinea,  alpine,   nomcu,    alpinea,    alpinea, ROT270, "Taito Corporation", "Alpine Ski (set 2)" )
+	GAME( 1982, timetunl, 0,        nomcu,    timetunl,   0,       ROT0,   "Taito Corporation", "Time Tunnel" )
+	GAME( 1982, wwestern, 0,        nomcu,    wwestern,   0,       ROT270, "Taito Corporation", "Wild Western (set 1)" )
+	GAME( 1982, wwester1, wwestern, nomcu,    wwestern,   0,       ROT270, "Taito Corporation", "Wild Western (set 2)" )
+	GAME( 1982, frontlin, 0,        mcu,      frontlin,   0,       ROT270, "Taito Corporation", "Front Line" )
+	GAME( 1983, elevator, 0,        mcu,      elevator,   0,       ROT0,   "Taito Corporation", "Elevator Action" )
+	GAME( 1983, elevatob, elevator, nomcu,    elevator,   0,       ROT0,   "bootleg", "Elevator Action (bootleg)" )
+	GAME( 1983, tinstar,  0,        mcu,      tinstar,    0,       ROT0,   "Taito Corporation", "The Tin Star" )
+	GAME( 1983, waterski, 0,        nomcu,    waterski,   0,       ROT270, "Taito Corporation", "Water Ski" )
+	GAME( 1983, bioatack, 0,        nomcu,    bioatack,   0,       ROT270, "Taito Corporation (Fox Video Games license)", "Bio Attack" )
+	GAME( 1984, sfposeid, 0,        mcu,      sfposeid,   0,       ROT0,   "Taito Corporation", "Sea Fighter Poseidon" )
+	GAME( 1983, hwrace,   0,        nomcu,    hwrace,     0,       ROT270, "Taito Corporation", "High Way Race" )
+	GAME( 1984, kikstart, 0,        kikstart, kikstart,   kikstart,ROT0,   "Taito Corporation", "Kick Start Wheelie King" )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,8 +45,7 @@ public class tubep
 	  bit 0 -- 1  kohm resistor  -- /
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_rjammer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rjammer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -216,8 +215,7 @@ public class tubep
 	***************************************************************************/
 	
 	
-	public static PaletteInitHandlerPtr palette_init_tubep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tubep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,r,g,b;
 	
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -428,8 +426,7 @@ public class tubep
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_tubep  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tubep  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuff = auto_malloc(0x800/2)) == 0)
 			return 1;
 		memset(dirtybuff,1,0x800/2);
@@ -445,8 +442,7 @@ public class tubep
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tubep_textram[offset] != data)
 		{
 			dirtybuff[offset/2] = 1;
@@ -457,16 +453,14 @@ public class tubep
 	
 	static UINT8 background_romsel = 0;
 	
-	public static WriteHandlerPtr tubep_background_romselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_background_romselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_romsel = data & 1;
 	} };
 	
 	
 	static UINT8 color_A4 = 0;
 	
-	public static WriteHandlerPtr tubep_colorproms_A4_line_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_colorproms_A4_line_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (color_A4 != ((data & 1)<<4))
 		{
 			color_A4 = (data & 1)<<4;
@@ -477,16 +471,14 @@ public class tubep
 	
 	static UINT8 ls175_b7 = 0x0f | 0xf0;
 	
-	public static WriteHandlerPtr tubep_background_a000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_background_a000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ls175_b7 = ((data&0x0f)^0x0f) | 0xf0;
 	} };
 	
 	
 	static UINT8 ls175_e8 = 0x0f;
 	
-	public static WriteHandlerPtr tubep_background_c000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_background_c000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ls175_e8 = ((data&0x0f)^0x0f);
 	} };
 	
@@ -585,8 +577,7 @@ public class tubep
 	}
 	
 	
-	public static WriteHandlerPtr tubep_sprite_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_sprite_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 10)
 		{
 			/*graph_ctrl[offset] = data;*/
@@ -653,16 +644,14 @@ public class tubep
 		}
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_tubep_eof  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_tubep_eof  = new VideoEofHandlerPtr() { public void handler(){
 		/* clear displayed frame */
 		memset(spritemap+DISP*256*256, 0x0f, 256*256);
 		DISP = DISP ^ 1;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tubep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		for (offs = 0;offs < 0x800; offs+=2)
@@ -753,7 +742,7 @@ public class tubep
 					if (sp_data!=0x0f)
 						bg_data = prom2[sp_data | color_A4];
 	
-					plot_pixel.handler(bitmap,h,v, pens[ bg_data*64 + romB_data_h ] );
+					plot_pixel(bitmap,h,v, pens[ bg_data*64 + romB_data_h ] );
 				}
 			}
 		}
@@ -768,22 +757,19 @@ public class tubep
 	
 	static UINT8 ls377_data = 0;
 	
-	public static WriteHandlerPtr rjammer_background_LS377_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_background_LS377_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ls377_data = data & 0xff;
 	} };
 	
 	
 	static UINT32 page = 0;
 	
-	public static WriteHandlerPtr rjammer_background_page_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_background_page_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		page = (data & 1) * 0x200;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_rjammer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rjammer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		for (offs = 0;offs < 0x800; offs+=2)
@@ -864,7 +850,7 @@ public class tubep
 	
 					if (sp_data!=0x0f)
 					{
-						plot_pixel.handler(bitmap,h,v,pens[0x00+ sp_data ] );
+						plot_pixel(bitmap,h,v,pens[0x00+ sp_data ] );
 					}
 					else
 					{
@@ -923,7 +909,7 @@ public class tubep
 						color_bank =  (pal14h4_pin13 & ((bg_data&0x08)>>3) & ((bg_data&0x04)>>2) & (((bg_data&0x02)>>1)^1) &  (bg_data&0x01)    )
 									| (pal14h4_pin18 & ((bg_data&0x08)>>3) & ((bg_data&0x04)>>2) &  ((bg_data&0x02)>>1)    & ((bg_data&0x01)^1) )
 									| (pal14h4_pin19);
-						plot_pixel.handler(bitmap,h,v,pens[0x20+ color_bank*0x10 + bg_data ] );
+						plot_pixel(bitmap,h,v,pens[0x20+ color_bank*0x10 + bg_data ] );
 					}
 				}
 			}

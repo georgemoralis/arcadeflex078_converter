@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,8 +17,7 @@ public class pbillian
 	
 	struct tilemap *pb_tilemap;
 	
-	public static WriteHandlerPtr pb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pb_videoram[offset] = data;
 		tilemap_mark_tile_dirty(pb_tilemap,offset&0x3ff);
 	} };
@@ -31,12 +30,11 @@ public class pbillian
 		SET_TILE_INFO(0,tileno,pal+0x10,0)
 	}
 	
-	VIDEO_START(pbillian)
-	{
+	public static VideoStartHandlerPtr video_start_pbillian  = new VideoStartHandlerPtr() { public int handler(){
 		pb_tilemap = tilemap_create(get_pb_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,32,32);
 		paletteram = auto_malloc(0x200);
 		return 0;
-	}
+	} };
 	
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
@@ -75,19 +73,18 @@ public class pbillian
 			col =(source[3]&0xf0)>>4;
 		  num=source[0]|((source[3]&0x0f)<<8); 
 		  
-		  drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x+8:x,flip_screen()?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x:x+8,flip_screen()?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x+8:x,flip_screen()?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
-			drawgfx( bitmap,Machine.gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x:x+8,flip_screen()?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
+		  drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x+8:x,flip_screen()?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x:x+8,flip_screen()?240-y+8:y,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x+8:x,flip_screen()?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
+			drawgfx( bitmap,Machine->gfx[0],num++,col,flip_screen(),flip_screen(),flip_screen()?240-x:x+8,flip_screen()?240-y:y+8,cliprect,TRANSPARENCY_PEN,0);
 	
 			source += 0x4;
 		}
 	}
 	
-	VIDEO_UPDATE(pbillian)
-	{
+	public static VideoUpdateHandlerPtr video_update_pbillian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,pb_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
-		if (is_pbillian != 0)usrintf_showmessage	("Power %d%%", ((input_port_3_r(0)&0x3f)*100)/0x3f);
-	}
+		if(is_pbillian)usrintf_showmessage	("Power %d%%", ((input_port_3_r(0)&0x3f)*100)/0x3f);
+	} };
 }

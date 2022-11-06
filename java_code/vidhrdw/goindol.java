@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -63,8 +63,7 @@ public class goindol
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_goindol  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_goindol  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -83,8 +82,7 @@ public class goindol
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr goindol_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr goindol_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (goindol_fg_videoram[offset] != data)
 		{
 			goindol_fg_videoram[offset] = data;
@@ -92,8 +90,7 @@ public class goindol
 		}
 	} };
 	
-	public static WriteHandlerPtr goindol_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr goindol_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (goindol_bg_videoram[offset] != data)
 		{
 			goindol_bg_videoram[offset] = data;
@@ -118,7 +115,7 @@ public class goindol
 			sx = sprite_ram[offs];
 			sy = 240-sprite_ram[offs+1];
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;
@@ -130,14 +127,14 @@ public class goindol
 				tile	+= tile;
 				palette	 = sprite_ram[offs+2] >> 3;
 	
-				drawgfx(bitmap,Machine.gfx[gfxbank],
+				drawgfx(bitmap,Machine->gfx[gfxbank],
 							tile,
 							palette,
 							flip_screen(),flip_screen(),
 							sx,sy,
 							cliprect,
 							TRANSPARENCY_PEN, 0);
-				drawgfx(bitmap,Machine.gfx[gfxbank],
+				drawgfx(bitmap,Machine->gfx[gfxbank],
 							tile+1,
 							palette,
 							flip_screen(),flip_screen(),
@@ -148,8 +145,7 @@ public class goindol
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_goindol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_goindol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(fg_tilemap,0,*goindol_fg_scrollx);
 		tilemap_set_scrolly(fg_tilemap,0,*goindol_fg_scrolly);
 	

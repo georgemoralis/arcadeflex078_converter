@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -13,8 +13,7 @@ public class galspnbl
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_galspnbl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_galspnbl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 555 RGB lookup */
@@ -40,17 +39,17 @@ public class galspnbl
 		int sx,sy;
 	
 	
-		data = COMBINE_DATA(&galspnbl_bgvideoram.read(offset));
+		data = COMBINE_DATA(&galspnbl_bgvideoram[offset]);
 	
 		sx = offset % 512;
 		sy = offset / 512;
 	
-		plot_pixel(tmpbitmap,sx,sy,Machine.pens[1024 + (data >> 1)]);
+		plot_pixel(tmpbitmap,sx,sy,Machine->pens[1024 + (data >> 1)]);
 	}
 	
 	WRITE16_HANDLER( galspnbl_scroll_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			screenscroll = 4-(data & 0xff);
 	}
 	
@@ -112,12 +111,12 @@ public class galspnbl
 					{
 						int x = sx + 8*(flipx?(size-1-col):col);
 						int y = sy + 8*(flipy?(size-1-row):row);
-						drawgfx(bitmap,Machine.gfx[1],
+						drawgfx(bitmap,Machine->gfx[1],
 							code + layout[row][col],
 							color,
 							flipx,flipy,
 							x,y,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 					}
 				}
 			}
@@ -125,8 +124,7 @@ public class galspnbl
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_galspnbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galspnbl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	

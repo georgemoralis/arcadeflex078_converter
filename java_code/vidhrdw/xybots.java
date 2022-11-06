@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_xybots  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xybots  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			1,					/* index to which gfx system */
@@ -88,7 +87,7 @@ public class xybots
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -97,7 +96,7 @@ public class xybots
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -112,8 +111,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xybots  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xybots  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -135,7 +133,7 @@ public class xybots
 	
 							PRIEN = ~(~MOPIX3 & ~MOPIX2 & ~MOPIX1) = (MOPIX3-0 > 1)
 	
-							if (PRIEN != 0)
+							if (PRIEN)
 								PF/MO = (~MOPRI3-0 > PFCOL3-0)
 							else
 								PF/MO = (~MOPRI3-0 >= PFCOL3-0)
@@ -149,7 +147,7 @@ public class xybots
 						int pfcolor = (pf[x] >> 4) & 0x0f;
 						int prien = ((mo[x] & 0x0f) > 1);
 	
-						if (prien != 0)
+						if (prien)
 						{
 							if (mopriority <= pfcolor)
 							{

@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,22 +38,21 @@ public class blstroid
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 1;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 2;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_blstroid  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_blstroid  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(blstroid_scanline_update, 8);
@@ -71,8 +70,8 @@ public class blstroid
 	static READ16_HANDLER( inputs_r )
 	{
 		int temp = readinputport(2 + (offset & 1));
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0040;
-		if (atarigen_get_hblank() != 0) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0040;
+		if (atarigen_get_hblank()) temp ^= 0x0010;
 		return temp;
 	}
 	
@@ -121,7 +120,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_blstroid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blstroid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blstroid )
 		PORT_START();       /* ff9800 */
 		PORT_ANALOG( 0x00ff, 0, IPT_DIAL | IPF_PLAYER1, 60, 10, 0, 0 );
 		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -203,8 +202,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_blstroid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blstroid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -229,9 +227,7 @@ public class blstroid
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -433,8 +429,7 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_blstroid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blstroid  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x80);
 	} };
@@ -447,9 +442,9 @@ public class blstroid
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_blstroid	   = new GameDriver("1987"	,"blstroid"	,"blstroid.java"	,rom_blstroid,null	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 4)" )
-	public static GameDriver driver_blstroi3	   = new GameDriver("1987"	,"blstroi3"	,"blstroid.java"	,rom_blstroi3,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 3)" )
-	public static GameDriver driver_blstroi2	   = new GameDriver("1987"	,"blstroi2"	,"blstroid.java"	,rom_blstroi2,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (rev 2)" )
-	public static GameDriver driver_blstroig	   = new GameDriver("1987"	,"blstroig"	,"blstroid.java"	,rom_blstroig,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (German, rev 2)" )
-	public static GameDriver driver_blsthead	   = new GameDriver("1987"	,"blsthead"	,"blstroid.java"	,rom_blsthead,driver_blstroid	,machine_driver_blstroid	,input_ports_blstroid	,init_blstroid	,ROT0	,	"Atari Games", "Blasteroids (with heads)" )
+	GAME( 1987, blstroid, 0,        blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 4)" )
+	GAME( 1987, blstroi3, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 3)" )
+	GAME( 1987, blstroi2, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (rev 2)" )
+	GAME( 1987, blstroig, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (German, rev 2)" )
+	GAME( 1987, blsthead, blstroid, blstroid, blstroid, blstroid, ROT0, "Atari Games", "Blasteroids (with heads)" )
 }

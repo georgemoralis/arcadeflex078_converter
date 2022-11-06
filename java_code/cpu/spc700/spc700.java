@@ -65,7 +65,7 @@ spctodo says sleep and standby modes cannot be used.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.spc700;
 
@@ -632,7 +632,7 @@ public class spc700
 		PUSH_16(REG_PC);
 		PUSH_8(GET_REG_P_INT());
 		FLAG_I = IFLAG_SET;
-		if (INT_ACK != 0)
+		if(INT_ACK)
 			INT_ACK(0);
 		JUMP(read_16_VEC(VECTOR_IRQ));
 	}
@@ -640,7 +640,7 @@ public class spc700
 	#if !SPC700_OPTIMIZE_SNES
 	INLINE void CHECK_IRQ(void)
 	{
-		if ((FLAG_I & LINE_IRQ) != 0)
+		if(FLAG_I & LINE_IRQ)
 			SERVICE_IRQ();
 	}
 	#else
@@ -706,7 +706,7 @@ public class spc700
 	#define OP_AND1(BCLK)														\
 				CLK(BCLK);														\
 				DST = EA_IMM16();												\
-				if ((FLAG_C & CFLAG_SET) != 0)											\
+				if(FLAG_C & CFLAG_SET)											\
 				{																\
 					DST = read_16_IMM(DST);										\
 					SRC = 1 << (DST >> 13);										\
@@ -719,7 +719,7 @@ public class spc700
 	#define OP_ANDN1(BCLK)														\
 				CLK(BCLK);														\
 				DST = EA_IMM16();												\
-				if ((FLAG_C & CFLAG_SET) != 0)											\
+				if(FLAG_C & CFLAG_SET)											\
 				{																\
 					DST = read_16_IMM(DST);										\
 					SRC = 1 << (DST >> 13);										\
@@ -758,7 +758,7 @@ public class spc700
 				CLK(BCLK);														\
 				SRC     = OPER_8_DP();											\
 				DST     = OPER_8_IMM();											\
-				if ((SRC & BIT) != 0)													\
+				if(SRC & BIT)													\
 				{																\
 					CLK(1);														\
 					BRANCH(DST);												\
@@ -768,7 +768,7 @@ public class spc700
 	#define OP_BCC(BCLK, COND)													\
 				CLK(BCLK);														\
 				DST     = OPER_8_IMM();											\
-				if (COND != 0)														\
+				if(COND)														\
 				{																\
 					CLK(1);														\
 					BRANCH(DST);												\
@@ -1098,7 +1098,7 @@ public class spc700
 				DST     = OPER_16_IMM();										\
 				SRC     = 1 << (DST >> 13);										\
 				DST     &= 0x1fff;												\
-				if ((FLAG_C & CFLAG_SET) != 0)											\
+				if(FLAG_C & CFLAG_SET)											\
 					write_8_NORM(DST, read_8_NORM(DST) | SRC);					\
 				else															\
 					write_8_NORM(DST, read_8_NORM(DST) & ~SRC)
@@ -1367,7 +1367,7 @@ public class spc700
 	/* Get the current CPU context */
 	unsigned spc700_get_context(void *dst_context)
 	{
-		if (dst_context != 0)
+		if(dst_context)
 			*(spc700i_cpu_struct*)dst_context = spc700i_cpu;
 		return sizeof(spc700i_cpu);
 	}
@@ -1375,7 +1375,7 @@ public class spc700
 	/* Set the current CPU context */
 	void spc700_set_context(void *src_context)
 	{
-		if (src_context != 0)
+		if(src_context)
 		{
 			spc700i_cpu = *(spc700i_cpu_struct*)src_context;
 			JUMP(REG_PC);
@@ -1460,7 +1460,7 @@ public class spc700
 	#if !SPC700_OPTIMIZE_SNES
 		if(state == CLEAR_LINE)
 			LINE_NMI = 0;
-		else if (LINE_NMI == 0)
+		else if(!LINE_NMI)
 		{
 			LINE_NMI = 1;
 			CLK(7);
@@ -1534,26 +1534,26 @@ public class spc700
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if(!context)
 			r = &spc700i_cpu;
 	
-		p =  ((r.flag_nz & 0x80)			|
-				((r.flag_v & 0x80) >> 1)	|
-				r.flag_p>>3				|
-				r.flag_b					|
-				((r.flag_h&0x10) >> 1)		|
-				r.flag_i					|
-				((!r.flag_nz) << 1)		|
-				((r.flag_c >> 8)&1));
+		p =  ((r->flag_nz & 0x80)			|
+				((r->flag_v & 0x80) >> 1)	|
+				r->flag_p>>3				|
+				r->flag_b					|
+				((r->flag_h&0x10) >> 1)		|
+				r->flag_i					|
+				((!r->flag_nz) << 1)		|
+				((r->flag_c >> 8)&1));
 	
 		 switch(regnum)
 		{
-			case CPU_INFO_REG+SPC700_PC:		sprintf(buffer[which], "PC:%04X", r.pc); break;
-			case CPU_INFO_REG+SPC700_S:			sprintf(buffer[which], "S:%02X", r.s); break;
+			case CPU_INFO_REG+SPC700_PC:		sprintf(buffer[which], "PC:%04X", r->pc); break;
+			case CPU_INFO_REG+SPC700_S:			sprintf(buffer[which], "S:%02X", r->s); break;
 			case CPU_INFO_REG+SPC700_P:			sprintf(buffer[which], "P:%02X", p); break;
-			case CPU_INFO_REG+SPC700_A:			sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+SPC700_X:			sprintf(buffer[which], "X:%02X", r.x); break;
-			case CPU_INFO_REG+SPC700_Y:			sprintf(buffer[which], "Y:%02X", r.y); break;
+			case CPU_INFO_REG+SPC700_A:			sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+SPC700_X:			sprintf(buffer[which], "X:%02X", r->x); break;
+			case CPU_INFO_REG+SPC700_Y:			sprintf(buffer[which], "Y:%02X", r->y); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
 					p & 0x80 ? 'N':'.',
@@ -1774,7 +1774,7 @@ public class spc700
 				case 0xa7: OP_SBC   ( 6, DXI          ); break; /* SBC dxi       */
 				case 0xa8: OP_SBC   ( 2, IMM          ); break; /* SBC imm       */
 				case 0xa9: OP_SBCM  ( 6, DP, DP       ); break; /* SBC dp, dp    */
-				case 0xaa: OP_MOV1C ( 4               ); break; /* MOV1 bit.C   */
+				case 0xaa: OP_MOV1C ( 4               ); break; /* MOV1 bit->C   */
 				case 0xab: OP_INCM  ( 4, DP           ); break; /* INC dp        */
 				case 0xac: OP_INCM  ( 5, ABS          ); break; /* INC abs       */
 				case 0xad: OP_CMPR  ( 2, REG_Y, IMM   ); break; /* CMP Y, imm    */
@@ -1806,7 +1806,7 @@ public class spc700
 				case 0xc7: OP_MOVRM ( 7, REG_A, DXI   ); break; /* MOV dxi, A    */
 				case 0xc8: OP_CMPR  ( 2, REG_X, IMM   ); break; /* CMP X, imm    */
 				case 0xc9: OP_MOVRM ( 5, REG_X, ABS   ); break; /* MOV abs, X    */
-				case 0xca: OP_MOV1M ( 6               ); break; /* MOV1 C.bit   */
+				case 0xca: OP_MOV1M ( 6               ); break; /* MOV1 C->bit   */
 				case 0xcb: OP_MOVRM ( 4, REG_Y, DP    ); break; /* MOV dp, Y     */
 				case 0xcc: OP_MOVRM ( 5, REG_Y, ABS   ); break; /* MOV abs, Y    */
 				case 0xcd: OP_MOVMR ( 2, IMM, REG_X   ); break; /* MOV X, imm    */

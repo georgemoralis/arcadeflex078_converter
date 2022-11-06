@@ -53,7 +53,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -112,13 +112,13 @@ public class metro
 	
 	UINT32 tilemap_scan_gstrik2( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		int val;
 	
 		val = (row&0x3f)*(256*2) + (col*2);
 	
-		if ((row & 0x40) != 0) val+=1;
-		if ((row & 0x80) != 0) val+=256;
+		if (row&0x40) val+=1;
+		if (row&0x80) val+=256;
 	
 		return val;
 	}
@@ -212,12 +212,12 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -250,12 +250,12 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -293,12 +293,12 @@ public class metro
 		tile			=	(metro_tiletable[table_index + 0] << 16 ) +
 							 metro_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -397,15 +397,14 @@ public class metro
 		int code,i;
 	
 		empty_tiles = auto_malloc(16*16*16);
-		if (empty_tiles == 0) return;
+		if (!empty_tiles) return;
 	
 		for (code = 0;code < 0x10;code++)
 			for (i = 0;i < 16*16;i++)
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	public static VideoStartHandlerPtr video_start_metro_14100  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_metro_14100  = new VideoStartHandlerPtr() { public int handler(){
 		support_8bpp = 0;
 		support_16x16 = 0;
 		has_zoom = 0;
@@ -431,8 +430,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_metro_14220  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_metro_14220  = new VideoStartHandlerPtr() { public int handler(){
 		support_8bpp = 1;
 		support_16x16 = 0;
 		has_zoom = 0;
@@ -462,8 +460,7 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_metro_14300  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_metro_14300  = new VideoStartHandlerPtr() { public int handler(){
 		support_8bpp = 1;
 		support_16x16 = 1;
 		has_zoom = 0;
@@ -494,9 +491,8 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_blzntrnd  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_metro_14220() != 0)
+	public static VideoStartHandlerPtr video_start_blzntrnd  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_metro_14220())
 			return 1;
 	
 		has_zoom = 1;
@@ -504,7 +500,7 @@ public class metro
 		metro_K053936_tilemap = tilemap_create(metro_K053936_get_tile_info, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 8,8, 256, 512 );
 	
-		if (metro_K053936_tilemap == 0)
+		if (!metro_K053936_tilemap)
 			return 1;
 	
 		K053936_wraparound_enable(0, 0);
@@ -517,9 +513,8 @@ public class metro
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_gstrik2  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_metro_14220() != 0)
+	public static VideoStartHandlerPtr video_start_gstrik2  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_metro_14220())
 			return 1;
 	
 		has_zoom = 1;
@@ -527,7 +522,7 @@ public class metro
 		metro_K053936_tilemap = tilemap_create(metro_K053936_gstrik2_get_tile_info, tilemap_scan_gstrik2,
 									TILEMAP_OPAQUE, 16,16, 128, 256 );
 	
-		if (metro_K053936_tilemap == 0)
+		if (!metro_K053936_tilemap)
 			return 1;
 	
 		K053936_wraparound_enable(0, 0);
@@ -606,8 +601,8 @@ public class metro
 		unsigned char *base_gfx	=	memory_region(region);
 		unsigned char *gfx_max	=	base_gfx + memory_region_length(region);
 	
-		int max_x				=	Machine.drv.screen_width;
-		int max_y				=	Machine.drv.screen_height;
+		int max_x				=	Machine->drv->screen_width;
+		int max_y				=	Machine->drv->screen_height;
 	
 		int max_sprites			=	spriteram_size / 8;
 		int sprites				=	metro_videoregs[0x00/2] % max_sprites;
@@ -656,7 +651,7 @@ public class metro
 	
 			gfxdata		=	base_gfx + (8*8*4/8) * (((attr & 0x000f) << 16) + code);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);		x = max_x - x - width;
 				flipy = NOT(flipy);		y = max_y - y - height;
@@ -670,7 +665,7 @@ public class metro
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 256;
-				gfx.colortable = Machine.remapped_colortable;
+				gfx.colortable = Machine->remapped_colortable;
 				gfx.total_colors = 0x20;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -698,7 +693,7 @@ public class metro
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 16;
-				gfx.colortable = Machine.remapped_colortable;
+				gfx.colortable = Machine->remapped_colortable;
 				gfx.total_colors = 0x200;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -725,7 +720,7 @@ public class metro
 		sprintf(buf, "%02X %02X",((src[ 0 ] & 0xf800) >> 11)^0x1f,((src[ 1 ] & 0xfc00) >> 10) );
 	    dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 	    dt[0].x = x;    dt[0].y = y;    dt[1].text = 0; /* terminate array */
-		displaytext(Machine.scrbitmap,dt);		}
+		displaytext(Machine->scrbitmap,dt);		}
 	#endif
 		}
 	}
@@ -777,17 +772,17 @@ public class metro
 			clip.max_x	=	clip.min_x + (WIN_NX-1)*8 - 1;
 			clip.max_y	=	clip.min_y + (WIN_NY-1)*8 - 1;
 	
-			if (clip.min_x > Machine.visible_area.max_x)	continue;
-			if (clip.min_y > Machine.visible_area.max_y)	continue;
+			if (clip.min_x > Machine->visible_area.max_x)	continue;
+			if (clip.min_y > Machine->visible_area.max_y)	continue;
 	
-			if (clip.max_x < Machine.visible_area.min_x)	continue;
-			if (clip.max_y < Machine.visible_area.min_y)	continue;
+			if (clip.max_x < Machine->visible_area.min_x)	continue;
+			if (clip.max_y < Machine->visible_area.min_y)	continue;
 	
-			if (clip.min_x < Machine.visible_area.min_x)	clip.min_x = Machine.visible_area.min_x;
-			if (clip.max_x > Machine.visible_area.max_x)	clip.max_x = Machine.visible_area.max_x;
+			if (clip.min_x < Machine->visible_area.min_x)	clip.min_x = Machine->visible_area.min_x;
+			if (clip.max_x > Machine->visible_area.max_x)	clip.max_x = Machine->visible_area.max_x;
 	
-			if (clip.min_y < Machine.visible_area.min_y)	clip.min_y = Machine.visible_area.min_y;
-			if (clip.max_y > Machine.visible_area.max_y)	clip.max_y = Machine.visible_area.max_y;
+			if (clip.min_y < Machine->visible_area.min_y)	clip.min_y = Machine->visible_area.min_y;
+			if (clip.max_y > Machine->visible_area.max_y)	clip.max_y = Machine->visible_area.max_y;
 	
 			/* The clip region's width must be a multiple of 8!
 			   This fact renderes the function useless, as far as
@@ -850,14 +845,13 @@ public class metro
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_metro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_metro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,pri,sprites_pri,layers_ctrl = -1;
 		data8_t *dirtyindex;
 		data16_t screenctrl = *metro_screenctrl;
 	
 		dirtyindex = malloc(metro_tiletable_size/4);
-		if (dirtyindex != 0)
+		if (dirtyindex)
 		{
 			int dirty = 0;
 	
@@ -875,7 +869,7 @@ public class metro
 			}
 			memcpy(metro_tiletable_old,metro_tiletable,metro_tiletable_size);
 	
-			if (dirty != 0)
+			if (dirty)
 			{
 				dirty_tiles(0,metro_vram_0,dirtyindex);
 				dirty_tiles(1,metro_vram_1,dirtyindex);
@@ -901,13 +895,13 @@ public class metro
 			---- ---- ---4 32--
 			---- ---- ---- --1-		? Blank Screen
 			---- ---- ---- ---0		Flip  Screen	*/
-		if ((screenctrl & 2) != 0)	return;
+		if (screenctrl & 2)	return;
 		flip_screen_set(screenctrl & 1);
 	
 		/* If the game supports 16x16 tiles, make sure that the
 		   16x16 and 8x8 tilemaps of a given layer are not simultaneously
 		   enabled! */
-		if (support_16x16 != 0)
+		if (support_16x16)
 		{
 			int layer;
 	
@@ -938,7 +932,7 @@ public class metro
 					*metro_screenctrl);					}
 	#endif
 	
-		if (has_zoom != 0) K053936_0_zoom_draw(bitmap,cliprect,metro_K053936_tilemap,0,0);
+		if (has_zoom) K053936_0_zoom_draw(bitmap,cliprect,metro_K053936_tilemap,0,0);
 	
 		/* Sprites priority wrt layers: 3..0 (low..high) */
 		sprites_pri	=	(metro_videoregs[0x02/2] & 0x0300) >> 8;

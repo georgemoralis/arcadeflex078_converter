@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i8039;
 
@@ -201,7 +201,7 @@ public class _8039dasm
 		int code, bit;
 		const char *cp;
 	
-		if (OpInizialized == 0) InitDasm8039();
+		if (!OpInizialized) InitDasm8039();
 	
 		code = cpu_readop(pc);
 		op = -1;	/* no matching opcode */

@@ -72,15 +72,15 @@ Notes:
 //   +-------------------------------------------------------+
 //
 //  ***  Dump ROMs  ***
-//     1) ROM1 (17C)  32Pin 1Mbit UV-EPROM          . save "975r01" file
-//     2) ROM2 ( 5F)  28Pin 512Kbit One-Time PROM   . save "975f02" file
-//     3) ROM3 ( 1D)  40Pin 4Mbit MASK ROM          . save "975c03" file
-//     4) ROM4 ( 3K)  42Pin 8Mbit MASK ROM          . save "975c04" file
-//     5) ROM5 ( 8L)  42Pin 8Mbit MASK ROM          . save "975c05" file
-//     6) ROM6 (12M)  42Pin 8Mbit MASK ROM          . save "975c06" file
-//     7) ROM7 (16K)  42Pin 8Mbit MASK ROM          . save "975c07" file
-//     8) ROM8 (16I)  40Pin 4Mbit MASK ROM          . save "975c08" file
-//     9) ROM9 (18I)  40Pin 4Mbit MASK ROM          . save "975c09" file
+//     1) ROM1 (17C)  32Pin 1Mbit UV-EPROM          -> save "975r01" file
+//     2) ROM2 ( 5F)  28Pin 512Kbit One-Time PROM   -> save "975f02" file
+//     3) ROM3 ( 1D)  40Pin 4Mbit MASK ROM          -> save "975c03" file
+//     4) ROM4 ( 3K)  42Pin 8Mbit MASK ROM          -> save "975c04" file
+//     5) ROM5 ( 8L)  42Pin 8Mbit MASK ROM          -> save "975c05" file
+//     6) ROM6 (12M)  42Pin 8Mbit MASK ROM          -> save "975c06" file
+//     7) ROM7 (16K)  42Pin 8Mbit MASK ROM          -> save "975c07" file
+//     8) ROM8 (16I)  40Pin 4Mbit MASK ROM          -> save "975c08" file
+//     9) ROM9 (18I)  40Pin 4Mbit MASK ROM          -> save "975c09" file
 //                                                        vvvvvvvvvvvv
 //                                                        esckidsj.zip
 
@@ -88,7 +88,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -121,15 +121,14 @@ public class vendetta
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_vendetta  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_vendetta  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -139,8 +138,7 @@ public class vendetta
 		}
 	} };
 	
-	public static ReadHandlerPtr vendetta_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vendetta_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = EEPROM_read_bit();
@@ -149,7 +147,7 @@ public class vendetta
 	
 		res |= readinputport( 3 ) & 0x0c; /* test switch */
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xfb;
@@ -159,8 +157,7 @@ public class vendetta
 	
 	static int irq_enabled;
 	
-	public static WriteHandlerPtr vendetta_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vendetta_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 - VOC0 - Video banking related */
 		/* bit 1 - VOC1 - Video banking related */
 		/* bit 2 - MSCHNG - Mono Sound select (Amp) */
@@ -185,26 +182,26 @@ public class vendetta
 	
 	/********************************************/
 	
-	public static ReadHandlerPtr vendetta_K052109_r  = new ReadHandlerPtr() { public int handler(int offset) { return K052109_r( offset + 0x2000 ); } };
-	//public static WriteHandlerPtr vendetta_K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data) { K052109_w( offset + 0x2000, data ); } };
-	public static WriteHandlerPtr vendetta_K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static ReadHandlerPtr vendetta_K052109_r  = new ReadHandlerPtr() { public int handler(int offset) return K052109_r( offset + 0x2000 ); }
+	//public static WriteHandlerPtr vendetta_K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data) K052109_w( offset + 0x2000, data ); }
+	public static WriteHandlerPtr vendetta_K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		// *************************************************************************************
 		// *  Escape Kids uses 052109's mirrored Tilemap ROM bank selector, but only during    *
-		// *  Tilemap MASK-ROM Test       (0x1d80<.0x3d80, 0x1e00<.0x3e00, 0x1f00<.0x3f00)  *
+		// *  Tilemap MASK-ROM Test       (0x1d80<->0x3d80, 0x1e00<->0x3e00, 0x1f00<->0x3f00)  *
 		// *************************************************************************************
 		if ( ( offset == 0x1d80 ) || ( offset == 0x1e00 ) || ( offset == 0x1f00 ) )		K052109_w( offset, data );
 		K052109_w( offset + 0x2000, data );
-	} };
+	}
 	
 	static void vendetta_video_banking( int select )
 	{
-		if ((select & 1) != 0)
+		if ( select & 1 )
 		{
 			memory_set_bankhandler_r( 2, 0, paletteram_r );
 			memory_set_bankhandler_w( 2, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w );
 			memory_set_bankhandler_r( 3, 0, K053247_r );
 			memory_set_bankhandler_w( 3, 0, K053247_w );
-		}
+		} };
 		else
 		{
 			memory_set_bankhandler_r( 2, 0, vendetta_K052109_r );
@@ -214,8 +211,7 @@ public class vendetta
 		}
 	}
 	
-	public static WriteHandlerPtr vendetta_5fe0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vendetta_5fe0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0,1 coin counters */
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
@@ -236,29 +232,25 @@ public class vendetta
 		cpu_set_nmi_line( 1, ASSERT_LINE );
 	}
 	
-	public static WriteHandlerPtr z80_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line( 1, CLEAR_LINE );
 	
 		timer_set( TIME_IN_USEC( 50 ), 0, z80_nmi_callback );
 	} };
 	
-	public static WriteHandlerPtr z80_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 	} };
 	
-	public static ReadHandlerPtr vendetta_sound_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vendetta_sound_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 		return 0x00;
 	} };
 	
-	public static ReadHandlerPtr vendetta_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vendetta_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else
 		{
 			static int res = 0x00;
@@ -377,7 +369,7 @@ public class vendetta
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_vendet4p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vendet4p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vendet4p )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -436,7 +428,7 @@ public class vendetta
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vendetta = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vendetta = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vendetta )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -475,7 +467,7 @@ public class vendetta
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_esckids = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_esckids = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( esckids )
 		PORT_START(); 		// Player 1 Control
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -561,14 +553,12 @@ public class vendetta
 		{ 0 }
 	};
 	
-	public static InterruptHandlerPtr vendetta_irq = new InterruptHandlerPtr() {public void handler()
-	{
-		if (irq_enabled != 0)
+	public static InterruptHandlerPtr vendetta_irq = new InterruptHandlerPtr() {public void handler(){
+		if (irq_enabled)
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_vendetta = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vendetta )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", KONAMI, 6000000)		/* ? */
@@ -598,13 +588,10 @@ public class vendetta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_esckids = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( esckids )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(vendetta)
@@ -613,9 +600,7 @@ public class vendetta
 	
 		MDRV_VIDEO_START(esckids)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -799,8 +784,7 @@ public class vendetta
 			cpu_setbank( 1, &RAM[ 0x10000 + ( lines * 0x2000 ) ] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_vendetta  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vendetta  = new MachineInitHandlerPtr() { public void handler(){
 		konami_cpu_setlines_callback = vendetta_banking;
 	
 		paletteram = &memory_region(REGION_CPU1)[0x48000];
@@ -812,19 +796,18 @@ public class vendetta
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_vendetta  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vendetta  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_vendetta	   = new GameDriver("1991"	,"vendetta"	,"vendetta.java"	,rom_vendetta,null	,machine_driver_vendetta	,input_ports_vendet4p	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 4 Players ver. T)" )
-	public static GameDriver driver_vendetao	   = new GameDriver("1991"	,"vendetao"	,"vendetta.java"	,rom_vendetao,driver_vendetta	,machine_driver_vendetta	,input_ports_vendet4p	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 4 Players ver. R)" )
-	public static GameDriver driver_vendet2p	   = new GameDriver("1991"	,"vendet2p"	,"vendetta.java"	,rom_vendet2p,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (World 2 Players ver. W)" )
-	public static GameDriver driver_vendetas	   = new GameDriver("1991"	,"vendetas"	,"vendetta.java"	,rom_vendetas,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (Asia 2 Players ver. U)" )
-	public static GameDriver driver_vendtaso	   = new GameDriver("1991"	,"vendtaso"	,"vendetta.java"	,rom_vendtaso,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Vendetta (Asia 2 Players ver. D)" )
-	public static GameDriver driver_vendettj	   = new GameDriver("1991"	,"vendettj"	,"vendetta.java"	,rom_vendettj,driver_vendetta	,machine_driver_vendetta	,input_ports_vendetta	,init_vendetta	,ROT0	,	"Konami", "Crime Fighters 2 (Japan 2 Players ver. P)" )
-	public static GameDriver driver_esckids	   = new GameDriver("1991"	,"esckids"	,"vendetta.java"	,rom_esckids,null	,machine_driver_esckids	,input_ports_esckids	,init_vendetta	,ROT0	,	"Konami", "Escape Kids (Japan 2 Players)" )
+	GAME( 1991, vendetta, 0,        vendetta, vendet4p, vendetta, ROT0, "Konami", "Vendetta (World 4 Players ver. T)" )
+	GAME( 1991, vendetao, vendetta, vendetta, vendet4p, vendetta, ROT0, "Konami", "Vendetta (World 4 Players ver. R)" )
+	GAME( 1991, vendet2p, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (World 2 Players ver. W)" )
+	GAME( 1991, vendetas, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (Asia 2 Players ver. U)" )
+	GAME( 1991, vendtaso, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Vendetta (Asia 2 Players ver. D)" )
+	GAME( 1991, vendettj, vendetta, vendetta, vendetta, vendetta, ROT0, "Konami", "Crime Fighters 2 (Japan 2 Players ver. P)" )
+	GAME( 1991, esckids,  0,        esckids,  esckids,  vendetta, ROT0, "Konami", "Escape Kids (Japan 2 Players)" )
 }

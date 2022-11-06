@@ -96,7 +96,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -108,8 +108,7 @@ public class punchout
 	
 	
 	
-	public static ReadHandlerPtr punchout_input_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr punchout_input_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = input_port_3_r.handler(offset);
 		/* bit 4 is busy pin level */
 		if( VLM5030_BSY() ) data &= ~0x10;
@@ -117,24 +116,20 @@ public class punchout
 		return data;
 	} };
 	
-	public static WriteHandlerPtr punchout_speech_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_speech_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		VLM5030_RST( data&0x01 );
 	} };
 	
-	public static WriteHandlerPtr punchout_speech_st_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_speech_st_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		VLM5030_ST( data&0x01 );
 	} };
 	
-	public static WriteHandlerPtr punchout_speech_vcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_speech_vcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		VLM5030_VCU( data & 0x01 );
 	} };
 	
-	public static WriteHandlerPtr punchout_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr punchout_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 			cpu_set_reset_line(1,ASSERT_LINE);
 		else
 			cpu_set_reset_line(1,CLEAR_LINE);
@@ -143,7 +138,7 @@ public class punchout
 	static int prot_mode_sel = -1; /* Mode selector */
 	static int prot_mem[16];
 	
-	public static ReadHandlerPtr spunchout_prot_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
 	
 		switch ( offset ) {
 			case 0x00:
@@ -175,7 +170,7 @@ public class punchout
 	
 			case 0x05:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x29D1 */
-					return prot_mem[offset] & 0x03; /* AND 0FH . AND 06H */
+					return prot_mem[offset] & 0x03; /* AND 0FH -> AND 06H */
 			break;
 	
 			case 0x06:
@@ -189,19 +184,19 @@ public class punchout
 			case 0x09:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x0313 */
 					return ( prot_mem[15] << 4 ); /* pipe through register 0xf7 << 4 */
-					/* (ret or 0x10) . (D7DF),(D7A0) - (D7DF),(D7A0) = 0d0h(ret nc) */
+					/* (ret or 0x10) -> (D7DF),(D7A0) - (D7DF),(D7A0) = 0d0h(ret nc) */
 			break;
 	
 			case 0x0a:
 				if ( prot_mode_sel == 0x0b ) /* PC = 0x060a */
 					return 0x05; /* write "JMP (IX)"code to 0d79eh */
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x1bd7 */
-					return prot_mem[offset] & 0x01; /* AND 0FH . AND 01H */
+					return prot_mem[offset] & 0x01; /* AND 0FH -> AND 01H */
 			break;
 	
 			case 0x0b:
 				if ( prot_mode_sel == 0x09 ) /* PC = 0x2AA3 */
-					return prot_mem[11] & 0x03;	/* AND 0FH . AND 03H */
+					return prot_mem[11] & 0x03;	/* AND 0FH -> AND 03H */
 			break;
 	
 			case 0x0c:
@@ -211,14 +206,14 @@ public class punchout
 			case 0x0d:
 				return prot_mode_sel;
 			break;
-		}
+		} };
 	
 		logerror("Read from unknown protection? port %02x ( selector = %02x )\n", offset, prot_mode_sel );
 	
 		return prot_mem[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		switch ( offset ) {
 			case 0x00:
@@ -271,99 +266,99 @@ public class punchout
 			case 0x0f:
 				prot_mem[offset] = data;
 				return;
-		}
+		} };
 	
 		logerror("Wrote to unknown protection? port %02x ( %02x )\n", offset, data );
 	
 		prot_mem[offset] = data;
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 0 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 0, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 1 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 1, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_2_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_2_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 2 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 2, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_3_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_3_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 3 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 3, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_5_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_5_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 5 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_5_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 5, data );
-	} };
+	}
 	
 	
-	public static ReadHandlerPtr spunchout_prot_6_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_6_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 6 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_6_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_6_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 6, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_9_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_9_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 9 );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_b_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_b_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 11 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_b_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 11, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_c_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_c_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 12 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_d_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 13, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr spunchout_prot_a_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_a_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 10 );
-	} };
+	}
 	
-	public static WriteHandlerPtr spunchout_prot_a_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 10, data );
-	} };
+	}
 	
 	#if 0
-	public static ReadHandlerPtr spunchout_prot_f_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr spunchout_prot_f_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return spunchout_prot_r( 15 );
-	} };
+	}
 	#endif
 	
-	public static WriteHandlerPtr spunchout_prot_f_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr spunchout_prot_f_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		spunchout_prot_w( 15, data );
-	} };
+	}
 	
 	
 	
@@ -465,7 +460,7 @@ public class punchout
 	
 	
 	
-	static InputPortPtr input_ports_punchout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_punchout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( punchout )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -536,7 +531,7 @@ public class punchout
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as punchout with additional duck button */
-	static InputPortPtr input_ports_spnchout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spnchout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spnchout )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -606,7 +601,7 @@ public class punchout
 		PORT_START(); 
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_armwrest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_armwrest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( armwrest )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -763,8 +758,7 @@ public class punchout
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_punchout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( punchout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000/2)	/* 4 MHz */
@@ -798,13 +792,10 @@ public class punchout
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_armwrest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( armwrest )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(punchout)
@@ -816,9 +807,7 @@ public class punchout
 		MDRV_PALETTE_INIT(armwrest)
 		MDRV_VIDEO_START(armwrest)
 		MDRV_VIDEO_UPDATE(armwrest)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1099,8 +1088,8 @@ public class punchout
 	
 	
 	
-	public static GameDriver driver_punchout	   = new GameDriver("1984"	,"punchout"	,"punchout.java"	,rom_punchout,null	,machine_driver_punchout	,input_ports_punchout	,init_punchout	,ROT0	,	"Nintendo", "Punch-Out!!" )
-	public static GameDriver driver_spnchout	   = new GameDriver("1984"	,"spnchout"	,"punchout.java"	,rom_spnchout,null	,machine_driver_punchout	,input_ports_spnchout	,init_spnchout	,ROT0	,	"Nintendo", "Super Punch-Out!!" )
-	public static GameDriver driver_spnchotj	   = new GameDriver("1984"	,"spnchotj"	,"punchout.java"	,rom_spnchotj,driver_spnchout	,machine_driver_punchout	,input_ports_spnchout	,init_spnchotj	,ROT0	,	"Nintendo", "Super Punch-Out!! (Japan)" )
-	public static GameDriver driver_armwrest	   = new GameDriver("1985"	,"armwrest"	,"punchout.java"	,rom_armwrest,null	,machine_driver_armwrest	,input_ports_armwrest	,init_armwrest	,ROT0	,	"Nintendo", "Arm Wrestling" )
+	GAME( 1984, punchout, 0,        punchout, punchout, punchout, ROT0, "Nintendo", "Punch-Out!!" )
+	GAME( 1984, spnchout, 0,        punchout, spnchout, spnchout, ROT0, "Nintendo", "Super Punch-Out!!" )
+	GAME( 1984, spnchotj, spnchout, punchout, spnchout, spnchotj, ROT0, "Nintendo", "Super Punch-Out!! (Japan)" )
+	GAME( 1985, armwrest, 0,        armwrest, armwrest, armwrest, ROT0, "Nintendo", "Arm Wrestling" )
 }

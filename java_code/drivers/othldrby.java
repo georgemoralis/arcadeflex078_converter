@@ -16,7 +16,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,13 +47,13 @@ public class othldrby
 	
 	static WRITE16_HANDLER( oki_bankswitch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	}
 	
 	static WRITE16_HANDLER( coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0,data & 1);
 			coin_counter_w(1,data & 2);
@@ -78,19 +78,19 @@ public class othldrby
 		switch (offset)
 		{
 			case 0:
-				return ((today.tm_sec/10)<<4) + (today.tm_sec%10);
+				return ((today->tm_sec/10)<<4) + (today->tm_sec%10);
 			case 1:
-				return ((today.tm_min/10)<<4) + (today.tm_min%10);
+				return ((today->tm_min/10)<<4) + (today->tm_min%10);
 			case 2:
-				return ((today.tm_hour/10)<<4) + (today.tm_hour%10);
+				return ((today->tm_hour/10)<<4) + (today->tm_hour%10);
 			case 3:
-				return today.tm_wday;
+				return today->tm_wday;
 			case 4:
-				return ((today.tm_mday/10)<<4) + (today.tm_mday%10);
+				return ((today->tm_mday/10)<<4) + (today->tm_mday%10);
 			case 5:
-				return (today.tm_mon + 1);
+				return (today->tm_mon + 1);
 			case 6:
-				return (((today.tm_year%100)/10)<<4) + (today.tm_year%10);
+				return (((today->tm_year%100)/10)<<4) + (today->tm_year%10);
 			case 7:
 			default:
 				return 0;	/* status? the other registers are read only when bit 0 is clear */
@@ -131,7 +131,7 @@ public class othldrby
 	
 	
 	
-	static InputPortPtr input_ports_othldrby = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_othldrby = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( othldrby )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -254,8 +254,7 @@ public class othldrby
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_othldrby = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( othldrby )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -278,9 +277,7 @@ public class othldrby
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -303,5 +300,5 @@ public class othldrby
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_othldrby	   = new GameDriver("1995"	,"othldrby"	,"othldrby.java"	,rom_othldrby,null	,machine_driver_othldrby	,input_ports_othldrby	,null	,ROT0	,	"Sunwise", "Othello Derby (Japan)" )
+	GAME( 1995, othldrby, 0, othldrby, othldrby, 0, ROT0, "Sunwise", "Othello Derby (Japan)" )
 }

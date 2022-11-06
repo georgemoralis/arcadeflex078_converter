@@ -6,7 +6,7 @@ Based on drivers from Juno First emulator by Chris Hardy (chrish@kcbbs.gen.nz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,14 +22,12 @@ public class hyperspt
 	/* these routines lurk in sndhrdw/trackfld.c */
 	
 	
-	public static WriteHandlerPtr hyperspt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyperspt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
 	/* handle fake button for speed cheat */
-	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		static int cheat = 0;
 		static int bits[] = { 0xee, 0xff, 0xbb, 0xaa };
@@ -54,28 +52,27 @@ public class hyperspt
 	static size_t nvram_size;
 	static int we_flipped_the_switch;
 	
-	public static NVRAMHandlerPtr nvram_handler_hyperspt  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_hyperspt  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			mame_fwrite(file,nvram,nvram_size);
 	
-			if (we_flipped_the_switch != 0)
+			if (we_flipped_the_switch)
 			{
 				struct InputPort *in;
 	
 	
 				/* find the dip switch which resets the high score table, and set it */
 				/* back to off. */
-				in = Machine.input_ports;
+				in = Machine->input_ports;
 	
-				while (in.type != IPT_END)
+				while (in->type != IPT_END)
 				{
-					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
-							strcmp(in.name,"World Records") == 0)
+					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
+							strcmp(in->name,"World Records") == 0)
 					{
-						if (in.default_value == 0)
-							in.default_value = in.mask;
+						if (in->default_value == 0)
+							in->default_value = in->mask;
 						break;
 					}
 	
@@ -87,7 +84,7 @@ public class hyperspt
 		}
 		else
 		{
-			if (file != 0)
+			if (file)
 			{
 				mame_fread(file,nvram,nvram_size);
 				we_flipped_the_switch = 0;
@@ -98,16 +95,16 @@ public class hyperspt
 	
 	
 				/* find the dip switch which resets the high score table, and set it on */
-				in = Machine.input_ports;
+				in = Machine->input_ports;
 	
-				while (in.type != IPT_END)
+				while (in->type != IPT_END)
 				{
-					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
-							strcmp(in.name,"World Records") == 0)
+					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
+							strcmp(in->name,"World Records") == 0)
 					{
-						if (in.default_value == in.mask)
+						if (in->default_value == in->mask)
 						{
-							in.default_value = 0;
+							in->default_value = 0;
 							we_flipped_the_switch = 1;
 						}
 						break;
@@ -189,7 +186,7 @@ public class hyperspt
 	
 	
 	
-	static InputPortPtr input_ports_hyperspt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyperspt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyperspt )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -292,7 +289,7 @@ public class hyperspt
 		PORT_DIPSETTING(	0x00, "Difficult 4" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_roadf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roadf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roadf )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -462,8 +459,7 @@ public class hyperspt
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_hyperspt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyperspt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)		/* 1.400 MHz ??? */
@@ -495,20 +491,15 @@ public class hyperspt
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, hyperspt_vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_roadf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( roadf )
 		MDRV_IMPORT_FROM(hyperspt)
 		MDRV_CPU_MEMORY(roadf_readmem, writemem)
 		MDRV_GFXDECODE(roadf_gfxdecodeinfo)
 		MDRV_VIDEO_START(roadf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -650,14 +641,13 @@ public class hyperspt
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_hyperspt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyperspt  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_hyperspt	   = new GameDriver("1984"	,"hyperspt"	,"hyperspt.java"	,rom_hyperspt,null	,machine_driver_hyperspt	,input_ports_hyperspt	,init_hyperspt	,ROT0	,	"Konami (Centuri license)", "Hyper Sports" )
-	public static GameDriver driver_hpolym84	   = new GameDriver("1984"	,"hpolym84"	,"hyperspt.java"	,rom_hpolym84,driver_hyperspt	,machine_driver_hyperspt	,input_ports_hyperspt	,init_hyperspt	,ROT0	,	"Konami", "Hyper Olympic '84" )
-	public static GameDriver driver_roadf	   = new GameDriver("1984"	,"roadf"	,"hyperspt.java"	,rom_roadf,null	,machine_driver_roadf	,input_ports_roadf	,init_hyperspt	,ROT90	,	"Konami", "Road Fighter (set 1)" )
-	public static GameDriver driver_roadf2	   = new GameDriver("1984"	,"roadf2"	,"hyperspt.java"	,rom_roadf2,driver_roadf	,machine_driver_roadf	,input_ports_roadf	,init_hyperspt	,ROT90	,	"Konami", "Road Fighter (set 2)" )
+	GAME( 1984, hyperspt, 0,		hyperspt, hyperspt, hyperspt, ROT0,  "Konami (Centuri license)", "Hyper Sports" )
+	GAME( 1984, hpolym84, hyperspt, hyperspt, hyperspt, hyperspt, ROT0,  "Konami", "Hyper Olympic '84" )
+	GAME( 1984, roadf,	  0,		roadf,	  roadf,	hyperspt, ROT90, "Konami", "Road Fighter (set 1)" )
+	GAME( 1984, roadf2,   roadf,	roadf,	  roadf,	hyperspt, ROT90, "Konami", "Road Fighter (set 2)" )
 }

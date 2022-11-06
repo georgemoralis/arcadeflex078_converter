@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,8 +23,7 @@ public class polyplay
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_polyplay  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_polyplay  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00);
 		palette_set_color(1,0xff,0xff,0xff);
 	
@@ -39,8 +38,7 @@ public class polyplay
 	} };
 	
 	
-	public static WriteHandlerPtr polyplay_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polyplay_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (polyplay_characterram[offset] != data)
 		{
 			dirtycharacter[((offset / 8) & 0x7f) + 0x80] = 1;
@@ -49,18 +47,16 @@ public class polyplay
 		}
 	} };
 	
-	public static ReadHandlerPtr polyplay_characterram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polyplay_characterram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return polyplay_characterram[offset];
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_polyplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_polyplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size[0]);
 		}

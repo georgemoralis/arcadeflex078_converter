@@ -56,7 +56,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -74,13 +74,8 @@ public class dbz2
 	
 	static int dbz2_control;
 	
-	VIDEO_START(dbz);
-	VIDEO_START(dbz2);
-	VIDEO_UPDATE(dbz);
-	VIDEO_UPDATE(dbz2);
 	
-	static INTERRUPT_GEN(dbz2_interrupt)
-	{
+	public static InterruptHandlerPtr dbz2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:
@@ -88,11 +83,11 @@ public class dbz2
 				break;
 	
 			case 1:
-				if (K053246_is_IRQ_enabled() != 0)
+				if (K053246_is_IRQ_enabled())
 					cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 				break;
 		}
-	}
+	} };
 	
 	#if 0
 	static READ16_HANDLER(dbzcontrol_r)
@@ -107,7 +102,7 @@ public class dbz2
 	
 		COMBINE_DATA(&dbz2_control);
 	
-		if ((data & 0x400) != 0)
+		if (data & 0x400)
 		{
 			K053246_set_OBJCHA_line(ASSERT_LINE);
 		}
@@ -144,7 +139,7 @@ public class dbz2
 	
 	static void dbz2_sound_irq(int irq)
 	{
-		if (irq != 0)
+		if (irq)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
@@ -233,7 +228,7 @@ public class dbz2
 	/**********************************************************************************/
 	
 	
-	static InputPortPtr input_ports_dbz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dbz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dbz )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -326,7 +321,7 @@ public class dbz2
 	//	PORT_DIPSETTING(    0x00, "Disabled" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dbz2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dbz2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dbz2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -461,8 +456,7 @@ public class dbz2
 	
 	/**********************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_dbz2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dbz2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -491,20 +485,15 @@ public class dbz2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dbz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dbz )
 		MDRV_IMPORT_FROM(dbz2)
 	
 		MDRV_VIDEO_START(dbz)
 		MDRV_VIDEO_UPDATE(dbz)
 		MDRV_VISIBLE_AREA(34, 34+48*8-1, 0, 32*8-1 )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
@@ -587,13 +576,11 @@ public class dbz2
 	ROM_END(); }}; 
 	
 	
-	static DRIVER_INIT(dbz2)
-	{
+	public static DriverInitHandlerPtr init_dbz2  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
-	}
+	} };
 	
-	static DRIVER_INIT(dbz)
-	{
+	public static DriverInitHandlerPtr init_dbz  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *ROM;
 	
 		konami_rom_deinterleave_2(REGION_GFX1);
@@ -613,8 +600,8 @@ public class dbz2
 		ROM[0x98c/2] = 0x4e71;
 		ROM[0x98e/2] = 0x4e71;
 		ROM[0x990/2] = 0x4e71;
-	}
+	} };
 	
-	public static GameDriver driver_dbz	   = new GameDriver("1993"	,"dbz"	,"dbz2.java"	,rom_dbz,null	,machine_driver_dbz	,input_ports_dbz	,init_dbz	,ROT0	,	"Banpresto", "Dragonball Z" , GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_dbz2	   = new GameDriver("1994"	,"dbz2"	,"dbz2.java"	,rom_dbz2,null	,machine_driver_dbz2	,input_ports_dbz2	,init_dbz2	,ROT0	,	"Banpresto", "Dragonball Z 2 Super Battle" , GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, dbz,  0, dbz,  dbz, dbz, ROT0, "Banpresto", "Dragonball Z" , GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, dbz2, 0, dbz2, dbz2, dbz2, ROT0, "Banpresto", "Dragonball Z 2 Super Battle" , GAME_IMPERFECT_GRAPHICS )
 }

@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class gomoku
 	
 	******************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_gomoku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gomoku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -82,31 +81,26 @@ public class gomoku
 				TILE_FLIPYX(flipyx))
 	}
 	
-	public static WriteHandlerPtr gomoku_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_videoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr gomoku_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_colorram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr gomoku_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_bgram[offset] = data;
 		gomoku_bg_dirty[offset] = 1;
 	} };
 	
-	public static WriteHandlerPtr gomoku_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_flipscreen = (data & 0x02) ? 0 : 1;
 	} };
 	
-	public static WriteHandlerPtr gomoku_bg_dispsw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_bg_dispsw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gomoku_bg_dispsw = (data & 0x02) ? 0 : 1;
 	} };
 	
@@ -115,8 +109,7 @@ public class gomoku
 	
 	******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gomoku  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gomoku  = new VideoStartHandlerPtr() { public int handler(){
 		unsigned char *GOMOKU_BG_X = memory_region( REGION_USER1 );
 		unsigned char *GOMOKU_BG_Y = memory_region( REGION_USER2 );
 		unsigned char *GOMOKU_BG_D = memory_region( REGION_USER3 );
@@ -151,10 +144,10 @@ public class gomoku
 	
 				color = 0x20;				// 黒(枠外)
 	
-				if ((bgdata & 0x01) != 0) color = 0x21;	// 茶(盤)
-				if ((bgdata & 0x02) != 0) color = 0x20;	// 黒(枠線)
+				if (bgdata & 0x01) color = 0x21;	// 茶(盤)
+				if (bgdata & 0x02) color = 0x20;	// 黒(枠線)
 	
-				plot_pixel.handler(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
+				plot_pixel(gomoku_bg_bitmap, (255 - x + 7), (255 - y - 1), color);
 			}
 		}
 	
@@ -165,8 +158,7 @@ public class gomoku
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_gomoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gomoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		unsigned char *GOMOKU_BG_X = memory_region( REGION_USER1 );
 		unsigned char *GOMOKU_BG_Y = memory_region( REGION_USER2 );
 		unsigned char *GOMOKU_BG_D = memory_region( REGION_USER3 );
@@ -177,7 +169,7 @@ public class gomoku
 		int color;
 	
 		/* draw background layer */
-		if (gomoku_bg_dispsw != 0)
+		if (gomoku_bg_dispsw)
 		{
 			/* copy bg bitmap */
 			copybitmap(bitmap, gomoku_bg_bitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
@@ -193,13 +185,13 @@ public class gomoku
 						bgdata = GOMOKU_BG_D[ GOMOKU_BG_X[x] + (GOMOKU_BG_Y[y] << 4) ];
 						bgram = gomoku_bgram[bgoffs];
 	
-						if ((bgdata & 0x04) != 0)
+						if (bgdata & 0x04)
 						{
-							if ((bgram & 0x01) != 0)
+							if (bgram & 0x01)
 							{
 								color = 0x2f;	// 明るい黒(石)
 							}
-							else if ((bgram & 0x02) != 0)
+							else if (bgram & 0x02)
 							{
 								color = 0x22;	// 白(石)
 							}
@@ -207,7 +199,7 @@ public class gomoku
 						}
 						else continue;
 	
-						plot_pixel.handler(bitmap, (255 - x + 7), (255 - y - 1), color);
+						plot_pixel(bitmap, (255 - x + 7), (255 - y - 1), color);
 					}
 				}
 			}
@@ -223,13 +215,13 @@ public class gomoku
 						bgdata = GOMOKU_BG_D[ GOMOKU_BG_X[x] + (GOMOKU_BG_Y[y] << 4) ];
 						bgram = gomoku_bgram[bgoffs];
 	
-						if ((bgdata & 0x08) != 0)
+						if (bgdata & 0x08)
 						{
-							if ((bgram & 0x04) != 0)
+							if (bgram & 0x04)
 							{
 								color = 0x2f;	// 明るい黒(カーソル)
 							}
-							else if ((bgram & 0x08) != 0)
+							else if (bgram & 0x08)
 							{
 								color = 0x22;	// 白(カーソル)
 							}
@@ -237,7 +229,7 @@ public class gomoku
 						}
 						else continue;
 	
-						plot_pixel.handler(bitmap, (255 - x + 7), (255 - y - 1), color);
+						plot_pixel(bitmap, (255 - x + 7), (255 - y - 1), color);
 	
 					}
 				}
@@ -264,7 +256,7 @@ public class gomoku
 				}
 			} else key_ins = 0;
 	
-			if (dispsw != 0)
+			if (dispsw)
 			{
 				for (y = 0; y < 16; y++)
 				{
@@ -313,7 +305,7 @@ public class gomoku
 	{
 		FILE *fp;
 		fp=fopen("TILE_VID.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(&videoram.read(0), videoram_size[0], 1, fp);
 			usrintf_showmessage("saved");

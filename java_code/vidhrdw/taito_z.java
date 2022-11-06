@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,7 +18,7 @@ public class taito_z
 	
 	static int taitoz_core_vh_start (int x_offs)
 	{
-		if (has_TC0480SCP() != 0)	/* it's Dblaxle, a tc0480scp game */
+		if (has_TC0480SCP())	/* it's Dblaxle, a tc0480scp game */
 		{
 			if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,x_offs,0x21,0x08,4,0,0,0,0))
 				return 1;
@@ -29,24 +29,22 @@ public class taito_z
 				return 1;
 		}
 	
-		if (has_TC0150ROD() != 0)
-			if (TC0150ROD_vh_start() != 0)
+		if (has_TC0150ROD())
+			if (TC0150ROD_vh_start())
 				return 1;
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_taitoz  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitoz  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitoz_core_vh_start(0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_spacegun  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spacegun  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitoz_core_vh_start(4));
 	} };
 	
@@ -210,7 +208,7 @@ public class taito_z
 			color = (data & 0xff00) >> 8;
 			zoomx = (data & 0x7f);
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 7;
 	
@@ -244,7 +242,7 @@ public class taito_z
 				zx = x + (((k+1)*zoomx)/8) - curx;
 				zy = y + (((j+1)*zoomy)/16) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -256,7 +254,7 @@ public class taito_z
 					flipy = NOT(flipy);
 				}
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -265,7 +263,7 @@ public class taito_z
 						zx<<12,zy<<13,primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -303,7 +301,7 @@ public class taito_z
 			/* higher bits are sometimes used... e.g. sign over flashing enemy car...! */
 			tilenum = data & 0x7ff;
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			zoomx += 1;
 			zoomy += 1;
@@ -339,7 +337,7 @@ public class taito_z
 					zx = x + (((k+1)*zoomx)/8) - curx;
 					zy = y + (((j+1)*zoomy)/8) - cury;
 	
-					if (sprites_flipscreen != 0)
+					if (sprites_flipscreen)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -351,7 +349,7 @@ public class taito_z
 						flipy = NOT(flipy);
 					}
 	
-					pdrawgfxzoom(bitmap,Machine.gfx[0],
+					pdrawgfxzoom(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flipx,flipy,
@@ -383,7 +381,7 @@ public class taito_z
 					zx = x + (((k+1)*zoomx)/4) - curx;
 					zy = y + (((j+1)*zoomy)/8) - cury;
 	
-					if (sprites_flipscreen != 0)
+					if (sprites_flipscreen)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -395,7 +393,7 @@ public class taito_z
 						flipy = NOT(flipy);
 					}
 	
-					pdrawgfxzoom(bitmap,Machine.gfx[2],
+					pdrawgfxzoom(bitmap,Machine->gfx[2],
 							code,
 							color,
 							flipx,flipy,
@@ -427,7 +425,7 @@ public class taito_z
 					zx = x + (((k+1)*zoomx)/2) - curx;
 					zy = y + (((j+1)*zoomy)/8) - cury;
 	
-					if (sprites_flipscreen != 0)
+					if (sprites_flipscreen)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -439,7 +437,7 @@ public class taito_z
 						flipy = NOT(flipy);
 					}
 	
-					pdrawgfxzoom(bitmap,Machine.gfx[2],
+					pdrawgfxzoom(bitmap,Machine->gfx[2],
 							code,
 							color,
 							flipx,flipy,
@@ -450,7 +448,7 @@ public class taito_z
 				}
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -487,7 +485,7 @@ public class taito_z
 			data = spriteram16[offs+3];
 			tilenum = data & 0x1fff;	/* $80000 spritemap rom maps up to $2000 64x64 sprites */
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 5;
 	
@@ -521,7 +519,7 @@ public class taito_z
 				zx = x + (((k+1)*zoomx)/4) - curx;
 				zy = y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -533,7 +531,7 @@ public class taito_z
 					flipy = NOT(flipy);
 				}
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -543,7 +541,7 @@ public class taito_z
 						primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -589,7 +587,7 @@ public class taito_z
 			data = spriteram16[offs+3];
 			tilenum = data & 0x1fff;	/* $80000 spritemap rom maps up to $2000 64x64 sprites */
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 5;
 	
@@ -623,7 +621,7 @@ public class taito_z
 				zx = x + (((k+1)*zoomx)/4) - curx;
 				zy = y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -635,7 +633,7 @@ public class taito_z
 					flipy = NOT(flipy);
 				}
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -645,7 +643,7 @@ public class taito_z
 						primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -682,7 +680,7 @@ public class taito_z
 			flipy = (data & 0x8000) >> 15;	// ???
 			tilenum = data & 0x1fff;	/* $80000 spritemap rom maps up to $2000 64x64 sprites */
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 5;
 	
@@ -715,7 +713,7 @@ public class taito_z
 				zx = x + (((k+1)*zoomx)/4) - curx;
 				zy = y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -727,7 +725,7 @@ public class taito_z
 					flipy = NOT(flipy);
 				}
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -737,7 +735,7 @@ public class taito_z
 						primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -774,7 +772,7 @@ public class taito_z
 			flipy = (data & 0x8000) >> 15;	// ???
 			tilenum = data & 0x1fff;	/* $80000 spritemap rom maps up to $2000 64x64 sprites */
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 5;
 	
@@ -807,7 +805,7 @@ public class taito_z
 				zx = x + (((k+1)*zoomx)/4) - curx;
 				zy = y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -819,7 +817,7 @@ public class taito_z
 					flipy = NOT(flipy);
 				}
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -829,7 +827,7 @@ public class taito_z
 						primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -839,8 +837,7 @@ public class taito_z
 	                        SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_contcirc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_contcirc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -865,8 +862,7 @@ public class taito_z
 	
 	/* Nightstr and ChaseHQ */
 	
-	public static VideoUpdateHandlerPtr video_update_chasehq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_chasehq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -889,8 +885,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bshark  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -913,8 +908,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sci  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sci  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -937,8 +931,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_aquajack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_aquajack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -961,8 +954,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spacegun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3];
 	
 		TC0100SCN_tilemap_update();
@@ -1089,8 +1081,7 @@ public class taito_z
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_dblaxle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dblaxle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[5];
 		UINT16 priority;
 	

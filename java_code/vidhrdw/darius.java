@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,14 +54,13 @@ public class darius
 	
 	/***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_darius  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_darius  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(darius_fg_get_tile_info[0],tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
-		if (fg_tilemap == 0)
+		if (!fg_tilemap)
 			return 1;
 	
 		spritelist = auto_malloc(0x800 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
@@ -111,7 +110,7 @@ public class darius
 		{
 			code = spriteram16[offs+2] &0x1fff;
 	
-			if (code != 0)
+			if (code)
 			{
 				data = spriteram16[offs];
 				sy = (256-data) & 0x1ff;
@@ -134,18 +133,18 @@ public class darius
 				if (curx > 900) curx -= 1024;
 	 			if (cury > 400) cury -= 512;
 	
-				sprite_ptr.code = code;
-				sprite_ptr.color = color;
-				sprite_ptr.flipx = flipx;
-				sprite_ptr.flipy = flipy;
-				sprite_ptr.x = curx;
-				sprite_ptr.y = cury;
+				sprite_ptr->code = code;
+				sprite_ptr->color = color;
+				sprite_ptr->flipx = flipx;
+				sprite_ptr->flipy = flipy;
+				sprite_ptr->x = curx;
+				sprite_ptr->y = cury;
 	
-				drawgfx(bitmap,Machine.gfx[0],
-						sprite_ptr.code,
-						sprite_ptr.color,
-						sprite_ptr.flipx,sprite_ptr.flipy,
-						sprite_ptr.x,sprite_ptr.y,
+				drawgfx(bitmap,Machine->gfx[0],
+						sprite_ptr->code,
+						sprite_ptr->color,
+						sprite_ptr->flipx,sprite_ptr->flipy,
+						sprite_ptr->x,sprite_ptr->y,
 						cliprect,TRANSPARENCY_PEN,0);
 			}
 		}
@@ -153,8 +152,7 @@ public class darius
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_darius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		PC080SN_tilemap_update();
 	
 		// draw bottom layer(always active)

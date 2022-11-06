@@ -26,34 +26,34 @@ CPUs related:
 * 1xOSC24MHz @ B20
 * 2xM27C4001 @ C22 & C23 (M68000 program ROMs)
 * 1xPAL20L8 @ B23 (handles 1st level M68000 memory map)
-	0 . DTACK (M68000 data ack)
-	1 . SELACT
-	2 . Input/sound (see below)
-	3 . ACTEXT
-	4 . SELMOV
-	5 . CSW
-	6 . CSR
-	7 . EXT
+	0 -> DTACK (M68000 data ack)
+	1 -> SELACT
+	2 -> Input/sound (see below)
+	3 -> ACTEXT
+	4 -> SELMOV
+	5 -> CSW
+	6 -> CSR
+	7 -> EXT
 
 * 1x74LS138 (3 to 8 line decoder) @ B13 (handles 2nd level M68000 memory map)
-	0 . IN0	DIPSW #1 & #2
-	1 . IN1	Joystick 1P & 2P, COINSW, STARTSW
-	2 . IN2	Wheel input
-	3 . -
-	4 . IN4	TESTSW & SERVICESW
-	5 . OUT (see below)
-	6 . CSBAN	OKIM6295 bankswitch
-	7 . CSSON	OKIM6295 R/W
+	0 -> IN0	DIPSW #1 & #2
+	1 -> IN1	Joystick 1P & 2P, COINSW, STARTSW
+	2 -> IN2	Wheel input
+	3 -> -
+	4 -> IN4	TESTSW & SERVICESW
+	5 -> OUT (see below)
+	6 -> CSBAN	OKIM6295 bankswitch
+	7 -> CSSON	OKIM6295 R/W
 
 * 1x74LS259 (8 bit addressable latches) @A7 (handles 3rd level M68000 memory map)
-	0 . Coin lockout 1
-	1 . Coin lockout 2
-	2 . Coin counter 1
-	3 . Coin counter 2
-	4 . Sound muting
-	5 . flip screen
-	6 . ENA/D?
-	7 . CKA/D?
+	0 -> Coin lockout 1
+	1 -> Coin lockout 2
+	2 -> Coin counter 1
+	3 -> Coin counter 2
+	4 -> Sound muting
+	5 -> flip screen
+	6 -> ENA/D?
+	7 -> CKA/D?
 
 Sound related:
 ==============
@@ -78,7 +78,7 @@ Palette related:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -132,7 +132,7 @@ public class wrally
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_wrally = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wrally = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wrally )
 	PORT_START(); 	/* DSW #1 & #2 */
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0003, "Normal" );
@@ -236,8 +236,7 @@ public class wrally
 		{ 100 }				/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_wrally = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wrally )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
 		MDRV_CPU_MEMORY(wrally_readmem,wrally_writemem)
@@ -259,9 +258,7 @@ public class wrally
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, wrally_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -306,6 +303,6 @@ public class wrally
 	
 	
 	
-	public static GameDriver driver_wrally	   = new GameDriver("1993"	,"wrally"	,"wrally.java"	,rom_wrally,null	,machine_driver_wrally	,input_ports_wrally	,init_wrally	,ROT0	,	"Gaelco", "World Rally (set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_wrallya	   = new GameDriver("1993"	,"wrallya"	,"wrally.java"	,rom_wrallya,driver_wrally	,machine_driver_wrally	,input_ports_wrally	,init_wrally	,ROT0	,	"Gaelco", "World Rally (set 2)", GAME_NOT_WORKING )
+	GAMEX( 1993, wrally,  0, 	  wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 1)", GAME_NOT_WORKING )
+	GAMEX( 1993, wrallya, wrally, wrally, wrally, wrally, ROT0, "Gaelco", "World Rally (set 2)", GAME_NOT_WORKING )
 }

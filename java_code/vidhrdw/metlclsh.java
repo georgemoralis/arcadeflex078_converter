@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,9 +39,8 @@ public class metlclsh
 	
 	/* Functions that driver has access to: */
 	
-	public static WriteHandlerPtr metlclsh_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr metlclsh_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 		{
 			metlclsh_write_mask = 0;
 			cpu_setbank(1, metlclsh_bgram);
@@ -54,8 +53,7 @@ public class metlclsh
 	} };
 	
 	static data8_t metlclsh_gfxbank;
-	public static WriteHandlerPtr metlclsh_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!(data & 4) && (metlclsh_gfxbank != data))
 		{
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
@@ -90,11 +88,10 @@ public class metlclsh
 		SET_TILE_INFO(1, metlclsh_bgram[tile_index] + (metlclsh_gfxbank << 7),0,0)
 	}
 	
-	public static WriteHandlerPtr metlclsh_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This ram is banked: it's either the tilemap (e401 = 1)
 			or bit n of another area (e401 = n << 1)? (that I don't understand) */
-		if (metlclsh_write_mask != 0)
+		if (metlclsh_write_mask)
 		{
 			/* unknown area - the following is almost surely wrong */
 	// 405b (e401 = e c a 8 6 4 2 0) writes d400++
@@ -123,7 +120,7 @@ public class metlclsh
 		Offset: 	Bits:			Value:
 	
 			0x000					Code
-			0x400	7--- ----		Priority (0/1 . over/below sprites and background)
+			0x400	7--- ----		Priority (0/1 -> over/below sprites and background)
 					-65- ----		Color
 					---- --10		Code
 	
@@ -137,8 +134,7 @@ public class metlclsh
 		tile_info.priority = ((attr & 0x80) ? 1 : 2);
 	}
 	
-	public static WriteHandlerPtr metlclsh_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (metlclsh_fgram[offset] != data)
 		{
 			metlclsh_fgram[offset] = data;
@@ -153,8 +149,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_metlclsh  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_metlclsh  = new VideoStartHandlerPtr() { public int handler(){
 		metlclsh_otherram = auto_malloc(0x800);	// banked ram
 	
 		bg_tilemap = tilemap_create(get_bg_tile_info,metlclsh_bgtilemap_scan,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -185,14 +180,14 @@ public class metlclsh
 					---- ---0		Enable
 	
 			1						Code (low bits)
-			2						Y (bottom . top)
-			3						X (right . left)
+			2						Y (bottom -> top)
+			3						X (right -> left)
 	
 	***************************************************************************/
 	
 	static void metlclsh_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		struct GfxElement *gfx = Machine.gfx[0];
+		struct GfxElement *gfx = Machine->gfx[0];
 		int offs;
 	
 		for (offs = 0;offs < spriteram_size; offs += 4)
@@ -212,28 +207,28 @@ public class metlclsh
 			if (sx < -7) sx += 256;
 			sy	=	240 - spriteram.read(offs+2);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;	flipx = NOT(flipx);
-				sy = 240 - sy;	flipy = NOT(flipy);		if (sizey != 0)	sy+=16;
+				sy = 240 - sy;	flipy = NOT(flipy);		if (sizey)	sy+=16;
 				if (sy > 240)	sy -= 256;
 			}
 	
 			/* Draw twice, at sy and sy + 256 (wrap around) */
 			for ( wrapy = 0; wrapy <= 256; wrapy += 256 )
 			{
-				if (sizey != 0)
+				if (sizey)
 				{
 					drawgfx(bitmap,gfx, code & ~1, color, flipx,flipy,
-							sx, sy + (flipy ? 0 : -16) + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx, sy + (flipy ? 0 : -16) + wrapy, Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					drawgfx(bitmap,gfx, code |  1, color, flipx,flipy,
-							sx,sy + (flipy ? -16 : 0) + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + (flipy ? -16 : 0) + wrapy, Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
 					drawgfx(bitmap,gfx, code, color, flipx,flipy,
-							sx,sy + wrapy, Machine.visible_area,TRANSPARENCY_PEN,0);
+							sx,sy + wrapy, Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -253,8 +248,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_metlclsh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0x10],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,fg_tilemap,1,0);	// low priority tiles of foreground

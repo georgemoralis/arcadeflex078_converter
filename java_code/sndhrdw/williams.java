@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -257,9 +257,7 @@ public class williams
 		MDRV_SOUND_ADD(YM2151, cvsd_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    single_dac_interface)
 		MDRV_SOUND_ADD(HC55516,cvsd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( williams_adpcm_sound )
@@ -271,9 +269,7 @@ public class williams
 		MDRV_SOUND_ADD(YM2151,  adpcm_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,     single_dac_interface)
 		MDRV_SOUND_ADD(OKIM6295,adpcm_6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( williams_narc_sound )
@@ -289,9 +285,7 @@ public class williams
 		MDRV_SOUND_ADD(YM2151, adpcm_ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    double_dac_interface)
 		MDRV_SOUND_ADD(HC55516,cvsd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -383,10 +377,10 @@ public class williams
 	
 		/* find the number of banks in the ADPCM space */
 		for (i = 0; i < MAX_SOUND; i++)
-			if (Machine.drv.sound[i].sound_type == SOUND_OKIM6295)
+			if (Machine->drv->sound[i].sound_type == SOUND_OKIM6295)
 			{
-				struct OKIM6295interface *intf = (struct OKIM6295interface *)Machine.drv.sound[i].sound_interface;
-				adpcm_bank_count = memory_region_length(intf.region[0]) / 0x40000;
+				struct OKIM6295interface *intf = (struct OKIM6295interface *)Machine->drv->sound[i].sound_interface;
+				adpcm_bank_count = memory_region_length(intf->region[0]) / 0x40000;
 			}
 	}
 	
@@ -501,8 +495,7 @@ public class williams
 		CVSD BANK SELECT
 	****************************************************************************/
 	
-	public static WriteHandlerPtr cvsd_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvsd_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(6, get_cvsd_bank_base(data));
 	} };
 	
@@ -512,19 +505,17 @@ public class williams
 		ADPCM BANK SELECT
 	****************************************************************************/
 	
-	public static WriteHandlerPtr adpcm_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(6, get_adpcm_bank_base(data));
 	} };
 	
 	
-	public static WriteHandlerPtr adpcm_6295_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_6295_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (adpcm_bank_count <= 3)
 		{
 			if (!(data & 0x04))
 				OKIM6295_set_bank_base(0, 0x00000);
-			else if ((data & 0x01) != 0)
+			else if (data & 0x01)
 				OKIM6295_set_bank_base(0, 0x40000);
 			else
 				OKIM6295_set_bank_base(0, 0x80000);
@@ -543,14 +534,12 @@ public class williams
 		NARC BANK SELECT
 	****************************************************************************/
 	
-	public static WriteHandlerPtr narc_master_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr narc_master_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(6, get_narc_master_bank_base(data));
 	} };
 	
 	
-	public static WriteHandlerPtr narc_slave_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr narc_slave_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(5, get_narc_slave_bank_base(data));
 	} };
 	
@@ -560,14 +549,12 @@ public class williams
 		PIA INTERFACES
 	****************************************************************************/
 	
-	public static ReadHandlerPtr cvsd_pia_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cvsd_pia_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pia_read(williams_pianum, offset);
 	} };
 	
 	
-	public static WriteHandlerPtr cvsd_pia_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvsd_pia_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pia_write(williams_pianum, offset, data);
 	} };
 	
@@ -594,7 +581,7 @@ public class williams
 	void williams_cvsd_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state != 0)
+		if (state)
 		{
 			cvsd_bank_select_w(0, 0);
 			init_audio_state();
@@ -611,8 +598,7 @@ public class williams
 		ADPCM COMMUNICATIONS
 	****************************************************************************/
 	
-	public static ReadHandlerPtr adpcm_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr adpcm_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(sound_cpunum, M6809_IRQ_LINE, CLEAR_LINE);
 		williams_sound_int_state = 0;
 		return soundlatch_r(0);
@@ -633,7 +619,7 @@ public class williams
 	void williams_adpcm_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state != 0)
+		if (state)
 		{
 			adpcm_bank_select_w(0, 0);
 			init_audio_state();
@@ -650,8 +636,7 @@ public class williams
 		NARC COMMUNICATIONS
 	****************************************************************************/
 	
-	public static ReadHandlerPtr narc_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr narc_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_nmi_line(sound_cpunum, CLEAR_LINE);
 		cpu_set_irq_line(sound_cpunum, M6809_IRQ_LINE, CLEAR_LINE);
 		williams_sound_int_state = 0;
@@ -675,7 +660,7 @@ public class williams
 	void williams_narc_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state != 0)
+		if (state)
 		{
 			narc_master_bank_select_w(0, 0);
 			narc_slave_bank_select_w(0, 0);
@@ -692,15 +677,13 @@ public class williams
 	}
 	
 	
-	public static ReadHandlerPtr narc_command2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr narc_command2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(soundalt_cpunum, M6809_FIRQ_LINE, CLEAR_LINE);
 		return soundlatch2_r(0);
 	} };
 	
 	
-	public static WriteHandlerPtr narc_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr narc_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch2_w.handler(0, data & 0xff);
 		cpu_set_irq_line(soundalt_cpunum, M6809_FIRQ_LINE, ASSERT_LINE);
 	} };

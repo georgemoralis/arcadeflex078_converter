@@ -6,7 +6,7 @@ Based on drivers from Juno First emulator by Chris Hardy (chrish@kcbbs.gen.nz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -19,8 +19,7 @@ public class rocnrope
 	
 	
 	/* Roc'n'Rope has the IRQ vectors in RAM. The rom contains $FFFF at this address! */
-	public static WriteHandlerPtr rocnrope_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rocnrope_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 	
@@ -63,7 +62,7 @@ public class rocnrope
 	};
 	
 	
-	static InputPortPtr input_ports_rocnrope = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rocnrope = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rocnrope )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -222,8 +221,7 @@ public class rocnrope
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rocnrope = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rocnrope )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1600000)        /* 1.6 MHz??? Attract mode depends on this to work correctly */
@@ -251,9 +249,7 @@ public class rocnrope
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -319,8 +315,7 @@ public class rocnrope
 	
 	
 	
-	public static DriverInitHandlerPtr init_rocnrope  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rocnrope  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	
 		{
@@ -331,13 +326,12 @@ public class rocnrope
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_rocnropk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rocnropk  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
 	
-	public static GameDriver driver_rocnrope	   = new GameDriver("1983"	,"rocnrope"	,"rocnrope.java"	,rom_rocnrope,null	,machine_driver_rocnrope	,input_ports_rocnrope	,init_rocnrope	,ROT270	,	"Konami", "Roc'n Rope" )
-	public static GameDriver driver_rocnropk	   = new GameDriver("1983"	,"rocnropk"	,"rocnrope.java"	,rom_rocnropk,driver_rocnrope	,machine_driver_rocnrope	,input_ports_rocnrope	,init_rocnropk	,ROT270	,	"Konami + Kosuka", "Roc'n Rope (Kosuka)" )
+	GAME( 1983, rocnrope, 0,        rocnrope, rocnrope, rocnrope, ROT270, "Konami", "Roc'n Rope" )
+	GAME( 1983, rocnropk, rocnrope, rocnrope, rocnrope, rocnropk, ROT270, "Konami + Kosuka", "Roc'n Rope (Kosuka)" )
 }

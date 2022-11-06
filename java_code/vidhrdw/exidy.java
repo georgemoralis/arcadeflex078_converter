@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -136,9 +136,8 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
-		if (exidy_palette != 0)
+	public static PaletteInitHandlerPtr palette_init_exidy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
+		if (exidy_palette)
 		{
 			int i;
 			
@@ -156,21 +155,20 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_exidy  = new VideoStartHandlerPtr() { public int handler()
-	{
-	    if (video_start_generic() != 0)
+	public static VideoStartHandlerPtr video_start_exidy  = new VideoStartHandlerPtr() { public int handler(){
+	    if (video_start_generic.handler())
 	        return 1;
 	
 		motion_object_1_vid = auto_bitmap_alloc(16, 16);
-	    if (motion_object_1_vid == 0)
+	    if (!motion_object_1_vid)
 	        return 1;
 	
 		motion_object_2_vid = auto_bitmap_alloc(16, 16);
-	    if (motion_object_2_vid == 0)
+	    if (!motion_object_2_vid)
 	        return 1;
 	
 		motion_object_2_clip = auto_bitmap_alloc(16, 16);
-	    if (motion_object_2_clip == 0)
+	    if (!motion_object_2_clip)
 	        return 1;
 	
 	    return 0;
@@ -191,8 +189,7 @@ public class exidy
 	}
 	
 	
-	public static InterruptHandlerPtr exidy_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr exidy_vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* latch the current condition */
 		latch_condition(0);
 		int_condition &= ~0x80;
@@ -202,8 +199,7 @@ public class exidy
 	} };
 	
 	
-	public static InterruptHandlerPtr teetert_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr teetert_vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* standard stuff */
 		exidy_vblank_interrupt();
 		
@@ -212,8 +208,7 @@ public class exidy
 	} };
 	
 	
-	public static ReadHandlerPtr exidy_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* clear any interrupts */
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
@@ -229,8 +224,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (exidy_characterram[offset] != data)
 		{
 			exidy_characterram[offset] = data;
@@ -246,8 +240,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		exidy_color_latch[offset] = data;
@@ -282,7 +275,7 @@ public class exidy
 				/* see if the character is dirty */
 				if (chardirty[code] == 1)
 				{
-					decodechar(Machine.gfx[0], code, exidy_characterram, Machine.drv.gfxdecodeinfo[0].gfxlayout);
+					decodechar(Machine->gfx[0], code, exidy_characterram, Machine->drv->gfxdecodeinfo[0].gfxlayout);
 					chardirty[code] = 2;
 				}
 	
@@ -290,7 +283,7 @@ public class exidy
 				if (dirtybuffer[offs] || chardirty[code])
 				{
 					int color = code >> 6;
-					drawgfx(tmpbitmap, Machine.gfx[0], code, color, 0, 0, x * 8, y * 8, NULL, TRANSPARENCY_NONE, 0);
+					drawgfx(tmpbitmap, Machine->gfx[0], code, color, 0, 0, x * 8, y * 8, NULL, TRANSPARENCY_NONE, 0);
 					dirtybuffer[offs] = 0;
 				}
 			}
@@ -357,11 +350,10 @@ public class exidy
 		return (!(*exidy_sprite_enable & 0x40));
 	}
 	
-	public static VideoEofHandlerPtr video_eof_exidy  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_exidy  = new VideoEofHandlerPtr() { public void handler(){
 		UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	    struct rectangle clip = { 0, 15, 0, 15 };
-	    int pen0 = Machine.pens[0];
+	    int pen0 = Machine->pens[0];
 	    int org_1_x = 0, org_1_y = 0;
 	    int org_2_x = 0, org_2_y = 0;
 	    int sx, sy;
@@ -379,16 +371,16 @@ public class exidy
 		}
 	
 		/* update the background if necessary */
-		if (update_complete == 0)
+		if (!update_complete)
 			update_background();
 		update_complete = 0;
 	
 		/* draw sprite 1 */
-		if (sprite_1_enabled() != 0)
+		if (sprite_1_enabled())
 		{
 			org_1_x = 236 - *exidy_sprite1_xpos - 4;
 			org_1_y = 244 - *exidy_sprite1_ypos - 4;
-			drawgfx(motion_object_1_vid, Machine.gfx[1],
+			drawgfx(motion_object_1_vid, Machine->gfx[1],
 				(*exidy_sprite_no & 0x0f) + 16 * enable_set, 0,
 				0, 0, 0, 0, &clip, TRANSPARENCY_NONE, 0);
 		}
@@ -396,11 +388,11 @@ public class exidy
 			fillbitmap(motion_object_1_vid, pen0, &clip);
 	
 		/* draw sprite 2 */
-		if (sprite_2_enabled() != 0)
+		if (sprite_2_enabled())
 		{
 			org_2_x = 236 - *exidy_sprite2_xpos - 4;
 			org_2_y = 244 - *exidy_sprite2_ypos - 4;
-			drawgfx(motion_object_2_vid, Machine.gfx[1],
+			drawgfx(motion_object_2_vid, Machine->gfx[1],
 				((*exidy_sprite_no >> 4) & 0x0f) + 32, 0,
 				0, 0, 0, 0, &clip, TRANSPARENCY_NONE, 0);
 		}
@@ -413,7 +405,7 @@ public class exidy
 		{
 			sx = org_2_x - org_1_x;
 			sy = org_2_y - org_1_y;
-			drawgfx(motion_object_2_clip, Machine.gfx[1],
+			drawgfx(motion_object_2_clip, Machine->gfx[1],
 				((*exidy_sprite_no >> 4) & 0x0f) + 32, 0,
 				0, 0, sx, sy, &clip, TRANSPARENCY_NONE, 0);
 		}
@@ -456,8 +448,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exidy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int sx, sy;
 	
 		/* update the background and draw it */
@@ -465,7 +456,7 @@ public class exidy
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 	
 		/* draw sprite 2 first */
-		if (sprite_2_enabled() != 0)
+		if (sprite_2_enabled())
 		{
 			sx = 236 - *exidy_sprite2_xpos - 4;
 			sy = 244 - *exidy_sprite2_ypos - 4;
@@ -476,7 +467,7 @@ public class exidy
 		}
 	
 		/* draw sprite 1 next */
-		if (sprite_1_enabled() != 0)
+		if (sprite_1_enabled())
 		{
 			UINT8 enable_set = ((*exidy_sprite_enable & 0x20) != 0);
 	

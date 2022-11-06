@@ -38,7 +38,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 **************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -65,12 +65,12 @@ public class powerins
 	
 	WRITE16_HANDLER( powerins_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)	flip_screen_set( data & 1 );
+		if (ACCESSING_LSB)	flip_screen_set( data & 1 );
 	}
 	
 	WRITE16_HANDLER( powerins_tilebank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (data != tile_bank)
 			{
@@ -205,8 +205,7 @@ public class powerins
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_powerins  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_powerins  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0,
 									powerins_get_memory_offset_0,
 									TILEMAP_OPAQUE,
@@ -288,8 +287,8 @@ public class powerins
 		data16_t *source = spriteram16 + 0x8000/2;
 		data16_t *finish = spriteram16 + 0x9000/2;
 	
-		int screen_w	=	Machine.drv.screen_width;
-		int screen_h	=	Machine.drv.screen_height;
+		int screen_w	=	Machine->drv->screen_width;
+		int screen_h	=	Machine->drv->screen_height;
 	
 		for ( ; source < finish; source += 16/2 )
 		{
@@ -315,7 +314,7 @@ public class powerins
 	
 			/* Handle flip_screen(). Apply a global offset of 32 pixels along x too */
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{	sx = screen_w - sx - dimx*16 - 32;	flipx = NOT(flipx);
 				sy = screen_h - sy - dimy*16;		flipy = NOT(flipy);
 				code += dimx*dimy-1;			inc = -1;	}
@@ -328,7 +327,7 @@ public class powerins
 			{
 				for (y = 0 ; y < dimy ; y++)
 				{
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 							code,
 							color,
 							flipx, flipy,
@@ -356,8 +355,7 @@ public class powerins
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_powerins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_powerins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		int scrollx = (powerins_vctrl_0[2/2]&0xff) + (powerins_vctrl_0[0/2]&0xff)*256;
@@ -382,9 +380,9 @@ public class powerins
 	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)		tilemap_draw(bitmap,cliprect, tilemap_0, 0, 0);
+		if (layers_ctrl&1)		tilemap_draw(bitmap,cliprect, tilemap_0, 0, 0);
 		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
-		if ((layers_ctrl & 8) != 0)		powerins_draw_sprites(bitmap,cliprect);
-		if ((layers_ctrl & 2) != 0)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
+		if (layers_ctrl&8)		powerins_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl&2)		tilemap_draw(bitmap,cliprect, tilemap_1, 0, 0);
 	} };
 }

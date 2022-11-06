@@ -33,7 +33,7 @@ metlclsh:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,16 +55,14 @@ public class metlclsh
 	
 	static data8_t *sharedram;
 	
-	static public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return sharedram[offset]; } };
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) return sharedram[offset]; }
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data) sharedram[offset] = data; }
 	
-	public static WriteHandlerPtr metlclsh_cause_irq = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_cause_irq = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,M6809_IRQ_LINE,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr metlclsh_ack_nmi = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_ack_nmi = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,IRQ_LINE_NMI,CLEAR_LINE);
 	} };
 	
@@ -113,23 +111,19 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr metlclsh_cause_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_cause_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,IRQ_LINE_NMI,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr metlclsh_ack_irq2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_ack_irq2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,M6809_IRQ_LINE,CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr metlclsh_ack_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_ack_nmi2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,IRQ_LINE_NMI,CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr metlclsh_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metlclsh_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 1);
 	} };
 	
@@ -171,7 +165,7 @@ public class metlclsh
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_metlclsh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metlclsh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metlclsh )
 		PORT_START(); 	/* IN0 - c000 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -317,8 +311,7 @@ public class metlclsh
 		{ metlclsh_irqhandler },
 	};
 	
-	public static InterruptHandlerPtr metlclsh_interrupt2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr metlclsh_interrupt2 = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			return;
 		/* generate NMI on coin insertion */
@@ -326,13 +319,11 @@ public class metlclsh
 			cpu_set_nmi_line(1, ASSERT_LINE);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_metlclsh  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_metlclsh  = new MachineInitHandlerPtr() { public void handler(){
 		flip_screen_set(0);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_metlclsh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metlclsh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)        // ?
@@ -362,9 +353,7 @@ public class metlclsh
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, metlclsh_ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, metlclsh_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -470,6 +459,6 @@ public class metlclsh
 		ROM_LOAD( "82s123.prm",   0x0000, 0x20, CRC(6844cc88) SHA1(89d23367aa6ff541205416e82781fe938dfeeb52) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_metlclsh	   = new GameDriver("1985"	,"metlclsh"	,"metlclsh.java"	,rom_metlclsh,null	,machine_driver_metlclsh	,input_ports_metlclsh	,null	,ROT0	,	"Data East", "Metal Clash (Japan)" )
+	GAME( 1985, metlclsh, 0, metlclsh, metlclsh, 0, ROT0, "Data East", "Metal Clash (Japan)" )
 	
 }

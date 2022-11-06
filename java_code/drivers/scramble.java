@@ -24,7 +24,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -443,7 +443,7 @@ public class scramble
 	
 	
 	
-	static InputPortPtr input_ports_scramble = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scramble = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scramble )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -483,7 +483,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SPECIAL );/* protection bit */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_explorer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_explorer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( explorer )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 );
@@ -574,7 +574,7 @@ public class scramble
 		PORT_SERVICE( 0x80, IP_ACTIVE_HIGH );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_atlantis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atlantis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atlantis )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -612,7 +612,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_theend = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_theend = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( theend )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -649,7 +649,7 @@ public class scramble
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );	/* output bits */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_froggers = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_froggers = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( froggers )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* 1P shoot2 - unused */
@@ -689,7 +689,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_amidars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amidars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amidars )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* 1P shoot2 - unused */
@@ -735,7 +735,7 @@ public class scramble
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_triplep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_triplep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( triplep )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -777,7 +777,7 @@ public class scramble
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ckongs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ckongs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ckongs )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -825,7 +825,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mars )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -873,7 +873,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_UP    | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_devilfsh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_devilfsh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( devilfsh )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -915,7 +915,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_newsin7 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_newsin7 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( newsin7 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -956,7 +956,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mrkougar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrkougar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrkougar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x03, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -994,7 +994,7 @@ public class scramble
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hotshock = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotshock = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotshock )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -1074,7 +1074,7 @@ public class scramble
 		PORT_DIPSETTING(    0x80, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hunchbks = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hunchbks = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hunchbks )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1118,7 +1118,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cavelon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cavelon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cavelon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1159,7 +1159,7 @@ public class scramble
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* protection check? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sfx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sfx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sfx )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );// "Fire" left
@@ -1200,7 +1200,7 @@ public class scramble
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'mimonkey' (scobra.c driver) */
-	static InputPortPtr input_ports_mimonscr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mimonscr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mimonscr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1406,8 +1406,7 @@ public class scramble
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_scramble = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scramble )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1429,12 +1428,9 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_explorer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( explorer )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1445,12 +1441,9 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, explorer_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_theend = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( theend )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1460,12 +1453,9 @@ public class scramble
 	
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(theend)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_froggers = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( froggers )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1479,12 +1469,9 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mars = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mars )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1494,12 +1481,9 @@ public class scramble
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_devilfsh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( devilfsh )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1510,12 +1494,9 @@ public class scramble
 		MDRV_GFXDECODE(devilfsh_gfxdecodeinfo)
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_newsin7 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( newsin7 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1527,12 +1508,9 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(newsin7)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mrkougar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrkougar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1543,12 +1521,9 @@ public class scramble
 		MDRV_GFXDECODE(mrkougar_gfxdecodeinfo)
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mrkougb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrkougb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1558,12 +1533,9 @@ public class scramble
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ckongs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ckongs )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1574,12 +1546,9 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(ckongs)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hotshock = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hotshock )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1593,12 +1562,9 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cavelon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cavelon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1607,12 +1573,9 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets, 0/1 for background */
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(ckongs)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sfx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sfx )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1636,12 +1599,9 @@ public class scramble
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, sfx_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, sfx_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mimonscr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mimonscr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1650,13 +1610,10 @@ public class scramble
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mimonkey)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Triple Punch and Mariner are different - only one CPU, one 8910 */
-	public static MachineHandlerPtr machine_driver_triplep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triplep )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1672,12 +1629,9 @@ public class scramble
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, triplep_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mariner = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mariner )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(triplep)
@@ -1687,13 +1641,10 @@ public class scramble
 	
 		MDRV_PALETTE_INIT(mariner)
 		MDRV_VIDEO_START(mariner)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Hunchback replaces the Z80 with a S2650 CPU */
-	public static MachineHandlerPtr machine_driver_hunchbks = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hunchbks )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(scramble)
@@ -1708,9 +1659,7 @@ public class scramble
 		MDRV_PALETTE_LENGTH(32+64+2+0)	/* 32 for characters, 64 for stars, 2 for bullets */
 	
 		MDRV_PALETTE_INIT(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2256,29 +2205,29 @@ public class scramble
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_scramble	   = new GameDriver("1981"	,"scramble"	,"scramble.java"	,rom_scramble,null	,machine_driver_scramble	,input_ports_scramble	,init_scramble	,ROT90	,	"Konami", "Scramble" )
-	public static GameDriver driver_scrambls	   = new GameDriver("1981"	,"scrambls"	,"scramble.java"	,rom_scrambls,driver_scramble	,machine_driver_scramble	,input_ports_scramble	,init_scrambls	,ROT90	,	"[Konami] (Stern license)", "Scramble (Stern)" )
-	public static GameDriver driver_explorer	   = new GameDriver("1981"	,"explorer"	,"scramble.java"	,rom_explorer,driver_scramble	,machine_driver_explorer	,input_ports_explorer	,null	,ROT90	,	"bootleg", "Explorer" )
-	public static GameDriver driver_atlantis	   = new GameDriver("1981"	,"atlantis"	,"scramble.java"	,rom_atlantis,null	,machine_driver_scramble	,input_ports_atlantis	,init_atlantis	,ROT90	,	"Comsoft", "Battle of Atlantis (set 1)" )
-	public static GameDriver driver_atlants2	   = new GameDriver("1981"	,"atlants2"	,"scramble.java"	,rom_atlants2,driver_atlantis	,machine_driver_scramble	,input_ports_atlantis	,init_atlantis	,ROT90	,	"Comsoft", "Battle of Atlantis (set 2)" )
-	public static GameDriver driver_theend	   = new GameDriver("1980"	,"theend"	,"scramble.java"	,rom_theend,null	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"Konami", "The End" )
-	public static GameDriver driver_theends	   = new GameDriver("1980"	,"theends"	,"scramble.java"	,rom_theends,driver_theend	,machine_driver_theend	,input_ports_theend	,init_theend	,ROT90	,	"[Konami] (Stern license)", "The End (Stern)" )
-	public static GameDriver driver_froggers	   = new GameDriver("1981"	,"froggers"	,"scramble.java"	,rom_froggers,driver_frogger	,machine_driver_froggers	,input_ports_froggers	,init_froggers	,ROT90	,	"bootleg", "Frog" )
-	public static GameDriver driver_amidars	   = new GameDriver("1982"	,"amidars"	,"scramble.java"	,rom_amidars,driver_amidar	,machine_driver_scramble	,input_ports_amidars	,init_atlantis	,ROT90	,	"Konami", "Amidar (Scramble hardware)" )
-	public static GameDriver driver_triplep	   = new GameDriver("1982"	,"triplep"	,"scramble.java"	,rom_triplep,null	,machine_driver_triplep	,input_ports_triplep	,init_scramble_ppi	,ROT90	,	"KKI", "Triple Punch" )
-	public static GameDriver driver_knockout	   = new GameDriver("1982"	,"knockout"	,"scramble.java"	,rom_knockout,driver_triplep	,machine_driver_triplep	,input_ports_triplep	,init_scramble_ppi	,ROT90	,	"KKK", "Knock Out!!" )
-	public static GameDriver driver_mariner	   = new GameDriver("1981"	,"mariner"	,"scramble.java"	,rom_mariner,null	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip", "Mariner", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_800fath	   = new GameDriver("1981"	,"800fath"	,"scramble.java"	,rom_800fath,driver_mariner	,machine_driver_mariner	,input_ports_scramble	,init_mariner	,ROT90	,	"Amenip (US Billiards Inc. license)", "800 Fathoms" )
-	public static GameDriver driver_ckongs	   = new GameDriver("1981"	,"ckongs"	,"scramble.java"	,rom_ckongs,driver_ckong	,machine_driver_ckongs	,input_ports_ckongs	,init_ckongs	,ROT90	,	"bootleg", "Crazy Kong (Scramble hardware)" )
-	public static GameDriver driver_mars	   = new GameDriver("1981"	,"mars"	,"scramble.java"	,rom_mars,null	,machine_driver_mars	,input_ports_mars	,init_mars	,ROT90	,	"Artic", "Mars" )
-	public static GameDriver driver_devilfsh	   = new GameDriver("1982"	,"devilfsh"	,"scramble.java"	,rom_devilfsh,null	,machine_driver_devilfsh	,input_ports_devilfsh	,init_devilfsh	,ROT90	,	"Artic", "Devil Fish" )
-	public static GameDriver driver_newsin7	   = new GameDriver("1983"	,"newsin7"	,"scramble.java"	,rom_newsin7,null	,machine_driver_newsin7	,input_ports_newsin7	,init_mars	,ROT90	,	"ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_mrkougar	   = new GameDriver("1984"	,"mrkougar"	,"scramble.java"	,rom_mrkougar,null	,machine_driver_mrkougar	,input_ports_mrkougar	,init_mrkougar	,ROT90	,	"ATW", "Mr. Kougar" )
-	public static GameDriver driver_mrkougr2	   = new GameDriver("1983"	,"mrkougr2"	,"scramble.java"	,rom_mrkougr2,driver_mrkougar	,machine_driver_mrkougar	,input_ports_mrkougar	,init_mrkougar	,ROT90	,	"ATW", "Mr. Kougar (earlier)" )
-	public static GameDriver driver_mrkougb	   = new GameDriver("1983"	,"mrkougb"	,"scramble.java"	,rom_mrkougb,driver_mrkougar	,machine_driver_mrkougb	,input_ports_mrkougar	,init_mrkougb	,ROT90	,	"bootleg", "Mr. Kougar (bootleg)" )
-	public static GameDriver driver_hotshock	   = new GameDriver("1982"	,"hotshock"	,"scramble.java"	,rom_hotshock,null	,machine_driver_hotshock	,input_ports_hotshock	,init_hotshock	,ROT90	,	"E.G. Felaco", "Hot Shocker" )
-	public static GameDriver driver_hunchbks	   = new GameDriver("1983"	,"hunchbks"	,"scramble.java"	,rom_hunchbks,driver_hunchbak	,machine_driver_hunchbks	,input_ports_hunchbks	,init_scramble_ppi	,ROT90	,	"Century Electronics", "Hunchback (Scramble hardware)" )
-	public static GameDriver driver_cavelon	   = new GameDriver("1983"	,"cavelon"	,"scramble.java"	,rom_cavelon,null	,machine_driver_cavelon	,input_ports_cavelon	,init_cavelon	,ROT90	,	"Jetsoft", "Cavelon" )
-	public static GameDriver driver_sfx	   = new GameDriver("1983"	,"sfx"	,"scramble.java"	,rom_sfx,null	,machine_driver_sfx	,input_ports_sfx	,init_sfx	,ORIENTATION_FLIP_X	,	"Nichibutsu", "SF-X" )
-	public static GameDriver driver_mimonscr	   = new GameDriver("198?"	,"mimonscr"	,"scramble.java"	,rom_mimonscr,driver_mimonkey	,machine_driver_mimonscr	,input_ports_mimonscr	,init_mimonscr	,ROT90	,	"bootleg", "Mighty Monkey (bootleg on Scramble hardware)" )
+	GAME( 1981, scramble, 0,        scramble, scramble, scramble,     ROT90, "Konami", "Scramble" )
+	GAME( 1981, scrambls, scramble, scramble, scramble, scrambls,     ROT90, "[Konami] (Stern license)", "Scramble (Stern)" )
+	GAME( 1981, explorer, scramble, explorer, explorer, 0,		      ROT90, "bootleg", "Explorer" )
+	GAME( 1981, atlantis, 0,        scramble, atlantis, atlantis,     ROT90, "Comsoft", "Battle of Atlantis (set 1)" )
+	GAME( 1981, atlants2, atlantis, scramble, atlantis, atlantis,     ROT90, "Comsoft", "Battle of Atlantis (set 2)" )
+	GAME( 1980, theend,   0,        theend,   theend,   theend,       ROT90, "Konami", "The End" )
+	GAME( 1980, theends,  theend,   theend,   theend,   theend,       ROT90, "[Konami] (Stern license)", "The End (Stern)" )
+	GAME( 1981, froggers, frogger,  froggers, froggers, froggers,     ROT90, "bootleg", "Frog" )
+	GAME( 1982, amidars,  amidar,   scramble, amidars,  atlantis,     ROT90, "Konami", "Amidar (Scramble hardware)" )
+	GAME( 1982, triplep,  0,        triplep,  triplep,  scramble_ppi, ROT90, "KKI", "Triple Punch" )
+	GAME( 1982, knockout, triplep,  triplep,  triplep,  scramble_ppi, ROT90, "KKK", "Knock Out!!" )
+	GAMEX(1981, mariner,  0,        mariner,  scramble, mariner,      ROT90, "Amenip", "Mariner", GAME_IMPERFECT_SOUND )
+	GAME( 1981, 800fath,  mariner,  mariner,  scramble, mariner,      ROT90, "Amenip (US Billiards Inc. license)", "800 Fathoms" )
+	GAME( 1981, ckongs,   ckong,    ckongs,   ckongs,   ckongs,       ROT90, "bootleg", "Crazy Kong (Scramble hardware)" )
+	GAME( 1981, mars,     0,        mars,     mars,     mars,         ROT90, "Artic", "Mars" )
+	GAME( 1982, devilfsh, 0,        devilfsh, devilfsh, devilfsh,     ROT90, "Artic", "Devil Fish" )
+	GAMEX(1983, newsin7,  0,        newsin7,  newsin7,  mars,         ROT90, "ATW USA, Inc.", "New Sinbad 7", GAME_IMPERFECT_COLORS )
+	GAME( 1984, mrkougar, 0,        mrkougar, mrkougar, mrkougar,     ROT90, "ATW", "Mr. Kougar" )
+	GAME( 1983, mrkougr2, mrkougar, mrkougar, mrkougar, mrkougar,     ROT90, "ATW", "Mr. Kougar (earlier)" )
+	GAME( 1983, mrkougb,  mrkougar, mrkougb,  mrkougar, mrkougb,      ROT90, "bootleg", "Mr. Kougar (bootleg)" )
+	GAME( 1982, hotshock, 0,        hotshock, hotshock, hotshock,     ROT90, "E.G. Felaco", "Hot Shocker" )
+	GAME( 1983, hunchbks, hunchbak, hunchbks, hunchbks, scramble_ppi, ROT90, "Century Electronics", "Hunchback (Scramble hardware)" )
+	GAME( 1983, cavelon,  0,        cavelon,  cavelon,  cavelon,      ROT90, "Jetsoft", "Cavelon" )
+	GAME( 1983, sfx,      0,        sfx,      sfx,      sfx,          ORIENTATION_FLIP_X, "Nichibutsu", "SF-X" )
+	GAME( 198?, mimonscr, mimonkey, mimonscr, mimonscr, mimonscr,     ROT90, "bootleg", "Mighty Monkey (bootleg on Scramble hardware)" )
 }

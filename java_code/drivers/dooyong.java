@@ -41,7 +41,7 @@ R-Shark, Super-X:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,19 +54,17 @@ public class dooyong
 	
 	
 	
-	public static WriteHandlerPtr lastday_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lastday_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;
 		cpu_setbank(1,&RAM[bankaddress]);
 	
-	if ((data & 0xf8) != 0) usrintf_showmessage("bankswitch %02x",data);
+	if (data & 0xf8) usrintf_showmessage("bankswitch %02x",data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -309,7 +307,7 @@ public class dooyong
 	
 	
 	
-	static InputPortPtr input_ports_lastday = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastday = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastday )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -387,7 +385,7 @@ public class dooyong
 		PORT_DIPSETTING(    0x80, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gulfstrm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gulfstrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gulfstrm )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Demo_Sounds") );
@@ -466,7 +464,7 @@ public class dooyong
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pollux = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pollux = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pollux )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Demo_Sounds") );
@@ -545,7 +543,7 @@ public class dooyong
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bluehawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bluehawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bluehawk )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Demo_Sounds") );
@@ -624,7 +622,7 @@ public class dooyong
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_primella = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_primella = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( primella )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x04, 0x04, DEF_STR( "Demo_Sounds") );
@@ -703,7 +701,7 @@ public class dooyong
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rshark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rshark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rshark )
 		PORT_START(); 
 		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x0004, 0x0004, DEF_STR( "Demo_Sounds") );
@@ -900,8 +898,7 @@ public class dooyong
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
@@ -945,8 +942,7 @@ public class dooyong
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_lastday = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lastday )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ??? */
@@ -972,12 +968,9 @@ public class dooyong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gulfstrm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gulfstrm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ??? */
@@ -1003,12 +996,9 @@ public class dooyong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_pollux = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pollux )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ??? */
@@ -1034,12 +1024,9 @@ public class dooyong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bluehawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bluehawk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ??? */
@@ -1066,12 +1053,9 @@ public class dooyong
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, bluehawk_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_primella = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( primella )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ??? */
@@ -1098,20 +1082,16 @@ public class dooyong
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, primella_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static InterruptHandlerPtr rshark_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr rshark_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_rshark = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rshark )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* measured on super-x */
@@ -1138,12 +1118,9 @@ public class dooyong
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, primella_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_superx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {// dif mem map
+	static MACHINE_DRIVER_START( superx ) // dif mem map
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* measured on super-x */
@@ -1170,9 +1147,7 @@ public class dooyong
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, primella_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_lastday = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	/* 64k for code + 128k for banks */
@@ -1705,18 +1680,18 @@ public class dooyong
 	
 	/* The differences between the two lastday sets are only in the sound program
 	   and graphics. The main program is the same. */
-	public static GameDriver driver_lastday	   = new GameDriver("1990"	,"lastday"	,"dooyong.java"	,rom_lastday,null	,machine_driver_lastday	,input_ports_lastday	,null	,ROT270	,	"Dooyong", "The Last Day (set 1)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_lastdaya	   = new GameDriver("1990"	,"lastdaya"	,"dooyong.java"	,rom_lastdaya,driver_lastday	,machine_driver_lastday	,input_ports_lastday	,null	,ROT270	,	"Dooyong", "The Last Day (set 2)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gulfstrm	   = new GameDriver("1991"	,"gulfstrm"	,"dooyong.java"	,rom_gulfstrm,null	,machine_driver_gulfstrm	,input_ports_gulfstrm	,null	,ROT270	,	"Dooyong", "Gulf Storm", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gulfstr2	   = new GameDriver("1991"	,"gulfstr2"	,"dooyong.java"	,rom_gulfstr2,driver_gulfstrm	,machine_driver_gulfstrm	,input_ports_gulfstrm	,null	,ROT270	,	"Dooyong (Media Shoji license)", "Gulf Storm (Media Shoji)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_pollux	   = new GameDriver("1991"	,"pollux"	,"dooyong.java"	,rom_pollux,null	,machine_driver_pollux	,input_ports_pollux	,null	,ROT270	,	"Dooyong", "Pollux (set 1)" )
-	public static GameDriver driver_polluxa	   = new GameDriver("1991"	,"polluxa"	,"dooyong.java"	,rom_polluxa,driver_pollux	,machine_driver_pollux	,input_ports_pollux	,null	,ROT270	,	"Dooyong", "Pollux (set 2)" )
-	public static GameDriver driver_bluehawk	   = new GameDriver("1993"	,"bluehawk"	,"dooyong.java"	,rom_bluehawk,null	,machine_driver_bluehawk	,input_ports_bluehawk	,null	,ROT270	,	"Dooyong", "Blue Hawk", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_bluehawn	   = new GameDriver("1993"	,"bluehawn"	,"dooyong.java"	,rom_bluehawn,driver_bluehawk	,machine_driver_bluehawk	,input_ports_bluehawk	,null	,ROT270	,	"[Dooyong] (NTC license)", "Blue Hawk (NTC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sadari	   = new GameDriver("1993"	,"sadari"	,"dooyong.java"	,rom_sadari,null	,machine_driver_primella	,input_ports_primella	,null	,ROT0	,	"[Dooyong] (NTC license)", "Sadari" )
-	public static GameDriver driver_gundl94	   = new GameDriver("1994"	,"gundl94"	,"dooyong.java"	,rom_gundl94,null	,machine_driver_primella	,input_ports_primella	,null	,ROT0	,	"Dooyong", "Gun Dealer '94" )
-	public static GameDriver driver_primella	   = new GameDriver("1994"	,"primella"	,"dooyong.java"	,rom_primella,driver_gundl94	,machine_driver_primella	,input_ports_primella	,null	,ROT0	,	"[Dooyong] (NTC license)", "Primella" )
-	public static GameDriver driver_superx	   = new GameDriver("1994"	,"superx"	,"dooyong.java"	,rom_superx,null	,machine_driver_superx	,input_ports_rshark	,null	,ROT270	,	"NTC", "Super-X (NTC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_superxm	   = new GameDriver("1994"	,"superxm"	,"dooyong.java"	,rom_superxm,driver_superx	,machine_driver_superx	,input_ports_rshark	,null	,ROT270	,	"Mitchell", "Super-X (Mitchell)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_rshark	   = new GameDriver("1995"	,"rshark"	,"dooyong.java"	,rom_rshark,null	,machine_driver_rshark	,input_ports_rshark	,null	,ROT270	,	"Dooyong", "R-Shark", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1990, lastday,  0,        lastday,  lastday,  0, ROT270, "Dooyong", "The Last Day (set 1)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1990, lastdaya, lastday,  lastday,  lastday,  0, ROT270, "Dooyong", "The Last Day (set 2)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, gulfstrm, 0,        gulfstrm, gulfstrm, 0, ROT270, "Dooyong", "Gulf Storm", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, gulfstr2, gulfstrm, gulfstrm, gulfstrm, 0, ROT270, "Dooyong (Media Shoji license)", "Gulf Storm (Media Shoji)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1991, pollux,   0,        pollux,   pollux,   0, ROT270, "Dooyong", "Pollux (set 1)" )
+	GAME( 1991, polluxa,  pollux,   pollux,   pollux,   0, ROT270, "Dooyong", "Pollux (set 2)" )
+	GAMEX(1993, bluehawk, 0,        bluehawk, bluehawk, 0, ROT270, "Dooyong", "Blue Hawk", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, bluehawn, bluehawk, bluehawk, bluehawk, 0, ROT270, "[Dooyong] (NTC license)", "Blue Hawk (NTC)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1993, sadari,   0,        primella, primella, 0, ROT0,   "[Dooyong] (NTC license)", "Sadari" )
+	GAME( 1994, gundl94,  0,        primella, primella, 0, ROT0,   "Dooyong", "Gun Dealer '94" )
+	GAME( 1994, primella, gundl94,  primella, primella, 0, ROT0,   "[Dooyong] (NTC license)", "Primella" )
+	GAMEX(1994, superx,   0,        superx,   rshark,   0, ROT270, "NTC", "Super-X (NTC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, superxm,  superx,   superx,   rshark,   0, ROT270, "Mitchell", "Super-X (Mitchell)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1995, rshark,   0,        rshark,   rshark,   0, ROT270, "Dooyong", "R-Shark", GAME_IMPERFECT_GRAPHICS )
 }

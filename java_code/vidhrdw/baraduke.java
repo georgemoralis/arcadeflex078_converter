@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class baraduke
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_baraduke  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_baraduke  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int bit0,bit1,bit2,bit3,r,g,b;
 	
@@ -95,8 +94,7 @@ public class baraduke
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_baraduke  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_baraduke  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -115,13 +113,11 @@ public class baraduke
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr baraduke_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr baraduke_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return baraduke_videoram[offset];
 	} };
 	
-	public static WriteHandlerPtr baraduke_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr baraduke_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (baraduke_videoram[offset] != data)
 		{
 			baraduke_videoram[offset] = data;
@@ -149,7 +145,7 @@ public class baraduke
 	
 		scrollx = xscroll[layer] + xdisp[layer];
 		scrolly = yscroll[layer] + 25;
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
 			scrollx = -scrollx + 227;
 			scrolly = -scrolly + 32;
@@ -159,12 +155,10 @@ public class baraduke
 		tilemap_set_scrolly(tilemap[layer], 0, scrolly);
 	}
 	
-	public static WriteHandlerPtr baraduke_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr baraduke_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(0, offset, data);
 	} };
-	public static WriteHandlerPtr baraduke_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr baraduke_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(1, offset, data);
 	} };
 	
@@ -215,7 +209,7 @@ public class baraduke
 					if( sx > 512 - 32 ) sx -= 512;
 	
 					if( flipx && !wide ) sx -= 16;
-					if (tall == 0) sy += 16;
+					if( !tall ) sy += 16;
 					if( !tall && (attr2 & 0x10) && flipy ) sy -= 16;
 	
 					sx += sprite_xoffs;
@@ -225,9 +219,9 @@ public class baraduke
 					{
 						for( col=0; col<=wide; col++ )
 						{
-							if (flipscreen != 0)
+							if (flipscreen)
 							{
-								drawgfx( bitmap, Machine.gfx[5],
+								drawgfx( bitmap, Machine->gfx[5],
 									sprite_number+2*row+col,
 									color,
 									NOT(flipx),NOT(flipy),
@@ -238,7 +232,7 @@ public class baraduke
 							}
 							else
 							{
-								drawgfx( bitmap, Machine.gfx[5],
+								drawgfx( bitmap, Machine->gfx[5],
 									sprite_number+2*row+col,
 									color,
 									flipx,flipy,
@@ -255,8 +249,7 @@ public class baraduke
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_baraduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_baraduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		/* this is the global sprite Y offset, actually */
@@ -289,7 +282,7 @@ public class baraduke
 			{
 				sx = mx + 2; sy = my - 2;
 			}
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 					sx = 35 - sx; sy = 27 - sy;
 			}
@@ -301,8 +294,7 @@ public class baraduke
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_metrocrs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_metrocrs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		/* this is the global sprite Y offset, actually */
@@ -334,7 +326,7 @@ public class baraduke
 			{
 				sx = mx + 2; sy = my - 2;
 			}
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 					sx = 35 - sx; sy = 27 - sy;
 			}

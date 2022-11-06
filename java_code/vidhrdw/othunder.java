@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,28 +28,26 @@ public class othunder
 	
 	/**********************************************************/
 	
-	static public static VideoStartHandlerPtr video_start_othunder_core  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_othunder_core  = new VideoStartHandlerPtr() { public int handler(){
 		/* Up to $800/8 big sprites, requires 0x100 * sizeof(*spritelist)
 		   Multiply this by 32 to give room for the number of small sprites,
 		   which are what actually get put in the structure. */
 	
 		spritelist = auto_malloc(0x2000 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,taito_hide_pixels,0,0,0,0,0,0))
 			return 1;
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_othunder  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_othunder  = new VideoStartHandlerPtr() { public int handler(){
 		/* There is a problem here. 4 is correct for text layer/sprite
 		   alignment, but the bg layers [or one of them] are wrong */
 	
@@ -111,7 +109,7 @@ public class othunder
 	static void othunder_draw_sprites_16x8(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int *primasks,int y_offs)
 	{
 		data16_t *spritemap = (data16_t *)memory_region(REGION_USER1);
-		UINT16 tile_mask = (Machine.gfx[0].total_elements) - 1;
+		UINT16 tile_mask = (Machine->gfx[0]->total_elements) - 1;
 		int offs, data, tilenum, color, flipx, flipy;
 		int x, y, priority, curx, cury;
 		int sprites_flipscreen = 0;
@@ -142,7 +140,7 @@ public class othunder
 			tilenum = data & 0x1fff;	// $80000 spritemap rom maps up to $2000 64x64 sprites
 			flipy = (data & 0x8000) >> 15;
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			map_offset = tilenum << 5;
 	
@@ -164,8 +162,8 @@ public class othunder
 	
 				px = k;
 				py = j;
-				if (flipx != 0)  px = 3-k;	/* pick tiles back to front for x and y flips */
-				if (flipy != 0)  py = 7-j;
+				if (flipx)  px = 3-k;	/* pick tiles back to front for x and y flips */
+				if (flipy)  py = 7-j;
 	
 				code = spritemap[map_offset + px + (py<<2)] &tile_mask;
 	
@@ -181,7 +179,7 @@ public class othunder
 				zx= x + (((k+1)*zoomx)/4) - curx;
 				zy= y + (((j+1)*zoomy)/8) - cury;
 	
-				if (sprites_flipscreen != 0)
+				if (sprites_flipscreen)
 				{
 					/* -zx/y is there to fix zoomed sprite coords in screenflip.
 					   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -193,33 +191,33 @@ public class othunder
 					flipy = NOT(flipy);
 				}
 	
-				sprite_ptr.code = code;
-				sprite_ptr.color = color;
-				sprite_ptr.flipx = flipx;
-				sprite_ptr.flipy = flipy;
-				sprite_ptr.x = curx;
-				sprite_ptr.y = cury;
-				sprite_ptr.zoomx = zx << 12;
-				sprite_ptr.zoomy = zy << 13;
+				sprite_ptr->code = code;
+				sprite_ptr->color = color;
+				sprite_ptr->flipx = flipx;
+				sprite_ptr->flipy = flipy;
+				sprite_ptr->x = curx;
+				sprite_ptr->y = cury;
+				sprite_ptr->zoomx = zx << 12;
+				sprite_ptr->zoomy = zy << 13;
 	
-				if (primasks != 0)
+				if (primasks)
 				{
-					sprite_ptr.primask = primasks[priority];
+					sprite_ptr->primask = primasks[priority];
 					sprite_ptr++;
 				}
 				else
 				{
-					drawgfxzoom(bitmap,Machine.gfx[0],
-							sprite_ptr.code,
-							sprite_ptr.color,
-							sprite_ptr.flipx,sprite_ptr.flipy,
-							sprite_ptr.x,sprite_ptr.y,
+					drawgfxzoom(bitmap,Machine->gfx[0],
+							sprite_ptr->code,
+							sprite_ptr->color,
+							sprite_ptr->flipx,sprite_ptr->flipy,
+							sprite_ptr->x,sprite_ptr->y,
 							cliprect,TRANSPARENCY_PEN,0,
-							sprite_ptr.zoomx,sprite_ptr.zoomy);
+							sprite_ptr->zoomx,sprite_ptr->zoomy);
 				}
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	
@@ -228,14 +226,14 @@ public class othunder
 		{
 			sprite_ptr--;
 	
-			pdrawgfxzoom(bitmap,Machine.gfx[0],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			pdrawgfxzoom(bitmap,Machine->gfx[0],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					cliprect,TRANSPARENCY_PEN,0,
-					sprite_ptr.zoomx,sprite_ptr.zoomy,
-					sprite_ptr.primask);
+					sprite_ptr->zoomx,sprite_ptr->zoomy,
+					sprite_ptr->primask);
 		}
 	}
 	
@@ -244,8 +242,7 @@ public class othunder
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_othunder  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[3];
 	
 		TC0100SCN_tilemap_update();

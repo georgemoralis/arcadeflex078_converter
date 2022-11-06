@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -86,7 +86,7 @@ public class datafile
 	 */
 	static int CLIB_DECL DriverDataCompareFunc(const void *arg1,const void *arg2)
 	{
-	    return strcmp( ((driver_data_type *)arg1).name, ((driver_data_type *)arg2).name );
+	    return strcmp( ((driver_data_type *)arg1)->name, ((driver_data_type *)arg2)->name );
 	}
 	
 	/*
@@ -110,7 +110,7 @@ public class datafile
 			sorted_drivers = (driver_data_type *)malloc(sizeof(driver_data_type) * num_games);
 			for (i=0;i<num_games;i++)
 			{
-				sorted_drivers[i].name = drivers[i].name;
+				sorted_drivers[i].name = drivers[i]->name;
 				sorted_drivers[i].index = i;
 			}
 			qsort(sorted_drivers,num_games,sizeof(driver_data_type),DriverDataCompareFunc);
@@ -123,7 +123,7 @@ public class datafile
 		if (driver_index_info == NULL)
 			return -1;
 	
-		return driver_index_info.index;
+		return driver_index_info->index;
 	
 	}
 	
@@ -155,7 +155,7 @@ public class datafile
 	                {
 	                        /* Store away our file position (if given on input) */
 	
-	                        if (pdwPosition != 0)
+	                        if (pdwPosition)
 	                                *pdwPosition = dwFilePos;
 	
 	                        /* If it's a separator, special case it */
@@ -210,7 +210,7 @@ public class datafile
 	
 	                                /* Connect up the */
 	
-	                                if (ppszTokenText != 0)
+	                                if (ppszTokenText)
 	                                        *ppszTokenText = bToken;
 	
 	                                return(TOKEN_SYMBOL);
@@ -279,7 +279,7 @@ public class datafile
 	
 	                                                mame_fseek(fp, dwPos, SEEK_SET);
 	
-	                                                if (pdwPosition != 0)
+	                                                if (pdwPosition)
 	                                                        *pdwPosition = dwPos;
 	
 	                                                if (LF == bData)        /* LF? Good! */
@@ -319,7 +319,7 @@ public class datafile
 	{
 	        /* If the file is open, time for fclose. */
 	
-	        if (fp != 0)
+	        if (fp)
 	        {
 	                mame_fclose(fp);
 	        }
@@ -387,7 +387,7 @@ public class datafile
 	
 	        while ((c1 = tolower(*s1)) == (c2 = tolower(*s2)))
 	        {
-	                if (c1 == 0)
+	                if (!c1)
 	                        return 0;
 	
 	                s1++;
@@ -412,7 +412,7 @@ public class datafile
 	        {
 	                if ((c1 = tolower (*s1)) != (c2 = tolower (*s2)))
 	                        return (c1 - c2);
-	                else if (c1 == 0)
+	                else if (!c1)
 	                        break;
 	                --n;
 	
@@ -470,14 +470,14 @@ public class datafile
 										game_index = GetGameNameIndex(s);
 										if (game_index >= 0)
 										{
-											idx.driver = drivers[game_index];
-											idx.offset = tell;
+											idx->driver = drivers[game_index];
+											idx->offset = tell;
 											idx++;
 											count++;
 											/* done = 1;  Not done, as we must process other clones in list */
 	
 										}
-										if (done == 0)
+										if (!done)
 										{
 											token = GetNextToken ((UINT8 **)&s, &tell);
 	
@@ -492,8 +492,8 @@ public class datafile
 	        }
 	
 	        /* mark end of index */
-	        idx.offset = 0L;
-	        idx.driver = 0;
+	        idx->offset = 0L;
+	        idx->driver = 0;
 	        return count;
 	}
 	
@@ -518,17 +518,17 @@ public class datafile
 	        *buffer = '\0';
 	
 	        /* find driver in datafile index */
-	        while (idx.driver)
+	        while (idx->driver)
 	        {
 	
-	                if (idx.driver == drv) break;
+	                if (idx->driver == drv) break;
 	
 	                idx++;
 	        }
-	        if (idx.driver == 0) return 1; /* driver not found in index */
+	        if (idx->driver == 0) return 1; /* driver not found in index */
 	
 	        /* seek to correct point in datafile */
-	        if (ParseSeek (idx.offset, SEEK_SET)) return 1;
+	        if (ParseSeek (idx->offset, SEEK_SET)) return 1;
 	
 	        /* read text until buffer is full or end of entry is encountered */
 	        while (TOKEN_INVALID != token)
@@ -540,7 +540,7 @@ public class datafile
 	                token = GetNextToken ((UINT8 **)&s, &tell);
 	                if (TOKEN_INVALID == token) continue;
 	
-	                if (found != 0)
+	                if (found)
 	                {
 	                        /* end entry when a tag is encountered */
 	                        if (TOKEN_SYMBOL == token && DATAFILE_TAG == s[0] && TOKEN_LINEBREAK == prev_token) break;
@@ -619,20 +619,20 @@ public class datafile
 	        *buffer = 0;
 	
 	
-	        if (history_filename == 0)
+	        if(!history_filename)
 	                history_filename = "history.dat";
 	
 	        /* try to open history datafile */
 	        if (ParseOpen (history_filename))
 	        {
 	                /* create index if necessary */
-	                if (hist_idx != 0)
+	                if (hist_idx)
 	                        history = 1;
 	                else
 	                        history = (index_datafile (&hist_idx) != 0);
 	
 	                /* load history text */
-	                if (hist_idx != 0)
+	                if (hist_idx)
 	                {
 	                        const struct GameDriver *gdrv;
 	
@@ -641,28 +641,28 @@ public class datafile
 	                        {
 	                                err = load_datafile_text (gdrv, buffer, bufsize,
 	                                                                                  hist_idx, DATAFILE_TAG_BIO);
-	                                gdrv = gdrv.clone_of;
+	                                gdrv = gdrv->clone_of;
 	                        } while (err && gdrv);
 	
-	                        if (err != 0) history = 0;
+	                        if (err) history = 0;
 	                }
 	                ParseClose ();
 	        }
 	
-	        if (mameinfo_filename == 0)
+	        if(!mameinfo_filename)
 	                mameinfo_filename = "mameinfo.dat";
 	
 	        /* try to open mameinfo datafile */
 	        if (ParseOpen (mameinfo_filename))
 	        {
 	                /* create index if necessary */
-	                if (mame_idx != 0)
+	                if (mame_idx)
 	                        mameinfo = 1;
 	                else
 	                        mameinfo = (index_datafile (&mame_idx) != 0);
 	
 	                /* load informational text (append) */
-	                if (mame_idx != 0)
+	                if (mame_idx)
 	                {
 	                        int len = strlen (buffer);
 	                        const struct GameDriver *gdrv;
@@ -672,10 +672,10 @@ public class datafile
 	                        {
 	                                err = load_datafile_text (gdrv, buffer+len, bufsize-len,
 	                                                                                  mame_idx, DATAFILE_TAG_MAME);
-	                                gdrv = gdrv.clone_of;
+	                                gdrv = gdrv->clone_of;
 	                        } while (err && gdrv);
 	
-	                        if (err != 0) mameinfo = 0;
+	                        if (err) mameinfo = 0;
 	                }
 	                ParseClose ();
 	        }

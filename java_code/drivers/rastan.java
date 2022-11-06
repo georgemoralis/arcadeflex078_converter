@@ -8,7 +8,7 @@ driver by Jarek Burczynski
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -63,8 +63,7 @@ public class rastan
 	MEMORY_END
 	
 	
-	public static WriteHandlerPtr rastan_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rastan_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 5, memory_region(REGION_CPU2) + ((data ^1) & 0x01) * 0x4000 + 0x10000 );
 	} };
 	
@@ -95,7 +94,7 @@ public class rastan
 	
 	
 	
-	static InputPortPtr input_ports_rastan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rastan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rastan )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -172,7 +171,7 @@ public class rastan
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rastsaga = new InputPortPtr(){ public void handler() { 		/* same as rastan, coinage is different */
+	static InputPortPtr input_ports_rastsaga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rastsaga )		/* same as rastan, coinage is different */
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -312,8 +311,7 @@ public class rastan
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rastan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rastan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz */
@@ -340,9 +338,7 @@ public class rastan
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -469,9 +465,9 @@ public class rastan
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_rastan	   = new GameDriver("1987"	,"rastan"	,"rastan.java"	,rom_rastan,null	,machine_driver_rastan	,input_ports_rastan	,null	,ROT0	,	"Taito Corporation Japan", "Rastan (World)")
+	GAME( 1987, rastan,   0,      rastan, rastan,   0, ROT0, "Taito Corporation Japan", "Rastan (World)")
 	/* IDENTICAL to rastan, only difference is copyright notice and Coin B coinage */
-	public static GameDriver driver_rastanu	   = new GameDriver("1987"	,"rastanu"	,"rastan.java"	,rom_rastanu,driver_rastan	,machine_driver_rastan	,input_ports_rastsaga	,null	,ROT0	,	"Taito America Corporation", "Rastan (US set 1)")
-	public static GameDriver driver_rastanu2	   = new GameDriver("1987"	,"rastanu2"	,"rastan.java"	,rom_rastanu2,driver_rastan	,machine_driver_rastan	,input_ports_rastsaga	,null	,ROT0	,	"Taito America Corporation", "Rastan (US set 2)")
-	public static GameDriver driver_rastsaga	   = new GameDriver("1987"	,"rastsaga"	,"rastan.java"	,rom_rastsaga,driver_rastan	,machine_driver_rastan	,input_ports_rastsaga	,null	,ROT0	,	"Taito Corporation", "Rastan Saga (Japan)")
+	GAME( 1987, rastanu,  rastan, rastan, rastsaga, 0, ROT0, "Taito America Corporation", "Rastan (US set 1)")
+	GAME( 1987, rastanu2, rastan, rastan, rastsaga, 0, ROT0, "Taito America Corporation", "Rastan (US set 2)")
+	GAME( 1987, rastsaga, rastan, rastan, rastsaga, 0, ROT0, "Taito Corporation", "Rastan Saga (Japan)")
 }

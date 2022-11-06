@@ -14,7 +14,7 @@ todo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,9 +22,6 @@ public class gomoku
 {
 	
 	
-	PALETTE_INIT(gomoku);
-	VIDEO_START(gomoku);
-	VIDEO_UPDATE(gomoku);
 	
 	
 	
@@ -33,8 +30,7 @@ public class gomoku
 	void gomoku_sh_stop(void);
 	
 	/* input ports are rotated 90 degrees */
-	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i, res;
 	
 		res = 0;
@@ -74,7 +70,7 @@ public class gomoku
 	};
 	
 	
-	static InputPortPtr input_ports_gomoku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gomoku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gomoku )
 		PORT_START(); 	/* 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN );
@@ -160,8 +156,7 @@ public class gomoku
 		0
 	};
 	
-	public static MachineHandlerPtr machine_driver_gomoku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gomoku )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/8)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem_gomoku,writemem_gomoku)
@@ -183,9 +178,7 @@ public class gomoku
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -224,5 +217,5 @@ public class gomoku
 	
 	
 	//     YEAR,     NAME,   PARENT,  MACHINE,    INPUT,     INIT,    MONITOR, COMPANY, FULLNAME, FLAGS
-	public static GameDriver driver_gomoku	   = new GameDriver("1981"	,"gomoku"	,"gomoku.java"	,rom_gomoku,null	,machine_driver_gomoku	,input_ports_gomoku	,null	,ROT90	,	"Nichibutsu", "Gomoku Narabe Renju", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981,   gomoku,        0,   gomoku,   gomoku,        0,      ROT90, "Nichibutsu", "Gomoku Narabe Renju", GAME_IMPERFECT_SOUND )
 }

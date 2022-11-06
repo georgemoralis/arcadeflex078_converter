@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -94,8 +94,7 @@ public class wc90
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_wc90  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wc90  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -109,8 +108,7 @@ public class wc90
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_wc90t  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wc90t  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(track_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
 		fg_tilemap = tilemap_create(track_get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -131,8 +129,7 @@ public class wc90
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr wc90_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90_bgvideoram[offset] != data)
 		{
 			wc90_bgvideoram[offset] = data;
@@ -140,8 +137,7 @@ public class wc90
 		}
 	} };
 	
-	public static WriteHandlerPtr wc90_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90_fgvideoram[offset] != data)
 		{
 			wc90_fgvideoram[offset] = data;
@@ -149,8 +145,7 @@ public class wc90
 		}
 	} };
 	
-	public static WriteHandlerPtr wc90_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90_txvideoram[offset] != data)
 		{
 			wc90_txvideoram[offset] = data;
@@ -167,7 +162,7 @@ public class wc90
 	***************************************************************************/
 	
 	#define WC90_DRAW_SPRITE( code, sx, sy ) \
-						drawgfx( bitmap, Machine.gfx[3], code, flags >> 4, \
+						drawgfx( bitmap, Machine->gfx[3], code, flags >> 4, \
 						bank&1, bank&2, sx, sy, cliprect, TRANSPARENCY_PEN, 0 )
 	
 	static char pos32x32[] = { 0, 1, 2, 3 };
@@ -225,7 +220,7 @@ public class wc90
 	
 	static void drawsprite_16x32( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ((bank & 2) != 0) {
+		if ( bank & 2 ) {
 			WC90_DRAW_SPRITE( code+1, sx, sy+16 );
 			WC90_DRAW_SPRITE( code, sx, sy );
 		} else {
@@ -236,7 +231,7 @@ public class wc90
 	
 	static void drawsprite_16x64( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ((bank & 2) != 0) {
+		if ( bank & 2 ) {
 			WC90_DRAW_SPRITE( code+3, sx, sy+48 );
 			WC90_DRAW_SPRITE( code+2, sx, sy+32 );
 			WC90_DRAW_SPRITE( code+1, sx, sy+16 );
@@ -251,7 +246,7 @@ public class wc90
 	
 	static void drawsprite_32x16( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ((bank & 1) != 0) {
+		if ( bank & 1 ) {
 			WC90_DRAW_SPRITE( code+1, sx+16, sy );
 			WC90_DRAW_SPRITE( code, sx, sy );
 		} else {
@@ -288,7 +283,7 @@ public class wc90
 	
 	static void drawsprite_64x16( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int code,
 								  int sx, int sy, int bank, int flags ) {
-		if ((bank & 1) != 0) {
+		if ( bank & 1 ) {
 			WC90_DRAW_SPRITE( code+3, sx+48, sy );
 			WC90_DRAW_SPRITE( code+2, sx+32, sy );
 			WC90_DRAW_SPRITE( code+1, sx+16, sy );
@@ -376,7 +371,7 @@ public class wc90
 	
 			if ( ( bank >> 4 ) == priority ) {
 	
-				if ((bank & 4) != 0) { /* visible */
+				if ( bank & 4 ) { /* visible */
 					which = ( spriteram.read(offs+2)>> 2 ) + ( spriteram.read(offs+3)<< 6 );
 	
 					sx = spriteram.read(offs + 8)+ ( (spriteram.read(offs + 9)& 1 ) << 8 );
@@ -392,8 +387,7 @@ public class wc90
 	#undef WC90_DRAW_SPRITE
 	
 	
-	public static VideoUpdateHandlerPtr video_update_wc90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wc90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,wc90_scroll2xlo[0] + 256 * wc90_scroll2xhi[0]);
 		tilemap_set_scrolly(bg_tilemap,0,wc90_scroll2ylo[0] + 256 * wc90_scroll2yhi[0]);
 		tilemap_set_scrollx(fg_tilemap,0,wc90_scroll1xlo[0] + 256 * wc90_scroll1xhi[0]);

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -43,8 +43,7 @@ public class gotya
 		{   -1, 0, 0 }		/* end of array */
 	};
 	
-	public static WriteHandlerPtr gotya_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gotya_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int theme_playing;
 		int sample_number;
 	

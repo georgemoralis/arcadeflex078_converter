@@ -29,7 +29,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -44,18 +44,15 @@ public class nbmj8688
 	
 	
 	
-	public static DriverInitHandlerPtr init_mjsikaku  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjsikaku  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_MJSIKAKU;
 	} };
 	
-	public static DriverInitHandlerPtr init_otonano  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_otonano  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_OTONANO;
 	} };
 	
-	public static DriverInitHandlerPtr init_mjcamera  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjcamera  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x20000;
 		UINT8 *prot = memory_region(REGION_USER1);
 		int i;
@@ -73,8 +70,7 @@ public class nbmj8688
 		nb1413m3_type = NB1413M3_MJCAMERA;
 	} };
 	
-	public static DriverInitHandlerPtr init_kanatuen  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kanatuen  = new DriverInitHandlerPtr() { public void handler(){
 		/* uses the same protection data as mjcamer, but a different check */
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x30000;
 	
@@ -86,8 +82,7 @@ public class nbmj8688
 		nb1413m3_type = NB1413M3_KANATUEN;
 	} };
 	
-	public static DriverInitHandlerPtr init_idhimitu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_idhimitu  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_SOUND1) + 0x20000;
 		UINT8 *prot = memory_region(REGION_USER1);
 		int i;
@@ -105,83 +100,67 @@ public class nbmj8688
 		nb1413m3_type = NB1413M3_IDHIMITU;
 	} };
 	
-	public static DriverInitHandlerPtr init_kaguya  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kaguya  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_KAGUYA;
 	} };
 	
-	public static DriverInitHandlerPtr init_secolove  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_secolove  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_SECOLOVE;
 	} };
 	
-	public static DriverInitHandlerPtr init_citylove  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_citylove  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_CITYLOVE;
 	} };
 	
-	public static DriverInitHandlerPtr init_seiha  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_seiha  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_SEIHA;
 	} };
 	
-	public static DriverInitHandlerPtr init_seiham  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_seiham  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_SEIHAM;
 	} };
 	
-	public static DriverInitHandlerPtr init_korinai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_korinai  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_KORINAI;
 	} };
 	
-	public static DriverInitHandlerPtr init_iemoto  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_iemoto  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_IEMOTO;
 	} };
 	
-	public static DriverInitHandlerPtr init_ojousan  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ojousan  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_OJOUSAN;
 	} };
 	
-	public static DriverInitHandlerPtr init_bijokkoy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bijokkoy  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_BIJOKKOY;
 	} };
 	
-	public static DriverInitHandlerPtr init_bijokkog  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bijokkog  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_BIJOKKOG;
 	} };
 	
-	public static DriverInitHandlerPtr init_housemnq  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_housemnq  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_HOUSEMNQ;
 	} };
 	
-	public static DriverInitHandlerPtr init_housemn2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_housemn2  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_HOUSEMN2;
 	} };
 	
-	public static DriverInitHandlerPtr init_orangec  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_orangec  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_ORANGEC;
 	} };
 	
-	public static DriverInitHandlerPtr init_crystalg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crystalg  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_CRYSTALG;
 	} };
 	
-	public static DriverInitHandlerPtr init_crystal2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crystal2  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_CRYSTAL2;
 	} };
 	
-	public static DriverInitHandlerPtr init_apparel  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_apparel  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_APPAREL;
 	} };
 	
@@ -233,15 +212,13 @@ public class nbmj8688
 	
 	
 	
-	public static ReadHandlerPtr sndrom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sndrom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* get top 8 bits of the I/O port address */
 		offset = (offset << 8) | (activecpu_get_reg(Z80_BC) >> 8);
 		return nb1413m3_sndrom_r(offset);
 	} };
 	
-	public static ReadHandlerPtr ff_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ff_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* possibly because of a bug, reads from port 0xd0 must return 0xff
 		   otherwise apparel doesn't clear the background when you insert a coin */
 		return 0xff;
@@ -401,8 +378,7 @@ public class nbmj8688
 	};
 	
 	
-	public static WriteHandlerPtr seiha_b0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seiha_b0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nb1413m3_outcoin_w(0,data);
 		nb1413m3_sndrombank1_w(0,data);
 	} };
@@ -496,7 +472,7 @@ public class nbmj8688
 	
 	
 	
-	static InputPortPtr input_ports_mjsikaku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjsikaku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjsikaku )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -566,7 +542,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_otonano = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_otonano = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( otonano )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -636,7 +612,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjcamera = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjcamera = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjcamera )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -706,7 +682,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kaguya = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kaguya = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kaguya )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "1C_1C") );
@@ -774,7 +750,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kanatuen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kanatuen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kanatuen )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -845,7 +821,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_idhimitu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_idhimitu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( idhimitu )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -916,7 +892,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_secolove = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_secolove = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( secolove )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -985,7 +961,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_citylove = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_citylove = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( citylove )
 	
 		// I don't have manual for this game.
 	
@@ -1060,7 +1036,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_seiha = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seiha = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seiha )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Hard"));
@@ -1130,7 +1106,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_seiham = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seiham = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seiham )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x00, "Game Out" );
 		PORT_DIPSETTING(    0x07, "60% (Hard"));
@@ -1198,7 +1174,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_iemoto = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iemoto = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iemoto )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Hard"));
@@ -1268,7 +1244,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bijokkoy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bijokkoy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bijokkoy )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1337,7 +1313,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bijokkog = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bijokkog = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bijokkog )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1405,7 +1381,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_housemnq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_housemnq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( housemnq )
 	
 		// I don't have manual for this game.
 	
@@ -1476,7 +1452,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_housemn2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_housemn2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( housemn2 )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1543,7 +1519,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_orangec = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_orangec = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( orangec )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1613,7 +1589,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vipclub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vipclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vipclub )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1683,7 +1659,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ojousan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ojousan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ojousan )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1753,7 +1729,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_korinai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_korinai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( korinai )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1823,7 +1799,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crystalg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crystalg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crystalg )
 	
 		// I don't have manual for this game.
 	
@@ -1896,7 +1872,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crystal2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crystal2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crystal2 )
 	
 		// I don't have manual for this game.
 	
@@ -1965,7 +1941,7 @@ public class nbmj8688
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_apparel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_apparel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( apparel )
 	
 		// I don't have manual for this game.
 	
@@ -2065,8 +2041,7 @@ public class nbmj8688
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV_4096 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV_4096 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 5000000)	/* 5.00 MHz */
@@ -2090,13 +2065,10 @@ public class nbmj8688
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV_256 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV_256 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2106,13 +2078,10 @@ public class nbmj8688
 	
 		MDRV_PALETTE_INIT(mbmj8688_8bit)
 		MDRV_VIDEO_START(mbmj8688_8bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV_65536 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV_65536 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2123,15 +2092,12 @@ public class nbmj8688
 	
 		MDRV_PALETTE_INIT(mbmj8688_16bit)
 		MDRV_VIDEO_START(mbmj8688_hybrid_16bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	// --------------------------------------------------------------------------------
 	
-	public static MachineHandlerPtr machine_driver_crystalg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crystalg )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_256)
@@ -2139,13 +2105,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_crystal2)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,96)	// nmiclock = 2f
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_apparel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( apparel )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_256)
@@ -2153,13 +2116,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_secolove)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mbmj_h12bit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mbmj_h12bit )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2170,13 +2130,10 @@ public class nbmj8688
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mbmj8688_hybrid_12bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mbmj_p16bit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mbmj_p16bit )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2187,13 +2144,10 @@ public class nbmj8688
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mbmj8688_pure_16bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mbmj_p16bit_LCD = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mbmj_p16bit_LCD )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mbmj_p16bit)
@@ -2207,13 +2161,10 @@ public class nbmj8688
 	
 		MDRV_VIDEO_START(mbmj8688_pure_16bit_LCD)
 		MDRV_VIDEO_UPDATE(mbmj8688_LCD)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_seiha = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( seiha )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2221,13 +2172,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_seiha)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_iemoto = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( iemoto )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2235,13 +2183,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_secolove,writemem_secolove)
 		MDRV_CPU_PORTS(readport_secolove,writeport_iemoto)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ojousan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ojousan )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_65536)
@@ -2249,13 +2194,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_ojousan,writemem_ojousan)
 		MDRV_CPU_PORTS(readport_secolove,writeport_iemoto)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)	// nmiclock = 60
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mbmj_p12bit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mbmj_p12bit )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2263,13 +2205,10 @@ public class nbmj8688
 		MDRV_CPU_MEMORY(readmem_mjsikaku,writemem_mjsikaku)
 		MDRV_CPU_PORTS(readport_kaguya,writeport_kaguya)
 		MDRV_CPU_VBLANK_INT(nb1413m3_interrupt,128)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjsikaku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjsikaku )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(NBMJDRV_4096)
@@ -2280,21 +2219,16 @@ public class nbmj8688
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_otonano = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( otonano )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mjsikaku)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_otonano,writeport_otonano)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2793,38 +2727,38 @@ public class nbmj8688
 	
 	
 	/* 8-bit palette */
-	public static GameDriver driver_crystalg	   = new GameDriver("1986"	,"crystalg"	,"nbmj8688.java"	,rom_crystalg,null	,machine_driver_crystalg	,input_ports_crystalg	,init_crystalg	,ROT0	,	"Nichibutsu", "Crystal Gal (Japan 860512)", GAME_NOT_WORKING )
-	public static GameDriver driver_crystal2	   = new GameDriver("1986"	,"crystal2"	,"nbmj8688.java"	,rom_crystal2,null	,machine_driver_crystalg	,input_ports_crystal2	,init_crystal2	,ROT0	,	"Nichibutsu", "Crystal Gal 2 (Japan 860620)", GAME_NOT_WORKING )
-	public static GameDriver driver_apparel	   = new GameDriver("1986"	,"apparel"	,"nbmj8688.java"	,rom_apparel,null	,machine_driver_apparel	,input_ports_apparel	,init_apparel	,ROT0	,	"Central Denshi", "Apparel Night (Japan 860929)" )
+	GAMEX(1986, crystalg, 0,        crystalg,        crystalg, crystalg, ROT0, "Nichibutsu", "Crystal Gal (Japan 860512)", GAME_NOT_WORKING )
+	GAMEX(1986, crystal2, 0,        crystalg,        crystal2, crystal2, ROT0, "Nichibutsu", "Crystal Gal 2 (Japan 860620)", GAME_NOT_WORKING )
+	GAME( 1986, apparel,  0,        apparel,         apparel,  apparel,  ROT0, "Central Denshi", "Apparel Night (Japan 860929)" )
 	
 	/* hybrid 12-bit palette */
-	public static GameDriver driver_citylove	   = new GameDriver("1986"	,"citylove"	,"nbmj8688.java"	,rom_citylove,null	,machine_driver_mbmj_h12bit	,input_ports_citylove	,init_citylove	,ROT0	,	"Nichibutsu", "City Love (Japan 860908)" )
-	public static GameDriver driver_secolove	   = new GameDriver("1986"	,"secolove"	,"nbmj8688.java"	,rom_secolove,null	,machine_driver_mbmj_h12bit	,input_ports_secolove	,init_secolove	,ROT0	,	"Nichibutsu", "Second Love (Japan 861201)" )
+	GAME( 1986, citylove, 0,        mbmj_h12bit,     citylove, citylove, ROT0, "Nichibutsu", "City Love (Japan 860908)" )
+	GAME( 1986, secolove, 0,        mbmj_h12bit,     secolove, secolove, ROT0, "Nichibutsu", "Second Love (Japan 861201)" )
 	
 	/* hybrid 16-bit palette */
-	public static GameDriver driver_seiha	   = new GameDriver("1987"	,"seiha"	,"nbmj8688.java"	,rom_seiha,null	,machine_driver_seiha	,input_ports_seiha	,init_seiha	,ROT0	,	"Nichibutsu", "Seiha (Japan 870725)" )
-	public static GameDriver driver_seiham	   = new GameDriver("1987"	,"seiham"	,"nbmj8688.java"	,rom_seiham,driver_seiha	,machine_driver_seiha	,input_ports_seiham	,init_seiham	,ROT0	,	"Nichibutsu", "Seiha [BET] (Japan 870723)" )
-	public static GameDriver driver_iemoto	   = new GameDriver("1987"	,"iemoto"	,"nbmj8688.java"	,rom_iemoto,null	,machine_driver_iemoto	,input_ports_iemoto	,init_iemoto	,ROT0	,	"Nichibutsu", "Iemoto (Japan 871020)" )
-	public static GameDriver driver_ojousan	   = new GameDriver("1987"	,"ojousan"	,"nbmj8688.java"	,rom_ojousan,null	,machine_driver_ojousan	,input_ports_ojousan	,init_ojousan	,ROT0	,	"Nichibutsu", "Ojousan (Japan 871204)" )
-	public static GameDriver driver_korinai	   = new GameDriver("1988"	,"korinai"	,"nbmj8688.java"	,rom_korinai,null	,machine_driver_ojousan	,input_ports_korinai	,init_korinai	,ROT0	,	"Nichibutsu", "Mahjong-zukino Korinai Menmen (Japan 880425)" )
+	GAME( 1987, seiha,    0,        seiha,           seiha,    seiha,    ROT0, "Nichibutsu", "Seiha (Japan 870725)" )
+	GAME( 1987, seiham,   seiha,    seiha,           seiham,   seiham,   ROT0, "Nichibutsu", "Seiha [BET] (Japan 870723)" )
+	GAME( 1987, iemoto,   0,        iemoto,          iemoto,   iemoto,   ROT0, "Nichibutsu", "Iemoto (Japan 871020)" )
+	GAME( 1987, ojousan,  0,        ojousan,         ojousan,  ojousan,  ROT0, "Nichibutsu", "Ojousan (Japan 871204)" )
+	GAME( 1988, korinai,  0,        ojousan,         korinai,  korinai,  ROT0, "Nichibutsu", "Mahjong-zukino Korinai Menmen (Japan 880425)" )
 	
 	/* pure 16-bit palette (+ LCD in some) */
-	public static GameDriver driver_housemnq	   = new GameDriver("1987"	,"housemnq"	,"nbmj8688.java"	,rom_housemnq,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_housemnq	,init_housemnq	,ROT0	,	"Nichibutsu", "House Mannequin (Japan 870217)" )
-	public static GameDriver driver_housemn2	   = new GameDriver("1987"	,"housemn2"	,"nbmj8688.java"	,rom_housemn2,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_housemn2	,init_housemn2	,ROT0	,	"Nichibutsu", "House Mannequin Roppongi Live hen (Japan 870418)" )
-	public static GameDriver driver_bijokkoy	   = new GameDriver("1987"	,"bijokkoy"	,"nbmj8688.java"	,rom_bijokkoy,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_bijokkoy	,init_bijokkoy	,ROT0	,	"Nichibutsu", "Bijokko Yume Monogatari (Japan 870925)" )
-	public static GameDriver driver_bijokkog	   = new GameDriver("1988"	,"bijokkog"	,"nbmj8688.java"	,rom_bijokkog,null	,machine_driver_mbmj_p16bit_LCD	,input_ports_bijokkog	,init_bijokkog	,ROT0	,	"Nichibutsu", "Bijokko Gakuen (Japan 880116)" )
-	public static GameDriver driver_orangec	   = new GameDriver("1988"	,"orangec"	,"nbmj8688.java"	,rom_orangec,null	,machine_driver_mbmj_p16bit	,input_ports_orangec	,init_orangec	,ROT0	,	"Daiichi Denshi", "Orange Club - Maruhi Kagai Jugyou (Japan 880213)" )
-	public static GameDriver driver_vipclub	   = new GameDriver("1988"	,"vipclub"	,"nbmj8688.java"	,rom_vipclub,driver_orangec	,machine_driver_mbmj_p16bit	,input_ports_vipclub	,init_orangec	,ROT0	,	"Daiichi Denshi", "Vip Club [BET] (Japan 880310)" )
+	GAME( 1987, housemnq, 0,        mbmj_p16bit_LCD, housemnq, housemnq, ROT0, "Nichibutsu", "House Mannequin (Japan 870217)" )
+	GAME( 1987, housemn2, 0,        mbmj_p16bit_LCD, housemn2, housemn2, ROT0, "Nichibutsu", "House Mannequin Roppongi Live hen (Japan 870418)" )
+	GAME( 1987, bijokkoy, 0,        mbmj_p16bit_LCD, bijokkoy, bijokkoy, ROT0, "Nichibutsu", "Bijokko Yume Monogatari (Japan 870925)" )
+	GAME( 1988, bijokkog, 0,        mbmj_p16bit_LCD, bijokkog, bijokkog, ROT0, "Nichibutsu", "Bijokko Gakuen (Japan 880116)" )
+	GAME( 1988, orangec,  0,        mbmj_p16bit,     orangec,  orangec,  ROT0, "Daiichi Denshi", "Orange Club - Maruhi Kagai Jugyou (Japan 880213)" )
+	GAME( 1988, vipclub,  orangec,  mbmj_p16bit,     vipclub,  orangec,  ROT0, "Daiichi Denshi", "Vip Club [BET] (Japan 880310)" )
 	
 	/* pure 12-bit palette */
-	public static GameDriver driver_kaguya	   = new GameDriver("1988"	,"kaguya"	,"nbmj8688.java"	,rom_kaguya,null	,machine_driver_mbmj_p12bit	,input_ports_kaguya	,init_kaguya	,ROT0	,	"MIKI SYOUJI", "Mahjong Kaguyahime [BET] (Japan 880521)" )
-	public static GameDriver driver_kanatuen	   = new GameDriver("1988"	,"kanatuen"	,"nbmj8688.java"	,rom_kanatuen,null	,machine_driver_mbmj_p12bit	,input_ports_kanatuen	,init_kanatuen	,ROT0	,	"Panac", "Kanatsuen no Onna [BET] (Japan 880905)" )
-	public static GameDriver driver_idhimitu	   = new GameDriver("1989"	,"idhimitu"	,"nbmj8688.java"	,rom_idhimitu,null	,machine_driver_mbmj_p12bit	,input_ports_idhimitu	,init_idhimitu	,ROT0	,	"Digital Soft", "Idol no Himitsu [BET] (Japan 890304)" )
+	GAME( 1988, kaguya,   0,        mbmj_p12bit,     kaguya,   kaguya,   ROT0, "MIKI SYOUJI", "Mahjong Kaguyahime [BET] (Japan 880521)" )
+	GAME( 1988, kanatuen, 0,        mbmj_p12bit,     kanatuen, kanatuen, ROT0, "Panac", "Kanatsuen no Onna [BET] (Japan 880905)" )
+	GAME( 1989, idhimitu, 0,        mbmj_p12bit,     idhimitu, idhimitu, ROT0, "Digital Soft", "Idol no Himitsu [BET] (Japan 890304)" )
 	
 	/* pure 12-bit palette + YM3812 instead of AY-3-8910 */
-	public static GameDriver driver_mjsikaku	   = new GameDriver("1988"	,"mjsikaku"	,"nbmj8688.java"	,rom_mjsikaku,null	,machine_driver_mjsikaku	,input_ports_mjsikaku	,init_mjsikaku	,ROT0	,	"Nichibutsu", "Mahjong Shikaku (Japan 880908)" )
-	public static GameDriver driver_mjsikakb	   = new GameDriver("1988"	,"mjsikakb"	,"nbmj8688.java"	,rom_mjsikakb,driver_mjsikaku	,machine_driver_mjsikaku	,input_ports_mjsikaku	,init_mjsikaku	,ROT0	,	"Nichibutsu", "Mahjong Shikaku (Japan 880722)" )
-	public static GameDriver driver_otonano	   = new GameDriver("1988"	,"otonano"	,"nbmj8688.java"	,rom_otonano,null	,machine_driver_otonano	,input_ports_otonano	,init_otonano	,ROT0	,	"Apple", "Otona no Mahjong (Japan 880628)" )
-	public static GameDriver driver_mjcamera	   = new GameDriver("1988"	,"mjcamera"	,"nbmj8688.java"	,rom_mjcamera,null	,machine_driver_otonano	,input_ports_mjcamera	,init_mjcamera	,ROT0	,	"MIKI SYOUJI", "Mahjong Camera Kozou (Japan 881109)" )
+	GAME( 1988, mjsikaku, 0,        mjsikaku,        mjsikaku, mjsikaku, ROT0, "Nichibutsu", "Mahjong Shikaku (Japan 880908)" )
+	GAME( 1988, mjsikakb, mjsikaku, mjsikaku,        mjsikaku, mjsikaku, ROT0, "Nichibutsu", "Mahjong Shikaku (Japan 880722)" )
+	GAME( 1988, otonano,  0,        otonano,         otonano,  otonano,  ROT0, "Apple", "Otona no Mahjong (Japan 880628)" )
+	GAME( 1988, mjcamera, 0,        otonano,         mjcamera, mjcamera, ROT0, "MIKI SYOUJI", "Mahjong Camera Kozou (Japan 881109)" )
 	
 }

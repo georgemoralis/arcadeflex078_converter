@@ -70,7 +70,7 @@ Tons of thanks to the guy who posted these, whoever he is...
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms9900;
 
@@ -459,7 +459,7 @@ public class _99xxcoreH
 		static int readbyte(int addr)
 		{
 			TMS99XX_ICOUNT -= 2;
-			if ((addr & 1) != 0)
+			if (addr & 1)
 			{
 				extra_byte = cpu_readmem14(addr-1);
 				return cpu_readmem14(addr);
@@ -474,7 +474,7 @@ public class _99xxcoreH
 		static void writebyte (int addr, int data)
 		{
 			TMS99XX_ICOUNT -= 2;
-			if ((addr & 1) != 0)
+			if (addr & 1)
 			{
 				extra_byte = cpu_readmem14(addr-1);
 	
@@ -591,7 +591,7 @@ public class _99xxcoreH
 					/* timer mode, timer disabled */
 					value = 0;
 	
-				if ((addr & 1) != 0)
+				if (addr & 1)
 					return (value & 0xFF);
 				else
 					return (value >> 8);
@@ -702,8 +702,8 @@ public class _99xxcoreH
 		}
 		else
 		{
-			I.memory_wait_states_byte = (((tms9995reset_param *) param).auto_wait_state) ? 4 : 0;
-			I.memory_wait_states_word = (((tms9995reset_param *) param).auto_wait_state) ? 12 : 4;
+			I.memory_wait_states_byte = (((tms9995reset_param *) param)->auto_wait_state) ? 4 : 0;
+			I.memory_wait_states_word = (((tms9995reset_param *) param)->auto_wait_state) ? 12 : 4;
 		}
 	
 		I.MID_flag = 0;
@@ -737,7 +737,7 @@ public class _99xxcoreH
 	
 			#ifdef MAME_DEBUG
 			{
-				if (mame_debug != 0)
+				if (mame_debug)
 				{
 					setstat();
 	
@@ -841,7 +841,7 @@ public class _99xxcoreH
 						contextswitch(level*4); /* load vector, save PC, WP and ST */
 	
 						/* change interrupt mask */
-						if (level != 0)
+						if (level)
 						{
 							I.STATUS = (I.STATUS & 0xFFF0) | (level -1);  /* decrement mask */
 							I.interrupt_pending = 0;  /* as a consequence, the interrupt request will be subsequently ignored */
@@ -897,7 +897,7 @@ public class _99xxcoreH
 	{
 		setstat();
 	
-		if (dst != 0)
+		if( dst )
 			*(tms99xx_Regs*)dst = I;
 	
 		return sizeof(tms99xx_Regs);
@@ -905,7 +905,7 @@ public class _99xxcoreH
 	
 	void TMS99XX_SET_CONTEXT(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			I = *(tms99xx_Regs*)src;
 			/* We have to make additionnal checks this, because Mame debugger can foolishly initialize
@@ -993,8 +993,8 @@ public class _99xxcoreH
 	/*
 	void tms9900_set_irq_line(IRQ_LINE_NMI, int state) : change the state of the LOAD* line
 	
-		state == 0 . LOAD* goes high (inactive)
-		state != 0 . LOAD* goes low (active)
+		state == 0 -> LOAD* goes high (inactive)
+		state != 0 -> LOAD* goes low (active)
 	
 		While LOAD* is low, we keep triggering LOAD interrupts...
 	
@@ -1009,8 +1009,8 @@ public class _99xxcoreH
 	
 		irqline is ignored, and should always be 0.
 	
-		state == 0 . INTREQ* goes high (inactive)
-		state != 0 . INTREQ* goes low (active)
+		state == 0 -> INTREQ* goes high (inactive)
+		state != 0 -> INTREQ* goes low (active)
 	*/
 	/*
 		R Nabet 991020, revised 991218 :
@@ -1209,7 +1209,7 @@ public class _99xxcoreH
 	
 			if (((I.int_state & mask) != 0) ^ (state != 0))
 			{	/* only if state changes */
-				if (state != 0)
+				if (state)
 				{
 					I.int_state |= mask;
 	
@@ -1290,7 +1290,7 @@ public class _99xxcoreH
 				/* normal behavior */
 				current_int = I.int_state | I.int_latch;
 	
-			if (current_int != 0)
+			if (current_int)
 				/* find first bit to 1 */
 				/* possible values : 1, 3, 4 */
 				for (level=0; ! (current_int & 1); current_int >>= 1, level++)
@@ -1322,51 +1322,51 @@ public class _99xxcoreH
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if( !context )
 			r = &I;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+TMS9900_PC: sprintf(buffer[which], "PC :%04X",  r.PC); break;
-			case CPU_INFO_REG+TMS9900_IR: sprintf(buffer[which], "IR :%04X",  r.IR); break;
-			case CPU_INFO_REG+TMS9900_WP: sprintf(buffer[which], "WP :%04X",  r.WP); break;
-			case CPU_INFO_REG+TMS9900_STATUS: sprintf(buffer[which], "ST :%04X",  r.STATUS); break;
+			case CPU_INFO_REG+TMS9900_PC: sprintf(buffer[which], "PC :%04X",  r->PC); break;
+			case CPU_INFO_REG+TMS9900_IR: sprintf(buffer[which], "IR :%04X",  r->IR); break;
+			case CPU_INFO_REG+TMS9900_WP: sprintf(buffer[which], "WP :%04X",  r->WP); break;
+			case CPU_INFO_REG+TMS9900_STATUS: sprintf(buffer[which], "ST :%04X",  r->STATUS); break;
 	#ifdef MAME_DEBUG
-			case CPU_INFO_REG+TMS9900_R0: sprintf(buffer[which], "R0 :%04X",  r.FR[0]); break;
-			case CPU_INFO_REG+TMS9900_R1: sprintf(buffer[which], "R1 :%04X",  r.FR[1]); break;
-			case CPU_INFO_REG+TMS9900_R2: sprintf(buffer[which], "R2 :%04X",  r.FR[2]); break;
-			case CPU_INFO_REG+TMS9900_R3: sprintf(buffer[which], "R3 :%04X",  r.FR[3]); break;
-			case CPU_INFO_REG+TMS9900_R4: sprintf(buffer[which], "R4 :%04X",  r.FR[4]); break;
-			case CPU_INFO_REG+TMS9900_R5: sprintf(buffer[which], "R5 :%04X",  r.FR[5]); break;
-			case CPU_INFO_REG+TMS9900_R6: sprintf(buffer[which], "R6 :%04X",  r.FR[6]); break;
-			case CPU_INFO_REG+TMS9900_R7: sprintf(buffer[which], "R7 :%04X",  r.FR[7]); break;
-			case CPU_INFO_REG+TMS9900_R8: sprintf(buffer[which], "R8 :%04X",  r.FR[8]); break;
-			case CPU_INFO_REG+TMS9900_R9: sprintf(buffer[which], "R9 :%04X",  r.FR[9]); break;
-			case CPU_INFO_REG+TMS9900_R10: sprintf(buffer[which], "R10:%04X",  r.FR[10]); break;
-			case CPU_INFO_REG+TMS9900_R11: sprintf(buffer[which], "R11:%04X",  r.FR[11]); break;
-			case CPU_INFO_REG+TMS9900_R12: sprintf(buffer[which], "R12:%04X",  r.FR[12]); break;
-			case CPU_INFO_REG+TMS9900_R13: sprintf(buffer[which], "R13:%04X",  r.FR[13]); break;
-			case CPU_INFO_REG+TMS9900_R14: sprintf(buffer[which], "R14:%04X",  r.FR[14]); break;
-			case CPU_INFO_REG+TMS9900_R15: sprintf(buffer[which], "R15:%04X",  r.FR[15]); break;
+			case CPU_INFO_REG+TMS9900_R0: sprintf(buffer[which], "R0 :%04X",  r->FR[0]); break;
+			case CPU_INFO_REG+TMS9900_R1: sprintf(buffer[which], "R1 :%04X",  r->FR[1]); break;
+			case CPU_INFO_REG+TMS9900_R2: sprintf(buffer[which], "R2 :%04X",  r->FR[2]); break;
+			case CPU_INFO_REG+TMS9900_R3: sprintf(buffer[which], "R3 :%04X",  r->FR[3]); break;
+			case CPU_INFO_REG+TMS9900_R4: sprintf(buffer[which], "R4 :%04X",  r->FR[4]); break;
+			case CPU_INFO_REG+TMS9900_R5: sprintf(buffer[which], "R5 :%04X",  r->FR[5]); break;
+			case CPU_INFO_REG+TMS9900_R6: sprintf(buffer[which], "R6 :%04X",  r->FR[6]); break;
+			case CPU_INFO_REG+TMS9900_R7: sprintf(buffer[which], "R7 :%04X",  r->FR[7]); break;
+			case CPU_INFO_REG+TMS9900_R8: sprintf(buffer[which], "R8 :%04X",  r->FR[8]); break;
+			case CPU_INFO_REG+TMS9900_R9: sprintf(buffer[which], "R9 :%04X",  r->FR[9]); break;
+			case CPU_INFO_REG+TMS9900_R10: sprintf(buffer[which], "R10:%04X",  r->FR[10]); break;
+			case CPU_INFO_REG+TMS9900_R11: sprintf(buffer[which], "R11:%04X",  r->FR[11]); break;
+			case CPU_INFO_REG+TMS9900_R12: sprintf(buffer[which], "R12:%04X",  r->FR[12]); break;
+			case CPU_INFO_REG+TMS9900_R13: sprintf(buffer[which], "R13:%04X",  r->FR[13]); break;
+			case CPU_INFO_REG+TMS9900_R14: sprintf(buffer[which], "R14:%04X",  r->FR[14]); break;
+			case CPU_INFO_REG+TMS9900_R15: sprintf(buffer[which], "R15:%04X",  r->FR[15]); break;
 	#endif
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r.WP & 0x8000 ? 'L':'.',
-					r.WP & 0x4000 ? 'A':'.',
-					r.WP & 0x2000 ? 'E':'.',
-					r.WP & 0x1000 ? 'C':'.',
-					r.WP & 0x0800 ? 'V':'.',
-					r.WP & 0x0400 ? 'P':'.',
-					r.WP & 0x0200 ? 'X':'.',
-					r.WP & 0x0100 ? '?':'.',
-					r.WP & 0x0080 ? '?':'.',
-					r.WP & 0x0040 ? '?':'.',
-					r.WP & 0x0020 ? '?':'.',
-					r.WP & 0x0010 ? '?':'.',
-					r.WP & 0x0008 ? 'I':'.',
-					r.WP & 0x0004 ? 'I':'.',
-					r.WP & 0x0002 ? 'I':'.',
-					r.WP & 0x0001 ? 'I':'.');
+					r->WP & 0x8000 ? 'L':'.',
+					r->WP & 0x4000 ? 'A':'.',
+					r->WP & 0x2000 ? 'E':'.',
+					r->WP & 0x1000 ? 'C':'.',
+					r->WP & 0x0800 ? 'V':'.',
+					r->WP & 0x0400 ? 'P':'.',
+					r->WP & 0x0200 ? 'X':'.',
+					r->WP & 0x0100 ? '?':'.',
+					r->WP & 0x0080 ? '?':'.',
+					r->WP & 0x0040 ? '?':'.',
+					r->WP & 0x0020 ? '?':'.',
+					r->WP & 0x0010 ? '?':'.',
+					r->WP & 0x0008 ? 'I':'.',
+					r->WP & 0x0004 ? 'I':'.',
+					r->WP & 0x0002 ? 'I':'.',
+					r->WP & 0x0001 ? 'I':'.');
 				break;
 			case CPU_INFO_NAME: return TMS99XX_CPU_NAME;
 			case CPU_INFO_FAMILY: return "Texas Instruments 9900";
@@ -1397,7 +1397,7 @@ public class _99xxcoreH
 	/* set decrementer mode flag */
 	static void set_flag0(int val)
 	{
-		if (val != 0)
+		if (val)
 			I.flag |= 1;
 		else
 			I.flag &= ~ 1;
@@ -1408,7 +1408,7 @@ public class _99xxcoreH
 	/* set decrementer enable flag */
 	static void set_flag1(int val)
 	{
-		if (val != 0)
+		if (val)
 			I.flag |= 2;
 		else
 			I.flag &= ~ 2;
@@ -1426,7 +1426,7 @@ public class _99xxcoreH
 	
 	
 	/*
-		performs a normal write to CRU bus (used by SBZ, SBO, LDCR : address range 0 . 0xFFF)
+		performs a normal write to CRU bus (used by SBZ, SBO, LDCR : address range 0 -> 0xFFF)
 	*/
 	static void writeCRU(int CRUAddr, int Number, UINT16 Value)
 	{
@@ -1464,7 +1464,7 @@ public class _99xxcoreH
 			else if ((CRUAddr >= 0xF75) && (CRUAddr < 0xF80))
 			{	/* user defined flags */
 				int mask = 1 << (CRUAddr - 0xF70);
-				if ((Value & 0x01) != 0)
+				if (Value & 0x01)
 					I.flag |= mask;
 				else
 					I.flag &= ~ mask;
@@ -1536,7 +1536,7 @@ public class _99xxcoreH
 	}
 	
 	/*
-		performs a normal read to CRU bus (used by TB, STCR : address range 0.0xFFF)
+		performs a normal read to CRU bus (used by TB, STCR : address range 0->0xFFF)
 	
 		Note that on some hardware, e.g. TI99, all normal memory operations cause unwanted CRU
 		read at the same address.
@@ -1689,7 +1689,7 @@ public class _99xxcoreH
 	
 			imm = fetch();
 	
-			if (reg != 0)
+			if (reg)
 			{	/* @>xxxx(Rx) */
 				CYCLES(8, 3);
 				return(readword(reg + I.WP) + imm);
@@ -1736,7 +1736,7 @@ public class _99xxcoreH
 	
 			imm = fetch();
 	
-			if (reg != 0)
+			if (reg)
 			{	/* @>xxxx(Rx) */
 				CYCLES(8, 3);
 				return(readword(reg + I.WP) + imm);
@@ -1782,8 +1782,8 @@ public class _99xxcoreH
 	#endif
 	
 	/*==========================================================================
-	   Illegal instructions                                        >0000.01FF (not for 9989 and later)
-	                                                               >0C00.0FFF (not for 99xxx)
+	   Illegal instructions                                        >0000->01FF (not for 9989 and later)
+	                                                               >0C00->0FFF (not for 99xxx)
 	============================================================================*/
 	
 	static void illegal(UINT16 opcode)
@@ -1794,8 +1794,8 @@ public class _99xxcoreH
 	
 	#if (TMS99XX_MODEL >= TMS99105A_ID)
 	/*==========================================================================
-	   Additionnal instructions,                                   >0000.002F
-	   Additionnal single-register instruction,                    >0030.003F
+	   Additionnal instructions,                                   >0000->002F
+	   Additionnal single-register instruction,                    >0030->003F
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -1809,7 +1809,7 @@ public class _99xxcoreH
 	static void h0000(UINT16 opcode)
 	{
 	#if 0
-		if ((opcode & 0x30) != 0)
+		if (opcode & 0x30)
 		{	/* STPC STore Program Counter */
 	
 		}
@@ -1886,7 +1886,7 @@ public class _99xxcoreH
 	
 	#if (TMS99XX_MODEL >= TMS9989_ID)
 	/*==========================================================================
-	   Additionnal single-register instructions,                   >0040.00FF
+	   Additionnal single-register instructions,                   >0040->00FF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -1957,7 +1957,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Additionnal single-operand instructions,                    >0100.01FF
+	   Additionnal single-operand instructions,                    >0100->01FF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2044,7 +2044,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Immediate, Control instructions,                            >0200.03FF
+	   Immediate, Control instructions,                            >0200->03FF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2222,7 +2222,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Single-operand instructions,                                >0400.07FF
+	   Single-operand instructions,                                >0400->07FF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2272,12 +2272,12 @@ public class _99xxcoreH
 			/* NEG --- NEGate */
 			/* *S = -*S */
 			value = - (INT16) readword(addr);
-			if (value != 0)
+			if (value)
 				I.STATUS &= ~ ST_C;
 			else
 				I.STATUS |= ST_C;
 	#if (TMS99XX_MODEL == TMS9940_ID)
-			if ((value & 0x0FFF) != 0)
+			if (value & 0x0FFF)
 				I.STATUS &= ~ ST_DC;
 			else
 				I.STATUS |= ST_DC;
@@ -2415,7 +2415,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Shift instructions,                                         >0800.0BFF
+	   Shift instructions,                                         >0800->0BFF
 	  --------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2480,8 +2480,8 @@ public class _99xxcoreH
 	
 	#if (TMS99XX_MODEL >= TMS99105A_ID)
 	/*==========================================================================
-	   Additionnal instructions,                                   >0C00.0C0F
-	   Additionnal single-register instructions,                   >0C10.0C3F
+	   Additionnal instructions,                                   >0C00->0C0F
+	   Additionnal single-register instructions,                   >0C10->0C3F
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2495,7 +2495,7 @@ public class _99xxcoreH
 	============================================================================*/
 	static void h0c00(UINT16 opcode)
 	{
-		if ((opcode & 0x30) != 0)
+		if (opcode & 0x30)
 		{
 	#if 0
 			switch ((opcode & 0x30) >> 4)
@@ -2586,7 +2586,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Additionnal single-operand instructions,                    >0C40.0FFF
+	   Additionnal single-operand instructions,                    >0C40->0FFF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2645,7 +2645,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Jump, CRU bit instructions,                                 >1000.1FFF
+	   Jump, CRU bit instructions,                                 >1000->1FFF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -2803,19 +2803,19 @@ public class _99xxcoreH
 	
 				while (a != 0)
 				{
-					if ((a & 1) != 0)  /* If current bit is set, */
+					if (a & 1)  /* If current bit is set, */
 						i++;      /* increment bit count. */
 					a >>= 1U;   /* Next bit. */
 				}
 	
 				/* Set ST_OP bit. */
-				/*if ((i & 1) != 0)
+				/*if (i & 1)
 					I.STATUS |= ST_OP;
 				else
 					I.STATUS &= ~ ST_OP;*/
 	
 				/* Jump accordingly. */
-				if ((i & 1) != 0)  /*(I.STATUS & ST_OP)*/
+				if (i & 1)  /*(I.STATUS & ST_OP)*/
 				{
 					I.PC += (offset + offset);
 					CYCLES(10, 3);
@@ -2848,7 +2848,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   General and One-Register instructions                       >2000.3FFF
+	   General and One-Register instructions                       >2000->3FFF
 	 ---------------------------------------------------------------------------
 	
 	     0 1 2 3-4 5 6 7+8 9 A B-C D E F
@@ -3071,7 +3071,7 @@ public class _99xxcoreH
 				/* just for once, tms9995 behaves like earlier 8-bit tms99xx chips */
 				/* this must be because instruction decoding is too complex */
 				value = readword(addr);
-				if ((addr & 1) != 0)
+				if (addr & 1)
 					value &= 0xFF;
 				else
 					value = (value >> 8) & 0xFF;
@@ -3111,7 +3111,7 @@ public class _99xxcoreH
 				value = readCRU((READREG(R12) >> 1), cnt);
 				setst_byte_laep(value);
 	
-				if ((addr & 1) != 0)
+				if (addr & 1)
 					writeword(addr, (value & 0x00FF) | (value2 & 0xFF00));
 				else
 					writeword(addr, (value2 & 0x00FF) | ((value << 8) & 0xFF00));
@@ -3133,7 +3133,7 @@ public class _99xxcoreH
 	
 	
 	/*==========================================================================
-	   Two-Operand instructions                                    >4000.FFFF
+	   Two-Operand instructions                                    >4000->FFFF
 	 ---------------------------------------------------------------------------
 	
 	      0 1 2 3-4 5 6 7+8 9 A B-C D E F

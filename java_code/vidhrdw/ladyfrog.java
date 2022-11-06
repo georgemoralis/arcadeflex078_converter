@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,15 +22,13 @@ public class ladyfrog
 	
 	UINT8 *ladyfrog_spriteram;
 	
-	WRITE_HANDLER(ladyfrog_spriteram_w)
-	{
+	public static WriteHandlerPtr ladyfrog_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ladyfrog_spriteram[offset]=data;
-	}
+	} };
 	
-	READ_HANDLER(ladyfrog_spriteram_r)
-	{
+	public static ReadHandlerPtr ladyfrog_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ladyfrog_spriteram[offset];
-	}
+	} };
 	
 	static void get_tile_info(int tile_index)
 	{
@@ -44,58 +42,49 @@ public class ladyfrog
 				)
 	}
 	
-	public static WriteHandlerPtr ladyfrog_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ladyfrog_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset>>1);
 	} };
 	
-	public static ReadHandlerPtr ladyfrog_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ladyfrog_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr ladyfrog_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 0x100) != 0)
+	public static WriteHandlerPtr ladyfrog_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 0x100)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
 	} };
 	
-	public static ReadHandlerPtr ladyfrog_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 0x100) != 0)
+	public static ReadHandlerPtr ladyfrog_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (offset & 0x100)
 			return paletteram_2.read( (offset & 0xff) + (palette_bank << 8) );
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
 	} };
 	
-	public static WriteHandlerPtr ladyfrog_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ladyfrog_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		palette_bank = (data & 0x20) >> 5;
 	
 	} };
 	
-	public static WriteHandlerPtr ladyfrog_gfxctrl2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ladyfrog_gfxctrl2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilebank=((data & 0x18) >> 3)^3;
 		tilemap_mark_all_tiles_dirty( tilemap );
 	} };
 	
 	
-	public static ReadHandlerPtr ladyfrog_gfxctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ladyfrog_gfxctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 			return 	gfxctrl;
 	} };
 	
-	public static ReadHandlerPtr ladyfrog_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ladyfrog_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ladyfrog_scrlram[offset];
 	} };
 	
-	public static WriteHandlerPtr ladyfrog_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ladyfrog_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ladyfrog_scrlram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data );
 	} };
@@ -115,7 +104,7 @@ public class ladyfrog
 				sy = 240-ladyfrog_spriteram[offs+0];
 				flipx = ((ladyfrog_spriteram[offs+1]&0x40)>>6);
 				flipy = ((ladyfrog_spriteram[offs+1]&0x80)>>7);
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,
 						pal,
 						flipx,flipy,
@@ -125,7 +114,7 @@ public class ladyfrog
 				if(ladyfrog_spriteram[offs+3]>240)
 				{
 					sx = (ladyfrog_spriteram[offs+3]-256);
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 	        				code,
 					        pal,
 					        flipx,flipy,
@@ -137,8 +126,7 @@ public class ladyfrog
 	
 	}
 	
-	public static VideoStartHandlerPtr video_start_ladyfrog  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ladyfrog  = new VideoStartHandlerPtr() { public int handler(){
 	  ladyfrog_spriteram = auto_malloc (160);
 	  tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 	
@@ -151,8 +139,7 @@ public class ladyfrog
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ladyfrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ladyfrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    tilemap_draw(bitmap,cliprect,tilemap,0,0);
 	    ladyfrog_draw_sprites(bitmap,cliprect);
 	} };

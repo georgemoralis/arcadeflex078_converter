@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -9,8 +9,7 @@ public class pcktgal
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_pcktgal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pcktgal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -37,8 +36,7 @@ public class pcktgal
 		}
 	} };
 	
-	public static WriteHandlerPtr pcktgal_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -46,8 +44,7 @@ public class pcktgal
 		}
 	} };
 	
-	public static WriteHandlerPtr pcktgal_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x80))
 		{
 			flip_screen_set(data & 0x80);
@@ -63,12 +60,11 @@ public class pcktgal
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_pcktgal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pcktgal  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -90,25 +86,24 @@ public class pcktgal
 	
 				flipx = spriteram.read(offs+1)& 0x04;
 				flipy = spriteram.read(offs+1)& 0x02;
-				if (flip_screen != 0) {
+				if (flip_screen()) {
 					sx=240-sx;
 					sy=240-sy;
-					if (flipx != 0) flipx=0; else flipx=1;
-					if (flipy != 0) flipy=0; else flipy=1;
+					if (flipx) flipx=0; else flipx=1;
+					if (flipy) flipy=0; else flipy=1;
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						spriteram.read(offs+3)+ ((spriteram.read(offs+1)& 1) << 8),
 						(spriteram.read(offs+1)& 0x70) >> 4,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pcktgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pcktgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		pcktgal_draw_sprites(bitmap);
 	} };

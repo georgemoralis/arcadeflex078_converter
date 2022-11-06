@@ -49,7 +49,7 @@ register 08 could be screen height / 2 (vblank start?)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -78,7 +78,7 @@ public class aerofgt
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -88,7 +88,7 @@ public class aerofgt
 	
 	static WRITE16_HANDLER( turbofrc_sound_command_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,(data >> 8) & 0xff);
@@ -101,20 +101,17 @@ public class aerofgt
 		return pending_command;
 	}
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
-	public static WriteHandlerPtr aerofgt_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aerofgt_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x03) * 0x8000);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_aerofgt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_aerofgt  = new MachineInitHandlerPtr() { public void handler(){
 		aerofgt_sh_bankswitch_w(0,0);	/* needed by spinlbrk */
 	} };
 	
@@ -384,7 +381,7 @@ public class aerofgt
 	
 	
 	
-	static InputPortPtr input_ports_pspikes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pspikes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pspikes )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY | IPF_PLAYER2 );
@@ -459,7 +456,7 @@ public class aerofgt
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_karatblz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_karatblz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( karatblz )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -567,7 +564,7 @@ public class aerofgt
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spinlbrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spinlbrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spinlbrk )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -661,7 +658,7 @@ public class aerofgt
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );			/*  most likely "Bonus Life" */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_turbofrc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_turbofrc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( turbofrc )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -732,7 +729,7 @@ public class aerofgt
 		PORT_BIT( 0x0080, IP_ACTIVE_LOW, IPT_START3 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aerofgtb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aerofgtb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aerofgtb )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -815,7 +812,7 @@ public class aerofgt
 		/* this port is checked at 1b080 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aerofgt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aerofgt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aerofgt )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -1024,8 +1021,7 @@ public class aerofgt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_pspikes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pspikes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1055,12 +1051,9 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_karatblz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( karatblz )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1090,12 +1083,9 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_spinlbrk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spinlbrk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1125,12 +1115,9 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_turbofrc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( turbofrc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1160,12 +1147,9 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_aerofgtb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aerofgtb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1196,12 +1180,9 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_aerofgt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aerofgt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -1232,9 +1213,7 @@ public class aerofgt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1654,17 +1633,17 @@ public class aerofgt
 	
 	
 	
-	public static GameDriver driver_spinlbrk	   = new GameDriver("1990"	,"spinlbrk"	,"aerofgt.java"	,rom_spinlbrk,null	,machine_driver_spinlbrk	,input_ports_spinlbrk	,null	,ROT0	,	"V-System Co.", "Spinal Breakers (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_spinlbru	   = new GameDriver("1990"	,"spinlbru"	,"aerofgt.java"	,rom_spinlbru,driver_spinlbrk	,machine_driver_spinlbrk	,input_ports_spinlbrk	,null	,ROT0	,	"V-System Co.", "Spinal Breakers (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_spinlbrj	   = new GameDriver("1990"	,"spinlbrj"	,"aerofgt.java"	,rom_spinlbrj,driver_spinlbrk	,machine_driver_spinlbrk	,input_ports_spinlbrk	,null	,ROT0	,	"V-System Co.", "Spinal Breakers (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_pspikes	   = new GameDriver("1991"	,"pspikes"	,"aerofgt.java"	,rom_pspikes,null	,machine_driver_pspikes	,input_ports_pspikes	,null	,ROT0	,	"Video System Co.", "Power Spikes (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_pspikesk	   = new GameDriver("1991"	,"pspikesk"	,"aerofgt.java"	,rom_pspikesk,driver_pspikes	,machine_driver_pspikes	,input_ports_pspikes	,null	,ROT0	,	"Video System Co.", "Power Spikes (Korea)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_svolly91	   = new GameDriver("1991"	,"svolly91"	,"aerofgt.java"	,rom_svolly91,driver_pspikes	,machine_driver_pspikes	,input_ports_pspikes	,null	,ROT0	,	"Video System Co.", "Super Volley '91 (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_karatblz	   = new GameDriver("1991"	,"karatblz"	,"aerofgt.java"	,rom_karatblz,null	,machine_driver_karatblz	,input_ports_karatblz	,null	,ROT0	,	"Video System Co.", "Karate Blazers (World?)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_karatblu	   = new GameDriver("1991"	,"karatblu"	,"aerofgt.java"	,rom_karatblu,driver_karatblz	,machine_driver_karatblz	,input_ports_karatblz	,null	,ROT0	,	"Video System Co.", "Karate Blazers (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_turbofrc	   = new GameDriver("1991"	,"turbofrc"	,"aerofgt.java"	,rom_turbofrc,null	,machine_driver_turbofrc	,input_ports_turbofrc	,null	,ROT270	,	"Video System Co.", "Turbo Force", GAME_NO_COCKTAIL )
-	public static GameDriver driver_aerofgt	   = new GameDriver("1992"	,"aerofgt"	,"aerofgt.java"	,rom_aerofgt,null	,machine_driver_aerofgt	,input_ports_aerofgt	,null	,ROT270	,	"Video System Co.", "Aero Fighters", GAME_NO_COCKTAIL )
-	public static GameDriver driver_aerofgtb	   = new GameDriver("1992"	,"aerofgtb"	,"aerofgt.java"	,rom_aerofgtb,driver_aerofgt	,machine_driver_aerofgtb	,input_ports_aerofgtb	,null	,ROT270	,	"Video System Co.", "Aero Fighters (Turbo Force hardware set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_aerofgtc	   = new GameDriver("1992"	,"aerofgtc"	,"aerofgt.java"	,rom_aerofgtc,driver_aerofgt	,machine_driver_aerofgtb	,input_ports_aerofgtb	,null	,ROT270	,	"Video System Co.", "Aero Fighters (Turbo Force hardware set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_sonicwi	   = new GameDriver("1992"	,"sonicwi"	,"aerofgt.java"	,rom_sonicwi,driver_aerofgt	,machine_driver_aerofgtb	,input_ports_aerofgtb	,null	,ROT270	,	"Video System Co.", "Sonic Wings (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, spinlbrk, 0,        spinlbrk, spinlbrk, 0, ROT0,   "V-System Co.", "Spinal Breakers (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, spinlbru, spinlbrk, spinlbrk, spinlbrk, 0, ROT0,   "V-System Co.", "Spinal Breakers (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, spinlbrj, spinlbrk, spinlbrk, spinlbrk, 0, ROT0,   "V-System Co.", "Spinal Breakers (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, pspikes,  0,        pspikes,  pspikes,  0, ROT0,   "Video System Co.", "Power Spikes (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, pspikesk, pspikes,  pspikes,  pspikes,  0, ROT0,   "Video System Co.", "Power Spikes (Korea)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, svolly91, pspikes,  pspikes,  pspikes,  0, ROT0,   "Video System Co.", "Super Volley '91 (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, karatblz, 0,        karatblz, karatblz, 0, ROT0,   "Video System Co.", "Karate Blazers (World?)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, karatblu, karatblz, karatblz, karatblz, 0, ROT0,   "Video System Co.", "Karate Blazers (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, turbofrc, 0,        turbofrc, turbofrc, 0, ROT270, "Video System Co.", "Turbo Force", GAME_NO_COCKTAIL )
+	GAMEX( 1992, aerofgt,  0,        aerofgt,  aerofgt,  0, ROT270, "Video System Co.", "Aero Fighters", GAME_NO_COCKTAIL )
+	GAMEX( 1992, aerofgtb, aerofgt,  aerofgtb, aerofgtb, 0, ROT270, "Video System Co.", "Aero Fighters (Turbo Force hardware set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1992, aerofgtc, aerofgt,  aerofgtb, aerofgtb, 0, ROT270, "Video System Co.", "Aero Fighters (Turbo Force hardware set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1992, sonicwi,  aerofgt,  aerofgtb, aerofgtb, 0, ROT270, "Video System Co.", "Sonic Wings (Japan)", GAME_NO_COCKTAIL )
 }

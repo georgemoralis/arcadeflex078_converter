@@ -60,7 +60,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.h6280;
 
@@ -185,7 +185,7 @@ public class h6280
 	
 	#ifdef  MAME_DEBUG
 		 	{
-				if (mame_debug != 0)
+				if (mame_debug)
 				{
 					/* Copy the segmentation registers for debugger to use */
 					int i;
@@ -234,14 +234,14 @@ public class h6280
 	
 	unsigned h6280_get_context (void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(h6280_Regs*)dst = h6280;
 		return sizeof(h6280_Regs);
 	}
 	
 	void h6280_set_context (void *src)
 	{
-		if (src != 0)
+		if( src )
 			h6280 = *(h6280_Regs*)src;
 	}
 	
@@ -367,43 +367,43 @@ public class h6280
 	
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &h6280;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+H6280_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-	        case CPU_INFO_REG+H6280_S: sprintf(buffer[which], "S:%02X", r.sp.b.l); break;
-	        case CPU_INFO_REG+H6280_P: sprintf(buffer[which], "P:%02X", r.p); break;
-	        case CPU_INFO_REG+H6280_A: sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+H6280_X: sprintf(buffer[which], "X:%02X", r.x); break;
-			case CPU_INFO_REG+H6280_Y: sprintf(buffer[which], "Y:%02X", r.y); break;
-			case CPU_INFO_REG+H6280_IRQ_MASK: sprintf(buffer[which], "IM:%02X", r.irq_mask); break;
-			case CPU_INFO_REG+H6280_TIMER_STATE: sprintf(buffer[which], "TMR:%02X", r.timer_status); break;
-			case CPU_INFO_REG+H6280_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+H6280_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r.irq_state[0]); break;
-			case CPU_INFO_REG+H6280_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r.irq_state[1]); break;
-			case CPU_INFO_REG+H6280_IRQT_STATE: sprintf(buffer[which], "IRQT:%X", r.irq_state[2]); break;
+			case CPU_INFO_REG+H6280_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+	        case CPU_INFO_REG+H6280_S: sprintf(buffer[which], "S:%02X", r->sp.b.l); break;
+	        case CPU_INFO_REG+H6280_P: sprintf(buffer[which], "P:%02X", r->p); break;
+	        case CPU_INFO_REG+H6280_A: sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+H6280_X: sprintf(buffer[which], "X:%02X", r->x); break;
+			case CPU_INFO_REG+H6280_Y: sprintf(buffer[which], "Y:%02X", r->y); break;
+			case CPU_INFO_REG+H6280_IRQ_MASK: sprintf(buffer[which], "IM:%02X", r->irq_mask); break;
+			case CPU_INFO_REG+H6280_TIMER_STATE: sprintf(buffer[which], "TMR:%02X", r->timer_status); break;
+			case CPU_INFO_REG+H6280_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+H6280_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r->irq_state[0]); break;
+			case CPU_INFO_REG+H6280_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r->irq_state[1]); break;
+			case CPU_INFO_REG+H6280_IRQT_STATE: sprintf(buffer[which], "IRQT:%X", r->irq_state[2]); break;
 	#ifdef MAME_DEBUG
-			case CPU_INFO_REG+H6280_M1: sprintf(buffer[which], "M1:%02X", r.mmr[0]); break;
-			case CPU_INFO_REG+H6280_M2: sprintf(buffer[which], "M2:%02X", r.mmr[1]); break;
-			case CPU_INFO_REG+H6280_M3: sprintf(buffer[which], "M3:%02X", r.mmr[2]); break;
-			case CPU_INFO_REG+H6280_M4: sprintf(buffer[which], "M4:%02X", r.mmr[3]); break;
-			case CPU_INFO_REG+H6280_M5: sprintf(buffer[which], "M5:%02X", r.mmr[4]); break;
-			case CPU_INFO_REG+H6280_M6: sprintf(buffer[which], "M6:%02X", r.mmr[5]); break;
-			case CPU_INFO_REG+H6280_M7: sprintf(buffer[which], "M7:%02X", r.mmr[6]); break;
-			case CPU_INFO_REG+H6280_M8: sprintf(buffer[which], "M8:%02X", r.mmr[7]); break;
+			case CPU_INFO_REG+H6280_M1: sprintf(buffer[which], "M1:%02X", r->mmr[0]); break;
+			case CPU_INFO_REG+H6280_M2: sprintf(buffer[which], "M2:%02X", r->mmr[1]); break;
+			case CPU_INFO_REG+H6280_M3: sprintf(buffer[which], "M3:%02X", r->mmr[2]); break;
+			case CPU_INFO_REG+H6280_M4: sprintf(buffer[which], "M4:%02X", r->mmr[3]); break;
+			case CPU_INFO_REG+H6280_M5: sprintf(buffer[which], "M5:%02X", r->mmr[4]); break;
+			case CPU_INFO_REG+H6280_M6: sprintf(buffer[which], "M6:%02X", r->mmr[5]); break;
+			case CPU_INFO_REG+H6280_M7: sprintf(buffer[which], "M7:%02X", r->mmr[6]); break;
+			case CPU_INFO_REG+H6280_M8: sprintf(buffer[which], "M8:%02X", r->mmr[7]); break;
 	#endif
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.p & 0x80 ? 'N':'.',
-					r.p & 0x40 ? 'V':'.',
-					r.p & 0x20 ? 'R':'.',
-					r.p & 0x10 ? 'B':'.',
-					r.p & 0x08 ? 'D':'.',
-					r.p & 0x04 ? 'I':'.',
-					r.p & 0x02 ? 'Z':'.',
-					r.p & 0x01 ? 'C':'.');
+					r->p & 0x80 ? 'N':'.',
+					r->p & 0x40 ? 'V':'.',
+					r->p & 0x20 ? 'R':'.',
+					r->p & 0x10 ? 'B':'.',
+					r->p & 0x08 ? 'D':'.',
+					r->p & 0x04 ? 'I':'.',
+					r->p & 0x02 ? 'Z':'.',
+					r->p & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "HuC6280";
 			case CPU_INFO_FAMILY: return "Hudsonsoft 6280";
@@ -428,8 +428,7 @@ public class h6280
 	
 	/*****************************************************************************/
 	
-	public static ReadHandlerPtr H6280_irq_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr H6280_irq_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int status;
 	
 		switch (offset)
@@ -448,8 +447,7 @@ public class h6280
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr H6280_irq_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr H6280_irq_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: /* Write irq mask */
@@ -464,8 +462,7 @@ public class h6280
 		}
 	} };
 	
-	public static ReadHandlerPtr H6280_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr H6280_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset) {
 			case 0: /* Counter value */
 				return (h6280.timer_value/1024)&127;
@@ -477,16 +474,15 @@ public class h6280
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr H6280_timer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr H6280_timer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 			case 0: /* Counter preload */
 				h6280.timer_load=h6280.timer_value=((data&127)+1)*1024;
 				return;
 	
 			case 1: /* Counter enable */
-				if ((data & 1) != 0)
-				{	/* stop . start causes reload */
+				if(data&1)
+				{	/* stop -> start causes reload */
 					if(h6280.timer_status==0) h6280.timer_value=h6280.timer_load;
 				}
 				h6280.timer_status=data&1;

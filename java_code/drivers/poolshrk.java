@@ -6,7 +6,7 @@ Atari Poolshark Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -18,8 +18,7 @@ public class poolshrk
 	static int poolshrk_da_latch;
 	
 	
-	public static DriverInitHandlerPtr init_poolshrk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_poolshrk  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8* pSprite = memory_region(REGION_GFX1);
 		UINT8* pOffset = memory_region(REGION_PROMS);
 	
@@ -51,29 +50,26 @@ public class poolshrk
 	} };
 	
 	
-	public static WriteHandlerPtr poolshrk_scratch_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr poolshrk_score_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr poolshrk_click_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr poolshrk_bump_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr poolshrk_scratch_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr poolshrk_score_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr poolshrk_click_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr poolshrk_bump_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
 	
 	
-	public static WriteHandlerPtr poolshrk_da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr poolshrk_da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		poolshrk_da_latch = data & 15;
 	} };
 	
 	
-	public static WriteHandlerPtr poolshrk_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 2) != 0)
+	public static WriteHandlerPtr poolshrk_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 2)
 			set_led_status(0, offset & 1);
-		if ((offset & 4) != 0)
+		if (offset & 4)
 			set_led_status(1, offset & 1);
 	} };
 	
 	
-	public static ReadHandlerPtr poolshrk_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr poolshrk_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(offset);
 	
 		int x = readinputport(4 + (offset & 1));
@@ -86,8 +82,7 @@ public class poolshrk
 	} };
 	
 	
-	public static ReadHandlerPtr poolshrk_interrupt_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr poolshrk_interrupt_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
 		return 0;
@@ -123,7 +118,7 @@ public class poolshrk
 	};
 	
 	
-	static InputPortPtr input_ports_poolshrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_poolshrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( poolshrk )
 		PORT_START(); 
 		PORT_BIT( 0x0C, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
@@ -211,8 +206,7 @@ public class poolshrk
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_poolshrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_poolshrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x7F, 0x7F, 0x7F);
 		palette_set_color(1,0xFF, 0xFF, 0xFF);
 		palette_set_color(2,0x7F, 0x7F, 0x7F);
@@ -220,8 +214,7 @@ public class poolshrk
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_poolshrk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( poolshrk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 11055000 / 8) /* ? */
@@ -242,9 +235,7 @@ public class poolshrk
 		MDRV_VIDEO_UPDATE(poolshrk)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_poolshrk = new RomLoadPtr(){ public void handler(){ 
@@ -265,5 +256,5 @@ public class poolshrk
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_poolshrk	   = new GameDriver("1977"	,"poolshrk"	,"poolshrk.java"	,rom_poolshrk,null	,machine_driver_poolshrk	,input_ports_poolshrk	,init_poolshrk	,0	,	"Atari", "Poolshark", GAME_NO_SOUND )
+	GAMEX( 1977, poolshrk, 0, poolshrk, poolshrk, poolshrk, 0, "Atari", "Poolshark", GAME_NO_SOUND )
 }

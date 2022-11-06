@@ -44,7 +44,7 @@ Verify Bar graph displays
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -125,7 +125,7 @@ public class stactics
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_stactics = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stactics = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stactics )
 	
 	    PORT_START();   /* 	IN0 */
 	    /*PORT_BIT (0x80, IP_ACTIVE_HIGH, IPT_UNUSED );Motor status. see stactics_port_0_r */
@@ -232,8 +232,7 @@ public class stactics
 	    new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_stactics = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stactics )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 1933560)
@@ -256,9 +255,7 @@ public class stactics
 		MDRV_VIDEO_UPDATE(stactics)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -290,6 +287,6 @@ public class stactics
 	
 	
 	
-	public static GameDriver driver_stactics	   = new GameDriver("1981"	,"stactics"	,"stactics.java"	,rom_stactics,null	,machine_driver_stactics	,input_ports_stactics	,null	,ROT0	,	"Sega", "Space Tactics", GAME_NO_SOUND )
+	GAMEX( 1981, stactics, 0, stactics, stactics, 0, ROT0, "Sega", "Space Tactics", GAME_NO_SOUND )
 	
 }

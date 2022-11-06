@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class gbusters
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gbusters  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gbusters  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 16;
@@ -60,12 +59,11 @@ public class gbusters
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gbusters  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gbusters  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		/* sprite priority 3 = disable */
-		if (gbusters_priority != 0)
+		if (gbusters_priority)
 		{
 	//		K051960_sprites_draw(bitmap,cliprect,1,1);	/* are these used? */
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,0);

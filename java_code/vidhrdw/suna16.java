@@ -32,10 +32,10 @@
 
 	$10000.w	fedc ba98 ---- ----
 				---- ---- 76-- ---- 	Sprite Size:
-										00 . 16 x 16	(2x2  tiles)
-										01 . 32 x 32	(4x4  tiles)
-										10 . 16 x 256	(2x32 tiles)
-										11 . 32 x 256	(4x32 tiles)
+										00 -> 16 x 16	(2x2  tiles)
+										01 -> 32 x 32	(4x4  tiles)
+										10 -> 16 x 256	(2x32 tiles)
+										11 -> 32 x 256	(4x32 tiles)
 				---- ---- --54 ----		? (Bit 4 used by uballoon)
 				---- ---- ---- 3210 	Source Row
 
@@ -59,7 +59,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -70,7 +70,7 @@ public class suna16
 	
 	WRITE16_HANDLER( suna16_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			flip_screen_set( data & 1 );
 			color_bank = data & 4;
@@ -87,8 +87,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_suna16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_suna16  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram16_2 = auto_malloc( 0x100 * sizeof(data16_t) );
 		if (paletteram16_2 != NULL)	return 0;
 		else						return 1;
@@ -96,14 +95,14 @@ public class suna16
 	
 	READ16_HANDLER( suna16_paletteram16_r )
 	{
-		if (color_bank != 0)	return paletteram16_2[offset];
+		if (color_bank)	return paletteram16_2[offset];
 		else			return paletteram16[offset];
 	}
 	
 	WRITE16_HANDLER( suna16_paletteram16_w )
 	{
 		int r,g,b;
-		if (color_bank != 0)	data = COMBINE_DATA(&paletteram16_2[offset]);
+		if (color_bank)	data = COMBINE_DATA(&paletteram16_2[offset]);
 		else			data = COMBINE_DATA(&paletteram16[offset]);
 		r = (data >>  0) & 0x1F;
 		g = (data >>  5) & 0x1F;
@@ -124,8 +123,8 @@ public class suna16
 	{
 		int offs;
 	
-		int max_x	=	Machine.drv.screen_width	- 8;
-		int max_y	=	Machine.drv.screen_height - 8;
+		int max_x	=	Machine->drv->screen_width	- 8;
+		int max_y	=	Machine->drv->screen_height - 8;
 	
 		for ( offs = 0xfc00/2; offs < 0x10000/2 ; offs += 4/2 )
 		{
@@ -160,7 +159,7 @@ public class suna16
 			x = (x & 0xff) - (x & 0x100);
 			y = (y0 - (y & 0xff) - dimy*8 ) & 0xff;
 	
-			if (flipx != 0)	{ tile_xstart = dimx-1; tile_xinc = -1; }
+			if (flipx)	{ tile_xstart = dimx-1; tile_xinc = -1; }
 			else		{ tile_xstart = 0;		tile_xinc = +1; }
 	
 			tile_y = 0; 	tile_yinc = +1;
@@ -184,9 +183,9 @@ public class suna16
 					int tile_flipx	=	tile & 0x4000;
 					int tile_flipy	=	tile & 0x8000;
 	
-					if (flipx != 0)	tile_flipx = !tile_flipx;
+					if (flipx)	tile_flipx = !tile_flipx;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = max_x - sx;
 						sy = max_y - sy;
@@ -194,12 +193,12 @@ public class suna16
 						tile_flipy = !tile_flipy;
 					}
 	
-					drawgfx(	bitmap, Machine.gfx[0],
+					drawgfx(	bitmap, Machine->gfx[0],
 								(tile & 0x3fff) + bank*0x4000,
 								attr + (color_bank ? 0x10 : 0),
 								tile_flipx, tile_flipy,
 								sx, sy,
-								Machine.visible_area,TRANSPARENCY_PEN,15	);
+								Machine->visible_area,TRANSPARENCY_PEN,15	);
 	
 					tile_x += tile_xinc;
 				}
@@ -220,8 +219,7 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_suna16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* I believe background is black */
 		fillbitmap(bitmap,get_black_pen(),Machine.visible_area);
 		suna16_draw_sprites(bitmap);

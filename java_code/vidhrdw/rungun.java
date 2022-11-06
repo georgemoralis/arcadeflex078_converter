@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,7 +39,7 @@ public class rungun
 	
 	INLINE UINT32 ttl_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return((row<<6) + col);
 	}
 	
@@ -79,8 +79,7 @@ public class rungun
 	}
 	
 	
-	VIDEO_START(rng)
-	{
+	public static VideoStartHandlerPtr video_start_rng  = new VideoStartHandlerPtr() { public int handler(){
 		static GfxLayout charlayout = new GfxLayout
 		(
 			8, 8,	// 8x8
@@ -105,24 +104,24 @@ public class rungun
 	
 		/* find first empty slot to decode gfx */
 		for (ttl_gfx_index = 0; ttl_gfx_index < MAX_GFX_ELEMENTS; ttl_gfx_index++)
-			if (Machine.gfx[ttl_gfx_index] == 0)
+			if (Machine->gfx[ttl_gfx_index] == 0)
 				break;
 	
 		if (ttl_gfx_index == MAX_GFX_ELEMENTS)
 			return(1);
 	
 		// decode the ttl layer's gfx
-		Machine.gfx[ttl_gfx_index] = decodegfx(memory_region(REGION_GFX3), &charlayout);
+		Machine->gfx[ttl_gfx_index] = decodegfx(memory_region(REGION_GFX3), &charlayout);
 	
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-		        Machine.gfx[ttl_gfx_index].colortable = Machine.remapped_colortable;
-		        Machine.gfx[ttl_gfx_index].total_colors = Machine.drv.color_table_len / 16;
+		        Machine->gfx[ttl_gfx_index]->colortable = Machine->remapped_colortable;
+		        Machine->gfx[ttl_gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-		        Machine.gfx[ttl_gfx_index].colortable = Machine.pens;
-		        Machine.gfx[ttl_gfx_index].total_colors = Machine.drv.total_colors / 16;
+		        Machine->gfx[ttl_gfx_index]->colortable = Machine->pens;
+		        Machine->gfx[ttl_gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 		// create the tilemap
@@ -137,8 +136,7 @@ public class rungun
 		return(0);
 	}
 	
-	VIDEO_UPDATE(rng)
-	{
+	public static VideoUpdateHandlerPtr video_update_rng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		fillbitmap(priority_bitmap, 0, cliprect);
 	
@@ -148,5 +146,5 @@ public class rungun
 	
 		tilemap_mark_all_tiles_dirty(ttl_tilemap);
 		tilemap_draw(bitmap, cliprect, ttl_tilemap, 0, 0);
-	}
+	} };
 }

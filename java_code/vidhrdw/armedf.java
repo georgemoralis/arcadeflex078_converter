@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,16 +49,16 @@ public class armedf
 	
 	static void get_tx_tile_info(int tile_index)
 	{
-		int tile_number = terraf_text_videoram.read(tile_index)&0xff;
+		int tile_number = terraf_text_videoram[tile_index]&0xff;
 		int attributes;
 	
 		if( scroll_type == 1 )
 		{
-			attributes = terraf_text_videoram.read(tile_index+0x800)&0xff;
+			attributes = terraf_text_videoram[tile_index+0x800]&0xff;
 		}
 		else
 		{
-			attributes = terraf_text_videoram.read(tile_index+0x400)&0xff;
+			attributes = terraf_text_videoram[tile_index+0x400]&0xff;
 		}
 		SET_TILE_INFO(
 				0,
@@ -96,8 +96,7 @@ public class armedf
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_armedf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_armedf  = new VideoStartHandlerPtr() { public int handler(){
 		if( scroll_type == 4 || /* cclimbr2 */
 			scroll_type == 3 )  /* legion */
 		{
@@ -134,9 +133,9 @@ public class armedf
 	
 	WRITE16_HANDLER( armedf_text_videoram_w )
 	{
-		int oldword = terraf_text_videoram.read(offset);
-		COMBINE_DATA(&terraf_text_videoram.read(offset));
-		if (oldword != terraf_text_videoram.read(offset))
+		int oldword = terraf_text_videoram[offset];
+		COMBINE_DATA(&terraf_text_videoram[offset]);
+		if (oldword != terraf_text_videoram[offset])
 		{
 			if( scroll_type == 1 )
 			{
@@ -170,7 +169,7 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scrollx_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			armedf_fg_scrollx = data >> 8;
 			waiting_msb = 1;
@@ -179,9 +178,9 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scrolly_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
-			if (waiting_msb != 0)
+			if (waiting_msb)
 				terraf_scroll_msb = data >> 8;
 			else
 				armedf_fg_scrolly = data >> 8;
@@ -190,7 +189,7 @@ public class armedf
 	
 	WRITE16_HANDLER( terraf_fg_scroll_msb_arm_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			waiting_msb = 0;
 	}
 	
@@ -239,7 +238,7 @@ public class armedf
 			int sx = buffered_spriteram16[offs+3];
 			int sy = sprite_offy+240-(buffered_spriteram16[offs+0]&0x1ff);
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				sx = 320 - sx + 176;	/* don't ask where 176 comes from, just tried it out */
 				sy = 240 - sy + 1;		/* don't ask where 1 comes from, just tried it out */
 				flipx = NOT(flipx);			/* the values seem to result in pixel-correct placement */
@@ -248,7 +247,7 @@ public class armedf
 	
 			if (((buffered_spriteram16[offs+0] & 0x3000) >> 12) == priority)
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 					code & 0xfff,
 					color,
 	 				flipx,flipy,
@@ -260,8 +259,7 @@ public class armedf
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_armedf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int sprite_enable = armedf_vreg & 0x200;
 	
 		tilemap_set_enable( bg_tilemap, armedf_vreg&0x800 );
@@ -287,15 +285,15 @@ public class armedf
 					int scrollx,scrolly;
 	
 					/* scrolling is handled by the protection mcu */
-					scrollx = (terraf_text_videoram.read(13)& 0xff) | (terraf_text_videoram.read(14)<< 8);
-					scrolly = (terraf_text_videoram.read(11)& 0xff) | (terraf_text_videoram.read(12)<< 8);
+					scrollx = (terraf_text_videoram[13] & 0xff) | (terraf_text_videoram[14] << 8);
+					scrolly = (terraf_text_videoram[11] & 0xff) | (terraf_text_videoram[12] << 8);
 					tilemap_set_scrollx( fg_tilemap, 0, scrollx);
 					tilemap_set_scrolly( fg_tilemap, 0, scrolly);
 				}
 				break;
 		}
 	
-		if ((armedf_vreg & 0x0800) != 0)
+		if( armedf_vreg & 0x0800 )
 		{
 			tilemap_draw( bitmap, cliprect, bg_tilemap, 0, 0);
 		}
@@ -304,11 +302,11 @@ public class armedf
 			fillbitmap( bitmap, get_black_pen(), cliprect ); /* disabled bg_tilemap - all black? */
 		}
 	
-		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 2 );
+		if( sprite_enable ) draw_sprites( bitmap, cliprect, 2 );
 		tilemap_draw( bitmap, cliprect, fg_tilemap, 0, 0);
-		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 1 );
+		if( sprite_enable ) draw_sprites( bitmap, cliprect, 1 );
 		tilemap_draw( bitmap, cliprect, tx_tilemap, 0, 0);
-		if (sprite_enable != 0) draw_sprites( bitmap, cliprect, 0 );
+		if( sprite_enable ) draw_sprites( bitmap, cliprect, 0 );
 	
 		if( keyboard_pressed(KEYCODE_1 ) ||
 			keyboard_pressed(KEYCODE_2 ) )
@@ -316,14 +314,13 @@ public class armedf
 			unsigned i;
 			for( i=0; i<0x800; i++ )
 			{
-				terraf_text_videoram.write(0x0,0x0);
+				terraf_text_videoram[i] = 0x0;
 			}
 			tilemap_mark_all_tiles_dirty( tx_tilemap );
 		}
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_armedf  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_armedf  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 }

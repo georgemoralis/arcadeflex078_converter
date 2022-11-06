@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -87,7 +87,7 @@ public class mystwarr
 		else
 			*color = sprite_colorbase | (c & 0x1f);
 	
-		if ((oinprion & 0xf0) != 0)
+		if (oinprion & 0xf0)
 			*priority = cbparam;  // use PCU2 internal priority
 		else
 			*priority = c & 0xf0; // use color implied priority
@@ -103,7 +103,7 @@ public class mystwarr
 	
 		tileno = dat3[tile_index] | ((dat2[tile_index]&0x3f)<<8);
 	
-		if ((tile_index & 1) != 0)
+		if (tile_index & 1)
 			colour = (dat1[tile_index>>1]&0xf);
 		else
 			colour = ((dat1[tile_index>>1]>>4)&0xf);
@@ -115,8 +115,7 @@ public class mystwarr
 		SET_TILE_INFO(0, tileno, colour, 0)
 	}
 	
-	VIDEO_START(gaiapols)
-	{
+	public static VideoStartHandlerPtr video_start_gaiapols  = new VideoStartHandlerPtr() { public int handler(){
 		K055555_vh_start();
 		K054338_vh_start();
 	
@@ -146,7 +145,7 @@ public class mystwarr
 		tilemap_set_transparent_pen(ult_936_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
 	static void get_ult_936_tile_info(int tile_index)
 	{
@@ -161,8 +160,7 @@ public class mystwarr
 		SET_TILE_INFO(0, tileno, colour, (dat1[tile_index]&0x40) ? TILE_FLIPX : 0)
 	}
 	
-	VIDEO_START(dadandrn)
-	{
+	public static VideoStartHandlerPtr video_start_dadandrn  = new VideoStartHandlerPtr() { public int handler(){
 		K055555_vh_start();
 		K054338_vh_start();
 	
@@ -194,10 +192,9 @@ public class mystwarr
 		tilemap_set_transparent_pen(ult_936_tilemap, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(mystwarr)
-	{
+	public static VideoStartHandlerPtr video_start_mystwarr  = new VideoStartHandlerPtr() { public int handler(){
 		K055555_vh_start();
 		K054338_vh_start();
 	
@@ -223,10 +220,9 @@ public class mystwarr
 		cbparam = 0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(metamrph)
-	{
+	public static VideoStartHandlerPtr video_start_metamrph  = new VideoStartHandlerPtr() { public int handler(){
 		int rgn_250 = REGION_GFX3;
 	
 		gametype = 0;
@@ -256,10 +252,9 @@ public class mystwarr
 		K053250_set_LayerOffset(0, -7, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(viostorm)
-	{
+	public static VideoStartHandlerPtr video_start_viostorm  = new VideoStartHandlerPtr() { public int handler(){
 		gametype = 0;
 	
 		K055555_vh_start();
@@ -283,10 +278,9 @@ public class mystwarr
 		K056832_set_LayerOffset(3,  3+1, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(martchmp)
-	{
+	public static VideoStartHandlerPtr video_start_martchmp  = new VideoStartHandlerPtr() { public int handler(){
 		gametype = 0;
 	
 		K055555_vh_start();
@@ -312,12 +306,11 @@ public class mystwarr
 		K054338_invert_alpha(0);
 	
 		return 0;
-	}
+	} };
 	
 	
 	
-	VIDEO_UPDATE(mystwarr)
-	{
+	public static VideoUpdateHandlerPtr video_update_mystwarr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, old, blendmode=0;
 	
 		if (cbparam<0) cbparam=0; else if (cbparam>=32) blendmode=(1<<16|GXMIX_BLEND_FORCE)<<2; //* water hack (TEMPORARY)
@@ -332,10 +325,9 @@ public class mystwarr
 		sprite_colorbase = K055555_get_palette_index(4)<<5;
 	
 		konamigx_mixer(bitmap, cliprect, 0, 0, 0, 0, blendmode);
-	}
+	} };
 	
-	VIDEO_UPDATE(metamrph)
-	{
+	public static VideoUpdateHandlerPtr video_update_metamrph  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, old;
 	
 		for (i = 0; i < 4; i++)
@@ -348,10 +340,9 @@ public class mystwarr
 		sprite_colorbase = K055555_get_palette_index(4)<<4;
 	
 		konamigx_mixer(bitmap, cliprect, 0, GXSUB_K053250 | GXSUB_4BPP, 0, 0, 0);
-	}
+	} };
 	
-	VIDEO_UPDATE(martchmp)
-	{
+	public static VideoUpdateHandlerPtr video_update_martchmp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, old, blendmode;
 	
 		for (i = 0; i < 4; i++)
@@ -370,13 +361,13 @@ public class mystwarr
 		blendmode = (oinprion==0xef && K054338_read_register(K338_REG_PBLEND)) ? ((1<<16|GXMIX_BLEND_FORCE)<<2) : 0;
 	
 		konamigx_mixer(bitmap, cliprect, 0, 0, 0, 0, blendmode);
-	}
+	} };
 	
 	
 	
 	WRITE16_HANDLER(ddd_053936_enable_w)
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			roz_enable = data & 0x0100;
 			roz_rombank = (data & 0xc000)>>14;
@@ -391,7 +382,7 @@ public class mystwarr
 	
 		if (offset == 1)
 		{
-	 		if (ACCESSING_MSB != 0) K053936GP_clip_enable(0, data & 0x0100);
+	 		if (ACCESSING_MSB) K053936GP_clip_enable(0, data & 0x0100);
 		}
 		else
 		{
@@ -477,7 +468,7 @@ public class mystwarr
 		return ROM[offset]<<8;
 	}
 	
-	VIDEO_UPDATE(dadandrn) /* and gaiapols */
+	public static VideoUpdateHandlerPtr video_update_dadandrn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)* and gaiapols */
 	{
 		int i, newbase, dirty, rozmode, blendmode;
 	
@@ -492,7 +483,7 @@ public class mystwarr
 			rozmode = GXSUB_8BPP;
 		}
 	
-		if (K056832_get_LayerAssociation() != 0)
+		if (K056832_get_LayerAssociation())
 		{
 			for (i=0; i<4; i++)
 			{
@@ -515,7 +506,7 @@ public class mystwarr
 					dirty = 1;
 				}
 			}
-			if (dirty != 0) K056832_MarkAllTilemapsDirty();
+			if (dirty) K056832_MarkAllTilemapsDirty();
 	
 		}
 	
@@ -558,5 +549,5 @@ public class mystwarr
 		}
 	
 		konamigx_mixer(bitmap, cliprect, (roz_enable) ? ult_936_tilemap : 0, rozmode, 0, 0, blendmode);
-	}
+	} };
 }

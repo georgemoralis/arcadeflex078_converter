@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -76,8 +76,7 @@ public class flkatck
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_flkatck  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_flkatck  = new VideoStartHandlerPtr() { public int handler(){
 		k007121_tilemap[0] = tilemap_create(get_tile_info_A,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		k007121_tilemap[1] = tilemap_create(get_tile_info_B,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -101,13 +100,12 @@ public class flkatck
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr flkatck_k007121_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flkatck_k007121_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x1000){	/* tiles */
 			if (k007121_ram[offset] != data)
 			{
 				k007121_ram[offset] = data;
-				if ((offset & 0x800) != 0)	/* score */
+				if (offset & 0x800)	/* score */
 					tilemap_mark_tile_dirty(k007121_tilemap[1],offset & 0x3ff);
 				else
 					tilemap_mark_tile_dirty(k007121_tilemap[0],offset & 0x3ff);
@@ -117,8 +115,7 @@ public class flkatck
 			k007121_ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr flkatck_k007121_regs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flkatck_k007121_regs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0x04:	/* ROM bank select */
@@ -150,8 +147,7 @@ public class flkatck
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_flkatck  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_flkatck  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle final_clip[2];
 	
 	#if 0

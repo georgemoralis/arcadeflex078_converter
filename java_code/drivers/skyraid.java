@@ -6,7 +6,7 @@ Atari Sky Raider driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,8 +20,7 @@ public class skyraid
 	static int analog_offset;
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_skyraid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skyraid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color( 0, 0x00, 0x00, 0x00);	/* terrain */
 		palette_set_color( 1, 0x18, 0x18, 0x18);
 		palette_set_color( 2, 0x30, 0x30, 0x30);
@@ -45,20 +44,17 @@ public class skyraid
 	} };
 	
 	
-	public static ReadHandlerPtr skyraid_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skyraid_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr skyraid_alpha_num_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skyraid_alpha_num_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return skyraid_alpha_num_ram[offset & 0x7f];
 	} };
 	
 	
-	public static ReadHandlerPtr skyraid_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skyraid_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(0);
 	
 		if (readinputport(4) > analog_range)
@@ -70,20 +66,17 @@ public class skyraid
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_alpha_num_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_alpha_num_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		skyraid_alpha_num_ram[offset & 0x7f] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* BIT0 => PLANE SWEEP */
 		/* BIT1 => MISSILE     */
 		/* BIT2 => EXPLOSION   */
@@ -95,20 +88,17 @@ public class skyraid
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_range_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_range_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		analog_range = data & 0x3f;
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_offset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_offset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		analog_offset = data & 0x3f;
 	} };
 	
 	
-	public static WriteHandlerPtr skyraid_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyraid_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		skyraid_scroll = data;
 	} };
 	
@@ -148,7 +138,7 @@ public class skyraid
 	};
 	
 	
-	static InputPortPtr input_ports_skyraid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyraid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyraid )
 		PORT_START(); 
 		PORT_DIPNAME( 0x30, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -279,8 +269,7 @@ public class skyraid
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_skyraid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skyraid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 12)
@@ -303,9 +292,7 @@ public class skyraid
 		MDRV_VIDEO_UPDATE(skyraid)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_skyraid = new RomLoadPtr(){ public void handler(){ 
@@ -338,5 +325,5 @@ public class skyraid
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_skyraid	   = new GameDriver("1978"	,"skyraid"	,"skyraid.java"	,rom_skyraid,null	,machine_driver_skyraid	,input_ports_skyraid	,null	,ORIENTATION_FLIP_Y	,	"Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX( 1978, skyraid, 0, skyraid, skyraid, 0, ORIENTATION_FLIP_Y, "Atari", "Sky Raider", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
 }

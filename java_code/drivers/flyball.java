@@ -6,7 +6,7 @@ Atari Flyball Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,8 +62,7 @@ public class flyball
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_flyball  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_flyball  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* address bits 0 through 8 are inverted */
@@ -84,63 +83,51 @@ public class flyball
 	
 	/* two physical buttons (start game and stop runner) share the same port bit */
 	
-	public static ReadHandlerPtr flyball_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flyball_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(0) & readinputport(5);
 	} };
 	
-	public static ReadHandlerPtr flyball_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flyball_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_getscanline() & 0x3f;
 	} };
 	
-	public static ReadHandlerPtr flyball_potsense_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flyball_potsense_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return flyball_potsense & ~flyball_potmask;
 	} };
 	
-	public static ReadHandlerPtr flyball_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flyball_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return flyball_zero_page[offset & 0xff];
 	} };
 	
-	public static WriteHandlerPtr flyball_potmask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_potmask_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_potmask |= data & 0xf;
 	} };
 	
-	public static WriteHandlerPtr flyball_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_zero_page[offset & 0xff] = data;
 	} };
 	
-	public static WriteHandlerPtr flyball_pitcher_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_pitcher_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_pitcher_pic = data & 0xf;
 	} };
 	
-	public static WriteHandlerPtr flyball_ball_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_ball_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_ball_vert = data;
 	} };
 	
-	public static WriteHandlerPtr flyball_ball_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_ball_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_ball_horz = data;
 	} };
 	
-	public static WriteHandlerPtr flyball_pitcher_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_pitcher_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_pitcher_vert = data;
 	} };
 	
-	public static WriteHandlerPtr flyball_pitcher_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_pitcher_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flyball_pitcher_horz = data;
 	} };
 	
-	public static WriteHandlerPtr flyball_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flyball_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit = ~data & 1;
 	
 		switch (offset)
@@ -197,7 +184,7 @@ public class flyball
 	};
 	
 	
-	static InputPortPtr input_ports_flyball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flyball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flyball )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -273,8 +260,7 @@ public class flyball
 	};
 	
 	
-	public static PaletteInitHandlerPtr palette_init_flyball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_flyball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x3F, 0x3F, 0x3F);  /* tiles, ball */
 		palette_set_color(1, 0xFF, 0xFF, 0xFF);
 		palette_set_color(2, 0xFF ,0xFF, 0xFF);  /* sprites */
@@ -282,8 +268,7 @@ public class flyball
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_flyball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( flyball )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -307,9 +292,7 @@ public class flyball
 		MDRV_VIDEO_START(flyball)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_flyball = new RomLoadPtr(){ public void handler(){ 
@@ -335,5 +318,5 @@ public class flyball
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_flyball	   = new GameDriver("1976"	,"flyball"	,"flyball.java"	,rom_flyball,null	,machine_driver_flyball	,input_ports_flyball	,null	,0	,	"Atari", "Flyball", GAME_NO_SOUND )
+	GAMEX( 1976, flyball, 0, flyball, flyball, 0, 0, "Atari", "Flyball", GAME_NO_SOUND )
 }

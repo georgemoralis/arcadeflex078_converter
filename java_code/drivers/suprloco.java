@@ -13,7 +13,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,8 +23,7 @@ public class suprloco
 	
 	
 	
-	public static WriteHandlerPtr suprloco_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr suprloco_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		/* spin for a while to let the Z80 read the command (fixes hanging sound in Regulus) */
@@ -80,7 +79,7 @@ public class suprloco
 	
 	
 	
-	static InputPortPtr input_ports_suprloco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprloco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprloco )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -190,8 +189,7 @@ public class suprloco
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_suprloco = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( suprloco )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -219,9 +217,7 @@ public class suprloco
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -261,8 +257,7 @@ public class suprloco
 	
 	
 	
-	public static DriverInitHandlerPtr init_suprloco  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_suprloco  = new DriverInitHandlerPtr() { public void handler(){
 		/* convert graphics to 4bpp from 3bpp */
 	
 		int i, j, k, color_source, color_dest;
@@ -301,5 +296,5 @@ public class suprloco
 	
 	
 	
-	public static GameDriver driver_suprloco	   = new GameDriver("1982"	,"suprloco"	,"suprloco.java"	,rom_suprloco,null	,machine_driver_suprloco	,input_ports_suprloco	,init_suprloco	,ROT0	,	"Sega", "Super Locomotive" )
+	GAME( 1982, suprloco, 0, suprloco, suprloco, suprloco, ROT0, "Sega", "Super Locomotive" )
 }

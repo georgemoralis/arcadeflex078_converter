@@ -58,7 +58,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,13 +73,11 @@ public class firetrap
 	static int firetrap_irq_enable = 0;
 	static int firetrap_nmi_enable;
 	
-	public static WriteHandlerPtr firetrap_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrap_nmi_enable=~data & 1;
 	} };
 	
-	public static WriteHandlerPtr firetrap_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -87,8 +85,7 @@ public class firetrap
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static ReadHandlerPtr firetrap_8751_bootleg_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrap_8751_bootleg_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Check for coin insertion */
 		/* the following only works in the bootleg version, which doesn't have an */
 		/* 8751 - the real thing is much more complicated than that. */
@@ -98,19 +95,16 @@ public class firetrap
 	
 	static int i8751_return,i8751_current_command;
 	
-	public static MachineInitHandlerPtr machine_init_firetrap  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_firetrap  = new MachineInitHandlerPtr() { public void handler(){
 		i8751_current_command=0;
 	} };
 	
-	public static ReadHandlerPtr firetrap_8751_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrap_8751_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//logerror("PC:%04x read from 8751\n",activecpu_get_pc());
 		return i8751_return;
 	} };
 	
-	public static WriteHandlerPtr firetrap_8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int i8751_init_ptr=0;
 		static const data8_t i8751_init_data[]={
 			0xf5,0xd5,0xdd,0x21,0x05,0xc1,0x87,0x5f,0x87,0x83,0x5f,0x16,0x00,0xdd,0x19,0xd1,
@@ -143,20 +137,20 @@ public class firetrap
 	
 		/* Init sequence command */
 		else if (data==0x13) {
-			if (i8751_current_command == 0)
+			if (!i8751_current_command)
 				i8751_init_ptr=0;
 			i8751_return=i8751_init_data[i8751_init_ptr++];
 		}
 	
 		/* Used to calculate a jump address when coins are inserted */
 		else if (data==0xbd) {
-			if (i8751_current_command == 0)
+			if (!i8751_current_command)
 				i8751_init_ptr=0;
 			i8751_return=i8751_coin_data[i8751_init_ptr++];
 		}
 	
 		else if (data==0x36) {
-			if (i8751_current_command == 0)
+			if (!i8751_current_command)
 				i8751_init_ptr=0;
 			i8751_return=i8751_36_data[i8751_init_ptr++];
 		}
@@ -188,20 +182,17 @@ public class firetrap
 		i8751_current_command=data;
 	} };
 	
-	public static WriteHandlerPtr firetrap_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr firetrap_sound_2400_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_sound_2400_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(offset,~data & 0x01);
 		firetrap_irq_enable = data & 0x02;
 	} };
 	
-	public static WriteHandlerPtr firetrap_sound_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_sound_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -223,13 +214,11 @@ public class firetrap
 			cpu_set_irq_line (1, M6502_IRQ_LINE, HOLD_LINE);
 	}
 	
-	public static WriteHandlerPtr firetrap_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next = data;
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -329,7 +318,7 @@ public class firetrap
 	
 	
 	
-	static InputPortPtr input_ports_firetrap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_firetrap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( firetrap )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN | IPF_4WAY );
@@ -412,7 +401,7 @@ public class firetrap
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_SERVICE1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_firetpbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_firetpbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( firetpbl )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN | IPF_4WAY );
@@ -553,13 +542,12 @@ public class firetrap
 		{ 30 }
 	};
 	
-	public static InterruptHandlerPtr firetrap = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr firetrap = new InterruptHandlerPtr() {public void handler(){
 		static int latch=0;
 		static int coin_command_pending=0;
 	
 		/* Check for coin IRQ */
-		if (cpu_getiloops() != 0) {
+		if (cpu_getiloops()) {
 			if ((readinputport(5) & 0x7) != 0x7 && !latch) {
 				coin_command_pending=~readinputport(5);
 				latch=1;
@@ -580,14 +568,12 @@ public class firetrap
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static InterruptHandlerPtr bootleg = new InterruptHandlerPtr() {public void handler()
-	{
-		if (firetrap_nmi_enable != 0)
+	public static InterruptHandlerPtr bootleg = new InterruptHandlerPtr() {public void handler(){
+		if (firetrap_nmi_enable)
 			cpu_set_irq_line (0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_firetrap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( firetrap )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz */
@@ -617,12 +603,9 @@ public class firetrap
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_firetpbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( firetpbl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz */
@@ -651,9 +634,7 @@ public class firetrap
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -788,6 +769,6 @@ public class firetrap
 	
 	
 	
-	public static GameDriver driver_firetrap	   = new GameDriver("1986"	,"firetrap"	,"firetrap.java"	,rom_firetrap,null	,machine_driver_firetrap	,input_ports_firetrap	,null	,ROT90	,	"Data East USA", "Fire Trap (US)" )
-	public static GameDriver driver_firetpbl	   = new GameDriver("1986"	,"firetpbl"	,"firetrap.java"	,rom_firetpbl,driver_firetrap	,machine_driver_firetpbl	,input_ports_firetpbl	,null	,ROT90	,	"bootleg", "Fire Trap (Japan bootleg)" )
+	GAME( 1986, firetrap, 0,        firetrap, firetrap, 0, ROT90, "Data East USA", "Fire Trap (US)" )
+	GAME( 1986, firetpbl, firetrap, firetpbl, firetpbl, 0, ROT90, "bootleg", "Fire Trap (Japan bootleg)" )
 }

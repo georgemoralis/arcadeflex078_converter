@@ -146,7 +146,7 @@ rumbling on a subwoofer in the cabinet.)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -203,8 +203,7 @@ public class ninjaw
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -217,7 +216,7 @@ public class ninjaw
 			taitosound_comm_w (0, data & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if ((data & 0xff00) != 0)
+		if (data & 0xff00)
 			usrintf_showmessage("ninjaw_sound_w to high byte: %04x",data);
 	#endif
 	}
@@ -232,8 +231,7 @@ public class ninjaw
 	
 	/**** sound pan control ****/
 	static int ninjaw_pandata[4];
-	public static WriteHandlerPtr ninjaw_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjaw_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  offset = offset&3;
 	  ninjaw_pandata[offset] = (float)data * (100.f / 255.0f);
 	  //usrintf_showmessage(" pan %02x %02x %02x %02x", ninjaw_pandata[0], ninjaw_pandata[1], ninjaw_pandata[2], ninjaw_pandata[3] );
@@ -516,7 +514,7 @@ public class ninjaw
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );\
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );
 	
-	static InputPortPtr input_ports_ninjaw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjaw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjaw )
 		NINJAW_DSWA
 		TAITO_COINAGE_WORLD_8
 	
@@ -529,7 +527,7 @@ public class ninjaw
 		NINJAW_IN4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ninjawj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjawj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjawj )
 		NINJAW_DSWA
 		TAITO_COINAGE_JAPAN_8
 	
@@ -542,7 +540,7 @@ public class ninjaw
 		NINJAW_IN4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_darius2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darius2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darius2 )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -685,8 +683,7 @@ public class ninjaw
 	Darius2: arbitrary interleaving of 10 to keep cpus synced.
 	*************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_ninjaw = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjaw )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -722,13 +719,10 @@ public class ninjaw
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_darius2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darius2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -764,9 +758,7 @@ public class ninjaw
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -929,8 +921,7 @@ public class ninjaw
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_ninjaw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ninjaw  = new DriverInitHandlerPtr() { public void handler(){
 		cpua_ctrl = 0xff;
 		state_save_register_UINT16("main1", 0, "control", &cpua_ctrl, 1);
 		state_save_register_func_postload(parse_control);
@@ -939,8 +930,7 @@ public class ninjaw
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_ninjaw  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ninjaw  = new MachineInitHandlerPtr() { public void handler(){
 	  /**** mixer control enable ****/
 	  mixer_sound_enable_global_w( 1 );	/* mixer enabled */
 	} };
@@ -948,8 +938,8 @@ public class ninjaw
 	
 	/* Working Games */
 	
-	public static GameDriver driver_ninjaw	   = new GameDriver("1987"	,"ninjaw"	,"ninjaw.java"	,rom_ninjaw,null	,machine_driver_ninjaw	,input_ports_ninjaw	,init_ninjaw	,ROT0	,	"Taito Corporation Japan", "The Ninja Warriors (World)" )
-	public static GameDriver driver_ninjawj	   = new GameDriver("1987"	,"ninjawj"	,"ninjaw.java"	,rom_ninjawj,driver_ninjaw	,machine_driver_ninjaw	,input_ports_ninjawj	,init_ninjaw	,ROT0	,	"Taito Corporation", "The Ninja Warriors (Japan)" )
-	public static GameDriver driver_darius2	   = new GameDriver("1989"	,"darius2"	,"ninjaw.java"	,rom_darius2,null	,machine_driver_darius2	,input_ports_darius2	,init_ninjaw	,ROT0	,	"Taito Corporation", "Darius II (Japan)" )
+	GAME( 1987, ninjaw,   0,      ninjaw,  ninjaw,   ninjaw,  ROT0, "Taito Corporation Japan", "The Ninja Warriors (World)" )
+	GAME( 1987, ninjawj,  ninjaw, ninjaw,  ninjawj,  ninjaw,  ROT0, "Taito Corporation", "The Ninja Warriors (Japan)" )
+	GAME( 1989, darius2,  0,      darius2, darius2,  ninjaw,  ROT0, "Taito Corporation", "Darius II (Japan)" )
 	
 }

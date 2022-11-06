@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -42,8 +42,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_kinst  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_kinst  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, rambase1 + 0x1000/4);
 		cpu_setbank(2, rombase);
 		cpu_setbank(3, rambase1);
@@ -66,8 +65,7 @@ public class kinst
 	}
 	
 	
-	public static InterruptHandlerPtr irq0_start = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr irq0_start = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 0, ASSERT_LINE);
 		timer_set(TIME_IN_USEC(50), 0, irq0_stop);
 	} };
@@ -137,7 +135,7 @@ public class kinst
 				result = 0xffff0000 | readinputport(offset);
 				temp = dcs_control_r();
 				result &= ~0x0002;
-				if ((temp & 0x800) != 0)
+				if (temp & 0x800)
 					result |= 0x0002;
 				break;
 	
@@ -223,11 +221,11 @@ public class kinst
 	
 	static MEMORY_READ32_START( main_readmem )
 		{ 0x00000000, 0x00000fff, MRA32_BANK4 },
-		{ 0x00001000, 0x0007ffff, MRA32_BANK1 },	/* . rambase1 + 0x1000 */
+		{ 0x00001000, 0x0007ffff, MRA32_BANK1 },	/* -> rambase1 + 0x1000 */
 		{ 0x80000000, 0x8007ffff, MRA32_RAM },
 		{ 0x88000000, 0x887fffff, MRA32_RAM },
-		{ 0x9fc00000, 0x9fc7ffff, MRA32_BANK2 },	/* . rombase */
-		{ 0xa0000000, 0xa007ffff, MRA32_BANK3 },	/* . rambase1 */
+		{ 0x9fc00000, 0x9fc7ffff, MRA32_BANK2 },	/* -> rombase */
+		{ 0xa0000000, 0xa007ffff, MRA32_BANK3 },	/* -> rambase1 */
 		{ 0xb0000080, 0xb00000ff, kinst_control_r },
 		{ 0xb0000100, 0xb000013f, ide_controller_r },
 		{ 0xb0000170, 0xb0000173, ide_controller_extra_r },
@@ -257,7 +255,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_kinst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kinst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kinst )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -392,9 +390,7 @@ public class kinst
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -455,8 +451,7 @@ public class kinst
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_kinst  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kinst  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 kinst_control_map[8] = { 0,1,2,3,4,5,6,7 };
 		UINT8 *features;
 	
@@ -490,8 +485,7 @@ public class kinst
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_kinst2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kinst2  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 kinst2_control_map[8] = { 2,4,1,0,3,5,6,7 };
 		UINT8 *features;
 	
@@ -539,6 +533,6 @@ public class kinst
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_kinst	   = new GameDriver("1994"	,"kinst"	,"kinst.java"	,rom_kinst,null	,machine_driver_kinst	,input_ports_kinst	,init_kinst	,ROT0	,	"Rare", "Killer Instinct (v1.0)" )
-	public static GameDriver driver_kinst2	   = new GameDriver("1994"	,"kinst2"	,"kinst.java"	,rom_kinst2,null	,machine_driver_kinst	,input_ports_kinst	,init_kinst2	,ROT0	,	"Rare", "Killer Instinct 2 (v2.1)" )
+	GAME( 1994, kinst,	0,		kinst, kinst,  kinst,	ROT0, "Rare", "Killer Instinct (v1.0)" )
+	GAME( 1994, kinst2, 0,		kinst, kinst,  kinst2,	ROT0, "Rare", "Killer Instinct 2 (v2.1)" )
 }

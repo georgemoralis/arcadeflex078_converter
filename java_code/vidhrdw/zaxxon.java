@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class zaxxon
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_zaxxon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_zaxxon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -97,8 +96,7 @@ public class zaxxon
 			COLOR(0,i) = i;
 	} };
 	
-	public static WriteHandlerPtr zaxxon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaxxon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -106,8 +104,7 @@ public class zaxxon
 		}
 	} };
 	
-	public static WriteHandlerPtr congo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr congo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -131,11 +128,11 @@ public class zaxxon
 			sy = 8 * (offs / 32);
 			sx = 8 * (offs % 32);
 	
-			if (!(Machine.orientation & ORIENTATION_SWAP_XY))
+			if (!(Machine->orientation & ORIENTATION_SWAP_XY))
 				/* leave screenful of black pixels at end */
 				sy += 256;
 	
-			drawgfx(src_bm,Machine.gfx[1],
+			drawgfx(src_bm,Machine->gfx[1],
 					memory_region(REGION_GFX4)[offs] + 256 * (memory_region(REGION_GFX4)[0x4000 + offs] & 3),
 					col + (memory_region(REGION_GFX4)[0x4000 + offs] >> 4),
 					0,0,
@@ -143,7 +140,7 @@ public class zaxxon
 					0,TRANSPARENCY_NONE,0);
 		}
 	
-		if (Machine.orientation & ORIENTATION_SWAP_XY)
+		if (Machine->orientation & ORIENTATION_SWAP_XY)
 		{
 			/* the background is stored as a rectangle, but is drawn by the hardware skewed: */
 			/* go right two pixels, then up one pixel. Doing the conversion at run time would */
@@ -172,7 +169,7 @@ public class zaxxon
 		int width, height;
 	
 		/* for speed, backgrounds are arranged differently if axis is swapped */
-		if (Machine.orientation & ORIENTATION_SWAP_XY)
+		if (Machine->orientation & ORIENTATION_SWAP_XY)
 			height = 512, width = 2303+32;
 		else
 			/* leave a screenful of black pixels at each end */
@@ -188,7 +185,7 @@ public class zaxxon
 				return 1;
 		}
 	
-		if (Machine.orientation & ORIENTATION_SWAP_XY)
+		if (Machine->orientation & ORIENTATION_SWAP_XY)
 		{
 			/* create a temporary bitmap to prepare the background before converting it */
 			if ((prebitmap = bitmap_alloc(256,4096)) == 0)
@@ -202,14 +199,14 @@ public class zaxxon
 	
 		if (zaxxon_vid_type == ZAXXON_VID || zaxxon_vid_type == FUTSPY_VID)
 		{
-			if (!(Machine.orientation & ORIENTATION_SWAP_XY))
+			if (!(Machine->orientation & ORIENTATION_SWAP_XY))
 				prebitmap = backgroundbitmap2;
 	
 			/* prepare a second background with different colors, used in the death sequence */
 			create_background(backgroundbitmap2, prebitmap, 16);
 		}
 	
-		if (Machine.orientation & ORIENTATION_SWAP_XY)
+		if (Machine->orientation & ORIENTATION_SWAP_XY)
 			bitmap_free(prebitmap);
 	
 		return 0;
@@ -226,15 +223,14 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_zaxxon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_zaxxon  = new VideoStartHandlerPtr() { public int handler(){
 		if ( zaxxon_create_background() )
 			return 1;
 	
 		fg_tilemap = tilemap_create(zaxxon_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -254,10 +250,10 @@ public class zaxxon
 			int i,skew,scroll;
 			struct rectangle clip;
 	
-			if (Machine.orientation & ORIENTATION_SWAP_XY)
+			if (Machine->orientation & ORIENTATION_SWAP_XY)
 			{
 				/* standard rotation - skew background horizontally */
-				if (flip_screen == 0)
+				if (!flip_screen())
 				{
 					if (zaxxon_vid_type == CONGO_VID)
 						scroll = 1023+63 - (zaxxon_background_position[0] + 256*zaxxon_background_position[1]);
@@ -272,12 +268,12 @@ public class zaxxon
 						scroll = (zaxxon_background_position[0] + 256*(zaxxon_background_position[1]&7)) - 32;
 				}
 	
-				skew = 128 - 512 + 2 * Machine.visible_area.min_x;
+				skew = 128 - 512 + 2 * Machine->visible_area.min_x;
 	
-				clip.min_y = Machine.visible_area.min_y;
-				clip.max_y = Machine.visible_area.max_y;
+				clip.min_y = Machine->visible_area.min_y;
+				clip.max_y = Machine->visible_area.max_y;
 	
-				for (i = Machine.visible_area.min_x;i <= Machine.visible_area.max_x;i++)
+				for (i = Machine->visible_area.min_x;i <= Machine->visible_area.max_x;i++)
 				{
 					clip.min_x = i;
 					clip.max_x = i;
@@ -294,14 +290,14 @@ public class zaxxon
 			else
 			{
 				/* skew background up one pixel every 2 horizontal pixels */
-				if (flip_screen_y == 0)
+				if (!flip_screen_y)
 				{
 					if (zaxxon_vid_type == CONGO_VID)
 						scroll = 2050 + 2*(zaxxon_background_position[0] + 256*zaxxon_background_position[1])
-								- backgroundbitmap1.height + 256;
+								- backgroundbitmap1->height + 256;
 					else
 						scroll = 2*(zaxxon_background_position[0] + 256*(zaxxon_background_position[1]&7))
-								- backgroundbitmap1.height + 256;
+								- backgroundbitmap1->height + 256;
 				}
 				else
 				{
@@ -311,12 +307,12 @@ public class zaxxon
 						scroll = -(2*(zaxxon_background_position[0] + 256*(zaxxon_background_position[1]&7))) - 2;
 				}
 	
-				skew = 72 - (255 - Machine.visible_area.max_y);
+				skew = 72 - (255 - Machine->visible_area.max_y);
 	
-				clip.min_x = Machine.visible_area.min_x;
-				clip.max_x = Machine.visible_area.max_x;
+				clip.min_x = Machine->visible_area.min_x;
+				clip.max_x = Machine->visible_area.max_x;
 	
-				for (i = Machine.visible_area.max_y;i >= Machine.visible_area.min_y;i-=2)
+				for (i = Machine->visible_area.max_y;i >= Machine->visible_area.min_y;i-=2)
 				{
 					clip.min_y = i-1;
 					clip.max_y = i;
@@ -352,7 +348,7 @@ public class zaxxon
 				int sx = ((spriteram.read(offs + 3)+ 16) & 0xff) - 32;
 				int sy = 255 - spriteram.read(offs)- 16;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -360,14 +356,13 @@ public class zaxxon
 					sy = 224 - sy;
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2], code, color, flipx, flipy,
+				drawgfx(bitmap, Machine->gfx[2], code, color, flipx, flipy,
 					sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zaxxon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		zaxxon_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
@@ -383,8 +378,7 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_razmataz  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_razmataz  = new VideoStartHandlerPtr() { public int handler(){
 		int offs;
 	
 		/* large bitmap for the precalculated background */
@@ -420,7 +414,7 @@ public class zaxxon
 		fg_tilemap = tilemap_create(razmataz_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -445,8 +439,7 @@ public class zaxxon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_razmataz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		razmataz_draw_background(bitmap, cliprect);
 		zaxxon_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
@@ -462,15 +455,14 @@ public class zaxxon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_congo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_congo  = new VideoStartHandlerPtr() { public int handler(){
 		if ( zaxxon_create_background() )
 			return 1;
 	
 		fg_tilemap = tilemap_create(congo_get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -507,7 +499,7 @@ public class zaxxon
 				int sx = ((spriteram.read(offs + 2 + 3)+ 16) & 0xff) - 31;
 				int sy = 255 - spriteram.read(offs + 2)- 15;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -515,14 +507,13 @@ public class zaxxon
 					sy = 224 - sy;
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2], code, color, flipx, flipy,
+				drawgfx(bitmap, Machine->gfx[2], code, color, flipx, flipy,
 					sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_congo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		zaxxon_draw_background(bitmap, cliprect);
 		congo_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
@@ -545,7 +536,7 @@ public class zaxxon
 				int sx = ((spriteram.read(offs + 3)+ 16) & 0xff) - 32;
 				int sy = 255 - spriteram.read(offs)- 16;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -553,14 +544,13 @@ public class zaxxon
 					sy = 224 - sy;
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2], code, color, flipx, flipy,
+				drawgfx(bitmap, Machine->gfx[2], code, color, flipx, flipy,
 					sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_futspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_futspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		zaxxon_draw_background(bitmap, cliprect);
 		futspy_draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);

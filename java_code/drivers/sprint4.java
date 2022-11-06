@@ -9,7 +9,7 @@ Atari Sprint 4 driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class sprint4
 	static int gear[4];
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_sprint4  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sprint4  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00); /* black  */
 		palette_set_color(1, 0xfc, 0xdf, 0x80); /* peach  */
 		palette_set_color(2, 0xf0, 0x00, 0xf0); /* violet */
@@ -101,27 +100,24 @@ public class sprint4
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_sprint4  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sprint4  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(32), 32, nmi_callback);
 	
 		timer_pulse(TIME_IN_HZ(60), 0, input_callback);
 	} };
 	
 	
-	public static ReadHandlerPtr sprint4_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint4_wram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sprint4_video_ram[0x380 + offset % 0x80];
 	} };
 	
 	
-	public static ReadHandlerPtr sprint4_analog_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint4_analog_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int n = (offset >> 1) & 3;
 	
 		UINT8 val;
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 		{
 			val = 4 * gear[n];
 		}
@@ -134,14 +130,12 @@ public class sprint4
 	} };
 	
 	
-	public static ReadHandlerPtr sprint4_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint4_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) << ((offset & 7) ^ 7)) & 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr sprint4_gas_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint4_gas_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(0);
 	
 		if (sprint4_collision[0]) val |= 0x02;
@@ -153,46 +147,38 @@ public class sprint4
 	} };
 	
 	
-	public static ReadHandlerPtr sprint4_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint4_dip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(4) >> (2 * (offset & 3))) & 3;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint4_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sprint4_video_ram[0x380 + offset % 0x80] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint4_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sprint4_collision[(offset >> 1) & 3] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint4_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		analog = data & 15;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint4_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status((offset >> 1) & 3, offset & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr sprint4_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound */
 	} };
-	public static WriteHandlerPtr sprint4_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound */
 	} };
-	public static WriteHandlerPtr sprint4_skid_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint4_skid_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound */
 	} };
 	
@@ -234,7 +220,7 @@ public class sprint4
 	};
 	
 	
-	static InputPortPtr input_ports_sprint4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprint4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprint4 )
 	
 		PORT_START(); 
 		PORT_BITX( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1, "Player 1 Gas", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
@@ -363,8 +349,7 @@ public class sprint4
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_sprint4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprint4 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -388,9 +373,7 @@ public class sprint4
 		MDRV_VIDEO_EOF(sprint4)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_sprint4 = new RomLoadPtr(){ public void handler(){ 
@@ -441,6 +424,6 @@ public class sprint4
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_sprint4	   = new GameDriver("1977"	,"sprint4"	,"sprint4.java"	,rom_sprint4,null	,machine_driver_sprint4	,input_ports_sprint4	,null	,ROT0	,	"Atari", "Sprint 4 (set 1)", GAME_NO_SOUND )
-	public static GameDriver driver_sprint4a	   = new GameDriver("1977"	,"sprint4a"	,"sprint4.java"	,rom_sprint4a,driver_sprint4	,machine_driver_sprint4	,input_ports_sprint4	,null	,ROT0	,	"Atari", "Sprint 4 (set 2)", GAME_NO_SOUND )
+	GAMEX( 1977, sprint4,  0,       sprint4, sprint4, 0, ROT0, "Atari", "Sprint 4 (set 1)", GAME_NO_SOUND )
+	GAMEX( 1977, sprint4a, sprint4, sprint4, sprint4, 0, ROT0, "Atari", "Sprint 4 (set 2)", GAME_NO_SOUND )
 }

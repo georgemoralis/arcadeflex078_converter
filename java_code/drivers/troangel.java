@@ -7,7 +7,7 @@ driver by Phil Stroffolino
 ****************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,7 +46,7 @@ public class troangel
 	
 	
 	
-	static InputPortPtr input_ports_troangel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_troangel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( troangel )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -172,8 +172,7 @@ public class troangel
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_troangel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( troangel )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 3 MHz ??? */
@@ -199,9 +198,7 @@ public class troangel
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -238,5 +235,5 @@ public class troangel
 	
 	
 	
-	public static GameDriver driver_troangel	   = new GameDriver("1983"	,"troangel"	,"troangel.java"	,rom_troangel,null	,machine_driver_troangel	,input_ports_troangel	,null	,ROT0	,	"Irem", "Tropical Angel" )
+	GAME( 1983, troangel, 0, troangel, troangel, 0, ROT0, "Irem", "Tropical Angel" )
 }

@@ -30,7 +30,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,8 +40,7 @@ public class rmhaihai
 	static int gfxbank;
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr rmhaihai_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rmhaihai_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -49,8 +48,7 @@ public class rmhaihai
 		}
 	} };
 	
-	public static WriteHandlerPtr rmhaihai_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rmhaihai_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -67,19 +65,17 @@ public class rmhaihai
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_rmhaihai  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rmhaihai  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_rmhaihai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rmhaihai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	} };
 	
@@ -87,8 +83,7 @@ public class rmhaihai
 	
 	static int keyboard_cmd;
 	
-	public static ReadHandlerPtr keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr keyboard_r  = new ReadHandlerPtr() { public int handler(int offset){
 	logerror("%04x: keyboard_r\n",activecpu_get_pc());
 		switch(activecpu_get_pc())
 		{
@@ -135,26 +130,22 @@ public class rmhaihai
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: keyboard_w %02x\n",activecpu_get_pc(),data);
 		keyboard_cmd = data;
 	} };
 	
-	public static ReadHandlerPtr samples_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr samples_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_SOUND1)[offset];
 	} };
 	
-	public static WriteHandlerPtr adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w(0,data);         /* bit0..3  */
 		MSM5205_reset_w(0,(data>>5)&1); /* bit 5    */
 		MSM5205_vclk_w (0,(data>>4)&1); /* bit4     */
 	} };
 	
-	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 	
 		// (data & 0x02) is switched on and off in service mode
@@ -167,8 +158,7 @@ public class rmhaihai
 		gfxbank = (data & 0x40) >> 6;	/* rmhaisei only */
 	} };
 	
-	public static WriteHandlerPtr themj_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr themj_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1) + 0x10000;
 		int bank = data & 0x03;
 	logerror("banksw %d\n",bank);
@@ -176,8 +166,7 @@ public class rmhaihai
 		cpu_setbank(2, rom + bank*0x4000 + 0x2000);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_themj  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_themj  = new MachineInitHandlerPtr() { public void handler(){
 		themj_rombank_w(0,0);
 	} };
 	
@@ -253,7 +242,7 @@ public class rmhaihai
 		new IO_WritePort( 0xbc0c, 0xbc0c, IOWP_NOP ),	// ??
 	MEMORY_END
 	
-	static InputPortPtr input_ports_rmhaihai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rmhaihai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rmhaihai )
 		PORT_START();   /* dsw2 */
 		PORT_DIPNAME( 0x01, 0x01, "Unknown 2-1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -364,7 +353,7 @@ public class rmhaihai
 		PORT_BIT_IMPULSE( 0x8000, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rmhaihib = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rmhaihib = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rmhaihib )
 		PORT_START();   /* dsw2 */
 		PORT_DIPNAME( 0x01, 0x01, "Unknown 2-1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -543,8 +532,7 @@ public class rmhaihai
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rmhaihai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rmhaihai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,20000000/4)	/* 5 MHz ??? */
@@ -570,12 +558,9 @@ public class rmhaihai
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rmhaisei = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rmhaisei )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rmhaihai)
@@ -583,12 +568,9 @@ public class rmhaihai
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo2)
 		MDRV_PALETTE_LENGTH(0x200)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_themj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( themj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rmhaihai)
@@ -602,9 +584,7 @@ public class rmhaihai
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo2)
 		MDRV_PALETTE_LENGTH(0x200)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -751,8 +731,7 @@ public class rmhaihai
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_rmhaihai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rmhaihai  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *rom = memory_region(REGION_GFX1);
 		int size = memory_region_length(REGION_GFX1);
 		int a,b;
@@ -763,7 +742,7 @@ public class rmhaihai
 		/* unpack the high bit of gfx */
 		for (b = size - 0x4000;b >= 0;b -= 0x4000)
 		{
-			if (b != 0) memcpy(rom + b,rom + b/2,0x2000);
+			if (b) memcpy(rom + b,rom + b/2,0x2000);
 	
 			for (a = 0;a < 0x2000;a++)
 			{
@@ -773,9 +752,9 @@ public class rmhaihai
 	} };
 	
 	
-	public static GameDriver driver_rmhaihai	   = new GameDriver("1985"	,"rmhaihai"	,"rmhaihai.java"	,rom_rmhaihai,null	,machine_driver_rmhaihai	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai (Japan)" )
-	public static GameDriver driver_rmhaihib	   = new GameDriver("1985"	,"rmhaihib"	,"rmhaihai.java"	,rom_rmhaihib,driver_rmhaihai	,machine_driver_rmhaihai	,input_ports_rmhaihib	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai [BET] (Japan)" )
-	public static GameDriver driver_rmhaijin	   = new GameDriver("1986"	,"rmhaijin"	,"rmhaihai.java"	,rom_rmhaijin,null	,machine_driver_rmhaihai	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Alba",  "Real Mahjong Haihai Jinji Idou Hen (Japan)" )
-	public static GameDriver driver_rmhaisei	   = new GameDriver("1986"	,"rmhaisei"	,"rmhaihai.java"	,rom_rmhaisei,null	,machine_driver_rmhaisei	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Visco", "Real Mahjong Haihai Seichouhen (Japan)" )
-	public static GameDriver driver_themj	   = new GameDriver("1987"	,"themj"	,"rmhaihai.java"	,rom_themj,null	,machine_driver_themj	,input_ports_rmhaihai	,init_rmhaihai	,ROT0	,	"Visco", "The Mah-jong (Japan)" )
+	GAME( 1985, rmhaihai, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai (Japan)" )
+	GAME( 1985, rmhaihib, rmhaihai, rmhaihai, rmhaihib, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai [BET] (Japan)" )
+	GAME( 1986, rmhaijin, 0,        rmhaihai, rmhaihai, rmhaihai, ROT0, "Alba",  "Real Mahjong Haihai Jinji Idou Hen (Japan)" )
+	GAME( 1986, rmhaisei, 0,        rmhaisei, rmhaihai, rmhaihai, ROT0, "Visco", "Real Mahjong Haihai Seichouhen (Japan)" )
+	GAME( 1987, themj,    0,        themj,    rmhaihai, rmhaihai, ROT0, "Visco", "The Mah-jong (Japan)" )
 }

@@ -5,7 +5,7 @@ Omori Electric CAD (OEC) 1981
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,8 +16,7 @@ public class carjmbre
 	
 	static int carjmbre_flipscreen, carjmbre_bgcolor;
 	
-	public static PaletteInitHandlerPtr palette_init_carjmbre  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_carjmbre  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,bit0,bit1,bit2,r,g,b;
 	
 		for (i = 0;i < Machine.drv.total_colors; i++)
@@ -43,14 +42,12 @@ public class carjmbre
 		}
 	} };
 	
-	public static WriteHandlerPtr carjmbre_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carjmbre_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		carjmbre_flipscreen = data?(TILEMAP_FLIPX|TILEMAP_FLIPY):0;
 		tilemap_set_flip( ALL_TILEMAPS,carjmbre_flipscreen );
 	} };
 	
-	public static WriteHandlerPtr carjmbre_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carjmbre_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int oldbg,i;
 	
 		oldbg=carjmbre_bgcolor;
@@ -78,15 +75,14 @@ public class carjmbre
 				0)
 	}
 	
-	public static WriteHandlerPtr carjmbre_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr carjmbre_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(carjmbre_tilemap,offset&0x3ff);
-	} };
+	}
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_carjmbre  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_carjmbre  = new VideoStartHandlerPtr() { public int handler(){
 	
 		carjmbre_tilemap = tilemap_create( get_carjmbre_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 	
@@ -96,8 +92,7 @@ public class carjmbre
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_carjmbre  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,troffs,sx,sy,flipx,flipy;
 	
 		//colorram
@@ -135,7 +130,7 @@ public class carjmbre
 					flipx = (spriteram.read(troffs+2)&0x40)>>6;
 					flipy = (spriteram.read(troffs+2)&0x80)>>7;
 	
-					if (carjmbre_flipscreen != 0)
+					if (carjmbre_flipscreen)
 					{
 						sx = (256+(226-sx))%256;
 						sy = 242-sy;

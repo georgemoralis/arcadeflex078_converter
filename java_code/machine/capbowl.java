@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -18,16 +18,14 @@ public class capbowl
 	static int GRMidByte  = 0;
 	static int GRLowByte = 0;
 	
-	public static MachineInitHandlerPtr machine_init_capbowl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_capbowl  = new MachineInitHandlerPtr() { public void handler(){
 		/* Initialize the ticket dispenser to 100 milliseconds */
 		/* (I'm not sure what the correct value really is) */
 		ticket_dispenser_init(100, TICKET_MOTOR_ACTIVE_HIGH, TICKET_STATUS_ACTIVE_LOW);
 	} };
 	
 	
-	public static WriteHandlerPtr capbowl_rom_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr capbowl_rom_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress = 0x10000 + ((data & 0x0c) << 13) + ((data & 0x01) << 14);
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -39,8 +37,7 @@ public class capbowl
 	/*
 		Write to GR Address upper word (2 bits)
 	*/
-	public static WriteHandlerPtr bowlrama_turbo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bowlrama_turbo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( offset )
 		{
 			case 0x08:	  /* Write address high byte (only 2 bits used) */
@@ -63,8 +60,7 @@ public class capbowl
 	} };
 	
 	
-	public static ReadHandlerPtr bowlrama_turbo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bowlrama_turbo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = 0;
 		int data = memory_region(REGION_GFX1)[currentaddress];
 	

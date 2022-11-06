@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -30,18 +30,15 @@ public class deadang
 	
 	/* Read/Write Handlers */
 	
-	public static ReadHandlerPtr deadang_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr deadang_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return deadang_shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr deadang_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deadang_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		deadang_shared_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr ghunter_trackball_low_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ghunter_trackball_low_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:	return (readinputport(5) & 0xff);
@@ -50,8 +47,7 @@ public class deadang
 	
 		return 0;
 	} };
-	public static ReadHandlerPtr ghunter_trackball_high_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ghunter_trackball_high_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:	return (readinputport(5) & 0xff00) >> 4;
@@ -116,7 +112,7 @@ public class deadang
 	
 	/* Input Ports */
 	
-	static InputPortPtr input_ports_deadang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_deadang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( deadang )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 	/* IN0 */
@@ -185,7 +181,7 @@ public class deadang
 		PORT_DIPSETTING(    0x80, "Overseas" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ghunter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ghunter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ghunter )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 	/* IN0 */
@@ -307,9 +303,8 @@ public class deadang
 	
 	/* Interrupt Generators */
 	
-	public static InterruptHandlerPtr deadang_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr deadang_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 			cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 		else
 			cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc4/4);	/* VBL */
@@ -317,8 +312,7 @@ public class deadang
 	
 	/* Machine Drivers */
 	
-	public static MachineHandlerPtr machine_driver_deadang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deadang )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V20,16000000/2) /* Sony 8623h9 CXQ70116D-8 (V20 compatible) */
@@ -350,9 +344,7 @@ public class deadang
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2203_INTERFACE
 		SEIBU_SOUND_SYSTEM_ADPCM_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROMs */
 	
@@ -448,14 +440,12 @@ public class deadang
 	
 	/* Driver Initialization */
 	
-	public static DriverInitHandlerPtr init_deadang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_deadang  = new DriverInitHandlerPtr() { public void handler(){
 		seibu_sound_decrypt(REGION_CPU3, 0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
 	} };
 	
-	public static DriverInitHandlerPtr init_ghunter  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ghunter  = new DriverInitHandlerPtr() { public void handler(){
 		seibu_sound_decrypt(REGION_CPU3, 0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
 	
@@ -465,6 +455,6 @@ public class deadang
 	
 	/* Game Drivers */
 	
-	public static GameDriver driver_deadang	   = new GameDriver("1988"	,"deadang"	,"deadang.java"	,rom_deadang,null	,machine_driver_deadang	,input_ports_deadang	,init_deadang	,ROT0	,	"Seibu Kaihatsu", "Dead Angle" )
-	public static GameDriver driver_ghunter	   = new GameDriver("1988"	,"ghunter"	,"deadang.java"	,rom_ghunter,driver_deadang	,machine_driver_deadang	,input_ports_ghunter	,init_ghunter	,ROT0	,	"Seibu Kaihatsu (Segasa/Sonic license)", "Gang Hunter (Spain)" )
+	GAME( 1988, deadang, 0,       deadang, deadang, deadang, ROT0, "Seibu Kaihatsu", "Dead Angle" )
+	GAME( 1988, ghunter, deadang, deadang, ghunter, ghunter, ROT0, "Seibu Kaihatsu (Segasa/Sonic license)", "Gang Hunter (Spain)" )
 }

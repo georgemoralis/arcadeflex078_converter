@@ -23,7 +23,7 @@ always false - counter was reloaded and incremented before interrupt occurs
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,8 +39,7 @@ public class tugboat
 	
 	/*  there isn't the usual resistor array anywhere near the color prom,
 	    just four 1k resistors. */
-	public static PaletteInitHandlerPtr palette_init_tugboat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tugboat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -63,14 +62,12 @@ public class tugboat
 	
 	/* see crtc6845.c. That file is only a placeholder, I process the writes here
 	   because I need the start_addr register to handle scrolling */
-	public static WriteHandlerPtr tugboat_hd46505_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tugboat_hd46505_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int reg;
 		if (offset == 0) reg = data & 0x0f;
 		else if (reg < 18) hd46505_0_reg[reg] = data;
 	} };
-	public static WriteHandlerPtr tugboat_hd46505_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tugboat_hd46505_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int reg;
 		if (offset == 0) reg = data & 0x0f;
 		else if (reg < 18) hd46505_1_reg[reg] = data;
@@ -78,8 +75,7 @@ public class tugboat
 	
 	
 	
-	public static WriteHandlerPtr tugboat_score_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tugboat_score_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tugboat_ram[0x291d + 32*offset] = data ^ 0x0f;	/* ???? */
 	} };
 	
@@ -105,7 +101,7 @@ public class tugboat
 					rgn = gfx1;
 				}
 	
-				drawgfx(bitmap,Machine.gfx[rgn],
+				drawgfx(bitmap,Machine->gfx[rgn],
 						code,
 						color,
 						0,0,
@@ -117,8 +113,7 @@ public class tugboat
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tugboat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tugboat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int startaddr0 = hd46505_0_reg[0x0c]*256 + hd46505_0_reg[0x0d];
 		int startaddr1 = hd46505_1_reg[0x0c]*256 + hd46505_1_reg[0x0d];
 	
@@ -133,8 +128,7 @@ public class tugboat
 	
 	static int ctrl;
 	
-	public static ReadHandlerPtr tugboat_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tugboat_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (~ctrl & 0x80)
 			return readinputport(0);
 		else if (~ctrl & 0x40)
@@ -147,13 +141,11 @@ public class tugboat
 			return readinputport(4);
 	} };
 	
-	public static ReadHandlerPtr tugboat_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tugboat_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ctrl;
 	} };
 	
-	public static WriteHandlerPtr tugboat_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tugboat_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ctrl = data;
 	} };
 	
@@ -177,8 +169,7 @@ public class tugboat
 		timer_set(cpu_getscanlinetime(1), 0, interrupt_gen);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tugboat  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tugboat  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia1_intf);
@@ -215,7 +206,7 @@ public class tugboat
 	
 	
 	
-	static InputPortPtr input_ports_tugboat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tugboat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tugboat )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -323,8 +314,7 @@ public class tugboat
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tugboat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tugboat )
 		MDRV_CPU_ADD_TAG("main", M6502, 2000000)	/* 2 MHz ???? */
 		MDRV_CPU_MEMORY(tugboat_readmem,tugboat_writemem)
 		MDRV_CPU_VBLANK_INT(nmi_line_pulse,1)
@@ -345,9 +335,7 @@ public class tugboat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -384,5 +372,5 @@ public class tugboat
 	
 	
 	
-	public static GameDriver driver_tugboat	   = new GameDriver("1982"	,"tugboat"	,"tugboat.java"	,rom_tugboat,null	,machine_driver_tugboat	,input_ports_tugboat	,null	,ROT90	,	"ETM", "Tugboat", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1982, tugboat, 0, tugboat, tugboat, 0, ROT90, "ETM", "Tugboat", GAME_IMPERFECT_GRAPHICS )
 }

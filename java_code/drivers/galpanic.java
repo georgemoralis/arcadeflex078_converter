@@ -94,7 +94,7 @@ Stephh's additional notes :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -110,8 +110,7 @@ public class galpanic
 	
 	
 	
-	public static InterruptHandlerPtr galpanic_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr galpanic_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* IRQ 3 drives the game, IRQ 5 updates the palette */
 		if (cpu_getiloops() != 0)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
@@ -119,8 +118,7 @@ public class galpanic
 			cpu_set_irq_line(0, 3, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr galhustl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr galhustl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 2:  cpu_set_irq_line(0, 5, HOLD_LINE); break;
@@ -132,7 +130,7 @@ public class galpanic
 	
 	static WRITE16_HANDLER( galpanic_6295_bankswitch_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			UINT8 *rom = memory_region(REGION_SOUND1);
 	
@@ -402,7 +400,7 @@ public class galpanic
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_galpanic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galpanic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galpanic )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unused") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -490,7 +488,7 @@ public class galpanic
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galpanib = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galpanib = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galpanib )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unused") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -590,7 +588,7 @@ public class galpanic
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fantasia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fantasia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fantasia )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy" );
@@ -679,7 +677,7 @@ public class galpanic
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'fantasia', but no "Service Mode" Dip Switch (and thus no "hidden" buttons) */
-	static InputPortPtr input_ports_missw96 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_missw96 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( missw96 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy" );
@@ -769,7 +767,7 @@ public class galpanic
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galhustl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galhustl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galhustl )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Lives") );
 		PORT_DIPSETTING(      0x0000, "6" );
@@ -875,14 +873,12 @@ public class galpanic
 		{ 100 }
 	};
 	
-	public static MachineInitHandlerPtr machine_init_galpanib  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_galpanib  = new MachineInitHandlerPtr() { public void handler(){
 		/* init watchdog */
 		watchdog_reset_r(0);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_galpanic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galpanic )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 8000000)
@@ -906,13 +902,10 @@ public class galpanic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_galpanib = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galpanib )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galpanic)
@@ -921,13 +914,10 @@ public class galpanic
 	
 		/* arm watchdog */
 		MDRV_MACHINE_INIT(galpanib)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_comad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( comad )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galpanic)
@@ -936,13 +926,10 @@ public class galpanic
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(comad)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fantsia2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fantsia2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(comad)
@@ -951,12 +938,9 @@ public class galpanic
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(comad)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_galhustl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galhustl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(comad)
@@ -966,9 +950,7 @@ public class galpanic
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(comad)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1158,12 +1140,12 @@ public class galpanic
 		ROM_LOAD( "galhstl5.u5", 0x00000, 0x80000, CRC(44a18f15) SHA1(1217cf7fbbb442358b15016099efeface5dcbd22) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_galpanic	   = new GameDriver("1990"	,"galpanic"	,"galpanic.java"	,rom_galpanic,null	,machine_driver_galpanic	,input_ports_galpanic	,null	,ROT90	,	"Kaneko", "Gals Panic (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_galpanib	   = new GameDriver("1990"	,"galpanib"	,"galpanic.java"	,rom_galpanib,driver_galpanic	,machine_driver_galpanib	,input_ports_galpanib	,null	,ROT90	,	"Kaneko", "Gals Panic (set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_fantasia	   = new GameDriver("1994"	,"fantasia"	,"galpanic.java"	,rom_fantasia,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Comad & New Japan System", "Fantasia", GAME_NO_COCKTAIL )
-	public static GameDriver driver_newfant	   = new GameDriver("1995"	,"newfant"	,"galpanic.java"	,rom_newfant,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Comad & New Japan System", "New Fantasia", GAME_NO_COCKTAIL )
-	public static GameDriver driver_fantsy95	   = new GameDriver("1995"	,"fantsy95"	,"galpanic.java"	,rom_fantsy95,null	,machine_driver_comad	,input_ports_fantasia	,null	,ROT90	,	"Hi-max Technology Inc.", "Fantasy '95", GAME_NO_COCKTAIL )
-	public static GameDriver driver_missw96	   = new GameDriver("1996"	,"missw96"	,"galpanic.java"	,rom_missw96,null	,machine_driver_comad	,input_ports_missw96	,null	,ROT0	,	"Comad", "Miss World '96 Nude", GAME_NO_COCKTAIL )
-	public static GameDriver driver_fantsia2	   = new GameDriver("1997"	,"fantsia2"	,"galpanic.java"	,rom_fantsia2,null	,machine_driver_fantsia2	,input_ports_missw96	,null	,ROT0	,	"Comad", "Fantasia II", GAME_NO_COCKTAIL )
-	public static GameDriver driver_galhustl	   = new GameDriver("1997"	,"galhustl"	,"galpanic.java"	,rom_galhustl,null	,machine_driver_galhustl	,input_ports_galhustl	,null	,ROT0	,	"ACE International", "Gals Hustler" )
+	GAMEX( 1990, galpanic, 0,        galpanic, galpanic, 0, ROT90, "Kaneko", "Gals Panic (set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, galpanib, galpanic, galpanib, galpanib, 0, ROT90, "Kaneko", "Gals Panic (set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1994, fantasia, 0,        comad,    fantasia, 0, ROT90, "Comad & New Japan System", "Fantasia", GAME_NO_COCKTAIL )
+	GAMEX( 1995, newfant,  0,        comad,    fantasia, 0, ROT90, "Comad & New Japan System", "New Fantasia", GAME_NO_COCKTAIL )
+	GAMEX( 1995, fantsy95, 0,        comad,    fantasia, 0, ROT90, "Hi-max Technology Inc.", "Fantasy '95", GAME_NO_COCKTAIL )
+	GAMEX( 1996, missw96,  0,        comad,    missw96,  0, ROT0,  "Comad", "Miss World '96 Nude", GAME_NO_COCKTAIL )
+	GAMEX( 1997, fantsia2, 0,        fantsia2, missw96,  0, ROT0,  "Comad", "Fantasia II", GAME_NO_COCKTAIL )
+	GAME(  1997, galhustl, 0,        galhustl, galhustl, 0, ROT0,  "ACE International", "Gals Hustler" )
 }

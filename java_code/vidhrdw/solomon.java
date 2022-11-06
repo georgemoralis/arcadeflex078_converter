@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class solomon
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static WriteHandlerPtr solomon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -21,8 +20,7 @@ public class solomon
 		}
 	} };
 	
-	public static WriteHandlerPtr solomon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -30,8 +28,7 @@ public class solomon
 		}
 	} };
 	
-	public static WriteHandlerPtr solomon_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (solomon_videoram2[offset] != data)
 		{
 			solomon_videoram2[offset] = data;
@@ -39,8 +36,7 @@ public class solomon
 		}
 	} };
 	
-	public static WriteHandlerPtr solomon_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (solomon_colorram2[offset] != data)
 		{
 			solomon_colorram2[offset] = data;
@@ -48,8 +44,7 @@ public class solomon
 		}
 	} };
 	
-	public static WriteHandlerPtr solomon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -76,18 +71,17 @@ public class solomon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_solomon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_solomon  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -108,7 +102,7 @@ public class solomon
 			int sx = spriteram.read(offs + 3);
 			int sy = 241 - spriteram.read(offs + 2);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 242 - sy;
@@ -116,17 +110,16 @@ public class solomon
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[2],
+			drawgfx(bitmap, Machine->gfx[2],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_solomon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_solomon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		solomon_draw_sprites(bitmap);

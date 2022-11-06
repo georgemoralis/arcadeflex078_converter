@@ -94,7 +94,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -126,12 +126,12 @@ public class badlands
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 1;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -141,15 +141,14 @@ public class badlands
 	static void scanline_update(int scanline)
 	{
 		/* sound IRQ is on 32V */
-		if ((scanline & 32) != 0)
+		if (scanline & 32)
 			atarigen_6502_irq_ack_r(0);
 		else if (!(readinputport(0) & 0x40))
 			atarigen_6502_irq_gen();
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_badlands  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_badlands  = new MachineInitHandlerPtr() { public void handler(){
 		pedal_value[0] = pedal_value[1] = 0x80;
 	
 		atarigen_eeprom_reset();
@@ -168,8 +167,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler(){
 		int pedal_state = input_port_4_r(0);
 		int i;
 	
@@ -195,7 +193,7 @@ public class badlands
 	static READ16_HANDLER( sound_busy_r )
 	{
 		int temp = 0xfeff;
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0100;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0100;
 		return temp;
 	}
 	
@@ -219,8 +217,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr audio_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr audio_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0x206)
@@ -246,8 +243,8 @@ public class badlands
 				*/
 				result = readinputport(3);
 				if (!(readinputport(0) & 0x0080)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
 				result ^= 0x10;
 				break;
 	
@@ -267,8 +264,7 @@ public class badlands
 	} };
 	
 	
-	public static WriteHandlerPtr audio_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr audio_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* n/c */
@@ -380,7 +376,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_badlands = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_badlands = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( badlands )
 		PORT_START(); 		/* fe4000 */
 		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -478,8 +474,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_badlands = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( badlands )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -507,9 +502,7 @@ public class badlands
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -552,8 +545,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_badlands  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_badlands  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_init_6502_speedup(1, 0x4155, 0x416d);
 	
@@ -570,5 +562,5 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_badlands	   = new GameDriver("1989"	,"badlands"	,"badlands.java"	,rom_badlands,null	,machine_driver_badlands	,input_ports_badlands	,init_badlands	,ROT0	,	"Atari Games", "Bad Lands" )
+	GAME( 1989, badlands, 0, badlands, badlands, badlands, ROT0, "Atari Games", "Bad Lands" )
 }

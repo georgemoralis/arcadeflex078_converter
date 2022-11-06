@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,20 +55,19 @@ public class atarig42
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 5;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_atarig42  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarig42  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(atarig42_scanline_update, 8);
@@ -86,8 +85,8 @@ public class atarig42
 	static READ16_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
 		temp ^= 0x0008;		/* A2D.EOC always high for now */
 		return temp;
 	}
@@ -108,7 +107,7 @@ public class atarig42
 	static WRITE16_HANDLER( io_latch_w )
 	{
 		/* upper byte */
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* bit 14 controls the ASIC65 reset line */
 			asic65_reset((~data >> 14) & 1);
@@ -118,7 +117,7 @@ public class atarig42
 		}
 	
 		/* lower byte */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 4 resets the sound CPU */
 			cpu_set_reset_line(1, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
@@ -166,7 +165,7 @@ public class atarig42
 	
 		switch (offset)
 		{
-			/* standard 68000 . 68eee . (bank) addressing */
+			/* standard 68000 -> 68eee -> (bank) addressing */
 			case 0x68000/2:
 				sloop_state = 1;
 				break;
@@ -382,7 +381,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_roadriot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roadriot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roadriot )
 		PORT_START(); 		/* e00000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -409,7 +408,7 @@ public class atarig42
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_guardian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_guardian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( guardian )
 		PORT_START(); 		/* e00000 */
 		PORT_BIT( 0x01ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 );
@@ -506,8 +505,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarig42 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarig42 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz)
@@ -533,9 +531,7 @@ public class atarig42
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -648,8 +644,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_roadriot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_roadriot  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT16 default_eeprom[] =
 		{
 			0x0001,0x01B7,0x01AF,0x01E4,0x0100,0x0130,0x0300,0x01CC,
@@ -681,13 +676,13 @@ public class atarig42
 		   +!AN.VID7*AN.0*MO.0					or if (mopix == 0) && (!alpha)
 	
 		CRA9=MGEP*!AN.VID7*AN.0*!MO.0			-- if (mopri >= pfpri) && (mopix != 0) && (!alpha)
-		   +!AN.VID7*AN.0*PF.VID9				or if ((pfpix & 0x200) != 0) && (!alpha)
+		   +!AN.VID7*AN.0*PF.VID9				or if (pfpix & 0x200) && (!alpha)
 	
 		CRA8=MGEP*!AN.VID7*AN.0*!MO.0*MVID8		-- if (mopri >= pfpri) && (mopix != 0) && (mopix & 0x100) && (!alpha)
 		   +!MGEP*!AN.VID7*AN.0*PF.VID8			or if (mopri < pfpri) && (pfpix & 0x100) && (!alpha)
-		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if ((pfpix & 0x100) != 0) && (!alpha)
+		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if (pfpix & 0x100) && (!alpha)
 	
-		CRMUXB=!AN.VID7*AN.0					-- if (alpha == 0)
+		CRMUXB=!AN.VID7*AN.0					-- if (!alpha)
 	
 		CRMUXA=!MGEP							-- if (mopri < pfpri)
 		   +MO.0								or (mopix == 0)
@@ -697,8 +692,7 @@ public class atarig42
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_guardian  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_guardian  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT16 default_eeprom[] =
 		{
 			0x0001,0x01FD,0x01FF,0x01EF,0x0100,0x01CD,0x0300,0x0104,
@@ -741,7 +735,7 @@ public class atarig42
 		   +!MGEP*!AN.VID7*AN.0*PF.VID8			or if (mopri < pfpri) && (!alpha) && (pfpix & 0x100)
 		   +!AN.VID7*AN.0*MO.0*PF.VID8			or if (mopix == 0) && (!alpha) && (pfpix & 0x100)
 	
-		CRMUXB=!AN.VID7*AN.0					-- if (alpha == 0)
+		CRMUXB=!AN.VID7*AN.0					-- if (!alpha)
 	
 		CRMUXA=!MGEP							-- if (mopri < pfpri)
 		   +MO.0								or (mopix == 0)
@@ -758,6 +752,6 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_roadriot	   = new GameDriver("1991"	,"roadriot"	,"atarig42.java"	,rom_roadriot,null	,machine_driver_atarig42	,input_ports_roadriot	,init_roadriot	,ROT0	,	"Atari Games", "Road Riot 4WD", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_guardian	   = new GameDriver("1992"	,"guardian"	,"atarig42.java"	,rom_guardian,null	,machine_driver_atarig42	,input_ports_guardian	,init_guardian	,ROT0	,	"Atari Games", "Guardians of the Hood" )
+	GAMEX( 1991, roadriot, 0,        atarig42, roadriot, roadriot, ROT0, "Atari Games", "Road Riot 4WD", GAME_UNEMULATED_PROTECTION )
+	GAME ( 1992, guardian, 0,        atarig42, guardian, guardian, ROT0, "Atari Games", "Guardians of the Hood" )
 }

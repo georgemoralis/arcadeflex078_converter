@@ -57,7 +57,7 @@ Known issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -70,37 +70,32 @@ public class tankbatt
 	
 	
 	
-	public static WriteHandlerPtr tankbatt_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbatt_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,data & 1);
 	} };
 	
-	public static ReadHandlerPtr tankbatt_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbatt_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
 		val = readinputport(0);
 		return ((val << (7-offset)) & 0x80);
 	} };
 	
-	public static ReadHandlerPtr tankbatt_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbatt_in1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
 		val = readinputport(1);
 		return ((val << (7-offset)) & 0x80);
 	} };
 	
-	public static ReadHandlerPtr tankbatt_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbatt_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
 		val = readinputport(2);
 		return ((val << (7-offset)) & 0x80);
 	} };
 	
-	public static WriteHandlerPtr tankbatt_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbatt_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tankbatt_nmi_enable = !data;
 		tankbatt_sound_enable = !data;
 		if (data != 0)
@@ -109,12 +104,11 @@ public class tankbatt
 			cpu_set_nmi_line(0, CLEAR_LINE);
 		}
 		/* hack - turn off the engine noise if the normal game nmi's are disabled */
-		if (data != 0) sample_stop (2);
+		if (data) sample_stop (2);
 	//	interrupt_enable_w (offset, !data);
 	} };
 	
-	public static WriteHandlerPtr tankbatt_demo_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbatt_demo_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tankbatt_nmi_enable = data;
 		if (data != 0)
 		{
@@ -124,17 +118,15 @@ public class tankbatt
 	//	interrupt_enable_w (offset, data);
 	} };
 	
-	public static WriteHandlerPtr tankbatt_sh_expl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tankbatt_sound_enable != 0)
+	public static WriteHandlerPtr tankbatt_sh_expl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tankbatt_sound_enable)
 			sample_start (1, 3, 0);
 	} };
 	
-	public static WriteHandlerPtr tankbatt_sh_engine_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tankbatt_sound_enable != 0)
+	public static WriteHandlerPtr tankbatt_sh_engine_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tankbatt_sound_enable)
 		{
-			if (data != 0)
+			if (data)
 				sample_start (2, 2, 1);
 			else
 				sample_start (2, 1, 1);
@@ -142,9 +134,8 @@ public class tankbatt
 		else sample_stop (2);
 	} };
 	
-	public static WriteHandlerPtr tankbatt_sh_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tankbatt_sound_enable != 0)
+	public static WriteHandlerPtr tankbatt_sh_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tankbatt_sound_enable)
 			sample_start (0, 0, 0);
 	} };
 	
@@ -177,13 +168,12 @@ public class tankbatt
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static InterruptHandlerPtr tankbatt_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tankbatt_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if ((readinputport (0) & 0x60) == 0) cpu_set_irq_line(0,0,HOLD_LINE);
-		else if (tankbatt_nmi_enable != 0) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
+		else if (tankbatt_nmi_enable) cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	static InputPortPtr input_ports_tankbatt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tankbatt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tankbatt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
@@ -281,8 +271,7 @@ public class tankbatt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tankbatt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tankbatt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)	/* 1 MHz ???? */
@@ -306,9 +295,7 @@ public class tankbatt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -335,5 +322,5 @@ public class tankbatt
 	
 	
 	
-	public static GameDriver driver_tankbatt	   = new GameDriver("1980"	,"tankbatt"	,"tankbatt.java"	,rom_tankbatt,null	,machine_driver_tankbatt	,input_ports_tankbatt	,null	,ROT90	,	"Namco", "Tank Battalion" )
+	GAME( 1980, tankbatt, 0, tankbatt, tankbatt, 0, ROT90, "Namco", "Tank Battalion" )
 }

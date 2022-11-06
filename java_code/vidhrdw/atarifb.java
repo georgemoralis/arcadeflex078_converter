@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,20 +27,17 @@ public class atarifb
 	
 	/***************************************************************************
 	***************************************************************************/
-	public static WriteHandlerPtr atarifb_alphap1_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_alphap1_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		atarifb_alphap1_vram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr atarifb_alphap2_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_alphap2_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		atarifb_alphap2_vram[offset] = data;
 	} };
 	
 	/***************************************************************************
 	***************************************************************************/
-	public static WriteHandlerPtr atarifb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data - 8 != *atarifb_scroll_register)
 		{
 			*atarifb_scroll_register = data - 8;
@@ -51,9 +48,8 @@ public class atarifb
 	/***************************************************************************
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_atarifb  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_generic() != 0)
+	public static VideoStartHandlerPtr video_start_atarifb  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_generic.handler())
 			return 1;
 	
 		memset(dirtybuffer, 1, videoram_size[0]);
@@ -69,12 +65,11 @@ public class atarifb
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atarifb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,obj;
 		int sprite_bank;
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(dirtybuffer,1,videoram_size[0]);
 	
 		/* Soccer uses a different graphics set for sprites */
@@ -99,7 +94,7 @@ public class atarifb
 			flipbit = (atarifb_alphap1_vram[offs] & 0x40) >> 6;
 			disable = (atarifb_alphap1_vram[offs] & 0x80) >> 7;
 	
-			if (disable == 0)
+			if (!disable)
 			{
 				drawgfx(bitmap,Machine.gfx[0],
 					charcode, 0,
@@ -124,7 +119,7 @@ public class atarifb
 			flipbit = (atarifb_alphap2_vram[offs] & 0x40) >> 6;
 			disable = (atarifb_alphap2_vram[offs] & 0x80) >> 7;
 	
-			if (disable == 0)
+			if (!disable)
 			{
 				drawgfx(bitmap,Machine.gfx[0],
 					charcode, 0,

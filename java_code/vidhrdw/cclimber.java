@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,8 +42,7 @@ public class cclimber
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_cclimber  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cclimber  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -133,8 +132,7 @@ public class cclimber
 	#define BGPEN (256+32)
 	#define SIDEPEN (256+32+1)
 	
-	public static PaletteInitHandlerPtr palette_init_swimmer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_swimmer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -235,8 +233,7 @@ public class cclimber
 	  bit 0 -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static WriteHandlerPtr swimmer_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr swimmer_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit0,bit1,bit2;
 		int r,g,b;
 	
@@ -264,8 +261,7 @@ public class cclimber
 	
 	
 	
-	public static WriteHandlerPtr cclimber_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cclimber_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			/* bit 5 of the address is not used for color memory. There is just */
@@ -283,22 +279,19 @@ public class cclimber
 	
 	
 	
-	public static WriteHandlerPtr cclimber_bigsprite_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cclimber_bigsprite_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cclimber_bsvideoram[offset] = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr swimmer_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr swimmer_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_vh_global_attribute(&palettebank, data & 1);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr swimmer_sidepanel_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr swimmer_sidepanel_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_vh_global_attribute(&sidepanel_enabled, data );
 	} };
 	
@@ -322,7 +315,7 @@ public class cclimber
 		oy = 128 - cclimber_bigspriteram[2];
 		flipx = cclimber_bigspriteram[1] & 0x10;
 		flipy = cclimber_bigspriteram[1] & 0x20;
-		if (flip_screen_y != 0)      /* only the Y direction has to be flipped */
+		if (flip_screen_y)      /* only the Y direction has to be flipped */
 		{
 			oy = 128 - oy;
 			flipy = NOT(flipy);
@@ -334,10 +327,10 @@ public class cclimber
 		{
 			sx = offs % 16;
 			sy = offs / 16;
-			if (flipx != 0) sx = 15 - sx;
-			if (flipy != 0) sy = 15 - sy;
+			if (flipx) sx = 15 - sx;
+			if (flipy) sy = 15 - sy;
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 	//				cclimber_bsvideoram[offs],	/* cclimber */
 					cclimber_bsvideoram[offs] + ((cclimber_bigspriteram[1] & 0x08) << 5),	/* swimmer */
 					color,
@@ -346,7 +339,7 @@ public class cclimber
 					0,TRANSPARENCY_PEN,0);
 	
 			/* wraparound */
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 	//				cclimber_bsvideoram[offs],	/* cclimber */
 					cclimber_bsvideoram[offs] + ((cclimber_bigspriteram[1] & 0x08) << 5),	/* swimmer */
 					color,
@@ -357,12 +350,11 @@ public class cclimber
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cclimber  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cclimber  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size[0]);
 		}
@@ -383,14 +375,14 @@ public class cclimber
 				flipx = colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
 				/* vertical flipping flips two adjacent characters */
-				if (flipy != 0) sy ^= 1;
+				if (flipy) sy ^= 1;
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 31 - sx;
 					flipx = NOT(flipx);
 				}
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 31 - sy;
 					flipy = NOT(flipy);
@@ -411,12 +403,12 @@ public class cclimber
 			int scroll[32];
 	
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				for (offs = 0;offs < 32;offs++)
 				{
 					scroll[offs] = -cclimber_column_scroll[31 - offs];
-					if (flip_screen_y != 0) scroll[offs] = -scroll[offs];
+					if (flip_screen_y) scroll[offs] = -scroll[offs];
 				}
 			}
 			else
@@ -424,7 +416,7 @@ public class cclimber
 				for (offs = 0;offs < 32;offs++)
 				{
 					scroll[offs] = -cclimber_column_scroll[offs];
-					if (flip_screen_y != 0) scroll[offs] = -scroll[offs];
+					if (flip_screen_y) scroll[offs] = -scroll[offs];
 				}
 			}
 	
@@ -448,12 +440,12 @@ public class cclimber
 			sy = 240 - spriteram.read(offs + 2);
 			flipx = spriteram.read(offs)& 0x40;
 			flipy = spriteram.read(offs)& 0x80;
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
@@ -475,12 +467,11 @@ public class cclimber
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_swimmer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_swimmer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size[0]);
 		}
@@ -501,7 +492,7 @@ public class cclimber
 				flipx = colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
 				/* vertical flipping flips two adjacent characters */
-				if (flipy != 0) sy ^= 1;
+				if (flipy) sy ^= 1;
 	
 				color = (colorram.read(offs)& 0x0f) + 0x10 * palettebank;
 				if (sx >= 24 && sidepanel_enabled)
@@ -509,12 +500,12 @@ public class cclimber
 				    color += 32;
 				}
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 31 - sx;
 					flipx = NOT(flipx);
 				}
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 31 - sy;
 					flipy = NOT(flipy);
@@ -535,7 +526,7 @@ public class cclimber
 			int scroll[32];
 	
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				for (offs = 0;offs < 32;offs++)
 					scroll[offs] = cclimber_column_scroll[31 - offs];
@@ -566,12 +557,12 @@ public class cclimber
 			sy = 240 - spriteram.read(offs + 2);
 			flipx = spriteram.read(offs)& 0x40;
 			flipy = spriteram.read(offs)& 0x80;
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);

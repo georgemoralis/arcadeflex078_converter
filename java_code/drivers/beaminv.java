@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,8 +28,7 @@ public class beaminv
 	 *
 	 ****************************************************************/
 	
-	public static ReadHandlerPtr beaminv_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr beaminv_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (input_port_3_r.handler(offset) & 0xfe) | ((cpu_getscanline() >> 7) & 0x01);
 	} };
 	
@@ -79,7 +78,7 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_beaminv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_beaminv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( beaminv )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -127,8 +126,7 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_beaminv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( beaminv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)	/* 2 MHz ? */
@@ -147,9 +145,7 @@ public class beaminv
 		MDRV_PALETTE_INIT(black_and_white)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -175,5 +171,5 @@ public class beaminv
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_beaminv	   = new GameDriver("19??"	,"beaminv"	,"beaminv.java"	,rom_beaminv,null	,machine_driver_beaminv	,input_ports_beaminv	,null	,ROT0	,	"Tekunon Kougyou", "Beam Invader", GAME_NO_SOUND)
+	GAMEX(19??, beaminv, 0, beaminv, beaminv, 0, ROT0, "Tekunon Kougyou", "Beam Invader", GAME_NO_SOUND)
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -129,16 +129,14 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr cerberus_dial_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cerberus_dial_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int original = readinputport(0);
 		int modified = dial_compute_value(readinputport(4), 0);
 		return (original & 0xc0) | ((modified & 0x80) >> 2) | (modified & 0x1f);
 	} };
 	
 	
-	public static ReadHandlerPtr cerberus_dial_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cerberus_dial_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int original = readinputport(2);
 		int modified = dial_compute_value(readinputport(5), 1);
 		return (original & 0xc0) | ((modified & 0x80) >> 2) | (modified & 0x1f);
@@ -154,8 +152,7 @@ public class leland
 	
 	UINT8 *alleymas_kludge_mem;
 	
-	public static WriteHandlerPtr alleymas_joystick_kludge = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr alleymas_joystick_kludge = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* catch the case where they clear this memory location at PC $1827 and change */
 		/* the value written to be a 1 */
 		if (activecpu_get_previouspc() == 0x1827)
@@ -206,22 +203,19 @@ public class leland
 	}
 	
 	
-	public static ReadHandlerPtr dangerz_input_y_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dangerz_input_y_r  = new ReadHandlerPtr() { public int handler(int offset){
 		update_dangerz_xy();
 		return dangerz_y & 0xff;
 	} };
 	
 	
-	public static ReadHandlerPtr dangerz_input_x_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dangerz_input_x_r  = new ReadHandlerPtr() { public int handler(int offset){
 		update_dangerz_xy();
 		return dangerz_x & 0xff;
 	} };
 	
 	
-	public static ReadHandlerPtr dangerz_input_upper_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dangerz_input_upper_r  = new ReadHandlerPtr() { public int handler(int offset){
 		update_dangerz_xy();
 		return ((dangerz_y >> 2) & 0xc0) | ((dangerz_x >> 8) & 0x03);
 	} };
@@ -236,28 +230,24 @@ public class leland
 	
 	static const UINT8 redline_pedal_value[8] = { 0xf0, 0xe0, 0xc0, 0xd0, 0x90, 0xb0, 0x30, 0x70 };
 	
-	public static ReadHandlerPtr redline_pedal_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redline_pedal_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pedal = readinputport(0);
 		return redline_pedal_value[pedal >> 5] | 0x0f;
 	} };
 	
 	
-	public static ReadHandlerPtr redline_pedal_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redline_pedal_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pedal = readinputport(2);
 		return redline_pedal_value[pedal >> 5] | 0x0f;
 	} };
 	
 	
-	public static ReadHandlerPtr redline_wheel_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redline_wheel_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(4), 0);
 	} };
 	
 	
-	public static ReadHandlerPtr redline_wheel_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redline_wheel_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(5), 1);
 	} };
 	
@@ -269,20 +259,17 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr offroad_wheel_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr offroad_wheel_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(7), 0);
 	} };
 	
 	
-	public static ReadHandlerPtr offroad_wheel_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr offroad_wheel_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(8), 1);
 	} };
 	
 	
-	public static ReadHandlerPtr offroad_wheel_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr offroad_wheel_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(9), 2);
 	} };
 	
@@ -294,8 +281,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr ataxx_trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ataxx_trackball_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(3 + offset), offset);
 	} };
 	
@@ -307,14 +293,12 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr indyheat_wheel_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr indyheat_wheel_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dial_compute_value(readinputport(3 + offset), offset);
 	} };
 	
 	
-	public static ReadHandlerPtr indyheat_analog_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr indyheat_analog_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:
@@ -334,8 +318,7 @@ public class leland
 	} };
 	
 	
-	public static WriteHandlerPtr indyheat_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr indyheat_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 3:
@@ -358,8 +341,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_leland  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_leland  = new MachineInitHandlerPtr() { public void handler(){
 		/* set the odd data bank */
 		battery_ram = memory_region(REGION_USER2);
 	
@@ -399,13 +381,12 @@ public class leland
 			cpu_setbank(3, &slave_base[0x10000]);
 	
 		/* if we have an I86 CPU, reset it */
-		if (Machine.drv.cpu[2].cpu_type == CPU_I186)
+		if (Machine->drv->cpu[2].cpu_type == CPU_I186)
 			leland_i186_sound_init();
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_ataxx  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ataxx  = new MachineInitHandlerPtr() { public void handler(){
 		/* set the odd data banks */
 		battery_ram = memory_region(REGION_USER2);
 		extra_tram = battery_ram + LELAND_BATTERY_RAM_SIZE;
@@ -480,8 +461,7 @@ public class leland
 	}
 	
 	
-	public static InterruptHandlerPtr leland_master_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr leland_master_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* check for coins here */
 		if ((readinputport(1) & 0x0e) != 0x0e)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, ASSERT_LINE);
@@ -495,10 +475,9 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_master_alt_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_master_alt_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* update any bankswitching */
-		if (LOG_BANKSWITCHING_M != 0)
+		if (LOG_BANKSWITCHING_M)
 			if ((alternate_bank ^ data) & 0x0f)
 				logerror("%04X:alternate_bank = %02X\n", activecpu_get_previouspc(), data & 0x0f);
 		alternate_bank = data & 15;
@@ -553,7 +532,7 @@ public class leland
 	
 		battery_ram_enable = (top_board_bank & 0x80);
 	
-		if (battery_ram_enable == 0)
+		if (!battery_ram_enable)
 			address = (!(sound_port_bank & 0x04)) ? &master_base[0x10000] : &master_base[0x1c000];
 		else
 			address = (!(top_board_bank & 0x40)) ? &master_base[0x28000] : &master_base[0x30000];
@@ -642,7 +621,7 @@ public class leland
 		}
 		cpu_setbank(1, address);
 	
-		if (battery_ram_enable != 0)
+		if (battery_ram_enable)
 			address = battery_ram;
 		else if ((master_bank & 0x30) == 0x20)
 			address = &ataxx_qram[(master_bank & 0xc0) << 8];
@@ -832,17 +811,15 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr ataxx_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ataxx_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int port = readinputport(2);
-		if (LOG_EEPROM != 0) logerror("%04X:EE read\n", activecpu_get_previouspc());
+		if (LOG_EEPROM) logerror("%04X:EE read\n", activecpu_get_previouspc());
 		return (port & ~0x01) | EEPROM_read_bit();
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (LOG_EEPROM != 0) logerror("%04X:EE write %d%d%d\n", activecpu_get_previouspc(),
+	public static WriteHandlerPtr ataxx_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (LOG_EEPROM) logerror("%04X:EE write %d%d%d\n", activecpu_get_previouspc(),
 				(data >> 6) & 1, (data >> 5) & 1, (data >> 4) & 1);
 		EEPROM_write_bit     ((data & 0x10) >> 4);
 		EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
@@ -857,11 +834,10 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_battery_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (battery_ram_enable != 0)
+	public static WriteHandlerPtr leland_battery_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (battery_ram_enable)
 		{
-			if (LOG_BATTERY_RAM != 0) logerror("%04X:BatteryW@%04X=%02X\n", activecpu_get_previouspc(), offset, data);
+			if (LOG_BATTERY_RAM) logerror("%04X:BatteryW@%04X=%02X\n", activecpu_get_previouspc(), offset, data);
 			battery_ram[offset] = data;
 		}
 		else
@@ -869,11 +845,10 @@ public class leland
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_battery_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (battery_ram_enable != 0)
+	public static WriteHandlerPtr ataxx_battery_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (battery_ram_enable)
 		{
-			if (LOG_BATTERY_RAM != 0) logerror("%04X:BatteryW@%04X=%02X\n", activecpu_get_previouspc(), offset, data);
+			if (LOG_BATTERY_RAM) logerror("%04X:BatteryW@%04X=%02X\n", activecpu_get_previouspc(), offset, data);
 			battery_ram[offset] = data;
 		}
 		else if ((master_bank & 0x30) == 0x20)
@@ -883,14 +858,13 @@ public class leland
 	} };
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_leland  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_leland  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			EEPROM_save(file);
 			mame_fwrite(file, memory_region(REGION_USER2), LELAND_BATTERY_RAM_SIZE);
 		}
-		else if (file != 0)
+		else if (file)
 		{
 			EEPROM_load(file);
 			mame_fread(file, memory_region(REGION_USER2), LELAND_BATTERY_RAM_SIZE);
@@ -903,14 +877,13 @@ public class leland
 	} };
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_ataxx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_ataxx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			EEPROM_save(file);
 			mame_fwrite(file, memory_region(REGION_USER2), LELAND_BATTERY_RAM_SIZE);
 		}
-		else if (file != 0)
+		else if (file)
 		{
 			EEPROM_load(file);
 			mame_fread(file, memory_region(REGION_USER2), LELAND_BATTERY_RAM_SIZE);
@@ -975,21 +948,21 @@ public class leland
 	{
 		int result = 0;
 	
-		if (LOG_KEYCARDS_FULL != 0) logerror("  (%04X:keycard_r)\n", activecpu_get_previouspc());
+		if (LOG_KEYCARDS_FULL) logerror("  (%04X:keycard_r)\n", activecpu_get_previouspc());
 	
 		/* if we have a valid keycard read state, we're reading from the keycard */
-		if ((keycard_state & 0x80) != 0)
+		if (keycard_state & 0x80)
 		{
 			/* clock in new data */
 			if (keycard_bit == 1)
 			{
 				keycard_shift = 0xff;	/* no data, but this is where we would clock it in */
-				if (LOG_KEYCARDS != 0) logerror("  (clocked in %02X)\n", keycard_shift);
+				if (LOG_KEYCARDS) logerror("  (clocked in %02X)\n", keycard_shift);
 			}
 	
 			/* clock in the bit */
 			result = (~keycard_shift & 1) << ((keycard_state >> 4) & 3);
-			if (LOG_KEYCARDS != 0) logerror("  (read %02X)\n", result);
+			if (LOG_KEYCARDS) logerror("  (read %02X)\n", result);
 		}
 		return result;
 	}
@@ -999,20 +972,20 @@ public class leland
 		int new_state = data & 0xb0;
 		int new_clock = data & 0x40;
 	
-		if (LOG_KEYCARDS_FULL != 0) logerror("  (%04X:keycard_w=%02X)\n", activecpu_get_previouspc(), data);
+		if (LOG_KEYCARDS_FULL) logerror("  (%04X:keycard_w=%02X)\n", activecpu_get_previouspc(), data);
 	
 		/* check for going active */
 		if (!keycard_state && new_state)
 		{
 			keycard_command[0] = keycard_command[1] = keycard_command[2] = 0;
-			if (LOG_KEYCARDS != 0) logerror("keycard going active (state=%02X)\n", new_state);
+			if (LOG_KEYCARDS) logerror("keycard going active (state=%02X)\n", new_state);
 		}
 	
 		/* check for going inactive */
 		else if (keycard_state && !new_state)
 		{
 			keycard_command[0] = keycard_command[1] = keycard_command[2] = 0;
-			if (LOG_KEYCARDS != 0) logerror("keycard going inactive\n");
+			if (LOG_KEYCARDS) logerror("keycard going inactive\n");
 		}
 	
 		/* check for clocks */
@@ -1028,7 +1001,7 @@ public class leland
 			/* look for a bit write */
 			else if (!new_clock && !keycard_clock && !(data & 0x80))
 			{
-				if (LOG_KEYCARDS != 0) logerror("  (write %02X)\n", data);
+				if (LOG_KEYCARDS) logerror("  (write %02X)\n", data);
 	
 				keycard_shift &= ~0x80;
 				if (data & (1 << ((new_state >> 4) & 3)))
@@ -1037,13 +1010,13 @@ public class leland
 				/* clock out the data on the last bit */
 				if (keycard_bit == 7)
 				{
-					if (LOG_KEYCARDS != 0) logerror("  (clocked out %02X)\n", keycard_shift);
+					if (LOG_KEYCARDS) logerror("  (clocked out %02X)\n", keycard_shift);
 					keycard_command[0] = keycard_command[1];
 					keycard_command[1] = keycard_command[2];
 					keycard_command[2] = keycard_shift;
 					if (keycard_command[0] == 0x62 && keycard_command[1] == 0x00 && keycard_command[2] == 0x80)
 					{
-						if (LOG_KEYCARDS != 0) logerror("  (got command $62)\n");
+						if (LOG_KEYCARDS) logerror("  (got command $62)\n");
 					}
 				}
 			}
@@ -1054,7 +1027,7 @@ public class leland
 		{
 			/* only an error if the selected bit changes; read/write transitions are okay */
 			if ((new_state & 0x30) != (keycard_state & 0x30))
-				if (LOG_KEYCARDS != 0) logerror("ERROR: Caught keycard state transition %02X . %02X\n", keycard_state, new_state);
+				if (LOG_KEYCARDS) logerror("ERROR: Caught keycard state transition %02X -> %02X\n", keycard_state, new_state);
 		}
 	
 		keycard_state = new_state;
@@ -1069,8 +1042,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr leland_master_analog_key_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_master_analog_key_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		switch (offset)
@@ -1096,8 +1068,7 @@ public class leland
 	
 	
 	
-	public static WriteHandlerPtr leland_master_analog_key_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_master_analog_key_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0x00:	/* FD = analog port trigger */
@@ -1107,7 +1078,7 @@ public class leland
 				analog_result = readinputport((data & 15) + 4);
 	
 				/* update top board banking for some games */
-				if (LOG_BANKSWITCHING_M != 0)
+				if (LOG_BANKSWITCHING_M)
 					if ((top_board_bank ^ data) & 0xc0)
 						logerror("%04X:top_board_bank = %02X\n", activecpu_get_previouspc(), data & 0xc0);
 				top_board_bank = data & 0xc0;
@@ -1128,8 +1099,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr leland_master_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_master_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset)
@@ -1160,7 +1130,7 @@ public class leland
 	
 			case 0x11:	/* /GIN1 */
 				result = readinputport(3);
-				if (LOG_EEPROM != 0) logerror("%04X:EE read\n", activecpu_get_previouspc());
+				if (LOG_EEPROM) logerror("%04X:EE read\n", activecpu_get_previouspc());
 				result = (result & ~0x01) | EEPROM_read_bit();
 				break;
 	
@@ -1172,8 +1142,7 @@ public class leland
 	} };
 	
 	
-	public static WriteHandlerPtr leland_master_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_master_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0x09:	/* /MCONT */
@@ -1182,7 +1151,7 @@ public class leland
 				cpu_set_nmi_line  (1,    (data & 0x04) ? CLEAR_LINE : ASSERT_LINE);
 				cpu_set_irq_line  (1, 0, (data & 0x08) ? CLEAR_LINE : ASSERT_LINE);
 	
-				if (LOG_EEPROM != 0) logerror("%04X:EE write %d%d%d\n", activecpu_get_previouspc(),
+				if (LOG_EEPROM) logerror("%04X:EE write %d%d%d\n", activecpu_get_previouspc(),
 						(data >> 6) & 1, (data >> 5) & 1, (data >> 4) & 1);
 				EEPROM_write_bit     ((data & 0x10) >> 4);
 				EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
@@ -1211,8 +1180,7 @@ public class leland
 	} };
 	
 	
-	public static ReadHandlerPtr ataxx_master_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ataxx_master_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset)
@@ -1235,8 +1203,7 @@ public class leland
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_master_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ataxx_master_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0x00:	/* /BKXL */
@@ -1247,7 +1214,7 @@ public class leland
 				break;
 	
 			case 0x04:	/* /MBNK */
-				if (LOG_BANKSWITCHING_M != 0)
+				if (LOG_BANKSWITCHING_M)
 					if ((master_bank ^ data) & 0xff)
 						logerror("%04X:master_bank = %02X\n", activecpu_get_previouspc(), data & 0xff);
 				master_bank = data;
@@ -1278,66 +1245,62 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_gated_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (wcol_enable != 0)
+	public static WriteHandlerPtr leland_gated_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (wcol_enable)
 			paletteram_BBGGGRRR_w(offset, data);
 	} };
 	
 	
-	public static ReadHandlerPtr leland_gated_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (wcol_enable != 0)
+	public static ReadHandlerPtr leland_gated_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (wcol_enable)
 			return paletteram_r(offset);
 		return 0xff;
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_paletteram_and_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (wcol_enable != 0)
+	public static WriteHandlerPtr ataxx_paletteram_and_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (wcol_enable)
 			paletteram_xxxxRRRRGGGGBBBB_w(offset, data);
 		else if (offset == 0x7f8 || offset == 0x7f9)
 			leland_master_video_addr_w(offset - 0x7f8, data);
 		else if (offset == 0x7fc)
 		{
 			xrom1_addr = (xrom1_addr & 0xff00) | (data & 0x00ff);
-			if (LOG_XROM != 0) logerror("%04X:XROM1 address low write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom1_addr);
+			if (LOG_XROM) logerror("%04X:XROM1 address low write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom1_addr);
 		}
 		else if (offset == 0x7fd)
 		{
 			xrom1_addr = (xrom1_addr & 0x00ff) | ((data << 8) & 0xff00);
-			if (LOG_XROM != 0) logerror("%04X:XROM1 address high write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom1_addr);
+			if (LOG_XROM) logerror("%04X:XROM1 address high write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom1_addr);
 		}
 		else if (offset == 0x7fe)
 		{
 			xrom2_addr = (xrom2_addr & 0xff00) | (data & 0x00ff);
-			if (LOG_XROM != 0) logerror("%04X:XROM2 address low write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom2_addr);
+			if (LOG_XROM) logerror("%04X:XROM2 address low write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom2_addr);
 		}
 		else if (offset == 0x7ff)
 		{
 			xrom2_addr = (xrom2_addr & 0x00ff) | ((data << 8) & 0xff00);
-			if (LOG_XROM != 0) logerror("%04X:XROM2 address high write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom2_addr);
+			if (LOG_XROM) logerror("%04X:XROM2 address high write = %02X (addr=%04X)\n", activecpu_get_previouspc(), data, xrom2_addr);
 		}
 		else
 			extra_tram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr ataxx_paletteram_and_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (wcol_enable != 0)
+	public static ReadHandlerPtr ataxx_paletteram_and_misc_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (wcol_enable)
 			return paletteram_r(offset);
 		else if (offset == 0x7fc || offset == 0x7fd)
 		{
 			int result = xrom_base[0x00000 | xrom1_addr | ((offset & 1) << 16)];
-			if (LOG_XROM != 0) logerror("%04X:XROM1 read(%d) = %02X (addr=%04X)\n", activecpu_get_previouspc(), offset - 0x7fc, result, xrom1_addr);
+			if (LOG_XROM) logerror("%04X:XROM1 read(%d) = %02X (addr=%04X)\n", activecpu_get_previouspc(), offset - 0x7fc, result, xrom1_addr);
 			return result;
 		}
 		else if (offset == 0x7fe || offset == 0x7ff)
 		{
 			int result = xrom_base[0x20000 | xrom2_addr | ((offset & 1) << 16)];
-			if (LOG_XROM != 0) logerror("%04X:XROM2 read(%d) = %02X (addr=%04X)\n", activecpu_get_previouspc(), offset - 0x7fc, result, xrom2_addr);
+			if (LOG_XROM) logerror("%04X:XROM2 read(%d) = %02X (addr=%04X)\n", activecpu_get_previouspc(), offset - 0x7fc, result, xrom2_addr);
 			return result;
 		}
 		else
@@ -1352,15 +1315,13 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr leland_sound_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_sound_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return leland_gfx_control;
 	} };
 	
 	
-	public static WriteHandlerPtr leland_sound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		int gfx_banks = Machine.gfx[0].total_elements / 0x400;
+	public static WriteHandlerPtr leland_sound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		int gfx_banks = Machine->gfx[0]->total_elements / 0x400;
 		int gfx_bank_mask = (gfx_banks - 1) << 4;
 		int diff = data ^ leland_gfx_control;
 	
@@ -1373,7 +1334,7 @@ public class leland
 		leland_dac_control &= data & 3;
 	
 	    /* some bankswitching occurs here */
-		if (LOG_BANKSWITCHING_M != 0)
+		if (LOG_BANKSWITCHING_M)
 			if ((sound_port_bank ^ data) & 0x24)
 				logerror("%04X:sound_port_bank = %02X\n", activecpu_get_previouspc(), data & 0x24);
 	    sound_port_bank = data & 0x24;
@@ -1388,8 +1349,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_slave_small_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_slave_small_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress = 0x10000 + 0xc000 * (data & 1);
 	
 		if (bankaddress >= slave_length)
@@ -1399,12 +1359,11 @@ public class leland
 		}
 		cpu_setbank(3, &slave_base[bankaddress]);
 	
-		if (LOG_BANKSWITCHING_S != 0) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data & 1, bankaddress);
+		if (LOG_BANKSWITCHING_S) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data & 1, bankaddress);
 	} };
 	
 	
-	public static WriteHandlerPtr leland_slave_large_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_slave_large_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress = 0x10000 + 0x8000 * (data & 15);
 	
 		if (bankaddress >= slave_length)
@@ -1414,12 +1373,11 @@ public class leland
 		}
 		cpu_setbank(3, &slave_base[bankaddress]);
 	
-		if (LOG_BANKSWITCHING_S != 0) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data & 15, bankaddress);
+		if (LOG_BANKSWITCHING_S) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data & 15, bankaddress);
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_slave_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ataxx_slave_banksw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress, bank = data & 15;
 	
 		if (bank == 0)
@@ -1438,7 +1396,7 @@ public class leland
 		}
 		cpu_setbank(3, &slave_base[bankaddress]);
 	
-		if (LOG_BANKSWITCHING_S != 0) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data, bankaddress);
+		if (LOG_BANKSWITCHING_S) logerror("%04X:Slave bank = %02X (%05X)\n", activecpu_get_previouspc(), data, bankaddress);
 	} };
 	
 	
@@ -1449,8 +1407,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr leland_raster_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_raster_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int scanline = cpu_getscanline();
 		return (scanline < 255) ? scanline : 255;
 	} };

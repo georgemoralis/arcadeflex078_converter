@@ -144,7 +144,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -320,7 +320,7 @@ public class balsente
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 70, 10, 0, 255 );
 	
 	
-	static InputPortPtr input_ports_sentetst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sentetst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sentetst )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -374,7 +374,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_cshift = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cshift = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cshift )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -415,7 +415,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gghost = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gghost = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gghost )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -464,7 +464,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hattrick = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hattrick = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hattrick )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -516,7 +516,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_otwalls = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_otwalls = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( otwalls )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -557,7 +557,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_snakepit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snakepit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snakepit )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -611,7 +611,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_snakjack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snakjack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snakjack )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -658,7 +658,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stocker = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stocker = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stocker )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "2C_1C") );
@@ -710,7 +710,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_triviag1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_triviag1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( triviag1 )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -771,7 +771,7 @@ public class balsente
 	#define input_ports_triviabb input_ports_triviag1
 	
 	
-	static InputPortPtr input_ports_gimeabrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gimeabrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gimeabrk )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "2C_1C") );
@@ -840,7 +840,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_minigolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_minigolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( minigolf )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -912,7 +912,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_minigol2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_minigol2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( minigol2 )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "2C_1C") );
@@ -984,7 +984,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_toggle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toggle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toggle )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -1031,7 +1031,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nametune = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nametune = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nametune )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -1106,7 +1106,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nstocker = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nstocker = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nstocker )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -1165,7 +1165,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sfootbal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sfootbal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sfootbal )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -1228,7 +1228,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spiker = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spiker = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spiker )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -1300,7 +1300,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stompin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stompin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stompin )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -1394,7 +1394,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_grudge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grudge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grudge )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, "0" );
@@ -1443,7 +1443,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rescraid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rescraid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rescraid )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -1515,7 +1515,7 @@ public class balsente
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_shrike = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shrike = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shrike )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -1589,8 +1589,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_balsente = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( balsente )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 5000000/4)
@@ -1620,13 +1619,10 @@ public class balsente
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CEM3394, cem_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shrike = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shrike )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(balsente)
@@ -1638,9 +1634,7 @@ public class balsente
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(1025)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2199,7 +2193,7 @@ public class balsente
 		/* ROM region must be 0x40000 total */
 	
 		UINT8 *temp = malloc(0x20000);
-		if (temp != 0)
+		if (temp)
 		{
 			UINT8 *rom = memory_region(REGION_CPU1);
 			UINT32 base;
@@ -2214,7 +2208,7 @@ public class balsente
 	
 				for (dest = 0x00000; dest < 0x20000; dest += 0x02000)
 				{
-					if ((cd_rom_mask & SWAP_HALVES) != 0)
+					if (cd_rom_mask & SWAP_HALVES)
 						memcpy(&temp[dest ^ 0x02000], &rom[base + dest], 0x02000);
 					else
 						memcpy(&temp[dest], &rom[base + dest], 0x02000);
@@ -2257,61 +2251,53 @@ public class balsente
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_sentetst  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_cshift  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_gghost  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
-	public static DriverInitHandlerPtr init_hattrick  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_otwalls  = new DriverInitHandlerPtr() { public void handler()  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
-	public static DriverInitHandlerPtr init_snakepit  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
-	public static DriverInitHandlerPtr init_snakjack  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
-	public static DriverInitHandlerPtr init_stocker  = new DriverInitHandlerPtr() { public void handler()  { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
-	public static DriverInitHandlerPtr init_triviag1  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_triviag2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sentetst  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
+	public static DriverInitHandlerPtr init_cshift  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_gghost  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
+	public static DriverInitHandlerPtr init_hattrick  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
+	public static DriverInitHandlerPtr init_otwalls  = new DriverInitHandlerPtr() { public void handler(){ expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
+	public static DriverInitHandlerPtr init_snakepit  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
+	public static DriverInitHandlerPtr init_snakjack  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
+	public static DriverInitHandlerPtr init_stocker  = new DriverInitHandlerPtr() { public void handler(){ expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 0; } };
+	public static DriverInitHandlerPtr init_triviag1  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ }
+	public static DriverInitHandlerPtr init_triviag2  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(&memory_region(REGION_CPU1)[0x20000], &memory_region(REGION_CPU1)[0x28000], 0x4000);
 		memcpy(&memory_region(REGION_CPU1)[0x24000], &memory_region(REGION_CPU1)[0x28000], 0x4000);
 		expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */
 	} };
-	public static DriverInitHandlerPtr init_gimeabrk  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; } };
-	public static DriverInitHandlerPtr init_minigolf  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_NONE); balsente_shooter = 0; balsente_adc_shift = 2; } };
-	public static DriverInitHandlerPtr init_minigol2  = new DriverInitHandlerPtr() { public void handler() { expand_roms(0x0c);        balsente_shooter = 0; balsente_adc_shift = 2; } };
-	public static DriverInitHandlerPtr init_toggle  = new DriverInitHandlerPtr() { public void handler()   { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_nametune  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gimeabrk  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_ALL);  balsente_shooter = 0; balsente_adc_shift = 1; }
+	public static DriverInitHandlerPtr init_minigolf  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_NONE); balsente_shooter = 0; balsente_adc_shift = 2; }
+	public static DriverInitHandlerPtr init_minigol2  = new DriverInitHandlerPtr() { public void handler() expand_roms(0x0c);        balsente_shooter = 0; balsente_adc_shift = 2; }
+	public static DriverInitHandlerPtr init_toggle  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_ALL);  balsente_shooter = 0; /* noanalog */ } };
+	public static DriverInitHandlerPtr init_nametune  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_NONE | SWAP_HALVES); balsente_shooter = 0; /* noanalog */
 	} };
-	public static DriverInitHandlerPtr init_nstocker  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nstocker  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x9902, 0x9902, nstocker_port2_r);
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_NONE | SWAP_HALVES); balsente_shooter = 1; balsente_adc_shift = 1;
 	} };
-	public static DriverInitHandlerPtr init_sfootbal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sfootbal  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_ALL  | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 0;
 	} };
-	public static DriverInitHandlerPtr init_spiker  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spiker  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x9f80, 0x9f8f, spiker_expand_w);
 		install_mem_read_handler(0, 0x9f80, 0x9f8f, spiker_expand_r);
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(EXPAND_ALL  | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 1;
 	} };
-	public static DriverInitHandlerPtr init_stompin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stompin  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x9f00, 0x9f00, balsente_rombank2_select_w);
 		expand_roms(0x0c | SWAP_HALVES); balsente_shooter = 0; balsente_adc_shift = 32;
 	} };
-	public static DriverInitHandlerPtr init_rescraid  = new DriverInitHandlerPtr() { public void handler() { expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */ } };
-	public static DriverInitHandlerPtr init_grudge  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rescraid  = new DriverInitHandlerPtr() { public void handler() expand_roms(EXPAND_NONE); balsente_shooter = 0; /* noanalog */ }
+	public static DriverInitHandlerPtr init_grudge  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x9400, 0x9400, grudge_steering_r);
 		expand_roms(EXPAND_NONE); balsente_shooter = 0;
 	} };
-	public static DriverInitHandlerPtr init_shrike  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shrike  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x9e00, 0x9fff, MRA_RAM);
 		install_mem_write_handler(0, 0x9e00, 0x9fff, MWA_RAM);
 		install_mem_read_handler(0, 0x9e00, 0x9e0f, shrike_shared_6809_r);
@@ -2327,30 +2313,30 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_sentetst	   = new GameDriver("1984"	,"sentetst"	,"balsente.java"	,rom_sentetst,null	,machine_driver_balsente	,input_ports_sentetst	,init_sentetst	,ROT0	,	"Bally/Sente", "Sente Diagnostic Cartridge" )
-	public static GameDriver driver_cshift	   = new GameDriver("1984"	,"cshift"	,"balsente.java"	,rom_cshift,null	,machine_driver_balsente	,input_ports_cshift	,init_cshift	,ROT0	,	"Bally/Sente", "Chicken Shift" )
-	public static GameDriver driver_gghost	   = new GameDriver("1984"	,"gghost"	,"balsente.java"	,rom_gghost,null	,machine_driver_balsente	,input_ports_gghost	,init_gghost	,ROT0	,	"Bally/Sente", "Goalie Ghost" )
-	public static GameDriver driver_hattrick	   = new GameDriver("1984"	,"hattrick"	,"balsente.java"	,rom_hattrick,null	,machine_driver_balsente	,input_ports_hattrick	,init_hattrick	,ROT0	,	"Bally/Sente", "Hat Trick" )
-	public static GameDriver driver_otwalls	   = new GameDriver("1984"	,"otwalls"	,"balsente.java"	,rom_otwalls,null	,machine_driver_balsente	,input_ports_otwalls	,init_otwalls	,ROT0	,	"Bally/Sente", "Off the Wall (Sente)" )
-	public static GameDriver driver_snakepit	   = new GameDriver("1984"	,"snakepit"	,"balsente.java"	,rom_snakepit,null	,machine_driver_balsente	,input_ports_snakepit	,init_snakepit	,ROT0	,	"Bally/Sente", "Snake Pit" )
-	public static GameDriver driver_snakjack	   = new GameDriver("1984"	,"snakjack"	,"balsente.java"	,rom_snakjack,null	,machine_driver_balsente	,input_ports_snakjack	,init_snakjack	,ROT0	,	"Bally/Sente", "Snacks'n Jaxson" )
-	public static GameDriver driver_stocker	   = new GameDriver("1984"	,"stocker"	,"balsente.java"	,rom_stocker,null	,machine_driver_balsente	,input_ports_stocker	,init_stocker	,ROT0	,	"Bally/Sente", "Stocker" )
-	public static GameDriver driver_triviag1	   = new GameDriver("1984"	,"triviag1"	,"balsente.java"	,rom_triviag1,null	,machine_driver_balsente	,input_ports_triviag1	,init_triviag1	,ROT0	,	"Bally/Sente", "Trivial Pursuit (Genus I)" )
-	public static GameDriver driver_triviag2	   = new GameDriver("1984"	,"triviag2"	,"balsente.java"	,rom_triviag2,null	,machine_driver_balsente	,input_ports_triviag2	,init_triviag2	,ROT0	,	"Bally/Sente", "Trivial Pursuit (Genus II)" )
-	public static GameDriver driver_triviasp	   = new GameDriver("1984"	,"triviasp"	,"balsente.java"	,rom_triviasp,null	,machine_driver_balsente	,input_ports_triviasp	,init_triviag2	,ROT0	,	"Bally/Sente", "Trivial Pursuit (All Star Sports Edition)" )
-	public static GameDriver driver_triviayp	   = new GameDriver("1984"	,"triviayp"	,"balsente.java"	,rom_triviayp,null	,machine_driver_balsente	,input_ports_triviayp	,init_triviag2	,ROT0	,	"Bally/Sente", "Trivial Pursuit (Young Players Edition)" )
-	public static GameDriver driver_triviabb	   = new GameDriver("1984"	,"triviabb"	,"balsente.java"	,rom_triviabb,null	,machine_driver_balsente	,input_ports_triviabb	,init_triviag2	,ROT0	,	"Bally/Sente", "Trivial Pursuit (Baby Boomer Edition)" )
-	public static GameDriver driver_gimeabrk	   = new GameDriver("1985"	,"gimeabrk"	,"balsente.java"	,rom_gimeabrk,null	,machine_driver_balsente	,input_ports_gimeabrk	,init_gimeabrk	,ROT0	,	"Bally/Sente", "Gimme A Break" )
-	public static GameDriver driver_minigolf	   = new GameDriver("1985"	,"minigolf"	,"balsente.java"	,rom_minigolf,null	,machine_driver_balsente	,input_ports_minigolf	,init_minigolf	,ROT0	,	"Bally/Sente", "Mini Golf (set 1)" )
-	public static GameDriver driver_minigol2	   = new GameDriver("1985"	,"minigol2"	,"balsente.java"	,rom_minigol2,driver_minigolf	,machine_driver_balsente	,input_ports_minigol2	,init_minigol2	,ROT0	,	"Bally/Sente", "Mini Golf (set 2)" )
-	public static GameDriver driver_toggle	   = new GameDriver("1985"	,"toggle"	,"balsente.java"	,rom_toggle,null	,machine_driver_balsente	,input_ports_toggle	,init_toggle	,ROT0	,	"Bally/Sente", "Toggle (prototype)" )
-	public static GameDriver driver_nametune	   = new GameDriver("1986"	,"nametune"	,"balsente.java"	,rom_nametune,null	,machine_driver_balsente	,input_ports_nametune	,init_nametune	,ROT0	,	"Bally/Sente", "Name That Tune" )
-	public static GameDriver driver_nstocker	   = new GameDriver("1986"	,"nstocker"	,"balsente.java"	,rom_nstocker,null	,machine_driver_balsente	,input_ports_nstocker	,init_nstocker	,ROT0	,	"Bally/Sente", "Night Stocker" )
-	public static GameDriver driver_sfootbal	   = new GameDriver("1986"	,"sfootbal"	,"balsente.java"	,rom_sfootbal,null	,machine_driver_balsente	,input_ports_sfootbal	,init_sfootbal	,ROT0	,	"Bally/Sente", "Street Football" )
-	public static GameDriver driver_spiker	   = new GameDriver("1986"	,"spiker"	,"balsente.java"	,rom_spiker,null	,machine_driver_balsente	,input_ports_spiker	,init_spiker	,ROT0	,	"Bally/Sente", "Spiker" )
-	public static GameDriver driver_stompin	   = new GameDriver("1986"	,"stompin"	,"balsente.java"	,rom_stompin,null	,machine_driver_balsente	,input_ports_stompin	,init_stompin	,ROT0	,	"Bally/Sente", "Stompin'" )
-	public static GameDriver driver_rescraid	   = new GameDriver("1987"	,"rescraid"	,"balsente.java"	,rom_rescraid,null	,machine_driver_balsente	,input_ports_rescraid	,init_rescraid	,ROT0	,	"Bally/Midway", "Rescue Raider" )
-	public static GameDriver driver_rescrdsa	   = new GameDriver("1987"	,"rescrdsa"	,"balsente.java"	,rom_rescrdsa,driver_rescraid	,machine_driver_balsente	,input_ports_rescraid	,init_rescraid	,ROT0	,	"Bally/Midway", "Rescue Raider (Stand-Alone)" )
-	public static GameDriver driver_grudge	   = new GameDriver("198?"	,"grudge"	,"balsente.java"	,rom_grudge,null	,machine_driver_balsente	,input_ports_grudge	,init_grudge	,ROT0	,	"Bally/Midway", "Grudge Match (prototype)" )
-	public static GameDriver driver_shrike	   = new GameDriver("198?"	,"shrike"	,"balsente.java"	,rom_shrike,null	,machine_driver_shrike	,input_ports_shrike	,init_shrike	,ROT0	,	"Bally/Sente", "Shrike Avenger (prototype)", GAME_NOT_WORKING )
+	GAME( 1984, sentetst, 0,        balsente, sentetst, sentetst, ROT0, "Bally/Sente", "Sente Diagnostic Cartridge" )
+	GAME( 1984, cshift,   0,        balsente, cshift,   cshift,   ROT0, "Bally/Sente", "Chicken Shift" )
+	GAME( 1984, gghost,   0,        balsente, gghost,   gghost,   ROT0, "Bally/Sente", "Goalie Ghost" )
+	GAME( 1984, hattrick, 0,        balsente, hattrick, hattrick, ROT0, "Bally/Sente", "Hat Trick" )
+	GAME( 1984, otwalls,  0,        balsente, otwalls,  otwalls,  ROT0, "Bally/Sente", "Off the Wall (Sente)" )
+	GAME( 1984, snakepit, 0,        balsente, snakepit, snakepit, ROT0, "Bally/Sente", "Snake Pit" )
+	GAME( 1984, snakjack, 0,        balsente, snakjack, snakjack, ROT0, "Bally/Sente", "Snacks'n Jaxson" )
+	GAME( 1984, stocker,  0,        balsente, stocker,  stocker,  ROT0, "Bally/Sente", "Stocker" )
+	GAME( 1984, triviag1, 0,        balsente, triviag1, triviag1, ROT0, "Bally/Sente", "Trivial Pursuit (Genus I)" )
+	GAME( 1984, triviag2, 0,        balsente, triviag2, triviag2, ROT0, "Bally/Sente", "Trivial Pursuit (Genus II)" )
+	GAME( 1984, triviasp, 0,        balsente, triviasp, triviag2, ROT0, "Bally/Sente", "Trivial Pursuit (All Star Sports Edition)" )
+	GAME( 1984, triviayp, 0,        balsente, triviayp, triviag2, ROT0, "Bally/Sente", "Trivial Pursuit (Young Players Edition)" )
+	GAME( 1984, triviabb, 0,        balsente, triviabb, triviag2, ROT0, "Bally/Sente", "Trivial Pursuit (Baby Boomer Edition)" )
+	GAME( 1985, gimeabrk, 0,        balsente, gimeabrk, gimeabrk, ROT0, "Bally/Sente", "Gimme A Break" )
+	GAME( 1985, minigolf, 0,        balsente, minigolf, minigolf, ROT0, "Bally/Sente", "Mini Golf (set 1)" )
+	GAME( 1985, minigol2, minigolf, balsente, minigol2, minigol2, ROT0, "Bally/Sente", "Mini Golf (set 2)" )
+	GAME( 1985, toggle,   0,        balsente, toggle,   toggle,   ROT0, "Bally/Sente", "Toggle (prototype)" )
+	GAME( 1986, nametune, 0,        balsente, nametune, nametune, ROT0, "Bally/Sente", "Name That Tune" )
+	GAME( 1986, nstocker, 0,        balsente, nstocker, nstocker, ROT0, "Bally/Sente", "Night Stocker" )
+	GAME( 1986, sfootbal, 0,        balsente, sfootbal, sfootbal, ROT0, "Bally/Sente", "Street Football" )
+	GAME( 1986, spiker,   0,        balsente, spiker,   spiker,   ROT0, "Bally/Sente", "Spiker" )
+	GAME( 1986, stompin,  0,        balsente, stompin,  stompin,  ROT0, "Bally/Sente", "Stompin'" )
+	GAME( 1987, rescraid, 0,        balsente, rescraid, rescraid, ROT0, "Bally/Midway", "Rescue Raider" )
+	GAME( 1987, rescrdsa, rescraid, balsente, rescraid, rescraid, ROT0, "Bally/Midway", "Rescue Raider (Stand-Alone)" )
+	GAME( 198?, grudge,   0,        balsente, grudge,   grudge,   ROT0, "Bally/Midway", "Grudge Match (prototype)" )
+	GAMEX(198?, shrike,   0,        shrike,   shrike,   shrike,   ROT0, "Bally/Sente", "Shrike Avenger (prototype)", GAME_NOT_WORKING )
 }

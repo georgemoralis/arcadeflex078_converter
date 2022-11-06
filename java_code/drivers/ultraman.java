@@ -8,7 +8,7 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,62 +48,62 @@ public class ultraman
 	
 	static WRITE16_HANDLER( ultraman_K051316_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051316_1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_1_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051316_2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_2_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051316_ctrl_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_ctrl_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051316_ctrl_1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_ctrl_1_w(offset, data & 0xff);
 	
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051316_ctrl_2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_ctrl_2_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051937_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051937_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( ultraman_K051960_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051960_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			soundlatch_w(0,data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( sound_irq_trigger_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	}
 	
@@ -171,7 +171,7 @@ public class ultraman
 	};
 	
 	
-	static InputPortPtr input_ports_ultraman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ultraman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ultraman )
 	
 		PORT_START(); 	/* Coins + Service */
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -283,8 +283,7 @@ public class ultraman
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ultraman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ultraman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)		/* 12 MHz? */
@@ -313,9 +312,7 @@ public class ultraman
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -358,11 +355,10 @@ public class ultraman
 	
 	
 	
-	public static DriverInitHandlerPtr init_ultraman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ultraman  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 	} };
 	
 	
-	public static GameDriver driver_ultraman	   = new GameDriver("1991"	,"ultraman"	,"ultraman.java"	,rom_ultraman,null	,machine_driver_ultraman	,input_ports_ultraman	,init_ultraman	,ROT0	,	"Banpresto/Bandai", "Ultraman (Japan)" )
+	GAME( 1991, ultraman, 0, ultraman, ultraman, ultraman, ROT0, "Banpresto/Bandai", "Ultraman (Japan)" )
 }

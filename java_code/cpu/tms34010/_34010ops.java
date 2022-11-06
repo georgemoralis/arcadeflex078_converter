@@ -12,8 +12,8 @@
 **	MISC MACROS
 **#################################################################################################*/
 
-#define ZEXTEND(val,width) if (width != 0) (val) &= ((UINT32)0xffffffff >> (32 - (width)))
-#define SEXTEND(val,width) if (width != 0) (val) = (INT32)((val) << (32 - (width))) >> (32 - (width))
+#define ZEXTEND(val,width) if (width) (val) &= ((UINT32)0xffffffff >> (32 - (width)))
+#define SEXTEND(val,width) if (width) (val) = (INT32)((val) << (32 - (width))) >> (32 - (width))
 
 #define SXYTOL(val)	((((INT16)(val).y * state.convsp) + ((INT16)(val).x << state.pixelshift)) + OFFSET)
 #define DXYTOL(val)	((((INT16)(val).y * state.convdp) + ((INT16)(val).x << state.pixelshift)) + OFFSET)
@@ -84,10 +84,10 @@ static void unimpl(void)
 	XY res;										\
 	XY  a =  R##REG_XY(R##SRCREG);				\
 	XY *b = &R##REG_XY(R##DSTREG);				\
-	res.x = b.x + a.x;							\
+	res.x = b->x + a.x;							\
 	   N_FLAG = !res.x;							\
 	   V_FLAG = res.x & 0x8000;					\
-	res.y = b.y + a.y;							\
+	res.y = b->y + a.y;							\
 	NOTZ_FLAG = res.y;							\
 	   C_FLAG = res.y & 0x8000;					\
   	*b = res;									\
@@ -100,12 +100,12 @@ static void add_xy_b(void) { ADD_XY(B); }
 {												\
 	XY  a =  R##REG_XY(R##SRCREG);				\
 	XY *b = &R##REG_XY(R##DSTREG);				\
-	   N_FLAG = (a.x == b.x);					\
-	   V_FLAG = (a.x >  b.x);					\
-	   C_FLAG = (a.y >  b.y);					\
-	NOTZ_FLAG = (a.y != b.y);					\
-	b.x -= a.x;								\
-	b.y -= a.y;								\
+	   N_FLAG = (a.x == b->x);					\
+	   V_FLAG = (a.x >  b->x);					\
+	   C_FLAG = (a.y >  b->y);					\
+	NOTZ_FLAG = (a.y != b->y);					\
+	b->x -= a.x;								\
+	b->y -= a.y;								\
   	COUNT_CYCLES(1);							\
 }
 static void sub_xy_a(void) { SUB_XY(A); }
@@ -278,7 +278,7 @@ static void drav_b(void) { DRAV(B); }
 	INT32 *rd = &R##REG(R##DSTREG);							\
 	INT32 r = 0 - *rd;										\
 	SET_NZV_SUB(0,*rd,r);									\
-	if (N_FLAG == 0)											\
+	if (!N_FLAG)											\
 	{														\
 		*rd = r;											\
 	}														\
@@ -340,7 +340,7 @@ static void addi_l_b(void) { ADDI_L(B); }
 #define ADDK(R)				              			      	\
 {			  												\
 	INT32 r,b,*rd;											\
-	INT32 a = PARAM_K; if (a == 0) a = 32;						\
+	INT32 a = PARAM_K; if (!a) a = 32;						\
 	rd = &R##REG(R##DSTREG);								\
 	b = *rd;												\
 	r = *rd = a + b;										\
@@ -566,7 +566,7 @@ static void exgf1_b(void) { EXGF(1,B); }
 	UINT32 rs  = R##REG(R##SRCREG);								\
 	 INT32 *rd = &R##REG(R##DSTREG);							\
 	SET_Z(rs);													\
-	if (rs != 0)														\
+	if (rs)														\
 	{															\
 		while (!(rs & 0x80000000))								\
 		{														\
@@ -589,7 +589,7 @@ static void lmo_b(void) { LMO(B); }
 		INT32 rd = R##DSTREG;									\
 		for (i = 15; i >= 0 ; i--)								\
 		{														\
-			if ((l & 0x8000) != 0)										\
+			if (l & 0x8000)										\
 			{													\
 				R##REG(i*N) = RLONG(R##REG(rd));				\
 				R##REG(rd) += 0x20;								\
@@ -612,7 +612,7 @@ static void mmfm_b(void) { MMFM(B,0x10); }
 		SET_N(R##REG(rd)^0x80000000);							\
 		for (i = 0; i  < 16; i++)								\
 		{														\
-			if ((l & 0x8000) != 0)										\
+			if (l & 0x8000)										\
 			{													\
 				R##REG(rd) -= 0x20;								\
 				WLONG(R##REG(rd),R##REG(i*N));					\
@@ -630,7 +630,7 @@ static void mmtm_b(void) { MMTM(B,0x10); }
 	INT32 *rs = &R##REG(R##SRCREG);								\
 	INT32 *rd = &R##REG(R##DSTREG);								\
 	V_FLAG = (*rs == 0);										\
-	if (V_FLAG == 0)												\
+	if (!V_FLAG)												\
 	{															\
 		*rd %= *rs;												\
 		SET_Z(*rd);												\
@@ -645,7 +645,7 @@ static void mods_b(void) { MODS(B); }
 	INT32 *rs = &R##REG(R##SRCREG);								\
 	INT32 *rd = &R##REG(R##DSTREG);								\
 	V_FLAG = (*rs == 0);										\
-	if (V_FLAG == 0)												\
+	if (!V_FLAG)												\
 	{															\
 		*rd = (UINT32)*rd % (UINT32)*rs;						\
 		SET_Z(*rd);												\
@@ -798,7 +798,7 @@ static void sext1_b(void) { SEXT(1,B); }
 	INT32 *rd = &R##REG(R##DSTREG);								\
 	INT32 res = *rd;											\
 	INT32 k = (K);												\
-	if (k != 0)														\
+	if (k)														\
 	{															\
 		res<<=(k-1);											\
 		C_FLAG = SIGN(res);										\
@@ -823,7 +823,7 @@ static void rl_r_b(void) { RL(B,BREG(BSRCREG)&0x1f); }
 	 INT32 *rd = &R##REG(R##DSTREG);							\
 	UINT32 res = *rd;											\
 	 INT32 k = K;												\
-	if (k != 0)														\
+	if (k)														\
 	{															\
 		UINT32 mask = (0xffffffff<<(31-k))&0x7fffffff;			\
 		UINT32 res2 = SIGN(res) ? res^mask : res;				\
@@ -851,7 +851,7 @@ static void sla_r_b(void) { SLA(B,BREG(BSRCREG)&0x1f); }
 	 INT32 *rd = &R##REG(R##DSTREG);							\
 	UINT32 res = *rd;											\
 	 INT32 k = K;												\
-	if (k != 0)														\
+	if (k)														\
 	{															\
 		res<<=(k-1);											\
 		C_FLAG = SIGN(res);										\
@@ -875,7 +875,7 @@ static void sll_r_b(void) { SLL(B,BREG(BSRCREG)&0x1f); }
 	INT32 *rd = &R##REG(R##DSTREG);								\
 	INT32 res = *rd;											\
 	INT32 k = (-(K)) & 0x1f;									\
-	if (k != 0)														\
+	if (k)														\
 	{															\
 		res>>=(k-1);											\
 		C_FLAG = res & 1;										\
@@ -899,7 +899,7 @@ static void sra_r_b(void) { SRA(B,BREG(BSRCREG)); }
 	 INT32 *rd = &R##REG(R##DSTREG);							\
 	UINT32 res = *rd;											\
 	 INT32 k = (-(K)) & 0x1f;									\
-	if (k != 0)														\
+	if (k)														\
 	{															\
 		res>>=(k-1);											\
 		C_FLAG = res & 1;										\
@@ -971,7 +971,7 @@ static void subi_l_b(void) { SUBI_L(B); }
 {			  													\
 	INT32 r;													\
 	INT32 *rd = &R##REG(R##DSTREG);								\
-	INT32 t = PARAM_K; if (t == 0) t = 32;							\
+	INT32 t = PARAM_K; if (!t) t = 32;							\
 	r = *rd - t;												\
 	SET_NZCV_SUB(*rd,t,r);										\
 	*rd = r;													\
@@ -1042,7 +1042,7 @@ static void movi_l_b(void) { MOVI_L(B); }
 
 #define MOVK(R)		       		       			    			\
 {																\
-	INT32 k = PARAM_K; if (k == 0) k = 32;							\
+	INT32 k = PARAM_K; if (!k) k = 32;							\
 	R##REG(R##DSTREG) = k;										\
 	COUNT_CYCLES(1);											\
 }
@@ -1410,7 +1410,7 @@ static void dsj_b (void) { DSJ(B); }
 
 #define DSJEQ(R)												\
 {																\
-	if (NOTZ_FLAG == 0)												\
+	if (!NOTZ_FLAG)												\
 	{															\
 		if (--R##REG(R##DSTREG))								\
 		{														\
@@ -1434,7 +1434,7 @@ static void dsjeq_b (void) { DSJEQ(B); }
 
 #define DSJNE(R)												\
 {																\
-	if (NOTZ_FLAG != 0)												\
+	if (NOTZ_FLAG)												\
 	{															\
 		if (--R##REG(R##DSTREG))								\
 		{														\
@@ -1518,9 +1518,9 @@ static void getst_b (void) { GETST(B); }
 
 #define j_xx_8(TAKE)			  								\
 {	   															\
-	if (ADSTREG != 0)												\
+	if (ADSTREG)												\
 	{															\
-		if (TAKE != 0)												\
+		if (TAKE)												\
 		{														\
 			PC += (PARAM_REL8 << 4);							\
 			COUNT_CYCLES(2);									\
@@ -1530,7 +1530,7 @@ static void getst_b (void) { GETST(B); }
 	}															\
 	else														\
 	{															\
-		if (TAKE != 0)												\
+		if (TAKE)												\
 		{														\
 			PC = PARAM_LONG_NO_INC();							\
 			change_pc29lew(TOBYTE(PC));							\
@@ -1546,9 +1546,9 @@ static void getst_b (void) { GETST(B); }
 
 #define j_xx_0(TAKE)											\
 {																\
-	if (ADSTREG != 0)												\
+	if (ADSTREG)												\
 	{															\
-		if (TAKE != 0)												\
+		if (TAKE)												\
 		{														\
 			PC += (PARAM_REL8 << 4);							\
 			COUNT_CYCLES(2);									\
@@ -1558,7 +1558,7 @@ static void getst_b (void) { GETST(B); }
 	}															\
 	else														\
 	{															\
-		if (TAKE != 0)												\
+		if (TAKE)												\
 		{														\
 			PC += (PARAM_WORD_NO_INC()<<4)+0x10;				\
 			COUNT_CYCLES(3);									\
@@ -1573,7 +1573,7 @@ static void getst_b (void) { GETST(B); }
 
 #define j_xx_x(TAKE)											\
 {																\
-	if (TAKE != 0)													\
+	if (TAKE)													\
 	{															\
 		PC += (PARAM_REL8 << 4);								\
 		COUNT_CYCLES(2);										\
@@ -1819,7 +1819,7 @@ static void rets(void)
 	PC = POP();
 	change_pc29lew(TOBYTE(PC));
 	offs = PARAM_N;
-	if (offs != 0)
+	if (offs)
 	{
 		SP+=(offs<<4);
 	}
@@ -1837,7 +1837,7 @@ static void rev_b (void) { REV(B); }
 static void trap(void)
 {
 	UINT32 t = PARAM_N;
-	if (t != 0)
+	if (t)
 	{
 		PUSH(PC);
 		PUSH(GET_ST());
@@ -1969,10 +1969,10 @@ New 34020 ops:
 	UINT32 a = PARAM_LONG();					\
 	XY *b = &R##REG_XY(R##DSTREG);				\
 	XY res;										\
-	res.x = b.x + (INT16)(a & 0xffff);			\
+	res.x = b->x + (INT16)(a & 0xffff);			\
 	   N_FLAG = !res.x;							\
 	   V_FLAG = res.x & 0x8000;					\
-	res.y = b.y + ((INT32)a >> 16);			\
+	res.y = b->y + ((INT32)a >> 16);			\
 	NOTZ_FLAG = res.y;							\
 	   C_FLAG = res.y & 0x8000;					\
   	*b = res;									\
@@ -2140,7 +2140,7 @@ static void cmovmc_b(void)
 {															\
 	INT32 r;												\
 	INT32 *rd = &R##REG(R##DSTREG);							\
-	INT32 t = PARAM_K; if (t == 0) t = 32;						\
+	INT32 t = PARAM_K; if (!t) t = 32;						\
 	r = *rd - t;											\
 	SET_NZCV_SUB(*rd,t,r);									\
 	COUNT_CYCLES(1);										\
@@ -2275,7 +2275,7 @@ static void retm(void)
 	UINT32 rs  = R##REG(R##SRCREG);								\
 	 INT32 *rd = &R##REG(R##DSTREG);							\
 	SET_Z(rs);													\
-	if (rs != 0)														\
+	if (rs)														\
 	{															\
 		while (!(rs & 0x00000001))								\
 		{														\

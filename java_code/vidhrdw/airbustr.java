@@ -32,7 +32,7 @@
 **************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -75,8 +75,7 @@ public class airbustr
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_airbustr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_airbustr  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,32);
 	
@@ -89,8 +88,7 @@ public class airbustr
 	} };
 	
 	
-	public static WriteHandlerPtr airbustr_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr airbustr_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (airbustr_fgram[offset] != data)
 		{
 			airbustr_fgram[offset] = data;
@@ -98,8 +96,7 @@ public class airbustr
 		}
 	} };
 	
-	public static WriteHandlerPtr airbustr_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr airbustr_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (airbustr_bgram[offset] != data)
 		{
 			airbustr_bgram[offset] = data;
@@ -120,15 +117,14 @@ public class airbustr
 				Bg Y	Bg X	Fg Y	Fg X	<-Scroll High Bits (complemented!)
 	*/
 	
-	public static WriteHandlerPtr airbustr_scrollregs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr airbustr_scrollregs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	static int bg_scrollx, bg_scrolly, fg_scrollx, fg_scrolly, highbits;
 	int xoffs, yoffs;
 	
-		if (flipscreen != 0)	{	xoffs = -0x06a;		yoffs = -0x1ff;}
+		if (flipscreen)	{	xoffs = -0x06a;		yoffs = -0x1ff;}
 		else			{	xoffs = -0x094;		yoffs = -0x100;}
 	
-		switch (offset)		// offset 0 <. port 4
+		switch (offset)		// offset 0 <-> port 4
 		{
 			case 0x00:	fg_scrolly =  data;	break;	// low 8 bits
 			case 0x02:	fg_scrollx =  data;	break;
@@ -195,16 +191,16 @@ public class airbustr
 				int flipy	=	gfx & 0x40;
 	
 				/* multi sprite */
-				if ((attr & 0x04) != 0)	{ sx += x;		sy += y;}
+				if (attr & 0x04)	{ sx += x;		sy += y;}
 				else				{ sx  = x;		sy  = y;}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 240 - sx;		sy = 240 - sy;
 					flipx = NOT(flipx);		flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,
 						attr >> 4,
 						flipx, flipy,
@@ -212,7 +208,7 @@ public class airbustr
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* let's get back to normal to support multi sprites */
-				if (flipscreen != 0)	{sx = 240 - sx;		sy = 240 - sy;}
+				if (flipscreen)	{sx = 240 - sx;		sy = 240 - sy;}
 	
 			}
 		}
@@ -220,8 +216,7 @@ public class airbustr
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_airbustr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_airbustr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#if 0
 	/*
 		Let's show some of the unknown bits:

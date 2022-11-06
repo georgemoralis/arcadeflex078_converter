@@ -295,7 +295,7 @@ Notes & Todo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -316,51 +316,44 @@ public class playch10
 	static UINT8 *work_ram, *ram_8w;
 	static int up_8w;
 	
-	public static WriteHandlerPtr up8w_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr up8w_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		up_8w = data & 1;
 	} };
 	
-	public static ReadHandlerPtr ram_8w_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ram_8w_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ( offset >= 0x400 && up_8w )
 			return ram_8w[offset];
 	
 		return ram_8w[offset & 0x3ff];
 	} };
 	
-	public static WriteHandlerPtr ram_8w_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ram_8w_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ( offset >= 0x400 && up_8w )
 			ram_8w[offset] = data;
 		else
 			ram_8w[offset & 0x3ff] = data;
 	} };
 	
-	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return work_ram[ offset & 0x7ff ];
 	} };
 	
-	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		work_ram[ offset & 0x7ff ] = data;
 	} };
 	
-	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 0, &work_ram[source] );
 	} };
 	
-	public static NVRAMHandlerPtr nvram_handler_playch10  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_playch10  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		UINT8 *mem = memory_region( REGION_CPU2 ) + 0x6000;
 	
-		if (read_or_write != 0)
+		if ( read_or_write )
 			mame_fwrite( file, mem, 0x1000 );
-		else if (file != 0)
+		else if (file)
 			mame_fread( file, mem, 0x1000 );
 		else
 			memset(mem, 0, 0x1000);
@@ -446,7 +439,7 @@ public class playch10
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_playch10 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_playch10 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( playch10 )
 	    PORT_START(); 	/* These are the BIOS buttons */
 	    PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE2, "Channel Select", KEYCODE_0, JOYCODE_NONE );/* CHSelect 		*/
 	    PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_SERVICE3, "Enter", KEYCODE_MINUS, JOYCODE_NONE );			/* Enter button 	*/
@@ -569,7 +562,7 @@ public class playch10
 	INPUT_PORTS_END(); }}; 
 	
 	/*Input Ports for gun games*/
-	static InputPortPtr input_ports_playc10g = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_playc10g = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( playc10g )
 	    PORT_START(); 	/* These are the BIOS buttons */
 	    PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE2, "Channel Select", KEYCODE_0, JOYCODE_NONE );/* CHSelect 		*/
 	    PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_SERVICE3, "Enter", KEYCODE_MINUS, JOYCODE_NONE );			/* Enter button 	*/
@@ -715,16 +708,16 @@ public class playch10
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static InterruptHandlerPtr playch10_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr playch10_interrupt = new InterruptHandlerPtr() {public void handler()
 	
 		/* LS161A, Sheet 1 - bottom left of Z80 */
 		if ( !pc10_dog_di && !pc10_nmi_enable ) {
 			cpu_set_reset_line( 0, PULSE_LINE );
-		}
+		} };
 	
-		else if (pc10_nmi_enable != 0)
+		else if ( pc10_nmi_enable )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	}
 	
 	static struct NESinterface nes_interface =
 	{
@@ -740,8 +733,7 @@ public class playch10
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_playch10 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( playch10 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000 / 2)        /* 8 MHz / 2 */
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -772,17 +764,12 @@ public class playch10
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
 		MDRV_SOUND_ADD(DAC, nes_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_playchnv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( playchnv )
 		MDRV_IMPORT_FROM(playch10)
 		MDRV_NVRAM_HANDLER(playch10)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1658,87 +1645,87 @@ public class playch10
 	/* A dummy driver, so that the bios can be debugged, and to serve as */
 	/* parent for the other drivers, so that we do not have to include */
 	/* them in every zip file */
-	public static GameDriver driver_playch10	   = new GameDriver("1986"	,"playch10"	,"playch10.java"	,rom_playch10,null	,machine_driver_playch10	,input_ports_playch10	,null	,ROT0	,	"Nintendo of America", "PlayChoice-10", NOT_A_DRIVER )
+	GAMEX( 1986, playch10, 0, playch10, playch10, 0, ROT0, "Nintendo of America", "PlayChoice-10", NOT_A_DRIVER )
 	
 	/******************************************************************************/
 	
 	/*    YEAR  NAME     PARENT	   MACHINE	 INPUT     INIT  	 MONITOR  */
 	
 	/* Standard Games */
-	public static GameDriver driver_pc_tenis	   = new GameDriver("1983"	,"pc_tenis"	,"playch10.java"	,rom_pc_tenis,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Tennis" )
-	public static GameDriver driver_pc_mario	   = new GameDriver("1983"	,"pc_mario"	,"playch10.java"	,rom_pc_mario,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Mario Bros." )
-	public static GameDriver driver_pc_bball	   = new GameDriver("1984"	,"pc_bball"	,"playch10.java"	,rom_pc_bball,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo of America", "PlayChoice-10: Baseball" )
-	public static GameDriver driver_pc_bfght	   = new GameDriver("1984"	,"pc_bfght"	,"playch10.java"	,rom_pc_bfght,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Balloon Fight" )
-	public static GameDriver driver_pc_ebike	   = new GameDriver("1984"	,"pc_ebike"	,"playch10.java"	,rom_pc_ebike,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Excite Bike" )
-	public static GameDriver driver_pc_golf	   = new GameDriver("1984"	,"pc_golf"	,"playch10.java"	,rom_pc_golf,driver_	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,playch10	,	ROT0, "Nintendo", "PlayChoice-10: Golf" )
-	public static GameDriver driver_pc_kngfu	   = new GameDriver("1984"	,"pc_kngfu"	,"playch10.java"	,rom_pc_kngfu,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Irem (Nintendo license)", "PlayChoice-10: Kung Fu" )
-	public static GameDriver driver_pc_smb	   = new GameDriver("1985"	,"pc_smb"	,"playch10.java"	,rom_pc_smb,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Super Mario Bros." )
-	public static GameDriver driver_pc_vball	   = new GameDriver("1986"	,"pc_vball"	,"playch10.java"	,rom_pc_vball,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,ROT0	,	"Nintendo", "PlayChoice-10: Volley Ball" )
-	public static GameDriver driver_pc_1942	   = new GameDriver("1987"	,"pc_1942"	,"playch10.java"	,rom_pc_1942,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pc_hrz	,ROT0	,	"Capcom", "PlayChoice-10: 1942", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1983, pc_tenis,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Tennis" )
+	GAME( 1983, pc_mario,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Mario Bros." )
+	GAME( 1984, pc_bball,playch10, playch10, playch10, playch10, ROT0, "Nintendo of America", "PlayChoice-10: Baseball" )
+	GAME( 1984, pc_bfght,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Balloon Fight" )
+	GAME( 1984, pc_ebike,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Excite Bike" )
+	GAME( 1984, pc_golf ,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Golf" )
+	GAME( 1984, pc_kngfu,playch10, playch10, playch10, playch10, ROT0, "Irem (Nintendo license)", "PlayChoice-10: Kung Fu" )
+	GAME( 1985, pc_smb,	 playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Super Mario Bros." )
+	GAME( 1986, pc_vball,playch10, playch10, playch10, playch10, ROT0, "Nintendo", "PlayChoice-10: Volley Ball" )
+	GAMEX(1987, pc_1942, playch10, playch10, playch10, pc_hrz,   ROT0, "Capcom", "PlayChoice-10: 1942", GAME_IMPERFECT_GRAPHICS )
 	
 	/* Gun Games */
-	public static GameDriver driver_pc_duckh	   = new GameDriver("1984"	,"pc_duckh"	,"playch10.java"	,rom_pc_duckh,driver_playch10	,machine_driver_playch10	,input_ports_playc10g	,init_pc_gun	,ROT0	,	"Nintendo", "PlayChoice-10: Duck Hunt" )
-	public static GameDriver driver_pc_hgaly	   = new GameDriver("1984"	,"pc_hgaly"	,"playch10.java"	,rom_pc_hgaly,driver_playch10	,machine_driver_playch10	,input_ports_playc10g	,init_pc_gun	,ROT0	,	"Nintendo", "PlayChoice-10: Hogan's Alley" )
-	public static GameDriver driver_pc_wgnmn	   = new GameDriver("1984"	,"pc_wgnmn"	,"playch10.java"	,rom_pc_wgnmn,driver_playch10	,machine_driver_playch10	,input_ports_playc10g	,init_pc_gun	,ROT0	,	"Nintendo", "PlayChoice-10: Wild Gunman" )
+	GAME( 1984, pc_duckh,playch10, playch10, playc10g, pc_gun,   ROT0, "Nintendo", "PlayChoice-10: Duck Hunt" )
+	GAME( 1984, pc_hgaly,playch10, playch10, playc10g, pc_gun,   ROT0, "Nintendo", "PlayChoice-10: Hogan's Alley" )
+	GAME( 1984, pc_wgnmn,playch10, playch10, playc10g, pc_gun,   ROT0, "Nintendo", "PlayChoice-10: Wild Gunman" )
 	
 	/* A-Board Games */
-	public static GameDriver driver_pc_grdus	   = new GameDriver("1986"	,"pc_grdus"	,"playch10.java"	,rom_pc_grdus,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcaboard	,ROT0	,	"Konami", "PlayChoice-10: Gradius" ) // date: 860917
-	public static GameDriver driver_pc_grdue	   = new GameDriver("1986"	,"pc_grdue"	,"playch10.java"	,rom_pc_grdue,driver_pc_grdus	,machine_driver_playch10	,input_ports_playch10	,init_pcaboard	,ROT0	,	"Konami", "PlayChoice-10: Gradius (older)" ) // date: 860219
-	public static GameDriver driver_pc_tkfld	   = new GameDriver("1987"	,"pc_tkfld"	,"playch10.java"	,rom_pc_tkfld,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcaboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Track & Field" )
+	GAME( 1986, pc_grdus,playch10, playch10, playch10, pcaboard, ROT0, "Konami", "PlayChoice-10: Gradius" ) // date: 860917
+	GAME( 1986, pc_grdue,pc_grdus, playch10, playch10, pcaboard, ROT0, "Konami", "PlayChoice-10: Gradius (older)" ) // date: 860219
+	GAME( 1987, pc_tkfld,playch10, playch10, playch10, pcaboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Track & Field" )
 	
 	/* B-Board Games */
-	public static GameDriver driver_pc_pwrst	   = new GameDriver("1986"	,"pc_pwrst"	,"playch10.java"	,rom_pc_pwrst,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Nintendo", "PlayChoice-10: Pro Wrestling" )
-	public static GameDriver driver_pc_trjan	   = new GameDriver("1986"	,"pc_trjan"	,"playch10.java"	,rom_pc_trjan,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Capcom USA (Nintendo of America license)", "PlayChoice-10: Trojan" )
-	public static GameDriver driver_pc_cvnia	   = new GameDriver("1987"	,"pc_cvnia"	,"playch10.java"	,rom_pc_cvnia,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Castlevania" )
-	public static GameDriver driver_pc_dbldr	   = new GameDriver("1987"	,"pc_dbldr"	,"playch10.java"	,rom_pc_dbldr,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Double Dribble" )
-	public static GameDriver driver_pc_rnatk	   = new GameDriver("1987"	,"pc_rnatk"	,"playch10.java"	,rom_pc_rnatk,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Rush N' Attack" )
-	public static GameDriver driver_pc_rygar	   = new GameDriver("1987"	,"pc_rygar"	,"playch10.java"	,rom_pc_rygar,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Tecmo (Nintendo of America license)", "PlayChoice-10: Rygar" )
-	public static GameDriver driver_pc_cntra	   = new GameDriver("1988"	,"pc_cntra"	,"playch10.java"	,rom_pc_cntra,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcbboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Contra" )
+	GAME( 1986, pc_pwrst,playch10, playch10, playch10, pcbboard, ROT0, "Nintendo", "PlayChoice-10: Pro Wrestling" )
+	GAME( 1986, pc_trjan,playch10, playch10, playch10, pcbboard, ROT0, "Capcom USA (Nintendo of America license)", "PlayChoice-10: Trojan" )
+	GAME( 1987, pc_cvnia,playch10, playch10, playch10, pcbboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Castlevania" )
+	GAME( 1987, pc_dbldr,playch10, playch10, playch10, pcbboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Double Dribble" )
+	GAME( 1987, pc_rnatk,playch10, playch10, playch10, pcbboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Rush N' Attack" )
+	GAME( 1987, pc_rygar,playch10, playch10, playch10, pcbboard, ROT0, "Tecmo (Nintendo of America license)", "PlayChoice-10: Rygar" )
+	GAME( 1988, pc_cntra,playch10, playch10, playch10, pcbboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Contra" )
 	
 	/* C-Board Games */
-	public static GameDriver driver_pc_goons	   = new GameDriver("1986"	,"pc_goons"	,"playch10.java"	,rom_pc_goons,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pccboard	,ROT0	,	"Konami", "PlayChoice-10: The Goonies" )
+	GAME( 1986, pc_goons,playch10, playch10, playch10, pccboard, ROT0, "Konami", "PlayChoice-10: The Goonies" )
 	
 	/* D-Board Games */
-	public static GameDriver driver_pc_mtoid	   = new GameDriver("1986"	,"pc_mtoid"	,"playch10.java"	,rom_pc_mtoid,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcdboard	,ROT0	,	"Nintendo", "PlayChoice-10: Metroid" )
-	public static GameDriver driver_pc_radrc	   = new GameDriver("1987"	,"pc_radrc"	,"playch10.java"	,rom_pc_radrc,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcdboard	,ROT0	,	"Square", "PlayChoice-10: Rad Racer" )
+	GAME( 1986, pc_mtoid,playch10, playch10, playch10, pcdboard, ROT0, "Nintendo", "PlayChoice-10: Metroid" )
+	GAME( 1987, pc_radrc,playch10, playch10, playch10, pcdboard, ROT0, "Square", "PlayChoice-10: Rad Racer" )
 	
 	/* E-Board Games */
-	public static GameDriver driver_pc_miket	   = new GameDriver("1987"	,"pc_miket"	,"playch10.java"	,rom_pc_miket,driver_playch10	,machine_driver_playchnv	,input_ports_playch10	,init_pceboard	,ROT0	,	"Nintendo", "PlayChoice-10: Mike Tyson's Punchout", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, pc_miket,playch10, playchnv, playch10, pceboard, ROT0, "Nintendo", "PlayChoice-10: Mike Tyson's Punchout", GAME_IMPERFECT_GRAPHICS )
 	
 	/* F-Board Games */
-	public static GameDriver driver_pc_rcpam	   = new GameDriver("1987"	,"pc_rcpam"	,"playch10.java"	,rom_pc_rcpam,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Rare", "PlayChoice-10: RC Pro Am" )
-	public static GameDriver driver_pc_rrngr	   = new GameDriver("1987"	,"pc_rrngr"	,"playch10.java"	,rom_pc_rrngr,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Capcom USA (Nintendo of America license)", "PlayChoice-10: Chip'n Dale - Rescue Rangers" )
-	public static GameDriver driver_pc_ddrgn	   = new GameDriver("1988"	,"pc_ddrgn"	,"playch10.java"	,rom_pc_ddrgn,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Technos", "PlayChoice-10: Double Dragon" )
-	public static GameDriver driver_pc_ngaid	   = new GameDriver("1989"	,"pc_ngaid"	,"playch10.java"	,rom_pc_ngaid,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden" )
-	public static GameDriver driver_pc_tmnt	   = new GameDriver("1989"	,"pc_tmnt"	,"playch10.java"	,rom_pc_tmnt,driver_	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,pcfboard	,	ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Teenage Mutant Ninja Turtles" )
-	public static GameDriver driver_pc_ftqst	   = new GameDriver("1989"	,"pc_ftqst"	,"playch10.java"	,rom_pc_ftqst,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Sunsoft (Nintendo of America license)", "PlayChoice-10: Uncle Fester's Quest - The Addams Family" )
-	public static GameDriver driver_pc_bstar	   = new GameDriver("1989"	,"pc_bstar"	,"playch10.java"	,rom_pc_bstar,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"SNK (Nintendo of America license)", "PlayChoice-10: Baseball Stars" )
-	public static GameDriver driver_pc_tbowl	   = new GameDriver("1989"	,"pc_tbowl"	,"playch10.java"	,rom_pc_tbowl,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Tecmo (Nintendo of America license)", "PlayChoice-10: Tecmo Bowl" )
-	public static GameDriver driver_pc_drmro	   = new GameDriver("1990"	,"pc_drmro"	,"playch10.java"	,rom_pc_drmro,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Nintendo", "PlayChoice-10: Dr. Mario" )
-	public static GameDriver driver_pc_ynoid	   = new GameDriver("1990"	,"pc_ynoid"	,"playch10.java"	,rom_pc_ynoid,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcfboard	,ROT0	,	"Capcom USA (Nintendo of America license)", "PlayChoice-10: Yo! Noid" )
+	GAME( 1987, pc_rcpam,playch10, playch10, playch10, pcfboard, ROT0, "Rare", "PlayChoice-10: RC Pro Am" )
+	GAME( 1987, pc_rrngr,playch10, playch10, playch10, pcfboard, ROT0, "Capcom USA (Nintendo of America license)", "PlayChoice-10: Chip'n Dale - Rescue Rangers" )
+	GAME( 1988, pc_ddrgn,playch10, playch10, playch10, pcfboard, ROT0, "Technos", "PlayChoice-10: Double Dragon" )
+	GAME( 1989, pc_ngaid,playch10, playch10, playch10, pcfboard, ROT0, "Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden" )
+	GAME( 1989, pc_tmnt ,playch10, playch10, playch10, pcfboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Teenage Mutant Ninja Turtles" )
+	GAME( 1989, pc_ftqst,playch10, playch10, playch10, pcfboard, ROT0, "Sunsoft (Nintendo of America license)", "PlayChoice-10: Uncle Fester's Quest - The Addams Family" )
+	GAME( 1989, pc_bstar,playch10, playch10, playch10, pcfboard, ROT0, "SNK (Nintendo of America license)", "PlayChoice-10: Baseball Stars" )
+	GAME( 1989, pc_tbowl,playch10, playch10, playch10, pcfboard, ROT0, "Tecmo (Nintendo of America license)", "PlayChoice-10: Tecmo Bowl" )
+	GAME( 1990, pc_drmro,playch10, playch10, playch10, pcfboard, ROT0, "Nintendo", "PlayChoice-10: Dr. Mario" )
+	GAME( 1990, pc_ynoid,playch10, playch10, playch10, pcfboard, ROT0, "Capcom USA (Nintendo of America license)", "PlayChoice-10: Yo! Noid" )
 	
 	/* G-Board Games */
-	public static GameDriver driver_pc_smb2	   = new GameDriver("1988"	,"pc_smb2"	,"playch10.java"	,rom_pc_smb2,driver_	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,pcgboard	,	ROT0, "Nintendo", "PlayChoice-10: Super Mario Bros. 2" )
-	public static GameDriver driver_pc_smb3	   = new GameDriver("1988"	,"pc_smb3"	,"playch10.java"	,rom_pc_smb3,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Nintendo", "PlayChoice-10: Super Mario Bros. 3" )
-	public static GameDriver driver_pc_mman3	   = new GameDriver("1990"	,"pc_mman3"	,"playch10.java"	,rom_pc_mman3,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Capcom USA (Nintendo of America license)", "PlayChoice-10: Mega Man 3" )
-	public static GameDriver driver_pc_suprc	   = new GameDriver("1990"	,"pc_suprc"	,"playch10.java"	,rom_pc_suprc,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Super C" )
-	public static GameDriver driver_pc_tmnt2	   = new GameDriver("1990"	,"pc_tmnt2"	,"playch10.java"	,rom_pc_tmnt2,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Konami (Nintendo of America license)", "PlayChoice-10: Teenage Mutant Ninja Turtles II" )
-	public static GameDriver driver_pc_wcup	   = new GameDriver("1990"	,"pc_wcup"	,"playch10.java"	,rom_pc_wcup,driver_	,machine_driver_playch10	,input_ports_playch10	,init_playch10	,pcgboard	,	ROT0, "Technos (Nintendo license)", "PlayChoice-10: Nintendo World Cup" )
-	public static GameDriver driver_pc_ngai2	   = new GameDriver("1990"	,"pc_ngai2"	,"playch10.java"	,rom_pc_ngai2,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden 2" )
-	public static GameDriver driver_pc_ngai3	   = new GameDriver("1991"	,"pc_ngai3"	,"playch10.java"	,rom_pc_ngai3,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden 3" )
-	public static GameDriver driver_pc_pwbld	   = new GameDriver("1991"	,"pc_pwbld"	,"playch10.java"	,rom_pc_pwbld,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Taito (Nintendo of America license)", "PlayChoice-10: Power Blade" )
-	public static GameDriver driver_pc_rkats	   = new GameDriver("1991"	,"pc_rkats"	,"playch10.java"	,rom_pc_rkats,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard	,ROT0	,	"Atlus (Nintendo of America license)", "PlayChoice-10: Rockin' Kats" )
+	GAME( 1988, pc_smb2 ,playch10, playch10, playch10, pcgboard, ROT0, "Nintendo", "PlayChoice-10: Super Mario Bros. 2" )
+	GAME( 1988, pc_smb3, playch10, playch10, playch10, pcgboard, ROT0, "Nintendo", "PlayChoice-10: Super Mario Bros. 3" )
+	GAME( 1990, pc_mman3,playch10, playch10, playch10, pcgboard, ROT0, "Capcom USA (Nintendo of America license)", "PlayChoice-10: Mega Man 3" )
+	GAME( 1990, pc_suprc,playch10, playch10, playch10, pcgboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Super C" )
+	GAME( 1990, pc_tmnt2,playch10, playch10, playch10, pcgboard, ROT0, "Konami (Nintendo of America license)", "PlayChoice-10: Teenage Mutant Ninja Turtles II" )
+	GAME( 1990, pc_wcup ,playch10, playch10, playch10, pcgboard, ROT0, "Technos (Nintendo license)", "PlayChoice-10: Nintendo World Cup" )
+	GAME( 1990, pc_ngai2,playch10, playch10, playch10, pcgboard, ROT0, "Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden 2" )
+	GAME( 1991, pc_ngai3,playch10, playch10, playch10, pcgboard, ROT0, "Tecmo (Nintendo of America license)", "PlayChoice-10: Ninja Gaiden 3" )
+	GAME( 1991, pc_pwbld,playch10, playch10, playch10, pcgboard, ROT0, "Taito (Nintendo of America license)", "PlayChoice-10: Power Blade" )
+	GAME( 1991, pc_rkats,playch10, playch10, playch10, pcgboard, ROT0, "Atlus (Nintendo of America license)", "PlayChoice-10: Rockin' Kats" )
 	/* variant with 4 screen mirror */
-	public static GameDriver driver_pc_radr2	   = new GameDriver("1990"	,"pc_radr2"	,"playch10.java"	,rom_pc_radr2,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard_type2	,ROT0	,	"Square (Nintendo of America license)", "PlayChoice-10: Rad Racer II" )
-	public static GameDriver driver_pc_gntlt	   = new GameDriver("1985"	,"pc_gntlt"	,"playch10.java"	,rom_pc_gntlt,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pcgboard_type2	,ROT0	,	"Atari/Tengen (Nintendo of America license)", "PlayChoice-10: Gauntlet" )
+	GAME( 1990, pc_radr2,playch10, playch10, playch10, pcgboard_type2, ROT0, "Square (Nintendo of America license)", "PlayChoice-10: Rad Racer II" )
+	GAME( 1985, pc_gntlt,playch10, playch10, playch10, pcgboard_type2, ROT0, "Atari/Tengen (Nintendo of America license)", "PlayChoice-10: Gauntlet" )
 	
 	/* H-Board Games */
-	public static GameDriver driver_pc_pinbt	   = new GameDriver("1988"	,"pc_pinbt"	,"playch10.java"	,rom_pc_pinbt,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pchboard	,ROT0	,	"Rare (Nintendo of America license)", "PlayChoice-10: PinBot", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	GAMEX(1988, pc_pinbt,playch10, playch10, playch10, pchboard, ROT0, "Rare (Nintendo of America license)", "PlayChoice-10: PinBot", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
 	
 	/* i-Board Games */
-	public static GameDriver driver_pc_cshwk	   = new GameDriver("1989"	,"pc_cshwk"	,"playch10.java"	,rom_pc_cshwk,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pciboard	,ROT0	,	"Rare (Nintendo of America license)", "PlayChoice-10: Captain Sky Hawk" )
-	public static GameDriver driver_pc_sjetm	   = new GameDriver("1990"	,"pc_sjetm"	,"playch10.java"	,rom_pc_sjetm,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pciboard	,ROT0	,	"Rare", "PlayChoice-10: Solar Jetman" )
+	GAME( 1989, pc_cshwk,playch10, playch10, playch10, pciboard, ROT0, "Rare (Nintendo of America license)", "PlayChoice-10: Captain Sky Hawk" )
+	GAME( 1990, pc_sjetm,playch10, playch10, playch10, pciboard, ROT0, "Rare", "PlayChoice-10: Solar Jetman" )
 	
 	/* K-Board Games */
-	public static GameDriver driver_pc_moglf	   = new GameDriver("1991"	,"pc_moglf"	,"playch10.java"	,rom_pc_moglf,driver_playch10	,machine_driver_playch10	,input_ports_playch10	,init_pckboard	,ROT0	,	"Nintendo", "PlayChoice-10: Mario's Open Golf" )
+	GAME( 1991, pc_moglf,playch10, playch10, playch10, pckboard, ROT0, "Nintendo", "PlayChoice-10: Mario's Open Golf" )
 }

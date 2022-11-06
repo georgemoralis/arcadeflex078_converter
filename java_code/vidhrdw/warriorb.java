@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,7 +29,7 @@ public class warriorb
 		int chips;
 	
 		spritelist = auto_malloc(0x800 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		chips = number_of_TC0100SCN();
@@ -40,12 +40,12 @@ public class warriorb
 		if (TC0100SCN_vh_start(chips,TC0100SCN_GFX_NUM,x_offs,0,0,0,0,0,multiscrn_xoffs))
 			return 1;
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
-		if (has_second_TC0110PCR() != 0)
-			if (TC0110PCR_1_vh_start() != 0)
+		if (has_second_TC0110PCR())
+			if (TC0110PCR_1_vh_start())
 				return 1;
 	
 		/* Ensure palette from correct TC0110PCR used for each screen */
@@ -54,13 +54,11 @@ public class warriorb
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_darius2d  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_darius2d  = new VideoStartHandlerPtr() { public int handler(){
 		return (warriorb_core_vh_start(4,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_warriorb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_warriorb  = new VideoStartHandlerPtr() { public int handler(){
 		return (warriorb_core_vh_start(4,1));
 	} };
 	
@@ -88,7 +86,7 @@ public class warriorb
 			data = spriteram16[offs+1];
 			tilenum = data & 0x7fff;
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			data = spriteram16[offs+0];
 			y = (-(data &0x1ff) - 24) & 0x1ff;	/* (inverted y adjusted for vis area) */
@@ -106,7 +104,7 @@ public class warriorb
 	
 	
 	#ifdef MAME_DEBUG
-			if ((data2 & 0xf280) != 0)   unknown |= (data2 &0xf280);
+			if (data2 & 0xf280)   unknown |= (data2 &0xf280);
 	#endif
 	
 			y += y_offs;
@@ -119,23 +117,23 @@ public class warriorb
 			cury = y;
 			code = tilenum;
 	
-			sprite_ptr.code = code;
-			sprite_ptr.color = color;
-			sprite_ptr.flipx = flipx;
-			sprite_ptr.flipy = flipy;
-			sprite_ptr.x = curx;
-			sprite_ptr.y = cury;
+			sprite_ptr->code = code;
+			sprite_ptr->color = color;
+			sprite_ptr->flipx = flipx;
+			sprite_ptr->flipy = flipy;
+			sprite_ptr->x = curx;
+			sprite_ptr->y = cury;
 	
-			drawgfx(bitmap,Machine.gfx[0],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			drawgfx(bitmap,Machine->gfx[0],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
 	
 	#ifdef MAME_DEBUG
-		if (unknown != 0)
+		if (unknown)
 			usrintf_showmessage("unknown sprite bits: %04x",unknown);
 	#endif
 	}
@@ -145,8 +143,7 @@ public class warriorb
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_warriorb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_warriorb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3], nodraw;
 	
 		TC0100SCN_tilemap_update();
@@ -161,7 +158,7 @@ public class warriorb
 		nodraw |= TC0100SCN_tilemap_draw(bitmap,cliprect,1,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);	/* right */
 	
 		/* Ensure screen blanked even when bottom layers not drawn due to disable bit */
-		if (nodraw != 0) fillbitmap(bitmap, get_black_pen(), cliprect);
+		if (nodraw) fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Sprites can be under/over the layer below text layer */
 		warriorb_draw_sprites(bitmap,cliprect,1,8); // draw sprites with priority 1 which are under the mid layer

@@ -44,7 +44,7 @@ Aug 1999   Proper cocktail emulation implemented by Chad Hendrickson
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -183,7 +183,7 @@ public class mappy
 	
 	
 	/* input from the outside world */
-	static InputPortPtr input_ports_mappy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mappy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mappy )
 		PORT_START();       /* DSW0 */
 	/* According to the manual, 0x04, 0x08 and 0x10 should always be off,
 	but... */
@@ -284,7 +284,7 @@ public class mappy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_digdug2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_digdug2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( digdug2 )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -371,7 +371,7 @@ public class mappy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_motos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_motos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( motos )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, "Reset" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -437,7 +437,7 @@ public class mappy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_todruaga = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_todruaga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( todruaga )
 		PORT_START();       /* DSW0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_DIPNAME( 0x30, 0x00, DEF_STR( "Lives") );
@@ -592,8 +592,7 @@ public class mappy
 	
 	
 	/* the machine driver: 2 6809s running at 1MHz */
-	public static MachineHandlerPtr machine_driver_mappy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mappy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -624,13 +623,10 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_digdug2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( digdug2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -661,13 +657,10 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_motos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( motos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -698,13 +691,10 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_todruaga = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( todruaga )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -735,9 +725,7 @@ public class mappy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -914,11 +902,11 @@ public class mappy
 	
 	
 	
-	public static GameDriver driver_mappy	   = new GameDriver("1983"	,"mappy"	,"mappy.java"	,rom_mappy,null	,machine_driver_mappy	,input_ports_mappy	,null	,ROT90	,	"Namco", "Mappy (US)" )
-	public static GameDriver driver_mappyj	   = new GameDriver("1983"	,"mappyj"	,"mappy.java"	,rom_mappyj,driver_mappy	,machine_driver_mappy	,input_ports_mappy	,null	,ROT90	,	"Namco", "Mappy (Japan)" )
-	public static GameDriver driver_digdug2	   = new GameDriver("1985"	,"digdug2"	,"mappy.java"	,rom_digdug2,null	,machine_driver_digdug2	,input_ports_digdug2	,null	,ROT90	,	"Namco", "Dig Dug II (New Ver.)" )
-	public static GameDriver driver_digdug2o	   = new GameDriver("1985"	,"digdug2o"	,"mappy.java"	,rom_digdug2o,driver_digdug2	,machine_driver_digdug2	,input_ports_digdug2	,null	,ROT90	,	"Namco", "Dig Dug II (Old Ver.)" )
-	public static GameDriver driver_motos	   = new GameDriver("1985"	,"motos"	,"mappy.java"	,rom_motos,null	,machine_driver_motos	,input_ports_motos	,null	,ROT90	,	"Namco", "Motos" )
-	public static GameDriver driver_todruaga	   = new GameDriver("1984"	,"todruaga"	,"mappy.java"	,rom_todruaga,null	,machine_driver_todruaga	,input_ports_todruaga	,null	,ROT90	,	"Namco", "Tower of Druaga (New Ver.)" )
-	public static GameDriver driver_todruago	   = new GameDriver("1984"	,"todruago"	,"mappy.java"	,rom_todruago,driver_todruaga	,machine_driver_todruaga	,input_ports_todruaga	,null	,ROT90	,	"Namco", "Tower of Druaga (Old Ver.)" )
+	GAME( 1983, mappy,    0,        mappy,    mappy,    0, ROT90, "Namco", "Mappy (US)" )
+	GAME( 1983, mappyj,   mappy,    mappy,    mappy,    0, ROT90, "Namco", "Mappy (Japan)" )
+	GAME( 1985, digdug2,  0,        digdug2,  digdug2,  0, ROT90, "Namco", "Dig Dug II (New Ver.)" )
+	GAME( 1985, digdug2o, digdug2,  digdug2,  digdug2,  0, ROT90, "Namco", "Dig Dug II (Old Ver.)" )
+	GAME( 1985, motos,    0,        motos,    motos,    0, ROT90, "Namco", "Motos" )
+	GAME( 1984, todruaga, 0,        todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (New Ver.)" )
+	GAME( 1984, todruago, todruaga, todruaga, todruaga, 0, ROT90, "Namco", "Tower of Druaga (Old Ver.)" )
 }

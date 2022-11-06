@@ -685,7 +685,7 @@ wrong.)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -799,15 +799,14 @@ public class taito_z
 	
 	/***** Routines for particular games *****/
 	
-	public static InterruptHandlerPtr sci_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sci_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Need 2 int4's per int6 else (-$6b63,A5) never set to 1 which
 		   causes all sprites to vanish! Spriteram has areas for 2 frames
 		   so in theory only needs updating every other frame. */
 	
 		sci_int6 = !sci_int6;
 	
-		if (sci_int6 != 0)
+		if (sci_int6)
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -817,19 +816,17 @@ public class taito_z
 	   at all. Cpu control byte has 0,4,8,c poked into 2nd nibble
 	   and it seems possible this should be causing int6's ? */
 	
-	public static InterruptHandlerPtr dblaxle_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr dblaxle_interrupt = new InterruptHandlerPtr() {public void handler(){
 		// Unsure how many int6's per frame, copy SCI for now
 		dblaxle_int6 = !dblaxle_int6;
 	
-		if (dblaxle_int6 != 0)
+		if (dblaxle_int6)
 			timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 	
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr dblaxle_cpub_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr dblaxle_cpub_interrupt = new InterruptHandlerPtr() {public void handler(){
 		// Unsure how many int6's per frame
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, taitoz_interrupt6);
 		cpu_set_irq_line(2, 4, HOLD_LINE);
@@ -863,15 +860,14 @@ public class taito_z
 		"0100111111" 	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_spacegun  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_spacegun  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -934,11 +930,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x4) != 0)
+			if (fake &0x4)
 			{
 				steer = 0x60;
 			}
-			else if ((fake & 0x8) != 0)
+			else if (fake &0x8)
 			{
 				steer = 0xff9f;
 			}
@@ -973,11 +969,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x4) != 0)
+			if (fake &0x4)
 			{
 				steer = 0xff80;
 			}
-			else if ((fake & 0x8) != 0)
+			else if (fake &0x8)
 			{
 				steer = 0x7f;
 			}
@@ -1088,11 +1084,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x4) != 0)
+			if (fake &0x4)
 			{
 				steer = 0xffa0;
 			}
-			else if ((fake & 0x8) != 0)
+			else if (fake &0x8)
 			{
 				steer = 0x5f;
 			}
@@ -1171,11 +1167,11 @@ public class taito_z
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x4) != 0)
+			if (fake &0x4)
 			{
 				steer = 0xffc0;
 			}
-			else if ((fake & 0x8) != 0)
+			else if (fake &0x8)
 			{
 				steer = 0x3f;
 			}
@@ -1236,8 +1232,7 @@ public class taito_z
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -1250,7 +1245,7 @@ public class taito_z
 			taitosound_comm_w (0, data & 0xff);
 	
 	#ifdef MAME_DEBUG
-	//	if ((data & 0xff00) != 0)
+	//	if (data & 0xff00)
 	//	{
 	//		char buf[80];
 	//
@@ -1276,7 +1271,7 @@ public class taito_z
 			taitosound_comm_w (0,(data >> 8) & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if ((data & 0xff) != 0)
+		if (data & 0xff)
 		{
 			char buf[80];
 	
@@ -1794,7 +1789,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
 	
-	static InputPortPtr input_ports_contcirc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_contcirc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( contcirc )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Upright") );
@@ -1865,7 +1860,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_contcrcu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_contcrcu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( contcrcu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Upright") );
@@ -1936,7 +1931,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chasehq = new InputPortPtr(){ public void handler() { 	// IN3-6 perhaps used with cockpit setup? //
+	static InputPortPtr input_ports_chasehq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chasehq )	// IN3-6 perhaps used with cockpit setup? //
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Upright / Steering Lock" );
@@ -2042,7 +2037,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chasehqj = new InputPortPtr(){ public void handler() { 	// IN3-6 perhaps used with cockpit setup? //
+	static InputPortPtr input_ports_chasehqj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chasehqj )	// IN3-6 perhaps used with cockpit setup? //
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Upright / Steering Lock" );
@@ -2148,7 +2143,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_enforce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_enforce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( enforce )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -2204,7 +2199,7 @@ public class taito_z
 		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bshark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bshark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bshark )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Mirror screen" );// manual says first two must be off
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2273,7 +2268,7 @@ public class taito_z
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bsharkj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bsharkj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bsharkj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Mirror screen" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2342,7 +2337,7 @@ public class taito_z
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sci = new InputPortPtr(){ public void handler() { 	// dsws may be slightly wrong
+	static InputPortPtr input_ports_sci = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sci )	// dsws may be slightly wrong
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, "Cockpit" );
@@ -2409,7 +2404,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sciu = new InputPortPtr(){ public void handler() { 	// dsws may be slightly wrong
+	static InputPortPtr input_ports_sciu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sciu )	// dsws may be slightly wrong
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, "Cockpit" );
@@ -2476,7 +2471,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nightstr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nightstr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nightstr )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, "Cockpit" );
@@ -2544,7 +2539,7 @@ public class taito_z
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aquajack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aquajack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aquajack )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x80, "Cockpit" );
@@ -2614,7 +2609,7 @@ public class taito_z
 		PORT_ANALOG( 0xff, 0x80, IPT_DIAL | IPF_PLAYER1, 50, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aquajckj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aquajckj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aquajckj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x80, "Cockpit" );
@@ -2684,7 +2679,7 @@ public class taito_z
 		PORT_ANALOG( 0xff, 0x80, IPT_DIAL | IPF_PLAYER1, 50, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacegun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacegun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacegun )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	// Manual says Always Off
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2754,7 +2749,7 @@ public class taito_z
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 20, 22, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dblaxle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dblaxle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dblaxle )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2822,7 +2817,7 @@ public class taito_z
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pwheelsj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pwheelsj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pwheelsj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3075,8 +3070,7 @@ public class taito_z
 	
 	/* Contcirc vis area seems narrower than the other games... */
 	
-	public static MachineHandlerPtr machine_driver_contcirc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( contcirc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3108,13 +3102,10 @@ public class taito_z
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_chasehq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chasehq )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3145,13 +3136,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_enforce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( enforce )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3184,13 +3172,10 @@ public class taito_z
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bshark = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bshark )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3218,13 +3203,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interfaceb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sci = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sci )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3256,13 +3238,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nightstr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nightstr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3294,13 +3273,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_aquajack = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aquajack )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -3332,13 +3308,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacegun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacegun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -3367,13 +3340,10 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interfaceb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dblaxle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dblaxle )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -3405,9 +3375,7 @@ public class taito_z
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -4138,8 +4106,7 @@ public class taito_z
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_taitoz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_taitoz  = new DriverInitHandlerPtr() { public void handler(){
 	//	taitosnd_setz80_soundcpu( 2 );
 	
 		cpua_ctrl = 0xff;
@@ -4155,8 +4122,7 @@ public class taito_z
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static DriverInitHandlerPtr init_bshark  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bshark  = new DriverInitHandlerPtr() { public void handler(){
 		cpua_ctrl = 0xff;
 		state_save_register_UINT16("main1", 0, "control", &cpua_ctrl, 1);
 		state_save_register_func_postload(parse_control_noz80);
@@ -4168,20 +4134,20 @@ public class taito_z
 	
 	/* Release date order: contcirc 1989 (c) date is bogus */
 	
-	public static GameDriver driver_contcirc	   = new GameDriver("1989"	,"contcirc"	,"taito_z.java"	,rom_contcirc,null	,machine_driver_contcirc	,input_ports_contcirc	,init_taitoz	,ROT0	,	"Taito Corporation Japan", "Continental Circus (World)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_contcrcu	   = new GameDriver("1987"	,"contcrcu"	,"taito_z.java"	,rom_contcrcu,driver_contcirc	,machine_driver_contcirc	,input_ports_contcrcu	,init_taitoz	,ROT0	,	"Taito America Corporation", "Continental Circus (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_chasehq	   = new GameDriver("1988"	,"chasehq"	,"taito_z.java"	,rom_chasehq,null	,machine_driver_chasehq	,input_ports_chasehq	,init_taitoz	,ROT0	,	"Taito Corporation Japan", "Chase H.Q. (World)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_chasehqj	   = new GameDriver("1988"	,"chasehqj"	,"taito_z.java"	,rom_chasehqj,driver_chasehq	,machine_driver_chasehq	,input_ports_chasehqj	,init_taitoz	,ROT0	,	"Taito Corporation", "Chase H.Q. (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_enforce	   = new GameDriver("1988"	,"enforce"	,"taito_z.java"	,rom_enforce,null	,machine_driver_enforce	,input_ports_enforce	,init_taitoz	,ROT0	,	"Taito Corporation", "Enforce (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_bshark	   = new GameDriver("1989"	,"bshark"	,"taito_z.java"	,rom_bshark,null	,machine_driver_bshark	,input_ports_bshark	,init_bshark	,ORIENTATION_FLIP_X	,	"Taito America Corporation", "Battle Shark (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_bsharkj	   = new GameDriver("1989"	,"bsharkj"	,"taito_z.java"	,rom_bsharkj,driver_bshark	,machine_driver_bshark	,input_ports_bsharkj	,init_bshark	,ORIENTATION_FLIP_X	,	"Taito Corporation", "Battle Shark (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sci	   = new GameDriver("1989"	,"sci"	,"taito_z.java"	,rom_sci,null	,machine_driver_sci	,input_ports_sci	,init_taitoz	,ROT0	,	"Taito Corporation Japan", "Special Criminal Investigation (World set 1)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_scia	   = new GameDriver("1989"	,"scia"	,"taito_z.java"	,rom_scia,driver_sci	,machine_driver_sci	,input_ports_sci	,init_taitoz	,ROT0	,	"Taito Corporation Japan", "Special Criminal Investigation (World set 2)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sciu	   = new GameDriver("1989"	,"sciu"	,"taito_z.java"	,rom_sciu,driver_sci	,machine_driver_sci	,input_ports_sciu	,init_taitoz	,ROT0	,	"Taito America Corporation", "Special Criminal Investigation (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_nightstr	   = new GameDriver("1989"	,"nightstr"	,"taito_z.java"	,rom_nightstr,null	,machine_driver_nightstr	,input_ports_nightstr	,init_taitoz	,ROT0	,	"Taito America Corporation", "Night Striker (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_aquajack	   = new GameDriver("1990"	,"aquajack"	,"taito_z.java"	,rom_aquajack,null	,machine_driver_aquajack	,input_ports_aquajack	,init_taitoz	,ROT0	,	"Taito Corporation Japan", "Aqua Jack (World)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_aquajckj	   = new GameDriver("1990"	,"aquajckj"	,"taito_z.java"	,rom_aquajckj,driver_aquajack	,machine_driver_aquajack	,input_ports_aquajckj	,init_taitoz	,ROT0	,	"Taito Corporation", "Aqua Jack (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_spacegun	   = new GameDriver("1990"	,"spacegun"	,"taito_z.java"	,rom_spacegun,null	,machine_driver_spacegun	,input_ports_spacegun	,init_bshark	,ORIENTATION_FLIP_X	,	"Taito Corporation Japan", "Space Gun (World)" )
-	public static GameDriver driver_dblaxle	   = new GameDriver("1991"	,"dblaxle"	,"taito_z.java"	,rom_dblaxle,null	,machine_driver_dblaxle	,input_ports_dblaxle	,init_taitoz	,ROT0	,	"Taito America Corporation", "Double Axle (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_pwheelsj	   = new GameDriver("1991"	,"pwheelsj"	,"taito_z.java"	,rom_pwheelsj,driver_dblaxle	,machine_driver_dblaxle	,input_ports_pwheelsj	,init_taitoz	,ROT0	,	"Taito Corporation", "Power Wheels (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, contcirc, 0,        contcirc, contcirc, taitoz,   ROT0,               "Taito Corporation Japan", "Continental Circus (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1987, contcrcu, contcirc, contcirc, contcrcu, taitoz,   ROT0,               "Taito America Corporation", "Continental Circus (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1988, chasehq,  0,        chasehq,  chasehq,  taitoz,   ROT0,               "Taito Corporation Japan", "Chase H.Q. (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1988, chasehqj, chasehq,  chasehq,  chasehqj, taitoz,   ROT0,               "Taito Corporation", "Chase H.Q. (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1988, enforce,  0,        enforce,  enforce,  taitoz,   ROT0,               "Taito Corporation", "Enforce (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, bshark,   0,        bshark,   bshark,   bshark,   ORIENTATION_FLIP_X, "Taito America Corporation", "Battle Shark (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, bsharkj,  bshark,   bshark,   bsharkj,  bshark,   ORIENTATION_FLIP_X, "Taito Corporation", "Battle Shark (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, sci,      0,        sci,      sci,      taitoz,   ROT0,               "Taito Corporation Japan", "Special Criminal Investigation (World set 1)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, scia,     sci,      sci,      sci,      taitoz,   ROT0,               "Taito Corporation Japan", "Special Criminal Investigation (World set 2)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, sciu,     sci,      sci,      sciu,     taitoz,   ROT0,               "Taito America Corporation", "Special Criminal Investigation (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, nightstr, 0,        nightstr, nightstr, taitoz,   ROT0,               "Taito America Corporation", "Night Striker (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1990, aquajack, 0,        aquajack, aquajack, taitoz,   ROT0,               "Taito Corporation Japan", "Aqua Jack (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1990, aquajckj, aquajack, aquajack, aquajckj, taitoz,   ROT0,               "Taito Corporation", "Aqua Jack (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1990, spacegun, 0,        spacegun, spacegun, bshark,   ORIENTATION_FLIP_X, "Taito Corporation Japan", "Space Gun (World)" )
+	GAMEX( 1991, dblaxle,  0,        dblaxle,  dblaxle,  taitoz,   ROT0,               "Taito America Corporation", "Double Axle (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1991, pwheelsj, dblaxle,  dblaxle,  pwheelsj, taitoz,   ROT0,               "Taito Corporation", "Power Wheels (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

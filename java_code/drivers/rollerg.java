@@ -8,7 +8,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,8 +23,7 @@ public class rollerg
 	
 	static int readzoomroms;
 	
-	public static WriteHandlerPtr rollerg_0010_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollerg_0010_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: write %02x to 0010\n",activecpu_get_pc(),data);
 	
 		/* bits 0/1 are coin counters */
@@ -40,22 +39,19 @@ public class rollerg
 		/* other bits unknown */
 	} };
 	
-	public static ReadHandlerPtr rollerg_K051316_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (readzoomroms != 0) return K051316_rom_0_r(offset);
+	public static ReadHandlerPtr rollerg_K051316_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (readzoomroms) return K051316_rom_0_r(offset);
 		else return K051316_0_r(offset);
 	} };
 	
-	public static ReadHandlerPtr rollerg_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rollerg_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return 0x00;
 	} };
 	
-	public static WriteHandlerPtr soundirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundirq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
@@ -64,14 +60,12 @@ public class rollerg
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
 	} };
 	
-	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x7f;
 	} };
 	
@@ -139,7 +133,7 @@ public class rollerg
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_rollerg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rollerg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rollerg )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -261,8 +255,7 @@ public class rollerg
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_rollerg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rollerg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* ? */
@@ -289,9 +282,7 @@ public class rollerg
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -360,20 +351,18 @@ public class rollerg
 		cpu_setbank(1,&RAM[offs]);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_rollerg  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_rollerg  = new MachineInitHandlerPtr() { public void handler(){
 		konami_cpu_setlines_callback = rollerg_banking;
 	
 		readzoomroms = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_rollerg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rollerg  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 	} };
 	
 	
 	
-	public static GameDriver driver_rollerg	   = new GameDriver("1991"	,"rollerg"	,"rollerg.java"	,rom_rollerg,null	,machine_driver_rollerg	,input_ports_rollerg	,init_rollerg	,ROT0	,	"Konami", "Rollergames (US)" )
-	public static GameDriver driver_rollergj	   = new GameDriver("1991"	,"rollergj"	,"rollerg.java"	,rom_rollergj,driver_rollerg	,machine_driver_rollerg	,input_ports_rollerg	,init_rollerg	,ROT0	,	"Konami", "Rollergames (Japan)" )
+	GAME( 1991, rollerg,  0,       rollerg, rollerg, rollerg, ROT0, "Konami", "Rollergames (US)" )
+	GAME( 1991, rollergj, rollerg, rollerg, rollerg, rollerg, ROT0, "Konami", "Rollergames (Japan)" )
 }

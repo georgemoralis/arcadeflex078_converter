@@ -19,7 +19,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,7 +52,7 @@ public class powerins
 	
 	static WRITE16_HANDLER( powerins_okibank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			unsigned char *RAM = memory_region(REGION_SOUND1);
 			int new_bank = data & 0x7;
@@ -67,7 +67,7 @@ public class powerins
 	
 	static WRITE16_HANDLER( powerin2_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0, data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -150,7 +150,7 @@ public class powerins
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_powerins = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_powerins = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( powerins )
 		PORT_START(); 	// IN0 - $100000 - Coins
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
@@ -312,8 +312,7 @@ public class powerins
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_powerins  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_powerins  = new MachineInitHandlerPtr() { public void handler(){
 		oki_bank = -1;	// samples bank "unitialised"
 	} };
 	
@@ -333,8 +332,7 @@ public class powerins
 		{ 100, 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_powerins = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( powerins )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* ? (it affects the game's speed!) */
@@ -358,12 +356,9 @@ public class powerins
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("sound", OKIM6295, powerins_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_powerina = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( powerina )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(powerins)
@@ -374,9 +369,7 @@ public class powerins
 		MDRV_CPU_PORTS(readport_snd,writeport_snd)
 	
 		MDRV_SOUND_REPLACE("sound", OKIM6295, powerin2_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -546,6 +539,6 @@ public class powerins
 		ROM_LOAD( "82s147.bin", 0x0020, 0x0200, CRC(d7818542) SHA1(e94f8004c804f260874a117d59dfa0637c5d3d73) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_powerins	   = new GameDriver("1993"	,"powerins"	,"powerins.java"	,rom_powerins,null	,machine_driver_powerins	,input_ports_powerins	,null	,ROT0	,	"Atlus", "Power Instinct (USA bootleg) (set 1)" )
-	public static GameDriver driver_powerina	   = new GameDriver("1993"	,"powerina"	,"powerins.java"	,rom_powerina,driver_powerins	,machine_driver_powerina	,input_ports_powerins	,null	,ROT0	,	"Atlus", "Power Instinct (USA bootleg) (set 2)", GAME_NO_SOUND )
+	GAME( 1993, powerins, 0,		powerins, powerins, 0, ROT0, "Atlus", "Power Instinct (USA bootleg) (set 1)" )
+	GAMEX(1993, powerina, powerins, powerina, powerins, 0, ROT0, "Atlus", "Power Instinct (USA bootleg) (set 2)", GAME_NO_SOUND )
 }

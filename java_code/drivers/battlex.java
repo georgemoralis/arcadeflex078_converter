@@ -42,7 +42,7 @@ XTAL: 10.0 MHz
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -101,7 +101,7 @@ public class battlex
 	
 	/*** INPUT PORTS *************************************************************/
 	
-	static InputPortPtr input_ports_battlex = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlex = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlex )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -221,8 +221,7 @@ public class battlex
 	
 	/*** MACHINE DRIVERS *********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_battlex = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battlex )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2 )		 /* 10 MHz, divided ? (Z80A CPU) */
@@ -246,9 +245,7 @@ public class battlex
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, battlex_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*** ROM LOADING *************************************************************/
@@ -278,8 +275,7 @@ public class battlex
 		ROM_LOAD( "2732.e",    0x0000, 0x1000, CRC(126842b7) SHA1(2da4f64e077232c1dd0853d07d801f9781517850) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_battlex  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_battlex  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *cold    = memory_region       ( REGION_USER1 );
 		UINT8 *mskd    = memory_region       ( REGION_USER2 );
 		UINT8 *dest    = memory_region       ( REGION_GFX1 );
@@ -300,7 +296,7 @@ public class battlex
 					int bit, col;
 					bit = (mskd[outcount*8+linecount] & bitmask) >> bitcount;
 	
-					if (bit != 0) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
+					if (bit) col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0x0f) << 4;
 					else col = (cold[outcount*8+(linecount&~1)+(bitcount/4)] & 0xf0);
 	
 					dest[outcount*32 + linecount*4 + bitcount /2] |= (col >> (4*(bitcount & 1)));
@@ -312,5 +308,5 @@ public class battlex
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	public static GameDriver driver_battlex	   = new GameDriver("1982"	,"battlex"	,"battlex.java"	,rom_battlex,null	,machine_driver_battlex	,input_ports_battlex	,init_battlex	,ROT180	,	"Omori Electric", "Battle Cross", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1982, battlex, 0, battlex, battlex, battlex, ROT180, "Omori Electric", "Battle Cross", GAME_IMPERFECT_GRAPHICS )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -28,7 +28,7 @@ public class cclimber
 		if (memory_region(REGION_SOUND1))
 		{
 			samplebuf = auto_malloc(2*memory_region_length(REGION_SOUND1));
-			if (samplebuf == 0)
+			if (!samplebuf)
 				return 1;
 		}
 	
@@ -42,7 +42,7 @@ public class cclimber
 		const UINT8 *rom = memory_region(REGION_SOUND1);
 	
 	
-		if (rom == 0) return;
+		if (!rom) return;
 	
 		/* decode the rom samples */
 		len = 0;
@@ -65,25 +65,21 @@ public class cclimber
 	
 	static int sample_num,sample_freq,sample_volume;
 	
-	public static WriteHandlerPtr cclimber_sample_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cclimber_sample_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sample_num = data;
 	} };
 	
-	public static WriteHandlerPtr cclimber_sample_rate_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cclimber_sample_rate_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* calculate the sampling frequency */
 		sample_freq = SND_CLOCK / 4 / (256 - data);
 	} };
 	
-	public static WriteHandlerPtr cclimber_sample_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cclimber_sample_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sample_volume = data & 0x1f;	/* range 0-31 */
 	} };
 	
-	public static WriteHandlerPtr cclimber_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (data == 0 || Machine.sample_rate == 0)
+	public static WriteHandlerPtr cclimber_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data == 0 || Machine->sample_rate == 0)
 			return;
 	
 		cclimber_play_sample(32 * sample_num,sample_freq,sample_volume);

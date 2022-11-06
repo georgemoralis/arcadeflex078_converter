@@ -24,7 +24,7 @@ System 24      68000x2  315-5292   315-5293  315-5294  315-5242        ym2151 da
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,7 +36,7 @@ public class segaic24
 	{
 		palette_set_color (color, r, g, b);
 	
-		if (highlight != 0) {
+		if(highlight) {
 			r = 255-0.6*(255-r);
 			g = 255-0.6*(255-g);
 			b = 255-0.6*(255-b);
@@ -45,7 +45,7 @@ public class segaic24
 			g = 0.6*g;
 			b = 0.6*b;
 		}
-		palette_set_color (color+Machine.drv.total_colors/2, r, g, b);
+		palette_set_color (color+Machine->drv->total_colors/2, r, g, b);
 	}
 	
 	// 315-5242
@@ -56,15 +56,15 @@ public class segaic24
 		data = paletteram16[offset];
 	
 		r = (data & 0x00f) << 4;
-		if ((data & 0x1000) != 0)
+		if(data & 0x1000)
 			r |= 8;
 	
 		g = data & 0x0f0;
-		if ((data & 0x2000) != 0)
+		if(data & 0x2000)
 			g |= 8;
 	
 		b = (data & 0xf00) >> 4;
-		if ((data & 0x4000) != 0)
+		if(data & 0x4000)
 			b |= 8;
 	
 		r |= r >> 5;
@@ -144,23 +144,23 @@ public class segaic24
 		sys24_tile_mask = tile_mask;
 	
 		for(sys24_char_gfx_index = 0; sys24_char_gfx_index < MAX_GFX_ELEMENTS; sys24_char_gfx_index++)
-			if (Machine.gfx[sys24_char_gfx_index] == 0)
+			if (Machine->gfx[sys24_char_gfx_index] == 0)
 				break;
 		if(sys24_char_gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
 	
 		sys24_char_ram = auto_malloc(0x80000);
-		if (sys24_char_ram == 0)
+		if(!sys24_char_ram)
 			return 1;
 	
 		sys24_tile_ram = auto_malloc(0x10000);
-		if (sys24_tile_ram == 0) {
+		if(!sys24_tile_ram) {
 			free(sys24_char_ram);
 			return 1;
 		}
 	
 		sys24_char_dirtymap = auto_malloc(SYS24_TILES);
-		if (sys24_char_dirtymap == 0) {
+		if(!sys24_char_dirtymap) {
 			free(sys24_tile_ram);
 			free(sys24_char_ram);
 			return 1;
@@ -187,24 +187,24 @@ public class segaic24
 		memset(sys24_tile_ram, 0, 0x10000);
 		memset(sys24_char_dirtymap, 0, SYS24_TILES);
 	
-		Machine.gfx[sys24_char_gfx_index] = decodegfx((unsigned char *)sys24_char_ram, &sys24_char_layout);
+		Machine->gfx[sys24_char_gfx_index] = decodegfx((unsigned char *)sys24_char_ram, &sys24_char_layout);
 	
-		if(!Machine.gfx[sys24_char_gfx_index]) {
+		if(!Machine->gfx[sys24_char_gfx_index]) {
 			free(sys24_char_dirtymap);
 			free(sys24_tile_ram);
 			free(sys24_char_ram);
 			return 1;
 		}
 	
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[sys24_char_gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[sys24_char_gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[sys24_char_gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[sys24_char_gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[sys24_char_gfx_index].colortable = Machine.pens;
-			Machine.gfx[sys24_char_gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[sys24_char_gfx_index]->colortable = Machine->pens;
+			Machine->gfx[sys24_char_gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 		state_save_register_UINT16("system24 tile", 0, "tile ram", sys24_tile_ram, 0x8000);
@@ -216,12 +216,12 @@ public class segaic24
 	
 	void sys24_tile_update(void)
 	{
-		if (sys24_char_dirty != 0) {
+		if(sys24_char_dirty) {
 			int i;
 			for(i=0; i<SYS24_TILES; i++) {
 				if(sys24_char_dirtymap[i]) {
 					sys24_char_dirtymap[i] = 0;
-					decodechar(Machine.gfx[sys24_char_gfx_index], i, (unsigned char *)sys24_char_ram, &sys24_char_layout);
+					decodechar(Machine->gfx[sys24_char_gfx_index], i, (unsigned char *)sys24_char_ram, &sys24_char_layout);
 				}
 			}
 			tilemap_mark_all_tiles_dirty(sys24_tile_layer[0]);
@@ -236,15 +236,15 @@ public class segaic24
 									 UINT16 tpri, UINT8 lpri, int win, int sx, int sy, int xx1, int yy1, int xx2, int yy2)
 	{
 		int y;
-		const UINT16 *source  = ((UINT16 *)bm.base) + sx + sy*bm.rowpixels;
-		const UINT8  *trans = ((UINT8 *) tm.base) + sx + sy*tm.rowpixels;
-		UINT8        *prib = priority_bitmap.base;
-		UINT16       *dest = dm.base;
+		const UINT16 *source  = ((UINT16 *)bm->base) + sx + sy*bm->rowpixels;
+		const UINT8  *trans = ((UINT8 *) tm->base) + sx + sy*tm->rowpixels;
+		UINT8        *prib = priority_bitmap->base;
+		UINT16       *dest = dm->base;
 	
 		tpri |= TILE_FLAG_FG_OPAQUE;
 	
-		dest += yy1*dm.rowpixels + xx1;
-		prib += yy1*priority_bitmap.rowpixels + xx1;
+		dest += yy1*dm->rowpixels + xx1;
+		prib += yy1*priority_bitmap->rowpixels + xx1;
 		mask += yy1*4;
 		yy2 -= yy1;
 	
@@ -266,13 +266,13 @@ public class segaic24
 			while(llx > 0) {
 				UINT16 m = *mask1++;
 	
-				if (win != 0)
+				if(win)
 					m = ~m;
 	
 				if(!cur_x && llx>=128) {
 					// Fast paths for the 128-pixels without side clipping case
 	
-					if (m == 0) {
+					if(!m) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x=0; x<128; x++) {
@@ -315,7 +315,7 @@ public class segaic24
 					// Clipped path
 					int llx1 = llx >= 128 ? 128 : llx;
 	
-					if (m == 0) {
+					if(!m) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x = cur_x; x<llx1; x++) {
@@ -353,10 +353,10 @@ public class segaic24
 				llx -= 128;
 				cur_x = 0;
 			}
-			source += bm.rowpixels;
-			trans  += tm.rowpixels;
-			dest   += dm.rowpixels;
-			prib   += priority_bitmap.rowpixels;
+			source += bm->rowpixels;
+			trans  += tm->rowpixels;
+			dest   += dm->rowpixels;
+			prib   += priority_bitmap->rowpixels;
 			mask   += 4;
 		}
 	}
@@ -370,14 +370,14 @@ public class segaic24
 										 UINT16 tpri, UINT8 lpri, int win, int sx, int sy, int xx1, int yy1, int xx2, int yy2)
 	{
 		int y;
-		const UINT16 *source  = ((UINT16 *)bm.base) + sx + sy*bm.rowpixels;
-		const UINT8  *trans = ((UINT8 *) tm.base) + sx + sy*tm.rowpixels;
-		UINT16       *dest = dm.base;
-		pen_t        *pens   = Machine.pens;
+		const UINT16 *source  = ((UINT16 *)bm->base) + sx + sy*bm->rowpixels;
+		const UINT8  *trans = ((UINT8 *) tm->base) + sx + sy*tm->rowpixels;
+		UINT16       *dest = dm->base;
+		pen_t        *pens   = Machine->pens;
 	
 		tpri |= TILE_FLAG_FG_OPAQUE;
 	
-		dest += yy1*dm.rowpixels + xx1;
+		dest += yy1*dm->rowpixels + xx1;
 		mask += yy1*4;
 		yy2 -= yy1;
 	
@@ -398,13 +398,13 @@ public class segaic24
 			while(llx > 0) {
 				UINT16 m = *mask1++;
 	
-				if (win != 0)
+				if(win)
 					m = ~m;
 	
 				if(!cur_x && llx>=128) {
 					// Fast paths for the 128-pixels without side clipping case
 	
-					if (m == 0) {
+					if(!m) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x=0; x<128; x++) {
@@ -440,7 +440,7 @@ public class segaic24
 					// Clipped path
 					int llx1 = llx >= 128 ? 128 : llx;
 	
-					if (m == 0) {
+					if(!m) {
 						// 1- 128 pixels from this layer
 						int x;
 						for(x = cur_x; x<llx1; x++) {
@@ -471,9 +471,9 @@ public class segaic24
 				llx -= 128;
 				cur_x = 0;
 			}
-			source += bm.rowpixels;
-			trans  += tm.rowpixels;
-			dest   += dm.rowpixels;
+			source += bm->rowpixels;
+			trans  += tm->rowpixels;
+			dest   += dm->rowpixels;
 			mask   += 4;
 		}
 	}
@@ -490,18 +490,18 @@ public class segaic24
 		layer >>= 1;
 	
 		// Layer disable
-		if ((vscr & 0x8000) != 0)
+		if(vscr & 0x8000)
 			return;
 	
-		if ((ctrl & 0x6000) != 0) {
+		if(ctrl & 0x6000) {
 			// Special window/scroll modes
-			if ((layer & 1) != 0)
+			if(layer & 1)
 				return;
 	
 			tilemap_set_scrolly(sys24_tile_layer[layer],   0, +(vscr & 0x1ff));
 			tilemap_set_scrolly(sys24_tile_layer[layer|1], 0, +(vscr & 0x1ff));
 	
-			if ((hscr & 0x8000) != 0) {
+			if(hscr & 0x8000) {
 				//#ifdef MAME_DEBUG
 				usrintf_showmessage("Linescroll with special mode %04x", ctrl);
 				//			return;
@@ -557,7 +557,7 @@ public class segaic24
 						 UINT16, UINT8, int, int, int, int, int, int, int);
 			int win = layer & 1;
 	
-			if(Machine.drv.video_attributes & VIDEO_RGB_DIRECT)
+			if(Machine->drv->video_attributes & VIDEO_RGB_DIRECT)
 				draw = sys24_tile_draw_rect_rgb;
 			else
 				draw = sys24_tile_draw_rect;
@@ -565,7 +565,7 @@ public class segaic24
 			bm = tilemap_get_pixmap(sys24_tile_layer[layer]);
 			tm = tilemap_get_transparency_bitmap(sys24_tile_layer[layer]);
 	
-			if ((hscr & 0x8000) != 0) {
+			if(hscr & 0x8000) {
 				int y;
 				UINT16 *hscrtb = sys24_tile_ram + 0x4000 + 0x200*layer;
 				vscr &= 0x1ff;
@@ -651,7 +651,7 @@ public class segaic24
 	int sys24_sprite_vh_start(void)
 	{
 		sys24_sprite_ram = auto_malloc(0x40000);
-		if (sys24_sprite_ram == 0)
+		if(!sys24_sprite_ram)
 			return 1;
 	
 		state_save_register_UINT16("system24 sprite", 0, "ram", sys24_sprite_ram, 0x20000);
@@ -738,7 +738,7 @@ public class segaic24
 			source = sprd[countspr];
 			cclip = clip[countspr];
 	
-			if (cclip != 0) {
+			if(cclip) {
 				min_y = (cclip[2] & 511);
 				min_x = (cclip[3] & 511) - 8;
 				max_y = (cclip[4] & 511);
@@ -751,14 +751,14 @@ public class segaic24
 			}
 	
 	
-			if(min_x < cliprect.min_x)
-				min_x = cliprect.min_x;
-			if(min_y < cliprect.min_y)
-				min_y = cliprect.min_y;
-			if(max_x > cliprect.max_x)
-				max_x = cliprect.max_x;
-			if(max_y > cliprect.max_y)
-				max_y = cliprect.max_y;
+			if(min_x < cliprect->min_x)
+				min_x = cliprect->min_x;
+			if(min_y < cliprect->min_y)
+				min_y = cliprect->min_y;
+			if(max_x > cliprect->max_x)
+				max_x = cliprect->max_x;
+			if(max_y > cliprect->max_y)
+				max_y = cliprect->max_y;
 	
 			if(!(source[0] & 0x2000))
 				zoomx = zoomy = source[1] & 0xff;
@@ -766,9 +766,9 @@ public class segaic24
 				zoomx = source[1] >> 8;
 				zoomy = source[1] & 0xff;
 			}
-			if (zoomx == 0)
+			if(!zoomx)
 				zoomx = 0x3f;
-			if (zoomy == 0)
+			if(!zoomy)
 				zoomy = 0x3f;
 	
 			zoomx++;
@@ -776,14 +776,14 @@ public class segaic24
 	
 			x = source[5] & 0xfff;
 			flipx = source[5] & 0x8000;
-			if ((x & 0x800) != 0)
+			if(x & 0x800)
 				x -= 0x1000;
 			sx = 1 << ((source[5] & 0x7000) >> 12);
 	
 			x -= 8;
 	
 			y = source[4] & 0xfff;
-			if ((y & 0x800) != 0)
+			if(y & 0x800)
 				y -= 0x1000;
 			flipy = source[4] & 0x8000;
 			sy = 1 << ((source[4] & 0x7000) >> 12);
@@ -833,11 +833,11 @@ public class segaic24
 										if(xpos2 >= min_x && xpos2 <= max_x) {
 											int zx1 = flipx ? 7-zx : zx;
 											int c = (pix1[zx1>>2] >> (((~zx1) & 3) << 2)) & 0xf;
-											UINT8 *pri = ((UINT8 *)priority_bitmap.line[ypos1]) + xpos2;
+											UINT8 *pri = ((UINT8 *)priority_bitmap->line[ypos1]) + xpos2;
 											if(!(*pri & pm[c])) {
 												c = colors[c];
-												if (c != 0) {
-													UINT16 *dst = ((UINT16 *)bitmap.line[ypos1]) + xpos2;
+												if(c) {
+													UINT16 *dst = ((UINT16 *)bitmap->line[ypos1]) + xpos2;
 													if(c==1)
 														*dst = (*dst) | 0x2000;
 													else
@@ -854,7 +854,7 @@ public class segaic24
 							ymod1 -= 0x40;
 							ypos1++;
 						}
-						if (flipy != 0)
+						if(flipy)
 							pix1 -= 2;
 						else
 							pix1 += 2;

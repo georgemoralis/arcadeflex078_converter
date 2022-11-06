@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -30,22 +30,21 @@ public class geebee
 			volume = 0;
 	}
 	
-	public static WriteHandlerPtr geebee_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr geebee_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(channel,0);
 		sound_latch = data;
 		volume = 0x7fff; /* set volume */
 		noise = 0x0000;  /* reset noise shifter */
 		/* faster decay enabled? */
-		if ((sound_latch & 8) != 0)
+		if( sound_latch & 8 )
 		{
 			/*
 			 * R24 is 10k, Rb is 0, C57 is 1uF
-			 * charge time t1 = 0.693 * (R24 + Rb) * C57 . 0.22176s
-			 * discharge time t2 = 0.693 * (Rb) * C57 . 0
+			 * charge time t1 = 0.693 * (R24 + Rb) * C57 -> 0.22176s
+			 * discharge time t2 = 0.693 * (Rb) * C57 -> 0
 			 * Then C33 is only charged via D6 (1N914), not discharged!
 			 * Decay:
-			 * discharge C33 (1uF) through R50 (22k) . 0.14058s
+			 * discharge C33 (1uF) through R50 (22k) -> 0.14058s
 			 */
 			timer_adjust(volume_timer, TIME_IN_HZ(32768/0.14058), 0, TIME_IN_HZ(32768/0.14058));
 		}
@@ -74,7 +73,7 @@ public class geebee
 			vcarry -= 18432000 / 3 / 2 / 384;
 	        while (vcarry < 0)
 	        {
-	            vcarry += Machine.sample_rate;
+	            vcarry += Machine->sample_rate;
 	            vcount++;
 				/* noise clocked with raising edge of 2V */
 				if ((vcount & 3) == 2)
@@ -121,13 +120,13 @@ public class geebee
 		int i;
 	
 		decay = (UINT16 *)auto_malloc(32768 * sizeof(INT16));
-		if (decay == 0)
+		if( !decay )
 			return 1;
 	
 	    for( i = 0; i < 0x8000; i++ )
 			decay[0x7fff-i] = (INT16) (0x7fff/exp(1.0*i/4096));
 	
-		channel = stream_init("GeeBee", 100, Machine.sample_rate, 0, geebee_sound_update);
+		channel = stream_init("GeeBee", 100, Machine->sample_rate, 0, geebee_sound_update);
 		
 		volume_timer = timer_alloc(volume_decay);
 	    return 0;

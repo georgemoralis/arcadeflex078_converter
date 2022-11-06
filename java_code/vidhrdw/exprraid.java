@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -11,8 +11,7 @@ public class exprraid
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static WriteHandlerPtr exprraid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -20,8 +19,7 @@ public class exprraid
 		}
 	} };
 	
-	public static WriteHandlerPtr exprraid_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -29,8 +27,7 @@ public class exprraid
 		}
 	} };
 	
-	public static WriteHandlerPtr exprraid_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -38,8 +35,7 @@ public class exprraid
 		}
 	} };
 	
-	public static WriteHandlerPtr exprraid_bgselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_bgselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bg_index[offset] != data)
 		{
 			bg_index[offset] = data;
@@ -47,13 +43,11 @@ public class exprraid
 		}
 	} };
 	
-	public static WriteHandlerPtr exprraid_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, offset, data);
 	} };
 	
-	public static WriteHandlerPtr exprraid_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exprraid_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
@@ -93,18 +87,17 @@ public class exprraid
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_exprraid  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exprraid  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 2);
@@ -127,7 +120,7 @@ public class exprraid
 			int sx = ((248 - spriteram.read(offs + 2)) & 0xff) - 8;
 			int sy = spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -135,7 +128,7 @@ public class exprraid
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
@@ -143,9 +136,9 @@ public class exprraid
 	
 			/* double height */
 	
-			if ((attr & 0x10) != 0)
+			if (attr & 0x10)
 			{
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 					code + 1, color,
 					flipx, flipy,
 					sx, sy + (flip_screen() ? -16 : 16),
@@ -154,8 +147,7 @@ public class exprraid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_exprraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exprraid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		exprraid_draw_sprites(bitmap);
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 1, 0);

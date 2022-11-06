@@ -31,7 +31,7 @@ Port 3 - Dipswitch
 
 OUT:
 Port 0 - RV,VREF and CREF
-Port 1 - Comms to the Sound card (. 8212)
+Port 1 - Comms to the Sound card (-> 8212)
     bit 0 = discrete sound
     bit 1 = INT to 8035
     bit 2 = T1 input to 8035
@@ -124,7 +124,7 @@ red flash effect when you die.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -135,8 +135,7 @@ public class spacefb
 	
 	
 	
-	public static InterruptHandlerPtr spacefb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr spacefb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0) cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);		/* RST 08h */
 		else cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);		/* RST 10h */
 	} };
@@ -144,23 +143,19 @@ public class spacefb
 	
 	unsigned char spacefb_sound_latch;
 	
-	public static ReadHandlerPtr spacefb_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spacefb_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ((spacefb_sound_latch & 0x18) << 1);
 	} };
 	
-	public static ReadHandlerPtr spacefb_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spacefb_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spacefb_sound_latch & 0x20;
 	} };
 	
-	public static ReadHandlerPtr spacefb_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spacefb_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spacefb_sound_latch & 0x04;
 	} };
 	
-	public static WriteHandlerPtr spacefb_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spacefb_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spacefb_sound_latch = data;
 		cpu_set_irq_line(1, 0, (!(data & 0x02)) ? ASSERT_LINE : CLEAR_LINE);
 	} };
@@ -226,7 +221,7 @@ public class spacefb
 	};
 	
 	
-	static InputPortPtr input_ports_spacefb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacefb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacefb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_2WAY );
@@ -279,7 +274,7 @@ public class spacefb
 	
 	
 	/* Same as Space Firebird, except for the difficulty switch */
-	static InputPortPtr input_ports_spacedem = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacedem = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacedem )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_2WAY );
@@ -373,8 +368,7 @@ public class spacefb
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_spacefb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacefb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)    /* 4 MHz? */
@@ -406,9 +400,7 @@ public class spacefb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -539,9 +531,9 @@ public class spacefb
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_spacefb	   = new GameDriver("1980"	,"spacefb"	,"spacefb.java"	,rom_spacefb,null	,machine_driver_spacefb	,input_ports_spacefb	,null	,ROT90	,	"Nintendo", "Space Firebird (Nintendo)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_spacefbg	   = new GameDriver("1980"	,"spacefbg"	,"spacefb.java"	,rom_spacefbg,driver_spacefb	,machine_driver_spacefb	,input_ports_spacefb	,null	,ROT90	,	"Gremlin", "Space Firebird (Gremlin)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_spacebrd	   = new GameDriver("1980"	,"spacebrd"	,"spacefb.java"	,rom_spacebrd,driver_spacefb	,machine_driver_spacefb	,input_ports_spacefb	,null	,ROT90	,	"bootleg", "Space Bird (bootleg)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_spacefbb	   = new GameDriver("1980"	,"spacefbb"	,"spacefb.java"	,rom_spacefbb,driver_spacefb	,machine_driver_spacefb	,input_ports_spacefb	,null	,ROT90	,	"bootleg", "Space Firebird (bootleg)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_spacedem	   = new GameDriver("1980"	,"spacedem"	,"spacefb.java"	,rom_spacedem,driver_spacefb	,machine_driver_spacefb	,input_ports_spacedem	,null	,ROT90	,	"Nintendo (Fortrek license)", "Space Demon", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, spacefb,  0,       spacefb, spacefb,  0, ROT90, "Nintendo", "Space Firebird (Nintendo)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, spacefbg, spacefb, spacefb, spacefb,  0, ROT90, "Gremlin", "Space Firebird (Gremlin)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, spacebrd, spacefb, spacefb, spacefb,  0, ROT90, "bootleg", "Space Bird (bootleg)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, spacefbb, spacefb, spacefb, spacefb,  0, ROT90, "bootleg", "Space Firebird (bootleg)", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, spacedem, spacefb, spacefb, spacedem, 0, ROT90, "Nintendo (Fortrek license)", "Space Demon", GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
 }

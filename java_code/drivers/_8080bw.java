@@ -44,8 +44,8 @@
 /* Change Log                                                               */
 /*                                                                          */
 /* 26 May 2001 - Following were renamed                                     */
-/* galxwars . galxwart - Galaxy Wars (c)1979 Taito, possible bootleg       */
-/* spaceatt . spaceat2 - Space Attack Part II                              */
+/* galxwars -> galxwart - Galaxy Wars (c)1979 Taito, possible bootleg       */
+/* spaceatt -> spaceat2 - Space Attack Part II                              */
 /*                                                                          */
 /* 26 May 2001 - Following were added                                       */
 /* galxwars - Galaxy Wars (set 1) (c)1979 Universal                         */
@@ -65,7 +65,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -74,8 +74,7 @@ public class _8080bw
 	
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_8080bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_8080bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 	} };
@@ -141,8 +140,7 @@ public class _8080bw
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_8080bw = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 8080bw )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",8080,2000000)        /* 2 MHz? */
@@ -162,9 +160,7 @@ public class _8080bw
 		MDRV_VIDEO_UPDATE(8080bw)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -173,7 +169,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_invaders = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invaders = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invaders )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -217,8 +213,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_invaders = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invaders )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -231,9 +226,7 @@ public class _8080bw
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, invaders_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invaders_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -246,7 +239,7 @@ public class _8080bw
 	
 	/* same as Invaders with a test mode switch */
 	
-	static InputPortPtr input_ports_sitv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sitv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sitv )
 		PORT_START(); 		/* TEST MODE */
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -298,7 +291,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_invadpt2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invadpt2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invadpt2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -346,8 +339,7 @@ public class _8080bw
 	
 	/* same as regular invaders, but with a color board added */
 	
-	public static MachineHandlerPtr machine_driver_invadpt2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invadpt2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(invaders)
@@ -355,9 +347,7 @@ public class _8080bw
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(8)
 		MDRV_PALETTE_INIT(invadpt2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************/
 	/*                                                     */
@@ -365,7 +355,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_cosmo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cosmo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cosmo )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -441,8 +431,7 @@ public class _8080bw
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 		
-	public static MachineHandlerPtr machine_driver_cosmo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cosmo )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(invaders)
 		MDRV_CPU_MODIFY("main")
@@ -452,9 +441,7 @@ public class _8080bw
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(8)
 		MDRV_PALETTE_INIT(cosmo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -463,7 +450,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_earthinv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_earthinv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( earthinv )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -516,7 +503,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_spaceatt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spaceatt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spaceatt )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -571,7 +558,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_invrvnge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invrvnge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invrvnge )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -617,8 +604,7 @@ public class _8080bw
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_invrvnge = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invrvnge )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -626,9 +612,7 @@ public class _8080bw
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(1*8, 31*8-1, 4*8, 32*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -637,7 +621,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_invad2ct = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invad2ct = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invad2ct )
 		PORT_START(); 
 		PORT_SERVICE(0x01, IP_ACTIVE_LOW);			  /* dip 8 */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* tied to pull-down */
@@ -679,8 +663,7 @@ public class _8080bw
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_invad2ct = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invad2ct )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -690,9 +673,7 @@ public class _8080bw
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, invad2ct_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invad2ct_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -715,7 +696,7 @@ public class _8080bw
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_sstrangr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sstrangr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sstrangr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -766,8 +747,7 @@ public class _8080bw
 		PORT_BITX(0,  0x02, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Fast", IP_KEY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_sstrangr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sstrangr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -782,9 +762,7 @@ public class _8080bw
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, invaders_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invaders_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -793,7 +771,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_sstrngr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sstrngr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sstrngr2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -845,8 +823,7 @@ public class _8080bw
 		PORT_BITX(0,  0x02, IPT_DIPSWITCH_SETTING | IPF_CHEAT, "Fast", IP_KEY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_sstrngr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sstrngr2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -863,9 +840,7 @@ public class _8080bw
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, invaders_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invaders_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -875,7 +850,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_spclaser = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spclaser = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spclaser )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -930,7 +905,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_spacewr3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacewr3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacewr3 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -982,7 +957,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_galxwars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galxwars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galxwars )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1036,7 +1011,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_lrescue = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lrescue = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lrescue )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1088,7 +1063,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_cosmicmo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cosmicmo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cosmicmo )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1165,7 +1140,7 @@ public class _8080bw
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_rollingc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rollingc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rollingc )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
@@ -1210,8 +1185,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_rollingc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rollingc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1223,9 +1197,7 @@ public class _8080bw
 		MDRV_PALETTE_INIT(invadpt2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1295,7 +1267,7 @@ public class _8080bw
 	/* probably never completed.                                           */
 	/* e.g. cocktail players button will give 6 credits!                   */
 	
-	static InputPortPtr input_ports_sheriff = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sheriff = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sheriff )
 		PORT_START();       /* 00 Main Controls */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_RIGHT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_LEFT   | IPF_8WAY );
@@ -1353,7 +1325,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bandido = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bandido = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bandido )
 		PORT_START();       /* 00 Main Controls */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_RIGHT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_LEFT   | IPF_8WAY );
@@ -1410,8 +1382,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_sheriff = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sheriff )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1433,9 +1404,7 @@ public class _8080bw
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, sheriff_dac_interface)
 		MDRV_SOUND_ADD(SN76477, sheriff_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1453,7 +1422,7 @@ public class _8080bw
 	};
 	
 	
-	static InputPortPtr input_ports_spcenctr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spcenctr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spcenctr )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x3f, 0x1f, IPT_AD_STICK_X | IPF_REVERSE, 10, 10, 0, 0x3f);/* 6 bit horiz encoder - Gray's binary */
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 );   /* fire */
@@ -1488,8 +1457,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0xc0, "90" );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_spcenctr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spcenctr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1497,9 +1465,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(spcenctr_readport,0)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1517,7 +1483,7 @@ public class _8080bw
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_gunfight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunfight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunfight )
 	    /* Gun position uses bits 4-6, handled using fake paddles */
 		PORT_START();       /* IN0 - Player 2 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
@@ -1581,8 +1547,7 @@ public class _8080bw
 		PORT_ANALOGX( 0xff, 0x00, IPT_PADDLE, 50, 10, 1, 255, KEYCODE_Z, KEYCODE_A, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_gunfight = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunfight )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1591,9 +1556,7 @@ public class _8080bw
 		MDRV_MACHINE_INIT(gunfight)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1602,7 +1565,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_m4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_m4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( m4 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_JOYSTICK_UP   | IPF_2WAY | IPF_PLAYER2 );
@@ -1640,8 +1603,7 @@ public class _8080bw
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_m4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( m4 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1649,9 +1611,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(gunfight_readport,writeport_1_2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1660,7 +1620,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_boothill = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boothill = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boothill )
 	    /* Gun position uses bits 4-6, handled using fake paddles */
 		PORT_START();       /* IN0 - Player 2 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
@@ -1699,8 +1659,7 @@ public class _8080bw
 		PORT_ANALOGX( 0xff, 0x00, IPT_PADDLE, 50, 10, 1, 255, KEYCODE_Z, KEYCODE_A, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_boothill = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( boothill )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1710,9 +1669,7 @@ public class _8080bw
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, boothill_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1739,7 +1696,7 @@ public class _8080bw
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_schaser = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_schaser = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( schaser )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER2 );
@@ -1790,8 +1747,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_schaser = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( schaser )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1810,9 +1766,7 @@ public class _8080bw
 		MDRV_SOUND_ADD(SN76477, schaser_sn76477_interface)
 		MDRV_SOUND_ADD(DAC, schaser_dac_interface)
 		MDRV_SOUND_ADD(CUSTOM, schaser_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -1821,7 +1775,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_schasrcv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_schasrcv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( schasrcv )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1873,8 +1827,7 @@ public class _8080bw
 	
 	static int sfl_int=0;
 	
-	public static ReadHandlerPtr sfl_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sfl_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sfl_int^=0x80;//vblank flag ?
 		return sfl_int|input_port_1_r.handler(0);
 	} };
@@ -1907,8 +1860,7 @@ public class _8080bw
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_sflush = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sflush )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -1921,11 +1873,9 @@ public class _8080bw
 		MDRV_PALETTE_INIT(sflush)
 		MDRV_VISIBLE_AREA(0*8, 31*8-1, 4*8, 30*8-1)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_sflush = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sflush = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sflush )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -1963,7 +1913,7 @@ public class _8080bw
 	/*
 	 * Clowns (EPROM version)
 	 */
-	static InputPortPtr input_ports_clowns = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_clowns = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( clowns )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0xff, 0x7f, IPT_PADDLE, 100, 10, 0x01, 0xfe);
 	
@@ -2002,7 +1952,7 @@ public class _8080bw
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_clowns1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_clowns1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( clowns1 )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0xff, 0x7f, IPT_PADDLE, 100, 10, 0x01, 0xfe);
 	
@@ -2040,8 +1990,7 @@ public class _8080bw
 		PORT_SERVICE( 0x80, IP_ACTIVE_HIGH );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_clowns = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( clowns )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2051,9 +2000,7 @@ public class _8080bw
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, circus_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2062,7 +2009,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_gmissile = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gmissile = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gmissile )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2111,7 +2058,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_280zzzap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_280zzzap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 280zzzap )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x0f, 0x00, IPT_PEDAL, 100, 64, 0x00, 0x0f );/* accelerator */
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_TOGGLE ); /* shift */
@@ -2145,8 +2092,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0xc0, "Spanish" );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_280zzzap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 280zzzap )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2154,9 +2100,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(c8080bw_readport,writeport_4_3)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2165,7 +2109,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_lupin3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lupin3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lupin3 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* selects color mode (dynamic vs. static) */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* something has to do with sound */
@@ -2208,8 +2152,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_lupin3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lupin3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2222,9 +2165,7 @@ public class _8080bw
 		MDRV_VISIBLE_AREA(1*8, 31*8-1, 4*8, 32*8-1)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2275,7 +2216,7 @@ public class _8080bw
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_helifire = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_helifire = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( helifire )
 		PORT_START();       /* 00 Main Controls */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY  );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -2381,8 +2322,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x07, "07" );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_helifire = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( helifire )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2404,9 +2344,7 @@ public class _8080bw
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, sheriff_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2415,7 +2353,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_spacefev = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacefev = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacefev )
 		PORT_START();       /* 00 Main Controls */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -2454,7 +2392,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_polaris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_polaris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( polaris )
 	
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, "Not Used" );
@@ -2516,8 +2454,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_polaris = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( polaris )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2535,9 +2472,7 @@ public class _8080bw
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("disc", DISCRETE, polaris_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2546,7 +2481,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_lagunar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lagunar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lagunar )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x0f, 0x00, IPT_PEDAL, 100, 64, 0x00, 0x0f );/* accelerator */
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_TOGGLE ); /* shift */
@@ -2589,15 +2524,14 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_phantom2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_phantom2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 		palette_set_color(2,0xc0,0xc0,0xc0); /* grey */
 	} };
 	
 	
-	static InputPortPtr input_ports_phantom2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phantom2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phantom2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2629,8 +2563,7 @@ public class _8080bw
 	
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_phantom2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( phantom2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2646,9 +2579,7 @@ public class _8080bw
 		MDRV_PALETTE_INIT(phantom2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2657,7 +2588,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_dogpatch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dogpatch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dogpatch )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -2712,7 +2643,7 @@ public class _8080bw
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_bowler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bowler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bowler )
 		PORT_START();       /* IN2 */
 		PORT_DIPNAME( 0x03, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -2751,8 +2682,7 @@ public class _8080bw
 		PORT_ANALOG( 0xff, 0, IPT_TRACKBALL_X, 10, 10, 0, 0);
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_bowler = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bowler )
 	
 	
 		/* basic machine hardware */
@@ -2766,9 +2696,7 @@ public class _8080bw
 		MDRV_VISIBLE_AREA(0*8, 35*8-1, 4*8, 32*8-1)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2787,7 +2715,7 @@ public class _8080bw
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_shuffle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shuffle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shuffle )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -2826,8 +2754,7 @@ public class _8080bw
 		PORT_ANALOG( 0xff, 0, IPT_TRACKBALL_X | IPF_REVERSE, 10, 10, 0, 0);
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_shuffle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shuffle )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2835,9 +2762,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(shuffle_readport,writeport_1_2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2855,7 +2780,7 @@ public class _8080bw
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_seawolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seawolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seawolf )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x1f, 0x01, IPT_PADDLE, 20, 5, 0, 0x1f);
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -2885,8 +2810,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0xe0, "Test Mode" );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_seawolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( seawolf )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2896,9 +2820,7 @@ public class _8080bw
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, seawolf_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2907,7 +2829,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_blueshrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blueshrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blueshrk )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x7f, 0x45, IPT_PADDLE, 100, 10, 0xf, 0x7f);
 	
@@ -2925,8 +2847,7 @@ public class _8080bw
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_blueshrk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blueshrk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2934,9 +2855,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(seawolf_readport,writeport_1_2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2945,7 +2864,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_desertgu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_desertgu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( desertgu )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG( 0x7f, 0x55, IPT_LIGHTGUN_X, 70, 10, 0xf, 0x7f);
 	
@@ -2972,8 +2891,7 @@ public class _8080bw
 		PORT_ANALOG( 0x7f, 0x45, IPT_LIGHTGUN_Y, 70, 10, 0xf, 0x7f);
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_desertgu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( desertgu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -2982,9 +2900,7 @@ public class _8080bw
 		MDRV_MACHINE_INIT(desertgu)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -2998,7 +2914,7 @@ public class _8080bw
 	 * while the upright version ties the pairs of inputs together through
 	 * jumpers in the wiring harness.
 	 */
-	static InputPortPtr input_ports_einnings = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_einnings = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( einnings )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );		/* home bat */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER2 );/* home fielders left */
@@ -3041,7 +2957,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_maze = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maze = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maze )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -3096,7 +3012,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_tornbase = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tornbase = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tornbase )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON3 | IPF_PLAYER1);
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_PLAYER2 );
@@ -3158,7 +3074,7 @@ public class _8080bw
 	};
 	
 	
-	static InputPortPtr input_ports_checkmat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_checkmat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( checkmat )
 		PORT_START();       /* IN0  */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -3213,8 +3129,7 @@ public class _8080bw
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_checkmat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( checkmat )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -3222,9 +3137,7 @@ public class _8080bw
 		MDRV_CPU_PORTS(checkmat_readport,0)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -3233,7 +3146,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_ozmawars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ozmawars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ozmawars )
 		PORT_START(); 		/* IN0 */
 	
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3280,7 +3193,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spaceph = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spaceph = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spaceph )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3329,7 +3242,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_sinvemag = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sinvemag = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sinvemag )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3384,7 +3297,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_jspecter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jspecter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jspecter )
 	
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3439,7 +3352,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	static InputPortPtr input_ports_ballbomb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ballbomb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ballbomb )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -3479,8 +3392,7 @@ public class _8080bw
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_ballbomb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ballbomb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -3493,9 +3405,7 @@ public class _8080bw
 		MDRV_VISIBLE_AREA(1*8, 31*8-1, 4*8, 32*8-1)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************/
@@ -3504,8 +3414,7 @@ public class _8080bw
 	/*                                                     */
 	/*******************************************************/
 	
-	public static MachineHandlerPtr machine_driver_yosakdon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yosakdon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(8080bw)
@@ -3515,12 +3424,10 @@ public class _8080bw
 		MDRV_VISIBLE_AREA(1*8, 31*8-1, 4*8, 32*8-1)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	static InputPortPtr input_ports_spceking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spceking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spceking )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -4429,95 +4336,95 @@ public class _8080bw
 	
 	/* board #            rom       parent    machine   inp       init (overlay/color hardware setup) */
 	
-	/* 596 */ public static GameDriver driver_seawolf	   = new GameDriver("1976"	,"seawolf"	,"_8080bw.java"	,rom_seawolf,null	,machine_driver_seawolf	,input_ports_seawolf	,init_seawolf	,ROT0	,	"Midway", "Sea Wolf", GAME_IMPERFECT_SOUND )
-	/* 597 */ public static GameDriver driver_gunfight	   = new GameDriver("1975"	,"gunfight"	,"_8080bw.java"	,rom_gunfight,null	,machine_driver_gunfight	,input_ports_gunfight	,init_gunfight	,ROT0	,	"Midway", "Gun Fight", GAME_NO_SOUND )
-	/* 605 */ public static GameDriver driver_tornbase	   = new GameDriver("1976"	,"tornbase"	,"_8080bw.java"	,rom_tornbase,null	,machine_driver_8080bw	,input_ports_tornbase	,init_8080bw	,ROT0	,	"Midway", "Tornado Baseball", GAME_NO_SOUND )
-	/* 610 */ public static GameDriver driver_280zzzap	   = new GameDriver("1976"	,"280zzzap"	,"_8080bw.java"	,rom_280zzzap,null	,machine_driver_280zzzap	,input_ports_280zzzap	,init_8080bw	,ROT0	,	"Midway", "Datsun 280 Zzzap", GAME_NO_SOUND )
-	/* 611 */ public static GameDriver driver_maze	   = new GameDriver("1976"	,"maze"	,"_8080bw.java"	,rom_maze,null	,machine_driver_8080bw	,input_ports_maze	,init_8080bw	,ROT0	,	"Midway", "Amazing Maze", GAME_NO_SOUND )
-	/* 612 */ public static GameDriver driver_boothill	   = new GameDriver("1977"	,"boothill"	,"_8080bw.java"	,rom_boothill,null	,machine_driver_boothill	,input_ports_boothill	,init_8080bw	,ROT0	,	"Midway", "Boot Hill" )
-	/* 615 */ public static GameDriver driver_checkmat	   = new GameDriver("1977"	,"checkmat"	,"_8080bw.java"	,rom_checkmat,null	,machine_driver_checkmat	,input_ports_checkmat	,init_8080bw	,ROT0	,	"Midway", "Checkmate", GAME_NO_SOUND )
-	/* 618 */ public static GameDriver driver_desertgu	   = new GameDriver("1977"	,"desertgu"	,"_8080bw.java"	,rom_desertgu,null	,machine_driver_desertgu	,input_ports_desertgu	,init_desertgu	,ROT0	,	"Midway", "Desert Gun", GAME_NO_SOUND )
-	/* 619 */ public static GameDriver driver_dplay	   = new GameDriver("1977"	,"dplay"	,"_8080bw.java"	,rom_dplay,driver_einnings	,machine_driver_m4	,input_ports_einnings	,init_8080bw	,ROT0	,	"Midway", "Double Play", GAME_NO_SOUND )
-	/* 622 */ public static GameDriver driver_lagunar	   = new GameDriver("1977"	,"lagunar"	,"_8080bw.java"	,rom_lagunar,null	,machine_driver_280zzzap	,input_ports_lagunar	,init_8080bw	,ROT90	,	"Midway", "Laguna Racer", GAME_NO_SOUND )
-	/* 623 */ public static GameDriver driver_gmissile	   = new GameDriver("1977"	,"gmissile"	,"_8080bw.java"	,rom_gmissile,null	,machine_driver_m4	,input_ports_gmissile	,init_8080bw	,ROT0	,	"Midway", "Guided Missile", GAME_NO_SOUND )
-	/* 626 */ public static GameDriver driver_m4	   = new GameDriver("1977"	,"m4"	,"_8080bw.java"	,rom_m4,null	,machine_driver_m4	,input_ports_m4	,init_8080bw	,ROT0	,	"Midway", "M-4", GAME_NO_SOUND )
-	/* 630 */ public static GameDriver driver_clowns	   = new GameDriver("1978"	,"clowns"	,"_8080bw.java"	,rom_clowns,null	,machine_driver_clowns	,input_ports_clowns	,init_8080bw	,ROT0	,	"Midway", "Clowns (rev. 2)", GAME_IMPERFECT_SOUND )
-	/* 630 */ public static GameDriver driver_clowns1	   = new GameDriver("1978"	,"clowns1"	,"_8080bw.java"	,rom_clowns1,driver_clowns	,machine_driver_clowns	,input_ports_clowns1	,init_8080bw	,ROT0	,	"Midway", "Clowns (rev. 1)", GAME_IMPERFECT_SOUND )
+	/* 596 */ GAMEX(1976, seawolf,  0,        seawolf,  seawolf,  seawolf,  ROT0,   "Midway", "Sea Wolf", GAME_IMPERFECT_SOUND )
+	/* 597 */ GAMEX(1975, gunfight, 0,        gunfight, gunfight, gunfight, ROT0,   "Midway", "Gun Fight", GAME_NO_SOUND )
+	/* 605 */ GAMEX(1976, tornbase, 0,        8080bw,   tornbase, 8080bw,	ROT0,   "Midway", "Tornado Baseball", GAME_NO_SOUND )
+	/* 610 */ GAMEX(1976, 280zzzap, 0,        280zzzap, 280zzzap, 8080bw,	ROT0,   "Midway", "Datsun 280 Zzzap", GAME_NO_SOUND )
+	/* 611 */ GAMEX(1976, maze,     0,        8080bw,   maze,     8080bw,	ROT0,   "Midway", "Amazing Maze", GAME_NO_SOUND )
+	/* 612 */ GAME( 1977, boothill, 0,        boothill, boothill, 8080bw,   ROT0,   "Midway", "Boot Hill" )
+	/* 615 */ GAMEX(1977, checkmat, 0,        checkmat, checkmat, 8080bw,	ROT0,   "Midway", "Checkmate", GAME_NO_SOUND )
+	/* 618 */ GAMEX(1977, desertgu, 0,        desertgu, desertgu, desertgu,	ROT0,   "Midway", "Desert Gun", GAME_NO_SOUND )
+	/* 619 */ GAMEX(1977, dplay,    einnings, m4,       einnings, 8080bw,	ROT0,   "Midway", "Double Play", GAME_NO_SOUND )
+	/* 622 */ GAMEX(1977, lagunar,  0,        280zzzap, lagunar,  8080bw,   ROT90,  "Midway", "Laguna Racer", GAME_NO_SOUND )
+	/* 623 */ GAMEX(1977, gmissile, 0,        m4,       gmissile, 8080bw,   ROT0,   "Midway", "Guided Missile", GAME_NO_SOUND )
+	/* 626 */ GAMEX(1977, m4,       0,        m4,       m4,       8080bw,   ROT0,   "Midway", "M-4", GAME_NO_SOUND )
+	/* 630 */ GAMEX(1978, clowns,   0,        clowns,   clowns,   8080bw,   ROT0,   "Midway", "Clowns (rev. 2)", GAME_IMPERFECT_SOUND )
+	/* 630 */ GAMEX(1978, clowns1,  clowns,   clowns,   clowns1,   8080bw,   ROT0,   "Midway", "Clowns (rev. 1)", GAME_IMPERFECT_SOUND )
 	/* 640    																		"Midway", "Space Walk" */
-	/* 642 */ public static GameDriver driver_einnings	   = new GameDriver("1978"	,"einnings"	,"_8080bw.java"	,rom_einnings,null	,machine_driver_m4	,input_ports_einnings	,init_8080bw	,ROT0	,	"Midway", "Extra Inning", GAME_NO_SOUND )
-	/* 643 */ public static GameDriver driver_shuffle	   = new GameDriver("1978"	,"shuffle"	,"_8080bw.java"	,rom_shuffle,null	,machine_driver_shuffle	,input_ports_shuffle	,init_8080bw	,ROT90	,	"Midway", "Shuffleboard", GAME_NO_SOUND )
-	/* 644 */ public static GameDriver driver_dogpatch	   = new GameDriver("1977"	,"dogpatch"	,"_8080bw.java"	,rom_dogpatch,null	,machine_driver_clowns	,input_ports_dogpatch	,init_8080bw	,ROT0	,	"Midway", "Dog Patch", GAME_NO_SOUND )
-	/* 645 */ public static GameDriver driver_spcenctr	   = new GameDriver("1980"	,"spcenctr"	,"_8080bw.java"	,rom_spcenctr,null	,machine_driver_spcenctr	,input_ports_spcenctr	,init_8080bw	,ROT0	,	"Midway", "Space Encounters", GAME_NO_SOUND )
-	/* 652 */ public static GameDriver driver_phantom2	   = new GameDriver("1979"	,"phantom2"	,"_8080bw.java"	,rom_phantom2,null	,machine_driver_phantom2	,input_ports_phantom2	,init_phantom2	,ROT0	,	"Midway", "Phantom II", GAME_NO_SOUND )
-	/* 730 */ public static GameDriver driver_bowler	   = new GameDriver("1978"	,"bowler"	,"_8080bw.java"	,rom_bowler,null	,machine_driver_bowler	,input_ports_bowler	,init_bowler	,ROT90	,	"Midway", "4 Player Bowling Alley", GAME_NO_SOUND )
-	/* 739 */ public static GameDriver driver_invaders	   = new GameDriver("1978"	,"invaders"	,"_8080bw.java"	,rom_invaders,null	,machine_driver_invaders	,input_ports_invaders	,init_invaders	,ROT270	,	"Midway", "Space Invaders" )
-	/* 742 */ public static GameDriver driver_blueshrk	   = new GameDriver("1978"	,"blueshrk"	,"_8080bw.java"	,rom_blueshrk,null	,machine_driver_blueshrk	,input_ports_blueshrk	,init_blueshrk	,ROT0	,	"Midway", "Blue Shark", GAME_NO_SOUND )
-	/* 851 */ public static GameDriver driver_invad2ct	   = new GameDriver("1980"	,"invad2ct"	,"_8080bw.java"	,rom_invad2ct,null	,machine_driver_invad2ct	,input_ports_invad2ct	,init_invad2ct	,ROT90	,	"Midway", "Space Invaders II (Midway, cocktail)" )
-	/* 852 */ public static GameDriver driver_invaddlx	   = new GameDriver("1980"	,"invaddlx"	,"_8080bw.java"	,rom_invaddlx,driver_invadpt2	,machine_driver_invaders	,input_ports_invadpt2	,init_invaddlx	,ROT270	,	"Midway", "Space Invaders Deluxe" )
+	/* 642 */ GAMEX(1978, einnings, 0,        m4,       einnings, 8080bw,	ROT0,   "Midway", "Extra Inning", GAME_NO_SOUND )
+	/* 643 */ GAMEX(1978, shuffle,  0,        shuffle,  shuffle,  8080bw,	ROT90,  "Midway", "Shuffleboard", GAME_NO_SOUND )
+	/* 644 */ GAMEX(1977, dogpatch, 0,        clowns,   dogpatch, 8080bw,   ROT0,   "Midway", "Dog Patch", GAME_NO_SOUND )
+	/* 645 */ GAMEX(1980, spcenctr, 0,        spcenctr, spcenctr, 8080bw,	ROT0,   "Midway", "Space Encounters", GAME_NO_SOUND )
+	/* 652 */ GAMEX(1979, phantom2, 0,        phantom2, phantom2, phantom2, ROT0,   "Midway", "Phantom II", GAME_NO_SOUND )
+	/* 730 */ GAMEX(1978, bowler,   0,        bowler,   bowler,   bowler,	ROT90,  "Midway", "4 Player Bowling Alley", GAME_NO_SOUND )
+	/* 739 */ GAME( 1978, invaders, 0,        invaders, invaders, invaders, ROT270, "Midway", "Space Invaders" )
+	/* 742 */ GAMEX(1978, blueshrk, 0,        blueshrk, blueshrk, blueshrk, ROT0,   "Midway", "Blue Shark", GAME_NO_SOUND )
+	/* 851 */ GAME( 1980, invad2ct, 0,        invad2ct, invad2ct, invad2ct, ROT90,  "Midway", "Space Invaders II (Midway, cocktail)" )
+	/* 852 */ GAME( 1980, invaddlx, invadpt2, invaders, invadpt2, invaddlx, ROT270, "Midway", "Space Invaders Deluxe" )
 	/* 870    																		"Midway", "Space Invaders Deluxe (cocktail) "*/
 	
 	/* Taito games */
 	
-		  public static GameDriver driver_sitv	   = new GameDriver("1978"	,"sitv"	,"_8080bw.java"	,rom_sitv,driver_invaders	,machine_driver_invaders	,input_ports_sitv	,init_invaders	,ROT270	,	"Taito", "Space Invaders (TV Version)" )
-		  public static GameDriver driver_sicv	   = new GameDriver("1979"	,"sicv"	,"_8080bw.java"	,rom_sicv,driver_invaders	,machine_driver_invadpt2	,input_ports_invaders	,init_invadpt2	,ROT270	,	"Taito", "Space Invaders (CV Version)" )
-		  public static GameDriver driver_sisv	   = new GameDriver("1978"	,"sisv"	,"_8080bw.java"	,rom_sisv,driver_invaders	,machine_driver_invadpt2	,input_ports_invaders	,init_invadpt2	,ROT270	,	"Taito", "Space Invaders (SV Version)" )
-		  public static GameDriver driver_sisv2	   = new GameDriver("1978"	,"sisv2"	,"_8080bw.java"	,rom_sisv2,driver_invaders	,machine_driver_invadpt2	,input_ports_invaders	,init_invadpt2	,ROT270	,	"Taito", "Space Invaders (SV Version 2)" )
-		  public static GameDriver driver_galxwars	   = new GameDriver("1979"	,"galxwars"	,"_8080bw.java"	,rom_galxwars,null	,machine_driver_invaders	,input_ports_galxwars	,init_invaders	,ROT270	,	"Universal", "Galaxy Wars (Universal set 1)" )
-		  public static GameDriver driver_galxwar2	   = new GameDriver("1979"	,"galxwar2"	,"_8080bw.java"	,rom_galxwar2,driver_galxwars	,machine_driver_invaders	,input_ports_galxwars	,init_invaders	,ROT270	,	"Universal", "Galaxy Wars (Universal set 2)" )
-		  public static GameDriver driver_galxwart	   = new GameDriver("1979"	,"galxwart"	,"_8080bw.java"	,rom_galxwart,driver_galxwars	,machine_driver_invaders	,input_ports_galxwars	,init_invaders	,ROT270	,	"Taito?", "Galaxy Wars (Taito?)" ) /* Copyright Not Displayed */
-		  public static GameDriver driver_starw	   = new GameDriver("1979"	,"starw"	,"_8080bw.java"	,rom_starw,driver_galxwars	,machine_driver_invaders	,input_ports_galxwars	,init_invaders	,ROT270	,	"bootleg", "Star Wars" )
-		  public static GameDriver driver_lrescue	   = new GameDriver("1979"	,"lrescue"	,"_8080bw.java"	,rom_lrescue,null	,machine_driver_invadpt2	,input_ports_lrescue	,init_invadpt2	,ROT270	,	"Taito", "Lunar Rescue" )
-		  public static GameDriver driver_grescue	   = new GameDriver("1979"	,"grescue"	,"_8080bw.java"	,rom_grescue,driver_lrescue	,machine_driver_invadpt2	,input_ports_lrescue	,init_invadpt2	,ROT270	,	"Taito (Universal license?)", "Galaxy Rescue" )
-		  public static GameDriver driver_desterth	   = new GameDriver("1979"	,"desterth"	,"_8080bw.java"	,rom_desterth,driver_lrescue	,machine_driver_invadpt2	,input_ports_invrvnge	,init_invadpt2	,ROT270	,	"bootleg", "Destination Earth" )
-		  public static GameDriver driver_invadpt2	   = new GameDriver("1979"	,"invadpt2"	,"_8080bw.java"	,rom_invadpt2,null	,machine_driver_invadpt2	,input_ports_invadpt2	,init_invadpt2	,ROT270	,	"Taito", "Space Invaders Part II (Taito)" )
-		  public static GameDriver driver_cosmo	   = new GameDriver("1979"	,"cosmo"	,"_8080bw.java"	,rom_cosmo,null	,machine_driver_cosmo	,input_ports_cosmo	,init_cosmo	,ROT90	,	"bootleg", "Cosmo", GAME_NO_SOUND )
-		  public static GameDriver driver_schaser	   = new GameDriver("1979"	,"schaser"	,"_8080bw.java"	,rom_schaser,null	,machine_driver_schaser	,input_ports_schaser	,init_schaser	,ROT270	,	"Taito", "Space Chaser", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
-		  public static GameDriver driver_schasrcv	   = new GameDriver("1979"	,"schasrcv"	,"_8080bw.java"	,rom_schasrcv,driver_schaser	,machine_driver_lupin3	,input_ports_schasrcv	,init_schaser	,ROT270	,	"Taito", "Space Chaser (CV version)", GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-		  public static GameDriver driver_sflush	   = new GameDriver("1979"	,"sflush"	,"_8080bw.java"	,rom_sflush,null	,machine_driver_sflush	,input_ports_sflush	,init_rollingc	,ROT270	,	"Taito", "Straight Flush",GAME_NO_SOUND| GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL)
-		  public static GameDriver driver_lupin3	   = new GameDriver("1980"	,"lupin3"	,"_8080bw.java"	,rom_lupin3,null	,machine_driver_lupin3	,input_ports_lupin3	,init_lupin3	,ROT270	,	"Taito", "Lupin III", GAME_NO_SOUND | GAME_NO_COCKTAIL )
-		  public static GameDriver driver_polaris	   = new GameDriver("1980"	,"polaris"	,"_8080bw.java"	,rom_polaris,null	,machine_driver_polaris	,input_ports_polaris	,init_polaris	,ROT270	,	"Taito", "Polaris (set 1)", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_polarisa	   = new GameDriver("1980"	,"polarisa"	,"_8080bw.java"	,rom_polarisa,driver_polaris	,machine_driver_polaris	,input_ports_polaris	,init_polaris	,ROT270	,	"Taito", "Polaris (set 2)", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_ballbomb	   = new GameDriver("1980"	,"ballbomb"	,"_8080bw.java"	,rom_ballbomb,null	,machine_driver_ballbomb	,input_ports_ballbomb	,init_invadpt2	,ROT270	,	"Taito", "Balloon Bomber", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )	/* missing clouds and blue background */
+		  GAME( 1978, sitv,     invaders, invaders, sitv,     invaders, ROT270, "Taito", "Space Invaders (TV Version)" )
+		  GAME( 1979, sicv,     invaders, invadpt2, invaders, invadpt2, ROT270, "Taito", "Space Invaders (CV Version)" )
+		  GAME( 1978, sisv,     invaders, invadpt2, invaders, invadpt2, ROT270, "Taito", "Space Invaders (SV Version)" )
+		  GAME( 1978, sisv2,    invaders, invadpt2, invaders, invadpt2, ROT270, "Taito", "Space Invaders (SV Version 2)" )
+		  GAME( 1979, galxwars, 0,        invaders, galxwars, invaders, ROT270, "Universal", "Galaxy Wars (Universal set 1)" )
+		  GAME( 1979, galxwar2, galxwars, invaders, galxwars, invaders, ROT270, "Universal", "Galaxy Wars (Universal set 2)" )
+		  GAME( 1979, galxwart, galxwars, invaders, galxwars, invaders, ROT270,	"Taito?", "Galaxy Wars (Taito?)" ) /* Copyright Not Displayed */
+		  GAME( 1979, starw,    galxwars, invaders, galxwars, invaders, ROT270, "bootleg", "Star Wars" )
+		  GAME( 1979, lrescue,  0,        invadpt2, lrescue,  invadpt2, ROT270, "Taito", "Lunar Rescue" )
+		  GAME( 1979, grescue,  lrescue,  invadpt2, lrescue,  invadpt2, ROT270, "Taito (Universal license?)", "Galaxy Rescue" )
+		  GAME( 1979, desterth, lrescue,  invadpt2, invrvnge, invadpt2, ROT270, "bootleg", "Destination Earth" )
+		  GAME( 1979, invadpt2, 0,        invadpt2, invadpt2, invadpt2, ROT270, "Taito", "Space Invaders Part II (Taito)" )
+		  GAMEX(1979, cosmo,    0,        cosmo,    cosmo,    cosmo,    ROT90,  "bootleg", "Cosmo", GAME_NO_SOUND )
+		  GAMEX(1979, schaser,  0,        schaser,  schaser,  schaser,  ROT270, "Taito", "Space Chaser", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
+		  GAMEX(1979, schasrcv, schaser,  lupin3,   schasrcv, schaser,  ROT270, "Taito", "Space Chaser (CV version)", GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+		  GAMEX(1979, sflush,   0,        sflush,   sflush,   rollingc,	ROT270, "Taito", "Straight Flush",GAME_NO_SOUND| GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL)
+		  GAMEX(1980, lupin3,   0,        lupin3,   lupin3,   lupin3,   ROT270, "Taito", "Lupin III", GAME_NO_SOUND | GAME_NO_COCKTAIL )
+		  GAMEX(1980, polaris,  0,        polaris,  polaris,  polaris,  ROT270, "Taito", "Polaris (set 1)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1980, polarisa, polaris,  polaris,  polaris,  polaris,  ROT270, "Taito", "Polaris (set 2)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1980, ballbomb, 0,        ballbomb, ballbomb, invadpt2, ROT270, "Taito", "Balloon Bomber", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )	/* missing clouds and blue background */
 	
 	/* Nintendo games */
 	
-		  public static GameDriver driver_sheriff	   = new GameDriver("1979"	,"sheriff"	,"_8080bw.java"	,rom_sheriff,null	,machine_driver_sheriff	,input_ports_sheriff	,init_8080bw	,ROT270	,	"Nintendo", "Sheriff", GAME_IMPERFECT_SOUND | GAME_WRONG_COLORS )
-		  public static GameDriver driver_spacefev	   = new GameDriver("1979"	,"spacefev"	,"_8080bw.java"	,rom_spacefev,null	,machine_driver_sheriff	,input_ports_spacefev	,init_8080bw	,ROT270	,	"Nintendo", "Space Fever (color)", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_sfeverbw	   = new GameDriver("1979"	,"sfeverbw"	,"_8080bw.java"	,rom_sfeverbw,driver_spacefev	,machine_driver_sheriff	,input_ports_spacefev	,init_8080bw	,ROT270	,	"Nintendo", "Space Fever (black and white)", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_bandido	   = new GameDriver("1980"	,"bandido"	,"_8080bw.java"	,rom_bandido,driver_sheriff	,machine_driver_sheriff	,input_ports_bandido	,init_bandido	,ROT270	,	"Exidy", "Bandido", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_helifire	   = new GameDriver("1980"	,"helifire"	,"_8080bw.java"	,rom_helifire,null	,machine_driver_helifire	,input_ports_helifire	,init_helifire	,ROT270	,	"Nintendo", "HeliFire (revision B)", GAME_IMPERFECT_SOUND )
-		  public static GameDriver driver_helifira	   = new GameDriver("1980"	,"helifira"	,"_8080bw.java"	,rom_helifira,driver_helifire	,machine_driver_helifire	,input_ports_helifire	,init_helifire	,ROT270	,	"Nintendo", "HeliFire (revision A)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1979, sheriff,  0,        sheriff,  sheriff,  8080bw,	ROT270, "Nintendo", "Sheriff", GAME_IMPERFECT_SOUND | GAME_WRONG_COLORS )
+		  GAMEX(1979, spacefev, 0,        sheriff,  spacefev, 8080bw,	ROT270, "Nintendo", "Space Fever (color)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1979, sfeverbw, spacefev, sheriff,  spacefev, 8080bw,	ROT270, "Nintendo", "Space Fever (black and white)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1980, bandido,  sheriff,  sheriff,  bandido,  bandido,	ROT270, "Exidy", "Bandido", GAME_IMPERFECT_SOUND )
+		  GAMEX(1980, helifire, 0,        helifire, helifire, helifire,	ROT270, "Nintendo", "HeliFire (revision B)", GAME_IMPERFECT_SOUND )
+		  GAMEX(1980, helifira, helifire, helifire, helifire, helifire,	ROT270, "Nintendo", "HeliFire (revision A)", GAME_IMPERFECT_SOUND )
 	
 	/* Misc. manufacturers */
 	
-		  public static GameDriver driver_earthinv	   = new GameDriver("1980"	,"earthinv"	,"_8080bw.java"	,rom_earthinv,driver_invaders	,machine_driver_invaders	,input_ports_earthinv	,init_invaders	,ROT270	,	"bootleg", "Super Earth Invasion" )
-		  public static GameDriver driver_spaceatt	   = new GameDriver("1978"	,"spaceatt"	,"_8080bw.java"	,rom_spaceatt,driver_invaders	,machine_driver_invaders	,input_ports_invaders	,init_invaders	,ROT270	,	"Video Games GMBH", "Space Attack" )
-		  public static GameDriver driver_spaceat2	   = new GameDriver("1980"	,"spaceat2"	,"_8080bw.java"	,rom_spaceat2,driver_invaders	,machine_driver_invaders	,input_ports_spaceatt	,init_invaders	,ROT270	,	"Zenitone-Microsec Ltd", "Space Attack II" )
-		  public static GameDriver driver_sinvzen	   = new GameDriver("19??"	,"sinvzen"	,"_8080bw.java"	,rom_sinvzen,driver_invaders	,machine_driver_invaders	,input_ports_spaceatt	,init_invaders	,ROT270	,	"Zenitone-Microsec Ltd", "Super Invaders (Zenitone-Microsec)" )
-		  public static GameDriver driver_sinvemag	   = new GameDriver("19??"	,"sinvemag"	,"_8080bw.java"	,rom_sinvemag,driver_invaders	,machine_driver_invaders	,input_ports_sinvemag	,init_invaders	,ROT270	,	"bootleg", "Super Invaders (EMAG)" )
-		  public static GameDriver driver_tst_invd	   = new GameDriver("19??"	,"tst_invd"	,"_8080bw.java"	,rom_tst_invd,driver_invaders	,machine_driver_invaders	,input_ports_invaders	,init_invaders	,ROT0	,	"Test ROM", "Space Invaders Test ROM" )
-		  public static GameDriver driver_alieninv	   = new GameDriver("19??"	,"alieninv"	,"_8080bw.java"	,rom_alieninv,driver_invaders	,machine_driver_invaders	,input_ports_earthinv	,init_invaders	,ROT270	,	"bootleg", "Alien Invasion Part II" )
-		  public static GameDriver driver_spceking	   = new GameDriver("1978"	,"spceking"	,"_8080bw.java"	,rom_spceking,driver_invaders	,machine_driver_invaders	,input_ports_spceking	,init_invaders	,ROT270	,	"Leijac (Konami)","Space King" )
-		  public static GameDriver driver_spcewars	   = new GameDriver("1978"	,"spcewars"	,"_8080bw.java"	,rom_spcewars,driver_invaders	,machine_driver_invaders	,input_ports_invadpt2	,init_invaders	,ROT270	,	"Sanritsu", "Space War (Sanritsu)" )
-		  public static GameDriver driver_spacewr3	   = new GameDriver("1978"	,"spacewr3"	,"_8080bw.java"	,rom_spacewr3,driver_invaders	,machine_driver_invaders	,input_ports_spacewr3	,init_invaders	,ROT270	,	"bootleg", "Space War Part 3" )
-		  public static GameDriver driver_invaderl	   = new GameDriver("1978"	,"invaderl"	,"_8080bw.java"	,rom_invaderl,driver_invaders	,machine_driver_invaders	,input_ports_invaders	,init_invaders	,ROT270	,	"bootleg", "Space Invaders (Logitec)" )
-		  public static GameDriver driver_jspecter	   = new GameDriver("1979"	,"jspecter"	,"_8080bw.java"	,rom_jspecter,driver_invaders	,machine_driver_invaders	,input_ports_jspecter	,init_invaders	,ROT270	,	"Jatre", "Jatre Specter (set 1)" )
-		  public static GameDriver driver_jspectr2	   = new GameDriver("1979"	,"jspectr2"	,"_8080bw.java"	,rom_jspectr2,driver_invaders	,machine_driver_invaders	,input_ports_jspecter	,init_invaders	,ROT270	,	"Jatre", "Jatre Specter (set 2)" )
-		  public static GameDriver driver_cosmicmo	   = new GameDriver("1979"	,"cosmicmo"	,"_8080bw.java"	,rom_cosmicmo,driver_invaders	,machine_driver_invaders	,input_ports_cosmicmo	,init_invaders	,ROT270	,	"Universal", "Cosmic Monsters" )
-		  public static GameDriver driver_superinv	   = new GameDriver("19??"	,"superinv"	,"_8080bw.java"	,rom_superinv,driver_invaders	,machine_driver_invaders	,input_ports_invaders	,init_invaders	,ROT270	,	"bootleg", "Super Invaders" )
-		  public static GameDriver driver_sstrangr	   = new GameDriver("1978"	,"sstrangr"	,"_8080bw.java"	,rom_sstrangr,null	,machine_driver_sstrangr	,input_ports_sstrangr	,init_8080bw	,ROT270	,	"Yachiyo Electronics, Ltd.", "Space Stranger" )
-		  public static GameDriver driver_sstrngr2	   = new GameDriver("1979"	,"sstrngr2"	,"_8080bw.java"	,rom_sstrngr2,null	,machine_driver_sstrngr2	,input_ports_sstrngr2	,init_sstrngr2	,ROT270	,	"Yachiyo Electronics, Ltd.", "Space Stranger 2" )
-		  public static GameDriver driver_moonbase	   = new GameDriver("1978"	,"moonbase"	,"_8080bw.java"	,rom_moonbase,driver_invadpt2	,machine_driver_invaders	,input_ports_invadpt2	,init_invaddlx	,ROT270	,	"Nichibutsu", "Moon Base" )
-		  public static GameDriver driver_invrvnge	   = new GameDriver("19??"	,"invrvnge"	,"_8080bw.java"	,rom_invrvnge,null	,machine_driver_invrvnge	,input_ports_invrvnge	,init_invrvnge	,ROT270	,	"Zenitone Microsec Ltd.", "Invader's Revenge",  GAME_NO_SOUND )
-		  public static GameDriver driver_invrvnga	   = new GameDriver("19??"	,"invrvnga"	,"_8080bw.java"	,rom_invrvnga,driver_invrvnge	,machine_driver_invrvnge	,input_ports_invrvnge	,init_invrvnge	,ROT270	,	"Zenitone Microsec Ltd. (Dutchford license)", "Invader's Revenge (Dutchford)", GAME_NO_SOUND )
-		  public static GameDriver driver_spclaser	   = new GameDriver("1980"	,"spclaser"	,"_8080bw.java"	,rom_spclaser,null	,machine_driver_invaders	,input_ports_spclaser	,init_invaddlx	,ROT270	,	"GamePlan (Taito)", "Space Laser" )
+		  GAME( 1980, earthinv, invaders, invaders, earthinv, invaders, ROT270, "bootleg", "Super Earth Invasion" )
+		  GAME( 1978, spaceatt, invaders, invaders, invaders, invaders, ROT270, "Video Games GMBH", "Space Attack" )
+		  GAME( 1980, spaceat2, invaders, invaders, spaceatt, invaders, ROT270, "Zenitone-Microsec Ltd", "Space Attack II" )
+		  GAME( 19??, sinvzen,  invaders, invaders, spaceatt, invaders, ROT270, "Zenitone-Microsec Ltd", "Super Invaders (Zenitone-Microsec)" )
+		  GAME( 19??, sinvemag, invaders, invaders, sinvemag, invaders, ROT270, "bootleg", "Super Invaders (EMAG)" )
+		  GAME( 19??, tst_invd, invaders, invaders, invaders, invaders, ROT0,   "Test ROM", "Space Invaders Test ROM" )
+		  GAME( 19??, alieninv, invaders, invaders, earthinv, invaders, ROT270, "bootleg", "Alien Invasion Part II" )
+		  GAME( 1978, spceking, invaders, invaders, spceking, invaders, ROT270, "Leijac (Konami)","Space King" )
+		  GAME( 1978, spcewars, invaders, invaders, invadpt2, invaders, ROT270, "Sanritsu", "Space War (Sanritsu)" )
+		  GAME( 1978, spacewr3, invaders, invaders, spacewr3, invaders, ROT270, "bootleg", "Space War Part 3" )
+		  GAME( 1978, invaderl, invaders, invaders, invaders, invaders, ROT270, "bootleg", "Space Invaders (Logitec)" )
+		  GAME( 1979, jspecter, invaders, invaders, jspecter, invaders, ROT270, "Jatre", "Jatre Specter (set 1)" )
+		  GAME( 1979, jspectr2, invaders, invaders, jspecter, invaders, ROT270, "Jatre", "Jatre Specter (set 2)" )
+		  GAME( 1979, cosmicmo, invaders, invaders, cosmicmo, invaders, ROT270, "Universal", "Cosmic Monsters" )
+		  GAME( 19??, superinv, invaders, invaders, invaders, invaders, ROT270, "bootleg", "Super Invaders" )
+		  GAME( 1978, sstrangr, 0,		  sstrangr, sstrangr, 8080bw,   ROT270,	"Yachiyo Electronics, Ltd.", "Space Stranger" )
+		  GAME( 1979, sstrngr2, 0,        sstrngr2, sstrngr2, sstrngr2, ROT270, "Yachiyo Electronics, Ltd.", "Space Stranger 2" )
+		  GAME( 1978, moonbase, invadpt2, invaders, invadpt2, invaddlx, ROT270, "Nichibutsu", "Moon Base" )
+		  GAMEX(19??, invrvnge, 0,        invrvnge, invrvnge, invrvnge, ROT270, "Zenitone Microsec Ltd.", "Invader's Revenge",  GAME_NO_SOUND )
+		  GAMEX(19??, invrvnga, invrvnge, invrvnge, invrvnge, invrvnge, ROT270, "Zenitone Microsec Ltd. (Dutchford license)", "Invader's Revenge (Dutchford)", GAME_NO_SOUND )
+		  GAME( 1980, spclaser, 0,        invaders, spclaser, invaddlx, ROT270, "GamePlan (Taito)", "Space Laser" )
 	
-		  public static GameDriver driver_laser	   = new GameDriver("1980"	,"laser"	,"_8080bw.java"	,rom_laser,driver_spclaser	,machine_driver_invaders	,input_ports_spclaser	,init_invaddlx	,ROT270	,	"<unknown>", "Laser" )
-		  public static GameDriver driver_spcewarl	   = new GameDriver("1979"	,"spcewarl"	,"_8080bw.java"	,rom_spcewarl,driver_spclaser	,machine_driver_invaders	,input_ports_spclaser	,init_invaddlx	,ROT270	,	"Leijac (Konami)","Space War (Leijac)" )
-		  public static GameDriver driver_rollingc	   = new GameDriver("1979"	,"rollingc"	,"_8080bw.java"	,rom_rollingc,null	,machine_driver_rollingc	,input_ports_rollingc	,init_rollingc	,ROT270	,	"Nichibutsu", "Rolling Crash / Moon Base", GAME_NO_SOUND )
-		  public static GameDriver driver_ozmawars	   = new GameDriver("1979"	,"ozmawars"	,"_8080bw.java"	,rom_ozmawars,null	,machine_driver_invaders	,input_ports_ozmawars	,init_8080bw	,ROT270	,	"SNK", "Ozma Wars (set 1)" )
-		  public static GameDriver driver_ozmawar2	   = new GameDriver("1979"	,"ozmawar2"	,"_8080bw.java"	,rom_ozmawar2,driver_ozmawars	,machine_driver_invaders	,input_ports_ozmawars	,init_8080bw	,ROT270	,	"SNK", "Ozma Wars (set 2)" ) /* Uses Taito's three board colour version of Space Invaders PCB */
-		  public static GameDriver driver_solfight	   = new GameDriver("1979"	,"solfight"	,"_8080bw.java"	,rom_solfight,driver_ozmawars	,machine_driver_invaders	,input_ports_ozmawars	,init_8080bw	,ROT270	,	"bootleg", "Solar Fight" )
-		  public static GameDriver driver_spaceph	   = new GameDriver("1979"	,"spaceph"	,"_8080bw.java"	,rom_spaceph,driver_ozmawars	,machine_driver_invaders	,input_ports_spaceph	,init_8080bw	,ROT270	,	"Zilec Games", "Space Phantoms" )
-		  public static GameDriver driver_yosakdon	   = new GameDriver("1979"	,"yosakdon"	,"_8080bw.java"	,rom_yosakdon,null	,machine_driver_yosakdon	,input_ports_lrescue	,init_8080bw	,ROT270	,	"bootleg", "Yosaku To Donbee (bootleg)", GAME_NO_SOUND )
+		  GAME( 1980, laser,    spclaser, invaders, spclaser, invaddlx, ROT270, "<unknown>", "Laser" )
+		  GAME( 1979, spcewarl, spclaser, invaders, spclaser, invaddlx, ROT270, "Leijac (Konami)","Space War (Leijac)" )
+		  GAMEX(1979, rollingc, 0,        rollingc, rollingc, rollingc, ROT270, "Nichibutsu", "Rolling Crash / Moon Base", GAME_NO_SOUND )
+		  GAME( 1979, ozmawars, 0,        invaders, ozmawars, 8080bw,   ROT270, "SNK", "Ozma Wars (set 1)" )
+		  GAME( 1979, ozmawar2, ozmawars, invaders, ozmawars, 8080bw,   ROT270, "SNK", "Ozma Wars (set 2)" ) /* Uses Taito's three board colour version of Space Invaders PCB */
+		  GAME( 1979, solfight, ozmawars, invaders, ozmawars, 8080bw,   ROT270, "bootleg", "Solar Fight" )
+		  GAME( 1979, spaceph,  ozmawars, invaders, spaceph,  8080bw,   ROT270, "Zilec Games", "Space Phantoms" )
+		  GAMEX(1979, yosakdon, 0,        yosakdon, lrescue,  8080bw,   ROT270, "bootleg", "Yosaku To Donbee (bootleg)", GAME_NO_SOUND )
 }

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_rampart  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rampart  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -103,8 +102,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rampart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rampart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -148,13 +146,13 @@ public class rampart
 	
 		/* allocate dirty map */
 		pfdirty = auto_malloc(sizeof(pfdirty[0]) * ydim);
-		if (pfdirty == 0)
+		if (!pfdirty)
 			return 0;
 		memset(pfdirty, 1, sizeof(pfdirty[0]) * ydim);
 	
 		/* allocate playfield bitmap */
 		pfbitmap = auto_bitmap_alloc(xdim, ydim);
-		if (pfbitmap == 0)
+		if (!pfbitmap)
 			return 0;
 		return 1;
 	}
@@ -216,7 +214,7 @@ public class rampart
 				pfdirty[y] = 0;
 	
 				/* draw it */
-				draw_scanline8(pfbitmap, 0, y, xdim, scanline, Machine.pens, -1);
+				draw_scanline8(pfbitmap, 0, y, xdim, scanline, Machine->pens, -1);
 			}
 	
 		/* copy the cached bitmap */

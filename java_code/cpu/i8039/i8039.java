@@ -36,7 +36,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i8039;
 
@@ -390,10 +390,10 @@ public class i8039
 		static void jb_5(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x20) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jb_6(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x40) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jb_7(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x80) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y != 0) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jf1(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.f1)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
-		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
+		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jni(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.irq_state == I8039_EXTERNAL_INT) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jnt_0(void)  	 { UINT8 i=M_RDMEM_OPCODE(); if (!test_r(0)) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
 		static void jt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (test_r(0))  { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; change_pc16(R.PC.w.l); } else ADJUST_CYCLES }
@@ -419,10 +419,10 @@ public class i8039
 		static void jb_5(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x20) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jb_6(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x40) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jb_7(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.A & 0x80) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y != 0) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jf0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_F0y) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jf1(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.f1)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
-		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy != 0)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jnc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cn)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
+		static void jc(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (M_Cy)	{ R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jni(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (R.irq_state == I8039_EXTERNAL_INT) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jnt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (!test_r(0)) { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
 		static void jt_0(void)	 	 { UINT8 i=M_RDMEM_OPCODE(); if (test_r(0))  { R.PC.w.l = ((R.PC.w.l-1) & 0xf00) | i; } else ADJUST_CYCLES }
@@ -531,12 +531,12 @@ public class i8039
 			R.irq_extra_cycles += Timer_IRQ();			/* Service pending Timer/Counter IRQ */
 		}
 	}
-	static void rl_a(void)		 { UINT8 i=R.A & 0x80; R.A <<= 1; if (i != 0) R.A |= 0x01; else R.A &= 0xfe; }
+	static void rl_a(void)		 { UINT8 i=R.A & 0x80; R.A <<= 1; if (i) R.A |= 0x01; else R.A &= 0xfe; }
 	/* NS990113 */
-	static void rlc_a(void) 	 { UINT8 i=M_Cy; if (R.A & 0x80) SET(C_FLAG); else CLR(C_FLAG); R.A <<= 1; if (i != 0) R.A |= 0x01; else R.A &= 0xfe; }
-	static void rr_a(void)		 { UINT8 i=R.A & 1; R.A >>= 1; if (i != 0) R.A |= 0x80; else R.A &= 0x7f; }
+	static void rlc_a(void) 	 { UINT8 i=M_Cy; if (R.A & 0x80) SET(C_FLAG); else CLR(C_FLAG); R.A <<= 1; if (i) R.A |= 0x01; else R.A &= 0xfe; }
+	static void rr_a(void)		 { UINT8 i=R.A & 1; R.A >>= 1; if (i) R.A |= 0x80; else R.A &= 0x7f; }
 	/* NS990113 */
-	static void rrc_a(void)		 { UINT8 i=M_Cy; if (R.A & 1) SET(C_FLAG); else CLR(C_FLAG); R.A >>= 1; if (i != 0) R.A |= 0x80; else R.A &= 0x7f; }
+	static void rrc_a(void)		 { UINT8 i=M_Cy; if (R.A & 1) SET(C_FLAG); else CLR(C_FLAG); R.A >>= 1; if (i) R.A |= 0x80; else R.A &= 0x7f; }
 	static void sel_mb0(void)	{ R.A11 = 0; R.A11ff = 0; }
 	static void sel_mb1(void)	 { R.A11ff = 0x800; if (R.irq_executing == I8039_NO_INT) R.A11 = 0x800; }
 	static void sel_rb0(void)	 { CLR(B_FLAG); regPTR = 0;  }
@@ -769,7 +769,7 @@ public class i8039
 				for ( ; inst_cycles > 0; inst_cycles-- )
 				{
 					T1 = test_r(1);
-					if (POSITIVE_EDGE_T1 != 0)
+					if (POSITIVE_EDGE_T1)
 					{
 						R.timer++;
 						if (R.timer == 0) {
@@ -805,7 +805,7 @@ public class i8039
 	 ****************************************************************************/
 	unsigned i8039_get_context (void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(I8039_Regs*)dst = R;
 		return sizeof(I8039_Regs);
 	}
@@ -816,7 +816,7 @@ public class i8039
 	 ****************************************************************************/
 	void i8039_set_context (void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			R = *(I8039_Regs*)src;
 			regPTR = ((M_By) ? 24 : 0);
@@ -941,37 +941,37 @@ public class i8039
 	
 		which = (which+1) % 8;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &R;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8039_PC: sprintf(buffer[which], "PC:%04X", r.PC.w.l); break;
-			case CPU_INFO_REG+I8039_SP: sprintf(buffer[which], "SP:%02X", r.SP); break;
-			case CPU_INFO_REG+I8039_PSW: sprintf(buffer[which], "PSW:%02X", r.PSW); break;
-			case CPU_INFO_REG+I8039_A: sprintf(buffer[which], "A:%02X", r.A); break;
-			case CPU_INFO_REG+I8039_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
-			case CPU_INFO_REG+I8039_TC: sprintf(buffer[which], "TC:%02X", r.timer); break;
-			case CPU_INFO_REG+I8039_P1: sprintf(buffer[which], "P1:%02X", r.P1); break;
-			case CPU_INFO_REG+I8039_P2: sprintf(buffer[which], "P2:%02X", r.P2); break;
-			case CPU_INFO_REG+I8039_R0: sprintf(buffer[which], "R0:%02X", r.RAM[r.regPtr+0]); break;
-			case CPU_INFO_REG+I8039_R1: sprintf(buffer[which], "R1:%02X", r.RAM[r.regPtr+1]); break;
-			case CPU_INFO_REG+I8039_R2: sprintf(buffer[which], "R2:%02X", r.RAM[r.regPtr+2]); break;
-			case CPU_INFO_REG+I8039_R3: sprintf(buffer[which], "R3:%02X", r.RAM[r.regPtr+3]); break;
-			case CPU_INFO_REG+I8039_R4: sprintf(buffer[which], "R4:%02X", r.RAM[r.regPtr+4]); break;
-			case CPU_INFO_REG+I8039_R5: sprintf(buffer[which], "R5:%02X", r.RAM[r.regPtr+5]); break;
-			case CPU_INFO_REG+I8039_R6: sprintf(buffer[which], "R6:%02X", r.RAM[r.regPtr+6]); break;
-			case CPU_INFO_REG+I8039_R7: sprintf(buffer[which], "R7:%02X", r.RAM[r.regPtr+7]); break;
+			case CPU_INFO_REG+I8039_PC: sprintf(buffer[which], "PC:%04X", r->PC.w.l); break;
+			case CPU_INFO_REG+I8039_SP: sprintf(buffer[which], "SP:%02X", r->SP); break;
+			case CPU_INFO_REG+I8039_PSW: sprintf(buffer[which], "PSW:%02X", r->PSW); break;
+			case CPU_INFO_REG+I8039_A: sprintf(buffer[which], "A:%02X", r->A); break;
+			case CPU_INFO_REG+I8039_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
+			case CPU_INFO_REG+I8039_TC: sprintf(buffer[which], "TC:%02X", r->timer); break;
+			case CPU_INFO_REG+I8039_P1: sprintf(buffer[which], "P1:%02X", r->P1); break;
+			case CPU_INFO_REG+I8039_P2: sprintf(buffer[which], "P2:%02X", r->P2); break;
+			case CPU_INFO_REG+I8039_R0: sprintf(buffer[which], "R0:%02X", r->RAM[r->regPtr+0]); break;
+			case CPU_INFO_REG+I8039_R1: sprintf(buffer[which], "R1:%02X", r->RAM[r->regPtr+1]); break;
+			case CPU_INFO_REG+I8039_R2: sprintf(buffer[which], "R2:%02X", r->RAM[r->regPtr+2]); break;
+			case CPU_INFO_REG+I8039_R3: sprintf(buffer[which], "R3:%02X", r->RAM[r->regPtr+3]); break;
+			case CPU_INFO_REG+I8039_R4: sprintf(buffer[which], "R4:%02X", r->RAM[r->regPtr+4]); break;
+			case CPU_INFO_REG+I8039_R5: sprintf(buffer[which], "R5:%02X", r->RAM[r->regPtr+5]); break;
+			case CPU_INFO_REG+I8039_R6: sprintf(buffer[which], "R6:%02X", r->RAM[r->regPtr+6]); break;
+			case CPU_INFO_REG+I8039_R7: sprintf(buffer[which], "R7:%02X", r->RAM[r->regPtr+7]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.PSW & 0x80 ? 'C':'.',
-					r.PSW & 0x40 ? 'A':'.',
-					r.PSW & 0x20 ? 'F':'.',
-					r.PSW & 0x10 ? 'B':'.',
-					r.PSW & 0x08 ? '?':'.',
-					r.PSW & 0x04 ? '4':'.',
-					r.PSW & 0x02 ? '2':'.',
-					r.PSW & 0x01 ? '1':'.');
+					r->PSW & 0x80 ? 'C':'.',
+					r->PSW & 0x40 ? 'A':'.',
+					r->PSW & 0x20 ? 'F':'.',
+					r->PSW & 0x10 ? 'B':'.',
+					r->PSW & 0x08 ? '?':'.',
+					r->PSW & 0x04 ? '4':'.',
+					r->PSW & 0x02 ? '2':'.',
+					r->PSW & 0x01 ? '1':'.');
 				break;
 			case CPU_INFO_NAME: return "I8039";
 			case CPU_INFO_FAMILY: return "Intel 8039";

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class brkthru
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_brkthru  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_brkthru  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -103,8 +102,7 @@ public class brkthru
 		SET_TILE_INFO(region, code & 0x7f,colour,0)
 	}
 	
-	public static WriteHandlerPtr brkthru_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brkthru_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -115,28 +113,26 @@ public class brkthru
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		data8_t code = brkthru_videoram.read(tile_index);
+		data8_t code = brkthru_videoram[tile_index];
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static WriteHandlerPtr brkthru_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (brkthru_videoram.read(offset)!= data)
+	public static WriteHandlerPtr brkthru_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (brkthru_videoram[offset] != data)
 		{
-			brkthru_videoram.write(data,data);
+			brkthru_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_brkthru  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_brkthru  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,16);
 	
-		if (fg_tilemap == 0)
+		if (!fg_tilemap)
 			return 1;
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen( fg_tilemap, 0 );
@@ -147,8 +143,7 @@ public class brkthru
 	
 	
 	
-	public static WriteHandlerPtr brkthru_1800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brkthru_1800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)	/* low 8 bits of scroll */
 			bgscroll = (bgscroll & 0x100) | data;
 		else if (offset == 1)
@@ -189,7 +184,7 @@ public class brkthru
 		int n;
 	
 		for( n=0; n<4; n++ ){
-			drawgfx( bitmap, Machine.uifont,
+			drawgfx( bitmap, Machine->uifont,
 				"0123456789abcdef"[(data>>(12-4*n))&0xf],
 				0,
 				1,0,
@@ -236,7 +231,7 @@ public class brkthru
 				sy = 240 - spriteram.read(offs+2);
 				code = spriteram.read(offs+1)+ 128 * (spriteram.read(offs)& 0x06);
 				color = (spriteram.read(offs)& 0xe0) >> 5;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -244,58 +239,57 @@ public class brkthru
 	
 				if (spriteram.read(offs)& 0x10)	/* double height */
 				{
-					drawgfx(bitmap,Machine.gfx[9],
+					drawgfx(bitmap,Machine->gfx[9],
 							code & ~1,
 							color,
 							flipscreen,flipscreen,
 							sx,flipscreen? sy + 16 : sy - 16,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[9],
+							Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[9],
 							code | 1,
 							color,
 							flipscreen,flipscreen,
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* redraw with wraparound */
-					drawgfx(bitmap,Machine.gfx[9],
+					drawgfx(bitmap,Machine->gfx[9],
 							code & ~1,
 							color,
 							flipscreen,flipscreen,
 							sx,(flipscreen? sy + 16 : sy - 16) + 256,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[9],
+							Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[9],
 							code | 1,
 							color,
 							flipscreen,flipscreen,
 							sx,sy + 256,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				}
 				else
 				{
-					drawgfx(bitmap,Machine.gfx[9],
+					drawgfx(bitmap,Machine->gfx[9],
 							code,
 							color,
 							flipscreen,flipscreen,
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* redraw with wraparound */
-					drawgfx(bitmap,Machine.gfx[9],
+					drawgfx(bitmap,Machine->gfx[9],
 							code,
 							color,
 							flipscreen,flipscreen,
 							sx,sy + 256,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				}
 				}
 			}
 		}
 	
-	public static VideoUpdateHandlerPtr video_update_brkthru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-		{
+	public static VideoUpdateHandlerPtr video_update_brkthru  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)	{
 		tilemap_set_scrollx(bg_tilemap,0, bgscroll);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY,0);
 	

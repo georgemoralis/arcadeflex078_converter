@@ -110,7 +110,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -153,20 +153,17 @@ public class jedi
 	}
 	
 	
-	public static WriteHandlerPtr main_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr main_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, M6502_IRQ_LINE, CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, M6502_IRQ_LINE, CLEAR_LINE);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_jedi  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_jedi  = new MachineInitHandlerPtr() { public void handler(){
 		/* init globals */
 		control_num = 0;
 		sound_latch = 0;
@@ -188,25 +185,23 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
-	    if ((data & 0x01) != 0) cpu_setbank(1, &RAM[0x10000]);
-	    if ((data & 0x02) != 0) cpu_setbank(1, &RAM[0x14000]);
-	    if ((data & 0x04) != 0) cpu_setbank(1, &RAM[0x18000]);
+	    if (data & 0x01) cpu_setbank(1, &RAM[0x10000]);
+	    if (data & 0x02) cpu_setbank(1, &RAM[0x14000]);
+	    if (data & 0x04) cpu_setbank(1, &RAM[0x18000]);
 	} };
 	
 	
 	
 	/*************************************
 	 *
-	 *	Main CPU . Sound CPU communications
+	 *	Main CPU -> Sound CPU communications
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1, (data & 1) ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
@@ -218,14 +213,12 @@ public class jedi
 	}
 	
 	
-	public static WriteHandlerPtr sound_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, delayed_sound_latch_w);
 	} };
 	
 	
-	public static ReadHandlerPtr sound_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    sound_comm_stat &= ~0x80;
 	    return sound_latch;
 	} };
@@ -234,19 +227,17 @@ public class jedi
 	
 	/*************************************
 	 *
-	 *	Sound CPU . Main CPU communications
+	 *	Sound CPU -> Main CPU communications
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr sound_ack_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_ack_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    sound_comm_stat &= ~0x40;
 	    return sound_ack_latch;
 	} };
 	
 	
-	public static WriteHandlerPtr sound_ack_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_ack_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    sound_ack_latch = data;
 	    sound_comm_stat |= 0x40;
 	} };
@@ -259,8 +250,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr a2d_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr a2d_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (control_num)
 		{
 			case 0:		return readinputport(2);
@@ -271,26 +261,22 @@ public class jedi
 	} };
 	
 	
-	public static ReadHandlerPtr special_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr special_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(1) ^ ((sound_comm_stat >> 1) & 0x60);
 	} };
 	
 	
-	public static WriteHandlerPtr a2d_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr a2d_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    control_num = offset;
 	} };
 	
 	
-	public static ReadHandlerPtr soundstat_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundstat_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return sound_comm_stat;
 	} };
 	
 	
-	public static WriteHandlerPtr jedi_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jedi_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, data >> 7);
 	} };
 	
@@ -302,14 +288,12 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr speech_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speech_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speech_write_buffer = data;
 	} };
 	
 	
-	public static WriteHandlerPtr speech_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speech_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int state = (~offset >> 8) & 1;
 	
 		if ((state ^ speech_strobe_state) && state)
@@ -318,8 +302,7 @@ public class jedi
 	} };
 	
 	
-	public static ReadHandlerPtr speech_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speech_ready_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (!tms5220_ready_r()) << 7;
 	} };
 	
@@ -331,15 +314,13 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr nvram_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (nvram_enabled != 0)
+	public static WriteHandlerPtr nvram_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (nvram_enabled)
 			generic_nvram[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nvram_enabled = ~offset & 1;
 	} };
 	
@@ -442,7 +423,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_jedi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jedi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jedi )
 		PORT_START(); 	/* 0C00 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_BUTTON3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_BUTTON2 );
@@ -563,8 +544,7 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_jedi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jedi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,MAIN_CPU_OSC/2/2)		/* 2.5MHz */
@@ -594,9 +574,7 @@ public class jedi
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(POKEY,   pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -644,5 +622,5 @@ public class jedi
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_jedi	   = new GameDriver("1984"	,"jedi"	,"jedi.java"	,rom_jedi,null	,machine_driver_jedi	,input_ports_jedi	,null	,ROT0	,	"Atari", "Return of the Jedi" )
+	GAME( 1984, jedi, 0, jedi, jedi, 0, ROT0, "Atari", "Return of the Jedi" )
 }

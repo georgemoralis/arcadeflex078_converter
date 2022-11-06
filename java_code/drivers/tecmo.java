@@ -47,7 +47,7 @@ f80b      ????
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,8 +61,7 @@ public class tecmo
 	
 	
 	
-	public static WriteHandlerPtr tecmo_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -71,25 +70,21 @@ public class tecmo
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr tecmo_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
 	static int adpcm_pos,adpcm_end;
 	
-	public static WriteHandlerPtr tecmo_adpcm_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_adpcm_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		adpcm_pos = data << 8;
 		MSM5205_reset_w(0,0);
 	} };
-	public static WriteHandlerPtr tecmo_adpcm_end_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_adpcm_end_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		adpcm_end = (data + 1) << 8;
 	} };
-	public static WriteHandlerPtr tecmo_adpcm_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_adpcm_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_set_volume(0,(data & 0x0f) * 100 / 15);
 	} };
 	static void tecmo_adpcm_int(int num)
@@ -238,7 +233,7 @@ public class tecmo
 	
 	
 	
-	static InputPortPtr input_ports_rygar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rygar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rygar )
 		PORT_START(); 	/* IN0 bits 0-3 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -327,7 +322,7 @@ public class tecmo
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gemini = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gemini = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gemini )
 		PORT_START(); 	/* IN0 bits 0-3 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -419,7 +414,7 @@ public class tecmo
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_silkworm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_silkworm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( silkworm )
 		PORT_START(); 	/* IN0 bit 0-3 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -581,8 +576,7 @@ public class tecmo
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rygar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rygar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4000000)
@@ -609,13 +603,10 @@ public class tecmo
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gemini = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gemini )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rygar)
@@ -624,21 +615,16 @@ public class tecmo
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(tecmo_sound_readmem,tecmo_sound_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_silkworm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( silkworm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gemini)
 		MDRV_CPU_REPLACE("main", Z80, 6000000)
 		MDRV_CPU_MEMORY(readmem,silkworm_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -856,16 +842,16 @@ public class tecmo
 	   video_type is used to distinguish Rygar, Silkworm and Gemini Wing.
 	   This is needed because there is a difference in the tile and sprite indexing.
 	*/
-	public static DriverInitHandlerPtr init_rygar  = new DriverInitHandlerPtr() { public void handler()    { tecmo_video_type = 0; } };
-	public static DriverInitHandlerPtr init_silkworm  = new DriverInitHandlerPtr() { public void handler() { tecmo_video_type = 1; } };
-	public static DriverInitHandlerPtr init_gemini  = new DriverInitHandlerPtr() { public void handler()   { tecmo_video_type = 2; } };
+	public static DriverInitHandlerPtr init_rygar  = new DriverInitHandlerPtr() { public void handler()  { tecmo_video_type = 0; } };
+	public static DriverInitHandlerPtr init_silkworm  = new DriverInitHandlerPtr() { public void handler() tecmo_video_type = 1; }
+	public static DriverInitHandlerPtr init_gemini  = new DriverInitHandlerPtr() { public void handler() { tecmo_video_type = 2; } };
 	
 	
 	
-	public static GameDriver driver_rygar	   = new GameDriver("1986"	,"rygar"	,"tecmo.java"	,rom_rygar,null	,machine_driver_rygar	,input_ports_rygar	,init_rygar	,ROT0	,	"Tecmo", "Rygar (US set 1)" )
-	public static GameDriver driver_rygar2	   = new GameDriver("1986"	,"rygar2"	,"tecmo.java"	,rom_rygar2,driver_rygar	,machine_driver_rygar	,input_ports_rygar	,init_rygar	,ROT0	,	"Tecmo", "Rygar (US set 2)" )
-	public static GameDriver driver_rygarj	   = new GameDriver("1986"	,"rygarj"	,"tecmo.java"	,rom_rygarj,driver_rygar	,machine_driver_rygar	,input_ports_rygar	,init_rygar	,ROT0	,	"Tecmo", "Argus no Senshi (Japan)" )
-	public static GameDriver driver_gemini	   = new GameDriver("1987"	,"gemini"	,"tecmo.java"	,rom_gemini,null	,machine_driver_gemini	,input_ports_gemini	,init_gemini	,ROT90	,	"Tecmo", "Gemini Wing" )
-	public static GameDriver driver_silkworm	   = new GameDriver("1988"	,"silkworm"	,"tecmo.java"	,rom_silkworm,null	,machine_driver_silkworm	,input_ports_silkworm	,init_silkworm	,ROT0	,	"Tecmo", "Silk Worm (set 1)" )
-	public static GameDriver driver_silkwrm2	   = new GameDriver("1988"	,"silkwrm2"	,"tecmo.java"	,rom_silkwrm2,driver_silkworm	,machine_driver_silkworm	,input_ports_silkworm	,init_silkworm	,ROT0	,	"Tecmo", "Silk Worm (set 2)" )
+	GAME( 1986, rygar,    0,        rygar,    rygar,    rygar,    ROT0,  "Tecmo", "Rygar (US set 1)" )
+	GAME( 1986, rygar2,   rygar,    rygar,    rygar,    rygar,    ROT0,  "Tecmo", "Rygar (US set 2)" )
+	GAME( 1986, rygarj,   rygar,    rygar,    rygar,    rygar,    ROT0,  "Tecmo", "Argus no Senshi (Japan)" )
+	GAME( 1987, gemini,   0,        gemini,   gemini,   gemini,   ROT90, "Tecmo", "Gemini Wing" )
+	GAME( 1988, silkworm, 0,        silkworm, silkworm, silkworm, ROT0,  "Tecmo", "Silk Worm (set 1)" )
+	GAME( 1988, silkwrm2, silkworm, silkworm, silkworm, silkworm, ROT0,  "Tecmo", "Silk Worm (set 2)" )
 }

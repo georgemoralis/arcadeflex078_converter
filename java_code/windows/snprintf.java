@@ -56,7 +56,7 @@
 
 /* /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -413,7 +413,7 @@ public class snprintf
 	  padlen = min - strln;
 	  if (padlen < 0)
 	    padlen = 0;
-	  if ((flags & DP_F_MINUS) != 0)
+	  if (flags & DP_F_MINUS)
 	    padlen = -padlen; /* Left Justify */
 	
 	  while ((padlen > 0) && (cnt < max))
@@ -460,14 +460,14 @@ public class snprintf
 	      uvalue = -value;
 	    }
 	    else
-	      if ((flags & DP_F_PLUS) != 0)  /* Do a sign (+/i) */
+	      if (flags & DP_F_PLUS)  /* Do a sign (+/i) */
 		signvalue = '+';
 	    else
-	      if ((flags & DP_F_SPACE) != 0)
+	      if (flags & DP_F_SPACE)
 		signvalue = ' ';
 	  }
 	
-	  if ((flags & DP_F_UP) != 0) caps = 1; /* Should characters be upper case? */
+	  if (flags & DP_F_UP) caps = 1; /* Should characters be upper case? */
 	
 	  do {
 	    convert[place++] =
@@ -482,12 +482,12 @@ public class snprintf
 	  spadlen = min - MAX (max, place) - (signvalue ? 1 : 0);
 	  if (zpadlen < 0) zpadlen = 0;
 	  if (spadlen < 0) spadlen = 0;
-	  if ((flags & DP_F_ZERO) != 0)
+	  if (flags & DP_F_ZERO)
 	  {
 	    zpadlen = MAX(zpadlen, spadlen);
 	    spadlen = 0;
 	  }
-	  if ((flags & DP_F_MINUS) != 0)
+	  if (flags & DP_F_MINUS)
 	    spadlen = -spadlen; /* Left Justifty */
 	
 	#ifdef DEBUG_SNPRINTF
@@ -503,7 +503,7 @@ public class snprintf
 	  }
 	
 	  /* Sign */
-	  if (signvalue != 0)
+	  if (signvalue)
 	    dopr_outch (buffer, currlen, maxlen, signvalue);
 	
 	  /* Zeros */
@@ -589,14 +589,14 @@ public class snprintf
 	  if (fvalue < 0)
 	    signvalue = '-';
 	  else
-	    if ((flags & DP_F_PLUS) != 0)  /* Do a sign (+/i) */
+	    if (flags & DP_F_PLUS)  /* Do a sign (+/i) */
 	      signvalue = '+';
 	    else
-	      if ((flags & DP_F_SPACE) != 0)
+	      if (flags & DP_F_SPACE)
 		signvalue = ' ';
 	
 	#if 0
-	  if ((flags & DP_F_UP) != 0) caps = 1; /* Should characters be upper case? */
+	  if (flags & DP_F_UP) caps = 1; /* Should characters be upper case? */
 	#endif
 	
 	  intpart = ufvalue;
@@ -648,12 +648,12 @@ public class snprintf
 	    zpadlen = 0;
 	  if (padlen < 0)
 	    padlen = 0;
-	  if ((flags & DP_F_MINUS) != 0)
+	  if (flags & DP_F_MINUS)
 	    padlen = -padlen; /* Left Justifty */
 	
 	  if ((flags & DP_F_ZERO) && (padlen > 0))
 	  {
-	    if (signvalue != 0)
+	    if (signvalue)
 	    {
 	      dopr_outch (buffer, currlen, maxlen, signvalue);
 	      --padlen;
@@ -670,7 +670,7 @@ public class snprintf
 	    dopr_outch (buffer, currlen, maxlen, ' ');
 	    --padlen;
 	  }
-	  if (signvalue != 0)
+	  if (signvalue)
 	    dopr_outch (buffer, currlen, maxlen, signvalue);
 	
 	  while (iplace > 0)

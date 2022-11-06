@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -145,9 +145,8 @@ public class seibu
 		}
 	}
 	
-	public static WriteHandlerPtr seibu_adpcm_adr_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0)
+	public static WriteHandlerPtr seibu_adpcm_adr_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset)
 		{
 			end = data<<8;
 		}
@@ -157,8 +156,7 @@ public class seibu
 		}
 	} };
 	
-	public static WriteHandlerPtr seibu_adpcm_ctl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_adpcm_ctl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// sequence is 00 02 01 each time.
 		switch (data)
 		{
@@ -174,9 +172,8 @@ public class seibu
 		}
 	} };
 	
-	public static WriteHandlerPtr seibu_adpcm_adr_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0)
+	public static WriteHandlerPtr seibu_adpcm_adr_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset)
 		{
 			end1 = data<<8;
 		}
@@ -186,8 +183,7 @@ public class seibu
 		}
 	} };
 	
-	public static WriteHandlerPtr seibu_adpcm_ctl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_adpcm_ctl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// sequence is 00 02 01 each time.
 		switch (data)
 		{
@@ -251,18 +247,15 @@ public class seibu
 			cpu_set_irq_line_and_vector(sound_cpu,0,ASSERT_LINE,irq1 & irq2);
 	}
 	
-	public static WriteHandlerPtr seibu_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		update_irq_lines(VECTOR_INIT);
 	} };
 	
-	public static WriteHandlerPtr seibu_rst10_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_rst10_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Unused for now */
 	} };
 	
-	public static WriteHandlerPtr seibu_rst18_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_rst18_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		update_irq_lines(RST18_CLEAR);
 	} };
 	
@@ -284,15 +277,13 @@ public class seibu
 	/***************************************************************************/
 	
 	/* Use this if the sound cpu is cpu 1 */
-	public static MachineInitHandlerPtr machine_init_seibu_sound_1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_seibu_sound_1  = new MachineInitHandlerPtr() { public void handler(){
 		sound_cpu=1;
 		update_irq_lines(VECTOR_INIT);
 	} };
 	
 	/* Use this if the sound cpu is cpu 2 */
-	public static MachineInitHandlerPtr machine_init_seibu_sound_2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_seibu_sound_2  = new MachineInitHandlerPtr() { public void handler(){
 		sound_cpu=2;
 		update_irq_lines(VECTOR_INIT);
 	} };
@@ -302,36 +293,30 @@ public class seibu
 	static UINT8 main2sub[2],sub2main[2];
 	static int main2sub_pending,sub2main_pending;
 	
-	public static WriteHandlerPtr seibu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_CPU1+sound_cpu);
 	
 		cpu_setbank(1,rom + 0x10000 + 0x8000 * (data & 1));
 	} };
 	
-	public static WriteHandlerPtr seibu_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
 	} };
 	
-	public static ReadHandlerPtr seibu_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr seibu_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return main2sub[offset];
 	} };
 	
-	public static ReadHandlerPtr seibu_main_data_pending_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr seibu_main_data_pending_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sub2main_pending ? 1 : 0;
 	} };
 	
-	public static WriteHandlerPtr seibu_main_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_main_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sub2main[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr seibu_pending_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_pending_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* just a guess */
 		main2sub_pending = 0;
 		sub2main_pending = 1;
@@ -356,7 +341,7 @@ public class seibu
 	WRITE16_HANDLER( seibu_main_word_w )
 	{
 		//logerror("%06x: seibu_main_word_w(%x,%02x)\n",activecpu_get_pc(),offset,data);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			switch (offset)
 			{
@@ -379,13 +364,11 @@ public class seibu
 		}
 	}
 	
-	public static ReadHandlerPtr seibu_main_v30_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr seibu_main_v30_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return seibu_main_word_r(offset/2,0) >> (8 * (offset & 1));
 	} };
 	
-	public static WriteHandlerPtr seibu_main_v30_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seibu_main_v30_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		seibu_main_word_w(offset/2,data << (8 * (offset & 1)),0xff00 >> (8 * (offset & 1)));
 	} };
 	
@@ -394,7 +377,7 @@ public class seibu
 		main2sub[0] = data&0xff;
 		main2sub[1] = data>>8;
 	
-	//	logerror("seibu_main_mustb_w: %x . %x %x\n", data, main2sub[0], main2sub[1]);
+	//	logerror("seibu_main_mustb_w: %x -> %x %x\n", data, main2sub[0], main2sub[1]);
 	
 		update_irq_lines(RST18_ASSERT);
 	}

@@ -54,7 +54,7 @@ JP4: /
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -100,9 +100,8 @@ public class m62
 	/* service mode to test the ROMs. */
 	static int ldrun2_bankswap;
 	
-	public static ReadHandlerPtr ldrun2_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (ldrun2_bankswap != 0)
+	public static ReadHandlerPtr ldrun2_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (ldrun2_bankswap)
 		{
 			unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -116,8 +115,7 @@ public class m62
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr ldrun2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ldrun2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int bankcontrol[2];
 		int banks[30] =
 		{
@@ -151,46 +149,39 @@ public class m62
 	/* Lode Runner 3 has, it seems, a poor man's protection consisting of a PAL */
 	/* (I think; it's included in the ROM set) which is read at certain times, */
 	/* and the game crashes if ti doesn't match the expected values. */
-	public static ReadHandlerPtr ldrun3_prot_5_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ldrun3_prot_5_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 5;
 	} };
 	
-	public static ReadHandlerPtr ldrun3_prot_7_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ldrun3_prot_7_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 7;
 	} };
 	
 	
-	public static WriteHandlerPtr ldrun4_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ldrun4_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bankaddress = 0x10000 + ((data & 0x01) * 0x4000);
 		set_m64_bank();
 	} };
 	
-	public static WriteHandlerPtr kidniki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kidniki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bankaddress = 0x10000 + (data & 0x0f) * 0x2000;
 		set_m64_bank();
 	} };
 	
 	#define battroad_bankswitch_w kidniki_bankswitch_w
 	
-	public static WriteHandlerPtr spelunkr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spelunkr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bankaddress = 0x10000 + (data & 0x03) * 0x2000;
 		set_m64_bank();
 	} };
 	
-	public static WriteHandlerPtr spelunk2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spelunk2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bankaddress = 0x20000 + 0x1000 * ((data & 0xc0)>>6);
 		bankaddress2 = 0x10000 + 0x0400 *  (data & 0x3c);
 		set_m64_bank2();
 	} };
 	
-	public static WriteHandlerPtr youjyudn_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr youjyudn_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bankaddress = 0x10000 + (data & 0x01) * 0x4000;
 		set_m64_bank();
 	} };
@@ -625,7 +616,7 @@ public class m62
 		PORT_DIPSETTING(    0x50, DEF_STR( "1C_6C") ); \
 	
 	
-	static InputPortPtr input_ports_kungfum = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kungfum = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kungfum )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -692,7 +683,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battroad )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -743,7 +734,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ldrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ldrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ldrun )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -794,7 +785,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ldrun2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ldrun2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ldrun2 )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -846,7 +837,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ldrun3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ldrun3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ldrun3 )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -898,7 +889,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ldrun4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ldrun4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ldrun4 )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -951,7 +942,7 @@ public class m62
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lotlot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lotlot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lotlot )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -1001,7 +992,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kidniki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kidniki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kidniki )
 		PORT_START(); 
 		IN0_PORT
 	
@@ -1051,7 +1042,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spelunkr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spelunkr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spelunkr )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -1102,7 +1093,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spelunk2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spelunk2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spelunk2 )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -1152,7 +1143,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_youjyudn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_youjyudn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( youjyudn )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -1203,7 +1194,7 @@ public class m62
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_horizon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_horizon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( horizon )
 		PORT_START(); 	/* IN0 */
 		IN0_PORT
 	
@@ -1409,8 +1400,7 @@ public class m62
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ldrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ldrun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 24000000/6)
@@ -1434,13 +1424,10 @@ public class m62
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kungfum = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kungfum )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1453,13 +1440,10 @@ public class m62
 	
 		MDRV_VIDEO_START(kungfum)
 		MDRV_VIDEO_UPDATE(kungfum)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_battroad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battroad )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1475,26 +1459,20 @@ public class m62
 		MDRV_PALETTE_INIT(battroad)
 		MDRV_VIDEO_START(battroad)
 		MDRV_VIDEO_UPDATE(battroad)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ldrun2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ldrun2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(ldrun2_readmem,ldrun2_writemem)
 		MDRV_CPU_PORTS(ldrun2_readport,ldrun2_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ldrun3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ldrun3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1504,13 +1482,10 @@ public class m62
 	
 		/* video hardware */
 		MDRV_GFXDECODE(ldrun3_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ldrun4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ldrun4 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1522,13 +1497,10 @@ public class m62
 		MDRV_GFXDECODE(ldrun3_gfxdecodeinfo)
 		MDRV_VIDEO_START(ldrun4)
 		MDRV_VIDEO_UPDATE(ldrun4)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lotlot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lotlot )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1541,13 +1513,10 @@ public class m62
 	
 		MDRV_VIDEO_START(lotlot)
 		MDRV_VIDEO_UPDATE(lotlot)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kidniki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kidniki )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1560,13 +1529,10 @@ public class m62
 	
 		MDRV_VIDEO_START(kidniki)
 		MDRV_VIDEO_UPDATE(kidniki)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spelunkr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spelunkr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1578,13 +1544,10 @@ public class m62
 	
 		MDRV_VIDEO_START(spelunkr)
 		MDRV_VIDEO_UPDATE(spelunkr)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spelunk2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spelunk2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1598,13 +1561,10 @@ public class m62
 		MDRV_PALETTE_INIT(spelunk2)
 		MDRV_VIDEO_START(spelunk2)
 		MDRV_VIDEO_UPDATE(spelunk2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_youjyudn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( youjyudn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1618,13 +1578,10 @@ public class m62
 	
 		MDRV_VIDEO_START(youjyudn)
 		MDRV_VIDEO_UPDATE(youjyudn)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_horizon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( horizon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ldrun)
@@ -1636,9 +1593,7 @@ public class m62
 	
 		MDRV_VIDEO_START(horizon)
 		MDRV_VIDEO_UPDATE(horizon)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2539,24 +2494,24 @@ public class m62
 		state_save_register_func_postload(set_m64_bank2);
 	}
 	
-	public static GameDriver driver_kungfum	   = new GameDriver("1984"	,"kungfum"	,"m62.java"	,rom_kungfum,null	,machine_driver_kungfum	,input_ports_kungfum	,init_m62	,ROT0	,	"Irem", "Kung-Fu Master" )
-	public static GameDriver driver_kungfud	   = new GameDriver("1984"	,"kungfud"	,"m62.java"	,rom_kungfud,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,init_m62	,ROT0	,	"Irem (Data East license)", "Kung-Fu Master (Data East)" )
-	public static GameDriver driver_spartanx	   = new GameDriver("1984"	,"spartanx"	,"m62.java"	,rom_spartanx,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,init_m62	,ROT0	,	"Irem", "Spartan X (Japan)" )
-	public static GameDriver driver_kungfub	   = new GameDriver("1984"	,"kungfub"	,"m62.java"	,rom_kungfub,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,init_m62	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 1)" )
-	public static GameDriver driver_kungfub2	   = new GameDriver("1984"	,"kungfub2"	,"m62.java"	,rom_kungfub2,driver_kungfum	,machine_driver_kungfum	,input_ports_kungfum	,init_m62	,ROT0	,	"bootleg", "Kung-Fu Master (bootleg set 2)" )
-	public static GameDriver driver_battroad	   = new GameDriver("1984"	,"battroad"	,"m62.java"	,rom_battroad,null	,machine_driver_battroad	,input_ports_battroad	,init_m62	,ROT90	,	"Irem", "The Battle-Road" )
-	public static GameDriver driver_ldrun	   = new GameDriver("1984"	,"ldrun"	,"m62.java"	,rom_ldrun,null	,machine_driver_ldrun	,input_ports_ldrun	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 1)" )
-	public static GameDriver driver_ldruna	   = new GameDriver("1984"	,"ldruna"	,"m62.java"	,rom_ldruna,driver_ldrun	,machine_driver_ldrun	,input_ports_ldrun	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner (set 2)" )
-	public static GameDriver driver_ldrun2	   = new GameDriver("1984"	,"ldrun2"	,"m62.java"	,rom_ldrun2,null	,machine_driver_ldrun2	,input_ports_ldrun2	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" )	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
-	public static GameDriver driver_ldrun3	   = new GameDriver("1985"	,"ldrun3"	,"m62.java"	,rom_ldrun3,null	,machine_driver_ldrun3	,input_ports_ldrun3	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner III - The Golden Labyrinth" )
-	public static GameDriver driver_ldrun3jp	   = new GameDriver("1985"	,"ldrun3jp"	,"m62.java"	,rom_ldrun3jp,driver_ldrun3	,machine_driver_ldrun3	,input_ports_ldrun3	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" )
-	public static GameDriver driver_ldrun4	   = new GameDriver("1986"	,"ldrun4"	,"m62.java"	,rom_ldrun4,null	,machine_driver_ldrun4	,input_ports_ldrun4	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" )
-	public static GameDriver driver_lotlot	   = new GameDriver("1985"	,"lotlot"	,"m62.java"	,rom_lotlot,null	,machine_driver_lotlot	,input_ports_lotlot	,init_m62	,ROT0	,	"Irem (licensed from Tokuma Shoten)", "Lot Lot" )
-	public static GameDriver driver_kidniki	   = new GameDriver("1986"	,"kidniki"	,"m62.java"	,rom_kidniki,null	,machine_driver_kidniki	,input_ports_kidniki	,init_m62	,ROT0	,	"Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_yanchamr	   = new GameDriver("1986"	,"yanchamr"	,"m62.java"	,rom_yanchamr,driver_kidniki	,machine_driver_kidniki	,input_ports_kidniki	,init_m62	,ROT0	,	"Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_spelunkr	   = new GameDriver("1985"	,"spelunkr"	,"m62.java"	,rom_spelunkr,null	,machine_driver_spelunkr	,input_ports_spelunkr	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker" )
-	public static GameDriver driver_spelnkrj	   = new GameDriver("1985"	,"spelnkrj"	,"m62.java"	,rom_spelnkrj,driver_spelunkr	,machine_driver_spelunkr	,input_ports_spelunkr	,init_m62	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker (Japan)" )
-	public static GameDriver driver_spelunk2	   = new GameDriver("1986"	,"spelunk2"	,"m62.java"	,rom_spelunk2,null	,machine_driver_spelunk2	,input_ports_spelunk2	,init_spelunk2	,ROT0	,	"Irem (licensed from Broderbund)", "Spelunker II" )
-	public static GameDriver driver_youjyudn	   = new GameDriver("1986"	,"youjyudn"	,"m62.java"	,rom_youjyudn,null	,machine_driver_youjyudn	,input_ports_youjyudn	,init_m62	,ROT270	,	"Irem", "Youjyuden (Japan)" )
-	public static GameDriver driver_horizon	   = new GameDriver("1985"	,"horizon"	,"m62.java"	,rom_horizon,null	,machine_driver_horizon	,input_ports_horizon	,init_m62	,ROT0	,	"Irem", "Horizon", GAME_IMPERFECT_SOUND )
+	GAME( 1984, kungfum,  0,        kungfum,  kungfum,  m62,      ROT0,   "Irem", "Kung-Fu Master" )
+	GAME( 1984, kungfud,  kungfum,  kungfum,  kungfum,  m62,      ROT0,   "Irem (Data East license)", "Kung-Fu Master (Data East)" )
+	GAME( 1984, spartanx, kungfum,  kungfum,  kungfum,  m62,      ROT0,   "Irem", "Spartan X (Japan)" )
+	GAME( 1984, kungfub,  kungfum,  kungfum,  kungfum,  m62,      ROT0,   "bootleg", "Kung-Fu Master (bootleg set 1)" )
+	GAME( 1984, kungfub2, kungfum,  kungfum,  kungfum,  m62,      ROT0,   "bootleg", "Kung-Fu Master (bootleg set 2)" )
+	GAME( 1984, battroad, 0,        battroad, battroad, m62,      ROT90,  "Irem", "The Battle-Road" )
+	GAME( 1984, ldrun,    0,        ldrun,    ldrun,    m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner (set 1)" )
+	GAME( 1984, ldruna,   ldrun,    ldrun,    ldrun,    m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner (set 2)" )
+	GAME( 1984, ldrun2,   0,        ldrun2,   ldrun2,   m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner II - The Bungeling Strikes Back" )	/* Japanese version is called Bangeringu Teikoku No Gyakushuu */
+	GAME( 1985, ldrun3,   0,        ldrun3,   ldrun3,   m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner III - The Golden Labyrinth" )
+	GAME( 1985, ldrun3jp, ldrun3,   ldrun3,   ldrun3,   m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner III - Majin No Fukkatsu" )
+	GAME( 1986, ldrun4,   0,        ldrun4,   ldrun4,   m62,      ROT0,   "Irem (licensed from Broderbund)", "Lode Runner IV - Teikoku Karano Dasshutsu" )
+	GAME( 1985, lotlot,   0,        lotlot,   lotlot,   m62,      ROT0,   "Irem (licensed from Tokuma Shoten)", "Lot Lot" )
+	GAMEX(1986, kidniki,  0,        kidniki,  kidniki,  m62,      ROT0,   "Irem (Data East USA license)", "Kid Niki - Radical Ninja (US)", GAME_IMPERFECT_SOUND )
+	GAMEX(1986, yanchamr, kidniki,  kidniki,  kidniki,  m62,      ROT0,   "Irem", "Kaiketsu Yanchamaru (Japan)", GAME_IMPERFECT_SOUND )
+	GAME( 1985, spelunkr, 0,        spelunkr, spelunkr, m62,      ROT0,   "Irem (licensed from Broderbund)", "Spelunker" )
+	GAME( 1985, spelnkrj, spelunkr, spelunkr, spelunkr, m62,      ROT0,   "Irem (licensed from Broderbund)", "Spelunker (Japan)" )
+	GAME( 1986, spelunk2, 0,        spelunk2, spelunk2, spelunk2, ROT0,   "Irem (licensed from Broderbund)", "Spelunker II" )
+	GAME( 1986, youjyudn, 0,        youjyudn, youjyudn, m62,      ROT270, "Irem", "Youjyuden (Japan)" )
+	GAMEX(1985, horizon,  0,        horizon,  horizon,  m62,      ROT0,   "Irem", "Horizon", GAME_IMPERFECT_SOUND )
 }

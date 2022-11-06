@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.pic16c5x;
 
@@ -172,7 +172,7 @@ public class _16c5xdsm
 		char *strtmp;
 		const char *cp;				/* character pointer in OpFormats */
 	
-		if (OpInizialized == 0) InitDasm16C5x();
+		if (!OpInizialized) InitDasm16C5x();
 	
 		op = -1;				/* no matching opcode */
 		code = READOP16(2*pc);

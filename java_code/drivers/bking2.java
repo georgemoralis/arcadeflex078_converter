@@ -19,7 +19,7 @@ ROM DM03 is missing from all known ROM sets.  This is a color palette.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,19 +35,16 @@ public class bking2
 	
 	static int sndnmi_enable = 1;
 	
-	public static ReadHandlerPtr bking2_sndnmi_disable_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bking2_sndnmi_disable_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sndnmi_enable = 0;
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr bking2_sndnmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_sndnmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sndnmi_enable = 1;
 	} };
 	
-	public static WriteHandlerPtr bking2_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i,code;
 	
 		code = 0;
@@ -55,38 +52,33 @@ public class bking2
 			if (data & (1 << i)) code |= 0x80 >> i;
 	
 		soundlatch_w.handler(offset,code);
-		if (sndnmi_enable != 0) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
+		if (sndnmi_enable) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	
 	static int bk3_l, bk3_h;
 	
-	public static WriteHandlerPtr bk3_l_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bk3_l_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bk3_l = data;
 	} };
 	
-	public static WriteHandlerPtr bk3_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bk3_h_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bk3_h = data;
 	} };
 	
-	public static ReadHandlerPtr bk3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bk3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *rom = memory_region(REGION_USER2);
 		return rom[bk3_h*256+bk3_l];
 	} };
 	
-	public static WriteHandlerPtr unk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr unk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		0 = finished reading extra rom
 		1 = started reading extra rom
 	*/
 	} };
 	
-	public static ReadHandlerPtr mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int res = 3;
 	
 		return res;//cpu data / MCU ready
@@ -104,8 +96,7 @@ public class bking2
 	*/
 	static unsigned char mcu_val;
 	
-	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef MAME_DEBUG
 		logerror("mcu_data_w = %x\n",data);
 	#endif
@@ -118,8 +109,7 @@ public class bking2
 			mcu_val = 0x5e;
 	} };
 	
-	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	usrintf_showmessage("MCU-r1 PC = %04x %02x",activecpu_get_pc(),mcu_val);
 		switch(mcu_val)
 		{
@@ -129,8 +119,7 @@ public class bking2
 		}
 	} };
 	
-	public static ReadHandlerPtr mcu_data_r2  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_data_r2  = new ReadHandlerPtr() { public int handler(int offset){
 	//	usrintf_showmessage("MCU-r2 PC = %04x %02x",activecpu_get_pc(),mcu_val);
 		return 0x31; //no "bad rom.", no "bad ext."
 	} };
@@ -221,7 +210,7 @@ public class bking2
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_bking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bking )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -335,7 +324,7 @@ public class bking2
 		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y | IPF_REVERSE | IPF_COCKTAIL, 25, 10, 0, 0 );/* Sensitivity, clip, min, max */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bking2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bking2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bking2 )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -500,8 +489,7 @@ public class bking2
 	};
 	
 	
-	public static WriteHandlerPtr portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* don't know what this is... could be a filter */
 		if (data != 0x00) logerror("portB = %02x\n",data);
 	} };
@@ -523,8 +511,7 @@ public class bking2
 		{ 25 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_bking2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bking2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -561,9 +548,7 @@ public class bking2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -698,7 +683,7 @@ public class bking2
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_bking	   = new GameDriver("1982"	,"bking"	,"bking2.java"	,rom_bking,null	,machine_driver_bking2	,input_ports_bking	,null	,ROT270	,	"Taito Corporation", "Birdie King" )
-	public static GameDriver driver_bking2	   = new GameDriver("1983"	,"bking2"	,"bking2.java"	,rom_bking2,null	,machine_driver_bking2	,input_ports_bking2	,null	,ROT90	,	"Taito Corporation", "Birdie King 2" )
-	public static GameDriver driver_bking3	   = new GameDriver("1984"	,"bking3"	,"bking2.java"	,rom_bking3,null	,machine_driver_bking2	,input_ports_bking2	,null	,ROT90	,	"Taito Corporation", "Birdie King 3" )
+	GAME( 1982, bking,  0, bking2, bking,  0, ROT270, "Taito Corporation", "Birdie King" )
+	GAME( 1983, bking2, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 2" )
+	GAME( 1984, bking3, 0, bking2, bking2, 0, ROT90,  "Taito Corporation", "Birdie King 3" )
 }

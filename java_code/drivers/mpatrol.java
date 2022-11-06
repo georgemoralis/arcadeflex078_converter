@@ -37,7 +37,7 @@ c0        background control?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,8 +52,7 @@ public class mpatrol
 	
 	/* this looks like some kind of protection. The game does strange things */
 	/* if a read from this address doesn't return the value it expects. */
-	public static ReadHandlerPtr mpatrol_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mpatrol_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: read protection\n",activecpu_get_pc());
 		return activecpu_get_reg(Z80_DE) & 0xff;
 	} };
@@ -102,7 +101,7 @@ public class mpatrol
 	
 	
 	
-	static InputPortPtr input_ports_mpatrol = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mpatrol = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mpatrol )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -203,7 +202,7 @@ public class mpatrol
 	INPUT_PORTS_END(); }}; 
 	
 	/* Identical to mpatrol, the only difference is the number of lives */
-	static InputPortPtr input_ports_mpatrolw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mpatrolw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mpatrolw )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -357,8 +356,7 @@ public class mpatrol
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mpatrol = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mpatrol )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)        /* 3.072 MHz ? */
@@ -385,9 +383,7 @@ public class mpatrol
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -468,6 +464,6 @@ public class mpatrol
 	
 	
 	
-	public static GameDriver driver_mpatrol	   = new GameDriver("1982"	,"mpatrol"	,"mpatrol.java"	,rom_mpatrol,null	,machine_driver_mpatrol	,input_ports_mpatrol	,null	,ROT0	,	"Irem", "Moon Patrol" )
-	public static GameDriver driver_mpatrolw	   = new GameDriver("1982"	,"mpatrolw"	,"mpatrol.java"	,rom_mpatrolw,driver_mpatrol	,machine_driver_mpatrol	,input_ports_mpatrolw	,null	,ROT0	,	"Irem (Williams license)", "Moon Patrol (Williams)" )
+	GAME( 1982, mpatrol,  0,       mpatrol, mpatrol,  0, ROT0, "Irem", "Moon Patrol" )
+	GAME( 1982, mpatrolw, mpatrol, mpatrol, mpatrolw, 0, ROT0, "Irem (Williams license)", "Moon Patrol (Williams)" )
 }

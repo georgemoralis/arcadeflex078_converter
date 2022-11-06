@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class troangel
 	  bit 0 -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_troangel  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_troangel  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -112,8 +111,7 @@ public class troangel
 	
 	
 	
-	public static WriteHandlerPtr troangel_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr troangel_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
 	
@@ -133,7 +131,7 @@ public class troangel
 	static void draw_background( struct mame_bitmap *bitmap )
 	{
 		int offs;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		for (offs = videoram_size - 2;offs >= 0;offs -= 2)
 		{
@@ -151,7 +149,7 @@ public class troangel
 				code = videoram.read(offs+1)+ ((attr & 0xc0) << 2);
 				flipx = attr & 0x20;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -170,7 +168,7 @@ public class troangel
 		{
 			int xscroll[256];
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				/* fixed */
 				for (offs = 0;offs < 64;offs++) xscroll[255-offs] = 0;
@@ -193,7 +191,7 @@ public class troangel
 				for (offs = 128;offs < 256;offs++) xscroll[offs] = -troangel_scroll[offs];
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,256,xscroll,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -215,10 +213,10 @@ public class troangel
 			int tile_number = code & 0x3f;
 	
 			int bank = 0;
-			if ((code & 0x80) != 0) bank += 1;
-			if ((attributes & 0x20) != 0) bank += 2;
+			if( code&0x80 ) bank += 1;
+			if( attributes&0x20 ) bank += 2;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 240 - sx;
 				sy = 224 - sy;
@@ -226,19 +224,18 @@ public class troangel
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1+bank],
+			drawgfx(bitmap,Machine->gfx[1+bank],
 				tile_number,
 				color,
 				flipx,flipy,
 				sx,sy,
-				Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_troangel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_troangel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_background(bitmap);
 		draw_sprites(bitmap);
 	} };

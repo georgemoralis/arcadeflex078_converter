@@ -55,7 +55,7 @@ register. So what is controlling priority.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -100,13 +100,11 @@ public class opwolf
 		return 0xff;
 	}
 	
-	public static ReadHandlerPtr z80_input1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr z80_input1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_0_word_r(0,0);	/* irrelevant mirror ? */
 	} };
 	
-	public static ReadHandlerPtr z80_input2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr z80_input2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_0_word_r(0,0);	/* needed for coins */
 	} };
 	
@@ -115,8 +113,7 @@ public class opwolf
 					SOUND
 	******************************************************/
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 10, memory_region(REGION_CPU2) + ((data-1) & 0x03) * 0x4000 + 0x10000 );
 	} };
 	
@@ -206,8 +203,7 @@ public class opwolf
 	//5 - different values
 	//6 - different values
 	
-	public static WriteHandlerPtr opwolf_adpcm_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr opwolf_adpcm_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int start;
 		int end;
 	
@@ -226,8 +222,7 @@ public class opwolf
 	} };
 	
 	
-	public static WriteHandlerPtr opwolf_adpcm_c_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr opwolf_adpcm_c_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int start;
 		int end;
 	
@@ -246,13 +241,11 @@ public class opwolf
 	} };
 	
 	
-	public static WriteHandlerPtr opwolf_adpcm_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr opwolf_adpcm_d_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*logerror("CPU #1         d00%i-data=%2x   pc=%4x\n",offset,data,activecpu_get_pc() );*/
 	} };
 	
-	public static WriteHandlerPtr opwolf_adpcm_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr opwolf_adpcm_e_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*logerror("CPU #1         e00%i-data=%2x   pc=%4x\n",offset,data,activecpu_get_pc() );*/
 	} };
 	
@@ -296,7 +289,7 @@ public class opwolf
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_opwolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_opwolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( opwolf )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -456,8 +449,7 @@ public class opwolf
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_opwolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( opwolf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000 )	/* 12 MHz ??? */
@@ -488,13 +480,10 @@ public class opwolf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_opwolfb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( opwolfb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -525,9 +514,7 @@ public class opwolf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -604,8 +591,7 @@ public class opwolf
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_opwolf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_opwolf  = new DriverInitHandlerPtr() { public void handler(){
 		opwolf_gun_xoffs = 0;
 		opwolf_gun_yoffs = 0;
 	
@@ -614,8 +600,7 @@ public class opwolf
 		state_save_register_UINT8("sound3", 0, "registers", adpcm_c, 8);
 	} };
 	
-	public static DriverInitHandlerPtr init_opwolfb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_opwolfb  = new DriverInitHandlerPtr() { public void handler(){
 		/* bootleg needs different range of raw gun coords */
 		opwolf_gun_xoffs = -2;
 		opwolf_gun_yoffs = 17;
@@ -628,6 +613,6 @@ public class opwolf
 	
 	
 	/*    year  rom       parent    machine   inp       init */
-	public static GameDriver driver_opwolf	   = new GameDriver("1987"	,"opwolf"	,"opwolf.java"	,rom_opwolf,null	,machine_driver_opwolf	,input_ports_opwolf	,init_opwolf	,ROT0	,	"Taito America Corporation", "Operation Wolf (US)" )
-	public static GameDriver driver_opwolfb	   = new GameDriver("1987"	,"opwolfb"	,"opwolf.java"	,rom_opwolfb,driver_opwolf	,machine_driver_opwolfb	,input_ports_opwolf	,init_opwolfb	,ROT0	,	"bootleg", "Operation Bear" )
+	GAME( 1987, opwolf,   0,        opwolf,   opwolf,   opwolf,   ROT0, "Taito America Corporation", "Operation Wolf (US)" )
+	GAME( 1987, opwolfb,  opwolf,   opwolfb,  opwolf,   opwolfb,  ROT0, "bootleg", "Operation Bear" )
 }

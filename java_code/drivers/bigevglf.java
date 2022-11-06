@@ -57,7 +57,7 @@ J1100072A
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -78,8 +78,7 @@ public class bigevglf
 	static UINT8 from_sound = 0;
 	static UINT8 sound_state = 0;
 	
-	public static WriteHandlerPtr beg_banking_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beg_banking_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		beg_bank = data;
 	
 	/* d0-d3 connect to A11-A14 of the ROMs (via ls273 latch)
@@ -93,61 +92,56 @@ public class bigevglf
 		from_sound = param&0xff;
 		sound_state |= 2;
 	}
-	static WRITE_HANDLER(beg_fromsound_w)	/* write to D800 sets bit 1 in status */
+	public static WriteHandlerPtr beg_fromsound_w = new WriteHandlerPtr() {public void handler(int offset, int data)* write to D800 sets bit 1 in status */
 	{
 		timer_set(TIME_NOW, (activecpu_get_pc()<<16)|data, from_sound_latch_callback);
-	}
+	} };
 	
-	static READ_HANDLER(beg_fromsound_r)
-	{
+	public static ReadHandlerPtr beg_fromsound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 		return from_sound;
-	}
+	} };
 	
-	static READ_HANDLER(beg_soundstate_r)
-	{
+	public static ReadHandlerPtr beg_soundstate_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 ret = sound_state;
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 		sound_state &= ~2; /* read from port 21 clears bit 1 in status */
 		return ret;
-	}
+	} };
 	
-	static READ_HANDLER(soundstate_r)
-	{
+	public static ReadHandlerPtr soundstate_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 		return sound_state;
-	}
+	} };
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 		sound_state &= ~1;
 	}
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)	/* write to port 20 clears bit 0 in status */
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)* write to port 20 clears bit 0 in status */
 	{
 		for_sound = data;
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)	/* read from D800 sets bit 0 in status */
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)* read from D800 sets bit 0 in status */
 	{
 		sound_state |= 1;
 		return for_sound;
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
@@ -164,25 +158,20 @@ public class bigevglf
 	}
 	
 	/* do this on a timer to let the CPUs synchronize */
-	static WRITE_HANDLER (beg13A_clr_w)
-	{
+	public static WriteHandlerPtr beg13A_clr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, (0<<8) | 0, deferred_ls74_w);
-	}
-	static WRITE_HANDLER (beg13B_clr_w)
-	{
+	} };
+	public static WriteHandlerPtr beg13B_clr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, (1<<8) | 0, deferred_ls74_w);
-	}
-	static WRITE_HANDLER (beg13A_set_w)
-	{
+	} };
+	public static WriteHandlerPtr beg13A_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, (0<<8) | 1, deferred_ls74_w);
-	}
-	static WRITE_HANDLER (beg13B_set_w)
-	{
+	} };
+	public static WriteHandlerPtr beg13B_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, (1<<8) | 1, deferred_ls74_w);
-	}
+	} };
 	
-	public static ReadHandlerPtr beg_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr beg_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/* d0 = Q of 74ls74 IC13(partA)
 	   d1 = Q of 74ls74 IC13(partB)
 	   d2 =
@@ -198,16 +187,14 @@ public class bigevglf
 	} };
 	
 	
-	public static ReadHandlerPtr beg_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr beg_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return beg_sharedram[offset];
 	} };
-	public static WriteHandlerPtr beg_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beg_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		beg_sharedram[offset] = data;
 	} };
 	
-	static InputPortPtr input_ports_bigevglf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigevglf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigevglf )
 	
 		PORT_START(); 	/* port 00 on sub cpu */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -349,8 +336,7 @@ public class bigevglf
 	
 	
 	
-	public static ReadHandlerPtr sub_cpu_mcu_coin_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sub_cpu_mcu_coin_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int bit5=0;
 		/*
 				bit 0 and bit 1 = coin inputs
@@ -453,8 +439,7 @@ public class bigevglf
 		new GfxDecodeInfo( -1 )	/* end of array */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_bigevglf  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bigevglf  = new MachineInitHandlerPtr() { public void handler(){
 		beg13_ls74[0] = 0;
 		beg13_ls74[1] = 0;
 	} };
@@ -479,8 +464,7 @@ public class bigevglf
 		{ 100 }	/* mixing level ??? */
 	};
 	
-	public static MachineHandlerPtr machine_driver_bigevglf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigevglf )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2)		/* 5 MHz ? */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -519,9 +503,7 @@ public class bigevglf
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface) /* YM2149 really */
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -560,5 +542,5 @@ public class bigevglf
 		ROM_LOAD( "a67-15",   0x18000, 0x8000, CRC(1d261428) SHA1(0f3e6d83a8a462436fa414de4e1e4306db869d3e))
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_bigevglf	   = new GameDriver("1986"	,"bigevglf"	,"bigevglf.java"	,rom_bigevglf,null	,machine_driver_bigevglf	,input_ports_bigevglf	,null	,ROT270	,	"Taito America Corporation", "Big Event Golf")
+	GAME( 1986, bigevglf,  0,        bigevglf,  bigevglf,  0, ROT270, "Taito America Corporation", "Big Event Golf")
 }

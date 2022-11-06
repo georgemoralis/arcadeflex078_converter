@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -56,8 +56,7 @@ public class zaccaria
 	
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_zaccaria  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_zaccaria  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,j,k;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -156,11 +155,10 @@ public class zaccaria
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_zaccaria  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_zaccaria  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap,32);
@@ -176,8 +174,7 @@ public class zaccaria
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr zaccaria_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (zaccaria_videoram[offset] != data)
 		{
 			zaccaria_videoram[offset] = data;
@@ -185,9 +182,8 @@ public class zaccaria
 		}
 	} };
 	
-	public static WriteHandlerPtr zaccaria_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 1) != 0)
+	public static WriteHandlerPtr zaccaria_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 1)
 		{
 			if (zaccaria_attributesram[offset] != data)
 			{
@@ -203,13 +199,11 @@ public class zaccaria
 		zaccaria_attributesram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr zaccaria_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data & 1);
 	} };
 	
-	public static WriteHandlerPtr zaccaria_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data & 1);
 	} };
 	
@@ -226,7 +220,7 @@ public class zaccaria
 		int offs;
 		struct rectangle clip = *cliprect;
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 			sect_rect(&clip, &spritevisiblearea_flipx);
 		else
 			sect_rect(&clip, spritevisiblearea);
@@ -252,18 +246,18 @@ public class zaccaria
 			int flipx = spriteram_2.read(offs + 2)& 0x40;
 			int flipy = spriteram_2.read(offs + 2)& 0x80;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					(spriteram_2.read(offs + 2)& 0x3f) + (spriteram_2.read(offs + 1)& 0xc0),
 					4 * (spriteram_2.read(offs + 1)& 0x07),
 					flipx,flipy,
@@ -278,18 +272,18 @@ public class zaccaria
 			int flipx = spriteram.read(offs + 1)& 0x40;
 			int flipy = spriteram.read(offs + 1)& 0x80;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					(spriteram.read(offs + 1)& 0x3f) + (spriteram.read(offs + 2)& 0xc0),
 					4 * (spriteram.read(offs + 2)& 0x07),
 					flipx,flipy,
@@ -299,8 +293,7 @@ public class zaccaria
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_zaccaria  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zaccaria  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		draw_sprites(bitmap,cliprect);

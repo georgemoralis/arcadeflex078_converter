@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -18,34 +18,28 @@ public class segasnd
 	static UINT8 sega_speechboard_latch, sega_speechboard_t0, sega_speechboard_p2, sega_speechboard_drq;
 	
 	
-	public static ReadHandlerPtr speechboard_t0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speechboard_t0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sega_speechboard_t0;
 	} };
 	
-	public static ReadHandlerPtr speechboard_t1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speechboard_t1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sega_speechboard_drq;
 	} };
 	
-	public static ReadHandlerPtr speechboard_p1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speechboard_p1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sega_speechboard_latch;
 	} };
 	
-	public static ReadHandlerPtr speechboard_rom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speechboard_rom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU2)[0x800 + 0x100*(sega_speechboard_p2 & 0x3f) + offset];
 	} };
 	
-	public static WriteHandlerPtr speechboard_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speechboard_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(!(data & 0x80))
 			sega_speechboard_t0 = 0;
 	} };
 	
-	public static WriteHandlerPtr speechboard_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speechboard_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sega_speechboard_p2 = data;
 	} };
 	
@@ -54,8 +48,7 @@ public class segasnd
 		sega_speechboard_drq = level == ASSERT_LINE;
 	}
 	
-	public static WriteHandlerPtr sega_sh_speechboard_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sega_sh_speechboard_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sega_speechboard_latch = data & 0x7f;
 		cpu_set_irq_line(1, 0, data & 0x80 ? CLEAR_LINE : ASSERT_LINE);
 		if(!(data & 0x80))

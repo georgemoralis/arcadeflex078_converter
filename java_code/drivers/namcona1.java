@@ -75,7 +75,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -152,15 +152,14 @@ public class namcona1
 	
 	static data8_t namcona1_nvmem[NA1_NVRAM_SIZE];
 	
-	public static NVRAMHandlerPtr nvram_handler_namcosna1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_namcosna1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if( read_or_write )
 		{
 			mame_fwrite( file, namcona1_nvmem, NA1_NVRAM_SIZE );
 		}
 		else
 		{
-			if (file != 0)
+			if (file)
 			{
 				mame_fread( file, namcona1_nvmem, NA1_NVRAM_SIZE );
 			}
@@ -189,7 +188,7 @@ public class namcona1
 	
 	static WRITE16_HANDLER( namcona1_nvram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if( ACCESSING_LSB )
 		{
 			namcona1_nvmem[offset] = data&0xff;
 		}
@@ -197,7 +196,7 @@ public class namcona1
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_namcona1_joy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcona1_joy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcona1_joy )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -261,7 +260,7 @@ public class namcona1
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_namcona1_quiz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcona1_quiz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcona1_quiz )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -325,7 +324,7 @@ public class namcona1
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_xday2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xday2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xday2 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, "DIP2 (Freeze"));
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -407,8 +406,8 @@ public class namcona1
 				break;
 	
 			case NAMCO_TINKLPIT:
-				if ((data & 0x2000) != 0) data |= 0x20; /* throw */
-				if ((data & 0x4000) != 0) data |= 0x10; /* jump */
+				if( data&0x2000 ) data |= 0x20; /* throw */
+				if( data&0x4000 ) data |= 0x10; /* jump */
 				if( i==1 )
 				{
 					if( readinputport(1)&0x80 ) data |= 0x80; /* P1 start */
@@ -451,10 +450,10 @@ public class namcona1
 			int p1 = readinputport(1);
 			int p2 = readinputport(2);
 			data32_t code = 0;
-			if ((p2 & 0x40) != 0) code |= 0x2000; // enter (top-level of self-test)
-			if ((p2 & 0x20) != 0) code |= 0x1000; // exit  (top-level of self-test)
-			if ((p1 & 0x40) != 0) code |= 0x0020; // next  (top-level of self-test)
-			if ((p1 & 0x20) != 0) code |= 0x0010; // prev  (top-level of self-test)
+			if( p2&0x40 ) code |= 0x2000; // enter (top-level of self-test)
+			if( p2&0x20 ) code |= 0x1000; // exit  (top-level of self-test)
+			if( p1&0x40 ) code |= 0x0020; // next  (top-level of self-test)
+			if( p1&0x20 ) code |= 0x0010; // prev  (top-level of self-test)
 			code = ~code;
 			mcu_ram[0xffc/2] = code>>16;
 			mcu_ram[0xffe/2] = code&0xffff;
@@ -852,7 +851,7 @@ public class namcona1
 		blit_setup( dst1, &dest_bytes_per_row, &dst_pitch, gfxbank);
 		blit_setup( src1, &source_bytes_per_row, &src_pitch, gfxbank );
 	
-		if ((num_bytes & 1) != 0)
+		if( num_bytes&1 )
 		{
 			num_bytes++;
 		}
@@ -964,14 +963,13 @@ public class namcona1
 		{ 0xfff000, 0xffffff, MWA16_RAM, &spriteram16 },
 	MEMORY_END
 	
-	public static InterruptHandlerPtr namcona1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcona1_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int level = cpu_getiloops(); /* 0,1,2,3,4 */
 		if( level==0 )
 		{
 			simulate_mcu();
 		}
-		if (mEnableInterrupts != 0)
+		if( mEnableInterrupts )
 		{
 			if( (namcona1_vreg[0x1a/2]&(1<<level))==0 )
 			{
@@ -988,8 +986,7 @@ public class namcona1
 	};
 	
 	/* cropped at sides */
-	public static MachineHandlerPtr machine_driver_namcona1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcona1 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 50113000/4)
 		MDRV_CPU_MEMORY(namcona1_readmem,namcona1_writemem)
@@ -1012,23 +1009,18 @@ public class namcona1
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(NAMCONA, NAMCONA_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* full-width */
-	public static MachineHandlerPtr machine_driver_namcona1w = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcona1w )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(namcona1)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 38*8-1-0, 4*8, 32*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static void
@@ -1049,17 +1041,17 @@ public class namcona1
 		mEnableInterrupts = 0;
 	}
 	
-	public static DriverInitHandlerPtr init_bkrtmaq  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_BKRTMAQ; } };
-	public static DriverInitHandlerPtr init_cgangpzl  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_CGANGPZL; } };
-	public static DriverInitHandlerPtr init_emeralda  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_EMERALDA; } };
-	public static DriverInitHandlerPtr init_exbania  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_EXBANIA; } };
-	public static DriverInitHandlerPtr init_fa  = new DriverInitHandlerPtr() { public void handler(){			init_namcona1(); namcona1_gametype = NAMCO_FA; } };
-	public static DriverInitHandlerPtr init_knckhead  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_KNCKHEAD; } };
-	public static DriverInitHandlerPtr init_numanath  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_NUMANATH; } };
-	public static DriverInitHandlerPtr init_quiztou  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_QUIZTOU; } };
-	public static DriverInitHandlerPtr init_swcourt  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_SWCOURT; } };
-	public static DriverInitHandlerPtr init_tinklpit  = new DriverInitHandlerPtr() { public void handler(){	init_namcona1(); namcona1_gametype = NAMCO_TINKLPIT; } };
-	public static DriverInitHandlerPtr init_xday2  = new DriverInitHandlerPtr() { public void handler(){		init_namcona1(); namcona1_gametype = NAMCO_XDAY2; } };
+	public static DriverInitHandlerPtr init_bkrtmaq  = new DriverInitHandlerPtr() { public void handler()	init_namcona1(); namcona1_gametype = NAMCO_BKRTMAQ; }
+	public static DriverInitHandlerPtr init_cgangpzl  = new DriverInitHandlerPtr() { public void handler()init_namcona1(); namcona1_gametype = NAMCO_CGANGPZL; }
+	public static DriverInitHandlerPtr init_emeralda  = new DriverInitHandlerPtr() { public void handler()init_namcona1(); namcona1_gametype = NAMCO_EMERALDA; }
+	public static DriverInitHandlerPtr init_exbania  = new DriverInitHandlerPtr() { public void handler()	init_namcona1(); namcona1_gametype = NAMCO_EXBANIA; }
+	public static DriverInitHandlerPtr init_fa  = new DriverInitHandlerPtr() { public void handler()		init_namcona1(); namcona1_gametype = NAMCO_FA; }
+	public static DriverInitHandlerPtr init_knckhead  = new DriverInitHandlerPtr() { public void handler()init_namcona1(); namcona1_gametype = NAMCO_KNCKHEAD; }
+	public static DriverInitHandlerPtr init_numanath  = new DriverInitHandlerPtr() { public void handler()init_namcona1(); namcona1_gametype = NAMCO_NUMANATH; }
+	public static DriverInitHandlerPtr init_quiztou  = new DriverInitHandlerPtr() { public void handler()	init_namcona1(); namcona1_gametype = NAMCO_QUIZTOU; }
+	public static DriverInitHandlerPtr init_swcourt  = new DriverInitHandlerPtr() { public void handler()	init_namcona1(); namcona1_gametype = NAMCO_SWCOURT; }
+	public static DriverInitHandlerPtr init_tinklpit  = new DriverInitHandlerPtr() { public void handler()init_namcona1(); namcona1_gametype = NAMCO_TINKLPIT; }
+	public static DriverInitHandlerPtr init_xday2  = new DriverInitHandlerPtr() { public void handler()	init_namcona1(); namcona1_gametype = NAMCO_XDAY2; }
 	
 	static RomLoadPtr rom_bkrtmaq = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xa80000, REGION_CPU1, 0 )
@@ -1263,20 +1255,20 @@ public class namcona1
 		ROM_LOAD16_BYTE( "xds1dat3.8c", 0x680000, 0x200000, CRC(8980acc4) SHA1(ecd94a3d3a38923e8e322cd8863671af26e30812) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_bkrtmaq	   = new GameDriver("1992"	,"bkrtmaq"	,"namcona1.java"	,rom_bkrtmaq,null	,machine_driver_namcona1w	,input_ports_namcona1_quiz	,init_bkrtmaq	,ROT0	,	"Namco", "Bakuretsu Quiz Ma-Q Dai Bouken (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_cgangpzl	   = new GameDriver("1992"	,"cgangpzl"	,"namcona1.java"	,rom_cgangpzl,null	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_cgangpzl	,ROT0	,	"Namco", "Cosmo Gang the Puzzle (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_cgangpzj	   = new GameDriver("1992"	,"cgangpzj"	,"namcona1.java"	,rom_cgangpzj,driver_cgangpzl	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_cgangpzl	,ROT0	,	"Namco", "Cosmo Gang the Puzzle (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_exvania	   = new GameDriver("1992"	,"exvania"	,"namcona1.java"	,rom_exvania,null	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_exbania	,ROT0	,	"Namco", "Exvania (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_fghtatck	   = new GameDriver("1992"	,"fghtatck"	,"namcona1.java"	,rom_fghtatck,null	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_fa	,ROT90	,	"Namco", "Fighter & Attacker (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_fa	   = new GameDriver("1992"	,"fa"	,"namcona1.java"	,rom_fa,driver_fghtatck	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_fa	,ROT90	,	"Namco", "F/A (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_knckhead	   = new GameDriver("1992"	,"knckhead"	,"namcona1.java"	,rom_knckhead,null	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_knckhead	,ROT0	,	"Namco", "Knuckle Heads (World)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_knckhedj	   = new GameDriver("1992"	,"knckhedj"	,"namcona1.java"	,rom_knckhedj,driver_knckhead	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_knckhead	,ROT0	,	"Namco", "Knuckle Heads (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_swcourt	   = new GameDriver("1992"	,"swcourt"	,"namcona1.java"	,rom_swcourt,null	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_swcourt	,ROT0	,	"Namco", "Super World Court (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_emeralda	   = new GameDriver("1993"	,"emeralda"	,"namcona1.java"	,rom_emeralda,null	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_emeralda	,ROT0	,	"Namco", "Emeraldia (Japan Version B)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_emerldaa	   = new GameDriver("1993"	,"emerldaa"	,"namcona1.java"	,rom_emerldaa,driver_emeralda	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_emeralda	,ROT0	,	"Namco", "Emeraldia (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_numanath	   = new GameDriver("1993"	,"numanath"	,"namcona1.java"	,rom_numanath,null	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_numanath	,ROT0	,	"Namco", "Numan Athletics (World)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_numanatj	   = new GameDriver("1993"	,"numanatj"	,"namcona1.java"	,rom_numanatj,driver_numanath	,machine_driver_namcona1	,input_ports_namcona1_joy	,init_numanath	,ROT0	,	"Namco", "Numan Athletics (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_quiztou	   = new GameDriver("1993"	,"quiztou"	,"namcona1.java"	,rom_quiztou,null	,machine_driver_namcona1	,input_ports_namcona1_quiz	,init_quiztou	,ROT0	,	"Namco", "Nettou! Gekitou! Quiztou!! (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tinklpit	   = new GameDriver("1993"	,"tinklpit"	,"namcona1.java"	,rom_tinklpit,null	,machine_driver_namcona1w	,input_ports_namcona1_joy	,init_tinklpit	,ROT0	,	"Namco", "Tinkle Pit (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_xday2	   = new GameDriver("1995"	,"xday2"	,"namcona1.java"	,rom_xday2,null	,machine_driver_namcona1	,input_ports_xday2	,init_xday2	,ROT0	,	"Namco", "X-Day 2 (Japan)", GAME_IMPERFECT_SOUND|GAME_NOT_WORKING )
+	GAMEX( 1992,bkrtmaq,  0,        namcona1w, namcona1_quiz,	bkrtmaq,  ROT0, "Namco", "Bakuretsu Quiz Ma-Q Dai Bouken (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,cgangpzl, 0,        namcona1w, namcona1_joy,	cgangpzl, ROT0, "Namco", "Cosmo Gang the Puzzle (US)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,cgangpzj, cgangpzl, namcona1w, namcona1_joy,	cgangpzl, ROT0, "Namco", "Cosmo Gang the Puzzle (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,exvania,  0,        namcona1,  namcona1_joy,	exbania,  ROT0, "Namco", "Exvania (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,fghtatck, 0,        namcona1,  namcona1_joy,	fa,       ROT90,"Namco", "Fighter & Attacker (US)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,fa,       fghtatck, namcona1,  namcona1_joy,	fa,       ROT90,"Namco", "F/A (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,knckhead, 0,        namcona1,  namcona1_joy,	knckhead, ROT0, "Namco", "Knuckle Heads (World)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,knckhedj, knckhead, namcona1,  namcona1_joy,	knckhead, ROT0, "Namco", "Knuckle Heads (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1992,swcourt,  0,        namcona1w, namcona1_joy,	swcourt,  ROT0, "Namco", "Super World Court (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,emeralda, 0,        namcona1w, namcona1_joy,	emeralda, ROT0, "Namco", "Emeraldia (Japan Version B)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,emerldaa, emeralda, namcona1w, namcona1_joy,	emeralda, ROT0, "Namco", "Emeraldia (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,numanath, 0,        namcona1,  namcona1_joy,	numanath, ROT0, "Namco", "Numan Athletics (World)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,numanatj, numanath, namcona1,  namcona1_joy,	numanath, ROT0, "Namco", "Numan Athletics (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,quiztou,  0,        namcona1,  namcona1_quiz,	quiztou,  ROT0, "Namco", "Nettou! Gekitou! Quiztou!! (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1993,tinklpit, 0,        namcona1w, namcona1_joy,	tinklpit, ROT0, "Namco", "Tinkle Pit (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1995,xday2,    0,        namcona1,  xday2,           xday2,    ROT0, "Namco", "X-Day 2 (Japan)", GAME_IMPERFECT_SOUND|GAME_NOT_WORKING )
 }

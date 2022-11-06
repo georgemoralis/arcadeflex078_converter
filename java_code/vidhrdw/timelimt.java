@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,7 +34,7 @@ public class timelimt
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_timelimt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom) {
+	public static PaletteInitHandlerPtr palette_init_timelimt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -58,8 +58,8 @@ public class timelimt
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
-		}
-	} };
+		} };
+	}
 	
 	/***************************************************************************
 	
@@ -69,7 +69,7 @@ public class timelimt
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		SET_TILE_INFO(1, timelimt_bg_videoram.read(tile_index), 0, 0);
+		SET_TILE_INFO(1, timelimt_bg_videoram[tile_index], 0, 0);
 	}
 	
 	static void get_fg_tile_info(int tile_index)
@@ -77,18 +77,17 @@ public class timelimt
 		SET_TILE_INFO(0, videoram.read(tile_index), 0, 0);
 	}
 	
-	public static VideoStartHandlerPtr video_start_timelimt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_timelimt  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if (!fg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -98,8 +97,7 @@ public class timelimt
 	
 	/***************************************************************************/
 	
-	public static WriteHandlerPtr timelimt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timelimt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -107,29 +105,25 @@ public class timelimt
 		}
 	} };
 	
-	public static WriteHandlerPtr timelimt_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (timelimt_bg_videoram.read(offset)!= data)
+	public static WriteHandlerPtr timelimt_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (timelimt_bg_videoram[offset] != data)
 		{
-			timelimt_bg_videoram.write(data,data);
+			timelimt_bg_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr timelimt_scroll_x_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timelimt_scroll_x_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollx &= 0x100;
 		scrollx |= data & 0xff;
 	} };
 	
-	public static WriteHandlerPtr timelimt_scroll_x_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timelimt_scroll_x_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollx &= 0xff;
 		scrollx |= ( data & 1 ) << 8;
 	} };
 	
-	public static WriteHandlerPtr timelimt_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timelimt_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrolly = data;
 	} };
 	
@@ -154,12 +148,12 @@ public class timelimt
 			code += ( attr & 0x80 ) ? 0x40 : 0x00;
 			code += ( attr & 0x40 ) ? 0x80 : 0x00;
 	
-			drawgfx( bitmap, Machine.gfx[2],
+			drawgfx( bitmap, Machine->gfx[2],
 					code,
 					attr & 7,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -171,8 +165,7 @@ public class timelimt
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_timelimt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, scrolly);
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);

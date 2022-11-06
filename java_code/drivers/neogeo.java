@@ -263,7 +263,7 @@ removal of hacks to change region / get info memory card manager
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -332,11 +332,11 @@ public class neogeo
 		int level = 0;
 	
 		/* determine which interrupt is active */
-		if (vblank_int != 0) level = 1;
-		if (scanline_int != 0) level = 2;
+		if (vblank_int) level = 1;
+		if (scanline_int) level = 2;
 	
 		/* either set or clear the appropriate lines */
-		if (level != 0)
+		if (level)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -344,10 +344,10 @@ public class neogeo
 	
 	static WRITE16_HANDLER( neo_irqack_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if ((data & 4) != 0) vblank_int = 0;
-			if ((data & 2) != 0) scanline_int = 0;
+			if (data & 4) vblank_int = 0;
+			if (data & 2) scanline_int = 0;
 			update_interrupts();
 		}
 	}
@@ -355,8 +355,7 @@ public class neogeo
 	
 	static int fc = 0;
 	
-	public static InterruptHandlerPtr neogeo_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr neogeo_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int line = RASTER_LINES - cpu_getiloops();
 	
 		current_rasterline = line;
@@ -389,7 +388,7 @@ public class neogeo
 				fc++;
 			}
 	
-			if ((irq2control & IRQ2CTRL_ENABLE) != 0)
+			if (irq2control & IRQ2CTRL_ENABLE)
 				usrintf_showmessage("IRQ2 enabled, need raster driver");
 	
 			/* return a standard vblank interrupt */
@@ -419,7 +418,7 @@ public class neogeo
 				current_rastercounter = RASTER_COUNTER_RELOAD + l - RASTER_LINE_RELOAD;
 		}
 	
-		if (busy != 0)
+		if (busy)
 		{
 			if (neogeo_raster_enable && scanline_read)
 			{
@@ -429,18 +428,18 @@ public class neogeo
 			}
 		}
 	
-		if ((irq2control & IRQ2CTRL_ENABLE) != 0)
+		if (irq2control & IRQ2CTRL_ENABLE)
 		{
 			if (line == irq2start)
 			{
 	//logerror("trigger IRQ2 at raster line %d (raster counter %d)\n",line,current_rastercounter);
-				if (busy == 0)
+				if (!busy)
 				{
-					if (neogeo_raster_enable != 0)
+					if (neogeo_raster_enable)
 						do_refresh = 1;
 				}
 	
-				if ((irq2control & IRQ2CTRL_AUTOLOAD_REPEAT) != 0)
+				if (irq2control & IRQ2CTRL_AUTOLOAD_REPEAT)
 					irq2start += (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 	
 				scanline_int = 1;
@@ -457,7 +456,7 @@ public class neogeo
 				usrintf_showmessage("raster effects %sabled",neogeo_raster_enable ? "en" : "dis");
 			}
 	
-			if ((irq2control & IRQ2CTRL_AUTOLOAD_VBLANK) != 0)
+			if (irq2control & IRQ2CTRL_AUTOLOAD_VBLANK)
 				irq2start = (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 			else
 				irq2start = 1000;
@@ -482,7 +481,7 @@ public class neogeo
 			vblank_int = 1;	   /* vertical blank */
 		}
 	
-		if (do_refresh != 0)
+		if (do_refresh)
 		{
 			if (line > RASTER_LINE_RELOAD)	/* avoid unnecessary updates after start of vblank */
 				force_partial_update((current_rastercounter - 256) - 1 + SCANLINE_ADJUST);
@@ -491,13 +490,11 @@ public class neogeo
 		update_interrupts();
 	}
 	
-	public static InterruptHandlerPtr neogeo_raster_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr neogeo_raster_interrupt = new InterruptHandlerPtr() {public void handler(){
 		raster_interrupt(0);
 	} };
 	
-	public static InterruptHandlerPtr neogeo_raster_interrupt_busy = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr neogeo_raster_interrupt_busy = new InterruptHandlerPtr() {public void handler(){
 		raster_interrupt(1);
 	} };
 	
@@ -517,10 +514,10 @@ public class neogeo
 	
 		res = (readinputport(4) & ~(readinputport(5) & 0x20)) ^ (coinflip << 6) ^ (databit << 7);
 	
-		if (Machine.sample_rate)
+		if (Machine->sample_rate)
 		{
 			res |= result_code << 8;
-			if (pending_command != 0) res &= 0x7fff;
+			if (pending_command) res &= 0x7fff;
 		}
 		else
 			res |= 0x0100;
@@ -531,7 +528,7 @@ public class neogeo
 	static WRITE16_HANDLER( neo_z80_w )
 	{
 		/* tpgold uses 16-bit writes, this can't be correct */
-	//	if (ACCESSING_LSB != 0)
+	//	if (ACCESSING_LSB)
 	//		return;
 	
 		soundlatch_w(0,(data>>8)&0xff);
@@ -600,7 +597,7 @@ public class neogeo
 	{
 		data16_t res;
 	
-		if (neogeo_has_trackball != 0)
+		if (neogeo_has_trackball)
 			res = (readinputport(ts?7:0) << 8) + readinputport(3);
 		else
 			res = (readinputport(0) << 8) + readinputport(3);
@@ -721,12 +718,12 @@ public class neogeo
 	{
 		logerror("%06x: neo_irq2pos_16_w offset %d %04x\n",activecpu_get_pc(),offset,data);
 	
-		if (offset != 0)
+		if (offset)
 			irq2pos_value = (irq2pos_value & 0xffff0000) | (UINT32)data;
 		else
 			irq2pos_value = (irq2pos_value & 0x0000ffff) | ((UINT32)data << 16);
 	
-		if ((irq2control & IRQ2CTRL_LOAD_RELATIVE) != 0)
+		if (irq2control & IRQ2CTRL_LOAD_RELATIVE)
 		{
 	//		int line = (irq2pos_value + 3) / 0x180;	/* ridhero gives 0x17d */
 			int line = (irq2pos_value + 0x3b) / 0x180;	/* turfmast goes as low as 0x145 */
@@ -740,7 +737,7 @@ public class neogeo
 	/* information about the sma random number generator provided by razoola */
 	/* this RNG is correct for KOF99, other games might be different */
 	
-	int neogeo_rng = 0x2345;	/* this is reset in public static MachineInitHandlerPtr machine_init_  = new MachineInitHandlerPtr() { public void handler() */
+	int neogeo_rng = 0x2345;	/* this is reset in public static MachineInitHandlerPtr machine_init_  = new MachineInitHandlerPtr() { public void handler()/
 	
 	static READ16_HANDLER( sma_random_r )
 	{
@@ -860,8 +857,7 @@ public class neogeo
 	};
 	
 	
-	public static ReadHandlerPtr z80_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr z80_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if 0
 	{
 		char buf[80];
@@ -932,8 +928,7 @@ public class neogeo
 		}
 	} };
 	
-	public static WriteHandlerPtr z80_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0xff)
 		{
 		case 0x04:
@@ -984,7 +979,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_neogeo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_neogeo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( neogeo )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -1075,7 +1070,7 @@ public class neogeo
 		PORT_BITX( 0x80, IP_ACTIVE_LOW, 0, "Test Switch", KEYCODE_F2, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjneogeo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjneogeo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjneogeo )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -1197,7 +1192,7 @@ public class neogeo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_irrmaze = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_irrmaze = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( irrmaze )
 		PORT_START(); 		/* IN0 multiplexed */
 		PORT_ANALOG( 0xff, 0x7f, IPT_TRACKBALL_X | IPF_REVERSE, 10, 20, 0, 0 );
 	
@@ -1279,7 +1274,7 @@ public class neogeo
 		PORT_ANALOG( 0xff, 0x7f, IPT_TRACKBALL_Y | IPF_REVERSE, 10, 20, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_popbounc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_popbounc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( popbounc )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -1432,8 +1427,7 @@ public class neogeo
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_neogeo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( neogeo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 12000000) /* verified */
@@ -1472,13 +1466,10 @@ public class neogeo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, neogeo_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_raster = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raster )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(neogeo)
@@ -1487,13 +1478,10 @@ public class neogeo
 	
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_RGB_DIRECT)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_raster_busy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raster_busy )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(raster)
@@ -1501,12 +1489,9 @@ public class neogeo
 		MDRV_CPU_VBLANK_INT(neogeo_raster_interrupt_busy,RASTER_LINES)
 	
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_neo320 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( neo320 )
 		MDRV_IMPORT_FROM(neogeo)
 		/* Screen width *should* be 320, at least in the test mode for the crosshatch,
 		   this has been verified on original hardware, glitches that occur at 320 in
@@ -1514,17 +1499,12 @@ public class neogeo
 		   probably correct in all cases, however to avoid confusion we use 304 unless
 		   a game *needs* 320 */
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ras320 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ras320 )
 		MDRV_IMPORT_FROM(raster)
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 2*8, 30*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*
@@ -5701,8 +5681,7 @@ public class neogeo
 	
 	
 	
-	public static DriverInitHandlerPtr init_kof99  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kof99  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 		int i,j;
 	
@@ -5738,8 +5717,7 @@ public class neogeo
 		install_mem_read16_handler(0, 0x2ffffa, 0x2ffffb, sma_random_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_garou  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_garou  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 		int i,j;
 	
@@ -5777,8 +5755,7 @@ public class neogeo
 		install_mem_read16_handler(0, 0x2ffff0, 0x2ffff1, sma_random_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_garouo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_garouo  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 		int i,j;
 	
@@ -5816,8 +5793,7 @@ public class neogeo
 		install_mem_read16_handler(0, 0x2ffff0, 0x2ffff1, sma_random_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_mslug3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mslug3  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 		int i,j;
 	
@@ -5853,8 +5829,7 @@ public class neogeo
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_kof2000  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kof2000  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 		int i,j;
 	
@@ -5892,57 +5867,49 @@ public class neogeo
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_kof99n  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kof99n  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x00);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_ganryu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ganryu  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x07);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_s1945p  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_s1945p  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x05);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_preisle2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_preisle2  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0x9f);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_mslug3n  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mslug3n  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xad);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_kof2000n  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kof2000n  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 2;
 		kof2000_neogeo_gfx_decrypt(0x00);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_bangbead  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bangbead  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xf8);
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_nitd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nitd  = new DriverInitHandlerPtr() { public void handler(){
 		neogeo_fix_bank_type = 1;
 		kof99_neogeo_gfx_decrypt(0xff);
 		init_neogeo();
@@ -6017,8 +5984,7 @@ public class neogeo
 	}
 	
 	
-	DRIVER_INIT ( kof98 )
-	{
+	public static DriverInitHandlerPtr init_kof98  = new DriverInitHandlerPtr() { public void handler(){
 		kof98P1decode();
 	
 	/* when 0x20aaaa contains 0x0090 (word) then 0x100 (normally the neogeo header) should return 0x00c200fd
@@ -6028,18 +5994,16 @@ public class neogeo
 	
 		init_neogeo();
 	
-	}
+	} };
 	
-	public static DriverInitHandlerPtr init_mjneogeo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjneogeo  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler (0, 0x300000, 0x300001, mjneogeo_r);
 		install_mem_write16_handler(0, 0x380000, 0x380001, mjneogeo_w);
 	
 		init_neogeo();
 	} };
 	
-	public static DriverInitHandlerPtr init_popbounc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_popbounc  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler (0, 0x300000, 0x300001, popbounc1_16_r);
 		install_mem_read16_handler (0, 0x340000, 0x340001, popbounc2_16_r);
 	

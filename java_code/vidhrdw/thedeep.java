@@ -30,7 +30,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -80,8 +80,7 @@ public class thedeep
 				0)
 	}
 	
-	public static WriteHandlerPtr thedeep_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_vram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (thedeep_vram_0[offset] != data)
 		{
 			thedeep_vram_0[offset] = data;
@@ -89,8 +88,7 @@ public class thedeep
 		}
 	} };
 	
-	public static WriteHandlerPtr thedeep_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_vram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (thedeep_vram_1[offset] != data)
 		{
 			thedeep_vram_1[offset] = data;
@@ -105,8 +103,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_thedeep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_thedeep  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0;i < 512;i++)
 		{
@@ -123,8 +120,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_thedeep  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_thedeep  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0  = tilemap_create(get_tile_info_0,tilemap_scan_rows_back,TILEMAP_TRANSPARENT,16,16,0x20,0x20);
 		tilemap_1  = tilemap_create(get_tile_info_1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,0x20,0x20);
 	
@@ -195,10 +191,10 @@ public class thedeep
 			nx = 1 << ((attr & 0x06) >> 1);
 			ny = 1 << ((attr & 0x18) >> 3);
 	
-			if ((color & 1) != 0)	sx -= 256;
-			if ((attr & 1) != 0)	sy -= 256;
+			if (color & 1)	sx -= 256;
+			if (attr  & 1)	sy -= 256;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -217,7 +213,7 @@ public class thedeep
 	
 				for (y = 0; y < ny; y++)
 				{
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code + (flipy ? (ny - y - 1) :  y),
 							color,
 							flipx,flipy,
@@ -235,8 +231,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_thedeep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx = thedeep_scroll[0] + (thedeep_scroll[1]<<8);
 		int scrolly = thedeep_scroll[2] + (thedeep_scroll[3]<<8);
 		int x;

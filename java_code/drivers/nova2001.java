@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,7 +80,7 @@ public class nova2001
 	
 	
 	
-	static InputPortPtr input_ports_nova2001 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nova2001 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nova2001 )
 	    PORT_START(); 
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -195,8 +195,7 @@ public class nova2001
 		{ 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_nova2001 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nova2001 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 12000000/4)	// 3 MHz
@@ -220,9 +219,7 @@ public class nova2001
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -268,6 +265,6 @@ public class nova2001
 	
 	
 	
-	public static GameDriver driver_nova2001	   = new GameDriver("1983"	,"nova2001"	,"nova2001.java"	,rom_nova2001,null	,machine_driver_nova2001	,input_ports_nova2001	,null	,ROT0	,	"UPL", "Nova 2001 (Japan)" )
-	public static GameDriver driver_nov2001u	   = new GameDriver("1983"	,"nov2001u"	,"nova2001.java"	,rom_nov2001u,driver_nova2001	,machine_driver_nova2001	,input_ports_nova2001	,null	,ROT0	,	"UPL (Universal license)", "Nova 2001 (US)" )
+	GAME( 1983, nova2001, 0,        nova2001, nova2001, 0, ROT0, "UPL", "Nova 2001 (Japan)" )
+	GAME( 1983, nov2001u, nova2001, nova2001, nova2001, 0, ROT0, "UPL (Universal license)", "Nova 2001 (US)" )
 }

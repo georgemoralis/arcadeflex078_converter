@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -24,7 +24,7 @@ public class _262intf
 	static const struct YMF262interface *intf_262 = NULL;
 	static void IRQHandler_262(int n,int irq)
 	{
-		if (intf_262.handler[n]) (intf_262.handler[n])(irq);
+		if (intf_262->handler[n]) (intf_262->handler[n])(irq);
 	}
 	static void timer_callback_262(int param)
 	{
@@ -49,33 +49,33 @@ public class _262intf
 	int YMF262_sh_start(const struct MachineSound *msound)
 	{
 		int i,chip;
-		int rate = Machine.sample_rate;
+		int rate = Machine->sample_rate;
 	
-		intf_262 = msound.sound_interface;
-		if( intf_262.num > MAX_262 ) return 1;
+		intf_262 = msound->sound_interface;
+		if( intf_262->num > MAX_262 ) return 1;
 	
 		if (options.use_filter)
-			rate = intf_262.baseclock/288;
+			rate = intf_262->baseclock/288;
 	
 		/* Timer state clear */
 		memset(Timer_262,0,sizeof(Timer_262));
 	
 		/* stream system initialize */
-		if ( YMF262Init(intf_262.num,intf_262.baseclock,rate) != 0)
+		if ( YMF262Init(intf_262->num,intf_262->baseclock,rate) != 0)
 			return 1;
 	
-		for (chip = 0;chip < intf_262.num; chip++)
+		for (chip = 0;chip < intf_262->num; chip++)
 		{
 			int mixed_vol;
 			int vol[4];		/* four separate outputs */
 			char buf[4][40];
 			const char *name[4];
 	
-			mixed_vol = intf_262.mixing_levelAB[chip];
+			mixed_vol = intf_262->mixing_levelAB[chip];
 			for (i=0; i<4; i++)
 			{
 				if (i==2) /*channels C ad D use separate field */
-					mixed_vol = intf_262.mixing_levelCD[chip];
+					mixed_vol = intf_262->mixing_levelCD[chip];
 				vol[i] = mixed_vol & 0xffff;
 				mixed_vol >>= 16;
 				name[i] = buf[i];
@@ -105,43 +105,43 @@ public class _262intf
 	{
 		int i;
 	
-		for (i = 0;i < intf_262.num;i++)
+		for (i = 0;i < intf_262->num;i++)
 			YMF262ResetChip(i);
 	}
 	
 	/* chip #0 */
-	public static ReadHandlerPtr YMF262_status_0_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YMF262_status_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YMF262Read(0, 0);
-	} };
-	public static WriteHandlerPtr YMF262_register_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_register_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(0, 0, data);
-	} };
-	public static WriteHandlerPtr YMF262_data_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_data_A_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(0, 1, data);
-	} };
-	public static WriteHandlerPtr YMF262_register_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_register_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(0, 2, data);
-	} };
-	public static WriteHandlerPtr YMF262_data_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_data_B_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(0, 3, data);
-	} };
+	}
 	
 	/* chip #1 */
-	public static ReadHandlerPtr YMF262_status_1_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YMF262_status_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YMF262Read(1, 0);
-	} };
-	public static WriteHandlerPtr YMF262_register_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_register_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(1, 0, data);
-	} };
-	public static WriteHandlerPtr YMF262_data_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_data_A_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(1, 1, data);
-	} };
-	public static WriteHandlerPtr YMF262_register_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_register_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(1, 2, data);
-	} };
-	public static WriteHandlerPtr YMF262_data_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	}
+	public static WriteHandlerPtr YMF262_data_B_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YMF262Write(1, 3, data);
-	} };
+	}
 	
 	#endif
 	

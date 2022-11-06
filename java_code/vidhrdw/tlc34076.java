@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,7 +45,7 @@ public class tlc34076
 	
 	static void update_palette(int which)
 	{
-		int totalcolors = (Machine.drv.total_colors <= 256) ? Machine.drv.total_colors : 256;
+		int totalcolors = (Machine->drv->total_colors <= 256) ? Machine->drv->total_colors : 256;
 		int i, mask = regs[PIXEL_READ_MASK];
 	
 		for (i = 0; i < totalcolors; i++)
@@ -101,8 +101,7 @@ public class tlc34076
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr tlc34076_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tlc34076_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 result;
 	
 		/* keep in range */
@@ -139,8 +138,7 @@ public class tlc34076
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr tlc34076_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tlc34076_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 oldval;
 	
 		/* keep in range */
@@ -251,7 +249,7 @@ public class tlc34076
 	
 	WRITE16_HANDLER( tlc34076_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			tlc34076_w(offset, data);
 	}
 	
@@ -262,7 +260,7 @@ public class tlc34076
 	
 	WRITE16_HANDLER( tlc34076_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			tlc34076_w(offset, data >> 8);
 	}
 	

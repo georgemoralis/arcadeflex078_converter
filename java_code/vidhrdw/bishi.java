@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class bishi
 		*color = layer_colorbase[layer] + ((*color & 0xf0));
 	}
 	
-	VIDEO_START(bishi)
-	{
+	public static VideoStartHandlerPtr video_start_bishi  = new VideoStartHandlerPtr() { public int handler(){
 		if (Machine.color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
 	
 		K055555_vh_start();
@@ -50,7 +49,7 @@ public class bishi
 		layer_colorbase[2] = 0x80;
 		layer_colorbase[3] = 0xc0;
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the three tile layers by priority order */
 	static void sortlayers(int *layer,int *pri)
@@ -71,8 +70,7 @@ public class bishi
 		SWAP(2,3)
 	}
 	
-	VIDEO_UPDATE(bishi)
-	{
+	public static VideoUpdateHandlerPtr video_update_bishi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers[4], i;/*, old;*/
 	/*	int bg_colorbase, new_colorbase, plane, dirty; */
 		int pris[4] = { K55_PRIINP_0, K55_PRIINP_3, K55_PRIINP_6, K55_PRIINP_7 };
@@ -98,5 +96,5 @@ public class bishi
 				K056832_tilemap_draw(bitmap, cliprect, layers[i], 0, 1<<i);
 			}
 		}
-	}
+	} };
 }

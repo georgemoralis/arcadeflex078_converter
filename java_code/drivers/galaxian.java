@@ -118,7 +118,7 @@ TO DO :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -130,14 +130,12 @@ public class galaxian
 	
 	
 	/* Send sound data to the sound cpu and cause an nmi */
-	public static WriteHandlerPtr checkman_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr checkman_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler (0,data);
 		cpu_set_irq_line (1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr drivfrcg_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr drivfrcg_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x002e:
@@ -874,7 +872,7 @@ public class galaxian
 	};
 	
 	
-	static InputPortPtr input_ports_galaxian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaxian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaxian )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -915,7 +913,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_superg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superg )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -956,7 +954,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_swarm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_swarm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( swarm )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -997,7 +995,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gmgalax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gmgalax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gmgalax )
 		PORT_START();       /* Ghost Muncher - IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL);
@@ -1081,7 +1079,7 @@ public class galaxian
 		PORT_DIPSETTING( 0x01, "Galaxian" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zerotime = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zerotime = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zerotime )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1122,7 +1120,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pisces = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pisces = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pisces )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -1164,7 +1162,7 @@ public class galaxian
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'pisces', but different "Coinage" Dip Switch */
-	static InputPortPtr input_ports_piscesb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_piscesb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( piscesb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -1205,7 +1203,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gteikokb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gteikokb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gteikokb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1247,7 +1245,7 @@ public class galaxian
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as gteikokb with cabinet reversed */
-	static InputPortPtr input_ports_gteikob2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gteikob2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gteikob2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1288,7 +1286,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacbatt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacbatt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacbatt )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1329,7 +1327,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_batman2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_batman2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( batman2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1370,7 +1368,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_warofbug = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warofbug = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warofbug )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
@@ -1411,7 +1409,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_redufo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_redufo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( redufo )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1450,7 +1448,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_exodus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exodus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exodus )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1493,7 +1491,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_streakng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_streakng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( streakng )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL);
@@ -1533,7 +1531,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pacmanbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pacmanbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pacmanbl )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1574,7 +1572,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_devilfsg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_devilfsg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( devilfsg )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1613,7 +1611,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zigzag = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zigzag = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zigzag )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1652,7 +1650,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_scramblb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scramblb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scramblb )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_COCKTAIL );
@@ -1689,7 +1687,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jumpbug = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jumpbug = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jumpbug )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
@@ -1728,7 +1726,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_levers = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_levers = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( levers )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
@@ -1776,7 +1774,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_azurian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_azurian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( azurian )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
@@ -1820,7 +1818,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x00, "Very hard" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_orbitron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_orbitron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( orbitron )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1860,7 +1858,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blkhole = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blkhole = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blkhole )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNUSED );
@@ -1900,7 +1898,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_checkman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_checkman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( checkman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -1940,7 +1938,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_checkmaj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_checkmaj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( checkmaj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -1981,7 +1979,7 @@ public class galaxian
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 );/* p1 tiles left */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dingo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dingo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dingo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2022,7 +2020,7 @@ public class galaxian
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 );/* Check code at 0x22e1 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mooncrst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mooncrst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mooncrst )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2063,7 +2061,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mooncrsg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mooncrsg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mooncrsg )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2104,7 +2102,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_smooncrs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_smooncrs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( smooncrs )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2145,7 +2143,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mooncrsa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mooncrsa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mooncrsa )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2186,7 +2184,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fantazia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fantazia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fantazia )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2227,7 +2225,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_eagle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eagle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eagle )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2269,7 +2267,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_eagle2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eagle2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eagle2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2315,7 +2313,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mooncrgx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mooncrgx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mooncrgx )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2356,7 +2354,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skybase = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skybase = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skybase )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNUSED );
@@ -2399,7 +2397,7 @@ public class galaxian
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_omega = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_omega = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( omega )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2436,7 +2434,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_moonqsr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moonqsr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moonqsr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2476,7 +2474,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_moonal2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moonal2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moonal2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2517,7 +2515,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mshuttle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mshuttle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mshuttle )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2564,7 +2562,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kingball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kingball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kingball )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2614,7 +2612,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_scorpnmc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scorpnmc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scorpnmc )
 		PORT_START();       /* IN0 - 0xa000 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SERVICE1 );	// COIN2? (it ALWAYS adds 1 credit)
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -2667,7 +2665,7 @@ public class galaxian
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_frogg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_frogg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( frogg )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2708,7 +2706,7 @@ public class galaxian
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_4in1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_4in1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 4in1 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
@@ -2828,7 +2826,7 @@ public class galaxian
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bagmanmc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bagmanmc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bagmanmc )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2880,7 +2878,7 @@ public class galaxian
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dkongjrm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dkongjrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dkongjrm )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -2919,7 +2917,7 @@ public class galaxian
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_froggrmc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_froggrmc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( froggrmc )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -2959,7 +2957,7 @@ public class galaxian
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rockclim = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rockclim = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rockclim )
 	
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -3041,7 +3039,7 @@ public class galaxian
 	- you can insert 99 credits 3 times consecutively, then it resets
 	
 	*/
-	static InputPortPtr input_ports_ozon1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ozon1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ozon1 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3092,7 +3090,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ladybugg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ladybugg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ladybugg )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -3133,7 +3131,7 @@ public class galaxian
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON1 );/* Check code at 0x22e1 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vpool = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vpool = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vpool )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -3190,7 +3188,7 @@ public class galaxian
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_drivfrcg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drivfrcg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drivfrcg )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -3458,26 +3456,20 @@ public class galaxian
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(galaxian)
 		MDRV_VIDEO_UPDATE(galaxian)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_galaxian = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galaxian )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gmgalax = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gmgalax )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3491,78 +3483,60 @@ public class galaxian
 		MDRV_COLORTABLE_LENGTH(16*4)
 	
 		MDRV_VIDEO_START(gmgalax)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pisces = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pisces )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gteikob2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gteikob2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(gteikob2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_batman2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( batman2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(batman2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mooncrgx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mooncrgx )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mooncrgx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pacmanbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pacmanbl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(pacmanbl_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_devilfsg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( devilfsg )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3572,13 +3546,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_GFXDECODE(pacmanbl_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mooncrst = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mooncrst )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3587,13 +3558,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mooncrst)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_skybase = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skybase )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3602,13 +3570,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_moonqsr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moonqsr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3617,13 +3582,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(moonqsr)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mshuttle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mshuttle )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3639,13 +3601,10 @@ public class galaxian
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_scramblb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scramblb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3657,13 +3616,10 @@ public class galaxian
 	
 		MDRV_PALETTE_INIT(scramble)
 		MDRV_VIDEO_START(scramble)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_zigzag = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zigzag )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3679,13 +3635,10 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_jumpbug = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jumpbug )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3699,13 +3652,10 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_checkman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( checkman )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3727,13 +3677,10 @@ public class galaxian
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_checkmaj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( checkmaj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -3751,13 +3698,10 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, checkmaj_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kingball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kingball )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3774,13 +3718,10 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, kingball_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_scorpnmc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scorpnmc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3789,13 +3730,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(batman2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_4in1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 4in1 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3806,13 +3744,10 @@ public class galaxian
 		MDRV_GFXDECODE(_4in1_gfxdecodeinfo)
 	
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bagmanmc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bagmanmc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3825,13 +3760,10 @@ public class galaxian
 		MDRV_GFXDECODE(bagmanmc_gfxdecodeinfo)
 	
 		MDRV_VIDEO_START(pisces)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dkongjrm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dkongjrm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
@@ -3840,13 +3772,10 @@ public class galaxian
 	
 		/* video hardware */
 		MDRV_VIDEO_START(dkongjrm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_froggrmc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( froggrmc )
 	
 		/* basic machine hardware */
 	
@@ -3869,12 +3798,9 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rockclim = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rockclim )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian)
 		MDRV_CPU_MODIFY("main")
@@ -3887,12 +3813,9 @@ public class galaxian
 		MDRV_PALETTE_INIT(rockclim)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ozon1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ozon1 )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
 		MDRV_CPU_MODIFY("main")
@@ -3906,12 +3829,9 @@ public class galaxian
 	
 		MDRV_VIDEO_START(galaxian_plain)
 		MDRV_SOUND_ADD(AY8910, jumpbug_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_drivfrcg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drivfrcg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 18432000/6)
@@ -3936,9 +3856,7 @@ public class galaxian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, galaxian_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -5418,76 +5336,76 @@ public class galaxian
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_galaxian	   = new GameDriver("1979"	,"galaxian"	,"galaxian.java"	,rom_galaxian,null	,machine_driver_galaxian	,input_ports_galaxian	,null	,ROT90	,	"Namco", "Galaxian (Namco set 1)" )
-	public static GameDriver driver_galaxiaj	   = new GameDriver("1979"	,"galaxiaj"	,"galaxian.java"	,rom_galaxiaj,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"Namco", "Galaxian (Namco set 2)" )
-	public static GameDriver driver_galmidw	   = new GameDriver("1979"	,"galmidw"	,"galaxian.java"	,rom_galmidw,driver_galaxian	,machine_driver_galaxian	,input_ports_galaxian	,null	,ROT90	,	"[Namco] (Midway license)", "Galaxian (Midway)" )
-	public static GameDriver driver_galmidwo	   = new GameDriver("1979"	,"galmidwo"	,"galaxian.java"	,rom_galmidwo,driver_galaxian	,machine_driver_galaxian	,input_ports_galaxian	,null	,ROT90	,	"[Namco] (Midway license)", "Galaxian (Midway, old rev)" )
-	public static GameDriver driver_superg	   = new GameDriver("1979"	,"superg"	,"galaxian.java"	,rom_superg,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Super Galaxians" )
-	public static GameDriver driver_galapx	   = new GameDriver("1979"	,"galapx"	,"galaxian.java"	,rom_galapx,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Galaxian Part X" )
-	public static GameDriver driver_moonaln	   = new GameDriver("19??"	,"moonaln"	,"galaxian.java"	,rom_moonaln,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"[Nichibutsu] (Karateco license)", "Moon Alien" )
-	public static GameDriver driver_galap1	   = new GameDriver("1979"	,"galap1"	,"galaxian.java"	,rom_galap1,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Space Invaders Galactica" )
-	public static GameDriver driver_galap4	   = new GameDriver("1979"	,"galap4"	,"galaxian.java"	,rom_galap4,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Galaxian Part 4" )
-	public static GameDriver driver_galturbo	   = new GameDriver("1979"	,"galturbo"	,"galaxian.java"	,rom_galturbo,driver_galaxian	,machine_driver_galaxian	,input_ports_superg	,null	,ROT90	,	"hack", "Galaxian Turbo" )
-	public static GameDriver driver_swarm	   = new GameDriver("1979"	,"swarm"	,"galaxian.java"	,rom_swarm,driver_galaxian	,machine_driver_galaxian	,input_ports_swarm	,null	,ROT90	,	"hack", "Swarm" )
-	public static GameDriver driver_zerotime	   = new GameDriver("1979"	,"zerotime"	,"galaxian.java"	,rom_zerotime,driver_galaxian	,machine_driver_galaxian	,input_ports_zerotime	,null	,ROT90	,	"Petaco S.A.", "Zero Time" )
-	public static GameDriver driver_tst_galx	   = new GameDriver("19??"	,"tst_galx"	,"galaxian.java"	,rom_tst_galx,driver_galaxian	,machine_driver_galaxian	,input_ports_galaxian	,null	,ROT90	,	"Test ROM", "Galaxian Test ROM" )
-	public static GameDriver driver_gmgalax	   = new GameDriver("1981"	,"gmgalax"	,"galaxian.java"	,rom_gmgalax,null	,machine_driver_gmgalax	,input_ports_gmgalax	,init_gmgalax	,ROT90	,	"bootleg", "Ghostmuncher Galaxian (bootleg)" )
-	public static GameDriver driver_pisces	   = new GameDriver("19??"	,"pisces"	,"galaxian.java"	,rom_pisces,null	,machine_driver_pisces	,input_ports_pisces	,init_pisces	,ROT90	,	"Subelectro", "Pisces" )
-	public static GameDriver driver_piscesb	   = new GameDriver("19??"	,"piscesb"	,"galaxian.java"	,rom_piscesb,driver_pisces	,machine_driver_pisces	,input_ports_piscesb	,init_pisces	,ROT90	,	"bootleg", "Pisces (bootleg)" )
-	public static GameDriver driver_uniwars	   = new GameDriver("1980"	,"uniwars"	,"galaxian.java"	,rom_uniwars,null	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "UniWar S" )
-	public static GameDriver driver_gteikoku	   = new GameDriver("1980"	,"gteikoku"	,"galaxian.java"	,rom_gteikoku,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"Irem", "Gingateikoku No Gyakushu" )
-	public static GameDriver driver_gteikokb	   = new GameDriver("1980"	,"gteikokb"	,"galaxian.java"	,rom_gteikokb,driver_uniwars	,machine_driver_pisces	,input_ports_gteikokb	,init_pisces	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg set 1)" )
-	public static GameDriver driver_gteikob2	   = new GameDriver("1980"	,"gteikob2"	,"galaxian.java"	,rom_gteikob2,driver_uniwars	,machine_driver_gteikob2	,input_ports_gteikob2	,init_gteikob2	,ROT270	,	"bootleg", "Gingateikoku No Gyakushu (bootleg set 2)" )
-	public static GameDriver driver_spacbatt	   = new GameDriver("1980"	,"spacbatt"	,"galaxian.java"	,rom_spacbatt,driver_uniwars	,machine_driver_pisces	,input_ports_spacbatt	,init_pisces	,ROT90	,	"bootleg", "Space Battle" )
-	public static GameDriver driver_skyraidr	   = new GameDriver("1980"	,"skyraidr"	,"galaxian.java"	,rom_skyraidr,driver_uniwars	,machine_driver_pisces	,input_ports_superg	,init_pisces	,ROT90	,	"bootleg", "Sky Raiders" )
-	public static GameDriver driver_batman2	   = new GameDriver("1981"	,"batman2"	,"galaxian.java"	,rom_batman2,driver_phoenix	,machine_driver_batman2	,input_ports_batman2	,init_pisces	,ROT270	,	"bootleg", "Batman Part 2" )
-	public static GameDriver driver_warofbug	   = new GameDriver("1981"	,"warofbug"	,"galaxian.java"	,rom_warofbug,null	,machine_driver_galaxian	,input_ports_warofbug	,init_pisces	,ROT90	,	"Armenia", "War of the Bugs or Monsterous Manouvers in a Mushroom Maze" )
-	public static GameDriver driver_redufo	   = new GameDriver("19??"	,"redufo"	,"galaxian.java"	,rom_redufo,null	,machine_driver_galaxian	,input_ports_redufo	,init_pisces	,ROT90	,	"bootleg", "Defend the Terra Attack on the Red UFO" )
-	public static GameDriver driver_exodus	   = new GameDriver("19??"	,"exodus"	,"galaxian.java"	,rom_exodus,driver_redufo	,machine_driver_galaxian	,input_ports_exodus	,init_pisces	,ROT90	,	"Subelectro", "Exodus (bootleg?)" )
-	public static GameDriver driver_streakng	   = new GameDriver("1981"	,"streakng"	,"galaxian.java"	,rom_streakng,null	,machine_driver_pacmanbl	,input_ports_streakng	,null	,ROT90	,	"Shoei", "Streaking", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_pacmanbl	   = new GameDriver("1981"	,"pacmanbl"	,"galaxian.java"	,rom_pacmanbl,driver_puckman	,machine_driver_pacmanbl	,input_ports_pacmanbl	,init_pisces	,ROT270	,	"bootleg", "Pac-Man (Galaxian hardware)" )
-	public static GameDriver driver_devilfsg	   = new GameDriver("1984"	,"devilfsg"	,"galaxian.java"	,rom_devilfsg,driver_devilfsh	,machine_driver_devilfsg	,input_ports_devilfsg	,null	,ROT270	,	"Vision / Artic", "Devil Fish (Galaxian hardware, bootleg?)" )
-	public static GameDriver driver_zigzag	   = new GameDriver("1982"	,"zigzag"	,"galaxian.java"	,rom_zigzag,null	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 1)" )
-	public static GameDriver driver_zigzag2	   = new GameDriver("1982"	,"zigzag2"	,"galaxian.java"	,rom_zigzag2,driver_zigzag	,machine_driver_zigzag	,input_ports_zigzag	,null	,ROT90	,	"LAX", "Zig Zag (Galaxian hardware, set 2)" )
-	public static GameDriver driver_scramblb	   = new GameDriver("1981"	,"scramblb"	,"galaxian.java"	,rom_scramblb,driver_scramble	,machine_driver_scramblb	,input_ports_scramblb	,null	,ROT90	,	"bootleg", "Scramble (Galaxian hardware)" )
-	public static GameDriver driver_jumpbug	   = new GameDriver("1981"	,"jumpbug"	,"galaxian.java"	,rom_jumpbug,null	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"Rock-ola", "Jump Bug" )
-	public static GameDriver driver_jumpbugb	   = new GameDriver("1981"	,"jumpbugb"	,"galaxian.java"	,rom_jumpbugb,driver_jumpbug	,machine_driver_jumpbug	,input_ports_jumpbug	,null	,ROT90	,	"bootleg", "Jump Bug (bootleg)" )
-	public static GameDriver driver_levers	   = new GameDriver("1983"	,"levers"	,"galaxian.java"	,rom_levers,null	,machine_driver_jumpbug	,input_ports_levers	,null	,ROT90	,	"Rock-ola", "Levers" )
-	public static GameDriver driver_azurian	   = new GameDriver("1982"	,"azurian"	,"galaxian.java"	,rom_azurian,null	,machine_driver_galaxian	,input_ports_azurian	,init_azurian	,ROT90	,	"Rait Electronics Ltd", "Azurian Attack" )
-	public static GameDriver driver_orbitron	   = new GameDriver("19??"	,"orbitron"	,"galaxian.java"	,rom_orbitron,null	,machine_driver_galaxian	,input_ports_orbitron	,init_pisces	,ROT270	,	"Signatron USA", "Orbitron" )
-	public static GameDriver driver_checkman	   = new GameDriver("1982"	,"checkman"	,"galaxian.java"	,rom_checkman,null	,machine_driver_checkman	,input_ports_checkman	,init_checkman	,ROT90	,	"Zilec-Zenitone", "Check Man" )
-	public static GameDriver driver_checkmaj	   = new GameDriver("1982"	,"checkmaj"	,"galaxian.java"	,rom_checkmaj,driver_checkman	,machine_driver_checkmaj	,input_ports_checkmaj	,init_checkmaj	,ROT90	,	"Jaleco", "Check Man (Japan)" )
-	public static GameDriver driver_dingo	   = new GameDriver("1983"	,"dingo"	,"galaxian.java"	,rom_dingo,null	,machine_driver_checkmaj	,input_ports_dingo	,init_dingo	,ROT90	,	"Ashby Computers and Graphics LTD. (Jaleco license)", "Dingo" )
-	public static GameDriver driver_blkhole	   = new GameDriver("1981"	,"blkhole"	,"galaxian.java"	,rom_blkhole,null	,machine_driver_galaxian	,input_ports_blkhole	,null	,ROT90	,	"TDS", "Black Hole" )
-	public static GameDriver driver_mooncrst	   = new GameDriver("1980"	,"mooncrst"	,"galaxian.java"	,rom_mooncrst,null	,machine_driver_mooncrst	,input_ports_mooncrst	,init_mooncrst	,ROT90	,	"Nichibutsu", "Moon Cresta (Nichibutsu)" )
-	public static GameDriver driver_mooncrsu	   = new GameDriver("1980"	,"mooncrsu"	,"galaxian.java"	,rom_mooncrsu,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrst	,init_mooncrsu	,ROT90	,	"Nichibutsu USA", "Moon Cresta (Nichibutsu, unencrypted)" )
-	public static GameDriver driver_mooncrsa	   = new GameDriver("1980"	,"mooncrsa"	,"galaxian.java"	,rom_mooncrsa,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrsa	,init_mooncrst	,ROT90	,	"Nichibutsu", "Moon Cresta (Nichibutsu, old rev)" )
-	public static GameDriver driver_mooncrsg	   = new GameDriver("1980"	,"mooncrsg"	,"galaxian.java"	,rom_mooncrsg,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrsg	,init_mooncrsu	,ROT90	,	"Gremlin", "Moon Cresta (Gremlin)" )
-	public static GameDriver driver_smooncrs	   = new GameDriver("1980?"	,"smooncrs"	,"galaxian.java"	,rom_smooncrs,driver_mooncrst	,machine_driver_mooncrst	,input_ports_smooncrs	,init_mooncrsu	,ROT90	,	"Gremlin", "Super Moon Cresta" )
-	public static GameDriver driver_mooncrsb	   = new GameDriver("1980"	,"mooncrsb"	,"galaxian.java"	,rom_mooncrsb,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrsa	,init_mooncrsu	,ROT90	,	"bootleg", "Moon Cresta (bootleg set 1)" )
-	public static GameDriver driver_mooncrs2	   = new GameDriver("1980"	,"mooncrs2"	,"galaxian.java"	,rom_mooncrs2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_mooncrsa	,init_mooncrsu	,ROT90	,	"Nichibutsu", "Moon Cresta (bootleg set 2)" )
-	public static GameDriver driver_fantazia	   = new GameDriver("1980"	,"fantazia"	,"galaxian.java"	,rom_fantazia,driver_mooncrst	,machine_driver_mooncrst	,input_ports_fantazia	,init_mooncrsu	,ROT90	,	"bootleg", "Fantazia", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_eagle	   = new GameDriver("1980"	,"eagle"	,"galaxian.java"	,rom_eagle,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle	,init_mooncrsu	,ROT90	,	"Centuri", "Eagle (set 1)" )
-	public static GameDriver driver_eagle2	   = new GameDriver("1980"	,"eagle2"	,"galaxian.java"	,rom_eagle2,driver_mooncrst	,machine_driver_mooncrst	,input_ports_eagle2	,init_mooncrsu	,ROT90	,	"Centuri", "Eagle (set 2)" )
-	public static GameDriver driver_mooncrgx	   = new GameDriver("1980"	,"mooncrgx"	,"galaxian.java"	,rom_mooncrgx,driver_mooncrst	,machine_driver_mooncrgx	,input_ports_mooncrgx	,init_mooncrgx	,ROT270	,	"bootleg", "Moon Cresta (Galaxian hardware)" )
-	public static GameDriver driver_moonqsr	   = new GameDriver("1980"	,"moonqsr"	,"galaxian.java"	,rom_moonqsr,null	,machine_driver_moonqsr	,input_ports_moonqsr	,init_moonqsr	,ROT90	,	"Nichibutsu", "Moon Quasar" )
-	public static GameDriver driver_mshuttle	   = new GameDriver("1981"	,"mshuttle"	,"galaxian.java"	,rom_mshuttle,null	,machine_driver_mshuttle	,input_ports_mshuttle	,init_mshuttle	,ROT0	,	"Nichibutsu", "Moon Shuttle (US?)" )
-	public static GameDriver driver_mshuttlj	   = new GameDriver("1981"	,"mshuttlj"	,"galaxian.java"	,rom_mshuttlj,driver_mshuttle	,machine_driver_mshuttle	,input_ports_mshuttle	,init_cclimbrj	,ROT0	,	"Nichibutsu", "Moon Shuttle (Japan)" )
-	public static GameDriver driver_moonal2	   = new GameDriver("1980"	,"moonal2"	,"galaxian.java"	,rom_moonal2,null	,machine_driver_mooncrst	,input_ports_moonal2	,null	,ROT90	,	"Nichibutsu", "Moon Alien Part 2" )
-	public static GameDriver driver_moonal2b	   = new GameDriver("1980"	,"moonal2b"	,"galaxian.java"	,rom_moonal2b,driver_moonal2	,machine_driver_mooncrst	,input_ports_moonal2	,null	,ROT90	,	"Nichibutsu", "Moon Alien Part 2 (older version)" )
-	public static GameDriver driver_skybase	   = new GameDriver("1982"	,"skybase"	,"galaxian.java"	,rom_skybase,null	,machine_driver_skybase	,input_ports_skybase	,null	,ROT90	,	"Omori Electric Co., Ltd.", "Sky Base" )
-	public static GameDriver driver_omega	   = new GameDriver("19??"	,"omega"	,"galaxian.java"	,rom_omega,driver_theend	,machine_driver_galaxian	,input_ports_omega	,null	,ROT270	,	"bootleg?", "Omega" )
-	public static GameDriver driver_kingball	   = new GameDriver("1980"	,"kingball"	,"galaxian.java"	,rom_kingball,null	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (US)" )
-	public static GameDriver driver_kingbalj	   = new GameDriver("1980"	,"kingbalj"	,"galaxian.java"	,rom_kingbalj,driver_kingball	,machine_driver_kingball	,input_ports_kingball	,init_kingball	,ROT90	,	"Namco", "King & Balloon (Japan)" )
-	public static GameDriver driver_scorpnmc	   = new GameDriver("19??"	,"scorpnmc"	,"galaxian.java"	,rom_scorpnmc,null	,machine_driver_scorpnmc	,input_ports_scorpnmc	,null	,ROT90	,	"Dorneer", "Scorpion (Moon Cresta hardware)" )
-	public static GameDriver driver_frogg	   = new GameDriver("1981"	,"frogg"	,"galaxian.java"	,rom_frogg,driver_frogger	,machine_driver_galaxian	,input_ports_frogg	,null	,ROT90	,	"bootleg", "Frog (Galaxian hardware)" )
-	public static GameDriver driver_4in1	   = new GameDriver("1981"	,"4in1"	,"galaxian.java"	,rom_4in1,null	,machine_driver_4in1	,input_ports_4in1	,init_4in1	,ROT90	,	"Armenia / Food and Fun", "4 Fun in 1", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_bagmanmc	   = new GameDriver("1982"	,"bagmanmc"	,"galaxian.java"	,rom_bagmanmc,driver_bagman	,machine_driver_bagmanmc	,input_ports_bagmanmc	,null	,ROT90	,	"bootleg", "Bagman (Moon Cresta hardware)", GAME_WRONG_COLORS  )
-	public static GameDriver driver_dkongjrm	   = new GameDriver("1982"	,"dkongjrm"	,"galaxian.java"	,rom_dkongjrm,driver_dkongjr	,machine_driver_dkongjrm	,input_ports_dkongjrm	,null	,ROT90	,	"bootleg", "Donkey Kong Jr. (Moon Cresta hardware)", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_froggrmc	   = new GameDriver("1981"	,"froggrmc"	,"galaxian.java"	,rom_froggrmc,driver_frogger	,machine_driver_froggrmc	,input_ports_froggrmc	,init_froggers	,ROT90	,	"bootleg?", "Frogger (Moon Cresta hardware)" )
-	public static GameDriver driver_rockclim	   = new GameDriver("1981"	,"rockclim"	,"galaxian.java"	,rom_rockclim,null	,machine_driver_rockclim	,input_ports_rockclim	,null	,ROT180	,	"Taito", "Rock Climber" )
-	public static GameDriver driver_ozon1	   = new GameDriver("1983"	,"ozon1"	,"galaxian.java"	,rom_ozon1,null	,machine_driver_ozon1	,input_ports_ozon1	,null	,ROT90	,	"Proma", "Ozon I" )
-	public static GameDriver driver_ladybugg	   = new GameDriver("1983"	,"ladybugg"	,"galaxian.java"	,rom_ladybugg,driver_ladybug	,machine_driver_batman2	,input_ports_ladybugg	,init_ladybugg	,ROT270	,	"bootleg", "Ladybug (bootleg on Galaxian hardware)" )
-	public static GameDriver driver_vpool	   = new GameDriver("1980"	,"vpool"	,"galaxian.java"	,rom_vpool,driver_hustler	,machine_driver_mooncrst	,input_ports_vpool	,null	,ROT90	,	"bootleg", "Video Pool (bootleg on Moon Cresta hardware)" )
-	public static GameDriver driver_drivfrcg	   = new GameDriver("1984"	,"drivfrcg"	,"galaxian.java"	,rom_drivfrcg,driver_drivfrcp	,machine_driver_drivfrcg	,input_ports_drivfrcg	,null	,ROT90	,	"Shinkai Inc. (Magic Eletronics USA licence)", "Driving Force (Galaxian conversion)", GAME_WRONG_COLORS )
+	GAME( 1979, galaxian, 0,        galaxian, galaxian, 0,        ROT90,  "Namco", "Galaxian (Namco set 1)" )
+	GAME( 1979, galaxiaj, galaxian, galaxian, superg,   0,        ROT90,  "Namco", "Galaxian (Namco set 2)" )
+	GAME( 1979, galmidw,  galaxian, galaxian, galaxian, 0,        ROT90,  "[Namco] (Midway license)", "Galaxian (Midway)" )
+	GAME( 1979, galmidwo, galaxian, galaxian, galaxian, 0,        ROT90,  "[Namco] (Midway license)", "Galaxian (Midway, old rev)" )
+	GAME( 1979, superg,   galaxian, galaxian, superg,   0,        ROT90,  "hack", "Super Galaxians" )
+	GAME( 1979, galapx,   galaxian, galaxian, superg,   0,   	  ROT90,  "hack", "Galaxian Part X" )
+	GAME( 19??, moonaln,  galaxian, galaxian, superg,   0,        ROT90,  "[Nichibutsu] (Karateco license)", "Moon Alien" )
+	GAME( 1979, galap1,   galaxian, galaxian, superg,   0,        ROT90,  "hack", "Space Invaders Galactica" )
+	GAME( 1979, galap4,   galaxian, galaxian, superg,   0,        ROT90,  "hack", "Galaxian Part 4" )
+	GAME( 1979, galturbo, galaxian, galaxian, superg,   0,        ROT90,  "hack", "Galaxian Turbo" )
+	GAME( 1979, swarm,    galaxian, galaxian, swarm,    0,        ROT90,  "hack", "Swarm" )
+	GAME( 1979, zerotime, galaxian, galaxian, zerotime, 0,        ROT90,  "Petaco S.A.", "Zero Time" )
+	GAME( 19??, tst_galx, galaxian, galaxian, galaxian, 0,        ROT90,  "Test ROM", "Galaxian Test ROM" )
+	GAME( 1981, gmgalax,  0,        gmgalax,  gmgalax,  gmgalax,  ROT90,  "bootleg", "Ghostmuncher Galaxian (bootleg)" )
+	GAME( 19??, pisces,   0,        pisces,   pisces,   pisces,	  ROT90,  "Subelectro", "Pisces" )
+	GAME( 19??, piscesb,  pisces,   pisces,   piscesb,  pisces,   ROT90,  "bootleg", "Pisces (bootleg)" )
+	GAME( 1980, uniwars,  0,        pisces,   superg,   pisces,   ROT90,  "Irem", "UniWar S" )
+	GAME( 1980, gteikoku, uniwars,  pisces,   superg,   pisces,   ROT90,  "Irem", "Gingateikoku No Gyakushu" )
+	GAME( 1980, gteikokb, uniwars,  pisces,   gteikokb, pisces,   ROT270, "bootleg", "Gingateikoku No Gyakushu (bootleg set 1)" )
+	GAME( 1980, gteikob2, uniwars,  gteikob2, gteikob2, gteikob2, ROT270, "bootleg", "Gingateikoku No Gyakushu (bootleg set 2)" )
+	GAME( 1980, spacbatt, uniwars,  pisces,   spacbatt, pisces,   ROT90,  "bootleg", "Space Battle" )
+	GAME( 1980, skyraidr, uniwars,  pisces,   superg,   pisces,   ROT90,  "bootleg", "Sky Raiders" )
+	GAME( 1981, batman2,  phoenix,  batman2,  batman2,  pisces,   ROT270, "bootleg", "Batman Part 2" )
+	GAME( 1981, warofbug, 0,        galaxian, warofbug, pisces,   ROT90,  "Armenia", "War of the Bugs or Monsterous Manouvers in a Mushroom Maze" )
+	GAME( 19??, redufo,   0,        galaxian, redufo,   pisces,   ROT90,  "bootleg", "Defend the Terra Attack on the Red UFO" )
+	GAME( 19??, exodus,   redufo,   galaxian, exodus,   pisces,   ROT90,  "Subelectro", "Exodus (bootleg?)" )
+	GAMEX(1981, streakng, 0,        pacmanbl, streakng, 0,        ROT90,  "Shoei", "Streaking", GAME_IMPERFECT_COLORS )
+	GAME( 1981, pacmanbl, puckman,  pacmanbl, pacmanbl, pisces,   ROT270, "bootleg", "Pac-Man (Galaxian hardware)" )
+	GAME( 1984, devilfsg, devilfsh, devilfsg, devilfsg, 0,        ROT270, "Vision / Artic", "Devil Fish (Galaxian hardware, bootleg?)" )
+	GAME( 1982, zigzag,   0,        zigzag,   zigzag,   0,        ROT90,  "LAX", "Zig Zag (Galaxian hardware, set 1)" )
+	GAME( 1982, zigzag2,  zigzag,   zigzag,   zigzag,   0,        ROT90,  "LAX", "Zig Zag (Galaxian hardware, set 2)" )
+	GAME( 1981, scramblb, scramble, scramblb, scramblb, 0,        ROT90,  "bootleg", "Scramble (Galaxian hardware)" )
+	GAME( 1981, jumpbug,  0,        jumpbug,  jumpbug,  0,        ROT90,  "Rock-ola", "Jump Bug" )
+	GAME( 1981, jumpbugb, jumpbug,  jumpbug,  jumpbug,  0,        ROT90,  "bootleg", "Jump Bug (bootleg)" )
+	GAME( 1983, levers,   0,        jumpbug,  levers,   0,        ROT90,  "Rock-ola", "Levers" )
+	GAME( 1982, azurian,  0,        galaxian, azurian,  azurian,  ROT90,  "Rait Electronics Ltd", "Azurian Attack" )
+	GAME( 19??, orbitron, 0,        galaxian, orbitron, pisces,   ROT270, "Signatron USA", "Orbitron" )
+	GAME( 1982, checkman, 0,        checkman, checkman, checkman, ROT90,  "Zilec-Zenitone", "Check Man" )
+	GAME( 1982, checkmaj, checkman, checkmaj, checkmaj, checkmaj, ROT90,  "Jaleco", "Check Man (Japan)" )
+	GAME( 1983, dingo,    0,        checkmaj, dingo,    dingo,    ROT90,  "Ashby Computers and Graphics LTD. (Jaleco license)", "Dingo" )
+	GAME( 1981, blkhole,  0,        galaxian, blkhole,  0,        ROT90,  "TDS", "Black Hole" )
+	GAME( 1980, mooncrst, 0,        mooncrst, mooncrst, mooncrst, ROT90,  "Nichibutsu", "Moon Cresta (Nichibutsu)" )
+	GAME( 1980, mooncrsu, mooncrst, mooncrst, mooncrst, mooncrsu, ROT90,  "Nichibutsu USA", "Moon Cresta (Nichibutsu, unencrypted)" )
+	GAME( 1980, mooncrsa, mooncrst, mooncrst, mooncrsa, mooncrst, ROT90,  "Nichibutsu", "Moon Cresta (Nichibutsu, old rev)" )
+	GAME( 1980, mooncrsg, mooncrst, mooncrst, mooncrsg, mooncrsu, ROT90,  "Gremlin", "Moon Cresta (Gremlin)" )
+	GAME( 1980?,smooncrs, mooncrst, mooncrst, smooncrs, mooncrsu, ROT90,  "Gremlin", "Super Moon Cresta" )
+	GAME( 1980, mooncrsb, mooncrst, mooncrst, mooncrsa, mooncrsu, ROT90,  "bootleg", "Moon Cresta (bootleg set 1)" )
+	GAME( 1980, mooncrs2, mooncrst, mooncrst, mooncrsa, mooncrsu, ROT90,  "Nichibutsu", "Moon Cresta (bootleg set 2)" )
+	GAMEX(1980, fantazia, mooncrst, mooncrst, fantazia, mooncrsu, ROT90,  "bootleg", "Fantazia", GAME_IMPERFECT_COLORS )
+	GAME( 1980, eagle,    mooncrst, mooncrst, eagle,    mooncrsu, ROT90,  "Centuri", "Eagle (set 1)" )
+	GAME( 1980, eagle2,   mooncrst, mooncrst, eagle2,   mooncrsu, ROT90,  "Centuri", "Eagle (set 2)" )
+	GAME( 1980, mooncrgx, mooncrst, mooncrgx, mooncrgx, mooncrgx, ROT270, "bootleg", "Moon Cresta (Galaxian hardware)" )
+	GAME( 1980, moonqsr,  0,        moonqsr,  moonqsr,  moonqsr,  ROT90,  "Nichibutsu", "Moon Quasar" )
+	GAME( 1981, mshuttle, 0,        mshuttle, mshuttle, mshuttle, ROT0,   "Nichibutsu", "Moon Shuttle (US?)" )
+	GAME( 1981, mshuttlj, mshuttle, mshuttle, mshuttle, cclimbrj, ROT0,   "Nichibutsu", "Moon Shuttle (Japan)" )
+	GAME( 1980, moonal2,  0,        mooncrst, moonal2,  0,        ROT90,  "Nichibutsu", "Moon Alien Part 2" )
+	GAME( 1980, moonal2b, moonal2,  mooncrst, moonal2,  0,        ROT90,  "Nichibutsu", "Moon Alien Part 2 (older version)" )
+	GAME( 1982, skybase,  0,        skybase,  skybase,  0,        ROT90,  "Omori Electric Co., Ltd.", "Sky Base" )
+	GAME( 19??, omega,    theend,   galaxian, omega,    0,        ROT270, "bootleg?", "Omega" )
+	GAME( 1980, kingball, 0,        kingball, kingball, kingball, ROT90,  "Namco", "King & Balloon (US)" )
+	GAME( 1980, kingbalj, kingball, kingball, kingball, kingball, ROT90,  "Namco", "King & Balloon (Japan)" )
+	GAME( 19??, scorpnmc, 0,        scorpnmc, scorpnmc, 0,        ROT90,  "Dorneer", "Scorpion (Moon Cresta hardware)" )
+	GAME( 1981, frogg,    frogger,  galaxian, frogg,    0,        ROT90,  "bootleg", "Frog (Galaxian hardware)" )
+	GAMEX(1981, 4in1,     0,        4in1,     4in1,     4in1,     ROT90,  "Armenia / Food and Fun", "4 Fun in 1", GAME_IMPERFECT_SOUND )
+	GAMEX(1982, bagmanmc, bagman,   bagmanmc, bagmanmc, 0,        ROT90,  "bootleg", "Bagman (Moon Cresta hardware)", GAME_WRONG_COLORS  )
+	GAMEX(1982, dkongjrm, dkongjr,  dkongjrm, dkongjrm, 0,        ROT90,  "bootleg", "Donkey Kong Jr. (Moon Cresta hardware)", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+	GAME( 1981, froggrmc, frogger,  froggrmc, froggrmc, froggers, ROT90,  "bootleg?", "Frogger (Moon Cresta hardware)" )
+	GAME( 1981, rockclim, 0,        rockclim, rockclim, 0,		  ROT180, "Taito", "Rock Climber" )
+	GAME( 1983, ozon1,    0,		ozon1,    ozon1,	0,		  ROT90,  "Proma", "Ozon I" )
+	GAME( 1983, ladybugg, ladybug,  batman2,  ladybugg, ladybugg, ROT270, "bootleg", "Ladybug (bootleg on Galaxian hardware)" )
+	GAME( 1980, vpool,    hustler,  mooncrst, vpool,    0,        ROT90,  "bootleg", "Video Pool (bootleg on Moon Cresta hardware)" )
+	GAMEX(1984, drivfrcg, drivfrcp, drivfrcg, drivfrcg, 0,		  ROT90,  "Shinkai Inc. (Magic Eletronics USA licence)", "Driving Force (Galaxian conversion)", GAME_WRONG_COLORS )
 }

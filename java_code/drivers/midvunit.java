@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,8 +54,7 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_midvunit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midvunit  = new MachineInitHandlerPtr() { public void handler(){
 		dcs_reset_w(1);
 		dcs_reset_w(0);
 	
@@ -67,8 +66,7 @@ public class midvunit
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_midvplus  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midvplus  = new MachineInitHandlerPtr() { public void handler(){
 		dcs_reset_w(1);
 		dcs_reset_w(0);
 	
@@ -176,7 +174,7 @@ public class midvunit
 	
 	static WRITE32_HANDLER( midvunit_cmos_w )
 	{
-		if (cmos_protected == 0)
+		if (!cmos_protected)
 		{
 			data32_t *cmos = (data32_t *)generic_nvram;
 			COMBINE_DATA(&cmos[offset]);
@@ -285,12 +283,12 @@ public class midvunit
 		{
 			int which = (offset >> 4) & 1;
 	//	logerror("%06X:tms32031_control_w(%02X) = %08X\n", activecpu_get_pc(), offset, data);
-			if ((data & 0x40) != 0)
+			if (data & 0x40)
 				timer_adjust(timer[which], TIME_NEVER, 0, TIME_NEVER);
 	
 			/* bit 0x200 selects internal clocking, which is 1/2 the main CPU clock rate */
-			if ((data & 0x200) != 0)
-				timer_rate = (double)Machine.drv.cpu[0].cpu_clock * 0.5;
+			if (data & 0x200)
+				timer_rate = (double)Machine->drv->cpu[0].cpu_clock * 0.5;
 			else
 				timer_rate = 10000000.;
 		}
@@ -445,7 +443,7 @@ public class midvunit
 				break;
 		}
 	
-		if (logit != 0)
+		if (logit)
 			logerror("%06X:midvplus_misc_w(%d) = %08X\n", activecpu_get_pc(), offset, data);
 	}
 	
@@ -576,7 +574,7 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_crusnusa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crusnusa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crusnusa )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -700,7 +698,7 @@ public class midvunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_crusnwld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crusnwld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crusnwld )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -821,7 +819,7 @@ public class midvunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_offroadc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_offroadc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( offroadc )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -916,7 +914,7 @@ public class midvunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wargods = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wargods = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wargods )
 		PORT_START(); 	    /* DS1 */
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1048,9 +1046,7 @@ public class midvunit
 	
 		MDRV_VIDEO_START(midvunit)
 		MDRV_VIDEO_UPDATE(midvunit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( midvunit )
@@ -1058,9 +1054,7 @@ public class midvunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( midvplus )
@@ -1076,9 +1070,7 @@ public class midvunit
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs2_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1368,9 +1360,9 @@ public class midvunit
 		/* speedups */
 		generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(speedup, speedup + 1), generic_speedup_r);
 	}
-	public static DriverInitHandlerPtr init_crusnusa  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc93e); } };
-	public static DriverInitHandlerPtr init_crusnu40  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc957); } };
-	public static DriverInitHandlerPtr init_crusnu21  = new DriverInitHandlerPtr() { public void handler() { init_crusnusa_common(0xc051); } };
+	public static DriverInitHandlerPtr init_crusnusa  = new DriverInitHandlerPtr() { public void handler() init_crusnusa_common(0xc93e); }
+	public static DriverInitHandlerPtr init_crusnu40  = new DriverInitHandlerPtr() { public void handler() init_crusnusa_common(0xc957); }
+	public static DriverInitHandlerPtr init_crusnu21  = new DriverInitHandlerPtr() { public void handler() init_crusnusa_common(0xc051); }
 	
 	
 	static void init_crusnwld_common(offs_t speedup)
@@ -1392,16 +1384,15 @@ public class midvunit
 		install_mem_write32_handler(0, ADDR_RANGE(0x9d0000, 0x9d0000), bit_reset_w);
 	
 		/* speedups */
-		if (speedup != 0)
+		if (speedup)
 			generic_speedup = install_mem_read32_handler(0, ADDR_RANGE(speedup, speedup + 1), generic_speedup_r);
 	}
-	public static DriverInitHandlerPtr init_crusnwld  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0xd4c0); } };
-	public static DriverInitHandlerPtr init_crusnw20  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0xd49c); } };
-	public static DriverInitHandlerPtr init_crusnw13  = new DriverInitHandlerPtr() { public void handler() { init_crusnwld_common(0); } };
+	public static DriverInitHandlerPtr init_crusnwld  = new DriverInitHandlerPtr() { public void handler() init_crusnwld_common(0xd4c0); }
+	public static DriverInitHandlerPtr init_crusnw20  = new DriverInitHandlerPtr() { public void handler() init_crusnwld_common(0xd49c); }
+	public static DriverInitHandlerPtr init_crusnw13  = new DriverInitHandlerPtr() { public void handler() init_crusnwld_common(0); }
 	
 	
-	public static DriverInitHandlerPtr init_offroadc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_offroadc  = new DriverInitHandlerPtr() { public void handler(){
 		dcs_init();
 		adc_shift = 16;
 	
@@ -1424,8 +1415,7 @@ public class midvunit
 		0
 	};
 	
-	public static DriverInitHandlerPtr init_wargods  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wargods  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 default_nvram[256];
 	
 		/* initialize the subsystems */
@@ -1457,13 +1447,13 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_crusnusa	   = new GameDriver("1994"	,"crusnusa"	,"midvunit.java"	,rom_crusnusa,null	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnusa	,ROT0	,	"Midway", "Cruis'n USA (rev L4.1)" )
-	public static GameDriver driver_crusnu40	   = new GameDriver("1994"	,"crusnu40"	,"midvunit.java"	,rom_crusnu40,driver_crusnusa	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnu40	,ROT0	,	"Midway", "Cruis'n USA (rev L4.0)" )
-	public static GameDriver driver_crusnu21	   = new GameDriver("1994"	,"crusnu21"	,"midvunit.java"	,rom_crusnu21,driver_crusnusa	,machine_driver_midvunit	,input_ports_crusnusa	,init_crusnu21	,ROT0	,	"Midway", "Cruis'n USA (rev L2.1)" )
-	public static GameDriver driver_crusnwld	   = new GameDriver("1996"	,"crusnwld"	,"midvunit.java"	,rom_crusnwld,null	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L2.3)" )
-	public static GameDriver driver_crusnw20	   = new GameDriver("1996"	,"crusnw20"	,"midvunit.java"	,rom_crusnw20,driver_crusnwld	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L2.0)" )
-	public static GameDriver driver_crusnw13	   = new GameDriver("1996"	,"crusnw13"	,"midvunit.java"	,rom_crusnw13,driver_crusnwld	,machine_driver_midvunit	,input_ports_crusnwld	,init_crusnwld	,ROT0	,	"Midway", "Cruis'n World (rev L1.3)" )
-	public static GameDriver driver_offroadc	   = new GameDriver("1997"	,"offroadc"	,"midvunit.java"	,rom_offroadc,null	,machine_driver_midvunit	,input_ports_offroadc	,init_offroadc	,ROT0	,	"Midway", "Off Road Challenge", GAME_NOT_WORKING )
+	GAME( 1994, crusnusa, 0,        midvunit, crusnusa, crusnusa, ROT0, "Midway", "Cruis'n USA (rev L4.1)" )
+	GAME( 1994, crusnu40, crusnusa, midvunit, crusnusa, crusnu40, ROT0, "Midway", "Cruis'n USA (rev L4.0)" )
+	GAME( 1994, crusnu21, crusnusa, midvunit, crusnusa, crusnu21, ROT0, "Midway", "Cruis'n USA (rev L2.1)" )
+	GAME( 1996, crusnwld, 0,        midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L2.3)" )
+	GAME( 1996, crusnw20, crusnwld, midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L2.0)" )
+	GAME( 1996, crusnw13, crusnwld, midvunit, crusnwld, crusnwld, ROT0, "Midway", "Cruis'n World (rev L1.3)" )
+	GAMEX( 1997, offroadc, 0,        midvunit, offroadc, offroadc, ROT0, "Midway", "Off Road Challenge", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_wargods	   = new GameDriver("1995"	,"wargods"	,"midvunit.java"	,rom_wargods,null	,machine_driver_midvplus	,input_ports_wargods	,init_wargods	,ROT0	,	"Midway", "War Gods" )
+	GAME( 1995, wargods,  0,        midvplus, wargods,  wargods,  ROT0, "Midway", "War Gods" )
 }

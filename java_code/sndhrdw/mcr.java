@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -75,7 +75,7 @@ public class mcr
 		int dac_index = 0;
 	
 		/* SSIO */
-		if ((mcr_sound_config & MCR_SSIO) != 0)
+		if (mcr_sound_config & MCR_SSIO)
 		{
 			ssio_sound_cpu = sound_cpu++;
 			ssio_reset_w(1);
@@ -83,7 +83,7 @@ public class mcr
 		}
 	
 		/* Turbo Chip Squeak */
-		if ((mcr_sound_config & MCR_TURBO_CHIP_SQUEAK) != 0)
+		if (mcr_sound_config & MCR_TURBO_CHIP_SQUEAK)
 		{
 			pia_config(0, PIA_ALTERNATE_ORDERING, &turbocs_pia_intf);
 			turbocs_dac_index = dac_index++;
@@ -93,7 +93,7 @@ public class mcr
 		}
 	
 		/* Chip Squeak Deluxe */
-		if ((mcr_sound_config & MCR_CHIP_SQUEAK_DELUXE) != 0)
+		if (mcr_sound_config & MCR_CHIP_SQUEAK_DELUXE)
 		{
 			pia_config(0, PIA_ALTERNATE_ORDERING, &csdeluxe_pia_intf);
 			csdeluxe_dac_index = dac_index++;
@@ -103,7 +103,7 @@ public class mcr
 		}
 	
 		/* Sounds Good */
-		if ((mcr_sound_config & MCR_SOUNDS_GOOD) != 0)
+		if (mcr_sound_config & MCR_SOUNDS_GOOD)
 		{
 			/* special case: Spy Hunter 2 has both Turbo CS and Sounds Good, so we use PIA slot 1 */
 			pia_config(1, PIA_ALTERNATE_ORDERING, &soundsgood_pia_intf);
@@ -114,7 +114,7 @@ public class mcr
 		}
 	
 		/* Squawk n Talk */
-		if ((mcr_sound_config & MCR_SQUAWK_N_TALK) != 0)
+		if (mcr_sound_config & MCR_SQUAWK_N_TALK)
 		{
 			pia_config(0, PIA_STANDARD_ORDERING, &squawkntalk_pia0_intf);
 			pia_config(1, PIA_STANDARD_ORDERING, &squawkntalk_pia1_intf);
@@ -124,7 +124,7 @@ public class mcr
 		}
 	
 		/* Advanced Audio */
-		if ((mcr_sound_config & MCR_WILLIAMS_SOUND) != 0)
+		if (mcr_sound_config & MCR_WILLIAMS_SOUND)
 		{
 			williams_cvsd_init(sound_cpu++, 0);
 			dac_index++;
@@ -147,13 +147,11 @@ public class mcr
 	 *************************************/
 	
 	/********* internal interfaces ***********/
-	public static WriteHandlerPtr ssio_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssio_status = data;
 	} };
 	
-	public static ReadHandlerPtr ssio_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ssio_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ssio_data[offset];
 	} };
 	
@@ -170,48 +168,42 @@ public class mcr
 				AY8910_set_volume(chip, chan, (ssio_duty_cycle[chip][chan] ^ 15) * 100 / 15);
 	}
 	
-	public static WriteHandlerPtr ssio_porta0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_porta0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssio_duty_cycle[0][0] = data & 15;
 		ssio_duty_cycle[0][1] = data >> 4;
 		ssio_update_volumes();
 	} };
 	
-	public static WriteHandlerPtr ssio_portb0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_portb0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssio_duty_cycle[0][2] = data & 15;
 		ssio_update_volumes();
 	} };
 	
-	public static WriteHandlerPtr ssio_porta1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_porta1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssio_duty_cycle[1][0] = data & 15;
 		ssio_duty_cycle[1][1] = data >> 4;
 		ssio_update_volumes();
 	} };
 	
-	public static WriteHandlerPtr ssio_portb1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_portb1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssio_duty_cycle[1][2] = data & 15;
 		mixer_sound_enable_global_w(!(data & 0x80));
 		ssio_update_volumes();
 	} };
 	
 	/********* external interfaces ***********/
-	public static WriteHandlerPtr ssio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, (offset << 8) | (data & 0xff), ssio_delayed_data_w);
 	} };
 	
-	public static ReadHandlerPtr ssio_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ssio_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ssio_status;
 	} };
 	
 	void ssio_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state != 0)
+		if (state)
 		{
 			int i;
 	
@@ -277,9 +269,7 @@ public class mcr
 		
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("ssio", AY8910, ssio_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -292,14 +282,12 @@ public class mcr
 	 *************************************/
 	
 	/********* internal interfaces ***********/
-	public static WriteHandlerPtr csdeluxe_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csdeluxe_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x3fc) | (data << 2);
 		DAC_signed_data_16_w(csdeluxe_dac_index, dacval << 6);
 	} };
 	
-	public static WriteHandlerPtr csdeluxe_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csdeluxe_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x003) | (data >> 6);
 		DAC_signed_data_16_w(csdeluxe_dac_index, dacval << 6);
 	} };
@@ -317,8 +305,7 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	public static WriteHandlerPtr csdeluxe_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr csdeluxe_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, csdeluxe_delayed_data_w);
 	} };
 	
@@ -372,9 +359,7 @@ public class mcr
 		MDRV_CPU_MEMORY(csdeluxe_readmem,csdeluxe_writemem)
 		
 		MDRV_SOUND_ADD_TAG("csd", DAC, mcr_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -387,14 +372,12 @@ public class mcr
 	 *************************************/
 	
 	/********* internal interfaces ***********/
-	public static WriteHandlerPtr soundsgood_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundsgood_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x3fc) | (data << 2);
 		DAC_signed_data_16_w(soundsgood_dac_index, dacval << 6);
 	} };
 	
-	public static WriteHandlerPtr soundsgood_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundsgood_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x003) | (data >> 6);
 		DAC_signed_data_16_w(soundsgood_dac_index, dacval << 6);
 		soundsgood_status = (data >> 4) & 3;
@@ -413,13 +396,11 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	public static WriteHandlerPtr soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, soundsgood_delayed_data_w);
 	} };
 	
-	public static ReadHandlerPtr soundsgood_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundsgood_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return soundsgood_status;
 	} };
 	
@@ -470,9 +451,7 @@ public class mcr
 		MDRV_CPU_MEMORY(soundsgood_readmem,soundsgood_writemem)
 		
 		MDRV_SOUND_ADD_TAG("sg", DAC, mcr_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -485,14 +464,12 @@ public class mcr
 	 *************************************/
 	
 	/********* internal interfaces ***********/
-	public static WriteHandlerPtr turbocs_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbocs_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x3fc) | (data << 2);
 		DAC_signed_data_16_w(turbocs_dac_index, dacval << 6);
 	} };
 	
-	public static WriteHandlerPtr turbocs_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbocs_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dacval = (dacval & ~0x003) | (data >> 6);
 		DAC_signed_data_16_w(turbocs_dac_index, dacval << 6);
 		turbocs_status = (data >> 4) & 3;
@@ -511,13 +488,11 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	public static WriteHandlerPtr turbocs_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr turbocs_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, turbocs_delayed_data_w);
 	} };
 	
-	public static ReadHandlerPtr turbocs_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr turbocs_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return turbocs_status;
 	} };
 	
@@ -563,9 +538,7 @@ public class mcr
 		MDRV_CPU_MEMORY(turbocs_readmem,turbocs_writemem)
 		
 		MDRV_SOUND_ADD_TAG("tcs", DAC, mcr_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START(turbo_chip_squeak_plus_sounds_good)
@@ -574,9 +547,7 @@ public class mcr
 		
 		MDRV_SOUND_REPLACE("tcs", DAC, mcr_dual_dac_interface)
 		MDRV_SOUND_REMOVE("sg")
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -589,18 +560,15 @@ public class mcr
 	 *************************************/
 	
 	/********* internal interfaces ***********/
-	public static WriteHandlerPtr squawkntalk_porta1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr squawkntalk_porta1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("Write to AY-8912\n");
 	} };
 	
-	public static WriteHandlerPtr squawkntalk_porta2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr squawkntalk_porta2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		squawkntalk_tms_command = data;
 	} };
 	
-	public static WriteHandlerPtr squawkntalk_portb2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr squawkntalk_portb2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-1 select read/write strobes on the TMS5220 */
 		data &= 0x03;
 	
@@ -641,8 +609,7 @@ public class mcr
 	
 	
 	/********* external interfaces ***********/
-	public static WriteHandlerPtr squawkntalk_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr squawkntalk_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, squawkntalk_delayed_data_w);
 	} };
 	
@@ -704,7 +671,5 @@ public class mcr
 		MDRV_CPU_MEMORY(squawkntalk_readmem,squawkntalk_writemem)
 		
 		MDRV_SOUND_ADD_TAG("snt", TMS5220, squawkntalk_tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 }

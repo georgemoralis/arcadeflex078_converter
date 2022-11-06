@@ -13,7 +13,7 @@ TO DO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class baraduke
 	
 	static int inputport_selected;
 	
-	public static WriteHandlerPtr inputport_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr inputport_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0xe0) == 0x60)
 			inputport_selected = data & 0x07;
 		else if ((data & 0xe0) == 0xc0)
@@ -41,8 +40,7 @@ public class baraduke
 	#define reverse_bitstrm(data) ((data & 0x01) << 4) | ((data & 0x02) << 2) | (data & 0x04) \
 								| ((data & 0x08) >> 2) | ((data & 0x10) >> 4)
 	
-	public static ReadHandlerPtr inputport_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inputport_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (inputport_selected){
@@ -67,18 +65,15 @@ public class baraduke
 		return data;
 	} };
 	
-	public static WriteHandlerPtr baraduke_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr baraduke_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
 	} };
 	
-	public static ReadHandlerPtr baraduke_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr baraduke_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
-	public static WriteHandlerPtr baraduke_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr baraduke_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
@@ -110,8 +105,7 @@ public class baraduke
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr soundkludge_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundkludge_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int counter;
 	
 		return ((counter++) >> 4) & 0xff;
@@ -159,7 +153,7 @@ public class baraduke
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_baraduke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_baraduke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( baraduke )
 		PORT_START(); 	/* DSW A */
 		PORT_SERVICE( 0x01, IP_ACTIVE_HIGH );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Lives") );
@@ -249,7 +243,7 @@ public class baraduke
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_metrocrs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metrocrs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metrocrs )
 		PORT_START(); 	/* DSW A */
 		PORT_SERVICE( 0x01, IP_ACTIVE_HIGH );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Coin_A") );
@@ -432,8 +426,7 @@ public class baraduke
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_baraduke = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( baraduke )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,49152000/32)	/* ??? */
@@ -463,12 +456,9 @@ public class baraduke
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_metrocrs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metrocrs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,49152000/32)	/* ??? */
@@ -498,9 +488,7 @@ public class baraduke
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_baraduke = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* 6809 code */
@@ -616,8 +604,7 @@ public class baraduke
 		ROM_LOAD( "mc1-2.2m",	0x0800, 0x0800, CRC(6f4dca7b) SHA1(781134c02853aded2cba63719c0e4c78b227da1c) )	/* Red palette */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_metrocrs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_metrocrs  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char *rom = memory_region(REGION_GFX2);
 	
@@ -627,8 +614,8 @@ public class baraduke
 	
 	
 	
-	public static GameDriver driver_baraduke	   = new GameDriver("1985"	,"baraduke"	,"baraduke.java"	,rom_baraduke,null	,machine_driver_baraduke	,input_ports_baraduke	,null	,ROT0	,	"Namco", "Baraduke (set 1)" )
-	public static GameDriver driver_baraduka	   = new GameDriver("1985"	,"baraduka"	,"baraduke.java"	,rom_baraduka,driver_baraduke	,machine_driver_baraduke	,input_ports_baraduke	,null	,ROT0	,	"Namco", "Baraduke (set 2)" )
-	public static GameDriver driver_metrocrs	   = new GameDriver("1985"	,"metrocrs"	,"baraduke.java"	,rom_metrocrs,null	,machine_driver_metrocrs	,input_ports_metrocrs	,init_metrocrs	,ROT0	,	"Namco", "Metro-Cross (set 1)" )
-	public static GameDriver driver_metrocra	   = new GameDriver("1985"	,"metrocra"	,"baraduke.java"	,rom_metrocra,driver_metrocrs	,machine_driver_metrocrs	,input_ports_metrocrs	,init_metrocrs	,ROT0	,	"Namco", "Metro-Cross (set 2)" )
+	GAME( 1985, baraduke, 0,        baraduke, baraduke, 0,        ROT0, "Namco", "Baraduke (set 1)" )
+	GAME( 1985, baraduka, baraduke, baraduke, baraduke, 0,        ROT0, "Namco", "Baraduke (set 2)" )
+	GAME( 1985, metrocrs, 0,        metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 1)" )
+	GAME( 1985, metrocra, metrocrs, metrocrs, metrocrs, metrocrs, ROT0, "Namco", "Metro-Cross (set 2)" )
 }

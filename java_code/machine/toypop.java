@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -23,16 +23,14 @@ public class toypop
 	static int coinageA[8][2] = {{1,1},{2,1},{1,3},{3,1},{1,2},{2,3},{1,6},{3,2}};
 	static int coinageB[4][2] = {{1,1},{1,7},{1,5},{2,1}};
 	
-	public static MachineInitHandlerPtr machine_init_toypop  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_toypop  = new MachineInitHandlerPtr() { public void handler(){
 		credits = coinsA = coinsB = 0;
 		interrupt_enable_mainCPU = 0;
 		interrupt_enable_sound = 0;
 		interrupt_enable_68k = 0;
 	} };
 	
-	public static ReadHandlerPtr toypop_sound_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr toypop_sound_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* to speed up emulation, we check for the loop the sound CPU sits in most of the time
 		   and end the current iteration (things will start going again with the next IRQ) */
 		if (offset == 0xa1 - 0x40 && toypop_sound_sharedram[offset] == 0 && activecpu_get_pc() == 0xe4df)
@@ -40,8 +38,7 @@ public class toypop
 		return toypop_sound_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr toypop_sound_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_sound_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		toypop_sound_sharedram[offset] = data;
 	} };
 	
@@ -52,27 +49,23 @@ public class toypop
 	
 	WRITE16_HANDLER( toypop_m68000_sharedram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			toypop_m68000_sharedram[offset] = data & 0xff;
 	}
 	
-	public static WriteHandlerPtr toypop_main_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_main_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_mainCPU = 1;
 	} };
 	
-	public static WriteHandlerPtr toypop_main_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_main_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_mainCPU = 0;
 	} };
 	
-	public static WriteHandlerPtr toypop_sound_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_sound_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_sound = 1;
 	} };
 	
-	public static WriteHandlerPtr toypop_sound_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_sound_interrupt_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_sound = 0;
 	} };
 	
@@ -86,26 +79,22 @@ public class toypop
 		interrupt_enable_68k = 0;
 	}
 	
-	public static InterruptHandlerPtr toypop_main_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_mainCPU != 0)
+	public static InterruptHandlerPtr toypop_main_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_mainCPU)
 			irq0_line_hold();
 	} };
 	
-	public static InterruptHandlerPtr toypop_sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_sound != 0)
+	public static InterruptHandlerPtr toypop_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_sound)
 			irq0_line_hold();
 	} };
 	
-	public static InterruptHandlerPtr toypop_m68000_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_68k != 0)
+	public static InterruptHandlerPtr toypop_m68000_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_68k)
 			cpu_set_irq_line(2, 6, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr toypop_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr toypop_customio_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int mode = toypop_customio[8];
 	
 		/* mode 5 values are actually checked against these numbers during power up */
@@ -149,8 +138,7 @@ public class toypop
 			}
 	} };
 	
-	public static ReadHandlerPtr liblrabl_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr liblrabl_customio_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int lastcoin, laststart;
 		int val, tmp, mode = toypop_customio[24];
 	
@@ -235,23 +223,19 @@ public class toypop
 			return toypop_customio[offset];
 	} };
 	
-	public static WriteHandlerPtr toypop_sound_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_sound_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr toypop_sound_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_sound_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr toypop_m68000_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_m68000_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(2, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr toypop_m68000_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toypop_m68000_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(2, ASSERT_LINE);
 	} };
 }

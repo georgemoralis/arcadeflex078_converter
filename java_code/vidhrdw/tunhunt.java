@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,8 +54,7 @@ public class tunhunt
 	
 	/****************************************************************************************/
 	
-	public static WriteHandlerPtr tunhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tunhunt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -63,8 +62,7 @@ public class tunhunt
 		}
 	} };
 	
-	public static WriteHandlerPtr tunhunt_mott_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tunhunt_mott_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( spriteram.read(offset)!=data )
 		{
 			spriteram.write(offset,data);
@@ -82,26 +80,25 @@ public class tunhunt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_tunhunt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tunhunt  = new VideoStartHandlerPtr() { public int handler(){
 		/*
 		Motion Object RAM contains 64 lines of run-length encoded data.
 		We keep track of dirty lines and cache the expanded bitmap.
 		With max RLE expansion, bitmap size is 256x64.
 		*/
 		dirtybuffer = auto_malloc(64);
-		if (dirtybuffer == 0)
+		if (!dirtybuffer)
 			return 1;
 	
 		memset( dirtybuffer, 1, 64 );
 		tmpbitmap = auto_bitmap_alloc( 256, 64 );
-		if (tmpbitmap == 0)
+		if (!tmpbitmap)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -110,8 +107,7 @@ public class tunhunt
 		return 0;
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tunhunt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* Tunnel Hunt uses a combination of color proms and palette RAM to specify a 16 color
 		 * palette.  Here, we manage only the mappings for alphanumeric characters and SHELL
 		 * graphics, which are unpacked ahead of time and drawn using MAME's drawgfx primitives.
@@ -241,7 +237,7 @@ public class tunhunt
 		int color;
 		int count,pen;
 		const unsigned char *source;
-		struct rectangle clip = Machine.visible_area;
+		struct rectangle clip = Machine->visible_area;
 	
 		for( line=0; line<64; line++ )
 		{
@@ -255,14 +251,14 @@ public class tunhunt
 					span_data = source[span];
 					if( span_data == 0xff ) break;
 					pen = ((span_data>>6)&0x3)^0x3;
-					color = Machine.pens[pen];
+					color = Machine->pens[pen];
 					count = (span_data&0x1f)+1;
 					while( count-- )
 					{
 						plot_pixel( tmpbitmap, x++,line,color );
 					}
 				}
-				color = Machine.pens[0];
+				color = Machine->pens[0];
 				while( x<256 )
 				{
 					plot_pixel( tmpbitmap, x++,line,color );
@@ -295,7 +291,7 @@ public class tunhunt
 			scaley,/* incyy */
 			0, /* no wraparound */
 			&clip,
-			TRANSPARENCY_PEN,Machine.pens[0],
+			TRANSPARENCY_PEN,Machine->pens[0],
 			0 /* priority */
 		);
 	}
@@ -318,7 +314,7 @@ public class tunhunt
 			1480: 00 f0 00 		00	40 40 40 40 40 40 40 40		00 00	00 00		y0
 			1400: 00 00 00 		ff	ff ff ff ff ff ff ff ff		40 40	40 40		y1
 			1280: 07 03 00 		01	07 06 04 05 02 07 03 00		09 0a	0b 0c		palette select
-			.hue 06 02 ff 		60	06 05 03 04 01 06 02 ff		d2 00	c2 ff
+			->hue 06 02 ff 		60	06 05 03 04 01 06 02 ff		d2 00	c2 ff
 	*/
 		int span,x,y;
 		UINT8 *pMem;
@@ -347,7 +343,7 @@ public class tunhunt
 						z = x0; /* give priority to rightmost spans */
 					}
 				}
-				color = Machine.pens[pen];
+				color = Machine->pens[pen];
 				plot_pixel( bitmap, x, 0xff-y, color );
 			}
 		}
@@ -364,19 +360,19 @@ public class tunhunt
 			int vstretch,
 			int hstretch )
 	{
-		if (hstretch != 0)
+		if( hstretch )
 		{
 			int sx,sy;
 			for( sx=0; sx<256; sx+=16 )
 			{
 				for( sy=0; sy<256; sy+=16 )
 				{
-					drawgfx( bitmap, Machine.gfx[1],
+					drawgfx( bitmap, Machine->gfx[1],
 						picture_code,
 						0, /* color */
 						0,0, /* flip */
 						sx,sy,
-						Machine.visible_area,
+						Machine->visible_area,
 						TRANSPARENCY_PEN,0 );
 				}
 			}
@@ -397,17 +393,16 @@ public class tunhunt
 				vstop		= 0x00
 	
 		*/
-		drawgfx( bitmap, Machine.gfx[1],
+		drawgfx( bitmap, Machine->gfx[1],
 				picture_code,
 				0, /* color */
 				0,0, /* flip */
 				255-hposition-16,vstart-32,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN,0 );
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tunhunt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const UINT8 *pMem = memory_region( REGION_CPU1 );
 	
 		update_palette();

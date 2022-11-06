@@ -6,7 +6,7 @@ Taito Super Speed Race video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,74 +28,62 @@ public class sspeedr
 	static unsigned track_ice;
 	
 	
-	public static WriteHandlerPtr sspeedr_driver_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_driver_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		driver_horz = (driver_horz & 0x100) | data;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_driver_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_driver_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		driver_horz = (driver_horz & 0xff) | ((data & 1) << 8);
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_driver_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_driver_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		driver_vert = data;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_driver_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_driver_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		driver_pic = data & 0x1f;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_drones_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_drones_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drones_horz = (drones_horz & 0x100) | data;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_drones_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_drones_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drones_horz = (drones_horz & 0xff) | ((data & 1) << 8);
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_drones_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_drones_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drones_mask = data & 0x3f;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_drones_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_drones_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drones_vert[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_track_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_track_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		track_horz = (track_horz & 0x100) | data;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_track_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_track_horz_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		track_horz = (track_horz & 0xff) | ((data & 1) << 8);
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_track_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_track_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		track_vert[offset] = data & 0x7f;
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_track_ice_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_track_ice_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		track_ice = data & 0x07;
 	} };
 	
@@ -113,13 +101,13 @@ public class sspeedr
 	
 			int flag = 0;
 	
-			if ((track_ice & 2) != 0)
+			if (track_ice & 2)
 			{
 				flag = 1;
 			}
-			else if ((track_ice & 4) != 0)
+			else if (track_ice & 4)
 			{
-				if ((track_ice & 1) != 0)
+				if (track_ice & 1)
 				{
 					flag = (counter_x <= 0x1ff);
 				}
@@ -147,7 +135,7 @@ public class sspeedr
 					((counter_x & 0x1c) >> 2) |
 					((counter_x & 0xe0) << 3);
 	
-				if ((counter_x & 2) != 0)
+				if (counter_x & 2)
 				{
 					plot_pixel(bitmap, x, y, p[offset] / 16);
 				}
@@ -175,7 +163,7 @@ public class sspeedr
 					((counter_x & 0x1c) >> 2) |
 					((counter_x & 0xe0) << 3);
 	
-				if ((counter_x & 2) != 0)
+				if (counter_x & 2)
 				{
 					plot_pixel(bitmap, x, y, p[offset] / 16);
 				}
@@ -216,7 +204,7 @@ public class sspeedr
 	
 			y = 0xf0 - drones_vert[i >> 1];
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code[i] ^ toggle,
 				0,
 				0, 0,
@@ -247,7 +235,7 @@ public class sspeedr
 	
 		y = 0xf0 - driver_vert;
 	
-		drawgfx(bitmap, Machine.gfx[0],
+		drawgfx(bitmap, Machine->gfx[0],
 			driver_pic,
 			0,
 			0, 0,
@@ -258,16 +246,14 @@ public class sspeedr
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_sspeedr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sspeedr  = new VideoStartHandlerPtr() { public int handler(){
 		toggle = 0;
 	
 		return 0;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sspeedr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_track(bitmap);
 	
 		draw_drones(bitmap, cliprect);
@@ -276,8 +262,7 @@ public class sspeedr
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_sspeedr  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_sspeedr  = new VideoEofHandlerPtr() { public void handler(){
 		toggle ^= 1;
 	} };
 }

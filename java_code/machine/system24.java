@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -86,19 +86,19 @@ public class system24
 	
 	WRITE16_HANDLER( system24temp_sys16_io_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			if(offset < 8) {
 				if(!(system24temp_sys16_io_dir & (1 << offset))) {
 					logerror("IO port write on input-only port (%d, [%02x], %02x, %d:%x)\n", offset, system24temp_sys16_io_dir, data & 0xff, cpu_getactivecpu(), activecpu_get_pc());
 					return;
 				}
-				if (system24temp_sys16_io_io_w != 0)
+				if(system24temp_sys16_io_io_w)
 					system24temp_sys16_io_io_w(offset, data);
 			} else if (offset < 0x20) {
 				switch(offset) {
 				case 0xe:
 					system24temp_sys16_io_cnt = data;
-					if (system24temp_sys16_io_cnt_w != 0)
+					if(system24temp_sys16_io_cnt_w)
 						system24temp_sys16_io_cnt_w(data & 7);
 					break;
 				case 0xf:

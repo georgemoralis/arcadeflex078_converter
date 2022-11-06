@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -20,11 +20,10 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static ReadHandlerPtr missile_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (ctrld != 0)	/* trackball */
+	public static ReadHandlerPtr missile_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (ctrld)	/* trackball */
 		{
-			if (flip_screen == 0)
+			if (!flip_screen())
 		  	    return ((readinputport(5) << 4) & 0xf0) | (readinputport(4) & 0x0f);
 			else
 		  	    return ((readinputport(7) << 4) & 0xf0) | (readinputport(6) & 0x0f);
@@ -35,15 +34,13 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static MachineInitHandlerPtr machine_init_missile  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_missile  = new MachineInitHandlerPtr() { public void handler(){
 		h_pos = v_pos = 0;
 	} };
 	
 	
 	/********************************************************************************************/
-	public static WriteHandlerPtr missile_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr missile_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int pc, opcode;
 		offset = offset + 0x640;
 	
@@ -119,8 +116,7 @@ public class missile
 	
 	unsigned char *missile_video2ram;
 	
-	public static ReadHandlerPtr missile_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr missile_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc, opcode;
 		offset = offset + 0x1900;
 	

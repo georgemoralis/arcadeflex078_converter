@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_toobin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_toobin  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			1,					/* index to which gfx system */
@@ -99,7 +98,7 @@ public class toobin
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 128,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -108,7 +107,7 @@ public class toobin
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,48);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -135,9 +134,9 @@ public class toobin
 			int green = (((newword >>  5) & 31) * 224) >> 5;
 			int blue =  (((newword      ) & 31) * 224) >> 5;
 	
-			if (red != 0) red += 38;
-			if (green != 0) green += 38;
-			if (blue != 0) blue += 38;
+			if (red) red += 38;
+			if (green) green += 38;
+			if (blue) blue += 38;
 	
 			palette_set_color(offset & 0x3ff, red, green, blue);
 			if (!(newword & 0x8000))
@@ -152,7 +151,7 @@ public class toobin
 	{
 		int i;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			brightness = (double)(~data & 0x1f) / 31.0;
 	
@@ -237,8 +236,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_toobin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toobin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;

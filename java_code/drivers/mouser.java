@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -29,27 +29,23 @@ public class mouser
 	/* Mouser has external masking circuitry around
 	 * the NMI input on the main CPU */
 	
-	public static WriteHandlerPtr mouser_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mouser_nmi_enable = data;
 	} };
 	
-	public static InterruptHandlerPtr mouser_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mouser_nmi_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if ((mouser_nmi_enable & 1) == 1)
 			nmi_line_pulse();
 	} };
 	
 	/* Sound CPU interrupted on write */
 	
-	public static WriteHandlerPtr mouser_sound_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_sound_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mouser_sound_byte = data;
 		cpu_set_irq_line(1, 0, PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr mouser_sound_byte_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mouser_sound_byte_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mouser_sound_byte;
 	} };
 	
@@ -113,7 +109,7 @@ public class mouser
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_mouser = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mouser = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mouser )
 	    PORT_START(); 
 	    PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNUSED );
 	    PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNUSED );
@@ -220,8 +216,7 @@ public class mouser
 		{ 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_mouser = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mouser )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ? */
@@ -250,9 +245,7 @@ public class mouser
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_mouser = new RomLoadPtr(){ public void handler(){ 
@@ -303,8 +296,7 @@ public class mouser
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_mouser  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mouser  = new DriverInitHandlerPtr() { public void handler(){
 		/* Decode the opcodes */
 	
 		offs_t i;
@@ -321,6 +313,6 @@ public class mouser
 	} };
 	
 	
-	public static GameDriver driver_mouser	   = new GameDriver("1983"	,"mouser"	,"mouser.java"	,rom_mouser,null	,machine_driver_mouser	,input_ports_mouser	,init_mouser	,ROT90	,	"UPL", "Mouser" )
-	public static GameDriver driver_mouserc	   = new GameDriver("1983"	,"mouserc"	,"mouser.java"	,rom_mouserc,driver_mouser	,machine_driver_mouser	,input_ports_mouser	,init_mouser	,ROT90	,	"[UPL] (Cosmos license)", "Mouser (Cosmos)" )
+	GAME( 1983, mouser,   0,      mouser, mouser, mouser, ROT90, "UPL", "Mouser" )
+	GAME( 1983, mouserc,  mouser, mouser, mouser, mouser, ROT90, "[UPL] (Cosmos license)", "Mouser (Cosmos)" )
 }

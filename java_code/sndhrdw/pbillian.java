@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -23,8 +23,7 @@ public class pbillian
 	
 	#define pb_play_s(start,end) mixer_play_sample(channel,samplebuf + (start<<8),	(end-start)<<8,5000,0) // 5khz ?
 	
-	WRITE_HANDLER(data_41a_w)
-	{
+	public static WriteHandlerPtr data_41a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 
 		 i/o port $41a wrties are sample related
 		 playback is done probably using mcu (missing dump)
@@ -52,5 +51,5 @@ public class pbillian
 			case 0x62:	pb_play_s(0x62,0x6d);break;
 			default: logerror("[41a] W %x at %x\n",data,activecpu_get_previouspc());
 		}
-	}	
+	} };	
 }

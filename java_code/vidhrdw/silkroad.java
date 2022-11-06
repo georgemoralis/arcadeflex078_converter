@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,7 +17,7 @@ public class silkroad
 	
 	static void silkroad_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri )
 	{
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		data32_t *source = silkroad_sprram;
 		data32_t *finish = source + 0x1000/4;
 		data32_t *maxspr = source;
@@ -55,7 +55,7 @@ public class silkroad
 	
 			if (priority == pri){
 	
-			if (flipx == 0) {
+			if (NOT(flipx)) {
 			for (wcount=0;wcount<width;wcount++) {
 			drawgfx(bitmap,gfx,tileno+wcount,color,0,0,xpos+wcount*16+8,ypos,cliprect,TRANSPARENCY_PEN,0);
 			}
@@ -142,8 +142,7 @@ public class silkroad
 	
 	
 	
-	VIDEO_START(silkroad)
-	{
+	public static VideoStartHandlerPtr video_start_silkroad  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64, 64);
 			tilemap_set_transparent_pen(fg_tilemap,0);
 	
@@ -154,12 +153,11 @@ public class silkroad
 			tilemap_set_transparent_pen(fg3_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
 	int enable1=1,enable2=1,enable3=1;
 	
-	VIDEO_UPDATE(silkroad)
-	{
+	public static VideoUpdateHandlerPtr video_update_silkroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,0x7c0,Machine.visible_area);
 	
 		tilemap_set_scrollx( fg_tilemap, 0, ((silkroad_regs[0] & 0xffff0000) >> 16) );
@@ -177,13 +175,13 @@ public class silkroad
 		if (keyboard_pressed(KEYCODE_D)) enable3 ^= 1;
 	*/
 	
-		if (enable1 != 0)	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
+		if(enable1)	tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
 		silkroad_drawsprites(bitmap,cliprect,0);
-		if (enable2 != 0)	tilemap_draw(bitmap,cliprect,fg2_tilemap,0,0);
+		if(enable2)	tilemap_draw(bitmap,cliprect,fg2_tilemap,0,0);
 	
 		silkroad_drawsprites(bitmap,cliprect,1);
-		if (enable3 != 0)	tilemap_draw(bitmap,cliprect,fg3_tilemap,0,0);
+		if(enable3)	tilemap_draw(bitmap,cliprect,fg3_tilemap,0,0);
 	
 	/*
 		usrintf_showmessage	("Regs %08x %08x %08x %08x %08x",
@@ -194,5 +192,5 @@ public class silkroad
 		silkroad_regs[5]
 		);
 	*/
-	}
+	} };
 }

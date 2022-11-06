@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -60,22 +60,21 @@ public class atarigt
 	{
 		int newstate = 0;
 	
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 3;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 4;
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_atarigt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarigt  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(atarigt_scanline_update, 8);
@@ -91,7 +90,7 @@ public class atarigt
 	
 	static void cage_irq_callback(int reason)
 	{
-		if (reason != 0)
+		if (reason)
 			atarigen_sound_int_gen();
 		else
 			atarigen_sound_int_ack_w(0,0,0);
@@ -123,8 +122,8 @@ public class atarigt
 	static READ32_HANDLER( special_port3_r )
 	{
 		int temp = readinputport(3);
-		if (atarigen_video_int_state != 0) temp ^= 0x0001;
-		if (atarigen_scanline_int_state != 0) temp ^= 0x0002;
+		if (atarigen_video_int_state) temp ^= 0x0001;
+		if (atarigen_scanline_int_state) temp ^= 0x0002;
 		return (temp << 16) | temp;
 	}
 	
@@ -136,27 +135,27 @@ public class atarigt
 	
 		pots[0] = pots[1] = pots[2] = pots[3] = 0x80;
 	
-		if ((fake & 0x01) != 0)			/* up */
+		if (fake & 0x01)			/* up */
 		{
-			if ((fake & 0x04) != 0)		/* up and left */
+			if (fake & 0x04)		/* up and left */
 				pots[3] = 0x00;
-			else if ((fake & 0x08) != 0)	/* up and right */
+			else if (fake & 0x08)	/* up and right */
 				pots[1] = 0x00;
 			else					/* up only */
 				pots[1] = pots[3] = 0x00;
 		}
-		else if ((fake & 0x02) != 0)		/* down */
+		else if (fake & 0x02)		/* down */
 		{
-			if ((fake & 0x04) != 0)		/* down and left */
+			if (fake & 0x04)		/* down and left */
 				pots[3] = 0xff;
-			else if ((fake & 0x08) != 0)	/* down and right */
+			else if (fake & 0x08)	/* down and right */
 				pots[1] = 0xff;
 			else					/* down only */
 				pots[1] = pots[3] = 0xff;
 		}
-		else if ((fake & 0x04) != 0)		/* left only */
+		else if (fake & 0x04)		/* left only */
 			pots[1] = 0xff, pots[3] = 0x00;
-		else if ((fake & 0x08) != 0)		/* right only */
+		else if (fake & 0x08)		/* right only */
 			pots[3] = 0xff, pots[1] = 0x00;
 	}
 	#endif
@@ -225,7 +224,7 @@ public class atarigt
 	static WRITE32_HANDLER( mo_command_w )
 	{
 		COMBINE_DATA(mo_command);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			atarirle_command_w(0, ((data & 0xffff) == 2) ? ATARIRLE_COMMAND_CHECKSUM : ATARIRLE_COMMAND_DRAW);
 	}
 	
@@ -247,9 +246,9 @@ public class atarigt
 	{
 		data32_t result = 0;
 		
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			result |= cage_control_r();
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			result |= main_from_cage_r() << 16;
 		return result;
 	}
@@ -257,9 +256,9 @@ public class atarigt
 	
 	static WRITE32_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			cage_control_w(data);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			main_to_cage_w(data >> 16);
 	}
 	
@@ -350,7 +349,7 @@ public class atarigt
 		protaddr[ADDRSEQ_COUNT - 1] = offset;
 	
 		/* check for particular sequences */
-		if (protmode == 0)
+		if (!protmode)
 		{
 			/* this is from the code at $20f90 */
 			if (protaddr[1] == 0xdcc7c4 && protaddr[2] == 0xdcc7c4 && protaddr[3] == 0xdc4010)
@@ -592,13 +591,13 @@ public class atarigt
 	
 		if ((mem_mask & 0xffff0000) != 0xffff0000)
 		{
-			if (ignore_writes == 0)
+			if (!ignore_writes)
 				atarigt_colorram_w(address, data >> 16, mem_mask >> 16);
 			(*protection_w)(address, data >> 16);
 		}
 		if ((mem_mask & 0x0000ffff) != 0x0000ffff)
 		{
-			if (ignore_writes == 0)
+			if (!ignore_writes)
 				atarigt_colorram_w(address + 2, data, mem_mask);
 			(*protection_w)(address + 2, data);
 		}
@@ -657,7 +656,7 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_tmek = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tmek = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tmek )
 		PORT_START(); 		/* 68.SW (A1=0) */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -724,7 +723,7 @@ public class atarigt
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_primrage = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_primrage = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( primrage )
 		PORT_START(); 		/* 68.SW (A1=0) */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -842,8 +841,7 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarigt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarigt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, ATARI_CLOCK_50MHz/2)
@@ -870,9 +868,7 @@ public class atarigt
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(cage)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1140,8 +1136,7 @@ public class atarigt
 		atarigen_playfield32_w(offset, data, mem_mask);
 	}
 	
-	public static DriverInitHandlerPtr init_tmek  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tmek  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigt_is_primrage = 0;
 	
@@ -1170,8 +1165,8 @@ public class atarigt
 		protection_w = primrage_protection_w;
 	}
 	
-	public static DriverInitHandlerPtr init_primrage  = new DriverInitHandlerPtr() { public void handler() { primrage_init_common(0x42f2); } };
-	public static DriverInitHandlerPtr init_primraga  = new DriverInitHandlerPtr() { public void handler() { primrage_init_common(0x48a4); } };
+	public static DriverInitHandlerPtr init_primrage  = new DriverInitHandlerPtr() { public void handler() primrage_init_common(0x42f2); }
+	public static DriverInitHandlerPtr init_primraga  = new DriverInitHandlerPtr() { public void handler() primrage_init_common(0x48a4); }
 	
 	
 	
@@ -1181,8 +1176,8 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_tmek	   = new GameDriver("1994"	,"tmek"	,"atarigt.java"	,rom_tmek,null	,machine_driver_atarigt	,input_ports_tmek	,init_tmek	,ROT0	,	"Atari Games", "T-MEK", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_tmekprot	   = new GameDriver("1994"	,"tmekprot"	,"atarigt.java"	,rom_tmekprot,driver_tmek	,machine_driver_atarigt	,input_ports_tmek	,init_tmek	,ROT0	,	"Atari Games", "T-MEK (prototype)" )
-	public static GameDriver driver_primrage	   = new GameDriver("1994"	,"primrage"	,"atarigt.java"	,rom_primrage,null	,machine_driver_atarigt	,input_ports_primrage	,init_primrage	,ROT0	,	"Atari Games", "Primal Rage (version 2.3)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_primraga	   = new GameDriver("1994"	,"primraga"	,"atarigt.java"	,rom_primraga,driver_primrage	,machine_driver_atarigt	,input_ports_primrage	,init_primraga	,ROT0	,	"Atari Games", "Primal Rage (version 2.0)", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1994, tmek,     0,        atarigt,  tmek,     tmek,     ROT0, "Atari Games", "T-MEK", GAME_UNEMULATED_PROTECTION )
+	GAME ( 1994, tmekprot, tmek,     atarigt,  tmek,     tmek,     ROT0, "Atari Games", "T-MEK (prototype)" )
+	GAMEX( 1994, primrage, 0,        atarigt,  primrage, primrage, ROT0, "Atari Games", "Primal Rage (version 2.3)", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1994, primraga, primrage, atarigt,  primrage, primraga, ROT0, "Atari Games", "Primal Rage (version 2.0)", GAME_UNEMULATED_PROTECTION )
 }

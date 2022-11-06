@@ -57,7 +57,7 @@ and 1 SFX channel controlled by an 8039:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,13 +73,11 @@ public class gyruss
 	
 	unsigned char *gyruss_sharedram;
 	
-	public static ReadHandlerPtr gyruss_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gyruss_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gyruss_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr gyruss_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gyruss_sharedram[offset] = data;
 	} };
 	
@@ -203,7 +201,7 @@ public class gyruss
 	
 	
 	
-	static InputPortPtr input_ports_gyruss = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gyruss = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gyruss )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -301,7 +299,7 @@ public class gyruss
 	
 	/* This is identical to gyruss except for the bonus that has different
 	   values */
-	static InputPortPtr input_ports_gyrussce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gyrussce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gyrussce )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -454,8 +452,7 @@ public class gyruss
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gyruss = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gyruss )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -495,9 +492,7 @@ public class gyruss
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -607,13 +602,12 @@ public class gyruss
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_gyruss  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gyruss  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode_cpu2();
 	} };
 	
 	
-	public static GameDriver driver_gyruss	   = new GameDriver("1983"	,"gyruss"	,"gyruss.java"	,rom_gyruss,null	,machine_driver_gyruss	,input_ports_gyruss	,init_gyruss	,ROT90	,	"Konami", "Gyruss (Konami)" )
-	public static GameDriver driver_gyrussce	   = new GameDriver("1983"	,"gyrussce"	,"gyruss.java"	,rom_gyrussce,driver_gyruss	,machine_driver_gyruss	,input_ports_gyrussce	,init_gyruss	,ROT90	,	"Konami (Centuri license)", "Gyruss (Centuri)" )
-	public static GameDriver driver_venus	   = new GameDriver("1983"	,"venus"	,"gyruss.java"	,rom_venus,driver_gyruss	,machine_driver_gyruss	,input_ports_gyrussce	,init_gyruss	,ROT90	,	"bootleg", "Venus" )
+	GAME( 1983, gyruss,   0,      gyruss, gyruss,   gyruss, ROT90, "Konami", "Gyruss (Konami)" )
+	GAME( 1983, gyrussce, gyruss, gyruss, gyrussce, gyruss, ROT90, "Konami (Centuri license)", "Gyruss (Centuri)" )
+	GAME( 1983, venus,    gyruss, gyruss, gyrussce, gyruss, ROT90, "bootleg", "Venus" )
 }

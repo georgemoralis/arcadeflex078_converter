@@ -145,7 +145,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -198,7 +198,7 @@ public class armedf
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			soundlatch_w(0,((data & 0x7f) << 1) | 1);
 	}
 	
@@ -365,8 +365,7 @@ public class armedf
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset){
 		soundlatch_clear_w(0,0);
 		return 0;
 	} };
@@ -444,7 +443,7 @@ public class armedf
 		PORT_DIPSETTING(    0x00, "6" );
 	
 	
-	static InputPortPtr input_ports_legion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_legion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( legion )
 		PORT_START(); 	/* IN0 */
 		NIHON_SINGLE_JOYSTICK(1)
 		NIHON_COINS
@@ -507,7 +506,7 @@ public class armedf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_terraf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_terraf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( terraf )
 		PORT_START(); 	/* IN0 */
 		NIHON_SINGLE_JOYSTICK(1)
 		NIHON_COINS
@@ -557,7 +556,7 @@ public class armedf
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kodure = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kodure = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kodure )
 		PORT_START(); 	/* IN0 */
 		NIHON_SINGLE_JOYSTICK(1)
 		NIHON_COINS
@@ -609,7 +608,7 @@ public class armedf
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cclimbr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cclimbr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cclimbr2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN   | IPF_8WAY | IPF_PLAYER1 );
@@ -676,7 +675,7 @@ public class armedf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_armedf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_armedf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( armedf )
 		PORT_START(); 	/* IN0 */
 		NIHON_SINGLE_JOYSTICK(1)
 		NIHON_COINS
@@ -797,8 +796,7 @@ public class armedf
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_terraf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( terraf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -828,12 +826,9 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_kodure = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kodure )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -863,12 +858,9 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_armedf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( armedf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -898,12 +890,9 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cclimbr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cclimbr2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* 8 MHz?? */
@@ -933,9 +922,7 @@ public class armedf
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, cclimbr2_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_legion = new RomLoadPtr(){ public void handler(){ 
@@ -1163,23 +1150,19 @@ public class armedf
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_terraf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_terraf  = new DriverInitHandlerPtr() { public void handler(){
 		armedf_setgfxtype(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_armedf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_armedf  = new DriverInitHandlerPtr() { public void handler(){
 		armedf_setgfxtype(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_kodure  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kodure  = new DriverInitHandlerPtr() { public void handler(){
 		armedf_setgfxtype(2);
 	} };
 	
-	public static DriverInitHandlerPtr init_legion  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_legion  = new DriverInitHandlerPtr() { public void handler(){
 	#if LEGION_HACK
 		/* This is a hack to allow you to use the extra features
 	         of 3 of the "Unused" Dip Switches (see notes above). */
@@ -1192,8 +1175,7 @@ public class armedf
 		armedf_setgfxtype(3);
 	} };
 	
-	public static DriverInitHandlerPtr init_legiono  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_legiono  = new DriverInitHandlerPtr() { public void handler(){
 	#if LEGION_HACK
 		/* This is a hack to allow you to use the extra features
 	         of 3 of the "Unused" Dip Switches (see notes above). */
@@ -1205,18 +1187,17 @@ public class armedf
 		armedf_setgfxtype(3);
 	} };
 	
-	public static DriverInitHandlerPtr init_cclimbr2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cclimbr2  = new DriverInitHandlerPtr() { public void handler(){
 		armedf_setgfxtype(4);
 	} };
 	
 	
 	/*     YEAR, NAME,   PARENT,   MACHINE,  INPUT,    INIT,     MONITOR, COMPANY,     FULLNAME, FLAGS */
-	public static GameDriver driver_legion	   = new GameDriver("1987"	,"legion"	,"armedf.java"	,rom_legion,null	,machine_driver_cclimbr2	,input_ports_legion	,init_legion	,ROT270	,	"Nichibutsu", "Legion (ver 2.03)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_legiono	   = new GameDriver("1987"	,"legiono"	,"armedf.java"	,rom_legiono,driver_legion	,machine_driver_cclimbr2	,input_ports_legion	,init_legiono	,ROT270	,	"Nichibutsu", "Legion (ver 1.05)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_terraf	   = new GameDriver("1987"	,"terraf"	,"armedf.java"	,rom_terraf,null	,machine_driver_terraf	,input_ports_terraf	,init_terraf	,ROT0	,	"Nichibutsu", "Terra Force",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_terrafu	   = new GameDriver("1987"	,"terrafu"	,"armedf.java"	,rom_terrafu,driver_terraf	,machine_driver_terraf	,input_ports_terraf	,init_terraf	,ROT0	,	"Nichibutsu USA", "Terra Force (US)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_kodure	   = new GameDriver("1987"	,"kodure"	,"armedf.java"	,rom_kodure,null	,machine_driver_kodure	,input_ports_kodure	,init_kodure	,ROT0	,	"Nichibutsu", "Kodure Ookami (Japan)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_cclimbr2	   = new GameDriver("1988"	,"cclimbr2"	,"armedf.java"	,rom_cclimbr2,null	,machine_driver_cclimbr2	,input_ports_cclimbr2	,init_cclimbr2	,ROT0	,	"Nichibutsu", "Crazy Climber 2 (Japan)")
-	public static GameDriver driver_armedf	   = new GameDriver("1988"	,"armedf"	,"armedf.java"	,rom_armedf,null	,machine_driver_armedf	,input_ports_armedf	,init_armedf	,ROT270	,	"Nichibutsu", "Armed Formation")
+	GAMEX( 1987, legion,   0,      cclimbr2, legion,   legion,   ROT270, "Nichibutsu", "Legion (ver 2.03)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1987, legiono,  legion, cclimbr2, legion,   legiono,  ROT270, "Nichibutsu", "Legion (ver 1.05)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1987, terraf,   0,      terraf,   terraf,   terraf,   ROT0,   "Nichibutsu", "Terra Force",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1987, terrafu,  terraf, terraf,   terraf,   terraf,   ROT0,   "Nichibutsu USA", "Terra Force (US)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1987, kodure,   0,      kodure,   kodure,   kodure,   ROT0,   "Nichibutsu", "Kodure Ookami (Japan)",  GAME_IMPERFECT_GRAPHICS | GAME_UNEMULATED_PROTECTION )
+	GAME( 1988, cclimbr2, 0,      cclimbr2, cclimbr2, cclimbr2, ROT0,   "Nichibutsu", "Crazy Climber 2 (Japan)")
+	GAME( 1988, armedf,   0,      armedf,   armedf,   armedf,   ROT270, "Nichibutsu", "Armed Formation")
 }

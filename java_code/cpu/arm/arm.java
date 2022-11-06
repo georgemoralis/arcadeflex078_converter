@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.arm;
 
@@ -261,7 +261,7 @@ public class arm
 		data32_t result = cpu_readmem26ledw_dword(addr&ADDRESS_MASK);
 	
 		/* Unaligned reads rotate the word, they never combine words */
-		if ((addr & 3) != 0) {
+		if (addr&3) {
 			if (ARM_DEBUG_CORE && addr&1)
 				logerror("%08x: Unaligned byte read %08x\n",R15,addr);
 	
@@ -316,7 +316,7 @@ public class arm
 		{
 	
 	#ifdef MAME_DEBUG
-			if (mame_debug != 0)
+			if (mame_debug)
 				MAME_Debug();
 	#endif
 	
@@ -419,7 +419,7 @@ public class arm
 	
 	unsigned arm_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 		{
 			memcpy( dst, &arm, sizeof(arm) );
 		}
@@ -428,7 +428,7 @@ public class arm
 	
 	void arm_set_context(void *src)
 	{
-		if (src != 0)
+		if (src)
 		{
 			memcpy( &arm, src, sizeof(arm) );
 		}
@@ -564,14 +564,14 @@ public class arm
 		switch (irqline) {
 	
 		case ARM_IRQ_LINE: /* IRQ */
-			if (state != 0)
+			if (state)
 				arm.pendingIrq=1;
 			else
 				arm.pendingIrq=0;
 			break;
 	
 		case ARM_FIRQ_LINE: /* FIRQ */
-			if (state != 0)
+			if (state)
 				arm.pendingFiq=1;
 			else
 				arm.pendingFiq=0;
@@ -619,7 +619,7 @@ public class arm
 		static int which = 0;
 	
 		ARM_REGS *pRegs = context;
-		if (context == 0)
+		if( !context )
 			pRegs = &arm;
 	
 		which = (which + 1) % 32;
@@ -627,44 +627,44 @@ public class arm
 	
 		switch( regnum )
 		{
-		case CPU_INFO_REG + ARM32_R0: sprintf( buffer[which], "R0  :%08x", pRegs.sArmRegister[ 0] );  break;
-		case CPU_INFO_REG + ARM32_R1: sprintf( buffer[which], "R1  :%08x", pRegs.sArmRegister[ 1] );  break;
-		case CPU_INFO_REG + ARM32_R2: sprintf( buffer[which], "R2  :%08x", pRegs.sArmRegister[ 2] );  break;
-		case CPU_INFO_REG + ARM32_R3: sprintf( buffer[which], "R3  :%08x", pRegs.sArmRegister[ 3] );  break;
-		case CPU_INFO_REG + ARM32_R4: sprintf( buffer[which], "R4  :%08x", pRegs.sArmRegister[ 4] );  break;
-		case CPU_INFO_REG + ARM32_R5: sprintf( buffer[which], "R5  :%08x", pRegs.sArmRegister[ 5] );  break;
-		case CPU_INFO_REG + ARM32_R6: sprintf( buffer[which], "R6  :%08x", pRegs.sArmRegister[ 6] );  break;
-		case CPU_INFO_REG + ARM32_R7: sprintf( buffer[which], "R7  :%08x", pRegs.sArmRegister[ 7] );  break;
-		case CPU_INFO_REG + ARM32_R8: sprintf( buffer[which], "R8  :%08x", pRegs.sArmRegister[ 8] );  break;
-		case CPU_INFO_REG + ARM32_R9: sprintf( buffer[which], "R9  :%08x", pRegs.sArmRegister[ 9] );  break;
-		case CPU_INFO_REG + ARM32_R10:sprintf( buffer[which], "R10 :%08x", pRegs.sArmRegister[10] );  break;
-		case CPU_INFO_REG + ARM32_R11:sprintf( buffer[which], "R11 :%08x", pRegs.sArmRegister[11] );  break;
-		case CPU_INFO_REG + ARM32_R12:sprintf( buffer[which], "R12 :%08x", pRegs.sArmRegister[12] );  break;
-		case CPU_INFO_REG + ARM32_R13:sprintf( buffer[which], "R13 :%08x", pRegs.sArmRegister[13] );  break;
-		case CPU_INFO_REG + ARM32_R14:sprintf( buffer[which], "R14 :%08x", pRegs.sArmRegister[14] );  break;
-		case CPU_INFO_REG + ARM32_R15:sprintf( buffer[which], "R15 :%08x", pRegs.sArmRegister[15] );  break;
-		case CPU_INFO_REG + ARM32_FR8: sprintf( buffer[which], "FR8 :%08x", pRegs.sArmRegister[eR8_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR9: sprintf( buffer[which], "FR9 :%08x", pRegs.sArmRegister[eR9_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR10:sprintf( buffer[which], "FR10:%08x", pRegs.sArmRegister[eR10_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR11:sprintf( buffer[which], "FR11:%08x", pRegs.sArmRegister[eR11_FIQ]);  break;
-		case CPU_INFO_REG + ARM32_FR12:sprintf( buffer[which], "FR12:%08x", pRegs.sArmRegister[eR12_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR13:sprintf( buffer[which], "FR13:%08x", pRegs.sArmRegister[eR13_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_FR14:sprintf( buffer[which], "FR14:%08x", pRegs.sArmRegister[eR14_FIQ] );  break;
-		case CPU_INFO_REG + ARM32_IR13:sprintf( buffer[which], "IR13:%08x", pRegs.sArmRegister[eR13_IRQ] );  break;
-		case CPU_INFO_REG + ARM32_IR14:sprintf( buffer[which], "IR14:%08x", pRegs.sArmRegister[eR14_IRQ] );  break;
-		case CPU_INFO_REG + ARM32_SR13:sprintf( buffer[which], "SR13:%08x", pRegs.sArmRegister[eR13_SVC] );  break;
-		case CPU_INFO_REG + ARM32_SR14:sprintf( buffer[which], "SR14:%08x", pRegs.sArmRegister[eR14_SVC] );  break;
+		case CPU_INFO_REG + ARM32_R0: sprintf( buffer[which], "R0  :%08x", pRegs->sArmRegister[ 0] );  break;
+		case CPU_INFO_REG + ARM32_R1: sprintf( buffer[which], "R1  :%08x", pRegs->sArmRegister[ 1] );  break;
+		case CPU_INFO_REG + ARM32_R2: sprintf( buffer[which], "R2  :%08x", pRegs->sArmRegister[ 2] );  break;
+		case CPU_INFO_REG + ARM32_R3: sprintf( buffer[which], "R3  :%08x", pRegs->sArmRegister[ 3] );  break;
+		case CPU_INFO_REG + ARM32_R4: sprintf( buffer[which], "R4  :%08x", pRegs->sArmRegister[ 4] );  break;
+		case CPU_INFO_REG + ARM32_R5: sprintf( buffer[which], "R5  :%08x", pRegs->sArmRegister[ 5] );  break;
+		case CPU_INFO_REG + ARM32_R6: sprintf( buffer[which], "R6  :%08x", pRegs->sArmRegister[ 6] );  break;
+		case CPU_INFO_REG + ARM32_R7: sprintf( buffer[which], "R7  :%08x", pRegs->sArmRegister[ 7] );  break;
+		case CPU_INFO_REG + ARM32_R8: sprintf( buffer[which], "R8  :%08x", pRegs->sArmRegister[ 8] );  break;
+		case CPU_INFO_REG + ARM32_R9: sprintf( buffer[which], "R9  :%08x", pRegs->sArmRegister[ 9] );  break;
+		case CPU_INFO_REG + ARM32_R10:sprintf( buffer[which], "R10 :%08x", pRegs->sArmRegister[10] );  break;
+		case CPU_INFO_REG + ARM32_R11:sprintf( buffer[which], "R11 :%08x", pRegs->sArmRegister[11] );  break;
+		case CPU_INFO_REG + ARM32_R12:sprintf( buffer[which], "R12 :%08x", pRegs->sArmRegister[12] );  break;
+		case CPU_INFO_REG + ARM32_R13:sprintf( buffer[which], "R13 :%08x", pRegs->sArmRegister[13] );  break;
+		case CPU_INFO_REG + ARM32_R14:sprintf( buffer[which], "R14 :%08x", pRegs->sArmRegister[14] );  break;
+		case CPU_INFO_REG + ARM32_R15:sprintf( buffer[which], "R15 :%08x", pRegs->sArmRegister[15] );  break;
+		case CPU_INFO_REG + ARM32_FR8: sprintf( buffer[which], "FR8 :%08x", pRegs->sArmRegister[eR8_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR9: sprintf( buffer[which], "FR9 :%08x", pRegs->sArmRegister[eR9_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR10:sprintf( buffer[which], "FR10:%08x", pRegs->sArmRegister[eR10_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR11:sprintf( buffer[which], "FR11:%08x", pRegs->sArmRegister[eR11_FIQ]);  break;
+		case CPU_INFO_REG + ARM32_FR12:sprintf( buffer[which], "FR12:%08x", pRegs->sArmRegister[eR12_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR13:sprintf( buffer[which], "FR13:%08x", pRegs->sArmRegister[eR13_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_FR14:sprintf( buffer[which], "FR14:%08x", pRegs->sArmRegister[eR14_FIQ] );  break;
+		case CPU_INFO_REG + ARM32_IR13:sprintf( buffer[which], "IR13:%08x", pRegs->sArmRegister[eR13_IRQ] );  break;
+		case CPU_INFO_REG + ARM32_IR14:sprintf( buffer[which], "IR14:%08x", pRegs->sArmRegister[eR14_IRQ] );  break;
+		case CPU_INFO_REG + ARM32_SR13:sprintf( buffer[which], "SR13:%08x", pRegs->sArmRegister[eR13_SVC] );  break;
+		case CPU_INFO_REG + ARM32_SR14:sprintf( buffer[which], "SR14:%08x", pRegs->sArmRegister[eR14_SVC] );  break;
 	
 	
 		case CPU_INFO_FLAGS:
 			sprintf(buffer[which], "%c%c%c%c%c%c",
-				(pRegs.sArmRegister[15] & N_MASK) ? 'N' : '-',
-				(pRegs.sArmRegister[15] & Z_MASK) ? 'Z' : '-',
-				(pRegs.sArmRegister[15] & C_MASK) ? 'C' : '-',
-				(pRegs.sArmRegister[15] & V_MASK) ? 'V' : '-',
-				(pRegs.sArmRegister[15] & I_MASK) ? 'I' : '-',
-				(pRegs.sArmRegister[15] & F_MASK) ? 'F' : '-');
-			switch (pRegs.sArmRegister[15] & 3)
+				(pRegs->sArmRegister[15] & N_MASK) ? 'N' : '-',
+				(pRegs->sArmRegister[15] & Z_MASK) ? 'Z' : '-',
+				(pRegs->sArmRegister[15] & C_MASK) ? 'C' : '-',
+				(pRegs->sArmRegister[15] & V_MASK) ? 'V' : '-',
+				(pRegs->sArmRegister[15] & I_MASK) ? 'I' : '-',
+				(pRegs->sArmRegister[15] & F_MASK) ? 'F' : '-');
+			switch (pRegs->sArmRegister[15] & 3)
 			{
 			case 0:
 				strcat(buffer[which], " USER");
@@ -725,13 +725,13 @@ public class arm
 		data32_t off = (insn & INSN_BRANCH) << 2;
 	
 		/* Save PC into LR if this is a branch with link */
-		if ((insn & INSN_BL) != 0)
+		if (insn & INSN_BL)
 		{
 			SetRegister(14,R15 + 4);
 		}
 	
 		/* Sign-extend the 24-bit offset in our calculations */
-		if ((off & 0x2000000u) != 0)
+		if (off & 0x2000000u)
 		{
 			R15 -= ((~(off | 0xfc000000u)) + 1) - 8;
 		}
@@ -746,7 +746,7 @@ public class arm
 		data32_t rn, rnv, off, rd;
 	
 		/* Fetch the offset */
-		if ((insn & INSN_I) != 0)
+		if (insn & INSN_I)
 		{
 			off = decodeShift(insn, NULL);
 		}
@@ -760,10 +760,10 @@ public class arm
 	
 	//	if (rn==0xf) logerror("%08x:  Source R15\n",R15);
 	
-		if ((insn & INSN_SDT_P) != 0)
+		if (insn & INSN_SDT_P)
 		{
 			/* Pre-indexed addressing */
-			if ((insn & INSN_SDT_U) != 0)
+			if (insn & INSN_SDT_U)
 			{
 				rnv = (GetRegister(rn) + off);
 			}
@@ -772,7 +772,7 @@ public class arm
 				rnv = (GetRegister(rn) - off);
 			}
 	
-			if ((insn & INSN_SDT_W) != 0)
+			if (insn & INSN_SDT_W)
 			{
 				SetRegister(rn,rnv);
 	
@@ -798,10 +798,10 @@ public class arm
 	
 		/* Do the transfer */
 		rd = (insn & INSN_RD) >> INSN_RD_SHIFT;
-		if ((insn & INSN_SDT_L) != 0)
+		if (insn & INSN_SDT_L)
 		{
 			/* Load */
-			if ((insn & INSN_SDT_B) != 0)
+			if (insn & INSN_SDT_B)
 			{
 				SetRegister(rd,(data32_t) READ8(rnv));
 			}
@@ -809,7 +809,7 @@ public class arm
 			{
 				if (rd == eR15)
 				{
-					if (ARM_DEBUG_CORE != 0)
+					if (ARM_DEBUG_CORE)
 						logerror("%08x:  LDR to R15\n",R15);
 					R15 = (READ32(rnv) & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & MODE_MASK);
 					R15 -= 4;
@@ -823,7 +823,7 @@ public class arm
 		else
 		{
 			/* Store */
-			if ((insn & INSN_SDT_B) != 0)
+			if (insn & INSN_SDT_B)
 			{
 				if (ARM_DEBUG_CORE && rd==eR15)
 					logerror("Wrote R15 in byte mode\n");
@@ -842,7 +842,7 @@ public class arm
 		/* Do post-indexing writeback */
 		if (!(insn & INSN_SDT_P)/* && (insn&INSN_SDT_W)*/)
 		{
-			if ((insn & INSN_SDT_U) != 0)
+			if (insn & INSN_SDT_U)
 			{
 				/* Writeback is applied in pipeline, before value is read from mem,
 					so writeback is effectively ignored */
@@ -882,7 +882,7 @@ public class arm
 	/* Set NZCV flags for ADDS / SUBS */
 	
 	#define HandleALUAddFlags(rd, rn, op2) \
-	  if ((insn & INSN_S) != 0) \
+	  if (insn & INSN_S) \
 	    R15 = \
 	      ((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
 	      | (((!SIGN_BITS_DIFFER(rn, op2)) && SIGN_BITS_DIFFER(rn, rd)) \
@@ -893,7 +893,7 @@ public class arm
 	  else R15 += 4;
 	
 	#define HandleALUSubFlags(rd, rn, op2) \
-	  if ((insn & INSN_S) != 0) \
+	  if (insn & INSN_S) \
 	    R15 = \
 	      ((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
 	      | ((SIGN_BITS_DIFFER(rn, op2) && SIGN_BITS_DIFFER(rn, rd)) \
@@ -909,7 +909,7 @@ public class arm
 	  (((rd) & SIGN_BIT) | ((!(rd)) << Z_BIT))
 	
 	#define HandleALULogicalFlags(rd, sc) \
-	  if ((insn & INSN_S) != 0) \
+	  if (insn & INSN_S) \
 	    R15 = ((R15 &~ (N_MASK | Z_MASK | C_MASK)) \
 	                     | HandleALUNZFlags(rd) \
 	                     | (((sc) != 0) << C_BIT)) + 4; \
@@ -927,11 +927,11 @@ public class arm
 		rn = 0;
 	
 		/* Construct Op2 */
-		if ((insn & INSN_I) != 0)
+		if (insn & INSN_I)
 		{
 			/* Immediate constant */
 			by = (insn & INSN_OP2_ROTATE) >> INSN_OP2_ROTATE_SHIFT;
-			if (by != 0)
+			if (by)
 			{
 				op2 = ROR(insn & INSN_OP2_IMM, by << 1);
 				sc = op2 & SIGN_BIT;
@@ -955,7 +955,7 @@ public class arm
 		{
 			if ((rn = (insn & INSN_RN) >> INSN_RN_SHIFT) == eR15)
 			{
-				if (ARM_DEBUG_CORE != 0)
+				if (ARM_DEBUG_CORE)
 					logerror("%08x:  Pipelined R15 (Shift %d)\n",R15,(insn&INSN_I?8:insn&0x10u?12:12));
 	
 				/* Docs strongly suggest the mode bits should be included here, but it breaks Captain
@@ -1038,13 +1038,13 @@ public class arm
 				R15 = (rd & ADDRESS_MASK) | (R15 & PSR_MASK) | oldMode;
 	
 				/* Retain old mode regardless */
-				if (ARM_DEBUG_CORE != 0)
+				if (ARM_DEBUG_CORE)
 					logerror("%08x:  Suspected R15 mode change\n",R15);
 			}
 			else
 			{
 				if (rdn==eR15) {
-					if (ARM_DEBUG_CORE != 0)
+					if (ARM_DEBUG_CORE)
 						logerror("%08x: Setting R15 with S flag\n",R15);
 					SetRegister(rdn,rd|oldMode); /* Todo: Should mask rd?? Mode not affected by S bit? */
 	
@@ -1057,15 +1057,15 @@ public class arm
 			}
 		/* TST & TEQ can affect R15 (the condition code register) with the S bit set */
 		} else if (rdn==eR15) {
-			if ((insn & INSN_S) != 0) {
-				if (ARM_DEBUG_CORE != 0)
+			if (insn & INSN_S) {
+				if (ARM_DEBUG_CORE)
 					logerror("%08x: TST class on R15 s bit set\n",R15);
 				R15 = rd;
 	
 				/* IRQ masks may have changed in this instruction */
 	//			arm_check_irq_state();
 			} else {
-				if (ARM_DEBUG_CORE != 0)
+				if (ARM_DEBUG_CORE)
 					logerror("%08x: TST class on R15 no s bit set\n",R15);
 			}
 		}
@@ -1086,7 +1086,7 @@ public class arm
 			logerror("%08x:  R15 used in mult\n",R15);
 	
 		/* Add on Rn if this is a MLA */
-		if ((insn & INSN_MUL_A) != 0)
+		if (insn & INSN_MUL_A)
 		{
 			r += GetRegister((insn&INSN_MUL_RN)>>INSN_MUL_RN_SHIFT);
 		}
@@ -1095,7 +1095,7 @@ public class arm
 		SetRegister((insn&INSN_MUL_RD)>>INSN_MUL_RD_SHIFT,r);
 	
 		/* Set N and Z if asked */
-		if ((insn & INSN_S) != 0)
+		if( insn & INSN_S )
 		{
 			R15 = (R15 &~ (N_MASK | Z_MASK)) | HandleALUNZFlags(r);
 		}
@@ -1111,7 +1111,7 @@ public class arm
 			if( (pat>>i)&1 )
 			{
 				if (i==15) {
-					if (s != 0) /* Pull full contents from stack */
+					if (s) /* Pull full contents from stack */
 						SetRegister( 15, READ32(rbv+=4) );
 					else /* Pull only address, preserve mode & status flags */
 						SetRegister( 15, (R15&PSR_MASK) | (R15&MODE_MASK) | ((READ32(rbv+=4))&ADDRESS_MASK) );
@@ -1134,7 +1134,7 @@ public class arm
 			if( (pat>>i)&1 )
 			{
 				if (i==15) {
-					if (s != 0) /* Pull full contents from stack */
+					if (s) /* Pull full contents from stack */
 						SetRegister( 15, READ32(rbv-=4) );
 					else /* Pull only address, preserve mode & status flags */
 						SetRegister( 15, (R15&PSR_MASK) | (R15&MODE_MASK) | ((READ32(rbv-=4))&ADDRESS_MASK) );
@@ -1194,21 +1194,21 @@ public class arm
 		if (ARM_DEBUG_CORE && insn & INSN_BDT_S)
 			logerror("%08x:  S Bit set in MEMBLOCK\n",R15);
 	
-		if ((insn & INSN_BDT_L) != 0)
+		if (insn & INSN_BDT_L)
 		{
 			/* Loading */
-			if ((insn & INSN_BDT_U) != 0)
+			if (insn & INSN_BDT_U)
 			{
 				/* Incrementing */
 				if (!(insn & INSN_BDT_P)) rbp = rbp + (- 4);
 	
 				result = loadInc( insn & 0xffff, rbp, insn&INSN_BDT_S );
 	
-				if ((insn & 0x8000) != 0) {
+				if (insn & 0x8000) {
 					R15-=4;
 				}
 	
-				if ((insn & INSN_BDT_W) != 0)
+				if (insn & INSN_BDT_W)
 				{
 					if (ARM_DEBUG_CORE && rb==15)
 						logerror("%08x:  Illegal LDRM writeback to r15\n",R15);
@@ -1225,11 +1225,11 @@ public class arm
 				}
 	
 				result = loadDec( insn&0xffff, rbp, insn&INSN_BDT_S );
-				if ((insn & 0x8000) != 0) {
+				if (insn & 0x8000) {
 					R15-=4;
 				}
 	
-				if ((insn & INSN_BDT_W) != 0)
+				if (insn & INSN_BDT_W)
 				{
 					if (rb==0xf)
 						logerror("%08x:  Illegal LDRM writeback to r15\n",R15);
@@ -1242,13 +1242,13 @@ public class arm
 			/* Storing */
 			if (insn & (1<<eR15))
 			{
-				if (ARM_DEBUG_CORE != 0)
+				if (ARM_DEBUG_CORE)
 					logerror("%08x: Writing R15 in strm\n",R15);
 	
 				/* special case handling if writing to PC */
 				R15 += 12;
 			}
-			if ((insn & INSN_BDT_U) != 0)
+			if (insn & INSN_BDT_U)
 			{
 				/* Incrementing */
 				if (!(insn & INSN_BDT_P))
@@ -1256,7 +1256,7 @@ public class arm
 					rbp = rbp + (- 4);
 				}
 				result = storeInc( insn&0xffff, rbp );
-				if ((insn & INSN_BDT_W) != 0)
+				if( insn & INSN_BDT_W )
 				{
 					SetRegister(rb,GetRegister(rb)+result*4);
 				}
@@ -1269,7 +1269,7 @@ public class arm
 					rbp = rbp - (- 4);
 				}
 				result = storeDec( insn&0xffff, rbp );
-				if ((insn & INSN_BDT_W) != 0)
+				if( insn & INSN_BDT_W )
 				{
 					SetRegister(rb,GetRegister(rb)-result*4);
 				}
@@ -1298,7 +1298,7 @@ public class arm
 		}
 	
 		/* All shift types ending in 1 are Rk, not #k */
-		if ((t & 1) != 0)
+		if( t & 1 )
 		{
 	//		logerror("%08x:  RegShift %02x %02x\n",R15, k>>1,GetRegister(k >> 1));
 			if (ARM_DEBUG_CORE && (insn&0x80)==0x80)
@@ -1309,7 +1309,7 @@ public class arm
 			if( k == 0 ) /* Register shift by 0 is a no-op */
 			{
 	//			logerror("%08x:  NO-OP Regshift\n",R15);
-				if (pCarry != 0) *pCarry = R15 & C_MASK;
+				if (pCarry) *pCarry = R15 & C_MASK;
 				return rm;
 			}
 		}
@@ -1317,7 +1317,7 @@ public class arm
 		switch (t >> 1)
 		{
 		case 0:						/* LSL */
-			if (pCarry != 0)
+			if (pCarry)
 			{
 				*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
 			}
@@ -1327,17 +1327,17 @@ public class arm
 		case 1:			       			/* LSR */
 			if (k == 0 || k == 32)
 			{
-				if (pCarry != 0) *pCarry = rm & SIGN_BIT;
+				if (pCarry) *pCarry = rm & SIGN_BIT;
 				return 0;
 			}
 			else if (k > 32)
 			{
-				if (pCarry != 0) *pCarry = 0;
+				if (pCarry) *pCarry = 0;
 				return 0;
 			}
 			else
 			{
-				if (pCarry != 0) *pCarry = (rm & (1 << (k - 1)));
+				if (pCarry) *pCarry = (rm & (1 << (k - 1)));
 				return LSR(rm, k);
 			}
 			break;
@@ -1345,12 +1345,12 @@ public class arm
 		case 2:						/* ASR */
 			if (k == 0 || k > 32)
 				k = 32;
-			if (pCarry != 0) *pCarry = (rm & (1 << (k - 1)));
+			if (pCarry) *pCarry = (rm & (1 << (k - 1)));
 			if (k >= 32)
 				return rm & SIGN_BIT ? 0xffffffffu : 0;
 			else
 			{
-				if ((rm & SIGN_BIT) != 0)
+				if (rm & SIGN_BIT)
 					return LSR(rm, k) | (0xffffffffu << (32 - k));
 				else
 					return LSR(rm, k);
@@ -1358,15 +1358,15 @@ public class arm
 			break;
 	
 		case 3:						/* ROR and RRX */
-			if (k != 0)
+			if (k)
 			{
 				while (k > 32) k -= 32;
-				if (pCarry != 0) *pCarry = rm & SIGN_BIT;
+				if (pCarry) *pCarry = rm & SIGN_BIT;
 				return ROR(rm, k);
 			}
 			else
 			{
-				if (pCarry != 0) *pCarry = (rm & 1);
+				if (pCarry) *pCarry = (rm & 1);
 				return LSR(rm, 1) | ((R15 & C_MASK) << 2);
 			}
 			break;

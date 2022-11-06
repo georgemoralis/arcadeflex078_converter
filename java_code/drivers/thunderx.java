@@ -10,7 +10,7 @@ K052591 emulation by Eddie Edwards
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,9 +24,8 @@ public class thunderx
 	
 	/***************************************************************************/
 	
-	public static InterruptHandlerPtr scontra_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr scontra_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
@@ -40,29 +39,26 @@ public class thunderx
 	static int rambank,pmcbank;
 	static unsigned char *ram,*pmcram;
 	
-	public static ReadHandlerPtr scontra_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (palette_selected != 0)
+	public static ReadHandlerPtr scontra_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (palette_selected)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr scontra_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (palette_selected != 0)
+	public static WriteHandlerPtr scontra_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (palette_selected)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr thunderx_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((rambank & 0x01) != 0)
+	public static ReadHandlerPtr thunderx_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (rambank & 0x01)
 			return ram[offset];
-		else if ((rambank & 0x10) != 0)
+		else if (rambank & 0x10)
 		{
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 	//			logerror("%04x read pmcram %04x\n",activecpu_get_pc(),offset);
 				return pmcram[offset];
@@ -77,14 +73,13 @@ public class thunderx
 			return paletteram_r(offset);
 	} };
 	
-	public static WriteHandlerPtr thunderx_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((rambank & 0x01) != 0)
+	public static WriteHandlerPtr thunderx_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (rambank & 0x01)
 			ram[offset] = data;
-		else if ((rambank & 0x10) != 0)
+		else if (rambank & 0x10)
 		{
 	//			if (offset == 0x200)	debug_signal_breakpoint(1);
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 				logerror("%04x pmcram %04x = %02x\n",activecpu_get_pc(),offset,data);
 				pmcram[offset] = data;
@@ -173,7 +168,7 @@ public class thunderx
 	// objects from s1 to e1
 	//
 	// only compare objects with the specified bits (cm) set in their flags
-	// only set object 0's hit bit if ((hm & 0x40) != 0) is true
+	// only set object 0's hit bit if (hm & 0x40) is true
 	//
 	// the data format is:
 	//
@@ -285,8 +280,7 @@ public class thunderx
 		run_collisions(X0,Y0,X1,Y1,CM,HM);
 	}
 	
-	public static WriteHandlerPtr thunderx_1f98_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thunderx_1f98_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	// logerror("%04x: 1f98_w %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 0 = enable char ROM reading through the video RAM */
@@ -295,7 +289,7 @@ public class thunderx
 		/* bit 1 = PMC-BK */
 		pmcbank = (data & 0x02) >> 1;
 	
-		/* bit 2 = do collision detection when 0.1 */
+		/* bit 2 = do collision detection when 0->1 */
 		if ((data & 4) && !(unknown_enable & 4))
 		{
 			calculate_collisions();
@@ -307,8 +301,7 @@ public class thunderx
 		unknown_enable = data;
 	} };
 	
-	public static WriteHandlerPtr scontra_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scontra_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int offs;
 	
@@ -329,8 +322,7 @@ public class thunderx
 		scontra_priority = data & 0x80;
 	} };
 	
-	public static WriteHandlerPtr thunderx_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thunderx_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: select video ram bank %02x\n",activecpu_get_pc(),data);
 		/* 0x01 = work RAM at 4000-5fff */
 		/* 0x00 = palette at 5800-5fff */
@@ -345,13 +337,11 @@ public class thunderx
 		scontra_priority = data & 0x08;
 	} };
 	
-	public static WriteHandlerPtr thunderx_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thunderx_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr scontra_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scontra_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* b3-b2: bank for chanel B */
 		/* b1-b0: bank for chanel A */
 	
@@ -471,7 +461,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_scontra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scontra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scontra )
 		PORT_START(); 	/* COINSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -575,7 +565,7 @@ public class thunderx
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thunderx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thunderx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thunderx )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -712,8 +702,7 @@ public class thunderx
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_scontra = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scontra )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* 052001 */
@@ -741,13 +730,10 @@ public class thunderx
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_thunderx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thunderx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* ? */
@@ -774,9 +760,7 @@ public class thunderx
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -975,15 +959,13 @@ public class thunderx
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_scontra  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_scontra  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		paletteram = &RAM[0x30000];
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_thunderx  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_thunderx  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = thunderx_banking;
@@ -993,16 +975,15 @@ public class thunderx
 		pmcram = &RAM[0x28800];
 	} };
 	
-	public static DriverInitHandlerPtr init_scontra  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_scontra  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_scontra	   = new GameDriver("1988"	,"scontra"	,"thunderx.java"	,rom_scontra,null	,machine_driver_scontra	,input_ports_scontra	,init_scontra	,ROT90	,	"Konami", "Super Contra" )
-	public static GameDriver driver_scontraj	   = new GameDriver("1988"	,"scontraj"	,"thunderx.java"	,rom_scontraj,driver_scontra	,machine_driver_scontra	,input_ports_scontra	,init_scontra	,ROT90	,	"Konami", "Super Contra (Japan)" )
-	public static GameDriver driver_thunderx	   = new GameDriver("1988"	,"thunderx"	,"thunderx.java"	,rom_thunderx,null	,machine_driver_thunderx	,input_ports_thunderx	,init_scontra	,ROT0	,	"Konami", "Thunder Cross" )
-	public static GameDriver driver_thnderxj	   = new GameDriver("1988"	,"thnderxj"	,"thunderx.java"	,rom_thnderxj,driver_thunderx	,machine_driver_thunderx	,input_ports_thunderx	,init_scontra	,ROT0	,	"Konami", "Thunder Cross (Japan)" )
+	GAME( 1988, scontra,  0,        scontra,  scontra,  scontra, ROT90, "Konami", "Super Contra" )
+	GAME( 1988, scontraj, scontra,  scontra,  scontra,  scontra, ROT90, "Konami", "Super Contra (Japan)" )
+	GAME( 1988, thunderx, 0,        thunderx, thunderx, scontra, ROT0, "Konami", "Thunder Cross" )
+	GAME( 1988, thnderxj, thunderx, thunderx, thunderx, scontra, ROT0, "Konami", "Thunder Cross (Japan)" )
 }

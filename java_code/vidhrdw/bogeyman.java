@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -11,8 +11,7 @@ public class bogeyman
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_bogeyman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bogeyman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* first 16 colors are RAM */
@@ -44,8 +43,7 @@ public class bogeyman
 		}
 	} };
 	
-	public static WriteHandlerPtr bogeyman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -53,8 +51,7 @@ public class bogeyman
 		}
 	} };
 	
-	public static WriteHandlerPtr bogeyman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -62,17 +59,15 @@ public class bogeyman
 		}
 	} };
 	
-	public static WriteHandlerPtr bogeyman_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (bogeyman_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr bogeyman_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (bogeyman_videoram2[offset] != data)
 		{
-			bogeyman_videoram2.write(offset,data);
+			bogeyman_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr bogeyman_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bogeyman_colorram2[offset] != data)
 		{
 			bogeyman_colorram2[offset] = data;
@@ -80,8 +75,7 @@ public class bogeyman
 		}
 	} };
 	
-	public static WriteHandlerPtr bogeyman_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset, ~data);
 	} };
@@ -99,25 +93,24 @@ public class bogeyman
 	static void get_fg_tile_info(int tile_index)
 	{
 		int attr = bogeyman_colorram2[tile_index];
-		int tile = bogeyman_videoram2.read(tile_index)| ((attr & 0x03) << 8);
+		int tile = bogeyman_videoram2[tile_index] | ((attr & 0x03) << 8);
 		int gfxbank = tile / 0x200;
 		int code = tile & 0x1ff;
 	
 		SET_TILE_INFO(gfxbank, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_bogeyman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bogeyman  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -133,7 +126,7 @@ public class bogeyman
 		{
 			int attr = spriteram.read(offs);
 	
-			if ((attr & 0x01) != 0)
+			if (attr & 0x01)
 			{
 				int code = spriteram.read(offs + 1)+ ((attr & 0x40) << 2);
 				int color = (attr & 0x08) >> 3;
@@ -143,9 +136,9 @@ public class bogeyman
 				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 				int multi = attr & 0x10;
 	
-				if (multi != 0) sy -= 16;
+				if (multi) sy -= 16;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -153,28 +146,27 @@ public class bogeyman
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2],
+				drawgfx(bitmap, Machine->gfx[2],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 	
-				if (multi != 0)
+				if (multi)
 				{
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 						code + 1, color,
 						flipx, flipy,
 						sx, sy + (flip_screen() ? -16 : 16),
-						Machine.visible_area,
+						Machine->visible_area,
 						TRANSPARENCY_PEN, 0);
 				}
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bogeyman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		bogeyman_draw_sprites(bitmap);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);

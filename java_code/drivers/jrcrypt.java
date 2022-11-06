@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -123,8 +123,7 @@ public class jrcrypt
 	};
 	#endif
 	
-	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler(){
 	#ifndef PreDecryptedRoms
 		s0 = 1;
 		s1 = 1;
@@ -310,7 +309,7 @@ public class jrcrypt
 			}
 	
 			/* latch new flip flops on rising edge of pcbe */
-			if (pcbe == 0)
+			if (!pcbe)
 			{
 				s0 = ns0;
 				s1 = ns1;
@@ -346,7 +345,7 @@ public class jrcrypt
 			}
 			else
 			{
-				if (encrypted != 0)
+				if (encrypted)
 					unmapped_encrypted++;
 				else
 					unmapped++;
@@ -407,8 +406,7 @@ public class jrcrypt
 	}
 	#endif
 	
-	public static WriteHandlerPtr jrpacman_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable = data;
 	} };
 	
@@ -429,8 +427,7 @@ public class jrcrypt
 	doesn't use an interrupt vector */
 							/* (see Z80.c for details). */
 	
-	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler(){
 		irq0_line_hold();
 	} };
 	
@@ -494,8 +491,8 @@ public class jrcrypt
 	
 	void Load(char *name,byte *buffer,int from, int length)
 	{
-		void *file = mame_fopen(Machine.gamedrv.name,0,FILETYPE_HIGHSCORE,0);
-		if (file == 0)
+		void *file = mame_fopen(Machine->gamedrv->name,0,FILETYPE_HIGHSCORE,0);
+		if (!file)
 			return;
 		while (length--)
 			buffer[from++]=fgetc(file);

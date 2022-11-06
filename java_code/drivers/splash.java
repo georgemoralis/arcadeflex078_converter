@@ -8,7 +8,7 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,7 +26,7 @@ public class splash
 	
 	static WRITE16_HANDLER( splash_sh_irqtrigger_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
 		}
@@ -49,7 +49,7 @@ public class splash
 	
 	WRITE16_HANDLER( splash_coin_w )
 	{
-		if (ACCESSING_MSB != 0){
+		if (ACCESSING_MSB){
 			switch ((offset >> 3)){
 				case 0x00:	/* Coin Lockouts */
 				case 0x01:
@@ -88,9 +88,9 @@ public class splash
 	
 	static int adpcm_data;
 	
-	public static WriteHandlerPtr splash_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr splash_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		adpcm_data = data;
-	} };
+	}
 	
 	static void splash_msm5205_int(int data)
 	{
@@ -111,7 +111,7 @@ public class splash
 	};
 	
 	
-	static InputPortPtr input_ports_splash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_splash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( splash )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x06, DEF_STR( "5C_1C") );
@@ -231,8 +231,7 @@ public class splash
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_splash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( splash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -260,9 +259,7 @@ public class splash
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, splash_ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, splash_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_splash = new RomLoadPtr(){ public void handler(){ 
@@ -287,5 +284,5 @@ public class splash
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_splash	   = new GameDriver("1992"	,"splash"	,"splash.java"	,rom_splash,null	,machine_driver_splash	,input_ports_splash	,null	,ROT0	,	"Gaelco", "Splash! (Ver. 1.2 World)" )
+	GAME( 1992, splash, 0, splash, splash, 0, ROT0, "Gaelco", "Splash! (Ver. 1.2 World)" )
 }

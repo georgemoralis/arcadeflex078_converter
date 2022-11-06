@@ -476,7 +476,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -722,7 +722,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_defender = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_defender = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( defender )
 		PORT_START();       /* IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_BUTTON1, "Fire", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
 		PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_BUTTON2, "Thrust", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
@@ -753,7 +753,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_colony7 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_colony7 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( colony7 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT );
@@ -780,7 +780,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stargate = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stargate = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stargate )
 		PORT_START();       /* IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_BUTTON1, "Fire", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
 		PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_BUTTON2, "Thrust", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
@@ -812,7 +812,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_joust = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_joust = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( joust )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_2WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_PLAYER2 );
@@ -845,7 +845,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_robotron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robotron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robotron )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_DOWN );
@@ -872,7 +872,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spdball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spdball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spdball )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
@@ -922,7 +922,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bubbles = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bubbles = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bubbles )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN );
@@ -945,7 +945,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_splat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_splat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( splat )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_UP | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_DOWN | IPF_8WAY | IPF_PLAYER2 );
@@ -987,7 +987,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sinistar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sinistar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sinistar )
 		PORT_START();       /* IN0 */
 		/* pseudo analog joystick, see below */
 	
@@ -1014,7 +1014,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_playball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_playball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( playball )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT );
@@ -1035,7 +1035,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_lottofun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lottofun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lottofun )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN );
@@ -1059,7 +1059,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_blaster = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blaster = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blaster )
 		PORT_START();       /* IN0 */
 		/* pseudo analog joystick, see below */
 	
@@ -1089,7 +1089,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_blastkit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blastkit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blastkit )
 		PORT_START();       /* IN0 */
 		/* pseudo analog joystick, see below */
 	
@@ -1121,7 +1121,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mysticm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mysticm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mysticm )
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT );
@@ -1147,7 +1147,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tshoot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tshoot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tshoot )
 		PORT_START(); 	/* IN0 (muxed with IN3)*/
 		PORT_ANALOG(0x3F, 0x20, IPT_LIGHTGUN_Y, 25, 10, 0, 0x3F);
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1177,7 +1177,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_inferno = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_inferno = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( inferno )
 		PORT_START(); 	/* IN0 (muxed with IN3) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPF_PLAYER1 | IPT_JOYSTICKLEFT_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPF_PLAYER1 | IPT_JOYSTICKLEFT_LEFT );
@@ -1217,7 +1217,7 @@ public class williams
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_joust2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_joust2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( joust2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_2WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY | IPF_PLAYER1 );
@@ -1309,8 +1309,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_defender = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( defender )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 1000000)
@@ -1337,13 +1336,10 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_williams = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( williams )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(defender)
@@ -1352,39 +1348,30 @@ public class williams
 		MDRV_CPU_MEMORY(williams_readmem,williams_writemem)
 	
 		MDRV_MACHINE_INIT(williams)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sinistar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sinistar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(HC55516, sinistar_cvsd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_playball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( playball )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sinistar)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(6, 298-1, 8, 239-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_blaster = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blaster )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams)
@@ -1396,13 +1383,10 @@ public class williams
 		MDRV_PALETTE_LENGTH(16+240)
 	
 		MDRV_VIDEO_START(blaster)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_williams2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( williams2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 1000000)
@@ -1429,13 +1413,10 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("wmsdac", DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_joust2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( joust2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(williams2)
@@ -1445,9 +1426,7 @@ public class williams
 	
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("wmsdac")
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2211,8 +2190,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_defender  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_defender  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 bank[8] = { 0x0c000, 0x10000, 0x11000, 0x12000, 0x0c000, 0x0c000, 0x0c000, 0x13000 };
 		defender_bank_list = bank;
 	
@@ -2224,8 +2202,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_defndjeu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_defndjeu  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 		Note: Please do not remove these comments in BETA versions. They are
 				helpful to get the games working. When they will work, useless
@@ -2276,8 +2253,7 @@ public class williams
 	} };
 	
 	#if 0
-	public static DriverInitHandlerPtr init_defcmnd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_defcmnd  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 bank[8] = { 0x0c000, 0x10000, 0x11000, 0x12000, 0x13000, 0x0c000, 0x0c000, 0x14000 };
 		defender_bank_list = bank;
 	
@@ -2289,8 +2265,7 @@ public class williams
 	} };
 	#endif
 	
-	public static DriverInitHandlerPtr init_mayday  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mayday  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 bank[8] = { 0x0c000, 0x10000, 0x11000, 0x12000, 0x0c000, 0x0c000, 0x0c000, 0x13000 };
 		defender_bank_list = bank;
 	
@@ -2305,8 +2280,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_colony7  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_colony7  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 bank[8] = { 0x0c000, 0x10000, 0x11000, 0x12000, 0x0c000, 0x0c000, 0x0c000, 0x0c000 };
 		defender_bank_list = bank;
 	
@@ -2318,8 +2292,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_stargate  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stargate  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2328,8 +2301,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_joust  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_joust  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2341,8 +2313,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_robotron  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_robotron  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2354,8 +2325,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_spdball  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spdball  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2376,8 +2346,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_bubbles  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bubbles  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2389,8 +2358,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_splat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_splat  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2402,8 +2370,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sinistar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sinistar  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2419,8 +2386,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_playball  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_playball  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2436,8 +2402,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_lottofun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lottofun  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2449,8 +2414,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blaster  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blaster  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2462,8 +2426,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blastkit  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blastkit  = new DriverInitHandlerPtr() { public void handler(){
 		/* CMOS configuration */
 		CONFIGURE_CMOS(0xcc00, 0x400);
 	
@@ -2475,8 +2438,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_mysticm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mysticm  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 tilemap_colors[] = { 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	
 		/* CMOS configuration */
@@ -2495,8 +2457,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tshoot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tshoot  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 tilemap_colors[] = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 	
 		/* CMOS configuration */
@@ -2511,8 +2472,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_inferno  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_inferno  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 tilemap_colors[] = { 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7 };
 	
 		/* CMOS configuration */
@@ -2531,8 +2491,7 @@ public class williams
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_joust2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_joust2  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT8 tilemap_colors[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 	
 		/* CMOS configuration */
@@ -2562,50 +2521,50 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_defender	   = new GameDriver("1980"	,"defender"	,"williams.java"	,rom_defender,null	,machine_driver_defender	,input_ports_defender	,init_defender	,ROT0	,	"Williams", "Defender (Red label)" )
-	public static GameDriver driver_defendg	   = new GameDriver("1980"	,"defendg"	,"williams.java"	,rom_defendg,driver_defender	,machine_driver_defender	,input_ports_defender	,init_defender	,ROT0	,	"Williams", "Defender (Green label)" )
-	public static GameDriver driver_defendw	   = new GameDriver("1980"	,"defendw"	,"williams.java"	,rom_defendw,driver_defender	,machine_driver_defender	,input_ports_defender	,init_defender	,ROT0	,	"Williams", "Defender (White label)" )
-	public static GameDriver driver_defndjeu	   = new GameDriver("1980"	,"defndjeu"	,"williams.java"	,rom_defndjeu,driver_defender	,machine_driver_defender	,input_ports_defender	,init_defndjeu	,ROT0	,	"Jeutel", "Defender ? (bootleg)", GAME_NOT_WORKING )
-	public static GameDriver driver_defcmnd	   = new GameDriver("1980"	,"defcmnd"	,"williams.java"	,rom_defcmnd,driver_defender	,machine_driver_defender	,input_ports_defender	,init_defender	,ROT0	,	"bootleg", "Defense Command (set 1)" )
-	public static GameDriver driver_defence	   = new GameDriver("1981"	,"defence"	,"williams.java"	,rom_defence,driver_defender	,machine_driver_defender	,input_ports_defender	,init_defender	,ROT0	,	"Outer Limits", "Defence Command" )
+	GAME( 1980, defender, 0,        defender, defender, defender, ROT0,   "Williams", "Defender (Red label)" )
+	GAME( 1980, defendg,  defender, defender, defender, defender, ROT0,   "Williams", "Defender (Green label)" )
+	GAME( 1980, defendw,  defender, defender, defender, defender, ROT0,   "Williams", "Defender (White label)" )
+	GAMEX(1980, defndjeu, defender, defender, defender, defndjeu, ROT0,   "Jeutel", "Defender ? (bootleg)", GAME_NOT_WORKING )
+	GAME( 1980, defcmnd,  defender, defender, defender, defender, ROT0,   "bootleg", "Defense Command (set 1)" )
+	GAME( 1981, defence,  defender, defender, defender, defender, ROT0,   "Outer Limits", "Defence Command" )
 	
-	public static GameDriver driver_mayday	   = new GameDriver("1980"	,"mayday"	,"williams.java"	,rom_mayday,null	,machine_driver_defender	,input_ports_defender	,init_mayday	,ROT0	,	"<unknown>", "Mayday (set 1)" )
-	public static GameDriver driver_maydaya	   = new GameDriver("1980"	,"maydaya"	,"williams.java"	,rom_maydaya,driver_mayday	,machine_driver_defender	,input_ports_defender	,init_mayday	,ROT0	,	"<unknown>", "Mayday (set 2)" )
-	public static GameDriver driver_maydayb	   = new GameDriver("1980"	,"maydayb"	,"williams.java"	,rom_maydayb,driver_mayday	,machine_driver_defender	,input_ports_defender	,init_mayday	,ROT0	,	"<unknown>", "Mayday (set 3)" )
+	GAME( 1980, mayday,   0,        defender, defender, mayday,   ROT0,   "<unknown>", "Mayday (set 1)" )
+	GAME( 1980, maydaya,  mayday,   defender, defender, mayday,   ROT0,   "<unknown>", "Mayday (set 2)" )
+	GAME( 1980, maydayb,  mayday,   defender, defender, mayday,   ROT0,   "<unknown>", "Mayday (set 3)" )
 	
-	public static GameDriver driver_colony7	   = new GameDriver("1981"	,"colony7"	,"williams.java"	,rom_colony7,null	,machine_driver_defender	,input_ports_colony7	,init_colony7	,ROT270	,	"Taito", "Colony 7 (set 1)" )
-	public static GameDriver driver_colony7a	   = new GameDriver("1981"	,"colony7a"	,"williams.java"	,rom_colony7a,driver_colony7	,machine_driver_defender	,input_ports_colony7	,init_colony7	,ROT270	,	"Taito", "Colony 7 (set 2)" )
+	GAME( 1981, colony7,  0,        defender, colony7,  colony7,  ROT270, "Taito", "Colony 7 (set 1)" )
+	GAME( 1981, colony7a, colony7,  defender, colony7,  colony7,  ROT270, "Taito", "Colony 7 (set 2)" )
 	
-	public static GameDriver driver_stargate	   = new GameDriver("1981"	,"stargate"	,"williams.java"	,rom_stargate,null	,machine_driver_williams	,input_ports_stargate	,init_stargate	,ROT0	,	"Williams", "Stargate" )
+	GAME( 1981, stargate, 0,        williams, stargate, stargate, ROT0,   "Williams", "Stargate" )
 	
-	public static GameDriver driver_robotron	   = new GameDriver("1982"	,"robotron"	,"williams.java"	,rom_robotron,null	,machine_driver_williams	,input_ports_robotron	,init_robotron	,ROT0	,	"Williams", "Robotron (Solid Blue label)" )
-	public static GameDriver driver_robotryo	   = new GameDriver("1982"	,"robotryo"	,"williams.java"	,rom_robotryo,driver_robotron	,machine_driver_williams	,input_ports_robotron	,init_robotron	,ROT0	,	"Williams", "Robotron (Yellow/Orange label)" )
+	GAME( 1982, robotron, 0,        williams, robotron, robotron, ROT0,   "Williams", "Robotron (Solid Blue label)" )
+	GAME( 1982, robotryo, robotron, williams, robotron, robotron, ROT0,   "Williams", "Robotron (Yellow/Orange label)" )
 	
-	public static GameDriver driver_joust	   = new GameDriver("1982"	,"joust"	,"williams.java"	,rom_joust,null	,machine_driver_williams	,input_ports_joust	,init_joust	,ROT0	,	"Williams", "Joust (White/Green label)" )
-	public static GameDriver driver_joustr	   = new GameDriver("1982"	,"joustr"	,"williams.java"	,rom_joustr,driver_joust	,machine_driver_williams	,input_ports_joust	,init_joust	,ROT0	,	"Williams", "Joust (Solid Red label)" )
-	public static GameDriver driver_joustwr	   = new GameDriver("1982"	,"joustwr"	,"williams.java"	,rom_joustwr,driver_joust	,machine_driver_williams	,input_ports_joust	,init_joust	,ROT0	,	"Williams", "Joust (White/Red label)" )
+	GAME( 1982, joust,    0,        williams, joust,    joust,    ROT0,   "Williams", "Joust (White/Green label)" )
+	GAME( 1982, joustr,   joust,    williams, joust,    joust,    ROT0,   "Williams", "Joust (Solid Red label)" )
+	GAME( 1982, joustwr,  joust,    williams, joust,    joust,    ROT0,   "Williams", "Joust (White/Red label)" )
 	
-	public static GameDriver driver_bubbles	   = new GameDriver("1982"	,"bubbles"	,"williams.java"	,rom_bubbles,null	,machine_driver_williams	,input_ports_bubbles	,init_bubbles	,ROT0	,	"Williams", "Bubbles" )
-	public static GameDriver driver_bubblesr	   = new GameDriver("1982"	,"bubblesr"	,"williams.java"	,rom_bubblesr,driver_bubbles	,machine_driver_williams	,input_ports_bubbles	,init_bubbles	,ROT0	,	"Williams", "Bubbles (Solid Red label)" )
-	public static GameDriver driver_bubblesp	   = new GameDriver("1982"	,"bubblesp"	,"williams.java"	,rom_bubblesp,driver_bubbles	,machine_driver_williams	,input_ports_bubbles	,init_bubbles	,ROT0	,	"Williams", "Bubbles (prototype version)" )
+	GAME( 1982, bubbles,  0,        williams, bubbles,  bubbles,  ROT0,   "Williams", "Bubbles" )
+	GAME( 1982, bubblesr, bubbles,  williams, bubbles,  bubbles,  ROT0,   "Williams", "Bubbles (Solid Red label)" )
+	GAME( 1982, bubblesp, bubbles,  williams, bubbles,  bubbles,  ROT0,   "Williams", "Bubbles (prototype version)" )
 	
-	public static GameDriver driver_splat	   = new GameDriver("1982"	,"splat"	,"williams.java"	,rom_splat,null	,machine_driver_williams	,input_ports_splat	,init_splat	,ROT0	,	"Williams", "Splat!" )
+	GAME( 1982, splat,    0,        williams, splat,    splat,    ROT0,   "Williams", "Splat!" )
 	
-	public static GameDriver driver_sinistar	   = new GameDriver("1982"	,"sinistar"	,"williams.java"	,rom_sinistar,null	,machine_driver_sinistar	,input_ports_sinistar	,init_sinistar	,ROT270	,	"Williams", "Sinistar (revision 3)" )
-	public static GameDriver driver_sinista1	   = new GameDriver("1982"	,"sinista1"	,"williams.java"	,rom_sinista1,driver_sinistar	,machine_driver_sinistar	,input_ports_sinistar	,init_sinistar	,ROT270	,	"Williams", "Sinistar (prototype version)" )
-	public static GameDriver driver_sinista2	   = new GameDriver("1982"	,"sinista2"	,"williams.java"	,rom_sinista2,driver_sinistar	,machine_driver_sinistar	,input_ports_sinistar	,init_sinistar	,ROT270	,	"Williams", "Sinistar (revision 2)" )
+	GAME( 1982, sinistar, 0,        sinistar, sinistar, sinistar, ROT270, "Williams", "Sinistar (revision 3)" )
+	GAME( 1982, sinista1, sinistar, sinistar, sinistar, sinistar, ROT270, "Williams", "Sinistar (prototype version)" )
+	GAME( 1982, sinista2, sinistar, sinistar, sinistar, sinistar, ROT270, "Williams", "Sinistar (revision 2)" )
 	
-	public static GameDriver driver_playball	   = new GameDriver("1983"	,"playball"	,"williams.java"	,rom_playball,null	,machine_driver_playball	,input_ports_playball	,init_playball	,ROT270	,	"Williams", "PlayBall! (prototype)" )
+	GAME( 1983, playball, 0,        playball, playball, playball, ROT270, "Williams", "PlayBall! (prototype)" )
 	
-	public static GameDriver driver_blaster	   = new GameDriver("1983"	,"blaster"	,"williams.java"	,rom_blaster,null	,machine_driver_blaster	,input_ports_blaster	,init_blaster	,ROT0	,	"Williams", "Blaster" )
-	public static GameDriver driver_blastkit	   = new GameDriver("1983"	,"blastkit"	,"williams.java"	,rom_blastkit,driver_blaster	,machine_driver_blaster	,input_ports_blastkit	,init_blastkit	,ROT0	,	"Williams", "Blaster (kit)" )
+	GAME( 1983, blaster,  0,        blaster,  blaster,  blaster,  ROT0,   "Williams", "Blaster" )
+	GAME( 1983, blastkit, blaster,  blaster,  blastkit, blastkit, ROT0,   "Williams", "Blaster (kit)" )
 	
-	public static GameDriver driver_spdball	   = new GameDriver("1985"	,"spdball"	,"williams.java"	,rom_spdball,null	,machine_driver_williams	,input_ports_spdball	,init_spdball	,ROT0	,	"Williams", "Speed Ball (prototype)" )
+	GAME( 1985, spdball,  0,        williams, spdball,  spdball,  ROT0,   "Williams", "Speed Ball (prototype)" )
 	
-	public static GameDriver driver_mysticm	   = new GameDriver("1983"	,"mysticm"	,"williams.java"	,rom_mysticm,null	,machine_driver_williams2	,input_ports_mysticm	,init_mysticm	,ROT0	,	"Williams", "Mystic Marathon" )
-	public static GameDriver driver_tshoot	   = new GameDriver("1984"	,"tshoot"	,"williams.java"	,rom_tshoot,null	,machine_driver_williams2	,input_ports_tshoot	,init_tshoot	,ROT0	,	"Williams", "Turkey Shoot" )
-	public static GameDriver driver_inferno	   = new GameDriver("1984"	,"inferno"	,"williams.java"	,rom_inferno,null	,machine_driver_williams2	,input_ports_inferno	,init_inferno	,ROT0	,	"Williams", "Inferno", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_joust2	   = new GameDriver("1986"	,"joust2"	,"williams.java"	,rom_joust2,null	,machine_driver_joust2	,input_ports_joust2	,init_joust2	,ROT270	,	"Williams", "Joust 2 - Survival of the Fittest (set 1)" )
+	GAME( 1983, mysticm,  0,        williams2,mysticm,  mysticm,  ROT0,   "Williams", "Mystic Marathon" )
+	GAME( 1984, tshoot,   0,        williams2,tshoot,   tshoot,   ROT0,   "Williams", "Turkey Shoot" )
+	GAMEX(1984, inferno,  0,        williams2,inferno,  inferno,  ROT0,   "Williams", "Inferno", GAME_IMPERFECT_SOUND )
+	GAME( 1986, joust2,   0,        joust2,   joust2,   joust2,   ROT270, "Williams", "Joust 2 - Survival of the Fittest (set 1)" )
 	
-	public static GameDriver driver_lottofun	   = new GameDriver("1987"	,"lottofun"	,"williams.java"	,rom_lottofun,null	,machine_driver_williams	,input_ports_lottofun	,init_lottofun	,ROT0	,	"H.A.R. Management", "Lotto Fun" )
+	GAME( 1987, lottofun, 0,        williams, lottofun, lottofun, ROT0,   "H.A.R. Management", "Lotto Fun" )
 }

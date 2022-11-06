@@ -143,7 +143,7 @@ GP-13  COH-110  S-XMB 1-660-276-11
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -410,8 +410,7 @@ public class namcos11
 	
 	#define SHRAM( x ) namcos11_sharedram[ ( x - 0x4000 ) / 4 ]
 	
-	public static InterruptHandlerPtr namcos11_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos11_vblank = new InterruptHandlerPtr() {public void handler(){
 		UINT16 n_coin;
 		UINT32 n_input;
 		static UINT16 n_oldcoin = 0;
@@ -477,11 +476,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom32_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if (ACCESSING_LSW32 != 0)
+		if( ACCESSING_LSW32 )
 		{
 			bankswitch_rom8( ( offset * 2 ), data & 0xffff );
 		}
-		if (ACCESSING_MSW32 != 0)
+		if( ACCESSING_MSW32 )
 		{
 			bankswitch_rom8( ( offset * 2 ) + 1, data >> 16 );
 		}
@@ -491,11 +490,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom64_upper_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if (ACCESSING_LSW32 != 0)
+		if( ACCESSING_LSW32 )
 		{
 			m_n_bankoffset = 0;
 		}
-		if (ACCESSING_MSW32 != 0)
+		if( ACCESSING_MSW32 )
 		{
 			m_n_bankoffset = 16;
 		}
@@ -512,11 +511,11 @@ public class namcos11
 	{
 		verboselog( 2, "bankswitch_rom64_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 	
-		if (ACCESSING_LSW32 != 0)
+		if( ACCESSING_LSW32 )
 		{
 			bankswitch_rom64( ( offset * 2 ), data & 0xffff );
 		}
-		if (ACCESSING_MSW32 != 0)
+		if( ACCESSING_MSW32 )
 		{
 			bankswitch_rom64( ( offset * 2 ) + 1, data >> 16 );
 		}
@@ -607,8 +606,7 @@ public class namcos11
 		{ NULL, NULL }
 	};
 	
-	public static DriverInitHandlerPtr init_namcos11  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_namcos11  = new DriverInitHandlerPtr() { public void handler(){
 		int n_game;
 	
 		cpu_setbank( 1, memory_region( REGION_USER1 ) );
@@ -621,7 +619,7 @@ public class namcos11
 		n_game = 0;
 		while( namcos11_config_table[ n_game ].s_name != NULL )
 		{
-			if( strcmp( Machine.gamedrv.name, namcos11_config_table[ n_game ].s_name ) == 0 )
+			if( strcmp( Machine->gamedrv->name, namcos11_config_table[ n_game ].s_name ) == 0 )
 			{
 				if( namcos11_config_table[ n_game ].keycus_r != NULL )
 				{
@@ -664,14 +662,12 @@ public class namcos11
 		psx_driver_init();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_namcos11  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_namcos11  = new MachineInitHandlerPtr() { public void handler(){
 		memset( namcos11_keycus, 0, namcos11_keycus_size );
 		psx_machine_init();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_coh100 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( coh100 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD( PSXCPU, 33868800 / 2 ) /* 33MHz ?? */
 		MDRV_CPU_MEMORY( namcos11_readmem, namcos11_writemem )
@@ -701,19 +697,14 @@ public class namcos11
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES( SOUND_SUPPORTS_STEREO )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_coh110 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( coh110 )
 		MDRV_IMPORT_FROM( coh100 )
 		MDRV_VIDEO_START( psx_type2_1024x1024 )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_namcos11 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcos11 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcos11 )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -779,7 +770,7 @@ public class namcos11
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tekken = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tekken = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tekken )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -845,7 +836,7 @@ public class namcos11
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_souledge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_souledge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( souledge )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -911,7 +902,7 @@ public class namcos11
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_myangel3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_myangel3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( myangel3 )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -1357,19 +1348,19 @@ public class namcos11
 		ROM_LOAD( "xv31wave.8k",  0x0000000, 0x400000, CRC(14f25ddd) SHA1(4981cf1017432ff85b768ec88c36f535df30b783) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_tekken	   = new GameDriver("1994"	,"tekken"	,"namcos11.java"	,rom_tekken,null	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken (TE4/VER.C)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_tekkena	   = new GameDriver("1994"	,"tekkena"	,"namcos11.java"	,rom_tekkena,driver_tekken	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken (TE2/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_tekkenb	   = new GameDriver("1994"	,"tekkenb"	,"namcos11.java"	,rom_tekkenb,driver_tekken	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken (TE1/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_tekken2	   = new GameDriver("1995"	,"tekken2"	,"namcos11.java"	,rom_tekken2,null	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken 2 Ver.B (TES3/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_tekken2a	   = new GameDriver("1995"	,"tekken2a"	,"namcos11.java"	,rom_tekken2a,driver_tekken2	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken 2 Ver.B (TES2/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_tekken2b	   = new GameDriver("1995"	,"tekken2b"	,"namcos11.java"	,rom_tekken2b,driver_tekken2	,machine_driver_coh100	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Tekken 2 (TES2/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_souledge	   = new GameDriver("1996"	,"souledge"	,"namcos11.java"	,rom_souledge,null	,machine_driver_coh110	,input_ports_souledge	,init_namcos11	,ROT0	,	"Namco", "Soul Edge Ver. II (SO4/VER.C)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_souledga	   = new GameDriver("1995"	,"souledga"	,"namcos11.java"	,rom_souledga,driver_souledge	,machine_driver_coh110	,input_ports_souledge	,init_namcos11	,ROT0	,	"Namco", "Soul Edge (SO3/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_souledgb	   = new GameDriver("1995"	,"souledgb"	,"namcos11.java"	,rom_souledgb,driver_souledge	,machine_driver_coh110	,input_ports_souledge	,init_namcos11	,ROT0	,	"Namco", "Soul Edge (SO1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_dunkmnia	   = new GameDriver("1995"	,"dunkmnia"	,"namcos11.java"	,rom_dunkmnia,null	,machine_driver_coh110	,input_ports_namcos11	,init_namcos11	,ROT0	,	"Namco", "Dunk Mania (DM1/VER.C)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_xevi3dg	   = new GameDriver("1995"	,"xevi3dg"	,"namcos11.java"	,rom_xevi3dg,null	,machine_driver_coh110	,input_ports_namcos11	,init_namcos11	,ROT0	,	"Namco", "Xevious 3D/G (XV31/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_primglex	   = new GameDriver("1996"	,"primglex"	,"namcos11.java"	,rom_primglex,null	,machine_driver_coh110	,input_ports_tekken	,init_namcos11	,ROT0	,	"Namco", "Prime Goal EX (PG1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_danceyes	   = new GameDriver("1996"	,"danceyes"	,"namcos11.java"	,rom_danceyes,null	,machine_driver_coh110	,input_ports_namcos11	,init_namcos11	,ROT0	,	"Namco", "Dancing Eyes (DC1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_starswep	   = new GameDriver("1997"	,"starswep"	,"namcos11.java"	,rom_starswep,null	,machine_driver_coh110	,input_ports_namcos11	,init_namcos11	,ROT0	,	"Axela/Namco", "Star Sweep (STP1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_myangel3	   = new GameDriver("1998"	,"myangel3"	,"namcos11.java"	,rom_myangel3,null	,machine_driver_coh110	,input_ports_myangel3	,init_namcos11	,ROT0	,	"Namco", "Kosodate Quiz My Angel 3 (KQT1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1994, tekken,    0,        coh100, tekken,   namcos11, ROT0, "Namco", "Tekken (TE4/VER.C)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1994, tekkena,   tekken,   coh100, tekken,   namcos11, ROT0, "Namco", "Tekken (TE2/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1994, tekkenb,   tekken,   coh100, tekken,   namcos11, ROT0, "Namco", "Tekken (TE1/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1995, tekken2,   0,        coh100, tekken,   namcos11, ROT0, "Namco", "Tekken 2 Ver.B (TES3/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1995, tekken2a,  tekken2,  coh100, tekken,   namcos11, ROT0, "Namco", "Tekken 2 Ver.B (TES2/VER.B)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1995, tekken2b,  tekken2,  coh100, tekken,   namcos11, ROT0, "Namco", "Tekken 2 (TES2/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1996, souledge,  0,        coh110, souledge, namcos11, ROT0, "Namco", "Soul Edge Ver. II (SO4/VER.C)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1995, souledga,  souledge, coh110, souledge, namcos11, ROT0, "Namco", "Soul Edge (SO3/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1995, souledgb,  souledge, coh110, souledge, namcos11, ROT0, "Namco", "Soul Edge (SO1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1995, dunkmnia,  0,        coh110, namcos11, namcos11, ROT0, "Namco", "Dunk Mania (DM1/VER.C)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1995, xevi3dg,   0,        coh110, namcos11, namcos11, ROT0, "Namco", "Xevious 3D/G (XV31/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1996, primglex,  0,        coh110, tekken,   namcos11, ROT0, "Namco", "Prime Goal EX (PG1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1996, danceyes,  0,        coh110, namcos11, namcos11, ROT0, "Namco", "Dancing Eyes (DC1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1997, starswep,  0,        coh110, namcos11, namcos11, ROT0, "Axela/Namco", "Star Sweep (STP1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1998, myangel3,  0,        coh110, myangel3, namcos11, ROT0, "Namco", "Kosodate Quiz My Angel 3 (KQT1/VER.A)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

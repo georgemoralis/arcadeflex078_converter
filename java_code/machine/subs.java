@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -21,8 +21,7 @@ public class subs
 	/***************************************************************************
 	subs_init_machine
 	***************************************************************************/
-	public static MachineInitHandlerPtr machine_init_subs  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_subs  = new MachineInitHandlerPtr() { public void handler(){
 		subs_steering_buf1 = 0;
 		subs_steering_buf2 = 0;
 		subs_steering_val1 = 0x00;
@@ -32,8 +31,7 @@ public class subs
 	/***************************************************************************
 	subs_interrupt
 	***************************************************************************/
-	public static InterruptHandlerPtr subs_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr subs_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* only do NMI interrupt if not in TEST mode */
 		if ((input_port_2_r(0) & 0x40)==0x40)
 			cpu_set_irq_line(0,IRQ_LINE_NMI,PULSE_LINE);
@@ -107,8 +105,7 @@ public class subs
 	/***************************************************************************
 	subs_steer_reset
 	***************************************************************************/
-	public static WriteHandlerPtr subs_steer_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_steer_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    subs_steering_val1 = 0x00;
 	    subs_steering_val2 = 0x00;
 	} };
@@ -116,8 +113,7 @@ public class subs
 	/***************************************************************************
 	subs_control_r
 	***************************************************************************/
-	public static ReadHandlerPtr subs_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr subs_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int inport = input_port_1_r.handler(offset);
 	
 		switch (offset & 0x07)
@@ -138,8 +134,7 @@ public class subs
 	/***************************************************************************
 	subs_coin_r
 	***************************************************************************/
-	public static ReadHandlerPtr subs_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr subs_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int inport = input_port_2_r.handler(offset);
 	
 		switch (offset & 0x07)
@@ -160,8 +155,7 @@ public class subs
 	/***************************************************************************
 	subs_options_r
 	***************************************************************************/
-	public static ReadHandlerPtr subs_options_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr subs_options_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int opts = input_port_0_r.handler(offset);
 	
 		switch (offset & 0x03)
@@ -178,16 +172,14 @@ public class subs
 	/***************************************************************************
 	subs_lamp1_w
 	***************************************************************************/
-	public static WriteHandlerPtr subs_lamp1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_lamp1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,~offset & 1);
 	} };
 	
 	/***************************************************************************
 	subs_lamp2_w
 	***************************************************************************/
-	public static WriteHandlerPtr subs_lamp2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_lamp2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1,~offset & 1);
 	} };
 	
@@ -195,28 +187,23 @@ public class subs
 	sub sound functions
 	***************************************************************************/
 	
-	public static WriteHandlerPtr subs_sonar2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_sonar2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(1, offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr subs_sonar1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_sonar1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(0, offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr subs_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(4, ~offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr subs_explode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_explode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(5, ~offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr subs_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Pulse noise reset */
 		discrete_sound_w(6, 0);
 	} };

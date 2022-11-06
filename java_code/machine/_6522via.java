@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -82,8 +82,8 @@ public class _6522via
 	
 	/******************* convenince macros and defines *******************/
 	
-	#define V_CYCLES_TO_TIME(c) ((double)(c) * v.cycles_to_sec)
-	#define V_TIME_TO_CYCLES(t) ((int)((t) * v.sec_to_cycles))
+	#define V_CYCLES_TO_TIME(c) ((double)(c) * v->cycles_to_sec)
+	#define V_TIME_TO_CYCLES(t) ((int)((t) * v->sec_to_cycles))
 	
 	/* Macros for PCR */
 	#define CA1_LOW_TO_HIGH(c)		(c & 0x01)
@@ -143,13 +143,13 @@ public class _6522via
 	#define INT_T1	0x40
 	#define INT_ANY	0x80
 	
-	#define CLR_PA_INT(v, which)	via_clear_int (which, INT_CA1 | ((!CA2_IND_IRQ(v.pcr)) ? INT_CA2: 0))
-	#define CLR_PB_INT(v, which)	via_clear_int (which, INT_CB1 | ((!CB2_IND_IRQ(v.pcr)) ? INT_CB2: 0))
+	#define CLR_PA_INT(v, which)	via_clear_int (which, INT_CA1 | ((!CA2_IND_IRQ(v->pcr)) ? INT_CA2: 0))
+	#define CLR_PB_INT(v, which)	via_clear_int (which, INT_CB1 | ((!CB2_IND_IRQ(v->pcr)) ? INT_CB2: 0))
 	
 	#define IFR_DELAY 3
 	
-	#define TIMER1_VALUE(v) (v.t1ll+(v.t1lh<<8))
-	#define TIMER2_VALUE(v) (v.t2ll+(v.t2lh<<8))
+	#define TIMER1_VALUE(v) (v->t1ll+(v->t1lh<<8))
+	#define TIMER2_VALUE(v) (v->t2ll+(v->t2lh<<8))
 	
 	/******************* static variables *******************/
 	
@@ -174,7 +174,7 @@ public class _6522via
 		via[which].time2 = via[which].time1=timer_get_time();
 	
 		/* Default clock is from CPU1 */
-		via_set_clock (which, Machine.drv.cpu[0].cpu_clock);
+		via_set_clock (which, Machine->drv->cpu[0].cpu_clock);
 	}
 	
 	
@@ -185,16 +185,16 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 	
-		v.ifr |= data;
+		v->ifr |= data;
 	#ifdef TRACE_VIA
-	logerror("6522VIA chip %d: IFR = %02X.  PC: %08X\n", which, v.ifr, activecpu_get_pc());
+	logerror("6522VIA chip %d: IFR = %02X.  PC: %08X\n", which, v->ifr, activecpu_get_pc());
 	#endif
 	
-		if (v.ier & v.ifr)
+		if (v->ier & v->ifr)
 	    {
-			v.ifr |= INT_ANY;
-			if (v.intf.irq_func)
-				(*v.intf.irq_func)(ASSERT_LINE);
+			v->ifr |= INT_ANY;
+			if (v->intf->irq_func)
+				(*v->intf->irq_func)(ASSERT_LINE);
 			else
 				logerror("6522VIA chip %d: Interrupt is asserted but there is no callback function.  PC: %08X\n", which, activecpu_get_pc());
 	    }
@@ -205,17 +205,17 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 	
-		v.ifr = (v.ifr & ~data) & 0x7f;
+		v->ifr = (v->ifr & ~data) & 0x7f;
 	#ifdef TRACE_VIA
-	logerror("6522VIA chip %d: IFR = %02X.  PC: %08X\n", which, v.ifr, activecpu_get_pc());
+	logerror("6522VIA chip %d: IFR = %02X.  PC: %08X\n", which, v->ifr, activecpu_get_pc());
 	#endif
 	
-		if (v.ifr & v.ier)
-			v.ifr |= INT_ANY;
+		if (v->ifr & v->ier)
+			v->ifr |= INT_ANY;
 		else
 		{
-			if (v.intf.irq_func)
-				(*v.intf.irq_func)(CLEAR_LINE);
+			if (v->intf->irq_func)
+				(*v->intf->irq_func)(CLEAR_LINE);
 	//		else
 	//			logerror("6522VIA chip %d: Interrupt is cleared but there is no callback function.  PC: %08X\n", which, activecpu_get_pc());
 		}
@@ -227,30 +227,30 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 	
-		if (T1_CONTINUOUS (v.acr))
+		if (T1_CONTINUOUS (v->acr))
 	    {
-			if (T1_SET_PB7(v.acr))
-				v.out_b ^= 0x80;
-			timer_adjust (v.t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
+			if (T1_SET_PB7(v->acr))
+				v->out_b ^= 0x80;
+			timer_adjust (v->t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
 	    }
 		else
 	    {
-			if (T1_SET_PB7(v.acr))
-				v.out_b |= 0x80;
-			v.t1_active = 0;
-			v.time1=timer_get_time();
+			if (T1_SET_PB7(v->acr))
+				v->out_b |= 0x80;
+			v->t1_active = 0;
+			v->time1=timer_get_time();
 	    }
-		if (v.ddr_b)
+		if (v->ddr_b)
 		{
-			UINT8 write_data = v.out_b & v.ddr_b;
+			UINT8 write_data = v->out_b & v->ddr_b;
 	
-			if (v.intf.out_b_func)
-				v.intf.out_b_func(0, write_data);
+			if (v->intf->out_b_func)
+				v->intf->out_b_func(0, write_data);
 			else
 				logerror("6522VIA chip %d: Port B is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 		}
 	
-		if (!(v.ifr & INT_T1))
+		if (!(v->ifr & INT_T1))
 			via_set_int (which, INT_T1);
 	}
 	
@@ -258,15 +258,15 @@ public class _6522via
 	{
 		struct via6522 *v = via + which;
 	
-		if (v.intf.t2_callback)
-			v.intf.t2_callback(timer_timeelapsed(v.t2));
+		if (v->intf->t2_callback)
+			v->intf->t2_callback(timer_timeelapsed(v->t2));
 		else
 			logerror("6522VIA chip %d: T2 timout occured but there is no callback.  PC: %08X\n", which, activecpu_get_pc());
 	
-		v.t2_active = 0;
-		v.time2=timer_get_time();
+		v->t2_active = 0;
+		v->time2=timer_get_time();
 	
-		if (!(v.ifr & INT_T2))
+		if (!(v->ifr & INT_T2))
 			via_set_int (which, INT_T2);
 	}
 	
@@ -313,10 +313,10 @@ public class _6522via
 	    {
 	    case VIA_PB:
 			/* update the input */
-			if (PB_LATCH_ENABLE(v.acr) == 0)
+			if (PB_LATCH_ENABLE(v->acr) == 0)
 			{
-				if (v.intf.in_b_func)
-					v.in_b = v.intf.in_b_func(0);
+				if (v->intf->in_b_func)
+					v->in_b = v->intf->in_b_func(0);
 				else
 					logerror("6522VIA chip %d: Port B is being read but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 			}
@@ -324,39 +324,39 @@ public class _6522via
 			CLR_PB_INT(v, which);
 	
 			/* combine input and output values, hold DDRB bit 7 high if T1_SET_PB7 */
-			if (T1_SET_PB7(v.acr))
-				val = (v.out_b & (v.ddr_b | 0x80)) | (v.in_b & ~(v.ddr_b | 0x80));
+			if (T1_SET_PB7(v->acr))
+				val = (v->out_b & (v->ddr_b | 0x80)) | (v->in_b & ~(v->ddr_b | 0x80));
 			else
-				val = (v.out_b & v.ddr_b) + (v.in_b & ~v.ddr_b);
+				val = (v->out_b & v->ddr_b) + (v->in_b & ~v->ddr_b);
 			break;
 	
 	    case VIA_PA:
 			/* update the input */
-			if (PA_LATCH_ENABLE(v.acr) == 0)
+			if (PA_LATCH_ENABLE(v->acr) == 0)
 			{
-				if (v.intf.in_a_func)
-					v.in_a = v.intf.in_a_func(0);
+				if (v->intf->in_a_func)
+					v->in_a = v->intf->in_a_func(0);
 				else
 					logerror("6522VIA chip %d: Port A is being read but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 			}
 	
 			/* combine input and output values */
-			val = (v.out_a & v.ddr_a) + (v.in_a & ~v.ddr_a);
+			val = (v->out_a & v->ddr_a) + (v->in_a & ~v->ddr_a);
 	
 			CLR_PA_INT(v, which);
 	
 			/* If CA2 is configured as output and in pulse or handshake mode,
 			   CA2 is set now */
-			if (CA2_AUTO_HS(v.pcr))
+			if (CA2_AUTO_HS(v->pcr))
 			{
-				if (v.out_ca2)
+				if (v->out_ca2)
 				{
 					/* set CA2 */
-					v.out_ca2 = 0;
+					v->out_ca2 = 0;
 	
 					/* call the CA2 output function */
-					if (v.intf.out_ca2_func)
-						v.intf.out_ca2_func(0, 0);
+					if (v->intf->out_ca2_func)
+						v->intf->out_ca2_func(0, 0);
 					else
 						logerror("6522VIA chip %d: Port CA2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), 0);
 				}
@@ -366,130 +366,130 @@ public class _6522via
 	
 	    case VIA_PANH:
 			/* update the input */
-			if (PA_LATCH_ENABLE(v.acr) == 0)
+			if (PA_LATCH_ENABLE(v->acr) == 0)
 			{
-				if (v.intf.in_a_func)
-					v.in_a = v.intf.in_a_func(0);
+				if (v->intf->in_a_func)
+					v->in_a = v->intf->in_a_func(0);
 				else
 					logerror("6522VIA chip %d: Port A is being read but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 			}
 	
 			/* combine input and output values */
-			val = (v.out_a & v.ddr_a) + (v.in_a & ~v.ddr_a);
+			val = (v->out_a & v->ddr_a) + (v->in_a & ~v->ddr_a);
 			break;
 	
 	    case VIA_DDRB:
-			val = v.ddr_b;
+			val = v->ddr_b;
 			break;
 	
 	    case VIA_DDRA:
-			val = v.ddr_a;
+			val = v->ddr_a;
 			break;
 	
 	    case VIA_T1CL:
 			via_clear_int (which, INT_T1);
-			if (v.t1_active)
-				val = V_TIME_TO_CYCLES(timer_timeleft(v.t1)) & 0xff;
+			if (v->t1_active)
+				val = V_TIME_TO_CYCLES(timer_timeleft(v->t1)) & 0xff;
 			else
 			{
-				if ( T1_CONTINUOUS(v.acr) )
+				if ( T1_CONTINUOUS(v->acr) )
 				{
 					val = (TIMER1_VALUE(v)-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time1)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time1)
 							%TIMER1_VALUE(v))-1)&0xff;
 				}
 				else
 				{
 					val = (0x10000-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time1)&0xffff)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time1)&0xffff)
 						   -1)&0xff;
 				}
 			}
 			break;
 	
 	    case VIA_T1CH:
-			if (v.t1_active)
-				val = V_TIME_TO_CYCLES(timer_timeleft(v.t1)) >> 8;
+			if (v->t1_active)
+				val = V_TIME_TO_CYCLES(timer_timeleft(v->t1)) >> 8;
 			else
 			{
-				if ( T1_CONTINUOUS(v.acr) )
+				if ( T1_CONTINUOUS(v->acr) )
 				{
 					val = (TIMER1_VALUE(v)-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time1)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time1)
 							%TIMER1_VALUE(v))-1)>>8;
 				}
 				else
 				{
 					val = (0x10000-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time1)&0xffff)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time1)&0xffff)
 						   -1)>>8;
 				}
 			}
 			break;
 	
 	    case VIA_T1LL:
-			val = v.t1ll;
+			val = v->t1ll;
 			break;
 	
 	    case VIA_T1LH:
-			val = v.t1lh;
+			val = v->t1lh;
 			break;
 	
 	    case VIA_T2CL:
 			via_clear_int (which, INT_T2);
-			if (v.t2_active)
-				val = V_TIME_TO_CYCLES(timer_timeleft(v.t2)) & 0xff;
+			if (v->t2_active)
+				val = V_TIME_TO_CYCLES(timer_timeleft(v->t2)) & 0xff;
 			else
 			{
-				if (T2_COUNT_PB6(v.acr))
+				if (T2_COUNT_PB6(v->acr))
 				{
-					val = v.t2cl;
+					val = v->t2cl;
 				}
 				else
 				{
 					val = (0x10000-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time2)&0xffff)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time2)&0xffff)
 						   -1)&0xff;
 				}
 			}
 			break;
 	
 	    case VIA_T2CH:
-			if (v.t2_active)
-				val = V_TIME_TO_CYCLES(timer_timeleft(v.t2)) >> 8;
+			if (v->t2_active)
+				val = V_TIME_TO_CYCLES(timer_timeleft(v->t2)) >> 8;
 			else
 			{
-				if (T2_COUNT_PB6(v.acr))
+				if (T2_COUNT_PB6(v->acr))
 				{
-					val = v.t2ch;
+					val = v->t2ch;
 				}
 				else
 				{
 					val = (0x10000-
-						   (V_TIME_TO_CYCLES(timer_get_time()-v.time2)&0xffff)
+						   (V_TIME_TO_CYCLES(timer_get_time()-v->time2)&0xffff)
 						   -1)>>8;
 				}
 			}
 			break;
 	
 	    case VIA_SR:
-			val = v.sr;
+			val = v->sr;
 			break;
 	
 	    case VIA_PCR:
-			val = v.pcr;
+			val = v->pcr;
 			break;
 	
 	    case VIA_ACR:
-			val = v.acr;
+			val = v->acr;
 			break;
 	
 	    case VIA_IER:
-			val = v.ier | 0x80;
+			val = v->ier | 0x80;
 			break;
 	
 	    case VIA_IFR:
-			val = v.ifr;
+			val = v->ifr;
 			break;
 	    }
 		return val;
@@ -507,17 +507,17 @@ public class _6522via
 		switch (offset)
 	    {
 	    case VIA_PB:
-			if (T1_SET_PB7(v.acr))
-				v.out_b = (v.out_b & 0x80) | (data  & 0x7f);
+			if (T1_SET_PB7(v->acr))
+				v->out_b = (v->out_b & 0x80) | (data  & 0x7f);
 			else
-				v.out_b = data;
+				v->out_b = data;
 	
-			if (v.ddr_b)
+			if (v->ddr_b)
 			{
-				UINT8 write_data = v.out_b & v.ddr_b;
+				UINT8 write_data = v->out_b & v->ddr_b;
 	
-				if (v.intf.out_b_func)
-					v.intf.out_b_func(0, write_data);
+				if (v->intf->out_b_func)
+					v->intf->out_b_func(0, write_data);
 				else
 					logerror("6522VIA chip %d: Port B is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 			}
@@ -526,16 +526,16 @@ public class _6522via
 	
 			/* If CB2 is configured as output and in pulse or handshake mode,
 			   CB2 is set now */
-			if (CB2_AUTO_HS(v.pcr))
+			if (CB2_AUTO_HS(v->pcr))
 			{
-				if (v.out_cb2)
+				if (v->out_cb2)
 				{
 					/* set CB2 */
-					v.out_cb2 = 0;
+					v->out_cb2 = 0;
 	
 					/* call the CB2 output function */
-					if (v.intf.out_cb2_func)
-						v.intf.out_cb2_func(0, 0);
+					if (v->intf->out_cb2_func)
+						v->intf->out_cb2_func(0, 0);
 					else
 						logerror("6522VIA chip %d: Port CB2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), 0);
 				}
@@ -543,14 +543,14 @@ public class _6522via
 			break;
 	
 	    case VIA_PA:
-			v.out_a = data;
+			v->out_a = data;
 	
-			if (v.ddr_a)
+			if (v->ddr_a)
 			{
-				UINT8 write_data = v.out_a & v.ddr_a;
+				UINT8 write_data = v->out_a & v->ddr_a;
 	
-				if (v.intf.out_a_func)
-					v.intf.out_a_func(0, write_data);
+				if (v->intf->out_a_func)
+					v->intf->out_a_func(0, write_data);
 				else
 					logerror("6522VIA chip %d: Port A is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 			}
@@ -559,16 +559,16 @@ public class _6522via
 	
 			/* If CA2 is configured as output and in pulse or handshake mode,
 			   CA2 is set now */
-			if (CA2_AUTO_HS(v.pcr))
+			if (CA2_AUTO_HS(v->pcr))
 			{
-				if (v.out_ca2)
+				if (v->out_ca2)
 				{
 					/* set CA2 */
-					v.out_ca2 = 0;
+					v->out_ca2 = 0;
 	
 					/* call the CA2 output function */
-					if (v.intf.out_ca2_func)
-						v.intf.out_ca2_func(0, 0);
+					if (v->intf->out_ca2_func)
+						v->intf->out_ca2_func(0, 0);
 					else
 						logerror("6522VIA chip %d: Port CA2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), 0);
 				}
@@ -577,14 +577,14 @@ public class _6522via
 			break;
 	
 	    case VIA_PANH:
-			v.out_a = data;
+			v->out_a = data;
 	
-			if (v.ddr_a)
+			if (v->ddr_a)
 			{
-				UINT8 write_data = v.out_a & v.ddr_a;
+				UINT8 write_data = v->out_a & v->ddr_a;
 	
-				if (v.intf.out_a_func)
-					v.intf.out_a_func(0, write_data);
+				if (v->intf->out_a_func)
+					v->intf->out_a_func(0, write_data);
 				else
 					logerror("6522VIA chip %d: Port A is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 			}
@@ -593,16 +593,16 @@ public class _6522via
 	
 	    case VIA_DDRB:
 	    	/* EHC 03/04/2000 - If data direction changed, present output on the lines */
-	    	if ( data != v.ddr_b )
+	    	if ( data != v->ddr_b )
 	    	{
-				v.ddr_b = data;
+				v->ddr_b = data;
 	
-				//if (v.ddr_b)
+				//if (v->ddr_b)
 				{
-					UINT8 write_data = v.out_b & v.ddr_b;
+					UINT8 write_data = v->out_b & v->ddr_b;
 	
-					if (v.intf.out_b_func)
-						v.intf.out_b_func(0, write_data);
+					if (v->intf->out_b_func)
+						v->intf->out_b_func(0, write_data);
 					else
 						logerror("6522VIA chip %d: Port B is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 				}
@@ -611,16 +611,16 @@ public class _6522via
 	
 	    case VIA_DDRA:
 	    	/* EHC 03/04/2000 - If data direction changed, present output on the lines */
-	    	if ( data != v.ddr_a )
+	    	if ( data != v->ddr_a )
 	    	{
-				v.ddr_a = data;
+				v->ddr_a = data;
 	
-				//if (v.ddr_a)
+				//if (v->ddr_a)
 				{
-					UINT8 write_data = v.out_a & v.ddr_a;
+					UINT8 write_data = v->out_a & v->ddr_a;
 	
-					if (v.intf.out_a_func)
-						v.intf.out_a_func(0, write_data);
+					if (v->intf->out_a_func)
+						v->intf->out_a_func(0, write_data);
 					else
 						logerror("6522VIA chip %d: Port A is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 				}
@@ -629,80 +629,80 @@ public class _6522via
 	
 	    case VIA_T1CL:
 	    case VIA_T1LL:
-			v.t1ll = data;
+			v->t1ll = data;
 			break;
 	
 		case VIA_T1LH:
-		    v.t1lh = data;
+		    v->t1lh = data;
 		    via_clear_int (which, INT_T1);
 		    break;
 	
 	    case VIA_T1CH:
-			v.t1ch = v.t1lh = data;
-			v.t1cl = v.t1ll;
+			v->t1ch = v->t1lh = data;
+			v->t1cl = v->t1ll;
 	
 			via_clear_int (which, INT_T1);
 	
-			if (T1_SET_PB7(v.acr))
+			if (T1_SET_PB7(v->acr))
 			{
-				v.out_b &= 0x7f;
+				v->out_b &= 0x7f;
 	
-				//if (v.ddr_b)
+				//if (v->ddr_b)
 				{
-					UINT8 write_data = v.out_b & v.ddr_b;
+					UINT8 write_data = v->out_b & v->ddr_b;
 	
-					if (v.intf.out_b_func)
-						v.intf.out_b_func(0, write_data);
+					if (v->intf->out_b_func)
+						v->intf->out_b_func(0, write_data);
 					else
 						logerror("6522VIA chip %d: Port B is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 				}
 			}
-			timer_adjust (v.t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
-			v.t1_active = 1;
+			timer_adjust (v->t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
+			v->t1_active = 1;
 			break;
 	
 	    case VIA_T2CL:
-			v.t2ll = data;
+			v->t2ll = data;
 			break;
 	
 	    case VIA_T2CH:
-			v.t2ch = v.t2lh = data;
-			v.t2cl = v.t2ll;
+			v->t2ch = v->t2lh = data;
+			v->t2cl = v->t2ll;
 	
 			via_clear_int (which, INT_T2);
 	
-			if (!T2_COUNT_PB6(v.acr))
+			if (!T2_COUNT_PB6(v->acr))
 			{
-				if (v.intf.t2_callback)
-					v.intf.t2_callback(timer_timeelapsed(v.t2));
+				if (v->intf->t2_callback)
+					v->intf->t2_callback(timer_timeelapsed(v->t2));
 				else
 					logerror("6522VIA chip %d: T2 timout occured but there is no callback.  PC: %08X\n", which, activecpu_get_pc());
 	
-				timer_adjust (v.t2, V_CYCLES_TO_TIME(TIMER2_VALUE(v) + IFR_DELAY), which, 0);
-				v.t2_active = 1;
+				timer_adjust (v->t2, V_CYCLES_TO_TIME(TIMER2_VALUE(v) + IFR_DELAY), which, 0);
+				v->t2_active = 1;
 			}
 			else
 			{
-				v.time2=timer_get_time();
+				v->time2=timer_get_time();
 			}
 			break;
 	
 	    case VIA_SR:
-			v.sr = data;
-			if (SO_O2_CONTROL(v.acr))
+			v->sr = data;
+			if (SO_O2_CONTROL(v->acr))
 			{
-				if (v.intf.out_shift_func)
-					v.intf.out_shift_func(data);
+				if (v->intf->out_shift_func)
+					v->intf->out_shift_func(data);
 				else
 					logerror("6522VIA chip %d: Shift register is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), data);
 			}
 	
 			/* kludge for Mac Plus (and 128k, 512k, 512ke) : */
-			if (SO_EXT_CONTROL(v.acr))
+			if (SO_EXT_CONTROL(v->acr))
 			{
-				if (v.intf.out_shift_func2)
+				if (v->intf->out_shift_func2)
 				{
-					v.intf.out_shift_func2(data);
+					v->intf->out_shift_func2(data);
 					via_set_int(which, INT_SR);
 				}
 				else
@@ -711,88 +711,88 @@ public class _6522via
 			break;
 	
 	    case VIA_PCR:
-			v.pcr = data;
+			v->pcr = data;
 	#ifdef TRACE_VIA
 	logerror("6522VIA chip %d: PCR = %02X.  PC: %08X\n", which, data, activecpu_get_pc());
 	#endif
 	
-			if (CA2_FIX_OUTPUT(data) && CA2_OUTPUT_LEVEL(data) ^ v.out_ca2)
+			if (CA2_FIX_OUTPUT(data) && CA2_OUTPUT_LEVEL(data) ^ v->out_ca2)
 			{
-				v.out_ca2 = CA2_OUTPUT_LEVEL(data);
-				if (v.intf.out_ca2_func)
-					v.intf.out_ca2_func(0, v.out_ca2);
+				v->out_ca2 = CA2_OUTPUT_LEVEL(data);
+				if (v->intf->out_ca2_func)
+					v->intf->out_ca2_func(0, v->out_ca2);
 				else
-					logerror("6522VIA chip %d: Port CA2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), v.out_ca2);
+					logerror("6522VIA chip %d: Port CA2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), v->out_ca2);
 			}
 	
-			if (CB2_FIX_OUTPUT(data) && CB2_OUTPUT_LEVEL(data) ^ v.out_cb2)
+			if (CB2_FIX_OUTPUT(data) && CB2_OUTPUT_LEVEL(data) ^ v->out_cb2)
 			{
-				v.out_cb2 = CB2_OUTPUT_LEVEL(data);
-				if (v.intf.out_cb2_func)
-					v.intf.out_cb2_func(0, v.out_cb2);
+				v->out_cb2 = CB2_OUTPUT_LEVEL(data);
+				if (v->intf->out_cb2_func)
+					v->intf->out_cb2_func(0, v->out_cb2);
 				else
-					logerror("6522VIA chip %d: Port CB2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), v.out_cb2);
+					logerror("6522VIA chip %d: Port CB2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), v->out_cb2);
 			}
 			break;
 	
 	    case VIA_ACR:
-			v.acr = data;
-			if (T1_SET_PB7(v.acr))
+			v->acr = data;
+			if (T1_SET_PB7(v->acr))
 			{
-				if (v.t1_active)
-					v.out_b &= ~0x80;
+				if (v->t1_active)
+					v->out_b &= ~0x80;
 				else
-					v.out_b |= 0x80;
+					v->out_b |= 0x80;
 	
-				//if (v.ddr_b)
+				//if (v->ddr_b)
 				{
-					UINT8 write_data = v.out_b & v.ddr_b;
+					UINT8 write_data = v->out_b & v->ddr_b;
 	
-					if (v.intf.out_b_func)
-						v.intf.out_b_func(0, write_data);
+					if (v->intf->out_b_func)
+						v->intf->out_b_func(0, write_data);
 					else
 						logerror("6522VIA chip %d: Port B is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), write_data);
 				}
 			}
 			if (T1_CONTINUOUS(data))
 			{
-				timer_adjust (v.t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
-				v.t1_active = 1;
+				timer_adjust (v->t1, V_CYCLES_TO_TIME(TIMER1_VALUE(v) + IFR_DELAY), which, 0);
+				v->t1_active = 1;
 			}
 			/* kludge for Mac Plus (and 128k, 512k, 512ke) : */
 			if (SI_EXT_CONTROL(data))
 			{
-				if (v.intf.si_ready_func)
-					v.intf.si_ready_func();
+				if (v->intf->si_ready_func)
+					v->intf->si_ready_func();
 				else
 					logerror("6522VIA chip %d: SI READY is being called to but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 			}
 			break;
 	
 		case VIA_IER:
-			if ((data & 0x80) != 0)
-				v.ier |= data & 0x7f;
+			if (data & 0x80)
+				v->ier |= data & 0x7f;
 			else
-				v.ier &= ~(data & 0x7f);
+				v->ier &= ~(data & 0x7f);
 	
-			if (v.ifr & INT_ANY)
+			if (v->ifr & INT_ANY)
 			{
-				if (((v.ifr & v.ier) & 0x7f) == 0)
+				if (((v->ifr & v->ier) & 0x7f) == 0)
 				{
-					v.ifr &= ~INT_ANY;
-					if (v.intf.irq_func)
-						(*v.intf.irq_func)(CLEAR_LINE);
+					v->ifr &= ~INT_ANY;
+					if (v->intf->irq_func)
+						(*v->intf->irq_func)(CLEAR_LINE);
 	//				else
 	//					logerror("6522VIA chip %d: Interrupt is cleared but there is no callback function.  PC: %08X\n", which, activecpu_get_pc());
 				}
 			}
 			else
 			{
-				if ((v.ier & v.ifr) & 0x7f)
+				if ((v->ier & v->ifr) & 0x7f)
 				{
-					v.ifr |= INT_ANY;
-					if (v.intf.irq_func)
-						(*v.intf.irq_func)(ASSERT_LINE);
+					v->ifr |= INT_ANY;
+					if (v->intf->irq_func)
+						(*v->intf->irq_func)(ASSERT_LINE);
 					else
 						logerror("6522VIA chip %d: Interrupt is asserted but there is no callback function.  PC: %08X\n", which, activecpu_get_pc());
 				}
@@ -800,7 +800,7 @@ public class _6522via
 			break;
 	
 		case VIA_IFR:
-			if ((data & INT_ANY) != 0)
+			if (data & INT_ANY)
 				data = 0x7f;
 			via_clear_int (which, data);
 			break;
@@ -814,7 +814,7 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 		/* set the input, what could be easier? */
-		v.in_a = data;
+		v->in_a = data;
 	}
 	
 	/******************* interface setting VIA port CA1 input *******************/
@@ -827,17 +827,17 @@ public class _6522via
 		data = data ? 1 : 0;
 	
 		/* handle the active transition */
-		if (data != v.in_ca1)
+		if (data != v->in_ca1)
 	    {
 	#ifdef TRACE_VIA
 	logerror("6522VIA chip %d: CA1 = %02X.  PC: %08X\n", which, data, activecpu_get_pc());
 	#endif
-			if ((CA1_LOW_TO_HIGH(v.pcr) && data) || (CA1_HIGH_TO_LOW(v.pcr) && !data))
+			if ((CA1_LOW_TO_HIGH(v->pcr) && data) || (CA1_HIGH_TO_LOW(v->pcr) && !data))
 			{
-				if (PA_LATCH_ENABLE(v.acr))
+				if (PA_LATCH_ENABLE(v->acr))
 				{
-					if (v.intf.in_a_func)
-						v.in_a = v.intf.in_a_func(0);
+					if (v->intf->in_a_func)
+						v->in_a = v->intf->in_a_func(0);
 					else
 						logerror("6522VIA chip %d: Port A is being read but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 				}
@@ -846,23 +846,23 @@ public class _6522via
 	
 				/* CA2 is configured as output and in pulse or handshake mode,
 				   CA2 is cleared now */
-				if (CA2_AUTO_HS(v.pcr))
+				if (CA2_AUTO_HS(v->pcr))
 				{
-					if (!v.out_ca2)
+					if (!v->out_ca2)
 					{
 						/* clear CA2 */
-						v.out_ca2 = 1;
+						v->out_ca2 = 1;
 	
 						/* call the CA2 output function */
-						if (v.intf.out_ca2_func)
-							v.intf.out_ca2_func(0, 1);
+						if (v->intf->out_ca2_func)
+							v->intf->out_ca2_func(0, 1);
 						else
 							logerror("6522VIA chip %d: Port CA2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), 1);
 					}
 				}
 			}
 	
-			v.in_ca1 = data;
+			v->in_ca1 = data;
 	    }
 	}
 	
@@ -876,19 +876,19 @@ public class _6522via
 		data = data ? 1 : 0;
 	
 		/* CA2 is in input mode */
-		if (CA2_INPUT(v.pcr))
+		if (CA2_INPUT(v->pcr))
 	    {
 			/* the new state has caused a transition */
-			if (v.in_ca2 != data)
+			if (v->in_ca2 != data)
 			{
 				/* handle the active transition */
-				if ((data && CA2_LOW_TO_HIGH(v.pcr)) || (!data && CA2_HIGH_TO_LOW(v.pcr)))
+				if ((data && CA2_LOW_TO_HIGH(v->pcr)) || (!data && CA2_HIGH_TO_LOW(v->pcr)))
 				{
 					/* mark the IRQ */
 					via_set_int (which, INT_CA2);
 				}
 				/* set the new value for CA2 */
-				v.in_ca2 = data;
+				v->in_ca2 = data;
 			}
 	    }
 	
@@ -904,7 +904,7 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 		/* set the input, what could be easier? */
-		v.in_b = data;
+		v->in_b = data;
 	}
 	
 	
@@ -919,14 +919,14 @@ public class _6522via
 		data = data ? 1 : 0;
 	
 		/* handle the active transition */
-		if (data != v.in_cb1)
+		if (data != v->in_cb1)
 	    {
-			if ((CB1_LOW_TO_HIGH(v.pcr) && data) || (CB1_HIGH_TO_LOW(v.pcr) && !data))
+			if ((CB1_LOW_TO_HIGH(v->pcr) && data) || (CB1_HIGH_TO_LOW(v->pcr) && !data))
 			{
-				if (PB_LATCH_ENABLE(v.acr))
+				if (PB_LATCH_ENABLE(v->acr))
 				{
-					if (v.intf.in_b_func)
-						v.in_b = v.intf.in_b_func(0);
+					if (v->intf->in_b_func)
+						v->in_b = v->intf->in_b_func(0);
 					else
 						logerror("6522VIA chip %d: Port B is being read but has no handler.  PC: %08X\n", which, activecpu_get_pc());
 				}
@@ -935,22 +935,22 @@ public class _6522via
 	
 				/* CB2 is configured as output and in pulse or handshake mode,
 				   CB2 is cleared now */
-				if (CB2_AUTO_HS(v.pcr))
+				if (CB2_AUTO_HS(v->pcr))
 				{
-					if (!v.out_cb2)
+					if (!v->out_cb2)
 					{
 						/* clear CB2 */
-						v.out_cb2 = 1;
+						v->out_cb2 = 1;
 	
 						/* call the CB2 output function */
-						if (v.intf.out_cb2_func)
-							v.intf.out_cb2_func(0, 1);
+						if (v->intf->out_cb2_func)
+							v->intf->out_cb2_func(0, 1);
 						else
 							logerror("6522VIA chip %d: Port CB2 is being written to but has no handler.  PC: %08X - %02X\n", which, activecpu_get_pc(), 1);
 					}
 				}
 			}
-			v.in_cb1 = data;
+			v->in_cb1 = data;
 	    }
 	}
 	
@@ -964,19 +964,19 @@ public class _6522via
 		data = data ? 1 : 0;
 	
 		/* CB2 is in input mode */
-		if (CB2_INPUT(v.pcr))
+		if (CB2_INPUT(v->pcr))
 	    {
 			/* the new state has caused a transition */
-			if (v.in_cb2 != data)
+			if (v->in_cb2 != data)
 			{
 				/* handle the active transition */
-				if ((data && CB2_LOW_TO_HIGH(v.pcr)) || (!data && CB2_HIGH_TO_LOW(v.pcr)))
+				if ((data && CB2_LOW_TO_HIGH(v->pcr)) || (!data && CB2_HIGH_TO_LOW(v->pcr)))
 				{
 					/* mark the IRQ */
 					via_set_int (which, INT_CB2);
 				}
 				/* set the new value for CB2 */
-				v.in_cb2 = data;
+				v->in_cb2 = data;
 			}
 	    }
 	}
@@ -990,136 +990,136 @@ public class _6522via
 		struct via6522 *v = via + which;
 	
 		via_set_int(which, INT_SR);
-		v.sr = data;
+		v->sr = data;
 	}
 	
 	/******************* Standard 8-bit CPU interfaces, D0-D7 *******************/
 	
-	public static ReadHandlerPtr via_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(0, offset); } };
-	public static ReadHandlerPtr via_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(1, offset); } };
-	public static ReadHandlerPtr via_2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(2, offset); } };
-	public static ReadHandlerPtr via_3_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(3, offset); } };
-	public static ReadHandlerPtr via_4_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(4, offset); } };
-	public static ReadHandlerPtr via_5_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(5, offset); } };
-	public static ReadHandlerPtr via_6_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(6, offset); } };
-	public static ReadHandlerPtr via_7_r  = new ReadHandlerPtr() { public int handler(int offset) { return via_read(7, offset); } };
+	public static ReadHandlerPtr via_0_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(0, offset); }
+	public static ReadHandlerPtr via_1_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(1, offset); }
+	public static ReadHandlerPtr via_2_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(2, offset); }
+	public static ReadHandlerPtr via_3_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(3, offset); }
+	public static ReadHandlerPtr via_4_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(4, offset); }
+	public static ReadHandlerPtr via_5_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(5, offset); }
+	public static ReadHandlerPtr via_6_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(6, offset); }
+	public static ReadHandlerPtr via_7_r  = new ReadHandlerPtr() { public int handler(int offset) return via_read(7, offset); }
 	
-	public static WriteHandlerPtr via_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(0, offset, data); } };
-	public static WriteHandlerPtr via_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(1, offset, data); } };
-	public static WriteHandlerPtr via_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(2, offset, data); } };
-	public static WriteHandlerPtr via_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(3, offset, data); } };
-	public static WriteHandlerPtr via_4_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(4, offset, data); } };
-	public static WriteHandlerPtr via_5_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(5, offset, data); } };
-	public static WriteHandlerPtr via_6_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(6, offset, data); } };
-	public static WriteHandlerPtr via_7_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_write(7, offset, data); } };
+	public static WriteHandlerPtr via_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(0, offset, data); }
+	public static WriteHandlerPtr via_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(1, offset, data); }
+	public static WriteHandlerPtr via_2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(2, offset, data); }
+	public static WriteHandlerPtr via_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(3, offset, data); }
+	public static WriteHandlerPtr via_4_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(4, offset, data); }
+	public static WriteHandlerPtr via_5_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(5, offset, data); }
+	public static WriteHandlerPtr via_6_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(6, offset, data); }
+	public static WriteHandlerPtr via_7_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_write(7, offset, data); }
 	
 	/******************* 8-bit A/B port interfaces *******************/
 	
-	public static WriteHandlerPtr via_0_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(0, data); } };
-	public static WriteHandlerPtr via_1_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(1, data); } };
-	public static WriteHandlerPtr via_2_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(2, data); } };
-	public static WriteHandlerPtr via_3_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(3, data); } };
-	public static WriteHandlerPtr via_4_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(4, data); } };
-	public static WriteHandlerPtr via_5_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(5, data); } };
-	public static WriteHandlerPtr via_6_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(6, data); } };
-	public static WriteHandlerPtr via_7_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_a(7, data); } };
+	public static WriteHandlerPtr via_0_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(0, data); }
+	public static WriteHandlerPtr via_1_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(1, data); }
+	public static WriteHandlerPtr via_2_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(2, data); }
+	public static WriteHandlerPtr via_3_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(3, data); }
+	public static WriteHandlerPtr via_4_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(4, data); }
+	public static WriteHandlerPtr via_5_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(5, data); }
+	public static WriteHandlerPtr via_6_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(6, data); }
+	public static WriteHandlerPtr via_7_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_a(7, data); }
 	
-	public static WriteHandlerPtr via_0_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(0, data); } };
-	public static WriteHandlerPtr via_1_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(1, data); } };
-	public static WriteHandlerPtr via_2_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(2, data); } };
-	public static WriteHandlerPtr via_3_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(3, data); } };
-	public static WriteHandlerPtr via_4_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(4, data); } };
-	public static WriteHandlerPtr via_5_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(5, data); } };
-	public static WriteHandlerPtr via_6_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(6, data); } };
-	public static WriteHandlerPtr via_7_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_b(7, data); } };
+	public static WriteHandlerPtr via_0_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(0, data); }
+	public static WriteHandlerPtr via_1_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(1, data); }
+	public static WriteHandlerPtr via_2_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(2, data); }
+	public static WriteHandlerPtr via_3_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(3, data); }
+	public static WriteHandlerPtr via_4_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(4, data); }
+	public static WriteHandlerPtr via_5_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(5, data); }
+	public static WriteHandlerPtr via_6_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(6, data); }
+	public static WriteHandlerPtr via_7_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_b(7, data); }
 	
-	public static ReadHandlerPtr via_0_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_a; } };
-	public static ReadHandlerPtr via_1_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_a; } };
-	public static ReadHandlerPtr via_2_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_a; } };
-	public static ReadHandlerPtr via_3_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_a; } };
-	public static ReadHandlerPtr via_4_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_a; } };
-	public static ReadHandlerPtr via_5_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_a; } };
-	public static ReadHandlerPtr via_6_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_a; } };
-	public static ReadHandlerPtr via_7_porta_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_a; } };
+	public static ReadHandlerPtr via_0_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_a; }
+	public static ReadHandlerPtr via_1_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_a; }
+	public static ReadHandlerPtr via_2_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_a; }
+	public static ReadHandlerPtr via_3_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_a; }
+	public static ReadHandlerPtr via_4_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_a; }
+	public static ReadHandlerPtr via_5_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_a; }
+	public static ReadHandlerPtr via_6_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_a; }
+	public static ReadHandlerPtr via_7_porta_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_a; }
 	
-	public static ReadHandlerPtr via_0_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_b; } };
-	public static ReadHandlerPtr via_1_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_b; } };
-	public static ReadHandlerPtr via_2_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_b; } };
-	public static ReadHandlerPtr via_3_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_b; } };
-	public static ReadHandlerPtr via_4_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_b; } };
-	public static ReadHandlerPtr via_5_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_b; } };
-	public static ReadHandlerPtr via_6_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_b; } };
-	public static ReadHandlerPtr via_7_portb_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_b; } };
+	public static ReadHandlerPtr via_0_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_b; }
+	public static ReadHandlerPtr via_1_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_b; }
+	public static ReadHandlerPtr via_2_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_b; }
+	public static ReadHandlerPtr via_3_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_b; }
+	public static ReadHandlerPtr via_4_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_b; }
+	public static ReadHandlerPtr via_5_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_b; }
+	public static ReadHandlerPtr via_6_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_b; }
+	public static ReadHandlerPtr via_7_portb_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_b; }
 	
 	/******************* 1-bit CA1/CA2/CB1/CB2 port interfaces *******************/
 	
-	public static WriteHandlerPtr via_0_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(0, data); } };
-	public static WriteHandlerPtr via_1_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(1, data); } };
-	public static WriteHandlerPtr via_2_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(2, data); } };
-	public static WriteHandlerPtr via_3_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(3, data); } };
-	public static WriteHandlerPtr via_4_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(4, data); } };
-	public static WriteHandlerPtr via_5_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(5, data); } };
-	public static WriteHandlerPtr via_6_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(6, data); } };
-	public static WriteHandlerPtr via_7_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca1(7, data); } };
-	public static WriteHandlerPtr via_0_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(0, data); } };
-	public static WriteHandlerPtr via_1_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(1, data); } };
-	public static WriteHandlerPtr via_2_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(2, data); } };
-	public static WriteHandlerPtr via_3_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(3, data); } };
-	public static WriteHandlerPtr via_4_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(4, data); } };
-	public static WriteHandlerPtr via_5_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(5, data); } };
-	public static WriteHandlerPtr via_6_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(6, data); } };
-	public static WriteHandlerPtr via_7_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_ca2(7, data); } };
+	public static WriteHandlerPtr via_0_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(0, data); }
+	public static WriteHandlerPtr via_1_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(1, data); }
+	public static WriteHandlerPtr via_2_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(2, data); }
+	public static WriteHandlerPtr via_3_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(3, data); }
+	public static WriteHandlerPtr via_4_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(4, data); }
+	public static WriteHandlerPtr via_5_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(5, data); }
+	public static WriteHandlerPtr via_6_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(6, data); }
+	public static WriteHandlerPtr via_7_ca1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca1(7, data); }
+	public static WriteHandlerPtr via_0_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(0, data); }
+	public static WriteHandlerPtr via_1_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(1, data); }
+	public static WriteHandlerPtr via_2_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(2, data); }
+	public static WriteHandlerPtr via_3_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(3, data); }
+	public static WriteHandlerPtr via_4_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(4, data); }
+	public static WriteHandlerPtr via_5_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(5, data); }
+	public static WriteHandlerPtr via_6_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(6, data); }
+	public static WriteHandlerPtr via_7_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_ca2(7, data); }
 	
-	public static WriteHandlerPtr via_0_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(0, data); } };
-	public static WriteHandlerPtr via_1_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(1, data); } };
-	public static WriteHandlerPtr via_2_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(2, data); } };
-	public static WriteHandlerPtr via_3_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(3, data); } };
-	public static WriteHandlerPtr via_4_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(4, data); } };
-	public static WriteHandlerPtr via_5_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(5, data); } };
-	public static WriteHandlerPtr via_6_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(6, data); } };
-	public static WriteHandlerPtr via_7_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb1(7, data); } };
-	public static WriteHandlerPtr via_0_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(0, data); } };
-	public static WriteHandlerPtr via_1_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(1, data); } };
-	public static WriteHandlerPtr via_2_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(2, data); } };
-	public static WriteHandlerPtr via_3_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(3, data); } };
-	public static WriteHandlerPtr via_4_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(4, data); } };
-	public static WriteHandlerPtr via_5_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(5, data); } };
-	public static WriteHandlerPtr via_6_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(6, data); } };
-	public static WriteHandlerPtr via_7_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) { via_set_input_cb2(7, data); } };
+	public static WriteHandlerPtr via_0_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(0, data); }
+	public static WriteHandlerPtr via_1_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(1, data); }
+	public static WriteHandlerPtr via_2_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(2, data); }
+	public static WriteHandlerPtr via_3_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(3, data); }
+	public static WriteHandlerPtr via_4_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(4, data); }
+	public static WriteHandlerPtr via_5_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(5, data); }
+	public static WriteHandlerPtr via_6_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(6, data); }
+	public static WriteHandlerPtr via_7_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb1(7, data); }
+	public static WriteHandlerPtr via_0_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(0, data); }
+	public static WriteHandlerPtr via_1_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(1, data); }
+	public static WriteHandlerPtr via_2_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(2, data); }
+	public static WriteHandlerPtr via_3_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(3, data); }
+	public static WriteHandlerPtr via_4_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(4, data); }
+	public static WriteHandlerPtr via_5_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(5, data); }
+	public static WriteHandlerPtr via_6_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(6, data); }
+	public static WriteHandlerPtr via_7_cb2_w = new WriteHandlerPtr() {public void handler(int offset, int data) via_set_input_cb2(7, data); }
 	
-	public static ReadHandlerPtr via_0_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_ca1; } };
-	public static ReadHandlerPtr via_1_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_ca1; } };
-	public static ReadHandlerPtr via_2_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_ca1; } };
-	public static ReadHandlerPtr via_3_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_ca1; } };
-	public static ReadHandlerPtr via_4_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_ca1; } };
-	public static ReadHandlerPtr via_5_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_ca1; } };
-	public static ReadHandlerPtr via_6_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_ca1; } };
-	public static ReadHandlerPtr via_7_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_ca1; } };
-	public static ReadHandlerPtr via_0_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_ca2; } };
-	public static ReadHandlerPtr via_1_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_ca2; } };
-	public static ReadHandlerPtr via_2_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_ca2; } };
-	public static ReadHandlerPtr via_3_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_ca2; } };
-	public static ReadHandlerPtr via_4_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_ca2; } };
-	public static ReadHandlerPtr via_5_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_ca2; } };
-	public static ReadHandlerPtr via_6_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_ca2; } };
-	public static ReadHandlerPtr via_7_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_ca2; } };
+	public static ReadHandlerPtr via_0_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_ca1; }
+	public static ReadHandlerPtr via_1_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_ca1; }
+	public static ReadHandlerPtr via_2_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_ca1; }
+	public static ReadHandlerPtr via_3_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_ca1; }
+	public static ReadHandlerPtr via_4_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_ca1; }
+	public static ReadHandlerPtr via_5_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_ca1; }
+	public static ReadHandlerPtr via_6_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_ca1; }
+	public static ReadHandlerPtr via_7_ca1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_ca1; }
+	public static ReadHandlerPtr via_0_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_ca2; }
+	public static ReadHandlerPtr via_1_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_ca2; }
+	public static ReadHandlerPtr via_2_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_ca2; }
+	public static ReadHandlerPtr via_3_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_ca2; }
+	public static ReadHandlerPtr via_4_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_ca2; }
+	public static ReadHandlerPtr via_5_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_ca2; }
+	public static ReadHandlerPtr via_6_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_ca2; }
+	public static ReadHandlerPtr via_7_ca2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_ca2; }
 	
-	public static ReadHandlerPtr via_0_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_cb1; } };
-	public static ReadHandlerPtr via_1_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_cb1; } };
-	public static ReadHandlerPtr via_2_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_cb1; } };
-	public static ReadHandlerPtr via_3_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_cb1; } };
-	public static ReadHandlerPtr via_4_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_cb1; } };
-	public static ReadHandlerPtr via_5_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_cb1; } };
-	public static ReadHandlerPtr via_6_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_cb1; } };
-	public static ReadHandlerPtr via_7_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_cb1; } };
-	public static ReadHandlerPtr via_0_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[0].in_cb2; } };
-	public static ReadHandlerPtr via_1_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[1].in_cb2; } };
-	public static ReadHandlerPtr via_2_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[2].in_cb2; } };
-	public static ReadHandlerPtr via_3_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[3].in_cb2; } };
-	public static ReadHandlerPtr via_4_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[4].in_cb2; } };
-	public static ReadHandlerPtr via_5_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[5].in_cb2; } };
-	public static ReadHandlerPtr via_6_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[6].in_cb2; } };
-	public static ReadHandlerPtr via_7_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) { return via[7].in_cb2; } };
+	public static ReadHandlerPtr via_0_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_cb1; }
+	public static ReadHandlerPtr via_1_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_cb1; }
+	public static ReadHandlerPtr via_2_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_cb1; }
+	public static ReadHandlerPtr via_3_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_cb1; }
+	public static ReadHandlerPtr via_4_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_cb1; }
+	public static ReadHandlerPtr via_5_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_cb1; }
+	public static ReadHandlerPtr via_6_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_cb1; }
+	public static ReadHandlerPtr via_7_cb1_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_cb1; }
+	public static ReadHandlerPtr via_0_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[0].in_cb2; }
+	public static ReadHandlerPtr via_1_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[1].in_cb2; }
+	public static ReadHandlerPtr via_2_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[2].in_cb2; }
+	public static ReadHandlerPtr via_3_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[3].in_cb2; }
+	public static ReadHandlerPtr via_4_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[4].in_cb2; }
+	public static ReadHandlerPtr via_5_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[5].in_cb2; }
+	public static ReadHandlerPtr via_6_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[6].in_cb2; }
+	public static ReadHandlerPtr via_7_cb2_r  = new ReadHandlerPtr() { public int handler(int offset) return via[7].in_cb2; }
 	
 	
 	#undef TRACE_VIA

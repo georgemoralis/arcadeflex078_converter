@@ -32,7 +32,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -178,13 +178,11 @@ public class pd4990a
 		}
 	}
 	
-	public static ReadHandlerPtr pd4990a_testbit_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pd4990a_testbit_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (testbit);
 	} };
 	
-	public static ReadHandlerPtr pd4990a_databit_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pd4990a_databit_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (outputbit);
 	} };
 	
@@ -245,7 +243,7 @@ public class pd4990a
 	static void pd4990a_nextbit(void)
 	{
 		++bitno;
-		if (reading != 0)
+		if(reading)
 			pd4990a_readbit();
 		if(reading && bitno==0x34)
 		{
@@ -282,7 +280,7 @@ public class pd4990a
 		{
 			case 0x1:	//load output register
 				bitno=0;
-				if (reading != 0)
+				if(reading)
 					pd4990a_readbit();	//prepare first bit
 				shiftlo=0;
 				shifthi=0;

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class tourtabl
 	
 	
 	
-	public static WriteHandlerPtr tourtabl_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tourtabl_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, data & 0x40); /* start 1 */
 		set_led_status(1, data & 0x20); /* start 2 */
 		set_led_status(2, data & 0x10); /* start 4 */
@@ -37,22 +36,18 @@ public class tourtabl
 	} };
 	
 	
-	public static WriteHandlerPtr r6532_0_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr r6532_0_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		r6532_0_ram[offset] = data;
 	} };
-	public static WriteHandlerPtr r6532_1_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr r6532_1_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		r6532_1_ram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr r6532_0_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr r6532_0_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return r6532_0_ram[offset];
 	} };
-	public static ReadHandlerPtr r6532_1_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr r6532_1_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return r6532_1_ram[offset];
 	} };
 	
@@ -111,8 +106,7 @@ public class tourtabl
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_tourtabl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tourtabl  = new MachineInitHandlerPtr() { public void handler(){
 		r6532_init(0, &r6532_interface_0);
 		r6532_init(1, &r6532_interface_1);
 	
@@ -120,7 +114,7 @@ public class tourtabl
 	} };
 	
 	
-	static InputPortPtr input_ports_tourtabl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tourtabl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tourtabl )
 	
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE | IPF_PLAYER1 | IPF_REVERSE, 40, 10, 0, 255 );
@@ -195,8 +189,7 @@ public class tourtabl
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_tourtabl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tourtabl )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 3579575 / 3)	/* actually M6507 */
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -217,9 +210,7 @@ public class tourtabl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(TIA, tia_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_tourtabl = new RomLoadPtr(){ public void handler(){ 
@@ -244,6 +235,6 @@ public class tourtabl
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_tourtabl	   = new GameDriver("1978"	,"tourtabl"	,"tourtabl.java"	,rom_tourtabl,null	,machine_driver_tourtabl	,input_ports_tourtabl	,init_NULL	,ROT0	,	"Atari", "Tournament Table (set 1)" )
-	public static GameDriver driver_tourtab2	   = new GameDriver("1978"	,"tourtab2"	,"tourtabl.java"	,rom_tourtab2,driver_tourtabl	,machine_driver_tourtabl	,input_ports_tourtabl	,init_NULL	,ROT0	,	"Atari", "Tournament Table (set 2)" )
+	GAME( 1978, tourtabl, 0,        tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 1)" )
+	GAME( 1978, tourtab2, tourtabl, tourtabl, tourtabl, NULL, ROT0, "Atari", "Tournament Table (set 2)" )
 }

@@ -50,7 +50,7 @@ Games by Nihon Game/Culture Brain:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -87,30 +87,25 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	public static DriverInitHandlerPtr init_chinhero  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chinhero  = new DriverInitHandlerPtr() { public void handler(){
 		shangkid_gfx_type = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_shangkid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shangkid  = new DriverInitHandlerPtr() { public void handler(){
 		shangkid_gfx_type = 1;
 	} };
 	
 	/***************************************************************************************/
 	
-	public static WriteHandlerPtr shangkid_maincpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_maincpu_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 1,&memory_region(REGION_CPU1)[(data&1)?0x10000:0x8000] );
 	} };
 	
-	public static WriteHandlerPtr shangkid_bbx_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_bbx_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line( 1, data?0:1 );
 	} };
 	
-	public static WriteHandlerPtr shangkid_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == 0 )
 		{
 			cpu_set_reset_line(1,PULSE_LINE);
@@ -121,27 +116,24 @@ public class shangkid
 		}
 	} };
 	
-	public static WriteHandlerPtr shangkid_sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bbx_sound_enable = data;
 	} };
 	
-	public static WriteHandlerPtr shangkid_bbx_AY8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_bbx_AY8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bbx_AY8910_control = data;
 		AY8910_control_port_0_w.handler( offset, data );
 	} };
 	
-	public static WriteHandlerPtr shangkid_bbx_AY8910_write_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shangkid_bbx_AY8910_write_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( bbx_AY8910_control )
 		{
 		case 0x0e:
-			if (bbx_sound_enable != 0)
+			if( bbx_sound_enable )
 			{
 				if( data == 0x01 )
 				{
-					/* 0.1 transition triggers interrupt on Sound CPU */
+					/* 0->1 transition triggers interrupt on Sound CPU */
 					cpu_set_irq_line( 2, 0, HOLD_LINE );
 				}
 			}
@@ -163,20 +155,17 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	public static ReadHandlerPtr shangkid_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shangkid_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_latch;
 	} };
 	
 	/***************************************************************************************/
 	
-	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shareram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shareram[offset];
 	} };
 	
@@ -360,8 +349,7 @@ public class shangkid
 	
 	/***************************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_chinhero = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chinhero )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000) /* ? */
@@ -396,22 +384,17 @@ public class shangkid
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shangkid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shangkid )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(chinhero)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(shangkid_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -452,8 +435,7 @@ public class shangkid
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_dynamski = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dynamski )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000) /* ? */
@@ -477,13 +459,11 @@ public class shangkid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************************/
 	
-	static InputPortPtr input_ports_dynamski = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dynamski = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dynamski )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -539,7 +519,7 @@ public class shangkid
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chinhero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chinhero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chinhero )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(	0x01, "3" );
@@ -594,7 +574,7 @@ public class shangkid
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shangkid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shangkid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shangkid )
 		PORT_START(); 
 		/*	There are also two potentiometers on the PCB for volume:
 		**	RV1 - Music
@@ -907,9 +887,9 @@ public class shangkid
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_dynamski	   = new GameDriver("1984"	,"dynamski"	,"shangkid.java"	,rom_dynamski,null	,machine_driver_dynamski	,input_ports_dynamski	,null	,ROT90	,	"Taiyo", "Dynamic Ski", GAME_NO_COCKTAIL )
-	public static GameDriver driver_chinhero	   = new GameDriver("1984"	,"chinhero"	,"shangkid.java"	,rom_chinhero,null	,machine_driver_chinhero	,input_ports_chinhero	,init_chinhero	,ROT90	,	"Taiyo", "Chinese Hero" )
-	public static GameDriver driver_chinher2	   = new GameDriver("1984"	,"chinher2"	,"shangkid.java"	,rom_chinher2,driver_chinhero	,machine_driver_chinhero	,input_ports_chinhero	,init_chinhero	,ROT90	,	"Taiyo", "Chinese Hero (older)" )
-	public static GameDriver driver_shangkid	   = new GameDriver("1985"	,"shangkid"	,"shangkid.java"	,rom_shangkid,null	,machine_driver_shangkid	,input_ports_shangkid	,init_shangkid	,ROT0	,	"Taiyo (Data East license)", "Shanghai Kid", GAME_NO_COCKTAIL )
-	public static GameDriver driver_hiryuken	   = new GameDriver("1985"	,"hiryuken"	,"shangkid.java"	,rom_hiryuken,driver_shangkid	,machine_driver_shangkid	,input_ports_shangkid	,init_shangkid	,ROT0	,	"[Nihon Game] (Taito license)", "Hokuha Syourin Hiryu no Ken", GAME_NO_COCKTAIL )
+	GAMEX( 1984, dynamski, 0,        dynamski, dynamski, 0,        ROT90, "Taiyo", "Dynamic Ski", GAME_NO_COCKTAIL )
+	GAME ( 1984, chinhero, 0,        chinhero, chinhero, chinhero, ROT90, "Taiyo", "Chinese Hero" )
+	GAME ( 1984, chinher2, chinhero, chinhero, chinhero, chinhero, ROT90, "Taiyo", "Chinese Hero (older)" )
+	GAMEX( 1985, shangkid, 0,        shangkid, shangkid, shangkid, ROT0,  "Taiyo (Data East license)", "Shanghai Kid", GAME_NO_COCKTAIL )
+	GAMEX( 1985, hiryuken, shangkid, shangkid, shangkid, shangkid, ROT0,  "[Nihon Game] (Taito license)", "Hokuha Syourin Hiryu no Ken", GAME_NO_COCKTAIL )
 }

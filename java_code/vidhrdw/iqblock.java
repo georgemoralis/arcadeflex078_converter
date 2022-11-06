@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -51,8 +51,7 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_iqblock  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_iqblock  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8, 8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,32,64, 8);
 	
@@ -73,25 +72,21 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr iqblock_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr iqblock_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		iqblock_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr iqblock_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr iqblock_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		iqblock_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset & 0x7ff);
 	} };
 	
-	public static ReadHandlerPtr iqblock_bgvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr iqblock_bgvideoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return iqblock_bgvideoram[offset];
 	} };
 	
-	public static WriteHandlerPtr iqblock_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr iqblock_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(fg_tilemap,offset,data);
 	} };
 	
@@ -103,9 +98,8 @@ public class iqblock
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_iqblock  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (iqblock_videoenable == 0) return;
+	public static VideoUpdateHandlerPtr video_update_iqblock  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (!iqblock_videoenable) return;
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);

@@ -64,7 +64,7 @@ OUT:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -88,8 +88,7 @@ public class astrocde
 	
 	
 	
-	public static WriteHandlerPtr seawolf2_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seawolf2_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0x42 = player 2 (left), 0x43 = player 1 (right) */
 		/* --x----- explosion */
 		/* ---x---- RELOAD (active low) */
@@ -222,7 +221,7 @@ public class astrocde
 	
 	
 	
-	static InputPortPtr input_ports_seawolf2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seawolf2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seawolf2 )
 		PORT_START();  /* IN0 */
 		PORT_ANALOG( 0x3f, 0x20, IPT_PADDLE | IPF_REVERSE | IPF_PLAYER1, 20, 5, 0, 0x3f);
 		PORT_DIPNAME( 0x40, 0x00, "Language 1" );
@@ -270,7 +269,7 @@ public class astrocde
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacezap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacezap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacezap )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -325,7 +324,7 @@ public class astrocde
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ebases = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ebases = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ebases )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -393,7 +392,7 @@ public class astrocde
 		PORT_ANALOGX( 0xff, 0x00, IPT_TRACKBALL_Y | IPF_CENTER, 50, 10, 0, 0, IP_KEY_NONE, IP_KEY_NONE, IP_JOY_NONE, IP_JOY_NONE );\
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wow )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -452,7 +451,7 @@ public class astrocde
 		PORT_DIPSETTING(    0x80, "Always On"  );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gorf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gorf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gorf )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -511,7 +510,7 @@ public class astrocde
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_robby = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robby = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robby )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -614,8 +613,7 @@ public class astrocde
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_seawolf2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( seawolf2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -637,12 +635,9 @@ public class astrocde
 		MDRV_VIDEO_UPDATE(seawolf2)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_spacezap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacezap )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -665,12 +660,9 @@ public class astrocde
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_2chip_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ebases = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ebases )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -693,12 +685,9 @@ public class astrocde
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_1chip_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_wow = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wow )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -723,12 +712,9 @@ public class astrocde
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_2chip_interface)
 		MDRV_SOUND_ADD(SAMPLES, wow_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, wow_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gorf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gorf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -756,12 +742,9 @@ public class astrocde
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_2chip_interface)
 		MDRV_SOUND_ADD(SAMPLES, gorf_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, gorf_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_robby = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robby )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -784,12 +767,9 @@ public class astrocde
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_2chip_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_profpac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( profpac )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1789773)	/* 1.789 MHz */
@@ -812,9 +792,7 @@ public class astrocde
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ASTROCADE, astrocade_2chip_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -923,24 +901,20 @@ public class astrocde
 	
 	
 	
-	public static DriverInitHandlerPtr init_seawolf2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_seawolf2  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler(0, 0x10, 0x10, seawolf2_controller2_r);
 		install_port_read_handler(0, 0x11, 0x11, seawolf2_controller1_r);
 	} };
-	public static DriverInitHandlerPtr init_ebases  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ebases  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler (0, 0x13, 0x13, ebases_trackball_r);
 		install_port_write_handler(0, 0x28, 0x28, ebases_trackball_select_w);
 	} };
-	public static DriverInitHandlerPtr init_wow  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wow  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler(0, 0x12, 0x12, wow_port_2_r);
 		install_port_read_handler(0, 0x15, 0x15, wow_io_r);
 		install_port_read_handler(0, 0x17, 0x17, wow_speech_r);
 	} };
-	public static DriverInitHandlerPtr init_gorf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gorf  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler (0, 0xd0a5, 0xd0a5, gorf_timer_r);
 	
 		install_port_read_handler(0, 0x12, 0x12, gorf_port_2_r);
@@ -949,12 +923,12 @@ public class astrocde
 	} };
 	
 	
-	public static GameDriver driver_seawolf2	   = new GameDriver("1978"	,"seawolf2"	,"astrocde.java"	,rom_seawolf2,null	,machine_driver_seawolf2	,input_ports_seawolf2	,init_seawolf2	,ROT0	,	"Midway", "Sea Wolf II", GAME_NO_SOUND )
-	public static GameDriver driver_spacezap	   = new GameDriver("1980"	,"spacezap"	,"astrocde.java"	,rom_spacezap,null	,machine_driver_spacezap	,input_ports_spacezap	,null	,ROT0	,	"Midway", "Space Zap" )
-	public static GameDriver driver_ebases	   = new GameDriver("1980"	,"ebases"	,"astrocde.java"	,rom_ebases,null	,machine_driver_ebases	,input_ports_ebases	,init_ebases	,ROT0	,	"Midway", "Extra Bases" )
-	public static GameDriver driver_wow	   = new GameDriver("1980"	,"wow"	,"astrocde.java"	,rom_wow,null	,machine_driver_wow	,input_ports_wow	,init_wow	,ROT0	,	"Midway", "Wizard of Wor" )
-	public static GameDriver driver_gorf	   = new GameDriver("1981"	,"gorf"	,"astrocde.java"	,rom_gorf,null	,machine_driver_gorf	,input_ports_gorf	,init_gorf	,ROT270	,	"Midway", "Gorf" )
-	public static GameDriver driver_gorfpgm1	   = new GameDriver("1981"	,"gorfpgm1"	,"astrocde.java"	,rom_gorfpgm1,driver_gorf	,machine_driver_gorf	,input_ports_gorf	,init_gorf	,ROT270	,	"Midway", "Gorf (Program 1)" )
-	public static GameDriver driver_robby	   = new GameDriver("1981"	,"robby"	,"astrocde.java"	,rom_robby,null	,machine_driver_robby	,input_ports_robby	,null	,ROT0	,	"Bally Midway", "Robby Roto" )
-	public static GameDriver driver_profpac	   = new GameDriver("1983"	,"profpac"	,"astrocde.java"	,rom_profpac,null	,machine_driver_profpac	,input_ports_gorf	,null	,ROT0	,	"Bally Midway", "Professor PacMan", GAME_NOT_WORKING )
+	GAMEX(1978, seawolf2, 0,    seawolf2, seawolf2, seawolf2, ROT0,   "Midway", "Sea Wolf II", GAME_NO_SOUND )
+	GAME( 1980, spacezap, 0,    spacezap, spacezap, 0,        ROT0,   "Midway", "Space Zap" )
+	GAME( 1980, ebases,   0,    ebases,   ebases,   ebases,   ROT0,   "Midway", "Extra Bases" )
+	GAME( 1980, wow,      0,    wow,      wow,      wow,      ROT0,   "Midway", "Wizard of Wor" )
+	GAME( 1981, gorf,     0,    gorf,     gorf,     gorf,     ROT270, "Midway", "Gorf" )
+	GAME( 1981, gorfpgm1, gorf, gorf,     gorf,     gorf,     ROT270, "Midway", "Gorf (Program 1)" )
+	GAME( 1981, robby,    0,    robby,    robby,    0,        ROT0,   "Bally Midway", "Robby Roto" )
+	GAMEX( 1983,profpac,  0,    profpac,  gorf,     0,        ROT0,   "Bally Midway", "Professor PacMan", GAME_NOT_WORKING )
 }

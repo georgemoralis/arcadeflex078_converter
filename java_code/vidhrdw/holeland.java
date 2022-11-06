@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,11 +59,10 @@ public class holeland
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_holeland  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_holeland  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(holeland_get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transmask(bg_tilemap,0,0xff,0x00); /* split type 0 is totally transparent in front half */
@@ -71,18 +70,16 @@ public class holeland
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_crzrally  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_crzrally  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(crzrally_get_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr holeland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr holeland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
@@ -90,8 +87,7 @@ public class holeland
 		}
 	} };
 	
-	public static WriteHandlerPtr holeland_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr holeland_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( colorram.read(offset)!=data )
 		{
 			colorram.write(offset,data);
@@ -99,8 +95,7 @@ public class holeland
 		}
 	} };
 	
-	public static WriteHandlerPtr holeland_pal_offs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr holeland_pal_offs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int po[2];
 		if ((data & 1) != po[offset])
 		{
@@ -110,14 +105,12 @@ public class holeland
 		}
 	} };
 	
-	public static WriteHandlerPtr holeland_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr holeland_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr holeland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0) flip_screen_y_set(data);
+	public static WriteHandlerPtr holeland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset) flip_screen_y_set(data);
 		else        flip_screen_x_set(data);
 	} };
 	
@@ -140,19 +133,19 @@ public class holeland
 			flipx = spriteram.read(offs+3)& 0x04;
 			flipy = spriteram.read(offs+3)& 0x08;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -178,19 +171,19 @@ public class holeland
 			flipx = spriteram.read(offs+3)& 0x04;
 			flipy = spriteram.read(offs+3)& 0x08;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -199,16 +192,14 @@ public class holeland
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_holeland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	/*tilemap_mark_all_tiles_dirty(bg_tilemap); */
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		holeland_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_crzrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		crzrally_draw_sprites(bitmap,cliprect);
 	} };

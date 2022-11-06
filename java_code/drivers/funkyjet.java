@@ -42,7 +42,7 @@ Stephh's notes :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -110,7 +110,7 @@ public class funkyjet
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_funkyjet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_funkyjet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( funkyjet )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -188,7 +188,7 @@ public class funkyjet
 		PORT_DIPSETTING(    0x01, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sotsugyo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sotsugyo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sotsugyo )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -323,8 +323,7 @@ public class funkyjet
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_funkyjet = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( funkyjet )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000) /* 28 MHz crystal */
@@ -352,9 +351,7 @@ public class funkyjet
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -396,13 +393,12 @@ public class funkyjet
 	  	ROM_LOAD( "sb030.15h",    0x00000, 0x20000, CRC(1ea43f48) SHA1(74cc8c740f1c7fa94c2cb460ea4ee7aa0c490ed7) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_funkyjet  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_funkyjet  = new DriverInitHandlerPtr() { public void handler(){
 		deco74_decrypt(REGION_GFX1);
 	} };
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_funkyjet	   = new GameDriver("1992"	,"funkyjet"	,"funkyjet.java"	,rom_funkyjet,null	,machine_driver_funkyjet	,input_ports_funkyjet	,init_funkyjet	,ROT0	,	"[Data East] (Mitchell license)", "Funky Jet" )
-	public static GameDriver driver_sotsugyo	   = new GameDriver("1995"	,"sotsugyo"	,"funkyjet.java"	,rom_sotsugyo,null	,machine_driver_funkyjet	,input_ports_sotsugyo	,init_funkyjet	,ROT0	,	"Mitchell (Atlus license)", "Sotsugyo Shousho" )
+	GAME( 1992, funkyjet, 0, funkyjet, funkyjet, funkyjet, ROT0, "[Data East] (Mitchell license)", "Funky Jet" )
+	GAME( 1995, sotsugyo, 0, funkyjet, sotsugyo, funkyjet, ROT0, "Mitchell (Atlus license)", "Sotsugyo Shousho" )
 }

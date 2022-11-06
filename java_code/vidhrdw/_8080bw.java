@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -109,8 +109,7 @@ public class _8080bw
 	OVERLAY_END
 	
 	
-	public static DriverInitHandlerPtr init_8080bw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_8080bw  = new DriverInitHandlerPtr() { public void handler(){
 		videoram_w_p = bw_videoram_w;
 		video_update_p = video_update_8080bw_common;
 		screen_red = 0;
@@ -119,53 +118,45 @@ public class _8080bw
 		flip_screen_set(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_invaders  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invaders  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		artwork_set_overlay(invaders_overlay);
 	} };
 	
-	public static DriverInitHandlerPtr init_invaddlx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invaddlx  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 	/*	artwork_set_overlay(invdpt2m_overlay);*/
 	} };
 	
-	public static DriverInitHandlerPtr init_invrvnge  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invrvnge  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		artwork_set_overlay(invrvnge_overlay);
 	} };
 	
-	public static DriverInitHandlerPtr init_invad2ct  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invad2ct  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		artwork_set_overlay(invad2ct_overlay);
 	} };
 	
-	public static DriverInitHandlerPtr init_sstrngr2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sstrngr2  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = sstrngr2_videoram_w;
 		screen_red_enabled = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_schaser  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_schaser  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = schaser_videoram_w;
 		background_color = 2;	/* blue */
 	} };
 	
-	public static DriverInitHandlerPtr init_rollingc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rollingc  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = schaser_videoram_w;
 		background_color = 0;	/* black */
 	} };
 	
-	public static DriverInitHandlerPtr init_helifire  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_helifire  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = helifire_videoram_w;
 		video_update_p = video_update_helifire;
@@ -173,70 +164,59 @@ public class _8080bw
 		helifire_star_rng = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_polaris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_polaris  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = polaris_videoram_w;
 	} };
 	
-	public static DriverInitHandlerPtr init_lupin3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lupin3  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = lupin3_videoram_w;
 	} };
 	
-	public static DriverInitHandlerPtr init_invadpt2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invadpt2  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = invadpt2_videoram_w;
 		screen_red_enabled = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_cosmo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cosmo  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = cosmo_videoram_w;
 	} };
 	
-	public static DriverInitHandlerPtr init_seawolf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_seawolf  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		video_update_p = video_update_seawolf;
 	} };
 	
-	public static DriverInitHandlerPtr init_blueshrk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blueshrk  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		video_update_p = video_update_blueshrk;
 	} };
 	
-	public static DriverInitHandlerPtr init_desertgu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_desertgu  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		video_update_p = video_update_desertgu;
 	} };
 	
-	public static DriverInitHandlerPtr init_bowler  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bowler  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		video_update_p = video_update_bowler;
 	} };
 	
-	public static DriverInitHandlerPtr init_phantom2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_phantom2  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		videoram_w_p = phantom2_videoram_w;
 		artwork_set_overlay(phantom2_overlay);
 	} };
 	
-	public static DriverInitHandlerPtr init_gunfight  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunfight  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		artwork_set_overlay(gunfight_overlay);
 	} };
 	
-	public static DriverInitHandlerPtr init_bandido  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bandido  = new DriverInitHandlerPtr() { public void handler(){
 		init_8080bw();
 		artwork_set_overlay(bandido_overlay);
 	} };
@@ -256,15 +236,14 @@ public class _8080bw
 	
 	void c8080bw_screen_red_w(int data)
 	{
-		if (screen_red_enabled != 0)
+		if (screen_red_enabled)
 		{
 			set_vh_global_attribute(&screen_red, data);
 		}
 	}
 	
 	
-	public static InterruptHandlerPtr polaris_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr polaris_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int cloud_speed;
 	
 		cloud_speed++;
@@ -287,8 +266,7 @@ public class _8080bw
 	} };
 	
 	
-	public static InterruptHandlerPtr phantom2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr phantom2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int cloud_speed;
 	
 		cloud_speed++;
@@ -307,13 +285,13 @@ public class _8080bw
 	
 	static void plot_pixel_8080(int x, int y, int col)
 	{
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			x = 255-x;
 			y = 255-y;
 		}
 	
-		plot_pixel(tmpbitmap,x,y,Machine.pens[col]);
+		plot_pixel(tmpbitmap,x,y,Machine->pens[col]);
 	}
 	
 	INLINE void plot_byte(int x, int y, int data, int fore_color, int back_color)
@@ -330,14 +308,12 @@ public class _8080bw
 	}
 	
 	
-	public static WriteHandlerPtr c8080bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c8080bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram_w_p(offset, data);
 	} };
 	
 	
-	public static WriteHandlerPtr bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y;
 	
 		videoram.write(offset,data);
@@ -348,8 +324,7 @@ public class _8080bw
 		plot_byte(x, y, data, 1, 0);
 	} };
 	
-	public static WriteHandlerPtr schaser_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr schaser_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y,col;
 	
 		videoram.write(offset,data);
@@ -362,8 +337,7 @@ public class _8080bw
 		plot_byte(x, y, data, col, background_color);
 	} };
 	
-	public static WriteHandlerPtr lupin3_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lupin3_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y,col;
 	
 		videoram.write(offset,data);
@@ -376,8 +350,7 @@ public class _8080bw
 		plot_byte(x, y, data, col, 0);
 	} };
 	
-	public static WriteHandlerPtr polaris_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polaris_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,i,col,back_color,fore_color,color_map;
 		UINT8 y, cloud_y;
 	
@@ -416,7 +389,7 @@ public class _8080bw
 			/* cloud appears in this part of the screen */
 			for (i = 0; i < 8; i++)
 			{
-				if ((data & 0x01) != 0)
+				if (data & 0x01)
 				{
 					col = fore_color;
 				}
@@ -433,7 +406,7 @@ public class _8080bw
 					col = (memory_region(REGION_USER1)[offs] & bit) ? 7 : back_color;
 				}
 	
-				plot_pixel_8080.handler(x, y, col);
+				plot_pixel_8080(x, y, col);
 	
 				x++;
 				data >>= 1;
@@ -441,8 +414,7 @@ public class _8080bw
 		}
 	} };
 	
-	public static WriteHandlerPtr helifire_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr helifire_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,back_color,foreground_color;
 	
 		videoram.write(offset,data);
@@ -457,8 +429,7 @@ public class _8080bw
 	} };
 	
 	
-	public static WriteHandlerPtr helifire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr helifire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		colorram.write(offset,data);
 	
 		/* redraw region with (possibly) changed color */
@@ -466,8 +437,7 @@ public class _8080bw
 	} };
 	
 	
-	public static WriteHandlerPtr schaser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr schaser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 	
@@ -482,14 +452,12 @@ public class _8080bw
 		}
 	} };
 	
-	public static ReadHandlerPtr schaser_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr schaser_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return colorram.read(offset & 0x1f1f);
 	} };
 	
 	
-	public static WriteHandlerPtr phantom2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phantom2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int CLOUD_SHIFT[] = { 0x01, 0x01, 0x02, 0x02, 0x04, 0x04, 0x08, 0x08,
 		                             0x10, 0x10, 0x20, 0x20, 0x40, 0x40, 0x80, 0x80 };
 	
@@ -512,7 +480,7 @@ public class _8080bw
 	
 		for (i = 0; i < 8; i++)
 		{
-			if ((data & 0x01) != 0)
+			if (data & 0x01)
 			{
 				col = 1;	/* white foreground */
 			}
@@ -534,7 +502,7 @@ public class _8080bw
 				}
 			}
 	
-			plot_pixel_8080.handler(x, y, col);
+			plot_pixel_8080(x, y, col);
 	
 			x++;
 			cloud_x++;
@@ -550,15 +518,13 @@ public class _8080bw
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_8080bw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_8080bw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_p(bitmap, cliprect);
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	static public static VideoUpdateHandlerPtr video_update_8080bw_common  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	
@@ -582,8 +548,7 @@ public class _8080bw
 	static int death_colors_rng = 0;
 	static int death_colors_timing = 0;
 	
-	public static PaletteInitHandlerPtr palette_init_helifire  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_helifire  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 8; i++)
@@ -624,8 +589,7 @@ public class _8080bw
 		}
 	}
 	
-	VIDEO_EOF (helifire)
-	{
+	public static VideoEofHandlerPtr video_eof_helifire  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		/* there are two circuits:
@@ -638,7 +602,7 @@ public class _8080bw
 	
 		death_colors_timing = (death_colors_timing + 1) & 15;
 	
-		if ((death_colors_timing & 1) != 0) /* 1,3,5,7,9,11,13,15 */
+		if (death_colors_timing & 1) /* 1,3,5,7,9,11,13,15 */
 			death_colors_rng = (((death_colors_rng ^ (death_colors_rng<<1) ^ 0x80)&0x80)>>7) | ((death_colors_rng&0x7f)<<1);
 	
 		b_to_g = (death_colors_rng & 0x20) >> 5;
@@ -650,7 +614,7 @@ public class _8080bw
 			g_to_r = 0;	
 	
 	
-		if (last_colors_change != 0)
+		if (last_colors_change)
 		{
 			/* normal palette */
 			for (i = 0; i < 8; i++)
@@ -670,26 +634,25 @@ public class _8080bw
 				int g = 0xff * ((i >> 1) & 1);
 				int b = 0xff * ((i >> 2) & 1);
 	
-				if (b_to_g != 0)
+				if (b_to_g)
 					g |= b;	/* perhaps we should use |= instead ? */
-				if (g_to_r != 0)
+				if (g_to_r)
 					r |= g;	/* perhaps we should use |= instead ? */
 	
 				palette_set_color(i,r,g,b);
 			}
 		}
-	}
+	} };
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_helifire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_helifire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		int sun_brightness = readinputport(4);
 		int sea_brightness = readinputport(5);
 		int sea_level = 116 + readinputport(6); /* 116 is a guess */
 		int wave_height = readinputport(7);
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	
@@ -830,7 +793,7 @@ public class _8080bw
 	
 		x = sight_xc;
 		y = sight_yc;
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			x = 255-x;
 			y = 255-y;
@@ -841,24 +804,21 @@ public class _8080bw
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_seawolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_seawolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
 	
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x1f) * 8) + 4, 63);
 	} };
 	
-	static public static VideoUpdateHandlerPtr video_update_blueshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_blueshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
 	
 	    draw_sight(bitmap,cliprect,((input_port_0_r(0) & 0x7f) * 2) - 12, 63);
 	} };
 	
-	static public static VideoUpdateHandlerPtr video_update_desertgu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_desertgu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* update the bitmap (and erase old cross) */
 		video_update_8080bw_common(bitmap, cliprect);
 	
@@ -868,8 +828,7 @@ public class _8080bw
 	} };
 	
 	
-	public static WriteHandlerPtr bowler_bonus_display_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bowler_bonus_display_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bits 0-6 control which score is lit.
 		   Bit 7 appears to be a global enable, but the exact
 		   effect is not known. */
@@ -878,8 +837,7 @@ public class _8080bw
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_bowler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_bowler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x,y,i;
 	
 		char score_line_1[] = "Bonus 200 400 500 700 500 400 200";
@@ -931,8 +889,7 @@ public class _8080bw
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_invadpt2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_invadpt2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -947,8 +904,7 @@ public class _8080bw
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_sflush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sflush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -964,8 +920,7 @@ public class _8080bw
 	} };
 	
 	
-	public static WriteHandlerPtr invadpt2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr invadpt2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y,col;
 	
 		videoram.write(offset,data);
@@ -974,7 +929,7 @@ public class _8080bw
 		x = 8 * (offset % 32);
 	
 		/* 32 x 32 colormap */
-		if (screen_red == 0)
+		if (!screen_red)
 		{
 			UINT16 colbase;
 	
@@ -987,8 +942,7 @@ public class _8080bw
 		plot_byte(x, y, data, col, 0);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_cosmo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cosmo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -1001,8 +955,7 @@ public class _8080bw
 		}
 	} };
 	
-	public static WriteHandlerPtr cosmo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cosmo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		int offs = ((offset>>5)<<8) | (offset&0x1f);
 	
@@ -1016,8 +969,7 @@ public class _8080bw
 		}		
 	} };
 	
-	public static WriteHandlerPtr cosmo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cosmo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y,col;
 	
 		videoram.write(offset,data);
@@ -1031,8 +983,7 @@ public class _8080bw
 		plot_byte(8*x, y, data, col, 0);
 	} };
 	
-	public static WriteHandlerPtr sstrngr2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sstrngr2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 x,y,col;
 	
 		videoram.write(offset,data);
@@ -1041,7 +992,7 @@ public class _8080bw
 		x = 8 * (offset % 32);
 	
 		/* 16 x 32 colormap */
-		if (screen_red == 0)
+		if (!screen_red)
 		{
 			UINT16 colbase;
 	
@@ -1051,7 +1002,7 @@ public class _8080bw
 		else
 			col = 1;	/* red */
 	
-		if (color_map_select != 0)
+		if (color_map_select)
 		{
 			x = 240 - x;
 			y = 31 - y;

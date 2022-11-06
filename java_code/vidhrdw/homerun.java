@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,8 +16,7 @@ public class homerun
 	
 	#define half_screen 116
 	
-	WRITE_HANDLER(homerun_banking_w)
-	{
+	public static WriteHandlerPtr homerun_banking_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(cpu_getscanline()>half_screen)
 			homerun_gc_down=data&3;
 		else
@@ -26,21 +25,19 @@ public class homerun
 	  	tilemap_mark_all_tiles_dirty(homerun_tilemap);
 	
 		data>>=5;
-		if (data == 0)
+		if(!data)
 			cpu_setbank(1, memory_region(REGION_CPU1) );
 		else
 			cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + (((data-1)&0x7)*0x4000 ));	
-	}
+	} };
 	
-	public static WriteHandlerPtr homerun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr homerun_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		homerun_videoram[offset]=data;
 		tilemap_mark_tile_dirty(homerun_tilemap,offset&0xfff);
 	} };
 	
-	WRITE_HANDLER(homerun_color_w)
-	{
+	public static WriteHandlerPtr homerun_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int bit0,bit1,bit2;
 		bit0 = (data >> 0) & 0x01;
@@ -56,7 +53,7 @@ public class homerun
 		bit2 = (data >> 7) & 0x01;
 		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 		palette_set_color(offset,r,g,b);
-	}
+	} };
 	
 	static void get_homerun_tile_info(int tile_index)
 	{
@@ -68,11 +65,10 @@ public class homerun
 	
 	
 	
-	VIDEO_START(homerun)
-	{
+	public static VideoStartHandlerPtr video_start_homerun  = new VideoStartHandlerPtr() { public int handler(){
 		homerun_tilemap = tilemap_create(get_homerun_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,64,64);
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -86,7 +82,7 @@ public class homerun
 			color = (spriteram.read(offs+2)& 0x7)+8 ;
 			flipx=(spriteram.read(offs+2)& 0x40) ;
 			flipy=(spriteram.read(offs+2)& 0x80) ;
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -95,8 +91,7 @@ public class homerun
 		}
 	}
 	
-	VIDEO_UPDATE(homerun)
-	{
+	public static VideoUpdateHandlerPtr video_update_homerun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle myclip=*cliprect; 
 		
 		/* upper part */
@@ -117,7 +112,7 @@ public class homerun
 		draw_sprites(bitmap,&myclip);
 	
 		homerun_gc_down=homerun_gc_up;
-	}
+	} };
 	
 	
 }

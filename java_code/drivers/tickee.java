@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,8 +34,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_tickee  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tickee  = new MachineInitHandlerPtr() { public void handler(){
 		/* mirror the ROM into bank 1 */
 		cpu_setbank(1, code_rom);
 	
@@ -52,8 +51,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_1_r.handler(offset) | (ticket_dispenser_0_r(0) >> 5) | (ticket_dispenser_1_r(0) >> 6);
 	} };
 	
@@ -131,7 +129,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_tickee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tickee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tickee )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, "Game Time/Diff" );
 		PORT_DIPSETTING(    0x03, "Very Fast/Very Easy" );
@@ -257,9 +255,7 @@ public class tickee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -287,8 +283,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_tickee  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tickee  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	} };
@@ -301,5 +296,5 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_tickee	   = new GameDriver("1994"	,"tickee"	,"tickee.java"	,rom_tickee,null	,machine_driver_tickee	,input_ports_tickee	,init_tickee	,ROT0	,	"Raster Elite", "Tickee Tickats" )
+	GAME( 1994, tickee, 0, tickee, tickee, tickee, ROT0, "Raster Elite", "Tickee Tickats" )
 }

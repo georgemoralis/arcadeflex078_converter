@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -11,8 +11,7 @@ public class kopunch
 	
 	
 	
-	public static InterruptHandlerPtr kopunch_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr kopunch_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			if (~input_port_1_r(0) & 0x80)	/* coin 1 */
@@ -30,8 +29,7 @@ public class kopunch
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xff);	/* RST 38h */
 	} };
 	
-	public static ReadHandlerPtr kopunch_in_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kopunch_in_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* port 31 + low 3 bits of port 32 contain the punch strength */
 		if (offset == 0)
 			return rand();
@@ -39,16 +37,14 @@ public class kopunch
 			return (rand() & 0x07) | input_port_1_r.handler(0);
 	} };
 	
-	public static WriteHandlerPtr kopunch_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,~data & 0x80);
 	
 	//	if ((data & 0x7f) != 0x7f)
 	//		usrintf_showmessage("port 38 = %02x",data);
 	} };
 	
-	public static WriteHandlerPtr kopunch_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kopunch_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,~data & 0x80);
 		coin_counter_w(1,~data & 0x40);
 	
@@ -75,8 +71,7 @@ public class kopunch
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand();
 	} };
 	
@@ -107,7 +102,7 @@ public class kopunch
 	};
 	
 	
-	static InputPortPtr input_ports_kopunch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kopunch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kopunch )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -183,8 +178,7 @@ public class kopunch
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_kopunch = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kopunch )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 4000000)	/* 4 MHz ???? appears to use 8080 instructions, not z80 */
@@ -207,9 +201,7 @@ public class kopunch
 		MDRV_VIDEO_UPDATE(kopunch)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -243,8 +235,7 @@ public class kopunch
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_kopunch  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kopunch  = new DriverInitHandlerPtr() { public void handler(){
 	//	UINT8 *rom = memory_region(REGION_CPU1);
 	
 		/* It looks like there is a security chip, that changes instruction of the form:
@@ -262,5 +253,5 @@ public class kopunch
 	} };
 	
 	
-	public static GameDriver driver_kopunch	   = new GameDriver("1981"	,"kopunch"	,"kopunch.java"	,rom_kopunch,null	,machine_driver_kopunch	,input_ports_kopunch	,init_kopunch	,ROT270	,	"Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)
+	GAMEX( 1981, kopunch, 0, kopunch, kopunch, kopunch, ROT270, "Sega", "KO Punch", GAME_NO_SOUND | GAME_NOT_WORKING)
 }

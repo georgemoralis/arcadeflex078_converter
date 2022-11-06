@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -54,8 +54,7 @@ public class invinco
 	};
 	
 	
-	public static WriteHandlerPtr invinco_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr invinco_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int port2State = 0;
 		int bitsChanged;
 		int bitsGoneHigh;
@@ -68,32 +67,32 @@ public class invinco
 	
 		port2State = data;
 	
-		if ((bitsGoneLow & OUT_PORT_2_SAUCER) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_SAUCER )
 		{
 			PLAY( SND_SAUCER, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_MOVE1) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_MOVE1 )
 		{
 			PLAY( SND_MOVE1, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_MOVE2) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_MOVE2 )
 		{
 			PLAY( SND_MOVE2, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_FIRE) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_FIRE )
 		{
 			PLAY( SND_FIRE, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_INVHIT) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_INVHIT )
 		{
 			PLAY( SND_INVHIT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_SHIPHIT) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_SHIPHIT )
 		{
 			PLAY( SND_SHIPHIT, 0 );
 		}

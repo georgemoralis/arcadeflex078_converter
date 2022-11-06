@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -66,7 +66,7 @@ public class lemmings
 		int r,g,b;
 	
 		COMBINE_DATA(&paletteram16[offset]);
-		if ((offset & 1) != 0) offset--;
+		if (offset&1) offset--;
 	
 		b = (paletteram16[offset] >> 0) & 0xff;
 		g = (paletteram16[offset+1] >> 8) & 0xff;
@@ -81,8 +81,7 @@ public class lemmings
 		cpu_set_irq_line(1,1,HOLD_LINE);
 	}
 	
-	public static WriteHandlerPtr lemmings_sound_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lemmings_sound_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,1,CLEAR_LINE);
 	} };
 	
@@ -141,7 +140,7 @@ public class lemmings
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_lemmings = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lemmings = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lemmings )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON1 );/* Select 1 */
@@ -290,8 +289,7 @@ public class lemmings
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_lemmings = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lemmings )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -321,9 +319,7 @@ public class lemmings
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -359,5 +355,5 @@ public class lemmings
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_lemmings	   = new GameDriver("1991"	,"lemmings"	,"lemmings.java"	,rom_lemmings,null	,machine_driver_lemmings	,input_ports_lemmings	,null	,ROT0	,	"Data East USA", "Lemmings (US Prototype)" )
+	GAME( 1991, lemmings, 0, lemmings, lemmings, 0, ROT0, "Data East USA", "Lemmings (US Prototype)" )
 }

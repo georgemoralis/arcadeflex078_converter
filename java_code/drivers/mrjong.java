@@ -44,7 +44,7 @@ ROMs 6A, 7A, 8A, 9A: 2764
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -77,13 +77,11 @@ public class mrjong
 	};
 	
 	
-	public static WriteHandlerPtr io_0x00_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_0x00_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mrjong_flipscreen_w(0, ((data & 0x04) > 2));
 	} };
 	
-	public static ReadHandlerPtr io_0x03_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_0x03_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x00;
 	} };
 	
@@ -105,7 +103,7 @@ public class mrjong
 	};
 	
 	
-	static InputPortPtr input_ports_mrjong = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrjong = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrjong )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER2 );
@@ -192,8 +190,7 @@ public class mrjong
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_mrjong = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrjong )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,15468000/6)	/* 2.578 MHz?? */
@@ -218,9 +215,7 @@ public class mrjong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -277,7 +272,7 @@ public class mrjong
 		ROM_LOAD( "clr.g5", 0x0020, 0x0100, CRC(bcb1e2e3) SHA1(c09731836a9d4e50316a84b86f61b599a1ef944d) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mrjong	   = new GameDriver("1983"	,"mrjong"	,"mrjong.java"	,rom_mrjong,null	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako", "Mr. Jong (Japan)" )
-	public static GameDriver driver_crazyblk	   = new GameDriver("1983"	,"crazyblk"	,"mrjong.java"	,rom_crazyblk,driver_mrjong	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako (ECI license)", "Crazy Blocks" )
-	public static GameDriver driver_blkbustr	   = new GameDriver("1983"	,"blkbustr"	,"mrjong.java"	,rom_blkbustr,driver_mrjong	,machine_driver_mrjong	,input_ports_mrjong	,null	,ROT90	,	"Kiwako (ECI license)", "BlockBuster" )
+	GAME( 1983, mrjong,   0,      mrjong, mrjong, 0, ROT90, "Kiwako", "Mr. Jong (Japan)" )
+	GAME( 1983, crazyblk, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "Crazy Blocks" )
+	GAME( 1983, blkbustr, mrjong, mrjong, mrjong, 0, ROT90, "Kiwako (ECI license)", "BlockBuster" )
 }

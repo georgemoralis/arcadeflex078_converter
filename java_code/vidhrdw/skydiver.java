@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,8 +20,7 @@ public class skydiver
 	static int width = 0;
 	
 	
-	public static MachineInitHandlerPtr machine_init_skydiver  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_skydiver  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset all latches */
 		skydiver_start_lamp_1_w(0, 0);
 		skydiver_start_lamp_2_w(0, 0);
@@ -58,8 +57,7 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_skydiver  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_skydiver  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
 		return !bg_tilemap;
@@ -72,8 +70,7 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr skydiver_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (skydiver_videoram[offset] != data)
 		{
 			skydiver_videoram[offset] = data;
@@ -82,77 +79,63 @@ public class skydiver
 	} };
 	
 	
-	public static ReadHandlerPtr skydiver_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skydiver_wram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return skydiver_videoram[offset | 0x380];
 	} };
 	
-	public static WriteHandlerPtr skydiver_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		skydiver_videoram[offset | 0x0380] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr skydiver_width_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_width_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		width = offset;
 	} };
 	
 	
-	public static WriteHandlerPtr skydiver_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(!offset);
 	} };
 	
 	
-	public static WriteHandlerPtr skydiver_start_lamp_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_start_lamp_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_start_lamp_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_start_lamp_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1, offset);
 	} };
 	
 	
-	public static WriteHandlerPtr skydiver_lamp_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_s_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lamps", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_k_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_k_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampk", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampy", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_d_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampd", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_i_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_i_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampi", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_v_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_v_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampv", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_e_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampe", offset);
 	} };
 	
-	public static WriteHandlerPtr skydiver_lamp_r_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_lamp_r_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampr", offset);
 	} };
 	
@@ -187,12 +170,12 @@ public class skydiver
 			charcode = (charcode & 0x07) | ((charcode & 0x60) >> 2);
 			color = pic & 0x01;
 	
-			if (wide != 0)
+			if (wide)
 			{
 				sx -= 8;
 			}
 	
-			drawgfxzoom(bitmap,Machine.gfx[1],
+			drawgfxzoom(bitmap,Machine->gfx[1],
 				charcode, color,
 				xflip,yflip,sx,sy,
 				cliprect,TRANSPARENCY_PEN,0,
@@ -201,8 +184,7 @@ public class skydiver
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_skydiver  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skydiver  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		draw_sprites(bitmap, cliprect);

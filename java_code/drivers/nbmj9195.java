@@ -95,7 +95,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -124,13 +124,12 @@ public class nbmj9195
 	static size_t sailorws_nvram_size;
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_sailorws  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_sailorws  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, sailorws_nvram, sailorws_nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file, sailorws_nvram, sailorws_nvram_size);
 			else
 				memset(sailorws_nvram, 0, sailorws_nvram_size);
@@ -149,8 +148,7 @@ public class nbmj9195
 		return soundlatch_r(0);
 	}
 	
-	public static WriteHandlerPtr sailorws_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailorws_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0, data);
 	} };
 	
@@ -166,12 +164,11 @@ public class nbmj9195
 		// bit2: hopper
 		// bit3: coin lockout
 	
-		if ((data & 0x04) != 0) sailorws_outcoin_flag ^= 1;
+		if (data & 0x04) sailorws_outcoin_flag ^= 1;
 		else sailorws_outcoin_flag = 1;
 	}
 	
-	public static WriteHandlerPtr sailorws_inputportsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailorws_inputportsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sailorws_inputport = (data ^ 0xff);
 	} };
 	
@@ -204,8 +201,7 @@ public class nbmj9195
 		mscoutm_inputport = (data ^ 0xff);
 	}
 	
-	public static ReadHandlerPtr mscoutm_dipsw_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mscoutm_dipsw_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// DIPSW A
 		return (((readinputport(0) & 0x01) << 7) | ((readinputport(0) & 0x02) << 5) |
 		        ((readinputport(0) & 0x04) << 3) | ((readinputport(0) & 0x08) << 1) |
@@ -213,8 +209,7 @@ public class nbmj9195
 		        ((readinputport(0) & 0x40) >> 5) | ((readinputport(0) & 0x80) >> 7));
 	} };
 	
-	public static ReadHandlerPtr mscoutm_dipsw_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mscoutm_dipsw_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// DIPSW B
 		return (((readinputport(1) & 0x01) << 7) | ((readinputport(1) & 0x02) << 5) |
 		        ((readinputport(1) & 0x04) << 3) | ((readinputport(1) & 0x08) << 1) |
@@ -231,9 +226,9 @@ public class nbmj9195
 	{
 		int portdata;
 	
-		if ((!strcmp(Machine.gamedrv.name, "mscoutm")) ||
-		    (!strcmp(Machine.gamedrv.name, "imekura")) ||
-		    (!strcmp(Machine.gamedrv.name, "mjegolf")))
+		if ((!strcmp(Machine->gamedrv->name, "mscoutm")) ||
+		    (!strcmp(Machine->gamedrv->name, "imekura")) ||
+		    (!strcmp(Machine->gamedrv->name, "mjegolf")))
 		{
 			switch (offset)
 			{
@@ -369,9 +364,9 @@ public class nbmj9195
 	
 	static void tmpz84c011_pio_w(int offset, int data)
 	{
-		if ((!strcmp(Machine.gamedrv.name, "imekura")) ||
-		    (!strcmp(Machine.gamedrv.name, "mscoutm")) ||
-		    (!strcmp(Machine.gamedrv.name, "mjegolf")))
+		if ((!strcmp(Machine->gamedrv->name, "imekura")) ||
+		    (!strcmp(Machine->gamedrv->name, "mscoutm")) ||
+		    (!strcmp(Machine->gamedrv->name, "mjegolf")))
 		{
 			switch (offset)
 			{
@@ -469,54 +464,54 @@ public class nbmj9195
 	/* CPU interface */
 	
 	/* device 0 */
-	public static ReadHandlerPtr tmpz84c011_0_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(0) & ~pio_dir[0]) | (pio_latch[0] & pio_dir[0]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(1) & ~pio_dir[1]) | (pio_latch[1] & pio_dir[1]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(2) & ~pio_dir[2]) | (pio_latch[2] & pio_dir[2]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(3) & ~pio_dir[3]) | (pio_latch[3] & pio_dir[3]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(4) & ~pio_dir[4]) | (pio_latch[4] & pio_dir[4]); } };
+	public static ReadHandlerPtr tmpz84c011_0_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(0) & ~pio_dir[0]) | (pio_latch[0] & pio_dir[0]); }
+	public static ReadHandlerPtr tmpz84c011_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(1) & ~pio_dir[1]) | (pio_latch[1] & pio_dir[1]); }
+	public static ReadHandlerPtr tmpz84c011_0_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(2) & ~pio_dir[2]) | (pio_latch[2] & pio_dir[2]); }
+	public static ReadHandlerPtr tmpz84c011_0_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(3) & ~pio_dir[3]) | (pio_latch[3] & pio_dir[3]); }
+	public static ReadHandlerPtr tmpz84c011_0_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(4) & ~pio_dir[4]) | (pio_latch[4] & pio_dir[4]); }
 	
-	public static WriteHandlerPtr tmpz84c011_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[0] = data; tmpz84c011_pio_w(0, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[1] = data; tmpz84c011_pio_w(1, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[2] = data; tmpz84c011_pio_w(2, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[3] = data; tmpz84c011_pio_w(3, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[4] = data; tmpz84c011_pio_w(4, data); } };
+	public static WriteHandlerPtr tmpz84c011_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[0] = data; tmpz84c011_pio_w(0, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[1] = data; tmpz84c011_pio_w(1, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[2] = data; tmpz84c011_pio_w(2, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[3] = data; tmpz84c011_pio_w(3, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[4] = data; tmpz84c011_pio_w(4, data); }
 	
-	public static ReadHandlerPtr tmpz84c011_0_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[0]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[1]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[2]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[3]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[4]; } };
+	public static ReadHandlerPtr tmpz84c011_0_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[0]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[1]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[2]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[3]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[4]; }
 	
-	public static WriteHandlerPtr tmpz84c011_0_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[0] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[1] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[2] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[3] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[4] = data; } };
+	public static WriteHandlerPtr tmpz84c011_0_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[0] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[1] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[2] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[3] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[4] = data; }
 	
 	/* device 1 */
-	public static ReadHandlerPtr tmpz84c011_1_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(5) & ~pio_dir[5]) | (pio_latch[5] & pio_dir[5]); } };
-	public static ReadHandlerPtr tmpz84c011_1_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(6) & ~pio_dir[6]) | (pio_latch[6] & pio_dir[6]); } };
-	public static ReadHandlerPtr tmpz84c011_1_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(7) & ~pio_dir[7]) | (pio_latch[7] & pio_dir[7]); } };
-	public static ReadHandlerPtr tmpz84c011_1_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(8) & ~pio_dir[8]) | (pio_latch[8] & pio_dir[8]); } };
-	public static ReadHandlerPtr tmpz84c011_1_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(9) & ~pio_dir[9]) | (pio_latch[9] & pio_dir[9]); } };
+	public static ReadHandlerPtr tmpz84c011_1_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(5) & ~pio_dir[5]) | (pio_latch[5] & pio_dir[5]); }
+	public static ReadHandlerPtr tmpz84c011_1_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(6) & ~pio_dir[6]) | (pio_latch[6] & pio_dir[6]); }
+	public static ReadHandlerPtr tmpz84c011_1_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(7) & ~pio_dir[7]) | (pio_latch[7] & pio_dir[7]); }
+	public static ReadHandlerPtr tmpz84c011_1_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(8) & ~pio_dir[8]) | (pio_latch[8] & pio_dir[8]); }
+	public static ReadHandlerPtr tmpz84c011_1_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(9) & ~pio_dir[9]) | (pio_latch[9] & pio_dir[9]); }
 	
-	public static WriteHandlerPtr tmpz84c011_1_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[5] = data; tmpz84c011_pio_w(5, data); } };
-	public static WriteHandlerPtr tmpz84c011_1_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[6] = data; tmpz84c011_pio_w(6, data); } };
-	public static WriteHandlerPtr tmpz84c011_1_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[7] = data; tmpz84c011_pio_w(7, data); } };
-	public static WriteHandlerPtr tmpz84c011_1_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[8] = data; tmpz84c011_pio_w(8, data); } };
-	public static WriteHandlerPtr tmpz84c011_1_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[9] = data; tmpz84c011_pio_w(9, data); } };
+	public static WriteHandlerPtr tmpz84c011_1_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[5] = data; tmpz84c011_pio_w(5, data); }
+	public static WriteHandlerPtr tmpz84c011_1_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[6] = data; tmpz84c011_pio_w(6, data); }
+	public static WriteHandlerPtr tmpz84c011_1_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[7] = data; tmpz84c011_pio_w(7, data); }
+	public static WriteHandlerPtr tmpz84c011_1_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[8] = data; tmpz84c011_pio_w(8, data); }
+	public static WriteHandlerPtr tmpz84c011_1_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[9] = data; tmpz84c011_pio_w(9, data); }
 	
-	public static ReadHandlerPtr tmpz84c011_1_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[5]; } };
-	public static ReadHandlerPtr tmpz84c011_1_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[6]; } };
-	public static ReadHandlerPtr tmpz84c011_1_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[7]; } };
-	public static ReadHandlerPtr tmpz84c011_1_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[8]; } };
-	public static ReadHandlerPtr tmpz84c011_1_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[9]; } };
+	public static ReadHandlerPtr tmpz84c011_1_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[5]; }
+	public static ReadHandlerPtr tmpz84c011_1_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[6]; }
+	public static ReadHandlerPtr tmpz84c011_1_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[7]; }
+	public static ReadHandlerPtr tmpz84c011_1_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[8]; }
+	public static ReadHandlerPtr tmpz84c011_1_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[9]; }
 	
-	public static WriteHandlerPtr tmpz84c011_1_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[5] = data; } };
-	public static WriteHandlerPtr tmpz84c011_1_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[6] = data; } };
-	public static WriteHandlerPtr tmpz84c011_1_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[7] = data; } };
-	public static WriteHandlerPtr tmpz84c011_1_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[8] = data; } };
-	public static WriteHandlerPtr tmpz84c011_1_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[9] = data; } };
+	public static WriteHandlerPtr tmpz84c011_1_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[5] = data; }
+	public static WriteHandlerPtr tmpz84c011_1_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[6] = data; }
+	public static WriteHandlerPtr tmpz84c011_1_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[7] = data; }
+	public static WriteHandlerPtr tmpz84c011_1_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[8] = data; }
+	public static WriteHandlerPtr tmpz84c011_1_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[9] = data; }
 	
 	
 	static void ctc0_interrupt(int state)
@@ -530,8 +525,7 @@ public class nbmj9195
 	}
 	
 	/* CTC of main cpu, ch0 trigger is vblank */
-	public static InterruptHandlerPtr ctc0_trg1 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ctc0_trg1 = new InterruptHandlerPtr() {public void handler(){
 		z80ctc_0_trg1_w(0, 1);
 		z80ctc_0_trg1_w(0, 0);
 	} };
@@ -542,7 +536,7 @@ public class nbmj9195
 		{ 0, 1 },		/* clock */
 		{ 0, 0 },		/* timer disables */
 		{ ctc0_interrupt, ctc1_interrupt },	/* interrupt handler */
-		{ 0, z80ctc_1_trg3_w },	/* ZC/TO0 callback ctc1.zc0 . ctc1.trg3 */
+		{ 0, z80ctc_1_trg3_w },	/* ZC/TO0 callback ctc1.zc0 -> ctc1.trg3 */
 		{ 0, 0 },		/* ZC/TO1 callback */
 		{ 0, 0 },		/* ZC/TO2 callback */
 	};
@@ -559,13 +553,12 @@ public class nbmj9195
 		}
 	
 		// initialize the CTC
-		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
-		ctc_intf.baseclock[1] = Machine.drv.cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
+		ctc_intf.baseclock[1] = Machine->drv->cpu[1].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_sailorws  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sailorws  = new MachineInitHandlerPtr() { public void handler(){
 		//
 	} };
 	
@@ -574,7 +567,7 @@ public class nbmj9195
 		unsigned char *ROM = memory_region(REGION_CPU2);
 	
 		// sound program patch
-		ROM[0x0213] = 0x00;			// DI . NOP
+		ROM[0x0213] = 0x00;			// DI -> NOP
 	
 		// initialize TMPZ84C011 PIO and CTC
 		tmpz84c011_init();
@@ -584,30 +577,30 @@ public class nbmj9195
 	}
 	
 	
-	public static DriverInitHandlerPtr init_mjuraden  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_koinomp  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_patimono  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mmehyou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_gal10ren  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mjlaman  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mkeibaou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_pachiten  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mjanbari  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_ultramhm  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_sailorws  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_sailorwr  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_psailor1  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_psailor2  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_otatidai  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_renaiclb  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_ngpgal  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mjgottsu  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_bakuhatu  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_cmehyou  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mjkoiura  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mscoutm  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_imekura  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
-	public static DriverInitHandlerPtr init_mjegolf  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_mjuraden  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_koinomp  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_patimono  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mmehyou  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_gal10ren  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjlaman  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mkeibaou  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_pachiten  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjanbari  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_ultramhm  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_sailorws  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_sailorwr  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_psailor1  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_psailor2  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_otatidai  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_renaiclb  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_ngpgal  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjgottsu  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_bakuhatu  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_cmehyou  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjkoiura  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mscoutm  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_imekura  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
+	public static DriverInitHandlerPtr init_mjegolf  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
 	
 	
 	public static Memory_ReadAddress readmem_sailorws[]={
@@ -2188,7 +2181,7 @@ public class nbmj9195
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN1 );
 	
 	
-	static InputPortPtr input_ports_mjuraden = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjuraden = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjuraden )
 	
 		// I don't have manual for this game.
 	
@@ -2261,7 +2254,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_koinomp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_koinomp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( koinomp )
 	
 		// I don't have manual for this game.
 	
@@ -2334,7 +2327,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_patimono = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_patimono = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( patimono )
 	
 		// I don't have manual for this game.
 	
@@ -2407,7 +2400,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjanbari = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjanbari = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjanbari )
 	
 		// I don't have manual for this game.
 	
@@ -2480,7 +2473,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mmehyou = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mmehyou = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mmehyou )
 	
 		// I don't have manual for this game.
 	
@@ -2553,7 +2546,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ultramhm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ultramhm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ultramhm )
 	
 		// I don't have manual for this game.
 	
@@ -2626,7 +2619,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gal10ren = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gal10ren = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gal10ren )
 	
 		// I don't have manual for this game.
 	
@@ -2699,7 +2692,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_renaiclb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_renaiclb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( renaiclb )
 	
 		// I don't have manual for this game.
 	
@@ -2772,7 +2765,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjlaman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjlaman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjlaman )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -2841,7 +2834,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mkeibaou = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mkeibaou = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mkeibaou )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1" );
@@ -2910,7 +2903,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pachiten = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pachiten = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pachiten )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
 		PORT_DIPSETTING(    0x07, "90% (Easy"));
@@ -2978,7 +2971,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sailorws = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sailorws = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sailorws )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1" );
@@ -3047,7 +3040,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sailorwr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sailorwr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sailorwr )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, "Game Out" );
 		PORT_DIPSETTING(    0x07, "90% (Easy"));
@@ -3115,7 +3108,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_psailor1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psailor1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psailor1 )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -3183,7 +3176,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_psailor2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psailor2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psailor2 )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -3251,7 +3244,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_otatidai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_otatidai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( otatidai )
 	
 		// I don't have manual for this game.
 	
@@ -3322,7 +3315,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ngpgal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ngpgal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ngpgal )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3392,7 +3385,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjgottsu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjgottsu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjgottsu )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1" );
@@ -3461,7 +3454,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bakuhatu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bakuhatu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bakuhatu )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1" );
@@ -3530,7 +3523,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cmehyou = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cmehyou = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cmehyou )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3600,7 +3593,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjkoiura = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjkoiura = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjkoiura )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3670,7 +3663,7 @@ public class nbmj9195
 		MJCTRL_SAILORWS_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mscoutm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mscoutm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mscoutm )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3739,7 +3732,7 @@ public class nbmj9195
 		MJCTRL_MSCOUTM_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_imekura = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_imekura = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( imekura )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3808,7 +3801,7 @@ public class nbmj9195
 		MJCTRL_MSCOUTM_PORT5
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjegolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjegolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjegolf )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -3905,8 +3898,7 @@ public class nbmj9195
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80,12000000/2)		/* TMPZ84C011, 6.00 MHz */
@@ -3938,13 +3930,10 @@ public class nbmj9195
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -3952,13 +3941,10 @@ public class nbmj9195
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_PIXEL_ASPECT_RATIO_1_2)
 		MDRV_VIDEO_START(mjkoiura)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_NBMJDRV3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( NBMJDRV3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -3969,53 +3955,41 @@ public class nbmj9195
 	
 		MDRV_VIDEO_START(mscoutm)
 		MDRV_VIDEO_UPDATE(mscoutm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	//-------------------------------------------------------------------------
 	
-	public static MachineHandlerPtr machine_driver_mjuraden = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjuraden )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjuraden,writemem_mjuraden)
 		MDRV_CPU_PORTS(readport_mjuraden,writeport_mjuraden)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_koinomp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( koinomp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_koinomp,writemem_koinomp)
 		MDRV_CPU_PORTS(readport_koinomp,writeport_koinomp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_patimono = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( patimono )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_patimono,writeport_patimono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjanbari = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjanbari )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4023,13 +3997,10 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_patimono,writeport_patimono)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mmehyou = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mmehyou )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4038,13 +4009,10 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_mmehyou,writeport_mmehyou)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ultramhm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ultramhm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4053,61 +4021,46 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_koinomp,writeport_koinomp)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gal10ren = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gal10ren )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_gal10ren,writeport_gal10ren)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_renaiclb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( renaiclb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_renaiclb,writeport_renaiclb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjlaman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjlaman )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_mjlaman,writeport_mjlaman)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mkeibaou = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mkeibaou )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_mkeibaou,writeport_mkeibaou)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pachiten = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pachiten )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4115,23 +4068,17 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_pachiten,writeport_pachiten)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sailorws = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sailorws )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sailorwr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sailorwr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
@@ -4139,149 +4086,114 @@ public class nbmj9195
 		MDRV_CPU_PORTS(readport_sailorwr,writeport_sailorwr)
 	
 		MDRV_NVRAM_HANDLER(sailorws)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_psailor1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( psailor1 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_psailor1,writeport_psailor1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_psailor2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( psailor2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_psailor2,writeport_psailor2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_otatidai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( otatidai )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV1 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_otatidai,writeport_otatidai)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ngpgal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ngpgal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_ngpgal,writeport_ngpgal)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjgottsu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjgottsu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_mjgottsu,writeport_mjgottsu)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bakuhatu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bakuhatu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_mjgottsu,writeport_mjgottsu)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cmehyou = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cmehyou )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_ngpgal,writemem_ngpgal)
 		MDRV_CPU_PORTS(readport_cmehyou,writeport_cmehyou)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjkoiura = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjkoiura )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV2 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjuraden,writemem_mjuraden)
 		MDRV_CPU_PORTS(readport_mjkoiura,writeport_mjkoiura)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mscoutm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mscoutm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mscoutm,writemem_mscoutm)
 		MDRV_CPU_PORTS(readport_mscoutm,writeport_mscoutm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_imekura = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( imekura )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjegolf,writemem_mjegolf)
 		MDRV_CPU_PORTS(readport_imekura,writeport_imekura)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjegolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjegolf )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( NBMJDRV3 )
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjegolf,writemem_mjegolf)
 		MDRV_CPU_PORTS(readport_mjegolf,writeport_mjegolf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_mjuraden = new RomLoadPtr(){ public void handler(){ 
@@ -4742,30 +4654,30 @@ public class nbmj9195
 	
 	
 	//     YEAR,     NAME,   PARENT,  MACHINE,    INPUT,     INIT,    MONITOR, COMPANY, FULLNAME, FLAGS
-	public static GameDriver driver_mjuraden	   = new GameDriver("1992"	,"mjuraden"	,"nbmj9195.java"	,rom_mjuraden,null	,machine_driver_mjuraden	,input_ports_mjuraden	,init_mjuraden	,ROT0	,	"Nichibutsu/Yubis", "Mahjong Uranai Densetsu (Japan)" )
-	public static GameDriver driver_koinomp	   = new GameDriver("1992"	,"koinomp"	,"nbmj9195.java"	,rom_koinomp,null	,machine_driver_koinomp	,input_ports_koinomp	,init_koinomp	,ROT0	,	"Nichibutsu", "Mahjong Koi no Magic Potion (Japan)" )
-	public static GameDriver driver_patimono	   = new GameDriver("1992"	,"patimono"	,"nbmj9195.java"	,rom_patimono,null	,machine_driver_patimono	,input_ports_patimono	,init_patimono	,ROT0	,	"Nichibutsu", "Mahjong Pachinko Monogatari (Japan)" )
-	public static GameDriver driver_mjanbari	   = new GameDriver("1992"	,"mjanbari"	,"nbmj9195.java"	,rom_mjanbari,null	,machine_driver_mjanbari	,input_ports_mjanbari	,init_mjanbari	,ROT0	,	"Nichibutsu/Yubis/AV JAPAN", "Medal Mahjong Janjan Baribari [BET] (Japan)" )
-	public static GameDriver driver_mmehyou	   = new GameDriver("1992"	,"mmehyou"	,"nbmj9195.java"	,rom_mmehyou,null	,machine_driver_mmehyou	,input_ports_mmehyou	,init_mmehyou	,ROT0	,	"Nichibutsu/Kawakusu", "Medal Mahjong Circuit no Mehyou [BET] (Japan)" )
-	public static GameDriver driver_ultramhm	   = new GameDriver("1993"	,"ultramhm"	,"nbmj9195.java"	,rom_ultramhm,null	,machine_driver_ultramhm	,input_ports_ultramhm	,init_ultramhm	,ROT0	,	"Apple", "Ultra Maru-hi Mahjong (Japan)" )
-	public static GameDriver driver_gal10ren	   = new GameDriver("1993"	,"gal10ren"	,"nbmj9195.java"	,rom_gal10ren,null	,machine_driver_gal10ren	,input_ports_gal10ren	,init_gal10ren	,ROT0	,	"FUJIC", "Mahjong Gal 10-renpatsu (Japan)" )
-	public static GameDriver driver_renaiclb	   = new GameDriver("1993"	,"renaiclb"	,"nbmj9195.java"	,rom_renaiclb,null	,machine_driver_renaiclb	,input_ports_renaiclb	,init_renaiclb	,ROT0	,	"FUJIC", "Mahjong Ren-ai Club (Japan)" )
-	public static GameDriver driver_mjlaman	   = new GameDriver("1993"	,"mjlaman"	,"nbmj9195.java"	,rom_mjlaman,null	,machine_driver_mjlaman	,input_ports_mjlaman	,init_mjlaman	,ROT0	,	"Nichibutsu/AV JAPAN", "Mahjong La Man (Japan)" )
-	public static GameDriver driver_mkeibaou	   = new GameDriver("1993"	,"mkeibaou"	,"nbmj9195.java"	,rom_mkeibaou,null	,machine_driver_mkeibaou	,input_ports_mkeibaou	,init_mkeibaou	,ROT0	,	"Nichibutsu", "Mahjong Keibaou (Japan)" )
-	public static GameDriver driver_pachiten	   = new GameDriver("1993"	,"pachiten"	,"nbmj9195.java"	,rom_pachiten,null	,machine_driver_pachiten	,input_ports_pachiten	,init_pachiten	,ROT0	,	"Nichibutsu/MIKI SYOUJI/AV JAPAN", "Medal Mahjong Pachi-Slot Tengoku [BET] (Japan)" )
-	public static GameDriver driver_sailorws	   = new GameDriver("1993"	,"sailorws"	,"nbmj9195.java"	,rom_sailorws,null	,machine_driver_sailorws	,input_ports_sailorws	,init_sailorws	,ROT0	,	"Nichibutsu", "Mahjong Sailor Wars (Japan)" )
-	public static GameDriver driver_sailorwr	   = new GameDriver("1993"	,"sailorwr"	,"nbmj9195.java"	,rom_sailorwr,driver_sailorws	,machine_driver_sailorwr	,input_ports_sailorwr	,init_sailorwr	,ROT0	,	"Nichibutsu", "Mahjong Sailor Wars-R [BET] (Japan)" )
-	public static GameDriver driver_psailor1	   = new GameDriver("1994"	,"psailor1"	,"nbmj9195.java"	,rom_psailor1,null	,machine_driver_psailor1	,input_ports_psailor1	,init_psailor1	,ROT0	,	"SPHINX", "Bishoujo Janshi Pretty Sailor 18-kin (Japan)" )
-	public static GameDriver driver_psailor2	   = new GameDriver("1994"	,"psailor2"	,"nbmj9195.java"	,rom_psailor2,null	,machine_driver_psailor2	,input_ports_psailor2	,init_psailor2	,ROT0	,	"SPHINX", "Bishoujo Janshi Pretty Sailor 2 (Japan)" )
-	public static GameDriver driver_otatidai	   = new GameDriver("1995"	,"otatidai"	,"nbmj9195.java"	,rom_otatidai,null	,machine_driver_otatidai	,input_ports_otatidai	,init_otatidai	,ROT0	,	"SPHINX", "Disco Mahjong Otachidai no Okite (Japan)" )
+	GAME( 1992, mjuraden, 0,        mjuraden, mjuraden, mjuraden, ROT0, "Nichibutsu/Yubis", "Mahjong Uranai Densetsu (Japan)" )
+	GAME( 1992, koinomp,  0,        koinomp,  koinomp,  koinomp,  ROT0, "Nichibutsu", "Mahjong Koi no Magic Potion (Japan)" )
+	GAME( 1992, patimono, 0,        patimono, patimono, patimono, ROT0, "Nichibutsu", "Mahjong Pachinko Monogatari (Japan)" )
+	GAME( 1992, mjanbari, 0,        mjanbari, mjanbari, mjanbari, ROT0, "Nichibutsu/Yubis/AV JAPAN", "Medal Mahjong Janjan Baribari [BET] (Japan)" )
+	GAME( 1992, mmehyou,  0,        mmehyou,  mmehyou,  mmehyou,  ROT0, "Nichibutsu/Kawakusu", "Medal Mahjong Circuit no Mehyou [BET] (Japan)" )
+	GAME( 1993, ultramhm, 0,        ultramhm, ultramhm, ultramhm, ROT0, "Apple", "Ultra Maru-hi Mahjong (Japan)" )
+	GAME( 1993, gal10ren, 0,        gal10ren, gal10ren, gal10ren, ROT0, "FUJIC", "Mahjong Gal 10-renpatsu (Japan)" )
+	GAME( 1993, renaiclb, 0,        renaiclb, renaiclb, renaiclb, ROT0, "FUJIC", "Mahjong Ren-ai Club (Japan)" )
+	GAME( 1993, mjlaman,  0,        mjlaman,  mjlaman,  mjlaman,  ROT0, "Nichibutsu/AV JAPAN", "Mahjong La Man (Japan)" )
+	GAME( 1993, mkeibaou, 0,        mkeibaou, mkeibaou, mkeibaou, ROT0, "Nichibutsu", "Mahjong Keibaou (Japan)" )
+	GAME( 1993, pachiten, 0,        pachiten, pachiten, pachiten, ROT0, "Nichibutsu/MIKI SYOUJI/AV JAPAN", "Medal Mahjong Pachi-Slot Tengoku [BET] (Japan)" )
+	GAME( 1993, sailorws, 0,        sailorws, sailorws, sailorws, ROT0, "Nichibutsu", "Mahjong Sailor Wars (Japan)" )
+	GAME( 1993, sailorwr, sailorws, sailorwr, sailorwr, sailorwr, ROT0, "Nichibutsu", "Mahjong Sailor Wars-R [BET] (Japan)" )
+	GAME( 1994, psailor1, 0,        psailor1, psailor1, psailor1, ROT0, "SPHINX", "Bishoujo Janshi Pretty Sailor 18-kin (Japan)" )
+	GAME( 1994, psailor2, 0,        psailor2, psailor2, psailor2, ROT0, "SPHINX", "Bishoujo Janshi Pretty Sailor 2 (Japan)" )
+	GAME( 1995, otatidai, 0,        otatidai, otatidai, otatidai, ROT0, "SPHINX", "Disco Mahjong Otachidai no Okite (Japan)" )
 	
-	public static GameDriver driver_ngpgal	   = new GameDriver("1991"	,"ngpgal"	,"nbmj9195.java"	,rom_ngpgal,null	,machine_driver_ngpgal	,input_ports_ngpgal	,init_ngpgal	,ROT0	,	"Nichibutsu", "Nekketsu Grand-Prix Gal (Japan)" )
-	public static GameDriver driver_mjgottsu	   = new GameDriver("1991"	,"mjgottsu"	,"nbmj9195.java"	,rom_mjgottsu,null	,machine_driver_mjgottsu	,input_ports_mjgottsu	,init_mjgottsu	,ROT0	,	"Nichibutsu", "Mahjong Gottsu ee-kanji (Japan)" )
-	public static GameDriver driver_bakuhatu	   = new GameDriver("1991"	,"bakuhatu"	,"nbmj9195.java"	,rom_bakuhatu,driver_mjgottsu	,machine_driver_bakuhatu	,input_ports_bakuhatu	,init_bakuhatu	,ROT0	,	"Nichibutsu", "Mahjong Bakuhatsu Junjouden (Japan)" )
-	public static GameDriver driver_cmehyou	   = new GameDriver("1992"	,"cmehyou"	,"nbmj9195.java"	,rom_cmehyou,null	,machine_driver_cmehyou	,input_ports_cmehyou	,init_cmehyou	,ROT0	,	"Nichibutsu/Kawakusu", "Mahjong Circuit no Mehyou (Japan)" )
-	public static GameDriver driver_mjkoiura	   = new GameDriver("1992"	,"mjkoiura"	,"nbmj9195.java"	,rom_mjkoiura,null	,machine_driver_mjkoiura	,input_ports_mjkoiura	,init_mjkoiura	,ROT0	,	"Nichibutsu", "Mahjong Koi Uranai (Japan)" )
+	GAME( 1991, ngpgal,   0,        ngpgal,   ngpgal,   ngpgal,   ROT0, "Nichibutsu", "Nekketsu Grand-Prix Gal (Japan)" )
+	GAME( 1991, mjgottsu, 0,        mjgottsu, mjgottsu, mjgottsu, ROT0, "Nichibutsu", "Mahjong Gottsu ee-kanji (Japan)" )
+	GAME( 1991, bakuhatu, mjgottsu, bakuhatu, bakuhatu, bakuhatu, ROT0, "Nichibutsu", "Mahjong Bakuhatsu Junjouden (Japan)" )
+	GAME( 1992, cmehyou,  0,        cmehyou,  cmehyou,  cmehyou,  ROT0, "Nichibutsu/Kawakusu", "Mahjong Circuit no Mehyou (Japan)" )
+	GAME( 1992, mjkoiura, 0,        mjkoiura, mjkoiura, mjkoiura, ROT0, "Nichibutsu", "Mahjong Koi Uranai (Japan)" )
 	
-	public static GameDriver driver_mscoutm	   = new GameDriver("1994"	,"mscoutm"	,"nbmj9195.java"	,rom_mscoutm,null	,machine_driver_mscoutm	,input_ports_mscoutm	,init_mscoutm	,ROT0	,	"SPHINX/AV JAPAN", "Mahjong Scout Man (Japan)" )
-	public static GameDriver driver_imekura	   = new GameDriver("1994"	,"imekura"	,"nbmj9195.java"	,rom_imekura,null	,machine_driver_imekura	,input_ports_imekura	,init_imekura	,ROT0	,	"SPHINX/AV JAPAN", "Imekura Mahjong (Japan)" )
-	public static GameDriver driver_mjegolf	   = new GameDriver("1994"	,"mjegolf"	,"nbmj9195.java"	,rom_mjegolf,null	,machine_driver_mjegolf	,input_ports_mjegolf	,init_mjegolf	,ROT0	,	"FUJIC/AV JAPAN", "Mahjong Erotica Golf (Japan)" )
+	GAME( 1994, mscoutm,  0,        mscoutm,  mscoutm,  mscoutm,  ROT0, "SPHINX/AV JAPAN", "Mahjong Scout Man (Japan)" )
+	GAME( 1994, imekura,  0,        imekura,  imekura,  imekura,  ROT0, "SPHINX/AV JAPAN", "Imekura Mahjong (Japan)" )
+	GAME( 1994, mjegolf,  0,        mjegolf,  mjegolf,  mjegolf,  ROT0, "FUJIC/AV JAPAN", "Mahjong Erotica Golf (Japan)" )
 }

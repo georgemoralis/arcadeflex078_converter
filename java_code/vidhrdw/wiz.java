@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,9 +42,8 @@ public class wiz
 	static int palette_bank;
 	
 	
-	public static VideoStartHandlerPtr video_start_wiz  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_generic() != 0)
+	public static VideoStartHandlerPtr video_start_wiz  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_generic.handler())
 			return 1;
 	
 		state_save_register_UINT8("wiz", 0, "char_bank",   char_bank,   2);
@@ -69,8 +68,7 @@ public class wiz
 	  bit 0 -- 1  kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_wiz  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wiz  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -101,8 +99,7 @@ public class wiz
 		}
 	} };
 	
-	public static WriteHandlerPtr wiz_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 1) && wiz_attributesram[offset] != data)
 		{
 			int i;
@@ -117,8 +114,7 @@ public class wiz
 		wiz_attributesram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr wiz_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palbank[offset] != (data & 1))
 		{
 			palbank[offset] = data & 1;
@@ -128,13 +124,11 @@ public class wiz
 		}
 	} };
 	
-	public static WriteHandlerPtr wiz_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bgpen = data;
 	} };
 	
-	public static WriteHandlerPtr wiz_char_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_char_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (char_bank[offset] != (data & 1))
 		{
 			char_bank[offset] = data & 1;
@@ -142,8 +136,7 @@ public class wiz
 		}
 	} };
 	
-	public static WriteHandlerPtr wiz_flipx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_flipx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (flipx != data)
 	    {
 			flipx = data;
@@ -153,8 +146,7 @@ public class wiz
 	} };
 	
 	
-	public static WriteHandlerPtr wiz_flipy_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_flipy_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (flipy != data)
 	    {
 			flipy = data;
@@ -177,7 +169,7 @@ public class wiz
 			sx = offs % 32;
 			sy = offs / 32;
 	
-			if (colortype != 0)
+			if (colortype)
 			{
 				col = (wiz_attributesram[2 * sx + 1] & 0x07);
 			}
@@ -187,19 +179,19 @@ public class wiz
 			}
 	
 			scroll = (8*sy + 256 - wiz_attributesram[2 * sx]) % 256;
-			if (flipy != 0)
+			if (flipy)
 			{
 			   scroll = (248 - scroll) % 256;
 			}
-			if (flipx != 0) sx = 31 - sx;
+			if (flipx) sx = 31 - sx;
 	
 	
-			drawgfx(bitmap,Machine.gfx[bank],
+			drawgfx(bitmap,Machine->gfx[bank],
 				videoram.read(offs),
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -216,7 +208,7 @@ public class wiz
 			sx = offs % 32;
 			sy = offs / 32;
 	
-			if (colortype != 0)
+			if (colortype)
 			{
 				col = (wiz_attributesram2[2 * sx + 1] & 0x07);
 			}
@@ -226,19 +218,19 @@ public class wiz
 			}
 	
 			scroll = (8*sy + 256 - wiz_attributesram2[2 * sx]) % 256;
-			if (flipy != 0)
+			if (flipy)
 			{
 			   scroll = (248 - scroll) % 256;
 			}
-			if (flipx != 0) sx = 31 - sx;
+			if (flipx) sx = 31 - sx;
 	
 	
-			drawgfx(bitmap,Machine.gfx[char_bank[1]],
+			drawgfx(bitmap,Machine->gfx[char_bank[1]],
 				wiz_videoram2[offs],
 				col + 8 * palette_bank,
 				flipx,flipy,
 				8*sx,scroll,
-				Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -257,10 +249,10 @@ public class wiz
 	
 			if (!sx || !sy) continue;
 	
-			if (flipx != 0) sx = 240 - sx;
-			if (flipy == 0) sy = 240 - sy;
+			if ( flipx) sx = 240 - sx;
+			if (NOT(flipy)) sy = 240 - sy;
 	
-			drawgfx(bitmap,Machine.gfx[bank],
+			drawgfx(bitmap,Machine->gfx[bank],
 					sprite_ram[offs + 1],
 					(sprite_ram[offs + 2] & 0x07) + 8 * palette_bank,
 					flipx,flipy,
@@ -277,8 +269,7 @@ public class wiz
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kungfut  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[bgpen],Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0] , 0);
 		draw_foreground(bitmap, 0);
@@ -286,8 +277,7 @@ public class wiz
 		draw_sprites(bitmap, spriteram  , 5, Machine.visible_area);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wiz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int bank;
 		const struct rectangle* visible_area;
 	
@@ -304,8 +294,7 @@ public class wiz
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_stinger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[bgpen],Machine.visible_area);
 		draw_background(bitmap, 2 + char_bank[0], 1);
 		draw_foreground(bitmap, 1);

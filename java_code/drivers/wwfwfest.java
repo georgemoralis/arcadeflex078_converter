@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -196,8 +196,7 @@ public class wwfwfest
 	
 	/*- Sound Related (from dd3) -*/
 	
-	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	} };
 	
@@ -213,7 +212,7 @@ public class wwfwfest
 	 There are 4 players, 2 sets of dipswitches and 2 misc
 	*******************************************************************************/
 	
-	static InputPortPtr input_ports_wwfwfest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wwfwfest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wwfwfest )
 		PORT_START(); 	/* Player 1 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -377,12 +376,12 @@ public class wwfwfest
 	 Interrupt Function
 	*******************************************************************************/
 	
-	public static InterruptHandlerPtr wwfwfest_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr wwfwfest_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops() == 0 )
 			cpu_set_irq_line(0, 3, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE);
-	} };
+	}
 	
 	/*******************************************************************************
 	 Sound Stuff..
@@ -399,7 +398,7 @@ public class wwfwfest
 	{
 		1,			/* 1 chip */
 		3579545,
-		{ YM3012_VOL(45,MIXER_PAN_LEFT,45,MIXER_PAN_RIGHT) },
+		{ YM3012_VOL(45,MIXER_PAN_LEFT,45,MIXER_PAN_RIGHT) } };,
 		{ dd3_ymirq_handler }
 	};
 	
@@ -411,8 +410,7 @@ public class wwfwfest
 		{ 90 }
 	};
 	
-	public static VideoEofHandlerPtr video_eof_wwfwfest  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_wwfwfest  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
@@ -420,8 +418,7 @@ public class wwfwfest
 	 Machine Driver(s)
 	*******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wwfwfest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wwfwfest )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 24 crystal, 12 rated chip */
@@ -449,9 +446,7 @@ public class wwfwfest
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************
 	 Rom Loaders / Game Drivers
@@ -575,7 +570,7 @@ public class wwfwfest
 		ROM_LOAD( "wf_02.rom",    0x00000, 0x40000, CRC(82ed7155) SHA1(b338e1150ffe3277c11d4d6e801a7d3bd7c58492) ) /* 2,3 */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_wwfwfest	   = new GameDriver("1991"	,"wwfwfest"	,"wwfwfest.java"	,rom_wwfwfest,null	,machine_driver_wwfwfest	,input_ports_wwfwfest	,null	,ROT0	,	"Technos Japan", "WWF WrestleFest (US)" )
-	public static GameDriver driver_wwfwfsta	   = new GameDriver("1991"	,"wwfwfsta"	,"wwfwfest.java"	,rom_wwfwfsta,driver_wwfwfest	,machine_driver_wwfwfest	,input_ports_wwfwfest	,null	,ROT0	,	"Technos Japan (Tecmo license)", "WWF WrestleFest (US Tecmo)" )
-	public static GameDriver driver_wwfwfstj	   = new GameDriver("1991"	,"wwfwfstj"	,"wwfwfest.java"	,rom_wwfwfstj,driver_wwfwfest	,machine_driver_wwfwfest	,input_ports_wwfwfest	,null	,ROT0	,	"Technos Japan", "WWF WrestleFest (Japan)" )
+	GAME( 1991, wwfwfest, 0,        wwfwfest, wwfwfest, 0, ROT0, "Technos Japan", "WWF WrestleFest (US)" )
+	GAME( 1991, wwfwfsta, wwfwfest, wwfwfest, wwfwfest, 0, ROT0, "Technos Japan (Tecmo license)", "WWF WrestleFest (US Tecmo)" )
+	GAME( 1991, wwfwfstj, wwfwfest, wwfwfest, wwfwfest, 0, ROT0, "Technos Japan", "WWF WrestleFest (Japan)" )
 }

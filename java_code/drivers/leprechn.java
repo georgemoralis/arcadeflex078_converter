@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -79,7 +79,7 @@ public class leprechn
 	};
 	
 	
-	static InputPortPtr input_ports_leprechn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_leprechn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( leprechn )
 	    // All of these ports are read indirectly through a VIA mapped at 0x2800
 	    PORT_START();       /* Input Port 0 */
 	    PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_TILT );// This is called "Slam" in the game
@@ -171,8 +171,7 @@ public class leprechn
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_leprechn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( leprechn )
 	
 		/* basic machine hardware */
 		// A good test to verify that the relative CPU speeds of the main
@@ -202,9 +201,7 @@ public class leprechn
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -245,6 +242,6 @@ public class leprechn
 	
 	
 	
-	public static GameDriver driver_leprechn	   = new GameDriver("1982"	,"leprechn"	,"leprechn.java"	,rom_leprechn,null	,machine_driver_leprechn	,input_ports_leprechn	,init_leprechn	,ROT0	,	"Tong Electronic", "Leprechaun" )
-	public static GameDriver driver_potogold	   = new GameDriver("1982"	,"potogold"	,"leprechn.java"	,rom_potogold,driver_leprechn	,machine_driver_leprechn	,input_ports_leprechn	,init_leprechn	,ROT0	,	"GamePlan", "Pot of Gold" )
+	GAME( 1982, leprechn, 0,        leprechn, leprechn, leprechn, ROT0, "Tong Electronic", "Leprechaun" )
+	GAME( 1982, potogold, leprechn, leprechn, leprechn, leprechn, ROT0, "GamePlan", "Pot of Gold" )
 }

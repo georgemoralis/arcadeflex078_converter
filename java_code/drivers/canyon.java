@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -51,8 +51,7 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_canyon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_canyon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00); /* BLACK */
 		palette_set_color(1, 0xff, 0xff, 0xff); /* WHITE */
 		palette_set_color(2, 0x80, 0x80, 0x80); /* GREY  */
@@ -70,8 +69,7 @@ public class canyon
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr canyon_switches_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr canyon_switches_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		if ((readinputport(2) >> (offset & 7)) & 1)
@@ -87,14 +85,12 @@ public class canyon
 	} };
 	
 	
-	public static ReadHandlerPtr canyon_options_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr canyon_options_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(0) >> (2 * (~offset & 3))) & 3;
 	} };
 	
 	
-	public static ReadHandlerPtr canyon_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr canyon_wram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset];
 	} };
 	
@@ -106,38 +102,32 @@ public class canyon
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr canyon_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset & 0x01, offset & 0x02);
 	} };
 	
 	
-	public static WriteHandlerPtr canyon_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(offset & 0x01, data & 0x0f);
 	} };
 	
 	
-	public static WriteHandlerPtr canyon_explode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_explode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(6, data / 16);
 	} };
 	
 	
-	public static WriteHandlerPtr canyon_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(4 + (offset & 0x01), !(offset & 0x02));
 	} };
 	
 	
-	public static WriteHandlerPtr canyon_whistle_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_whistle_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(2 + (offset & 0x01), (offset & 0x02) >> 1);
 	} };
 	
 	
-	public static WriteHandlerPtr canyon_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset] = data;
 	} };
 	
@@ -186,7 +176,7 @@ public class canyon
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_canyon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_canyon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( canyon )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x03, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -469,8 +459,7 @@ public class canyon
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_canyon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( canyon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -495,9 +484,7 @@ public class canyon
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, canyon_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -554,6 +541,6 @@ public class canyon
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_canyon	   = new GameDriver("1977"	,"canyon"	,"canyon.java"	,rom_canyon,null	,machine_driver_canyon	,input_ports_canyon	,null	,ROT0	,	"Atari", "Canyon Bomber" )
-	public static GameDriver driver_canyonp	   = new GameDriver("1977"	,"canyonp"	,"canyon.java"	,rom_canyonp,driver_canyon	,machine_driver_canyon	,input_ports_canyon	,null	,ROT0	,	"Atari", "Canyon Bomber (prototype)" )
+	GAME( 1977, canyon,  0,      canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber" )
+	GAME( 1977, canyonp, canyon, canyon, canyon, 0, ROT0, "Atari", "Canyon Bomber (prototype)" )
 }

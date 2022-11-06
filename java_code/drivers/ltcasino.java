@@ -14,7 +14,7 @@ etc.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,25 +39,22 @@ public class ltcasino
 		SET_TILE_INFO(0,tileno,colour,0)
 	}
 	
-	VIDEO_START(ltcasino)
-	{
+	public static VideoStartHandlerPtr video_start_ltcasino  = new VideoStartHandlerPtr() { public int handler(){
 		ltcasino_tilemap = tilemap_create(get_ltcasino_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,64,32);
 		
-		if (ltcasino_tilemap == 0)
+		if( !ltcasino_tilemap )
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
-	public static WriteHandlerPtr ltcasino_tile_num_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ltcasino_tile_num_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ltcasino_tile_num_ram[offset] = data;
 		tilemap_mark_tile_dirty(ltcasino_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr ltcasino_tile_atr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ltcasino_tile_atr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ltcasino_tile_atr_ram[offset] = data;
 		tilemap_mark_tile_dirty(ltcasino_tilemap,offset);
 	} };
@@ -80,7 +77,7 @@ public class ltcasino
 		new Memory_ReadAddress( 0xec10, 0xec10, input_port_4_r ),
 		new Memory_ReadAddress( 0xec12, 0xec12, input_port_5_r ),
 		new Memory_ReadAddress( 0xec20, 0xec20, AY8910_read_port_0_r ),
-		new Memory_ReadAddress( 0xec21, 0xec21, input_port_6_r ), //ltcasino . pc: F3F3 (A in service) and F3FD (B in service)
+		new Memory_ReadAddress( 0xec21, 0xec21, input_port_6_r ), //ltcasino -> pc: F3F3 (A in service) and F3FD (B in service)
 		new Memory_ReadAddress( 0xec3e, 0xec3e, MRA_NOP ), //not used
 	
 		new Memory_ReadAddress( 0xf000, 0xffff, MRA_ROM ),
@@ -106,7 +103,7 @@ public class ltcasino
 	};
 	
 	
-	static InputPortPtr input_ports_ltcasino = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ltcasino = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ltcasino )
 		PORT_START();  /* Q in service */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );//or start2?
 		PORT_DIPNAME( 0x02, 0x00, DEF_STR( "Unknown") );
@@ -293,7 +290,7 @@ public class ltcasino
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ltcasin2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ltcasin2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ltcasin2 )
 		PORT_START();  /* Q in service */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );//start?
 		PORT_DIPNAME( 0x02, 0x00, DEF_STR( "Unknown") );
@@ -505,10 +502,9 @@ public class ltcasino
 	};
 	
 	
-	VIDEO_UPDATE(ltcasino)
-	{
+	public static VideoUpdateHandlerPtr video_update_ltcasino  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,ltcasino_tilemap,0,0);
-	}
+	} };
 	
 	static AY8910interface ay8910_interface = new AY8910interface
 	(
@@ -522,8 +518,7 @@ public class ltcasino
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_ltcasino = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ltcasino )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,2000000)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -544,9 +539,7 @@ public class ltcasino
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ltcasino = new RomLoadPtr(){ public void handler(){ 
@@ -576,6 +569,6 @@ public class ltcasino
 		ROM_LOAD( "lc2_rv.bin", 0x0000, 0x1000, CRC(84cbee7b) SHA1(742831d5ae0db6c7c644a18a837831ee0474d472) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ltcasino	   = new GameDriver("1982"	,"ltcasino"	,"ltcasino.java"	,rom_ltcasino,null	,machine_driver_ltcasino	,input_ports_ltcasino	,null	,ROT0	,	"Digital Controls Inc.", "Little Casino", GAME_NOT_WORKING )
-	public static GameDriver driver_ltcasin2	   = new GameDriver("1984"	,"ltcasin2"	,"ltcasino.java"	,rom_ltcasin2,null	,machine_driver_ltcasino	,input_ports_ltcasin2	,null	,ROT0	,	"Digital Controls Inc.", "Little Casino 2", GAME_NOT_WORKING )
+	GAMEX( 1982, ltcasino, 0, ltcasino, ltcasino, 0, ROT0, "Digital Controls Inc.", "Little Casino", GAME_NOT_WORKING )
+	GAMEX( 1984, ltcasin2, 0, ltcasino, ltcasin2, 0, ROT0, "Digital Controls Inc.", "Little Casino 2", GAME_NOT_WORKING )
 }

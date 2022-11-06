@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -38,7 +38,7 @@ public class phoenix
 	 *
 	 *		1D5 		 1Q1  2D4		2Q0  3D4	   3Q0	4D5 	 4Q1 4Q0
 	 *		+--+--+--+--+--+  +--+--+--+--+  +--+--+--+--+	+--+--+--+--+--+
-	 *	 +.| 0| 1| 2| 3| 4|.| 5| 6| 7| 8|.| 9|10|11|12|.|13|14|15|16|17|
+	 *	 +->| 0| 1| 2| 3| 4|->| 5| 6| 7| 8|->| 9|10|11|12|->|13|14|15|16|17|
 	 *	 |	+--+--+--+--+--+  +--+--+--+--+  +--+--+--+--+	+--+--+--+--+--+
 	 *	 |											 ____			  |  |
 	 *	 |											/	 |------------+  |
@@ -89,7 +89,7 @@ public class phoenix
 				VMAX*2/3/(0.693*R41*C18d)
 	        }
 		};
-		if (output != 0)
+		if( output )
 		{
 			if (level > VMAX*1/3)
 			{
@@ -139,7 +139,7 @@ public class phoenix
 		#define R43 570000
 		#define R44 570000
 	
-		if (output != 0)
+		if( output )
 		{
 			if (level > VMIN)
 			{
@@ -202,19 +202,19 @@ public class phoenix
 	        }
 	    }
 	
-	    if (vco2 != 0)
+	    if( vco2 )
 		{
 			#define C22 100.0e-6
 			#define R42 10000
 			#define R45 51000
 			#define R46 51000
 			#define RP	27777	/* R42+R46 parallel with R45 */
-			if (vco1 != 0)
+			if( vco1 )
 			{
 				/*		R42 10k
 				 * +5V -/\/\/------------+
 				 *			   5V		 |
-				 * +5V -/\/\/--+--/\/\/--+-. V/C
+				 * +5V -/\/\/--+--/\/\/--+--> V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -230,7 +230,7 @@ public class phoenix
 				/*		R42 10k
 				 *	0V -/\/\/------------+
 				 *			  2.7V		 |
-				 * +5V -/\/\/--+--/\/\/--+-. V/C
+				 * +5V -/\/\/--+--/\/\/--+--> V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -248,12 +248,12 @@ public class phoenix
 		}
 		else
 		{
-			if (vco1 != 0)
+			if( vco1 )
 			{
 				/*		R42 10k
 				 * +5V -/\/\/------------+
 				 *			  2.3V		 |
-				 *	0V -/\/\/--+--/\/\/--+-. V/C
+				 *	0V -/\/\/--+--/\/\/--+--> V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -273,7 +273,7 @@ public class phoenix
 				/*		R42 10k
 				 *	0V -/\/\/------------+
 				 *			   0V		 |
-				 *	0V -/\/\/--+--/\/\/--+-. V/C
+				 *	0V -/\/\/--+--/\/\/--+--> V/C
 				 *	   R45 51k | R46 51k
 				 *			  ---
 				 *			  --- 100u
@@ -331,7 +331,7 @@ public class phoenix
 		 *							 \ 100k
 		 *							 /
 		 * !bit4	| /|	R22 	 |
-		 * 0V/5V >--|< |---/\/\/-----+-------+--. V C7
+		 * 0V/5V >--|< |---/\/\/-----+-------+---> V C7
 		 *			| \|	47k 	 |		 |
 		 *			D4				 |		_|_
 		 *					   6.8u --- 	\ / D5
@@ -422,7 +422,7 @@ public class phoenix
 		#define R49 1000
 	    #define R51 330
 		#define R52 20000
-		if ((sound_latch_a & 0x40) != 0)
+		if( sound_latch_a & 0x40 )
 		{
 			if (level > VMIN)
 			{
@@ -466,7 +466,7 @@ public class phoenix
 	    #define R53 330
 		#define R54 47000
 	
-		if ((sound_latch_a & 0x80) != 0)
+		if( sound_latch_a & 0x80 )
 		{
 			if (level < VMAX)
 			{
@@ -531,7 +531,7 @@ public class phoenix
 			polyoffs = (polyoffs + n) & 0x3ffff;
 			polybit = (poly18[polyoffs>>5] >> (polyoffs & 31)) & 1;
 		}
-		if (polybit == 0)
+		if (!polybit)
 			sum += vc24;
 	
 		/* 400Hz crude low pass filter: this is only a guess!! */
@@ -541,7 +541,7 @@ public class phoenix
 			lowpass_counter += samplerate;
 			lowpass_polybit = polybit;
 		}
-		if (lowpass_polybit == 0)
+		if (!lowpass_polybit)
 			sum += vc25;
 	
 		return sum;
@@ -549,7 +549,7 @@ public class phoenix
 	
 	static void phoenix_sound_update(int param, INT16 *buffer, int length)
 	{
-		int samplerate = Machine.sample_rate;
+		int samplerate = Machine->sample_rate;
 	
 		while( length-- > 0 )
 		{
@@ -559,8 +559,7 @@ public class phoenix
 		}
 	}
 	
-	public static WriteHandlerPtr phoenix_sound_control_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phoenix_sound_control_a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == sound_latch_a )
 			return;
 	
@@ -568,21 +567,20 @@ public class phoenix
 		sound_latch_a = data;
 	
 		tone1_vco1_cap = (sound_latch_a >> 4) & 3;
-		if ((sound_latch_a & 0x20) != 0)
+		if( sound_latch_a & 0x20 )
 			tone1_level = VMAX * 10000 / (10000+10000);
 		else
 			tone1_level = VMAX;
 	} };
 	
-	public static WriteHandlerPtr phoenix_sound_control_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phoenix_sound_control_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == sound_latch_b )
 			return;
 	
 		stream_update(channel,0);
 		sound_latch_b = data;
 	
-		if ((sound_latch_b & 0x20) != 0)
+		if( sound_latch_b & 0x20 )
 			tone2_level = VMAX * 10 / 11;
 		else
 			tone2_level = VMAX;
@@ -598,7 +596,7 @@ public class phoenix
 	
 		poly18 = (UINT32 *)auto_malloc((1ul << (18-5)) * sizeof(UINT32));
 	
-		if (poly18 == 0)
+		if( !poly18 )
 			return 1;
 	
 	    shiftreg = 0;
@@ -616,7 +614,7 @@ public class phoenix
 			poly18[i] = bits;
 		}
 	
-		channel = stream_init("Custom", 50, Machine.sample_rate, 0, phoenix_sound_update);
+		channel = stream_init("Custom", 50, Machine->sample_rate, 0, phoenix_sound_update);
 		if( channel == -1 )
 			return 1;
 	

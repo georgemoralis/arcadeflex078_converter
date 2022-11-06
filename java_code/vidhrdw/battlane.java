@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,7 @@ public class battlane
 	        0x01    = Scroll MSB
 	*/
 	
-	public static WriteHandlerPtr battlane_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 		int bit0, bit1, bit2;
 	
@@ -59,18 +58,15 @@ public class battlane
 		palette_set_color(offset, r, g, b);
 	} };
 	
-	public static WriteHandlerPtr battlane_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, ((battlane_video_ctrl & 0x01) << 8) + data);
 	} };
 	
-	public static WriteHandlerPtr battlane_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, ((battlane_cpu_control & 0x01) << 8) + data);
 	} };
 	
-	public static WriteHandlerPtr battlane_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (battlane_tileram[offset] != data)
 		{
 		    battlane_tileram[offset] = data;
@@ -78,35 +74,32 @@ public class battlane
 		}
 	} };
 	
-	public static WriteHandlerPtr battlane_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    battlane_spriteram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr battlane_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i, orval;
 	
 	    orval = (~battlane_video_ctrl >> 1) & 0x07;
 	
-		if (orval == 0)
+		if (!orval)
 			orval = 7;
 	
 		for (i = 0; i < 8; i++)
 		{
 			if (data & 1 << i)
 			{
-				((UINT8 *)screen_bitmap.line[offset % 0x100])[(offset / 0x100) * 8 + i] |= orval;
+				((UINT8 *)screen_bitmap->line[offset % 0x100])[(offset / 0x100) * 8 + i] |= orval;
 			}
 			else
 			{
-				((UINT8 *)screen_bitmap.line[offset % 0x100])[(offset / 0x100) * 8 + i] &= ~orval;
+				((UINT8 *)screen_bitmap->line[offset % 0x100])[(offset / 0x100) * 8 + i] &= ~orval;
 			}
 		}
 	} };
 	
-	public static WriteHandlerPtr battlane_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		battlane_video_ctrl = data;
 	} };
 	
@@ -150,17 +143,16 @@ public class battlane
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_battlane  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battlane  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info_bg, battlane_tilemap_scan_rows_2x2,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
 		
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		screen_bitmap = auto_bitmap_alloc(32 * 8, 32 * 8);
 	
-		if (screen_bitmap == 0)
+		if (!screen_bitmap)
 			return 1;
 	
 		return 0;
@@ -189,7 +181,7 @@ public class battlane
 			code += 256 * ((attr >> 6) & 0x02);
 			code += 256 * ((attr >> 5) & 0x01);
 	
-			if ((attr & 0x01) != 0)
+			if (attr & 0x01)
 			{
 				color = (attr >> 3) & 0x01;
 	
@@ -199,7 +191,7 @@ public class battlane
 				flipx = attr & 0x04;
 				flipy = attr & 0x02;
 	
-				if (flip_screen == 0)
+				if (!flip_screen())
 	            {
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -207,24 +199,24 @@ public class battlane
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx, flipy,
 					sx, sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 	
-				if ((attr & 0x10) != 0)  /* Double Y direction */
+				if (attr & 0x10)  /* Double Y direction */
 				{
 					dy = flipy ? 16 : -16;
 	
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 						code + 1,
 						color,
 						flipx, flipy,
 						sx, sy + dy,
-						Machine.visible_area,
+						Machine->visible_area,
 						TRANSPARENCY_PEN, 0);
 				}
 			}
@@ -239,25 +231,24 @@ public class battlane
 		{
 			for (x = 0; x < 32 * 8; x++)
 			{
-				data = ((UINT8 *)screen_bitmap.line[y])[x];
+				data = ((UINT8 *)screen_bitmap->line[y])[x];
 	
-				if (data != 0)
+				if (data)
 				{
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
-						plot_pixel(bitmap, 255 - x, 255 - y, Machine.pens[data]);
+						plot_pixel(bitmap, 255 - x, 255 - y, Machine->pens[data]);
 					}
 					else
 					{
-						plot_pixel(bitmap, x, y, Machine.pens[data]);
+						plot_pixel(bitmap, x, y, Machine->pens[data]);
 					}
 				}
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_battlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_battlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_mark_all_tiles_dirty(bg_tilemap); // HACK
 	
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class hexion
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_hexion  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hexion  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,32);
 	
@@ -75,15 +74,14 @@ public class hexion
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr hexion_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hexion_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1) + 0x10000;
 	
 		/* bits 0-3 select ROM bank */
 		cpu_setbank(1,rom + 0x2000 * (data & 0x0f));
 	
 		/* does bit 6 trigger the 052591? */
-		if ((data & 0x40) != 0)
+		if (data & 0x40)
 		{
 			int bank = unkram[0]&1;
 			memset(vram[bank],unkram[1],0x2000);
@@ -93,14 +91,13 @@ public class hexion
 		pmcbank = (data & 0x80) >> 7;
 	
 		/* other bits unknown */
-	if ((data & 0x30) != 0)
+	if (data & 0x30)
 		usrintf_showmessage("bankswitch %02x",data&0xf0);
 	
 	//logerror("%04x: bankswitch_w %02x\n",activecpu_get_pc(),data);
 	} };
 	
-	public static ReadHandlerPtr hexion_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hexion_bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (gfxrom_select && offset < 0x1000)
 		{
 			return memory_region(REGION_GFX1)[((gfxrom_select & 0x7f) << 12) + offset];
@@ -120,8 +117,7 @@ public class hexion
 		}
 	} };
 	
-	public static WriteHandlerPtr hexion_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hexion_bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bankctrl == 3 && offset == 0 && (data & 0xfe) == 0)
 		{
 	//logerror("%04x: bankedram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
@@ -129,7 +125,7 @@ public class hexion
 		}
 		else if (bankctrl == 0)
 		{
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 	//logerror("%04x: bankedram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
 				if (vram[rambank][offset] != data)
@@ -143,7 +139,7 @@ public class hexion
 		}
 		else if (bankctrl == 2 && offset < 0x800)
 		{
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 	//logerror("%04x: unkram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
 				unkram[offset] = data;
@@ -155,14 +151,12 @@ public class hexion
 	logerror("%04x: bankedram_w offset %04x, data %02x, bankctrl = %02x\n",activecpu_get_pc(),offset,data,bankctrl);
 	} };
 	
-	public static WriteHandlerPtr hexion_bankctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hexion_bankctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: bankctrl_w %02x\n",activecpu_get_pc(),data);
 		bankctrl = data;
 	} };
 	
-	public static WriteHandlerPtr hexion_gfxrom_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hexion_gfxrom_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: gfxrom_select_w %02x\n",activecpu_get_pc(),data);
 		gfxrom_select = data;
 	} };
@@ -175,8 +169,7 @@ public class hexion
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hexion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hexion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,tilemap[1],0,0);
 		tilemap_draw(bitmap,cliprect,tilemap[0],0,0);
 	} };

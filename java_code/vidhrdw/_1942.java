@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class _1942
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_1942  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_1942  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -136,8 +135,7 @@ public class _1942
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_1942  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_1942  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,16);
 	
@@ -156,21 +154,18 @@ public class _1942
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr c1942_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		c1942_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr c1942_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		c1942_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,(offset & 0x0f) | ((offset >> 1) & 0x01f0));
 	} };
 	
 	
-	public static WriteHandlerPtr c1942_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (c1942_palette_bank != data)
 		{
 			c1942_palette_bank = data;
@@ -178,8 +173,7 @@ public class _1942
 		}
 	} };
 	
-	public static WriteHandlerPtr c1942_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
@@ -187,8 +181,7 @@ public class _1942
 	} };
 	
 	
-	public static WriteHandlerPtr c1942_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7: flip screen
 	       bit 4: cpu B reset
 		   bit 0: coin counter */
@@ -223,7 +216,7 @@ public class _1942
 			sx = spriteram.read(offs + 3)- 0x10 * (spriteram.read(offs + 1)& 0x10);
 			sy = spriteram.read(offs + 2);
 			dir = 1;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -236,7 +229,7 @@ public class _1942
 	
 			do
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code + i,col,
 						flip_screen(),flip_screen(),
 						sx,sy + 16 * i * dir,
@@ -249,8 +242,7 @@ public class _1942
 	
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_1942  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_1942  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);

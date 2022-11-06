@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class leprechn
 	
 	
 	/* RGBI palette. Is it correct? */
-	public static PaletteInitHandlerPtr palette_init_leprechn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_leprechn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 16; i++)
@@ -39,21 +38,19 @@ public class leprechn
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_leprechn  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_leprechn  = new VideoStartHandlerPtr() { public int handler(){
 		videoram_size[0] = Machine.drv.screen_width * Machine.drv.screen_height;
 	
 		/* allocate our own dirty buffer */
 		videoram = auto_malloc(videoram_size[0]);
-		if (videoram == 0)
+		if (!videoram)
 			return 1;
 	
 		return video_start_generic_bitmapped();
 	} };
 	
 	
-	public static WriteHandlerPtr leprechn_graphics_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leprechn_graphics_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    graphics_command = data;
 	} };
 	
@@ -65,13 +62,12 @@ public class leprechn
 	}
 	
 	
-	public static WriteHandlerPtr leprechn_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leprechn_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sx,sy;
 	
-		if (pending != 0)
+		if (pending)
 		{
-			plot_pixel.handler(tmpbitmap, x, y, Machine.pens[color]);
+			plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	        videoram.write(y * Machine->drv->screen_width + x,color);
 	
 	        pending = 0;
@@ -83,17 +79,17 @@ public class leprechn
 	
 	        color = data & 0x0f;
 	
-			if ((data & 0x10) != 0)
+			if (data & 0x10)
 			{
-				if ((data & 0x40) != 0)
+				if (data & 0x40)
 					x--;
 				else
 					x++;
 			}
 	
-			if ((data & 0x20) != 0)
+			if (data & 0x20)
 			{
-				if ((data & 0x80) != 0)
+				if (data & 0x80)
 					y--;
 				else
 					y++;
@@ -118,11 +114,11 @@ public class leprechn
 	
 	        memset(videoram, data, videoram_size[0]);
 	
-	        for (sx = 0; sx < Machine.drv.screen_width; sx++)
+	        for (sx = 0; sx < Machine->drv->screen_width; sx++)
 	        {
-		        for (sy = 0; sy < Machine.drv.screen_height; sy++)
+		        for (sy = 0; sy < Machine->drv->screen_height; sy++)
 		        {
-					plot_pixel.handler(tmpbitmap, sx, sy, Machine.pens[data]);
+					plot_pixel(tmpbitmap, sx, sy, Machine->pens[data]);
 				}
 			}
 	
@@ -140,8 +136,7 @@ public class leprechn
 	} };
 	
 	
-	public static ReadHandlerPtr leprechn_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leprechn_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return videoram.read(y * Machine->drv->screen_width + x);
 	} };
 }

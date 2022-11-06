@@ -28,7 +28,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 		[if we denote the three layers with 0-3 (0 being the backmost)
 		 and the sprite with S]
 
-		Sprite Priority			Order (back . front)
+		Sprite Priority			Order (back -> front)
 				0					S 0 1 2
 				1					0 S 1 2
 				2					0 1 S 2
@@ -38,7 +38,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -149,8 +149,7 @@ public class unico
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	public static VideoStartHandlerPtr video_start_unico  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_unico  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
 	
@@ -179,8 +178,7 @@ public class unico
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_zeropnt2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_zeropnt2  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info32_0,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,	16,16,	0x40, 0x40);
 	
@@ -270,12 +268,12 @@ public class unico
 			sx	=	(sx & 0x1ff) - (sx & 0x200);
 			sy	=	(sy & 0x1ff) - (sy & 0x200);
 	
-			if (flipx != 0)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
+			if (flipx)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
 			else		{	startx = sx;				endx = sx+dimx*16;	incx = +16;	}
 	
 			for (x = startx ; x != endx ; x += incx)
 			{
-				pdrawgfx(	bitmap, Machine.gfx[0],
+				pdrawgfx(	bitmap, Machine->gfx[0],
 							code++,
 							attr & 0x1f,
 							flipx, flipy,
@@ -323,12 +321,12 @@ public class unico
 			sx	=	(sx & 0x1ff) - (sx & 0x200);
 			sy	=	(sy & 0x1ff) - (sy & 0x200);
 	
-			if (flipx != 0)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
+			if (flipx)	{	startx = sx+(dimx-1)*16;	endx = sx-16;		incx = -16;	}
 			else		{	startx = sx;				endx = sx+dimx*16;	incx = +16;	}
 	
 			for (x = startx ; x != endx ; x += incx)
 			{
-				pdrawgfx(	bitmap, Machine.gfx[0],
+				pdrawgfx(	bitmap, Machine->gfx[0],
 							code++,
 							attr & 0x1f,
 							flipx, flipy,
@@ -349,8 +347,7 @@ public class unico
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_unico  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		tilemap_set_scrollx(tilemap_0, 0, *unico_scrollx_0);
@@ -378,15 +375,15 @@ public class unico
 		fillbitmap(bitmap,Machine.pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
+		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
 	
 		/* Sprites are drawn last, using pdrawgfx */
-		if ((layers_ctrl & 8) != 0)	unico_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 8)	unico_draw_sprites(bitmap,cliprect);
 	
 		/* Draw the gunsight for ligth gun games */
-		if (unico_has_lightgun != 0) {
+		if (unico_has_lightgun) {
 			draw_crosshair(bitmap,
 				readinputport(6)*384/256,
 				readinputport(5)*224/256,
@@ -399,8 +396,7 @@ public class unico
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zeropnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		tilemap_set_scrollx(tilemap_0, 0, unico_scroll32[0] >> 16);
@@ -428,15 +424,15 @@ public class unico
 		fillbitmap(bitmap,Machine.pens[0x1f00],cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,1);
+		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,tilemap_1,0,2);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,4);
 	
 		/* Sprites are drawn last, using pdrawgfx */
-		if ((layers_ctrl & 8) != 0)	unico_draw_sprites32(bitmap,cliprect);
+		if (layers_ctrl & 8)	unico_draw_sprites32(bitmap,cliprect);
 	
 		/* Draw the gunsight for ligth gun games */
-		if (unico_has_lightgun != 0) {
+		if (unico_has_lightgun) {
 			draw_crosshair(bitmap,
 				readinputport(6)*384/256,
 				readinputport(5)*224/256,

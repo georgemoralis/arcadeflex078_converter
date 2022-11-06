@@ -119,7 +119,7 @@ need to reproduce the $18141a calculations.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -205,13 +205,12 @@ public class undrfire
 		"0100110000",	/* lock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_undrfire  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_undrfire  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&undrfire_eeprom_interface);
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -248,12 +247,12 @@ public class undrfire
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32 != 0)	/* $500000 is watchdog */
+				if (ACCESSING_MSB32)	/* $500000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32 != 0)
+				if (ACCESSING_LSB32)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -266,7 +265,7 @@ public class undrfire
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32 != 0)
+				if (ACCESSING_MSB32)
 				{
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
@@ -345,13 +344,13 @@ public class undrfire
 	
 	static WRITE32_HANDLER( rotate_control_w )	/* only a guess that it's rotation */
 	{
-			if (ACCESSING_LSW32 != 0)
+			if (ACCESSING_LSW32)
 			{
 				undrfire_rotate_ctrl[port_sel] = data;
 				return;
 			}
 	
-			if (ACCESSING_MSW32 != 0)
+			if (ACCESSING_MSW32)
 			{
 				port_sel = (data &0x70000) >> 16;
 			}
@@ -445,7 +444,7 @@ public class undrfire
 				 INPUT PORTS (dips in eprom)
 	***********************************************************/
 	
-	static InputPortPtr input_ports_undrfire = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_undrfire = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( undrfire )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW,  IPT_UNKNOWN );
@@ -565,8 +564,7 @@ public class undrfire
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_undrfire  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_undrfire  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1,&RAM[0x80000]);
@@ -588,14 +586,12 @@ public class undrfire
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) },		/* master volume */
 	};
 	
-	public static InterruptHandlerPtr undrfire_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr undrfire_interrupt = new InterruptHandlerPtr() {public void handler(){
 		frame_counter^=1;
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_undrfire = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( undrfire )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)	/* 16 MHz */
@@ -625,9 +621,7 @@ public class undrfire
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -758,8 +752,7 @@ public class undrfire
 		return undrfire_ram[0x4f8/4];
 	}
 	
-	public static DriverInitHandlerPtr init_undrfire  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_undrfire  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX3);
 		int size=memory_region_length(REGION_GFX3);
@@ -790,7 +783,7 @@ public class undrfire
 	} };
 	
 	
-	public static GameDriver driver_undrfire	   = new GameDriver("1993"	,"undrfire"	,"undrfire.java"	,rom_undrfire,null	,machine_driver_undrfire	,input_ports_undrfire	,init_undrfire	,ROT0	,	"Taito Corporation Japan", "Under Fire (World)" )
-	public static GameDriver driver_undrfiru	   = new GameDriver("1993"	,"undrfiru"	,"undrfire.java"	,rom_undrfiru,driver_undrfire	,machine_driver_undrfire	,input_ports_undrfire	,init_undrfire	,ROT0	,	"Taito America Corporation", "Under Fire (US)" )
-	public static GameDriver driver_undrfirj	   = new GameDriver("1993"	,"undrfirj"	,"undrfire.java"	,rom_undrfirj,driver_undrfire	,machine_driver_undrfire	,input_ports_undrfire	,init_undrfire	,ROT0	,	"Taito Corporation", "Under Fire (Japan)" )
+	GAME( 1993, undrfire, 0,        undrfire, undrfire, undrfire, ROT0, "Taito Corporation Japan", "Under Fire (World)" )
+	GAME( 1993, undrfiru, undrfire, undrfire, undrfire, undrfire, ROT0, "Taito America Corporation", "Under Fire (US)" )
+	GAME( 1993, undrfirj, undrfire, undrfire, undrfire, undrfire, ROT0, "Taito Corporation", "Under Fire (Japan)" )
 }

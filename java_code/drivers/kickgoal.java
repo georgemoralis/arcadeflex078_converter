@@ -25,7 +25,7 @@ lev 7 : 0x7c : 0000 0000 - x
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,13 +55,12 @@ public class kickgoal
 		"*10011xxxx"	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_kickgoal  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0) EEPROM_save(file);
+	public static NVRAMHandlerPtr nvram_handler_kickgoal  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write) EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 		}
 	} };
 	
@@ -74,7 +73,7 @@ public class kickgoal
 	
 	static WRITE16_HANDLER( kickgoal_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			switch (offset)
 			{
@@ -121,7 +120,7 @@ public class kickgoal
 	
 	/* INPUT ports ***************************************************************/
 	
-	static InputPortPtr input_ports_kickgoal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kickgoal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kickgoal )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -213,8 +212,7 @@ public class kickgoal
 	
 	/* MACHINE drivers ***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_kickgoal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kickgoal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -240,9 +238,7 @@ public class kickgoal
 	
 		/* sound hardware */
 	//	MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Rom Loading ***************************************************************/
 	
@@ -266,8 +262,7 @@ public class kickgoal
 	
 	/* GAME drivers **************************************************************/
 	
-	public static DriverInitHandlerPtr init_kickgoal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kickgoal  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		/* fix "bug" that prevents game from writing to EEPROM */
@@ -275,5 +270,5 @@ public class kickgoal
 	} };
 	
 	
-	public static GameDriver driver_kickgoal	   = new GameDriver("1995"	,"kickgoal"	,"kickgoal.java"	,rom_kickgoal,null	,machine_driver_kickgoal	,input_ports_kickgoal	,init_kickgoal	,ROT0	,	"TCH", "Kick Goal", GAME_NO_SOUND )
+	GAMEX( 1995, kickgoal,0, kickgoal, kickgoal, kickgoal, ROT0, "TCH", "Kick Goal", GAME_NO_SOUND )
 }

@@ -1,16 +1,16 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class ninjakd2
 {
 	
-	#define COLORTABLE_START(gfxn,color)	Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + \
-						color * Machine.gfx[gfxn].color_granularity
-	#define GFX_COLOR_CODES(gfxn) 		Machine.gfx[gfxn].total_colors
-	#define GFX_ELEM_COLORS(gfxn) 		Machine.gfx[gfxn].color_granularity
+	#define COLORTABLE_START(gfxn,color)	Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + \
+						color * Machine->gfx[gfxn]->color_granularity
+	#define GFX_COLOR_CODES(gfxn) 		Machine->gfx[gfxn]->total_colors
+	#define GFX_ELEM_COLORS(gfxn) 		Machine->gfx[gfxn]->color_granularity
 	
 	unsigned char 	*ninjakd2_scrolly_ram;
 	unsigned char 	*ninjakd2_scrollx_ram;
@@ -28,8 +28,7 @@ public class ninjakd2
 	static int 		 bg_enable = 1;
 	static int 		 sp_overdraw = 0;
 	
-	public static VideoStartHandlerPtr video_start_ninjakd2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ninjakd2  = new VideoStartHandlerPtr() { public int handler(){
 		if ((bg_dirtybuffer = auto_malloc(1024)) == 0)
 			return 1;
 	
@@ -44,8 +43,7 @@ public class ninjakd2
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ninjakd2_background_videoram[offset] != data)
 		{
 			bg_dirtybuffer[offset >> 1] = 1;
@@ -53,31 +51,28 @@ public class ninjakd2
 		}
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ninjakd2_foreground_videoram[offset] != data)
 			ninjakd2_foreground_videoram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bg_enable!=data)
 		{
 			ninjakd2_bgenable_ram[offset] = data;
 			bg_enable = data;
-			if (bg_enable != 0)
+			if (bg_enable)
 			 memset(bg_dirtybuffer, 1, ninjakd2_backgroundram_size / 2);
 			else
-			 fillbitmap(bitmap_bg, Machine.pens[0],0);
+			 fillbitmap(bitmap_bg, Machine->pens[0],0);
 		}
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_sprite_overdraw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_sprite_overdraw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (sp_overdraw!=data)
 		{
 			ninjakd2_spoverdraw_ram[offset] = data;
-			fillbitmap(bitmap_sp,15,Machine.visible_area);
+			fillbitmap(bitmap_sp,15,Machine->visible_area);
 			sp_overdraw = data;
 		}
 	} };
@@ -104,12 +99,12 @@ public class ninjakd2
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
 	
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 							tile,
 							palette,
 							flipx,flipy,
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN, 15);
+							Machine->visible_area,TRANSPARENCY_PEN, 15);
 			}
 	
 		}
@@ -140,7 +135,7 @@ public class ninjakd2
 				flipx = hi & 0x10;
 				flipy = hi & 0x20;
 				palette = hi & 0x0f;
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						  tile,
 						  palette,
 						  flipx,flipy,
@@ -170,12 +165,12 @@ public class ninjakd2
 				flipx = spriteram.read(offs+2)& 0x10;
 				flipy = spriteram.read(offs+2)& 0x20;
 				palette = spriteram.read(offs+4)& 0x0f;
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 							tile,
 							palette,
 							flipx,flipy,
 							sx,sy,
-							Machine.visible_area,
+							Machine->visible_area,
 							TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -189,17 +184,16 @@ public class ninjakd2
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_ninjakd2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ninjakd2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx,scrolly;
 	
-		if (bg_enable != 0)
+		if (bg_enable)
 			ninjakd2_draw_background(bitmap_bg);
 	
 		scrollx = -((ninjakd2_scrollx_ram[0]+ninjakd2_scrollx_ram[1]*256) & 0x1FF);
 		scrolly = -((ninjakd2_scrolly_ram[0]+ninjakd2_scrolly_ram[1]*256) & 0x1FF);
 	
-		if (sp_overdraw != 0)	/* overdraw sprite mode */
+		if (sp_overdraw)	/* overdraw sprite mode */
 		{
 			ninjakd2_draw_sprites(bitmap_sp);
 			ninjakd2_draw_foreground(bitmap_sp);

@@ -33,7 +33,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,39 +53,37 @@ public class deniam
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(offset,(data >> 8) & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		}
 	}
 	
-	public static WriteHandlerPtr deniam16b_oki_rom_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deniam16b_oki_rom_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0,(data & 0x40) ? 0x40000 : 0x00000);
 	} };
 	
 	static WRITE16_HANDLER( deniam16c_oki_rom_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_set_bank_base(0,(data & 0x01) ? 0x40000 : 0x00000);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_deniam  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_deniam  = new MachineInitHandlerPtr() { public void handler(){
 		/* logicpr2 does not reset the bank base on startup */
 		OKIM6295_set_bank_base(0,0x00000);
 	} };
 	
 	static WRITE16_HANDLER( YM3812_control_port_0_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			YM3812_control_port_0_w(0,(data >> 8) & 0xff);
 	}
 	
 	static WRITE16_HANDLER( YM3812_write_port_0_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			YM3812_write_port_0_w(0,(data >> 8) & 0xff);
 	}
 	
@@ -179,7 +177,7 @@ public class deniam
 	
 	
 	
-	static InputPortPtr input_ports_karianx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_karianx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( karianx )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -236,7 +234,7 @@ public class deniam
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_logicpr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_logicpr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( logicpr2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -317,7 +315,7 @@ public class deniam
 	static void irqhandler(int linestate)
 	{
 		/* system 16c doesn't have the sound CPU */
-		if (Machine.drv.cpu[1].cpu_type)
+		if (Machine->drv->cpu[1].cpu_type)
 			cpu_set_irq_line(1,0,linestate);
 	}
 	
@@ -339,8 +337,7 @@ public class deniam
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_deniam16b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deniam16b )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,25000000/2)	/* ??? */
@@ -369,12 +366,9 @@ public class deniam
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_deniam16c = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deniam16c )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,25000000/2)	/* ??? */
@@ -399,9 +393,7 @@ public class deniam
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -497,8 +489,8 @@ public class deniam
 	
 	
 	
-	public static GameDriver driver_logicpro	   = new GameDriver("1996"	,"logicpro"	,"deniam.java"	,rom_logicpro,null	,machine_driver_deniam16b	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Logic Pro (Japan)" )
-	public static GameDriver driver_croquis	   = new GameDriver("1996"	,"croquis"	,"deniam.java"	,rom_croquis,driver_logicpro	,machine_driver_deniam16b	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Croquis (Germany)" )
-	public static GameDriver driver_karianx	   = new GameDriver("1996"	,"karianx"	,"deniam.java"	,rom_karianx,null	,machine_driver_deniam16b	,input_ports_karianx	,init_karianx	,ROT0	,	"Deniam", "Karian Cross (Rev. 1.0)" )
-	public static GameDriver driver_logicpr2	   = new GameDriver("1997"	,"logicpr2"	,"deniam.java"	,rom_logicpr2,null	,machine_driver_deniam16c	,input_ports_logicpr2	,init_logicpro	,ROT0	,	"Deniam", "Logic Pro 2 (Japan)", GAME_IMPERFECT_SOUND )
+	GAME( 1996, logicpro, 0,        deniam16b, logicpr2, logicpro, ROT0, "Deniam", "Logic Pro (Japan)" )
+	GAME( 1996, croquis,  logicpro, deniam16b, logicpr2, logicpro, ROT0, "Deniam", "Croquis (Germany)" )
+	GAME( 1996, karianx,  0,        deniam16b, karianx,  karianx,  ROT0, "Deniam", "Karian Cross (Rev. 1.0)" )
+	GAMEX(1997, logicpr2, 0,        deniam16c, logicpr2, logicpro, ROT0, "Deniam", "Logic Pro 2 (Japan)", GAME_IMPERFECT_SOUND )
 }

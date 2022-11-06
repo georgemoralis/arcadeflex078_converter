@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,7 @@ public class retofinv
 				((v & 0x80) >> 3) | ((v & 0x40) >> 1) | ((v & 0x20) << 1) | ((v & 0x10) << 3);
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_retofinv  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_retofinv  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -96,8 +95,7 @@ public class retofinv
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_retofinv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_retofinv  = new VideoStartHandlerPtr() { public int handler(){
 		if ((bg_dirtybuffer = auto_malloc(retofinv_videoram_size)) == 0)
 			return 1;
 	
@@ -109,61 +107,52 @@ public class retofinv
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr retofinv_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr retofinv_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data;
 		memset(bg_dirtybuffer,1,retofinv_videoram_size);
-		fillbitmap(bitmap_bg,Machine.pens[0],0);
+		fillbitmap(bitmap_bg,Machine->pens[0],0);
 	} };
 	
-	public static ReadHandlerPtr retofinv_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return retofinv_bg_videoram.read(offset);
+	public static ReadHandlerPtr retofinv_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return retofinv_bg_videoram[offset];
 	} };
 	
-	public static ReadHandlerPtr retofinv_fg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return retofinv_fg_videoram.read(offset);
+	public static ReadHandlerPtr retofinv_fg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return retofinv_fg_videoram[offset];
 	} };
 	
-	public static ReadHandlerPtr retofinv_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return retofinv_bg_colorram.read(offset);
+	public static ReadHandlerPtr retofinv_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return retofinv_bg_colorram[offset];
 	} };
 	
-	public static ReadHandlerPtr retofinv_fg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return retofinv_fg_colorram.read(offset);
+	public static ReadHandlerPtr retofinv_fg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return retofinv_fg_colorram[offset];
 	} };
 	
-	public static WriteHandlerPtr retofinv_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (retofinv_bg_videoram.read(offset)!= data)
+	public static WriteHandlerPtr retofinv_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (retofinv_bg_videoram[offset] != data)
 		{
 			bg_dirtybuffer[offset] = 1;
-			retofinv_bg_videoram.write(data,data);
+			retofinv_bg_videoram[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr retofinv_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (retofinv_fg_videoram.read(offset)!= data)
-			retofinv_fg_videoram.write(data,data);
+	public static WriteHandlerPtr retofinv_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (retofinv_fg_videoram[offset] != data)
+			retofinv_fg_videoram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr retofinv_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (retofinv_bg_colorram.read(offset)!= data)
+	public static WriteHandlerPtr retofinv_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (retofinv_bg_colorram[offset] != data)
 		{
 			bg_dirtybuffer[offset] = 1;
-			retofinv_bg_colorram.write(data,data);
+			retofinv_bg_colorram[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr retofinv_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (retofinv_fg_colorram.read(offset)!= data)
-			retofinv_fg_colorram.write(data,data);
+	public static WriteHandlerPtr retofinv_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (retofinv_fg_colorram[offset] != data)
+			retofinv_fg_colorram[offset] = data;
 	} };
 	
 	void retofinv_render_sprites(struct mame_bitmap *bitmap)
@@ -193,7 +182,7 @@ public class retofinv
 				tileofs2 = 2;
 				tileofs3 = 3;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					tileofs0 = 2;
 					tileofs2 = 0;
@@ -208,46 +197,46 @@ public class retofinv
 						     could it be Z80 bug ? */
 					if (tile==0x98) tile--;
 	
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 								tile,
 								palette,
 								flipx,flipy,
 								sx,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
-				if ((size & 4) != 0)
+				if (size & 4)
 				{
 					if ((size & 8) && (flipscreen)) sx-=16;
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 								tile+tileofs0,
 								palette,
 								flipx,flipy,
 								sx,sy+16,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 	
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 								tile+tileofs2,
 								palette,
 								flipx,flipy,
 								sx,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
-				if ((size & 8) != 0)
+				if (size & 8)
 				{
-					if (flipscreen != 0) sx+=32;
-					drawgfx(bitmap,Machine.gfx[2],
+					if (flipscreen) sx+=32;
+					drawgfx(bitmap,Machine->gfx[2],
 								tile+tileofs1,
 								palette,
 								flipx,flipy,
 								sx-16,sy+16,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 	
-					drawgfx(bitmap,Machine.gfx[2],
+					drawgfx(bitmap,Machine->gfx[2],
 								tile+tileofs3,
 								palette,
 								flipx,flipy,
 								sx-16,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -280,27 +269,27 @@ public class retofinv
 					sx = 31-x;
 					sy = 31-y;
 	
-					if (flipscreen != 0)
+					if (flipscreen)
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
 					}
 	
 					bg_dirtybuffer[offs] = 0;
-					tile = retofinv_bg_videoram.read(offs)+ 256 * bg_bank;
-					palette = retofinv_bg_colorram.read(offs)& 0x3f;
+					tile = retofinv_bg_videoram[offs] + 256 * bg_bank;
+					palette = retofinv_bg_colorram[offs] & 0x3f;
 	
-					drawgfx(bitmap_bg,Machine.gfx[1],
+					drawgfx(bitmap_bg,Machine->gfx[1],
 							tile,
 							palette,
 							flipscreen,flipscreen,
 							8*sx+16,8*sy,
-							Machine.visible_area,TRANSPARENCY_NONE,0);
+							Machine->visible_area,TRANSPARENCY_NONE,0);
 				}
 			}
 		}
 	
-		copybitmap(bitmap,bitmap_bg,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(bitmap,bitmap_bg,0,0,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	
@@ -320,22 +309,22 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram.read(offs);
+				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  Machine.visible_area,TRANSPARENCY_NONE,0);
+							  Machine->visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	
@@ -349,22 +338,22 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram.read(offs);
+				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  Machine.visible_area,TRANSPARENCY_PEN,0);
+							  Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	
@@ -378,22 +367,22 @@ public class retofinv
 	
 				flipx = flipy = 0;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 280 - sx;
 					sy = 248 - sy;
 					flipx = flipy = 1;
 				}
 	
-				tile = retofinv_fg_videoram.read(offs)+(retofinv_fg_char_bank[0]*256);
-				palette = retofinv_fg_colorram.read(offs);
+				tile = retofinv_fg_videoram[offs]+(retofinv_fg_char_bank[0]*256);
+				palette = retofinv_fg_colorram[offs];
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 							  tile,
 							  palette,
 							  flipx,flipy,
 							  sx,sy,
-							  Machine.visible_area,TRANSPARENCY_NONE,0);
+							  Machine->visible_area,TRANSPARENCY_NONE,0);
 			}
 		}
 	}
@@ -407,8 +396,7 @@ public class retofinv
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_retofinv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_retofinv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		retofinv_draw_background(bitmap);
 		retofinv_render_sprites(bitmap);
 		retofinv_draw_foreground(bitmap);

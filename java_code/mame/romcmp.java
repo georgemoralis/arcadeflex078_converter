@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -163,16 +163,16 @@ public class romcmp
 		int mask0,mask1;
 		int addrbit;
 	
-		if (file.buf == 0) return;
+		if (file->buf == 0) return;
 	
 		/* check for bad data lines */
 		mask0 = 0x0000;
 		mask1 = 0xffff;
 	
-		for (i = 0;i < file.size;i+=2)
+		for (i = 0;i < file->size;i+=2)
 		{
-			mask0 |= ((file.buf[i] << 8) | file.buf[i+1]);
-			mask1 &= ((file.buf[i] << 8) | file.buf[i+1]);
+			mask0 |= ((file->buf[i] << 8) | file->buf[i+1]);
+			mask1 &= ((file->buf[i] << 8) | file->buf[i+1]);
 			if (mask0 == 0xffff && mask1 == 0x0000) break;
 		}
 	
@@ -188,11 +188,11 @@ public class romcmp
 				bits = 8;
 			else bits = 16;
 	
-			printf("%-23s %-23s FIXED BITS (",side ? "" : file.name,side ? file.name : "");
+			printf("%-23s %-23s FIXED BITS (",side ? "" : file->name,side ? file->name : "");
 			for (i = 0;i < bits;i++)
 			{
 				if (~mask0 & 0x8000) printf("0");
-				else if ((mask1 & 0x8000) != 0) printf("1");
+				else if (mask1 & 0x8000) printf("1");
 				else printf("x");
 	
 				mask0 <<= 1;
@@ -209,30 +209,30 @@ public class romcmp
 	
 		addrbit = 1;
 		mask0 = 0;
-		while (addrbit <= file.size/2)
+		while (addrbit <= file->size/2)
 		{
-			for (i = 0;i < file.size;i++)
+			for (i = 0;i < file->size;i++)
 			{
-				if (file.buf[i] != file.buf[i ^ addrbit]) break;
+				if (file->buf[i] != file->buf[i ^ addrbit]) break;
 			}
 	
-			if (i == file.size)
+			if (i == file->size)
 				mask0 |= addrbit;
 	
 			addrbit <<= 1;
 		}
 	
-		if (mask0 != 0)
+		if (mask0)
 		{
-			if (mask0 == file.size/2)
-				printf("%-23s %-23s 1ST AND 2ND HALF IDENTICAL\n",side ? "" : file.name,side ? file.name : "");
+			if (mask0 == file->size/2)
+				printf("%-23s %-23s 1ST AND 2ND HALF IDENTICAL\n",side ? "" : file->name,side ? file->name : "");
 			else
 			{
-				printf("%-23s %-23s BADADDR",side ? "" : file.name,side ? file.name : "");
+				printf("%-23s %-23s BADADDR",side ? "" : file->name,side ? file->name : "");
 				for (i = 0;i < 24;i++)
 				{
-					if (file.size <= (1<<(23-i))) printf(" ");
-					else if ((mask0 & 0x800000) != 0) printf("-");
+					if (file->size <= (1<<(23-i))) printf(" ");
+					else if (mask0 & 0x800000) printf("-");
 					else printf("x");
 					mask0 <<= 1;
 				}
@@ -242,25 +242,25 @@ public class romcmp
 		}
 	
 		mask0 = 0x000000;
-		mask1 = file.size-1;
-		for (i = 0;i < file.size;i++)
+		mask1 = file->size-1;
+		for (i = 0;i < file->size;i++)
 		{
-			if (file.buf[i] != 0xff)
+			if (file->buf[i] != 0xff)
 			{
 				mask0 |= i;
 				mask1 &= i;
-				if (mask0 == file.size-1 && mask1 == 0x00) break;
+				if (mask0 == file->size-1 && mask1 == 0x00) break;
 			}
 		}
 	
-		if (mask0 != file.size-1 || mask1 != 0x00)
+		if (mask0 != file->size-1 || mask1 != 0x00)
 		{
-			printf("%-23s %-23s ",side ? "" : file.name,side ? file.name : "");
+			printf("%-23s %-23s ",side ? "" : file->name,side ? file->name : "");
 			for (i = 0;i < 24;i++)
 			{
-				if (file.size <= (1<<(23-i))) printf(" ");
+				if (file->size <= (1<<(23-i))) printf(" ");
 				else if (~mask0 & 0x800000) printf("1");
-				else if ((mask1 & 0x800000) != 0) printf("0");
+				else if (mask1 & 0x800000) printf("0");
 				else printf("x");
 				mask0 <<= 1;
 				mask1 <<= 1;
@@ -272,25 +272,25 @@ public class romcmp
 	
 	
 		mask0 = 0x000000;
-		mask1 = file.size-1;
-		for (i = 0;i < file.size;i++)
+		mask1 = file->size-1;
+		for (i = 0;i < file->size;i++)
 		{
-			if (file.buf[i] != 0x00)
+			if (file->buf[i] != 0x00)
 			{
 				mask0 |= i;
 				mask1 &= i;
-				if (mask0 == file.size-1 && mask1 == 0x00) break;
+				if (mask0 == file->size-1 && mask1 == 0x00) break;
 			}
 		}
 	
-		if (mask0 != file.size-1 || mask1 != 0x00)
+		if (mask0 != file->size-1 || mask1 != 0x00)
 		{
-			printf("%-23s %-23s ",side ? "" : file.name,side ? file.name : "");
+			printf("%-23s %-23s ",side ? "" : file->name,side ? file->name : "");
 			for (i = 0;i < 24;i++)
 			{
-				if (file.size <= (1<<(23-i))) printf(" ");
+				if (file->size <= (1<<(23-i))) printf(" ");
 				else if ((mask0 & 0x800000) == 0) printf("1");
-				else if ((mask1 & 0x800000) != 0) printf("0");
+				else if (mask1 & 0x800000) printf("0");
 				else printf("x");
 				mask0 <<= 1;
 				mask1 <<= 1;
@@ -302,26 +302,26 @@ public class romcmp
 	
 	
 		mask0 = 0xff;
-		for (i = 0;i < file.size/4 && mask0;i++)
+		for (i = 0;i < file->size/4 && mask0;i++)
 		{
-			if (file.buf[               2*i  ] != 0x00) mask0 &= ~0x01;
-			if (file.buf[               2*i  ] != 0xff) mask0 &= ~0x02;
-			if (file.buf[               2*i+1] != 0x00) mask0 &= ~0x04;
-			if (file.buf[               2*i+1] != 0xff) mask0 &= ~0x08;
-			if (file.buf[file.size/2 + 2*i  ] != 0x00) mask0 &= ~0x10;
-			if (file.buf[file.size/2 + 2*i  ] != 0xff) mask0 &= ~0x20;
-			if (file.buf[file.size/2 + 2*i+1] != 0x00) mask0 &= ~0x40;
-			if (file.buf[file.size/2 + 2*i+1] != 0xff) mask0 &= ~0x80;
+			if (file->buf[               2*i  ] != 0x00) mask0 &= ~0x01;
+			if (file->buf[               2*i  ] != 0xff) mask0 &= ~0x02;
+			if (file->buf[               2*i+1] != 0x00) mask0 &= ~0x04;
+			if (file->buf[               2*i+1] != 0xff) mask0 &= ~0x08;
+			if (file->buf[file->size/2 + 2*i  ] != 0x00) mask0 &= ~0x10;
+			if (file->buf[file->size/2 + 2*i  ] != 0xff) mask0 &= ~0x20;
+			if (file->buf[file->size/2 + 2*i+1] != 0x00) mask0 &= ~0x40;
+			if (file->buf[file->size/2 + 2*i+1] != 0xff) mask0 &= ~0x80;
 		}
 	
-		if ((mask0 & 0x01) != 0) printf("%-23s %-23s 1ST HALF = 00xx\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x02) != 0) printf("%-23s %-23s 1ST HALF = FFxx\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x04) != 0) printf("%-23s %-23s 1ST HALF = xx00\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x08) != 0) printf("%-23s %-23s 1ST HALF = xxFF\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x10) != 0) printf("%-23s %-23s 2ND HALF = 00xx\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x20) != 0) printf("%-23s %-23s 2ND HALF = FFxx\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x40) != 0) printf("%-23s %-23s 2ND HALF = xx00\n",side ? "" : file.name,side ? file.name : "");
-		if ((mask0 & 0x80) != 0) printf("%-23s %-23s 2ND HALF = xxFF\n",side ? "" : file.name,side ? file.name : "");
+		if (mask0 & 0x01) printf("%-23s %-23s 1ST HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x02) printf("%-23s %-23s 1ST HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x04) printf("%-23s %-23s 1ST HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x08) printf("%-23s %-23s 1ST HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x10) printf("%-23s %-23s 2ND HALF = 00xx\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x20) printf("%-23s %-23s 2ND HALF = FFxx\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x40) printf("%-23s %-23s 2ND HALF = xx00\n",side ? "" : file->name,side ? file->name : "");
+		if (mask0 & 0x80) printf("%-23s %-23s 2ND HALF = xxFF\n",side ? "" : file->name,side ? file->name : "");
 	}
 	
 	
@@ -332,12 +332,12 @@ public class romcmp
 			case MODE_A:
 			case MODE_NIB1:
 			case MODE_NIB2:
-				return file.size;
+				return file->size;
 			case MODE_12:
 			case MODE_22:
 			case MODE_E:
 			case MODE_O:
-				return file.size / 2;
+				return file->size / 2;
 			case MODE_14:
 			case MODE_24:
 			case MODE_34:
@@ -346,7 +346,7 @@ public class romcmp
 			case MODE_O12:
 			case MODE_E22:
 			case MODE_O22:
-				return file.size / 4;
+				return file->size / 4;
 			default:
 				return 0;
 		}
@@ -374,15 +374,15 @@ public class romcmp
 				*base = 1; *mask = 0xff; break;
 			case MODE_22:
 			case MODE_E22:
-				*base = file.size / 2; *mask = 0xff; break;
+				*base = file->size / 2; *mask = 0xff; break;
 			case MODE_O22:
-				*base = 1 + file.size / 2; *mask = 0xff; break;
+				*base = 1 + file->size / 2; *mask = 0xff; break;
 			case MODE_24:
-				*base = file.size / 4; *mask = 0xff; break;
+				*base = file->size / 4; *mask = 0xff; break;
 			case MODE_34:
-				*base = 2*file.size / 4; *mask = 0xff; break;
+				*base = 2*file->size / 4; *mask = 0xff; break;
 			case MODE_44:
-				*base = 3*file.size / 4; *mask = 0xff; break;
+				*base = 3*file->size / 4; *mask = 0xff; break;
 		}
 	}
 	
@@ -394,7 +394,7 @@ public class romcmp
 		int base1,base2,mult1,mult2,mask1,mask2;
 	
 	
-		if (file1.buf == 0 || file2.buf == 0) return 0.0;
+		if (file1->buf == 0 || file2->buf == 0) return 0.0;
 	
 		size1 = usedbytes(file1,mode1);
 		size2 = usedbytes(file2,mode2);
@@ -410,22 +410,22 @@ public class romcmp
 			{
 				/* normal compare */
 				for (i = 0;i < size1;i++)
-					if (file1.buf[base1 + mult1 * i] == file2.buf[base2 + mult2 * i]) match++;
+					if (file1->buf[base1 + mult1 * i] == file2->buf[base2 + mult2 * i]) match++;
 			}
 			else
 			{
 				/* nibble compare, abort if other half is not empty */
 				for (i = 0;i < size1;i++)
 				{
-					if (((file1.buf[base1 + mult1 * i] & ~mask1) != (0x00 & ~mask1) &&
-						 (file1.buf[base1 + mult1 * i] & ~mask1) != (0xff & ~mask1)) ||
-						((file2.buf[base1 + mult1 * i] & ~mask2) != (0x00 & ~mask2) &&
-						 (file2.buf[base1 + mult1 * i] & ~mask2) != (0xff & ~mask2)))
+					if (((file1->buf[base1 + mult1 * i] & ~mask1) != (0x00 & ~mask1) &&
+						 (file1->buf[base1 + mult1 * i] & ~mask1) != (0xff & ~mask1)) ||
+						((file2->buf[base1 + mult1 * i] & ~mask2) != (0x00 & ~mask2) &&
+						 (file2->buf[base1 + mult1 * i] & ~mask2) != (0xff & ~mask2)))
 					{
 						match = 0;
 						break;
 					}
-					if ((file1.buf[base1 + mult1 * i] & mask1) == (file2.buf[base2 + mult2 * i] & mask2)) match++;
+					if ((file1->buf[base1 + mult1 * i] & mask1) == (file2->buf[base2 + mult2 * i] & mask2)) match++;
 				}
 			}
 		}
@@ -440,18 +440,18 @@ public class romcmp
 		FILE *f = 0;
 	
 	
-		if (path != 0)
+		if (path)
 		{
 			char delim[2] = { PATH_DELIM, '\0' };
 			strcpy(fullname,path);
 			strcat(fullname,delim);
 		}
 		else fullname[0] = 0;
-		strcat(fullname,file.name);
+		strcat(fullname,file->name);
 	
-		if ((file.buf = malloc(file.size)) == 0)
+		if ((file->buf = malloc(file->size)) == 0)
 		{
-			printf("%s: out of memory!\n",file.name);
+			printf("%s: out of memory!\n",file->name);
 			return;
 		}
 	
@@ -461,7 +461,7 @@ public class romcmp
 			return;
 		}
 	
-		if (fread(file.buf,1,file.size,f) != file.size)
+		if (fread(file->buf,1,file->size,f) != file->size)
 		{
 			printf("%s: %s\n",fullname,strerror(errno));
 			fclose(f);
@@ -476,14 +476,14 @@ public class romcmp
 	
 	static void freefile(struct fileinfo *file)
 	{
-		free(file.buf);
-		file.buf = 0;
+		free(file->buf);
+		file->buf = 0;
 	}
 	
 	
 	static void printname(const struct fileinfo *file1,const struct fileinfo *file2,float score,int mode1,int mode2)
 	{
-		printf("%-12s %s %-12s %s ",file1 ? file1.name : "",modenames[mode1],file2 ? file2.name : "",modenames[mode2]);
+		printf("%-12s %s %-12s %s ",file1 ? file1->name : "",modenames[mode1],file2 ? file2->name : "",modenames[mode2]);
 		if (score == 0.0) printf("NO MATCH\n");
 		else if (score == 1.0) printf("IDENTICAL\n");
 		else printf("%3.6f%%\n",score*100);
@@ -508,23 +508,23 @@ public class romcmp
 	
 			/* load all files in directory */
 			dir = opendir(path);
-			if (dir != 0)
+			if (dir)
 			{
 				while((d = readdir(dir)) != NULL)
 				{
 					char buf[255+1];
 					struct stat st_file;
 	
-					sprintf(buf, "%s%c%s", path, PATH_DELIM, d.d_name);
+					sprintf(buf, "%s%c%s", path, PATH_DELIM, d->d_name);
 					if(stat(buf, &st_file) == 0 && S_ISREG(st_file.st_mode))
 					{
 						unsigned size = st_file.st_size;
 						while (size && (size & 1) == 0) size >>= 1;
 						if (size & ~1)
-							printf("%-23s %-23s ignored (not a ROM)\n",i ? "" : d.d_name,i ? d.d_name : "");
+							printf("%-23s %-23s ignored (not a ROM)\n",i ? "" : d->d_name,i ? d->d_name : "");
 						else
 						{
-							strcpy(files[i][found[i]].name,d.d_name);
+							strcpy(files[i][found[i]].name,d->d_name);
 							files[i][found[i]].size = st_file.st_size;
 							readfile(path,&files[i][found[i]]);
 							files[i][found[i]].listed = 0;
@@ -557,33 +557,33 @@ public class romcmp
 			{
 				int size;
 	
-				size = zipent.uncompressed_size;
+				size = zipent->uncompressed_size;
 				while (size && (size & 1) == 0) size >>= 1;
-				if (zipent.uncompressed_size == 0 || (size & ~1))
+				if (zipent->uncompressed_size == 0 || (size & ~1))
 					printf("%-23s %-23s ignored (not a ROM)\n",
-						i ? "" : zipent.name, i ? zipent.name : "");
+						i ? "" : zipent->name, i ? zipent->name : "");
 				else
 				{
 					struct fileinfo *file = &files[i][found[i]];
-					const char *delim = strrchr(zipent.name,'/');
+					const char *delim = strrchr(zipent->name,'/');
 	
-					if (delim != 0)
-						strcpy (file.name,delim+1);
+					if (delim)
+						strcpy (file->name,delim+1);
 					else
-						strcpy(file.name,zipent.name);
-					file.size = zipent.uncompressed_size;
-					if ((file.buf = malloc(file.size)) == 0)
-						printf("%s: out of memory!\n",file.name);
+						strcpy(file->name,zipent->name);
+					file->size = zipent->uncompressed_size;
+					if ((file->buf = malloc(file->size)) == 0)
+						printf("%s: out of memory!\n",file->name);
 					else
 					{
-						if (readuncompresszip(zip, zipent, (char *)file.buf) != 0)
+						if (readuncompresszip(zip, zipent, (char *)file->buf) != 0)
 						{
-							free(file.buf);
-							file.buf = 0;
+							free(file->buf);
+							file->buf = 0;
 						}
 					}
 	
-					file.listed = 0;
+					file->listed = 0;
 					if (found[i] >= MAX_FILES)
 					{
 						printf("%s: max of %d files exceeded\n",path,MAX_FILES);

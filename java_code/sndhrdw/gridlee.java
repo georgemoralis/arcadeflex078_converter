@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -68,18 +68,17 @@ public class gridlee
 	int gridlee_sh_start(const struct MachineSound *msound)
 	{
 		/* allocate the stream */
-		gridlee_stream = stream_init("Gridlee custom", 100, Machine.sample_rate, 0, gridlee_stream_update);
+		gridlee_stream = stream_init("Gridlee custom", 100, Machine->sample_rate, 0, gridlee_stream_update);
 	
-		if (Machine.sample_rate != 0)
-			freq_to_step = (double)(1 << 24) / (double)Machine.sample_rate;
+		if (Machine->sample_rate != 0)
+			freq_to_step = (double)(1 << 24) / (double)Machine->sample_rate;
 	
 		return 0;
 	}
 	
 	
 	
-	public static WriteHandlerPtr gridlee_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridlee_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	static UINT8 sound_data[24];
 	
 		stream_update(gridlee_stream, 0);
@@ -108,7 +107,7 @@ public class gridlee
 				break;
 			
 			case 0x08+0x08:
-				if (data != 0)
+				if (data)
 					tone_step = freq_to_step * (double)(data * 5);
 				else
 					tone_step = 0;
@@ -127,7 +126,7 @@ public class gridlee
 				break;
 				
 			case 0x0d+0x08:
-	//			if (data != 0)
+	//			if (data)
 	//				tone_step = freq_to_step * (double)(data * 11);
 	//			else
 	//				tone_step = 0;

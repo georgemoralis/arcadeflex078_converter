@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,8 +29,7 @@ public class zac2650
 	/* once it's workings are fully understood.                   */
 	/**************************************************************/
 	
-	public static WriteHandlerPtr tinvader_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tinvader_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -38,8 +37,7 @@ public class zac2650
 		}
 	} };
 	
-	public static WriteHandlerPtr zac_s2636_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zac_s2636_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (s2636ram[offset] != data)
 	    {
 			s2636ram[offset] = data;
@@ -47,14 +45,12 @@ public class zac2650
 	    }
 	} };
 	
-	public static ReadHandlerPtr zac_s2636_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zac_s2636_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(offset!=0xCB) return s2636ram[offset];
 	    else return CollisionSprite;
 	} };
 	
-	public static ReadHandlerPtr tinvader_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tinvader_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_0_r.handler(0) - CollisionBackground;
 	} };
 	
@@ -75,7 +71,7 @@ public class zac2650
 	
 	        /* Draw first sprite */
 	
-		    drawgfx(spritebitmap,Machine.gfx[expand],
+		    drawgfx(spritebitmap,Machine->gfx[expand],
 				    first * 2,
 				    0,
 				    0,0,
@@ -84,14 +80,14 @@ public class zac2650
 	
 	        /* Get fingerprint */
 	
-		    for (x = fx; x < fx + Machine.gfx[expand].width; x++)
+		    for (x = fx; x < fx + Machine->gfx[expand]->width; x++)
 		    {
-			    for (y = fy; y < fy + Machine.gfx[expand].height; y++)
+			    for (y = fy; y < fy + Machine->gfx[expand]->height; y++)
 	            {
-				    if ((x < Machine.visible_area.min_x) ||
-				        (x > Machine.visible_area.max_x) ||
-				        (y < Machine.visible_area.min_y) ||
-				        (y > Machine.visible_area.max_y))
+				    if ((x < Machine->visible_area.min_x) ||
+				        (x > Machine->visible_area.max_x) ||
+				        (y < Machine->visible_area.min_y) ||
+				        (y > Machine->visible_area.max_y))
 				    {
 					    continue;
 				    }
@@ -102,7 +98,7 @@ public class zac2650
 	
 	        /* Blackout second sprite */
 	
-		    drawgfx(spritebitmap,Machine.gfx[1],
+		    drawgfx(spritebitmap,Machine->gfx[1],
 				    second * 2,
 				    1,
 				    0,0,
@@ -111,14 +107,14 @@ public class zac2650
 	
 	        /* Remove fingerprint */
 	
-		    for (x = fx; x < fx + Machine.gfx[expand].width; x++)
+		    for (x = fx; x < fx + Machine->gfx[expand]->width; x++)
 		    {
-			    for (y = fy; y < fy + Machine.gfx[expand].height; y++)
+			    for (y = fy; y < fy + Machine->gfx[expand]->height; y++)
 	            {
-				    if ((x < Machine.visible_area.min_x) ||
-				        (x > Machine.visible_area.max_x) ||
-				        (y < Machine.visible_area.min_y) ||
-				        (y > Machine.visible_area.max_y))
+				    if ((x < Machine->visible_area.min_x) ||
+				        (x > Machine->visible_area.max_x) ||
+				        (y < Machine->visible_area.min_y) ||
+				        (y > Machine->visible_area.max_y))
 				    {
 					    continue;
 				    }
@@ -129,7 +125,7 @@ public class zac2650
 	
 	        /* Zero bitmap */
 	
-		    drawgfx(spritebitmap,Machine.gfx[expand],
+		    drawgfx(spritebitmap,Machine->gfx[expand],
 				    first * 2,
 				    1,
 				    0,0,
@@ -147,12 +143,11 @@ public class zac2650
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_tinvader  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tinvader  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 24, 24, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		if ((spritebitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
@@ -182,7 +177,7 @@ public class zac2650
 	    CollisionBackground = 0;	/* Read from 0x1e80 bit 7 */
 	
 		// for collision detection checking
-		copybitmap(tmpbitmap,bitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap(tmpbitmap,bitmap,0,0,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 	    for(offs=0;offs<0x50;offs+=0x10)
 	    {
@@ -197,30 +192,30 @@ public class zac2650
 	            if(dirtychar[spriteno])
 	            {
 	            	/* 16x8 version */
-		   			decodechar(Machine.gfx[1],spriteno,s2636ram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
+		   			decodechar(Machine->gfx[1],spriteno,s2636ram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
 	
 	                /* 16x16 version */
-	   				decodechar(Machine.gfx[2],spriteno,s2636ram,Machine.drv.gfxdecodeinfo[2].gfxlayout);
+	   				decodechar(Machine->gfx[2],spriteno,s2636ram,Machine->drv->gfxdecodeinfo[2].gfxlayout);
 	
 	                dirtychar[spriteno] = 0;
 	            }
 	
-	            /* Sprite.Background collision detection */
-				drawgfx(bitmap,Machine.gfx[expand],
+	            /* Sprite->Background collision detection */
+				drawgfx(bitmap,Machine->gfx[expand],
 					    spriteno,
 						1,
 					    0,0,
 					    bx,by,
 					    0, TRANSPARENCY_PEN, 0);
 	
-		        for (x = bx; x < bx + Machine.gfx[expand].width; x++)
+		        for (x = bx; x < bx + Machine->gfx[expand]->width; x++)
 		        {
-			        for (y = by; y < by + Machine.gfx[expand].height; y++)
+			        for (y = by; y < by + Machine->gfx[expand]->height; y++)
 	                {
-				        if ((x < Machine.visible_area.min_x) ||
-				            (x > Machine.visible_area.max_x) ||
-				            (y < Machine.visible_area.min_y) ||
-				            (y > Machine.visible_area.max_y))
+				        if ((x < Machine->visible_area.min_x) ||
+				            (x > Machine->visible_area.max_x) ||
+				            (y < Machine->visible_area.min_y) ||
+				            (y > Machine->visible_area.max_y))
 				        {
 					        continue;
 				        }
@@ -233,7 +228,7 @@ public class zac2650
 	                }
 		        }
 	
-				drawgfx(bitmap,Machine.gfx[expand],
+				drawgfx(bitmap,Machine->gfx[expand],
 					    spriteno,
 						0,
 					    0,0,
@@ -242,7 +237,7 @@ public class zac2650
 	        }
 	    }
 	
-	    /* Sprite.Sprite collision detection */
+	    /* Sprite->Sprite collision detection */
 	    CollisionSprite = 0;
 	//  if(SpriteCollision(0,1)) CollisionSprite |= 0x20;	/* Not Used */
 	    if(SpriteCollision(0,2)) CollisionSprite |= 0x10;
@@ -252,8 +247,7 @@ public class zac2650
 	//  if(SpriteCollision(2,4)) CollisionSprite |= 0x01;	/* Not Used */
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tinvader  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tinvader_draw_sprites(bitmap);
 	} };

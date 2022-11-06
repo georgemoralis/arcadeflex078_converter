@@ -344,7 +344,7 @@ the differences are.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -429,8 +429,7 @@ public class wgp
 	/* FWIW offset of 10000,10500 on ints can get CPUB obeying the
 	   first CPUA command the same frame; probably not necessary */
 	
-	public static InterruptHandlerPtr wgp_cpub_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr wgp_cpub_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, wgp_cpub_interrupt6);
 		cpu_set_irq_line(2, 4, HOLD_LINE);
 	} };
@@ -495,16 +494,16 @@ public class wgp
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x8) != 0)	/* pressing down */
+			if (fake & 0x8)	/* pressing down */
 				steer = 0x20;
 	
-			if ((fake & 0x4) != 0)	/* pressing up */
+			if (fake & 0x4)	/* pressing up */
 				steer = 0x60;
 	
-			if ((fake & 0x2) != 0)	/* pressing right */
+			if (fake & 0x2)	/* pressing right */
 				steer = 0x00;
 	
-			if ((fake & 0x1) != 0)	/* pressing left */
+			if (fake & 0x1)	/* pressing left */
 				steer = 0x80;
 		}
 	
@@ -565,8 +564,7 @@ public class wgp
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -784,7 +782,7 @@ public class wgp
 		PORT_DIPSETTING(    0x00, "8" );
 	
 	
-	static InputPortPtr input_ports_wgp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wgp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wgp )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Motor Test" );			// Only available in "test mode"
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -866,7 +864,7 @@ public class wgp
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'wgp', but different coinage */
-	static InputPortPtr input_ports_wgpj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wgpj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wgpj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Motor Test" );			// Only available in "test mode"
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -947,7 +945,7 @@ public class wgp
 		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_PLAYER2, 20, 10, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wgpjoy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wgpjoy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wgpjoy )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1011,7 +1009,7 @@ public class wgp
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'wgpj', but no "Motor Test" Dip Switch (DSWA 0) */
-	static InputPortPtr input_ports_wgp2 = new InputPortPtr(){ public void handler() { 	/* Wgp2 has no "lumps" ? */
+	static InputPortPtr input_ports_wgp2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wgp2 )	/* Wgp2 has no "lumps" ? */
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1176,8 +1174,7 @@ public class wgp
 	graphics glitches.
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wgp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wgp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -1209,13 +1206,10 @@ public class wgp
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wgp2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wgp2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -1247,9 +1241,7 @@ public class wgp
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1457,8 +1449,7 @@ public class wgp
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_wgp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wgp  = new DriverInitHandlerPtr() { public void handler(){
 	#if 0
 		/* Patch for coding error that causes corrupt data in
 		   sprite tilemapping area from $4083c0-847f */
@@ -1476,8 +1467,7 @@ public class wgp
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static DriverInitHandlerPtr init_wgp2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wgp2  = new DriverInitHandlerPtr() { public void handler(){
 		/* Code patches to prevent failure in memory checks */
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU3);
 		ROM[0x8008 / 2] = 0x0;
@@ -1488,10 +1478,10 @@ public class wgp
 	
 	/* Working Games with some graphics problems - e.g. missing rotation */
 	
-	public static GameDriver driver_wgp	   = new GameDriver("1989"	,"wgp"	,"wgp.java"	,rom_wgp,null	,machine_driver_wgp	,input_ports_wgp	,init_wgp	,ROT0	,	"Taito America Corporation", "World Grand Prix (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_wgpj	   = new GameDriver("1989"	,"wgpj"	,"wgp.java"	,rom_wgpj,driver_wgp	,machine_driver_wgp	,input_ports_wgpj	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_wgpjoy	   = new GameDriver("1989"	,"wgpjoy"	,"wgp.java"	,rom_wgpjoy,driver_wgp	,machine_driver_wgp	,input_ports_wgpjoy	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (joystick version set 1) (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_wgpjoya	   = new GameDriver("1989"	,"wgpjoya"	,"wgp.java"	,rom_wgpjoya,driver_wgp	,machine_driver_wgp	,input_ports_wgpjoy	,init_wgp	,ROT0	,	"Taito Corporation", "World Grand Prix (joystick version set 2) (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_wgp2	   = new GameDriver("1990"	,"wgp2"	,"wgp.java"	,rom_wgp2,driver_wgp	,machine_driver_wgp2	,input_ports_wgp2	,init_wgp2	,ROT0	,	"Taito Corporation", "World Grand Prix 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, wgp,      0,      wgp,    wgp,    wgp,    ROT0, "Taito America Corporation", "World Grand Prix (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, wgpj,     wgp,    wgp,    wgpj,   wgp,    ROT0, "Taito Corporation", "World Grand Prix (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, wgpjoy,   wgp,    wgp,    wgpjoy, wgp,    ROT0, "Taito Corporation", "World Grand Prix (joystick version set 1) (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, wgpjoya,  wgp,    wgp,    wgpjoy, wgp,    ROT0, "Taito Corporation", "World Grand Prix (joystick version set 2) (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1990, wgp2,     wgp,    wgp2,   wgp2,   wgp2,   ROT0, "Taito Corporation", "World Grand Prix 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
 }

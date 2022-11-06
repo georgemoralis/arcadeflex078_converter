@@ -6,7 +6,7 @@ Atari Wolf Pack (prototype) video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,16 +37,15 @@ public class wolfpack
 	static struct mame_bitmap* helper;
 	
 	
-	public static WriteHandlerPtr wolfpack_ship_size_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_ship_size_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 color;
 	
 		color = 0x48;
 	
-		if ((data & 0x10) != 0) color += 0x13;
-		if ((data & 0x20) != 0) color += 0x22;
-		if ((data & 0x40) != 0) color += 0x3A;
-		if ((data & 0x80) != 0) color += 0x48;
+		if (data & 0x10) color += 0x13;
+		if (data & 0x20) color += 0x22;
+		if (data & 0x40) color += 0x3A;
+		if (data & 0x80) color += 0x48;
 	
 		palette_set_color(3,
 			color,
@@ -62,54 +61,42 @@ public class wolfpack
 	} };
 	
 	
-	public static WriteHandlerPtr wolfpack_video_invert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_video_invert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_video_invert = data & 1;
 	} };
-	public static WriteHandlerPtr wolfpack_ship_reflect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_ship_reflect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_ship_reflect = data & 1;
 	} };
-	public static WriteHandlerPtr wolfpack_pt_pos_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_pt_pos_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_pt_pos_select = data & 1;
 	} };
-	public static WriteHandlerPtr wolfpack_pt_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_pt_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_pt_horz = data;
 	} };
-	public static WriteHandlerPtr wolfpack_pt_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_pt_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_pt_pic = data & 0x3f;
 	} };
-	public static WriteHandlerPtr wolfpack_ship_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_ship_h_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_ship_h = data;
 	} };
-	public static WriteHandlerPtr wolfpack_torpedo_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_torpedo_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_torpedo_pic = data;
 	} };
-	public static WriteHandlerPtr wolfpack_ship_h_precess_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_ship_h_precess_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_ship_h_precess = data & 0x3f;
 	} };
-	public static WriteHandlerPtr wolfpack_ship_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_ship_pic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_ship_pic = data & 0x0f;
 	} };
-	public static WriteHandlerPtr wolfpack_torpedo_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_torpedo_h_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_torpedo_h = data;
 	} };
-	public static WriteHandlerPtr wolfpack_torpedo_v_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_torpedo_v_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_torpedo_v = data;
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_wolfpack  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wolfpack  = new VideoStartHandlerPtr() { public int handler(){
 		UINT16 val = 0;
 	
 		int i;
@@ -165,7 +152,7 @@ public class wolfpack
 	
 		int chop = (scaler[wolfpack_ship_size] * wolfpack_ship_h_precess) >> 16;
 	
-		drawgfxzoom(bitmap, Machine.gfx[1],
+		drawgfxzoom(bitmap, Machine->gfx[1],
 			wolfpack_ship_pic,
 			0,
 			wolfpack_ship_reflect, 0,
@@ -184,7 +171,7 @@ public class wolfpack
 		int x;
 		int y;
 	
-		drawgfx(bitmap, Machine.gfx[3],
+		drawgfx(bitmap, Machine->gfx[3],
 			wolfpack_torpedo_pic,
 			0,
 			0, 0,
@@ -230,7 +217,7 @@ public class wolfpack
 			rect.max_x = 255;
 		}
 	
-		drawgfx(bitmap, Machine.gfx[2],
+		drawgfx(bitmap, Machine->gfx[2],
 			wolfpack_pt_pic,
 			0,
 			0, 0,
@@ -239,7 +226,7 @@ public class wolfpack
 			&rect,
 			TRANSPARENCY_PEN, 0);
 	
-		drawgfx(bitmap, Machine.gfx[2],
+		drawgfx(bitmap, Machine->gfx[2],
 			wolfpack_pt_pic,
 			0,
 			0, 0,
@@ -264,7 +251,7 @@ public class wolfpack
 	
 		for (y = rect.min_y; y <= rect.max_y; y++)
 		{
-			UINT16* p = bitmap.line[y];
+			UINT16* p = bitmap->line[y];
 	
 			for (x = rect.min_x; x <= rect.max_x; x++)
 			{
@@ -274,8 +261,7 @@ public class wolfpack
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_wolfpack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wolfpack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		int j;
 	
@@ -305,8 +291,7 @@ public class wolfpack
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_wolfpack  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_wolfpack  = new VideoEofHandlerPtr() { public void handler(){
 		struct rectangle rect;
 	
 		int x;
@@ -314,8 +299,8 @@ public class wolfpack
 	
 		rect.min_x = 0;
 		rect.min_y = 0;
-		rect.max_x = helper.width - 1;
-		rect.max_y = helper.height - 1;
+		rect.max_x = helper->width - 1;
+		rect.max_y = helper->height - 1;
 	
 		fillbitmap(helper, 0, &rect);
 	
@@ -328,9 +313,9 @@ public class wolfpack
 	
 			for (x = 2 * x1; x < 2 * x2; x++)
 			{
-				if (x < 0 || x >= helper.width)
+				if (x < 0 || x >= helper->width)
 					continue;
-				if (y < 0 || y >= helper.height)
+				if (y < 0 || y >= helper->height)
 					continue;
 	
 				if (read_pixel(helper, x, y))

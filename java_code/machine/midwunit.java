@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -77,7 +77,7 @@ public class midwunit
 	
 	WRITE16_HANDLER( midwunit_cmos_w )
 	{
-		if (cmos_write_enable != 0)
+		if (cmos_write_enable)
 		{
 			COMBINE_DATA(&((data16_t *)generic_nvram)[offset]);
 			cmos_write_enable = 0;
@@ -267,7 +267,7 @@ public class midwunit
 		int result = 0;
 	
 		/* convert to a byte offset */
-		if ((offset & 1) != 0)
+		if (offset & 1)
 			return 0;
 		offset /= 2;
 	
@@ -421,32 +421,27 @@ public class midwunit
 		midway_serial_pic_init(528);
 	}
 	
-	public static DriverInitHandlerPtr init_mk3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk3  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1069bd0, 0xff926810, 0x105dc10, 0x105dc30, 0x105dc50);
 	} };
 	
-	public static DriverInitHandlerPtr init_mk3r20  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk3r20  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1069bd0, 0xff926790, 0x105dc10, 0x105dc30, 0x105dc50);
 	} };
 	
-	public static DriverInitHandlerPtr init_mk3r10  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk3r10  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x1078e50, 0xff923e30, 0x105d490, 0x105d4b0, 0x105d4d0);
 	} };
 	
-	public static DriverInitHandlerPtr init_umk3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_umk3  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x106a0e0, 0xff9696a0, 0x105dc10, 0x105dc30, 0x105dc50);
 	} };
 	
-	public static DriverInitHandlerPtr init_umk3r11  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_umk3r11  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk3_common();
 		INSTALL_SPEEDUP_3(0x106a0e0, 0xff969680, 0x105dc10, 0x105dc30, 0x105dc50);
 	} };
@@ -454,8 +449,7 @@ public class midwunit
 	
 	/********************** 2 On 2 Open Ice Challenge **********************/
 	
-	public static DriverInitHandlerPtr init_openice  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_openice  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_wunit_generic();
 	
@@ -466,8 +460,7 @@ public class midwunit
 	
 	/********************** NBA Hangtime & NBA Maximum Hangtime **********************/
 	
-	public static DriverInitHandlerPtr init_nbahangt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nbahangt  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_wunit_generic();
 	
@@ -544,8 +537,7 @@ public class midwunit
 		logerror("Changed I/O swiching to %d\n", data);
 	}
 	
-	public static DriverInitHandlerPtr init_wwfmania  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wwfmania  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_wunit_generic();
 	
@@ -561,8 +553,7 @@ public class midwunit
 	
 	/********************** Rampage World Tour **********************/
 	
-	public static DriverInitHandlerPtr init_rmpgwt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rmpgwt  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_wunit_generic();
 	
@@ -573,8 +564,7 @@ public class midwunit
 	
 	/********************** Revolution X **********************/
 	
-	public static DriverInitHandlerPtr init_revx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_revx  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *base;
 		int i, j;
 	
@@ -611,8 +601,7 @@ public class midwunit
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_midwunit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midwunit  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* reset sound */
@@ -625,8 +614,7 @@ public class midwunit
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_midxunit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midxunit  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_midwunit();
 		dcs_set_io_callbacks(midxunit_dcs_output_full, NULL);
 	} };
@@ -654,7 +642,7 @@ public class midwunit
 	
 	WRITE16_HANDLER( midxunit_security_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			security_bits = data & 0x0f;
 	}
 	
@@ -677,7 +665,7 @@ public class midwunit
 	{
 		logerror("%08X:Sound read\n", activecpu_get_pc());
 	
-		if (Machine.sample_rate)
+		if (Machine->sample_rate)
 			return dcs_data_r() & 0xff;
 		return 0x0000;
 	}
@@ -685,7 +673,7 @@ public class midwunit
 	
 	READ16_HANDLER( midwunit_sound_state_r )
 	{
-		if (Machine.sample_rate)
+		if (Machine->sample_rate)
 			return dcs_control_r();
 		return 0x0800;
 	}
@@ -694,14 +682,14 @@ public class midwunit
 	WRITE16_HANDLER( midwunit_sound_w )
 	{
 		/* check for out-of-bounds accesses */
-		if (offset != 0)
+		if (offset)
 		{
 			logerror("%08X:Unexpected write to sound (hi) = %04X\n", activecpu_get_pc(), data);
 			return;
 		}
 	
 		/* call through based on the sound type */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			logerror("%08X:Sound write = %04X\n", activecpu_get_pc(), data);
 			dcs_data_w(data & 0xff);

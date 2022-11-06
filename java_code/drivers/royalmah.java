@@ -75,7 +75,7 @@ Stephh's notes (based on the games Z80 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -86,8 +86,7 @@ public class royalmah
 	static int palette_base;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_royalmah  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_royalmah  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -117,8 +116,7 @@ public class royalmah
 	} };
 	
 	/* 0 B01234 G01234 R01234 */
-	public static PaletteInitHandlerPtr palette_init_mjderngr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mjderngr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -136,8 +134,7 @@ public class royalmah
 	} };
 	
 	
-	public static WriteHandlerPtr royalmah_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr royalmah_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		UINT8 x, y;
 		UINT8 col1, col2;
@@ -155,7 +152,7 @@ public class royalmah
 		{
 			int col = ((col1 & 0x01) >> 0) | ((col1 & 0x10) >> 3) | ((col2 & 0x01) << 2) | ((col2 & 0x10) >> 1);
 	
-			plot_pixel.handler(tmpbitmap, (x+i) ^ 0xff, y ^ 0xff, 16*palette_base + col );
+			plot_pixel(tmpbitmap, (x+i) ^ 0xff, y ^ 0xff, 16*palette_base + col );
 	
 			col1 >>= 1;
 			col2 >>= 1;
@@ -163,8 +160,7 @@ public class royalmah
 	} };
 	
 	
-	public static WriteHandlerPtr royalmah_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr royalmah_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 = coin counter */
 		coin_counter_w(0,data & 2);
 	
@@ -174,23 +170,20 @@ public class royalmah
 		set_vh_global_attribute(&palette_base,(data & 0x08) >> 3);
 	} };
 	
-	public static WriteHandlerPtr mjderngr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjderngr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 = coin counter */
 		coin_counter_w(0,data & 2);
 	
 		/* bit 2 always set? */
 	} };
 	
-	public static WriteHandlerPtr mjderngr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjderngr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_vh_global_attribute(&palette_base,data);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_royalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_royalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	
@@ -198,7 +191,7 @@ public class royalmah
 	
 			for (offs = 0; offs < videoram_size[0]; offs++)
 			{
-				royalmah_videoram_w.handler(offs, videoram.read(offs));
+				royalmah_videoram_w(offs, videoram.read(offs));
 			}
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
@@ -207,8 +200,7 @@ public class royalmah
 	
 	
 	
-	public static WriteHandlerPtr royalmah_rom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr royalmah_rom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* using this handler will avoid all the entries in the error log that are the result of
 		   the RLD and RRD instructions this games uses to print text on the screen */
 	} };
@@ -217,13 +209,11 @@ public class royalmah
 	static int royalmah_input_port_select;
 	static int majs101b_dsw_select;
 	
-	public static WriteHandlerPtr royalmah_input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr royalmah_input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		royalmah_input_port_select = data;
 	} };
 	
-	public static ReadHandlerPtr royalmah_player_1_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr royalmah_player_1_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = (input_port_0_r.handler(offset) & 0xc0) | 0x3f;
 	
 		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_0_r.handler(offset);
@@ -235,8 +225,7 @@ public class royalmah
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr royalmah_player_2_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr royalmah_player_2_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = (input_port_5_r.handler(offset) & 0xc0) | 0x3f;
 	
 		if ((royalmah_input_port_select & 0x01) == 0)  ret &= input_port_5_r.handler(offset);
@@ -250,8 +239,7 @@ public class royalmah
 	
 	
 	
-	static public static ReadHandlerPtr majs101b_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr majs101b_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (majs101b_dsw_select)
 		{
 			case 0x00: return readinputport(13);	/* DSW3 */
@@ -264,9 +252,8 @@ public class royalmah
 	
 	static data8_t suzume_bank;
 	
-	static public static ReadHandlerPtr suzume_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((suzume_bank & 0x40) != 0)
+	public static ReadHandlerPtr suzume_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (suzume_bank & 0x40)
 		{
 			return suzume_bank;
 		}
@@ -282,8 +269,7 @@ public class royalmah
 		}
 	} };
 	
-	static public static WriteHandlerPtr suzume_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr suzume_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
 	
@@ -298,8 +284,7 @@ public class royalmah
 	} };
 	
 	
-	static public static WriteHandlerPtr tontonb_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tontonb_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
 	
@@ -316,8 +301,7 @@ public class royalmah
 	
 	
 	/* bits 5 and 6 seem to affect which Dip Switch to read in 'majs101b' */
-	static public static WriteHandlerPtr dynax_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1);
 		int address;
 	
@@ -491,7 +475,7 @@ public class royalmah
 	
 	
 	
-	static InputPortPtr input_ports_royalmah = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_royalmah = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( royalmah )
 		PORT_START(); 	/* P1 IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "P1 A",            KEYCODE_A,         IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "P1 E",            KEYCODE_E,         IP_JOY_NONE );
@@ -616,7 +600,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tontonb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tontonb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tontonb )
 		PORT_START(); 	/* P1 IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "P1 A",            KEYCODE_A,         IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "P1 E",            KEYCODE_E,         IP_JOY_NONE );
@@ -710,7 +694,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 . 0x73b0) */
+		PORT_START(); 	/* DSW1 (inport $10 -> 0x73b0) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -740,7 +724,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (inport $47 . 0x73b1) */
+		PORT_START(); 	/* DSW3 (inport $47 -> 0x73b1) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x0e6d
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x4e7d
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x4e4d
@@ -764,7 +748,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $46 . 0x73b2) */
+		PORT_START(); 	/* DSW2 (inport $46 -> 0x73b2) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -791,7 +775,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjdiplob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjdiplob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjdiplob )
 		PORT_START(); 	/* P1 IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "P1 A",            KEYCODE_A,         IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "P1 E",            KEYCODE_E,         IP_JOY_NONE );
@@ -885,7 +869,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 . 0x76fa) */
+		PORT_START(); 	/* DSW1 (inport $10 -> 0x76fa) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -915,7 +899,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $62 . 0x76fb) */
+		PORT_START(); 	/* DSW2 (inport $62 -> 0x76fb) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x09cd
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x4b82
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x4b52
@@ -939,7 +923,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (inport $63 . 0x76fc) */
+		PORT_START(); 	/* DSW3 (inport $63 -> 0x76fc) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -966,7 +950,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_majs101b = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_majs101b = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( majs101b )
 		PORT_START(); 	/* P1 IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "P1 A",            KEYCODE_A,         IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "P1 E",            KEYCODE_E,         IP_JOY_NONE );
@@ -1060,7 +1044,7 @@ public class royalmah
 		PORT_SERVICE( 0x08, IP_ACTIVE_HIGH );
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
-		PORT_START(); 	/* DSW1 (inport $10 . 0x76fd) */
+		PORT_START(); 	/* DSW1 (inport $10 -> 0x76fd) */
 		PORT_DIPNAME( 0x0f, 0x0f, "Pay Out Rate" );
 		PORT_DIPSETTING(    0x0f, "96%" );
 		PORT_DIPSETTING(    0x0e, "93%" );
@@ -1090,7 +1074,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW2 (inport $00 (after out 0,$40) . 0x76fa) */
+		PORT_START(); 	/* DSW2 (inport $00 (after out 0,$40) -> 0x76fa) */
 		PORT_DIPNAME( 0x03, 0x03, "Winnings" );		// check code at 0x14e4
 		PORT_DIPSETTING(    0x00, "32 24 16 12 8 4 2 1" );// table at 0x1539
 		PORT_DIPSETTING(    0x03, "50 30 15 8 5 3 2 1" );// table at 0x1509
@@ -1115,7 +1099,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x00, "Black" );
 		PORT_DIPSETTING(    0x80, "Gray" );
 	
-		PORT_START(); 	/* DSW3 (inport $00 (after out 0,$00) . 0x76fc) */
+		PORT_START(); 	/* DSW3 (inport $00 (after out 0,$00) -> 0x76fc) */
 		PORT_DIPNAME( 0x01, 0x00, "Special Combinaisons" );// see notes
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -1141,7 +1125,7 @@ public class royalmah
 		PORT_DIPSETTING(    0x80, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW4 (inport $00 (after out 0,$20) . 0x76fb) */
+		PORT_START(); 	/* DSW4 (inport $00 (after out 0,$20) -> 0x76fb) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Unknown") );		// stored at 0x702f - check code at 0x1713,
 		PORT_DIPSETTING(    0x00, "0" );			// 0x33d1, 0x3408, 0x3415, 0x347c, 0x3492, 0x350d,
 		PORT_DIPSETTING(    0x01, "1" );			// 0x4af9, 0x4b1f and 0x61f6
@@ -1180,8 +1164,7 @@ public class royalmah
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_royalmah = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( royalmah )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)        /* 3.00 MHz ? */
@@ -1206,13 +1189,10 @@ public class royalmah
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dondenmj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dondenmj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000/2)	/* 4 MHz ? */
@@ -1237,52 +1217,37 @@ public class royalmah
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_suzume = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( suzume )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(suzume_readport,suzume_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tontonb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tontonb )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(tontonb_readport,tontonb_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mjdiplob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjdiplob )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(mjdiplob_readport,mjdiplob_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_majs101b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( majs101b )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(majs101b_readport,majs101b_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mjderngr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjderngr )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(dondenmj)
 		MDRV_CPU_MODIFY("main")
@@ -1291,9 +1256,7 @@ public class royalmah
 		MDRV_PALETTE_LENGTH(512)
 	
 		MDRV_PALETTE_INIT(mjderngr)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1422,12 +1385,12 @@ public class royalmah
 	
 	
 	
-	public static GameDriver driver_royalmah	   = new GameDriver("1982"	,"royalmah"	,"royalmah.java"	,rom_royalmah,null	,machine_driver_royalmah	,input_ports_royalmah	,null	,ROT0	,	"Falcon", "Royal Mahjong (Japan)" )
-	public static GameDriver driver_suzume	   = new GameDriver("1986"	,"suzume"	,"royalmah.java"	,rom_suzume,null	,machine_driver_suzume	,input_ports_majs101b	,null	,ROT0	,	"Dyna Electronics", "Watashiha Suzumechan (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_dondenmj	   = new GameDriver("1986"	,"dondenmj"	,"royalmah.java"	,rom_dondenmj,null	,machine_driver_dondenmj	,input_ports_majs101b	,null	,ROT0	,	"Dyna Electronics", "Don Den Mahjong [BET] (Japan)" )
-	public static GameDriver driver_mjdiplob	   = new GameDriver("1987"	,"mjdiplob"	,"royalmah.java"	,rom_mjdiplob,null	,machine_driver_mjdiplob	,input_ports_mjdiplob	,null	,ROT0	,	"Dynax", "Mahjong Diplomat [BET] (Japan)" )
-	public static GameDriver driver_tontonb	   = new GameDriver("1987"	,"tontonb"	,"royalmah.java"	,rom_tontonb,null	,machine_driver_tontonb	,input_ports_tontonb	,null	,ROT0	,	"Dynax", "Tonton [BET] (Japan)" )
-	public static GameDriver driver_majs101b	   = new GameDriver("1988"	,"majs101b"	,"royalmah.java"	,rom_majs101b,null	,machine_driver_majs101b	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong Studio 101 [BET] (Japan)" )
-	public static GameDriver driver_mjderngr	   = new GameDriver("1989"	,"mjderngr"	,"royalmah.java"	,rom_mjderngr,null	,machine_driver_mjderngr	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong Derringer (Japan)" )
-	public static GameDriver driver_mjifb	   = new GameDriver("1990"	,"mjifb"	,"royalmah.java"	,rom_mjifb,null	,machine_driver_mjderngr	,input_ports_majs101b	,null	,ROT0	,	"Dynax", "Mahjong If [BET] (Japan)", GAME_NOT_WORKING )
+	GAME( 1982, royalmah, 0, royalmah, royalmah, 0, ROT0, "Falcon", "Royal Mahjong (Japan)" )
+	GAMEX(1986, suzume,   0, suzume,   majs101b, 0, ROT0, "Dyna Electronics", "Watashiha Suzumechan (Japan)", GAME_NOT_WORKING )
+	GAME( 1986, dondenmj, 0, dondenmj, majs101b, 0, ROT0, "Dyna Electronics", "Don Den Mahjong [BET] (Japan)" )
+	GAME( 1987, mjdiplob, 0, mjdiplob, mjdiplob, 0, ROT0, "Dynax", "Mahjong Diplomat [BET] (Japan)" )
+	GAME( 1987, tontonb,  0, tontonb,  tontonb,  0, ROT0, "Dynax", "Tonton [BET] (Japan)" )
+	GAME( 1988, majs101b, 0, majs101b, majs101b, 0, ROT0, "Dynax", "Mahjong Studio 101 [BET] (Japan)" )
+	GAME( 1989, mjderngr, 0, mjderngr, majs101b, 0, ROT0, "Dynax", "Mahjong Derringer (Japan)" )
+	GAMEX(1990, mjifb,    0, mjderngr, majs101b, 0, ROT0, "Dynax", "Mahjong If [BET] (Japan)", GAME_NOT_WORKING )
 }

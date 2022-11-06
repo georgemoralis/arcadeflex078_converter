@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -64,8 +64,7 @@ public class othldrby
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_othldrby  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_othldrby  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		tilemap[2] = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -165,7 +164,7 @@ public class othldrby
 			sizex = (buf_spriteram[offs+2] & 0x000f) + 1;
 			sizey = (buf_spriteram[offs+3] & 0x000f) + 1;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -177,7 +176,7 @@ public class othldrby
 			{
 				for (x = 0;x < sizex;x++)
 				{
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code + x + sizex * y,
 							color,
 							flipx,flipy,
@@ -188,8 +187,7 @@ public class othldrby
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_othldrby  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_othldrby  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer;
 	
 	
@@ -197,7 +195,7 @@ public class othldrby
 	
 		for (layer = 0;layer < 3;layer++)
 		{
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				tilemap_set_scrollx(tilemap[layer],0,vreg[2*layer]+59);
 				tilemap_set_scrolly(tilemap[layer],0,vreg[2*layer+1]+248);
@@ -227,8 +225,7 @@ public class othldrby
 		draw_sprites(bitmap,cliprect,3);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_othldrby  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_othldrby  = new VideoEofHandlerPtr() { public void handler(){
 		/* sprites need to be delayed two frames */
 	    memcpy(buf_spriteram,buf_spriteram2,SPRITERAM_SIZE*sizeof(buf_spriteram[0]));
 	    memcpy(buf_spriteram2,&vram[SPRITERAM_START],SPRITERAM_SIZE*sizeof(buf_spriteram[0]));

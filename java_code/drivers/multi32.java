@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -70,9 +70,9 @@ public class multi32
 	
 	static WRITE16_HANDLER(irq_ack_w)
 	{
-		if (ACCESSING_MSB != 0) {
+		if(ACCESSING_MSB) {
 			irq_status &= data >> 8;
-			if (irq_status == 0)
+			if(!irq_status)
 				cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
 	}
@@ -84,14 +84,13 @@ public class multi32
 		cpu_set_irq_callback(0, irq_callback);
 	}
 	
-	public static NVRAMHandlerPtr nvram_handler_system32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_system32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 		}
 	} };
@@ -103,7 +102,7 @@ public class multi32
 	
 	static WRITE16_HANDLER(system32_eeprom_w)
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			EEPROM_write_bit(data & 0x80);
 			EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 			EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -135,7 +134,7 @@ public class multi32
 		*/
 	
 		if (offset<MAX_COLOURS) {
-			if (monitor != 0) {
+			if (monitor) {
 				data = paletteram16_b[offset];
 			}
 			else data = paletteram16[offset];
@@ -274,7 +273,7 @@ public class multi32
 		COMBINE_DATA(&control[offset]);
 	
 		if (offset<=3) {
-			if (analogSwitch != 0) analogRead[offset*2+1]=readinputport(offset*2+5);
+			if (analogSwitch) analogRead[offset*2+1]=readinputport(offset*2+5);
 			else analogRead[offset*2]=readinputport(offset*2+4);
 		}
 	}
@@ -334,7 +333,7 @@ public class multi32
 	
 		switch(offset) {
 		case 0x03:
-			if (ACCESSING_LSB != 0) {
+			if(ACCESSING_LSB) {
 				EEPROM_write_bit(data & 0x80);
 				EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 				EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -450,7 +449,7 @@ public class multi32
 			// orunners value=00, 08, 34
 			break;
 		case 0x07:
-			if (ACCESSING_LSB != 0) {
+			if(ACCESSING_LSB) {
 				EEPROM_write_bit(data & 0x80);
 				EEPROM_set_cs_line((data & 0x20) ? CLEAR_LINE : ASSERT_LINE);
 				EEPROM_set_clock_line((data & 0x40) ? ASSERT_LINE : CLEAR_LINE);
@@ -536,8 +535,7 @@ public class multi32
 	MEMORY_END
 	
 	
-	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_system32  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1));
 		irq_init();
 	
@@ -547,9 +545,8 @@ public class multi32
 		system32_screen_old_mode = 1;
 	} };
 	
-	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr system32_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if(cpu_getiloops())
 			irq_raise(1);
 		else
 			irq_raise(0);
@@ -593,20 +590,17 @@ public class multi32
 	
 	static UINT8 *sys32_SoundMemBank;
 	
-	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr system32_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sys32_SoundMemBank[offset];
 	} };
 	
-	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sys32_shared_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		return RAM[offset];
 	} };
 	
-	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_shared_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = (data8_t *)system32_shared_ram;
 	
 		RAM[offset] = data;
@@ -629,8 +623,7 @@ public class multi32
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr sys32_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sys32_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int Bank;
 	
@@ -686,8 +679,7 @@ public class multi32
 		{ YM3012_VOL(100, MIXER_PAN_CENTER, 100, MIXER_PAN_CENTER) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_base = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( base )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V60, 20000000/10) // Reality is 20mhz but V60/V70 timings are unknown
@@ -717,46 +709,35 @@ public class multi32
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3438, mul32_ym3438_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_multi32 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( multi32 )
 		MDRV_IMPORT_FROM(base)
 		MDRV_SOUND_ADD(MULTIPCM, mul32_multipcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_scross = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scross )
 		MDRV_IMPORT_FROM(base)
 		MDRV_SOUND_ADD(MULTIPCM, scross_multipcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static DRIVER_INIT(orunners)
-	{
+	public static DriverInitHandlerPtr init_orunners  = new DriverInitHandlerPtr() { public void handler(){
 		multi32=1;
 		system32_temp_kludge = 0;
 		system32_mixerShift = 4;
-	}
+	} };
 	
-	static DRIVER_INIT(titlef)
-	{
+	public static DriverInitHandlerPtr init_titlef  = new DriverInitHandlerPtr() { public void handler(){
 		multi32=1;
 		system32_temp_kludge = 0;
 		system32_mixerShift = 4;
-	}
+	} };
 	
-	static DRIVER_INIT(harddunk)
-	{
+	public static DriverInitHandlerPtr init_harddunk  = new DriverInitHandlerPtr() { public void handler(){
 		multi32=1;
 		system32_temp_kludge = 0;
 		system32_mixerShift = 5;
-	}
+	} };
 	
 	#define SYSTEM32_PLAYER_INPUTS(_n_, _b1_, _b2_, _b3_, _b4_) \
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_##_b1_         | IPF_PLAYER##_n_ );\
@@ -769,7 +750,7 @@ public class multi32
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER##_n_ );
 	
 	
-	static InputPortPtr input_ports_orunners = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_orunners = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( orunners )
 		PORT_START(); 	// port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* EEPROM data */
@@ -865,7 +846,7 @@ public class multi32
 		PORT_DIPSETTING(    0x02, "B only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_titlef = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_titlef = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( titlef )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* EEPROM data */
@@ -896,7 +877,7 @@ public class multi32
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_harddunk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_harddunk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( harddunk )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* EEPROM data */
@@ -962,7 +943,7 @@ public class multi32
 		PORT_DIPSETTING(    0x02, "B only" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_scross = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scross = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scross )
 		PORT_START(); 	// 0xc0000a - port 0
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SPECIAL );/* EEPROM data */
@@ -1215,11 +1196,11 @@ public class multi32
 	ROM_END(); }}; 
 	
 	// boot, and are playable, some gfx problems
-	public static GameDriver driver_orunners	   = new GameDriver("1992"	,"orunners"	,"multi32.java"	,rom_orunners,null	,machine_driver_multi32	,input_ports_orunners	,init_orunners	,ROT0	,	"Sega", "Outrunners (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_harddunk	   = new GameDriver("1994"	,"harddunk"	,"multi32.java"	,rom_harddunk,null	,machine_driver_multi32	,input_ports_harddunk	,init_harddunk	,ROT0	,	"Sega", "Hard Dunk (World)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_harddunj	   = new GameDriver("1994"	,"harddunj"	,"multi32.java"	,rom_harddunj,driver_harddunk	,machine_driver_multi32	,input_ports_harddunk	,init_harddunk	,ROT0	,	"Sega", "Hard Dunk (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_scross	   = new GameDriver("1992"	,"scross"	,"multi32.java"	,rom_scross,null	,machine_driver_scross	,input_ports_scross	,init_orunners	,ROT0	,	"Sega", "Stadium Cross (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1992, orunners,     0,        multi32, orunners, orunners, ROT0, "Sega", "Outrunners (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, harddunk,     0,        multi32, harddunk, harddunk, ROT0, "Sega", "Hard Dunk (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, harddunj,     harddunk, multi32, harddunk, harddunk, ROT0, "Sega", "Hard Dunk (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1992, scross,       0,        scross,  scross,   orunners, ROT0, "Sega", "Stadium Cross (World)", GAME_IMPERFECT_GRAPHICS )
 	
 	// doesn't boot (needs v60 fixing, modeler has a hack in the cpu core)
-	public static GameDriver driver_titlef	   = new GameDriver("199?"	,"titlef"	,"multi32.java"	,rom_titlef,null	,machine_driver_multi32	,input_ports_titlef	,init_titlef	,ROT0	,	"Sega", "Title Fight", GAME_NOT_WORKING )
+	GAMEX( 199?, titlef,       0, multi32, titlef,   titlef,   ROT0, "Sega", "Title Fight", GAME_NOT_WORKING )
 }

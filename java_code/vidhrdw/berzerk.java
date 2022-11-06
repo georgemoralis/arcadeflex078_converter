@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,8 +23,7 @@ public class berzerk
 	static data8_t collision = 0;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_berzerk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_berzerk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* Simple 1-bit RGBI palette */
@@ -45,15 +44,15 @@ public class berzerk
 		pen_t fore, back;
 	
 	
-		fore  = Machine.pens[col >> 4];
-		back  = Machine.pens[0];
+		fore  = Machine->pens[col >> 4];
+		back  = Machine->pens[0];
 	
 		plot_pixel(tmpbitmap, x  , y, (data & 0x80) ? fore : back);
 		plot_pixel(tmpbitmap, x+1, y, (data & 0x40) ? fore : back);
 		plot_pixel(tmpbitmap, x+2, y, (data & 0x20) ? fore : back);
 		plot_pixel(tmpbitmap, x+3, y, (data & 0x10) ? fore : back);
 	
-		fore  = Machine.pens[col & 0x0f];
+		fore  = Machine->pens[col & 0x0f];
 	
 		plot_pixel(tmpbitmap, x+4, y, (data & 0x08) ? fore : back);
 		plot_pixel(tmpbitmap, x+5, y, (data & 0x04) ? fore : back);
@@ -62,8 +61,7 @@ public class berzerk
 	}
 	
 	
-	public static WriteHandlerPtr berzerk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offs_t coloroffset;
 		UINT8 x, y;
 	
@@ -80,8 +78,7 @@ public class berzerk
 	} };
 	
 	
-	public static WriteHandlerPtr berzerk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		UINT8 x, y;
 	
@@ -102,8 +99,7 @@ public class berzerk
 	} };
 	
 	
-	public static WriteHandlerPtr berzerk_magicram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_magicram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data16_t data2;
 		data8_t data3;
 		int shift_amount;
@@ -121,7 +117,7 @@ public class berzerk
 	
 	
 		/* Bit 3 is the flip bit */
-		if ((magicram_control & 0x08) != 0)
+		if (magicram_control & 0x08)
 		{
 			data3 = BITSWAP8(data3,0,1,2,3,4,5,6,7);
 		}
@@ -160,16 +156,14 @@ public class berzerk
 	} };
 	
 	
-	public static WriteHandlerPtr berzerk_magicram_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_magicram_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		magicram_control = data;
 		magicram_latch = 0;
 		collision = 0;
 	} };
 	
 	
-	public static ReadHandlerPtr berzerk_port_4e_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr berzerk_port_4e_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_3_r.handler(0) | collision;
 	} };
 }

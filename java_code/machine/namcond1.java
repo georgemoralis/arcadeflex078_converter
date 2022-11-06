@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -25,8 +25,7 @@ public class namcond1
 	static UINT8 coin_count[4];
 	int namcond1_gfxbank;
 	
-	public static MachineInitHandlerPtr machine_init_namcond1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_namcond1  = new MachineInitHandlerPtr() { public void handler(){
 	#ifdef MAME_DEBUG
 	    /*unsigned char   *ROM = memory_region(REGION_CPU1);*/
 	    /*unsigned int debug_trigger_addr;*/
@@ -64,7 +63,7 @@ public class namcond1
 	    UINT8   current, pressed;
 	
 	    // the H8 IRQ5 does polling of inputs and writes to shared RAM
-	    if (namcond1_h8_irq5_enabled == 0)
+	    if( !namcond1_h8_irq5_enabled )
 	        return( namcond1_shared_ram[offset] );
 	
 	    switch( offset )
@@ -158,7 +157,7 @@ public class namcond1
 	        #if 0
 	            if( namcond1_shared_ram[offset] == 0x0000 &&
 	                data == 0x0001 )
-	              logerror( "changing 0$.$1 to $%x @$%x\n",
+	              logerror( "changing 0$->$1 to $%x @$%x\n",
 	                        offset<<1, activecpu_get_pc() );
 	        #endif
 	            COMBINE_DATA( namcond1_shared_ram + offset );
@@ -194,8 +193,7 @@ public class namcond1
 	data16_t *namcond1_eeprom;
 	
 	/* not used at this point */
-	public static NVRAMHandlerPtr nvram_handler_namcond1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_namcond1  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 	  if( file == 0 )
 	    return;
 	

@@ -117,7 +117,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -146,24 +146,21 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr hsync_chain_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hsync_chain_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* horizontal sync divider chain */
 		UINT8 val = (cycles_currently_ran() - cycles_at_vsync) & 0xff;
 		return BITSWAP8(val,0,1,2,3,4,5,6,7);
 	} };
 	
 	
-	public static ReadHandlerPtr vsync_chain_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsync_chain_hi_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* vertical sync divider chain */
 		UINT8 val = cpu_getscanline();
 		return ((val >> 1) & 0x08) | ((val >> 3) & 0x04) | ((val >> 5) & 0x02) | (val >> 7);
 	} };
 	
 	
-	public static ReadHandlerPtr vsync_chain_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsync_chain_lo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* vertical sync divider chain */
 		UINT8 val = cpu_getscanline();
 		return val & 0x0f;
@@ -177,8 +174,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr meadows_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr meadows_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:
@@ -210,8 +206,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr meadows_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr meadows_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* preserve the actual cycle count */
 	    cycles_at_vsync = cycles_currently_ran();
 	
@@ -222,7 +217,7 @@ public class meadows
 		/* check the fake coin input */
 		if (readinputport(3) & 0x01)
 		{
-			if (coin1_state == 0)
+			if (!coin1_state)
 			{
 				coin1_state = 1;
 				cpu_set_irq_line_and_vector(0, 0, PULSE_LINE, 0x82);
@@ -240,8 +235,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr minferno_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr minferno_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* preserve the actual cycle count */
 		cycles_at_vsync = cycles_currently_ran();
 		minferno_sense++;
@@ -256,8 +250,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sound_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 3)
 		{
 			case 0: /* DAC */
@@ -298,8 +291,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr sound_hardware_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_hardware_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (offset)
@@ -323,8 +315,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    /* fake something toggling the sense input line of the S2650 */
 		sound_sense_state ^= 1;
 		cpu_set_irq_line(1, 1, sound_sense_state ? ASSERT_LINE : CLEAR_LINE);
@@ -371,8 +362,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_meadows  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_meadows  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 	} };
@@ -473,7 +463,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_meadows = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_meadows = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( meadows )
 		PORT_START(); 		/* IN0 buttons */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1  );
@@ -517,7 +507,7 @@ public class meadows
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_minferno = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_minferno = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( minferno )
 		PORT_START(); 		/* IN0 left joystick */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -651,8 +641,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_meadows = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( meadows )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 5000000/8/3) 	/* 5MHz / 8 = 625 kHz */
@@ -682,13 +671,10 @@ public class meadows
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_minferno = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( minferno )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 5000000/8/3) 	/* 5MHz / 8 = 625 kHz */
@@ -711,9 +697,7 @@ public class meadows
 		MDRV_VIDEO_UPDATE(meadows)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -802,15 +786,13 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_deadeye  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_deadeye  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(deadeye_overlay);
 	} };
 	
 	
 	/* A fake for the missing ball sprites #3 and #4 */
-	public static DriverInitHandlerPtr init_gypsyjug  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gypsyjug  = new DriverInitHandlerPtr() { public void handler(){
 		static unsigned char ball[16*2] =
 		{
 			0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00,
@@ -833,8 +815,7 @@ public class meadows
 	
 	
 	/* A fake for inverting the data bus */
-	public static DriverInitHandlerPtr init_minferno  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_minferno  = new DriverInitHandlerPtr() { public void handler(){
 		int i, length;
 		unsigned char *mem;
 	
@@ -853,7 +834,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_deadeye	   = new GameDriver("1978"	,"deadeye"	,"meadows.java"	,rom_deadeye,null	,machine_driver_meadows	,input_ports_meadows	,init_deadeye	,ROT0	,	"Meadows", "Dead Eye" )
-	public static GameDriver driver_gypsyjug	   = new GameDriver("1978"	,"gypsyjug"	,"meadows.java"	,rom_gypsyjug,null	,machine_driver_meadows	,input_ports_meadows	,init_gypsyjug	,ROT0	,	"Meadows", "Gypsy Juggler" )
-	public static GameDriver driver_minferno	   = new GameDriver("1978"	,"minferno"	,"meadows.java"	,rom_minferno,null	,machine_driver_minferno	,input_ports_minferno	,init_minferno	,ROT0	,	"Meadows", "Inferno (S2650)", GAME_NO_SOUND )
+	GAME( 1978, deadeye,  0, meadows,  meadows,  deadeye,  ROT0, "Meadows", "Dead Eye" )
+	GAME( 1978, gypsyjug, 0, meadows,  meadows,  gypsyjug, ROT0, "Meadows", "Gypsy Juggler" )
+	GAMEX(1978, minferno, 0, minferno, minferno, minferno, ROT0, "Meadows", "Inferno (S2650)", GAME_NO_SOUND )
 }

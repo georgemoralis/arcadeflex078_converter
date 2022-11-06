@@ -88,7 +88,7 @@ OP(23) {
 	m6502_ICount -= 3;
 	RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OP23 %02x\n",activecpu_get_pc(),tmp);
 }
 #define deco16_43 m6502_43 								/* 2 ILL */
@@ -98,7 +98,7 @@ OP(63) {
 	m6502_ICount -= 3;
 	RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OP63 %02x\n",activecpu_get_pc(),tmp);
 }
 #define deco16_83 m6502_83 								/* 2 ILL */
@@ -108,7 +108,7 @@ OP(a3) {
 	m6502_ICount -= 3;
 	RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OPA3 %02x\n",activecpu_get_pc(),tmp);
 }
 #define deco16_c3 m6502_c3 								/* 2 ILL */
@@ -116,7 +116,7 @@ OP(a3) {
 
 OP(13) { int tmp; m6502_ICount -= 3; RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OP13 %02x\n",activecpu_get_pc(),tmp);
 
 //bank select control?
@@ -302,7 +302,7 @@ OP(bb) {
 	m6502_ICount -= 3;
 	RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OPBB %02x\n",activecpu_get_pc(),tmp);
 }
 #define deco16_db m6502_db 								/* 2 ILL */
@@ -385,7 +385,7 @@ OP(3f) {
 	m6502_ICount -= 3;
 	RD_IMM;
 
-	if (DECO16_VERBOSE != 0)
+	if (DECO16_VERBOSE)
 		logerror("%04x: OP3F %02x\n",activecpu_get_pc(),tmp);
 }
 #define deco16_5f m6502_5f								/* 5 BBR5 ZPG */

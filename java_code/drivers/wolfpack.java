@@ -6,7 +6,7 @@ Atari Wolf Pack (prototype) driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -33,14 +33,12 @@ public class wolfpack
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_wolfpack  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_wolfpack  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(0), 0, periodic_callback);
 	} };
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_wolfpack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wolfpack  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		palette_set_color(0, 0x00, 0x00, 0x00);
@@ -71,14 +69,12 @@ public class wolfpack
 	} };
 	
 	
-	public static ReadHandlerPtr wolfpack_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wolfpack_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr wolfpack_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wolfpack_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(0);
 	
 		if (((readinputport(2) + 0) / 2) & 1)
@@ -94,8 +90,7 @@ public class wolfpack
 	} };
 	
 	
-	public static ReadHandlerPtr wolfpack_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wolfpack_misc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		/* BIT0 => SPEECH BUSY */
@@ -107,7 +102,7 @@ public class wolfpack
 		/* BIT6 => UNUSED      */
 		/* BIT7 => VBLANK      */
 	
-		if (wolfpack_collision == 0)
+		if (!wolfpack_collision)
 		{
 			val |= 0x10;
 		}
@@ -120,40 +115,36 @@ public class wolfpack
 	} };
 	
 	
-	public static WriteHandlerPtr wolfpack_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr wolfpack_high_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data) { } };
-	public static WriteHandlerPtr wolfpack_sonar_ping_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_sirlat_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_pt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_start_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_launch_torpedo_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_low_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_screw_cont_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_lamp_flash_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_warning_light_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_audamp_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr wolfpack_word_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr wolfpack_high_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data) }
+	public static WriteHandlerPtr wolfpack_sonar_ping_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_sirlat_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_pt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_start_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_launch_torpedo_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_low_explo_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_screw_cont_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_lamp_flash_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_warning_light_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_audamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr wolfpack_word_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
 	
 	
-	public static WriteHandlerPtr wolfpack_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(!(data & 1));
 	} };
 	
 	
-	public static WriteHandlerPtr wolfpack_credit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_credit_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, !(data & 1));
 	} };
 	
 	
-	public static WriteHandlerPtr wolfpack_coldetres_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wolfpack_coldetres_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wolfpack_collision = 0;
 	} };
 	
@@ -211,7 +202,7 @@ public class wolfpack
 	};
 	
 	
-	static InputPortPtr input_ports_wolfpack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wolfpack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wolfpack )
 	
 		PORT_START(); 
 		PORT_BIT ( 0x03, IP_ACTIVE_HIGH, IPT_UNUSED );/* dial connects here */
@@ -367,9 +358,7 @@ public class wolfpack
 		MDRV_VIDEO_EOF(wolfpack)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_wolfpack = new RomLoadPtr(){ public void handler(){ 
@@ -402,5 +391,5 @@ public class wolfpack
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_wolfpack	   = new GameDriver("1978"	,"wolfpack"	,"wolfpack.java"	,rom_wolfpack,null	,machine_driver_wolfpack	,input_ports_wolfpack	,null	,ORIENTATION_FLIP_Y	,	"Atari", "Wolf Pack (prototype)", GAME_NO_SOUND )
+	GAMEX( 1978, wolfpack, 0, wolfpack, wolfpack, 0, ORIENTATION_FLIP_Y, "Atari", "Wolf Pack (prototype)", GAME_NO_SOUND )
 }

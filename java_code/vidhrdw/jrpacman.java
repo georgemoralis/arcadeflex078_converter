@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,8 +42,7 @@ public class jrpacman
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_jrpacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_jrpacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -86,8 +85,7 @@ public class jrpacman
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_jrpacman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jrpacman  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset(dirtybuffer,1,videoram_size[0]);
@@ -102,8 +100,7 @@ public class jrpacman
 	
 	
 	
-	public static WriteHandlerPtr jrpacman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
@@ -127,8 +124,7 @@ public class jrpacman
 	
 	
 	
-	public static WriteHandlerPtr jrpacman_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (*jrpacman_palettebank != data)
 		{
 			*jrpacman_palettebank = data;
@@ -138,8 +134,7 @@ public class jrpacman
 	
 	
 	
-	public static WriteHandlerPtr jrpacman_colortablebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_colortablebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (*jrpacman_colortablebank != data)
 		{
 			*jrpacman_colortablebank = data;
@@ -149,8 +144,7 @@ public class jrpacman
 	
 	
 	
-	public static WriteHandlerPtr jrpacman_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (*jrpacman_charbank != data)
 		{
 			*jrpacman_charbank = data;
@@ -159,8 +153,7 @@ public class jrpacman
 	} };
 	
 	
-	public static WriteHandlerPtr jrpacman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jrpacman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -176,8 +169,7 @@ public class jrpacman
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_jrpacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jrpacman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,offs;
 		int scrolly[36];
 	
@@ -205,7 +197,7 @@ public class jrpacman
 					{
 						sy = my;
 						sx = mx+2;
-						if (flipscreen != 0)
+						if (flipscreen)
 						{
 							sx = 35 - sx;
 							sy = 55 - sy;
@@ -226,7 +218,7 @@ public class jrpacman
 						{
 							sy = mx - 2;
 							sx = my - 58;
-							if (flipscreen != 0)
+							if (flipscreen)
 							{
 								sx = 35 - sx;
 								sy = 55 - sy;
@@ -244,7 +236,7 @@ public class jrpacman
 						{
 							sy = mx - 2;
 							sx = my - 22;
-							if (flipscreen != 0)
+							if (flipscreen)
 							{
 								sx = 35 - sx;
 								sy = 55 - sy;
@@ -273,7 +265,7 @@ public class jrpacman
 			for (i = 34;i < 36;i++)
 				scrolly[i] = 0;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				for (i = 0;i < 36;i++)
 					scrolly[i] = 224 - scrolly[i];

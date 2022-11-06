@@ -25,7 +25,7 @@ The output selects the active layer, it can be:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -96,8 +96,7 @@ public class bionicc
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bionicc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bionicc  = new VideoStartHandlerPtr() { public int handler(){
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      16,16,64,64);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,64,64);
@@ -176,7 +175,7 @@ public class bionicc
 	
 	WRITE16_HANDLER( bionicc_gfxctrl_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			flip_screen_set(data & 0x0100);
 	
@@ -199,7 +198,7 @@ public class bionicc
 	static void bionicc_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		int offs;
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 	
 		for (offs = (spriteram_size-8)/2;offs >= 0;offs -= 4)
 		{
@@ -212,7 +211,7 @@ public class bionicc
 				int sx = (INT16)buffered_spriteram16[offs+3];	/* signed */
 				int sy = (INT16)buffered_spriteram16[offs+2];	/* signed */
 				if(sy>512-16) sy-=512;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -230,8 +229,7 @@ public class bionicc
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_bionicc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bionicc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,1|TILEMAP_BACK,0);	/* nothing in FRONT */
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -241,8 +239,7 @@ public class bionicc
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_bionicc  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_bionicc  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 }

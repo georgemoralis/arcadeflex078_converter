@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,15 +31,14 @@ public class toaplan1
 	
 	
 	
-	public static InterruptHandlerPtr toaplan1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (toaplan1_intenable != 0)
+	public static InterruptHandlerPtr toaplan1_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (toaplan1_intenable)
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
 	WRITE16_HANDLER( toaplan1_intenable_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan1_intenable = data & 0xff;
 		}
@@ -94,11 +93,11 @@ public class toaplan1
 			/* data 0x0000	means set DSP BIO line active and disable */
 			/*				communication to main processor*/
 			logerror("DSP PC:%04x IO write %04x at port 3\n",activecpu_get_previouspc(),data);
-			if ((data & 0x8000) != 0) {
+			if (data & 0x8000) {
 				demonwld_dsp_BIO = CLEAR_LINE;
 			}
 			if (data == 0) {
-				if (dsp_execute != 0) {
+				if (dsp_execute) {
 					logerror("Turning 68000 on\n");
 					timer_suspendcpu(0, CLEAR, SUSPEND_REASON_HALT);
 					dsp_execute = 0;
@@ -114,7 +113,7 @@ public class toaplan1
 		logerror("68000:%08x  Writing %08x to %08x.\n",activecpu_get_pc() ,data ,0xe0000a + offset);
 	#endif
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			switch (data)
 			{
@@ -165,7 +164,7 @@ public class toaplan1
 		/* latch so it doesn't add more than one */
 		/* credit per keypress */
 	
-		if ((data & 0x18) != 0)
+		if (data & 0x18)
 		{
 			credits++ ;
 		}
@@ -192,7 +191,7 @@ public class toaplan1
 		{
 			case 0:  break;
 			case 1:  break;
-			case 2:  if (ACCESSING_LSB != 0) credits = data & 0xff; break;
+			case 2:  if (ACCESSING_LSB) credits = data & 0xff; break;
 		}
 	}
 	
@@ -203,7 +202,7 @@ public class toaplan1
 	
 	WRITE16_HANDLER( toaplan1_shared_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan1_sharedram[offset] = data & 0xff;
 		}
@@ -216,15 +215,14 @@ public class toaplan1
 		if (ACCESSING_LSB && (data == 0))
 		{
 			logerror("PC:%04x  Resetting Sound CPU and Sound chip (%08x)\n",activecpu_get_previouspc(),data);
-			if (Machine.drv.sound[0].sound_type == SOUND_YM3812)
+			if (Machine->drv->sound[0].sound_type == SOUND_YM3812)
 				YM3812_sh_reset();
-			if (Machine.drv.cpu[1].cpu_type == CPU_Z80)
+			if (Machine->drv->cpu[1].cpu_type == CPU_Z80)
 				cpu_set_reset_line(1,PULSE_LINE);
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_toaplan1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_toaplan1  = new MachineInitHandlerPtr() { public void handler(){
 		toaplan1_intenable = 0;
 		toaplan1_coin_count = 0;
 		toaplan1_unk_reset_port = 0;
@@ -233,14 +231,13 @@ public class toaplan1
 		state_save_register_INT32("toaplan1", 0, "Coin_counter", &toaplan1_coin_count, 1);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_zerozone  = new MachineInitHandlerPtr() { public void handler()	/* Hack for ZeroWing and OutZone. See the video driver */
+	public static MachineInitHandlerPtr machine_init_zerozone  = new MachineInitHandlerPtr() { public void handler()* Hack for ZeroWing and OutZone. See the video driver */
 	{
 		machine_init_toaplan1();
 		toaplan1_unk_reset_port = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_demonwld  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_demonwld  = new MachineInitHandlerPtr() { public void handler(){
 		dsp_addr_w = 0;
 		dsp_execute = 0;
 		main_ram_seg = 0;
@@ -250,8 +247,7 @@ public class toaplan1
 		machine_init_toaplan1();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_vimana  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vimana  = new MachineInitHandlerPtr() { public void handler(){
 		credits = 0;
 		latch = 0;
 		state_save_register_INT32("vimana", 0, "Credits count", &credits, 1);
@@ -259,13 +255,12 @@ public class toaplan1
 		machine_init_toaplan1();
 	} };
 	
-	public static WriteHandlerPtr rallybik_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallybik_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (data) {
-			case 0x08: if (toaplan1_coin_count != 0) { coin_counter_w(0,1); coin_counter_w(0,0); } break;
-			case 0x09: if (toaplan1_coin_count != 0) { coin_counter_w(2,1); coin_counter_w(2,0); } break;
-			case 0x0a: if (toaplan1_coin_count != 0) { coin_counter_w(1,1); coin_counter_w(1,0); } break;
-			case 0x0b: if (toaplan1_coin_count != 0) { coin_counter_w(3,1); coin_counter_w(3,0); } break;
+			case 0x08: if (toaplan1_coin_count) { coin_counter_w(0,1); coin_counter_w(0,0); } break;
+			case 0x09: if (toaplan1_coin_count) { coin_counter_w(2,1); coin_counter_w(2,0); } break;
+			case 0x0a: if (toaplan1_coin_count) { coin_counter_w(1,1); coin_counter_w(1,0); } break;
+			case 0x0b: if (toaplan1_coin_count) { coin_counter_w(3,1); coin_counter_w(3,0); } break;
 			case 0x0c: coin_lockout_w(0,1); coin_lockout_w(2,1); break;
 			case 0x0d: coin_lockout_w(0,0); coin_lockout_w(2,0); break;
 			case 0x0e: coin_lockout_w(1,1); coin_lockout_w(3,1); break;
@@ -274,8 +269,7 @@ public class toaplan1
 		}
 	} };
 	
-	public static WriteHandlerPtr toaplan1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toaplan1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("Z80 writing %02x to coin control\n",data);
 		/* This still isnt too clear yet. */
 		/* Coin C has no coin lock ? */
@@ -306,7 +300,7 @@ public class toaplan1
 	
 	WRITE16_HANDLER( samesame_coin_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan1_coin_w(offset, data & 0xff);
 		}

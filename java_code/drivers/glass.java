@@ -10,7 +10,7 @@ The DS5002FP has up to 128KB undumped gameplay code making the game unplayable :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,8 +24,7 @@ public class glass
 	
 	static int cause_interrupt;
 	
-	public static MachineInitHandlerPtr machine_init_glass  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_glass  = new MachineInitHandlerPtr() { public void handler(){
 		cause_interrupt = 1;
 		glass_current_bit = 0;
 	} };
@@ -35,9 +34,8 @@ public class glass
 		cause_interrupt = 1;
 	}
 	
-	public static InterruptHandlerPtr glass_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cause_interrupt != 0){
+	public static InterruptHandlerPtr glass_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cause_interrupt){
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 			cause_interrupt = 0;
 		}
@@ -87,7 +85,7 @@ public class glass
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
@@ -124,7 +122,7 @@ public class glass
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_glass = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_glass = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( glass )
 	PORT_START(); 	/* DSW #2 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x02, "Easy" );
@@ -207,8 +205,7 @@ public class glass
 		{ 100 }				/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_glass = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( glass )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)		/* 12 MHz (M680000 P12) */
@@ -232,9 +229,7 @@ public class glass
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, glass_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_glass = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )	/* 68000 code */
@@ -280,8 +275,7 @@ public class glass
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_glass  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_glass  = new DriverInitHandlerPtr() { public void handler(){
 		/*
 		For REGION_GFX2 we have this memory map:
 			0x000000-0x1fffff ROM H13
@@ -301,5 +295,5 @@ public class glass
 		glass_ROM16_split(REGION_GFX2, REGION_GFX1, 0x0200000, 0x0200000, 0x0200000, 0x0300000);
 	} };
 	
-	public static GameDriver driver_glass	   = new GameDriver("1993"	,"glass"	,"glass.java"	,rom_glass,null	,machine_driver_glass	,input_ports_glass	,init_glass	,ROT0	,	"Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1993, glass, 0, glass,glass, glass, ROT0, "Gaelco", "Glass", GAME_UNEMULATED_PROTECTION )
 }

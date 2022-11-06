@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -68,8 +68,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starwars_m6532_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_m6532_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int temp;
 	
 		switch (offset)
@@ -109,8 +108,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starwars_m6532_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_m6532_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: /* 0x80 - Port A Write */
@@ -179,8 +177,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starwars_sin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_sin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		port_A &= 0x7f; /* ready to receive new commands from main */
@@ -190,8 +187,7 @@ public class starwars
 	} };
 	
 	
-	public static WriteHandlerPtr starwars_sout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_sout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port_A |= 0x40; /* result from sound cpu pending */
 		main_data = data;
 		return;
@@ -205,8 +201,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starwars_main_read_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_main_read_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		logerror("main_read_r\n");
@@ -218,8 +213,7 @@ public class starwars
 	} };
 	
 	
-	public static ReadHandlerPtr starwars_main_ready_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_main_ready_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if 0 /* correct, but doesn't work */
 		return (port_A & 0xc0); /* only upper two flag bits mapped */
 	#else
@@ -228,17 +222,15 @@ public class starwars
 	} };
 	
 	
-	public static WriteHandlerPtr starwars_main_wr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_main_wr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port_A |= 0x80;  /* command from main cpu pending */
 		sound_data = data;
-		if (PA7_irq != 0)
+		if (PA7_irq)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr starwars_soundrst_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_soundrst_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port_A &= 0x3f;
 	
 		/* reset sound CPU here  */

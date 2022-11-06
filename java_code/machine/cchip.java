@@ -39,7 +39,7 @@ original board.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -69,8 +69,7 @@ public class cchip
 		0x4e, 0x75                          /* RTS                    ( Return ) */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_cchip1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cchip1  = new MachineInitHandlerPtr() { public void handler(){
 		state_save_register_int  ("cchip1", 0, "current_bank", &current_bank);
 		state_save_register_UINT8("cchip1", 0, "cc_port",      &cc_port, 1);
 	} };

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -20,8 +20,7 @@ public class pitnrun
 	static unsigned char fromz80,toz80;
 	static int zaccept,zready;
 	
-	public static MachineInitHandlerPtr machine_init_pitnrun  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pitnrun  = new MachineInitHandlerPtr() { public void handler(){
 		zaccept = 1;
 		zready = 0;
 		cpu_set_irq_line(2,0,CLEAR_LINE);
@@ -32,8 +31,7 @@ public class pitnrun
 		zaccept = 1;
 	}
 	
-	public static ReadHandlerPtr pitnrun_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		timer_set(TIME_NOW,0,pitnrun_mcu_real_data_r);
 		return toz80;
 	} };
@@ -45,13 +43,11 @@ public class pitnrun
 		fromz80 = data;
 	}
 	
-	public static WriteHandlerPtr pitnrun_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW,data,pitnrun_mcu_real_data_w);
 	} };
 	
-	public static ReadHandlerPtr pitnrun_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* mcu synchronization */
 		cpu_yielduntil_time (TIME_IN_USEC(5));
 		/* bit 0 = the 68705 has read data from the Z80 */
@@ -61,13 +57,11 @@ public class pitnrun
 	
 	static unsigned char portA_in,portA_out;
 	
-	public static ReadHandlerPtr pitnrun_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return portA_in;
 	} };
 	
-	public static WriteHandlerPtr pitnrun_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		portA_out = data;
 	} };
 	
@@ -91,8 +85,7 @@ public class pitnrun
 	 *               the main Z80 memory location to access)
 	 */
 	
-	public static ReadHandlerPtr pitnrun_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -109,8 +102,7 @@ public class pitnrun
 		zaccept = 0;
 	}
 	
-	public static WriteHandlerPtr pitnrun_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pitnrun_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (~data & 0x02)
 		{
 			/* 68705 is going to read data from the Z80 */
@@ -155,8 +147,7 @@ public class pitnrun
 	 *                  passes through)
 	 */
 	
-	public static ReadHandlerPtr pitnrun_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pitnrun_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (zready << 0) | (zaccept << 1);
 	} };
 	

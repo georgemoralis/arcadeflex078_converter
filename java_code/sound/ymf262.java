@@ -41,7 +41,7 @@ differences between OPL2 and OPL3 shown in datasheets:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -226,7 +226,7 @@ public class ymf262
 		UINT32	eg_timer_add;			/* step of eg_timer						*/
 		UINT32	eg_timer_overflow;		/* envelope generator timer overlfows every 1 sample (on real chip) */
 	
-		UINT32	fn_tab[1024];			/* fnumber.increment counter	*/
+		UINT32	fn_tab[1024];			/* fnumber->increment counter	*/
 	
 		/* LFO */
 		UINT8	lfo_am_depth;
@@ -611,14 +611,14 @@ public class ymf262
 	INLINE void OPL3_STATUS_SET(OPL3 *chip,int flag)
 	{
 		/* set status flag masking out disabled IRQs */
-		chip.status |= (flag & chip.statusmask);
-		if(!(chip.status & 0x80))
+		chip->status |= (flag & chip->statusmask);
+		if(!(chip->status & 0x80))
 		{
-			if(chip.status & 0x7f)
+			if(chip->status & 0x7f)
 			{	/* IRQ on */
-				chip.status |= 0x80;
+				chip->status |= 0x80;
 				/* callback user interrupt handler (IRQ is OFF to ON) */
-				if(chip.IRQHandler) (chip.IRQHandler)(chip.IRQParam,1);
+				if(chip->IRQHandler) (chip->IRQHandler)(chip->IRQParam,1);
 			}
 		}
 	}
@@ -627,14 +627,14 @@ public class ymf262
 	INLINE void OPL3_STATUS_RESET(OPL3 *chip,int flag)
 	{
 		/* reset status flag */
-		chip.status &= ~flag;
-		if(chip.status & 0x80)
+		chip->status &= ~flag;
+		if(chip->status & 0x80)
 		{
-			if (!(chip.status & 0x7f))
+			if (!(chip->status & 0x7f))
 			{
-				chip.status &= 0x7f;
+				chip->status &= 0x7f;
 				/* callback user interrupt handler (IRQ is ON to OFF) */
-				if(chip.IRQHandler) (chip.IRQHandler)(chip.IRQParam,0);
+				if(chip->IRQHandler) (chip->IRQHandler)(chip->IRQParam,0);
 			}
 		}
 	}
@@ -642,7 +642,7 @@ public class ymf262
 	/* IRQ mask set */
 	INLINE void OPL3_STATUSMASK_SET(OPL3 *chip,int flag)
 	{
-		chip.statusmask = flag;
+		chip->statusmask = flag;
 		/* IRQ handling check */
 		OPL3_STATUS_SET(chip,0);
 		OPL3_STATUS_RESET(chip,0);
@@ -655,19 +655,19 @@ public class ymf262
 		UINT8 tmp;
 	
 		/* LFO */
-		chip.lfo_am_cnt += chip.lfo_am_inc;
-		if (chip.lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
-			chip.lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
+		chip->lfo_am_cnt += chip->lfo_am_inc;
+		if (chip->lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
+			chip->lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
 	
-		tmp = lfo_am_table[ chip.lfo_am_cnt >> LFO_SH ];
+		tmp = lfo_am_table[ chip->lfo_am_cnt >> LFO_SH ];
 	
-		if (chip.lfo_am_depth)
+		if (chip->lfo_am_depth)
 			LFO_AM = tmp;
 		else
 			LFO_AM = tmp>>2;
 	
-		chip.lfo_pm_cnt += chip.lfo_pm_inc;
-		LFO_PM = ((chip.lfo_pm_cnt>>LFO_SH) & 7) | chip.lfo_pm_depth_range;
+		chip->lfo_pm_cnt += chip->lfo_pm_inc;
+		LFO_PM = ((chip->lfo_pm_cnt>>LFO_SH) & 7) | chip->lfo_pm_depth_range;
 	}
 	
 	/* advance to next sample */
@@ -678,47 +678,47 @@ public class ymf262
 		int i;
 	
 	//profiler_mark(PROFILER_USER3);
-		chip.eg_timer += chip.eg_timer_add;
+		chip->eg_timer += chip->eg_timer_add;
 	
-		while (chip.eg_timer >= chip.eg_timer_overflow)
+		while (chip->eg_timer >= chip->eg_timer_overflow)
 		{
-			chip.eg_timer -= chip.eg_timer_overflow;
+			chip->eg_timer -= chip->eg_timer_overflow;
 	
-			chip.eg_cnt++;
+			chip->eg_cnt++;
 	
 			for (i=0; i<9*2*2; i++)
 			{
-				CH  = &chip.P_CH[i/2];
-				op  = &CH.SLOT[i&1];
+				CH  = &chip->P_CH[i/2];
+				op  = &CH->SLOT[i&1];
 	#if 1
 				/* Envelope Generator */
-				switch(op.state)
+				switch(op->state)
 				{
 				case EG_ATT:	/* attack phase */
-	//				if ( !(chip.eg_cnt & ((1<<op.eg_sh_ar)-1) ) )
-					if ( !(chip.eg_cnt & op.eg_m_ar) )
+	//				if ( !(chip->eg_cnt & ((1<<op->eg_sh_ar)-1) ) )
+					if ( !(chip->eg_cnt & op->eg_m_ar) )
 					{
-						op.volume += (~op.volume *
-		                        		           (eg_inc[op.eg_sel_ar + ((chip.eg_cnt>>op.eg_sh_ar)&7)])
+						op->volume += (~op->volume *
+		                        		           (eg_inc[op->eg_sel_ar + ((chip->eg_cnt>>op->eg_sh_ar)&7)])
 	        			                          ) >>3;
 	
-						if (op.volume <= MIN_ATT_INDEX)
+						if (op->volume <= MIN_ATT_INDEX)
 						{
-							op.volume = MIN_ATT_INDEX;
-							op.state = EG_DEC;
+							op->volume = MIN_ATT_INDEX;
+							op->state = EG_DEC;
 						}
 	
 					}
 				break;
 	
 				case EG_DEC:	/* decay phase */
-	//				if ( !(chip.eg_cnt & ((1<<op.eg_sh_dr)-1) ) )
-					if ( !(chip.eg_cnt & op.eg_m_dr) )
+	//				if ( !(chip->eg_cnt & ((1<<op->eg_sh_dr)-1) ) )
+					if ( !(chip->eg_cnt & op->eg_m_dr) )
 					{
-						op.volume += eg_inc[op.eg_sel_dr + ((chip.eg_cnt>>op.eg_sh_dr)&7)];
+						op->volume += eg_inc[op->eg_sel_dr + ((chip->eg_cnt>>op->eg_sh_dr)&7)];
 	
-						if ( op.volume >= op.sl )
-							op.state = EG_SUS;
+						if ( op->volume >= op->sl )
+							op->state = EG_SUS;
 	
 					}
 				break;
@@ -729,35 +729,35 @@ public class ymf262
 					one can change percusive/non-percussive modes on the fly and
 					the chip will remain in sustain phase - verified on real YM3812 */
 	
-					if(op.eg_type)		/* non-percussive mode */
+					if(op->eg_type)		/* non-percussive mode */
 					{
 										/* do nothing */
 					}
 					else				/* percussive mode */
 					{
 						/* during sustain phase chip adds Release Rate (in percussive mode) */
-	//					if ( !(chip.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
-						if ( !(chip.eg_cnt & op.eg_m_rr) )
+	//					if ( !(chip->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
+						if ( !(chip->eg_cnt & op->eg_m_rr) )
 						{
-							op.volume += eg_inc[op.eg_sel_rr + ((chip.eg_cnt>>op.eg_sh_rr)&7)];
+							op->volume += eg_inc[op->eg_sel_rr + ((chip->eg_cnt>>op->eg_sh_rr)&7)];
 	
-							if ( op.volume >= MAX_ATT_INDEX )
-								op.volume = MAX_ATT_INDEX;
+							if ( op->volume >= MAX_ATT_INDEX )
+								op->volume = MAX_ATT_INDEX;
 						}
 						/* else do nothing in sustain phase */
 					}
 				break;
 	
 				case EG_REL:	/* release phase */
-	//				if ( !(chip.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
-					if ( !(chip.eg_cnt & op.eg_m_rr) )
+	//				if ( !(chip->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
+					if ( !(chip->eg_cnt & op->eg_m_rr) )
 					{
-						op.volume += eg_inc[op.eg_sel_rr + ((chip.eg_cnt>>op.eg_sh_rr)&7)];
+						op->volume += eg_inc[op->eg_sel_rr + ((chip->eg_cnt>>op->eg_sh_rr)&7)];
 	
-						if ( op.volume >= MAX_ATT_INDEX )
+						if ( op->volume >= MAX_ATT_INDEX )
 						{
-							op.volume = MAX_ATT_INDEX;
-							op.state = EG_OFF;
+							op->volume = MAX_ATT_INDEX;
+							op->state = EG_OFF;
 						}
 	
 					}
@@ -774,33 +774,33 @@ public class ymf262
 	//profiler_mark(PROFILER_USER4);
 		for (i=0; i<9*2*2; i++)
 		{
-			CH  = &chip.P_CH[i/2];
-			op  = &CH.SLOT[i&1];
+			CH  = &chip->P_CH[i/2];
+			op  = &CH->SLOT[i&1];
 	
 			/* Phase Generator */
-			if(op.vib)
+			if(op->vib)
 			{
 				UINT8 block;
-				unsigned int block_fnum = CH.block_fnum;
+				unsigned int block_fnum = CH->block_fnum;
 	
 				unsigned int fnum_lfo   = (block_fnum&0x0380) >> 7;
 	
 				signed int lfo_fn_table_index_offset = lfo_pm_table[LFO_PM + 16*fnum_lfo ];
 	
-				if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
+				if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
 				{
 					block_fnum += lfo_fn_table_index_offset;
 					block = (block_fnum&0x1c00) >> 10;
-					op.Cnt += (chip.fn_tab[block_fnum&0x03ff] >> (7-block)) * op.mul;
+					op->Cnt += (chip->fn_tab[block_fnum&0x03ff] >> (7-block)) * op->mul;
 				}
 				else	/* LFO phase modulation  = zero */
 				{
-					op.Cnt += op.Incr;
+					op->Cnt += op->Incr;
 				}
 			}
 			else	/* LFO phase modulation disabled for this operator */
 			{
-				op.Cnt += op.Incr;
+				op->Cnt += op->Incr;
 			}
 		}
 	//profiler_mark(PROFILER_END);
@@ -816,15 +816,15 @@ public class ymf262
 		*	Simply use bit 22 as the noise output.
 		*/
 	
-		chip.noise_p += chip.noise_f;
-		i = chip.noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
-		chip.noise_p &= FREQ_MASK;
+		chip->noise_p += chip->noise_f;
+		i = chip->noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
+		chip->noise_p &= FREQ_MASK;
 		while (i)
 		{
 			/*
 			UINT32 j;
-			j = ( (chip.noise_rng) ^ (chip.noise_rng>>14) ^ (chip.noise_rng>>15) ^ (chip.noise_rng>>22) ) & 1;
-			chip.noise_rng = (j<<22) | (chip.noise_rng>>1);
+			j = ( (chip->noise_rng) ^ (chip->noise_rng>>14) ^ (chip->noise_rng>>15) ^ (chip->noise_rng>>22) ) & 1;
+			chip->noise_rng = (j<<22) | (chip->noise_rng>>1);
 			*/
 	
 			/*
@@ -835,8 +835,8 @@ public class ymf262
 				what is real state of the noise_rng after the reset.
 			*/
 	
-			if (chip.noise_rng & 1) chip.noise_rng ^= 0x800302;
-			chip.noise_rng >>= 1;
+			if (chip->noise_rng & 1) chip->noise_rng ^= 0x800302;
+			chip->noise_rng >>= 1;
 	
 			i--;
 		}
@@ -866,7 +866,7 @@ public class ymf262
 	}
 	
 	
-	#define volume_calc(OP) ((OP).TLL + ((UINT32)(OP).volume) + (LFO_AM & (OP).AMmask))
+	#define volume_calc(OP) ((OP)->TLL + ((UINT32)(OP)->volume) + (LFO_AM & (OP)->AMmask))
 	
 	/* calculate output of a standard 2 operator channel
 	 (or 1st part of a 4-op channel) */
@@ -880,27 +880,27 @@ public class ymf262
 		phase_modulation2= 0;
 	
 		/* SLOT 1 */
-		SLOT = &CH.SLOT[SLOT1];
+		SLOT = &CH->SLOT[SLOT1];
 		env  = volume_calc(SLOT);
-		out  = SLOT.op1_out[0] + SLOT.op1_out[1];
-		SLOT.op1_out[0] = SLOT.op1_out[1];
-		SLOT.op1_out[1] = 0;
+		out  = SLOT->op1_out[0] + SLOT->op1_out[1];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
+		SLOT->op1_out[1] = 0;
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.FB)
+			if (!SLOT->FB)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.Cnt, env, (out<<SLOT.FB), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->Cnt, env, (out<<SLOT->FB), SLOT->wavetable );
 		}
-		*SLOT.connect += SLOT.op1_out[1];
-	//logerror("out0=%5i vol0=%4i ", SLOT.op1_out[1], env );
+		*SLOT->connect += SLOT->op1_out[1];
+	//logerror("out0=%5i vol0=%4i ", SLOT->op1_out[1], env );
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			*SLOT.connect += op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable);
+			*SLOT->connect += op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable);
 	
-	//logerror("out1=%5i vol1=%4i\n", op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable), env );
+	//logerror("out1=%5i vol1=%4i\n", op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable), env );
 	
 	}
 	
@@ -913,16 +913,16 @@ public class ymf262
 		phase_modulation = 0;
 	
 		/* SLOT 1 */
-		SLOT = &CH.SLOT[SLOT1];
+		SLOT = &CH->SLOT[SLOT1];
 		env  = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			*SLOT.connect += op_calc(SLOT.Cnt, env, phase_modulation2, SLOT.wavetable );
+			*SLOT->connect += op_calc(SLOT->Cnt, env, phase_modulation2, SLOT->wavetable );
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			*SLOT.connect += op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable);
+			*SLOT->connect += op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable);
 	
 	}
 	
@@ -972,8 +972,8 @@ public class ymf262
 	
 		/* Bass Drum (verified on real YM3812):
 		  - depends on the channel 6 'connect' register:
-		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1.op2.out)
-		      when connect = 1 _only_ operator 2 is present on output (op2.out), operator 1 is ignored
+		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1->op2->out)
+		      when connect = 1 _only_ operator 2 is present on output (op2->out), operator 1 is ignored
 		  - output sample always is multiplied by 2
 		*/
 	
@@ -983,39 +983,39 @@ public class ymf262
 		SLOT = &CH[6].SLOT[SLOT1];
 		env = volume_calc(SLOT);
 	
-		out = SLOT.op1_out[0] + SLOT.op1_out[1];
-		SLOT.op1_out[0] = SLOT.op1_out[1];
+		out = SLOT->op1_out[0] + SLOT->op1_out[1];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
 	
-		if (!SLOT.CON)
-			phase_modulation = SLOT.op1_out[0];
+		if (!SLOT->CON)
+			phase_modulation = SLOT->op1_out[0];
 		//else ignore output of operator 1
 	
-		SLOT.op1_out[1] = 0;
+		SLOT->op1_out[1] = 0;
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.FB)
+			if (!SLOT->FB)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.Cnt, env, (out<<SLOT.FB), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->Cnt, env, (out<<SLOT->FB), SLOT->wavetable );
 		}
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			chanout[6] += op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable) * 2;
+			chanout[6] += op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable) * 2;
 	
 	
 		/* Phase generation is based on: */
-		// HH  (13) channel 7.slot 1 combined with channel 8.slot 2 (same combination as TOP CYMBAL but different output phases)
-		// SD  (16) channel 7.slot 1
-		// TOM (14) channel 8.slot 1
-		// TOP (17) channel 7.slot 1 combined with channel 8.slot 2 (same combination as HIGH HAT but different output phases)
+		// HH  (13) channel 7->slot 1 combined with channel 8->slot 2 (same combination as TOP CYMBAL but different output phases)
+		// SD  (16) channel 7->slot 1
+		// TOM (14) channel 8->slot 1
+		// TOP (17) channel 7->slot 1 combined with channel 8->slot 2 (same combination as HIGH HAT but different output phases)
 	
 		/* Envelope generation based on: */
-		// HH  channel 7.slot1
-		// SD  channel 7.slot2
-		// TOM channel 8.slot1
-		// TOP channel 8.slot2
+		// HH  channel 7->slot1
+		// SD  channel 7->slot2
+		// TOM channel 8->slot1
+		// TOP channel 8->slot2
 	
 	
 		/* The following formulas can be well optimized.
@@ -1033,9 +1033,9 @@ public class ymf262
 			*/
 	
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.Cnt>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.Cnt>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.Cnt>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->Cnt>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->Cnt>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1044,33 +1044,33 @@ public class ymf262
 			UINT32 phase = res1 ? (0x200|(0xd0>>2)) : 0xd0;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.Cnt>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->Cnt>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->Cnt>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e ^ bit5e);
 	
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | (0xd0>>2); */
-			if (res2 != 0)
+			if (res2)
 				phase = (0x200|(0xd0>>2));
 	
 	
 			/* when phase & 0x200 is set and noise=1 then phase = 0x200|0xd0 */
 			/* when phase & 0x200 is set and noise=0 then phase = 0x200|(0xd0>>2), ie no change */
-			if ((phase & 0x200) != 0)
+			if (phase&0x200)
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0x200|0xd0;
 			}
 			else
 			/* when phase & 0x200 is clear and noise=1 then phase = 0xd0>>2 */
 			/* when phase & 0x200 is clear and noise=0 then phase = 0xd0, ie no change */
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0xd0>>2;
 			}
 	
-			chanout[7] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1.wavetable) * 2;
+			chanout[7] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1->wavetable) * 2;
 		}
 	
 		/* Snare Drum (verified on real YM3812) */
@@ -1078,7 +1078,7 @@ public class ymf262
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit8 = ((SLOT7_1.Cnt>>FREQ_SH)>>8)&1;
+			unsigned char bit8 = ((SLOT7_1->Cnt>>FREQ_SH)>>8)&1;
 	
 			/* when bit8 = 0 phase = 0x100; */
 			/* when bit8 = 1 phase = 0x200; */
@@ -1088,25 +1088,25 @@ public class ymf262
 			/* when noisebit = 0 pass the phase from calculation above */
 			/* when noisebit = 1 phase ^= 0x100; */
 			/* in other words: phase ^= (noisebit<<8); */
-			if (noise != 0)
+			if (noise)
 				phase ^= 0x100;
 	
-			chanout[7] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2.wavetable) * 2;
+			chanout[7] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2->wavetable) * 2;
 		}
 	
 		/* Tom Tom (verified on real YM3812) */
 		env = volume_calc(SLOT8_1);
 		if( env < ENV_QUIET )
-			chanout[8] += op_calc(SLOT8_1.Cnt, env, 0, SLOT8_1.wavetable) * 2;
+			chanout[8] += op_calc(SLOT8_1->Cnt, env, 0, SLOT8_1->wavetable) * 2;
 	
 		/* Top Cymbal (verified on real YM3812) */
 		env = volume_calc(SLOT8_2);
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.Cnt>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.Cnt>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.Cnt>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->Cnt>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->Cnt>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1115,16 +1115,16 @@ public class ymf262
 			UINT32 phase = res1 ? 0x300 : 0x100;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.Cnt>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->Cnt>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->Cnt>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e ^ bit5e);
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | 0x100; */
-			if (res2 != 0)
+			if (res2)
 				phase = 0x300;
 	
-			chanout[8] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2.wavetable) * 2;
+			chanout[8] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2->wavetable) * 2;
 		}
 	
 	}
@@ -1148,7 +1148,7 @@ public class ymf262
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if ((n & 1) != 0)		/* round to nearest */
+			if (n&1)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1190,7 +1190,7 @@ public class ymf262
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if ((n & 1) != 0)						/* round to nearest */
+			if (n&1)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1303,25 +1303,25 @@ public class ymf262
 		int i;
 	
 		/* frequency base */
-		chip.freqbase  = (chip.rate) ? ((double)chip.clock / (8.0*36)) / chip.rate  : 0;
+		chip->freqbase  = (chip->rate) ? ((double)chip->clock / (8.0*36)) / chip->rate  : 0;
 	#if 0
-		chip.rate = (double)chip.clock / (8.0*36);
-		chip.freqbase  = 1.0;
+		chip->rate = (double)chip->clock / (8.0*36);
+		chip->freqbase  = 1.0;
 	#endif
 	
-		/* logerror("YMF262: freqbase=%f\n", chip.freqbase); */
+		/* logerror("YMF262: freqbase=%f\n", chip->freqbase); */
 	
 		/* Timer base time */
-		chip.TimerBase = 1.0 / ((double)chip.clock / (8.0*36) );
+		chip->TimerBase = 1.0 / ((double)chip->clock / (8.0*36) );
 	
-		/* make fnumber . increment counter table */
+		/* make fnumber -> increment counter table */
 		for( i=0 ; i < 1024 ; i++ )
 		{
 			/* opn phase increment counter = 20bit */
-			chip.fn_tab[i] = (UINT32)( (double)i * 64 * chip.freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
+			chip->fn_tab[i] = (UINT32)( (double)i * 64 * chip->freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
 	#if 0
 			logerror("YMF262.C: fn_tab[%4i] = %08x (dec=%8i)\n",
-					 i, chip.fn_tab[i]>>6, chip.fn_tab[i]>>6 );
+					 i, chip->fn_tab[i]>>6, chip->fn_tab[i]>>6 );
 	#endif
 		}
 	
@@ -1346,45 +1346,45 @@ public class ymf262
 	
 		/* Amplitude modulation: 27 output levels (triangle waveform); 1 level takes one of: 192, 256 or 448 samples */
 		/* One entry from LFO_AM_TABLE lasts for 64 samples */
-		chip.lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * chip.freqbase;
+		chip->lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * chip->freqbase;
 	
 		/* Vibrato: 8 output levels (triangle waveform); 1 level takes 1024 samples */
-		chip.lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * chip.freqbase;
+		chip->lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * chip->freqbase;
 	
-		/*logerror ("chip.lfo_am_inc = %8x ; chip.lfo_pm_inc = %8x\n", chip.lfo_am_inc, chip.lfo_pm_inc);*/
+		/*logerror ("chip->lfo_am_inc = %8x ; chip->lfo_pm_inc = %8x\n", chip->lfo_am_inc, chip->lfo_pm_inc);*/
 	
 		/* Noise generator: a step takes 1 sample */
-		chip.noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * chip.freqbase;
+		chip->noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * chip->freqbase;
 	
-		chip.eg_timer_add  = (1<<EG_SH)  * chip.freqbase;
-		chip.eg_timer_overflow = ( 1 ) * (1<<EG_SH);
-		/*logerror("YMF262init eg_timer_add=%8x eg_timer_overflow=%8x\n", chip.eg_timer_add, chip.eg_timer_overflow);*/
+		chip->eg_timer_add  = (1<<EG_SH)  * chip->freqbase;
+		chip->eg_timer_overflow = ( 1 ) * (1<<EG_SH);
+		/*logerror("YMF262init eg_timer_add=%8x eg_timer_overflow=%8x\n", chip->eg_timer_add, chip->eg_timer_overflow);*/
 	
 	}
 	
 	INLINE void FM_KEYON(OPL3_SLOT *SLOT, UINT32 key_set)
 	{
-		if( !SLOT.key )
+		if( !SLOT->key )
 		{
 			/* restart Phase Generator */
-			SLOT.Cnt = 0;
-			/* phase . Attack */
-			SLOT.state = EG_ATT;
+			SLOT->Cnt = 0;
+			/* phase -> Attack */
+			SLOT->state = EG_ATT;
 		}
-		SLOT.key |= key_set;
+		SLOT->key |= key_set;
 	}
 	
 	INLINE void FM_KEYOFF(OPL3_SLOT *SLOT, UINT32 key_clr)
 	{
-		if( SLOT.key )
+		if( SLOT->key )
 		{
-			SLOT.key &= key_clr;
+			SLOT->key &= key_clr;
 	
-			if( !SLOT.key )
+			if( !SLOT->key )
 			{
-				/* phase . Release */
-				if (SLOT.state>EG_REL)
-					SLOT.state = EG_REL;
+				/* phase -> Release */
+				if (SLOT->state>EG_REL)
+					SLOT->state = EG_REL;
 			}
 		}
 	}
@@ -1395,48 +1395,48 @@ public class ymf262
 		int ksr;
 	
 		/* (frequency) phase increment counter */
-		SLOT.Incr = CH.fc * SLOT.mul;
-		ksr = CH.kcode >> SLOT.KSR;
+		SLOT->Incr = CH->fc * SLOT->mul;
+		ksr = CH->kcode >> SLOT->KSR;
 	
-		if( SLOT.ksr != ksr )
+		if( SLOT->ksr != ksr )
 		{
-			SLOT.ksr = ksr;
+			SLOT->ksr = ksr;
 	
 			/* calculate envelope generator rates */
-			if ((SLOT.ar + SLOT.ksr) < 16+60)
+			if ((SLOT->ar + SLOT->ksr) < 16+60)
 			{
-				SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-				SLOT.eg_m_ar   = (1<<SLOT.eg_sh_ar)-1;
-				SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+				SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+				SLOT->eg_m_ar   = (1<<SLOT->eg_sh_ar)-1;
+				SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 			}
 			else
 			{
-				SLOT.eg_sh_ar  = 0;
-				SLOT.eg_m_ar   = (1<<SLOT.eg_sh_ar)-1;
-				SLOT.eg_sel_ar = 13*RATE_STEPS;
+				SLOT->eg_sh_ar  = 0;
+				SLOT->eg_m_ar   = (1<<SLOT->eg_sh_ar)-1;
+				SLOT->eg_sel_ar = 13*RATE_STEPS;
 			}
-			SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-			SLOT.eg_m_dr   = (1<<SLOT.eg_sh_dr)-1;
-			SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
-			SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-			SLOT.eg_m_rr   = (1<<SLOT.eg_sh_rr)-1;
-			SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+			SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+			SLOT->eg_m_dr   = (1<<SLOT->eg_sh_dr)-1;
+			SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
+			SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+			SLOT->eg_m_rr   = (1<<SLOT->eg_sh_rr)-1;
+			SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 		}
 	}
 	
 	/* set multi,am,vib,EG-TYP,KSR,mul */
 	INLINE void set_mul(OPL3 *chip,int slot,int v)
 	{
-		OPL3_CH   *CH   = &chip.P_CH[slot/2];
-		OPL3_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL3_CH   *CH   = &chip->P_CH[slot/2];
+		OPL3_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.mul     = mul_tab[v&0x0f];
-		SLOT.KSR     = (v&0x10) ? 0 : 2;
-		SLOT.eg_type = (v&0x20);
-		SLOT.vib     = (v&0x40);
-		SLOT.AMmask  = (v&0x80) ? ~0 : 0;
+		SLOT->mul     = mul_tab[v&0x0f];
+		SLOT->KSR     = (v&0x10) ? 0 : 2;
+		SLOT->eg_type = (v&0x20);
+		SLOT->vib     = (v&0x40);
+		SLOT->AMmask  = (v&0x80) ? ~0 : 0;
 	
-		if (chip.OPL3_mode & 1)
+		if (chip->OPL3_mode & 1)
 		{
 			int chan_no = slot/2;
 	
@@ -1453,7 +1453,7 @@ public class ymf262
 			{
 			case 0: case 1: case 2:
 			case 9: case 10: case 11:
-				if (CH.extended)
+				if (CH->extended)
 				{
 					/* normal */
 					CALC_FCSLOT(CH,SLOT);
@@ -1466,7 +1466,7 @@ public class ymf262
 			break;
 			case 3: case 4: case 5:
 			case 12: case 13: case 14:
-				if ((CH-3).extended)
+				if ((CH-3)->extended)
 				{
 					/* update this SLOT using frequency data for 1st channel of a pair */
 					CALC_FCSLOT(CH-3,SLOT);
@@ -1493,15 +1493,15 @@ public class ymf262
 	/* set ksl & tl */
 	INLINE void set_ksl_tl(OPL3 *chip,int slot,int v)
 	{
-		OPL3_CH   *CH   = &chip.P_CH[slot/2];
-		OPL3_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL3_CH   *CH   = &chip->P_CH[slot/2];
+		OPL3_SLOT *SLOT = &CH->SLOT[slot&1];
 	
 		int ksl = v>>6; /* 0 / 1.5 / 3.0 / 6.0 dB/OCT */
 	
-		SLOT.ksl = ksl ? 3-ksl : 31;
-		SLOT.TL  = (v&0x3f)<<(ENV_BITS-1-7); /* 7 bits TL (bit 6 = always 0) */
+		SLOT->ksl = ksl ? 3-ksl : 31;
+		SLOT->TL  = (v&0x3f)<<(ENV_BITS-1-7); /* 7 bits TL (bit 6 = always 0) */
 	
-		if (chip.OPL3_mode & 1)
+		if (chip->OPL3_mode & 1)
 		{
 			int chan_no = slot/2;
 	
@@ -1518,40 +1518,40 @@ public class ymf262
 			{
 			case 0: case 1: case 2:
 			case 9: case 10: case 11:
-				if (CH.extended)
+				if (CH->extended)
 				{
 					/* normal */
-					SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+					SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 				}
 				else
 				{
 					/* normal */
-					SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+					SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 				}
 			break;
 			case 3: case 4: case 5:
 			case 12: case 13: case 14:
-				if ((CH-3).extended)
+				if ((CH-3)->extended)
 				{
 					/* update this SLOT using frequency data for 1st channel of a pair */
-					SLOT.TLL = SLOT.TL + ((CH-3).ksl_base>>SLOT.ksl);
+					SLOT->TLL = SLOT->TL + ((CH-3)->ksl_base>>SLOT->ksl);
 				}
 				else
 				{
 					/* normal */
-					SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+					SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 				}
 			break;
 			default:
 					/* normal */
-					SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+					SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 			break;
 			}
 		}
 		else
 		{
 			/* in OPL2 mode */
-			SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+			SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 		}
 	
 	}
@@ -1559,49 +1559,49 @@ public class ymf262
 	/* set attack rate & decay rate  */
 	INLINE void set_ar_dr(OPL3 *chip,int slot,int v)
 	{
-		OPL3_CH   *CH   = &chip.P_CH[slot/2];
-		OPL3_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL3_CH   *CH   = &chip->P_CH[slot/2];
+		OPL3_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
+		SLOT->ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
 	
-		if ((SLOT.ar + SLOT.ksr) < 16+60) /* verified on real YMF262 - all 15 x rates take "zero" time */
+		if ((SLOT->ar + SLOT->ksr) < 16+60) /* verified on real YMF262 - all 15 x rates take "zero" time */
 		{
-			SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-			SLOT.eg_m_ar   = (1<<SLOT.eg_sh_ar)-1;
-			SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+			SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+			SLOT->eg_m_ar   = (1<<SLOT->eg_sh_ar)-1;
+			SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 		}
 		else
 		{
-			SLOT.eg_sh_ar  = 0;
-			SLOT.eg_m_ar   = (1<<SLOT.eg_sh_ar)-1;
-			SLOT.eg_sel_ar = 13*RATE_STEPS;
+			SLOT->eg_sh_ar  = 0;
+			SLOT->eg_m_ar   = (1<<SLOT->eg_sh_ar)-1;
+			SLOT->eg_sel_ar = 13*RATE_STEPS;
 		}
 	
-		SLOT.dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-		SLOT.eg_m_dr   = (1<<SLOT.eg_sh_dr)-1;
-		SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
+		SLOT->dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+		SLOT->eg_m_dr   = (1<<SLOT->eg_sh_dr)-1;
+		SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
 	}
 	
 	/* set sustain level & release rate */
 	INLINE void set_sl_rr(OPL3 *chip,int slot,int v)
 	{
-		OPL3_CH   *CH   = &chip.P_CH[slot/2];
-		OPL3_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL3_CH   *CH   = &chip->P_CH[slot/2];
+		OPL3_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.sl  = sl_tab[ v>>4 ];
+		SLOT->sl  = sl_tab[ v>>4 ];
 	
-		SLOT.rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-		SLOT.eg_m_rr   = (1<<SLOT.eg_sh_rr)-1;
-		SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+		SLOT->rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+		SLOT->eg_m_rr   = (1<<SLOT->eg_sh_rr)-1;
+		SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 	}
 	
 	
 	static void update_channels(OPL3 *chip, OPL3_CH *CH)
 	{
 		/* update channel passed as a parameter and a channel at CH+=3; */
-		if (CH.extended)
+		if (CH->extended)
 		{	/* we've just switched to combined 4 operator mode */
 	
 		}
@@ -1633,7 +1633,7 @@ public class ymf262
 		}
 	#endif
 	
-		if ((r & 0x100) != 0)
+		if(r&0x100)
 		{
 			switch(r)
 			{
@@ -1644,37 +1644,37 @@ public class ymf262
 				{
 					UINT8 prev;
 	
-					CH = &chip.P_CH[0];	/* channel 0 */
-					prev = CH.extended;
-					CH.extended = (v>>0) & 1;
-					if(prev != CH.extended)
+					CH = &chip->P_CH[0];	/* channel 0 */
+					prev = CH->extended;
+					CH->extended = (v>>0) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 					CH++;					/* channel 1 */
-					prev = CH.extended;
-					CH.extended = (v>>1) & 1;
-					if(prev != CH.extended)
+					prev = CH->extended;
+					CH->extended = (v>>1) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 					CH++;					/* channel 2 */
-					prev = CH.extended;
-					CH.extended = (v>>2) & 1;
-					if(prev != CH.extended)
+					prev = CH->extended;
+					CH->extended = (v>>2) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 	
 	
-					CH = &chip.P_CH[9];	/* channel 9 */
-					prev = CH.extended;
-					CH.extended = (v>>3) & 1;
-					if(prev != CH.extended)
+					CH = &chip->P_CH[9];	/* channel 9 */
+					prev = CH->extended;
+					CH->extended = (v>>3) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 					CH++;					/* channel 10 */
-					prev = CH.extended;
-					CH.extended = (v>>4) & 1;
-					if(prev != CH.extended)
+					prev = CH->extended;
+					CH->extended = (v>>4) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 					CH++;					/* channel 11 */
-					prev = CH.extended;
-					CH.extended = (v>>5) & 1;
-					if(prev != CH.extended)
+					prev = CH->extended;
+					CH->extended = (v>>5) & 1;
+					if(prev != CH->extended)
 						update_channels(chip, CH);
 	
 				}
@@ -1682,13 +1682,13 @@ public class ymf262
 			break;
 			case 0x105:	/* OPL3 extensions enable register */
 	
-				chip.OPL3_mode = v&0x01;	/* OPL3 mode when bit0=1 otherwise it is OPL2 mode */
+				chip->OPL3_mode = v&0x01;	/* OPL3 mode when bit0=1 otherwise it is OPL2 mode */
 	
 				/* following behaviour was tested on real YMF262,
 				switching OPL3/OPL2 modes on the fly:
 				 - does not change the waveform previously selected (unless when ....)
 				 - does not update CH.A, CH.B, CH.C and CH.D output selectors (registers c0-c8) (unless when ....)
-				 - does not disable channels 9-17 on OPL3.OPL2 switch
+				 - does not disable channels 9-17 on OPL3->OPL2 switch
 				 - does not switch 4 operator channels back to 2 operator channels
 				*/
 	
@@ -1717,13 +1717,13 @@ public class ymf262
 			case 0x01:	/* test register */
 			break;
 			case 0x02:	/* Timer 1 */
-				chip.T[0] = (256-v)*4;
+				chip->T[0] = (256-v)*4;
 			break;
 			case 0x03:	/* Timer 2 */
-				chip.T[1] = (256-v)*16;
+				chip->T[1] = (256-v)*16;
 			break;
 			case 0x04:	/* IRQ clear / mask and Timer enable */
-				if ((v & 0x80) != 0)
+				if(v&0x80)
 				{	/* IRQ flags clear */
 					OPL3_STATUS_RESET(chip,0x60);
 				}
@@ -1737,23 +1737,23 @@ public class ymf262
 					OPL3_STATUSMASK_SET(chip, (~v) & 0x60 );
 	
 					/* timer 2 */
-					if(chip.st[1] != st2)
+					if(chip->st[1] != st2)
 					{
-						double interval = st2 ? (double)chip.T[1]*chip.TimerBase : 0.0;
-						chip.st[1] = st2;
-						if (chip.TimerHandler) (chip.TimerHandler)(chip.TimerParam+1,interval);
+						double interval = st2 ? (double)chip->T[1]*chip->TimerBase : 0.0;
+						chip->st[1] = st2;
+						if (chip->TimerHandler) (chip->TimerHandler)(chip->TimerParam+1,interval);
 					}
 					/* timer 1 */
-					if(chip.st[0] != st1)
+					if(chip->st[0] != st1)
 					{
-						double interval = st1 ? (double)chip.T[0]*chip.TimerBase : 0.0;
-						chip.st[0] = st1;
-						if (chip.TimerHandler) (chip.TimerHandler)(chip.TimerParam+0,interval);
+						double interval = st1 ? (double)chip->T[0]*chip->TimerBase : 0.0;
+						chip->st[0] = st1;
+						if (chip->TimerHandler) (chip->TimerHandler)(chip->TimerParam+0,interval);
 					}
 				}
 			break;
 			case 0x08:	/* x,NTS,x,x, x,x,x,x */
-				chip.nts = v;
+				chip->nts = v;
 			break;
 	
 			default:
@@ -1787,67 +1787,67 @@ public class ymf262
 				if (ch_offset != 0)	/* 0xbd register is present in set #1 only */
 					return;
 	
-				chip.lfo_am_depth = v & 0x80;
-				chip.lfo_pm_depth_range = (v&0x40) ? 8 : 0;
+				chip->lfo_am_depth = v & 0x80;
+				chip->lfo_pm_depth_range = (v&0x40) ? 8 : 0;
 	
-				chip.rhythm = v&0x3f;
+				chip->rhythm = v&0x3f;
 	
-				if(chip.rhythm&0x20)
+				if(chip->rhythm&0x20)
 				{
 					/* BD key on/off */
-					if ((v & 0x10) != 0)
+					if(v&0x10)
 					{
-						FM_KEYON (&chip.P_CH[6].SLOT[SLOT1], 2);
-						FM_KEYON (&chip.P_CH[6].SLOT[SLOT2], 2);
+						FM_KEYON (&chip->P_CH[6].SLOT[SLOT1], 2);
+						FM_KEYON (&chip->P_CH[6].SLOT[SLOT2], 2);
 					}
 					else
 					{
-						FM_KEYOFF(&chip.P_CH[6].SLOT[SLOT1],~2);
-						FM_KEYOFF(&chip.P_CH[6].SLOT[SLOT2],~2);
+						FM_KEYOFF(&chip->P_CH[6].SLOT[SLOT1],~2);
+						FM_KEYOFF(&chip->P_CH[6].SLOT[SLOT2],~2);
 					}
 					/* HH key on/off */
-					if ((v & 0x01) != 0) FM_KEYON (&chip.P_CH[7].SLOT[SLOT1], 2);
-					else       FM_KEYOFF(&chip.P_CH[7].SLOT[SLOT1],~2);
+					if(v&0x01) FM_KEYON (&chip->P_CH[7].SLOT[SLOT1], 2);
+					else       FM_KEYOFF(&chip->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key on/off */
-					if ((v & 0x08) != 0) FM_KEYON (&chip.P_CH[7].SLOT[SLOT2], 2);
-					else       FM_KEYOFF(&chip.P_CH[7].SLOT[SLOT2],~2);
+					if(v&0x08) FM_KEYON (&chip->P_CH[7].SLOT[SLOT2], 2);
+					else       FM_KEYOFF(&chip->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key on/off */
-					if ((v & 0x04) != 0) FM_KEYON (&chip.P_CH[8].SLOT[SLOT1], 2);
-					else       FM_KEYOFF(&chip.P_CH[8].SLOT[SLOT1],~2);
+					if(v&0x04) FM_KEYON (&chip->P_CH[8].SLOT[SLOT1], 2);
+					else       FM_KEYOFF(&chip->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY key on/off */
-					if ((v & 0x02) != 0) FM_KEYON (&chip.P_CH[8].SLOT[SLOT2], 2);
-					else       FM_KEYOFF(&chip.P_CH[8].SLOT[SLOT2],~2);
+					if(v&0x02) FM_KEYON (&chip->P_CH[8].SLOT[SLOT2], 2);
+					else       FM_KEYOFF(&chip->P_CH[8].SLOT[SLOT2],~2);
 				}
 				else
 				{
 					/* BD key off */
-					FM_KEYOFF(&chip.P_CH[6].SLOT[SLOT1],~2);
-					FM_KEYOFF(&chip.P_CH[6].SLOT[SLOT2],~2);
+					FM_KEYOFF(&chip->P_CH[6].SLOT[SLOT1],~2);
+					FM_KEYOFF(&chip->P_CH[6].SLOT[SLOT2],~2);
 					/* HH key off */
-					FM_KEYOFF(&chip.P_CH[7].SLOT[SLOT1],~2);
+					FM_KEYOFF(&chip->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key off */
-					FM_KEYOFF(&chip.P_CH[7].SLOT[SLOT2],~2);
+					FM_KEYOFF(&chip->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key off */
-					FM_KEYOFF(&chip.P_CH[8].SLOT[SLOT1],~2);
+					FM_KEYOFF(&chip->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY off */
-					FM_KEYOFF(&chip.P_CH[8].SLOT[SLOT2],~2);
+					FM_KEYOFF(&chip->P_CH[8].SLOT[SLOT2],~2);
 				}
 				return;
 			}
 	
 			/* keyon,block,fnum */
 			if( (r&0x0f) > 8) return;
-			CH = &chip.P_CH[(r&0x0f) + ch_offset];
+			CH = &chip->P_CH[(r&0x0f) + ch_offset];
 	
 			if(!(r&0x10))
 			{	/* a0-a8 */
-				block_fnum  = (CH.block_fnum&0x1f00) | v;
+				block_fnum  = (CH->block_fnum&0x1f00) | v;
 			}
 			else
 			{	/* b0-b8 */
-				block_fnum = ((v&0x1f)<<8) | (CH.block_fnum&0xff);
+				block_fnum = ((v&0x1f)<<8) | (CH->block_fnum&0xff);
 	
-				if (chip.OPL3_mode & 1)
+				if (chip->OPL3_mode & 1)
 				{
 					int chan_no = (r&0x0f) + ch_offset;
 	
@@ -1863,113 +1863,113 @@ public class ymf262
 					{
 					case 0: case 1: case 2:
 					case 9: case 10: case 11:
-						if (CH.extended)
+						if (CH->extended)
 						{
 							//if this is 1st channel forming up a 4-op channel
 							//ALSO keyon/off slots of 2nd channel forming up 4-op channel
-							if ((v & 0x20) != 0)
+							if(v&0x20)
 							{
-								FM_KEYON (&CH.SLOT[SLOT1], 1);
-								FM_KEYON (&CH.SLOT[SLOT2], 1);
-								FM_KEYON (&(CH+3).SLOT[SLOT1], 1);
-								FM_KEYON (&(CH+3).SLOT[SLOT2], 1);
+								FM_KEYON (&CH->SLOT[SLOT1], 1);
+								FM_KEYON (&CH->SLOT[SLOT2], 1);
+								FM_KEYON (&(CH+3)->SLOT[SLOT1], 1);
+								FM_KEYON (&(CH+3)->SLOT[SLOT2], 1);
 							}
 							else
 							{
-								FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-								FM_KEYOFF(&CH.SLOT[SLOT2],~1);
-								FM_KEYOFF(&(CH+3).SLOT[SLOT1],~1);
-								FM_KEYOFF(&(CH+3).SLOT[SLOT2],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT2],~1);
+								FM_KEYOFF(&(CH+3)->SLOT[SLOT1],~1);
+								FM_KEYOFF(&(CH+3)->SLOT[SLOT2],~1);
 							}
 						}
 						else
 						{
 							//else normal 2 operator function keyon/off
-							if ((v & 0x20) != 0)
+							if(v&0x20)
 							{
-								FM_KEYON (&CH.SLOT[SLOT1], 1);
-								FM_KEYON (&CH.SLOT[SLOT2], 1);
+								FM_KEYON (&CH->SLOT[SLOT1], 1);
+								FM_KEYON (&CH->SLOT[SLOT2], 1);
 							}
 							else
 							{
-								FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-								FM_KEYOFF(&CH.SLOT[SLOT2],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT2],~1);
 							}
 						}
 					break;
 	
 					case 3: case 4: case 5:
 					case 12: case 13: case 14:
-						if ((CH-3).extended)
+						if ((CH-3)->extended)
 						{
 							//if this is 2nd channel forming up 4-op channel just do nothing
 						}
 						else
 						{
 							//else normal 2 operator function keyon/off
-							if ((v & 0x20) != 0)
+							if(v&0x20)
 							{
-								FM_KEYON (&CH.SLOT[SLOT1], 1);
-								FM_KEYON (&CH.SLOT[SLOT2], 1);
+								FM_KEYON (&CH->SLOT[SLOT1], 1);
+								FM_KEYON (&CH->SLOT[SLOT2], 1);
 							}
 							else
 							{
-								FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-								FM_KEYOFF(&CH.SLOT[SLOT2],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+								FM_KEYOFF(&CH->SLOT[SLOT2],~1);
 							}
 						}
 					break;
 	
 					default:
-						if ((v & 0x20) != 0)
+						if(v&0x20)
 						{
-							FM_KEYON (&CH.SLOT[SLOT1], 1);
-							FM_KEYON (&CH.SLOT[SLOT2], 1);
+							FM_KEYON (&CH->SLOT[SLOT1], 1);
+							FM_KEYON (&CH->SLOT[SLOT2], 1);
 						}
 						else
 						{
-							FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-							FM_KEYOFF(&CH.SLOT[SLOT2],~1);
+							FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+							FM_KEYOFF(&CH->SLOT[SLOT2],~1);
 						}
 					break;
 					}
 				}
 				else
 				{
-					if ((v & 0x20) != 0)
+					if(v&0x20)
 					{
-						FM_KEYON (&CH.SLOT[SLOT1], 1);
-						FM_KEYON (&CH.SLOT[SLOT2], 1);
+						FM_KEYON (&CH->SLOT[SLOT1], 1);
+						FM_KEYON (&CH->SLOT[SLOT2], 1);
 					}
 					else
 					{
-						FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-						FM_KEYOFF(&CH.SLOT[SLOT2],~1);
+						FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+						FM_KEYOFF(&CH->SLOT[SLOT2],~1);
 					}
 				}
 			}
 			/* update */
-			if(CH.block_fnum != block_fnum)
+			if(CH->block_fnum != block_fnum)
 			{
 				UINT8 block  = block_fnum >> 10;
 	
-				CH.block_fnum = block_fnum;
+				CH->block_fnum = block_fnum;
 	
-				CH.ksl_base = ksl_tab[block_fnum>>6];
-				CH.fc       = chip.fn_tab[block_fnum&0x03ff] >> (7-block);
+				CH->ksl_base = ksl_tab[block_fnum>>6];
+				CH->fc       = chip->fn_tab[block_fnum&0x03ff] >> (7-block);
 	
-				/* BLK 2,1,0 bits . bits 3,2,1 of kcode */
-				CH.kcode    = (CH.block_fnum&0x1c00)>>9;
+				/* BLK 2,1,0 bits -> bits 3,2,1 of kcode */
+				CH->kcode    = (CH->block_fnum&0x1c00)>>9;
 	
 				/* the info below is actually opposite to what is stated in the Manuals (verifed on real YMF262) */
-				/* if notesel == 0 . lsb of kcode is bit 10 (MSB) of fnum  */
-				/* if notesel == 1 . lsb of kcode is bit 9 (MSB-1) of fnum */
-				if (chip.nts&0x40)
-					CH.kcode |= (CH.block_fnum&0x100)>>8;	/* notesel == 1 */
+				/* if notesel == 0 -> lsb of kcode is bit 10 (MSB) of fnum  */
+				/* if notesel == 1 -> lsb of kcode is bit 9 (MSB-1) of fnum */
+				if (chip->nts&0x40)
+					CH->kcode |= (CH->block_fnum&0x100)>>8;	/* notesel == 1 */
 				else
-					CH.kcode |= (CH.block_fnum&0x200)>>9;	/* notesel == 0 */
+					CH->kcode |= (CH->block_fnum&0x200)>>9;	/* notesel == 0 */
 	
-				if (chip.OPL3_mode & 1)
+				if (chip->OPL3_mode & 1)
 				{
 					int chan_no = (r&0x0f) + ch_offset;
 					/* in OPL3 mode */
@@ -1984,39 +1984,39 @@ public class ymf262
 					{
 					case 0: case 1: case 2:
 					case 9: case 10: case 11:
-						if (CH.extended)
+						if (CH->extended)
 						{
 							//if this is 1st channel forming up a 4-op channel
 							//ALSO update slots of 2nd channel forming up 4-op channel
 	
 							/* refresh Total Level in FOUR SLOTs of this channel and channel+3 using data from THIS channel */
-							CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-							CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
-							(CH+3).SLOT[SLOT1].TLL = (CH+3).SLOT[SLOT1].TL + (CH.ksl_base>>(CH+3).SLOT[SLOT1].ksl);
-							(CH+3).SLOT[SLOT2].TLL = (CH+3).SLOT[SLOT2].TL + (CH.ksl_base>>(CH+3).SLOT[SLOT2].ksl);
+							CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+							CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
+							(CH+3)->SLOT[SLOT1].TLL = (CH+3)->SLOT[SLOT1].TL + (CH->ksl_base>>(CH+3)->SLOT[SLOT1].ksl);
+							(CH+3)->SLOT[SLOT2].TLL = (CH+3)->SLOT[SLOT2].TL + (CH->ksl_base>>(CH+3)->SLOT[SLOT2].ksl);
 	
 							/* refresh frequency counter in FOUR SLOTs of this channel and channel+3 using data from THIS channel */
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
-							CALC_FCSLOT(CH,&(CH+3).SLOT[SLOT1]);
-							CALC_FCSLOT(CH,&(CH+3).SLOT[SLOT2]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
+							CALC_FCSLOT(CH,&(CH+3)->SLOT[SLOT1]);
+							CALC_FCSLOT(CH,&(CH+3)->SLOT[SLOT2]);
 						}
 						else
 						{
 							//else normal 2 operator function
 							/* refresh Total Level in both SLOTs of this channel */
-							CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-							CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+							CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+							CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 							/* refresh frequency counter in both SLOTs of this channel */
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 						}
 					break;
 	
 					case 3: case 4: case 5:
 					case 12: case 13: case 14:
-						if ((CH-3).extended)
+						if ((CH-3)->extended)
 						{
 							//if this is 2nd channel forming up 4-op channel just do nothing
 						}
@@ -2024,23 +2024,23 @@ public class ymf262
 						{
 							//else normal 2 operator function
 							/* refresh Total Level in both SLOTs of this channel */
-							CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-							CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+							CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+							CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 							/* refresh frequency counter in both SLOTs of this channel */
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-							CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+							CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 						}
 					break;
 	
 					default:
 						/* refresh Total Level in both SLOTs of this channel */
-						CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-						CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+						CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+						CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 						/* refresh frequency counter in both SLOTs of this channel */
-						CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-						CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+						CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+						CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 					break;
 					}
 				}
@@ -2049,12 +2049,12 @@ public class ymf262
 					/* in OPL2 mode */
 	
 					/* refresh Total Level in both SLOTs of this channel */
-					CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-					CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+					CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+					CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 					/* refresh frequency counter in both SLOTs of this channel */
-					CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-					CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+					CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+					CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 				}
 			}
 		break;
@@ -2063,35 +2063,35 @@ public class ymf262
 			/* CH.D, CH.C, CH.B, CH.A, FB(3bits), C */
 			if( (r&0xf) > 8) return;
 	
-			CH = &chip.P_CH[(r&0xf) + ch_offset];
+			CH = &chip->P_CH[(r&0xf) + ch_offset];
 	
-			if( chip.OPL3_mode & 1 )
+			if( chip->OPL3_mode & 1 )
 			{
 				int base = ((r&0xf) + ch_offset) * 4;
 	
 				/* OPL3 mode */
-				chip.pan[ base    ] = (v & 0x10) ? ~0 : 0;	/* ch.A */
-				chip.pan[ base +1 ] = (v & 0x20) ? ~0 : 0;	/* ch.B */
-				chip.pan[ base +2 ] = (v & 0x40) ? ~0 : 0;	/* ch.C */
-				chip.pan[ base +3 ] = (v & 0x80) ? ~0 : 0;	/* ch.D */
+				chip->pan[ base    ] = (v & 0x10) ? ~0 : 0;	/* ch.A */
+				chip->pan[ base +1 ] = (v & 0x20) ? ~0 : 0;	/* ch.B */
+				chip->pan[ base +2 ] = (v & 0x40) ? ~0 : 0;	/* ch.C */
+				chip->pan[ base +3 ] = (v & 0x80) ? ~0 : 0;	/* ch.D */
 			}
 			else
 			{
 				int base = ((r&0xf) + ch_offset) * 4;
 	
 				/* OPL2 mode - always enabled */
-				chip.pan[ base    ] = ~0;		/* ch.A */
-				chip.pan[ base +1 ] = ~0;		/* ch.B */
-				chip.pan[ base +2 ] = ~0;		/* ch.C */
-				chip.pan[ base +3 ] = ~0;		/* ch.D */
+				chip->pan[ base    ] = ~0;		/* ch.A */
+				chip->pan[ base +1 ] = ~0;		/* ch.B */
+				chip->pan[ base +2 ] = ~0;		/* ch.C */
+				chip->pan[ base +3 ] = ~0;		/* ch.D */
 			}
 	
-			chip.pan_ctrl_value[ (r&0xf) + ch_offset ] = v;	/* store control value for OPL3/OPL2 mode switching on the fly */
+			chip->pan_ctrl_value[ (r&0xf) + ch_offset ] = v;	/* store control value for OPL3/OPL2 mode switching on the fly */
 	
-			CH.SLOT[SLOT1].FB  = (v>>1)&7 ? ((v>>1)&7) + 7 : 0;
-			CH.SLOT[SLOT1].CON = v&1;
+			CH->SLOT[SLOT1].FB  = (v>>1)&7 ? ((v>>1)&7) + 7 : 0;
+			CH->SLOT[SLOT1].CON = v&1;
 	
-			if( chip.OPL3_mode & 1 )
+			if( chip->OPL3_mode & 1 )
 			{
 				int chan_no = (r&0x0f) + ch_offset;
 	
@@ -2099,120 +2099,120 @@ public class ymf262
 				{
 				case 0: case 1: case 2:
 				case 9: case 10: case 11:
-					if (CH.extended)
+					if (CH->extended)
 					{
-						UINT8 conn = (CH.SLOT[SLOT1].CON<<1) || ((CH+3).SLOT[SLOT1].CON<<0);
+						UINT8 conn = (CH->SLOT[SLOT1].CON<<1) || ((CH+3)->SLOT[SLOT1].CON<<0);
 						switch(conn)
 						{
 						case 0:
-							/* 1 . 2 . 3 . 4 - out */
+							/* 1 -> 2 -> 3 -> 4 - out */
 	
-							CH.SLOT[SLOT1].connect = &phase_modulation;
-							CH.SLOT[SLOT2].connect = &phase_modulation2;
-							(CH+3).SLOT[SLOT1].connect = &phase_modulation;
-							(CH+3).SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
+							CH->SLOT[SLOT1].connect = &phase_modulation;
+							CH->SLOT[SLOT2].connect = &phase_modulation2;
+							(CH+3)->SLOT[SLOT1].connect = &phase_modulation;
+							(CH+3)->SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
 						break;
 						case 1:
-							/* 1 . 2 -\
-							   3 . 4 -+- out */
+							/* 1 -> 2 -\
+							   3 -> 4 -+- out */
 	
-							CH.SLOT[SLOT1].connect = &phase_modulation;
-							CH.SLOT[SLOT2].connect = &chanout[ chan_no ];
-							(CH+3).SLOT[SLOT1].connect = &phase_modulation;
-							(CH+3).SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
+							CH->SLOT[SLOT1].connect = &phase_modulation;
+							CH->SLOT[SLOT2].connect = &chanout[ chan_no ];
+							(CH+3)->SLOT[SLOT1].connect = &phase_modulation;
+							(CH+3)->SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
 						break;
 						case 2:
 							/* 1 -----------\
-							   2 . 3 . 4 -+- out */
+							   2 -> 3 -> 4 -+- out */
 	
-							CH.SLOT[SLOT1].connect = &chanout[ chan_no ];
-							CH.SLOT[SLOT2].connect = &phase_modulation2;
-							(CH+3).SLOT[SLOT1].connect = &phase_modulation;
-							(CH+3).SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
+							CH->SLOT[SLOT1].connect = &chanout[ chan_no ];
+							CH->SLOT[SLOT2].connect = &phase_modulation2;
+							(CH+3)->SLOT[SLOT1].connect = &phase_modulation;
+							(CH+3)->SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
 						break;
 						case 3:
 							/* 1 ------\
-							   2 . 3 -+- out
+							   2 -> 3 -+- out
 							   4 ------/     */
-							CH.SLOT[SLOT1].connect = &chanout[ chan_no ];
-							CH.SLOT[SLOT2].connect = &phase_modulation2;
-							(CH+3).SLOT[SLOT1].connect = &chanout[ chan_no + 3 ];
-							(CH+3).SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
+							CH->SLOT[SLOT1].connect = &chanout[ chan_no ];
+							CH->SLOT[SLOT2].connect = &phase_modulation2;
+							(CH+3)->SLOT[SLOT1].connect = &chanout[ chan_no + 3 ];
+							(CH+3)->SLOT[SLOT2].connect = &chanout[ chan_no + 3 ];
 						break;
 						}
 					}
 					else
 					{
 						/* 2 operators mode */
-						CH.SLOT[SLOT1].connect = CH.SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
-						CH.SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
+						CH->SLOT[SLOT1].connect = CH->SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
+						CH->SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
 					}
 				break;
 	
 				case 3: case 4: case 5:
 				case 12: case 13: case 14:
-					if ((CH-3).extended)
+					if ((CH-3)->extended)
 					{
-						UINT8 conn = ((CH-3).SLOT[SLOT1].CON<<1) || (CH.SLOT[SLOT1].CON<<0);
+						UINT8 conn = ((CH-3)->SLOT[SLOT1].CON<<1) || (CH->SLOT[SLOT1].CON<<0);
 						switch(conn)
 						{
 						case 0:
-							/* 1 . 2 . 3 . 4 - out */
+							/* 1 -> 2 -> 3 -> 4 - out */
 	
-							(CH-3).SLOT[SLOT1].connect = &phase_modulation;
-							(CH-3).SLOT[SLOT2].connect = &phase_modulation2;
-							CH.SLOT[SLOT1].connect = &phase_modulation;
-							CH.SLOT[SLOT2].connect = &chanout[ chan_no ];
+							(CH-3)->SLOT[SLOT1].connect = &phase_modulation;
+							(CH-3)->SLOT[SLOT2].connect = &phase_modulation2;
+							CH->SLOT[SLOT1].connect = &phase_modulation;
+							CH->SLOT[SLOT2].connect = &chanout[ chan_no ];
 						break;
 						case 1:
-							/* 1 . 2 -\
-							   3 . 4 -+- out */
+							/* 1 -> 2 -\
+							   3 -> 4 -+- out */
 	
-							(CH-3).SLOT[SLOT1].connect = &phase_modulation;
-							(CH-3).SLOT[SLOT2].connect = &chanout[ chan_no - 3 ];
-							CH.SLOT[SLOT1].connect = &phase_modulation;
-							CH.SLOT[SLOT2].connect = &chanout[ chan_no ];
+							(CH-3)->SLOT[SLOT1].connect = &phase_modulation;
+							(CH-3)->SLOT[SLOT2].connect = &chanout[ chan_no - 3 ];
+							CH->SLOT[SLOT1].connect = &phase_modulation;
+							CH->SLOT[SLOT2].connect = &chanout[ chan_no ];
 						break;
 						case 2:
 							/* 1 -----------\
-							   2 . 3 . 4 -+- out */
+							   2 -> 3 -> 4 -+- out */
 	
-							(CH-3).SLOT[SLOT1].connect = &chanout[ chan_no - 3 ];
-							(CH-3).SLOT[SLOT2].connect = &phase_modulation2;
-							CH.SLOT[SLOT1].connect = &phase_modulation;
-							CH.SLOT[SLOT2].connect = &chanout[ chan_no ];
+							(CH-3)->SLOT[SLOT1].connect = &chanout[ chan_no - 3 ];
+							(CH-3)->SLOT[SLOT2].connect = &phase_modulation2;
+							CH->SLOT[SLOT1].connect = &phase_modulation;
+							CH->SLOT[SLOT2].connect = &chanout[ chan_no ];
 						break;
 						case 3:
 							/* 1 ------\
-							   2 . 3 -+- out
+							   2 -> 3 -+- out
 							   4 ------/     */
-							(CH-3).SLOT[SLOT1].connect = &chanout[ chan_no - 3 ];
-							(CH-3).SLOT[SLOT2].connect = &phase_modulation2;
-							CH.SLOT[SLOT1].connect = &chanout[ chan_no ];
-							CH.SLOT[SLOT2].connect = &chanout[ chan_no ];
+							(CH-3)->SLOT[SLOT1].connect = &chanout[ chan_no - 3 ];
+							(CH-3)->SLOT[SLOT2].connect = &phase_modulation2;
+							CH->SLOT[SLOT1].connect = &chanout[ chan_no ];
+							CH->SLOT[SLOT2].connect = &chanout[ chan_no ];
 						break;
 						}
 					}
 					else
 					{
 						/* 2 operators mode */
-						CH.SLOT[SLOT1].connect = CH.SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
-						CH.SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
+						CH->SLOT[SLOT1].connect = CH->SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
+						CH->SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
 					}
 				break;
 	
 				default:
 						/* 2 operators mode */
-						CH.SLOT[SLOT1].connect = CH.SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
-						CH.SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
+						CH->SLOT[SLOT1].connect = CH->SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
+						CH->SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
 				break;
 				}
 			}
 			else
 			{
 				/* OPL2 mode - always 2 operators mode */
-				CH.SLOT[SLOT1].connect = CH.SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
-				CH.SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
+				CH->SLOT[SLOT1].connect = CH->SLOT[SLOT1].CON ? &chanout[(r&0xf)+ch_offset] : &phase_modulation;
+				CH->SLOT[SLOT2].connect = &chanout[(r&0xf)+ch_offset];
 			}
 		break;
 	
@@ -2222,19 +2222,19 @@ public class ymf262
 	
 			slot += ch_offset*2;
 	
-			CH = &chip.P_CH[slot/2];
+			CH = &chip->P_CH[slot/2];
 	
 	
 			/* store 3-bit value written regardless of current OPL2 or OPL3 mode... (verified on real YMF262) */
 			v &= 7;
-			CH.SLOT[slot&1].waveform_number = v;
+			CH->SLOT[slot&1].waveform_number = v;
 	
 			/* ... but select only waveforms 0-3 in OPL2 mode */
-			if( !(chip.OPL3_mode & 1) )
+			if( !(chip->OPL3_mode & 1) )
 			{
 				v &= 3; /* we're in OPL2 mode */
 			}
-			CH.SLOT[slot&1].wavetable = v * SIN_LEN;
+			CH->SLOT[slot&1].wavetable = v * SIN_LEN;
 		break;
 		}
 	}
@@ -2242,7 +2242,7 @@ public class ymf262
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile != 0)
+		if (cymfile)
 		{
 			fputc( (unsigned char)0, cymfile );
 		}
@@ -2267,7 +2267,7 @@ public class ymf262
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("ymf262_.cym","wb");
-		if (cymfile != 0)
+		if (cymfile)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create ymf262_.cym file\n");
@@ -2278,8 +2278,8 @@ public class ymf262
 	
 	static void OPL3_UnLockTable(void)
 	{
-		if (num_lock != 0) num_lock--;
-		if (num_lock != 0) return;
+		if(num_lock) num_lock--;
+		if(num_lock) return;
 	
 		/* last time */
 	
@@ -2297,11 +2297,11 @@ public class ymf262
 	{
 		int c,s;
 	
-		chip.eg_timer = 0;
-		chip.eg_cnt   = 0;
+		chip->eg_timer = 0;
+		chip->eg_cnt   = 0;
 	
-		chip.noise_rng = 1;	/* noise shift register */
-		chip.nts       = 0;	/* note split */
+		chip->noise_rng = 1;	/* noise shift register */
+		chip->nts       = 0;	/* note split */
 		OPL3_STATUS_RESET(chip,0x60);
 	
 		/* reset with register write */
@@ -2326,11 +2326,11 @@ public class ymf262
 		/* reset operator parameters */
 		for( c = 0 ; c < 9*2 ; c++ )
 		{
-			OPL3_CH *CH = &chip.P_CH[c];
+			OPL3_CH *CH = &chip->P_CH[c];
 			for(s = 0 ; s < 2 ; s++ )
 			{
-				CH.SLOT[s].state     = EG_OFF;
-				CH.SLOT[s].volume    = MAX_ATT_INDEX;
+				CH->SLOT[s].state     = EG_OFF;
+				CH->SLOT[s].volume    = MAX_ATT_INDEX;
 			}
 		}
 	}
@@ -2353,9 +2353,9 @@ public class ymf262
 		/* clear */
 		memset(chip, 0, sizeof(OPL3));
 	
-		chip.type  = type;
-		chip.clock = clock;
-		chip.rate  = rate;
+		chip->type  = type;
+		chip->clock = clock;
+		chip->rate  = rate;
 	
 		/* init global tables */
 		OPL3_initalize(chip);
@@ -2377,18 +2377,18 @@ public class ymf262
 	
 	static void OPL3SetTimerHandler(OPL3 *chip,OPL3_TIMERHANDLER TimerHandler,int channelOffset)
 	{
-		chip.TimerHandler   = TimerHandler;
-		chip.TimerParam = channelOffset;
+		chip->TimerHandler   = TimerHandler;
+		chip->TimerParam = channelOffset;
 	}
 	static void OPL3SetIRQHandler(OPL3 *chip,OPL3_IRQHANDLER IRQHandler,int param)
 	{
-		chip.IRQHandler     = IRQHandler;
-		chip.IRQParam = param;
+		chip->IRQHandler     = IRQHandler;
+		chip->IRQParam = param;
 	}
 	static void OPL3SetUpdateHandler(OPL3 *chip,OPL3_UPDATEHANDLER UpdateHandler,int param)
 	{
-		chip.UpdateHandler = UpdateHandler;
-		chip.UpdateParam = param;
+		chip->UpdateHandler = UpdateHandler;
+		chip->UpdateParam = param;
 	}
 	
 	/* YMF262 I/O interface */
@@ -2400,13 +2400,13 @@ public class ymf262
 		switch(a&3)
 		{
 		case 0:	/* address port 0 (register set #1) */
-			chip.address = v;
+			chip->address = v;
 		break;
 	
 		case 1:	/* data port - ignore A1 */
 		case 3:	/* data port - ignore A1 */
-			if(chip.UpdateHandler) chip.UpdateHandler(chip.UpdateParam,0);
-			OPL3WriteReg(chip,chip.address,v);
+			if(chip->UpdateHandler) chip->UpdateHandler(chip->UpdateParam,0);
+			OPL3WriteReg(chip,chip->address,v);
 		break;
 	
 		case 2:	/* address port 1 (register set #2) */
@@ -2420,23 +2420,23 @@ public class ymf262
 			   verified on registers from set#2: 0x01, 0x04, 0x20-0xef
 			   The only exception is register 0x05.
 			*/
-			if( chip.OPL3_mode & 1 )
+			if( chip->OPL3_mode & 1 )
 			{
 				/* OPL3 mode */
-					chip.address = v | 0x100;
+					chip->address = v | 0x100;
 			}
 			else
 			{
 				/* in OPL2 mode the only accessible in set #2 is register 0x05 */
 				if( v==5 )
-					chip.address = v | 0x100;
+					chip->address = v | 0x100;
 				else
-					chip.address = v;	/* verified range: 0x01, 0x04, 0x20-0xef(set #2 becomes set #1 in opl2 mode) */
+					chip->address = v;	/* verified range: 0x01, 0x04, 0x20-0xef(set #2 becomes set #1 in opl2 mode) */
 			}
 		break;
 		}
 	
-		return chip.status>>7;
+		return chip->status>>7;
 	}
 	
 	static unsigned char OPL3Read(OPL3 *chip,int a)
@@ -2444,7 +2444,7 @@ public class ymf262
 		if( a==0 )
 		{
 			/* status port */
-			return chip.status;
+			return chip->status;
 		}
 	
 		return 0x00;	/* verified on real YMF262 */
@@ -2454,7 +2454,7 @@ public class ymf262
 	
 	static int OPL3TimerOver(OPL3 *chip,int c)
 	{
-		if (c != 0)
+		if( c )
 		{	/* Timer B */
 			OPL3_STATUS_SET(chip,0x20);
 		}
@@ -2463,8 +2463,8 @@ public class ymf262
 			OPL3_STATUS_SET(chip,0x40);
 		}
 		/* reload timer */
-		if (chip.TimerHandler) (chip.TimerHandler)(chip.TimerParam+c,(double)chip.T[c]*chip.TimerBase);
-		return chip.status>>7;
+		if (chip->TimerHandler) (chip->TimerHandler)(chip->TimerParam+c,(double)chip->T[c]*chip->TimerBase);
+		return chip->status>>7;
 	}
 	
 	
@@ -2481,7 +2481,7 @@ public class ymf262
 	{
 		int i;
 	
-		if (YMF262NumChips != 0)
+		if (YMF262NumChips)
 			return -1;	/* duplicate init. */
 	
 		YMF262NumChips = num;
@@ -2565,7 +2565,7 @@ public class ymf262
 	void YMF262UpdateOne(int which, INT16 **buffers, int length)
 	{
 		OPL3		*chip  = YMF262[which];
-		UINT8		rhythm = chip.rhythm&0x20;
+		UINT8		rhythm = chip->rhythm&0x20;
 	
 		OPL3SAMPLE	*ch_a = buffers[0];
 		OPL3SAMPLE	*ch_b = buffers[1];
@@ -2577,10 +2577,10 @@ public class ymf262
 		if( (void *)chip != cur_chip ){
 			cur_chip = (void *)chip;
 			/* rhythm slots */
-			SLOT7_1 = &chip.P_CH[7].SLOT[SLOT1];
-			SLOT7_2 = &chip.P_CH[7].SLOT[SLOT2];
-			SLOT8_1 = &chip.P_CH[8].SLOT[SLOT1];
-			SLOT8_2 = &chip.P_CH[8].SLOT[SLOT2];
+			SLOT7_1 = &chip->P_CH[7].SLOT[SLOT1];
+			SLOT7_2 = &chip->P_CH[7].SLOT[SLOT2];
+			SLOT8_1 = &chip->P_CH[8].SLOT[SLOT1];
+			SLOT8_2 = &chip->P_CH[8].SLOT[SLOT2];
 		}
 		for( i=0; i < length ; i++ )
 		{
@@ -2596,64 +2596,64 @@ public class ymf262
 	
 	#if 1
 		/* register set #1 */
-			chan_calc(&chip.P_CH[0]);			/* extended 4op ch#0 part 1 or 2op ch#0 */
-			if (chip.P_CH[0].extended)
-				chan_calc_ext(&chip.P_CH[3]);	/* extended 4op ch#0 part 2 */
+			chan_calc(&chip->P_CH[0]);			/* extended 4op ch#0 part 1 or 2op ch#0 */
+			if (chip->P_CH[0].extended)
+				chan_calc_ext(&chip->P_CH[3]);	/* extended 4op ch#0 part 2 */
 			else
-				chan_calc(&chip.P_CH[3]);		/* standard 2op ch#3 */
+				chan_calc(&chip->P_CH[3]);		/* standard 2op ch#3 */
 	
 	
-			chan_calc(&chip.P_CH[1]);			/* extended 4op ch#1 part 1 or 2op ch#1 */
-			if (chip.P_CH[1].extended)
-				chan_calc_ext(&chip.P_CH[4]);	/* extended 4op ch#1 part 2 */
+			chan_calc(&chip->P_CH[1]);			/* extended 4op ch#1 part 1 or 2op ch#1 */
+			if (chip->P_CH[1].extended)
+				chan_calc_ext(&chip->P_CH[4]);	/* extended 4op ch#1 part 2 */
 			else
-				chan_calc(&chip.P_CH[4]);		/* standard 2op ch#4 */
+				chan_calc(&chip->P_CH[4]);		/* standard 2op ch#4 */
 	
 	
-			chan_calc(&chip.P_CH[2]);			/* extended 4op ch#2 part 1 or 2op ch#2 */
-			if (chip.P_CH[2].extended)
-				chan_calc_ext(&chip.P_CH[5]);	/* extended 4op ch#2 part 2 */
+			chan_calc(&chip->P_CH[2]);			/* extended 4op ch#2 part 1 or 2op ch#2 */
+			if (chip->P_CH[2].extended)
+				chan_calc_ext(&chip->P_CH[5]);	/* extended 4op ch#2 part 2 */
 			else
-				chan_calc(&chip.P_CH[5]);		/* standard 2op ch#5 */
+				chan_calc(&chip->P_CH[5]);		/* standard 2op ch#5 */
 	
 	
-			if (rhythm == 0)
+			if(!rhythm)
 			{
-				chan_calc(&chip.P_CH[6]);
-				chan_calc(&chip.P_CH[7]);
-				chan_calc(&chip.P_CH[8]);
+				chan_calc(&chip->P_CH[6]);
+				chan_calc(&chip->P_CH[7]);
+				chan_calc(&chip->P_CH[8]);
 			}
 			else		/* Rhythm part */
 			{
-				chan_calc_rhythm(&chip.P_CH[0], (chip.noise_rng>>0)&1 );
+				chan_calc_rhythm(&chip->P_CH[0], (chip->noise_rng>>0)&1 );
 			}
 	
 		/* register set #2 */
-			chan_calc(&chip.P_CH[ 9]);
-			if (chip.P_CH[9].extended)
-				chan_calc_ext(&chip.P_CH[12]);
+			chan_calc(&chip->P_CH[ 9]);
+			if (chip->P_CH[9].extended)
+				chan_calc_ext(&chip->P_CH[12]);
 			else
-				chan_calc(&chip.P_CH[12]);
+				chan_calc(&chip->P_CH[12]);
 	
 	
-			chan_calc(&chip.P_CH[10]);
-			if (chip.P_CH[10].extended)
-				chan_calc_ext(&chip.P_CH[13]);
+			chan_calc(&chip->P_CH[10]);
+			if (chip->P_CH[10].extended)
+				chan_calc_ext(&chip->P_CH[13]);
 			else
-				chan_calc(&chip.P_CH[13]);
+				chan_calc(&chip->P_CH[13]);
 	
 	
-			chan_calc(&chip.P_CH[11]);
-			if (chip.P_CH[11].extended)
-				chan_calc_ext(&chip.P_CH[14]);
+			chan_calc(&chip->P_CH[11]);
+			if (chip->P_CH[11].extended)
+				chan_calc_ext(&chip->P_CH[14]);
 			else
-				chan_calc(&chip.P_CH[14]);
+				chan_calc(&chip->P_CH[14]);
 	
 	
 	        /* channels 15,16,17 are fixed 2-operator channels only */
-			chan_calc(&chip.P_CH[15]);
-			chan_calc(&chip.P_CH[16]);
-			chan_calc(&chip.P_CH[17]);
+			chan_calc(&chip->P_CH[15]);
+			chan_calc(&chip->P_CH[16]);
+			chan_calc(&chip->P_CH[17]);
 	#endif
 	//profiler_mark(PROFILER_END);
 	
@@ -2661,85 +2661,85 @@ public class ymf262
 	
 	//profiler_mark(PROFILER_USER2);
 			/* accumulator register set #1 */
-			a =  chanout[0] & chip.pan[0];
-			b =  chanout[0] & chip.pan[1];
-			c =  chanout[0] & chip.pan[2];
-			d =  chanout[0] & chip.pan[3];
+			a =  chanout[0] & chip->pan[0];
+			b =  chanout[0] & chip->pan[1];
+			c =  chanout[0] & chip->pan[2];
+			d =  chanout[0] & chip->pan[3];
 	#if 1
-			a += chanout[1] & chip.pan[4];
-			b += chanout[1] & chip.pan[5];
-			c += chanout[1] & chip.pan[6];
-			d += chanout[1] & chip.pan[7];
-			a += chanout[2] & chip.pan[8];
-			b += chanout[2] & chip.pan[9];
-			c += chanout[2] & chip.pan[10];
-			d += chanout[2] & chip.pan[11];
+			a += chanout[1] & chip->pan[4];
+			b += chanout[1] & chip->pan[5];
+			c += chanout[1] & chip->pan[6];
+			d += chanout[1] & chip->pan[7];
+			a += chanout[2] & chip->pan[8];
+			b += chanout[2] & chip->pan[9];
+			c += chanout[2] & chip->pan[10];
+			d += chanout[2] & chip->pan[11];
 	
-			a += chanout[3] & chip.pan[12];
-			b += chanout[3] & chip.pan[13];
-			c += chanout[3] & chip.pan[14];
-			d += chanout[3] & chip.pan[15];
-			a += chanout[4] & chip.pan[16];
-			b += chanout[4] & chip.pan[17];
-			c += chanout[4] & chip.pan[18];
-			d += chanout[4] & chip.pan[19];
-			a += chanout[5] & chip.pan[20];
-			b += chanout[5] & chip.pan[21];
-			c += chanout[5] & chip.pan[22];
-			d += chanout[5] & chip.pan[23];
+			a += chanout[3] & chip->pan[12];
+			b += chanout[3] & chip->pan[13];
+			c += chanout[3] & chip->pan[14];
+			d += chanout[3] & chip->pan[15];
+			a += chanout[4] & chip->pan[16];
+			b += chanout[4] & chip->pan[17];
+			c += chanout[4] & chip->pan[18];
+			d += chanout[4] & chip->pan[19];
+			a += chanout[5] & chip->pan[20];
+			b += chanout[5] & chip->pan[21];
+			c += chanout[5] & chip->pan[22];
+			d += chanout[5] & chip->pan[23];
 	
-			a += chanout[6] & chip.pan[24];
-			b += chanout[6] & chip.pan[25];
-			c += chanout[6] & chip.pan[26];
-			d += chanout[6] & chip.pan[27];
-			a += chanout[7] & chip.pan[28];
-			b += chanout[7] & chip.pan[29];
-			c += chanout[7] & chip.pan[30];
-			d += chanout[7] & chip.pan[31];
-			a += chanout[8] & chip.pan[32];
-			b += chanout[8] & chip.pan[33];
-			c += chanout[8] & chip.pan[34];
-			d += chanout[8] & chip.pan[35];
+			a += chanout[6] & chip->pan[24];
+			b += chanout[6] & chip->pan[25];
+			c += chanout[6] & chip->pan[26];
+			d += chanout[6] & chip->pan[27];
+			a += chanout[7] & chip->pan[28];
+			b += chanout[7] & chip->pan[29];
+			c += chanout[7] & chip->pan[30];
+			d += chanout[7] & chip->pan[31];
+			a += chanout[8] & chip->pan[32];
+			b += chanout[8] & chip->pan[33];
+			c += chanout[8] & chip->pan[34];
+			d += chanout[8] & chip->pan[35];
 	
 			/* accumulator register set #2 */
-			a += chanout[9] & chip.pan[36];
-			b += chanout[9] & chip.pan[37];
-			c += chanout[9] & chip.pan[38];
-			d += chanout[9] & chip.pan[39];
-			a += chanout[10] & chip.pan[40];
-			b += chanout[10] & chip.pan[41];
-			c += chanout[10] & chip.pan[42];
-			d += chanout[10] & chip.pan[43];
-			a += chanout[11] & chip.pan[44];
-			b += chanout[11] & chip.pan[45];
-			c += chanout[11] & chip.pan[46];
-			d += chanout[11] & chip.pan[47];
+			a += chanout[9] & chip->pan[36];
+			b += chanout[9] & chip->pan[37];
+			c += chanout[9] & chip->pan[38];
+			d += chanout[9] & chip->pan[39];
+			a += chanout[10] & chip->pan[40];
+			b += chanout[10] & chip->pan[41];
+			c += chanout[10] & chip->pan[42];
+			d += chanout[10] & chip->pan[43];
+			a += chanout[11] & chip->pan[44];
+			b += chanout[11] & chip->pan[45];
+			c += chanout[11] & chip->pan[46];
+			d += chanout[11] & chip->pan[47];
 	
-			a += chanout[12] & chip.pan[48];
-			b += chanout[12] & chip.pan[49];
-			c += chanout[12] & chip.pan[50];
-			d += chanout[12] & chip.pan[51];
-			a += chanout[13] & chip.pan[52];
-			b += chanout[13] & chip.pan[53];
-			c += chanout[13] & chip.pan[54];
-			d += chanout[13] & chip.pan[55];
-			a += chanout[14] & chip.pan[56];
-			b += chanout[14] & chip.pan[57];
-			c += chanout[14] & chip.pan[58];
-			d += chanout[14] & chip.pan[59];
+			a += chanout[12] & chip->pan[48];
+			b += chanout[12] & chip->pan[49];
+			c += chanout[12] & chip->pan[50];
+			d += chanout[12] & chip->pan[51];
+			a += chanout[13] & chip->pan[52];
+			b += chanout[13] & chip->pan[53];
+			c += chanout[13] & chip->pan[54];
+			d += chanout[13] & chip->pan[55];
+			a += chanout[14] & chip->pan[56];
+			b += chanout[14] & chip->pan[57];
+			c += chanout[14] & chip->pan[58];
+			d += chanout[14] & chip->pan[59];
 	
-			a += chanout[15] & chip.pan[60];
-			b += chanout[15] & chip.pan[61];
-			c += chanout[15] & chip.pan[62];
-			d += chanout[15] & chip.pan[63];
-			a += chanout[16] & chip.pan[64];
-			b += chanout[16] & chip.pan[65];
-			c += chanout[16] & chip.pan[66];
-			d += chanout[16] & chip.pan[67];
-			a += chanout[17] & chip.pan[68];
-			b += chanout[17] & chip.pan[69];
-			c += chanout[17] & chip.pan[70];
-			d += chanout[17] & chip.pan[71];
+			a += chanout[15] & chip->pan[60];
+			b += chanout[15] & chip->pan[61];
+			c += chanout[15] & chip->pan[62];
+			d += chanout[15] & chip->pan[63];
+			a += chanout[16] & chip->pan[64];
+			b += chanout[16] & chip->pan[65];
+			c += chanout[16] & chip->pan[66];
+			d += chanout[16] & chip->pan[67];
+			a += chanout[17] & chip->pan[68];
+			b += chanout[17] & chip->pan[69];
+			c += chanout[17] & chip->pan[70];
+			d += chanout[17] & chip->pan[71];
 	#endif
 			a >>= FINAL_SH;
 			b >>= FINAL_SH;

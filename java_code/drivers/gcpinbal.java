@@ -32,7 +32,7 @@ Stephh's notes (based on the game M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,8 +61,7 @@ public class gcpinbal
 		}
 	}
 	
-	public static InterruptHandlerPtr gcpinbal_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gcpinbal_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Unsure of actual sequence */
 	
 		timer_set(TIME_IN_CYCLES(500,0),0, gcpinbal_interrupt1);
@@ -134,7 +133,7 @@ public class gcpinbal
 	
 			// MSM6585 bank, coin LEDs, maybe others?
 			case 0x44:
-				if ((data & 0x10) != 0)
+				if (data & 0x10)
 				{
 					bank = 0x100000;
 				}
@@ -231,7 +230,7 @@ public class gcpinbal
 	                   INPUT PORTS, DIPs
 	***********************************************************/
 	
-	static InputPortPtr input_ports_gcpinbal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gcpinbal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gcpinbal )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy" );
@@ -389,13 +388,11 @@ public class gcpinbal
 	                        MACHINE DRIVERS
 	***********************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_gcpinbal  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_gcpinbal  = new VideoEofHandlerPtr() { public void handler(){
 	//	buffer_spriteram16_w(0,0,0);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_gcpinbal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gcpinbal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 32000000/2)	/* 16 MHz ? */
@@ -419,9 +416,7 @@ public class gcpinbal
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, m6295_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -455,5 +450,5 @@ public class gcpinbal
 	
 	
 	
-	public static GameDriver driver_gcpinbal	   = new GameDriver("1994"	,"gcpinbal"	,"gcpinbal.java"	,rom_gcpinbal,null	,machine_driver_gcpinbal	,input_ports_gcpinbal	,null	,ROT270	,	"Excellent System", "Grand Cross", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1994, gcpinbal, 0, gcpinbal, gcpinbal, 0, ROT270, "Excellent System", "Grand Cross", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

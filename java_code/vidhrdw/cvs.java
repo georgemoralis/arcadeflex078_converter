@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -82,8 +82,7 @@ public class cvs
 	 * colours are taken from SRAM and are programmable   *
 	 ******************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_cvs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cvs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int attr,col,map;
 	
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -139,17 +138,16 @@ public class cvs
 	    scroll[7]=0;
 	} };
 	
-	public static WriteHandlerPtr cvs_video_fx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvs_video_fx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%4x : Data Port = %2x\n",activecpu_get_pc(),data);
 	
 	    /* Unimplemented */
 	
-	    if ((data & 2) != 0)   logerror("       SHADE BRIGHTER TO RIGHT\n");
-	    if ((data & 4) != 0)   logerror("       SCREEN ROTATE\n");
-	    if ((data & 8) != 0)   logerror("       SHADE BRIGHTER TO LEFT\n");
-	    if ((data & 64) != 0)  logerror("       SHADE BRIGHTER TO BOTTOM\n");
-	    if ((data & 128) != 0) logerror("       SHADE BRIGHTER TO TOP\n");
+	    if(data & 2)   logerror("       SHADE BRIGHTER TO RIGHT\n");
+	    if(data & 4)   logerror("       SCREEN ROTATE\n");
+	    if(data & 8)   logerror("       SHADE BRIGHTER TO LEFT\n");
+	    if(data & 64)  logerror("       SHADE BRIGHTER TO BOTTOM\n");
+	    if(data & 128) logerror("       SHADE BRIGHTER TO TOP\n");
 	
 	    /* Implemented */
 	
@@ -158,8 +156,7 @@ public class cvs
 	    set_led_status(2,data & 32);	/* Lamp 2 */
 	} };
 	
-	public static ReadHandlerPtr cvs_character_mode_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cvs_character_mode_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Really a write - uses address info */
 	
 	    int value   = offset + 0x10;
@@ -176,19 +173,16 @@ public class cvs
 	    return 0;
 	} };
 	
-	public static ReadHandlerPtr cvs_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cvs_collision_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return CollisionRegister;
 	} };
 	
-	public static ReadHandlerPtr cvs_collision_clear  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cvs_collision_clear  = new ReadHandlerPtr() { public int handler(int offset){
 		CollisionRegister=0;
 	    return 0;
 	} };
 	
-	public static WriteHandlerPtr cvs_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvs_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_reg = 255 - data;
 	
 	    scroll[1]=scroll_reg;
@@ -198,9 +192,8 @@ public class cvs
 	    scroll[5]=scroll_reg;
 	} };
 	
-	public static WriteHandlerPtr cvs_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (s2650_get_flag() == 0)
+	public static WriteHandlerPtr cvs_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(!s2650_get_flag())
 	    {
 	    	// Colour Map
 	
@@ -214,9 +207,8 @@ public class cvs
 	    }
 	} };
 	
-	public static ReadHandlerPtr cvs_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (s2650_get_flag() == 0)
+	public static ReadHandlerPtr cvs_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(!s2650_get_flag())
 	    {
 	    	// Colour Map
 	
@@ -230,9 +222,8 @@ public class cvs
 	    }
 	} };
 	
-	public static WriteHandlerPtr cvs_bullet_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (s2650_get_flag() == 0)
+	public static WriteHandlerPtr cvs_bullet_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(!s2650_get_flag())
 	    {
 	    	// Bullet Ram
 	
@@ -246,9 +237,8 @@ public class cvs
 	    }
 	} };
 	
-	public static ReadHandlerPtr cvs_bullet_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (s2650_get_flag() == 0)
+	public static ReadHandlerPtr cvs_bullet_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(!s2650_get_flag())
 	    {
 	    	// Bullet Ram
 	
@@ -262,9 +252,8 @@ public class cvs
 	    }
 	} };
 	
-	public static WriteHandlerPtr cvs_2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (s2650_get_flag() == 0)
+	public static WriteHandlerPtr cvs_2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(!s2650_get_flag())
 	    {
 	    	// First 2636
 	
@@ -282,9 +271,8 @@ public class cvs
 		}
 	} };
 	
-	public static ReadHandlerPtr cvs_2636_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (s2650_get_flag() == 0)
+	public static ReadHandlerPtr cvs_2636_1_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(!s2650_get_flag())
 	    {
 	    	// First 2636
 	
@@ -298,9 +286,8 @@ public class cvs
 	    }
 	} };
 	
-	public static WriteHandlerPtr cvs_2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (s2650_get_flag() == 0)
+	public static WriteHandlerPtr cvs_2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(!s2650_get_flag())
 	    {
 	    	// Second 2636
 	
@@ -318,9 +305,8 @@ public class cvs
 	    }
 	} };
 	
-	public static ReadHandlerPtr cvs_2636_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (s2650_get_flag() == 0)
+	public static ReadHandlerPtr cvs_2636_2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(!s2650_get_flag())
 	    {
 	    	// Second 2636
 	
@@ -334,9 +320,8 @@ public class cvs
 	    }
 	} };
 	
-	public static WriteHandlerPtr cvs_2636_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (s2650_get_flag() == 0)
+	public static WriteHandlerPtr cvs_2636_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(!s2650_get_flag())
 	    {
 	    	// Third 2636
 	
@@ -354,9 +339,8 @@ public class cvs
 	    }
 	} };
 	
-	public static ReadHandlerPtr cvs_2636_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (s2650_get_flag() == 0)
+	public static ReadHandlerPtr cvs_2636_3_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(!s2650_get_flag())
 	    {
 	    	// Third 2636
 	
@@ -370,8 +354,7 @@ public class cvs
 	    }
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cvs  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cvs  = new VideoStartHandlerPtr() { public int handler(){
 		int generator = 0;
 	    int x,y;
 	
@@ -435,8 +418,7 @@ public class cvs
 		return 0;
 	} };
 	
-	public static InterruptHandlerPtr cvs_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cvs_interrupt = new InterruptHandlerPtr() {public void handler(){
 		stars_scroll++;
 	
 		cpu_irq_line_vector_w(0,0,0x03);
@@ -445,27 +427,26 @@ public class cvs
 	
 	INLINE void plot_star(struct mame_bitmap *bitmap, int x, int y)
 	{
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			x = 255 - x;
 		}
-		if (flip_screen_y != 0)
+		if (flip_screen_y)
 		{
 			y = 255 - y;
 		}
 	
-		if (read_pixel(bitmap, x, y) == Machine.pens[0])
+		if (read_pixel(bitmap, x, y) == Machine->pens[0])
 		{
-			plot_pixel(bitmap, x, y, Machine.pens[7]);
+			plot_pixel(bitmap, x, y, Machine->pens[7]);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cvs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,character;
 		int sx,sy;
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(dirtybuffer, 1, videoram_size[0]);
 	
 		/* for every character in the Video RAM, check if it has been modified */
@@ -527,7 +508,7 @@ public class cvs
 	                else if((colorram.read(offs)& 0x01) == 0) forecolor=257;
 	            }
 	
-	            if (forecolor != 0)
+	            if(forecolor)
 	 			    drawgfx(collision_background,Machine.gfx[character_bank],
 					        character,
 						    forecolor,
@@ -587,7 +568,7 @@ public class cvs
 	                    	CollisionRegister |= 0x80;
 	                }
 	
-		            plot_pixel.handler(bitmap,bx,offs,Machine.pens[7]);
+		            plot_pixel(bitmap,bx,offs,Machine.pens[7]);
 	            }
 	        }
 	    }
@@ -614,13 +595,13 @@ public class cvs
 	
 	        	     pen = S1 | S2 | S3;
 	
-	                 if (pen != 0)
+	                 if(pen)
 	                 {
 	             	    UINT16 *address = (UINT16 *)dst;
-					    if ((pen & 0xff000000) != 0) address[BL3] = Machine.pens[(pen >> 24) & 15];
-					    if ((pen & 0x00ff0000) != 0) address[BL2] = Machine.pens[(pen >> 16) & 15];
-					    if ((pen & 0x0000ff00) != 0) address[BL1] = Machine.pens[(pen >>  8) & 15];
-					    if ((pen & 0x000000ff) != 0) address[BL0] = Machine.pens[(pen & 15)];
+					    if (pen & 0xff000000) address[BL3] = Machine.pens[(pen >> 24) & 15];
+					    if (pen & 0x00ff0000) address[BL2] = Machine.pens[(pen >> 16) & 15];
+					    if (pen & 0x0000ff00) address[BL1] = Machine.pens[(pen >>  8) & 15];
+					    if (pen & 0x000000ff) address[BL0] = Machine.pens[(pen & 15)];
 	
 	                    /* Collision Detection */
 	
@@ -630,15 +611,15 @@ public class cvs
 					    if (spb[BL1] != Machine.pens[0]) SB |= 0x00000800;
 					    if (spb[BL0] != Machine.pens[0]) SB |= 0x00000008;
 	
-	       	            if ((S1 & S2) != 0) CollisionRegister |= 1;
-	       	            if ((S2 & S3) != 0) CollisionRegister |= 2;
-	    			    if ((S1 & S3) != 0) CollisionRegister |= 4;
+	       	            if (S1 & S2) CollisionRegister |= 1;
+	       	            if (S2 & S3) CollisionRegister |= 2;
+	    			    if (S1 & S3) CollisionRegister |= 4;
 	
-	                    if (SB != 0)
+	                    if (SB)
 	                    {
-	    			        if ((S1 & SB) != 0) CollisionRegister |= 16;
-	   			            if ((S2 & SB) != 0) CollisionRegister |= 32;
-	       	                if ((S3 & SB) != 0) CollisionRegister |= 64;
+	    			        if (S1 & SB) CollisionRegister |= 16;
+	   			            if (S2 & SB) CollisionRegister |= 32;
+	       	                if (S3 & SB) CollisionRegister |= 64;
 	                    }
 	                 }
 	
@@ -667,13 +648,13 @@ public class cvs
 	
 	        	     pen = S1 | S2 | S3;
 	
-	                 if (pen != 0)
+	                 if(pen)
 	                 {
 	             	    UINT8 *address = (UINT8 *)dst;
-					    if ((pen & 0xff000000) != 0) address[BL3] = Machine.pens[(pen >> 24) & 15];
-					    if ((pen & 0x00ff0000) != 0) address[BL2] = Machine.pens[(pen >> 16) & 15];
-					    if ((pen & 0x0000ff00) != 0) address[BL1] = Machine.pens[(pen >>  8) & 15];
-					    if ((pen & 0x000000ff) != 0) address[BL0] = Machine.pens[(pen & 15)];
+					    if (pen & 0xff000000) address[BL3] = Machine.pens[(pen >> 24) & 15];
+					    if (pen & 0x00ff0000) address[BL2] = Machine.pens[(pen >> 16) & 15];
+					    if (pen & 0x0000ff00) address[BL1] = Machine.pens[(pen >>  8) & 15];
+					    if (pen & 0x000000ff) address[BL0] = Machine.pens[(pen & 15)];
 	
 	                    /* Collision Detection */
 	
@@ -683,15 +664,15 @@ public class cvs
 					    if (spb[BL1] != Machine.pens[0]) SB |= 0x00000800;
 					    if (spb[BL0] != Machine.pens[0]) SB |= 0x00000008;
 	
-	       	            if ((S1 & S2) != 0) CollisionRegister |= 1;
-	       	            if ((S2 & S3) != 0) CollisionRegister |= 2;
-	    			    if ((S1 & S3) != 0) CollisionRegister |= 4;
+	       	            if (S1 & S2) CollisionRegister |= 1;
+	       	            if (S2 & S3) CollisionRegister |= 2;
+	    			    if (S1 & S3) CollisionRegister |= 4;
 	
-	                    if (SB != 0)
+	                    if (SB)
 	                    {
-	    			        if ((S1 & SB) != 0) CollisionRegister |= 16;
-	   			            if ((S2 & SB) != 0) CollisionRegister |= 32;
-	       	                if ((S3 & SB) != 0) CollisionRegister |= 64;
+	    			        if (S1 & SB) CollisionRegister |= 16;
+	   			            if (S2 & SB) CollisionRegister |= 32;
+	       	                if (S3 & SB) CollisionRegister |= 64;
 	                    }
 	                 }
 	
@@ -703,7 +684,7 @@ public class cvs
 	
 	    /* Stars */
 	
-	    if (stars_on != 0)
+	    if(stars_on)
 	    {
 			for (offs = 0;offs < total_stars;offs++)
 			{

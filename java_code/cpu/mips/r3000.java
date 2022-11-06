@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.mips;
 
@@ -338,7 +338,7 @@ public class r3000
 	unsigned r3000_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(r3000_regs *)dst = r3000;
 	
 		/* return the context size */
@@ -349,7 +349,7 @@ public class r3000
 	void r3000_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			r3000 = *(r3000_regs *)src;
 	
 		if (r3000.bigendian)
@@ -377,8 +377,8 @@ public class r3000
 		struct r3000_config *config = param;
 	
 		/* allocate memory */
-		r3000.icache = malloc(config.icache);
-		r3000.dcache = malloc(config.dcache);
+		r3000.icache = malloc(config->icache);
+		r3000.dcache = malloc(config->dcache);
 		if (!r3000.icache || !r3000.dcache)
 		{
 			fprintf(stderr, "error: couldn't allocate cache for r3000!\n");
@@ -407,9 +407,9 @@ public class r3000
 		}
 	
 		/* initialize the rest of the config */
-		r3000.hasfpu = config.hasfpu;
-		r3000.icache_size = config.icache;
-		r3000.dcache_size = config.dcache;
+		r3000.hasfpu = config->hasfpu;
+		r3000.icache_size = config->icache;
+		r3000.dcache_size = config->dcache;
 		r3000.cur = *r3000.memory_hand;
 		r3000.cache = r3000.dcache;
 		r3000.cache_size = r3000.dcache_size;
@@ -474,18 +474,18 @@ public class r3000
 			UINT32 diff = oldsr ^ val;
 	
 			/* handle cache isolation */
-			if ((diff & SR_IsC) != 0)
+			if (diff & SR_IsC)
 			{
-				if ((val & SR_IsC) != 0)
+				if (val & SR_IsC)
 					r3000.cur = *r3000.cache_hand;
 				else
 					r3000.cur = *r3000.memory_hand;
 			}
 	
 			/* handle cache switching */
-			if ((diff & SR_SwC) != 0)
+			if (diff & SR_SwC)
 			{
-				if ((val & SR_SwC) != 0)
+				if (val & SR_SwC)
 					r3000.cache = r3000.icache, r3000.cache_size = r3000.icache_size;
 				else
 					r3000.cache = r3000.dcache, r3000.cache_size = r3000.dcache_size;
@@ -516,8 +516,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop0_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop0_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop0_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop0_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop0_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop0_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -596,8 +596,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop1_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop1_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop1_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop1_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop1_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop1_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -663,8 +663,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop2_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop2_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop2_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop2_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop2_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop2_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -730,8 +730,8 @@ public class r3000
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL = get_cop3_reg(RDREG);					break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL = get_cop3_creg(RDREG);				break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL = get_cop3_reg(RDREG);					break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL = get_cop3_creg(RDREG);				break;
 			case 0x04:	/* MTCz */		set_cop3_reg(RDREG, RTVAL);								break;
 			case 0x06:	/* CTCz */		set_cop3_creg(RDREG, RTVAL);							break;
 			case 0x08:	/* BC */
@@ -814,20 +814,20 @@ public class r3000
 				case 0x00:	/* SPECIAL */
 					switch (op & 63)
 					{
-						case 0x00:	/* SLL */		if (RDREG != 0) RDVAL = RTVAL << SHIFT;						break;
-						case 0x02:	/* SRL */		if (RDREG != 0) RDVAL = RTVAL >> SHIFT;						break;
-						case 0x03:	/* SRA */		if (RDREG != 0) RDVAL = (INT32)RTVAL >> SHIFT;				break;
-						case 0x04:	/* SLLV */		if (RDREG != 0) RDVAL = RTVAL << (RSVAL & 31);				break;
-						case 0x06:	/* SRLV */		if (RDREG != 0) RDVAL = RTVAL >> (RSVAL & 31);				break;
-						case 0x07:	/* SRAV */		if (RDREG != 0) RDVAL = (INT32)RTVAL >> (RSVAL & 31);		break;
+						case 0x00:	/* SLL */		if (RDREG) RDVAL = RTVAL << SHIFT;						break;
+						case 0x02:	/* SRL */		if (RDREG) RDVAL = RTVAL >> SHIFT;						break;
+						case 0x03:	/* SRA */		if (RDREG) RDVAL = (INT32)RTVAL >> SHIFT;				break;
+						case 0x04:	/* SLLV */		if (RDREG) RDVAL = RTVAL << (RSVAL & 31);				break;
+						case 0x06:	/* SRLV */		if (RDREG) RDVAL = RTVAL >> (RSVAL & 31);				break;
+						case 0x07:	/* SRAV */		if (RDREG) RDVAL = (INT32)RTVAL >> (RSVAL & 31);		break;
 						case 0x08:	/* JR */		SETPC(RSVAL);											break;
 						case 0x09:	/* JALR */		SETPCL(RSVAL,RDREG);									break;
 						case 0x0c:	/* SYSCALL */	generate_exception(EXCEPTION_SYSCALL);					break;
 						case 0x0d:	/* BREAK */		generate_exception(EXCEPTION_BREAK);					break;
 						case 0x0f:	/* SYNC */		invalid_instruction(op);								break;
-						case 0x10:	/* MFHI */		if (RDREG != 0) RDVAL = HIVAL;								break;
+						case 0x10:	/* MFHI */		if (RDREG) RDVAL = HIVAL;								break;
 						case 0x11:	/* MTHI */		HIVAL = RSVAL;											break;
-						case 0x12:	/* MFLO */		if (RDREG != 0) RDVAL = LOVAL;								break;
+						case 0x12:	/* MFLO */		if (RDREG) RDVAL = LOVAL;								break;
 						case 0x13:	/* MTLO */		LOVAL = RSVAL;											break;
 						case 0x18:	/* MULT */
 							temp64 = (INT64)(INT32)RSVAL * (INT64)(INT32)RTVAL;
@@ -842,7 +842,7 @@ public class r3000
 							r3000_icount -= 11;
 							break;
 						case 0x1a:	/* DIV */
-							if (RTVAL != 0)
+							if (RTVAL)
 							{
 								LOVAL = (INT32)RSVAL / (INT32)RTVAL;
 								HIVAL = (INT32)RSVAL % (INT32)RTVAL;
@@ -850,7 +850,7 @@ public class r3000
 							r3000_icount -= 34;
 							break;
 						case 0x1b:	/* DIVU */
-							if (RTVAL != 0)
+							if (RTVAL)
 							{
 								LOVAL = RSVAL / RTVAL;
 								HIVAL = RSVAL % RTVAL;
@@ -861,18 +861,18 @@ public class r3000
 							if (ENABLE_OVERFLOWS && RSVAL > ~RTVAL) generate_exception(EXCEPTION_OVERFLOW);
 							else RDVAL = RSVAL + RTVAL;
 							break;
-						case 0x21:	/* ADDU */		if (RDREG != 0) RDVAL = RSVAL + RTVAL;						break;
+						case 0x21:	/* ADDU */		if (RDREG) RDVAL = RSVAL + RTVAL;						break;
 						case 0x22:	/* SUB */
 							if (ENABLE_OVERFLOWS && RSVAL < RTVAL) generate_exception(EXCEPTION_OVERFLOW);
 							else RDVAL = RSVAL - RTVAL;
 							break;
-						case 0x23:	/* SUBU */		if (RDREG != 0) RDVAL = RSVAL - RTVAL;						break;
-						case 0x24:	/* AND */		if (RDREG != 0) RDVAL = RSVAL & RTVAL;						break;
-						case 0x25:	/* OR */		if (RDREG != 0) RDVAL = RSVAL | RTVAL;						break;
-						case 0x26:	/* XOR */		if (RDREG != 0) RDVAL = RSVAL ^ RTVAL;						break;
-						case 0x27:	/* NOR */		if (RDREG != 0) RDVAL = ~(RSVAL | RTVAL);					break;
-						case 0x2a:	/* SLT */		if (RDREG != 0) RDVAL = (INT32)RSVAL < (INT32)RTVAL;			break;
-						case 0x2b:	/* SLTU */		if (RDREG != 0) RDVAL = (UINT32)RSVAL < (UINT32)RTVAL;		break;
+						case 0x23:	/* SUBU */		if (RDREG) RDVAL = RSVAL - RTVAL;						break;
+						case 0x24:	/* AND */		if (RDREG) RDVAL = RSVAL & RTVAL;						break;
+						case 0x25:	/* OR */		if (RDREG) RDVAL = RSVAL | RTVAL;						break;
+						case 0x26:	/* XOR */		if (RDREG) RDVAL = RSVAL ^ RTVAL;						break;
+						case 0x27:	/* NOR */		if (RDREG) RDVAL = ~(RSVAL | RTVAL);					break;
+						case 0x2a:	/* SLT */		if (RDREG) RDVAL = (INT32)RSVAL < (INT32)RTVAL;			break;
+						case 0x2b:	/* SLTU */		if (RDREG) RDVAL = (UINT32)RSVAL < (UINT32)RTVAL;		break;
 						case 0x30:	/* TEQ */		invalid_instruction(op);								break;
 						case 0x31:	/* TGEU */		invalid_instruction(op);								break;
 						case 0x32:	/* TLT */		invalid_instruction(op);								break;
@@ -912,15 +912,15 @@ public class r3000
 				case 0x07:	/* BGTZ */		if ((INT32)RSVAL > 0) ADDPC(SIMMVAL);							break;
 				case 0x08:	/* ADDI */
 					if (ENABLE_OVERFLOWS && RSVAL > ~SIMMVAL) generate_exception(EXCEPTION_OVERFLOW);
-					else if (RTREG != 0) RTVAL = RSVAL + SIMMVAL;
+					else if (RTREG) RTVAL = RSVAL + SIMMVAL;
 					break;
-				case 0x09:	/* ADDIU */		if (RTREG != 0) RTVAL = RSVAL + SIMMVAL;								break;
-				case 0x0a:	/* SLTI */		if (RTREG != 0) RTVAL = (INT32)RSVAL < (INT32)SIMMVAL;				break;
-				case 0x0b:	/* SLTIU */		if (RTREG != 0) RTVAL = (UINT32)RSVAL < (UINT32)SIMMVAL;				break;
-				case 0x0c:	/* ANDI */		if (RTREG != 0) RTVAL = RSVAL & UIMMVAL;								break;
-				case 0x0d:	/* ORI */		if (RTREG != 0) RTVAL = RSVAL | UIMMVAL;								break;
-				case 0x0e:	/* XORI */		if (RTREG != 0) RTVAL = RSVAL ^ UIMMVAL;								break;
-				case 0x0f:	/* LUI */		if (RTREG != 0) RTVAL = UIMMVAL << 16;								break;
+				case 0x09:	/* ADDIU */		if (RTREG) RTVAL = RSVAL + SIMMVAL;								break;
+				case 0x0a:	/* SLTI */		if (RTREG) RTVAL = (INT32)RSVAL < (INT32)SIMMVAL;				break;
+				case 0x0b:	/* SLTIU */		if (RTREG) RTVAL = (UINT32)RSVAL < (UINT32)SIMMVAL;				break;
+				case 0x0c:	/* ANDI */		if (RTREG) RTVAL = RSVAL & UIMMVAL;								break;
+				case 0x0d:	/* ORI */		if (RTREG) RTVAL = RSVAL | UIMMVAL;								break;
+				case 0x0e:	/* XORI */		if (RTREG) RTVAL = RSVAL ^ UIMMVAL;								break;
+				case 0x0f:	/* LUI */		if (RTREG) RTVAL = UIMMVAL << 16;								break;
 				case 0x10:	/* COP0 */		handle_cop0(op);												break;
 				case 0x11:	/* COP1 */		handle_cop1(op);												break;
 				case 0x12:	/* COP2 */		handle_cop2(op);												break;
@@ -929,12 +929,12 @@ public class r3000
 				case 0x15:	/* BNEL */		invalid_instruction(op);										break;
 				case 0x16:	/* BLEZL */		invalid_instruction(op);										break;
 				case 0x17:	/* BGTZL */		invalid_instruction(op);										break;
-				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (INT8)temp;		break;
-				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (INT16)temp;	break;
+				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG) RTVAL = (INT8)temp;		break;
+				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG) RTVAL = (INT16)temp;	break;
 				case 0x22:	/* LWL */		(*r3000.lwl)(op);												break;
-				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = temp;			break;
-				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (UINT8)temp;	break;
-				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG != 0) RTVAL = (UINT16)temp;	break;
+				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL); if (RTREG) RTVAL = temp;			break;
+				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL); if (RTREG) RTVAL = (UINT8)temp;	break;
+				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL); if (RTREG) RTVAL = (UINT16)temp;	break;
 				case 0x26:	/* LWR */		(*r3000.lwr)(op);												break;
 				case 0x28:	/* SB */		WBYTE(SIMMVAL+RSVAL, RTVAL);									break;
 				case 0x29:	/* SH */		WWORD(SIMMVAL+RSVAL, RTVAL); 									break;
@@ -1139,49 +1139,49 @@ public class r3000
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &r3000;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+R3000_PC:  	sprintf(buffer[which], "PC: %08X", r.pc); break;
-			case CPU_INFO_REG+R3000_SR:  	sprintf(buffer[which], "SR: %08X", r.cpr[0][COP0_Status]); break;
+			case CPU_INFO_REG+R3000_PC:  	sprintf(buffer[which], "PC: %08X", r->pc); break;
+			case CPU_INFO_REG+R3000_SR:  	sprintf(buffer[which], "SR: %08X", r->cpr[0][COP0_Status]); break;
 	
-			case CPU_INFO_REG+R3000_R0:		sprintf(buffer[which], "R0: %08X", r.r[0]); break;
-			case CPU_INFO_REG+R3000_R1:		sprintf(buffer[which], "R1: %08X", r.r[1]); break;
-			case CPU_INFO_REG+R3000_R2:		sprintf(buffer[which], "R2: %08X", r.r[2]); break;
-			case CPU_INFO_REG+R3000_R3:		sprintf(buffer[which], "R3: %08X", r.r[3]); break;
-			case CPU_INFO_REG+R3000_R4:		sprintf(buffer[which], "R4: %08X", r.r[4]); break;
-			case CPU_INFO_REG+R3000_R5:		sprintf(buffer[which], "R5: %08X", r.r[5]); break;
-			case CPU_INFO_REG+R3000_R6:		sprintf(buffer[which], "R6: %08X", r.r[6]); break;
-			case CPU_INFO_REG+R3000_R7:		sprintf(buffer[which], "R7: %08X", r.r[7]); break;
-			case CPU_INFO_REG+R3000_R8:		sprintf(buffer[which], "R8: %08X", r.r[8]); break;
-			case CPU_INFO_REG+R3000_R9:		sprintf(buffer[which], "R9: %08X", r.r[9]); break;
-			case CPU_INFO_REG+R3000_R10:	sprintf(buffer[which], "R10:%08X", r.r[10]); break;
-			case CPU_INFO_REG+R3000_R11:	sprintf(buffer[which], "R11:%08X", r.r[11]); break;
-			case CPU_INFO_REG+R3000_R12:	sprintf(buffer[which], "R12:%08X", r.r[12]); break;
-			case CPU_INFO_REG+R3000_R13:	sprintf(buffer[which], "R13:%08X", r.r[13]); break;
-			case CPU_INFO_REG+R3000_R14:	sprintf(buffer[which], "R14:%08X", r.r[14]); break;
-			case CPU_INFO_REG+R3000_R15:	sprintf(buffer[which], "R15:%08X", r.r[15]); break;
-			case CPU_INFO_REG+R3000_R16:	sprintf(buffer[which], "R16:%08X", r.r[16]); break;
-			case CPU_INFO_REG+R3000_R17:	sprintf(buffer[which], "R17:%08X", r.r[17]); break;
-			case CPU_INFO_REG+R3000_R18:	sprintf(buffer[which], "R18:%08X", r.r[18]); break;
-			case CPU_INFO_REG+R3000_R19:	sprintf(buffer[which], "R19:%08X", r.r[19]); break;
-			case CPU_INFO_REG+R3000_R20:	sprintf(buffer[which], "R20:%08X", r.r[20]); break;
-			case CPU_INFO_REG+R3000_R21:	sprintf(buffer[which], "R21:%08X", r.r[21]); break;
-			case CPU_INFO_REG+R3000_R22:	sprintf(buffer[which], "R22:%08X", r.r[22]); break;
-			case CPU_INFO_REG+R3000_R23:	sprintf(buffer[which], "R23:%08X", r.r[23]); break;
-			case CPU_INFO_REG+R3000_R24:	sprintf(buffer[which], "R24:%08X", r.r[24]); break;
-			case CPU_INFO_REG+R3000_R25:	sprintf(buffer[which], "R25:%08X", r.r[25]); break;
-			case CPU_INFO_REG+R3000_R26:	sprintf(buffer[which], "R26:%08X", r.r[26]); break;
-			case CPU_INFO_REG+R3000_R27:	sprintf(buffer[which], "R27:%08X", r.r[27]); break;
-			case CPU_INFO_REG+R3000_R28:	sprintf(buffer[which], "R28:%08X", r.r[28]); break;
-			case CPU_INFO_REG+R3000_R29:	sprintf(buffer[which], "R29:%08X", r.r[29]); break;
-			case CPU_INFO_REG+R3000_R30:	sprintf(buffer[which], "R30:%08X", r.r[30]); break;
-			case CPU_INFO_REG+R3000_R31:	sprintf(buffer[which], "R31:%08X", r.r[31]); break;
+			case CPU_INFO_REG+R3000_R0:		sprintf(buffer[which], "R0: %08X", r->r[0]); break;
+			case CPU_INFO_REG+R3000_R1:		sprintf(buffer[which], "R1: %08X", r->r[1]); break;
+			case CPU_INFO_REG+R3000_R2:		sprintf(buffer[which], "R2: %08X", r->r[2]); break;
+			case CPU_INFO_REG+R3000_R3:		sprintf(buffer[which], "R3: %08X", r->r[3]); break;
+			case CPU_INFO_REG+R3000_R4:		sprintf(buffer[which], "R4: %08X", r->r[4]); break;
+			case CPU_INFO_REG+R3000_R5:		sprintf(buffer[which], "R5: %08X", r->r[5]); break;
+			case CPU_INFO_REG+R3000_R6:		sprintf(buffer[which], "R6: %08X", r->r[6]); break;
+			case CPU_INFO_REG+R3000_R7:		sprintf(buffer[which], "R7: %08X", r->r[7]); break;
+			case CPU_INFO_REG+R3000_R8:		sprintf(buffer[which], "R8: %08X", r->r[8]); break;
+			case CPU_INFO_REG+R3000_R9:		sprintf(buffer[which], "R9: %08X", r->r[9]); break;
+			case CPU_INFO_REG+R3000_R10:	sprintf(buffer[which], "R10:%08X", r->r[10]); break;
+			case CPU_INFO_REG+R3000_R11:	sprintf(buffer[which], "R11:%08X", r->r[11]); break;
+			case CPU_INFO_REG+R3000_R12:	sprintf(buffer[which], "R12:%08X", r->r[12]); break;
+			case CPU_INFO_REG+R3000_R13:	sprintf(buffer[which], "R13:%08X", r->r[13]); break;
+			case CPU_INFO_REG+R3000_R14:	sprintf(buffer[which], "R14:%08X", r->r[14]); break;
+			case CPU_INFO_REG+R3000_R15:	sprintf(buffer[which], "R15:%08X", r->r[15]); break;
+			case CPU_INFO_REG+R3000_R16:	sprintf(buffer[which], "R16:%08X", r->r[16]); break;
+			case CPU_INFO_REG+R3000_R17:	sprintf(buffer[which], "R17:%08X", r->r[17]); break;
+			case CPU_INFO_REG+R3000_R18:	sprintf(buffer[which], "R18:%08X", r->r[18]); break;
+			case CPU_INFO_REG+R3000_R19:	sprintf(buffer[which], "R19:%08X", r->r[19]); break;
+			case CPU_INFO_REG+R3000_R20:	sprintf(buffer[which], "R20:%08X", r->r[20]); break;
+			case CPU_INFO_REG+R3000_R21:	sprintf(buffer[which], "R21:%08X", r->r[21]); break;
+			case CPU_INFO_REG+R3000_R22:	sprintf(buffer[which], "R22:%08X", r->r[22]); break;
+			case CPU_INFO_REG+R3000_R23:	sprintf(buffer[which], "R23:%08X", r->r[23]); break;
+			case CPU_INFO_REG+R3000_R24:	sprintf(buffer[which], "R24:%08X", r->r[24]); break;
+			case CPU_INFO_REG+R3000_R25:	sprintf(buffer[which], "R25:%08X", r->r[25]); break;
+			case CPU_INFO_REG+R3000_R26:	sprintf(buffer[which], "R26:%08X", r->r[26]); break;
+			case CPU_INFO_REG+R3000_R27:	sprintf(buffer[which], "R27:%08X", r->r[27]); break;
+			case CPU_INFO_REG+R3000_R28:	sprintf(buffer[which], "R28:%08X", r->r[28]); break;
+			case CPU_INFO_REG+R3000_R29:	sprintf(buffer[which], "R29:%08X", r->r[29]); break;
+			case CPU_INFO_REG+R3000_R30:	sprintf(buffer[which], "R30:%08X", r->r[30]); break;
+			case CPU_INFO_REG+R3000_R31:	sprintf(buffer[which], "R31:%08X", r->r[31]); break;
 	
 			case CPU_INFO_NAME: return "R3000";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R3000 (big-endian)" : "MIPS R3000 (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R3000 (big-endian)" : "MIPS R3000 (little-endian)";
 			case CPU_INFO_VERSION: return "1.0";
 			case CPU_INFO_FILE: return __FILE__;
 			case CPU_INFO_CREDITS: return "Copyright (C) Aaron Giles 2000-2002";
@@ -1296,7 +1296,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 3)) RTVAL = temp;
 			else
@@ -1311,7 +1311,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 3) == 3) RTVAL = temp;
 			else
@@ -1353,7 +1353,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 3)) RTVAL = temp;
 			else
@@ -1368,7 +1368,7 @@ public class r3000
 	{
 		offs_t offs = SIMMVAL + RSVAL;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 3) == 3) RTVAL = temp;
 			else

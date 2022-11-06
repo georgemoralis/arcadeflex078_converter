@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i86;
 
@@ -144,7 +144,7 @@ public class i286
 		for (i = 0;i < 256; i++)
 		{
 			for (j = i, c = 0; j > 0; j >>= 1)
-				if ((j & 1) != 0) c++;
+				if (j & 1) c++;
 	
 			parity_table[i] = !(c & 1);
 		}
@@ -174,14 +174,14 @@ public class i286
 		/* in my docu not all registers are initialized! */
 		//memset( &I, 0, sizeof(I) );
 	
-		if (urinit != 0) {
+		if (urinit) {
 			i286_urinit();
 			urinit=0;
 	
 			/* this function seams to be called as a result of
 			   cpu_set_reset_line */
 			/* If a reset parameter is given, take it as pointer to an address mask */
-			if (param != 0)
+			if( param )
 				I.amask = *(unsigned*)param;
 			else
 				I.amask = 0x00ffff;
@@ -215,17 +215,17 @@ public class i286
 	
 	unsigned i286_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(i286_Regs*)dst = I;
 		 return sizeof(i286_Regs);
 	}
 	
 	void i286_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			I = *(i286_Regs*)src;
-			if (PM != 0) {
+			if (PM) {
 	
 			} else {
 				I.base[CS] = SegBase(CS);
@@ -278,7 +278,7 @@ public class i286
 		switch( regnum )
 		{
 			case REG_PC:
-				if (PM != 0) {
+				if (PM) {
 				} else {
 					if (val - I.base[CS] >= 0x10000)
 					{
@@ -290,7 +290,7 @@ public class i286
 				break;
 			case I286_IP: I.pc = I.base[CS] + val; break;
 			case REG_SP:
-				if (PM != 0) {
+				if (PM) {
 				} else {
 					if( val - I.base[SS] < 0x10000 )
 					{
@@ -407,84 +407,84 @@ public class i286
 	
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &I;
 	
 		switch( regnum )
 		{
-		case CPU_INFO_REG+I286_IP: sprintf(buffer[which], "IP:%04X", r.pc - r.base[CS]); break;
-		case CPU_INFO_REG+I286_SP: sprintf(buffer[which], "SP:%04X", r.regs.w[SP]); break;
-		case CPU_INFO_REG+I286_FLAGS: sprintf(buffer[which], "F:%04X", r.flags); break;
-		case CPU_INFO_REG+I286_AX: sprintf(buffer[which], "AX:%04X", r.regs.w[AX]); break;
-		case CPU_INFO_REG+I286_CX: sprintf(buffer[which], "CX:%04X", r.regs.w[CX]); break;
-		case CPU_INFO_REG+I286_DX: sprintf(buffer[which], "DX:%04X", r.regs.w[DX]); break;
-		case CPU_INFO_REG+I286_BX: sprintf(buffer[which], "BX:%04X", r.regs.w[BX]); break;
-		case CPU_INFO_REG+I286_BP: sprintf(buffer[which], "BP:%04X", r.regs.w[BP]); break;
-		case CPU_INFO_REG+I286_SI: sprintf(buffer[which], "SI:%04X", r.regs.w[SI]); break;
-		case CPU_INFO_REG+I286_DI: sprintf(buffer[which], "DI:%04X", r.regs.w[DI]); break;
+		case CPU_INFO_REG+I286_IP: sprintf(buffer[which], "IP:%04X", r->pc - r->base[CS]); break;
+		case CPU_INFO_REG+I286_SP: sprintf(buffer[which], "SP:%04X", r->regs.w[SP]); break;
+		case CPU_INFO_REG+I286_FLAGS: sprintf(buffer[which], "F:%04X", r->flags); break;
+		case CPU_INFO_REG+I286_AX: sprintf(buffer[which], "AX:%04X", r->regs.w[AX]); break;
+		case CPU_INFO_REG+I286_CX: sprintf(buffer[which], "CX:%04X", r->regs.w[CX]); break;
+		case CPU_INFO_REG+I286_DX: sprintf(buffer[which], "DX:%04X", r->regs.w[DX]); break;
+		case CPU_INFO_REG+I286_BX: sprintf(buffer[which], "BX:%04X", r->regs.w[BX]); break;
+		case CPU_INFO_REG+I286_BP: sprintf(buffer[which], "BP:%04X", r->regs.w[BP]); break;
+		case CPU_INFO_REG+I286_SI: sprintf(buffer[which], "SI:%04X", r->regs.w[SI]); break;
+		case CPU_INFO_REG+I286_DI: sprintf(buffer[which], "DI:%04X", r->regs.w[DI]); break;
 		case CPU_INFO_REG+I286_ES:
-			sprintf(buffer[which], "ES:  %04X %02X", r.sregs[ES], r.rights[ES]);
+			sprintf(buffer[which], "ES:  %04X %02X", r->sregs[ES], r->rights[ES]);
 			break;
 		case CPU_INFO_REG+I286_ES_2:
-			sprintf(buffer[which],"%06X %04X", r.base[ES], r.limit[ES]);
+			sprintf(buffer[which],"%06X %04X", r->base[ES], r->limit[ES]);
 			break;
 		case CPU_INFO_REG+I286_CS:
-			sprintf(buffer[which], "CS:  %04X %02X", r.sregs[CS], r.rights[CS]);
+			sprintf(buffer[which], "CS:  %04X %02X", r->sregs[CS], r->rights[CS]);
 			break;
 		case CPU_INFO_REG+I286_CS_2:
-			sprintf(buffer[which],"%06X %04X", r.base[CS], r.limit[CS]);
+			sprintf(buffer[which],"%06X %04X", r->base[CS], r->limit[CS]);
 			break;
 		case CPU_INFO_REG+I286_SS:
-			sprintf(buffer[which], "SS:  %04X %02X", r.sregs[SS], r.rights[SS]);
+			sprintf(buffer[which], "SS:  %04X %02X", r->sregs[SS], r->rights[SS]);
 			break;
 		case CPU_INFO_REG+I286_SS_2:
-			sprintf(buffer[which],"%06X %04X", r.base[SS], r.limit[SS]);
+			sprintf(buffer[which],"%06X %04X", r->base[SS], r->limit[SS]);
 			break;
 		case CPU_INFO_REG+I286_DS:
-			sprintf(buffer[which], "DS:  %04X %02X", r.sregs[DS], r.rights[DS]);
+			sprintf(buffer[which], "DS:  %04X %02X", r->sregs[DS], r->rights[DS]);
 			break;
 		case CPU_INFO_REG+I286_DS_2:
-			sprintf(buffer[which],"%06X %04X", r.base[DS], r.limit[DS]);
+			sprintf(buffer[which],"%06X %04X", r->base[DS], r->limit[DS]);
 			break;
-		case CPU_INFO_REG+I286_MSW: sprintf(buffer[which],"MSW:%04X", r.msw); break;
-		case CPU_INFO_REG+I286_GDTR: sprintf(buffer[which],"GDTR: %06X", r.gdtr.base); break;
-		case CPU_INFO_REG+I286_GDTR_2: sprintf(buffer[which],"%04X", r.gdtr.limit); break;
-		case CPU_INFO_REG+I286_IDTR: sprintf(buffer[which],"IDTR: %06X", r.idtr.base); break;
-		case CPU_INFO_REG+I286_IDTR_2: sprintf(buffer[which],"%04X", r.idtr.limit); break;
+		case CPU_INFO_REG+I286_MSW: sprintf(buffer[which],"MSW:%04X", r->msw); break;
+		case CPU_INFO_REG+I286_GDTR: sprintf(buffer[which],"GDTR: %06X", r->gdtr.base); break;
+		case CPU_INFO_REG+I286_GDTR_2: sprintf(buffer[which],"%04X", r->gdtr.limit); break;
+		case CPU_INFO_REG+I286_IDTR: sprintf(buffer[which],"IDTR: %06X", r->idtr.base); break;
+		case CPU_INFO_REG+I286_IDTR_2: sprintf(buffer[which],"%04X", r->idtr.limit); break;
 		case CPU_INFO_REG+I286_LDTR:
-			sprintf(buffer[which],"LDTR:%04X %02X", r.ldtr.sel, r.ldtr.rights);
+			sprintf(buffer[which],"LDTR:%04X %02X", r->ldtr.sel, r->ldtr.rights);
 			break;
 		case CPU_INFO_REG+I286_LDTR_2:
-			sprintf(buffer[which],"%06X %04X", r.ldtr.base, r.ldtr.limit);
+			sprintf(buffer[which],"%06X %04X", r->ldtr.base, r->ldtr.limit);
 			break;
 		case CPU_INFO_REG+I286_TR:
-			sprintf(buffer[which],"TR:  %04X %02X", r.tr.sel, r.tr.rights);
+			sprintf(buffer[which],"TR:  %04X %02X", r->tr.sel, r->tr.rights);
 			break;
 		case CPU_INFO_REG+I286_TR_2:
-			sprintf(buffer[which],"%06X %04X", r.tr.base, r.tr.limit);
+			sprintf(buffer[which],"%06X %04X", r->tr.base, r->tr.limit);
 			break;
-		case CPU_INFO_REG+I286_VECTOR: sprintf(buffer[which], "V:%02X", r.int_vector); break;
-		case CPU_INFO_REG+I286_PENDING: sprintf(buffer[which], "P:%X", r.irq_state); break;
-		case CPU_INFO_REG+I286_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-		case CPU_INFO_REG+I286_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
+		case CPU_INFO_REG+I286_VECTOR: sprintf(buffer[which], "V:%02X", r->int_vector); break;
+		case CPU_INFO_REG+I286_PENDING: sprintf(buffer[which], "P:%X", r->irq_state); break;
+		case CPU_INFO_REG+I286_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+		case CPU_INFO_REG+I286_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
 		case CPU_INFO_FLAGS:
-			r.flags = CompressFlags();
+			r->flags = CompressFlags();
 			sprintf(buffer[which], "%c%c %c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r.flags & 0x8000 ? '?':'.',
-					r.flags & 0x4000 ? '?':'.',
-					((r.flags & 0x3000)>>12)+'0',
-					r.flags & 0x0800 ? 'O':'.',
-					r.flags & 0x0400 ? 'D':'.',
-					r.flags & 0x0200 ? 'I':'.',
-					r.flags & 0x0100 ? 'T':'.',
-					r.flags & 0x0080 ? 'S':'.',
-					r.flags & 0x0040 ? 'Z':'.',
-					r.flags & 0x0020 ? '?':'.',
-					r.flags & 0x0010 ? 'A':'.',
-					r.flags & 0x0008 ? '?':'.',
-					r.flags & 0x0004 ? 'P':'.',
-					r.flags & 0x0002 ? 'N':'.',
-					r.flags & 0x0001 ? 'C':'.');
+					r->flags & 0x8000 ? '?':'.',
+					r->flags & 0x4000 ? '?':'.',
+					((r->flags & 0x3000)>>12)+'0',
+					r->flags & 0x0800 ? 'O':'.',
+					r->flags & 0x0400 ? 'D':'.',
+					r->flags & 0x0200 ? 'I':'.',
+					r->flags & 0x0100 ? 'T':'.',
+					r->flags & 0x0080 ? 'S':'.',
+					r->flags & 0x0040 ? 'Z':'.',
+					r->flags & 0x0020 ? '?':'.',
+					r->flags & 0x0010 ? 'A':'.',
+					r->flags & 0x0008 ? '?':'.',
+					r->flags & 0x0004 ? 'P':'.',
+					r->flags & 0x0002 ? 'N':'.',
+					r->flags & 0x0001 ? 'C':'.');
 			break;
 		case CPU_INFO_REG+I286_EMPTY: sprintf(buffer[which]," ");break;
 		case CPU_INFO_NAME: return "I80286";

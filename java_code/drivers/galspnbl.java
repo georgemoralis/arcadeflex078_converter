@@ -22,7 +22,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,7 +37,7 @@ public class galspnbl
 	
 	static WRITE16_HANDLER( soundcommand_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -108,7 +108,7 @@ public class galspnbl
 	
 	
 	
-	static InputPortPtr input_ports_hotpinbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotpinbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotpinbl )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -192,7 +192,7 @@ public class galspnbl
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galspnbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galspnbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galspnbl )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -333,8 +333,7 @@ public class galspnbl
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_hotpinbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hotpinbl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz ??? */
@@ -363,9 +362,7 @@ public class galspnbl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -429,6 +426,6 @@ public class galspnbl
 	
 	
 	
-	public static GameDriver driver_hotpinbl	   = new GameDriver("1995"	,"hotpinbl"	,"galspnbl.java"	,rom_hotpinbl,null	,machine_driver_hotpinbl	,input_ports_hotpinbl	,null	,ROT90	,	"Comad & New Japan System", "Hot Pinball", GAME_NO_COCKTAIL )
-	public static GameDriver driver_galspnbl	   = new GameDriver("1996"	,"galspnbl"	,"galspnbl.java"	,rom_galspnbl,null	,machine_driver_hotpinbl	,input_ports_galspnbl	,null	,ROT90	,	"Comad", "Gals Pinball", GAME_NO_COCKTAIL )
+	GAMEX( 1995, hotpinbl, 0, hotpinbl, hotpinbl, 0, ROT90, "Comad & New Japan System", "Hot Pinball", GAME_NO_COCKTAIL )
+	GAMEX( 1996, galspnbl, 0, hotpinbl, galspnbl, 0, ROT90, "Comad", "Gals Pinball", GAME_NO_COCKTAIL )
 }

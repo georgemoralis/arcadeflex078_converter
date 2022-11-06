@@ -218,7 +218,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -233,8 +233,7 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_omegrace  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_omegrace  = new MachineInitHandlerPtr() { public void handler(){
 		/* Omega Race expects the vector processor to be ready. */
 		avgdvg_reset_w (0, 0);
 	} };
@@ -247,15 +246,13 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr omegrace_vg_go_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr omegrace_vg_go_r  = new ReadHandlerPtr() { public int handler(int offset){
 		avgdvg_go_w(0,0);
 		return 0;
 	} };
 	
 	
-	public static ReadHandlerPtr omegrace_vg_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr omegrace_vg_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return avgdvg_done() ? 0x00 : 0x80;
 	} };
 	
@@ -292,8 +289,7 @@ public class omegrace
 	};
 	
 	
-	public static ReadHandlerPtr omegrace_spinner1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr omegrace_spinner1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (spinnerTable[readinputport(4) & 0x3f]);
 	} };
 	
@@ -305,8 +301,7 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr omegrace_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr omegrace_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
@@ -321,8 +316,7 @@ public class omegrace
 	} };
 	
 	
-	public static WriteHandlerPtr omegrace_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr omegrace_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler (offset, data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
@@ -440,7 +434,7 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_omegrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_omegrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( omegrace )
 		PORT_START();  /* SW0 */
 		PORT_DIPNAME( 0x03, 0x03, "1st Bonus Life" );
 		PORT_DIPSETTING (   0x00, "40k" );
@@ -544,8 +538,7 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_omegrace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( omegrace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)
@@ -576,9 +569,7 @@ public class omegrace
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -621,8 +612,7 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_omegrace  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_omegrace  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(omegrace_overlay);
 	} };
 	
@@ -634,6 +624,6 @@ public class omegrace
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_omegrace	   = new GameDriver("1981"	,"omegrace"	,"omegrace.java"	,rom_omegrace,null	,machine_driver_omegrace	,input_ports_omegrace	,init_omegrace	,ROT0	,	"Midway",         "Omega Race", GAME_NO_COCKTAIL )
-	public static GameDriver driver_deltrace	   = new GameDriver("1981"	,"deltrace"	,"omegrace.java"	,rom_deltrace,driver_omegrace	,machine_driver_omegrace	,input_ports_omegrace	,init_omegrace	,ROT0	,	"Allied Leisure", "Delta Race", GAME_NO_COCKTAIL )
+	GAMEX( 1981, omegrace, 0,        omegrace, omegrace, omegrace, ROT0, "Midway",         "Omega Race", GAME_NO_COCKTAIL )
+	GAMEX( 1981, deltrace, omegrace, omegrace, omegrace, omegrace, ROT0, "Allied Leisure", "Delta Race", GAME_NO_COCKTAIL )
 }

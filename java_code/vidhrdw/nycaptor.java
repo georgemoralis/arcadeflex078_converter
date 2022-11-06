@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -32,15 +32,13 @@ public class nycaptor
 	UINT8 *nycaptor_scrlram;
 	
 	UINT8 *nycaptor_spriteram;
-	WRITE_HANDLER(nycaptor_spriteram_w)
-	{
-		nycaptor_spriteram.write(data,data);
-	}
+	public static WriteHandlerPtr nycaptor_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		nycaptor_spriteram[offset]=data;
+	} };
 	
-	READ_HANDLER(nycaptor_spriteram_r)
-	{
-		return nycaptor_spriteram.read(offset);
-	}
+	public static ReadHandlerPtr nycaptor_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return nycaptor_spriteram[offset];
+	} };
 	
 	static void get_tile_info(int tile_index)
 	{
@@ -54,7 +52,7 @@ public class nycaptor
 	#ifdef MAME_DEBUG
 	  if(nycaptor_mask&(1<<tile_info.priority))
 	  {
-	    if (nycaptor_spot != 0)pal=0xe;else pal=4;
+	    if(nycaptor_spot)pal=0xe;else pal=4;
 	  }
 	#endif
 	
@@ -66,8 +64,7 @@ public class nycaptor
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_nycaptor  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_nycaptor  = new VideoStartHandlerPtr() { public int handler(){
 	  nycaptor_spriteram = auto_malloc (160);
 	  tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32 );
 	
@@ -82,35 +79,30 @@ public class nycaptor
 		return video_start_generic.handler();
 	} };
 	
-	public static WriteHandlerPtr nycaptor_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nycaptor_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset>>1);
 	} };
 	
-	public static ReadHandlerPtr nycaptor_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr nycaptor_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 0x100) != 0)
+	public static WriteHandlerPtr nycaptor_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 0x100)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
 	} };
 	
-	public static ReadHandlerPtr nycaptor_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 0x100) != 0)
+	public static ReadHandlerPtr nycaptor_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (offset & 0x100)
 			return paletteram_2.read( (offset & 0xff) + (palette_bank << 8) );
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
 	} };
 	
-	public static WriteHandlerPtr nycaptor_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nycaptor_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxctrl == data)
 			return;
 		gfxctrl = data;
@@ -124,18 +116,15 @@ public class nycaptor
 	
 	} };
 	
-	public static ReadHandlerPtr nycaptor_gfxctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_gfxctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 			return 	gfxctrl;
 	} };
 	
-	public static ReadHandlerPtr nycaptor_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return nycaptor_scrlram[offset];
 	} };
 	
-	public static WriteHandlerPtr nycaptor_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nycaptor_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nycaptor_scrlram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data );
 	} };
@@ -145,34 +134,34 @@ public class nycaptor
 		int i;
 		for (i=0;i<0x20;i++)
 		{
-			int pr = nycaptor_spriteram.read(0x9f-i);
+			int pr = nycaptor_spriteram[0x9f-i];
 			int offs = (pr & 0x1f) * 4;
 			{
 				int code,sx,sy,flipx,flipy,pal,priori;
-				code = nycaptor_spriteram.read(offs+2)+ ((nycaptor_spriteram.read(offs+1)& 0x10) << 4);//1 bit wolny = 0x20
-				pal=nycaptor_spriteram.read(offs+1)& 0x0f;
-				sx = nycaptor_spriteram.read(offs+3);
-				sy = 240-nycaptor_spriteram.read(offs+0);
+				code = nycaptor_spriteram[offs+2] + ((nycaptor_spriteram[offs+1] & 0x10) << 4);//1 bit wolny = 0x20
+				pal=nycaptor_spriteram[offs+1] & 0x0f;
+				sx = nycaptor_spriteram[offs+3];
+				sy = 240-nycaptor_spriteram[offs+0];
 				priori=(pr&0xe0)>>5;
 	      if(priori==pri)
 	      {
 	#ifdef MAME_DEBUG
 	      if(nycaptor_mask&(1<<(pri+4)))pal=0xd;
 	#endif
-				flipx = ((nycaptor_spriteram.read(offs+1)&0x40)>>6);
-				flipy = ((nycaptor_spriteram.read(offs+1)&0x80)>>7);
+				flipx = ((nycaptor_spriteram[offs+1]&0x40)>>6);
+				flipy = ((nycaptor_spriteram[offs+1]&0x80)>>7);
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,
 						pal,
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,15);
 	
-				if(nycaptor_spriteram.read(offs+3)>240)
+				if(nycaptor_spriteram[offs+3]>240)
 				{
-					sx = (nycaptor_spriteram.read(offs+3)-256);
-					drawgfx(bitmap,Machine.gfx[1],
+					sx = (nycaptor_spriteram[offs+3]-256);
+					drawgfx(bitmap,Machine->gfx[1],
 	        				code,
 					        pal,
 					        flipx,flipy,
@@ -220,11 +209,10 @@ public class nycaptor
 	}
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_nycaptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#ifdef MAME_DEBUG
 	  nycaptor_setmask();
-	  if ((nycaptor_mask & 0x1000) != 0)
+	  if(nycaptor_mask&0x1000)
 	  {
 	     	tilemap_draw(bitmap,cliprect,tilemap,TILEMAP_BACK|3,0);
 	     	tilemap_draw(bitmap,cliprect,tilemap,TILEMAP_FRONT|3,0);

@@ -33,7 +33,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,8 +50,7 @@ public class ojankohs
 	static int ojankohs_vclk_left;
 	
 	
-	public static MachineInitHandlerPtr machine_init_ojankohs  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ojankohs  = new MachineInitHandlerPtr() { public void handler(){
 		ojankohs_portselect = 0;
 	
 		ojankohs_adpcm_reset = 0;
@@ -59,35 +58,31 @@ public class ojankohs
 		ojankohs_vclk_left = 0;
 	} };
 	
-	public static WriteHandlerPtr ojankohs_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankohs_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1, &ROM[0x10000 + (0x4000 * (data & 0x3f))]);
 	} };
 	
-	public static WriteHandlerPtr ojankoy_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankoy_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1, &ROM[0x10000 + (0x4000 * (data & 0x1f))]);
 	
 		ojankohs_adpcm_reset = ((data & 0x20) >> 5);
-		if (ojankohs_adpcm_reset == 0) ojankohs_vclk_left = 0;
+		if (!ojankohs_adpcm_reset) ojankohs_vclk_left = 0;
 	
 		MSM5205_reset_w(0, !ojankohs_adpcm_reset);
 	} };
 	
-	public static WriteHandlerPtr ojankohs_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankohs_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ojankohs_adpcm_reset = (data & 0x01);
 		ojankohs_vclk_left = 0;
 	
 		MSM5205_reset_w(0, !ojankohs_adpcm_reset);
 	} };
 	
-	public static WriteHandlerPtr ojankohs_msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankohs_msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ojankohs_adpcm_data = data;
 		ojankohs_vclk_left = 2;
 	} };
@@ -95,23 +90,22 @@ public class ojankohs
 	static void ojankohs_adpcm_int(int irq)
 	{
 		/* skip if we're reset */
-		if (ojankohs_adpcm_reset == 0)
+		if (!ojankohs_adpcm_reset)
 			return;
 	
 		/* clock the data through */
-		if (ojankohs_vclk_left != 0) {
+		if (ojankohs_vclk_left) {
 			MSM5205_data_w(0, (ojankohs_adpcm_data >> 4));
 			ojankohs_adpcm_data <<= 4;
 			ojankohs_vclk_left--;
 		}
 	
 		/* generate an NMI if we're out of data */
-		if (ojankohs_vclk_left == 0) 
+		if (!ojankohs_vclk_left) 
 			cpu_set_nmi_line(0, PULSE_LINE);
 	}
 	
-	public static WriteHandlerPtr ojankoc_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankoc_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *BANKROM = memory_region(REGION_USER1);
 		UINT32 bank_address = (data & 0x0f) * 0x8000;
 	
@@ -122,13 +116,11 @@ public class ojankohs
 		ojankoc_flipscreen(data);
 	} };
 	
-	public static WriteHandlerPtr ojankohs_portselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankohs_portselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ojankohs_portselect = data;
 	} };
 	
-	public static ReadHandlerPtr ojankohs_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankohs_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
 		switch (ojankohs_portselect) {
@@ -153,8 +145,7 @@ public class ojankohs
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr ojankoc_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankoc_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i;
 		int ret = 0;
 	
@@ -166,8 +157,7 @@ public class ojankohs
 		return (ret & 0x3f) | (readinputport(12 + offset) & 0xc0);
 	} };
 	
-	public static ReadHandlerPtr ojankohs_ay8910_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankohs_ay8910_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// DIPSW 2
 		return (((readinputport(2) & 0x01) << 7) | ((readinputport(2) & 0x02) << 5) |
 		        ((readinputport(2) & 0x04) << 3) | ((readinputport(2) & 0x08) << 1) |
@@ -175,8 +165,7 @@ public class ojankohs
 		        ((readinputport(2) & 0x40) >> 5) | ((readinputport(2) & 0x80) >> 7));
 	} };
 	
-	public static ReadHandlerPtr ojankohs_ay8910_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankohs_ay8910_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// DIPSW 1
 		return (((readinputport(3) & 0x01) << 7) | ((readinputport(3) & 0x02) << 5) |
 		        ((readinputport(3) & 0x04) << 3) | ((readinputport(3) & 0x08) << 1) |
@@ -184,33 +173,27 @@ public class ojankohs
 		        ((readinputport(3) & 0x40) >> 5) | ((readinputport(3) & 0x80) >> 7));
 	} };
 	
-	public static ReadHandlerPtr ojankoy_ay8910_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankoy_ay8910_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2);				// DIPSW 2
 	} };
 	
-	public static ReadHandlerPtr ojankoy_ay8910_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ojankoy_ay8910_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(3);				// DIPSW 1
 	} };
 	
-	public static ReadHandlerPtr ccasino_dipsw3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ccasino_dipsw3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(9) ^ 0xff);		// DIPSW 3
 	} };
 	
-	public static ReadHandlerPtr ccasino_dipsw4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ccasino_dipsw4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(10) ^ 0xff);		// DIPSW 4
 	} };
 	
-	public static WriteHandlerPtr ojankoy_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ojankoy_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w( 0, (data & 0x01));
 	} };
 	
-	public static WriteHandlerPtr ccasino_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccasino_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, (data & 0x02));
 	} };
 	
@@ -356,7 +339,7 @@ public class ojankohs
 	};
 	
 	
-	static InputPortPtr input_ports_ojankohs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ojankohs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ojankohs )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -465,7 +448,7 @@ public class ojankohs
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ojankoy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ojankoy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ojankoy )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -584,7 +567,7 @@ public class ojankohs
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ccasino = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ccasino = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ccasino )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -760,7 +743,7 @@ public class ojankohs
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ojankoc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ojankoc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ojankoc )
 		PORT_START(); 	/* DSW1 (0) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -984,8 +967,7 @@ public class ojankohs
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ojankohs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ojankohs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1012,12 +994,9 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankohs_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ojankoy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ojankoy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1045,12 +1024,9 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoy_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ccasino = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ccasino )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 MHz ? */
@@ -1077,12 +1053,9 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoy_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankohs_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ojankoc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ojankoc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)			/* 4.00 MHz */
@@ -1108,9 +1081,7 @@ public class ojankohs
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ojankoc_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, ojankoc_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ojankohs = new RomLoadPtr(){ public void handler(){ 
@@ -1205,9 +1176,9 @@ public class ojankohs
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_ojankoc	   = new GameDriver("1986"	,"ojankoc"	,"ojankohs.java"	,rom_ojankoc,null	,machine_driver_ojankoc	,input_ports_ojankoc	,null	,ROT0	,	"V-System Co.", "Ojanko Club (Japan)" )
-	public static GameDriver driver_ojankoy	   = new GameDriver("1986"	,"ojankoy"	,"ojankohs.java"	,rom_ojankoy,null	,machine_driver_ojankoy	,input_ports_ojankoy	,null	,ROT0	,	"V-System Co.", "Ojanko Yakata (Japan)" )
-	public static GameDriver driver_ojanko2	   = new GameDriver("1987"	,"ojanko2"	,"ojankohs.java"	,rom_ojanko2,null	,machine_driver_ojankoy	,input_ports_ojankoy	,null	,ROT0	,	"V-System Co.", "Ojanko Yakata 2bankan (Japan)" )
-	public static GameDriver driver_ccasino	   = new GameDriver("1987"	,"ccasino"	,"ojankohs.java"	,rom_ccasino,null	,machine_driver_ccasino	,input_ports_ccasino	,null	,ROT0	,	"V-System Co.", "Chinese Casino [BET] (Japan)" )
-	public static GameDriver driver_ojankohs	   = new GameDriver("1988"	,"ojankohs"	,"ojankohs.java"	,rom_ojankohs,null	,machine_driver_ojankohs	,input_ports_ojankohs	,null	,ROT0	,	"V-System Co.", "Ojanko High School (Japan)" )
+	GAME( 1986, ojankoc,  0, ojankoc,  ojankoc,  0, ROT0, "V-System Co.", "Ojanko Club (Japan)" )
+	GAME( 1986, ojankoy,  0, ojankoy,  ojankoy,  0, ROT0, "V-System Co.", "Ojanko Yakata (Japan)" )
+	GAME( 1987, ojanko2,  0, ojankoy,  ojankoy,  0, ROT0, "V-System Co.", "Ojanko Yakata 2bankan (Japan)" )
+	GAME( 1987, ccasino,  0, ccasino,  ccasino,  0, ROT0, "V-System Co.", "Chinese Casino [BET] (Japan)" )
+	GAME( 1988, ojankohs, 0, ojankohs, ojankohs, 0, ROT0, "V-System Co.", "Ojanko High School (Japan)" )
 }

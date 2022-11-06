@@ -9,7 +9,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,8 +20,7 @@ public class yamato
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_yamato  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_yamato  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -107,30 +106,24 @@ public class yamato
 	
 	static int p0,p1;
 	
-	public static WriteHandlerPtr p0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr p0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p0 = data;
 	} };
-	public static WriteHandlerPtr p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr p1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p1 = data;
 	} };
-	public static ReadHandlerPtr p0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr p0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return p0;
 	} };
-	public static ReadHandlerPtr p1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr p1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return p1;
 	} };
 	
-	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data);
 	} };
 	
@@ -216,7 +209,7 @@ public class yamato
 	
 	
 	
-	static InputPortPtr input_ports_yamato = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yamato = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yamato )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -343,8 +336,7 @@ public class yamato
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_yamato = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yamato )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -374,9 +366,7 @@ public class yamato
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, yamato_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -447,12 +437,11 @@ public class yamato
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_yamato  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_yamato  = new DriverInitHandlerPtr() { public void handler(){
 		yamato_decode();
 	} };
 	
 	
-	public static GameDriver driver_yamato	   = new GameDriver("1983"	,"yamato"	,"yamato.java"	,rom_yamato,null	,machine_driver_yamato	,input_ports_yamato	,init_yamato	,ROT90	,	"Sega", "Yamato (US)" )
-	public static GameDriver driver_yamato2	   = new GameDriver("1983"	,"yamato2"	,"yamato.java"	,rom_yamato2,driver_yamato	,machine_driver_yamato	,input_ports_yamato	,init_yamato	,ROT90	,	"Sega", "Yamato (World?)" )
+	GAME( 1983, yamato,  0,      yamato, yamato, yamato, ROT90, "Sega", "Yamato (US)" )
+	GAME( 1983, yamato2, yamato, yamato, yamato, yamato, ROT90, "Sega", "Yamato (World?)" )
 }

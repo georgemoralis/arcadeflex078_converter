@@ -178,7 +178,7 @@ The games seem to use them to mark platforms, kill zones and no-go areas.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -423,14 +423,13 @@ public class cps1
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_cps  = new MachineInitHandlerPtr() { public void handler()
-	{
-		const char *gamename = Machine.gamedrv.name;
+	public static MachineInitHandlerPtr machine_init_cps  = new MachineInitHandlerPtr() { public void handler(){
+		const char *gamename = Machine->gamedrv->name;
 		struct CPS1config *pCFG=&cps1_config_table[0];
 	
-		while(pCFG.name)
+		while(pCFG->name)
 		{
-			if (strcmp(pCFG.name, gamename) == 0)
+			if (strcmp(pCFG->name, gamename) == 0)
 			{
 				break;
 			}
@@ -438,13 +437,13 @@ public class cps1
 		}
 		cps1_game_config=pCFG;
 	
-	    if (!cps1_game_config.name)
+	    if (!cps1_game_config->name)
 	    {
 	        gamename="cps2";
 	        pCFG=&cps1_config_table[0];
-	        while(pCFG.name)
+	        while(pCFG->name)
 	        {
-	            if (strcmp(pCFG.name, gamename) == 0)
+	            if (strcmp(pCFG->name, gamename) == 0)
 	            {
 	                break;
 	            }
@@ -519,21 +518,21 @@ public class cps1
 		/* Some games interrogate a couple of registers on bootup. */
 		/* These are CPS1 board B self test checks. They wander from game to */
 		/* game. */
-		if (offset && offset == cps1_game_config.cpsb_addr/2)
-			return cps1_game_config.cpsb_value;
+		if (offset && offset == cps1_game_config->cpsb_addr/2)
+			return cps1_game_config->cpsb_value;
 	
 		/* some games use as a protection check the ability to do 16-bit multiplies */
 		/* with a 32-bit result, by writing the factors to two ports and reading the */
 		/* result from two other ports. */
-		if (offset && offset == cps1_game_config.mult_result_lo/2)
-			return (cps1_output[cps1_game_config.mult_factor1/2] *
-					cps1_output[cps1_game_config.mult_factor2/2]) & 0xffff;
-		if (offset && offset == cps1_game_config.mult_result_hi/2)
-			return (cps1_output[cps1_game_config.mult_factor1/2] *
-					cps1_output[cps1_game_config.mult_factor2/2]) >> 16;
+		if (offset && offset == cps1_game_config->mult_result_lo/2)
+			return (cps1_output[cps1_game_config->mult_factor1/2] *
+					cps1_output[cps1_game_config->mult_factor2/2]) & 0xffff;
+		if (offset && offset == cps1_game_config->mult_result_hi/2)
+			return (cps1_output[cps1_game_config->mult_factor1/2] *
+					cps1_output[cps1_game_config->mult_factor2/2]) >> 16;
 	
 		/* Pang 3 EEPROM interface */
-		if (cps1_game_config.kludge == 5 && offset == 0x7a/2)
+		if (cps1_game_config->kludge == 5 && offset == 0x7a/2)
 			return cps1_eeprom_port_r(0,mem_mask);
 	
 		return cps1_output[offset];
@@ -542,7 +541,7 @@ public class cps1
 	WRITE16_HANDLER( cps1_output_w )
 	{
 		/* Pang 3 EEPROM interface */
-		if (cps1_game_config.kludge == 5 && offset == 0x7a/2)
+		if (cps1_game_config->kludge == 5 && offset == 0x7a/2)
 		{
 			cps1_eeprom_port_w(0,data,mem_mask);
 			return;
@@ -562,23 +561,23 @@ public class cps1
 	
 	
 	#ifdef MAME_DEBUG
-	if (cps1_game_config.control_reg && offset == cps1_game_config.control_reg/2 && data != 0x3f)
+	if (cps1_game_config->control_reg && offset == cps1_game_config->control_reg/2 && data != 0x3f)
 		logerror("control_reg = %04x",data);
 	#endif
 	#if VERBOSE
 	if (offset > 0x22/2 &&
-	        offset != cps1_game_config.layer_control/2 &&
-			offset != cps1_game_config.priority[0]/2 &&
-			offset != cps1_game_config.priority[1]/2 &&
-			offset != cps1_game_config.priority[2]/2 &&
-			offset != cps1_game_config.priority[3]/2 &&
-			offset != cps1_game_config.control_reg/2)
+	        offset != cps1_game_config->layer_control/2 &&
+			offset != cps1_game_config->priority[0]/2 &&
+			offset != cps1_game_config->priority[1]/2 &&
+			offset != cps1_game_config->priority[2]/2 &&
+			offset != cps1_game_config->priority[3]/2 &&
+			offset != cps1_game_config->control_reg/2)
 		logerror("PC %06x: write %02x to output port %02x\n",activecpu_get_pc(),data,offset*2);
 	
 	#ifdef MAME_DEBUG
 	if (offset == 0x22/2 && (data & ~0x8001) != 0x0e)
 		logerror("port 22 = %04x",data);
-	if (cps1_game_config.priority[0] && offset == cps1_game_config.priority[0]/2 && data != 0x00)
+	if (cps1_game_config->priority[0] && offset == cps1_game_config->priority[0]/2 && data != 0x00)
 		usrintf_showmessage("priority0 %04x",data);
 	#endif
 	#endif
@@ -699,10 +698,10 @@ public class cps1
 				int n = 0;
 				UINT32 mask = (0x80808080 >> j) & src;
 	
-				if ((mask & 0x000000ff) != 0) n |= 1;
-				if ((mask & 0x0000ff00) != 0) n |= 2;
-				if ((mask & 0x00ff0000) != 0) n |= 4;
-				if ((mask & 0xff000000) != 0) n |= 8;
+				if (mask & 0x000000ff) n |= 1;
+				if (mask & 0x0000ff00) n |= 2;
+				if (mask & 0x00ff0000) n |= 4;
+				if (mask & 0xff000000) n |= 8;
 	
 				dwval |= n << (j * 4);
 			}
@@ -748,13 +747,11 @@ public class cps1
 	}
 	
 	
-	public static DriverInitHandlerPtr init_cps1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cps1  = new DriverInitHandlerPtr() { public void handler(){
 		cps1_gfx_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_cps2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cps2  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 		data16_t *xor = (data16_t *)memory_region(REGION_USER1);
 		int i;
@@ -782,26 +779,26 @@ public class cps1
 	{
 		FILE *fp;
 		fp=fopen("SCROLL1.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_scroll1, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("SCROLL2.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_scroll2, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("SCROLL3.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_scroll3, cps1_scroll_size, 1, fp);
 			fclose(fp);
 		}
 	
 	    fp=fopen("OBJ.DMP", "w+b");
-	    if (fp != 0)
+	    if (fp)
 	    {
 	        fwrite(cps1_obj, cps1_obj_size, 1, fp);
 	        fclose(fp);
@@ -810,14 +807,14 @@ public class cps1
 	    {
 	        /* PSL: CPS2 support */
 	        fp=fopen("OBJCPS2.DMP", "w+b");
-	        if (fp != 0)
+	        if (fp)
 	        {
 	            fwrite(cps2_objram1, cps2_obj_size, 1, fp);
 	            fwrite(cps2_objram2, cps2_obj_size, 1, fp);
 	            fclose(fp);
 	        }
 	        fp=fopen("CPS2OUTP.DMP", "w+b");
-	        if (fp != 0)
+	        if (fp)
 	        {
 	            fwrite(cps2_output, cps2_output_size, 1, fp);
 	            fclose(fp);
@@ -827,27 +824,27 @@ public class cps1
 	
 	
 		fp=fopen("OTHER.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_other, cps1_other_size, 1, fp);
 			fclose(fp);
 		}
 	
 		fp=fopen("PALETTE.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_palette, cps1_palette_size, 1, fp);
 			fclose(fp);
 		}
 	
 		fp=fopen("OUTPUT.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_output, cps1_output_size, 1, fp);
 			fclose(fp);
 		}
 		fp=fopen("VIDEO.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(cps1_gfxram, cps1_gfxram_size, 1, fp);
 			fclose(fp);
@@ -879,7 +876,7 @@ public class cps1
 		}
 	
 		/* Some of the sf2 hacks use only sprite port 0x9100 and the scroll layers are offset */
-		if (cps1_game_config.kludge == 10)
+		if (cps1_game_config->kludge == 10)
 		{
 			cps1_output[CPS1_OBJ_BASE/2] = 0x9100;
 			cps1_obj=cps1_base(CPS1_OBJ_BASE, cps1_obj_size);
@@ -910,12 +907,12 @@ public class cps1
 		stars2y =cps1_port(CPS1_STARS2_SCROLLY);
 	
 		/* Get layer enable bits */
-		layercontrol=cps1_port(cps1_game_config.layer_control);
-		tilemap_set_enable(tilemap[0],layercontrol & cps1_game_config.layer_enable_mask[0]);
-		tilemap_set_enable(tilemap[1],layercontrol & cps1_game_config.layer_enable_mask[1]);
-		tilemap_set_enable(tilemap[2],layercontrol & cps1_game_config.layer_enable_mask[2]);
-		cps1_stars_enabled[0] = layercontrol & cps1_game_config.layer_enable_mask[3];
-		cps1_stars_enabled[1] = layercontrol & cps1_game_config.layer_enable_mask[4];
+		layercontrol=cps1_port(cps1_game_config->layer_control);
+		tilemap_set_enable(tilemap[0],layercontrol & cps1_game_config->layer_enable_mask[0]);
+		tilemap_set_enable(tilemap[1],layercontrol & cps1_game_config->layer_enable_mask[1]);
+		tilemap_set_enable(tilemap[2],layercontrol & cps1_game_config->layer_enable_mask[2]);
+		cps1_stars_enabled[0] = layercontrol & cps1_game_config->layer_enable_mask[3];
+		cps1_stars_enabled[1] = layercontrol & cps1_game_config->layer_enable_mask[4];
 	
 	
 	#ifdef MAME_DEBUG
@@ -944,13 +941,13 @@ public class cps1
 	#endif
 	
 		enablemask = 0;
-		if (cps1_game_config.layer_enable_mask[0] == cps1_game_config.layer_enable_mask[1])
-			enablemask = cps1_game_config.layer_enable_mask[0];
-		if (cps1_game_config.layer_enable_mask[0] == cps1_game_config.layer_enable_mask[2])
-			enablemask = cps1_game_config.layer_enable_mask[0];
-		if (cps1_game_config.layer_enable_mask[1] == cps1_game_config.layer_enable_mask[2])
-			enablemask = cps1_game_config.layer_enable_mask[1];
-		if (enablemask != 0)
+		if (cps1_game_config->layer_enable_mask[0] == cps1_game_config->layer_enable_mask[1])
+			enablemask = cps1_game_config->layer_enable_mask[0];
+		if (cps1_game_config->layer_enable_mask[0] == cps1_game_config->layer_enable_mask[2])
+			enablemask = cps1_game_config->layer_enable_mask[0];
+		if (cps1_game_config->layer_enable_mask[1] == cps1_game_config->layer_enable_mask[2])
+			enablemask = cps1_game_config->layer_enable_mask[1];
+		if (enablemask)
 		{
 			if (((layercontrol & enablemask) && (layercontrol & enablemask) != enablemask))
 				usrintf_showmessage("layer %02x",layercontrol&0xc03f);
@@ -960,9 +957,9 @@ public class cps1
 	
 	{
 		int enablemask;
-		enablemask = cps1_game_config.layer_enable_mask[0] | cps1_game_config.layer_enable_mask[1]
-				| cps1_game_config.layer_enable_mask[2]
-				| cps1_game_config.layer_enable_mask[3] | cps1_game_config.layer_enable_mask[4];
+		enablemask = cps1_game_config->layer_enable_mask[0] | cps1_game_config->layer_enable_mask[1]
+				| cps1_game_config->layer_enable_mask[2]
+				| cps1_game_config->layer_enable_mask[3] | cps1_game_config->layer_enable_mask[4];
 		if (((layercontrol & ~enablemask) & 0xc03e) != 0)
 			usrintf_showmessage("layer %02x contact MAMEDEV",layercontrol&0xc03f);
 	}
@@ -997,19 +994,19 @@ public class cps1
 	
 	static UINT32 tilemap0_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x1f) + ((col & 0x3f) << 5) + ((row & 0x20) << 6);
 	}
 	
 	static UINT32 tilemap1_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x0f) + ((col & 0x3f) << 4) + ((row & 0x30) << 6);
 	}
 	
 	static UINT32 tilemap2_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x07) + ((col & 0x3f) << 3) + ((row & 0x38) << 6);
 	}
 	
@@ -1017,13 +1014,13 @@ public class cps1
 	
 	static void get_tile0_info(int tile_index)
 	{
-		int base = cps1_game_config.bank_scroll1 * 0x08000;
+		int base = cps1_game_config->bank_scroll1 * 0x08000;
 		int code = cps1_scroll1[2*tile_index];
 		int attr = cps1_scroll1[2*tile_index+1];
 	
 	
 		/* knights & msword */
-		if (cps1_game_config.kludge == 3)
+		if (cps1_game_config->kludge == 3)
 			if (code == 0xf020) code = 0x0020;
 	
 		SET_TILE_INFO(
@@ -1044,9 +1041,9 @@ public class cps1
 	
 	static void get_tile1_info(int tile_index)
 	{
-		int base = cps1_game_config.bank_scroll2 * 0x04000;
-		const int startcode = cps1_game_config.start_scroll2;
-		const int endcode   = cps1_game_config.end_scroll2;
+		int base = cps1_game_config->bank_scroll2 * 0x04000;
+		const int startcode = cps1_game_config->start_scroll2;
+		const int endcode   = cps1_game_config->end_scroll2;
 		int code = cps1_scroll2[2*tile_index];
 		int attr = cps1_scroll2[2*tile_index+1];
 	
@@ -1060,7 +1057,7 @@ public class cps1
 		/*
 		MERCS has an gap in the scroll 2 layout
 		(bad tiles at start of level 2)*/
-			|| (cps1_game_config.kludge == 4 && (code >= 0x1e00 && code < 0x5400))
+			|| (cps1_game_config->kludge == 4 && (code >= 0x1e00 && code < 0x5400))
 		)
 		{
 			tile_info.pen_data = empty_tile;
@@ -1070,21 +1067,21 @@ public class cps1
 	
 	static void get_tile2_info(int tile_index)
 	{
-		int base = cps1_game_config.bank_scroll3 * 0x1000;
-		const int startcode = cps1_game_config.start_scroll3;
-		const int endcode   = cps1_game_config.end_scroll3;
+		int base = cps1_game_config->bank_scroll3 * 0x1000;
+		const int startcode = cps1_game_config->start_scroll3;
+		const int endcode   = cps1_game_config->end_scroll3;
 		int code = cps1_scroll3[2*tile_index];
 		int attr = cps1_scroll3[2*tile_index+1];
 	
-		if (cps1_game_config.kludge == 2 && code < 0x0e00)
+		if (cps1_game_config->kludge == 2 && code < 0x0e00)
 		{
 			code += 0x1000;
 		}
-		if (cps1_game_config.kludge == 8 && code >= 0x5800)
+		if (cps1_game_config->kludge == 8 && code >= 0x5800)
 		{
 			code -= 0x4000;
 		}
-		if (cps1_game_config.kludge == 9 && code < 0x5600)
+		if (cps1_game_config->kludge == 9 && code < 0x5600)
 		{
 			code += 0x4000;
 		}
@@ -1113,8 +1110,8 @@ public class cps1
 			int mask;
 	
 			/* Get transparency registers */
-			if (cps1_game_config.priority[i])
-				mask = cps1_port(cps1_game_config.priority[i]) ^ 0xffff;
+			if (cps1_game_config->priority[i])
+				mask = cps1_port(cps1_game_config->priority[i]) ^ 0xffff;
 			else mask = 0xffff;	/* completely transparent if priority masks not defined (mercs, qad) */
 	
 			tilemap_set_transmask(tilemap[0],i,mask,0x8000);
@@ -1123,8 +1120,7 @@ public class cps1
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_cps  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cps  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 	    machine_init_cps();
@@ -1141,7 +1137,7 @@ public class cps1
 		memset(empty_tile,0xff,sizeof(empty_tile));
 	
 		cps1_old_palette=auto_malloc(cps1_palette_size);
-		if (cps1_old_palette == 0)
+		if (!cps1_old_palette)
 			return 1;
 		memset(cps1_old_palette, 0x00, cps1_palette_size);
 		for (i = 0;i < cps1_palette_entries*16;i++)
@@ -1150,13 +1146,13 @@ public class cps1
 		}
 	
 	    cps1_buffered_obj = auto_malloc (cps1_obj_size);
-	    if (cps1_buffered_obj == 0)
+	    if (!cps1_buffered_obj)
 			return 1;
 	    memset(cps1_buffered_obj, 0x00, cps1_obj_size);
 	
 	    if (cps_version==2) {
 		cps2_buffered_obj = auto_malloc (cps2_obj_size);
-		if (cps2_buffered_obj == 0)
+		if (!cps2_buffered_obj)
 		    return 1;
 		memset(cps2_buffered_obj, 0x00, cps2_obj_size);
 	    }
@@ -1178,7 +1174,7 @@ public class cps1
 		cps1_output[CPS1_OTHER_BASE/2]   = 0x9100;
 		cps1_output[CPS1_PALETTE_BASE/2] = 0x90c0;
 	
-		if (cps1_game_config == 0)
+		if (!cps1_game_config)
 		{
 			logerror("cps1_game_config hasn't been set up yet");
 			return -1;
@@ -1200,14 +1196,12 @@ public class cps1
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cps1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cps1  = new VideoStartHandlerPtr() { public int handler(){
 	    cps_version=1;
 	    return video_start_cps();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cps2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cps2  = new VideoStartHandlerPtr() { public int handler(){
 	    if (cps_version != 99)
 	    {
 	        cps_version=2;
@@ -1246,7 +1240,7 @@ public class cps1
 				else
 				{
 					bright = (palette>>12);
-					if (bright != 0) bright += 2;
+					if (bright) bright += 2;
 	
 					red   = ((palette>>8)&0x0f) * bright;
 					green = ((palette>>4)&0x0f) * bright;
@@ -1319,15 +1313,15 @@ public class cps1
 	{
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)					\
 	{																	\
-		if (flip_screen != 0)												\
-			pdrawgfx(bitmap,Machine.gfx[1],							\
+		if (flip_screen())												\
+			pdrawgfx(bitmap,Machine->gfx[1],							\
 					CODE,												\
 					COLOR,												\
 					!(FLIPX),!(FLIPY),									\
 					511-16-(SX),255-16-(SY),							\
 					cliprect,TRANSPARENCY_PEN,15,0x02);					\
 		else															\
-			pdrawgfx(bitmap,Machine.gfx[1],							\
+			pdrawgfx(bitmap,Machine->gfx[1],							\
 					CODE,												\
 					COLOR,												\
 					FLIPX,FLIPY,										\
@@ -1340,7 +1334,7 @@ public class cps1
 		data16_t *base=cps1_buffered_obj;
 	
 		/* some sf2 hacks draw the sprites in reverse order */
-		if (cps1_game_config.kludge == 10)
+		if (cps1_game_config->kludge == 10)
 		{
 			base += cps1_last_sprite_offset;
 			baseadd = -4;
@@ -1361,22 +1355,22 @@ public class cps1
 	//		x-=0x20;
 	//		y+=0x20;
 	
-			if (cps1_game_config.kludge == 7)
+			if (cps1_game_config->kludge == 7)
 			{
 				code += 0x4000;
 			}
-			if (cps1_game_config.kludge == 1 && code >= 0x01000)
+			if (cps1_game_config->kludge == 1 && code >= 0x01000)
 			{
 				code += 0x4000;
 			}
-			if (cps1_game_config.kludge == 2 && code >= 0x02a00)
+			if (cps1_game_config->kludge == 2 && code >= 0x02a00)
 			{
 				code += 0x4000;
 			}
 	
-			if (code < Machine.gfx[1].total_elements)
+			if (code < Machine->gfx[1]->total_elements)
 			{
-				if ((colour & 0xff00) != 0)
+				if (colour & 0xff00 )
 				{
 					/* handle blocked sprites */
 					int nx=(colour & 0x0f00) >> 8;
@@ -1385,10 +1379,10 @@ public class cps1
 					nx++;
 					ny++;
 	
-					if ((colour & 0x40) != 0)
+					if (colour & 0x40)
 					{
 						/* Y flip */
-						if ((colour & 0x20) != 0)
+						if (colour &0x20)
 						{
 							for (nys=0; nys<ny; nys++)
 							{
@@ -1425,7 +1419,7 @@ public class cps1
 					}
 					else
 					{
-						if ((colour & 0x20) != 0)
+						if (colour &0x20)
 						{
 							for (nys=0; nys<ny; nys++)
 							{
@@ -1481,7 +1475,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			cps2_objram_bank = data & 1;
 		}
@@ -1489,7 +1483,7 @@ public class cps1
 	
 	READ16_HANDLER( cps2_objram1_r )
 	{
-		if ((cps2_objram_bank & 1) != 0)
+		if (cps2_objram_bank & 1)
 			return cps2_objram2[offset];
 		else
 			return cps2_objram1[offset];
@@ -1497,7 +1491,7 @@ public class cps1
 	
 	READ16_HANDLER( cps2_objram2_r )
 	{
-		if ((cps2_objram_bank & 1) != 0)
+		if (cps2_objram_bank & 1)
 			return cps2_objram1[offset];
 		else
 			return cps2_objram2[offset];
@@ -1505,7 +1499,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram1_w )
 	{
-		if ((cps2_objram_bank & 1) != 0)
+		if (cps2_objram_bank & 1)
 			COMBINE_DATA(&cps2_objram2[offset]);
 		else
 			COMBINE_DATA(&cps2_objram1[offset]);
@@ -1513,7 +1507,7 @@ public class cps1
 	
 	WRITE16_HANDLER( cps2_objram2_w )
 	{
-		if ((cps2_objram_bank & 1) != 0)
+		if (cps2_objram_bank & 1)
 			COMBINE_DATA(&cps2_objram1[offset]);
 		else
 			COMBINE_DATA(&cps2_objram2[offset]);
@@ -1524,7 +1518,7 @@ public class cps1
 		int baseptr;
 		baseptr = 0x7000;
 	
-		if ((cps2_objram_bank & 1) != 0) baseptr ^= 0x0080;
+		if (cps2_objram_bank & 1) baseptr ^= 0x0080;
 	
 	//usrintf_showmessage("%04x %d",cps2_port(CPS2_OBJ_BASE),cps2_objram_bank&1);
 	
@@ -1562,15 +1556,15 @@ public class cps1
 	{
 	#define DRAWSPRITE(CODE,COLOR,FLIPX,FLIPY,SX,SY)									\
 	{																					\
-		if (flip_screen != 0)																\
-			pdrawgfx(bitmap,Machine.gfx[1],											\
+		if (flip_screen())																\
+			pdrawgfx(bitmap,Machine->gfx[1],											\
 					CODE,																\
 					COLOR,																\
 					!(FLIPX),!(FLIPY),													\
 					511-16-(SX),255-16-(SY),											\
 					cliprect,TRANSPARENCY_PEN,15,primasks[priority]);					\
 		else																			\
-			pdrawgfx(bitmap,Machine.gfx[1],											\
+			pdrawgfx(bitmap,Machine->gfx[1],											\
 					CODE,																\
 					COLOR,																\
 					FLIPX,FLIPY,														\
@@ -1599,13 +1593,13 @@ public class cps1
 			int colour= base[i+3];
 			int col=colour&0x1f;
 	
-			if ((colour & 0x80) != 0)
+			if(colour & 0x80)
 			{
 				x += cps2_port(CPS2_OBJ_XOFFS);  /* fix the offset of some games */
 				y += cps2_port(CPS2_OBJ_YOFFS);  /* like Marvel vs. Capcom ending credits */
 			}
 	
-			if ((colour & 0xff00) != 0)
+			if (colour & 0xff00 )
 			{
 				/* handle blocked sprites */
 				int nx=(colour & 0x0f00) >> 8;
@@ -1614,10 +1608,10 @@ public class cps1
 				nx++;
 				ny++;
 	
-				if ((colour & 0x40) != 0)
+				if (colour & 0x40)
 				{
 					/* Y flip */
-					if ((colour & 0x20) != 0)
+					if (colour &0x20)
 					{
 						for (nys=0; nys<ny; nys++)
 						{
@@ -1653,7 +1647,7 @@ public class cps1
 				}
 				else
 				{
-					if ((colour & 0x20) != 0)
+					if (colour &0x20)
 					{
 						for (nys=0; nys<ny; nys++)
 						{
@@ -1729,7 +1723,7 @@ public class cps1
 					int sy = (offs % 256);
 					sx = (sx - stars2x + (col & 0x1f)) & 0x1ff;
 					sy = (sy - stars2y) & 0xff;
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 511 - sx;
 						sy = 255 - sy;
@@ -1737,9 +1731,9 @@ public class cps1
 	
 					col = ((col & 0xe0) >> 1) + (cpu_getcurrentframe()/16 & 0x0f);
 	
-					if (sx >= cliprect.min_x && sx <= cliprect.max_x &&
-						sy >= cliprect.min_y && sy <= cliprect.max_y)
-						plot_pixel(bitmap,sx,sy,Machine.pens[0xa00+col]);
+					if (sx >= cliprect->min_x && sx <= cliprect->max_x &&
+						sy >= cliprect->min_y && sy <= cliprect->max_y)
+						plot_pixel(bitmap,sx,sy,Machine->pens[0xa00+col]);
 				}
 			}
 		}
@@ -1755,7 +1749,7 @@ public class cps1
 					int sy = (offs % 256);
 					sx = (sx - stars1x + (col & 0x1f)) & 0x1ff;
 					sy = (sy - stars1y) & 0xff;
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 511 - sx;
 						sy = 255 - sy;
@@ -1763,9 +1757,9 @@ public class cps1
 	
 					col = ((col & 0xe0) >> 1) + (cpu_getcurrentframe()/16 & 0x0f);
 	
-					if (sx >= cliprect.min_x && sx <= cliprect.max_x &&
-						sy >= cliprect.min_y && sy <= cliprect.max_y)
-						plot_pixel(bitmap,sx,sy,Machine.pens[0x800+col]);
+					if (sx >= cliprect->min_x && sx <= cliprect->max_x &&
+						sy >= cliprect->min_y && sy <= cliprect->max_y)
+						plot_pixel(bitmap,sx,sy,Machine->pens[0x800+col]);
 				}
 			}
 		}
@@ -1809,8 +1803,7 @@ public class cps1
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cps1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    int layercontrol,l0,l1,l2,l3;
 		int videocontrol=cps1_port(0x22);
 	
@@ -1835,7 +1828,7 @@ public class cps1
 	
 		tilemap_set_scrollx(tilemap[0],0,scroll1x);
 		tilemap_set_scrolly(tilemap[0],0,scroll1y);
-		if ((videocontrol & 0x01) != 0)	/* linescroll enable */
+		if (videocontrol & 0x01)	/* linescroll enable */
 		{
 			int scrly=-scroll2y;
 			int i;
@@ -1943,8 +1936,7 @@ public class cps1
 	#endif
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_cps1  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_cps1  = new VideoEofHandlerPtr() { public void handler(){
 		/* Get video memory base registers */
 		cps1_get_video_base();
 	

@@ -28,7 +28,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,11 +43,10 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_midyunit  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_midyunit  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, midyunit_cmos_ram, 0x8000);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, midyunit_cmos_ram, 0x8000);
 		else
 			memset(midyunit_cmos_ram, 0, 0x8000);
@@ -98,7 +97,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_narc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_narc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( narc )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -148,7 +147,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_trog = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_trog = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( trog )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -243,7 +242,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_smashtv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_smashtv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( smashtv )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN   | IPF_PLAYER1 );
@@ -339,7 +338,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_strkforc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_strkforc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( strkforc )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -435,7 +434,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mkla2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mkla2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mkla2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -527,7 +526,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mkla4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mkla4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mkla4 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -622,7 +621,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_term2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_term2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( term2 )
 		PORT_START(); 
 		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -718,7 +717,7 @@ public class midyunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_totcarn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_totcarn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( totcarn )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN   | IPF_PLAYER1 );
@@ -856,8 +855,7 @@ public class midyunit
 	
 	#define COMPUTED_VBLANK(yvis, ytotal, fps) ((1000000 * (ytotal - yvis)) / (fps * ytotal))
 	
-	public static MachineHandlerPtr machine_driver_zunit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zunit )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 48000000/TMS34010_CLOCK_DIVIDER)
@@ -881,9 +879,7 @@ public class midyunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(williams_narc_sound)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -893,8 +889,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_yunit_core = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yunit_core )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
@@ -914,13 +909,10 @@ public class midyunit
 	
 		MDRV_VIDEO_EOF(midyunit)
 		MDRV_VIDEO_UPDATE(midyunit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_yunit_cvsd_4bit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yunit_cvsd_4bit )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -929,13 +921,10 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(256)
 		MDRV_VIDEO_START(midyunit_4bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_yunit_cvsd_6bit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yunit_cvsd_6bit )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -944,13 +933,10 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
 		MDRV_VIDEO_START(midyunit_6bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_yunit_adpcm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yunit_adpcm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(yunit_core)
@@ -959,9 +945,7 @@ public class midyunit
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
 		MDRV_VIDEO_START(midyunit_6bit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*
@@ -981,74 +965,53 @@ public class midyunit
 	*/
 	
 	
-	public static MachineHandlerPtr machine_driver_trog = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trog )
 		MDRV_IMPORT_FROM(yunit_cvsd_4bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 395, 0, 255)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_strkforc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( strkforc )
 		MDRV_IMPORT_FROM(yunit_cvsd_4bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(255, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 254)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_smashtv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( smashtv )
 		MDRV_IMPORT_FROM(yunit_cvsd_6bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 409, 0, 255)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hiimpact = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hiimpact )
 		MDRV_IMPORT_FROM(yunit_cvsd_6bit)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 395, 0, 255)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_term2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( term2 )
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(255, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 403, 0, 254)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mk )
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(254, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 253)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_totcarn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( totcarn )
 		MDRV_IMPORT_FROM(yunit_adpcm)
 		MDRV_VBLANK_DURATION(COMPUTED_VBLANK(256, 288, MKLA5_FPS))
 		MDRV_VISIBLE_AREA(0, 399, 0, 255)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1909,31 +1872,31 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_narc	   = new GameDriver("1988"	,"narc"	,"midyunit.java"	,rom_narc,null	,machine_driver_zunit	,input_ports_narc	,init_narc	,ROT0	,	"Williams", "Narc (rev 7.00)" )
-	public static GameDriver driver_narc3	   = new GameDriver("1988"	,"narc3"	,"midyunit.java"	,rom_narc3,driver_narc	,machine_driver_zunit	,input_ports_narc	,init_narc3	,ROT0	,	"Williams", "Narc (rev 3.20)" )
+	GAME( 1988, narc,     0,       zunit,    narc,    narc,     ROT0, "Williams", "Narc (rev 7.00)" )
+	GAME( 1988, narc3,    narc,    zunit,    narc,    narc3,    ROT0, "Williams", "Narc (rev 3.20)" )
 	
-	public static GameDriver driver_trog	   = new GameDriver("1990"	,"trog"	,"midyunit.java"	,rom_trog,null	,machine_driver_trog	,input_ports_trog	,init_trog	,ROT0	,	"Midway",   "Trog (rev LA4 03/11/91)" )
-	public static GameDriver driver_trog3	   = new GameDriver("1990"	,"trog3"	,"midyunit.java"	,rom_trog3,driver_trog	,machine_driver_trog	,input_ports_trog	,init_trog3	,ROT0	,	"Midway",   "Trog (rev LA3 02/14/91)" )
-	public static GameDriver driver_trogpa6	   = new GameDriver("1990"	,"trogpa6"	,"midyunit.java"	,rom_trogpa6,driver_trog	,machine_driver_trog	,input_ports_trog	,init_trogpa6	,ROT0	,	"Midway",   "Trog (rev PA6-PAC 09/09/90)" )
-	public static GameDriver driver_trogp	   = new GameDriver("1990"	,"trogp"	,"midyunit.java"	,rom_trogp,driver_trog	,machine_driver_trog	,input_ports_trog	,init_trogp	,ROT0	,	"Midway",   "Trog (prototype, rev 4.00 07/27/90)" )
-	public static GameDriver driver_strkforc	   = new GameDriver("1991"	,"strkforc"	,"midyunit.java"	,rom_strkforc,null	,machine_driver_strkforc	,input_ports_strkforc	,init_strkforc	,ROT0	,	"Midway",   "Strike Force (rev 1 02/25/91)" )
+	GAME( 1990, trog,     0,       trog,     trog,    trog,     ROT0, "Midway",   "Trog (rev LA4 03/11/91)" )
+	GAME( 1990, trog3,    trog,    trog,     trog,    trog3,    ROT0, "Midway",   "Trog (rev LA3 02/14/91)" )
+	GAME( 1990, trogpa6,  trog,    trog,     trog,    trogpa6,  ROT0, "Midway",   "Trog (rev PA6-PAC 09/09/90)" )
+	GAME( 1990, trogp,    trog,    trog,     trog,    trogp,    ROT0, "Midway",   "Trog (prototype, rev 4.00 07/27/90)" )
+	GAME( 1991, strkforc, 0,       strkforc, strkforc,strkforc, ROT0, "Midway",   "Strike Force (rev 1 02/25/91)" )
 	
-	public static GameDriver driver_smashtv	   = new GameDriver("1990"	,"smashtv"	,"midyunit.java"	,rom_smashtv,null	,machine_driver_smashtv	,input_ports_smashtv	,init_smashtv	,ROT0	,	"Williams", "Smash T.V. (rev 8.00)" )
-	public static GameDriver driver_smashtv6	   = new GameDriver("1990"	,"smashtv6"	,"midyunit.java"	,rom_smashtv6,driver_smashtv	,machine_driver_smashtv	,input_ports_smashtv	,init_smashtv	,ROT0	,	"Williams", "Smash T.V. (rev 6.00)" )
-	public static GameDriver driver_smashtv5	   = new GameDriver("1990"	,"smashtv5"	,"midyunit.java"	,rom_smashtv5,driver_smashtv	,machine_driver_smashtv	,input_ports_smashtv	,init_smashtv	,ROT0	,	"Williams", "Smash T.V. (rev 5.00)" )
-	public static GameDriver driver_smashtv4	   = new GameDriver("1990"	,"smashtv4"	,"midyunit.java"	,rom_smashtv4,driver_smashtv	,machine_driver_smashtv	,input_ports_smashtv	,init_smashtv4	,ROT0	,	"Williams", "Smash T.V. (rev 4.00)" )
-	public static GameDriver driver_hiimpact	   = new GameDriver("1990"	,"hiimpact"	,"midyunit.java"	,rom_hiimpact,null	,machine_driver_hiimpact	,input_ports_trog	,init_hiimpact	,ROT0	,	"Williams", "High Impact Football (rev LA3 12/27/90)" )
-	public static GameDriver driver_shimpact	   = new GameDriver("1991"	,"shimpact"	,"midyunit.java"	,rom_shimpact,null	,machine_driver_hiimpact	,input_ports_trog	,init_shimpact	,ROT0	,	"Midway",   "Super High Impact (rev LA1 09/30/91)", GAME_NOT_WORKING )
-	public static GameDriver driver_shimpacp	   = new GameDriver("1991"	,"shimpacp"	,"midyunit.java"	,rom_shimpacp,driver_shimpact	,machine_driver_hiimpact	,input_ports_trog	,init_shimpacp	,ROT0	,	"Midway",   "Super High Impact (prototype, rev 5.0 09/15/91)", GAME_NOT_WORKING )
+	GAME( 1990, smashtv,  0,       smashtv,  smashtv, smashtv,  ROT0, "Williams", "Smash T.V. (rev 8.00)" )
+	GAME( 1990, smashtv6, smashtv, smashtv,  smashtv, smashtv,  ROT0, "Williams", "Smash T.V. (rev 6.00)" )
+	GAME( 1990, smashtv5, smashtv, smashtv,  smashtv, smashtv,  ROT0, "Williams", "Smash T.V. (rev 5.00)" )
+	GAME( 1990, smashtv4, smashtv, smashtv,  smashtv, smashtv4, ROT0, "Williams", "Smash T.V. (rev 4.00)" )
+	GAME( 1990, hiimpact, 0,       hiimpact, trog,    hiimpact, ROT0, "Williams", "High Impact Football (rev LA3 12/27/90)" )
+	GAMEX(1991, shimpact, 0,       hiimpact, trog,    shimpact, ROT0, "Midway",   "Super High Impact (rev LA1 09/30/91)", GAME_NOT_WORKING )
+	GAMEX(1991, shimpacp, shimpact,hiimpact, trog,    shimpacp, ROT0, "Midway",   "Super High Impact (prototype, rev 5.0 09/15/91)", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_term2	   = new GameDriver("1991"	,"term2"	,"midyunit.java"	,rom_term2,null	,machine_driver_term2	,input_ports_term2	,init_term2	,ROT0	,	"Midway",   "Terminator 2 - Judgment Day (rev LA3 03/27/92)" )
-	public static GameDriver driver_term2la2	   = new GameDriver("1991"	,"term2la2"	,"midyunit.java"	,rom_term2la2,driver_term2	,machine_driver_term2	,input_ports_term2	,init_term2la2	,ROT0	,	"Midway",   "Terminator 2 - Judgment Day (rev LA2 12/09/91)" )
-	public static GameDriver driver_term2la1	   = new GameDriver("1991"	,"term2la1"	,"midyunit.java"	,rom_term2la1,driver_term2	,machine_driver_term2	,input_ports_term2	,init_term2la1	,ROT0	,	"Midway",   "Terminator 2 - Judgment Day (rev LA1 11/01/91)" )
-	public static GameDriver driver_mkprot9	   = new GameDriver("1992"	,"mkprot9"	,"midyunit.java"	,rom_mkprot9,driver_mk	,machine_driver_mk	,input_ports_mkla2	,init_mkprot9	,ROT0	,	"Midway",   "Mortal Kombat (prototype, rev 9.0 07/28/92)" )
-	public static GameDriver driver_mkla1	   = new GameDriver("1992"	,"mkla1"	,"midyunit.java"	,rom_mkla1,driver_mk	,machine_driver_mk	,input_ports_mkla2	,init_mkla1	,ROT0	,	"Midway",   "Mortal Kombat (rev 1.0 08/08/92)" )
-	public static GameDriver driver_mkla2	   = new GameDriver("1992"	,"mkla2"	,"midyunit.java"	,rom_mkla2,driver_mk	,machine_driver_mk	,input_ports_mkla2	,init_mkla2	,ROT0	,	"Midway",   "Mortal Kombat (rev 2.0 08/18/92)" )
-	public static GameDriver driver_mkla3	   = new GameDriver("1992"	,"mkla3"	,"midyunit.java"	,rom_mkla3,driver_mk	,machine_driver_mk	,input_ports_mkla4	,init_mkla3	,ROT0	,	"Midway",   "Mortal Kombat (rev 3.0 08/31/92)" )
-	public static GameDriver driver_mkla4	   = new GameDriver("1992"	,"mkla4"	,"midyunit.java"	,rom_mkla4,driver_mk	,machine_driver_mk	,input_ports_mkla4	,init_mkla4	,ROT0	,	"Midway",   "Mortal Kombat (rev 4.0 09/28/92)" )
-	public static GameDriver driver_totcarn	   = new GameDriver("1992"	,"totcarn"	,"midyunit.java"	,rom_totcarn,null	,machine_driver_totcarn	,input_ports_totcarn	,init_totcarn	,ROT0	,	"Midway",   "Total Carnage (rev LA1 03/10/92)" )
-	public static GameDriver driver_totcarnp	   = new GameDriver("1992"	,"totcarnp"	,"midyunit.java"	,rom_totcarnp,driver_totcarn	,machine_driver_totcarn	,input_ports_totcarn	,init_totcarnp	,ROT0	,	"Midway",   "Total Carnage (prototype, rev 1.0 01/25/92)" )
+	GAME( 1991, term2,    0,       term2,    term2,   term2,    ROT0, "Midway",   "Terminator 2 - Judgment Day (rev LA3 03/27/92)" )
+	GAME( 1991, term2la2, term2,   term2,    term2,   term2la2, ROT0, "Midway",   "Terminator 2 - Judgment Day (rev LA2 12/09/91)" )
+	GAME( 1991, term2la1, term2,   term2,    term2,   term2la1, ROT0, "Midway",   "Terminator 2 - Judgment Day (rev LA1 11/01/91)" )
+	GAME( 1992, mkprot9,  mk,      mk,       mkla2,   mkprot9,  ROT0, "Midway",   "Mortal Kombat (prototype, rev 9.0 07/28/92)" )
+	GAME( 1992, mkla1,    mk,      mk,       mkla2,   mkla1,    ROT0, "Midway",   "Mortal Kombat (rev 1.0 08/08/92)" )
+	GAME( 1992, mkla2,    mk,      mk,       mkla2,   mkla2,    ROT0, "Midway",   "Mortal Kombat (rev 2.0 08/18/92)" )
+	GAME( 1992, mkla3,    mk,      mk,       mkla4,   mkla3,    ROT0, "Midway",   "Mortal Kombat (rev 3.0 08/31/92)" )
+	GAME( 1992, mkla4,    mk,      mk,       mkla4,   mkla4,    ROT0, "Midway",   "Mortal Kombat (rev 4.0 09/28/92)" )
+	GAME( 1992, totcarn,  0,       totcarn,  totcarn, totcarn,  ROT0, "Midway",   "Total Carnage (rev LA1 03/10/92)" )
+	GAME( 1992, totcarnp, totcarn, totcarn,  totcarn, totcarnp, ROT0, "Midway",   "Total Carnage (prototype, rev 1.0 01/25/92)" )
 }

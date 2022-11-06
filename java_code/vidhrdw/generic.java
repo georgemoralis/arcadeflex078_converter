@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class generic
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_generic  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_generic  = new VideoStartHandlerPtr() { public int handler(){
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
@@ -83,8 +82,7 @@ public class generic
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_generic_bitmapped  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_generic_bitmapped  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -98,24 +96,20 @@ public class generic
 	  To be used by bitmapped games not using sprites.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_generic_bitmapped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	
-	public static ReadHandlerPtr videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return colorram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
@@ -124,8 +118,7 @@ public class generic
 		}
 	} };
 	
-	public static WriteHandlerPtr colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
@@ -136,13 +129,11 @@ public class generic
 	
 	
 	
-	public static ReadHandlerPtr spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram.write(offset,data);
 	} };
 	
@@ -156,13 +147,11 @@ public class generic
 		COMBINE_DATA(spriteram16+offset);
 	}
 	
-	public static ReadHandlerPtr spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram_2.read(offset);
 	} };
 	
-	public static WriteHandlerPtr spriteram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spriteram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram_2.write(offset,data);
 	} };
 	
@@ -209,8 +198,7 @@ public class generic
 	
 	*/
 	
-	public static WriteHandlerPtr buffer_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buffer_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memcpy(buffered_spriteram,spriteram,spriteram_size[0]);
 	} };
 	
@@ -224,8 +212,7 @@ public class generic
 		memcpy(buffered_spriteram32,spriteram32,spriteram_size);
 	}
 	
-	public static WriteHandlerPtr buffer_spriteram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buffer_spriteram_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memcpy(buffered_spriteram_2,spriteram_2,spriteram_2_size);
 	} };
 	
@@ -266,25 +253,25 @@ public class generic
 	
 		tilemap_set_flip(ALL_TILEMAPS,(TILEMAP_FLIPX & flip_screen_x) | (TILEMAP_FLIPY & flip_screen_y));
 	
-		min_x = Machine.drv.default_visible_area.min_x;
-		max_x = Machine.drv.default_visible_area.max_x;
-		min_y = Machine.drv.default_visible_area.min_y;
-		max_y = Machine.drv.default_visible_area.max_y;
+		min_x = Machine->drv->default_visible_area.min_x;
+		max_x = Machine->drv->default_visible_area.max_x;
+		min_y = Machine->drv->default_visible_area.min_y;
+		max_y = Machine->drv->default_visible_area.max_y;
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			int temp;
 	
-			temp = Machine.drv.screen_width - min_x - 1;
-			min_x = Machine.drv.screen_width - max_x - 1;
+			temp = Machine->drv->screen_width - min_x - 1;
+			min_x = Machine->drv->screen_width - max_x - 1;
 			max_x = temp;
 		}
-		if (flip_screen_y != 0)
+		if (flip_screen_y)
 		{
 			int temp;
 	
-			temp = Machine.drv.screen_height - min_y - 1;
-			min_y = Machine.drv.screen_height - max_y - 1;
+			temp = Machine->drv->screen_height - min_y - 1;
+			min_y = Machine->drv->screen_height - max_y - 1;
 			max_y = temp;
 		}
 	
@@ -309,7 +296,7 @@ public class generic
 	
 	void flip_screen_x_set(int on)
 	{
-		if (on != 0) on = ~0;
+		if (on) on = ~0;
 		if (flip_screen_x != on)
 		{
 			set_vh_global_attribute(&flip_screen_x,on);
@@ -324,7 +311,7 @@ public class generic
 	
 	void flip_screen_y_set(int on)
 	{
-		if (on != 0) on = ~0;
+		if (on) on = ~0;
 		if (flip_screen_y != on)
 		{
 			set_vh_global_attribute(&flip_screen_y,on);
@@ -343,7 +330,7 @@ public class generic
 		if (!addr || *addr != data)
 		{
 			global_attribute_changed = 1;
-			if (addr != 0)
+			if (addr)
 				*addr = data;
 		}
 	}

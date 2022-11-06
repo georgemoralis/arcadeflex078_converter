@@ -44,7 +44,7 @@ NOTE :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -67,8 +67,7 @@ public class omegaf
 	  Initializers
 	**************************************************************************/
 	
-	public static DriverInitHandlerPtr init_omegaf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_omegaf  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		/* Hack the input protection. $00 and $01 code is written to $C005 */
@@ -101,8 +100,7 @@ public class omegaf
 	  Interrupts
 	**************************************************************************/
 	
-	public static InterruptHandlerPtr omegaf_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr omegaf_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 	} };
 	
@@ -111,7 +109,7 @@ public class omegaf
 	  Inputs
 	**************************************************************************/
 	
-	static InputPortPtr input_ports_omegaf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_omegaf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( omegaf )
 		PORT_START(); 			/* Player 1 inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -187,7 +185,7 @@ public class omegaf
 		PORT_DIPSETTING(    0x20, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_robokid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robokid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robokid )
 		PORT_START(); 			/* Player 1 inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -256,7 +254,7 @@ public class omegaf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_robokidj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robokidj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robokidj )
 		PORT_START(); 			/* Player 1 inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -328,8 +326,7 @@ public class omegaf
 	  Memory handlers
 	**************************************************************************/
 	
-	public static WriteHandlerPtr omegaf_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr omegaf_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -622,8 +619,7 @@ public class omegaf
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_omegaf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( omegaf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 12000000/2)		/* 12000000/2 ??? */
@@ -652,13 +648,10 @@ public class omegaf
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_robokid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robokid )
 		MDRV_IMPORT_FROM(omegaf)
 	
 		MDRV_CPU_MODIFY("main")
@@ -666,9 +659,7 @@ public class omegaf
 	
 		MDRV_GFXDECODE(robokid_gfxdecodeinfo)
 		MDRV_VIDEO_START(robokid)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/**************************************************************************
@@ -824,8 +815,8 @@ public class omegaf
 	
 	
 	/*   ( YEAR  NAME      PARENT   MACHINE  INPUT    INIT      MONITOR COMPANY  FULLNAME                 FLAGS ) */
-	public static GameDriver driver_robokid	   = new GameDriver("1988"	,"robokid"	,"omegaf.java"	,rom_robokid,null	,machine_driver_robokid	,input_ports_robokid	,null	,ROT0	,	"UPL",  "Atomic Robo-kid",         GAME_NO_COCKTAIL )
-	public static GameDriver driver_robokidj	   = new GameDriver("1988"	,"robokidj"	,"omegaf.java"	,rom_robokidj,driver_robokid	,machine_driver_robokid	,input_ports_robokidj	,null	,ROT0	,	"UPL",  "Atomic Robo-kid (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_omegaf	   = new GameDriver("1989"	,"omegaf"	,"omegaf.java"	,rom_omegaf,null	,machine_driver_omegaf	,input_ports_omegaf	,init_omegaf	,ROT270	,	"UPL",  "Omega Fighter",          GAME_NO_COCKTAIL )
-	public static GameDriver driver_omegafs	   = new GameDriver("1989"	,"omegafs"	,"omegaf.java"	,rom_omegafs,driver_omegaf	,machine_driver_omegaf	,input_ports_omegaf	,init_omegaf	,ROT270	,	"UPL",  "Omega Fighter Special",  GAME_NO_COCKTAIL )
+	GAMEX( 1988, robokid,  0,       robokid, robokid, 0,        ROT0,   "UPL",  "Atomic Robo-kid",         GAME_NO_COCKTAIL )
+	GAMEX( 1988, robokidj, robokid, robokid, robokidj,0,        ROT0,   "UPL",  "Atomic Robo-kid (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1989, omegaf,   0,       omegaf,  omegaf,  omegaf,   ROT270, "UPL",  "Omega Fighter",          GAME_NO_COCKTAIL )
+	GAMEX( 1989, omegafs,  omegaf,  omegaf,  omegaf,  omegaf,   ROT270, "UPL",  "Omega Fighter Special",  GAME_NO_COCKTAIL )
 }

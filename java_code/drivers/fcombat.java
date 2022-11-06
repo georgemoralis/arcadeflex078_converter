@@ -33,14 +33,14 @@ inputs + notes by stephh
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class fcombat
 {
 	
-	static InputPortPtr input_ports_fcombat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fcombat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fcombat )
 		PORT_START();       /* player 1 inputs (muxed on 0xe000) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -109,8 +109,7 @@ public class fcombat
 	
 	/* is it protection? */
 	
-	public static ReadHandlerPtr fcombat_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fcombat_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Must match ONE of these values after a "and  $3E" intruction :
 	
 			76F0: 1E 04 2E 26 34 32 3A 16 3E 36
@@ -124,19 +123,17 @@ public class fcombat
 	
 	/* same as exerion again */
 	
-	public static ReadHandlerPtr fcombat_port01_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fcombat_port01_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* the cocktail flip bit muxes between ports 0 and 1 */
 		return exerion_cocktail_flip ? input_port_1_r.handler(offset) : input_port_0_r.handler(offset);
 	} };
 	
 	
-	public static ReadHandlerPtr fcombat_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fcombat_port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit 0 is VBLANK, which we simulate manually */
 		int result = input_port_3_r.handler(offset);
 		int ybeam = cpu_getscanline();
-		if (ybeam > Machine.visible_area.max_y)
+		if (ybeam > Machine->visible_area.max_y)
 			result |= 1;
 		return result;
 	} };
@@ -293,8 +290,7 @@ public class fcombat
 	/* interrupt */
 	
 	
-	public static InterruptHandlerPtr fcombat_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fcombat_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Exerion triggers NMIs on coin insertion */
 		if (readinputport(4) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -306,8 +302,7 @@ public class fcombat
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_fcombat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fcombat )
 	
 		MDRV_CPU_ADD(Z80, 10000000/3)
 		MDRV_CPU_MEMORY(fcombat_readmem,fcombat_writemem)
@@ -332,9 +327,7 @@ public class fcombat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*************************************
 	 *
@@ -342,14 +335,13 @@ public class fcombat
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_fcombat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fcombat  = new DriverInitHandlerPtr() { public void handler(){
 		UINT32 oldaddr, newaddr, length;
 		UINT8 *src, *dst, *temp;
 	
 		/* allocate some temporary space */
 		temp = malloc(0x10000);
-		if (temp == 0)
+		if (!temp)
 			return;
 	
 		/* make a temporary copy of the character data */
@@ -421,5 +413,5 @@ public class fcombat
 		ROM_LOAD( "fcprom_c.a9",  0x0320, 0x0100, CRC(768ac120) SHA1(ceede1d6cbeae08da96ef52bdca2718a839d88ab) ) /* bg char mixer */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_fcombat	   = new GameDriver("1985"	,"fcombat"	,"fcombat.java"	,rom_fcombat,null	,machine_driver_fcombat	,input_ports_fcombat	,init_fcombat	,ROT90	,	"Jaleco", "Field Combat", GAME_NOT_WORKING )
+	GAMEX( 1985, fcombat,  0,       fcombat, fcombat, fcombat,  ROT90, "Jaleco", "Field Combat", GAME_NOT_WORKING )
 }

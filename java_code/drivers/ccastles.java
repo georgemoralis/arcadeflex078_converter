@@ -83,7 +83,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -98,31 +98,27 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr ccastles_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccastles_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,~data & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr ccastles_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccastles_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this is not working, haven't investigated why */
 		coin_counter_w(offset^1, ~data);
 	} };
 	
 	
-	public static WriteHandlerPtr ccastles_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccastles_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	
-		if (data != 0) { cpu_setbank(1,&RAM[0x10000]); }
+		if (data) { cpu_setbank(1,&RAM[0x10000]); }
 		else { cpu_setbank(1,&RAM[0xa000]); }
 	} };
 	
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -191,7 +187,7 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_ccastles = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ccastles = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ccastles )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -279,8 +275,7 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_ccastles = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ccastles )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1500000)
@@ -304,9 +299,7 @@ public class ccastles
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -365,7 +358,7 @@ public class ccastles
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_ccastles	   = new GameDriver("1983"	,"ccastles"	,"ccastles.java"	,rom_ccastles,null	,machine_driver_ccastles	,input_ports_ccastles	,null	,ROT0	,	"Atari", "Crystal Castles (version 4)" )
-	public static GameDriver driver_ccastle3	   = new GameDriver("1983"	,"ccastle3"	,"ccastles.java"	,rom_ccastle3,driver_ccastles	,machine_driver_ccastles	,input_ports_ccastles	,null	,ROT0	,	"Atari", "Crystal Castles (version 3)" )
-	public static GameDriver driver_ccastle2	   = new GameDriver("1983"	,"ccastle2"	,"ccastles.java"	,rom_ccastle2,driver_ccastles	,machine_driver_ccastles	,input_ports_ccastles	,null	,ROT0	,	"Atari", "Crystal Castles (version 2)" )
+	GAME( 1983, ccastles, 0,        ccastles, ccastles, 0, ROT0, "Atari", "Crystal Castles (version 4)" )
+	GAME( 1983, ccastle3, ccastles, ccastles, ccastles, 0, ROT0, "Atari", "Crystal Castles (version 3)" )
+	GAME( 1983, ccastle2, ccastles, ccastles, ccastles, 0, ROT0, "Atari", "Crystal Castles (version 2)" )
 }

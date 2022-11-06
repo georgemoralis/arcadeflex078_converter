@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class cop01
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_cop01  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cop01  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -83,8 +82,8 @@ public class cop01
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int tile = cop01_bgvideoram.read(tile_index);
-		int attr = cop01_bgvideoram.read(tile_index+0x800);
+		int tile = cop01_bgvideoram[tile_index];
+		int attr = cop01_bgvideoram[tile_index+0x800];
 		int pri  = (attr & 0x80) >> 7;
 	
 		/* kludge: priority is not actually pen based, but color based. Since the
@@ -97,14 +96,14 @@ public class cop01
 		 * the screen right at the beginning of mightguy. cop01 doesn't seem to
 		 * use priority at all.
 		 */
-		if ((attr & 0x10) != 0) pri = 0;
+		if (attr & 0x10) pri = 0;
 	
 		SET_TILE_INFO(1,tile + ((attr & 0x03) << 8),(attr & 0x1c) >> 2,TILE_SPLIT(pri));
 	}
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int tile = cop01_fgvideoram.read(tile_index);
+		int tile = cop01_fgvideoram[tile_index];
 		SET_TILE_INFO(0,tile,0,0);
 	}
 	
@@ -116,8 +115,7 @@ public class cop01
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_cop01  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cop01  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,      8,8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -141,26 +139,23 @@ public class cop01
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr cop01_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (cop01_bgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr cop01_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (cop01_bgvideoram[offset] != data)
 		{
-			cop01_bgvideoram.write(data,data);
+			cop01_bgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset & 0x7ff);
 		}
 	} };
 	
-	public static WriteHandlerPtr cop01_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (cop01_fgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr cop01_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (cop01_fgvideoram[offset] != data)
 		{
-			cop01_fgvideoram.write(data,data);
+			cop01_fgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr cop01_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cop01_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	0x40: --xx---- sprite bank, coin counters, flip screen
 		 *	      -----x-- flip screen
 		 *	      ------xx coin counters
@@ -209,7 +204,7 @@ public class cop01
 			sx = (spriteram.read(offs+3)- 0x80) + 256 * (attr & 0x01);
 			sy = 240 - spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -217,10 +212,10 @@ public class cop01
 				flipy = NOT(flipy);
 			}
 	
-			if ((code & 0x80) != 0)
+			if (code&0x80)
 				code += (mightguy_vreg[0]&0x30)<<3;
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 				code,
 				color,
 				flipx,flipy,
@@ -230,8 +225,7 @@ public class cop01
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cop01  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cop01  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,mightguy_vreg[1] + 256 * (mightguy_vreg[2] & 1));
 		tilemap_set_scrolly(bg_tilemap,0,mightguy_vreg[3]);
 	

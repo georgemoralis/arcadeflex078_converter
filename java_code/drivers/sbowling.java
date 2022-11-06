@@ -39,7 +39,7 @@ PROMs : NEC B406 (1kx4) x2
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,16 +65,15 @@ public class sbowling
 	
 	static void plot_pixel_sbw(int x, int y, int col)
 	{
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			y = 255-y;
 			x = 247-x;
 		}
-		plot_pixel(tmpbitmap,x,y,Machine.pens[col]);
+		plot_pixel(tmpbitmap,x,y,Machine->pens[col]);
 	}
 	
-	public static WriteHandlerPtr sbw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbw_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,i,v1,v2;
 	
 		videoram.write(offset,data);
@@ -89,37 +88,32 @@ public class sbowling
 		
 		for(i = 0; i < 8; i++)
 		{
-			plot_pixel_sbw.handler(x++, y, color_prom_address | ( ((v1&1)*0x20) | ((v2&1)*0x40) ) );
+			plot_pixel_sbw(x++, y, color_prom_address | ( ((v1&1)*0x20) | ((v2&1)*0x40) ) );
 			v1 >>= 1;
 			v2 >>= 1;
 		}
 	} };
 	
-	VIDEO_UPDATE(sbowling)
-	{
+	public static VideoUpdateHandlerPtr video_update_sbowling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0x18],cliprect);
 		tilemap_draw(bitmap,cliprect,sb_tilemap,0,0);
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect, TRANSPARENCY_PEN, color_prom_address);
-	}
+	} };
 	
-	VIDEO_START(sbowling)
-	{
+	public static VideoStartHandlerPtr video_start_sbowling  = new VideoStartHandlerPtr() { public int handler(){
 		tmpbitmap = auto_bitmap_alloc(32*8,32*8);
 		sb_tilemap = tilemap_create(get_sb_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 32);
 		return 0;
-	}
+	} };
 	
-	public static WriteHandlerPtr pix_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pix_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pix_sh = data;
 	} };
-	public static WriteHandlerPtr pix_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pix_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pix[0] = pix[1];
 		pix[1] = data;
 	} };
-	public static ReadHandlerPtr pix_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pix_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT32 p1, p0;
 		int res;
 		int sh = pix_sh & 7;
@@ -134,15 +128,13 @@ public class sbowling
 	
 	
 	
-	public static InterruptHandlerPtr sbw_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sbw_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int vector = cpu_getvblank() ? 0xcf : 0xd7;	/* RST 08h/10h */
 	
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
 	} };
 	
-	static WRITE_HANDLER (system_w)
-	{
+	public static WriteHandlerPtr system_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			76543210
 			-------x flip screen/controls?
@@ -155,14 +147,13 @@ public class sbowling
 		if((sbw_system^data)&1)
 		{
 			int offs;
-			for (offs = 0;offs < videoram_size; offs++)
+			for (offs = 0;offs < videoram_size[0]; offs++)
 				sbw_videoram_w(offs, videoram.read(offs));
 		}
 		sbw_system = data;
-	}
+	} };
 	
-	static WRITE_HANDLER(graph_control_w)
-	{
+	public static WriteHandlerPtr graph_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			76543210
 			-----xxx color PROM address lines A9,A8,A7
@@ -175,15 +166,14 @@ public class sbowling
 		
 		bgmap = ((data>>4)^3) & 0x3;
 		tilemap_mark_all_tiles_dirty(sb_tilemap);
-	}
+	} };
 	
-	static READ_HANDLER (controls_r)
-	{
-		if ((sbw_system & 2) != 0)
-			return input_port_2_r(0);
+	public static ReadHandlerPtr controls_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(sbw_system&2)
+			return input_port_2_r.handler(0);
 		else
-			return input_port_3_r(0);
-	}
+			return input_port_3_r.handler(0);
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -228,7 +218,7 @@ public class sbowling
 	};
 	
 	
-	static InputPortPtr input_ports_sbowling = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbowling = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbowling )
 		PORT_START(); 
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN1   );
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH,	IPT_TILT );
@@ -326,8 +316,7 @@ public class sbowling
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static public static PaletteInitHandlerPtr palette_init_sbowling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sbowling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		const int resistances_rg[3] = { 470, 270, 100 };
@@ -364,8 +353,7 @@ public class sbowling
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_sbowling = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sbowling )
 	
 		MDRV_CPU_ADD(8080, 19968000/10 )
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -384,9 +372,7 @@ public class sbowling
 		MDRV_VIDEO_START(sbowling)
 		MDRV_VIDEO_UPDATE(sbowling)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_sbowling = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	
@@ -407,6 +393,6 @@ public class sbowling
 		ROM_LOAD( "kb09.6m",        0x0400, 0x0400, CRC(e29191a6) SHA1(9a2c78a96ef6d118f4dacbea0b7d454b66a452ae))
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_sbowling	   = new GameDriver("1982"	,"sbowling"	,"sbowling.java"	,rom_sbowling,null	,machine_driver_sbowling	,input_ports_sbowling	,null	,ROT90	,	"Taito Corporation", "Strike Bowling",GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS)
+	GAMEX( 1982, sbowling, 0, sbowling, sbowling, 0, ROT90, "Taito Corporation", "Strike Bowling",GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS)
 	
 }

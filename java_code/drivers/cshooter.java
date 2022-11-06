@@ -81,7 +81,7 @@ Stephh's notes (based on the game Z80 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -100,7 +100,7 @@ public class cshooter
 		int attr = (cshooter_txram[tile_index*2+1]);
 		int rg;
 		rg=0;
-		if ((attr & 0x20) != 0) rg = 1;
+		if (attr & 0x20) rg = 1;
 	
 		SET_TILE_INFO(
 	
@@ -110,42 +110,36 @@ public class cshooter
 				0)
 	}
 	
-	WRITE_HANDLER(cshooter_txram_w)
-	{
+	public static WriteHandlerPtr cshooter_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cshooter_txram[offset] = data;
 		tilemap_mark_tile_dirty(cshooter_txtilemap,offset/2);
-	}
+	} };
 	
-	VIDEO_START(cshooter)
-	{
+	public static VideoStartHandlerPtr video_start_cshooter  = new VideoStartHandlerPtr() { public int handler(){
 		cshooter_txtilemap = tilemap_create(get_cstx_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32, 32);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(cshooter)
-	{
+	public static VideoUpdateHandlerPtr video_update_cshooter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,cshooter_txtilemap,0,0);
-	}
+	} };
 	
 	
 	/* main cpu */
 	
-	public static InterruptHandlerPtr cshooter_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cshooter_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x08); // almost certainly wrong?
 	} };
 	
 	
 	static int cshooter_counter;
 	
-	public static MachineInitHandlerPtr machine_init_cshooter  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cshooter  = new MachineInitHandlerPtr() { public void handler(){
 		cshooter_counter = 0;
 	} };
 	
-	public static ReadHandlerPtr cshooter_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cshooter_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Even reads must return 0xff - Odd reads must return the contents of input port 5.
 		   Code at 0x5061 is executed once during P.O.S.T. where there is one read.
 		   Code at 0x50b4 is then executed each frame (not sure) where there are 2 reads. */
@@ -153,12 +147,10 @@ public class cshooter
 		return ( (cshooter_counter++ & 1) ? 0xff : input_port_5_r.handler(0) );
 	} };
 	
-	public static WriteHandlerPtr cshooter_c500_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cshooter_c500_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
-	public static WriteHandlerPtr cshooter_c700_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cshooter_c700_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	
@@ -237,7 +229,7 @@ public class cshooter
 	};
 	
 	
-	static InputPortPtr input_ports_cshooter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cshooter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cshooter )
 		PORT_START(); 	/* IN0	(0xc200) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -357,8 +349,7 @@ public class cshooter
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_cshooter = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cshooter )
 		MDRV_CPU_ADD(Z80,6000000)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -385,9 +376,7 @@ public class cshooter
 		MDRV_VIDEO_UPDATE(cshooter)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*
@@ -553,8 +542,7 @@ public class cshooter
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_cshooter  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cshooter  = new DriverInitHandlerPtr() { public void handler(){
 		/* temp so it boots */
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -564,8 +552,7 @@ public class cshooter
 	
 	} };
 	
-	public static DriverInitHandlerPtr init_cshootre  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cshootre  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -603,7 +590,7 @@ public class cshooter
 	
 	
 	
-	public static GameDriver driver_cshooter	   = new GameDriver("1987"	,"cshooter"	,"cshooter.java"	,rom_cshooter,null	,machine_driver_cshooter	,input_ports_cshooter	,init_cshooter	,ROT270	,	"[Seibu Kaihatsu] (Taito license)",  "Cross Shooter (not encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_cshootre	   = new GameDriver("1987"	,"cshootre"	,"cshooter.java"	,rom_cshootre,driver_cshooter	,machine_driver_cshooter	,input_ports_cshooter	,init_cshootre	,ROT270	,	"[Seibu Kaihatsu] (J.K.H. license)", "Cross Shooter (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_airraid	   = new GameDriver("1987"	,"airraid"	,"cshooter.java"	,rom_airraid,driver_cshooter	,machine_driver_cshooter	,input_ports_cshooter	,init_cshootre	,ROT270	,	"Seibu Kaihatsu",                    "Air Raid (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1987, cshooter, 0,        cshooter, cshooter, cshooter, ROT270, "[Seibu Kaihatsu] (Taito license)",  "Cross Shooter (not encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1987, cshootre, cshooter, cshooter, cshooter, cshootre, ROT270, "[Seibu Kaihatsu] (J.K.H. license)", "Cross Shooter (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1987, airraid,  cshooter, cshooter, cshooter, cshootre, ROT270, "Seibu Kaihatsu",                    "Air Raid (encrypted)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

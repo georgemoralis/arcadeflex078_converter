@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class _40love
 	*	color prom decoding
 	*/
 	
-	public static PaletteInitHandlerPtr palette_init_fortyl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_fortyl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -89,8 +88,8 @@ public class _40love
 	{
 		int tile_number = videoram.read(tile_index);
 		int tile_attrib = colorram.read((tile_index/64)*2);
-		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40.0x200 */
-		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10.0x80, 0x08.0x40 */
+		int tile_h_bank = (tile_attrib&0x40)<<3;	/* 0x40->0x200 */
+		int tile_l_bank = (tile_attrib&0x18)<<3;	/* 0x10->0x80, 0x08->0x40 */
 	
 		int code = tile_number;
 		if ((tile_attrib & 0x20) && (code >= 0xc0))
@@ -109,8 +108,7 @@ public class _40love
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_fortyl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fortyl  = new VideoStartHandlerPtr() { public int handler(){
 		fortyl_pixram1 = auto_malloc(0x4000);
 		fortyl_pixram2 = auto_malloc(0x4000);
 	
@@ -142,19 +140,18 @@ public class _40love
 		int	i = offset & ~1;
 		int x = ((colorram.read(i)& 0x80) << 1) | colorram.read(i+1);	/* 9 bits signed */
 	
-		if (fortyl_flipscreen != 0)
+		if (fortyl_flipscreen)
 			x += 0x51;
 		else
 			x -= 0x50;
 	
 		x &= 0x1ff;
-		if ((x & 0x100) != 0) x -= 0x200;				/* sign extend */
+		if (x&0x100) x -= 0x200;				/* sign extend */
 	
 		tilemap_set_scrollx(background, offset/2, x);
 	}
 	
-	public static WriteHandlerPtr fortyl_pixram_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fortyl_pixram_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs;
 		int f = data & 0x01;
 	
@@ -171,9 +168,8 @@ public class _40love
 		}
 	} };
 	
-	public static ReadHandlerPtr fortyl_pixram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (pixram_sel != 0)
+	public static ReadHandlerPtr fortyl_pixram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (pixram_sel)
 			return fortyl_pixram2[offset];
 		else
 			return fortyl_pixram1[offset];
@@ -187,7 +183,7 @@ public class _40love
 		x = (offset & 0x1f)*8;
 		y = (offset >> 5) & 0xff;
 	
-		if (pixram_sel != 0)
+		if (pixram_sel)
 		{
 			d1 = fortyl_pixram2[offset];
 			d2 = fortyl_pixram2[offset + 0x2000];
@@ -201,16 +197,15 @@ public class _40love
 		for (i=0;i<8;i++)
 		{
 			c = ((d2>>i)&1) + ((d1>>i)&1)*2;
-			if (pixram_sel != 0)
+			if (pixram_sel)
 				plot_pixel(pixel_bitmap2, x+i, y, fortyl_pix_color[c]);
 			else
 				plot_pixel(pixel_bitmap1, x+i, y, fortyl_pix_color[c]);
 		}
 	}
 	
-	public static WriteHandlerPtr fortyl_pixram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (pixram_sel != 0)
+	public static WriteHandlerPtr fortyl_pixram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (pixram_sel)
 			fortyl_pixram2[offset] = data;
 		else
 			fortyl_pixram1[offset] = data;
@@ -219,21 +214,18 @@ public class _40love
 	} };
 	
 	
-	public static WriteHandlerPtr fortyl_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fortyl_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(background,offset);
 		}
 	} };
-	public static ReadHandlerPtr fortyl_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fortyl_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr fortyl_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fortyl_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( colorram.read(offset)!=data )
 		{
 			int i;
@@ -245,8 +237,7 @@ public class _40love
 			fortyl_set_scroll_x(offset);
 		}
 	} };
-	public static ReadHandlerPtr fortyl_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fortyl_bg_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return colorram.read(offset);
 	} };
 	
@@ -283,7 +274,7 @@ public class _40love
 			sx = spriteram.read(offs+3);
 			sy = spriteram.read(offs+0)+1;
 	
-			if (fortyl_flipscreen != 0)
+			if (fortyl_flipscreen)
 				sx = 240 - sx;
 			else
 				sy = 242 - sy;
@@ -296,7 +287,7 @@ public class _40love
 			if (spriteram.read(offs+2)& 0xe0)
 				color = rand()&0xf;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -312,7 +303,7 @@ public class _40love
 			sx = spriteram_2.read(offs+3);
 			sy = spriteram_2.read(offs+0)+1;
 	
-			if (fortyl_flipscreen != 0)
+			if (fortyl_flipscreen)
 				sx = 240 - sx;
 			else
 				sy = 242 - sy;
@@ -325,7 +316,7 @@ public class _40love
 			if (spriteram_2.read(offs+2)& 0xe0)
 				color = rand()&0xf;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -339,7 +330,7 @@ public class _40love
 		int offs;
 		int f = fortyl_flipscreen ^ 1;
 	
-		if (fortyl_pix_redraw != 0)
+		if (fortyl_pix_redraw)
 		{
 			fortyl_pix_redraw = 0;
 	
@@ -347,14 +338,13 @@ public class _40love
 				fortyl_plot_pix(offs);
 		}
 	
-		if (pixram_sel != 0)
+		if (pixram_sel)
 			copybitmap(bitmap,pixel_bitmap1,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,pixel_bitmap2,f,f,fortyl_xoffset,0,cliprect,TRANSPARENCY_NONE,0);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fortyl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_pixram(bitmap,cliprect);
 	
 		tilemap_set_scrolldy(background,-fortyl_video_ctrl[1]+1,-fortyl_video_ctrl[1]-1 );

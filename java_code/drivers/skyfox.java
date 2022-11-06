@@ -15,7 +15,7 @@ To Do:	The background rendering is entirely guesswork
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -120,7 +120,7 @@ public class skyfox
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_skyfox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyfox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyfox )
 	
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    );
@@ -253,8 +253,7 @@ public class skyfox
 	/* Check for coin insertion once a frame (polling a fake input port).
 	   Generate an NMI in case. Scroll the background too. */
 	
-	public static InterruptHandlerPtr skyfox_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr skyfox_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Scroll the bg */
 		skyfox_bg_pos += (skyfox_bg_ctrl >> 1) & 0x7;	// maybe..
 	
@@ -274,8 +273,7 @@ public class skyfox
 		{ 0, 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_skyfox = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skyfox )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -301,9 +299,7 @@ public class skyfox
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, skyfox_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -432,8 +428,7 @@ public class skyfox
 	
 	
 	/* Untangle the graphics: cut each 32x32x8 tile in 16 8x8x8 tiles */
-	public static DriverInitHandlerPtr init_skyfox  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skyfox  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_GFX1);
 		unsigned char *end = RAM + memory_region_length(REGION_GFX1);
 		unsigned char buf[32*32];
@@ -451,6 +446,6 @@ public class skyfox
 	
 	
 	
-	public static GameDriver driver_skyfox	   = new GameDriver("1987"	,"skyfox"	,"skyfox.java"	,rom_skyfox,null	,machine_driver_skyfox	,input_ports_skyfox	,init_skyfox	,ROT90	,	"Jaleco (Nichibutsu USA license)", "Sky Fox"  )
-	public static GameDriver driver_exerizrb	   = new GameDriver("1987"	,"exerizrb"	,"skyfox.java"	,rom_exerizrb,driver_skyfox	,machine_driver_skyfox	,input_ports_skyfox	,init_skyfox	,ROT90	,	"Jaleco", "Exerizer (Japan) (bootleg)" )
+	GAME( 1987, skyfox,   0,      skyfox, skyfox, skyfox, ROT90, "Jaleco (Nichibutsu USA license)", "Sky Fox"  )
+	GAME( 1987, exerizrb, skyfox, skyfox, skyfox, skyfox, ROT90, "Jaleco", "Exerizer (Japan) (bootleg)" )
 }

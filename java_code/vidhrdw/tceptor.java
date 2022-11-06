@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_tceptor  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tceptor  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int totcolors, totlookup;
 		int i;
 	
@@ -168,13 +167,11 @@ public class tceptor
 	}
 	
 	
-	public static ReadHandlerPtr tceptor_tile_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tceptor_tile_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tceptor_tile_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr tceptor_tile_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tceptor_tile_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tceptor_tile_ram[offset] != data)
 		{
 			tceptor_tile_ram[offset] = data;
@@ -182,13 +179,11 @@ public class tceptor
 		}
 	} };
 	
-	public static ReadHandlerPtr tceptor_tile_attr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tceptor_tile_attr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tceptor_tile_attr[offset];
 	} };
 	
-	public static WriteHandlerPtr tceptor_tile_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tceptor_tile_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tceptor_tile_attr[offset] != data)
 		{
 			tceptor_tile_attr[offset] = data;
@@ -217,13 +212,11 @@ public class tceptor
 		SET_TILE_INFO(bg, code, color, 0);
 	}
 	
-	public static ReadHandlerPtr tceptor_bg_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tceptor_bg_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tceptor_bg_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr tceptor_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tceptor_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tceptor_bg_ram[offset] != data)
 		{
 			tceptor_bg_ram[offset] = data;
@@ -236,8 +229,7 @@ public class tceptor
 		}
 	} };
 	
-	public static WriteHandlerPtr tceptor_bg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tceptor_bg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 		case 0:
@@ -302,13 +294,13 @@ public class tceptor
 		free(buffer);
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(region), &bg_layout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(region), &bg_layout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		Machine.gfx[gfx_index].colortable = Machine.remapped_colortable[2048];
-		Machine.gfx[gfx_index].total_colors = 64;
+		Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable[2048];
+		Machine->gfx[gfx_index]->total_colors = 64;
 	
 		return 0;
 	}
@@ -316,13 +308,13 @@ public class tceptor
 	static int decode_sprite(int gfx_index, struct GfxLayout *layout, const void *data)
 	{
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(data, layout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(data, layout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		Machine.gfx[gfx_index].colortable = Machine.remapped_colortable[1024];
-		Machine.gfx[gfx_index].total_colors = 64;
+		Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable[1024];
+		Machine->gfx[gfx_index]->total_colors = 64;
 	
 		return 0;
 	}
@@ -444,8 +436,7 @@ public class tceptor
 		tilemap_mark_all_tiles_dirty(bg2_tilemap);
 	}
 	
-	public static VideoStartHandlerPtr video_start_tceptor  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tceptor  = new VideoStartHandlerPtr() { public int handler(){
 		int gfx_index;
 	
 		/* find first empty slot to decode gfx */
@@ -469,7 +460,7 @@ public class tceptor
 	
 		/* allocate temp bitmaps */
 		temp_bitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (temp_bitmap == 0)
+		if (!temp_bitmap)
 			return 1;
 	
 		if (namco_road_init(gfx_index))
@@ -478,7 +469,7 @@ public class tceptor
 		namco_road_set_transparent_color(Machine.remapped_colortable[0xfff]);
 	
 		tx_tilemap = tilemap_create(get_tx_tile_info, tilemap_scan_cols, TILEMAP_TRANSPARENT_COLOR, 8, 8, 34, 28);
-		if (tx_tilemap == 0)
+		if (!tx_tilemap)
 			return 1;
 	
 		tilemap_set_scrollx(tx_tilemap, 0, -2*8);
@@ -565,7 +556,7 @@ public class tceptor
 	
 				if (is_mask_spr[color])
 				{
-					if (need_mask == 0)
+					if (!need_mask)
 					{
 						// backup previous bitmap
 						copybitmap(temp_bitmap, bitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
@@ -582,7 +573,7 @@ public class tceptor
 				y -= 78;
 	
 				drawgfxzoom(bitmap,
-				            Machine.gfx[gfx],
+				            Machine->gfx[gfx],
 				            code,
 				            color,
 				            flipx, flipy,
@@ -595,12 +586,12 @@ public class tceptor
 		}
 	
 		/* if SPR_MASK_COLOR pen is used, restore pixels from previous bitmap */
-		if (need_mask != 0)
+		if (need_mask)
 		{
 			int x, y;
 	
-			for (x = cliprect.min_x; x <= cliprect.max_x; x++)
-				for (y = cliprect.min_y; y <= cliprect.max_y; y++)
+			for (x = cliprect->min_x; x <= cliprect->max_x; x++)
+				for (y = cliprect->min_y; y <= cliprect->max_y; y++)
 					if (read_pixel(bitmap, x, y) == SPR_MASK_COLOR)
 					{
 						int color = read_pixel(temp_bitmap, x, y);
@@ -612,8 +603,7 @@ public class tceptor
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tceptor  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle rect;
 		int pri;
 		int bg_center = 144 - ((((bg1_scroll_x + bg2_scroll_x ) & 0x1ff) - 288) / 2);

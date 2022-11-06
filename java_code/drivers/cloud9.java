@@ -60,7 +60,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -74,14 +74,12 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr cloud9_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloud9_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,~data & 0x80);
 	} };
 	
 	
-	public static WriteHandlerPtr cloud9_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloud9_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -142,7 +140,7 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_cloud9 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cloud9 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cloud9 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x07, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_SERVICE( 0x08, IP_ACTIVE_LOW );
@@ -264,8 +262,7 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_cloud9 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cloud9 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/8)	/* 1.512 MHz?? */
@@ -289,9 +286,7 @@ public class cloud9
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*************************************
 	 *
@@ -322,6 +317,6 @@ public class cloud9
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_cloud9	   = new GameDriver("1983"	,"cloud9"	,"cloud9.java"	,rom_cloud9,null	,machine_driver_cloud9	,input_ports_cloud9	,null	,ROT0	,	"Atari", "Cloud 9 (prototype)", GAME_NO_COCKTAIL )
+	GAMEX( 1983, cloud9, 0, cloud9, cloud9, 0, ROT0, "Atari", "Cloud 9 (prototype)", GAME_NO_COCKTAIL )
 	
 }

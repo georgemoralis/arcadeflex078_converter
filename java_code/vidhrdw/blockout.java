@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -65,8 +65,7 @@ public class blockout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_blockout  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_blockout  = new VideoStartHandlerPtr() { public int handler(){
 		/* Allocate temporary bitmaps */
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
@@ -82,32 +81,32 @@ public class blockout
 		int color;
 	
 	
-		if (x < Machine.visible_area.min_x ||
-				x > Machine.visible_area.max_x ||
-				y < Machine.visible_area.min_y ||
-				y > Machine.visible_area.max_y)
+		if (x < Machine->visible_area.min_x ||
+				x > Machine->visible_area.max_x ||
+				y < Machine->visible_area.min_y ||
+				y > Machine->visible_area.max_y)
 			return;
 	
-		front = blockout_videoram.read(y*256+x/2);
-		back = blockout_videoram.read(0x10000 + y*256+x/2);
+		front = blockout_videoram[y*256+x/2];
+		back = blockout_videoram[0x10000 + y*256+x/2];
 	
 		if (front>>8) color = front>>8;
 		else color = (back>>8) + 256;
-		plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
+		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	
-		if ((front & 0xff) != 0) color = front&0xff;
+		if (front&0xff) color = front&0xff;
 		else color = (back&0xff) + 256;
-		plot_pixel(tmpbitmap, x+1, y, Machine.pens[color]);
+		plot_pixel(tmpbitmap, x+1, y, Machine->pens[color]);
 	}
 	
 	
 	
 	WRITE16_HANDLER( blockout_videoram_w )
 	{
-		data16_t oldword = blockout_videoram.read(offset);
-		COMBINE_DATA(&blockout_videoram.read(offset));
+		data16_t oldword = blockout_videoram[offset];
+		COMBINE_DATA(&blockout_videoram[offset]);
 	
-		if (oldword != blockout_videoram.read(offset))
+		if (oldword != blockout_videoram[offset])
 		{
 			updatepixels((offset % 256)*2,(offset / 256) % 256);
 		}
@@ -115,8 +114,7 @@ public class blockout
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blockout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
 		{
@@ -134,16 +132,16 @@ public class blockout
 	
 					d = blockout_frontvideoram[y*64+(x/8)];
 	
-					if (d != 0)
+					if (d)
 					{
-						if ((d & 0x80) != 0) plot_pixel.handler(bitmap, x  , y, color);
-						if ((d & 0x40) != 0) plot_pixel.handler(bitmap, x+1, y, color);
-						if ((d & 0x20) != 0) plot_pixel.handler(bitmap, x+2, y, color);
-						if ((d & 0x10) != 0) plot_pixel.handler(bitmap, x+3, y, color);
-						if ((d & 0x08) != 0) plot_pixel.handler(bitmap, x+4, y, color);
-						if ((d & 0x04) != 0) plot_pixel.handler(bitmap, x+5, y, color);
-						if ((d & 0x02) != 0) plot_pixel.handler(bitmap, x+6, y, color);
-						if ((d & 0x01) != 0) plot_pixel.handler(bitmap, x+7, y, color);
+						if (d&0x80) plot_pixel(bitmap, x  , y, color);
+						if (d&0x40) plot_pixel(bitmap, x+1, y, color);
+						if (d&0x20) plot_pixel(bitmap, x+2, y, color);
+						if (d&0x10) plot_pixel(bitmap, x+3, y, color);
+						if (d&0x08) plot_pixel(bitmap, x+4, y, color);
+						if (d&0x04) plot_pixel(bitmap, x+5, y, color);
+						if (d&0x02) plot_pixel(bitmap, x+6, y, color);
+						if (d&0x01) plot_pixel(bitmap, x+7, y, color);
 					}
 				}
 			}

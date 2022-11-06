@@ -19,7 +19,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,14 +36,12 @@ public class spdodgeb
 	/* end of private globals */
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr spd_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spd_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int chip = offset & 1;
 	
 		switch (offset/2)
@@ -222,8 +220,7 @@ public class spdodgeb
 	}
 	#endif
 	
-	public static ReadHandlerPtr mcu63701_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu63701_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("CPU #0 PC %04x: read from port %02x of 63701 data address 3801\n",activecpu_get_pc(),offset);
 	
 		if (mcu63701_command == 0) return 0x6a;
@@ -238,16 +235,14 @@ public class spdodgeb
 		}
 	} };
 	
-	public static WriteHandlerPtr mcu63701_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu63701_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("CPU #0 PC %04x: write %02x to 63701 control address 3800\n",activecpu_get_pc(),data);
 		mcu63701_command = data;
 		mcu63705_update_inputs();
 	} };
 	
 	
-	public static ReadHandlerPtr port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int port = readinputport(0);
 	
 		toggle^=0x02;	/* mcu63701_busy flag */
@@ -305,7 +300,7 @@ public class spdodgeb
 	};
 	
 	
-	static InputPortPtr input_ports_spdodgeb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spdodgeb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spdodgeb )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );/* mcu63701_busy flag */
@@ -438,8 +433,7 @@ public class spdodgeb
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_spdodgeb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spdodgeb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12000000/6)	/* 2MHz ? */
@@ -469,9 +463,7 @@ public class spdodgeb
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -537,6 +529,6 @@ public class spdodgeb
 	
 	
 	
-	public static GameDriver driver_spdodgeb	   = new GameDriver("1987"	,"spdodgeb"	,"spdodgeb.java"	,rom_spdodgeb,null	,machine_driver_spdodgeb	,input_ports_spdodgeb	,null	,ROT0	,	"Technos", "Super Dodge Ball (US)" )
-	public static GameDriver driver_nkdodgeb	   = new GameDriver("1987"	,"nkdodgeb"	,"spdodgeb.java"	,rom_nkdodgeb,driver_spdodgeb	,machine_driver_spdodgeb	,input_ports_spdodgeb	,null	,ROT0	,	"Technos", "Nekketsu Koukou Dodgeball Bu (Japan bootleg)" )
+	GAME( 1987, spdodgeb, 0,        spdodgeb, spdodgeb, 0, ROT0, "Technos", "Super Dodge Ball (US)" )
+	GAME( 1987, nkdodgeb, spdodgeb, spdodgeb, spdodgeb, 0, ROT0, "Technos", "Nekketsu Koukou Dodgeball Bu (Japan bootleg)" )
 }

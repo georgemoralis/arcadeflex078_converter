@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -20,8 +20,7 @@ public class bsktball
 	/***************************************************************************
 	bsktball_nmion_w
 	***************************************************************************/
-	public static WriteHandlerPtr bsktball_nmion_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_nmion_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		NMION = offset & 0x01;
 	} };
 	
@@ -29,8 +28,7 @@ public class bsktball
 	bsktball_interrupt
 	***************************************************************************/
 	/* NMI every 32V, IRQ every VBLANK */
-	public static InterruptHandlerPtr bsktball_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bsktball_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int i256V=0;
 	
 		/* We mod by 8 because we're interrupting 8x per frame, 1 per 32V */
@@ -38,7 +36,7 @@ public class bsktball
 	
 		if (i256V==0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-		else if (NMION != 0)
+		else if (NMION)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -46,13 +44,11 @@ public class bsktball
 	bsktball_ld_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr bsktball_ld1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_ld1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LD1 = (offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr bsktball_ld2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_ld2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LD2 = (offset & 0x01);
 	} };
 	
@@ -61,8 +57,7 @@ public class bsktball
 	bsktball_in0_r
 	***************************************************************************/
 	
-	public static ReadHandlerPtr bsktball_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bsktball_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int DR0=0;		/* PL2 H DIR */
 		static int DR1=0;		/* PL2 V DIR */
 		static int DR2=0;		/* PL1 H DIR */
@@ -146,7 +141,7 @@ public class bsktball
 			return ((p1_horiz & 0x0F) | ((p1_vert << 4) & 0xF0));
 		}
 		/* D0-D3 = Plyr 2 Horiz, D4-D7 = Plyr 2 Vert */
-		else if (LD2 != 0)
+		else if (LD2)
 		{
 			return ((p2_horiz & 0x0F) | ((p2_vert << 4) & 0xF0));
 		}
@@ -164,13 +159,11 @@ public class bsktball
 	/***************************************************************************
 	bsktball_led_w
 	***************************************************************************/
-	public static WriteHandlerPtr bsktball_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,offset & 0x01);
 	} };
 	
-	public static WriteHandlerPtr bsktball_led2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_led2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1,offset & 0x01);
 	} };
 	
@@ -178,19 +171,16 @@ public class bsktball
 	/***************************************************************************
 	Sound handlers
 	***************************************************************************/
-	public static WriteHandlerPtr bsktball_bounce_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_bounce_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(1, data & 0x0f);	// Crowd
 		discrete_sound_w(2, (data & 0x10) ? 1 : 0);	// Bounce
 	} };
 	
-	public static WriteHandlerPtr bsktball_note_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_note_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(0, (~data) & 0xff);	// Note
 	} };
 	
-	public static WriteHandlerPtr bsktball_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsktball_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(3,(~offset) & 0x01);
 	} };
 }

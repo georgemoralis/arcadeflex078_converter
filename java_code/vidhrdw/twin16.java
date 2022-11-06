@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,11 +42,11 @@ public class twin16
 	
 	WRITE16_HANDLER( twin16_videoram2_w )
 	{
-		int oldword = twin16_videoram2.read(offset);
+		int oldword = twin16_videoram2[offset];
 	
-		COMBINE_DATA(&twin16_videoram2.read(offset));
+		COMBINE_DATA(&twin16_videoram2[offset]);
 	
-		if (oldword != twin16_videoram2.read(offset))
+		if (oldword != twin16_videoram2[offset])
 		{
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
@@ -85,7 +85,7 @@ public class twin16
 	
 			flip_screen_x_set(video_register & TWIN16_SCREEN_FLIPX);
 	
-			if (twin16_custom_vidhrdw != 0)
+			if (twin16_custom_vidhrdw)
 				flip_screen_y_set(video_register & TWIN16_SCREEN_FLIPY);
 			else
 				flip_screen_y_set(~video_register & TWIN16_SCREEN_FLIPY);
@@ -118,7 +118,7 @@ public class twin16
 		if( xpos>=320 ) xpos -= 65536;
 		if( ypos>=256 ) ypos -= 65536;
 	
-		if (pri != 0) pval=2; else pval=8;
+		if (pri) pval=2; else pval=8;
 	
 		{
 			{
@@ -127,8 +127,8 @@ public class twin16
 					int sy = (flipy)?(ypos+height-1-y):(ypos+y);
 					if( sy>=16 && sy<256-16 )
 					{
-						UINT16 *dest = (UINT16 *)bitmap.line[sy];
-						UINT8 *pdest = (UINT8 *)priority_bitmap.line[sy];
+						UINT16 *dest = (UINT16 *)bitmap->line[sy];
+						UINT8 *pdest = (UINT8 *)priority_bitmap->line[sy];
 	
 						for( x=0; x<width; x++ )
 						{
@@ -164,14 +164,14 @@ public class twin16
 		memset( &spriteram16[0x1800], 0, 0x800 );
 		while( source<finish ){
 			UINT16 priority = source[0];
-			if ((priority & 0x8000) != 0){
+			if( priority & 0x8000 ){
 				UINT16 *dest = &spriteram16[0x1800 + 4*(priority&0xff)];
 	
 				INT32 xpos = (0x10000*source[4])|source[5];
 				INT32 ypos = (0x10000*source[6])|source[7];
 	
 				UINT16 attributes = source[2]&0x03ff; /* scale,size,color */
-				if ((priority & 0x0200) != 0) attributes |= 0x4000;
+				if( priority & 0x0200 ) attributes |= 0x4000;
 				/* Todo:  priority & 0x0100 is also used */
 				attributes |= 0x8000;
 	
@@ -224,7 +224,7 @@ public class twin16
 				int xpos = source[1];
 				int ypos = source[2];
 	
-				const pen_t *pal_data = Machine.pens+((attributes&0xf)+0x10)*16;
+				const pen_t *pal_data = Machine->pens+((attributes&0xf)+0x10)*16;
 				int height	= 16<<((attributes>>6)&0x3);
 				int width	= 16<<((attributes>>4)&0x3);
 				const UINT16 *pen_data = 0;
@@ -246,7 +246,7 @@ public class twin16
 	
 						case 2:
 						pen_data = twin16_gfx_rom + 0x80000;
-						if ((code & 0x4000) != 0) pen_data += 0x40000;
+						if( code&0x4000 ) pen_data += 0x40000;
 						break;
 	
 						case 3:
@@ -257,12 +257,12 @@ public class twin16
 				}
 				pen_data += code*0x40;
 	
-				if ((video_register & TWIN16_SCREEN_FLIPY) != 0){
+				if( video_register&TWIN16_SCREEN_FLIPY ){
 					if (ypos>65000) ypos=ypos-65536; /* Bit hacky */
 					ypos = 256-ypos-height;
 					flipy = NOT(flipy);
 				}
-				if ((video_register & TWIN16_SCREEN_FLIPX) != 0){
+				if( video_register&TWIN16_SCREEN_FLIPX ){
 					if (xpos>65000) xpos=xpos-65536; /* Bit hacky */
 					xpos = 320-xpos-width;
 					flipx = NOT(flipx);
@@ -314,17 +314,17 @@ public class twin16
 			bank_table[3] = 3;
 		}
 	
-		if ((video_register & TWIN16_SCREEN_FLIPX) != 0){
+		if( video_register&TWIN16_SCREEN_FLIPX ){
 			dx = 256-dx-64;
 			tile_flipx = !tile_flipx;
 		}
 	
-		if ((video_register & TWIN16_SCREEN_FLIPY) != 0){
+		if( video_register&TWIN16_SCREEN_FLIPY ){
 			dy = 256-dy;
 			tile_flipy = !tile_flipy;
 		}
 	
-		if (tile_flipy != 0){
+		if( tile_flipy ){
 			y1 = 7; y2 = -1; yd = -1;
 		}
 		else {
@@ -336,8 +336,8 @@ public class twin16
 			int sy = (i/64)*8;
 			int xpos,ypos;
 	
-			if ((video_register & TWIN16_SCREEN_FLIPX) != 0) sx = 63*8 - sx;
-			if ((video_register & TWIN16_SCREEN_FLIPY) != 0) sy = 63*8 - sy;
+			if( video_register&TWIN16_SCREEN_FLIPX ) sx = 63*8 - sx;
+			if( video_register&TWIN16_SCREEN_FLIPY ) sy = 63*8 - sy;
 	
 			xpos = (sx-dx)&0x1ff;
 			ypos = (sy-dy)&0x1ff;
@@ -353,22 +353,22 @@ public class twin16
 				*/
 				const UINT16 *gfx_data = gfx_base + (code&0x7ff)*16 + bank_table[(code>>11)&0x3]*0x8000;
 				int color = (code>>13);
-				pen_t *pal_data = Machine.pens + 16*(0x20+color+8*palette);
+				pen_t *pal_data = Machine->pens + 16*(0x20+color+8*palette);
 	
 				{
 					int y;
 					UINT16 data;
 					int pen;
 	
-					if (tile_flipx != 0)
+					if( tile_flipx )
 					{
-						if (opaque != 0)
+						if( opaque )
 						{
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									dest[7] = pal_data[(data>>4*3)&0xf];
@@ -397,24 +397,24 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
-									if (data != 0)
+									if( data )
 									{
-										pen = (data>>4*3)&0xf; if (pen != 0) { dest[7] = pal_data[pen]; pdest[7]|=4; }
-										pen = (data>>4*2)&0xf; if (pen != 0) { dest[6] = pal_data[pen]; pdest[6]|=4; }
-										pen = (data>>4*1)&0xf; if (pen != 0) { dest[5] = pal_data[pen]; pdest[5]|=4; }
-										pen = (data>>4*0)&0xf; if (pen != 0) { dest[4] = pal_data[pen]; pdest[4]|=4; }
+										pen = (data>>4*3)&0xf; if( pen ) { dest[7] = pal_data[pen]; pdest[7]|=4; }
+										pen = (data>>4*2)&0xf; if( pen ) { dest[6] = pal_data[pen]; pdest[6]|=4; }
+										pen = (data>>4*1)&0xf; if( pen ) { dest[5] = pal_data[pen]; pdest[5]|=4; }
+										pen = (data>>4*0)&0xf; if( pen ) { dest[4] = pal_data[pen]; pdest[4]|=4; }
 									}
 									data = *gfx_data++;
-									if (data != 0)
+									if( data )
 									{
-										pen = (data>>4*3)&0xf; if (pen != 0) { dest[3] = pal_data[pen]; pdest[3]|=4; }
-										pen = (data>>4*2)&0xf; if (pen != 0) { dest[2] = pal_data[pen]; pdest[2]|=4; }
-										pen = (data>>4*1)&0xf; if (pen != 0) { dest[1] = pal_data[pen]; pdest[1]|=4; }
-										pen = (data>>4*0)&0xf; if (pen != 0) { dest[0] = pal_data[pen]; pdest[0]|=4; }
+										pen = (data>>4*3)&0xf; if( pen ) { dest[3] = pal_data[pen]; pdest[3]|=4; }
+										pen = (data>>4*2)&0xf; if( pen ) { dest[2] = pal_data[pen]; pdest[2]|=4; }
+										pen = (data>>4*1)&0xf; if( pen ) { dest[1] = pal_data[pen]; pdest[1]|=4; }
+										pen = (data>>4*0)&0xf; if( pen ) { dest[0] = pal_data[pen]; pdest[0]|=4; }
 									}
 								}
 							}
@@ -422,13 +422,13 @@ public class twin16
 					}
 					else
 					{
-						if (opaque != 0)
+						if( opaque )
 						{
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
 									*dest++ = pal_data[(data>>4*3)&0xf];
@@ -458,24 +458,24 @@ public class twin16
 							{
 								for( y=y1; y!=y2; y+=yd )
 								{
-									UINT16 *dest = ((UINT16 *)bitmap.line[ypos+y])+xpos;
-									UINT8 *pdest = ((UINT8 *)priority_bitmap.line[ypos+y])+xpos;
+									UINT16 *dest = ((UINT16 *)bitmap->line[ypos+y])+xpos;
+									UINT8 *pdest = ((UINT8 *)priority_bitmap->line[ypos+y])+xpos;
 	
 									data = *gfx_data++;
-									if (data != 0)
+									if( data )
 									{
-										pen = (data>>4*3)&0xf; if (pen != 0) { dest[0] = pal_data[pen]; pdest[0]|=4; }
-										pen = (data>>4*2)&0xf; if (pen != 0) { dest[1] = pal_data[pen]; pdest[1]|=4; }
-										pen = (data>>4*1)&0xf; if (pen != 0) { dest[2] = pal_data[pen]; pdest[2]|=4; }
-										pen = (data>>4*0)&0xf; if (pen != 0) { dest[3] = pal_data[pen]; pdest[3]|=4; }
+										pen = (data>>4*3)&0xf; if( pen ) { dest[0] = pal_data[pen]; pdest[0]|=4; }
+										pen = (data>>4*2)&0xf; if( pen ) { dest[1] = pal_data[pen]; pdest[1]|=4; }
+										pen = (data>>4*1)&0xf; if( pen ) { dest[2] = pal_data[pen]; pdest[2]|=4; }
+										pen = (data>>4*0)&0xf; if( pen ) { dest[3] = pal_data[pen]; pdest[3]|=4; }
 									}
 									data = *gfx_data++;
-									if (data != 0)
+									if( data )
 									{
-										pen = (data>>4*3)&0xf; if (pen != 0) { dest[4] = pal_data[pen]; pdest[4]|=4; }
-										pen = (data>>4*2)&0xf; if (pen != 0) { dest[5] = pal_data[pen]; pdest[5]|=4; }
-										pen = (data>>4*1)&0xf; if (pen != 0) { dest[6] = pal_data[pen]; pdest[6]|=4; }
-										pen = (data>>4*0)&0xf; if (pen != 0) { dest[7] = pal_data[pen]; pdest[7]|=4; }
+										pen = (data>>4*3)&0xf; if( pen ) { dest[4] = pal_data[pen]; pdest[4]|=4; }
+										pen = (data>>4*2)&0xf; if( pen ) { dest[5] = pal_data[pen]; pdest[5]|=4; }
+										pen = (data>>4*1)&0xf; if( pen ) { dest[6] = pal_data[pen]; pdest[6]|=4; }
+										pen = (data>>4*0)&0xf; if( pen ) { dest[7] = pal_data[pen]; pdest[7]|=4; }
 									}
 								}
 							}
@@ -496,12 +496,11 @@ public class twin16
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_twin16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_twin16  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows_flip_y,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -509,12 +508,11 @@ public class twin16
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_fround  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fround  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -522,8 +520,7 @@ public class twin16
 		return 0;
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_twin16  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_twin16  = new VideoEofHandlerPtr() { public void handler(){
 		if( twin16_spriteram_process_enable() && need_process_spriteram )
 			twin16_spriteram_process();
 	
@@ -532,8 +529,7 @@ public class twin16
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_twin16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 		draw_layer( bitmap,1 );
 		draw_layer( bitmap,0 );

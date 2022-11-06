@@ -44,7 +44,7 @@ Note : there is an ingame typo bug that doesn't display the bonus life values
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,8 +56,7 @@ public class commando
 	
 	
 	
-	public static InterruptHandlerPtr commando_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr commando_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h - VBLANK */
 	} };
 	
@@ -113,7 +112,7 @@ public class commando
 	
 	
 	
-	static InputPortPtr input_ports_commando = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_commando = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( commando )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -193,7 +192,7 @@ public class commando
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'commando', but "Service Mode" Dip Switches instead of "Demo Sound" Dip Switch */
-	static InputPortPtr input_ports_commandu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_commandu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( commandu )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -333,8 +332,7 @@ public class commando
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_commando = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( commando )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -363,9 +361,7 @@ public class commando
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -556,8 +552,7 @@ public class commando
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_commando  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_commando  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -576,8 +571,7 @@ public class commando
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_spaceinv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spaceinv  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -597,9 +591,9 @@ public class commando
 	
 	
 	
-	public static GameDriver driver_commando	   = new GameDriver("1985"	,"commando"	,"commando.java"	,rom_commando,null	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Commando (World)" )
-	public static GameDriver driver_commandu	   = new GameDriver("1985"	,"commandu"	,"commando.java"	,rom_commandu,driver_commando	,machine_driver_commando	,input_ports_commandu	,init_commando	,ROT90	,	"Capcom (Data East USA license)", "Commando (US)" )
-	public static GameDriver driver_commandj	   = new GameDriver("1985"	,"commandj"	,"commando.java"	,rom_commandj,driver_commando	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Senjou no Ookami" )
-	public static GameDriver driver_sinvasn	   = new GameDriver("1985"	,"sinvasn"	,"commando.java"	,rom_sinvasn,driver_commando	,machine_driver_commando	,input_ports_commando	,init_commando	,ROT90	,	"Capcom", "Space Invasion (Europe)" )
-	public static GameDriver driver_sinvasnb	   = new GameDriver("1985"	,"sinvasnb"	,"commando.java"	,rom_sinvasnb,driver_commando	,machine_driver_commando	,input_ports_commando	,init_spaceinv	,ROT90	,	"bootleg", "Space Invasion (bootleg)" )
+	GAME( 1985, commando, 0,        commando, commando, commando, ROT90, "Capcom", "Commando (World)" )
+	GAME( 1985, commandu, commando, commando, commandu, commando, ROT90, "Capcom (Data East USA license)", "Commando (US)" )
+	GAME( 1985, commandj, commando, commando, commando, commando, ROT90, "Capcom", "Senjou no Ookami" )
+	GAME( 1985, sinvasn,  commando, commando, commando, commando, ROT90, "Capcom", "Space Invasion (Europe)" )
+	GAME( 1985, sinvasnb, commando, commando, commando, spaceinv, ROT90, "bootleg", "Space Invasion (bootleg)" )
 }

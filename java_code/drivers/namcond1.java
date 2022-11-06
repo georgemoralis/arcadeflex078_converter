@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,7 +48,7 @@ public class namcond1
 	
 	/*************************************************************/
 	
-	static InputPortPtr input_ports_namcond1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcond1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcond1 )
 		PORT_START();       /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -178,8 +178,7 @@ public class namcond1
 	  - The level 1 interrupt to the 68k has been measured at 60Hz.
 	*******************************************/
 	
-	public static MachineHandlerPtr machine_driver_namcond1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcond1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12288000)
@@ -204,9 +203,7 @@ public class namcond1
 		MDRV_VIDEO_START(ygv608)
 		MDRV_VIDEO_UPDATE(ygv608)
 		MDRV_VIDEO_STOP(ygv608)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ncv1 = new RomLoadPtr(){ public void handler(){ 
@@ -315,9 +312,9 @@ public class namcond1
 	#endif
 	
 	
-	public static GameDriver driver_ncv1	   = new GameDriver("1995"	,"ncv1"	,"namcond1.java"	,rom_ncv1,null	,machine_driver_namcond1	,input_ports_namcond1	,null	,ROT90	,	"Namco", "Namco Classics Collection Vol.1", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ncv1j	   = new GameDriver("1995"	,"ncv1j"	,"namcond1.java"	,rom_ncv1j,driver_ncv1	,machine_driver_namcond1	,input_ports_namcond1	,null	,ROT90	,	"Namco", "Namco Classics Collection Vol.1 (Japan set 1)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ncv1j2	   = new GameDriver("1995"	,"ncv1j2"	,"namcond1.java"	,rom_ncv1j2,driver_ncv1	,machine_driver_namcond1	,input_ports_namcond1	,null	,ROT90	,	"Namco", "Namco Classics Collection Vol.1 (Japan set 2)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ncv2	   = new GameDriver("1996"	,"ncv2"	,"namcond1.java"	,rom_ncv2,null	,machine_driver_namcond1	,input_ports_namcond1	,null	,ROT90	,	"Namco", "Namco Classics Collection Vol.2", GAME_NOT_WORKING | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ncv2j	   = new GameDriver("1996"	,"ncv2j"	,"namcond1.java"	,rom_ncv2j,driver_ncv2	,machine_driver_namcond1	,input_ports_namcond1	,null	,ROT90	,	"Namco", "Namco Classics Collection Vol.2 (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, ncv1,      0, namcond1, namcond1, 0, ROT90, "Namco", "Namco Classics Collection Vol.1", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, ncv1j,  ncv1, namcond1, namcond1, 0, ROT90, "Namco", "Namco Classics Collection Vol.1 (Japan set 1)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, ncv1j2, ncv1, namcond1, namcond1, 0, ROT90, "Namco", "Namco Classics Collection Vol.1 (Japan set 2)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, ncv2,      0, namcond1, namcond1, 0, ROT90, "Namco", "Namco Classics Collection Vol.2", GAME_NOT_WORKING | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, ncv2j,  ncv2, namcond1, namcond1, 0, ROT90, "Namco", "Namco Classics Collection Vol.2 (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

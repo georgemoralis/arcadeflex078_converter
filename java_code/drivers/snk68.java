@@ -34,7 +34,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -118,7 +118,7 @@ public class snk68
 	{
 		/* top byte is used, meaning unknown */
 		/* bottom byte is protection in ikari 3 and streetsm */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			invert_controls = ((data & 0xff) == 0x07) ? 0xff : 0x00;
 	}
 	
@@ -204,8 +204,7 @@ public class snk68
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr D7759_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr D7759_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_port_w(offset,data);
 		UPD7759_start_w (0,0);
 		UPD7759_start_w (0,1);
@@ -228,7 +227,7 @@ public class snk68
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_pow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pow )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -306,7 +305,7 @@ public class snk68
 	INPUT_PORTS_END(); }}; 
 	
 	/* Identical to pow, but the Language dip switch has no effect */
-	static InputPortPtr input_ports_powj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_powj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( powj )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -383,7 +382,7 @@ public class snk68
 		PORT_DIPSETTING(	0xc0, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_searchar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_searchar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( searchar )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -466,7 +465,7 @@ public class snk68
 		PORT_ANALOGX( 0xff, 0x00, IPT_DIAL | IPF_REVERSE | IPF_PLAYER2, 25, 10, 0, 0, KEYCODE_N, KEYCODE_M, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_streetsm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_streetsm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( streetsm )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -550,7 +549,7 @@ public class snk68
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as streetsm, but Coinage is different */
-	static InputPortPtr input_ports_streetsj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_streetsj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( streetsj )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -633,7 +632,7 @@ public class snk68
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ikari3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ikari3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ikari3 )
 		PORT_START(); 	/* Player 1 controls, maybe all are active_high? */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -817,8 +816,7 @@ public class snk68
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_ikari3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ikari3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* Accurate */
@@ -846,13 +844,10 @@ public class snk68
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pow = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pow )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* Accurate */
@@ -880,13 +875,10 @@ public class snk68
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_searchar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( searchar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -914,13 +906,10 @@ public class snk68
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_streetsm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( streetsm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* Accurate */
@@ -948,9 +937,7 @@ public class snk68
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -1218,21 +1205,20 @@ public class snk68
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_searchar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_searchar  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_USER1));
 	} };
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_pow	   = new GameDriver("1988"	,"pow"	,"snk68.java"	,rom_pow,null	,machine_driver_pow	,input_ports_pow	,null	,ROT0	,	"SNK", "P.O.W. - Prisoners of War (US)" )
-	public static GameDriver driver_powj	   = new GameDriver("1988"	,"powj"	,"snk68.java"	,rom_powj,driver_pow	,machine_driver_pow	,input_ports_powj	,null	,ROT0	,	"SNK", "Datsugoku - Prisoners of War (Japan)" )
-	public static GameDriver driver_searchar	   = new GameDriver("1989"	,"searchar"	,"snk68.java"	,rom_searchar,null	,machine_driver_searchar	,input_ports_searchar	,init_searchar	,ROT90	,	"SNK", "SAR - Search And Rescue (World)" )
-	public static GameDriver driver_sercharu	   = new GameDriver("1989"	,"sercharu"	,"snk68.java"	,rom_sercharu,driver_searchar	,machine_driver_searchar	,input_ports_searchar	,init_searchar	,ROT90	,	"SNK", "SAR - Search And Rescue (US)" )
-	public static GameDriver driver_streetsm	   = new GameDriver("1989"	,"streetsm"	,"snk68.java"	,rom_streetsm,null	,machine_driver_streetsm	,input_ports_streetsm	,null	,ROT0	,	"SNK", "Street Smart (US version 2)" )
-	public static GameDriver driver_streets1	   = new GameDriver("1989"	,"streets1"	,"snk68.java"	,rom_streets1,driver_streetsm	,machine_driver_searchar	,input_ports_streetsm	,null	,ROT0	,	"SNK", "Street Smart (US version 1)" )
-	public static GameDriver driver_streetsw	   = new GameDriver("1989"	,"streetsw"	,"snk68.java"	,rom_streetsw,driver_streetsm	,machine_driver_searchar	,input_ports_streetsj	,null	,ROT0	,	"SNK", "Street Smart (World version 1)" )
-	public static GameDriver driver_streetsj	   = new GameDriver("1989"	,"streetsj"	,"snk68.java"	,rom_streetsj,driver_streetsm	,machine_driver_searchar	,input_ports_streetsj	,null	,ROT0	,	"SNK", "Street Smart (Japan version 1)" )
-	public static GameDriver driver_ikari3	   = new GameDriver("1989"	,"ikari3"	,"snk68.java"	,rom_ikari3,null	,machine_driver_ikari3	,input_ports_ikari3	,init_searchar	,ROT0	,	"SNK", "Ikari III - The Rescue" )
+	GAME( 1988, pow,	  0,		pow,	  pow,		0,		  ROT0,  "SNK", "P.O.W. - Prisoners of War (US)" )
+	GAME( 1988, powj,	  pow,		pow,	  powj, 	0,		  ROT0,  "SNK", "Datsugoku - Prisoners of War (Japan)" )
+	GAME( 1989, searchar, 0,		searchar, searchar, searchar, ROT90, "SNK", "SAR - Search And Rescue (World)" )
+	GAME( 1989, sercharu, searchar, searchar, searchar, searchar, ROT90, "SNK", "SAR - Search And Rescue (US)" )
+	GAME( 1989, streetsm, 0,		streetsm, streetsm, 0,		  ROT0,  "SNK", "Street Smart (US version 2)" )
+	GAME( 1989, streets1, streetsm, searchar, streetsm, 0,		  ROT0,  "SNK", "Street Smart (US version 1)" )
+	GAME( 1989, streetsw, streetsm, searchar, streetsj, 0,		  ROT0,  "SNK", "Street Smart (World version 1)" )
+	GAME( 1989, streetsj, streetsm, searchar, streetsj, 0,		  ROT0,  "SNK", "Street Smart (Japan version 1)" )
+	GAME( 1989, ikari3,   0,		ikari3,   ikari3,	searchar, ROT0,  "SNK", "Ikari III - The Rescue" )
 	
 }

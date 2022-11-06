@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,7 +28,7 @@ public class phozon
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
+	public static PaletteInitHandlerPtr palette_init_phozon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -57,9 +57,9 @@ public class phozon
 	
 			palette_set_color(i,r,g,b);
 			color_prom++;
-		}
+		} };
 	
-		color_prom += 2*Machine.drv.total_colors;
+		color_prom += 2*Machine->drv->total_colors;
 		/* color_prom now points to the beginning of the lookup table */
 	
 		/* characters */
@@ -68,17 +68,17 @@ public class phozon
 		/* sprites */
 		for (i = 0; i < TOTAL_COLORS(2); i++)
 			COLOR(2,i) = (*(color_prom++) & 0x0f) + 0x10;
-	} };
+	}
 	
-	public static VideoStartHandlerPtr video_start_phozon  = new VideoStartHandlerPtr() { public int handler() {
+	public static VideoStartHandlerPtr video_start_phozon  = new VideoStartHandlerPtr() { public int handler()
 		/* set up spriteram area */
 		spriteram_size[0] = 0x80;
-		spriteram = &phozon_spriteram.read(0x780);
-		spriteram_2 = &phozon_spriteram.read(0x780+0x800);
-		spriteram_3 = &phozon_spriteram.read(0x780+0x800+0x800);
+		spriteram = &phozon_spriteram[0x780];
+		spriteram_2 = &phozon_spriteram[0x780+0x800];
+		spriteram_3 = &phozon_spriteram[0x780+0x800+0x800];
 	
 		return video_start_generic.handler();
-	} };
+	}
 	
 	void phozon_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
@@ -101,8 +101,7 @@ public class phozon
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_phozon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -177,7 +176,7 @@ public class phozon
 	
 					case 0x04:		/* 8x16 */
 						sprite = (sprite << 2) | ((spriteram_3.read(offs)& 0xc0) >> 6);
-						if (flipy == 0){
+						if (NOT(flipy)){
 							phozon_draw_sprite8(bitmap,2+sprite,color,flipx,flipy,x,y+8);
 							phozon_draw_sprite8(bitmap,sprite,color,flipx,flipy,x,y);
 						}
@@ -189,7 +188,7 @@ public class phozon
 	
 					case 0x24:		/* 8x32 */
 						sprite = (sprite << 2) | ((spriteram_3.read(offs)& 0xc0) >> 6);
-						if (flipy == 0){
+						if (NOT(flipy)){
 							phozon_draw_sprite8(bitmap,10+sprite,color,flipx,flipy,x,y+8);
 							phozon_draw_sprite8(bitmap,8+sprite,color,flipx,flipy,x,y);
 							phozon_draw_sprite8(bitmap,2+sprite,color,flipx,flipy,x,y-8);

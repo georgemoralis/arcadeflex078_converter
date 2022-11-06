@@ -8,7 +8,7 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,21 +27,18 @@ public class ddrible
 	/* video hardware functions */
 	
 	
-	public static InterruptHandlerPtr ddrible_interrupt_0 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (ddrible_int_enable_0 != 0)
+	public static InterruptHandlerPtr ddrible_interrupt_0 = new InterruptHandlerPtr() {public void handler(){
+		if (ddrible_int_enable_0)
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr ddrible_interrupt_1 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (ddrible_int_enable_1 != 0)
+	public static InterruptHandlerPtr ddrible_interrupt_1 = new InterruptHandlerPtr() {public void handler(){
+		if (ddrible_int_enable_1)
 			cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr ddrible_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -50,28 +47,23 @@ public class ddrible
 	} };
 	
 	
-	public static ReadHandlerPtr ddrible_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ddrible_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ddrible_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr ddrible_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrible_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr ddrible_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ddrible_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ddrible_snd_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr ddrible_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrible_snd_sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr ddrible_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* b4-b7: unused */
 		/* b2-b3: unknown */
 		/* b1: coin counter 2 */
@@ -80,15 +72,13 @@ public class ddrible
 		coin_counter_w(1,(data >> 1) & 0x01);
 	} };
 	
-	public static ReadHandlerPtr ddrible_vlm5030_busy_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ddrible_vlm5030_busy_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand(); /* patch */
-		if (VLM5030_BSY() != 0) return 1;
+		if (VLM5030_BSY()) return 1;
 		else return 0;
 	} };
 	
-	public static WriteHandlerPtr ddrible_vlm5030_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_vlm5030_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *SPEECH_ROM = memory_region(REGION_SOUND1);
 		/* b7 : vlm data bus OE   */
 		/* b6 : VLM5030-RST       */
@@ -178,7 +168,7 @@ public class ddrible
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_ddribble = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddribble = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddribble )
 		PORT_START(); 	/* PLAYER 1 INPUTS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -341,8 +331,7 @@ public class ddrible
 		0x10000     /* memory size 64Kbyte * 2 bank */
 	};
 	
-	public static MachineHandlerPtr machine_driver_ddribble = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddribble )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 18432000/12 MHz? */
@@ -377,9 +366,7 @@ public class ddrible
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ddribble = new RomLoadPtr(){ public void handler(){ 
@@ -412,5 +399,5 @@ public class ddrible
 	
 	
 	
-	public static GameDriver driver_ddribble	   = new GameDriver("1986"	,"ddribble"	,"ddrible.java"	,rom_ddribble,null	,machine_driver_ddribble	,input_ports_ddribble	,null	,ROT0	,	"Konami", "Double Dribble")
+	GAME( 1986, ddribble, 0, ddribble, ddribble, 0, ROT0, "Konami", "Double Dribble")
 }

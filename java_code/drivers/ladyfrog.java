@@ -48,7 +48,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,55 +62,48 @@ public class ladyfrog
 	
 	
 	
-	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		snd_flag=0;
 		return snd_data;
 	} };
 	
-	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_data = data;
 		snd_flag = 2;
 	
 	} };
 	
-	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1, (data&1 )? ASSERT_LINE : CLEAR_LINE);
 	} };
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
 	} };
 	
-	static WRITE_HANDLER(unk_w)
-	{
+	public static WriteHandlerPtr unk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
-	}
+	} };
 	
 	static AY8910interface ay8910_interface = new AY8910interface
 	(
@@ -131,8 +124,7 @@ public class ladyfrog
 		{ 100 }
 	};
 	
-	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return snd_flag | 0xfd;
 	} };
 	
@@ -205,7 +197,7 @@ public class ladyfrog
 	};
 	
 	
-	static InputPortPtr input_ports_ladyfrog = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ladyfrog = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ladyfrog )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "4" );
@@ -285,8 +277,7 @@ public class ladyfrog
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_ladyfrog = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ladyfrog )
 		MDRV_CPU_ADD(Z80,8000000/2)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
@@ -317,9 +308,7 @@ public class ladyfrog
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_ladyfrog = new RomLoadPtr(){ public void handler(){ 
@@ -338,5 +327,5 @@ public class ladyfrog
 		ROM_LOAD( "8.10",   0x20000, 0x10000, CRC(8c73baa1) SHA1(50fb408be181ef3c125dee23b04daeb010c9f276) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ladyfrog	   = new GameDriver("1990"	,"ladyfrog"	,"ladyfrog.java"	,rom_ladyfrog,null	,machine_driver_ladyfrog	,input_ports_ladyfrog	,null	,ORIENTATION_SWAP_XY	,	"Mondial Games", "Lady Frog")
+	GAME(1990, ladyfrog, 0,       ladyfrog,  ladyfrog, 0, ORIENTATION_SWAP_XY, "Mondial Games", "Lady Frog")
 }

@@ -179,7 +179,7 @@ cpu #2 (PC=0000060E): unmapped memory word read from 0000683A & FFFF
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -244,7 +244,7 @@ public class taitoair
 	
 	static WRITE16_HANDLER( dsp_HOLDA_signal_w )
 	{
-		if (offset != 0)
+		if (offset)
 			logerror("TMS32025:%04x Writing %01x level to HOLD-Acknowledge signal\n",activecpu_get_previouspc(),data);
 	}
 	
@@ -314,8 +314,7 @@ public class taitoair
 		cpu_setbank(1, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 3;
 		reset_sound_region();
 	} };
@@ -454,7 +453,7 @@ public class taitoair
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_topland = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topland = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topland )
 		PORT_START();   /* DSWA */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, "Mechanized (alt);" )
@@ -521,7 +520,7 @@ public class taitoair
 		PORT_ANALOG( 0xffff, 0x0000, IPT_AD_STICK_Y | IPF_PLAYER2, 30, 40, 0xf800, 0x7ff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ainferno = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ainferno = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ainferno )
 		PORT_START();   /* DSWA */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, "Mechanized (alt);" )
@@ -645,8 +644,7 @@ public class taitoair
 					MACHINE DRIVERS
 	************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_airsys = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( airsys )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000 / 2)		/* 12 MHz ??? */
@@ -676,9 +674,7 @@ public class taitoair
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, airsys_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************************************
@@ -772,8 +768,7 @@ public class taitoair
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_taitoair  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_taitoair  = new DriverInitHandlerPtr() { public void handler(){
 		dsp_HOLD_signal = ASSERT_LINE;
 	
 		state_save_register_int("sound1", 0, "sound region", &banknum);
@@ -783,6 +778,6 @@ public class taitoair
 	
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY  FULLNAME */
-	public static GameDriver driver_topland	   = new GameDriver("1988"	,"topland"	,"taitoair.java"	,rom_topland,null	,machine_driver_airsys	,input_ports_topland	,init_taitoair	,ROT0	,	"Taito Corporation Japan", "Top Landing (World)", GAME_NOT_WORKING )
-	public static GameDriver driver_ainferno	   = new GameDriver("1990"	,"ainferno"	,"taitoair.java"	,rom_ainferno,null	,machine_driver_airsys	,input_ports_ainferno	,init_taitoair	,ROT0	,	"Taito America Corporation", "Air Inferno (US)", GAME_NOT_WORKING )
+	GAMEX( 1988, topland,  0,        airsys,   topland,  taitoair, ROT0,    "Taito Corporation Japan", "Top Landing (World)", GAME_NOT_WORKING )
+	GAMEX( 1990, ainferno, 0,        airsys,   ainferno, taitoair, ROT0,    "Taito America Corporation", "Air Inferno (US)", GAME_NOT_WORKING )
 }

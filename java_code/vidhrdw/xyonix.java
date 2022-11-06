@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class xyonix
 	static struct tilemap *xyonix_tilemap;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_xyonix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_xyonix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -51,21 +50,18 @@ public class xyonix
 		SET_TILE_INFO(0,tileno,attr >> 4,0)
 	}
 	
-	public static WriteHandlerPtr xyonix_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xyonix_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xyonix_vidram[offset] = data;
 		tilemap_mark_tile_dirty(xyonix_tilemap,(offset-1)&0x0fff);
 	} };
 	
-	VIDEO_START(xyonix)
-	{
+	public static VideoStartHandlerPtr video_start_xyonix  = new VideoStartHandlerPtr() { public int handler(){
 		xyonix_tilemap = tilemap_create(get_xyonix_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 4, 8,80,32);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(xyonix)
-	{
+	public static VideoUpdateHandlerPtr video_update_xyonix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,xyonix_tilemap,0,0);
-	}
+	} };
 }

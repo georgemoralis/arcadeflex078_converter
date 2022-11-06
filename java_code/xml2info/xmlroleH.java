@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.xml2info;
 
@@ -111,7 +111,7 @@ public class xmlroleH
 	#endif /* XML_DTD */
 	
 	#define XmlTokenRole(state, tok, ptr, end, enc) \
-	 (((state).handler)(state, tok, ptr, end, enc))
+	 (((state)->handler)(state, tok, ptr, end, enc))
 	
 	#ifdef __cplusplus
 	}

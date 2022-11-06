@@ -11,7 +11,7 @@ Bryan McPhail, 27/01/00:
   Fixed Gwar, Gwarj, both working properly now.
   Renamed Gwarjp to Gwarj.
   Added Gwara
-  Removed strcmp(drv.names) :)
+  Removed strcmp(drv->names) :)
   Made Gwara (the new clone) the main set, and old gwar to gwara.  This is
   because (what is now) gwara seemingly has a different graphics board.  Fix
   chars and scroll registers are in different locations, while gwar (new)
@@ -162,14 +162,14 @@ AT08XX03:
 		CPUA and B handshake through NMIs. They were implemented in
 		all SNK triple Z80 drivers as
 
-			ENABLE.SIGNAL.HOLDUP.MAKEUP.ACKNOWLEDGE
+			ENABLE->SIGNAL->HOLDUP->MAKEUP->ACKNOWLEDGE
 
 		but upon close examination of the games code no evidence of
 		any game relying on this behavior to function correctly was
 		found. Sometimes it even has adverse effects by triggering
 		extra NMI's therefore handshaking has been reduced to basic
 
-			SIGNAL.ACKNOWLEDGE
+			SIGNAL->ACKNOWLEDGE
 
 	4) Sound Latching
 
@@ -217,7 +217,7 @@ Credits (in alphabetical order)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -234,24 +234,22 @@ public class snk
 	// see IRQ notes in drivers\marvins.c
 	static void irq_trigger_callback(int cpu) { cpu_set_irq_line(cpu, 0, HOLD_LINE); }
 	
-	public static InterruptHandlerPtr snk_irq_AB = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr snk_irq_AB = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 0, HOLD_LINE);
 		timer_set(TIME_IN_USEC(snk_irq_delay), 1, irq_trigger_callback);
 	} };
 	
-	public static InterruptHandlerPtr snk_irq_BA = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr snk_irq_BA = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 		timer_set(TIME_IN_USEC(snk_irq_delay), 0, irq_trigger_callback);
 	} };
 	
 	// NMI handshakes between CPUs are determined to be much simpler
-	public static ReadHandlerPtr snk_cpuA_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) { cpu_set_nmi_line(0, ASSERT_LINE); return 0; } };
-	public static WriteHandlerPtr snk_cpuA_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(0, CLEAR_LINE); } };
+	public static ReadHandlerPtr snk_cpuA_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) cpu_set_nmi_line(0, ASSERT_LINE); return 0; }
+	public static WriteHandlerPtr snk_cpuA_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) cpu_set_nmi_line(0, CLEAR_LINE); }
 	
-	public static ReadHandlerPtr snk_cpuB_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) { cpu_set_nmi_line(1, ASSERT_LINE); return 0; } };
-	public static WriteHandlerPtr snk_cpuB_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(1, CLEAR_LINE); } };
+	public static ReadHandlerPtr snk_cpuB_nmi_trigger_r  = new ReadHandlerPtr() { public int handler(int offset) cpu_set_nmi_line(1, ASSERT_LINE); return 0; }
+	public static WriteHandlerPtr snk_cpuB_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data) cpu_set_nmi_line(1, CLEAR_LINE); }
 	
 	/*********************************************************************/
 	
@@ -290,7 +288,7 @@ public class snk
 	/*********************************************************************/
 	
 	static int snk_rot8( int which ){
-		const int dial_8[8]   = { 0xf0,0x30,0x10,0x50,0x40,0xc0,0x80,0xa0 };
+		const int dial_8[8]   = { 0xf0,0x30,0x10,0x50,0x40,0xc0,0x80,0xa0 } };;
 		int value = readinputport(which+1);
 		int joypos16 = value>>4;
 		return (value&0xf) | dial_8[joypos16>>1];
@@ -307,7 +305,7 @@ public class snk
 		/* 0xf0 isn't a valid direction, but avoids the "joystick error"
 		protection
 		** in Guerilla War which happens when direction changes directly from
-		** 0x50<.0x60 8 times.
+		** 0x50<->0x60 8 times.
 		*/
 		0x50,0x40,0x30,0x20,0x10,0x00
 		};
@@ -367,26 +365,26 @@ public class snk
 	
 	/*********************************************************************/
 	
-	public static WriteHandlerPtr snk_sound_register_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr snk_sound_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		snk_sound_register &= (data>>4);
-	} };
+	}
 	
-	public static ReadHandlerPtr snk_sound_register_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr snk_sound_register_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return snk_sound_register;// | 0x2; /* hack; lets chopper1 play music */
-	} };
+	}
 	
 	void snk_sound_callback0_w( int state ){ /* ? */
-		if (state != 0) snk_sound_register |= 0x01;
+		if( state ) snk_sound_register |= 0x01;
 	}
 	
 	void snk_sound_callback1_w( int state ){ /* ? */
-		if (state != 0) snk_sound_register |= 0x02;
+		if( state ) snk_sound_register |= 0x02;
 	}
 	
 	static struct YM3526interface ym3526_interface = {
 		1,			/* number of chips */
 		4000000,	/* 4 MHz */
-		{ 100 },		/* mixing level */
+		{ 100 } };,		/* mixing level */
 		{ snk_sound_callback0_w } /* ? */
 	};
 	
@@ -412,16 +410,16 @@ public class snk
 		{ snk_sound_callback0_w } /* ? */
 	};
 	
-	public static WriteHandlerPtr snk_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr snk_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		snk_sound_register |= 0x08 | 0x04;
 		soundlatch_w.handler( offset, data );
-	} };
+	}
 	
-	public static ReadHandlerPtr snk_soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset){ /* TNK3 */
+	public static ReadHandlerPtr snk_soundlatch_clear_r  = new ReadHandlerPtr() { public int handler(int offset)/* TNK3 */
 		soundlatch_w( 0, 0 );
 		snk_sound_register = 0;
 		return 0x00;
-	} };
+	}
 	
 	/*********************************************************************/
 	
@@ -535,21 +533,21 @@ public class snk
 	
 	/**********************  Tnk3, Athena, Fighting Golf ********************/
 	
-	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return shared_ram[offset];
-	} };
-	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	}
+	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		shared_ram[offset] = data;
-	} };
+	}
 	
-	public static ReadHandlerPtr shared_ram2_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr shared_ram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return shared_ram2[offset];
-	} };
-	public static WriteHandlerPtr shared_ram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	}
+	public static WriteHandlerPtr shared_ram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		shared_ram2[offset] = data;
-	} };
+	}
 	
-	public static ReadHandlerPtr cpuA_io_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr cpuA_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 		switch( offset ){
 			case 0x000: return snk_input_port_r( 0 );	// coin input, player start
 			case 0x100: return snk_input_port_r( 1 );	// joy1
@@ -574,12 +572,12 @@ public class snk
 			case 0xe60:
 			case 0xe80:
 			case 0xea0:
-			case 0xee0: if (hard_flags != 0) return 0xff;
-		}
+			case 0xee0: if( hard_flags ) return 0xff;
+		} };
 		return io_ram[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr cpuA_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr cpuA_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		switch( offset ){
 			case 0x000:
 			break;
@@ -596,10 +594,10 @@ public class snk
 			default:
 			io_ram[offset] = data;
 			break;
-		}
-	} };
+		} };
+	}
 	
-	public static ReadHandlerPtr cpuB_io_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr cpuB_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 		switch( offset ){
 			case 0x000:
 			case 0x700: return(snk_cpuA_nmi_trigger_r(0));
@@ -611,13 +609,12 @@ public class snk
 			case 0xe60:
 			case 0xe80:
 			case 0xea0:
-			case 0xee0: if (hard_flags != 0) return 0xff;
-		}
+			case 0xee0: if( hard_flags ) return 0xff;
+		} };
 		return io_ram[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr cpuB_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpuB_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		io_ram[offset] = data;
 	
 		if (offset==0 || offset==0x700) snk_cpuB_nmi_ack_w(0, 0);
@@ -963,8 +960,7 @@ public class snk
 	
 	/**********************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_tnk3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tnk3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -997,13 +993,10 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_athena = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( athena )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1036,13 +1029,10 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ikari = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ikari )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1075,13 +1065,10 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_victroad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( victroad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1115,13 +1102,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gwar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gwar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1155,13 +1139,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bermudat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bermudat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1196,13 +1177,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_psychos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( psychos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1236,13 +1214,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_chopper1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chopper1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1276,13 +1251,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tdfever = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tdfever )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1316,13 +1288,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tdfever2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tdfever2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1356,13 +1325,10 @@ public class snk
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(Y8950,y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ftsoccer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ftsoccer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1395,9 +1361,7 @@ public class snk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***********************************************************************/
@@ -2677,7 +2641,7 @@ public class snk
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_4C") ); \
 		PORT_DIPSETTING(    0xc0, DEF_STR( "1C_6C") );
 	
-	static InputPortPtr input_ports_ikari = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ikari = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ikari )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -2733,7 +2697,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ikarijp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ikarijp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ikarijp )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2790,7 +2754,7 @@ public class snk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_victroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_victroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( victroad )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* sound related ??? */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -2847,7 +2811,7 @@ public class snk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gwar )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* sound related ??? */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -2904,7 +2868,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_athena = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_athena = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( athena )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -2975,7 +2939,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, "14" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tnk3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tnk3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tnk3 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3059,7 +3023,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bermudat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bermudat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bermudat )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3114,7 +3078,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, "Time attack 5 minutes" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bermudaa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bermudaa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bermudaa )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3174,7 +3138,7 @@ public class snk
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as Bermudaa, but has different Bonus Life */
-	static InputPortPtr input_ports_worldwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_worldwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( worldwar )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3230,7 +3194,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_psychos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psychos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psychos )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound related */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3291,7 +3255,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_legofair = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_legofair = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( legofair )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3361,7 +3325,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_choppera = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_choppera = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( choppera )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound CPU status */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3417,7 +3381,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fitegolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fitegolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fitegolf )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound related? */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3497,7 +3461,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_countryc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_countryc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( countryc )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN ); /* sound related? */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -3565,7 +3529,7 @@ public class snk
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ftsoccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ftsoccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ftsoccer )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3679,7 +3643,7 @@ public class snk
 		PORT_BITX(0x80, IP_ACTIVE_LOW, IPT_START4, "Start Game D", IP_KEY_DEFAULT, IP_JOY_DEFAULT );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tdfever = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tdfever = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tdfever )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3864,7 +3828,7 @@ public class snk
 		/* c080 */ SNK_UNUSED
 	};
 	
-	public static DriverInitHandlerPtr init_ikari  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_ikari  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		/*  Hack ROM test */
 		RAM[0x11a6] = 0x00;
@@ -3881,9 +3845,9 @@ public class snk
 		hard_flags = 1;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_ikarijp  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_ikarijp  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		RAM[0x190b] = 0xc9; /* faster test */
 	
@@ -3892,9 +3856,9 @@ public class snk
 		hard_flags = 1;
 		snk_bg_tilemap_baseaddr = 0xd000;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_ikarijpb  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_ikarijpb  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		RAM[0x190b] = 0xc9; /* faster test */
 	
@@ -3903,9 +3867,9 @@ public class snk
 		hard_flags = 1;
 		snk_bg_tilemap_baseaddr = 0xd000;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_victroad  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_victroad  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		/* Hack ROM test */
 		RAM[0x17bd] = 0x00;
@@ -3922,9 +3886,9 @@ public class snk
 		hard_flags = 1;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_dogosoke  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_dogosoke  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		/* Hack ROM test */
 		RAM[0x179f] = 0x00;
@@ -3941,41 +3905,41 @@ public class snk
 		hard_flags = 1;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_gwar  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_gwar  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = ikari_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_gwara  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_gwara  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = ikari_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 4;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_chopper  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_chopper  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = athena_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 0;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_choppera  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_choppera  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = choppera_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_bermudat  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_bermudat  = new DriverInitHandlerPtr() { public void handler()
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		// Patch "Turbo Error"
@@ -3988,102 +3952,102 @@ public class snk
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 0;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_worldwar  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_worldwar  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = ikari_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 0;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tdfever  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_tdfever  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x08;
 		snk_io = tdfever_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
-		snk_gamegroup = (!strcmp(Machine.gamedrv.name,"tdfeverj")) ? 5 : 3;
+		snk_gamegroup = (!strcmp(Machine->gamedrv->name,"tdfeverj")) ? 5 : 3;
 		snk_irq_delay = 1000;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tdfever2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_tdfever2  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x08;
 		snk_io = tdfever_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
-		snk_gamegroup = (!strcmp(Machine.gamedrv.name,"tdfeverj")) ? 5 : 3;
+		snk_gamegroup = (!strcmp(Machine->gamedrv->name,"tdfeverj")) ? 5 : 3;
 		snk_irq_delay = 1000;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_ftsoccer  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_ftsoccer  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x08;
 		snk_io = tdfever_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 7;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tnk3  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_tnk3  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x20;
 		snk_io = ikari_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_athena  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_athena  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = athena_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_fitegolf  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_fitegolf  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = athena_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 1;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_psychos  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_psychos  = new DriverInitHandlerPtr() { public void handler()
 		snk_sound_busy_bit = 0x01;
 		snk_io = athena_io;
 		hard_flags = 0;
 		snk_bg_tilemap_baseaddr = 0xd800;
 		snk_gamegroup = 0;
-	} };
+	}
 	
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_tnk3	   = new GameDriver("1985"	,"tnk3"	,"snk.java"	,rom_tnk3,null	,machine_driver_tnk3	,input_ports_tnk3	,init_tnk3	,ROT270	,	"SNK", "T.N.K. III (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tnk3j	   = new GameDriver("1985"	,"tnk3j"	,"snk.java"	,rom_tnk3j,driver_tnk3	,machine_driver_tnk3	,input_ports_tnk3	,init_tnk3	,ROT270	,	"SNK", "T.A.N.K. (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_athena	   = new GameDriver("1986"	,"athena"	,"snk.java"	,rom_athena,null	,machine_driver_athena	,input_ports_athena	,init_athena	,ROT0	,	"SNK", "Athena", GAME_NO_COCKTAIL )
-	public static GameDriver driver_fitegolf	   = new GameDriver("1988"	,"fitegolf"	,"snk.java"	,rom_fitegolf,null	,machine_driver_athena	,input_ports_fitegolf	,init_fitegolf	,ROT0	,	"SNK", "Fighting Golf (World?)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_fitegol2	   = new GameDriver("1988"	,"fitegol2"	,"snk.java"	,rom_fitegol2,driver_fitegolf	,machine_driver_athena	,input_ports_fitegolf	,init_fitegolf	,ROT0	,	"SNK", "Fighting Golf (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_countryc	   = new GameDriver("1988"	,"countryc"	,"snk.java"	,rom_countryc,driver_fitegolf	,machine_driver_athena	,input_ports_countryc	,init_fitegolf	,ROT0	,	"SNK", "Country Club", GAME_NO_COCKTAIL )
-	public static GameDriver driver_ikari	   = new GameDriver("1986"	,"ikari"	,"snk.java"	,rom_ikari,null	,machine_driver_ikari	,input_ports_ikari	,init_ikari	,ROT270	,	"SNK", "Ikari Warriors (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_ikarijp	   = new GameDriver("1986"	,"ikarijp"	,"snk.java"	,rom_ikarijp,driver_ikari	,machine_driver_ikari	,input_ports_ikarijp	,init_ikarijp	,ROT270	,	"SNK", "Ikari (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_ikarijpb	   = new GameDriver("1986"	,"ikarijpb"	,"snk.java"	,rom_ikarijpb,driver_ikari	,machine_driver_ikari	,input_ports_ikarijp	,init_ikarijpb	,ROT270	,	"bootleg", "Ikari (Japan bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_victroad	   = new GameDriver("1986"	,"victroad"	,"snk.java"	,rom_victroad,null	,machine_driver_victroad	,input_ports_victroad	,init_victroad	,ROT270	,	"SNK", "Victory Road", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dogosoke	   = new GameDriver("1986"	,"dogosoke"	,"snk.java"	,rom_dogosoke,driver_victroad	,machine_driver_victroad	,input_ports_victroad	,init_dogosoke	,ROT270	,	"SNK", "Dogou Souken", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gwar	   = new GameDriver("1987"	,"gwar"	,"snk.java"	,rom_gwar,null	,machine_driver_gwar	,input_ports_gwar	,init_gwar	,ROT270	,	"SNK", "Guerrilla War (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gwarj	   = new GameDriver("1987"	,"gwarj"	,"snk.java"	,rom_gwarj,driver_gwar	,machine_driver_gwar	,input_ports_gwar	,init_gwar	,ROT270	,	"SNK", "Guevara (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gwara	   = new GameDriver("1987"	,"gwara"	,"snk.java"	,rom_gwara,driver_gwar	,machine_driver_gwar	,input_ports_gwar	,init_gwara	,ROT270	,	"SNK", "Guerrilla War (Version 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gwarb	   = new GameDriver("1987"	,"gwarb"	,"snk.java"	,rom_gwarb,driver_gwar	,machine_driver_gwar	,input_ports_gwar	,init_gwar	,ROT270	,	"bootleg", "Guerrilla War (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bermudat	   = new GameDriver("1987"	,"bermudat"	,"snk.java"	,rom_bermudat,null	,machine_driver_bermudat	,input_ports_bermudat	,init_bermudat	,ROT270	,	"SNK", "Bermuda Triangle (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bermudao	   = new GameDriver("1987"	,"bermudao"	,"snk.java"	,rom_bermudao,driver_bermudat	,machine_driver_bermudat	,input_ports_bermudat	,init_bermudat	,ROT270	,	"SNK", "Bermuda Triangle (Japan old version)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bermudaa	   = new GameDriver("1987"	,"bermudaa"	,"snk.java"	,rom_bermudaa,driver_bermudat	,machine_driver_bermudat	,input_ports_bermudaa	,init_worldwar	,ROT270	,	"SNK", "Bermuda Triangle (US older version)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_worldwar	   = new GameDriver("1987"	,"worldwar"	,"snk.java"	,rom_worldwar,driver_bermudat	,machine_driver_bermudat	,input_ports_worldwar	,init_worldwar	,ROT270	,	"SNK", "World Wars (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_psychos	   = new GameDriver("1987"	,"psychos"	,"snk.java"	,rom_psychos,null	,machine_driver_psychos	,input_ports_psychos	,init_psychos	,ROT0	,	"SNK", "Psycho Soldier (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_psychosj	   = new GameDriver("1987"	,"psychosj"	,"snk.java"	,rom_psychosj,driver_psychos	,machine_driver_psychos	,input_ports_psychos	,init_psychos	,ROT0	,	"SNK", "Psycho Soldier (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_chopper	   = new GameDriver("1988"	,"chopper"	,"snk.java"	,rom_chopper,null	,machine_driver_chopper1	,input_ports_legofair	,init_chopper	,ROT270	,	"SNK", "Chopper I (US set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_choppera	   = new GameDriver("1988"	,"choppera"	,"snk.java"	,rom_choppera,driver_chopper	,machine_driver_chopper1	,input_ports_choppera	,init_choppera	,ROT270	,	"SNK", "Chopper I (US set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_chopperb	   = new GameDriver("1988"	,"chopperb"	,"snk.java"	,rom_chopperb,driver_chopper	,machine_driver_chopper1	,input_ports_legofair	,init_chopper	,ROT270	,	"SNK", "Chopper I (US set 3)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_legofair	   = new GameDriver("1988"	,"legofair"	,"snk.java"	,rom_legofair,driver_chopper	,machine_driver_chopper1	,input_ports_legofair	,init_chopper	,ROT270	,	"SNK", "Koukuu Kihei Monogatari - The Legend of Air Cavalry (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tdfever	   = new GameDriver("1987"	,"tdfever"	,"snk.java"	,rom_tdfever,null	,machine_driver_tdfever	,input_ports_tdfever	,init_tdfever	,ROT270	,	"SNK", "TouchDown Fever", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tdfeverj	   = new GameDriver("1987"	,"tdfeverj"	,"snk.java"	,rom_tdfeverj,driver_tdfever	,machine_driver_tdfever	,input_ports_tdfever	,init_tdfever	,ROT270	,	"SNK", "TouchDown Fever (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tdfever2	   = new GameDriver("1988"	,"tdfever2"	,"snk.java"	,rom_tdfever2,driver_tdfever	,machine_driver_tdfever2	,input_ports_tdfever	,init_tdfever2	,ROT270	,	"SNK", "TouchDown Fever 2", GAME_NO_COCKTAIL ) /* upgrade kit for Touchdown Fever */
-	public static GameDriver driver_ftsoccer	   = new GameDriver("1988"	,"ftsoccer"	,"snk.java"	,rom_ftsoccer,null	,machine_driver_ftsoccer	,input_ports_ftsoccer	,init_ftsoccer	,ROT0	,	"SNK", "Fighting Soccer", GAME_NO_COCKTAIL )
+	GAMEX( 1985, tnk3,     0,        tnk3,     tnk3,     tnk3,     ROT270, "SNK", "T.N.K. III (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1985, tnk3j,    tnk3,     tnk3,     tnk3,     tnk3,     ROT270, "SNK", "T.A.N.K. (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, athena,   0,        athena,   athena,   athena,   ROT0,   "SNK", "Athena", GAME_NO_COCKTAIL )
+	GAMEX( 1988, fitegolf, 0,        athena,   fitegolf, fitegolf, ROT0,   "SNK", "Fighting Golf (World?)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, fitegol2, fitegolf, athena,   fitegolf, fitegolf, ROT0,   "SNK", "Fighting Golf (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, countryc, fitegolf, athena,   countryc, fitegolf, ROT0,   "SNK", "Country Club", GAME_NO_COCKTAIL )
+	GAMEX( 1986, ikari,    0,        ikari,    ikari,    ikari,    ROT270, "SNK", "Ikari Warriors (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, ikarijp,  ikari,    ikari,    ikarijp,  ikarijp,  ROT270, "SNK", "Ikari (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, ikarijpb, ikari,    ikari,    ikarijp,  ikarijpb, ROT270, "bootleg", "Ikari (Japan bootleg)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, victroad, 0,        victroad, victroad, victroad, ROT270, "SNK", "Victory Road", GAME_NO_COCKTAIL )
+	GAMEX( 1986, dogosoke, victroad, victroad, victroad, dogosoke, ROT270, "SNK", "Dogou Souken", GAME_NO_COCKTAIL )
+	GAMEX( 1987, gwar,     0,        gwar,     gwar,     gwar,     ROT270, "SNK", "Guerrilla War (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, gwarj,    gwar,     gwar,     gwar,     gwar,     ROT270, "SNK", "Guevara (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, gwara,    gwar,     gwar,     gwar,     gwara,    ROT270, "SNK", "Guerrilla War (Version 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, gwarb,    gwar,     gwar,     gwar,     gwar,     ROT270, "bootleg", "Guerrilla War (bootleg)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, bermudat, 0,        bermudat, bermudat, bermudat, ROT270, "SNK", "Bermuda Triangle (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, bermudao, bermudat, bermudat, bermudat, bermudat, ROT270, "SNK", "Bermuda Triangle (Japan old version)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, bermudaa, bermudat, bermudat, bermudaa, worldwar, ROT270, "SNK", "Bermuda Triangle (US older version)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, worldwar, bermudat, bermudat, worldwar, worldwar, ROT270, "SNK", "World Wars (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, psychos,  0,        psychos,  psychos,  psychos,  ROT0,   "SNK", "Psycho Soldier (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, psychosj, psychos,  psychos,  psychos,  psychos,  ROT0,   "SNK", "Psycho Soldier (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, chopper,  0,        chopper1, legofair, chopper,  ROT270, "SNK", "Chopper I (US set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, choppera, chopper,  chopper1, choppera, choppera, ROT270, "SNK", "Chopper I (US set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, chopperb, chopper,  chopper1, legofair, chopper,  ROT270, "SNK", "Chopper I (US set 3)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, legofair, chopper,  chopper1, legofair, chopper,  ROT270, "SNK", "Koukuu Kihei Monogatari - The Legend of Air Cavalry (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, tdfever,  0,        tdfever,  tdfever,  tdfever,  ROT270, "SNK", "TouchDown Fever", GAME_NO_COCKTAIL )
+	GAMEX( 1987, tdfeverj, tdfever,  tdfever,  tdfever,  tdfever,  ROT270, "SNK", "TouchDown Fever (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, tdfever2, tdfever,  tdfever2, tdfever,  tdfever2, ROT270, "SNK", "TouchDown Fever 2", GAME_NO_COCKTAIL ) /* upgrade kit for Touchdown Fever */
+	GAMEX( 1988, ftsoccer, 0,        ftsoccer, ftsoccer, ftsoccer, ROT0,   "SNK", "Fighting Soccer", GAME_NO_COCKTAIL )
 }

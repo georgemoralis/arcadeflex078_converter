@@ -74,7 +74,7 @@
  ***************************************************************/
 #undef ADC
 #define ADC 													\
-	if ((P & F_D) != 0)												\
+	if (P & F_D)												\
 	{															\
 		int c = (P & F_C);										\
 		int lo = (A & 0x0f) + (tmp & 0x0f) + c; 				\
@@ -89,7 +89,7 @@
 			P |= F_V;											\
 		if( hi > 0x90 ) 										\
 			hi += 0x60; 										\
-		if ((hi & 0xff00) != 0)										\
+		if( hi & 0xff00 )										\
 			P |= F_C;											\
 		A = (lo & 0x0f) + (hi & 0xf0);							\
 	}															\
@@ -100,7 +100,7 @@
 		P &= ~(F_V | F_C);										\
 		if( ~(A^tmp) & (A^sum) & F_N )							\
 			P |= F_V;											\
-		if ((sum & 0xff00) != 0)										\
+		if( sum & 0xff00 )										\
 			P |= F_C;											\
 		A = (UINT8) sum;										\
 	}															\
@@ -112,7 +112,7 @@
  ***************************************************************/
 #undef SBC
 #define SBC 													\
-	if ((P & F_D) != 0)												\
+	if (P & F_D)												\
 	{															\
 		int c = (P & F_C) ^ F_C;								\
 		int sum = A - tmp - c;									\
@@ -121,11 +121,11 @@
 		P &= ~(F_V | F_C);										\
 		if( (A^tmp) & (A^sum) & F_N )							\
 			P |= F_V;											\
-		if ((lo & 0xf0) != 0) 										\
+		if( lo & 0xf0 ) 										\
 			lo -= 6;											\
-		if ((lo & 0x80) != 0) 										\
+		if( lo & 0x80 ) 										\
 			hi -= 0x10; 										\
-		if ((hi & 0x0f00) != 0)										\
+		if( hi & 0x0f00 )										\
 			hi -= 0x60; 										\
 		if( (sum & 0xff00) == 0 )								\
 			P |= F_C;											\

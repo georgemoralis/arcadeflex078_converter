@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,7 +23,7 @@ public class tigeroad
 	{
 		int bank;
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			data = (data >> 8) & 0xff;
 	
@@ -98,7 +98,7 @@ public class tigeroad
 				if (sx > 0x100) sx -= 0x200;
 				if (sy > 0x100) sy -= 0x200;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -106,12 +106,12 @@ public class tigeroad
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2],
+				drawgfx(bitmap, Machine->gfx[2],
 					tile_number,
 					color,
 					flipx, flipy,
 					sx, 240 - sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 15);
 			}
 	
@@ -145,22 +145,21 @@ public class tigeroad
 	
 	static UINT32 tigeroad_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return 2 * (col % 8) + 16 * ((127 - row) % 8) + 128 * (col / 8) + 2048 * ((127 - row) / 8);
 	}
 	
-	public static VideoStartHandlerPtr video_start_tigeroad  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tigeroad  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tigeroad_tilemap_scan, 
 			TILEMAP_SPLIT, 32, 32, 128, 128);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transmask(bg_tilemap, 0, 0xffff, 0);
@@ -171,8 +170,7 @@ public class tigeroad
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tigeroad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_BACK, 0);
 		tigeroad_draw_sprites(bitmap, 0);
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_FRONT, 1);
@@ -180,8 +178,7 @@ public class tigeroad
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 2);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_tigeroad  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_tigeroad  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 }

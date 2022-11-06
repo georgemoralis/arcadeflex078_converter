@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,8 +25,7 @@ public class gsword
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_josvolly  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_josvolly  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* sprite lookup table is not original but it is almost 98% correct */
 	
 		int sprite_lookup_table[16] = { 0x00,0x02,0x05,0x8C,0x49,0xDD,0xB7,0x06,
@@ -76,8 +75,7 @@ public class gsword
 			COLOR(1,i) = sprite_lookup_table[*(color_prom++)];
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_gsword  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gsword  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* sprite lookup table is not original but it is almost 98% correct */
 	
 		int sprite_lookup_table[16] = { 0x00,0x02,0x05,0x8C,0x49,0xDD,0xB7,0x06,
@@ -123,8 +121,7 @@ public class gsword
 			COLOR(1,i) = sprite_lookup_table[*(color_prom++)];
 	} };
 	
-	public static WriteHandlerPtr gsword_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -132,8 +129,7 @@ public class gsword
 		}
 	} };
 	
-	public static WriteHandlerPtr gsword_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (charbank != data)
 		{
 			charbank = data;
@@ -141,9 +137,8 @@ public class gsword
 		}
 	} };
 	
-	public static WriteHandlerPtr gsword_videoctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x8f) != 0)
+	public static WriteHandlerPtr gsword_videoctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x8f)
 		{
 			usrintf_showmessage("videoctrl %02x",data);
 		}
@@ -169,8 +164,7 @@ public class gsword
 		/* other bits unused */
 	} };
 	
-	public static WriteHandlerPtr gsword_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
@@ -183,12 +177,11 @@ public class gsword
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_gsword  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gsword  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 64);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -221,23 +214,22 @@ public class gsword
 					tile -= 128;
 					sy-=16;
 				}
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 				}
-				drawgfx(bitmap,Machine.gfx[1+spritebank],
+				drawgfx(bitmap,Machine->gfx[1+spritebank],
 						tile,
 						gsword_spritetile_ram[offs+1] & 0x3f,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_COLOR, 15);
+						Machine->visible_area,TRANSPARENCY_COLOR, 15);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gsword  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		gsword_draw_sprites(bitmap);
 	} };

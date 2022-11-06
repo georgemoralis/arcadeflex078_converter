@@ -6,7 +6,7 @@ Atari Poolshark video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -32,8 +32,7 @@ public class poolshrk
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_poolshrk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_poolshrk  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info, get_memory_offset,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
@@ -46,8 +45,7 @@ public class poolshrk
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_poolshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_poolshrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_mark_all_tiles_dirty(tilemap);

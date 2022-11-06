@@ -24,7 +24,7 @@ Year + Game			PCB				Notes
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -44,8 +44,8 @@ public class unico
 	***************************************************************************/
 	
 	READ16_HANDLER ( YM3812_status_port_0_msb_r )	{	return YM3812_status_port_0_r(0) << 8;	}
-	WRITE16_HANDLER( YM3812_register_port_0_msb_w )	{	if (ACCESSING_MSB != 0)	YM3812_control_port_0_w(0,data >> 8);	}
-	WRITE16_HANDLER( YM3812_data_port_0_msb_w )		{	if (ACCESSING_MSB != 0)	YM3812_write_port_0_w(0,data >> 8);		}
+	WRITE16_HANDLER( YM3812_register_port_0_msb_w )	{	if (ACCESSING_MSB)	YM3812_control_port_0_w(0,data >> 8);	}
+	WRITE16_HANDLER( YM3812_data_port_0_msb_w )		{	if (ACCESSING_MSB)	YM3812_write_port_0_w(0,data >> 8);		}
 	
 	
 	/*
@@ -60,7 +60,7 @@ public class unico
 	
 	static WRITE16_HANDLER( burglarx_sound_bank_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			int bank = (data >> 8 ) & 1;
 			OKIM6295_set_bank_base(0, 0x40000 * bank );
@@ -115,7 +115,7 @@ public class unico
 	
 	static WRITE16_HANDLER( zeropnt_sound_bank_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* Banked sound samples. The 3rd quarter of the ROM
 			   contains garbage. Indeed, only banks 0&1 are used */
@@ -241,7 +241,7 @@ public class unico
 	
 	static WRITE32_HANDLER( zeropnt2_sound_bank_w )
 	{
-		if (ACCESSING_MSB32 != 0)
+		if (ACCESSING_MSB32)
 		{
 			int bank = ((data >> 24) & 3) % 4;
 			unsigned char *dst	= memory_region(REGION_SOUND1);
@@ -265,7 +265,7 @@ public class unico
 		if (data & ~0xfe00000)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_MSB32 != 0)
+		if ( ACCESSING_MSB32 )
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x04000000);
@@ -333,7 +333,7 @@ public class unico
 									Burglar X
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_burglarx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_burglarx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( burglarx )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -422,7 +422,7 @@ public class unico
 									Zero Point
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_zeropnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zeropnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zeropnt )
 	
 		PORT_START(); 	// IN0 - $800018.w
 		PORT_BIT(  0x0001, IP_ACTIVE_HIGH, IPT_COIN1    );
@@ -515,7 +515,7 @@ public class unico
 									Zero Point 2
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_zeropnt2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zeropnt2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zeropnt2 )
 		PORT_START(); 	// IN0 - $800019.b
 		PORT_BIT(  0x0001, IP_ACTIVE_HIGH, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_HIGH, IPT_COIN2    );
@@ -645,8 +645,7 @@ public class unico
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_unico  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_unico  = new MachineInitHandlerPtr() { public void handler(){
 		unico_has_lightgun = 0;
 	} };
 	
@@ -698,12 +697,12 @@ public class unico
 	
 	void nvram_handler_zeropnt2(mame_file *file,int read_or_write)
 	{
-		if (read_or_write != 0)
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&zeropnt2_eeprom_interface);
-			if (file != 0)	EEPROM_load(file);
+			if (file)	EEPROM_load(file);
 		}
 	}
 	
@@ -712,8 +711,7 @@ public class unico
 									Burglar X
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_burglarx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( burglarx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -739,9 +737,7 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, unico_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, unico_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -749,14 +745,12 @@ public class unico
 									Zero Point
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_zeropt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zeropt  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_unico();
 		unico_has_lightgun = 1;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_zeropnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zeropnt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -782,9 +776,7 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, unico_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, unico_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -792,8 +784,7 @@ public class unico
 									Zero Point 2
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_zeropnt2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zeropnt2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -821,9 +812,7 @@ public class unico
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD( YM2151,		zeropnt2_ym2151_intf )
 		MDRV_SOUND_ADD( OKIM6295,	zeropnt2_m6295_intf  )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1155,9 +1144,9 @@ public class unico
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_burglarx	   = new GameDriver("1997"	,"burglarx"	,"unico.java"	,rom_burglarx,null	,machine_driver_burglarx	,input_ports_burglarx	,null	,ROT0	,	"Unico", "Burglar X"  )
-	public static GameDriver driver_zeropnt	   = new GameDriver("1998"	,"zeropnt"	,"unico.java"	,rom_zeropnt,null	,machine_driver_zeropnt	,input_ports_zeropnt	,null	,ROT0	,	"Unico", "Zero Point (set 1)" )
-	public static GameDriver driver_zeropnta	   = new GameDriver("1998"	,"zeropnta"	,"unico.java"	,rom_zeropnta,driver_zeropnt	,machine_driver_zeropnt	,input_ports_zeropnt	,null	,ROT0	,	"Unico", "Zero Point (set 2)" )
-	public static GameDriver driver_zeropnt2	   = new GameDriver("1999"	,"zeropnt2"	,"unico.java"	,rom_zeropnt2,null	,machine_driver_zeropnt2	,input_ports_zeropnt2	,null	,ROT0	,	"Unico", "Zero Point 2" )
+	GAME( 1997, burglarx, 0,       burglarx, burglarx, 0, ROT0, "Unico", "Burglar X"  )
+	GAME( 1998, zeropnt,  0,       zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point (set 1)" )
+	GAME( 1998, zeropnta, zeropnt, zeropnt,  zeropnt,  0, ROT0, "Unico", "Zero Point (set 2)" )
+	GAME( 1999, zeropnt2, 0,       zeropnt2, zeropnt2, 0, ROT0, "Unico", "Zero Point 2" )
 	
 }

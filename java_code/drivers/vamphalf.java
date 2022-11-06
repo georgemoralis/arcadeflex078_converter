@@ -19,7 +19,7 @@
 *********************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,17 +46,15 @@ public class vamphalf
 		{ 0xffc00000, 0xffffffff, MWA32_ROM },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_vamphalf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vamphalf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vamphalf )
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static VideoStartHandlerPtr video_start_vamphalf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vamphalf  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_vamphalf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vamphalf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 	} };
 	
@@ -77,8 +75,7 @@ public class vamphalf
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_vamphalf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vamphalf )
 		MDRV_CPU_ADD(E132XS,10000000)		 /* ?? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 	
@@ -96,13 +93,10 @@ public class vamphalf
 	
 		MDRV_VIDEO_START(vamphalf)
 		MDRV_VIDEO_UPDATE(vamphalf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_xfiles = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xfiles )
 		MDRV_CPU_ADD(E132XS,10000000)		 /* ?? */
 		MDRV_CPU_MEMORY(xfiles_readmem,xfiles_writemem)
 	
@@ -120,9 +114,7 @@ public class vamphalf
 	
 		MDRV_VIDEO_START(vamphalf)
 		MDRV_VIDEO_UPDATE(vamphalf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* f2 systems hardware */
 	
@@ -366,15 +358,14 @@ public class vamphalf
 		ROM_LOAD16_WORD_SWAP("u10.bin", 0x00000000,    0x400000,   CRC(f2ef1eb9) SHA1(d033d140fce6716d7d78509aa5387829f0a1404c) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_vamphalf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vamphalf  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_USER1));
 	} };
 	
 	/*           rom       parent    machine   inp       init */
-	public static GameDriver driver_vamphalf	   = new GameDriver("19??"	,"vamphalf"	,"vamphalf.java"	,rom_vamphalf,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Danbi", "Vamp 1/2", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_hidnctch	   = new GameDriver("19??"	,"hidnctch"	,"vamphalf.java"	,rom_hidnctch,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Hidden Catch", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_landbrk	   = new GameDriver("19??"	,"landbrk"	,"vamphalf.java"	,rom_landbrk,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Land Breaker", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_racoon	   = new GameDriver("19??"	,"racoon"	,"vamphalf.java"	,rom_racoon,null	,machine_driver_vamphalf	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"Eolith", "Racoon World", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_xfiles	   = new GameDriver("19??"	,"xfiles"	,"vamphalf.java"	,rom_xfiles,null	,machine_driver_xfiles	,input_ports_vamphalf	,init_vamphalf	,ROT0	,	"dfPIX Entertainment Inc.", "X-Files", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 19??, vamphalf, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Danbi", "Vamp 1/2", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 19??, hidnctch, 0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Hidden Catch", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 19??, landbrk,  0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Land Breaker", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 19??, racoon,   0,        vamphalf, vamphalf, vamphalf, ROT0, "Eolith", "Racoon World", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 19??, xfiles,   0,        xfiles,   vamphalf, vamphalf, ROT0, "dfPIX Entertainment Inc.", "X-Files", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

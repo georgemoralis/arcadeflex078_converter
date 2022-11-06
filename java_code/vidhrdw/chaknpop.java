@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class chaknpop
 	  palette decode
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_chaknpop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_chaknpop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 1024; i++)
@@ -85,7 +84,7 @@ public class chaknpop
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
-		if ((gfxmode & GFX_VRAM_BANK) != 0)
+		if (gfxmode & GFX_VRAM_BANK)
 			bankaddress = 0x14000;
 		else
 			bankaddress = 0x10000;
@@ -100,13 +99,11 @@ public class chaknpop
 		tilemap_set_flip(tx_tilemap, flip_x | flip_y);
 	}
 	
-	public static ReadHandlerPtr chaknpop_gfxmode_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr chaknpop_gfxmode_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gfxmode;
 	} };
 	
-	public static WriteHandlerPtr chaknpop_gfxmode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_gfxmode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxmode != data)
 		{
 			int all_dirty = 0;
@@ -126,13 +123,12 @@ public class chaknpop
 				all_dirty = 1;
 			}
 	
-			if (all_dirty != 0)
+			if (all_dirty)
 				tx_tilemap_mark_all_dirty();
 		}
 	} };
 	
-	public static WriteHandlerPtr chaknpop_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (chaknpop_txram[offset] != data)
 		{
 			chaknpop_txram[offset] = data;
@@ -140,8 +136,7 @@ public class chaknpop
 		}
 	} };
 	
-	public static WriteHandlerPtr chaknpop_attrram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chaknpop_attrram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (chaknpop_attrram[offset] != data)
 		{
 			chaknpop_attrram[offset] = data;
@@ -167,14 +162,14 @@ public class chaknpop
 	static void chaknpop_get_tx_tile_info(int tile_index)
 	{
 		int tile = chaknpop_txram[tile_index];
-		int tile_h_bank = (gfxmode & GFX_TX_BANK2) << 2;	/* 0x00-0xff . 0x200-0x2ff */
+		int tile_h_bank = (gfxmode & GFX_TX_BANK2) << 2;	/* 0x00-0xff -> 0x200-0x2ff */
 		int color = chaknpop_attrram[TX_COLOR2];
 	
 		if (tile == 0x74)
 			color = chaknpop_attrram[TX_COLOR1];
 	
 		if (gfxmode & GFX_TX_BANK1 && tile >= 0xc0)
-			tile += 0xc0;					/* 0xc0-0xff . 0x180-0x1bf */
+			tile += 0xc0;					/* 0xc0-0xff -> 0x180-0x1bf */
 		tile |= tile_h_bank;
 	
 		SET_TILE_INFO(1, tile, color, 0)
@@ -185,14 +180,13 @@ public class chaknpop
 	  Initialize video hardware emulation
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_chaknpop  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_chaknpop  = new VideoStartHandlerPtr() { public int handler(){
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
 		/*                          info                       offset             type             w   h  col row */
 		tx_tilemap = tilemap_create(chaknpop_get_tx_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,  8,  8, 32, 32);
 	
-		if (tx_tilemap == 0)
+		if (!tx_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(tx_tilemap, 0);
@@ -238,23 +232,23 @@ public class chaknpop
 			int color = (chaknpop_sprram[offs + 2] & 7);
 			int tile = (chaknpop_sprram[offs + 1] & 0x3f) | ((chaknpop_sprram[offs + 2] & 0x38) << 3);
 	
-			if (flip_x != 0)
+			if (flip_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_y != 0)
+			if (flip_y)
 			{
 				sy = 242 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					tile,
 					color,
 					flipx, flipy,
 					sx, sy,
-					Machine . visible_area,
+					Machine -> visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -269,10 +263,10 @@ public class chaknpop
 			int x = ((offs & 0x1f) << 3) + 7;
 			int y = offs >> 5;
 	
-			if (flip_x == 0)
+			if (!flip_x)
 				x = 255 - x;
 	
-			if (flip_y == 0)
+			if (!flip_y)
 				y = 255 - y;
 	
 			for (i = 0x80; i > 0; i >>= 1, x += dx)
@@ -288,7 +282,7 @@ public class chaknpop
 				if (vram4[offs] & i)
 					color |= 0x040;	// tx mask
 	
-				if (color != 0)
+				if (color)
 				{
 					pen_t pen = read_pixel(bitmap, x, y);
 					pen |= color;
@@ -298,8 +292,7 @@ public class chaknpop
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_chaknpop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, tx_tilemap, 0, 0);
 		chaknpop_draw_sprites(bitmap);
 		chaknpop_draw_bitmap(bitmap);

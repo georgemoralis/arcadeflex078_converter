@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,8 +23,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_rastan  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rastan  = new VideoStartHandlerPtr() { public int handler(){
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
 			return 1;
@@ -35,8 +34,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_opwolf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_opwolf  = new VideoStartHandlerPtr() { public int handler(){
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
 			return 1;
 	
@@ -46,8 +44,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_rainbow  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rainbow  = new VideoStartHandlerPtr() { public int handler(){
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(1,1,0,0,0,0,0))
 			return 1;
@@ -58,8 +55,7 @@ public class rastan
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_jumping  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jumping  = new VideoStartHandlerPtr() { public int handler(){
 		if (PC080SN_vh_start(1,1,0,0,1,0,0))
 			return 1;
 	
@@ -119,8 +115,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rastan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[2];
 	
 		PC080SN_tilemap_update();
@@ -146,8 +141,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_opwolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[2];
 	
 		PC080SN_tilemap_update();
@@ -167,7 +161,7 @@ public class rastan
 	//	usrintf_showmessage("%d %d",input_port_5_word_r(0,0xffff),input_port_6_word_r(0,0xffff));
 	
 		/* See if we should draw artificial gun targets */
-		if (1 != 0) //input_port_4_word_r(0,0) &0x1)	/* Fake DSW */
+		if (1) //input_port_4_word_r(0,0) &0x1)	/* Fake DSW */
 		{
 			/* Draw an aiming crosshair */
 			draw_crosshair(bitmap,(input_port_4_word_r(0,0xffff)*320)/256,input_port_5_word_r(0,0xffff),cliprect);
@@ -176,8 +170,7 @@ public class rastan
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rainbow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[2];
 	
 		PC080SN_tilemap_update();
@@ -203,8 +196,7 @@ public class rastan
 	
 	*/
 	
-	public static VideoUpdateHandlerPtr video_update_jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jumping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,layer[2];
 		int sprite_colbank = (sprite_ctrl & 0xe0) >> 1;
 	

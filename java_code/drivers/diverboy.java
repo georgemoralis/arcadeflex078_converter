@@ -51,7 +51,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -59,21 +59,18 @@ public class diverboy
 {
 	
 	
-	VIDEO_START(diverboy);
-	VIDEO_UPDATE(diverboy);
 	
 	
 	static WRITE16_HANDLER( soundcmd_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
 		}
 	}
 	
-	public static WriteHandlerPtr okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 2 might be reset */
 	//	usrintf_showmessage("%02x",data);
 	
@@ -125,7 +122,7 @@ public class diverboy
 	
 	
 	
-	static InputPortPtr input_ports_diverboy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_diverboy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( diverboy )
 		PORT_START(); 	// 0x180000.w
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );// unused ?
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );// unused ?
@@ -214,8 +211,7 @@ public class diverboy
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_diverboy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( diverboy )
 		MDRV_CPU_ADD(M68000, 12000000) /* guess */
 		MDRV_CPU_MEMORY(diverboy_readmem,diverboy_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -238,9 +234,7 @@ public class diverboy
 		MDRV_VIDEO_UPDATE(diverboy)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -272,5 +266,5 @@ public class diverboy
 	
 	
 	
-	public static GameDriver driver_diverboy	   = new GameDriver("1992"	,"diverboy"	,"diverboy.java"	,rom_diverboy,null	,machine_driver_diverboy	,input_ports_diverboy	,null	,ORIENTATION_FLIP_X	,	"Electronic Devices Italy", "Diver Boy", GAME_IMPERFECT_SOUND )
+	GAMEX(1992, diverboy, 0, diverboy, diverboy, 0, ORIENTATION_FLIP_X, "Electronic Devices Italy", "Diver Boy", GAME_IMPERFECT_SOUND )
 }

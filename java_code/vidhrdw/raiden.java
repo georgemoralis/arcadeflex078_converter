@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,36 +15,30 @@ public class raiden
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr raiden_background_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiden_background_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return raiden_back_data[offset];
 	} };
 	
-	public static ReadHandlerPtr raiden_foreground_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiden_foreground_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return raiden_fore_data[offset];
 	} };
 	
-	public static WriteHandlerPtr raiden_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiden_back_data[offset]=data;
 		tilemap_mark_tile_dirty( bg_layer,offset/2);
 	} };
 	
-	public static WriteHandlerPtr raiden_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiden_fore_data[offset]=data;
 		tilemap_mark_tile_dirty( fg_layer,offset/2);
 	} };
 	
-	public static WriteHandlerPtr raiden_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden_text_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( tx_layer,offset/2);
 	} };
 	
-	public static WriteHandlerPtr raidena_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raidena_text_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( tx_layer,offset/2);
 	} };
@@ -89,8 +83,7 @@ public class raiden
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_raiden  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_raiden  = new VideoStartHandlerPtr() { public int handler(){
 		bg_layer = tilemap_create(get_back_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 		fg_layer = tilemap_create(get_fore_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
 		tx_layer = tilemap_create(get_text_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -105,8 +98,7 @@ public class raiden
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_raidena  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_raidena  = new VideoStartHandlerPtr() { public int handler(){
 		bg_layer = tilemap_create(get_back_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,32,32);
 		fg_layer = tilemap_create(get_fore_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
 		tx_layer = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -121,8 +113,7 @@ public class raiden
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr raiden_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiden_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* All other bits unknown - could be playfield enables */
 	
 		/* Flipscreen */
@@ -154,24 +145,23 @@ public class raiden
 			sprite = buffered_spriteram[offs+2]+(buffered_spriteram[offs+3]<<8);
 			sprite &= 0x0fff;
 	
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				x=240-x;
 				y=240-y;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[3],
+			drawgfx(bitmap,Machine->gfx[3],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_raiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_raiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps, alternate version has different scroll positions */
-		if (ALTERNATE == 0) {
+		if (!ALTERNATE) {
 			tilemap_set_scrollx( bg_layer,0, ((raiden_scroll_ram[1]<<8)+raiden_scroll_ram[0]) );
 			tilemap_set_scrolly( bg_layer,0, ((raiden_scroll_ram[3]<<8)+raiden_scroll_ram[2]) );
 			tilemap_set_scrollx( fg_layer,0, ((raiden_scroll_ram[5]<<8)+raiden_scroll_ram[4]) );

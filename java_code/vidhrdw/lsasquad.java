@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,7 +25,7 @@ public class lsasquad
 	
 			base = 64 * scrollram[offs+1];
 			sx = 8*(offs/4) + scrollx;
-			if (flip_screen != 0) sx = 248 - sx;
+			if (flip_screen()) sx = 248 - sx;
 			sx &= 0xff;
 	
 			for (y = 0;y < 32;y++)
@@ -33,26 +33,26 @@ public class lsasquad
 				int attr;
 	
 				sy = 8*y + scrolly;
-				if (flip_screen != 0) sy = 248 - sy;
+				if (flip_screen()) sy = 248 - sy;
 				sy &= 0xff;
 	
 				attr = videoram.read(base + 2*y + 1);
 				code = videoram.read(base + 2*y)+ ((attr & 0x0f) << 8);
 				color = attr >> 4;
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flip_screen(),flip_screen(),
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,15);
+						Machine->visible_area,TRANSPARENCY_PEN,15);
 				if (sx > 248)	/* wraparound */
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx-256,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,15);
+							Machine->visible_area,TRANSPARENCY_PEN,15);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class lsasquad
 			flipx = attr & 0x40;
 			flipy = attr & 0x80;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -81,24 +81,23 @@ public class lsasquad
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine->visible_area,TRANSPARENCY_PEN,15);
 			/* wraparound */
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx-256,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,15);
+					Machine->visible_area,TRANSPARENCY_PEN,15);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lsasquad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lsasquad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[511],Machine.visible_area);
 	
 		draw_layer(bitmap,lsasquad_scrollram + 0x000);

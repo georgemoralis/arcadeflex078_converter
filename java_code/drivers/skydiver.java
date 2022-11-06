@@ -84,7 +84,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -109,8 +109,7 @@ public class skydiver
 		0x01, 0x02
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_skydiver  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skydiver  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 		palette_set_color(2,0xa0,0xa0,0xa0); /* grey */
@@ -126,15 +125,13 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr skydiver_nmion_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skydiver_nmion_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		skydiver_nmion = offset;
 	} };
 	
 	
-	public static InterruptHandlerPtr skydiver_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (skydiver_nmion != 0)
+	public static InterruptHandlerPtr skydiver_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (skydiver_nmion)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -212,7 +209,7 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_skydiver = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skydiver = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skydiver )
 		PORT_START();  /* IN0 */
 		PORT_BIT (0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT (0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -346,8 +343,7 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_skydiver = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skydiver )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800,3000000/4)	   /* ???? */
@@ -369,9 +365,7 @@ public class skydiver
 		MDRV_PALETTE_INIT(skydiver)
 		MDRV_VIDEO_START(skydiver)
 		MDRV_VIDEO_UPDATE(skydiver)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -405,5 +399,5 @@ public class skydiver
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_skydiver	   = new GameDriver("1978"	,"skydiver"	,"skydiver.java"	,rom_skydiver,null	,machine_driver_skydiver	,input_ports_skydiver	,null	,ROT0	,	"Atari", "Sky Diver", GAME_NO_SOUND )
+	GAMEX( 1978, skydiver, 0, skydiver, skydiver, 0, ROT0, "Atari", "Sky Diver", GAME_NO_SOUND )
 }

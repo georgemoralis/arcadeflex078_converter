@@ -1,10 +1,10 @@
 /*
-	Interface routine for 68kem <. Mame
+	Interface routine for 68kem <-> Mame
 */
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m68000;
 
@@ -409,7 +409,7 @@ public class asmintf
 	#endif // A68K2
 	
 	/********************************************/
-	/* Interface routines to link Mame . 68KEM */
+	/* Interface routines to link Mame -> 68KEM */
 	/********************************************/
 	
 	#define READOP(a)	(cpu_readop16((a) ^ a68k_memory_intf.opcode_xor))
@@ -450,13 +450,13 @@ public class asmintf
 			a68k_memory_intf = interface_a24_d16;
 	
 		// Import encryption routines if present
-		if (param != 0)
+		if (param)
 		{
-			a68k_memory_intf.read8pc = interface.read8pc;
-			a68k_memory_intf.read16pc = interface.read16pc;
-			a68k_memory_intf.read32pc = interface.read32pc;
-			a68k_memory_intf.read16d = interface.read16d;
-			a68k_memory_intf.read32d = interface.read32d;
+			a68k_memory_intf.read8pc = interface->read8pc;
+			a68k_memory_intf.read16pc = interface->read16pc;
+			a68k_memory_intf.read32pc = interface->read32pc;
+			a68k_memory_intf.read16d = interface->read16d;
+			a68k_memory_intf.read32d = interface->read32d;
 		}
 	
 		m68k16_reset_common();
@@ -482,7 +482,7 @@ public class asmintf
 	#ifdef MAME_DEBUG
 	    do
 	    {
-			if (mame_debug != 0)
+			if (mame_debug)
 	        {
 				#ifdef TRACE68K
 	
@@ -534,14 +534,14 @@ public class asmintf
 	
 	unsigned m68000_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(a68k_cpu_context*)dst = M68000_regs;
 		return sizeof(a68k_cpu_context);
 	}
 	
 	void m68000_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			M68000_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68000_regs.Memory_Interface;
@@ -693,52 +693,52 @@ public class asmintf
 	
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &M68000_regs;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M68K_PC: sprintf(buffer[which], "PC:%06X", r.pc); break;
-			case CPU_INFO_REG+M68K_ISP: sprintf(buffer[which], "ISP:%08X", r.isp); break;
-			case CPU_INFO_REG+M68K_USP: sprintf(buffer[which], "USP:%08X", r.usp); break;
-			case CPU_INFO_REG+M68K_SR: sprintf(buffer[which], "SR:%08X", r.sr); break;
-			case CPU_INFO_REG+M68K_VBR: sprintf(buffer[which], "VBR:%08X", r.vbr); break;
-			case CPU_INFO_REG+M68K_SFC: sprintf(buffer[which], "SFC:%08X", r.sfc); break;
-			case CPU_INFO_REG+M68K_DFC: sprintf(buffer[which], "DFC:%08X", r.dfc); break;
-			case CPU_INFO_REG+M68K_D0: sprintf(buffer[which], "D0:%08X", r.d[0]); break;
-			case CPU_INFO_REG+M68K_D1: sprintf(buffer[which], "D1:%08X", r.d[1]); break;
-			case CPU_INFO_REG+M68K_D2: sprintf(buffer[which], "D2:%08X", r.d[2]); break;
-			case CPU_INFO_REG+M68K_D3: sprintf(buffer[which], "D3:%08X", r.d[3]); break;
-			case CPU_INFO_REG+M68K_D4: sprintf(buffer[which], "D4:%08X", r.d[4]); break;
-			case CPU_INFO_REG+M68K_D5: sprintf(buffer[which], "D5:%08X", r.d[5]); break;
-			case CPU_INFO_REG+M68K_D6: sprintf(buffer[which], "D6:%08X", r.d[6]); break;
-			case CPU_INFO_REG+M68K_D7: sprintf(buffer[which], "D7:%08X", r.d[7]); break;
-			case CPU_INFO_REG+M68K_A0: sprintf(buffer[which], "A0:%08X", r.a[0]); break;
-			case CPU_INFO_REG+M68K_A1: sprintf(buffer[which], "A1:%08X", r.a[1]); break;
-			case CPU_INFO_REG+M68K_A2: sprintf(buffer[which], "A2:%08X", r.a[2]); break;
-			case CPU_INFO_REG+M68K_A3: sprintf(buffer[which], "A3:%08X", r.a[3]); break;
-			case CPU_INFO_REG+M68K_A4: sprintf(buffer[which], "A4:%08X", r.a[4]); break;
-			case CPU_INFO_REG+M68K_A5: sprintf(buffer[which], "A5:%08X", r.a[5]); break;
-			case CPU_INFO_REG+M68K_A6: sprintf(buffer[which], "A6:%08X", r.a[6]); break;
-			case CPU_INFO_REG+M68K_A7: sprintf(buffer[which], "A7:%08X", r.a[7]); break;
+			case CPU_INFO_REG+M68K_PC: sprintf(buffer[which], "PC:%06X", r->pc); break;
+			case CPU_INFO_REG+M68K_ISP: sprintf(buffer[which], "ISP:%08X", r->isp); break;
+			case CPU_INFO_REG+M68K_USP: sprintf(buffer[which], "USP:%08X", r->usp); break;
+			case CPU_INFO_REG+M68K_SR: sprintf(buffer[which], "SR:%08X", r->sr); break;
+			case CPU_INFO_REG+M68K_VBR: sprintf(buffer[which], "VBR:%08X", r->vbr); break;
+			case CPU_INFO_REG+M68K_SFC: sprintf(buffer[which], "SFC:%08X", r->sfc); break;
+			case CPU_INFO_REG+M68K_DFC: sprintf(buffer[which], "DFC:%08X", r->dfc); break;
+			case CPU_INFO_REG+M68K_D0: sprintf(buffer[which], "D0:%08X", r->d[0]); break;
+			case CPU_INFO_REG+M68K_D1: sprintf(buffer[which], "D1:%08X", r->d[1]); break;
+			case CPU_INFO_REG+M68K_D2: sprintf(buffer[which], "D2:%08X", r->d[2]); break;
+			case CPU_INFO_REG+M68K_D3: sprintf(buffer[which], "D3:%08X", r->d[3]); break;
+			case CPU_INFO_REG+M68K_D4: sprintf(buffer[which], "D4:%08X", r->d[4]); break;
+			case CPU_INFO_REG+M68K_D5: sprintf(buffer[which], "D5:%08X", r->d[5]); break;
+			case CPU_INFO_REG+M68K_D6: sprintf(buffer[which], "D6:%08X", r->d[6]); break;
+			case CPU_INFO_REG+M68K_D7: sprintf(buffer[which], "D7:%08X", r->d[7]); break;
+			case CPU_INFO_REG+M68K_A0: sprintf(buffer[which], "A0:%08X", r->a[0]); break;
+			case CPU_INFO_REG+M68K_A1: sprintf(buffer[which], "A1:%08X", r->a[1]); break;
+			case CPU_INFO_REG+M68K_A2: sprintf(buffer[which], "A2:%08X", r->a[2]); break;
+			case CPU_INFO_REG+M68K_A3: sprintf(buffer[which], "A3:%08X", r->a[3]); break;
+			case CPU_INFO_REG+M68K_A4: sprintf(buffer[which], "A4:%08X", r->a[4]); break;
+			case CPU_INFO_REG+M68K_A5: sprintf(buffer[which], "A5:%08X", r->a[5]); break;
+			case CPU_INFO_REG+M68K_A6: sprintf(buffer[which], "A6:%08X", r->a[6]); break;
+			case CPU_INFO_REG+M68K_A7: sprintf(buffer[which], "A7:%08X", r->a[7]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r.sr & 0x8000 ? 'T':'.',
-					r.sr & 0x4000 ? '?':'.',
-					r.sr & 0x2000 ? 'S':'.',
-					r.sr & 0x1000 ? '?':'.',
-					r.sr & 0x0800 ? '?':'.',
-					r.sr & 0x0400 ? 'I':'.',
-					r.sr & 0x0200 ? 'I':'.',
-					r.sr & 0x0100 ? 'I':'.',
-					r.sr & 0x0080 ? '?':'.',
-					r.sr & 0x0040 ? '?':'.',
-					r.sr & 0x0020 ? '?':'.',
-					r.sr & 0x0010 ? 'X':'.',
-					r.sr & 0x0008 ? 'N':'.',
-					r.sr & 0x0004 ? 'Z':'.',
-					r.sr & 0x0002 ? 'V':'.',
-					r.sr & 0x0001 ? 'C':'.');
+					r->sr & 0x8000 ? 'T':'.',
+					r->sr & 0x4000 ? '?':'.',
+					r->sr & 0x2000 ? 'S':'.',
+					r->sr & 0x1000 ? '?':'.',
+					r->sr & 0x0800 ? '?':'.',
+					r->sr & 0x0400 ? 'I':'.',
+					r->sr & 0x0200 ? 'I':'.',
+					r->sr & 0x0100 ? 'I':'.',
+					r->sr & 0x0080 ? '?':'.',
+					r->sr & 0x0040 ? '?':'.',
+					r->sr & 0x0020 ? '?':'.',
+					r->sr & 0x0010 ? 'X':'.',
+					r->sr & 0x0008 ? 'N':'.',
+					r->sr & 0x0004 ? 'Z':'.',
+					r->sr & 0x0002 ? 'V':'.',
+					r->sr & 0x0001 ? 'C':'.');
 	            break;
 			case CPU_INFO_NAME: return "68000";
 			case CPU_INFO_FAMILY: return "Motorola 68K";
@@ -788,7 +788,7 @@ public class asmintf
 	
 	void m68010_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 	    {
 			M68000_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68000_regs.Memory_Interface;
@@ -885,7 +885,7 @@ public class asmintf
 	#ifdef MAME_DEBUG
 	    do
 	    {
-			if (mame_debug != 0)
+			if (mame_debug)
 	        {
 				#ifdef TRACE68K
 	
@@ -936,14 +936,14 @@ public class asmintf
 	
 	unsigned m68020_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(a68k_cpu_context*)dst = M68020_regs;
 		return sizeof(a68k_cpu_context);
 	}
 	
 	void m68020_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 	    {
 			M68020_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68020_regs.Memory_Interface;
@@ -1092,52 +1092,52 @@ public class asmintf
 	
 		which = (which + 1) % 32;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &M68020_regs;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M68K_PC: sprintf(buffer[which], "PC:%06X", r.pc); break;
-			case CPU_INFO_REG+M68K_ISP: sprintf(buffer[which], "ISP:%08X", r.isp); break;
-			case CPU_INFO_REG+M68K_USP: sprintf(buffer[which], "USP:%08X", r.usp); break;
-			case CPU_INFO_REG+M68K_SR: sprintf(buffer[which], "SR:%08X", r.sr); break;
-			case CPU_INFO_REG+M68K_VBR: sprintf(buffer[which], "VBR:%08X", r.vbr); break;
-			case CPU_INFO_REG+M68K_SFC: sprintf(buffer[which], "SFC:%08X", r.sfc); break;
-			case CPU_INFO_REG+M68K_DFC: sprintf(buffer[which], "DFC:%08X", r.dfc); break;
-			case CPU_INFO_REG+M68K_D0: sprintf(buffer[which], "D0:%08X", r.d[0]); break;
-			case CPU_INFO_REG+M68K_D1: sprintf(buffer[which], "D1:%08X", r.d[1]); break;
-			case CPU_INFO_REG+M68K_D2: sprintf(buffer[which], "D2:%08X", r.d[2]); break;
-			case CPU_INFO_REG+M68K_D3: sprintf(buffer[which], "D3:%08X", r.d[3]); break;
-			case CPU_INFO_REG+M68K_D4: sprintf(buffer[which], "D4:%08X", r.d[4]); break;
-			case CPU_INFO_REG+M68K_D5: sprintf(buffer[which], "D5:%08X", r.d[5]); break;
-			case CPU_INFO_REG+M68K_D6: sprintf(buffer[which], "D6:%08X", r.d[6]); break;
-			case CPU_INFO_REG+M68K_D7: sprintf(buffer[which], "D7:%08X", r.d[7]); break;
-			case CPU_INFO_REG+M68K_A0: sprintf(buffer[which], "A0:%08X", r.a[0]); break;
-			case CPU_INFO_REG+M68K_A1: sprintf(buffer[which], "A1:%08X", r.a[1]); break;
-			case CPU_INFO_REG+M68K_A2: sprintf(buffer[which], "A2:%08X", r.a[2]); break;
-			case CPU_INFO_REG+M68K_A3: sprintf(buffer[which], "A3:%08X", r.a[3]); break;
-			case CPU_INFO_REG+M68K_A4: sprintf(buffer[which], "A4:%08X", r.a[4]); break;
-			case CPU_INFO_REG+M68K_A5: sprintf(buffer[which], "A5:%08X", r.a[5]); break;
-			case CPU_INFO_REG+M68K_A6: sprintf(buffer[which], "A6:%08X", r.a[6]); break;
-			case CPU_INFO_REG+M68K_A7: sprintf(buffer[which], "A7:%08X", r.a[7]); break;
+			case CPU_INFO_REG+M68K_PC: sprintf(buffer[which], "PC:%06X", r->pc); break;
+			case CPU_INFO_REG+M68K_ISP: sprintf(buffer[which], "ISP:%08X", r->isp); break;
+			case CPU_INFO_REG+M68K_USP: sprintf(buffer[which], "USP:%08X", r->usp); break;
+			case CPU_INFO_REG+M68K_SR: sprintf(buffer[which], "SR:%08X", r->sr); break;
+			case CPU_INFO_REG+M68K_VBR: sprintf(buffer[which], "VBR:%08X", r->vbr); break;
+			case CPU_INFO_REG+M68K_SFC: sprintf(buffer[which], "SFC:%08X", r->sfc); break;
+			case CPU_INFO_REG+M68K_DFC: sprintf(buffer[which], "DFC:%08X", r->dfc); break;
+			case CPU_INFO_REG+M68K_D0: sprintf(buffer[which], "D0:%08X", r->d[0]); break;
+			case CPU_INFO_REG+M68K_D1: sprintf(buffer[which], "D1:%08X", r->d[1]); break;
+			case CPU_INFO_REG+M68K_D2: sprintf(buffer[which], "D2:%08X", r->d[2]); break;
+			case CPU_INFO_REG+M68K_D3: sprintf(buffer[which], "D3:%08X", r->d[3]); break;
+			case CPU_INFO_REG+M68K_D4: sprintf(buffer[which], "D4:%08X", r->d[4]); break;
+			case CPU_INFO_REG+M68K_D5: sprintf(buffer[which], "D5:%08X", r->d[5]); break;
+			case CPU_INFO_REG+M68K_D6: sprintf(buffer[which], "D6:%08X", r->d[6]); break;
+			case CPU_INFO_REG+M68K_D7: sprintf(buffer[which], "D7:%08X", r->d[7]); break;
+			case CPU_INFO_REG+M68K_A0: sprintf(buffer[which], "A0:%08X", r->a[0]); break;
+			case CPU_INFO_REG+M68K_A1: sprintf(buffer[which], "A1:%08X", r->a[1]); break;
+			case CPU_INFO_REG+M68K_A2: sprintf(buffer[which], "A2:%08X", r->a[2]); break;
+			case CPU_INFO_REG+M68K_A3: sprintf(buffer[which], "A3:%08X", r->a[3]); break;
+			case CPU_INFO_REG+M68K_A4: sprintf(buffer[which], "A4:%08X", r->a[4]); break;
+			case CPU_INFO_REG+M68K_A5: sprintf(buffer[which], "A5:%08X", r->a[5]); break;
+			case CPU_INFO_REG+M68K_A6: sprintf(buffer[which], "A6:%08X", r->a[6]); break;
+			case CPU_INFO_REG+M68K_A7: sprintf(buffer[which], "A7:%08X", r->a[7]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r.sr & 0x8000 ? 'T':'.',
-					r.sr & 0x4000 ? '?':'.',
-					r.sr & 0x2000 ? 'S':'.',
-					r.sr & 0x1000 ? '?':'.',
-					r.sr & 0x0800 ? '?':'.',
-					r.sr & 0x0400 ? 'I':'.',
-					r.sr & 0x0200 ? 'I':'.',
-					r.sr & 0x0100 ? 'I':'.',
-					r.sr & 0x0080 ? '?':'.',
-					r.sr & 0x0040 ? '?':'.',
-					r.sr & 0x0020 ? '?':'.',
-					r.sr & 0x0010 ? 'X':'.',
-					r.sr & 0x0008 ? 'N':'.',
-					r.sr & 0x0004 ? 'Z':'.',
-					r.sr & 0x0002 ? 'V':'.',
-					r.sr & 0x0001 ? 'C':'.');
+					r->sr & 0x8000 ? 'T':'.',
+					r->sr & 0x4000 ? '?':'.',
+					r->sr & 0x2000 ? 'S':'.',
+					r->sr & 0x1000 ? '?':'.',
+					r->sr & 0x0800 ? '?':'.',
+					r->sr & 0x0400 ? 'I':'.',
+					r->sr & 0x0200 ? 'I':'.',
+					r->sr & 0x0100 ? 'I':'.',
+					r->sr & 0x0080 ? '?':'.',
+					r->sr & 0x0040 ? '?':'.',
+					r->sr & 0x0020 ? '?':'.',
+					r->sr & 0x0010 ? 'X':'.',
+					r->sr & 0x0008 ? 'N':'.',
+					r->sr & 0x0004 ? 'Z':'.',
+					r->sr & 0x0002 ? 'V':'.',
+					r->sr & 0x0001 ? 'C':'.');
 	            break;
 			case CPU_INFO_NAME: return "68020";
 			case CPU_INFO_FAMILY: return "Motorola 68K";
@@ -1184,7 +1184,7 @@ public class asmintf
 	
 	void m68ec020_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 	    {
 			M68020_regs = *(a68k_cpu_context*)src;
 	        a68k_memory_intf = M68020_regs.Memory_Interface;

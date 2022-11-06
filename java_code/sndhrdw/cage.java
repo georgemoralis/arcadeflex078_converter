@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -180,7 +180,7 @@ public class cage
 		cpu_setbank(11, memory_region(boot_region + 1));
 	
 		cage_cpu = mame_find_cpu_index("cage");
-		cage_cpu_clock_period = 1.0 / (double)Machine.drv.cpu[cage_cpu].cpu_clock;
+		cage_cpu_clock_period = 1.0 / (double)Machine->drv->cpu[cage_cpu].cpu_clock;
 		cage_cpu_h1_clock = cage_cpu_clock_period * 2.0;
 	
 		dma_timer = timer_alloc(dma_timer_callback);
@@ -189,7 +189,7 @@ public class cage
 		
 		buffer_in = buffer_out = 0;
 		
-		if (speedup != 0)
+		if (speedup)
 			speedup_ram = install_mem_write32_handler(cage_cpu, ADDR_RANGE(speedup, speedup), speedup_w);
 	}
 	
@@ -202,7 +202,7 @@ public class cage
 	
 	void cage_reset_w(int state)
 	{
-		if (state != 0)
+		if (state)
 			cage_control_w(0);
 		cpunum_set_reset_line(cage_cpu, state ? ASSERT_LINE : CLEAR_LINE);
 	}
@@ -282,15 +282,15 @@ public class cage
 	#endif
 	
 		/* allocate a DAC stream */
-		sound_stream = stream_init_multi(DAC_BUFFER_CHANNELS, names, mixing_levels, Machine.sample_rate, 0, dac_update);
+		sound_stream = stream_init_multi(DAC_BUFFER_CHANNELS, names, mixing_levels, Machine->sample_rate, 0, dac_update);
 	
 		/* allocate memory for our buffers */
 		sound_buffer = auto_malloc(DAC_BUFFER_SAMPLES * sizeof(INT16));
-		if (sound_buffer == 0)
+		if (!sound_buffer)
 			return 1;
 	
 	#if (LOG_WAVE)
-		wavfile = wav_open("cage.wav", Machine.sample_rate, 2);
+		wavfile = wav_open("cage.wav", Machine->sample_rate, 2);
 	#endif
 	
 		return 0;
@@ -435,8 +435,8 @@ public class cage
 		/* and times the number of bits per sample */
 		serial_time_per_word = bit_clock * 8.0 * (double)(((tms32031_io_regs[SPORT_GLOBAL_CTL] >> 18) & 3) + 1);
 	
-		/* compute the step value to stretch this to the Machine.sample_rate */
-		buffer_out_step = (UINT32)(65536.0 / (serial_time_per_word * DAC_BUFFER_CHANNELS * (double)Machine.sample_rate));
+		/* compute the step value to stretch this to the Machine->sample_rate */
+		buffer_out_step = (UINT32)(65536.0 / (serial_time_per_word * DAC_BUFFER_CHANNELS * (double)Machine->sample_rate));
 	}
 	
 	
@@ -458,8 +458,8 @@ public class cage
 				break;
 		}
 	
-		if (LOG_32031_IOPORTS != 0)
-			logerror("CAGE:%06X:%s read . %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], result);
+		if (LOG_32031_IOPORTS)
+			logerror("CAGE:%06X:%s read -> %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], result);
 		return result;
 	}
 	
@@ -468,7 +468,7 @@ public class cage
 	{
 		COMBINE_DATA(&tms32031_io_regs[offset]);
 	
-		if (LOG_32031_IOPORTS != 0)
+		if (LOG_32031_IOPORTS)
 			logerror("CAGE:%06X:%s write = %08X\n", activecpu_get_pc(), register_names[offset & 0x7f], tms32031_io_regs[offset]);
 		
 		switch (offset)
@@ -526,7 +526,7 @@ public class cage
 		int val;
 		
 		/* set the IRQ to the main CPU */
-		if (cage_irqhandler != 0)
+		if (cage_irqhandler)
 		{
 			int reason = 0;
 			
@@ -542,8 +542,8 @@ public class cage
 		cpuintrf_push_context(cage_cpu);
 		val = activecpu_get_reg(TMS32031_IOF);
 		val &= ~0x88;
-		if (cpu_to_cage_ready != 0) val |= 0x08;
-		if (cage_to_cpu_ready != 0) val |= 0x80;
+		if (cpu_to_cage_ready) val |= 0x08;
+		if (cage_to_cpu_ready) val |= 0x80;
 		activecpu_set_reg(TMS32031_IOF, val);
 		cpuintrf_pop_context();
 	}
@@ -551,7 +551,7 @@ public class cage
 	
 	static READ32_HANDLER( cage_from_main_r )
 	{
-		if (LOG_COMM != 0)
+		if (LOG_COMM)
 			logerror("%06X:CAGE read command = %04X\n", activecpu_get_pc(), cage_from_main);
 		cpu_to_cage_ready = 0;
 		update_control_lines();
@@ -561,14 +561,14 @@ public class cage
 	
 	static WRITE32_HANDLER( cage_from_main_ack_w )
 	{
-		if (LOG_COMM != 0)
+		if (LOG_COMM)
 			logerror("%06X:CAGE ack command = %04X\n", activecpu_get_pc(), cage_from_main);
 	}
 	
 	
 	static WRITE32_HANDLER( cage_to_main_w )
 	{
-		if (LOG_COMM != 0)
+		if (LOG_COMM)
 			logerror("%06X:Data from CAGE = %04X\n", activecpu_get_pc(), data);
 		soundlatch_word_w(0, data, mem_mask);
 		cage_to_cpu_ready = 1;
@@ -579,9 +579,9 @@ public class cage
 	static READ32_HANDLER( cage_io_status_r )
 	{
 		int result = 0;
-		if (cpu_to_cage_ready != 0)
+		if (cpu_to_cage_ready)
 			result |= 0x80;
-		if (cage_to_cpu_ready == 0)
+		if (!cage_to_cpu_ready)
 			result |= 0x40;
 		return result;
 	}
@@ -589,7 +589,7 @@ public class cage
 	
 	UINT16 main_from_cage_r(void)
 	{
-		if (LOG_COMM != 0)
+		if (LOG_COMM)
 			logerror("%06X:main read data = %04X\n", activecpu_get_pc(), soundlatch_word_r(0, 0));
 		cage_to_cpu_ready = 0;
 		update_control_lines();
@@ -608,7 +608,7 @@ public class cage
 	
 	void main_to_cage_w(UINT16 data)
 	{
-		if (LOG_COMM != 0)
+		if (LOG_COMM)
 			logerror("%06X:Command to CAGE = %04X\n", activecpu_get_pc(), data);
 		timer_set(TIME_NOW, data, deferred_cage_w);
 	}
@@ -618,9 +618,9 @@ public class cage
 	{
 		UINT16 result = 0;
 		
-		if (cpu_to_cage_ready != 0)
+		if (cpu_to_cage_ready)
 			result |= 2;
-		if (cage_to_cpu_ready != 0)
+		if (cage_to_cpu_ready)
 			result |= 1;
 		
 		return result;
@@ -753,9 +753,7 @@ public class cage
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(CUSTOM, cage_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( cage_seattle )
@@ -763,7 +761,5 @@ public class cage
 		
 		MDRV_CPU_MODIFY("cage")
 		MDRV_CPU_MEMORY(readmem_cage_seattle,writemem_cage_seattle)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 }

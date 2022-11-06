@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -56,11 +56,10 @@ public class tail2nos
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_tail2nos  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tail2nos  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		if (K051316_vh_start_0(REGION_GFX3,4,TILEMAP_OPAQUE,0,zoom_callback))
@@ -113,13 +112,13 @@ public class tail2nos
 	
 	WRITE16_HANDLER( tail2nos_gfxbank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int bank;
 	
 			/* bits 0 and 2 select char bank */
-			if ((data & 0x04) != 0) bank = 2;
-			else if ((data & 0x01) != 0) bank = 1;
+			if (data & 0x04) bank = 2;
+			else if (data & 0x01) bank = 1;
 			else bank = 0;
 	
 			if (charbank != bank)
@@ -129,7 +128,7 @@ public class tail2nos
 			}
 	
 			/* bit 5 seems to select palette bank (used on startup) */
-			if ((data & 0x20) != 0) bank = 7;
+			if (data & 0x20) bank = 7;
 			else bank = 3;
 	
 			if (charpalette != bank)
@@ -168,7 +167,7 @@ public class tail2nos
 			flipx = spriteram16[offs + 2] & 0x1000;
 			flipy = spriteram16[offs + 2] & 0x0800;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					40 + color,
 					flipx,flipy,
@@ -177,8 +176,7 @@ public class tail2nos
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tail2nos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static GfxLayout tilelayout = new GfxLayout
 		(
 			16,16,
@@ -198,7 +196,7 @@ public class tail2nos
 		);
 	
 	
-		if (dirtygfx != 0)
+		if (dirtygfx)
 		{
 			int i;
 	
@@ -209,7 +207,7 @@ public class tail2nos
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine.gfx[2],i,(UINT8 *)zoomdata,&tilelayout);
+					decodechar(Machine->gfx[2],i,(UINT8 *)zoomdata,&tilelayout);
 				}
 			}
 	
@@ -217,13 +215,13 @@ public class tail2nos
 		}
 	
 	
-		if (video_enable != 0)
+		if (video_enable)
 		{
 			K051316_zoom_draw_0(bitmap,cliprect,0,0);
 			drawsprites(bitmap,cliprect);
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		}
 		else
-			fillbitmap(bitmap,Machine.pens[0],cliprect);
+			fillbitmap(bitmap,Machine->pens[0],cliprect);
 	}
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class topspeed
 	
 	/****************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_topspeed  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_topspeed  = new VideoStartHandlerPtr() { public int handler(){
 		/* (chips, gfxnum, x_offs, y_offs, y_invert, opaque, dblwidth) */
 		if (PC080SN_vh_start(2,1,0,8,0,0,0))
 			return 1;
@@ -96,7 +95,7 @@ public class topspeed
 	
 				code = spritemap[map_offset + (py<<3) + px];
 	
-				if ((code & 0x8000) != 0)
+				if (code & 0x8000)
 				{
 					bad_chunks += 1;
 					continue;
@@ -108,7 +107,7 @@ public class topspeed
 				zx = x + (((k+1)*zoomx)/8) - curx;
 				zy = y + (((j+1)*zoomy)/16) - cury;
 	
-				pdrawgfxzoom(bitmap,Machine.gfx[0],
+				pdrawgfxzoom(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx,flipy,
@@ -118,7 +117,7 @@ public class topspeed
 						primasks[priority]);
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	}
@@ -126,8 +125,7 @@ public class topspeed
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_topspeed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_topspeed  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[4];
 	
 	#ifdef MAME_DEBUG

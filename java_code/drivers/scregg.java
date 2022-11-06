@@ -13,7 +13,7 @@ Sprite Priorities in Dommy
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -88,7 +88,7 @@ public class scregg
 	
 	
 	
-	static InputPortPtr input_ports_scregg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scregg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scregg )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
@@ -205,8 +205,7 @@ public class scregg
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_dommy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dommy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)
@@ -230,13 +229,10 @@ public class scregg
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_scregg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scregg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)
@@ -260,9 +256,7 @@ public class scregg
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_dommy = new RomLoadPtr(){ public void handler(){ 
@@ -327,7 +321,7 @@ public class scregg
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_dommy	   = new GameDriver("198?"	,"dommy"	,"scregg.java"	,rom_dommy,null	,machine_driver_dommy	,input_ports_scregg	,null	,ROT270	,	"Technos", "Dommy" )
-	public static GameDriver driver_scregg	   = new GameDriver("1983"	,"scregg"	,"scregg.java"	,rom_scregg,null	,machine_driver_scregg	,input_ports_scregg	,null	,ROT270	,	"Technos", "Scrambled Egg" )
-	public static GameDriver driver_eggs	   = new GameDriver("1983"	,"eggs"	,"scregg.java"	,rom_eggs,driver_scregg	,machine_driver_scregg	,input_ports_scregg	,null	,ROT270	,	"[Technos] Universal USA", "Eggs" )
+	GAME( 198?, dommy,  0,      dommy,  scregg, 0, ROT270, "Technos", "Dommy" )
+	GAME( 1983, scregg, 0,      scregg, scregg, 0, ROT270, "Technos", "Scrambled Egg" )
+	GAME( 1983, eggs,   scregg, scregg, scregg, 0, ROT270, "[Technos] Universal USA", "Eggs" )
 }

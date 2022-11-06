@@ -80,7 +80,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -92,8 +92,7 @@ public class hexion
 	
 	
 	
-	public static WriteHandlerPtr coincntr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coincntr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: coincntr_w %02x\n",activecpu_get_pc(),data);
 	
 		/* bits 0/1 = coin counters */
@@ -145,7 +144,7 @@ public class hexion
 	
 	
 	
-	static InputPortPtr input_ports_hexion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hexion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hexion )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -289,17 +288,15 @@ public class hexion
 	
 	
 	
-	public static InterruptHandlerPtr hexion_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hexion_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* NMI handles start and coin inputs, origin unknown */
-		if (cpu_getiloops() != 0)
+		if (cpu_getiloops())
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_hexion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hexion )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,24000000/4)	/* Z80B 6 MHz */
@@ -323,9 +320,7 @@ public class hexion
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -354,5 +349,5 @@ public class hexion
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_hexion	   = new GameDriver("1992"	,"hexion"	,"hexion.java"	,rom_hexion,null	,machine_driver_hexion	,input_ports_hexion	,null	,ROT0	,	"Konami", "Hexion (Japan)" )
+	GAME( 1992, hexion, 0, hexion, hexion, 0, ROT0, "Konami", "Hexion (Japan)" )
 }

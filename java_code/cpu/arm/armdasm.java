@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.arm;
 
@@ -31,22 +31,22 @@ public class armdasm
 		/* ccccctttmmmm */
 		const char *pRegOp[4] = { "LSL","LSR","ASR","ROR" };
 	
-		if (printOp0 != 0)
+		if (printOp0)
 			pBuf += sprintf(pBuf,"R%d, ", (opcode>>12)&0xf);
-		if (printOp1 != 0)
+		if (printOp1)
 			pBuf += sprintf(pBuf,"R%d, ", (opcode>>16)&0xf);
 	
 		/* Immediate Op2 */
-		if ((opcode & 0x02000000) != 0)
+		if( opcode&0x02000000 )
 			return WriteImmediateOperand(pBuf-2,opcode);
 	
 		/* Register Op2 */
-		if (printOp2 != 0)
+		if (printOp2)
 			pBuf += sprintf(pBuf,"R%d, ", (opcode>>0)&0xf);
 	
 		pBuf += sprintf(pBuf, "%s ", pRegOp[(opcode>>5)&3] );
 	
-		if ((opcode & 0x10) != 0) /* Shift amount specified in bottom bits of RS */
+		if( opcode&0x10 ) /* Shift amount specified in bottom bits of RS */
 		{
 			pBuf += sprintf( pBuf, "R%d", (opcode>>8)&0xf );
 		}
@@ -70,7 +70,7 @@ public class armdasm
 			(opcode>> 0)&0xf,
 			pRegOp[(opcode>>5)&3] );
 	
-		if ((opcode & 0x10) != 0) /* Shift amount specified in bottom bits of RS */
+		if( opcode&0x10 ) /* Shift amount specified in bottom bits of RS */
 		{
 			pBuf += sprintf( pBuf, "R%d", (opcode>>7)&0xf );
 		}
@@ -87,7 +87,7 @@ public class armdasm
 	static char *WriteBranchAddress( char *pBuf, data32_t pc, data32_t opcode )
 	{
 		opcode &= 0x00ffffff;
-		if ((opcode & 0x00800000) != 0)
+		if( opcode&0x00800000 )
 		{
 			opcode |= 0xff000000; /* sign-extend */
 		}
@@ -133,7 +133,7 @@ public class armdasm
 		{
 			/* multiply */
 			/* xxxx0000 00ASdddd nnnnssss 1001mmmm */
-			if ((opcode & 0x00200000) != 0)
+			if( opcode&0x00200000 )
 			{
 				pBuf += sprintf( pBuf, "MLA" );
 			}
@@ -142,7 +142,7 @@ public class armdasm
 				pBuf += sprintf( pBuf, "MUL" );
 			}
 			pBuf += sprintf( pBuf, "%s", pConditionCode );
-			if ((opcode & 0x00100000) != 0)
+			if( opcode&0x00100000 )
 			{
 				*pBuf++ = 'S';
 			}
@@ -154,7 +154,7 @@ public class armdasm
 				(opcode&0xf),
 				(opcode>>8)&0xf );
 	
-			if ((opcode & 0x00200000) != 0)
+			if( opcode&0x00200000 )
 			{
 				pBuf += sprintf( pBuf, ", R%d", (opcode>>12)&0xf );
 			}
@@ -210,7 +210,7 @@ public class armdasm
 	
 			/* xxxx010P UBWLnnnn ddddoooo oooooooo  Immediate form */
 			/* xxxx011P UBWLnnnn ddddcccc ctt0mmmm  Register form */
-			if ((opcode & 0x00100000) != 0)
+			if( opcode&0x00100000 )
 			{
 				pBuf += sprintf( pBuf, "LDR" );
 			}
@@ -220,15 +220,15 @@ public class armdasm
 			}
 			pBuf += sprintf( pBuf, "%s", pConditionCode );
 	
-			if ((opcode & 0x00400000) != 0)
+			if( opcode&0x00400000 )
 			{
 				pBuf += sprintf( pBuf, "B" );
 			}
 	
-			if ((opcode & 0x00200000) != 0)
+			if( opcode&0x00200000 )
 			{
 				/* writeback addr */
-				if ((opcode & 0x01000000) != 0)
+				if( opcode&0x01000000 )
 				{
 					/* pre-indexed addressing */
 					pBuf += sprintf( pBuf, "!" );
@@ -244,7 +244,7 @@ public class armdasm
 			pBuf += sprintf( pBuf, "R%d, [R%d",
 				(opcode>>12)&0xf, (opcode>>16)&0xf );
 	
-			if ((opcode & 0x02000000) != 0)
+			if( opcode&0x02000000 )
 			{
 				/* register form */
 				pBuf = WriteRegisterOperand1( pBuf, opcode );
@@ -254,7 +254,7 @@ public class armdasm
 			{
 				/* immediate form */
 				pBuf += sprintf( pBuf, "]" );
-				if ((opcode & 0x00800000) != 0)
+				if( opcode&0x00800000 )
 				{
 					pBuf += sprintf( pBuf, ", #$%x", opcode&0xfff );
 				}
@@ -269,7 +269,7 @@ public class armdasm
 			/* xxxx100P USWLnnnn llllllll llllllll */
 			/* Block Data Transfer */
 	
-			if ((opcode & 0x00100000) != 0)
+			if( opcode&0x00100000 )
 			{
 				pBuf += sprintf( pBuf, "LDM" );
 			}
@@ -279,19 +279,19 @@ public class armdasm
 			}
 			pBuf += sprintf( pBuf, "%s", pConditionCode );
 	
-			if ((opcode & 0x01000000) != 0)
+			if( opcode&0x01000000 )
 			{
 				pBuf += sprintf( pBuf, "P" );
 			}
-			if ((opcode & 0x00800000) != 0)
+			if( opcode&0x00800000 )
 			{
 				pBuf += sprintf( pBuf, "U" );
 			}
-			if ((opcode & 0x00400000) != 0)
+			if( opcode&0x00400000 )
 			{
 				pBuf += sprintf( pBuf, "^" );
 			}
-			if ((opcode & 0x00200000) != 0)
+			if( opcode&0x00200000 )
 			{
 				pBuf += sprintf( pBuf, "W" );
 			}
@@ -316,7 +316,7 @@ public class armdasm
 				}
 				if (found && last==15)
 					pBuf += sprintf( pBuf, " R15,");
-				else if (found != 0)
+				else if (found)
 					pBuf += sprintf( pBuf, " R%d-R%d,",last,15);
 			}
 	
@@ -327,7 +327,7 @@ public class armdasm
 		{
 			/* branch instruction */
 			/* xxxx101L oooooooo oooooooo oooooooo */
-			if ((opcode & 0x01000000) != 0)
+			if( opcode&0x01000000 )
 			{
 				pBuf += sprintf( pBuf, "BL" );
 			}

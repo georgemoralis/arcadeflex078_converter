@@ -5,7 +5,7 @@
 #define MAX_262 2
 
 #ifndef YAC512_VOL
-/* YMF262interface.mixing_levelXX macro */
+/* YMF262interface->mixing_levelXX macro */
 #define YAC512_VOL(LVol,LPan,RVol,RPan) (MIXER(LVol,LPan)|(MIXER(RVol,RPan) << 16))
 #endif
 

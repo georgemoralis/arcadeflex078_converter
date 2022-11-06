@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -510,12 +510,12 @@ public class psx
 			verboselog( 0, "psx_sio_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 			break;
 		case 2:
-			if (ACCESSING_LSW32 != 0)
+			if( ACCESSING_LSW32 )
 			{
 				m_p_n_sio_mode[ n_port ] = data & 0xffff;
 				verboselog( 1, "psx_sio_w %d mode %04x\n", n_port, data & 0xffff );
 			}
-			if (ACCESSING_MSW32 != 0)
+			if( ACCESSING_MSW32 )
 			{
 				m_p_n_sio_control[ n_port ] = data >> 16;
 				verboselog( 1, "psx_sio_w %d control %04x\n", n_port, data >> 16 );
@@ -527,11 +527,11 @@ public class psx
 			}
 			break;
 		case 3:
-			if (ACCESSING_LSW32 != 0)
+			if( ACCESSING_LSW32 )
 			{
 				verboselog( 0, "psx_sio_w( %08x, %08x, %08x )\n", offset, data, mem_mask );
 			}
-			if (ACCESSING_MSW32 != 0)
+			if( ACCESSING_MSW32 )
 			{
 				m_p_n_sio_baud[ n_port ] = data >> 16;
 				verboselog( 1, "psx_sio_w %d baud %04x\n", n_port, data >> 16 );
@@ -571,33 +571,33 @@ public class psx
 			break;
 		case 1:
 			data = m_p_n_sio_status[ n_port ];
-			if (ACCESSING_LSW32 != 0)
+			if( ACCESSING_LSW32 )
 			{
 				verboselog( 1, "psx_sio_r %d status %04x\n", n_port, data & 0xffff );
 			}
-			if (ACCESSING_MSW32 != 0)
+			if( ACCESSING_MSW32 )
 			{
 				verboselog( 1, "psx_sio_r %d mode %04x\n", n_port, data >> 16 );
 			}
 			break;
 		case 2:
 			data = ( m_p_n_sio_control[ n_port ] << 16 ) | m_p_n_sio_mode[ n_port ];
-			if (ACCESSING_LSW32 != 0)
+			if( ACCESSING_LSW32 )
 			{
 				verboselog( 1, "psx_sio_r %d mode %04x\n", n_port, data & 0xffff );
 			}
-			if (ACCESSING_MSW32 != 0)
+			if( ACCESSING_MSW32 )
 			{
 				verboselog( 1, "psx_sio_r %d control %04x\n", n_port, data >> 16 );
 			}
 			break;
 		case 3:
 			data = m_p_n_sio_baud[ n_port ] << 16;
-			if (ACCESSING_LSW32 != 0)
+			if( ACCESSING_LSW32 )
 			{
 				verboselog( 0, "psx_sio_r( %08x, %08x ) %08x\n", offset, mem_mask, data );
 			}
-			if (ACCESSING_MSW32 != 0)
+			if( ACCESSING_MSW32 )
 			{
 				verboselog( 1, "psx_sio_r %d baud %04x\n", n_port, data >> 16 );
 			}

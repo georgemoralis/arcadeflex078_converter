@@ -125,7 +125,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -164,22 +164,22 @@ public class atarisy2
 	
 	static void update_interrupts(void)
 	{
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			cpu_set_irq_line(0, 3, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 3, CLEAR_LINE);
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			cpu_set_irq_line(0, 2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 2, CLEAR_LINE);
 	
-		if (p2portwr_state != 0)
+		if (p2portwr_state)
 			cpu_set_irq_line(0, 1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 1, CLEAR_LINE);
 	
-		if (p2portrd_state != 0)
+		if (p2portrd_state)
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
@@ -195,11 +195,11 @@ public class atarisy2
 	
 	static void scanline_update(int scanline)
 	{
-		if (scanline <= Machine.drv.screen_height)
+		if (scanline <= Machine->drv->screen_height)
 		{
 			/* generate the 32V interrupt (IRQ 2) */
 			if ((scanline % 64) == 0)
-				if ((interrupt_enable & 4) != 0)
+				if (interrupt_enable & 4)
 					atarigen_scanline_int_gen();
 		}
 	}
@@ -212,8 +212,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_atarisy2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarisy2  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -236,10 +235,9 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vblank_int = new InterruptHandlerPtr() {public void handler(){
 		/* clock the VBLANK through */
-		if ((interrupt_enable & 8) != 0)
+		if (interrupt_enable & 8)
 			atarigen_video_int_gen();
 	} };
 	
@@ -255,7 +253,7 @@ public class atarisy2
 	static WRITE16_HANDLER( int1_ack_w )
 	{
 		/* reset sound CPU */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			cpu_set_reset_line(1, (data & 1) ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
@@ -326,19 +324,18 @@ public class atarisy2
 	{
 		int result = input_port_1_r(offset) | (input_port_2_r(offset) << 8);
 	
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x20;
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x10;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x20;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x10;
 	
 		return result;
 	}
 	
 	
-	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = input_port_0_r.handler(offset);
 	
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x01;
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x02;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x01;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x02;
 		if (!has_tms5220 || tms5220_ready_r()) result ^= 0x04;
 		if (!(input_port_2_r.handler(offset) & 0x80)) result ^= 0x10;
 	
@@ -346,11 +343,10 @@ public class atarisy2
 	} };
 	
 	
-	public static WriteHandlerPtr switch_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr switch_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		(void)offset;
 	
-		if (has_tms5220 != 0)
+		if (has_tms5220)
 		{
 			data = 12 | ((data >> 5) & 1);
 			tms5220_set_frequency(ATARI_CLOCK_20MHz/4 / (16 - data) / 2);
@@ -380,8 +376,7 @@ public class atarisy2
 	}
 	
 	
-	public static ReadHandlerPtr leta_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leta_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    if (pedal_count == -1)   /* 720 */
 		{
 			switch (offset & 3)
@@ -404,16 +399,14 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mixer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mixer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		atarigen_set_ym2151_vol((data & 7) * 100 / 7);
 		atarigen_set_pokey_vol(((data >> 3) & 3) * 100 / 3);
 		atarigen_set_tms5220_vol(((data >> 5) & 7) * 100 / 7);
 	} };
 	
 	
-	public static WriteHandlerPtr sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	
@@ -428,8 +421,7 @@ public class atarisy2
 	}
 	
 	
-	public static WriteHandlerPtr sound_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_6502_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* clock the state through */
 		p2portwr_state = (interrupt_enable & 2) != 0;
 		atarigen_update_interrupts();
@@ -439,8 +431,7 @@ public class atarisy2
 	} };
 	
 	
-	public static ReadHandlerPtr sound_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_6502_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* clock the state through */
 		p2portrd_state = (interrupt_enable & 1) != 0;
 		atarigen_update_interrupts();
@@ -457,16 +448,14 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr tms5220_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms5220_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tms5220_data = data;
 	} };
 	
 	
-	public static WriteHandlerPtr tms5220_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms5220_strobe_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!(offset & 1) && tms5220_data_strobe)
-			if (has_tms5220 != 0)
+			if (has_tms5220)
 				tms5220_data_w(0, tms5220_data);
 		tms5220_data_strobe = offset & 1;
 	} };
@@ -479,8 +468,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr coincount_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coincount_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, (data >> 0) & 1);
 		coin_counter_w(1, (data >> 1) & 1);
 	} };
@@ -578,7 +566,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_paperboy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_paperboy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( paperboy )
 		PORT_START(); 	/* 1840 (sound) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );
@@ -678,7 +666,7 @@ public class atarisy2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_720 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_720 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 720 )
 		PORT_START(); 	/* 1840 (sound) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );
@@ -777,7 +765,7 @@ public class atarisy2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ssprint = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssprint = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssprint )
 		PORT_START(); 	/* 1840 (sound) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );
@@ -876,7 +864,7 @@ public class atarisy2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_csprint = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_csprint = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( csprint )
 		PORT_START(); 	/* 1840 (sound) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );
@@ -975,7 +963,7 @@ public class atarisy2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_apb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_apb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( apb )
 		PORT_START(); 	/* 1840 (sound) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SPECIAL );
@@ -1182,8 +1170,7 @@ public class atarisy2
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_atarisy2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarisy2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", T11, ATARI_CLOCK_20MHz/2)
@@ -1216,34 +1203,26 @@ public class atarisy2
 		MDRV_SOUND_ADD_TAG("ym",    YM2151,  ym2151_interface)
 		MDRV_SOUND_ADD_TAG("pokey", POKEY,   pokey_interface)
 		MDRV_SOUND_ADD_TAG("tms",   TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_720 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 720 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarisy2)
 		
 		MDRV_CPU_REPLACE("sound", M6502, 2200000) /* artifically high to prevent deadlock at startup ATARI_CLOCK_14MHz/8,*/
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sprint = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprint )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarisy2)
 		
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("tms")
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -3051,8 +3030,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_paperboy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_paperboy  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t compressed_default_eeprom[] =
 		{
 			0x0000,0x4300,0x0113,0x0124,0x0150,0x0153,0x0154,0x0100,
@@ -3100,8 +3078,7 @@ public class atarisy2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_720  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_720  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		slapstic_init(107);
 	
@@ -3125,8 +3102,7 @@ public class atarisy2
 		has_tms5220 = 0;
 	}	
 	
-	public static DriverInitHandlerPtr init_ssprint  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ssprint  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t compressed_default_eeprom[] =
 		{
 			0x0000,0x01FF,0x0E00,0x01FF,0x0100,0x0120,0x0100,0x0120,
@@ -3157,8 +3133,7 @@ public class atarisy2
 		ssprint_init_common(compressed_default_eeprom);
 	} };
 	
-	public static DriverInitHandlerPtr init_ssprint1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ssprint1  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t compressed_default_eeprom[] =
 		{
 			0x0000,0x1e00,0x01ff,0x2500,0x0103,0x01e8,0x0152,0x0157,
@@ -3203,8 +3178,7 @@ public class atarisy2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_csprint  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_csprint  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t compressed_default_eeprom[] =
 		{
 			0x0000,0x01FF,0x0E00,0x0128,0x01D0,0x0127,0x0100,0x0120,
@@ -3249,8 +3223,7 @@ public class atarisy2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_apb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_apb  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		slapstic_init(110);
 	
@@ -3266,41 +3239,41 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_paperboy	   = new GameDriver("1984"	,"paperboy"	,"atarisy2.java"	,rom_paperboy,null	,machine_driver_atarisy2	,input_ports_paperboy	,init_paperboy	,ROT0	,	"Atari Games", "Paperboy (rev 3)" )
-	public static GameDriver driver_paperbr2	   = new GameDriver("1984"	,"paperbr2"	,"atarisy2.java"	,rom_paperbr2,driver_paperboy	,machine_driver_atarisy2	,input_ports_paperboy	,init_paperboy	,ROT0	,	"Atari Games", "Paperboy (rev 2)" )
-	public static GameDriver driver_paperbr1	   = new GameDriver("1984"	,"paperbr1"	,"atarisy2.java"	,rom_paperbr1,driver_paperboy	,machine_driver_atarisy2	,input_ports_paperboy	,init_paperboy	,ROT0	,	"Atari Games", "Paperboy (rev 1)" )
+	GAME( 1984, paperboy, 0,        atarisy2, paperboy, paperboy, ROT0,   "Atari Games", "Paperboy (rev 3)" )
+	GAME( 1984, paperbr2, paperboy, atarisy2, paperboy, paperboy, ROT0,   "Atari Games", "Paperboy (rev 2)" )
+	GAME( 1984, paperbr1, paperboy, atarisy2, paperboy, paperboy, ROT0,   "Atari Games", "Paperboy (rev 1)" )
 	
-	public static GameDriver driver_720	   = new GameDriver("1986"	,"720"	,"atarisy2.java"	,rom_720,null	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (rev 4)" )
-	public static GameDriver driver_720r3	   = new GameDriver("1986"	,"720r3"	,"atarisy2.java"	,rom_720r3,driver_720	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (rev 3)" )
-	public static GameDriver driver_720r2	   = new GameDriver("1986"	,"720r2"	,"atarisy2.java"	,rom_720r2,driver_720	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (rev 2)" )
-	public static GameDriver driver_720r1	   = new GameDriver("1986"	,"720r1"	,"atarisy2.java"	,rom_720r1,driver_720	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (rev 1)" )
-	public static GameDriver driver_720g	   = new GameDriver("1986"	,"720g"	,"atarisy2.java"	,rom_720g,driver_720	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (German, rev 2)" )
-	public static GameDriver driver_720gr1	   = new GameDriver("1986"	,"720gr1"	,"atarisy2.java"	,rom_720gr1,driver_720	,machine_driver_720	,input_ports_720	,init_720	,ROT0	,	"Atari Games", "720 Degrees (German, rev 1)" )
+	GAME( 1986, 720,      0,        720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (rev 4)" )
+	GAME( 1986, 720r3,    720,      720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (rev 3)" )
+	GAME( 1986, 720r2,    720,      720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (rev 2)" )
+	GAME( 1986, 720r1,    720,      720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (rev 1)" )
+	GAME( 1986, 720g,     720,      720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (German, rev 2)" )
+	GAME( 1986, 720gr1,   720,      720,      720,      720,      ROT0,   "Atari Games", "720 Degrees (German, rev 1)" )
 		
-	public static GameDriver driver_ssprint	   = new GameDriver("1986"	,"ssprint"	,"atarisy2.java"	,rom_ssprint,null	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint	,ROT0	,	"Atari Games", "Super Sprint (rev 4)" )
-	public static GameDriver driver_ssprint3	   = new GameDriver("1986"	,"ssprint3"	,"atarisy2.java"	,rom_ssprint3,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (rev 3)" )
-	public static GameDriver driver_ssprint1	   = new GameDriver("1986"	,"ssprint1"	,"atarisy2.java"	,rom_ssprint1,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (rev 1)" )
-	public static GameDriver driver_ssprintg	   = new GameDriver("1986"	,"ssprintg"	,"atarisy2.java"	,rom_ssprintg,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (German, rev 2)" )
-	public static GameDriver driver_sspring1	   = new GameDriver("1986"	,"sspring1"	,"atarisy2.java"	,rom_sspring1,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (German, rev 1)" )
-	public static GameDriver driver_ssprintf	   = new GameDriver("1986"	,"ssprintf"	,"atarisy2.java"	,rom_ssprintf,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (French)" )
-	public static GameDriver driver_ssprints	   = new GameDriver("1986"	,"ssprints"	,"atarisy2.java"	,rom_ssprints,driver_ssprint	,machine_driver_sprint	,input_ports_ssprint	,init_ssprint1	,ROT0	,	"Atari Games", "Super Sprint (Spanish)" )
+	GAME( 1986, ssprint,  0,        sprint,   ssprint,  ssprint,  ROT0,   "Atari Games", "Super Sprint (rev 4)" )
+	GAME( 1986, ssprint3, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (rev 3)" )
+	GAME( 1986, ssprint1, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (rev 1)" )
+	GAME( 1986, ssprintg, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (German, rev 2)" )
+	GAME( 1986, sspring1, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (German, rev 1)" )
+	GAME( 1986, ssprintf, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (French)" )
+	GAME( 1986, ssprints, ssprint,  sprint,   ssprint,  ssprint1, ROT0,   "Atari Games", "Super Sprint (Spanish)" )
 	
-	public static GameDriver driver_csprint	   = new GameDriver("1986"	,"csprint"	,"atarisy2.java"	,rom_csprint,null	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (rev 3)" )
-	public static GameDriver driver_csprint2	   = new GameDriver("1986"	,"csprint2"	,"atarisy2.java"	,rom_csprint2,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (rev 2)" )
-	public static GameDriver driver_csprint1	   = new GameDriver("1986"	,"csprint1"	,"atarisy2.java"	,rom_csprint1,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (rev 1)" )
-	public static GameDriver driver_csprintg	   = new GameDriver("1986"	,"csprintg"	,"atarisy2.java"	,rom_csprintg,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (German, rev 2)" )
-	public static GameDriver driver_cspring1	   = new GameDriver("1986"	,"cspring1"	,"atarisy2.java"	,rom_cspring1,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (German, rev 1)" )
-	public static GameDriver driver_csprintf	   = new GameDriver("1986"	,"csprintf"	,"atarisy2.java"	,rom_csprintf,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (French)" )
-	public static GameDriver driver_csprints	   = new GameDriver("1986"	,"csprints"	,"atarisy2.java"	,rom_csprints,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (Spanish, rev 2)" )
-	public static GameDriver driver_csprins1	   = new GameDriver("1986"	,"csprins1"	,"atarisy2.java"	,rom_csprins1,driver_csprint	,machine_driver_sprint	,input_ports_csprint	,init_csprint	,ROT0	,	"Atari Games", "Championship Sprint (Spanish, rev 1)" )
+	GAME( 1986, csprint,  0,        sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (rev 3)" )
+	GAME( 1986, csprint2, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (rev 2)" )
+	GAME( 1986, csprint1, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (rev 1)" )
+	GAME( 1986, csprintg, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (German, rev 2)" )
+	GAME( 1986, cspring1, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (German, rev 1)" )
+	GAME( 1986, csprintf, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (French)" )
+	GAME( 1986, csprints, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (Spanish, rev 2)" )
+	GAME( 1986, csprins1, csprint,  sprint,   csprint,  csprint,  ROT0,   "Atari Games", "Championship Sprint (Spanish, rev 1)" )
 	
-	public static GameDriver driver_apb	   = new GameDriver("1987"	,"apb"	,"atarisy2.java"	,rom_apb,null	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 7)" )
-	public static GameDriver driver_apb6	   = new GameDriver("1987"	,"apb6"	,"atarisy2.java"	,rom_apb6,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 6)" )
-	public static GameDriver driver_apb5	   = new GameDriver("1987"	,"apb5"	,"atarisy2.java"	,rom_apb5,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 5)" )
-	public static GameDriver driver_apb4	   = new GameDriver("1987"	,"apb4"	,"atarisy2.java"	,rom_apb4,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 4)" )
-	public static GameDriver driver_apb3	   = new GameDriver("1987"	,"apb3"	,"atarisy2.java"	,rom_apb3,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 3)" )
-	public static GameDriver driver_apb2	   = new GameDriver("1987"	,"apb2"	,"atarisy2.java"	,rom_apb2,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 2)" )
-	public static GameDriver driver_apb1	   = new GameDriver("1987"	,"apb1"	,"atarisy2.java"	,rom_apb1,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (rev 1)" )
-	public static GameDriver driver_apbg	   = new GameDriver("1987"	,"apbg"	,"atarisy2.java"	,rom_apbg,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (German)" )
-	public static GameDriver driver_apbf	   = new GameDriver("1987"	,"apbf"	,"atarisy2.java"	,rom_apbf,driver_apb	,machine_driver_atarisy2	,input_ports_apb	,init_apb	,ROT270	,	"Atari Games", "APB - All Points Bulletin (French)" )
+	GAME( 1987, apb,      0,        atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 7)" )
+	GAME( 1987, apb6,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 6)" )
+	GAME( 1987, apb5,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 5)" )
+	GAME( 1987, apb4,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 4)" )
+	GAME( 1987, apb3,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 3)" )
+	GAME( 1987, apb2,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 2)" )
+	GAME( 1987, apb1,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (rev 1)" )
+	GAME( 1987, apbg,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (German)" )
+	GAME( 1987, apbf,     apb,      atarisy2, apb,      apb,      ROT270, "Atari Games", "APB - All Points Bulletin (French)" )
 }

@@ -156,7 +156,7 @@ NMI causes a ROM/RAM test.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -171,33 +171,27 @@ public class zaxxon
 	
 	/* Read/Write Handlers */
 	
-	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaxxon_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr zaxxon_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaxxon_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(offset, ~data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr zaxxon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaxxon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr razmataz_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr razmataz_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 	} };
 	
-	public static ReadHandlerPtr razmataz_unknown1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr razmataz_unknown1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand() & 0xff;
 	} };
 	
-	public static ReadHandlerPtr razmataz_unknown2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr razmataz_unknown2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -224,32 +218,29 @@ public class zaxxon
 		return res;
 	}
 	
-	public static ReadHandlerPtr razmataz_dial_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr razmataz_dial_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return razmataz_dial_r(0);
 	} };
 	
-	public static ReadHandlerPtr razmataz_dial_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr razmataz_dial_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return razmataz_dial_r(1);
 	} };
 	
-	public static WriteHandlerPtr congo_daio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr congo_daio_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 1)
 		{
-			if ((data & 0x02) != 0) sample_start(0, 0, 0);
+			if (data & 0x02) sample_start(0, 0, 0);
 		}
 		else if (offset == 2)
 		{
 			data ^= 0xff;
 	
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 			{
-				if ((data & 0x08) != 0) sample_start(1, 1, 0);
-				if ((data & 0x04) != 0) sample_start(2, 2, 0);
-				if ((data & 0x02) != 0) sample_start(3, 3, 0);
-				if ((data & 0x01) != 0) sample_start(4, 4, 0);
+				if (data & 0x08) sample_start(1, 1, 0);
+				if (data & 0x04) sample_start(2, 2, 0);
+				if (data & 0x02) sample_start(3, 3, 0);
+				if (data & 0x01) sample_start(4, 4, 0);
 			}
 		}
 	} };
@@ -421,7 +412,7 @@ public class zaxxon
 	
 	/* Input Ports */
 	
-	static InputPortPtr input_ports_zaxxon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zaxxon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zaxxon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -506,7 +497,7 @@ public class zaxxon
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, JOYCODE_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_szaxxon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_szaxxon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( szaxxon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -594,7 +585,7 @@ public class zaxxon
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_razmataz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_razmataz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( razmataz )
 		PORT_START(); 	/* IN0 */
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_CENTER | IPF_PLAYER1, 30, 15, 0, 0 );
 	
@@ -670,7 +661,7 @@ public class zaxxon
 		PORT_BIT( 0xc0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ixion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ixion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ixion )
 		PORT_START(); 	/* IN0 */
 		PORT_ANALOGX( 0xff, 0x00, IPT_DIAL | IPF_CENTER, 30, 15, 0, 0, KEYCODE_Z, KEYCODE_X, 0, 0 );
 	
@@ -743,7 +734,7 @@ public class zaxxon
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_congo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_congo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( congo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -838,7 +829,7 @@ public class zaxxon
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tiptop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tiptop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tiptop )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -933,7 +924,7 @@ public class zaxxon
 		PORT_BITX(0x01, IP_ACTIVE_HIGH, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_futspy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_futspy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( futspy )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1156,8 +1147,7 @@ public class zaxxon
 	
 	/* Interrupt Generators */
 	
-	public static InterruptHandlerPtr zaxxon_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr zaxxon_interrupt = new InterruptHandlerPtr() {public void handler(){
 		// Get F2 key press status
 		if (readinputport(5) & 0x01)
 			nmi_line_pulse();		// trigger self test
@@ -1167,25 +1157,21 @@ public class zaxxon
 	
 	/* Machine Initialization */
 	
-	public static MachineInitHandlerPtr machine_init_zaxxon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zaxxon  = new MachineInitHandlerPtr() { public void handler(){
 		zaxxon_vid_type = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_congo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_congo  = new MachineInitHandlerPtr() { public void handler(){
 		zaxxon_vid_type = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_futspy  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_futspy  = new MachineInitHandlerPtr() { public void handler(){
 		zaxxon_vid_type = 2;
 	} };
 	
 	/* Machine Drivers */
 	
-	public static MachineHandlerPtr machine_driver_root = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( root )
 		// basic machine hardware
 		MDRV_CPU_ADD_TAG("main", Z80, 48660000/16)	// 3.04125 MHz
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -1207,21 +1193,15 @@ public class zaxxon
 		MDRV_PALETTE_INIT(zaxxon)
 		MDRV_VIDEO_START(zaxxon)
 		MDRV_VIDEO_UPDATE(zaxxon)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_zaxxon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zaxxon )
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_SOUND_ADD(SAMPLES, zaxxon_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_razmataz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( razmataz )
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1229,12 +1209,9 @@ public class zaxxon
 	
 		MDRV_VIDEO_START(razmataz)
 		MDRV_VIDEO_UPDATE(razmataz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ixion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ixion )
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1242,12 +1219,9 @@ public class zaxxon
 	
 		MDRV_VIDEO_START(razmataz)
 		MDRV_VIDEO_UPDATE(razmataz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_congo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( congo )
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1267,12 +1241,9 @@ public class zaxxon
 	
 		MDRV_SOUND_ADD(SN76496, congo_sn76496_interface)
 		MDRV_SOUND_ADD(SAMPLES, congo_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_futspy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( futspy )
 		MDRV_IMPORT_FROM(root)
 	
 		MDRV_CPU_MODIFY("main")
@@ -1285,9 +1256,7 @@ public class zaxxon
 		MDRV_VIDEO_UPDATE(futspy)
 	
 		MDRV_SOUND_ADD(SAMPLES, zaxxon_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROMs */
 	
@@ -1599,8 +1568,7 @@ public class zaxxon
 	
 	/* Driver Initialization */
 	
-	public static DriverInitHandlerPtr init_zaxxonb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zaxxonb  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 		the values vary, but the translation mask is always laid out like this:
 	
@@ -1662,7 +1630,7 @@ public class zaxxon
 			/* pick the offset in the table from bits 1, 3 and 5 of the source data */
 			j = ((src >> 1) & 1) + (((src >> 3) & 1) << 1) + (((src >> 5) & 1) << 2);
 			/* the bottom half of the translation table is the mirror image of the top */
-			if ((src & 0x80) != 0) j = 7 - j;
+			if (src & 0x80) j = 7 - j;
 	
 			/* decode the ROM data */
 			rom[A] = src ^ data_xortable[i][j];
@@ -1674,35 +1642,31 @@ public class zaxxon
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_szaxxon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_szaxxon  = new DriverInitHandlerPtr() { public void handler(){
 		szaxxon_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_futspy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_futspy  = new DriverInitHandlerPtr() { public void handler(){
 		futspy_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_razmataz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_razmataz  = new DriverInitHandlerPtr() { public void handler(){
 		nprinces_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_ixion  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ixion  = new DriverInitHandlerPtr() { public void handler(){
 		szaxxon_decode();
 	} };
 	
 	/* Game Drivers */
 	
-	public static GameDriver driver_zaxxon	   = new GameDriver("1982"	,"zaxxon"	,"zaxxon.java"	,rom_zaxxon,null	,machine_driver_zaxxon	,input_ports_zaxxon	,null	,ROT90	,	"Sega",    "Zaxxon (set 1)" )
-	public static GameDriver driver_zaxxon2	   = new GameDriver("1982"	,"zaxxon2"	,"zaxxon.java"	,rom_zaxxon2,driver_zaxxon	,machine_driver_zaxxon	,input_ports_zaxxon	,null	,ROT90	,	"Sega",    "Zaxxon (set 2)" )
-	public static GameDriver driver_zaxxonb	   = new GameDriver("1982"	,"zaxxonb"	,"zaxxon.java"	,rom_zaxxonb,driver_zaxxon	,machine_driver_zaxxon	,input_ports_zaxxon	,init_zaxxonb	,ROT90	,	"bootleg", "Jackson" )
-	public static GameDriver driver_szaxxon	   = new GameDriver("1982"	,"szaxxon"	,"zaxxon.java"	,rom_szaxxon,null	,machine_driver_zaxxon	,input_ports_szaxxon	,init_szaxxon	,ROT90	,	"Sega",    "Super Zaxxon" )
-	public static GameDriver driver_razmataz	   = new GameDriver("1983"	,"razmataz"	,"zaxxon.java"	,rom_razmataz,null	,machine_driver_razmataz	,input_ports_razmataz	,init_razmataz	,ROT270	,	"Sega",    "Razzmatazz", GAME_NO_SOUND )
-	public static GameDriver driver_ixion	   = new GameDriver("1983"	,"ixion"	,"zaxxon.java"	,rom_ixion,null	,machine_driver_ixion	,input_ports_ixion	,init_ixion	,ROT270	,	"Sega",    "Ixion (prototype)", GAME_NO_SOUND )
-	public static GameDriver driver_congo	   = new GameDriver("1983"	,"congo"	,"zaxxon.java"	,rom_congo,null	,machine_driver_congo	,input_ports_congo	,null	,ROT90	,	"Sega",    "Congo Bongo" )
-	public static GameDriver driver_tiptop	   = new GameDriver("1983"	,"tiptop"	,"zaxxon.java"	,rom_tiptop,driver_congo	,machine_driver_congo	,input_ports_tiptop	,null	,ROT90	,	"Sega",    "Tip Top" )
-	public static GameDriver driver_futspy	   = new GameDriver("1984"	,"futspy"	,"zaxxon.java"	,rom_futspy,null	,machine_driver_futspy	,input_ports_futspy	,init_futspy	,ROT270	,	"Sega",    "Future Spy" )
+	GAME( 1982, zaxxon,   0,      zaxxon,   zaxxon,   0,        ROT90,  "Sega",    "Zaxxon (set 1)" )
+	GAME( 1982, zaxxon2,  zaxxon, zaxxon,   zaxxon,   0,        ROT90,  "Sega",    "Zaxxon (set 2)" )
+	GAME( 1982, zaxxonb,  zaxxon, zaxxon,   zaxxon,   zaxxonb,  ROT90,  "bootleg", "Jackson" )
+	GAME( 1982, szaxxon,  0,      zaxxon,   szaxxon,  szaxxon,  ROT90,  "Sega",    "Super Zaxxon" )
+	GAMEX(1983, razmataz, 0,      razmataz, razmataz, razmataz, ROT270, "Sega",    "Razzmatazz", GAME_NO_SOUND )
+	GAMEX(1983, ixion,    0,      ixion,    ixion,    ixion,    ROT270, "Sega",    "Ixion (prototype)", GAME_NO_SOUND )
+	GAME( 1983, congo,    0,	  congo,    congo,    0,        ROT90,  "Sega",    "Congo Bongo" )
+	GAME( 1983, tiptop,   congo,  congo,    tiptop,   0,        ROT90,  "Sega",    "Tip Top" )
+	GAME( 1984, futspy,   0,      futspy,   futspy,   futspy,   ROT270, "Sega",    "Future Spy" )
 }

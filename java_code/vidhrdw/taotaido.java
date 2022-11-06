@@ -10,7 +10,7 @@ zooming might be wrong (only used on title logo?)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,9 +28,9 @@ public class taotaido
 	/* sprite tile codes 0x4000 - 0x7fff get remapped according to the content of these registers */
 	WRITE16_HANDLER( taotaido_sprite_character_bank_select_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if(ACCESSING_MSB)
 			taotaido_sprite_character_bank_select[offset*2] = data >> 8;
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			taotaido_sprite_character_bank_select[offset*2+1] = data &0xff;
 	}
 	
@@ -53,7 +53,7 @@ public class taotaido
 		int x,y;
 	
 		data16_t *source = &taotaido_spriteram_older[spriteno*4];
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 	
 		int yzoom = (source[0] & 0xf000) >> 12;
@@ -82,7 +82,7 @@ public class taotaido
 		{
 			int sx,sy;
 	
-			if (yflip != 0) sy = ((ypos + yzoom * (ysize - y)/2 + 16) & 0x1ff) - 16;
+			if (yflip) sy = ((ypos + yzoom * (ysize - y)/2 + 16) & 0x1ff) - 16;
 				else sy = ((ypos + yzoom * y / 2 + 16) & 0x1ff) - 16;
 	
 			for (x = 0;x <= xsize;x++)
@@ -103,7 +103,7 @@ public class taotaido
 					realtile |= taotaido_sprite_character_bank_select[block] * 0x800;
 				}
 	
-				if (xflip != 0) sx = ((xpos + xzoom * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+				if (xflip) sx = ((xpos + xzoom * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 					else sx = ((xpos + xzoom * x / 2 + 16) & 0x1ff) - 16;
 	
 	
@@ -158,9 +158,9 @@ public class taotaido
 			case 5:
 			case 6:
 			case 7:
-				if (ACCESSING_MSB != 0)
+				if(ACCESSING_MSB)
 					taotaido_video_bank_select[(offset-4)*2] = data >> 8;
-				if (ACCESSING_LSB != 0)
+				if(ACCESSING_LSB)
 					taotaido_video_bank_select[(offset-4)*2+1] = data &0xff;
 					tilemap_mark_all_tiles_dirty(bg_tilemap);
 				break;
@@ -193,12 +193,11 @@ public class taotaido
 	
 	UINT32 taotaido_tilemap_scan_rows( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return row*0x40 + (col&0x3f) + ((col&0x40)<<6);
 	}
 	
-	VIDEO_START(taotaido)
-	{
+	public static VideoStartHandlerPtr video_start_taotaido  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(taotaido_bg_tile_info,taotaido_tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,128,64);
 	
 		taotaido_spriteram_old = auto_malloc(0x2000);
@@ -208,11 +207,10 @@ public class taotaido
 		taotaido_spriteram2_older = auto_malloc(0x10000);
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE(taotaido)
-	{
+	public static VideoUpdateHandlerPtr video_update_taotaido  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	//	tilemap_set_scrollx(bg_tilemap,0,(taotaido_scrollram[0x380/2]>>4)); // the values put here end up being wrong every other frame
 	//	tilemap_set_scrolly(bg_tilemap,0,(taotaido_scrollram[0x382/2]>>4)); // the values put here end up being wrong every other frame
 	
@@ -236,10 +234,9 @@ public class taotaido
 		}
 	
 		taotaido_drawsprites(bitmap,cliprect);
-	}
+	} };
 	
-	public static VideoEofHandlerPtr video_eof_taotaido  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taotaido  = new VideoEofHandlerPtr() { public void handler(){
 		/* sprites need to be delayed by 2 frames? */
 	
 		memcpy(taotaido_spriteram2_older,taotaido_spriteram2_old,0x10000);

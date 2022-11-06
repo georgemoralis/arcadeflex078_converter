@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,7 +21,7 @@ public class goal92
 	
 	static WRITE16_HANDLER( goal92_sound_command_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(0, (data >> 8) & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -100,7 +100,7 @@ public class goal92
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_goal92 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_goal92 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( goal92 )
 	
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0007, "Coin A / Coin C" );
@@ -297,8 +297,7 @@ public class goal92
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_goal92 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( goal92 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000) // clock should be 12 MHz, but it causes problems for an unknown reason
@@ -325,12 +324,9 @@ public class goal92
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cupsocbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cupsocbl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)
@@ -357,9 +353,7 @@ public class goal92
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*
 	
@@ -485,6 +479,6 @@ public class goal92
 		ROM_LOAD( "sc_03.bin",    0x000000, 0x080000, CRC(6e254d12) SHA1(857779dbd276b688201a8ea3afd5817e38acad2e) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_goal92	   = new GameDriver("1992"	,"goal92"	,"goal92.java"	,rom_goal92,driver_cupsoc	,machine_driver_goal92	,input_ports_goal92	,null	,ROT0	,	"bootleg", "Goal '92" )
-	public static GameDriver driver_cupsocbl	   = new GameDriver("1992"	,"cupsocbl"	,"goal92.java"	,rom_cupsocbl,driver_cupsoc	,machine_driver_cupsocbl	,input_ports_goal92	,null	,ROT0	,	"bootleg", "Seibu Cup Soccer (bootleg)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAME(  1992, goal92,   cupsoc, goal92,   goal92, 0, ROT0, "bootleg", "Goal '92" )
+	GAMEX( 1992, cupsocbl, cupsoc, cupsocbl, goal92, 0, ROT0, "bootleg", "Seibu Cup Soccer (bootleg)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

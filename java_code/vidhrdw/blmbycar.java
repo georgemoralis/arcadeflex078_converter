@@ -30,7 +30,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -136,8 +136,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_blmbycar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_blmbycar  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 16,16, DIM_NX, DIM_NY );
 	
@@ -215,12 +214,12 @@ public class blmbycar
 			int	pri			=	(~attr >> 3) & 0x1;		// Priority (1 = Low)
 			int pri_mask	=	~((1 << (pri+1)) - 1);	// Above the first "pri" levels
 	
-			if ((x & 0x4000) != 0)	continue;	// ? To get rid of the "shadow" blocks
+			if (x & 0x4000)	continue;	// ? To get rid of the "shadow" blocks
 	
 			x	=	(x & 0x1ff) - 0x10;
 			y	=	0xf0 - ((y & 0xff)  - (y & 0x100));
 	
-			pdrawgfx(	bitmap, Machine.gfx[0],
+			pdrawgfx(	bitmap, Machine->gfx[0],
 						code,
 						0x20 + (attr & 0xf),
 						flipx, flipy,
@@ -239,8 +238,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blmbycar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,layers_ctrl = -1;
 	
 		tilemap_set_scrolly( tilemap_0, 0, blmbycar_scroll_0[ 0 ]);
@@ -264,16 +262,16 @@ public class blmbycar
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if ((layers_ctrl & 1) != 0)
+		if (layers_ctrl&1)
 			for (i = 0; i <= 1; i++)
 				tilemap_draw(bitmap, cliprect, tilemap_0, i, i);
 		else	fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((layers_ctrl & 2) != 0)
+		if (layers_ctrl&2)
 			for (i = 0; i <= 1; i++)
 				tilemap_draw(bitmap, cliprect, tilemap_1, i, i);
 	
-		if ((layers_ctrl & 8) != 0)
+		if (layers_ctrl&8)
 			blmbycar_draw_sprites(bitmap, cliprect);
 	} };
 }

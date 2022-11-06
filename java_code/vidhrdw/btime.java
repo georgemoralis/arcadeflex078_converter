@@ -10,7 +10,7 @@ This file is also used by scregg.c
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,8 +50,7 @@ public class btime
 	    bit 0 -- 47 kohm resistor  -- RED (inverted)
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_btime  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_btime  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -99,8 +98,7 @@ public class btime
 	    bit 0 -- 15 kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_lnc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_lnc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -129,8 +127,7 @@ public class btime
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_lnc  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_lnc  = new MachineInitHandlerPtr() { public void handler(){
 	    *lnc_charbank = 1;
 	} };
 	
@@ -140,8 +137,7 @@ public class btime
 	Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_bnj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bnj  = new VideoStartHandlerPtr() { public int handler(){
 	    if (video_start_generic.handler() != 0)
 	        return 1;
 	
@@ -159,8 +155,7 @@ public class btime
 	    return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_btime  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_btime  = new VideoStartHandlerPtr() { public int handler(){
 	    bnj_scroll1 = 0;
 	    bnj_scroll2 = 0;
 	
@@ -169,14 +164,12 @@ public class btime
 	
 	
 	
-	public static WriteHandlerPtr btime_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr btime_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* RGB output is inverted */
 	    paletteram_BBGGGRRR_w(offset,~data);
 	} };
 	
-	public static WriteHandlerPtr lnc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lnc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (videoram.read(offset)!= data || colorram.read(offset)!= *lnc_charbank)
 	    {
 	        videoram.write(offset,data);
@@ -186,8 +179,7 @@ public class btime
 	    }
 	} };
 	
-	public static ReadHandlerPtr btime_mirrorvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr btime_mirrorvideoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int x,y;
 	
 	    /* swap x and y coordinates */
@@ -198,8 +190,7 @@ public class btime
 	    return videoram_r(offset);
 	} };
 	
-	public static ReadHandlerPtr btime_mirrorcolorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr btime_mirrorcolorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int x,y;
 	
 	    /* swap x and y coordinates */
@@ -210,8 +201,7 @@ public class btime
 	    return colorram_r(offset);
 	} };
 	
-	public static WriteHandlerPtr btime_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr btime_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int x,y;
 	
 	    /* swap x and y coordinates */
@@ -222,8 +212,7 @@ public class btime
 	    videoram_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr lnc_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lnc_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int x,y;
 	
 	    /* swap x and y coordinates */
@@ -234,8 +223,7 @@ public class btime
 	    lnc_videoram_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr btime_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr btime_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int x,y;
 	
 	    /* swap x and y coordinates */
@@ -246,8 +234,7 @@ public class btime
 	    colorram_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr deco_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deco_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (deco_charram[offset] == data)  return;
 	
 	    deco_charram[offset] = data;
@@ -261,8 +248,7 @@ public class btime
 	    char_dirty  [offset >> 3] = 1;
 	} };
 	
-	public static WriteHandlerPtr bnj_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bnj_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (bnj_backgroundram[offset] != data)
 	    {
 	        dirtybuffer2[offset] = 1;
@@ -271,8 +257,7 @@ public class btime
 	    }
 	} };
 	
-	public static WriteHandlerPtr bnj_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bnj_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // Dirty screen if background is being turned off
 	    if (bnj_scroll1 && !data)
 	    {
@@ -282,13 +267,11 @@ public class btime
 	    bnj_scroll1 = data;
 	} };
 	
-	public static WriteHandlerPtr bnj_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bnj_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    bnj_scroll2 = data;
 	} };
 	
-	public static WriteHandlerPtr zoar_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zoar_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // Zoar video control
 	    //
 	    // Bit 0-2 = Unknown (always 0). Marked as MCOL on schematics
@@ -299,8 +282,7 @@ public class btime
 		flip_screen_set(data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr btime_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr btime_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // Btime video control
 	    //
 	    // Bit 0   = Flip screen
@@ -309,8 +291,7 @@ public class btime
 		flip_screen_set(data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr bnj_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bnj_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* Bnj/Lnc works a little differently than the btime/eggs (apparently). */
 	    /* According to the information at: */
 	    /* http://www.davesclassics.com/arcade/Switch_Settings/BumpNJump.sw */
@@ -325,8 +306,7 @@ public class btime
 	        btime_video_control_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr lnc_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lnc_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // I have a feeling that this only works by coincidence. I couldn't
 	    // figure out how NMI's are disabled by the sound processor
 	    lnc_sound_interrupt_enabled = data & 0x08;
@@ -334,8 +314,7 @@ public class btime
 	    bnj_video_control_w(offset, data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr disco_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr disco_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_vh_global_attribute(&btime_palette, (data >> 2) & 0x03);
 	
 		if (!(input_port_3_r(0) & 0x40)) /* cocktail mode */
@@ -345,9 +324,8 @@ public class btime
 	} };
 	
 	
-	public static InterruptHandlerPtr lnc_sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-	    if (lnc_sound_interrupt_enabled != 0)
+	public static InterruptHandlerPtr lnc_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
+	    if (lnc_sound_interrupt_enabled)
 	    	cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -383,18 +361,18 @@ public class btime
 	        sx = 31 - (offs / 32);
 	        sy = offs % 32;
 	
-	        if (flip_screen != 0)
+	        if (flip_screen())
 	        {
 	            sx = 31 - sx;
 	            sy = 31 - sy;
 	        }
 	
-	        drawgfx(bitmap,Machine.gfx[0],
+	        drawgfx(bitmap,Machine->gfx[0],
 	                code,
 	                color,
 	                flip_screen(),flip_screen(),
 	                8*sx,8*sy,
-	                Machine.visible_area,transparency,0);
+	                Machine->visible_area,transparency,0);
 	    }
 	}
 	
@@ -417,7 +395,7 @@ public class btime
 	        flipx = sprite_ram[offs + 0] & 0x04;
 	        flipy = sprite_ram[offs + 0] & 0x02;
 	
-	        if (flip_screen != 0)
+	        if (flip_screen())
 	        {
 	            sx = 240 - sx;
 	            sy = 240 - sy + sprite_y_adjust_flip_screen;
@@ -428,22 +406,22 @@ public class btime
 	
 	        sy -= sprite_y_adjust;
 	
-	        drawgfx(bitmap,Machine.gfx[1],
+	        drawgfx(bitmap,Machine->gfx[1],
 	                sprite_ram[offs + interleave],
 	                color,
 	                flipx,flipy,
 	                sx,sy,
-	                Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 	        sy += (flip_screen() ? -256 : 256);
 	
 	        // Wrap around
-	        drawgfx(bitmap,Machine.gfx[1],
+	        drawgfx(bitmap,Machine->gfx[1],
 	                sprite_ram[offs + interleave],
 	                color,
 	                flipx,flipy,
 	                sx,sy,
-	                Machine.visible_area,TRANSPARENCY_PEN,0);
+	                Machine->visible_area,TRANSPARENCY_PEN,0);
 	    }
 	}
 	
@@ -470,13 +448,13 @@ public class btime
 	            sx = 240 - (16 * (offs / 16) + scroll);
 	            sy = 16 * (offs % 16);
 	
-	            if (flip_screen != 0)
+	            if (flip_screen())
 	            {
 	                sx = 240 - sx;
 	                sy = 240 - sy;
 	            }
 	
-	            drawgfx(bitmap, Machine.gfx[2],
+	            drawgfx(bitmap, Machine->gfx[2],
 	                    memory_region(REGION_GFX3)[tileoffset + offs],
 	                    btime_palette,
 	                    flip_screen(),flip_screen(),
@@ -502,7 +480,7 @@ public class btime
 	        switch (char_dirty[code])
 	        {
 	        case 1:
-	            decodechar(Machine.gfx[0],code,deco_charram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
+	            decodechar(Machine->gfx[0],code,deco_charram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	            char_dirty[code] = 2;
 	            /* fall through */
 	        case 2:
@@ -528,25 +506,24 @@ public class btime
 	        {
 	            sprite_dirty[code] = 0;
 	
-	            decodechar(Machine.gfx[1],code,deco_charram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
+	            decodechar(Machine->gfx[1],code,deco_charram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
 	        }
 	    }
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_btime  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
-	    if ((bnj_scroll1 & 0x10) != 0)
+	    if (bnj_scroll1 & 0x10)
 	    {
 	        int i, start;
 	
 	        // Generate tile map
 	        static unsigned char btime_tilemap[4];
 	
-	        if (flip_screen != 0)
+	        if (flip_screen())
 	            start = 0;
 	        else
 	            start = 1;
@@ -573,9 +550,8 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_eggs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
 	    drawchars(tmpbitmap, TRANSPARENCY_NONE, 0, -1);
@@ -587,9 +563,8 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_lnc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
 	    drawchars(tmpbitmap, TRANSPARENCY_NONE, 0, -1);
@@ -601,12 +576,11 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_zoar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
-	    if ((bnj_scroll1 & 0x04) != 0)
+	    if (bnj_scroll1 & 0x04)
 	    {
 	        drawbackground(bitmap, zoar_scrollram);
 	
@@ -626,9 +600,8 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_bnj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	    {
 	        memset(dirtybuffer,1,videoram_size[0]);
 	        memset(dirtybuffer2,1,bnj_backgroundram_size);
@@ -638,7 +611,7 @@ public class btime
 	     *  For each character in the background RAM, check if it has been
 	     *  modified since last time and update it accordingly.
 	     */
-	    if (bnj_scroll1 != 0)
+	    if (bnj_scroll1)
 	    {
 	        int scroll, offs;
 	
@@ -654,7 +627,7 @@ public class btime
 	            sy = 16 * (((offs % 0x100) < 0x80) ? offs % 8 : (offs % 8) + 8);
 	            sx = 496 - sx;
 	
-	            if (flip_screen != 0)
+	            if (flip_screen())
 	            {
 	                sx = 496 - sx;
 	                sy = 240 - sy;
@@ -670,7 +643,7 @@ public class btime
 	
 	        /* copy the background bitmap to the screen */
 	        scroll = (bnj_scroll1 & 0x02) * 128 + 511 - bnj_scroll2;
-	        if (flip_screen == 0)
+	        if (!flip_screen())
 	            scroll = 767-scroll;
 	        copyscrollbitmap (bitmap, background_bitmap, 1, &scroll, 0, 0, Machine.visible_area,TRANSPARENCY_NONE, 0);
 	
@@ -692,12 +665,11 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cookrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cookrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    int offs;
 	
 	
-	    if (get_vh_global_attribute_changed() != 0)
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
 	    /*
@@ -711,7 +683,7 @@ public class btime
 	        sx = 31 - (offs / 32);
 	        sy = offs % 32;
 	
-	        if (flip_screen != 0)
+	        if (flip_screen())
 	        {
 	            sx = 31 - sx;
 	            sy = 31 - sy;
@@ -731,9 +703,8 @@ public class btime
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_disco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer,1,videoram_size[0]);
 	
 	    decode_modified(spriteram, 1);

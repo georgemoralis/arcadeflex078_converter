@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,16 +21,16 @@ public class drgnmst
 	static void get_drgnmst_fg_tile_info(int tile_index)
 	{
 		int tileno,colour, flipyx;
-		tileno = drgnmst_fg_videoram.read(tile_index*2)& 0xfff;
-		colour = drgnmst_fg_videoram.read(tile_index*2+1)& 0x1f;
-		flipyx = (drgnmst_fg_videoram.read(tile_index*2+1)& 0x60)>>5;
+		tileno = drgnmst_fg_videoram[tile_index*2] & 0xfff;
+		colour = drgnmst_fg_videoram[tile_index*2+1] & 0x1f;
+		flipyx = (drgnmst_fg_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_fg_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_fg_videoram.read(offset));
+		COMBINE_DATA(&drgnmst_fg_videoram[offset]);
 		tilemap_mark_tile_dirty(drgnmst_fg_tilemap,offset/2);
 	}
 	
@@ -39,39 +39,39 @@ public class drgnmst
 	static void get_drgnmst_bg_tile_info(int tile_index)
 	{
 		int tileno,colour,flipyx;
-		tileno = (drgnmst_bg_videoram.read(tile_index*2)& 0x1fff)+0x800;
-		colour = drgnmst_bg_videoram.read(tile_index*2+1)& 0x1f;
-		flipyx = (drgnmst_bg_videoram.read(tile_index*2+1)& 0x60)>>5;
+		tileno = (drgnmst_bg_videoram[tile_index*2]& 0x1fff)+0x800;
+		colour = drgnmst_bg_videoram[tile_index*2+1] & 0x1f;
+		flipyx = (drgnmst_bg_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(3,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_bg_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_bg_videoram.read(offset));
+		COMBINE_DATA(&drgnmst_bg_videoram[offset]);
 		tilemap_mark_tile_dirty(drgnmst_bg_tilemap,offset/2);
 	}
 	
 	static void get_drgnmst_md_tile_info(int tile_index)
 	{
 		int tileno,colour,flipyx;
-		tileno = (drgnmst_md_videoram.read(tile_index*2)& 0x7fff)-0x2000;
+		tileno = (drgnmst_md_videoram[tile_index*2]& 0x7fff)-0x2000;
 	
-		colour = drgnmst_md_videoram.read(tile_index*2+1)& 0x1f;
-		flipyx = (drgnmst_md_videoram.read(tile_index*2+1)& 0x60)>>5;
+		colour = drgnmst_md_videoram[tile_index*2+1] & 0x1f;
+		flipyx = (drgnmst_md_videoram[tile_index*2+1] & 0x60)>>5;
 	
 		SET_TILE_INFO(2,tileno,colour,TILE_FLIPYX(flipyx))
 	}
 	
 	WRITE16_HANDLER( drgnmst_md_videoram_w )
 	{
-		COMBINE_DATA(&drgnmst_md_videoram.read(offset));
+		COMBINE_DATA(&drgnmst_md_videoram[offset]);
 		tilemap_mark_tile_dirty(drgnmst_md_tilemap,offset/2);
 	}
 	
 	static void drgnmst_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		data16_t *source = spriteram16;
 		data16_t *finish = source + 0x800/2;
 	
@@ -94,8 +94,8 @@ public class drgnmst
 			if ((source[3] & 0xff00) == 0xff00) break;
 	
 	
-			if (flipx == 0) { incx = 16;} else { incx = -16; xpos += 16*wide; }
-			if (flipy == 0) { incy = 16;} else { incy = -16; ypos += 16*high; }
+			if (NOT(flipx)) { incx = 16;} else { incx = -16; xpos += 16*wide; }
+			if (NOT(flipy)) { incy = 16;} else { incy = -16; ypos += 16*high; }
 	
 	
 			for (y=0;y<=high;y++) {
@@ -132,8 +132,7 @@ public class drgnmst
 		return (col*8)+(row&0x07)+((row&0xf8)>>3)*512;
 	}
 	
-	VIDEO_START(drgnmst)
-	{
+	public static VideoStartHandlerPtr video_start_drgnmst  = new VideoStartHandlerPtr() { public int handler(){
 		drgnmst_fg_tilemap = tilemap_create(get_drgnmst_fg_tile_info,drgnmst_fg_tilemap_scan_cols,TILEMAP_TRANSPARENT,      8, 8, 64,64);
 		tilemap_set_transparent_pen(drgnmst_fg_tilemap,15);
 	
@@ -147,10 +146,9 @@ public class drgnmst
 		tilemap_set_scroll_rows(drgnmst_md_tilemap,1024);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(drgnmst)
-	{
+	public static VideoUpdateHandlerPtr video_update_drgnmst  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int y;
 	
 		tilemap_set_scrollx(drgnmst_bg_tilemap,0, drgnmst_vidregs[10]-18); // verify
@@ -206,5 +204,5 @@ public class drgnmst
 	//	usrintf_showmessage	("x %04x x %04x x %04x x %04x x %04x", drgnmst_vidregs2[0], drgnmst_vidregs[12], drgnmst_vidregs[13], drgnmst_vidregs[14], drgnmst_vidregs[15]);
 	//	usrintf_showmessage	("x %04x x %04x y %04x y %04x z %04x z %04x",drgnmst_vidregs[0],drgnmst_vidregs[1],drgnmst_vidregs[2],drgnmst_vidregs[3],drgnmst_vidregs[4],drgnmst_vidregs[5]);
 	
-	}
+	} };
 }

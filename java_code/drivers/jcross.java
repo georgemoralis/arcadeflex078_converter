@@ -18,7 +18,7 @@ Could be bad dump ('final' romset is made of two sets marked as 'bad' )
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,8 +34,8 @@ public class jcross
 	static int sound_cpu_busy=0;
 	
 	data8_t *jcr_sharedram;
-	static READ_HANDLER(sharedram_r){	return jcr_sharedram[offset];}
-	static WRITE_HANDLER(sharedram_w){	jcr_sharedram[offset]=data;}
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)return jcr_sharedram[offset];}
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)jcr_sharedram[offset]=data;}
 	
 	static struct namco_interface snkwave_interface =
 	{
@@ -56,35 +56,31 @@ public class jcross
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_cpu_busy = 0x20;
 		soundlatch_w.handler(0, data);
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sound_cpu_busy = 0;
 		return(soundlatch_r(0));
 	} };
 	
-	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr jcross_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jcross_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(input_port_0_r.handler(0) | sound_cpu_busy);
 	} };
 	
-	static WRITE_HANDLER(jcross_vregs0_w){jcross_vregs[0]=data;}
-	static WRITE_HANDLER(jcross_vregs1_w){jcross_vregs[1]=data;}
-	static WRITE_HANDLER(jcross_vregs2_w){jcross_vregs[2]=data;}
-	static WRITE_HANDLER(jcross_vregs3_w){jcross_vregs[3]=data;}
-	static WRITE_HANDLER(jcross_vregs4_w){jcross_vregs[4]=data;}
+	public static WriteHandlerPtr jcross_vregs0_w = new WriteHandlerPtr() {public void handler(int offset, int data)cross_vregs[0]=data;}
+	public static WriteHandlerPtr jcross_vregs1_w = new WriteHandlerPtr() {public void handler(int offset, int data)cross_vregs[1]=data;}
+	public static WriteHandlerPtr jcross_vregs2_w = new WriteHandlerPtr() {public void handler(int offset, int data)cross_vregs[2]=data;}
+	public static WriteHandlerPtr jcross_vregs3_w = new WriteHandlerPtr() {public void handler(int offset, int data)cross_vregs[3]=data;}
+	public static WriteHandlerPtr jcross_vregs4_w = new WriteHandlerPtr() {public void handler(int offset, int data)cross_vregs[4]=data;}
 	
 	
 	public static Memory_ReadAddress readmem_sound[]={
@@ -168,7 +164,7 @@ public class jcross
 	};
 	
 	
-	static InputPortPtr input_ports_jcross = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jcross = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jcross )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -299,8 +295,7 @@ public class jcross
 	**
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_jcross = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jcross )
 	
 		MDRV_CPU_ADD(Z80, 3360000)
 		MDRV_CPU_MEMORY(readmem_CPUA,writemem_CPUA)
@@ -332,9 +327,7 @@ public class jcross
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(NAMCO, snkwave_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_jcross = new RomLoadPtr(){ public void handler(){ 
@@ -375,7 +368,7 @@ public class jcross
 		ROM_LOAD( "jcrossp0.j9",  0x800, 0x400, CRC(99f54d48) SHA1(9bd20eaa9706d28eaca9f5e195204d89e302272f) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_jcross	   = new GameDriver("1984"	,"jcross"	,"jcross.java"	,rom_jcross,null	,machine_driver_jcross	,input_ports_jcross	,null	,ROT270	,	"SNK", "Jumping Cross",GAME_NO_COCKTAIL|GAME_IMPERFECT_GRAPHICS)
+	GAMEX(1984, jcross, 0, jcross, jcross, 0, ROT270,   "SNK", "Jumping Cross",GAME_NO_COCKTAIL|GAME_IMPERFECT_GRAPHICS)
 	
 	
 }

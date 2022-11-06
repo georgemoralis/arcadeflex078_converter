@@ -11,7 +11,7 @@ Juno First emu and the mame driver is based on.
 Read/Write memory
 
 $0000-$7FFF = Screen RAM (only written to)
-$8000-$800f = Palette RAM. BBGGGRRR (D7.D0)
+$8000-$800f = Palette RAM. BBGGGRRR (D7->D0)
 $8100-$8FFF = Work RAM
 
 Write memory
@@ -50,28 +50,28 @@ $802c	- Dipswitch 1
 
 
 
-$9000.$9FFF Banked Memory - see below
-$A000.$BFFF "juno\\JFA_B9.BIN",
-$C000.$DFFF "juno\\JFB_B10.BIN",
-$E000.$FFFF "juno\\JFC_A10.BIN",
+$9000->$9FFF Banked Memory - see below
+$A000->$BFFF "juno\\JFA_B9.BIN",
+$C000->$DFFF "juno\\JFB_B10.BIN",
+$E000->$FFFF "juno\\JFC_A10.BIN",
 
-Banked memory - Paged into $9000.$9FFF..
+Banked memory - Paged into $9000->$9FFF..
 
 NOTE - In Tutankhm this only contains graphics, in Juno First it also contains code. (which
 		generally sets up the blitter)
 
-	"juno\\JFC1_A4.BIN",	$0000.$1FFF
-	"juno\\JFC2_A5.BIN",	$2000.$3FFF
-	"juno\\JFC3_A6.BIN",	$4000.$5FFF
-	"juno\\JFC4_A7.BIN",	$6000.$7FFF
-	"juno\\JFC5_A8.BIN",	$8000.$9FFF
-	"juno\\JFC6_A9.BIN",	$A000.$bFFF
+	"juno\\JFC1_A4.BIN",	$0000->$1FFF
+	"juno\\JFC2_A5.BIN",	$2000->$3FFF
+	"juno\\JFC3_A6.BIN",	$4000->$5FFF
+	"juno\\JFC4_A7.BIN",	$6000->$7FFF
+	"juno\\JFC5_A8.BIN",	$8000->$9FFF
+	"juno\\JFC6_A9.BIN",	$A000->$bFFF
 
 Blitter source graphics
 
-	"juno\\JFS3_C7.BIN",	$C000.$DFFF
-	"juno\\JFS4_D7.BIN",	$E000.$FFFF
-	"juno\\JFS5_E7.BIN",	$10000.$11FFF
+	"juno\\JFS3_C7.BIN",	$C000->$DFFF
+	"juno\\JFS4_D7.BIN",	$E000->$FFFF
+	"juno\\JFS5_E7.BIN",	$10000->$11FFF
 
 
 ***************************************************************************/
@@ -79,7 +79,7 @@ Blitter source graphics
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -96,8 +96,7 @@ public class junofrst
 	
 	
 	
-	public static WriteHandlerPtr junofrst_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -105,8 +104,7 @@ public class junofrst
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static ReadHandlerPtr junofrst_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr junofrst_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int timer;
 	
 	
@@ -121,8 +119,7 @@ public class junofrst
 		return (timer << 4) | i8039_status;
 	} };
 	
-	public static WriteHandlerPtr junofrst_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 	
@@ -132,15 +129,14 @@ public class junofrst
 	
 	
 			C = 0;
-			if ((data & 1) != 0) C += 47000;	/* 47000pF = 0.047uF */
-			if ((data & 2) != 0) C += 220000;	/* 220000pF = 0.22uF */
+			if (data & 1) C += 47000;	/* 47000pF = 0.047uF */
+			if (data & 2) C += 220000;	/* 220000pF = 0.22uF */
 			data >>= 2;
 			set_RC_filter(i,1000,2200,200,C);
 		}
 	} };
 	
-	public static WriteHandlerPtr junofrst_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -153,25 +149,21 @@ public class junofrst
 		last = data;
 	} };
 	
-	public static WriteHandlerPtr junofrst_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x80) == 0)
 			cpu_set_irq_line(2, 0, CLEAR_LINE);
 		i8039_status = (data & 0x70) >> 4;
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
-	public static WriteHandlerPtr junofrst_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -257,7 +249,7 @@ public class junofrst
 	};
 	
 	
-	static InputPortPtr input_ports_junofrst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_junofrst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( junofrst )
 		PORT_START();       /* DSW2 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x03, "3" );
@@ -371,8 +363,7 @@ public class junofrst
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_junofrst = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( junofrst )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)			/* 1.5 MHz ??? */
@@ -403,9 +394,7 @@ public class junofrst
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_junofrst = new RomLoadPtr(){ public void handler(){ 
@@ -460,12 +449,11 @@ public class junofrst
 	
 	
 	
-	public static DriverInitHandlerPtr init_junofrst  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_junofrst  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_junofrst	   = new GameDriver("1983"	,"junofrst"	,"junofrst.java"	,rom_junofrst,null	,machine_driver_junofrst	,input_ports_junofrst	,init_junofrst	,ROT90	,	"Konami", "Juno First" )
-	public static GameDriver driver_junofstg	   = new GameDriver("1983"	,"junofstg"	,"junofrst.java"	,rom_junofstg,driver_junofrst	,machine_driver_junofrst	,input_ports_junofrst	,init_junofrst	,ROT90	,	"Konami (Gottlieb license)", "Juno First (Gottlieb)" )
+	GAME( 1983, junofrst, 0,        junofrst, junofrst, junofrst, ROT90, "Konami", "Juno First" )
+	GAME( 1983, junofstg, junofrst, junofrst, junofrst, junofrst, ROT90, "Konami (Gottlieb license)", "Juno First (Gottlieb)" )
 }

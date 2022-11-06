@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -90,7 +90,7 @@ public class outrun
 	{
 		UINT8 *buf = malloc( source_size );
 		UINT8 *buf_base = buf;
-		if (buf != 0){
+		if( buf ){
 			UINT8 *gr = memory_region(REGION_GFX3);
 			UINT8 *grr = NULL;
 		    int i,j,k;
@@ -159,7 +159,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -175,7 +175,7 @@ public class outrun
 	
 	#if 0
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -189,7 +189,7 @@ public class outrun
 	#if 0
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -202,10 +202,10 @@ public class outrun
 	}
 	#endif
 	
-	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (sys16_custom_irq != 0) sys16_custom_irq();
+	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler()
+		if(sys16_custom_irq) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
-	} };
+	}
 	
 	public static IO_ReadPort sound_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -238,20 +238,20 @@ public class outrun
 	
 	static WRITE16_HANDLER( sound_shared_ram_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			sound_shared_ram[offset*2+1] = data&0xff;
 		}
-		if (ACCESSING_MSB != 0){
+		if( ACCESSING_MSB ){
 			sound_shared_ram[offset*2] = data>>8;
 		}
 	}
 	
-	public static ReadHandlerPtr sound2_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr sound2_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return sound_shared_ram[offset];
-	} };
-	public static WriteHandlerPtr sound2_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	}
+	public static WriteHandlerPtr sound2_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		sound_shared_ram[offset] = data;
-	} };
+	}
 	
 	
 	static RomLoadPtr rom_shangon = new RomLoadPtr(){ public void handler(){ 
@@ -639,7 +639,7 @@ public class outrun
 			case 1:	return 0xff00;  // brake
 			case 2:	return 0x0000;  // accel
 			case 0:	return 0x0000;  // neither
-		}
+		} };
 		return 0x0000;
 	}
 	
@@ -677,7 +677,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_analog_select_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if ( ACCESSING_LSB )
 		{
 			selected_analog = (data & 0x0c) >> 2;
 		}
@@ -689,10 +689,10 @@ public class outrun
 	{
 		int ret=input_port_2_r( offset );
 		int data=input_port_1_r( offset );
-		if ((data & 4) != 0) or_gear=0;
-		else if ((data & 8) != 0) or_gear=1;
+		if(data & 4) or_gear=0;
+		else if(data & 8) or_gear=1;
 	
-		if (or_gear != 0) ret|=0x10;
+		if(or_gear) ret|=0x10;
 		else ret&=0xef;
 	
 		return ret;
@@ -705,7 +705,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_ctrl1_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			sys16_refreshenable = data & 0x20;
 			/* bit 0 always 1? */
 			/* bits 2-3 continuously change: 00-01-10-11; this is the same that
@@ -715,7 +715,7 @@ public class outrun
 	
 	static WRITE16_HANDLER( outrun_ctrl2_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			/* bit 0 always 1? */
 			set_led_status(0,data & 0x04);
 			set_led_status(1,data & 0x02);	/* brakes */
@@ -805,11 +805,11 @@ public class outrun
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_outrun  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_outrun  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[8] = {
 			7,0,1,2,
 			3,4,5,6
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_spritesystem = sys16_sprite_outrun;
 		sys16_textlayer_lo_min=0;
@@ -854,13 +854,13 @@ public class outrun
 		sys16_gr_colorflip[1][3]=0x00 / 2;
 	
 		sys16_gr_second_road = &sys16_extraram[0x8000];
-	} };
+	}
 	
-	public static MachineInitHandlerPtr machine_init_outruna  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_outruna  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[8] = {
 			7,0,1,2,
 			3,4,5,6
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_spritesystem = sys16_sprite_outrun;
 		sys16_textlayer_lo_min=0;
@@ -904,17 +904,15 @@ public class outrun
 		sys16_gr_colorflip[1][3]=0x00 / 2;
 	
 		sys16_gr_second_road = &sys16_extraram[0x10000];
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_outrun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_outrun  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_interleave_sprite_data( 0x100000 );
 		generate_gr_screen(512,2048,0,0,3,0x8000);
 	} };
 	
-	public static DriverInitHandlerPtr init_outrunb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_outrunb  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int i;
 	
@@ -1001,7 +999,7 @@ public class outrun
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_outrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_outrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( outrun )
 	PORT_START(); 	/* Steering */
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_CENTER, 100, 3, 0x48, 0xb8 );
 	//	PORT_ANALOG( 0xff, 0x7f, IPT_PADDLE , 70, 3, 0x48, 0xb8 );
@@ -1067,15 +1065,14 @@ public class outrun
 	INPUT_PORTS_END(); }}; 
 	
 	/***************************************************************************/
-	public static InterruptHandlerPtr or_interrupt = new InterruptHandlerPtr() {public void handler(){
+	public static InterruptHandlerPtr or_interrupt = new InterruptHandlerPtr() {public void handler()
 		int intleft=cpu_getiloops();
 		if(intleft!=0) cpu_set_irq_line(0, 2, HOLD_LINE);
 		else cpu_set_irq_line(0, 4, HOLD_LINE);
-	} };
+	}
 	
 	
-	public static MachineHandlerPtr machine_driver_outrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( outrun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1111,21 +1108,16 @@ public class outrun
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_outruna = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( outruna )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(outrun)
 	
 		MDRV_MACHINE_INIT(outruna)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static data16_t *shared_ram2;
@@ -1212,7 +1204,7 @@ public class outrun
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_shangon  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shangon  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_hangon;
 		sys16_sprxoffset = -0xc0;
@@ -1244,23 +1236,23 @@ public class outrun
 		sys16_gr_colorflip[1][1]=0x04 / 2;
 		sys16_gr_colorflip[1][2]=0x02 / 2;
 		sys16_gr_colorflip[1][3]=0x02 / 2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shangon  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_shangon  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		generate_gr_screen(512,1024,0,0,4,0x8000);
 	
 		sys16_patch_z80code( 0x1087, 0x20);
 		sys16_patch_z80code( 0x1088, 0x01);
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shangonb  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_shangonb  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		generate_gr_screen(512,1024,8,0,4,0x8000);
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_shangon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shangon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shangon )
 	PORT_START(); 	/* Steering */
 		PORT_ANALOG( 0xff, 0x7f, IPT_AD_STICK_X | IPF_REVERSE | IPF_CENTER , 100, 3, 0x42, 0xbd );
 	
@@ -1324,8 +1316,7 @@ public class outrun
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_shangon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shangon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1360,16 +1351,14 @@ public class outrun
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k_512)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static GameDriver driver_shangon	   = new GameDriver("1992"	,"shangon"	,"outrun.java"	,rom_shangon,null	,machine_driver_shangon	,input_ports_shangon	,init_shangon	,ROT0	,	"Sega",    "Super Hang-On", GAME_NOT_WORKING )
-	public static GameDriver driver_shangonb	   = new GameDriver("1992"	,"shangonb"	,"outrun.java"	,rom_shangonb,driver_shangon	,machine_driver_shangon	,input_ports_shangon	,init_shangonb	,ROT0	,	"bootleg", "Super Hang-On (bootleg)" )
+	GAMEX(1992, shangon,  0,        shangon,  shangon,  shangon,  ROT0,         "Sega",    "Super Hang-On", GAME_NOT_WORKING )
+	GAME( 1992, shangonb, shangon,  shangon,  shangon,  shangonb, ROT0,         "bootleg", "Super Hang-On (bootleg)" )
 	
-	public static GameDriver driver_outrun	   = new GameDriver("1986"	,"outrun"	,"outrun.java"	,rom_outrun,null	,machine_driver_outrun	,input_ports_outrun	,init_outrun	,ROT0	,	"Sega",    "Out Run (set 1)" )
-	public static GameDriver driver_outruna	   = new GameDriver("1986"	,"outruna"	,"outrun.java"	,rom_outruna,driver_outrun	,machine_driver_outruna	,input_ports_outrun	,init_outrun	,ROT0	,	"Sega",    "Out Run (set 2)" )
-	public static GameDriver driver_outrunb	   = new GameDriver("1986"	,"outrunb"	,"outrun.java"	,rom_outrunb,driver_outrun	,machine_driver_outruna	,input_ports_outrun	,init_outrunb	,ROT0	,	"Sega",    "Out Run (set 3)" )
-	public static GameDriver driver_toutrun	   = new GameDriver("19??"	,"toutrun"	,"outrun.java"	,rom_toutrun,null	,machine_driver_outrun	,input_ports_outrun	,init_outrun	,ROT0	,	"Sega", "Turbo Outrun (set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_toutruna	   = new GameDriver("19??"	,"toutruna"	,"outrun.java"	,rom_toutruna,driver_toutrun	,machine_driver_outrun	,input_ports_outrun	,init_outrun	,ROT0	,	"Sega", "Turbo Outrun (set 2)", GAME_NOT_WORKING )
+	GAME( 1986, outrun,   0,        outrun,   outrun,   outrun,   ROT0,         "Sega",    "Out Run (set 1)" )
+	GAME( 1986, outruna,  outrun,   outruna,  outrun,   outrun,   ROT0,         "Sega",    "Out Run (set 2)" )
+	GAME( 1986, outrunb,  outrun,   outruna,  outrun,   outrunb,  ROT0,         "Sega",    "Out Run (set 3)" )
+	GAMEX(19??, toutrun,  0,        outrun,   outrun,   outrun,   ROT0,         "Sega", "Turbo Outrun (set 1)", GAME_NOT_WORKING )
+	GAMEX(19??, toutruna, toutrun,  outrun,   outrun,   outrun,   ROT0,         "Sega", "Turbo Outrun (set 2)", GAME_NOT_WORKING )
 }

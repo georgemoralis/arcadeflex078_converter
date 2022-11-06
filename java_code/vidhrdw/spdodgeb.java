@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,8 +18,7 @@ public class spdodgeb
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_spdodgeb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_spdodgeb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -61,7 +60,7 @@ public class spdodgeb
 	
 	static UINT32 background_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -83,11 +82,10 @@ public class spdodgeb
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_spdodgeb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spdodgeb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap,32);
@@ -104,8 +102,7 @@ public class spdodgeb
 	
 	static int lastscroll;
 	
-	public static InterruptHandlerPtr spdodgeb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr spdodgeb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int iloop = cpu_getiloops();
 	
 		if (iloop > 1 && iloop < 32)
@@ -113,17 +110,15 @@ public class spdodgeb
 			scrollx[31-iloop] = lastscroll;
 			cpu_set_irq_line(0, M6502_IRQ_LINE, HOLD_LINE);
 		}
-		else if (iloop == 0)
+		else if (!iloop)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr spdodgeb_scrollx_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spdodgeb_scrollx_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lastscroll = (lastscroll & 0x100) | data;
 	} };
 	
-	public static WriteHandlerPtr spdodgeb_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spdodgeb_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		const UINT8 *rom = memory_region(REGION_CPU1);
 	
 		/* bit 0 = flip screen */
@@ -146,8 +141,7 @@ public class spdodgeb
 		sprite_palbank = (data & 0xc0) >> 6;
 	} };
 	
-	public static WriteHandlerPtr spdodgeb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spdodgeb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (spdodgeb_videoram[offset] != data)
 		{
 			spdodgeb_videoram[offset] = data;
@@ -169,7 +163,7 @@ public class spdodgeb
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		unsigned char *src;
 		int i;
 	
@@ -191,7 +185,7 @@ public class spdodgeb
 			int dy = -16;
 			int cy;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -210,7 +204,7 @@ public class spdodgeb
 				break;
 	
 				case 1: /* double y */
-				if (flip_screen != 0) { if (sy > 240) sy -= 256; } else { if (sy < 0) sy += 256; }
+				if (flip_screen()) { if (sy > 240) sy -= 256; } else { if (sy < 0) sy += 256; }
 				cy = sy + dy;
 				which &= ~1;
 				DRAW_SPRITE(0,sx,cy);
@@ -223,12 +217,11 @@ public class spdodgeb
 	#undef DRAW_SPRITE
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spdodgeb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spdodgeb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			for (i = 0;i < 30;i++)
 				tilemap_set_scrollx(bg_tilemap,i+1,scrollx[29 - i]+5);

@@ -37,7 +37,7 @@ Boulderdash use the same graphics chips but are different pcbs.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,7 +62,7 @@ public class dec0
 				break;
 	
 			case 4: /* 6502 sound cpu */
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					soundlatch_w(0,data & 0xff);
 					cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -98,7 +98,7 @@ public class dec0
 	{
 	    switch (offset<<1) {
 	    	case 0:
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					soundlatch_w(0,data & 0xff);
 					cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -112,7 +112,7 @@ public class dec0
 	
 	static WRITE16_HANDLER( midres_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -296,8 +296,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM3812_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM3812_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM3812_control_port_0_w(0,data);
@@ -308,8 +307,7 @@ public class dec0
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -428,7 +426,7 @@ public class dec0
 		PORT_DIPSETTING(    0x0c, DEF_STR( "1C_1C") ); \
 		PORT_DIPSETTING(    0x08, DEF_STR( "1C_2C") ); \
 	
-	static InputPortPtr input_ports_hbarrel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hbarrel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hbarrel )
 		DEC0_PLAYER1_CONTROL
 		DEC0_PLAYER2_CONTROL
 		DEC0_MACHINE_CONTROL
@@ -476,7 +474,7 @@ public class dec0
 		PORT_ANALOGX( 0xff, 0x00, IPT_DIAL | IPF_REVERSE | IPF_PLAYER2, 25, 10, 0, 0, KEYCODE_N, KEYCODE_M, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_baddudes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_baddudes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( baddudes )
 		DEC0_PLAYER1_CONTROL
 		DEC0_PLAYER2_CONTROL
 		DEC0_MACHINE_CONTROL
@@ -525,7 +523,7 @@ public class dec0
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );/* unused */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_robocop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robocop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robocop )
 		DEC0_PLAYER1_CONTROL
 		DEC0_PLAYER2_CONTROL
 		DEC0_MACHINE_CONTROL
@@ -570,7 +568,7 @@ public class dec0
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hippodrm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hippodrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hippodrm )
 		DEC0_PLAYER1_CONTROL
 		DEC0_PLAYER2_CONTROL
 		DEC0_MACHINE_CONTROL
@@ -640,7 +638,7 @@ public class dec0
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START2 );
 	
 	
-	static InputPortPtr input_ports_slyspy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_slyspy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( slyspy )
 		DEC1_PLAYER1_CONTROL
 		DEC1_PLAYER2_CONTROL
 	
@@ -692,7 +690,7 @@ public class dec0
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_midres = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_midres = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( midres )
 		DEC1_PLAYER1_CONTROL
 		DEC1_PLAYER2_CONTROL
 	
@@ -752,7 +750,7 @@ public class dec0
 		PORT_ANALOGX( 0xff, 0x00, IPT_DIAL | IPF_REVERSE | IPF_PLAYER2, 25, 10, 0, 0, KEYCODE_N, KEYCODE_M, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bouldash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bouldash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bouldash )
 		DEC1_PLAYER1_CONTROL
 		DEC1_PLAYER2_CONTROL
 	
@@ -899,8 +897,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_hbarrel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hbarrel )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -928,12 +925,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_baddudes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( baddudes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -961,12 +955,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_birdtry = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( birdtry )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -994,12 +985,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_robocop = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robocop )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1031,12 +1019,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_robocopb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robocopb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1064,12 +1049,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hippodrm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hippodrm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1101,12 +1083,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_slyspy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slyspy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1134,12 +1113,9 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812b_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_midres = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( midres )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1167,9 +1143,7 @@ public class dec0
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812b_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -2142,27 +2116,27 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_hbarrel	   = new GameDriver("1987"	,"hbarrel"	,"dec0.java"	,rom_hbarrel,null	,machine_driver_hbarrel	,input_ports_hbarrel	,init_hbarrel	,ROT270	,	"Data East USA",         "Heavy Barrel (US)" )
-	public static GameDriver driver_hbarrelw	   = new GameDriver("1987"	,"hbarrelw"	,"dec0.java"	,rom_hbarrelw,driver_hbarrel	,machine_driver_hbarrel	,input_ports_hbarrel	,init_hbarrelw	,ROT270	,	"Data East Corporation", "Heavy Barrel (World)" )
-	public static GameDriver driver_baddudes	   = new GameDriver("1988"	,"baddudes"	,"dec0.java"	,rom_baddudes,null	,machine_driver_baddudes	,input_ports_baddudes	,init_baddudes	,ROT0	,	"Data East USA",         "Bad Dudes vs. Dragonninja (US)" )
-	public static GameDriver driver_drgninja	   = new GameDriver("1988"	,"drgninja"	,"dec0.java"	,rom_drgninja,driver_baddudes	,machine_driver_baddudes	,input_ports_baddudes	,init_baddudes	,ROT0	,	"Data East Corporation", "Dragonninja (Japan)" )
-	public static GameDriver driver_birdtry	   = new GameDriver("1988"	,"birdtry"	,"dec0.java"	,rom_birdtry,null	,machine_driver_birdtry	,input_ports_hbarrel	,init_birdtry	,ROT270	,	"Data East Corporation", "Birdie Try (Japan)", GAME_UNEMULATED_PROTECTION|GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_robocop	   = new GameDriver("1988"	,"robocop"	,"dec0.java"	,rom_robocop,null	,machine_driver_robocop	,input_ports_robocop	,init_robocop	,ROT0	,	"Data East Corporation", "Robocop (World revision 4)" )
-	public static GameDriver driver_robocopw	   = new GameDriver("1988"	,"robocopw"	,"dec0.java"	,rom_robocopw,driver_robocop	,machine_driver_robocop	,input_ports_robocop	,init_robocop	,ROT0	,	"Data East Corporation", "Robocop (World revision 3)" )
-	public static GameDriver driver_robocopj	   = new GameDriver("1988"	,"robocopj"	,"dec0.java"	,rom_robocopj,driver_robocop	,machine_driver_robocop	,input_ports_robocop	,init_robocop	,ROT0	,	"Data East Corporation", "Robocop (Japan)" )
-	public static GameDriver driver_robocopu	   = new GameDriver("1988"	,"robocopu"	,"dec0.java"	,rom_robocopu,driver_robocop	,machine_driver_robocop	,input_ports_robocop	,init_robocop	,ROT0	,	"Data East USA",         "Robocop (US revision 1)" )
-	public static GameDriver driver_robocpu0	   = new GameDriver("1988"	,"robocpu0"	,"dec0.java"	,rom_robocpu0,driver_robocop	,machine_driver_robocop	,input_ports_robocop	,init_robocop	,ROT0	,	"Data East USA",         "Robocop (US revision 0)" )
-	public static GameDriver driver_robocopb	   = new GameDriver("1988"	,"robocopb"	,"dec0.java"	,rom_robocopb,driver_robocop	,machine_driver_robocopb	,input_ports_robocop	,init_robocop	,ROT0	,	"bootleg",               "Robocop (World bootleg)")
-	public static GameDriver driver_hippodrm	   = new GameDriver("1989"	,"hippodrm"	,"dec0.java"	,rom_hippodrm,null	,machine_driver_hippodrm	,input_ports_hippodrm	,init_hippodrm	,ROT0	,	"Data East USA",         "Hippodrome (US)" )
-	public static GameDriver driver_ffantasy	   = new GameDriver("1989"	,"ffantasy"	,"dec0.java"	,rom_ffantasy,driver_hippodrm	,machine_driver_hippodrm	,input_ports_hippodrm	,init_hippodrm	,ROT0	,	"Data East Corporation", "Fighting Fantasy (Japan revision 2)" )
-	public static GameDriver driver_ffantasa	   = new GameDriver("1989"	,"ffantasa"	,"dec0.java"	,rom_ffantasa,driver_hippodrm	,machine_driver_hippodrm	,input_ports_hippodrm	,init_hippodrm	,ROT0	,	"Data East Corporation", "Fighting Fantasy (Japan)" )
-	public static GameDriver driver_slyspy	   = new GameDriver("1989"	,"slyspy"	,"dec0.java"	,rom_slyspy,null	,machine_driver_slyspy	,input_ports_slyspy	,init_slyspy	,ROT0	,	"Data East USA",         "Sly Spy (US revision 3)" )
-	public static GameDriver driver_slyspy2	   = new GameDriver("1989"	,"slyspy2"	,"dec0.java"	,rom_slyspy2,driver_slyspy	,machine_driver_slyspy	,input_ports_slyspy	,init_slyspy	,ROT0	,	"Data East USA",         "Sly Spy (US revision 2)" )
-	public static GameDriver driver_secretag	   = new GameDriver("1989"	,"secretag"	,"dec0.java"	,rom_secretag,driver_slyspy	,machine_driver_slyspy	,input_ports_slyspy	,init_slyspy	,ROT0	,	"Data East Corporation", "Secret Agent (World)" )
-	public static GameDriver driver_secretab	   = new GameDriver("1989"	,"secretab"	,"dec0.java"	,rom_secretab,driver_slyspy	,machine_driver_slyspy	,input_ports_slyspy	,init_slyspy	,ROT0	,	"bootleg",               "Secret Agent (bootleg)", GAME_NOT_WORKING )
-	public static GameDriver driver_midres	   = new GameDriver("1989"	,"midres"	,"dec0.java"	,rom_midres,null	,machine_driver_midres	,input_ports_midres	,null	,ROT0	,	"Data East Corporation", "Midnight Resistance (World)" )
-	public static GameDriver driver_midresu	   = new GameDriver("1989"	,"midresu"	,"dec0.java"	,rom_midresu,driver_midres	,machine_driver_midres	,input_ports_midres	,null	,ROT0	,	"Data East USA",         "Midnight Resistance (US)" )
-	public static GameDriver driver_midresj	   = new GameDriver("1989"	,"midresj"	,"dec0.java"	,rom_midresj,driver_midres	,machine_driver_midres	,input_ports_midres	,null	,ROT0	,	"Data East Corporation", "Midnight Resistance (Japan)" )
-	public static GameDriver driver_bouldash	   = new GameDriver("1990"	,"bouldash"	,"dec0.java"	,rom_bouldash,null	,machine_driver_slyspy	,input_ports_bouldash	,init_slyspy	,ROT0	,	"Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (World)" )
-	public static GameDriver driver_bouldshj	   = new GameDriver("1990"	,"bouldshj"	,"dec0.java"	,rom_bouldshj,driver_bouldash	,machine_driver_slyspy	,input_ports_bouldash	,init_slyspy	,ROT0	,	"Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (Japan)" )
+	GAME( 1987, hbarrel,  0,        hbarrel,  hbarrel,  hbarrel,  ROT270, "Data East USA",         "Heavy Barrel (US)" )
+	GAME( 1987, hbarrelw, hbarrel,  hbarrel,  hbarrel,  hbarrelw, ROT270, "Data East Corporation", "Heavy Barrel (World)" )
+	GAME( 1988, baddudes, 0,        baddudes, baddudes, baddudes, ROT0,   "Data East USA",         "Bad Dudes vs. Dragonninja (US)" )
+	GAME( 1988, drgninja, baddudes, baddudes, baddudes, baddudes, ROT0,   "Data East Corporation", "Dragonninja (Japan)" )
+	GAMEX(1988, birdtry,  0,        birdtry,  hbarrel,  birdtry,  ROT270, "Data East Corporation", "Birdie Try (Japan)", GAME_UNEMULATED_PROTECTION|GAME_IMPERFECT_GRAPHICS )
+	GAME( 1988, robocop,  0,        robocop,  robocop,  robocop,  ROT0,   "Data East Corporation", "Robocop (World revision 4)" )
+	GAME( 1988, robocopw, robocop,  robocop,  robocop,  robocop,  ROT0,   "Data East Corporation", "Robocop (World revision 3)" )
+	GAME( 1988, robocopj, robocop,  robocop,  robocop,  robocop,  ROT0,   "Data East Corporation", "Robocop (Japan)" )
+	GAME( 1988, robocopu, robocop,  robocop,  robocop,  robocop,  ROT0,   "Data East USA",         "Robocop (US revision 1)" )
+	GAME( 1988, robocpu0, robocop,  robocop,  robocop,  robocop,  ROT0,   "Data East USA",         "Robocop (US revision 0)" )
+	GAME( 1988, robocopb, robocop,  robocopb, robocop,  robocop,  ROT0,   "bootleg",               "Robocop (World bootleg)")
+	GAME( 1989, hippodrm, 0,        hippodrm, hippodrm, hippodrm, ROT0,   "Data East USA",         "Hippodrome (US)" )
+	GAME( 1989, ffantasy, hippodrm, hippodrm, hippodrm, hippodrm, ROT0,   "Data East Corporation", "Fighting Fantasy (Japan revision 2)" )
+	GAME( 1989, ffantasa, hippodrm, hippodrm, hippodrm, hippodrm, ROT0,   "Data East Corporation", "Fighting Fantasy (Japan)" )
+	GAME( 1989, slyspy,   0,        slyspy,   slyspy,   slyspy,   ROT0,   "Data East USA",         "Sly Spy (US revision 3)" )
+	GAME( 1989, slyspy2,  slyspy,   slyspy,   slyspy,   slyspy,   ROT0,   "Data East USA",         "Sly Spy (US revision 2)" )
+	GAME( 1989, secretag, slyspy,   slyspy,   slyspy,   slyspy,   ROT0,   "Data East Corporation", "Secret Agent (World)" )
+	GAMEX(1989, secretab, slyspy,   slyspy,   slyspy,   slyspy,   ROT0,   "bootleg",               "Secret Agent (bootleg)", GAME_NOT_WORKING )
+	GAME( 1989, midres,   0,        midres,   midres,   0,        ROT0,   "Data East Corporation", "Midnight Resistance (World)" )
+	GAME( 1989, midresu,  midres,   midres,   midres,   0,        ROT0,   "Data East USA",         "Midnight Resistance (US)" )
+	GAME( 1989, midresj,  midres,   midres,   midres,   0,        ROT0,   "Data East Corporation", "Midnight Resistance (Japan)" )
+	GAME( 1990, bouldash, 0,        slyspy,   bouldash, slyspy,   ROT0,   "Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (World)" )
+	GAME( 1990, bouldshj, bouldash, slyspy,   bouldash, slyspy,   ROT0,   "Data East Corporation (licensed from First Star)", "Boulder Dash / Boulder Dash Part 2 (Japan)" )
 }

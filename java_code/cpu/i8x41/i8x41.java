@@ -59,7 +59,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i8x41;
 
@@ -513,9 +513,9 @@ public class i8x41
 			/* Configure upper lines on Port 2 for IRQ handshaking (P24 and P25) */
 	
 			ENABLE |= FLAGS;
-			if ((STATE & OBF) != 0) P2_HS |= 0x10;
+			if( STATE & OBF ) P2_HS |= 0x10;
 			else P2_HS &= 0xef;
-			if ((STATE & IBF) != 0) P2_HS |= 0x20;
+			if( STATE & IBF ) P2_HS |= 0x20;
 			else P2_HS &= 0xdf;
 			WP(0x02, (P2 & P2_HS) );
 		}
@@ -530,7 +530,7 @@ public class i8x41
 		if( 0 == (ENABLE & IBFI) )
 		{
 			ENABLE |= IBFI;		/* enable input buffer full interrupt */
-			if ((STATE & IBF) != 0)	/* already got data in the buffer? */
+			if( STATE & IBF )	/* already got data in the buffer? */
 				i8x41_set_irq_line(I8X41_INT_IBF, HOLD_LINE);
 		}
 	}
@@ -554,10 +554,10 @@ public class i8x41
 			(*i8x41.irq_callback)(I8X41_INT_IBF);
 	
 		STATE &= ~IBF;					/* clear input buffer full flag */
-		if ((ENABLE & FLAGS) != 0)
+		if( ENABLE & FLAGS )
 		{
 			P2_HS &= 0xdf;
-			if ((STATE & OBF) != 0) P2_HS |= 0x10;
+			if( STATE & OBF ) P2_HS |= 0x10;
 			else P2_HS &= 0xef;
 			WP(0x02, (P2 & P2_HS) );	/* Clear the DBBI IRQ out on P25 */
 		}
@@ -629,7 +629,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if ((PSW & FC) != 0)
+		if( PSW & FC )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -641,7 +641,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if ((STATE & F0) != 0)
+		if( STATE & F0 )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -653,7 +653,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if ((STATE & F1) != 0)
+		if( STATE & F1 )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -728,7 +728,7 @@ public class i8x41
 		if( !(ENABLE & CNT) )
 		{
 			UINT8 level = RP(I8X41_t1);
-			if (level != 0) CONTROL |= TEST1;
+			if( level ) CONTROL |= TEST1;
 			else CONTROL &= ~TEST1;
 		}
 		if( !(CONTROL & TEST1) )
@@ -743,7 +743,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if (A != 0)
+		if( A )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -755,7 +755,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if ((STATE & OBF) != 0)
+		if( STATE & OBF )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -767,7 +767,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if ((CONTROL & TOVF) != 0)
+		if( CONTROL & TOVF )
 			PC = (PC & 0x700) | adr;
 		CONTROL &= ~TOVF;
 	}
@@ -795,7 +795,7 @@ public class i8x41
 		if( !(ENABLE & CNT) )
 		{
 			UINT8 level = RP(I8X41_t1);
-			if (level != 0) CONTROL |= TEST1;
+			if( level ) CONTROL |= TEST1;
 			else CONTROL &= ~TEST1;
 		}
 		if( (CONTROL & TEST1) )
@@ -810,7 +810,7 @@ public class i8x41
 	{
 		UINT8 adr = ROP_ARG(PC);
 		PC += 1;
-		if (A == 0)
+		if( !A )
 			PC = (PC & 0x700) | adr;
 	}
 	
@@ -1050,10 +1050,10 @@ public class i8x41
 	{
 		DBBO = A;			/* DBB output buffer */
 		STATE |= OBF;		/* assert the output buffer full flag */
-		if ((ENABLE & FLAGS) != 0)
+		if( ENABLE & FLAGS )
 		{
 			P2_HS |= 0x10;
-			if ((STATE & IBF) != 0) P2_HS |= 0x20;
+			if( STATE & IBF ) P2_HS |= 0x20;
 			else P2_HS &= 0xdf;
 			WP(0x02, (P2 & P2_HS) );	/* Assert the DBBO IRQ out on P24 */
 		}
@@ -1924,7 +1924,7 @@ public class i8x41
 			}
 	
 	
-			if ((ENABLE & CNT) != 0)
+			if( ENABLE & CNT )
 			{
 				inst_cycles = i8x41_cycles[op];
 				for ( ; inst_cycles > 0; inst_cycles-- )
@@ -1936,16 +1936,16 @@ public class i8x41
 						if (TIMER == 0)
 						{
 							CONTROL |= TOVF;
-							if ((ENABLE & TCNTI) != 0)
+							if( ENABLE & TCNTI )
 								CONTROL |= TIRQ_PEND;
 						}
 					}
-					if (T1_level != 0) CONTROL |= TEST1;
+					if( T1_level ) CONTROL |= TEST1;
 					else CONTROL &= ~TEST1;
 				}
 			}
 	
-			if ((ENABLE & T) != 0)
+			if( ENABLE & T )
 			{
 				PRESCALER += i8x41_cycles[op];
 				/**** timer is prescaled by 32 ****/
@@ -1956,13 +1956,13 @@ public class i8x41
 					if( TIMER == 0 )
 					{
 						CONTROL |= TOVF;
-						if ((ENABLE & TCNTI) != 0)
+						if( ENABLE & TCNTI )
 							CONTROL |= TIRQ_PEND;
 					}
 				}
 			}
 	
-			if ((CONTROL & IRQ_PEND) != 0)	/* Are any Interrupts Pending ? */
+			if( CONTROL & IRQ_PEND )	/* Are any Interrupts Pending ? */
 			{
 				if( 0 == (CONTROL & IRQ_EXEC) )	/* Are any Interrupts being serviced ? */
 				{
@@ -1983,7 +1983,7 @@ public class i8x41
 						PC = V_TIMER;
 						CONTROL &= ~TIRQ_PEND;
 						CONTROL |= TIRQ_EXEC;
-						if ((ENABLE & T) != 0) PRESCALER += 2;	/* 2 states */
+						if( ENABLE & T ) PRESCALER += 2;	/* 2 states */
 						i8x41_ICount -= 2;		/* 2 states to take interrupt */
 					}
 				}
@@ -2002,7 +2002,7 @@ public class i8x41
 	
 	unsigned i8x41_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			memcpy(dst, &i8x41, sizeof(I8X41));
 		return sizeof(I8X41);
 	}
@@ -2014,7 +2014,7 @@ public class i8x41
 	
 	void i8x41_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 			memcpy(&i8x41, src, sizeof(I8X41));
 	}
 	
@@ -2044,10 +2044,10 @@ public class i8x41
 		case I8X41_DATA:
 	//		logerror("i8x41 #%d:%03x  Reading DATA DBBI %02x.  State was %02x,  ", cpu_getactivecpu(), PC, DBBO, STATE);
 				STATE &= ~OBF;	/* reset the output buffer full flag */
-				if ((ENABLE & FLAGS) != 0)
+				if( ENABLE & FLAGS)
 				{
 					P2_HS &= 0xef;
-					if ((STATE & IBF) != 0) P2_HS |= 0x20;
+					if( STATE & IBF ) P2_HS |= 0x20;
 					else P2_HS &= 0xdf;
 					WP(0x02, (P2 & P2_HS) );	/* Clear the DBBO IRQ out on P24 */
 				}
@@ -2101,9 +2101,9 @@ public class i8x41
 					DBBO = val;
 				STATE &= ~F1;
 				STATE |= IBF;
-				if ((ENABLE & IBFI) != 0)
+				if( ENABLE & IBFI )
 					CONTROL |= IBFI_PEND;
-				if ((ENABLE & FLAGS) != 0)
+				if( ENABLE & FLAGS)
 				{
 					P2_HS |= 0x20;
 					if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
@@ -2125,9 +2125,9 @@ public class i8x41
 					DBBO = val;
 				STATE |= F1;
 				STATE |= IBF;
-				if ((ENABLE & IBFI) != 0)
+				if( ENABLE & IBFI )
 					CONTROL |= IBFI_PEND;
-				if ((ENABLE & FLAGS) != 0)
+				if( ENABLE & FLAGS)
 				{
 					P2_HS |= 0x20;
 					if( 0 == (STATE & OBF) ) P2_HS |= 0x10;
@@ -2173,7 +2173,7 @@ public class i8x41
 			if (state != CLEAR_LINE)
 			{
 				STATE |= IBF;
-				if ((ENABLE & IBFI) != 0)
+				if (ENABLE & IBFI)
 				{
 					CONTROL |= IBFI_PEND;
 				}
@@ -2192,10 +2192,10 @@ public class i8x41
 			else
 			{
 				/* high to low transition? */
-				if ((CONTROL & TEST1) != 0)
+				if( CONTROL & TEST1 )
 				{
 					/* counting enabled? */
-					if ((ENABLE & CNT) != 0)
+					if( ENABLE & CNT )
 					{
 						TIMER++;
 						if( TIMER == 0 )
@@ -2229,24 +2229,24 @@ public class i8x41
 	
 		which = (which+1) % 8;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &i8x41;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8X41_PC: sprintf(buffer[which], "PC:%04X", r.pc); break;
-			case CPU_INFO_REG+I8X41_SP: sprintf(buffer[which], "S:%X", r.psw & SP); break;
-			case CPU_INFO_REG+I8X41_PSW:sprintf(buffer[which], "PSW:%02X", r.psw); break;
-			case CPU_INFO_REG+I8X41_A:	sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+I8X41_T:	sprintf(buffer[which], "T:%02X.%02X", r.timer, (r.prescaler & 0x1f) ); break;
-			case CPU_INFO_REG+I8X41_R0: sprintf(buffer[which], "R0:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 0]); break;
-			case CPU_INFO_REG+I8X41_R1: sprintf(buffer[which], "R1:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 1]); break;
-			case CPU_INFO_REG+I8X41_R2: sprintf(buffer[which], "R2:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 2]); break;
-			case CPU_INFO_REG+I8X41_R3: sprintf(buffer[which], "R3:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 3]); break;
-			case CPU_INFO_REG+I8X41_R4: sprintf(buffer[which], "R4:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 4]); break;
-			case CPU_INFO_REG+I8X41_R5: sprintf(buffer[which], "R5:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 5]); break;
-			case CPU_INFO_REG+I8X41_R6: sprintf(buffer[which], "R6:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 6]); break;
-			case CPU_INFO_REG+I8X41_R7: sprintf(buffer[which], "R7:%02X", i8x41.ram[((r.psw & BS) ? M_BANK1 : M_BANK0) + 7]); break;
+			case CPU_INFO_REG+I8X41_PC: sprintf(buffer[which], "PC:%04X", r->pc); break;
+			case CPU_INFO_REG+I8X41_SP: sprintf(buffer[which], "S:%X", r->psw & SP); break;
+			case CPU_INFO_REG+I8X41_PSW:sprintf(buffer[which], "PSW:%02X", r->psw); break;
+			case CPU_INFO_REG+I8X41_A:	sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+I8X41_T:	sprintf(buffer[which], "T:%02X.%02X", r->timer, (r->prescaler & 0x1f) ); break;
+			case CPU_INFO_REG+I8X41_R0: sprintf(buffer[which], "R0:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 0]); break;
+			case CPU_INFO_REG+I8X41_R1: sprintf(buffer[which], "R1:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 1]); break;
+			case CPU_INFO_REG+I8X41_R2: sprintf(buffer[which], "R2:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 2]); break;
+			case CPU_INFO_REG+I8X41_R3: sprintf(buffer[which], "R3:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 3]); break;
+			case CPU_INFO_REG+I8X41_R4: sprintf(buffer[which], "R4:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 4]); break;
+			case CPU_INFO_REG+I8X41_R5: sprintf(buffer[which], "R5:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 5]); break;
+			case CPU_INFO_REG+I8X41_R6: sprintf(buffer[which], "R6:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 6]); break;
+			case CPU_INFO_REG+I8X41_R7: sprintf(buffer[which], "R7:%02X", i8x41.ram[((r->psw & BS) ? M_BANK1 : M_BANK0) + 7]); break;
 			case CPU_INFO_REG+I8X41_P1: sprintf(buffer[which], "P1:%02X", i8x41.p1); break;
 			case CPU_INFO_REG+I8X41_P2: sprintf(buffer[which], "P2:%02X", i8x41.p2); break;
 			case CPU_INFO_REG+I8X41_DATA_DASM:sprintf(buffer[which], "DBBI:%02X", i8x41.dbbi); break;
@@ -2254,14 +2254,14 @@ public class i8x41
 			case CPU_INFO_REG+I8X41_STAT:sprintf(buffer[which], "STAT:%02X", i8x41.state); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.psw & 0x80 ? 'C':'.',
-					r.psw & 0x40 ? 'A':'.',
-					r.psw & 0x20 ? '0':'.',
-					r.psw & 0x10 ? 'B':'.',
-					r.psw & 0x08 ? '?':'.',
-					r.psw & 0x04 ? 's':'.',
-					r.psw & 0x02 ? 's':'.',
-					r.psw & 0x01 ? 's':'.');
+					r->psw & 0x80 ? 'C':'.',
+					r->psw & 0x40 ? 'A':'.',
+					r->psw & 0x20 ? '0':'.',
+					r->psw & 0x10 ? 'B':'.',
+					r->psw & 0x08 ? '?':'.',
+					r->psw & 0x04 ? 's':'.',
+					r->psw & 0x02 ? 's':'.',
+					r->psw & 0x01 ? 's':'.');
 				break;
 			case CPU_INFO_NAME: return "I8X41";
 			case CPU_INFO_FAMILY: return "Intel 8x41";

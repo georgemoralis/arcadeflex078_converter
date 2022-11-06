@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -9,8 +9,7 @@ public class beezer
 	
 	static int scanline=0;
 	
-	public static InterruptHandlerPtr beezer_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr beezer_interrupt = new InterruptHandlerPtr() {public void handler(){
 		scanline = (scanline + 1) % 0x80;
 		via_0_ca2_w (0, scanline & 0x10);
 		if ((scanline & 0x78) == 0x78)
@@ -19,25 +18,23 @@ public class beezer
 			cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_beezer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_beezer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			for (y = Machine.visible_area.min_y; y <= Machine.visible_area.max_y; y+=2)
 			{
 				for (x = Machine.visible_area.min_x; x <= Machine.visible_area.max_x; x++)
 				{
-					plot_pixel.handler (tmpbitmap, x, y+1, Machine.pens[videoram.read(0x80*y+x)& 0x0f]);
-					plot_pixel.handler (tmpbitmap, x, y, Machine.pens[(videoram.read(0x80*y+x)>> 4)& 0x0f]);
+					plot_pixel (tmpbitmap, x, y+1, Machine.pens[videoram.read(0x80*y+x)& 0x0f]);
+					plot_pixel (tmpbitmap, x, y, Machine.pens[(videoram.read(0x80*y+x)>> 4)& 0x0f]);
 				}
 			}
 		
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
-	public static WriteHandlerPtr beezer_map_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beezer_map_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 		  bit 7 -- 330  ohm resistor  -- BLUE
 		        -- 560  ohm resistor  -- BLUE
@@ -69,23 +66,21 @@ public class beezer
 		palette_set_color(offset, r, g, b);
 	} };
 	
-	public static WriteHandlerPtr beezer_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beezer_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x, y;
 		x = offset % 0x100;
 		y = (offset / 0x100) * 2;
 	
-		if( (y >= Machine.visible_area.min_y) && (y <= Machine.visible_area.max_y) )
+		if( (y >= Machine->visible_area.min_y) && (y <= Machine->visible_area.max_y) )
 		{
-			plot_pixel.handler (tmpbitmap, x, y+1, Machine.pens[data & 0x0f]);
-			plot_pixel.handler (tmpbitmap, x, y, Machine.pens[(data >> 4)& 0x0f]);
+			plot_pixel (tmpbitmap, x, y+1, Machine->pens[data & 0x0f]);
+			plot_pixel (tmpbitmap, x, y, Machine->pens[(data >> 4)& 0x0f]);
 		}
 	
 		videoram.write(offset,data);
 	} };
 	
-	public static ReadHandlerPtr beezer_line_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr beezer_line_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (scanline & 0xfe) << 1;
 	} };
 	

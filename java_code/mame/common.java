@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -212,23 +212,23 @@ public class common
 			return NULL;
 	
 		/* fill in the sample data */
-		result.length = length;
-		result.smpfreq = rate;
-		result.resolution = bits;
+		result->length = length;
+		result->smpfreq = rate;
+		result->resolution = bits;
 	
 		/* read the data in */
 		if (bits == 8)
 		{
-			mame_fread(f, result.data, length);
+			mame_fread(f, result->data, length);
 	
 			/* convert 8-bit data to signed samples */
 			for (temp32 = 0; temp32 < length; temp32++)
-				result.data[temp32] ^= 0x80;
+				result->data[temp32] ^= 0x80;
 		}
 		else
 		{
 			/* 16-bit data is fine as-is */
-			mame_fread_lsbfirst(f, result.data, length);
+			mame_fread_lsbfirst(f, result->data, length);
 		}
 	
 		return result;
@@ -258,27 +258,27 @@ public class common
 		i = 0;
 		while (samplenames[i+skipfirst] != 0) i++;
 	
-		if (i == 0) return 0;
+		if (!i) return 0;
 	
 		if ((samples = auto_malloc(sizeof(struct GameSamples) + (i-1)*sizeof(struct GameSample))) == 0)
 			return 0;
 	
-		samples.total = i;
-		for (i = 0;i < samples.total;i++)
-			samples.sample[i] = 0;
+		samples->total = i;
+		for (i = 0;i < samples->total;i++)
+			samples->sample[i] = 0;
 	
-		for (i = 0;i < samples.total;i++)
+		for (i = 0;i < samples->total;i++)
 		{
 			mame_file *f;
 	
 			if (samplenames[i+skipfirst][0])
 			{
 				if ((f = mame_fopen(basename,samplenames[i+skipfirst],FILETYPE_SAMPLE,0)) == 0)
-					if (skipfirst != 0)
+					if (skipfirst)
 						f = mame_fopen(samplenames[0]+1,samplenames[i+skipfirst],FILETYPE_SAMPLE,0);
 				if (f != 0)
 				{
-					samples.sample[i] = read_wav_sample(f);
+					samples->sample[i] = read_wav_sample(f);
 					mame_fclose(f);
 				}
 			}
@@ -305,13 +305,13 @@ public class common
 		int i;
 	
 		if (num < MAX_MEMORY_REGIONS)
-			return Machine.memory_region[num].base;
+			return Machine->memory_region[num].base;
 		else
 		{
 			for (i = 0;i < MAX_MEMORY_REGIONS;i++)
 			{
-				if (Machine.memory_region[i].type == num)
-					return Machine.memory_region[i].base;
+				if (Machine->memory_region[i].type == num)
+					return Machine->memory_region[i].base;
 			}
 		}
 	
@@ -329,13 +329,13 @@ public class common
 		int i;
 	
 		if (num < MAX_MEMORY_REGIONS)
-			return Machine.memory_region[num].length;
+			return Machine->memory_region[num].length;
 		else
 		{
 			for (i = 0;i < MAX_MEMORY_REGIONS;i++)
 			{
-				if (Machine.memory_region[i].type == num)
-					return Machine.memory_region[i].length;
+				if (Machine->memory_region[i].type == num)
+					return Machine->memory_region[i].length;
 			}
 		}
 	
@@ -354,21 +354,21 @@ public class common
 	
 	    if (num < MAX_MEMORY_REGIONS)
 	    {
-	        Machine.memory_region[num].length = length;
-	        Machine.memory_region[num].base = malloc(length);
-	        return (Machine.memory_region[num].base == NULL) ? 1 : 0;
+	        Machine->memory_region[num].length = length;
+	        Machine->memory_region[num].base = malloc(length);
+	        return (Machine->memory_region[num].base == NULL) ? 1 : 0;
 	    }
 	    else
 	    {
 	        for (i = 0;i < MAX_MEMORY_REGIONS;i++)
 	        {
-	            if (Machine.memory_region[i].base == NULL)
+	            if (Machine->memory_region[i].base == NULL)
 	            {
-	                Machine.memory_region[i].length = length;
-	                Machine.memory_region[i].type = num;
-	                Machine.memory_region[i].flags = flags;
-	                Machine.memory_region[i].base = malloc(length);
-	                return (Machine.memory_region[i].base == NULL) ? 1 : 0;
+	                Machine->memory_region[i].length = length;
+	                Machine->memory_region[i].type = num;
+	                Machine->memory_region[i].flags = flags;
+	                Machine->memory_region[i].base = malloc(length);
+	                return (Machine->memory_region[i].base == NULL) ? 1 : 0;
 	            }
 	        }
 	    }
@@ -387,17 +387,17 @@ public class common
 	
 		if (num < MAX_MEMORY_REGIONS)
 		{
-			free(Machine.memory_region[num].base);
-			memset(Machine.memory_region[num], 0, sizeof(Machine.memory_region[num]));
+			free(Machine->memory_region[num].base);
+			memset(Machine->memory_region[num], 0, sizeof(Machine->memory_region[num]));
 		}
 		else
 		{
 			for (i = 0;i < MAX_MEMORY_REGIONS;i++)
 			{
-				if (Machine.memory_region[i].type == num)
+				if (Machine->memory_region[i].type == num)
 				{
-					free(Machine.memory_region[i].base);
-					memset(Machine.memory_region[i], 0, sizeof(Machine.memory_region[i]));
+					free(Machine->memory_region[i].base);
+					memset(Machine->memory_region[i], 0, sizeof(Machine->memory_region[i]));
 					return;
 				}
 			}
@@ -470,9 +470,9 @@ public class common
 	
 	void nvram_handler_generic_0fill(mame_file *file, int read_or_write)
 	{
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memset(generic_nvram, 0, generic_nvram_size);
@@ -486,9 +486,9 @@ public class common
 	
 	void nvram_handler_generic_1fill(mame_file *file, int read_or_write)
 	{
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memset(generic_nvram, 0xff, generic_nvram_size);
@@ -529,9 +529,9 @@ public class common
 			unsigned char *bm;
 	
 			/* initialize the basic parameters */
-			bitmap.depth = depth;
-			bitmap.width = width;
-			bitmap.height = height;
+			bitmap->depth = depth;
+			bitmap->width = width;
+			bitmap->height = height;
 	
 			/* determine pixel size in bytes */
 			pixelsize = 1;
@@ -543,11 +543,11 @@ public class common
 			/* round the width to a multiple of 8 */
 			rdwidth = (width + 7) & ~7;
 			rowlen = rdwidth + 2 * BITMAP_SAFETY;
-			bitmap.rowpixels = rowlen;
+			bitmap->rowpixels = rowlen;
 	
 			/* now convert from pixels to bytes */
 			rowlen *= pixelsize;
-			bitmap.rowbytes = rowlen;
+			bitmap->rowbytes = rowlen;
 	
 			/* determine total memory for bitmap and line arrays */
 			bitmapsize = (height + 2 * BITMAP_SAFETY) * rowlen;
@@ -557,24 +557,24 @@ public class common
 			linearraysize = (linearraysize + 15) & ~15;
 	
 			/* allocate the bitmap data plus an array of line pointers */
-			bitmap.line = use_auto ? auto_malloc(linearraysize + bitmapsize) : malloc(linearraysize + bitmapsize);
-			if (bitmap.line == NULL)
+			bitmap->line = use_auto ? auto_malloc(linearraysize + bitmapsize) : malloc(linearraysize + bitmapsize);
+			if (bitmap->line == NULL)
 			{
-				if (use_auto == 0) free(bitmap);
+				if (!use_auto) free(bitmap);
 				return NULL;
 			}
 	
 			/* clear ALL bitmap, including safety area, to avoid garbage on right */
-			bm = (unsigned char *)bitmap.line + linearraysize;
+			bm = (unsigned char *)bitmap->line + linearraysize;
 			memset(bm, 0, (height + 2 * BITMAP_SAFETY) * rowlen);
 	
 			/* initialize the line pointers */
 			for (i = 0; i < height + 2 * BITMAP_SAFETY; i++)
-				bitmap.line[i] = &bm[i * rowlen + BITMAP_SAFETY * pixelsize];
+				bitmap->line[i] = &bm[i * rowlen + BITMAP_SAFETY * pixelsize];
 	
 			/* adjust for the safety rows */
-			bitmap.line += BITMAP_SAFETY;
-			bitmap.base = bitmap.line[0];
+			bitmap->line += BITMAP_SAFETY;
+			bitmap->base = bitmap->line[0];
 	
 			/* set the pixel functions */
 			set_pixel_functions(bitmap);
@@ -592,7 +592,7 @@ public class common
 	
 	struct mame_bitmap *bitmap_alloc(int width,int height)
 	{
-		return bitmap_alloc_core(width,height,Machine.scrbitmap.depth,0);
+		return bitmap_alloc_core(width,height,Machine->scrbitmap->depth,0);
 	}
 	
 	
@@ -614,14 +614,14 @@ public class common
 	void bitmap_free(struct mame_bitmap *bitmap)
 	{
 		/* skip if NULL */
-		if (bitmap == 0)
+		if (!bitmap)
 			return;
 	
 		/* unadjust for the safety rows */
-		bitmap.line -= BITMAP_SAFETY;
+		bitmap->line -= BITMAP_SAFETY;
 	
 		/* free the memory */
-		free(bitmap.line);
+		free(bitmap->line);
 		free(bitmap);
 	}
 	
@@ -640,7 +640,7 @@ public class common
 	void *auto_malloc(size_t size)
 	{
 		void *result = malloc(size);
-		if (result != 0)
+		if (result)
 		{
 			struct malloc_info *info;
 	
@@ -653,8 +653,8 @@ public class common
 	
 			/* fill in the current entry */
 			info = &malloc_list[malloc_list_index++];
-			info.tag = get_resource_tag();
-			info.ptr = result;
+			info->tag = get_resource_tag();
+			info->ptr = result;
 		}
 		return result;
 	}
@@ -668,7 +668,7 @@ public class common
 	char *auto_strdup(const char *str)
 	{
 		char *new_str = auto_malloc(strlen(str) + 1);
-		if (new_str == 0)
+		if (!new_str)
 			return NULL;
 		strcpy(new_str, str);
 		return new_str;
@@ -689,7 +689,7 @@ public class common
 		while (malloc_list_index > 0 && malloc_list[malloc_list_index - 1].tag >= tag)
 		{
 			struct malloc_info *info = &malloc_list[--malloc_list_index];
-			free(info.ptr);
+			free(info->ptr);
 		}
 	}
 	
@@ -701,7 +701,7 @@ public class common
 	
 	struct mame_bitmap *auto_bitmap_alloc(int width,int height)
 	{
-		return bitmap_alloc_core(width,height,Machine.scrbitmap.depth,1);
+		return bitmap_alloc_core(width,height,Machine->scrbitmap->depth,1);
 	}
 	
 	
@@ -763,17 +763,17 @@ public class common
 		UINT32 saved_rgb_components[3];
 	
 		/* allow the artwork system to override certain parameters */
-		bounds = Machine.visible_area;
+		bounds = Machine->visible_area;
 		memcpy(saved_rgb_components, direct_rgb_components, sizeof(direct_rgb_components));
 		artwork_override_screenshot_params(&bitmap, &bounds, direct_rgb_components);
 	
 		/* allow the OSD system to muck with the screenshot */
 		osdcopy = osd_override_snapshot(bitmap, &bounds);
-		if (osdcopy != 0)
+		if (osdcopy)
 			bitmap = osdcopy;
 	
 		/* now do the actual work */
-		if (Machine.drv.video_attributes & VIDEO_TYPE_VECTOR)
+		if (Machine->drv->video_attributes & VIDEO_TYPE_VECTOR)
 			png_write_bitmap(fp,bitmap);
 		else
 		{
@@ -783,10 +783,10 @@ public class common
 			sizex = bounds.max_x - bounds.min_x + 1;
 			sizey = bounds.max_y - bounds.min_y + 1;
 	
-			scalex = (Machine.drv.video_attributes & VIDEO_PIXEL_ASPECT_RATIO_2_1) ? 2 : 1;
-			scaley = (Machine.drv.video_attributes & VIDEO_PIXEL_ASPECT_RATIO_1_2) ? 2 : 1;
+			scalex = (Machine->drv->video_attributes & VIDEO_PIXEL_ASPECT_RATIO_2_1) ? 2 : 1;
+			scaley = (Machine->drv->video_attributes & VIDEO_PIXEL_ASPECT_RATIO_1_2) ? 2 : 1;
 	
-			if(Machine.gamedrv.flags & ORIENTATION_SWAP_XY)
+			if(Machine->gamedrv->flags & ORIENTATION_SWAP_XY)
 			{
 				int temp;
 	
@@ -795,41 +795,41 @@ public class common
 				scaley = temp;
 			}
 	
-			copy = bitmap_alloc_depth(sizex * scalex,sizey * scaley,bitmap.depth);
-			if (copy != 0)
+			copy = bitmap_alloc_depth(sizex * scalex,sizey * scaley,bitmap->depth);
+			if (copy)
 			{
 				int x,y,sx,sy;
 	
 				sx = bounds.min_x;
 				sy = bounds.min_y;
 	
-				switch (bitmap.depth)
+				switch (bitmap->depth)
 				{
 				case 8:
-					for (y = 0;y < copy.height;y++)
+					for (y = 0;y < copy->height;y++)
 					{
-						for (x = 0;x < copy.width;x++)
+						for (x = 0;x < copy->width;x++)
 						{
-							((UINT8 *)copy.line[y])[x] = ((UINT8 *)bitmap.line[sy+(y/scaley)])[sx +(x/scalex)];
+							((UINT8 *)copy->line[y])[x] = ((UINT8 *)bitmap->line[sy+(y/scaley)])[sx +(x/scalex)];
 						}
 					}
 					break;
 				case 15:
 				case 16:
-					for (y = 0;y < copy.height;y++)
+					for (y = 0;y < copy->height;y++)
 					{
-						for (x = 0;x < copy.width;x++)
+						for (x = 0;x < copy->width;x++)
 						{
-							((UINT16 *)copy.line[y])[x] = ((UINT16 *)bitmap.line[sy+(y/scaley)])[sx +(x/scalex)];
+							((UINT16 *)copy->line[y])[x] = ((UINT16 *)bitmap->line[sy+(y/scaley)])[sx +(x/scalex)];
 						}
 					}
 					break;
 				case 32:
-					for (y = 0;y < copy.height;y++)
+					for (y = 0;y < copy->height;y++)
 					{
-						for (x = 0;x < copy.width;x++)
+						for (x = 0;x < copy->width;x++)
 						{
-							((UINT32 *)copy.line[y])[x] = ((UINT32 *)bitmap.line[sy+(y/scaley)])[sx +(x/scalex)];
+							((UINT32 *)copy->line[y])[x] = ((UINT32 *)bitmap->line[sy+(y/scaley)])[sx +(x/scalex)];
 						}
 					}
 					break;
@@ -844,7 +844,7 @@ public class common
 		memcpy(direct_rgb_components, saved_rgb_components, sizeof(saved_rgb_components));
 	
 		/* if the OSD system allocated a bitmap; free it */
-		if (osdcopy != 0)
+		if (osdcopy)
 			bitmap_free(osdcopy);
 	}
 	
@@ -861,17 +861,17 @@ public class common
 	
 		/* avoid overwriting existing files */
 		/* first of all try with "gamename.png" */
-		sprintf(name,"%.8s", Machine.gamedrv.name);
+		sprintf(name,"%.8s", Machine->gamedrv->name);
 		if (mame_faccess(name,FILETYPE_SCREENSHOT))
 		{
 			do
 			{
 				/* otherwise use "nameNNNN.png" */
-				sprintf(name,"%.4s%04d",Machine.gamedrv.name,snapno++);
+				sprintf(name,"%.4s%04d",Machine->gamedrv->name,snapno++);
 			} while (mame_faccess(name, FILETYPE_SCREENSHOT));
 		}
 	
-		if ((fp = mame_fopen(Machine.gamedrv.name, name, FILETYPE_SCREENSHOT, 1)) != NULL)
+		if ((fp = mame_fopen(Machine->gamedrv->name, name, FILETYPE_SCREENSHOT, 1)) != NULL)
 		{
 			save_screen_snapshot_as(fp, bitmap);
 			mame_fclose(fp);
@@ -906,7 +906,7 @@ public class common
 	
 	const struct RomModule *rom_first_region(const struct GameDriver *drv)
 	{
-		return drv.rom;
+		return drv->rom;
 	}
 	
 	
@@ -987,7 +987,7 @@ public class common
 		FILE *f;
 	
 		f = fopen("romload.log", opened++ ? "a" : "w");
-		if (f != 0)
+		if (f)
 		{
 			va_start(arg, string);
 			vfprintf(f, string, arg);
@@ -1017,10 +1017,10 @@ public class common
 			while(!BIOSENTRY_ISEND(bios))
 			{
 				char bios_number[3];
-				sprintf(bios_number, "%d", bios.value);
+				sprintf(bios_number, "%d", bios->value);
 	
 				if(!strcmp(bios_number, options.bios))
-					bios_no = bios.value;
+					bios_no = bios->value;
 	
 				bios++;
 			}
@@ -1030,8 +1030,8 @@ public class common
 			/* Test for bios short names */
 			while(!BIOSENTRY_ISEND(bios))
 			{
-				if(!strcmp(bios._name, options.bios))
-					bios_no = bios.value;
+				if(!strcmp(bios->_name, options.bios))
+					bios_no = bios->value;
 	
 				bios++;
 			}
@@ -1054,7 +1054,7 @@ public class common
 		int count = 0;
 	
 		/* determine the correct biosset to load based on options.bios string */
-		int this_bios = determine_bios_rom(Machine.gamedrv.bios);
+		int this_bios = determine_bios_rom(Machine->gamedrv->bios);
 	
 		/* loop over regions, then over files */
 		for (region = romp; region; region = rom_next_region(region))
@@ -1089,22 +1089,22 @@ public class common
 		/* optional files are okay */
 		if (ROM_ISOPTIONAL(romp))
 		{
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "OPTIONAL %-12s NOT FOUND\n", ROM_GETNAME(romp));
-			romdata.warnings++;
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "OPTIONAL %-12s NOT FOUND\n", ROM_GETNAME(romp));
+			romdata->warnings++;
 		}
 	
 		/* no good dumps are okay */
 		else if (ROM_NOGOODDUMP(romp))
 		{
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s NOT FOUND (NO GOOD DUMP KNOWN)\n", ROM_GETNAME(romp));
-			romdata.warnings++;
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s NOT FOUND (NO GOOD DUMP KNOWN)\n", ROM_GETNAME(romp));
+			romdata->warnings++;
 		}
 	
 		/* anything else is bad */
 		else
 		{
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s NOT FOUND\n", ROM_GETNAME(romp));
-			romdata.errors++;
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s NOT FOUND\n", ROM_GETNAME(romp));
+			romdata->errors++;
 		}
 	}
 	
@@ -1124,13 +1124,13 @@ public class common
 		found_functions = hash_data_used_functions(hash) & hash_data_used_functions(acthash);
 	
 		hash_data_print(hash, found_functions, chksum);
-		sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "    EXPECTED: %s\n", chksum);
+		sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "    EXPECTED: %s\n", chksum);
 	
 		/* We dump informations only of the functions for which MAME provided
 			a correct checksum. Other functions we might have calculated are
 			useless here */
 		hash_data_print(acthash, found_functions, chksum);
-		sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "       FOUND: %s\n", chksum);
+		sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "       FOUND: %s\n", chksum);
 	
 		/* For debugging purposes, we check if the checksums available in the
 		   driver are correctly specified or not. This can be done by checking
@@ -1142,16 +1142,16 @@ public class common
 			if (hash_data_extract_printable_checksum(hash, 1<<i, chksum) == 2)
 				wrong_functions |= 1<<i;
 	
-		if (wrong_functions != 0)
+		if (wrong_functions)
 		{
 			for (i=0;i<HASH_NUM_FUNCTIONS;i++)
 				if (wrong_functions & (1<<i))
 				{
-					sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)],
+					sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)],
 						"\tInvalid %s checksum treated as 0 (check leading zeros)\n",
 						hash_function_name(1<<i));
 	
-					romdata.warnings++;
+					romdata->warnings++;
 				}
 		}
 	}
@@ -1168,41 +1168,41 @@ public class common
 		const char* acthash;
 	
 		/* we've already complained if there is no file */
-		if (!romdata.file)
+		if (!romdata->file)
 			return;
 	
 		/* get the length and CRC from the file */
-		actlength = mame_fsize(romdata.file);
-		acthash = mame_fhash(romdata.file);
+		actlength = mame_fsize(romdata->file);
+		acthash = mame_fhash(romdata->file);
 	
 		/* verify length */
 		if (explength != actlength)
 		{
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s WRONG LENGTH (expected: %08x found: %08x)\n", name, explength, actlength);
-			romdata.warnings++;
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s WRONG LENGTH (expected: %08x found: %08x)\n", name, explength, actlength);
+			romdata->warnings++;
 		}
 	
 		/* If there is no good dump known, write it */
 		if (hash_data_has_info(hash, HASH_INFO_NO_DUMP))
 		{
-				sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s NO GOOD DUMP KNOWN\n", name);
-			romdata.warnings++;
+				sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s NO GOOD DUMP KNOWN\n", name);
+			romdata->warnings++;
 		}
 		/* verify checksums */
 		else if (!hash_data_is_equal(hash, acthash, 0))
 		{
 			/* otherwise, it's just bad */
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s WRONG CHECKSUMS:\n", name);
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s WRONG CHECKSUMS:\n", name);
 	
 			dump_wrong_and_correct_checksums(romdata, hash, acthash);
 	
-			romdata.warnings++;
+			romdata->warnings++;
 		}
 		/* If it matches, but it is actually a bad dump, write it */
 		else if (hash_data_has_info(hash, HASH_INFO_BAD_DUMP))
 		{
-			sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s ROM NEEDS REDUMP\n",name);
-			romdata.warnings++;
+			sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s ROM NEEDS REDUMP\n",name);
+			romdata->warnings++;
 		}
 	}
 	
@@ -1220,20 +1220,20 @@ public class common
 		osd_display_loading_rom_message(NULL, romdata);
 	
 		/* only display if we have warnings or errors */
-		if (romdata.warnings || romdata.errors)
+		if (romdata->warnings || romdata->errors)
 		{
 			
 			/* display either an error message or a warning message */
-			if (romdata.errors)
+			if (romdata->errors)
 			{
-				strcat(romdata.errorbuf, "ERROR: required files are missing, the game cannot be run.\n");
+				strcat(romdata->errorbuf, "ERROR: required files are missing, the game cannot be run.\n");
 				bailing = 1;
 			}
 			else
-				strcat(romdata.errorbuf, "WARNING: the game might not run correctly.\n");
+				strcat(romdata->errorbuf, "WARNING: the game might not run correctly.\n");
 	
 			/* display the result */
-			printf("%s", romdata.errorbuf);
+			printf("%s", romdata->errorbuf);
 	
 			/* if we're not getting out of here, wait for a keypress */
 			if (!options.gui_host && !bailing)
@@ -1255,12 +1255,12 @@ public class common
 		}
 	
 		/* clean up any regions */
-		if (romdata.errors)
+		if (romdata->errors)
 			for (region = 0; region < MAX_MEMORY_REGIONS; region++)
 				free_memory_region(region);
 	
 		/* return true if we had any errors */
-		return (romdata.errors != 0);
+		return (romdata->errors != 0);
 	}
 	
 	
@@ -1282,7 +1282,7 @@ public class common
 		/* if this is a CPU region, override with the CPU width and endianness */
 		if (type >= REGION_CPU1 && type < REGION_CPU1 + MAX_CPU)
 		{
-			int cputype = Machine.drv.cpu[type - REGION_CPU1].cpu_type;
+			int cputype = Machine->drv->cpu[type - REGION_CPU1].cpu_type;
 			if (cputype != 0)
 			{
 				datawidth = cputype_databus_width(cputype) / 8;
@@ -1295,7 +1295,7 @@ public class common
 		if (ROMREGION_ISINVERTED(regiondata))
 		{
 			debugload("+ Inverting region\n");
-			for (i = 0, base = romdata.regionbase; i < romdata.regionlength; i++)
+			for (i = 0, base = romdata->regionbase; i < romdata->regionlength; i++)
 				*base++ ^= 0xff;
 		}
 	
@@ -1307,7 +1307,7 @@ public class common
 	#endif
 		{
 			debugload("+ Byte swapping region\n");
-			for (i = 0, base = romdata.regionbase; i < romdata.regionlength; i += datawidth)
+			for (i = 0, base = romdata->regionbase; i < romdata->regionlength; i += datawidth)
 			{
 				UINT8 temp[8];
 				memcpy(temp, base, datawidth);
@@ -1327,7 +1327,7 @@ public class common
 	{
 		const struct GameDriver *drv;
 	
-		++romdata.romsloaded;
+		++romdata->romsloaded;
 	
 		/* update status display */
 		if (osd_display_loading_rom_message(ROM_GETNAME(romp), romdata))
@@ -1335,13 +1335,13 @@ public class common
 	
 		/* Attempt reading up the chain through the parents. It automatically also
 		   attempts any kind of load by checksum supported by the archives. */
-		romdata.file = NULL;
-		for (drv = Machine.gamedrv; !romdata.file && drv; drv = drv.clone_of)
-			if (drv.name && *drv.name)
-				romdata.file = mame_fopen_rom(drv.name, ROM_GETNAME(romp), ROM_GETHASHDATA(romp));
+		romdata->file = NULL;
+		for (drv = Machine->gamedrv; !romdata->file && drv; drv = drv->clone_of)
+			if (drv->name && *drv->name)
+				romdata->file = mame_fopen_rom(drv->name, ROM_GETNAME(romp), ROM_GETHASHDATA(romp));
 	
 		/* return the result */
-		return (romdata.file != NULL);
+		return (romdata->file != NULL);
 	}
 	
 	
@@ -1353,8 +1353,8 @@ public class common
 	static int rom_fread(struct rom_load_data *romdata, UINT8 *buffer, int length)
 	{
 		/* files just pass through */
-		if (romdata.file)
-			return mame_fread(romdata.file, buffer, length);
+		if (romdata->file)
+			return mame_fread(romdata->file, buffer, length);
 	
 		/* otherwise, fill with randomness */
 		else
@@ -1378,7 +1378,7 @@ public class common
 		int skip = ROM_GETSKIPCOUNT(romp);
 		int reversed = ROM_ISREVERSED(romp);
 		int numgroups = (numbytes + groupsize - 1) / groupsize;
-		UINT8 *base = romdata.regionbase + ROM_GETOFFSET(romp);
+		UINT8 *base = romdata->regionbase + ROM_GETOFFSET(romp);
 		int i;
 	
 		debugload("Loading ROM data: offs=%X len=%X mask=%02X group=%d skip=%d reverse=%d\n", ROM_GETOFFSET(romp), numbytes, datamask, groupsize, skip, reversed);
@@ -1391,7 +1391,7 @@ public class common
 		}
 	
 		/* make sure we only fill within the region space */
-		if (ROM_GETOFFSET(romp) + numgroups * groupsize + (numgroups - 1) * skip > romdata.regionlength)
+		if (ROM_GETOFFSET(romp) + numgroups * groupsize + (numgroups - 1) * skip > romdata->regionlength)
 		{
 			printf("Error in RomModule definition: %s out of memory region space\n", ROM_GETNAME(romp));
 			return -1;
@@ -1412,13 +1412,13 @@ public class common
 		skip += groupsize;
 		while (numbytes)
 		{
-			int evengroupcount = (sizeof(romdata.tempbuf) / groupsize) * groupsize;
+			int evengroupcount = (sizeof(romdata->tempbuf) / groupsize) * groupsize;
 			int bytesleft = (numbytes > evengroupcount) ? evengroupcount : numbytes;
-			UINT8 *bufptr = romdata.tempbuf;
+			UINT8 *bufptr = romdata->tempbuf;
 	
 			/* read as much as we can */
 			debugload("  Reading %X bytes into buffer\n", bytesleft);
-			if (rom_fread(romdata, romdata.tempbuf, bytesleft) != bytesleft)
+			if (rom_fread(romdata, romdata->tempbuf, bytesleft) != bytesleft)
 				return 0;
 			numbytes -= bytesleft;
 	
@@ -1433,7 +1433,7 @@ public class common
 						*base = *bufptr++;
 	
 				/* grouped data -- non-reversed case */
-				else if (reversed == 0)
+				else if (!reversed)
 					while (bytesleft)
 					{
 						for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
@@ -1460,7 +1460,7 @@ public class common
 						*base = (*base & ~datamask) | ((*bufptr++ << datashift) & datamask);
 	
 				/* grouped data -- non-reversed case */
-				else if (reversed == 0)
+				else if (!reversed)
 					while (bytesleft)
 					{
 						for (i = 0; i < groupsize && bytesleft; i++, bytesleft--)
@@ -1490,10 +1490,10 @@ public class common
 	static int fill_rom_data(struct rom_load_data *romdata, const struct RomModule *romp)
 	{
 		UINT32 numbytes = ROM_GETLENGTH(romp);
-		UINT8 *base = romdata.regionbase + ROM_GETOFFSET(romp);
+		UINT8 *base = romdata->regionbase + ROM_GETOFFSET(romp);
 	
 		/* make sure we fill within the region space */
-		if (ROM_GETOFFSET(romp) + numbytes > romdata.regionlength)
+		if (ROM_GETOFFSET(romp) + numbytes > romdata->regionlength)
 		{
 			printf("Error in RomModule definition: FILL out of memory region space\n");
 			return 0;
@@ -1518,14 +1518,14 @@ public class common
 	
 	static int copy_rom_data(struct rom_load_data *romdata, const struct RomModule *romp)
 	{
-		UINT8 *base = romdata.regionbase + ROM_GETOFFSET(romp);
+		UINT8 *base = romdata->regionbase + ROM_GETOFFSET(romp);
 		int srcregion = ROM_GETFLAGS(romp) >> 24;
 		UINT32 numbytes = ROM_GETLENGTH(romp);
 		UINT32 srcoffs = (UINT32)ROM_GETHASHDATA(romp);  /* srcoffset in place of hashdata */
 		UINT8 *srcbase;
 	
 		/* make sure we copy within the region space */
-		if (ROM_GETOFFSET(romp) + numbytes > romdata.regionlength)
+		if (ROM_GETOFFSET(romp) + numbytes > romdata->regionlength)
 		{
 			printf("Error in RomModule definition: COPY out of target memory region space\n");
 			return 0;
@@ -1540,7 +1540,7 @@ public class common
 	
 		/* make sure the source was valid */
 		srcbase = memory_region(srcregion);
-		if (srcbase == 0)
+		if (!srcbase)
 		{
 			printf("Error in RomModule definition: COPY from an invalid region\n");
 			return 0;
@@ -1637,7 +1637,7 @@ public class common
 						while (ROMENTRY_ISCONTINUE(romp));
 	
 						/* if this was the first use of this file, verify the length and CRC */
-						if (baserom != 0)
+						if (baserom)
 						{
 							debugload("Verifying length (%X) and checksums\n", explength);
 							verify_length_and_hash(romdata, ROM_GETNAME(baserom), explength, ROM_GETHASHDATA(baserom));
@@ -1645,19 +1645,19 @@ public class common
 						}
 	
 						/* reseek to the start and clear the baserom so we don't reverify */
-						if (romdata.file)
-							mame_fseek(romdata.file, 0, SEEK_SET);
+						if (romdata->file)
+							mame_fseek(romdata->file, 0, SEEK_SET);
 						baserom = NULL;
 						explength = 0;
 					}
 					while (ROMENTRY_ISRELOAD(romp));
 	
 					/* close the file */
-					if (romdata.file)
+					if (romdata->file)
 					{
 						debugload("Closing ROM file\n");
-						mame_fclose(romdata.file);
-						romdata.file = NULL;
+						mame_fclose(romdata->file);
+						romdata->file = NULL;
 					}
 				}
 				else
@@ -1670,9 +1670,9 @@ public class common
 	
 		/* error case */
 	fatalerror:
-		if (romdata.file)
-			mame_fclose(romdata.file);
-		romdata.file = NULL;
+		if (romdata->file)
+			mame_fclose(romdata->file);
+		romdata->file = NULL;
 		return 0;
 	}
 	
@@ -1700,7 +1700,7 @@ public class common
 				/* make the filename of the source */
 				strcpy(filename, ROM_GETNAME(romp));
 				c = strrchr(filename, '.');
-				if (c != 0)
+				if (c)
 					strcpy(c, ".chd");
 				else
 					strcat(filename, ".chd");
@@ -1708,13 +1708,13 @@ public class common
 				/* first open the source drive */
 				debugload("Opening disk image: %s\n", filename);
 				source = chd_open(filename, 0, NULL);
-				if (source == 0)
+				if (!source)
 				{
 					if (chd_get_last_error() == CHDERR_UNSUPPORTED_VERSION)
-						sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
+						sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
 					else
-						sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s NOT FOUND\n", filename);
-					romdata.errors++;
+						sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s NOT FOUND\n", filename);
+					romdata->errors++;
 					romp++;
 					continue;
 				}
@@ -1728,9 +1728,9 @@ public class common
 				/* verify the MD5 */
 				if (!hash_data_is_equal(ROM_GETHASHDATA(romp), acthash, 0))
 				{
-					sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s WRONG CHECKSUMS:\n", filename);
+					sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s WRONG CHECKSUMS:\n", filename);
 					dump_wrong_and_correct_checksums(romdata, ROM_GETHASHDATA(romp), acthash);
-					romdata.warnings++;
+					romdata->warnings++;
 				}
 	
 				/* if not read-only, make the diff file */
@@ -1739,7 +1739,7 @@ public class common
 					/* make the filename of the diff */
 					strcpy(filename, ROM_GETNAME(romp));
 					c = strrchr(filename, '.');
-					if (c != 0)
+					if (c)
 						strcpy(c, ".dif");
 					else
 						strcat(filename, ".dif");
@@ -1747,7 +1747,7 @@ public class common
 					/* try to open the diff */
 					debugload("Opening differencing image: %s\n", filename);
 					diff = chd_open(filename, 1, source);
-					if (diff == 0)
+					if (!diff)
 					{
 						/* didn't work; try creating it instead */
 						debugload("Creating differencing image: %s\n", filename);
@@ -1755,10 +1755,10 @@ public class common
 						if (err != CHDERR_NONE)
 						{
 							if (chd_get_last_error() == CHDERR_UNSUPPORTED_VERSION)
-								sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
+								sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
 							else
-								sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s: CAN'T CREATE DIFF FILE\n", filename);
-							romdata.errors++;
+								sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s: CAN'T CREATE DIFF FILE\n", filename);
+							romdata->errors++;
 							romp++;
 							continue;
 						}
@@ -1766,13 +1766,13 @@ public class common
 						/* open the newly-created diff file */
 						debugload("Opening differencing image: %s\n", filename);
 						diff = chd_open(filename, 1, source);
-						if (diff == 0)
+						if (!diff)
 						{
 							if (chd_get_last_error() == CHDERR_UNSUPPORTED_VERSION)
-								sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
+								sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s UNSUPPORTED CHD VERSION\n", filename);
 							else
-								sprintf(&romdata.errorbuf[strlen(romdata.errorbuf)], "%-12s: CAN'T OPEN DIFF FILE\n", filename);
-							romdata.errors++;
+								sprintf(&romdata->errorbuf[strlen(romdata->errorbuf)], "%-12s: CAN'T OPEN DIFF FILE\n", filename);
+							romdata->errors++;
 							romp++;
 							continue;
 						}
@@ -1813,7 +1813,7 @@ public class common
 		memset(disk_handle, 0, sizeof(disk_handle));
 	
 		/* determine the correct biosset to load based on options.bios string */
-		system_bios = determine_bios_rom(Machine.gamedrv.bios);
+		system_bios = determine_bios_rom(Machine->gamedrv->bios);
 	
 		/* loop until we hit the end */
 		for (region = romp, regnum = 0; region; region = rom_next_region(region), regnum++)
@@ -1830,7 +1830,7 @@ public class common
 			}
 	
 			/* if sound is disabled and it's a sound-only region, skip it */
-			if (Machine.sample_rate == 0 && ROMREGION_ISSOUNDONLY(region))
+			if (Machine->sample_rate == 0 && ROMREGION_ISSOUNDONLY(region))
 				continue;
 	
 			/* allocate memory for the region */
@@ -1900,7 +1900,7 @@ public class common
 		const struct RomModule *region, *rom, *chunk;
 		char buf[512];
 	
-		if (romp == 0) return;
+		if (!romp) return;
 	
 	#ifdef MESS
 		if (!strcmp(basename,"nes")) return;

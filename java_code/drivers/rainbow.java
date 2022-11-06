@@ -176,11 +176,11 @@ a diamond of a specific color: It depends on its x position and
 direction. There is a cheat code at the top of each secret room
 that can be entered on the copyright screen:
 
-	L . left
-	R . right
-	J . jump
-	B . rainbow
-	S . start
+	L -> left
+	R -> right
+	J -> jump
+	B -> rainbow
+	S -> start
 
 				  |  regular   |  extra
 	--------------+------------+------------
@@ -202,7 +202,7 @@ that can be entered on the copyright screen:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -227,7 +227,7 @@ public class rainbow
 	
 	static WRITE16_HANDLER( jumping_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			jumping_latch = data & 0xff; /*M68000 writes .b to $400007*/
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -314,13 +314,11 @@ public class rainbow
 	              Jumping uses two YM2203's
 	***********************************************************/
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(5, memory_region(REGION_CPU2) + ((data - 1) & 3) * 0x4000 + 0x10000);
 	} };
 	
-	public static ReadHandlerPtr jumping_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jumping_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jumping_latch;
 	} };
 	
@@ -375,7 +373,7 @@ public class rainbow
 				 INPUT PORTS, DIPs
 	***********************************************************/
 	
-	static InputPortPtr input_ports_rainbow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rainbow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rainbow )
 		PORT_START(); 	/* DIP SWITCH A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -449,7 +447,7 @@ public class rainbow
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jumping = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jumping = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jumping )
 		PORT_START(); 	/* DIP SWITCH A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -614,8 +612,7 @@ public class rainbow
 	                      MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_rainbow = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rainbow )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -641,13 +638,10 @@ public class rainbow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_jumping = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jumping )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -673,9 +667,7 @@ public class rainbow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -789,18 +781,15 @@ public class rainbow
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_rainbow  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rainbow  = new DriverInitHandlerPtr() { public void handler(){
 		rainbow_cchip_init(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_rainbowe  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rainbowe  = new DriverInitHandlerPtr() { public void handler(){
 		rainbow_cchip_init(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_jumping  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jumping  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* Sprite colour map is reversed - switch to normal */
@@ -812,8 +801,8 @@ public class rainbow
 	} };
 	
 	
-	public static GameDriver driver_rainbow	   = new GameDriver("1987"	,"rainbow"	,"rainbow.java"	,rom_rainbow,null	,machine_driver_rainbow	,input_ports_rainbow	,init_rainbow	,ROT0	,	"Taito Corporation", "Rainbow Islands (new version)" )
-	public static GameDriver driver_rainbowo	   = new GameDriver("1987"	,"rainbowo"	,"rainbow.java"	,rom_rainbowo,driver_rainbow	,machine_driver_rainbow	,input_ports_rainbow	,init_rainbow	,ROT0	,	"Taito Corporation", "Rainbow Islands (old version)" )
-	public static GameDriver driver_rainbowe	   = new GameDriver("1988"	,"rainbowe"	,"rainbow.java"	,rom_rainbowe,driver_rainbow	,machine_driver_rainbow	,input_ports_rainbow	,init_rainbowe	,ROT0	,	"Taito Corporation", "Rainbow Islands (Extra)" )
-	public static GameDriver driver_jumping	   = new GameDriver("1989"	,"jumping"	,"rainbow.java"	,rom_jumping,driver_rainbow	,machine_driver_jumping	,input_ports_jumping	,init_jumping	,ROT0	,	"bootleg", "Jumping" )
+	GAME( 1987, rainbow,  0,       rainbow, rainbow, rainbow,  ROT0, "Taito Corporation", "Rainbow Islands (new version)" )
+	GAME( 1987, rainbowo, rainbow, rainbow, rainbow, rainbow,  ROT0, "Taito Corporation", "Rainbow Islands (old version)" )
+	GAME( 1988, rainbowe, rainbow, rainbow, rainbow, rainbowe, ROT0, "Taito Corporation", "Rainbow Islands (Extra)" )
+	GAME( 1989, jumping,  rainbow, jumping, jumping, jumping,  ROT0, "bootleg", "Jumping" )
 }

@@ -47,7 +47,7 @@ Stephh's notes :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,8 +55,7 @@ public class iqblock
 {
 	
 	
-	public static WriteHandlerPtr iqblock_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr iqblock_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    UINT8 *mem = memory_region( REGION_CPU1 );
 	
 	    mem[0xfe26] = data;
@@ -64,8 +63,7 @@ public class iqblock
 	    mem[0xfe1c] = data;
 	} };
 	
-	public static WriteHandlerPtr grndtour_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grndtour_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    UINT8 *mem = memory_region( REGION_CPU1 );
 	
 		mem[0xfe39] = data;
@@ -75,27 +73,23 @@ public class iqblock
 	} };
 	
 	
-	public static InterruptHandlerPtr iqblock_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr iqblock_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* ???? */
 		else
 			cpu_set_irq_line(0, 0, ASSERT_LINE);			/* ???? */
 	} };
 	
-	public static WriteHandlerPtr iqblock_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr iqblock_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
-	public static ReadHandlerPtr extrarom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr extrarom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_USER1)[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr port_C_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr port_C_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 4 unknown; it is pulsed at the end of every NMI */
 	
 		/* bit 5 seems to be 0 during screen redraw */
@@ -118,8 +112,7 @@ public class iqblock
 		{ port_C_w },				/* Port C write */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_iqblock  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_iqblock  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
@@ -166,7 +159,7 @@ public class iqblock
 	
 	
 	
-	static InputPortPtr input_ports_iqblock = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iqblock = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iqblock )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -306,8 +299,7 @@ public class iqblock
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_iqblock = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( iqblock )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)	/* 6 MHz */
@@ -332,12 +324,9 @@ public class iqblock
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface) // UM3567
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cabaret = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cabaret )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z180,12000000/2)	/* 6 MHz , appears to use Z180 instructions */
@@ -362,9 +351,7 @@ public class iqblock
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface) // UM3567
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -428,8 +415,7 @@ public class iqblock
 	
 	
 	
-	public static DriverInitHandlerPtr init_iqblock  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_iqblock  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -450,8 +436,7 @@ public class iqblock
 		iqblock_vidhrdw_type=1;
 	} };
 	
-	public static DriverInitHandlerPtr init_grndtour  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_grndtour  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -473,8 +458,7 @@ public class iqblock
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_cabaret  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cabaret  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -494,8 +478,8 @@ public class iqblock
 	
 	
 	
-	public static GameDriver driver_iqblock	   = new GameDriver("1993"	,"iqblock"	,"iqblock.java"	,rom_iqblock,null	,machine_driver_iqblock	,input_ports_iqblock	,init_iqblock	,ROT0	,	"IGS", "IQ-Block" )
-	public static GameDriver driver_grndtour	   = new GameDriver("1993"	,"grndtour"	,"iqblock.java"	,rom_grndtour,null	,machine_driver_iqblock	,input_ports_iqblock	,init_grndtour	,ROT0	,	"IGS", "Grand Tour" )
+	GAME( 1993, iqblock, 0, iqblock, iqblock, iqblock, ROT0, "IGS", "IQ-Block" )
+	GAME( 1993, grndtour, 0, iqblock, iqblock, grndtour, ROT0, "IGS", "Grand Tour" )
 	
-	public static GameDriver driver_cabaret	   = new GameDriver("19??"	,"cabaret"	,"iqblock.java"	,rom_cabaret,null	,machine_driver_cabaret	,input_ports_iqblock	,init_cabaret	,ROT0	,	"IGS", "Cabaret", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 19??, cabaret, 0, cabaret, iqblock, cabaret, ROT0, "IGS", "Cabaret", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

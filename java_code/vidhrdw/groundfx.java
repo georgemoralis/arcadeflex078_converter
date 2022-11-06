@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,10 +26,9 @@ public class groundfx
 	
 	/******************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_groundfx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_groundfx  = new VideoStartHandlerPtr() { public int handler(){
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		if (TC0100SCN_vh_start(1,TC0100SCN_GFX_NUM,50,8,0,0,0,0,0))
@@ -132,7 +131,7 @@ public class groundfx
 			flipy = NOT(flipy);
 			y = (-y &0x3ff);
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			flipy = NOT(flipy);
 			zoomx += 1;
@@ -160,8 +159,8 @@ public class groundfx
 					px = k;
 					py = j;
 					/* pick tiles back to front for x and y flips */
-					if (flipx != 0)  px = dimension-1-k;
-					if (flipy != 0)  py = dimension-1-j;
+					if (flipx)  px = dimension-1-k;
+					if (flipy)  py = dimension-1-j;
 	
 					code = spritemap[map_offset + px + (py<<(dblsize+1))];
 	
@@ -177,7 +176,7 @@ public class groundfx
 					zx= x + (((k+1)*zoomx)/dimension) - curx;
 					zy= y + (((j+1)*zoomy)/dimension) - cury;
 	
-					if (sprites_flipscreen != 0)
+					if (sprites_flipscreen)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -189,16 +188,16 @@ public class groundfx
 						flipy = NOT(flipy);
 					}
 	
-					sprite_ptr.gfx = 0;
-					sprite_ptr.code = code;
-					sprite_ptr.color = color;
-					sprite_ptr.flipx = NOT(flipx);
-					sprite_ptr.flipy = flipy;
-					sprite_ptr.x = curx;
-					sprite_ptr.y = cury;
-					sprite_ptr.zoomx = zx << 12;
-					sprite_ptr.zoomy = zy << 12;
-					sprite_ptr.pri = priority;
+					sprite_ptr->gfx = 0;
+					sprite_ptr->code = code;
+					sprite_ptr->color = color;
+					sprite_ptr->flipx = NOT(flipx);
+					sprite_ptr->flipy = flipy;
+					sprite_ptr->x = curx;
+					sprite_ptr->y = cury;
+					sprite_ptr->zoomx = zx << 12;
+					sprite_ptr->zoomy = zy << 12;
+					sprite_ptr->pri = priority;
 					sprite_ptr++;
 				}
 			}
@@ -211,19 +210,19 @@ public class groundfx
 	
 			sprite_ptr--;
 	
-			if (do_hack && sprite_ptr.pri==1 && sprite_ptr.y<100)
+			if (do_hack && sprite_ptr->pri==1 && sprite_ptr->y<100)
 				clipper=&hack_cliprect;
 			else
 				clipper=cliprect;
 	
-			pdrawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			pdrawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					clipper,TRANSPARENCY_PEN,0,
-					sprite_ptr.zoomx,sprite_ptr.zoomy,
-					primasks[sprite_ptr.pri]);
+					sprite_ptr->zoomx,sprite_ptr->zoomy,
+					primasks[sprite_ptr->pri]);
 		}
 	}
 	
@@ -231,8 +230,7 @@ public class groundfx
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_groundfx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[5];
 		UINT8 pivlayer[3];
 		UINT16 priority;

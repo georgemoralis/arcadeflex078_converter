@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,7 +40,7 @@ public class pushman
 	
 	static WRITE16_HANDLER( pushman_control_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			soundlatch_w(0,(data>>8)&0xff);
 	}
 	
@@ -57,9 +57,9 @@ public class pushman
 	
 	static WRITE16_HANDLER( pushman_68705_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			shared_ram[2*offset]=data>>8;
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			shared_ram[2*offset+1]=data&0xff;
 	
 		if (offset==1)
@@ -88,9 +88,9 @@ public class pushman
 	
 	static WRITE16_HANDLER( bballs_68705_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			shared_ram[2*offset]=data>>8;
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			shared_ram[2*offset+1]=data&0xff;
 	
 		if(offset==0)
@@ -113,13 +113,11 @@ public class pushman
 	}
 	
 	
-	public static ReadHandlerPtr pushman_68000_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pushman_68000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr pushman_68000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pushman_68000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==2 && (shared_ram[2]&2)==0 && data&2) {
 			latch=(shared_ram[1]<<8)|shared_ram[0];
 			new_latch=1;
@@ -127,8 +125,7 @@ public class pushman
 		shared_ram[offset]=data;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_bballs  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bballs  = new MachineInitHandlerPtr() { public void handler(){
 		latch=0x400;
 	} };
 	
@@ -226,7 +223,7 @@ public class pushman
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_pushman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pushman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pushman )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -305,7 +302,7 @@ public class pushman
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bballs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bballs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bballs )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -457,8 +454,7 @@ public class pushman
 	
 	static UINT32 amask_m68705 = 0xfff;
 	
-	public static MachineHandlerPtr machine_driver_pushman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pushman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -491,12 +487,9 @@ public class pushman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bballs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bballs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -526,9 +519,7 @@ public class pushman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************/
@@ -598,6 +589,6 @@ public class pushman
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_pushman	   = new GameDriver("1990"	,"pushman"	,"pushman.java"	,rom_pushman,null	,machine_driver_pushman	,input_ports_pushman	,null	,ROT0	,	"Comad (American Sammy license)", "Pushman" )
-	public static GameDriver driver_bballs	   = new GameDriver("1991"	,"bballs"	,"pushman.java"	,rom_bballs,null	,machine_driver_bballs	,input_ports_bballs	,null	,ROT0	,	"Comad", "Bouncing Balls" )
+	GAME( 1990, pushman, 0, pushman, pushman, 0, ROT0, "Comad (American Sammy license)", "Pushman" )
+	GAME( 1991, bballs,  0, bballs,  bballs,  0, ROT0, "Comad", "Bouncing Balls" )
 }

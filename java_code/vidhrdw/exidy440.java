@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,8 +49,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_exidy440  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exidy440  = new VideoStartHandlerPtr() { public int handler(){
 		/* reset the system */
 		firq_enable = 0;
 		firq_select = 0;
@@ -65,12 +64,12 @@ public class exidy440
 	
 		/* allocate a bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (tmpbitmap == 0)
+		if (!tmpbitmap)
 			return 1;
 	
 		/* allocate a buffer for VRAM */
 		local_videoram = auto_malloc(256 * 256 * 2);
-		if (local_videoram == 0)
+		if (!local_videoram)
 			return 1;
 	
 		/* clear it */
@@ -78,7 +77,7 @@ public class exidy440
 	
 		/* allocate a buffer for palette RAM */
 		local_paletteram = auto_malloc(512 * 2);
-		if (local_paletteram == 0)
+		if (!local_paletteram)
 			return 1;
 	
 		/* clear it */
@@ -86,7 +85,7 @@ public class exidy440
 	
 		/* allocate a scanline dirty array */
 		scanline_dirty = auto_malloc(256);
-		if (scanline_dirty == 0)
+		if (!scanline_dirty)
 			return 1;
 	
 		/* mark everything dirty to start */
@@ -102,8 +101,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *base = &local_videoram[(*exidy440_scanline * 256 + offset) * 2];
 	
 		/* combine the two pixel values into one byte */
@@ -111,8 +109,7 @@ public class exidy440
 	} };
 	
 	
-	public static WriteHandlerPtr exidy440_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *base = &local_videoram[(*exidy440_scanline * 256 + offset) * 2];
 	
 		/* expand the two pixel values into two bytes */
@@ -131,14 +128,12 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return local_paletteram[palettebank_io * 512 + offset];
 	} };
 	
 	
-	public static WriteHandlerPtr exidy440_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* update palette ram in the I/O bank */
 		local_paletteram[palettebank_io * 512 + offset] = data;
 	
@@ -164,8 +159,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_horizontal_pos_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_horizontal_pos_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* clear the FIRQ on a read here */
 		exidy440_firq_beam = 0;
 		exidy440_update_firq();
@@ -176,8 +170,7 @@ public class exidy440
 	} };
 	
 	
-	public static ReadHandlerPtr exidy440_vertical_pos_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_vertical_pos_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result;
 	
 		/* according to the schems, this value is latched on any FIRQ
@@ -196,8 +189,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy440_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		force_partial_update(cpu_getscanline());
 		spriteram.write(offset,data);
 	} };
@@ -210,8 +202,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy440_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int oldvis = palettebank_vis;
 	
 		/* extract the various bits */
@@ -244,8 +235,7 @@ public class exidy440
 	} };
 	
 	
-	public static WriteHandlerPtr exidy440_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* clear the VBLANK FIRQ on a write here */
 		exidy440_firq_vblank = 0;
 		exidy440_update_firq();
@@ -268,8 +258,7 @@ public class exidy440
 	}
 	
 	
-	public static InterruptHandlerPtr exidy440_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr exidy440_vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* set the FIRQ line on a VBLANK */
 		exidy440_firq_vblank = 1;
 		exidy440_update_firq();
@@ -362,7 +351,7 @@ public class exidy440
 			UINT8 *src;
 	
 			/* skip if out of range */
-			if (yoffs < cliprect.min_y || yoffs >= cliprect.max_y + 16)
+			if (yoffs < cliprect->min_y || yoffs >= cliprect->max_y + 16)
 				continue;
 	
 			/* get a pointer to the source image */
@@ -383,11 +372,11 @@ public class exidy440
 					sy += 240;
 	
 				/* stop if we get before the current scanline */
-				if (yoffs < cliprect.min_y)
+				if (yoffs < cliprect->min_y)
 					break;
 	
 				/* only draw scanlines that are in this cliprect */
-				if (yoffs <= cliprect.max_y)
+				if (yoffs <= cliprect->max_y)
 				{
 					UINT8 *old = &local_videoram[sy * 512 + xoffs];
 					int currx = xoffs;
@@ -405,7 +394,7 @@ public class exidy440
 						{
 							/* combine with the background */
 							pen = left | old[0];
-							plot_pixel(bitmap, currx, yoffs, Machine.pens[pen]);
+							plot_pixel(bitmap, currx, yoffs, Machine->pens[pen]);
 	
 							/* check the collisions bit */
 							if ((palette[2 * pen] & 0x80) && count++ < 128)
@@ -418,7 +407,7 @@ public class exidy440
 						{
 							/* combine with the background */
 							pen = right | old[1];
-							plot_pixel(bitmap, currx, yoffs, Machine.pens[pen]);
+							plot_pixel(bitmap, currx, yoffs, Machine->pens[pen]);
 	
 							/* check the collisions bit */
 							if ((palette[2 * pen] & 0x80) && count++ < 128)
@@ -447,8 +436,8 @@ public class exidy440
 		int beamx, beamy;
 	
 		/* draw any dirty scanlines from the VRAM directly */
-		sy = scroll_offset + cliprect.min_y;
-		for (y = cliprect.min_y; y <= cliprect.max_y; y++, sy++)
+		sy = scroll_offset + cliprect->min_y;
+		for (y = cliprect->min_y; y <= cliprect->max_y; y++, sy++)
 		{
 			/* wrap at the bottom of the screen */
 			if (sy >= 240)
@@ -457,7 +446,7 @@ public class exidy440
 			/* only redraw if dirty */
 			if (scanline_dirty[sy])
 			{
-				draw_scanline8(tmpbitmap, 0, y, 320, &local_videoram[sy * 512], Machine.pens, -1);
+				draw_scanline8(tmpbitmap, 0, y, 320, &local_videoram[sy * 512], Machine->pens, -1);
 				scanline_dirty[sy] = 0;
 			}
 		}
@@ -467,7 +456,7 @@ public class exidy440
 		draw_sprites(bitmap, cliprect, scroll_offset);
 	
 		/* draw the crosshair (but not for topsecret) */
-		if (exidy440_topsecret == 0)
+		if (!exidy440_topsecret)
 		{
 			beamx = ((input_port_4_r(0) & 0xff) * 320) >> 8;
 			beamy = ((input_port_5_r(0) & 0xff) * 240) >> 8;
@@ -484,15 +473,14 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exidy440  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* if we need a full refresh, mark all scanlines dirty */
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(scanline_dirty, 1, 256);
 	
 		/* if we're Top Secret, do our refresh here; others are done in the update function above */
 		/* unless we're doing a full refresh (eg. when the driver is paused) */
-		if (exidy440_topsecret != 0)
+		if (exidy440_topsecret)
 		{
 			/* if the scroll changed, mark everything dirty */
 			if (topsecex_yscroll != topsecex_last_yscroll)
@@ -519,10 +507,9 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static VideoEofHandlerPtr video_eof_exidy440  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_exidy440  = new VideoEofHandlerPtr() { public void handler(){
 		/* generate an interrupt once/frame for the beam */
-		if (exidy440_topsecret == 0)
+		if (!exidy440_topsecret)
 		{
 			double time, increment;
 			int beamx, beamy;

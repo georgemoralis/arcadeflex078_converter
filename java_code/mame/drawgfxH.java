@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -146,9 +146,9 @@ public class drawgfxH
 	
 	
 	/* pointers to pixel functions.  They're set based on depth */
-	#define plot_pixel(bm,x,y,p)	(*(bm).plot)(bm,x,y,p)
-	#define read_pixel(bm,x,y)		(*(bm).read)(bm,x,y)
-	#define plot_box(bm,x,y,w,h,p)	(*(bm).plot_box)(bm,x,y,w,h,p)
+	#define plot_pixel(bm,x,y,p)	(*(bm)->plot)(bm,x,y,p)
+	#define read_pixel(bm,x,y)		(*(bm)->read)(bm,x,y)
+	#define plot_box(bm,x,y,w,h,p)	(*(bm)->plot_box)(bm,x,y,w,h,p)
 	
 	void decodechar(struct GfxElement *gfx,int num,const unsigned char *src,const struct GfxLayout *gl);
 	struct GfxElement *decodegfx(const unsigned char *src,const struct GfxLayout *gl);
@@ -276,10 +276,10 @@ public class drawgfxH
 	
 	INLINE void sect_rect(struct rectangle *dst, const struct rectangle *src)
 	{
-		if (src.min_x > dst.min_x) dst.min_x = src.min_x;
-		if (src.max_x < dst.max_x) dst.max_x = src.max_x;
-		if (src.min_y > dst.min_y) dst.min_y = src.min_y;
-		if (src.max_y < dst.max_y) dst.max_y = src.max_y;
+		if (src->min_x > dst->min_x) dst->min_x = src->min_x;
+		if (src->max_x < dst->max_x) dst->max_x = src->max_x;
+		if (src->min_y > dst->min_y) dst->min_y = src->min_y;
+		if (src->max_y < dst->max_y) dst->max_y = src->max_y;
 	}
 	
 	

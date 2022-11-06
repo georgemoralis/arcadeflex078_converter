@@ -17,7 +17,7 @@ MAIN BOARD:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -32,13 +32,11 @@ public class sbasketb
 	
 	
 	
-	public static WriteHandlerPtr sbasketb_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbasketb_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr sbasketb_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbasketb_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -98,7 +96,7 @@ public class sbasketb
 	
 	
 	
-	static InputPortPtr input_ports_sbasketb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbasketb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbasketb )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -236,8 +234,7 @@ public class sbasketb
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_sbasketb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sbasketb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1400000)        /* 1.400 MHz ??? */
@@ -267,9 +264,7 @@ public class sbasketb
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, sbasketb_vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -377,13 +372,12 @@ public class sbasketb
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_sbasketb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sbasketb  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_sbasketb	   = new GameDriver("1984"	,"sbasketb"	,"sbasketb.java"	,rom_sbasketb,null	,machine_driver_sbasketb	,input_ports_sbasketb	,init_sbasketb	,ROT90	,	"Konami", "Super Basketball (version G)" )
-	public static GameDriver driver_sbasketo	   = new GameDriver("1984"	,"sbasketo"	,"sbasketb.java"	,rom_sbasketo,driver_sbasketb	,machine_driver_sbasketb	,input_ports_sbasketb	,init_sbasketb	,ROT90	,	"Konami", "Super Basketball (version E)" )
-	public static GameDriver driver_sbasketu	   = new GameDriver("1984"	,"sbasketu"	,"sbasketb.java"	,rom_sbasketu,driver_sbasketb	,machine_driver_sbasketb	,input_ports_sbasketb	,null	,ROT90	,	"Konami", "Super Basketball (not encrypted)" )
+	GAME( 1984, sbasketb, 0,        sbasketb, sbasketb, sbasketb, ROT90, "Konami", "Super Basketball (version G)" )
+	GAME( 1984, sbasketo, sbasketb, sbasketb, sbasketb, sbasketb, ROT90, "Konami", "Super Basketball (version E)" )
+	GAME( 1984, sbasketu, sbasketb, sbasketb, sbasketb, 0,        ROT90, "Konami", "Super Basketball (not encrypted)" )
 }

@@ -2,22 +2,20 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class chindrag
 {
 	
-	VIDEO_START(chindrag)
-	{
+	public static VideoStartHandlerPtr video_start_chindrag  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(chindrag)
-	{
+	public static VideoUpdateHandlerPtr video_update_chindrag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
-	}
+	} };
 	static MEMORY_READ16_START( chindrag_readmem )
 		{ 0x000000, 0x07ffff, MRA16_ROM },
 		{ 0x100000, 0x103fff, MRA16_RAM },
@@ -98,11 +96,10 @@ public class chindrag
 	};
 	
 	
-	static InputPortPtr input_ports_chindrag = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chindrag = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chindrag )
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_chindrag = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chindrag )
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(chindrag_readmem,chindrag_writemem)
 	//	MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -121,9 +118,7 @@ public class chindrag
 		MDRV_VIDEO_UPDATE(chindrag)
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	void dw_decrypt(void)
@@ -154,8 +149,7 @@ public class chindrag
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_chindrag  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chindrag  = new DriverInitHandlerPtr() { public void handler(){
 		dw_decrypt();
 	} };
 	
@@ -174,5 +168,5 @@ public class chindrag
 		ROM_LOAD( "sp",         0x00000, 0x40000, CRC(fde63ce1) SHA1(cc32d2cace319fe4d5d0aa96d7addb2d1def62f2) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_chindrag	   = new GameDriver("1994"	,"chindrag"	,"chindrag.java"	,rom_chindrag,null	,machine_driver_chindrag	,input_ports_chindrag	,init_chindrag	,ROT0	,	"IGS", "China Dragon / Dragon World", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1994, chindrag, 0, chindrag, chindrag, chindrag, ROT0, "IGS", "China Dragon / Dragon World", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

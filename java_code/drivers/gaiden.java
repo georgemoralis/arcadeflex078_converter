@@ -126,7 +126,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -155,8 +155,8 @@ public class gaiden
 	
 	static WRITE16_HANDLER( gaiden_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);	/* Ninja Gaiden */
-		if (ACCESSING_MSB != 0) soundlatch_w(0,data >> 8);	/* Tecmo Knight */
+		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);	/* Ninja Gaiden */
+		if (ACCESSING_MSB) soundlatch_w(0,data >> 8);	/* Tecmo Knight */
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	}
 	
@@ -170,7 +170,7 @@ public class gaiden
 	
 	static WRITE16_HANDLER( wildfang_protection_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			static int jumpcode;
 			static int jumppoints[] =
@@ -297,14 +297,13 @@ public class gaiden
 	
 	static int *raiga_jumppoints = jumppoints_00;
 	
-	static MACHINE_INIT ( raiga )
-	{
+	public static MachineInitHandlerPtr machine_init_raiga  = new MachineInitHandlerPtr() { public void handler(){
 		raiga_jumppoints = jumppoints_00;
-	}
+	} };
 	
 	static WRITE16_HANDLER( raiga_protection_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			static int jumpcode;
 	
@@ -419,7 +418,7 @@ public class gaiden
 	
 	
 	
-	static InputPortPtr input_ports_shadoww = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shadoww = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shadoww )
 		PORT_START(); 	/* System Inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -499,7 +498,7 @@ public class gaiden
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wildfang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wildfang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wildfang )
 		PORT_START(); 	/* System Inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -580,7 +579,7 @@ public class gaiden
 		PORT_DIPSETTING(      0x0000, "Tecmo Knight" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tknight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tknight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tknight )
 		PORT_START(); 	/* System Inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -660,7 +659,7 @@ public class gaiden
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_raiga = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raiga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raiga )
 		PORT_START(); 	/* System Inputs */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -827,8 +826,7 @@ public class gaiden
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_shadoww = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shadoww )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 18432000/2)	/* 9.216 MHz */
@@ -857,21 +855,16 @@ public class gaiden
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_raiga = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raiga )
 		MDRV_IMPORT_FROM(shadoww)
 	
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER | VIDEO_NEEDS_6BITS_PER_GUN | VIDEO_RGB_DIRECT)
 	
 		MDRV_VIDEO_START(raiga)
 		MDRV_VIDEO_UPDATE(raiga)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1146,14 +1139,12 @@ public class gaiden
 	
 	
 	
-	public static DriverInitHandlerPtr init_shadoww  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shadoww  = new DriverInitHandlerPtr() { public void handler(){
 		/* sprite size Y = sprite size X */
 		gaiden_sprite_sizey = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_wildfang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wildfang  = new DriverInitHandlerPtr() { public void handler(){
 		/* sprite size Y = sprite size X */
 		gaiden_sprite_sizey = 0;
 	
@@ -1161,8 +1152,7 @@ public class gaiden
 		install_mem_write16_handler(0, 0x07a804, 0x07a805, wildfang_protection_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_raiga  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_raiga  = new DriverInitHandlerPtr() { public void handler(){
 		/* sprite size Y independent from sprite size X */
 		gaiden_sprite_sizey = 2;
 	
@@ -1172,12 +1162,12 @@ public class gaiden
 	
 	
 	
-	public static GameDriver driver_shadoww	   = new GameDriver("1988"	,"shadoww"	,"gaiden.java"	,rom_shadoww,null	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Shadow Warriors (World set 1)" )
-	public static GameDriver driver_shadowwa	   = new GameDriver("1988"	,"shadowwa"	,"gaiden.java"	,rom_shadowwa,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Shadow Warriors (World set 2)" )
-	public static GameDriver driver_gaiden	   = new GameDriver("1988"	,"gaiden"	,"gaiden.java"	,rom_gaiden,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Ninja Gaiden (US)" )
-	public static GameDriver driver_ryukendn	   = new GameDriver("1989"	,"ryukendn"	,"gaiden.java"	,rom_ryukendn,driver_shadoww	,machine_driver_shadoww	,input_ports_shadoww	,init_shadoww	,ROT0	,	"Tecmo", "Ninja Ryukenden (Japan)" )
-	public static GameDriver driver_wildfang	   = new GameDriver("1989"	,"wildfang"	,"gaiden.java"	,rom_wildfang,null	,machine_driver_shadoww	,input_ports_wildfang	,init_wildfang	,ROT0	,	"Tecmo", "Wild Fang / Tecmo Knight" )
-	public static GameDriver driver_tknight	   = new GameDriver("1989"	,"tknight"	,"gaiden.java"	,rom_tknight,driver_wildfang	,machine_driver_shadoww	,input_ports_tknight	,init_wildfang	,ROT0	,	"Tecmo", "Tecmo Knight" )
-	public static GameDriver driver_stratof	   = new GameDriver("1991"	,"stratof"	,"gaiden.java"	,rom_stratof,null	,machine_driver_raiga	,input_ports_raiga	,init_raiga	,ROT0	,	"Tecmo", "Raiga - Strato Fighter (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_raiga	   = new GameDriver("1991"	,"raiga"	,"gaiden.java"	,rom_raiga,driver_stratof	,machine_driver_raiga	,input_ports_raiga	,init_raiga	,ROT0	,	"Tecmo", "Raiga - Strato Fighter (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1988, shadoww,  0,        shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Shadow Warriors (World set 1)" )
+	GAME( 1988, shadowwa, shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Shadow Warriors (World set 2)" )
+	GAME( 1988, gaiden,   shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Ninja Gaiden (US)" )
+	GAME( 1989, ryukendn, shadoww,  shadoww, shadoww,  shadoww,  ROT0, "Tecmo", "Ninja Ryukenden (Japan)" )
+	GAME( 1989, wildfang, 0,        shadoww, wildfang, wildfang, ROT0, "Tecmo", "Wild Fang / Tecmo Knight" )
+	GAME( 1989, tknight,  wildfang, shadoww, tknight,  wildfang, ROT0, "Tecmo", "Tecmo Knight" )
+	GAMEX(1991, stratof,  0,        raiga,	 raiga,    raiga,    ROT0, "Tecmo", "Raiga - Strato Fighter (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, raiga,    stratof,  raiga,	 raiga,    raiga,    ROT0, "Tecmo", "Raiga - Strato Fighter (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

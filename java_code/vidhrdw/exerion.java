@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class exerion
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_exerion  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_exerion  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -114,8 +113,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_exerion  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exerion  = new VideoStartHandlerPtr() { public int handler(){
 		UINT16 *dst;
 		UINT8 *src;
 		int i, x, y;
@@ -129,7 +127,7 @@ public class exerion
 	
 		/* allocate memory to track the background latches */
 		background_latches = auto_malloc(Machine.drv.screen_height * 16);
-		if (background_latches == 0)
+		if (!background_latches)
 			return 1;
 	
 		/* allocate memory for the decoded background graphics */
@@ -168,19 +166,19 @@ public class exerion
 					UINT16 val;
 	
 					val = ((data >> 3) & 2) | ((data >> 0) & 1);
-					if (val != 0) val |= 0x100 >> i;
+					if (val) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 4) & 2) | ((data >> 1) & 1);
-					if (val != 0) val |= 0x100 >> i;
+					if (val) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 5) & 2) | ((data >> 2) & 1);
-					if (val != 0) val |= 0x100 >> i;
+					if (val) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 	
 					val = ((data >> 6) & 2) | ((data >> 3) & 1);
-					if (val != 0) val |= 0x100 >> i;
+					if (val) val |= 0x100 >> i;
 					*dst++ = val << (2 * i);
 				}
 				for (x = 0; x < 128; x++)
@@ -199,8 +197,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exerion_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exerion_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 = flip screen and joystick input multiplexor */
 		exerion_cocktail_flip = data & 1;
 	
@@ -217,17 +214,16 @@ public class exerion
 	} };
 	
 	
-	public static WriteHandlerPtr exerion_video_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exerion_video_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int ybeam = cpu_getscanline();
 	
-		if (ybeam >= Machine.drv.screen_height)
-			ybeam = Machine.drv.screen_height - 1;
+		if (ybeam >= Machine->drv->screen_height)
+			ybeam = Machine->drv->screen_height - 1;
 	
 		/* copy data up to and including the current scanline */
 		while (ybeam != last_scanline_update)
 		{
-			last_scanline_update = (last_scanline_update + 1) % Machine.drv.screen_height;
+			last_scanline_update = (last_scanline_update + 1) % Machine->drv->screen_height;
 			memcpy(&background_latches[last_scanline_update * 16], current_latches, 16);
 		}
 	
@@ -237,8 +233,7 @@ public class exerion
 	} };
 	
 	
-	public static ReadHandlerPtr exerion_video_timing_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exerion_video_timing_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit 1 is VBLANK */
 		/* bit 0 is the SNMI signal, which is low for H >= 0x1c0 and /VBLANK */
 	
@@ -263,11 +258,11 @@ public class exerion
 	
 	void draw_background(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		UINT8 *latches = &background_latches[cliprect.min_y * 16];
+		UINT8 *latches = &background_latches[cliprect->min_y * 16];
 		int x, y;
 	
 		/* loop over all visible scanlines */
-		for (y = cliprect.min_y; y <= cliprect.max_y; y++, latches += 16)
+		for (y = cliprect->min_y; y <= cliprect->max_y; y++, latches += 16)
 		{
 			UINT16 *src0 = &background_gfx[0][latches[1] * 256];
 			UINT16 *src1 = &background_gfx[1][latches[3] * 256];
@@ -290,10 +285,10 @@ public class exerion
 			pen_t *pens;
 	
 			/* the cocktail flip flag controls whether we count up or down in X */
-			if (exerion_cocktail_flip == 0)
+			if (!exerion_cocktail_flip)
 			{
 				/* skip processing anything that's not visible */
-				for (x = BACKGROUND_X_START; x < cliprect.min_x; x++)
+				for (x = BACKGROUND_X_START; x < cliprect->min_x; x++)
 				{
 					if (!(++xoffs0 & 0x1f)) start0++, stop0++;
 					if (!(++xoffs1 & 0x1f)) start1++, stop1++;
@@ -302,7 +297,7 @@ public class exerion
 				}
 	
 				/* draw the rest of the scanline fully */
-				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
+				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
 				{
 					UINT16 combined = 0;
 					UINT8 lookupval;
@@ -330,7 +325,7 @@ public class exerion
 			else
 			{
 				/* skip processing anything that's not visible */
-				for (x = BACKGROUND_X_START; x < cliprect.min_x; x++)
+				for (x = BACKGROUND_X_START; x < cliprect->min_x; x++)
 				{
 					if (!(xoffs0-- & 0x1f)) start0++, stop0++;
 					if (!(xoffs1-- & 0x1f)) start1++, stop1++;
@@ -339,7 +334,7 @@ public class exerion
 				}
 	
 				/* draw the rest of the scanline fully */
-				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
+				for (x = cliprect->min_x; x <= cliprect->max_x; x++)
 				{
 					UINT16 combined = 0;
 					UINT8 lookupval;
@@ -366,8 +361,8 @@ public class exerion
 			}
 	
 			/* draw the scanline */
-			pens = Machine.remapped_colortable[0x200 + (latches[12] >> 4) * 16];
-			draw_scanline8(bitmap, cliprect.min_x, y, cliprect.max_x - cliprect.min_x + 1, &scanline[cliprect.min_x], pens, -1);
+			pens = Machine->remapped_colortable[0x200 + (latches[12] >> 4) * 16];
+			draw_scanline8(bitmap, cliprect->min_x, y, cliprect->max_x - cliprect->min_x + 1, &scanline[cliprect->min_x], pens, -1);
 		}
 	}
 	
@@ -378,8 +373,7 @@ public class exerion
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exerion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exerion  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int sx, sy, offs, i;
 	
 		/* finish updating the scanlines */
@@ -389,7 +383,7 @@ public class exerion
 		draw_background(bitmap, cliprect);
 	
 	#ifdef DEBUG_SPRITES
-		if (sprite_log != 0)
+		if (sprite_log)
 		{
 			int i;
 	
@@ -420,18 +414,18 @@ public class exerion
 			int color = ((flags >> 1) & 0x03) | ((code >> 5) & 0x04) | (code & 0x08) | (sprite_palette * 16);
 			const struct GfxElement *gfx = doubled ? Machine.gfx[2] : Machine.gfx[1];
 	
-			if (exerion_cocktail_flip != 0)
+			if (exerion_cocktail_flip)
 			{
 				x = 64*8 - gfx.width - x;
 				y = 32*8 - gfx.height - y;
-				if (wide != 0) y -= gfx.height;
+				if (wide) y -= gfx.height;
 				xflip = !xflip;
 				yflip = !yflip;
 			}
 	
-			if (wide != 0)
+			if (wide)
 			{
-				if (yflip != 0)
+				if (yflip)
 					code |= 0x10, code2 &= ~0x10;
 				else
 					code &= ~0x10, code2 |= 0x10;
@@ -443,7 +437,7 @@ public class exerion
 			drawgfx(bitmap, gfx, code, color, xflip, yflip, x, y,
 			        cliprect, TRANSPARENCY_COLOR, 16);
 	
-			if (doubled != 0) i += 4;
+			if (doubled) i += 4;
 		}
 	
 		/* draw the visible text layer */

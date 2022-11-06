@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -211,8 +211,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mia  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mia  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
 		layer_colorbase[2] = 40;
@@ -224,8 +223,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cuebrckj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cuebrckj  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
 		layer_colorbase[2] = 40;
@@ -237,8 +235,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_tmnt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tmnt  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 32;
 		layer_colorbase[2] = 40;
@@ -250,8 +247,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_punkshot  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_punkshot  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,tmnt_tile_callback))
@@ -261,7 +257,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_lgtnfght  = new VideoStartHandlerPtr() { public int handler()	/* also tmnt2, ssriders */
+	public static VideoStartHandlerPtr video_start_lgtnfght  = new VideoStartHandlerPtr() { public int handler()* also tmnt2, ssriders */
 	{
 		K053251_vh_start();
 	
@@ -282,8 +278,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sunsetbl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sunsetbl  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,ssbl_tile_callback))
@@ -293,8 +288,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_detatwin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_detatwin  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,detatwin_tile_callback))
@@ -304,8 +298,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_glfgreat  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_glfgreat  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,tmnt_tile_callback))
@@ -315,7 +308,7 @@ public class tmnt
 	
 		roz_tilemap = tilemap_create(glfgreat_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,512,512);
 	
-		if (roz_tilemap == 0)
+		if (!roz_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(roz_tilemap,0);
@@ -326,8 +319,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_thndrx2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_thndrx2  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,tmnt_tile_callback))
@@ -337,8 +329,7 @@ public class tmnt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_prmrsocr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_prmrsocr  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,tmnt_tile_callback))
@@ -348,7 +339,7 @@ public class tmnt
 	
 		roz_tilemap = tilemap_create(prmrsocr_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,512,256);
 	
-		if (roz_tilemap == 0)
+		if (!roz_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(roz_tilemap,0);
@@ -391,7 +382,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( tmnt_0a0000_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			static int last;
 	
@@ -417,7 +408,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( punkshot_0a0020_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			static int last;
 	
@@ -438,7 +429,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( lgtnfght_0a0018_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			static int last;
 	
@@ -460,7 +451,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( detatwin_700300_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -483,7 +474,7 @@ public class tmnt
 	
 	READ16_HANDLER( glfgreat_rom_r )
 	{
-		if (glfgreat_roz_rom_mode != 0)
+		if (glfgreat_roz_rom_mode)
 			return memory_region(REGION_GFX3)[glfgreat_roz_char_bank * 0x80000 + offset];
 		else if (offset < 0x40000)
 			return memory_region(REGION_USER1)[offset + 0x80000 + glfgreat_roz_rom_bank * 0x40000] +
@@ -494,7 +485,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( glfgreat_122000_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -515,7 +506,7 @@ public class tmnt
 	
 			/* other bits unknown */
 		}
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* bit 8 = 53596 char/rom selection for ROM test */
 			glfgreat_roz_rom_mode = data & 0x100;
@@ -525,7 +516,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( ssriders_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -546,7 +537,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( ssriders_1c0300_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -562,7 +553,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( prmrsocr_122000_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0,1 = coin counter */
 			coin_counter_w(0,data & 0x01);
@@ -583,7 +574,7 @@ public class tmnt
 	
 	WRITE16_HANDLER( tmnt_priority_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 2/3 = priority; other bits unused */
 			/* bit2 = PRI bit3 = PRI2
@@ -631,8 +622,7 @@ public class tmnt
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,0);
@@ -642,8 +632,7 @@ public class tmnt
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[0],0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tmnt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,0);
@@ -654,8 +643,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_punkshot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
 		layer_colorbase[0] = K053251_get_palette_index(K053251_CI2);
@@ -682,8 +670,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lgtnfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
 		layer_colorbase[0] = K053251_get_palette_index(K053251_CI2);
@@ -722,8 +709,7 @@ public class tmnt
 		else return glfgreat_pixel & 0xff;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_glfgreat  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K053251_set_tilemaps(NULL,NULL,K052109_tilemap[0],K052109_tilemap[1],K052109_tilemap[2]);
 	
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
@@ -769,8 +755,7 @@ public class tmnt
 		K053245_sprites_draw(bitmap,cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tmnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tmnt2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		double brt;
 		int i, newdim, newen, cb, ce;
 	
@@ -780,7 +765,7 @@ public class tmnt
 		if (newdim != lastdim || newen != lasten)
 		{
 			brt = 1.0;
-			if (newen != 0) brt -= (1.0-PALETTE_DEFAULT_SHADOW_FACTOR)*newdim/8;
+			if (newen) brt -= (1.0-PALETTE_DEFAULT_SHADOW_FACTOR)*newdim/8;
 			lastdim = newdim;
 			lasten  = newen;
 	
@@ -819,8 +804,7 @@ public class tmnt
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_thndrx2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		bg_colorbase       = K053251_get_palette_index(K053251_CI0);
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI1);
 		layer_colorbase[0] = K053251_get_palette_index(K053251_CI2);
@@ -855,8 +839,7 @@ public class tmnt
 	
 	***************************************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_detatwin  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_detatwin  = new VideoEofHandlerPtr() { public void handler(){
 		K053245_clear_buffer();
 	} };
 }

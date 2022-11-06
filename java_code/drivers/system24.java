@@ -90,15 +90,13 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class system24
 {
 	
-	VIDEO_START(system24);
-	VIDEO_UPDATE(system24);
 	
 	
 	// Floppy Fisk Controller
@@ -122,7 +120,7 @@ public class system24
 	
 	static READ16_HANDLER( fdc_r )
 	{
-		if (track_size == 0)
+		if(!track_size)
 			return 0xffff;
 	
 		switch(offset) {
@@ -136,10 +134,10 @@ public class system24
 		case 3:
 		default: {
 			int res = fdc_data;
-			if (fdc_drq != 0) {
+			if(fdc_drq) {
 				fdc_span--;
 				//			logerror("Read %02x (%d)\n", res, fdc_span);
-				if (fdc_span != 0) {
+				if(fdc_span) {
 					fdc_pt++;
 					fdc_data = *fdc_pt;
 				} else {
@@ -157,10 +155,10 @@ public class system24
 	
 	static WRITE16_HANDLER( fdc_w )
 	{
-		if (track_size == 0)
+		if(!track_size)
 			return;
 	
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			data &= 0xff;
 			switch(offset) {
 			case 0:
@@ -222,11 +220,11 @@ public class system24
 				fdc_sector = data;
 				break;
 			case 3:
-				if (fdc_drq != 0) {
+				if(fdc_drq) {
 					//				logerror("Write %02x (%d)\n", data, fdc_span);
 					*fdc_pt++ = data;
 					fdc_span--;
-					if (fdc_span == 0) {
+					if(!fdc_span) {
 						logerror("FDC: transfert complete\n");
 						fdc_drq = 0;
 						fdc_status = 0;
@@ -242,7 +240,7 @@ public class system24
 	
 	static READ16_HANDLER( fdc_status_r )
 	{
-		if (track_size == 0)
+		if(!track_size)
 			return 0xffff;
 	
 		return 0x90 | (fdc_irq ? 2 : 0) | (fdc_drq ? 1 : 0) | (fdc_phys_track ? 0x40 : 0) | (fdc_index_count ? 0x20 : 0);
@@ -250,7 +248,7 @@ public class system24
 	
 	static WRITE16_HANDLER( fdc_ctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			logerror("FDC control %02x\n", data & 0xff);
 	}
 	
@@ -334,7 +332,7 @@ public class system24
 	{
 		switch(port) {
 		case 3:
-			if ((data & 4) != 0)
+			if(data & 4)
 				cur_input_line = (cur_input_line + 1) & 7;
 			break;
 		case 7: // DAC
@@ -362,7 +360,7 @@ public class system24
 	
 	static WRITE16_HANDLER( hotrod3_ctrl_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			data &= 3;
 			if(data == 3)
 				hotrod_ctrl_cur = 0;
@@ -373,7 +371,7 @@ public class system24
 	
 	static READ16_HANDLER( hotrod3_ctrl_r )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			switch(offset) {
 				// Steering dials
 			case 0:
@@ -423,14 +421,14 @@ public class system24
 	static void reset_reset(void)
 	{
 		int changed = resetcontrol ^ prev_resetcontrol;
-		if ((changed & 2) != 0) {
-			if ((resetcontrol & 2) != 0) {
+		if(changed & 2) {
+			if(resetcontrol & 2) {
 				cpu_set_halt_line(1, CLEAR_LINE);
 				cpu_set_reset_line(1, PULSE_LINE);
 			} else
 				cpu_set_halt_line(1, ASSERT_LINE);
 		}
-		if ((changed & 4) != 0)
+		if(changed & 4)
 			YM2151ResetChip(0);
 		prev_resetcontrol = resetcontrol;
 	}
@@ -460,7 +458,7 @@ public class system24
 	
 	static WRITE16_HANDLER( curbank_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			curbank = data & 0xff;
 			reset_bank();
 		}
@@ -522,13 +520,13 @@ public class system24
 	
 	static WRITE16_HANDLER( ym_register_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			YM2151_register_port_0_w(0, data);
 	}
 	
 	static WRITE16_HANDLER( ym_data_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			YM2151_data_port_0_w(0, data);
 	}
 	
@@ -553,10 +551,10 @@ public class system24
 	
 	static WRITE16_HANDLER( mlatch_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			int i;
 			unsigned char mxor = 0;
-			if (mlatch_table == 0) {
+			if(!mlatch_table) {
 				logerror("Protection: magic latch accessed but no table loaded (%d:%x)\n", cpu_getactivecpu(), activecpu_get_pc());
 				return;
 			}
@@ -632,7 +630,7 @@ public class system24
 			break;
 		}
 		case 1:
-			if (ACCESSING_LSB != 0) {
+			if(ACCESSING_LSB) {
 				UINT8 old_tb = irq_timerb;
 				irq_timerb = data;
 				if(old_tb != irq_timerb)
@@ -667,18 +665,17 @@ public class system24
 		return 0xffff;
 	}
 	
-	static INTERRUPT_GEN(irq_vbl)
-	{
+	public static InterruptHandlerPtr irq_vbl = new InterruptHandlerPtr() {public void handler(){
 		int irq = cpu_getiloops() ? IRQ_SPRITE : IRQ_VBLANK;
 		int mask = 1 << irq;
 	
-		if ((irq_allow0 & mask) != 0)
+		if(irq_allow0 & mask)
 			cpu_set_irq_line(0, 1+irq, HOLD_LINE);
 	
-		if ((irq_allow1 & mask) != 0)
+		if(irq_allow1 & mask)
 			cpu_set_irq_line(1, 1+irq, HOLD_LINE);
 	
-		if (cpu_getiloops() == 0) {
+		if(!cpu_getiloops()) {
 			// Ensure one index pulse every 20 frames
 			// The is some code in bnzabros at 0x852 that makes it crash
 			// if the pulse train is too fast
@@ -686,7 +683,7 @@ public class system24
 			if(fdc_index_count >= 20)
 				fdc_index_count = 0;
 		}
-	}
+	} };
 	
 	static void irq_ym(int irq)
 	{
@@ -817,54 +814,47 @@ public class system24
 		{ 0xfc0000, 0xffffff, ramhi_w },
 	MEMORY_END
 	
-	static DRIVER_INIT(qgh)
-	{
+	public static DriverInitHandlerPtr init_qgh  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = gqh_mlt;
 		track_size = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(dcclub)
-	{
+	public static DriverInitHandlerPtr init_dcclub  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(dcclub_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = dcclub_mlt;
 		track_size = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(qrouka)
-	{
+	public static DriverInitHandlerPtr init_qrouka  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = qrouka_mlt;
 		track_size = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(quizmeku)
-	{
+	public static DriverInitHandlerPtr init_quizmeku  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = quizmeku_mlt;
 		track_size = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(mahmajn)
-	{
+	public static DriverInitHandlerPtr init_mahmajn  = new DriverInitHandlerPtr() { public void handler(){
 	
 		system24temp_sys16_io_set_callbacks(mahmajn_io_r, mahmajn_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = mahmajn_mlt;
 		track_size = 0;
 		cur_input_line = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(mahmajn2)
-	{
+	public static DriverInitHandlerPtr init_mahmajn2  = new DriverInitHandlerPtr() { public void handler(){
 	
 		system24temp_sys16_io_set_callbacks(mahmajn_io_r, mahmajn_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = mahmajn2_mlt;
 		track_size = 0;
 		cur_input_line = 0;
-	}
+	} };
 	
-	static DRIVER_INIT(hotrod)
-	{
+	public static DriverInitHandlerPtr init_hotrod  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 	
@@ -877,10 +867,9 @@ public class system24
 		// 6        256
 	
 		track_size = 0x2f00;
-	}
+	} };
 	
-	static DRIVER_INIT(bnzabros)
-	{
+	public static DriverInitHandlerPtr init_bnzabros  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = bnzabros_mlt;
 	
@@ -894,55 +883,48 @@ public class system24
 		// 7        256
 	
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static DRIVER_INIT(sspirits)
-	{
+	public static DriverInitHandlerPtr init_sspirits  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static DRIVER_INIT(sgmast)
-	{
+	public static DriverInitHandlerPtr init_sgmast  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static DRIVER_INIT(qsww)
-	{
+	public static DriverInitHandlerPtr init_qsww  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static DRIVER_INIT(gground)
-	{
+	public static DriverInitHandlerPtr init_gground  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static DRIVER_INIT(crkdown)
-	{
+	public static DriverInitHandlerPtr init_crkdown  = new DriverInitHandlerPtr() { public void handler(){
 		system24temp_sys16_io_set_callbacks(hotrod_io_r, hotrod_io_w, resetcontrol_w, iod_r, iod_w);
 		mlatch_table = 0;
 		track_size = 0x2d00;
-	}
+	} };
 	
-	static NVRAM_HANDLER(system24)
-	{
+	public static NVRAMHandlerPtr nvram_handler_system24  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		if(!track_size || !file)
 			return;
-		if (read_or_write != 0)
+		if(read_or_write)
 			mame_fwrite(file, memory_region(REGION_USER2), 2*track_size);
 		else
 			mame_fread(file, memory_region(REGION_USER2), 2*track_size);
-	}
+	} };
 	
-	static MACHINE_INIT(system24)
-	{
+	public static MachineInitHandlerPtr machine_init_system24  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_set_halt_line(1, ASSERT_LINE);
 		prev_resetcontrol = resetcontrol = 0x06;
 		fdc_init();
@@ -950,9 +932,9 @@ public class system24
 		reset_bank();
 		irq_init();
 		mlatch = 0x00;
-	}
+	} };
 	
-	static InputPortPtr input_ports_hotrod = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotrod = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotrod )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1022,7 +1004,7 @@ public class system24
 		PORT_ANALOG( 0xff, 0x01, IPT_PEDAL | IPF_PLAYER3, 25, 15, 0x01, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bnzabros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bnzabros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bnzabros )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -1081,7 +1063,7 @@ public class system24
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_qgh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qgh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qgh )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -1139,7 +1121,7 @@ public class system24
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dcclub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dcclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dcclub )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -1190,7 +1172,7 @@ public class system24
 		PORT_ANALOG( 0xff, 0x00, IPT_PEDAL | IPF_PLAYER1, 16, 16, 0x00, 0x8f );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quizmeku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizmeku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizmeku )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -1248,7 +1230,7 @@ public class system24
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mahmajn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mahmajn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mahmajn )
 		PORT_START(); 
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "A", KEYCODE_A, IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "B", KEYCODE_B, IP_JOY_NONE );
@@ -1499,8 +1481,7 @@ public class system24
 		{ 50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_system24 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system24 )
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(system24_readmem, system24_writemem)
 		MDRV_CPU_VBLANK_INT(irq_vbl, 2)
@@ -1526,26 +1507,24 @@ public class system24
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC,    dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static GameDriver driver_hotrod	   = new GameDriver("1988"	,"hotrod"	,"system24.java"	,rom_hotrod,null	,machine_driver_system24	,input_ports_hotrod	,init_hotrod	,ROT0	,	"Sega", "Hot Rod (turbo 3 player)")
-	public static GameDriver driver_bnzabros	   = new GameDriver("1990"	,"bnzabros"	,"system24.java"	,rom_bnzabros,null	,machine_driver_system24	,input_ports_bnzabros	,init_bnzabros	,ROT0	,	"Sega", "Bonanza Bros")
-	public static GameDriver driver_dcclub	   = new GameDriver("1991"	,"dcclub"	,"system24.java"	,rom_dcclub,null	,machine_driver_system24	,input_ports_dcclub	,init_dcclub	,ROT0	,	"Sega", "Dynamic Country Club")
-	public static GameDriver driver_mahmajn	   = new GameDriver("1992"	,"mahmajn"	,"system24.java"	,rom_mahmajn,null	,machine_driver_system24	,input_ports_mahmajn	,init_mahmajn	,ROT0	,	"Sega", "Tokoro San no MahMahjan")
-	public static GameDriver driver_qgh	   = new GameDriver("1994"	,"qgh"	,"system24.java"	,rom_qgh,null	,machine_driver_system24	,input_ports_qgh	,init_qgh	,ROT0	,	"Sega", "Quiz Ghost Hunter")
-	public static GameDriver driver_quizmeku	   = new GameDriver("1994"	,"quizmeku"	,"system24.java"	,rom_quizmeku,null	,machine_driver_system24	,input_ports_quizmeku	,init_quizmeku	,ROT0	,	"Sega", "Quiz Mekurumeku Story")
-	public static GameDriver driver_qrouka	   = new GameDriver("1994"	,"qrouka"	,"system24.java"	,rom_qrouka,null	,machine_driver_system24	,input_ports_qgh	,init_qrouka	,ROT0	,	"Sega", "Quiz Rouka Ni Tattenasai")
-	public static GameDriver driver_mahmajn2	   = new GameDriver("1994"	,"mahmajn2"	,"system24.java"	,rom_mahmajn2,null	,machine_driver_system24	,input_ports_mahmajn	,init_mahmajn2	,ROT0	,	"Sega", "Tokoro San no MahMahjan 2")
+	GAME( 1988, hotrod,   0, system24, hotrod,   hotrod,   ROT0, "Sega", "Hot Rod (turbo 3 player)")
+	GAME( 1990, bnzabros, 0, system24, bnzabros, bnzabros, ROT0, "Sega", "Bonanza Bros")
+	GAME( 1991, dcclub,   0, system24, dcclub,   dcclub,   ROT0, "Sega", "Dynamic Country Club")
+	GAME( 1992, mahmajn,  0, system24, mahmajn,  mahmajn,  ROT0, "Sega", "Tokoro San no MahMahjan")
+	GAME( 1994, qgh,      0, system24, qgh,      qgh,      ROT0, "Sega", "Quiz Ghost Hunter")
+	GAME( 1994, quizmeku, 0, system24, quizmeku, quizmeku, ROT0, "Sega", "Quiz Mekurumeku Story")
+	GAME( 1994, qrouka,   0, system24, qgh,      qrouka,   ROT0, "Sega", "Quiz Rouka Ni Tattenasai")
+	GAME( 1994, mahmajn2, 0, system24, mahmajn,  mahmajn2, ROT0, "Sega", "Tokoro San no MahMahjan 2")
 	
 	/* Encrypted */
-	public static GameDriver driver_sspirits	   = new GameDriver("????"	,"sspirits"	,"system24.java"	,rom_sspirits,null	,machine_driver_system24	,input_ports_bnzabros	,init_sspirits	,ROT0	,	"Sega", "Scramble Spirits", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	public static GameDriver driver_sgmast	   = new GameDriver("????"	,"sgmast"	,"system24.java"	,rom_sgmast,null	,machine_driver_system24	,input_ports_bnzabros	,init_sgmast	,ROT0	,	"Sega", "Super Masters Golf", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	public static GameDriver driver_qsww	   = new GameDriver("????"	,"qsww"	,"system24.java"	,rom_qsww,null	,machine_driver_system24	,input_ports_bnzabros	,init_qsww	,ROT0	,	"Sega", "Quiz Syukudai wo Wasuremashita", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	public static GameDriver driver_gground	   = new GameDriver("????"	,"gground"	,"system24.java"	,rom_gground,null	,machine_driver_system24	,input_ports_bnzabros	,init_gground	,ROT0	,	"Sega", "Gain Ground", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
-	public static GameDriver driver_crkdown	   = new GameDriver("????"	,"crkdown"	,"system24.java"	,rom_crkdown,null	,machine_driver_system24	,input_ports_bnzabros	,init_crkdown	,ROT0	,	"Sega", "Crackdown", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	GAMEX( ????, sspirits, 0, system24, bnzabros, sspirits, ROT0, "Sega", "Scramble Spirits", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	GAMEX( ????, sgmast,   0, system24, bnzabros, sgmast,   ROT0, "Sega", "Super Masters Golf", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	GAMEX( ????, qsww,     0, system24, bnzabros, qsww,     ROT0, "Sega", "Quiz Syukudai wo Wasuremashita", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	GAMEX( ????, gground,  0, system24, bnzabros, gground,  ROT0, "Sega", "Gain Ground", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
+	GAMEX( ????, crkdown,  0, system24, bnzabros, crkdown,  ROT0, "Sega", "Crackdown", GAME_NOT_WORKING|GAME_UNEMULATED_PROTECTION)
 	
 	/* Other S24 Games, mostly not dumped / encrypted / only bad disk images exist
 	

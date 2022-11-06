@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.z8000;
 
@@ -82,9 +82,9 @@ public class _8000dasm
 	            break;
 			default:
 				o = &z8000_exec[w[0]];
-				if (o.size > 1) { GET_OP(1, new_pc); new_pc += 2; }
-				if (o.size > 2) { GET_OP(2, new_pc); new_pc += 2; }
-				src = o.dasm;
+				if (o->size > 1) { GET_OP(1, new_pc); new_pc += 2; }
+				if (o->size > 2) { GET_OP(2, new_pc); new_pc += 2; }
+				src = o->dasm;
 	
 				while (*src)
 				{

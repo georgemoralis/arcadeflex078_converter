@@ -12,7 +12,7 @@ TO DO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,19 +24,16 @@ public class flkatck
 	
 	/***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_flkatck  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_flkatck  = new MachineInitHandlerPtr() { public void handler(){
 		K007232_set_bank( 0, 0, 1 );
 	} };
 	
-	public static InterruptHandlerPtr flkatck_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (flkatck_irq_enabled != 0)
+	public static InterruptHandlerPtr flkatck_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (flkatck_irq_enabled)
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr flkatck_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flkatck_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress = 0;
 	
@@ -50,19 +47,18 @@ public class flkatck
 			cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static ReadHandlerPtr flkatck_ls138_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flkatck_ls138_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch ((offset & 0x1c) >> 2){
 			case 0x00:	/* inputs + DIPSW #3 + coinsw */
-				if ((offset & 0x02) != 0)
+				if (offset & 0x02)
 					data = readinputport(2 + (offset & 0x01));
 				else
 					data = readinputport(4 + (offset & 0x01));
 				break;
 			case 0x01:	/* DIPSW #1 & DIPSW #2 */
-				if ((offset & 0x02) != 0)
+				if (offset & 0x02)
 					data = readinputport(1 - (offset & 0x01));
 				break;
 		}
@@ -70,8 +66,7 @@ public class flkatck
 		return data;
 	} };
 	
-	public static WriteHandlerPtr flkatck_ls138_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flkatck_ls138_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch ((offset & 0x1c) >> 2){
 			case 0x04:	/* bankswitch */
 				flkatck_bankswitch_w(0, data);
@@ -138,7 +133,7 @@ public class flkatck
 	};
 	
 	
-	static InputPortPtr input_ports_flkatck = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flkatck = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flkatck )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x02, DEF_STR( "4C_1C") );
@@ -283,8 +278,7 @@ public class flkatck
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_flkatck = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( flkatck )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309,3000000) /* HD63C09EP, 24/8 MHz */
@@ -314,9 +308,7 @@ public class flkatck
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -352,7 +344,7 @@ public class flkatck
 	
 	
 	
-	public static GameDriver driver_mx5000	   = new GameDriver("1987"	,"mx5000"	,"flkatck.java"	,rom_mx5000,null	,machine_driver_flkatck	,input_ports_flkatck	,null	,ROT90	,	"Konami", "MX5000" )
-	public static GameDriver driver_flkatck	   = new GameDriver("1987"	,"flkatck"	,"flkatck.java"	,rom_flkatck,driver_mx5000	,machine_driver_flkatck	,input_ports_flkatck	,null	,ROT90	,	"Konami", "Flak Attack (Japan)" )
+	GAME( 1987, mx5000,  0, 	 flkatck, flkatck, 0, ROT90, "Konami", "MX5000" )
+	GAME( 1987, flkatck, mx5000, flkatck, flkatck, 0, ROT90, "Konami", "Flak Attack (Japan)" )
 	
 }

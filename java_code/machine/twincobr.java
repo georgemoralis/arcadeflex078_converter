@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -39,7 +39,7 @@ public class twincobr
 	static int fsharkbt_8741;
 	
 	
-	public static MachineInitHandlerPtr machine_init_fsharkbt_reset_8741_mcu  = new MachineInitHandlerPtr() { public void handler()	/* machine_init_fsharkbt_reset_8741_mcu */
+	public static MachineInitHandlerPtr machine_init_fsharkbt_reset_8741_mcu  = new MachineInitHandlerPtr() { public void handler()* machine_init_fsharkbt_reset_8741_mcu */
 	{
 		toaplan_main_cpu = 0;		/* 68000 */
 		twincobr_display_on = 0;
@@ -58,8 +58,7 @@ public class twincobr
 		state_save_register_int("fsharkbt", 0, "MCU_Output", &fsharkbt_8741);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_wardner  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_wardner  = new MachineInitHandlerPtr() { public void handler(){
 		toaplan_main_cpu = 1;		/* Z80 */
 		twincobr_display_on = 1;
 		twincobr_intenable = 0;
@@ -79,9 +78,8 @@ public class twincobr
 	
 	
 	
-	public static InterruptHandlerPtr twincobr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (twincobr_intenable != 0) {
+	public static InterruptHandlerPtr twincobr_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (twincobr_intenable) {
 			twincobr_intenable = 0;
 			cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 		}
@@ -181,11 +179,11 @@ public class twincobr
 	#if LOG_DSP_CALLS
 			logerror("DSP PC:%04x IO write %04x at port 3\n",activecpu_get_previouspc(),data);
 	#endif
-			if ((data & 0x8000) != 0) {
+			if (data & 0x8000) {
 				twincobr_dsp_BIO = CLEAR_LINE;
 			}
 			if (data == 0) {
-				if (dsp_execute != 0) {
+				if (dsp_execute) {
 	#if LOG_DSP_CALLS
 					logerror("Turning %s on\n",toaplan_cpu_type[toaplan_main_cpu]);
 	#endif
@@ -217,16 +215,14 @@ public class twincobr
 	}
 	
 	
-	public static WriteHandlerPtr wardner_mainram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_mainram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if 0
 		if ((offset == 4) && (data != 4)) logerror("CPU #0:%04x  Writing %02x to %04x of main RAM (DSP command number)\n",activecpu_get_pc(),data, offset + 0x7000);
 	#endif
 		wardner_mainram[offset] = data;
 	
 	} };
-	public static ReadHandlerPtr wardner_mainram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wardner_mainram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wardner_mainram[offset];
 	} };
 	
@@ -253,7 +249,7 @@ public class twincobr
 			case 0x000b: twincobr_fg_rom_bank = 0x1000; break;
 			case 0x000e: twincobr_display_on  = 0x0000; break; /* Turn display off */
 			case 0x000f: twincobr_display_on  = 0x0001; break; /* Turn display on */
-			case 0x000c: if (twincobr_display_on != 0) {
+			case 0x000c: if (twincobr_display_on) {
 							/* This means assert the INT line to the DSP */
 	#if LOG_DSP_CALLS
 							logerror("Turning DSP on and %s off\n",toaplan_cpu_type[toaplan_main_cpu]);
@@ -262,7 +258,7 @@ public class twincobr
 							cpu_set_irq_line(2, 0, ASSERT_LINE); /* TMS32010 INT */
 							timer_suspendcpu(0, ASSERT, SUSPEND_REASON_HALT);
 						} break;
-			case 0x000d: if (twincobr_display_on != 0) {
+			case 0x000d: if (twincobr_display_on) {
 							/* This means inhibit the INT line to the DSP */
 	#if LOG_DSP_CALLS
 							logerror("Turning DSP off\n");
@@ -274,13 +270,12 @@ public class twincobr
 	}
 	WRITE16_HANDLER( twincobr_control_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan0_control_w(offset, data & 0xff);
 		}
 	}
-	public static WriteHandlerPtr wardner_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		toaplan0_control_w(offset, data);
 	} };
 	
@@ -292,7 +287,7 @@ public class twincobr
 	
 	WRITE16_HANDLER( twincobr_sharedram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			twincobr_sharedram[offset] = data & 0xff;
 		}
@@ -333,17 +328,15 @@ public class twincobr
 	}
 	WRITE16_HANDLER( fshark_coin_dsp_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan0_coin_dsp_w(offset, data & 0xff);
 		}
 	}
-	public static WriteHandlerPtr twincobr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr twincobr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		toaplan0_coin_dsp_w(offset, data);
 	} };
-	public static WriteHandlerPtr wardner_coin_dsp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wardner_coin_dsp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		toaplan0_coin_dsp_w(offset, data);
 	} };
 }

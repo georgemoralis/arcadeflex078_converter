@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,8 +54,7 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_scontra  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_scontra  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 16;
@@ -76,15 +75,14 @@ public class thunderx
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_scontra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_scontra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		/* The background color is always from layer 1 - but it's always black anyway */
 	//	fillbitmap(bitmap,Machine.pens[16 * layer_colorbase[1]],cliprect);
-		if (scontra_priority != 0)
+		if (scontra_priority)
 		{
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,1);
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[1],0,2);

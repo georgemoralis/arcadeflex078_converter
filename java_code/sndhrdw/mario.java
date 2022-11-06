@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -9,9 +9,8 @@ public class mario
 	
 	
 	
-	public static WriteHandlerPtr mario_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (data != 0)
+	public static WriteHandlerPtr mario_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data)
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 		else
 			cpu_set_irq_line(1,0,CLEAR_LINE);
@@ -19,8 +18,7 @@ public class mario
 	
 	
 	/* Mario running sample */
-	public static WriteHandlerPtr mario_sh1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		if (last!= data)
@@ -31,8 +29,7 @@ public class mario
 	} };
 	
 	/* Luigi running sample */
-	public static WriteHandlerPtr mario_sh2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		if (last!= data)
@@ -43,15 +40,14 @@ public class mario
 	} };
 	
 	/* Misc samples */
-	public static WriteHandlerPtr mario_sh3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int state[8];
 	
 		/* Don't trigger the sample if it's still playing */
 		if (state[offset] == data) return;
 	
 		state[offset] = data;
-		if (data != 0)
+		if (data)
 		{
 			switch (offset)
 			{

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,18 +18,16 @@ public class m79amb
 	
 	
 	/* palette colors (see drivers/8080bw.c) */
-	static final int BLACK = 0, WHITE = 1;
+	enum { BLACK, WHITE };
 	
 	
 	static unsigned char mask = 0;
 	
-	public static WriteHandlerPtr ramtek_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ramtek_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mask = data;
 	} };
 	
-	public static WriteHandlerPtr ramtek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ramtek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data = data & ~mask;
 	
 		if (videoram.read(offset)!= data)
@@ -43,7 +41,7 @@ public class m79amb
 	
 			for (i = 0; i < 8; i++)
 			{
-				plot_pixel.handler(tmpbitmap, x, y, Machine.pens[(data & 0x80) ? WHITE : BLACK]);
+				plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? WHITE : BLACK]);
 	
 				x++;
 				data <<= 1;

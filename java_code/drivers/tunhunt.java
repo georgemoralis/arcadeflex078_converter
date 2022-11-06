@@ -50,7 +50,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,8 +69,7 @@ public class tunhunt
 	
 	UINT8 tunhunt_control;
 	
-	public static WriteHandlerPtr tunhunt_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tunhunt_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			0x01	coin counter#2	"right counter"
 			0x02	coin counter#1	"center counter"
@@ -94,45 +93,38 @@ public class tunhunt
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr tunhunt_button_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tunhunt_button_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = readinputport( 0 );
 		return ((data>>offset)&1)?0x00:0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(3)&0xff;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw2_0r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_0r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3)&0x0100)?0x80:0x00;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw2_1r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_1r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3)&0x0200)?0x80:0x00;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw2_2r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_2r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3)&0x0400)?0x80:0x00;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw2_3r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_3r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3)&0x0800)?0x80:0x00;
 	} };
 	
 	
-	public static ReadHandlerPtr dsw2_4r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_4r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3)&0x1000)?0x80:0x00;
 	} };
 	
@@ -185,7 +177,7 @@ public class tunhunt
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_tunhunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tunhunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tunhunt )
 		PORT_START(); 
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_TILT );
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -324,8 +316,7 @@ public class tunhunt
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_tunhunt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tunhunt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,2000000)		/* ??? */
@@ -349,9 +340,7 @@ public class tunhunt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -440,6 +429,6 @@ public class tunhunt
 	 *************************************/
 	
 	/*         rom   parent  machine    inp       	init */
-	public static GameDriver driver_tunhunt	   = new GameDriver("1979"	,"tunhunt"	,"tunhunt.java"	,rom_tunhunt,null	,machine_driver_tunhunt	,input_ports_tunhunt	,null	,ORIENTATION_SWAP_XY	,	"Atari", "Tunnel Hunt" )
-	public static GameDriver driver_tunhuntc	   = new GameDriver("1981"	,"tunhuntc"	,"tunhunt.java"	,rom_tunhuntc,driver_tunhunt	,machine_driver_tunhunt	,input_ports_tunhunt	,null	,ORIENTATION_SWAP_XY	,	"Atari (Centuri license)", "Tunnel Hunt (Centuri)" )
+	GAME( 1979,tunhunt,  0,       tunhunt,   tunhunt,	0,  ORIENTATION_SWAP_XY, "Atari", "Tunnel Hunt" )
+	GAME( 1981,tunhuntc, tunhunt, tunhunt,   tunhunt,	0,  ORIENTATION_SWAP_XY, "Atari (Centuri license)", "Tunnel Hunt (Centuri)" )
 }

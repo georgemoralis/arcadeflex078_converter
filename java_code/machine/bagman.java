@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -214,8 +214,7 @@ public class bagman
 	}
 	
 	
-	public static WriteHandlerPtr bagman_pal16r6_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_pal16r6_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	unsigned char line;
 	
 		line = offset*4;
@@ -223,8 +222,7 @@ public class bagman
 		columnvalue[line+1] = 1-(data&1);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_bagman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bagman  = new MachineInitHandlerPtr() { public void handler(){
 		bagman_pal16r6_w(0,1);	/*pin 2*/
 		bagman_pal16r6_w(1,1);	/*pin 3*/
 		bagman_pal16r6_w(2,1);	/*pin 4*/
@@ -236,8 +234,7 @@ public class bagman
 		update_pal();
 	} };
 	
-	public static ReadHandlerPtr bagman_pal16r6_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bagman_pal16r6_r  = new ReadHandlerPtr() { public int handler(int offset){
 		update_pal();
 		return	(outvalue[6]) + (outvalue[5]<<1) + (outvalue[4]<<2) +
 			(outvalue[3]<<3) + (outvalue[2]<<4) + (outvalue[1]<<5);

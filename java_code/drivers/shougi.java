@@ -92,15 +92,14 @@ PROM  : Type MB7051
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class shougi
 {
 	
-	//public static VideoStartHandlerPtr video_start_shougi  = new VideoStartHandlerPtr() { public int handler()
-	//{
+	//public static VideoStartHandlerPtr video_start_shougi  = new VideoStartHandlerPtr() { public int handler()//{
 	//	generic_vh_start();
 	//} };
 	
@@ -110,19 +109,18 @@ public class shougi
 	
 	
 	  bit 0 -- 1000 ohm resistor--\
-	  bit 1 -- 470 ohm resistor --+--+-. RED
+	  bit 1 -- 470 ohm resistor --+--+--> RED
 	  bit 2 -- 220 ohm resistor --/  \---------------1000 ohm resistor---\
 	  bit 3 -- 1000 ohm resistor--\                                      |
-	  bit 4 -- 470 ohm resistor --+--+-. GREEN                          |
+	  bit 4 -- 470 ohm resistor --+--+--> GREEN                          |
 	  bit 5 -- 220 ohm resistor --/  \---------------1000 ohm resistor---+--- 1000 Ohm pullup resistor
-	  bit 6 -- 470 ohm resistor --+--+-. BLUE                           |
+	  bit 6 -- 470 ohm resistor --+--+--> BLUE                           |
 	  bit 7 -- 220 ohm resistor --/  \---------------1000 ohm resistor---/
 	
 	***************************************************************************/
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_shougi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_shougi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		const int resistances_b[2]  = { 470, 220 };
 		const int resistances_rg[3] = { 1000, 470, 220 };
@@ -162,8 +160,7 @@ public class shougi
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shougi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	int offs;
 	
 		for (offs = 0;offs <0x4000; offs++)
@@ -187,7 +184,7 @@ public class shougi
 					color= ((data1>>x) & 1) | (((data1>>(4+x)) & 1)<<1);
 					data = ((data2>>x) & 1) | (((data2>>(4+x)) & 1)<<1);
 	
-					plot_pixel.handler(bitmap, 255-(sx*4 + x), 255-sy, color*4 + data);
+					plot_pixel(bitmap, 255-(sx*4 + x), 255-sy, color*4 + data);
 				}
 			}
 		}
@@ -204,45 +201,38 @@ public class shougi
 	//to do:
 	// add separate sharedram/r/w() for both CPUs and use control value to verify access
 	
-	static public static WriteHandlerPtr cpu_sharedram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_sharedram_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (cpu_sharedram_control_val!=0) logerror("sub CPU access to shared RAM when access set for main cpu\n");
 		cpu_sharedram[offset] = data;
 	} };
 	
-	static public static WriteHandlerPtr cpu_sharedram_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_sharedram_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (cpu_sharedram_control_val!=1) logerror("main CPU access to shared RAM when access set for sub cpu\n");
 		cpu_sharedram[offset] = data;
 	} };
 	
-	static public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_sharedram[offset];
 	} };
 	
-	static public static WriteHandlerPtr cpu_shared_ctrl_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_shared_ctrl_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_sharedram_control_val = 0;
 	logerror("cpu_sharedram_ctrl=SUB");
 	} };
 	
-	static public static WriteHandlerPtr cpu_shared_ctrl_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_shared_ctrl_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_sharedram_control_val = 1;
 	logerror("cpu_sharedram_ctrl=MAIN");
 	} };
 	
-	public static WriteHandlerPtr shougi_watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shougi_watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		watchdog_reset_w(0,data);
 	} };
 	
 	
 	static int nmi_enabled = 0;
 	
-	public static WriteHandlerPtr nmi_disable_and_clear_line_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_and_clear_line_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enabled = 0; /* disable NMIs */
 	
 		/* NMI lines are tied together on both CPUs and connected to the LS74 /Q output */
@@ -250,13 +240,11 @@ public class shougi
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enabled = 1; /* enable NMIs */
 	} };
 	
-	public static InterruptHandlerPtr shougi_vblank_nmi = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr shougi_vblank_nmi = new InterruptHandlerPtr() {public void handler(){
 		if ( nmi_enabled == 1 )
 		{
 			/* NMI lines are tied together on both CPUs and connected to the LS74 /Q output */
@@ -311,10 +299,9 @@ public class shougi
 	
 	/* sub */
 	static int r=0;
-	static public static ReadHandlerPtr dummy_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dummy_r  = new ReadHandlerPtr() { public int handler(int offset){
 		r ^= 1;
-		if (r != 0)
+		if(r)
 			return 0xff;
 		else
 			return 0;
@@ -342,7 +329,7 @@ public class shougi
 	
 	
 	
-	static InputPortPtr input_ports_shougi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shougi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shougi )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START2 );/+-
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );/+-
@@ -387,8 +374,7 @@ public class shougi
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_shougi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shougi )
 	
 		MDRV_CPU_ADD(Z80,10000000/4)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -415,9 +401,7 @@ public class shougi
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -459,6 +443,6 @@ public class shougi
 		ROM_LOAD( "pr.2l",   0x0000, 0x0020, CRC(cd3559ff) SHA1(a1291b06a8a337943660b2ef62c94c49d58a6fb5) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_shougi	   = new GameDriver("198?"	,"shougi"	,"shougi.java"	,rom_shougi,null	,machine_driver_shougi	,input_ports_shougi	,null	,ROT0	,	"Alpha Denshi", "Shougi", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_shougi2	   = new GameDriver("198?"	,"shougi2"	,"shougi.java"	,rom_shougi2,driver_shougi	,machine_driver_shougi	,input_ports_shougi	,null	,ROT0	,	"Alpha Denshi", "Shougi 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 198?, shougi,  0,        shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 198?, shougi2, shougi,   shougi,  shougi,  0, ROT0, "Alpha Denshi", "Shougi 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

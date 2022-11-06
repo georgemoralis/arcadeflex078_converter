@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,7 +30,7 @@ public class vaportra
 	/* Function for all 16x16 1024x1024 layers */
 	static UINT32 vaportra_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) << 6);
 	}
 	
@@ -67,8 +67,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_vaportra  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vaportra  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg2_tile_info,vaportra_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_bg3_tile_info,vaportra_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
@@ -197,7 +196,7 @@ public class vaportra
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -205,19 +204,19 @@ public class vaportra
 				inc = 1;
 			}
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[4],
+				drawgfx(bitmap,Machine->gfx[4],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -230,8 +229,7 @@ public class vaportra
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vaportra  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri=vaportra_control_2[0];
 	
 		/* Update flipscreen */

@@ -13,7 +13,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -32,8 +32,7 @@ public class ohmygod
 	static int sndbank;
 	static int nosound_kludge_step;
 	
-	public static MachineInitHandlerPtr machine_init_ohmygod  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ohmygod  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_SOUND1);
 	
 		/* the game requires the watchdog to fire during boot, so we have
@@ -48,7 +47,7 @@ public class ohmygod
 	
 	WRITE16_HANDLER( ohmygod_ctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			unsigned char *rom = memory_region(REGION_SOUND1);
 	
@@ -59,7 +58,7 @@ public class ohmygod
 				memcpy(rom + 0x20000,rom + 0x40000 + 0x20000 * sndbank,0x20000);
 			}
 		}
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_counter_w(0,data & 0x1000);
 			coin_counter_w(1,data & 0x2000);
@@ -68,7 +67,7 @@ public class ohmygod
 	
 	READ16_HANDLER( ohmygod_sound_status_r )
 	{
-		if(Machine.sample_rate == 0)
+		if(Machine->sample_rate == 0)
 		{
 			/* strobe 'sample playing' flags of the OKIM6295 to make it start up */
 	
@@ -126,7 +125,7 @@ public class ohmygod
 	
 	
 	
-	static InputPortPtr input_ports_ohmygod = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ohmygod = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ohmygod )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -226,7 +225,7 @@ public class ohmygod
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_naname = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_naname = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( naname )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -371,8 +370,7 @@ public class ohmygod
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ohmygod = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ohmygod )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -396,9 +394,7 @@ public class ohmygod
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -441,17 +437,15 @@ public class ohmygod
 	
 	
 	
-	public static DriverInitHandlerPtr init_ohmygod  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ohmygod  = new DriverInitHandlerPtr() { public void handler(){
 		adpcm_bank_shift = 4;
 	} };
 	
-	public static DriverInitHandlerPtr init_naname  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_naname  = new DriverInitHandlerPtr() { public void handler(){
 		adpcm_bank_shift = 0;
 	} };
 	
 	
-	public static GameDriver driver_ohmygod	   = new GameDriver("1993"	,"ohmygod"	,"ohmygod.java"	,rom_ohmygod,null	,machine_driver_ohmygod	,input_ports_ohmygod	,init_ohmygod	,ROT0	,	"Atlus", "Oh My God! (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_naname	   = new GameDriver("1994"	,"naname"	,"ohmygod.java"	,rom_naname,null	,machine_driver_ohmygod	,input_ports_naname	,init_naname	,ROT0	,	"Atlus", "Naname de Magic! (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, ohmygod, 0, ohmygod, ohmygod, ohmygod, ROT0, "Atlus", "Oh My God! (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1994, naname,  0, ohmygod, naname,  naname,  ROT0, "Atlus", "Naname de Magic! (Japan)", GAME_NO_COCKTAIL )
 }

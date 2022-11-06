@@ -35,7 +35,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,8 +47,7 @@ public class pbaction
 	
 	
 	
-	public static WriteHandlerPtr pbaction_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pbaction_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0x00);
 	} };
@@ -116,7 +115,7 @@ public class pbaction
 	};
 	
 	
-	static InputPortPtr input_ports_pbaction = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pbaction = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pbaction )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON3 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -270,14 +269,12 @@ public class pbaction
 	);
 	
 	
-	public static InterruptHandlerPtr pbaction_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr pbaction_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0x02);	/* the CPU is in Interrupt Mode 2 */
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_pbaction = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pbaction )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz? */
@@ -305,9 +302,7 @@ public class pbaction
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -375,6 +370,6 @@ public class pbaction
 	
 	
 	
-	public static GameDriver driver_pbaction	   = new GameDriver("1985"	,"pbaction"	,"pbaction.java"	,rom_pbaction,null	,machine_driver_pbaction	,input_ports_pbaction	,null	,ROT90	,	"Tehkan", "Pinball Action (set 1)" )
-	public static GameDriver driver_pbactio2	   = new GameDriver("1985"	,"pbactio2"	,"pbaction.java"	,rom_pbactio2,driver_pbaction	,machine_driver_pbaction	,input_ports_pbaction	,null	,ROT90	,	"Tehkan", "Pinball Action (set 2)" )
+	GAME( 1985, pbaction, 0,        pbaction, pbaction, 0, ROT90, "Tehkan", "Pinball Action (set 1)" )
+	GAME( 1985, pbactio2, pbaction, pbaction, pbaction, 0, ROT90, "Tehkan", "Pinball Action (set 2)" )
 }

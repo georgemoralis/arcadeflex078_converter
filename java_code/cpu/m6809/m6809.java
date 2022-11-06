@@ -72,7 +72,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6809;
 
@@ -174,7 +174,7 @@ public class m6809
 	#define CHANGE_PC change_pc16(PCD)
 	#if 0
 	#define CHANGE_PC	{			\
-		if (m6809_slapstic != 0)		\
+		if( m6809_slapstic )		\
 			cpu_setOPbase16(PCD);	\
 		else						\
 			change_pc16(PCD);		\
@@ -272,7 +272,7 @@ public class m6809
 	#define CLR_ZC		CC&=~(CC_Z|CC_C)
 	
 	/* macros for CC -- CC bits affected should be reset before calling */
-	#define SET_Z(a)		if (a == 0)SEZ
+	#define SET_Z(a)		if(!a)SEZ
 	#define SET_Z8(a)		SET_Z((UINT8)a)
 	#define SET_Z16(a)		SET_Z((UINT16)a)
 	#define SET_N8(a)		CC|=((a&0x80)>>4)
@@ -361,7 +361,7 @@ public class m6809
 	#define BRANCH(f) { 					\
 		UINT8 t;							\
 		IMMBYTE(t); 						\
-		if (f != 0) 							\
+		if( f ) 							\
 		{									\
 			PC += SIGNED(t);				\
 			CHANGE_PC;						\
@@ -371,7 +371,7 @@ public class m6809
 	#define LBRANCH(f) {                    \
 		PAIR t; 							\
 		IMMWORD(t); 						\
-		if (f != 0) 							\
+		if( f ) 							\
 		{									\
 			m6809_ICount -= 1;				\
 			PC += t.w.l;					\
@@ -415,8 +415,8 @@ public class m6809
 	
 	INLINE void WM16( UINT32 Addr, PAIR *p )
 	{
-		WM( Addr, p.b.h );
-		WM( (Addr+1)&0xffff, p.b.l );
+		WM( Addr, p->b.h );
+		WM( (Addr+1)&0xffff, p->b.l );
 	}
 	
 	/****************************************************************************
@@ -424,7 +424,7 @@ public class m6809
 	 ****************************************************************************/
 	unsigned m6809_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(m6809_Regs*)dst = m6809;
 		return sizeof(m6809_Regs);
 	}
@@ -434,7 +434,7 @@ public class m6809
 	 ****************************************************************************/
 	void m6809_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 			m6809 = *(m6809_Regs*)src;
 		CHANGE_PC;
 	
@@ -619,7 +619,7 @@ public class m6809
 	
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &m6809;
 	
 		switch( regnum )
@@ -634,27 +634,27 @@ public class m6809
 	
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.cc & 0x80 ? 'E':'.',
-					r.cc & 0x40 ? 'F':'.',
-	                r.cc & 0x20 ? 'H':'.',
-	                r.cc & 0x10 ? 'I':'.',
-	                r.cc & 0x08 ? 'N':'.',
-	                r.cc & 0x04 ? 'Z':'.',
-	                r.cc & 0x02 ? 'V':'.',
-	                r.cc & 0x01 ? 'C':'.');
+					r->cc & 0x80 ? 'E':'.',
+					r->cc & 0x40 ? 'F':'.',
+	                r->cc & 0x20 ? 'H':'.',
+	                r->cc & 0x10 ? 'I':'.',
+	                r->cc & 0x08 ? 'N':'.',
+	                r->cc & 0x04 ? 'Z':'.',
+	                r->cc & 0x02 ? 'V':'.',
+	                r->cc & 0x01 ? 'C':'.');
 	            break;
-			case CPU_INFO_REG+M6809_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+M6809_S: sprintf(buffer[which], "S:%04X", r.s.w.l); break;
-			case CPU_INFO_REG+M6809_CC: sprintf(buffer[which], "CC:%02X", r.cc); break;
-			case CPU_INFO_REG+M6809_U: sprintf(buffer[which], "U:%04X", r.u.w.l); break;
-			case CPU_INFO_REG+M6809_A: sprintf(buffer[which], "A:%02X", r.d.b.h); break;
-			case CPU_INFO_REG+M6809_B: sprintf(buffer[which], "B:%02X", r.d.b.l); break;
-			case CPU_INFO_REG+M6809_X: sprintf(buffer[which], "X:%04X", r.x.w.l); break;
-			case CPU_INFO_REG+M6809_Y: sprintf(buffer[which], "Y:%04X", r.y.w.l); break;
-			case CPU_INFO_REG+M6809_DP: sprintf(buffer[which], "DP:%02X", r.dp.b.h); break;
-			case CPU_INFO_REG+M6809_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+M6809_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state[M6809_IRQ_LINE]); break;
-			case CPU_INFO_REG+M6809_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r.irq_state[M6809_FIRQ_LINE]); break;
+			case CPU_INFO_REG+M6809_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+M6809_S: sprintf(buffer[which], "S:%04X", r->s.w.l); break;
+			case CPU_INFO_REG+M6809_CC: sprintf(buffer[which], "CC:%02X", r->cc); break;
+			case CPU_INFO_REG+M6809_U: sprintf(buffer[which], "U:%04X", r->u.w.l); break;
+			case CPU_INFO_REG+M6809_A: sprintf(buffer[which], "A:%02X", r->d.b.h); break;
+			case CPU_INFO_REG+M6809_B: sprintf(buffer[which], "B:%02X", r->d.b.l); break;
+			case CPU_INFO_REG+M6809_X: sprintf(buffer[which], "X:%04X", r->x.w.l); break;
+			case CPU_INFO_REG+M6809_Y: sprintf(buffer[which], "Y:%04X", r->y.w.l); break;
+			case CPU_INFO_REG+M6809_DP: sprintf(buffer[which], "DP:%02X", r->dp.b.h); break;
+			case CPU_INFO_REG+M6809_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+M6809_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state[M6809_IRQ_LINE]); break;
+			case CPU_INFO_REG+M6809_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r->irq_state[M6809_FIRQ_LINE]); break;
 		}
 		return buffer[which];
 	}

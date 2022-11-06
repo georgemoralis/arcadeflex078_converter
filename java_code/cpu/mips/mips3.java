@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.mips;
 
@@ -321,7 +321,7 @@ public class mips3
 	*/
 	
 		/* back up if necessary */
-		if (backup != 0)
+		if (backup)
 			mips3.pc = mips3.ppc;
 	
 		/* set the exception PC */
@@ -406,7 +406,7 @@ public class mips3
 	unsigned mips3_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(mips3_regs *)dst = mips3;
 	
 		/* return the context size */
@@ -417,7 +417,7 @@ public class mips3
 	void mips3_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			mips3 = *(mips3_regs *)src;
 	
 		if (mips3.bigendian)
@@ -449,8 +449,8 @@ public class mips3
 		struct mips3_config *config = param;
 	
 		/* allocate memory */
-		mips3.icache = malloc(config.icache);
-		mips3.dcache = malloc(config.dcache);
+		mips3.icache = malloc(config->icache);
+		mips3.dcache = malloc(config->dcache);
 		if (!mips3.icache || !mips3.dcache)
 		{
 			fprintf(stderr, "error: couldn't allocate cache for mips3!\n");
@@ -485,8 +485,8 @@ public class mips3
 		}
 	
 		/* initialize the rest of the config */
-		mips3.icache_size = config.icache;
-		mips3.dcache_size = config.dcache;
+		mips3.icache_size = config->icache;
+		mips3.dcache_size = config->dcache;
 	
 		/* initialize the state */
 		mips3.pc = 0xbfc00000;
@@ -613,7 +613,7 @@ public class mips3
 				/* update interrupts and cycle counting */
 				UINT32 diff = mips3.cpr[0][idx] ^ val;
 				mips3.cpr[0][idx] = val;
-				if ((diff & 0x8000) != 0)
+				if (diff & 0x8000)
 					update_cycle_counting();
 				check_irqs();
 				break;
@@ -680,9 +680,9 @@ public class mips3
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop0_reg(RDREG);		break;
-			case 0x01:	/* DMFCz */		if (RTREG != 0) RTVAL64 = get_cop0_reg(RDREG);				break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop0_creg(RDREG);		break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL64 = (INT32)get_cop0_reg(RDREG);		break;
+			case 0x01:	/* DMFCz */		if (RTREG) RTVAL64 = get_cop0_reg(RDREG);				break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL64 = (INT32)get_cop0_creg(RDREG);		break;
 			case 0x04:	/* MTCz */		set_cop0_reg(RDREG, RTVAL32);							break;
 			case 0x05:	/* DMTCz */		set_cop0_reg(RDREG, RTVAL64);							break;
 			case 0x06:	/* CTCz */		set_cop0_creg(RDREG, RTVAL32);							break;
@@ -764,9 +764,9 @@ public class mips3
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop1_reg(RDREG);		break;
-			case 0x01:	/* DMFCz */		if (RTREG != 0) RTVAL64 = get_cop1_reg(RDREG);				break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop1_creg(RDREG);		break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL64 = (INT32)get_cop1_reg(RDREG);		break;
+			case 0x01:	/* DMFCz */		if (RTREG) RTVAL64 = get_cop1_reg(RDREG);				break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL64 = (INT32)get_cop1_creg(RDREG);		break;
 			case 0x04:	/* MTCz */		set_cop1_reg(RDREG, RTVAL32);							break;
 			case 0x05:	/* DMTCz */		set_cop1_reg(RDREG, RTVAL64);							break;
 			case 0x06:	/* CTCz */		set_cop1_creg(RDREG, RTVAL32);							break;
@@ -1219,9 +1219,9 @@ public class mips3
 	
 		switch (RSREG)
 		{
-			case 0x00:	/* MFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop2_reg(RDREG);		break;
-			case 0x01:	/* DMFCz */		if (RTREG != 0) RTVAL64 = get_cop2_reg(RDREG);				break;
-			case 0x02:	/* CFCz */		if (RTREG != 0) RTVAL64 = (INT32)get_cop2_creg(RDREG);		break;
+			case 0x00:	/* MFCz */		if (RTREG) RTVAL64 = (INT32)get_cop2_reg(RDREG);		break;
+			case 0x01:	/* DMFCz */		if (RTREG) RTVAL64 = get_cop2_reg(RDREG);				break;
+			case 0x02:	/* CFCz */		if (RTREG) RTVAL64 = (INT32)get_cop2_creg(RDREG);		break;
 			case 0x04:	/* MTCz */		set_cop2_reg(RDREG, RTVAL32);							break;
 			case 0x05:	/* DMTCz */		set_cop2_reg(RDREG, RTVAL64);							break;
 			case 0x06:	/* CTCz */		set_cop2_creg(RDREG, RTVAL32);							break;
@@ -1312,27 +1312,27 @@ public class mips3
 				case 0x00:	/* SPECIAL */
 					switch (op & 63)
 					{
-						case 0x00:	/* SLL */		if (RDREG != 0) RDVAL64 = (INT32)(RTVAL32 << SHIFT);					break;
+						case 0x00:	/* SLL */		if (RDREG) RDVAL64 = (INT32)(RTVAL32 << SHIFT);					break;
 						case 0x01:	/* MOVF - R5000*/if (RDREG && GET_FCC((op >> 18) & 7) == ((op >> 16) & 1)) RDVAL64 = RSVAL64;	break;
-						case 0x02:	/* SRL */		if (RDREG != 0) RDVAL64 = (INT32)(RTVAL32 >> SHIFT);					break;
-						case 0x03:	/* SRA */		if (RDREG != 0) RDVAL64 = (INT32)RTVAL32 >> SHIFT;					break;
-						case 0x04:	/* SLLV */		if (RDREG != 0) RDVAL64 = (INT32)(RTVAL32 << (RSVAL32 & 31));		break;
-						case 0x06:	/* SRLV */		if (RDREG != 0) RDVAL64 = (INT32)(RTVAL32 >> (RSVAL32 & 31));		break;
-						case 0x07:	/* SRAV */		if (RDREG != 0) RDVAL64 = (INT32)RTVAL32 >> (RSVAL32 & 31);			break;
+						case 0x02:	/* SRL */		if (RDREG) RDVAL64 = (INT32)(RTVAL32 >> SHIFT);					break;
+						case 0x03:	/* SRA */		if (RDREG) RDVAL64 = (INT32)RTVAL32 >> SHIFT;					break;
+						case 0x04:	/* SLLV */		if (RDREG) RDVAL64 = (INT32)(RTVAL32 << (RSVAL32 & 31));		break;
+						case 0x06:	/* SRLV */		if (RDREG) RDVAL64 = (INT32)(RTVAL32 >> (RSVAL32 & 31));		break;
+						case 0x07:	/* SRAV */		if (RDREG) RDVAL64 = (INT32)RTVAL32 >> (RSVAL32 & 31);			break;
 						case 0x08:	/* JR */		SETPC(RSVAL32);													break;
 						case 0x09:	/* JALR */		SETPCL(RSVAL32,RDREG);											break;
-						case 0x0a:	/* MOVZ - R5000 */if (RTVAL64 == 0) { if (RDREG != 0) RDVAL64 = RSVAL64; }			break;
-						case 0x0b:	/* MOVN - R5000 */if (RTVAL64 != 0) { if (RDREG != 0) RDVAL64 = RSVAL64; }			break;
+						case 0x0a:	/* MOVZ - R5000 */if (RTVAL64 == 0) { if (RDREG) RDVAL64 = RSVAL64; }			break;
+						case 0x0b:	/* MOVN - R5000 */if (RTVAL64 != 0) { if (RDREG) RDVAL64 = RSVAL64; }			break;
 						case 0x0c:	/* SYSCALL */	generate_exception(EXCEPTION_SYSCALL, 1);						break;
 						case 0x0d:	/* BREAK */		generate_exception(EXCEPTION_BREAK, 1);							break;
 						case 0x0f:	/* SYNC */		/* effective no-op */											break;
-						case 0x10:	/* MFHI */		if (RDREG != 0) RDVAL64 = HIVAL64;									break;
+						case 0x10:	/* MFHI */		if (RDREG) RDVAL64 = HIVAL64;									break;
 						case 0x11:	/* MTHI */		HIVAL64 = RSVAL64;												break;
-						case 0x12:	/* MFLO */		if (RDREG != 0) RDVAL64 = LOVAL64;									break;
+						case 0x12:	/* MFLO */		if (RDREG) RDVAL64 = LOVAL64;									break;
 						case 0x13:	/* MTLO */		LOVAL64 = RSVAL64;												break;
-						case 0x14:	/* DSLLV */		if (RDREG != 0) RDVAL64 = RTVAL64 << (RSVAL32 & 63);					break;
-						case 0x16:	/* DSRLV */		if (RDREG != 0) RDVAL64 = RTVAL64 >> (RSVAL32 & 63);					break;
-						case 0x17:	/* DSRAV */		if (RDREG != 0) RDVAL64 = (INT64)RTVAL64 >> (RSVAL32 & 63);			break;
+						case 0x14:	/* DSLLV */		if (RDREG) RDVAL64 = RTVAL64 << (RSVAL32 & 63);					break;
+						case 0x16:	/* DSRLV */		if (RDREG) RDVAL64 = RTVAL64 >> (RSVAL32 & 63);					break;
+						case 0x17:	/* DSRAV */		if (RDREG) RDVAL64 = (INT64)RTVAL64 >> (RSVAL32 & 63);			break;
 						case 0x18:	/* MULT */
 							temp64 = (INT64)(INT32)RSVAL32 * (INT64)(INT32)RTVAL32;
 							LOVAL64 = (INT32)temp64;
@@ -1346,7 +1346,7 @@ public class mips3
 							mips3_icount -= 3;
 							break;
 						case 0x1a:	/* DIV */
-							if (RTVAL32 != 0)
+							if (RTVAL32)
 							{
 								LOVAL64 = (INT32)((INT32)RSVAL32 / (INT32)RTVAL32);
 								HIVAL64 = (INT32)((INT32)RSVAL32 % (INT32)RTVAL32);
@@ -1354,7 +1354,7 @@ public class mips3
 							mips3_icount -= 35;
 							break;
 						case 0x1b:	/* DIVU */
-							if (RTVAL32 != 0)
+							if (RTVAL32)
 							{
 								LOVAL64 = (INT32)(RSVAL32 / RTVAL32);
 								HIVAL64 = (INT32)(RSVAL32 % RTVAL32);
@@ -1374,7 +1374,7 @@ public class mips3
 							mips3_icount -= 7;
 							break;
 						case 0x1e:	/* DDIV */
-							if (RTVAL64 != 0)
+							if (RTVAL64)
 							{
 								LOVAL64 = (INT64)RSVAL64 / (INT64)RTVAL64;
 								HIVAL64 = (INT64)RSVAL64 % (INT64)RTVAL64;
@@ -1382,7 +1382,7 @@ public class mips3
 							mips3_icount -= 67;
 							break;
 						case 0x1f:	/* DDIVU */
-							if (RTVAL64 != 0)
+							if (RTVAL64)
 							{
 								LOVAL64 = RSVAL64 / RTVAL64;
 								HIVAL64 = RSVAL64 % RTVAL64;
@@ -1393,40 +1393,40 @@ public class mips3
 							if (ENABLE_OVERFLOWS && RSVAL32 > ~RTVAL32) generate_exception(EXCEPTION_OVERFLOW, 1);
 							else RDVAL64 = (INT32)(RSVAL32 + RTVAL32);
 							break;
-						case 0x21:	/* ADDU */		if (RDREG != 0) RDVAL64 = (INT32)(RSVAL32 + RTVAL32);				break;
+						case 0x21:	/* ADDU */		if (RDREG) RDVAL64 = (INT32)(RSVAL32 + RTVAL32);				break;
 						case 0x22:	/* SUB */
 							if (ENABLE_OVERFLOWS && RSVAL32 < RTVAL32) generate_exception(EXCEPTION_OVERFLOW, 1);
 							else RDVAL64 = (INT32)(RSVAL32 - RTVAL32);
 							break;
-						case 0x23:	/* SUBU */		if (RDREG != 0) RDVAL64 = (INT32)(RSVAL32 - RTVAL32);				break;
-						case 0x24:	/* AND */		if (RDREG != 0) RDVAL64 = RSVAL64 & RTVAL64;							break;
-						case 0x25:	/* OR */		if (RDREG != 0) RDVAL64 = RSVAL64 | RTVAL64;							break;
-						case 0x26:	/* XOR */		if (RDREG != 0) RDVAL64 = RSVAL64 ^ RTVAL64;							break;
-						case 0x27:	/* NOR */		if (RDREG != 0) RDVAL64 = ~(RSVAL64 | RTVAL64);						break;
-						case 0x2a:	/* SLT */		if (RDREG != 0) RDVAL64 = (INT64)RSVAL64 < (INT64)RTVAL64;			break;
-						case 0x2b:	/* SLTU */		if (RDREG != 0) RDVAL64 = (UINT64)RSVAL64 < (UINT64)RTVAL64;			break;
+						case 0x23:	/* SUBU */		if (RDREG) RDVAL64 = (INT32)(RSVAL32 - RTVAL32);				break;
+						case 0x24:	/* AND */		if (RDREG) RDVAL64 = RSVAL64 & RTVAL64;							break;
+						case 0x25:	/* OR */		if (RDREG) RDVAL64 = RSVAL64 | RTVAL64;							break;
+						case 0x26:	/* XOR */		if (RDREG) RDVAL64 = RSVAL64 ^ RTVAL64;							break;
+						case 0x27:	/* NOR */		if (RDREG) RDVAL64 = ~(RSVAL64 | RTVAL64);						break;
+						case 0x2a:	/* SLT */		if (RDREG) RDVAL64 = (INT64)RSVAL64 < (INT64)RTVAL64;			break;
+						case 0x2b:	/* SLTU */		if (RDREG) RDVAL64 = (UINT64)RSVAL64 < (UINT64)RTVAL64;			break;
 						case 0x2c:	/* DADD */
 							if (ENABLE_OVERFLOWS && RSVAL64 > ~RTVAL64) generate_exception(EXCEPTION_OVERFLOW, 1);
 							else RDVAL64 = RSVAL64 + RTVAL64;
 							break;
-						case 0x2d:	/* DADDU */		if (RDREG != 0) RDVAL64 = RSVAL64 + RTVAL64;							break;
+						case 0x2d:	/* DADDU */		if (RDREG) RDVAL64 = RSVAL64 + RTVAL64;							break;
 						case 0x2e:	/* DSUB */
 							if (ENABLE_OVERFLOWS && RSVAL64 < RTVAL64) generate_exception(EXCEPTION_OVERFLOW, 1);
 							else RDVAL64 = RSVAL64 - RTVAL64;
 							break;
-						case 0x2f:	/* DSUBU */		if (RDREG != 0) RDVAL64 = RSVAL64 - RTVAL64;							break;
+						case 0x2f:	/* DSUBU */		if (RDREG) RDVAL64 = RSVAL64 - RTVAL64;							break;
 						case 0x30:	/* TGE */		if ((INT64)RSVAL64 >= (INT64)RTVAL64) generate_exception(EXCEPTION_TRAP, 1); break;
 						case 0x31:	/* TGEU */		if (RSVAL64 >= RTVAL64) generate_exception(EXCEPTION_TRAP, 1);	break;
 						case 0x32:	/* TLT */		if ((INT64)RSVAL64 < (INT64)RTVAL64) generate_exception(EXCEPTION_TRAP, 1); break;
 						case 0x33:	/* TLTU */		if (RSVAL64 < RTVAL64) generate_exception(EXCEPTION_TRAP, 1);	break;
 						case 0x34:	/* TEQ */		if (RSVAL64 == RTVAL64) generate_exception(EXCEPTION_TRAP, 1);	break;
 						case 0x36:	/* TNE */		if (RSVAL64 != RTVAL64) generate_exception(EXCEPTION_TRAP, 1);	break;
-						case 0x38:	/* DSLL */		if (RDREG != 0) RDVAL64 = RTVAL64 << SHIFT;							break;
-						case 0x3a:	/* DSRL */		if (RDREG != 0) RDVAL64 = RTVAL64 >> SHIFT;							break;
-						case 0x3b:	/* DSRA */		if (RDREG != 0) RDVAL64 = (INT64)RTVAL64 >> SHIFT;					break;
-						case 0x3c:	/* DSLL32 */	if (RDREG != 0) RDVAL64 = RTVAL64 << (SHIFT + 32);					break;
-						case 0x3e:	/* DSRL32 */	if (RDREG != 0) RDVAL64 = RTVAL64 >> (SHIFT + 32);					break;
-						case 0x3f:	/* DSRA32 */	if (RDREG != 0) RDVAL64 = (INT64)RTVAL64 >> (SHIFT + 32);			break;
+						case 0x38:	/* DSLL */		if (RDREG) RDVAL64 = RTVAL64 << SHIFT;							break;
+						case 0x3a:	/* DSRL */		if (RDREG) RDVAL64 = RTVAL64 >> SHIFT;							break;
+						case 0x3b:	/* DSRA */		if (RDREG) RDVAL64 = (INT64)RTVAL64 >> SHIFT;					break;
+						case 0x3c:	/* DSLL32 */	if (RDREG) RDVAL64 = RTVAL64 << (SHIFT + 32);					break;
+						case 0x3e:	/* DSRL32 */	if (RDREG) RDVAL64 = RTVAL64 >> (SHIFT + 32);					break;
+						case 0x3f:	/* DSRA32 */	if (RDREG) RDVAL64 = (INT64)RTVAL64 >> (SHIFT + 32);			break;
 						default:	/* ??? */		invalid_instruction(op);										break;
 					}
 					break;
@@ -1460,15 +1460,15 @@ public class mips3
 				case 0x07:	/* BGTZ */		if ((INT64)RSVAL64 > 0) ADDPC(SIMMVAL);									break;
 				case 0x08:	/* ADDI */
 					if (ENABLE_OVERFLOWS && RSVAL32 > ~SIMMVAL) generate_exception(EXCEPTION_OVERFLOW, 1);
-					else if (RTREG != 0) RTVAL64 = (INT32)(RSVAL32 + SIMMVAL);
+					else if (RTREG) RTVAL64 = (INT32)(RSVAL32 + SIMMVAL);
 					break;
-				case 0x09:	/* ADDIU */		if (RTREG != 0) RTVAL64 = (INT32)(RSVAL32 + SIMMVAL);						break;
-				case 0x0a:	/* SLTI */		if (RTREG != 0) RTVAL64 = (INT64)RSVAL64 < (INT64)SIMMVAL;					break;
-				case 0x0b:	/* SLTIU */		if (RTREG != 0) RTVAL64 = (UINT64)RSVAL64 < (UINT64)SIMMVAL;					break;
-				case 0x0c:	/* ANDI */		if (RTREG != 0) RTVAL64 = RSVAL64 & UIMMVAL;									break;
-				case 0x0d:	/* ORI */		if (RTREG != 0) RTVAL64 = RSVAL64 | UIMMVAL;									break;
-				case 0x0e:	/* XORI */		if (RTREG != 0) RTVAL64 = RSVAL64 ^ UIMMVAL;									break;
-				case 0x0f:	/* LUI */		if (RTREG != 0) RTVAL64 = (INT32)(UIMMVAL << 16);							break;
+				case 0x09:	/* ADDIU */		if (RTREG) RTVAL64 = (INT32)(RSVAL32 + SIMMVAL);						break;
+				case 0x0a:	/* SLTI */		if (RTREG) RTVAL64 = (INT64)RSVAL64 < (INT64)SIMMVAL;					break;
+				case 0x0b:	/* SLTIU */		if (RTREG) RTVAL64 = (UINT64)RSVAL64 < (UINT64)SIMMVAL;					break;
+				case 0x0c:	/* ANDI */		if (RTREG) RTVAL64 = RSVAL64 & UIMMVAL;									break;
+				case 0x0d:	/* ORI */		if (RTREG) RTVAL64 = RSVAL64 | UIMMVAL;									break;
+				case 0x0e:	/* XORI */		if (RTREG) RTVAL64 = RSVAL64 ^ UIMMVAL;									break;
+				case 0x0f:	/* LUI */		if (RTREG) RTVAL64 = (INT32)(UIMMVAL << 16);							break;
 				case 0x10:	/* COP0 */		handle_cop0(op);														break;
 				case 0x11:	/* COP1 */		handle_cop1(op);														break;
 				case 0x12:	/* COP2 */		handle_cop2(op);														break;
@@ -1479,19 +1479,19 @@ public class mips3
 				case 0x17:	/* BGTZL */		if ((INT64)RSVAL64 > 0) ADDPC(SIMMVAL); else mips3.pc += 4;				break;
 				case 0x18:	/* DADDI */
 					if (ENABLE_OVERFLOWS && RSVAL64 > ~SIMMVAL) generate_exception(EXCEPTION_OVERFLOW, 1);
-					else if (RTREG != 0) RTVAL64 = RSVAL64 + (INT64)SIMMVAL;
+					else if (RTREG) RTVAL64 = RSVAL64 + (INT64)SIMMVAL;
 					break;
-				case 0x19:	/* DADDIU */	if (RTREG != 0) RTVAL64 = RSVAL64 + (UINT64)SIMMVAL;							break;
+				case 0x19:	/* DADDIU */	if (RTREG) RTVAL64 = RSVAL64 + (UINT64)SIMMVAL;							break;
 				case 0x1a:	/* LDL */		(*mips3.ldl)(op);														break;
 				case 0x1b:	/* LDR */		(*mips3.ldr)(op);														break;
-				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (INT8)temp;			break;
-				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (INT16)temp;		break;
+				case 0x20:	/* LB */		temp = RBYTE(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (INT8)temp;			break;
+				case 0x21:	/* LH */		temp = RWORD(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (INT16)temp;		break;
 				case 0x22:	/* LWL */		(*mips3.lwl)(op);														break;
-				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (INT32)temp;		break;
-				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (UINT8)temp;		break;
-				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (UINT16)temp;		break;
+				case 0x23:	/* LW */		temp = RLONG(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (INT32)temp;		break;
+				case 0x24:	/* LBU */		temp = RBYTE(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (UINT8)temp;		break;
+				case 0x25:	/* LHU */		temp = RWORD(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (UINT16)temp;		break;
 				case 0x26:	/* LWR */		(*mips3.lwr)(op);														break;
-				case 0x27:	/* LWU */		temp = RLONG(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = (UINT32)temp;		break;
+				case 0x27:	/* LWU */		temp = RLONG(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = (UINT32)temp;		break;
 				case 0x28:	/* SB */		WBYTE(SIMMVAL+RSVAL32, RTVAL32);										break;
 				case 0x29:	/* SH */		WWORD(SIMMVAL+RSVAL32, RTVAL32); 										break;
 				case 0x2a:	/* SWL */		(*mips3.swl)(op);														break;
@@ -1507,7 +1507,7 @@ public class mips3
 				case 0x34:	/* LLD */		logerror("mips3 Unhandled op: LLD\n");									break;
 				case 0x35:	/* LDC1 */		set_cop1_reg(RTREG, RDOUBLE(SIMMVAL+RSVAL32));							break;
 				case 0x36:	/* LDC2 */		set_cop2_reg(RTREG, RDOUBLE(SIMMVAL+RSVAL32));							break;
-				case 0x37:	/* LD */		temp64 = RDOUBLE(SIMMVAL+RSVAL32); if (RTREG != 0) RTVAL64 = temp64;			break;
+				case 0x37:	/* LD */		temp64 = RDOUBLE(SIMMVAL+RSVAL32); if (RTREG) RTVAL64 = temp64;			break;
 				case 0x38:	/* SC */		logerror("mips3 Unhandled op: SC\n");									break;
 				case 0x39:	/* SWC1 */		WLONG(SIMMVAL+RSVAL32, get_cop1_reg(RTREG));							break;
 				case 0x3a:	/* SWC2 */		WLONG(SIMMVAL+RSVAL32, get_cop2_reg(RTREG));							break;
@@ -1852,55 +1852,55 @@ public class mips3
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+MIPS3_PC:  	sprintf(buffer[which], "PC: %08X", r.pc); break;
-			case CPU_INFO_REG+MIPS3_SR:  	sprintf(buffer[which], "SR: %08X", (UINT32)r.cpr[0][COP0_Status]); break;
-			case CPU_INFO_REG+MIPS3_EPC:  	sprintf(buffer[which], "EPC:%08X", (UINT32)r.cpr[0][COP0_EPC]); break;
-			case CPU_INFO_REG+MIPS3_CAUSE: 	sprintf(buffer[which], "Cause:%08X", (UINT32)r.cpr[0][COP0_Cause]); break;
+			case CPU_INFO_REG+MIPS3_PC:  	sprintf(buffer[which], "PC: %08X", r->pc); break;
+			case CPU_INFO_REG+MIPS3_SR:  	sprintf(buffer[which], "SR: %08X", (UINT32)r->cpr[0][COP0_Status]); break;
+			case CPU_INFO_REG+MIPS3_EPC:  	sprintf(buffer[which], "EPC:%08X", (UINT32)r->cpr[0][COP0_EPC]); break;
+			case CPU_INFO_REG+MIPS3_CAUSE: 	sprintf(buffer[which], "Cause:%08X", (UINT32)r->cpr[0][COP0_Cause]); break;
 			case CPU_INFO_REG+MIPS3_COUNT: 	sprintf(buffer[which], "Count:%08X", (UINT32)((activecpu_gettotalcycles64() - mips3.count_zero_time) / 2)); break;
-			case CPU_INFO_REG+MIPS3_COMPARE:sprintf(buffer[which], "Compare:%08X", (UINT32)r.cpr[0][COP0_Compare]); break;
+			case CPU_INFO_REG+MIPS3_COMPARE:sprintf(buffer[which], "Compare:%08X", (UINT32)r->cpr[0][COP0_Compare]); break;
 	
-			case CPU_INFO_REG+MIPS3_R0:		sprintf(buffer[which], "R0: %08X%08X", (UINT32)(r.r[0] >> 32), (UINT32)r.r[0]); break;
-			case CPU_INFO_REG+MIPS3_R1:		sprintf(buffer[which], "R1: %08X%08X", (UINT32)(r.r[1] >> 32), (UINT32)r.r[1]); break;
-			case CPU_INFO_REG+MIPS3_R2:		sprintf(buffer[which], "R2: %08X%08X", (UINT32)(r.r[2] >> 32), (UINT32)r.r[2]); break;
-			case CPU_INFO_REG+MIPS3_R3:		sprintf(buffer[which], "R3: %08X%08X", (UINT32)(r.r[3] >> 32), (UINT32)r.r[3]); break;
-			case CPU_INFO_REG+MIPS3_R4:		sprintf(buffer[which], "R4: %08X%08X", (UINT32)(r.r[4] >> 32), (UINT32)r.r[4]); break;
-			case CPU_INFO_REG+MIPS3_R5:		sprintf(buffer[which], "R5: %08X%08X", (UINT32)(r.r[5] >> 32), (UINT32)r.r[5]); break;
-			case CPU_INFO_REG+MIPS3_R6:		sprintf(buffer[which], "R6: %08X%08X", (UINT32)(r.r[6] >> 32), (UINT32)r.r[6]); break;
-			case CPU_INFO_REG+MIPS3_R7:		sprintf(buffer[which], "R7: %08X%08X", (UINT32)(r.r[7] >> 32), (UINT32)r.r[7]); break;
-			case CPU_INFO_REG+MIPS3_R8:		sprintf(buffer[which], "R8: %08X%08X", (UINT32)(r.r[8] >> 32), (UINT32)r.r[8]); break;
-			case CPU_INFO_REG+MIPS3_R9:		sprintf(buffer[which], "R9: %08X%08X", (UINT32)(r.r[9] >> 32), (UINT32)r.r[9]); break;
-			case CPU_INFO_REG+MIPS3_R10:	sprintf(buffer[which], "R10:%08X%08X", (UINT32)(r.r[10] >> 32), (UINT32)r.r[10]); break;
-			case CPU_INFO_REG+MIPS3_R11:	sprintf(buffer[which], "R11:%08X%08X", (UINT32)(r.r[11] >> 32), (UINT32)r.r[11]); break;
-			case CPU_INFO_REG+MIPS3_R12:	sprintf(buffer[which], "R12:%08X%08X", (UINT32)(r.r[12] >> 32), (UINT32)r.r[12]); break;
-			case CPU_INFO_REG+MIPS3_R13:	sprintf(buffer[which], "R13:%08X%08X", (UINT32)(r.r[13] >> 32), (UINT32)r.r[13]); break;
-			case CPU_INFO_REG+MIPS3_R14:	sprintf(buffer[which], "R14:%08X%08X", (UINT32)(r.r[14] >> 32), (UINT32)r.r[14]); break;
-			case CPU_INFO_REG+MIPS3_R15:	sprintf(buffer[which], "R15:%08X%08X", (UINT32)(r.r[15] >> 32), (UINT32)r.r[15]); break;
-			case CPU_INFO_REG+MIPS3_R16:	sprintf(buffer[which], "R16:%08X%08X", (UINT32)(r.r[16] >> 32), (UINT32)r.r[16]); break;
-			case CPU_INFO_REG+MIPS3_R17:	sprintf(buffer[which], "R17:%08X%08X", (UINT32)(r.r[17] >> 32), (UINT32)r.r[17]); break;
-			case CPU_INFO_REG+MIPS3_R18:	sprintf(buffer[which], "R18:%08X%08X", (UINT32)(r.r[18] >> 32), (UINT32)r.r[18]); break;
-			case CPU_INFO_REG+MIPS3_R19:	sprintf(buffer[which], "R19:%08X%08X", (UINT32)(r.r[19] >> 32), (UINT32)r.r[19]); break;
-			case CPU_INFO_REG+MIPS3_R20:	sprintf(buffer[which], "R20:%08X%08X", (UINT32)(r.r[20] >> 32), (UINT32)r.r[20]); break;
-			case CPU_INFO_REG+MIPS3_R21:	sprintf(buffer[which], "R21:%08X%08X", (UINT32)(r.r[21] >> 32), (UINT32)r.r[21]); break;
-			case CPU_INFO_REG+MIPS3_R22:	sprintf(buffer[which], "R22:%08X%08X", (UINT32)(r.r[22] >> 32), (UINT32)r.r[22]); break;
-			case CPU_INFO_REG+MIPS3_R23:	sprintf(buffer[which], "R23:%08X%08X", (UINT32)(r.r[23] >> 32), (UINT32)r.r[23]); break;
-			case CPU_INFO_REG+MIPS3_R24:	sprintf(buffer[which], "R24:%08X%08X", (UINT32)(r.r[24] >> 32), (UINT32)r.r[24]); break;
-			case CPU_INFO_REG+MIPS3_R25:	sprintf(buffer[which], "R25:%08X%08X", (UINT32)(r.r[25] >> 32), (UINT32)r.r[25]); break;
-			case CPU_INFO_REG+MIPS3_R26:	sprintf(buffer[which], "R26:%08X%08X", (UINT32)(r.r[26] >> 32), (UINT32)r.r[26]); break;
-			case CPU_INFO_REG+MIPS3_R27:	sprintf(buffer[which], "R27:%08X%08X", (UINT32)(r.r[27] >> 32), (UINT32)r.r[27]); break;
-			case CPU_INFO_REG+MIPS3_R28:	sprintf(buffer[which], "R28:%08X%08X", (UINT32)(r.r[28] >> 32), (UINT32)r.r[28]); break;
-			case CPU_INFO_REG+MIPS3_R29:	sprintf(buffer[which], "R29:%08X%08X", (UINT32)(r.r[29] >> 32), (UINT32)r.r[29]); break;
-			case CPU_INFO_REG+MIPS3_R30:	sprintf(buffer[which], "R30:%08X%08X", (UINT32)(r.r[30] >> 32), (UINT32)r.r[30]); break;
-			case CPU_INFO_REG+MIPS3_R31:	sprintf(buffer[which], "R31:%08X%08X", (UINT32)(r.r[31] >> 32), (UINT32)r.r[31]); break;
-			case CPU_INFO_REG+MIPS3_HI:		sprintf(buffer[which], "HI: %08X%08X", (UINT32)(r.hi >> 32), (UINT32)r.hi); break;
-			case CPU_INFO_REG+MIPS3_LO:		sprintf(buffer[which], "LO: %08X%08X", (UINT32)(r.lo >> 32), (UINT32)r.lo); break;
+			case CPU_INFO_REG+MIPS3_R0:		sprintf(buffer[which], "R0: %08X%08X", (UINT32)(r->r[0] >> 32), (UINT32)r->r[0]); break;
+			case CPU_INFO_REG+MIPS3_R1:		sprintf(buffer[which], "R1: %08X%08X", (UINT32)(r->r[1] >> 32), (UINT32)r->r[1]); break;
+			case CPU_INFO_REG+MIPS3_R2:		sprintf(buffer[which], "R2: %08X%08X", (UINT32)(r->r[2] >> 32), (UINT32)r->r[2]); break;
+			case CPU_INFO_REG+MIPS3_R3:		sprintf(buffer[which], "R3: %08X%08X", (UINT32)(r->r[3] >> 32), (UINT32)r->r[3]); break;
+			case CPU_INFO_REG+MIPS3_R4:		sprintf(buffer[which], "R4: %08X%08X", (UINT32)(r->r[4] >> 32), (UINT32)r->r[4]); break;
+			case CPU_INFO_REG+MIPS3_R5:		sprintf(buffer[which], "R5: %08X%08X", (UINT32)(r->r[5] >> 32), (UINT32)r->r[5]); break;
+			case CPU_INFO_REG+MIPS3_R6:		sprintf(buffer[which], "R6: %08X%08X", (UINT32)(r->r[6] >> 32), (UINT32)r->r[6]); break;
+			case CPU_INFO_REG+MIPS3_R7:		sprintf(buffer[which], "R7: %08X%08X", (UINT32)(r->r[7] >> 32), (UINT32)r->r[7]); break;
+			case CPU_INFO_REG+MIPS3_R8:		sprintf(buffer[which], "R8: %08X%08X", (UINT32)(r->r[8] >> 32), (UINT32)r->r[8]); break;
+			case CPU_INFO_REG+MIPS3_R9:		sprintf(buffer[which], "R9: %08X%08X", (UINT32)(r->r[9] >> 32), (UINT32)r->r[9]); break;
+			case CPU_INFO_REG+MIPS3_R10:	sprintf(buffer[which], "R10:%08X%08X", (UINT32)(r->r[10] >> 32), (UINT32)r->r[10]); break;
+			case CPU_INFO_REG+MIPS3_R11:	sprintf(buffer[which], "R11:%08X%08X", (UINT32)(r->r[11] >> 32), (UINT32)r->r[11]); break;
+			case CPU_INFO_REG+MIPS3_R12:	sprintf(buffer[which], "R12:%08X%08X", (UINT32)(r->r[12] >> 32), (UINT32)r->r[12]); break;
+			case CPU_INFO_REG+MIPS3_R13:	sprintf(buffer[which], "R13:%08X%08X", (UINT32)(r->r[13] >> 32), (UINT32)r->r[13]); break;
+			case CPU_INFO_REG+MIPS3_R14:	sprintf(buffer[which], "R14:%08X%08X", (UINT32)(r->r[14] >> 32), (UINT32)r->r[14]); break;
+			case CPU_INFO_REG+MIPS3_R15:	sprintf(buffer[which], "R15:%08X%08X", (UINT32)(r->r[15] >> 32), (UINT32)r->r[15]); break;
+			case CPU_INFO_REG+MIPS3_R16:	sprintf(buffer[which], "R16:%08X%08X", (UINT32)(r->r[16] >> 32), (UINT32)r->r[16]); break;
+			case CPU_INFO_REG+MIPS3_R17:	sprintf(buffer[which], "R17:%08X%08X", (UINT32)(r->r[17] >> 32), (UINT32)r->r[17]); break;
+			case CPU_INFO_REG+MIPS3_R18:	sprintf(buffer[which], "R18:%08X%08X", (UINT32)(r->r[18] >> 32), (UINT32)r->r[18]); break;
+			case CPU_INFO_REG+MIPS3_R19:	sprintf(buffer[which], "R19:%08X%08X", (UINT32)(r->r[19] >> 32), (UINT32)r->r[19]); break;
+			case CPU_INFO_REG+MIPS3_R20:	sprintf(buffer[which], "R20:%08X%08X", (UINT32)(r->r[20] >> 32), (UINT32)r->r[20]); break;
+			case CPU_INFO_REG+MIPS3_R21:	sprintf(buffer[which], "R21:%08X%08X", (UINT32)(r->r[21] >> 32), (UINT32)r->r[21]); break;
+			case CPU_INFO_REG+MIPS3_R22:	sprintf(buffer[which], "R22:%08X%08X", (UINT32)(r->r[22] >> 32), (UINT32)r->r[22]); break;
+			case CPU_INFO_REG+MIPS3_R23:	sprintf(buffer[which], "R23:%08X%08X", (UINT32)(r->r[23] >> 32), (UINT32)r->r[23]); break;
+			case CPU_INFO_REG+MIPS3_R24:	sprintf(buffer[which], "R24:%08X%08X", (UINT32)(r->r[24] >> 32), (UINT32)r->r[24]); break;
+			case CPU_INFO_REG+MIPS3_R25:	sprintf(buffer[which], "R25:%08X%08X", (UINT32)(r->r[25] >> 32), (UINT32)r->r[25]); break;
+			case CPU_INFO_REG+MIPS3_R26:	sprintf(buffer[which], "R26:%08X%08X", (UINT32)(r->r[26] >> 32), (UINT32)r->r[26]); break;
+			case CPU_INFO_REG+MIPS3_R27:	sprintf(buffer[which], "R27:%08X%08X", (UINT32)(r->r[27] >> 32), (UINT32)r->r[27]); break;
+			case CPU_INFO_REG+MIPS3_R28:	sprintf(buffer[which], "R28:%08X%08X", (UINT32)(r->r[28] >> 32), (UINT32)r->r[28]); break;
+			case CPU_INFO_REG+MIPS3_R29:	sprintf(buffer[which], "R29:%08X%08X", (UINT32)(r->r[29] >> 32), (UINT32)r->r[29]); break;
+			case CPU_INFO_REG+MIPS3_R30:	sprintf(buffer[which], "R30:%08X%08X", (UINT32)(r->r[30] >> 32), (UINT32)r->r[30]); break;
+			case CPU_INFO_REG+MIPS3_R31:	sprintf(buffer[which], "R31:%08X%08X", (UINT32)(r->r[31] >> 32), (UINT32)r->r[31]); break;
+			case CPU_INFO_REG+MIPS3_HI:		sprintf(buffer[which], "HI: %08X%08X", (UINT32)(r->hi >> 32), (UINT32)r->hi); break;
+			case CPU_INFO_REG+MIPS3_LO:		sprintf(buffer[which], "LO: %08X%08X", (UINT32)(r->lo >> 32), (UINT32)r->lo); break;
 	
 			case CPU_INFO_NAME: return "MIPS III";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS III (big-endian)" : "MIPS III (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS III (big-endian)" : "MIPS III (little-endian)";
 			case CPU_INFO_VERSION: return "1.0";
 			case CPU_INFO_FILE: return __FILE__;
 			case CPU_INFO_CREDITS: return "Copyright (C) Aaron Giles 2000-2002";
@@ -1921,13 +1921,13 @@ public class mips3
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
 			case CPU_INFO_NAME: return "R4600";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R4600 (big-endian)" : "MIPS R4600 (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R4600 (big-endian)" : "MIPS R4600 (little-endian)";
 			default: return mips3_info(context, regnum);
 	    }
 		return buffer[which];
@@ -1943,13 +1943,13 @@ public class mips3
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
 			case CPU_INFO_NAME: return "R5000";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R5000 (big-endian)" : "MIPS R5000 (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R5000 (big-endian)" : "MIPS R5000 (little-endian)";
 			default: return mips3_info(context, regnum);
 	    }
 		return buffer[which];
@@ -2021,7 +2021,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 3)) RTVAL64 = (INT32)temp;
 			else
@@ -2036,7 +2036,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 3) == 3) RTVAL64 = (INT32)temp;
 			else
@@ -2051,7 +2051,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		UINT64 temp = RDOUBLE(offs & ~7);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 7)) RTVAL64 = temp;
 			else
@@ -2067,7 +2067,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		UINT64 temp = RDOUBLE(offs & ~7);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 7) == 7) RTVAL64 = temp;
 			else
@@ -2136,7 +2136,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 3) == 3) RTVAL64 = (INT32)temp;
 			else
@@ -2151,7 +2151,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		data32_t temp = RLONG(offs & ~3);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 3)) RTVAL64 = (INT32)temp;
 			else
@@ -2166,7 +2166,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		UINT64 temp = RDOUBLE(offs & ~7);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if ((offs & 7) == 7) RTVAL64 = temp;
 			else
@@ -2182,7 +2182,7 @@ public class mips3
 	{
 		offs_t offs = SIMMVAL + RSVAL32;
 		UINT64 temp = RDOUBLE(offs & ~7);
-		if (RTREG != 0)
+		if (RTREG)
 		{
 			if (!(offs & 7)) RTVAL64 = temp;
 			else

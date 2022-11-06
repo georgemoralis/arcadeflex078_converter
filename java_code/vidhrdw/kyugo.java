@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -64,8 +64,7 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_kyugo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kyugo  = new VideoStartHandlerPtr() { public int handler(){
 		color_codes = memory_region(REGION_PROMS) + 0x300;
 	
 	
@@ -90,8 +89,7 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr kyugo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kyugo_fgvideoram[offset] != data)
 		{
 			kyugo_fgvideoram[offset] = data;
@@ -100,8 +98,7 @@ public class kyugo
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kyugo_bgvideoram[offset] != data)
 		{
 			kyugo_bgvideoram[offset] = data;
@@ -110,8 +107,7 @@ public class kyugo
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_bgattribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_bgattribram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kyugo_bgattribram[offset] != data)
 		{
 			kyugo_bgattribram[offset] = data;
@@ -120,21 +116,18 @@ public class kyugo
 	} };
 	
 	
-	public static ReadHandlerPtr kyugo_spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kyugo_spriteram_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// only the lower nibble is connected
 		return kyugo_spriteram_2[offset] | 0xf0;
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_scroll_x_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_scroll_x_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_x_lo = data;
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 is scroll MSB */
 		scroll_x_hi = data & 0x01;
 	
@@ -154,19 +147,17 @@ public class kyugo
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
 	
-		if ((data & 0x9e) != 0)
+		if (data & 0x9e)
 			usrintf_showmessage("%02x",data);
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_y = data;
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 0x01))
 		{
 			flipscreen = (data & 0x01);
@@ -202,7 +193,7 @@ public class kyugo
 			if (sx > 320) sx -= 512;
 	
 			sy = 255 - spriteram_area1[offs];
-			if (flipscreen != 0) sy = 240 - sy;
+			if (flipscreen) sy = 240 - sy;
 	
 			color = spriteram_area1[offs+1] & 0x1f;
 	
@@ -218,14 +209,14 @@ public class kyugo
 				flipx =  attr & 0x08;
 				flipy =  attr & 0x04;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 				}
 	
 	
-				drawgfx( bitmap, Machine.gfx[2],
+				drawgfx( bitmap, Machine->gfx[2],
 						 code,
 						 color,
 						 flipx,flipy,
@@ -236,9 +227,8 @@ public class kyugo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_kyugo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (flipscreen != 0)
+	public static VideoUpdateHandlerPtr video_update_kyugo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (flipscreen)
 			tilemap_set_scrollx(bg_tilemap,0,-(scroll_x_lo + (scroll_x_hi*256)));
 		else
 			tilemap_set_scrollx(bg_tilemap,0,  scroll_x_lo + (scroll_x_hi*256));

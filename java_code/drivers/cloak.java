@@ -109,7 +109,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -128,13 +128,11 @@ public class cloak
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr cloak_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cloak_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cloak_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr cloak_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cloak_sharedram[offset] = data;
 	} };
 	
@@ -144,32 +142,26 @@ public class cloak
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr cloak_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1 - offset, ~data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr cloak_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(1 - offset, data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr cloak_custom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_custom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
-	public static WriteHandlerPtr cloak_irq_reset_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_irq_reset_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, data, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr cloak_irq_reset_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_irq_reset_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, data, CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr cloak_nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cloak_nvram_enabled = data & 0x01;
 	} };
 	
@@ -253,7 +245,7 @@ public class cloak
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_cloak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cloak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cloak )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_DOWN  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_UP    | IPF_8WAY );
@@ -370,8 +362,7 @@ public class cloak
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_cloak = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cloak )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1000000)		/* 1 MHz ???? */
@@ -400,9 +391,7 @@ public class cloak
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*************************************
 	 *
@@ -521,8 +510,8 @@ public class cloak
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_cloak	   = new GameDriver("1983"	,"cloak"	,"cloak.java"	,rom_cloak,null	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (rev 5)" )
-	public static GameDriver driver_cloaksp	   = new GameDriver("1983"	,"cloaksp"	,"cloak.java"	,rom_cloaksp,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (Spanish)" )
-	public static GameDriver driver_cloakfr	   = new GameDriver("1983"	,"cloakfr"	,"cloak.java"	,rom_cloakfr,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (French)" )
-	public static GameDriver driver_cloakgr	   = new GameDriver("1983"	,"cloakgr"	,"cloak.java"	,rom_cloakgr,driver_cloak	,machine_driver_cloak	,input_ports_cloak	,null	,ROT0	,	"Atari", "Cloak & Dagger (German)" )
+	GAME( 1983, cloak,   0,     cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (rev 5)" )
+	GAME( 1983, cloaksp, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (Spanish)" )
+	GAME( 1983, cloakfr, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (French)" )
+	GAME( 1983, cloakgr, cloak, cloak, cloak, 0, ROT0, "Atari", "Cloak & Dagger (German)" )
 }

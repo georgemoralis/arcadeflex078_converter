@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -21,42 +21,41 @@ public class phozon
 	unsigned char *phozon_customio_1, *phozon_customio_2;
 	static int credits, coincounter1, coincounter2;
 	
-	public static MachineInitHandlerPtr machine_init_phozon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_phozon  = new MachineInitHandlerPtr() { public void handler(){
 	    credits = coincounter1 = coincounter2 = 0;
 		cpu_set_halt_line(1, CLEAR_LINE);
 		cpu_set_halt_line(2, CLEAR_LINE);
 	} };
 	
 	/* memory handlers */
-	public static ReadHandlerPtr phozon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
-	    return phozon_spriteram.read(offset);
-	} };
+	public static ReadHandlerPtr phozon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
+	    return phozon_spriteram[offset];
+	}
 	
-	public static WriteHandlerPtr phozon_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-	   phozon_spriteram.write(data,data);
-	} };
+	public static WriteHandlerPtr phozon_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	   phozon_spriteram[offset] = data;
+	}
 	
-	public static ReadHandlerPtr phozon_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr phozon_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	    return phozon_snd_sharedram[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr phozon_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr phozon_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	    phozon_snd_sharedram[offset] = data;
-	} };
+	}
 	
 	/* cpu control functions */
-	public static WriteHandlerPtr phozon_cpu2_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr phozon_cpu2_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
-	} };
+	}
 	
-	public static WriteHandlerPtr phozon_cpu3_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr phozon_cpu3_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		cpu_set_halt_line(2, offset ? CLEAR_LINE : ASSERT_LINE);
-	} };
+	}
 	
-	public static WriteHandlerPtr phozon_cpu3_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr phozon_cpu3_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		cpu_set_reset_line(2,PULSE_LINE);
-	} };
+	}
 	
 	/************************************************************************************
 	*																					*
@@ -64,21 +63,18 @@ public class phozon
 	*																					*
 	************************************************************************************/
 	
-	public static WriteHandlerPtr phozon_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phozon_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		phozon_customio_1[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr phozon_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phozon_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    phozon_customio_2[offset] = data;
 	} };
 	
 	static int credmoned [] = { 1, 1, 1, 1, 1, 2, 2, 3 };
 	static int monedcred [] = { 1, 2, 3, 6, 7, 1, 3, 1 };
 	
-	public static ReadHandlerPtr phozon_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr phozon_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode, val, temp1, temp2;
 	
 	    mode = phozon_customio_1[8];
@@ -202,8 +198,7 @@ public class phozon
 	    return val;
 	} };
 	
-	public static ReadHandlerPtr phozon_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr phozon_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode, val;
 	
 	    mode = phozon_customio_2[8];

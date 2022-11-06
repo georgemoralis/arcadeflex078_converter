@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,8 +20,7 @@ public class rohga
 		return ((bank>>4)&0x3)<<12;
 	}
 	
-	public static VideoStartHandlerPtr video_start_rohga  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rohga  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -33,8 +32,7 @@ public class rohga
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_wizdfire  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wizdfire  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -50,8 +48,7 @@ public class rohga
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_nitrobal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_nitrobal  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -80,7 +77,7 @@ public class rohga
 		{
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult,pri=0;
 			sprite = spriteptr[offs+1];
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			x = spriteptr[offs+2];
 	
@@ -107,7 +104,7 @@ public class rohga
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -115,23 +112,23 @@ public class rohga
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				x=304-x;
 				y=240-y;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=-16;
 			}
 			else mult=+16;
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine.gfx[3],
+				pdrawgfx(bitmap,Machine->gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						Machine.visible_area,TRANSPARENCY_PEN,0,pri);
+						Machine->visible_area,TRANSPARENCY_PEN,0,pri);
 	
 				multi--;
 			}
@@ -148,7 +145,7 @@ public class rohga
 			int trans=TRANSPARENCY_PEN;
 	
 			sprite = spriteptr[offs+1];
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			x = spriteptr[offs+2];
 	
@@ -200,7 +197,7 @@ public class rohga
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -208,27 +205,27 @@ public class rohga
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				x=304-x;
 				y=240-y;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=-16;
 			}
 			else
 				mult=+16;
 	
-			if (fx != 0) fx=0; else fx=1;
-			if (fy != 0) fy=0; else fy=1;
+			if (fx) fx=0; else fx=1;
+			if (fy) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[bank],
+				drawgfx(bitmap,Machine->gfx[bank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						Machine.visible_area,trans,0);
+						Machine->visible_area,trans,0);
 	
 				multi--;
 			}
@@ -278,7 +275,7 @@ public class rohga
 			int trans=TRANSPARENCY_PEN;
 	
 			sprite = spriteptr[offs+3];
-			if (sprite == 0) {
+			if (!sprite) {
 				offs+=inc;
 				continue;
 			}
@@ -370,7 +367,7 @@ public class rohga
 	//			else
 	//				tilemap_pri=8; 
 	
-				if (deco16_priority != 0)
+				if (deco16_priority)
 					tilemap_pri=8;
 				else
 					tilemap_pri=64;
@@ -386,38 +383,38 @@ public class rohga
 			fx = (spriteptr[offs+0]&0x4000);
 			fy = (spriteptr[offs+0]&0x8000);
 	
-			if (flip_screen == 0) { /* Inverted from Mutant Fighter! */
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+			if (!flip_screen()) { /* Inverted from Mutant Fighter! */
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 	
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
 				if (sx>0x180) sx=-(0x200 - sx);
 				if (sy>0x180) sy=-(0x200 - sy);
 	
-				if (fx != 0) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
-				if (fy != 0) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
+				if (fx) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
+				if (fy) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
 			} else {
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
-				if ((sx & 0x100) != 0) sx=-(0x100 - (sx&0xff));
-				if ((sy & 0x100) != 0) sy=-(0x100 - (sy&0xff));
+				if (sx&0x100) sx=-(0x100 - (sx&0xff));
+				if (sy&0x100) sy=-(0x100 - (sy&0xff));
 				sx = 304 - sx;
 				sy = 240 - sy;
 				if (sx >= 432) sx -= 512;
 				if (sy >= 384) sy -= 512;
-				if (fx != 0) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
-				if (fy != 0) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
+				if (fx) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
+				if (fy) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
 			}
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
+					deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							Machine.visible_area,trans,0,tilemap_pri,sprite_pri);
+							Machine->visible_area,trans,0,tilemap_pri,sprite_pri);
 				}
 			}
 	
@@ -427,8 +424,7 @@ public class rohga
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rohga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rohga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Update playfields */
 	//	flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -451,8 +447,7 @@ public class rohga
 	//	deco16_print_debug_info();
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wizdfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wizdfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Update playfields */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
@@ -479,8 +474,7 @@ public class rohga
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_nitrobal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_nitrobal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Update playfields */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);

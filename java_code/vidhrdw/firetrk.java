@@ -6,7 +6,7 @@ Atari Fire Truck + Super Bug + Monte Carlo video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,11 +49,11 @@ public class firetrk
 	
 	INLINE int arrow_code(int c)
 	{
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			return (c & 0x3F) >= 0x4 && (c & 0x3F) <= 0xB;
 		}
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			return (c & 0x3F) >= 0x8 && (c & 0x3F) <= 0xF;
 		}
@@ -68,7 +68,7 @@ public class firetrk
 	
 		if (GAME_IS_FIRETRUCK || GAME_IS_SUPERBUG)
 		{
-			if (flag != 0)
+			if (flag)
 			{
 				car[0].color = 1;
 				car[1].color = 1;
@@ -116,7 +116,7 @@ public class firetrk
 		{
 			color = 0;
 		}
-		if (flash != 0)
+		if (flash)
 		{
 			color |= 4;
 		}
@@ -133,7 +133,7 @@ public class firetrk
 	
 		/* palette 1 for crash and palette 2 for skid */
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			if ((code & 0x30) != 0x00 || (code & 0x0c) == 0x00)
 			{
@@ -145,7 +145,7 @@ public class firetrk
 			}
 		}
 	
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			if ((code & 0x30) != 0x00)
 			{
@@ -157,7 +157,7 @@ public class firetrk
 			}
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			if ((code & 0xc0) == 0x40 || (code & 0xc0) == 0x80)
 			{
@@ -181,39 +181,34 @@ public class firetrk
 	}
 	
 	
-	public static WriteHandlerPtr firetrk_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_vert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(tilemap1, 0, data);
 		tilemap_set_scrolly(tilemap2, 0, data);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_horz_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(tilemap1, 0, data - 37);
 		tilemap_set_scrollx(tilemap2, 0, data - 37);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_drone_hpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_drone_hpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drone_hpos = data;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_drone_vpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_drone_vpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drone_vpos = data;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_car_rot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (GAME_IS_FIRETRUCK != 0)
+	public static WriteHandlerPtr firetrk_car_rot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (GAME_IS_FIRETRUCK)
 		{
 			car[0].number = data & 0x03;
 	
-			if ((data & 0x10) != 0) /* swap xy */
+			if (data & 0x10) /* swap xy */
 			{
 				car[0].layout = 4;
 			}
@@ -226,11 +221,11 @@ public class firetrk
 			car[0].flipy = data & 0x08;
 		}
 	
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			car[0].number = (data & 0x03) ^ 3;
 	
-			if ((data & 0x10) != 0) /* swap xy */
+			if (data & 0x10) /* swap xy */
 			{
 				car[0].layout = 4;
 			}
@@ -243,11 +238,11 @@ public class firetrk
 			car[0].flipy = data & 0x08;
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			car[0].number = data & 0x07;
 	
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 			{
 				car[1].color |= 2;
 			}
@@ -262,22 +257,21 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_drone_rot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_drone_rot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		car[1].number = data & 0x07;
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			car[1].flipx = data & 0x08;
 			car[1].flipy = data & 0x10;
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			car[1].flipx = data & 0x10;
 			car[1].flipy = data & 0x08;
 	
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 			{
 				car[1].color |= 1;
 			}
@@ -289,8 +283,7 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (firetrk_playfield_ram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(tilemap1, offset);
@@ -301,8 +294,7 @@ public class firetrk
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_firetrk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_firetrk  = new VideoStartHandlerPtr() { public int handler(){
 		helper1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		helper2 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
@@ -322,17 +314,17 @@ public class firetrk
 		memset(&car[0], 0, sizeof (struct sprite_data));
 		memset(&car[1], 0, sizeof (struct sprite_data));
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			car[0].layout = 3;
 			car[1].layout = 5;
 		}
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			car[0].layout = 3;
 			car[1].layout = 0;
 		}
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			car[0].layout = 3;
 			car[1].layout = 4;
@@ -347,7 +339,7 @@ public class firetrk
 		car[0].x = 144;
 		car[0].y = 104;
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			car[1].x = car[1].flipx ? drone_hpos - 63 : 192 - drone_hpos;
 			car[1].y = car[1].flipy ? drone_vpos - 63 : 192 - drone_vpos;
@@ -355,7 +347,7 @@ public class firetrk
 			car[1].x += 36;
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			car[1].x = car[1].flipx ? drone_hpos - 31 : 224 - drone_hpos;
 			car[1].y = car[1].flipy ? drone_vpos - 31 : 224 - drone_vpos;
@@ -380,22 +372,21 @@ public class firetrk
 			{
 				x = (i == 0) ? 296 : 8;
 			}
-			if (GAME_IS_MONTECARLO != 0)
+			if (GAME_IS_MONTECARLO)
 			{
 				x = (i == 0) ? 24 : 16;
 			}
 	
-			for (y = 0; y < 256; y += Machine.gfx[0].width)
+			for (y = 0; y < 256; y += Machine->gfx[0]->width)
 			{
-				drawgfx(bitmap, Machine.gfx[0], *p++, 0, 0, 0,
+				drawgfx(bitmap, Machine->gfx[0], *p++, 0, 0, 0,
 					x, y, cliprect, TRANSPARENCY_NONE, 0);
 			}
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_firetrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_firetrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_draw(bitmap, &playfield_window, tilemap1, 0, 0);
@@ -425,8 +416,7 @@ public class firetrk
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_firetrk  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_firetrk  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		tilemap_draw(helper1, &playfield_window, tilemap2, 0, 0);
@@ -435,8 +425,8 @@ public class firetrk
 	
 		for (i = 1; i >= 0; i--)
 		{
-			int width = Machine.gfx[car[i].layout].width;
-			int height = Machine.gfx[car[i].layout].height;
+			int width = Machine->gfx[car[i].layout]->width;
+			int height = Machine->gfx[car[i].layout]->height;
 	
 			int x;
 			int y;
@@ -447,7 +437,7 @@ public class firetrk
 			}
 	
 			drawgfx(helper2,
-				Machine.gfx[car[i].layout],
+				Machine->gfx[car[i].layout],
 				car[i].number,
 				0,
 				car[i].flipx,
@@ -488,7 +478,7 @@ public class firetrk
 			}
 		}
 	
-		if (blink != 0)
+		if (blink)
 		{
 			firetrk_set_blink(0);
 		}

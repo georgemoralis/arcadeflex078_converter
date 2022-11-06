@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class irobot
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_irobot  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -95,8 +94,7 @@ public class irobot
 	} };
 	
 	
-	public static WriteHandlerPtr irobot_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int r,g,b;
 		int bits,intensity;
 	    unsigned int color;
@@ -118,8 +116,7 @@ public class irobot
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_irobot  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_irobot  = new VideoStartHandlerPtr() { public int handler(){
 		/* Setup 2 bitmaps for the polygon generator */
 		if ((polybitmap1 = auto_malloc(BITMAP_WIDTH * Machine.drv.screen_height)) == 0)
 			return 1;
@@ -179,7 +176,7 @@ public class irobot
 	void irobot_poly_clear(void)
 	{
 		UINT8 *bitmap_base = irobot_bufsel ? polybitmap2 : polybitmap1;
-		memset(bitmap_base, 0, BITMAP_WIDTH * Machine.drv.screen_height);
+		memset(bitmap_base, 0, BITMAP_WIDTH * Machine->drv->screen_height);
 	}
 	
 	#define draw_pixel(x,y,c)		polybitmap[(y) * BITMAP_WIDTH + (x)] = (c)
@@ -251,7 +248,7 @@ public class irobot
 	
 		logerror("Starting Polygon Generator, Clear=%d\n",irvg_clear);
 	
-		if (irobot_bufsel != 0)
+		if (irobot_bufsel)
 			polybitmap = polybitmap2;
 		else
 			polybitmap = polybitmap1;
@@ -380,8 +377,7 @@ public class irobot
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_irobot  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 *bitmap_base = irobot_bufsel ? polybitmap1 : polybitmap2;
 		int x, y, offs;
 	

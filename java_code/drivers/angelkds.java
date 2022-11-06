@@ -128,7 +128,7 @@ Dumped by Chackn
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -145,8 +145,7 @@ public class angelkds
 	
 	*/
 	
-	static public static WriteHandlerPtr angelkds_cpu_bank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_cpu_bank_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_USER1);
 	
@@ -165,8 +164,7 @@ public class angelkds
 	
 	#if FAKEINPUTS
 	
-	public static ReadHandlerPtr angelkds_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr angelkds_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int fake = readinputport(6+offset);
 	
 		return ((fake & 0x01) ? fake  : readinputport(4+offset));
@@ -174,8 +172,7 @@ public class angelkds
 	
 	#else
 	
-	public static ReadHandlerPtr angelkds_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr angelkds_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(4+offset);
 	} };
 	
@@ -318,7 +315,7 @@ public class angelkds
 											/* move right in hiscores table */
 	
 	
-	static InputPortPtr input_ports_angelkds = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_angelkds = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( angelkds )
 		PORT_START(); 		/* inport $40 */
 		PORT_DIPNAME( 0xf0, 0xf0, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x70, DEF_STR( "4C_1C") );
@@ -434,13 +431,11 @@ public class angelkds
 	
 	static UINT8 angelkds_sound[4];
 	
-	public static WriteHandlerPtr angelkds_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		angelkds_sound[offset]=data;
 	} };
 	
-	public static ReadHandlerPtr angelkds_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr angelkds_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return angelkds_sound[offset];
 	} };
 	
@@ -507,8 +502,7 @@ public class angelkds
 	
 	*/
 	
-	public static MachineHandlerPtr machine_driver_angelkds = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( angelkds )
 		MDRV_CPU_ADD(Z80, 8000000) /* 8MHz? 6 seems too slow? */
 		MDRV_CPU_MEMORY(readmem_main,writemem_main)
 		MDRV_CPU_PORTS(readport_main,writeport_main)
@@ -534,9 +528,7 @@ public class angelkds
 		MDRV_VIDEO_UPDATE(angelkds)
 	
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*** Rom Loading
 	
@@ -630,9 +622,9 @@ public class angelkds
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_spcpostn  = new DriverInitHandlerPtr() { public void handler()	{ spcpostn_decode(); } };
+	public static DriverInitHandlerPtr init_spcpostn  = new DriverInitHandlerPtr() { public void handler() spcpostn_decode(); }
 	
 	
-	public static GameDriver driver_angelkds	   = new GameDriver("1988"	,"angelkds"	,"angelkds.java"	,rom_angelkds,null	,machine_driver_angelkds	,input_ports_angelkds	,null	,ROT90	,	"Sega / Nasco?", "Angel Kids (Japan)" ) /* Nasco not displayed but 'Exa Planning' is */
-	public static GameDriver driver_spcpostn	   = new GameDriver("1986"	,"spcpostn"	,"angelkds.java"	,rom_spcpostn,null	,machine_driver_angelkds	,input_ports_angelkds	,init_spcpostn	,ROT90	,	"Sega / Nasco", "Space Position (Japan)", GAME_NOT_WORKING ) /* encrypted */
+	GAME( 1988, angelkds, 0, angelkds, angelkds,        0,  ROT90,  "Sega / Nasco?", "Angel Kids (Japan)" ) /* Nasco not displayed but 'Exa Planning' is */
+	GAMEX(1986, spcpostn, 0, angelkds, angelkds, spcpostn,  ROT90,  "Sega / Nasco", "Space Position (Japan)", GAME_NOT_WORKING ) /* encrypted */
 }

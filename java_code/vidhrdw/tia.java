@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -88,8 +88,7 @@ public class tia
 	};
 	
 	
-	public static PaletteInitHandlerPtr palette_init_tia_NTSC  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tia_NTSC  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, j;
 	
 		static const double color[16][2] =
@@ -146,8 +145,7 @@ public class tia
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_tia_PAL  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tia_PAL  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, j;
 	
 		static const double color[16][2] =
@@ -204,8 +202,7 @@ public class tia
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_tia  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tia  = new VideoStartHandlerPtr() { public int handler(){
 		int cx = Machine.drv.screen_width;
 		int cy = Machine.drv.screen_height;
 	
@@ -221,8 +218,7 @@ public class tia
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tia  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap, helper[1 - current_bitmap], 0, 0, 0, 0,
 			cliprect, TRANSPARENCY_NONE, 0);
 	} };
@@ -239,7 +235,7 @@ public class tia
 		int j;
 		int k;
 	
-		if ((REFP & 8) != 0)
+		if (REFP & 8)
 		{
 			GRP = BITSWAP8(GRP, 0, 1, 2, 3, 4, 5, 6, 7);
 		}
@@ -308,7 +304,7 @@ public class tia
 		int i;
 		int j;
 	
-		if (REFPF != 0)
+		if (REFPF)
 		{
 			UINT32 swap = 0;
 	
@@ -316,7 +312,7 @@ public class tia
 			{
 				swap <<= 1;
 	
-				if ((PF & 1) != 0)
+				if (PF & 1)
 				{
 					swap |= 1;
 				}
@@ -350,7 +346,7 @@ public class tia
 	
 		for (i = 0; i < width; i++)
 		{
-			if ((ENAB & 2) != 0)
+			if (ENAB & 2)
 			{
 				p[horz % 160] = COLUPF >> 1;
 			}
@@ -456,7 +452,7 @@ public class tia
 		memset(lineM1, 0xFF, sizeof lineM1);
 		memset(lineBL, 0xFF, sizeof lineBL);
 	
-		if ((VBLANK & 2) != 0)
+		if (VBLANK & 2)
 		{
 			memset(temp, 0, 160);
 		}
@@ -471,7 +467,7 @@ public class tia
 	
 			memset(temp, COLUBK >> 1, 160);
 	
-			if ((CTRLPF & 4) != 0)
+			if (CTRLPF & 4)
 			{
 				drawS1(temp);
 				drawM1(temp);
@@ -538,12 +534,12 @@ public class tia
 			if (collision_check(lineM0, lineM1, x1, x2))
 				CXPPMM |= 0x40;
 	
-			if (y >= helper[current_bitmap].height)
+			if (y >= helper[current_bitmap]->height)
 			{
 				continue;
 			}
 	
-			p = helper[current_bitmap].line[y];
+			p = helper[current_bitmap]->line[y];
 	
 			for (x = x1; x < x2; x++)
 			{
@@ -561,7 +557,7 @@ public class tia
 		int button0 = readinputport(4) & 0x80;
 		int button1 = readinputport(5) & 0x80;
 	
-		if ((VBLANK & 0x40) != 0)
+		if (VBLANK & 0x40)
 		{
 			INPT4 &= button0;
 			INPT5 &= button1;
@@ -574,8 +570,7 @@ public class tia
 	}
 	
 	
-	public static WriteHandlerPtr WSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr WSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int cycles = activecpu_gettotalcycles() - frame_cycles;
 	
 		if (cycles % 76)
@@ -585,15 +580,14 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr VSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 2) != 0)
+	public static WriteHandlerPtr VSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 2)
 		{
 			if (!(VSYNC & 2))
 			{
 				update_bitmap(
-					Machine.drv.screen_width,
-					Machine.drv.screen_height);
+					Machine->drv->screen_width,
+					Machine->drv->screen_height);
 				
 				current_bitmap ^= 1;
 	
@@ -608,9 +602,8 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr VBLANK_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x80) != 0)
+	public static WriteHandlerPtr VBLANK_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x80)
 		{
 			paddle_cycles = activecpu_gettotalcycles();
 		}
@@ -619,8 +612,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr HMOVE_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HMOVE_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int curr_x = current_x();
 		int curr_y = current_y();
 	
@@ -649,9 +641,9 @@ public class tia
 	
 		if (curr_x <= -8)
 		{
-			if (curr_y < helper[current_bitmap].height)
+			if (curr_y < helper[current_bitmap]->height)
 			{
-				memset(helper[current_bitmap].line[curr_y], 0, 16);
+				memset(helper[current_bitmap]->line[curr_y], 0, 16);
 			}
 	
 			prev_x = 8;
@@ -659,14 +651,12 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RSYNC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this address is used in chip testing */
 	} };
 	
 	
-	public static WriteHandlerPtr HMCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HMCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		HMP0 = 0;
 		HMP1 = 0;
 		HMM0 = 0;
@@ -675,8 +665,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr CXCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr CXCLR_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		CXM0P = 0;
 		CXM1P = 0;
 		CXP0FB = 0;
@@ -688,8 +677,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RESP0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horzP0 = current_x();
 	
 		if (horzP0 < 0)
@@ -703,8 +691,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RESP1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horzP1 = current_x();
 	
 		if (horzP1 < 0)
@@ -718,8 +705,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESM0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RESM0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horzM0 = current_x();
 	
 		if (horzM0 < 0)
@@ -733,8 +719,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESM1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RESM1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horzM1 = current_x();
 	
 		if (horzM1 < 0)
@@ -748,8 +733,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESBL_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RESBL_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		horzBL = current_x();
 	
 		if (horzBL < 0)
@@ -763,9 +747,8 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESMP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((RESMP0 & 2) != 0)
+	public static WriteHandlerPtr RESMP0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (RESMP0 & 2)
 		{
 			horzM0 = (horzP0 + 4 * nusiz[NUSIZ0 & 7][1]) % 160;
 		}
@@ -774,9 +757,8 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr RESMP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((RESMP1 & 2) != 0)
+	public static WriteHandlerPtr RESMP1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (RESMP1 & 2)
 		{
 			horzM1 = (horzP1 + 4 * nusiz[NUSIZ1 & 7][1]) % 160;
 		}
@@ -785,16 +767,14 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr GRP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr GRP0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		prevGRP1 = GRP1;
 	
 		GRP0 = data;
 	} };
 	
 	
-	public static WriteHandlerPtr GRP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr GRP1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		prevGRP0 = GRP0;
 	
 		GRP1 = data;
@@ -803,16 +783,14 @@ public class tia
 	} };
 	
 	
-	public static ReadHandlerPtr INPT_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr INPT_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT32 elapsed = activecpu_gettotalcycles() - paddle_cycles;
 	
 		return elapsed > 76 * readinputport(offset & 3) ? 0x80 : 0x00;
 	} };
 	
 	
-	public static ReadHandlerPtr tia_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tia_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 data = 0;
 	
 		if (!(offset & 0x8))
@@ -856,8 +834,7 @@ public class tia
 	} };
 	
 	
-	public static WriteHandlerPtr tia_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tia_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const int delay[0x40] =
 		{
 			 0,	// VSYNC

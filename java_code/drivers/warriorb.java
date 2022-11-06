@@ -112,7 +112,7 @@ Colscroll effects?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -133,8 +133,7 @@ public class warriorb
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -157,8 +156,7 @@ public class warriorb
 	
 	static int ninjaw_pandata[4];		/**** sound pan control ****/
 	
-	public static WriteHandlerPtr warriorb_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr warriorb_pancontrol = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = offset&3;
 		ninjaw_pandata[offset] = (data<<1) + data;   /* original volume*3 */
 	
@@ -338,7 +336,7 @@ public class warriorb
 		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_BUTTON2 | IPF_PLAYER2 );
 	
 	
-	static InputPortPtr input_ports_darius2d = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darius2d = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darius2d )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );  // used, but manual in japanese
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -383,7 +381,7 @@ public class warriorb
 		WARRIORB_PLAYERS_INPUT_2( IPT_BUTTON3 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_warriorb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warriorb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warriorb )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, "Vitality Recovery" );//after finishing a level
 		PORT_DIPSETTING(    0x02, "Less" );
@@ -518,8 +516,7 @@ public class warriorb
 	                       MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_darius2d = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darius2d )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? (Might well be 16!) */
@@ -550,13 +547,10 @@ public class warriorb
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ADD(CUSTOM, subwoofer_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_warriorb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( warriorb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ? */
@@ -586,9 +580,7 @@ public class warriorb
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -726,14 +718,12 @@ public class warriorb
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_warriorb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_warriorb  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_taito_dualscreen  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_taito_dualscreen  = new MachineInitHandlerPtr() { public void handler(){
 		/**** mixer control enable ****/
 		mixer_sound_enable_global_w( 1 );	/* mixer enabled */
 	} };
@@ -741,7 +731,7 @@ public class warriorb
 	
 	/* Working Games */
 	
-	public static GameDriver driver_darius2d	   = new GameDriver("1989"	,"darius2d"	,"warriorb.java"	,rom_darius2d,driver_darius2	,machine_driver_darius2d	,input_ports_darius2d	,init_warriorb	,ROT0	,	"Taito Corporation", "Darius II (dual screen) (Japan)" )
-	public static GameDriver driver_drius2do	   = new GameDriver("1989"	,"drius2do"	,"warriorb.java"	,rom_drius2do,driver_darius2	,machine_driver_darius2d	,input_ports_darius2d	,init_warriorb	,ROT0	,	"Taito Corporation", "Darius II (dual screen) (Japan old version)" )
-	public static GameDriver driver_warriorb	   = new GameDriver("1991"	,"warriorb"	,"warriorb.java"	,rom_warriorb,null	,machine_driver_warriorb	,input_ports_warriorb	,init_warriorb	,ROT0	,	"Taito Corporation", "Warrior Blade - Rastan Saga Episode III (Japan)" )
+	GAME( 1989, darius2d, darius2,  darius2d, darius2d, warriorb, ROT0, "Taito Corporation", "Darius II (dual screen) (Japan)" )
+	GAME( 1989, drius2do, darius2,  darius2d, darius2d, warriorb, ROT0, "Taito Corporation", "Darius II (dual screen) (Japan old version)" )
+	GAME( 1991, warriorb, 0,        warriorb, warriorb, warriorb, ROT0, "Taito Corporation", "Warrior Blade - Rastan Saga Episode III (Japan)" )
 }

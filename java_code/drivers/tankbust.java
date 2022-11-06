@@ -18,7 +18,7 @@ To do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,20 +39,17 @@ public class tankbust
 		latch = data;
 	}
 	
-	public static WriteHandlerPtr tankbust_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW,data,soundlatch_callback);
 	} };
 	
-	public static ReadHandlerPtr tankbust_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbust_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return latch;
 	} };
 	
 	//port B of ay8910#0
 	static unsigned int timer1=0;
-	public static ReadHandlerPtr tankbust_soundtimer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbust_soundtimer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
 		timer1++;
@@ -71,8 +68,7 @@ public class tankbust
 	
 	static int e0xx_data[8] = { 0,0,0,0, 0,0,0,0 };
 	
-	public static WriteHandlerPtr tankbust_e0xx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_e0xx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		e0xx_data[offset] = data;
 	
 	#if 0
@@ -114,16 +110,14 @@ public class tankbust
 		}
 	} };
 	
-	public static ReadHandlerPtr debug_output_area_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr debug_output_area_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return e0xx_data[offset];
 	} };
 	
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_tankbust  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tankbust  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 128; i++)
@@ -173,15 +167,13 @@ public class tankbust
 	} };
 	
 	#if 0
-	public static ReadHandlerPtr read_from_unmapped_memory  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr read_from_unmapped_memory  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	#endif
 	
 	static int variable_data=0x11;
-	public static ReadHandlerPtr some_changing_input  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr some_changing_input  = new ReadHandlerPtr() { public int handler(int offset){
 		variable_data = (variable_data+8) & 0xff;
 		return variable_data;
 	} };
@@ -272,7 +264,7 @@ public class tankbust
 	
 	
 	
-	static InputPortPtr input_ports_tankbust = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tankbust = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tankbust )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -376,8 +368,7 @@ public class tankbust
 		new WriteHandlerPtr[] { 0, 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_tankbust = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tankbust )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)		/* 4 MHz ? */
@@ -411,9 +402,7 @@ public class tankbust
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -463,5 +452,5 @@ public class tankbust
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_tankbust	   = new GameDriver("1985"	,"tankbust"	,"tankbust.java"	,rom_tankbust,null	,machine_driver_tankbust	,input_ports_tankbust	,null	,ROT90	,	"Valadon Automation", "Tank Busters" )
+	GAME(1985, tankbust,	 0, 	  tankbust, tankbust,  0, ROT90, "Valadon Automation", "Tank Busters" )
 }

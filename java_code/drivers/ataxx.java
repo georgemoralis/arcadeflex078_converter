@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -140,7 +140,7 @@ public class ataxx
 	#define IPT_EEPROM_DATA	IPT_SPECIAL
 	
 	
-	static InputPortPtr input_ports_ataxx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ataxx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ataxx )
 		PORT_START(); 		/* 0xF6 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -171,7 +171,7 @@ public class ataxx
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wsf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wsf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wsf )
 		PORT_START(); 		/* 0xF6 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -225,7 +225,7 @@ public class ataxx
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_indyheat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_indyheat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( indyheat )
 		PORT_START(); 		/* 0xF6 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN1, 1 );
@@ -271,7 +271,7 @@ public class ataxx
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_brutforc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brutforc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brutforc )
 		PORT_START(); 		/* 0xF6 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
@@ -374,8 +374,7 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_ataxx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ataxx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("master", Z80, 6000000)
@@ -410,22 +409,17 @@ public class ataxx
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, i186_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wsf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wsf )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ataxx)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -740,8 +734,7 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_ataxx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ataxx  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 ataxx_eeprom_data[] =
 		{
@@ -767,8 +760,7 @@ public class ataxx
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_ataxxj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ataxxj  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 ataxxj_eeprom_data[] =
 		{
@@ -793,8 +785,7 @@ public class ataxx
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_wsf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wsf  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 wsf_eeprom_data[] =
 		{
@@ -821,8 +812,7 @@ public class ataxx
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_indyheat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_indyheat  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 indyheat_eeprom_data[] =
 		{
@@ -854,8 +844,7 @@ public class ataxx
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_brutforc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_brutforc  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 brutforc_eeprom_data[] =
 		{
@@ -882,8 +871,7 @@ public class ataxx
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_asylum  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_asylum  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the default EEPROM state */
 		static const UINT16 asylum_eeprom_data[] =
 		{
@@ -917,11 +905,11 @@ public class ataxx
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_ataxx	   = new GameDriver("1990"	,"ataxx"	,"ataxx.java"	,rom_ataxx,null	,machine_driver_ataxx	,input_ports_ataxx	,init_ataxx	,ROT0	,	"Leland Corp.", "Ataxx (set 1)" )
-	public static GameDriver driver_ataxxa	   = new GameDriver("1990"	,"ataxxa"	,"ataxx.java"	,rom_ataxxa,driver_ataxx	,machine_driver_ataxx	,input_ports_ataxx	,init_ataxx	,ROT0	,	"Leland Corp.", "Ataxx (set 2)" )
-	public static GameDriver driver_ataxxj	   = new GameDriver("1990"	,"ataxxj"	,"ataxx.java"	,rom_ataxxj,driver_ataxx	,machine_driver_ataxx	,input_ports_ataxx	,init_ataxxj	,ROT0	,	"Leland Corp.", "Ataxx (Japan)" )
-	public static GameDriver driver_wsf	   = new GameDriver("1990"	,"wsf"	,"ataxx.java"	,rom_wsf,null	,machine_driver_wsf	,input_ports_wsf	,init_wsf	,ROT0	,	"Leland Corp.", "World Soccer Finals" )
-	public static GameDriver driver_indyheat	   = new GameDriver("1991"	,"indyheat"	,"ataxx.java"	,rom_indyheat,null	,machine_driver_wsf	,input_ports_indyheat	,init_indyheat	,ROT0	,	"Leland Corp.", "Danny Sullivan's Indy Heat" )
-	public static GameDriver driver_brutforc	   = new GameDriver("1991"	,"brutforc"	,"ataxx.java"	,rom_brutforc,null	,machine_driver_wsf	,input_ports_brutforc	,init_brutforc	,ROT0	,	"Leland Corp.", "Brute Force" )
-	public static GameDriver driver_asylum	   = new GameDriver("1991"	,"asylum"	,"ataxx.java"	,rom_asylum,null	,machine_driver_wsf	,input_ports_brutforc	,init_asylum	,ROT270	,	"Leland Corp.", "Asylum (prototype)" )
+	GAME( 1990, ataxx,    0,      ataxx,   ataxx,    ataxx,    ROT0,   "Leland Corp.", "Ataxx (set 1)" )
+	GAME( 1990, ataxxa,   ataxx,  ataxx,   ataxx,    ataxx,    ROT0,   "Leland Corp.", "Ataxx (set 2)" )
+	GAME( 1990, ataxxj,   ataxx,  ataxx,   ataxx,    ataxxj,   ROT0,   "Leland Corp.", "Ataxx (Japan)" )
+	GAME( 1990, wsf,      0,      wsf,     wsf,      wsf,      ROT0,   "Leland Corp.", "World Soccer Finals" )
+	GAME( 1991, indyheat, 0,      wsf,     indyheat, indyheat, ROT0,   "Leland Corp.", "Danny Sullivan's Indy Heat" )
+	GAME( 1991, brutforc, 0,      wsf,     brutforc, brutforc, ROT0,   "Leland Corp.", "Brute Force" )
+	GAME( 1991, asylum,   0,      wsf,     brutforc, asylum,   ROT270, "Leland Corp.", "Asylum (prototype)" )
 }

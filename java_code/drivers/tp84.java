@@ -83,7 +83,7 @@ C004      76489 #4 trigger
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -98,20 +98,17 @@ public class tp84
 	
 	static UINT8 *sharedram;
 	
-	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
 	
 	
-	public static ReadHandlerPtr tp84_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tp84_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* main xtal 14.318MHz, divided by 4 to get the CPU clock, further */
 		/* divided by 2048 to get this timer */
 		/* (divide by (2048/2), and not 1024, because the CPU cycle counter is */
@@ -119,35 +116,33 @@ public class tp84
 		return (activecpu_gettotalcycles() / (2048/2)) & 0x0f;
 	} };
 	
-	public static WriteHandlerPtr tp84_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int C;
 	
 		/* 76489 #0 */
 		C = 0;
-		if ((offset & 0x008) != 0) C +=  47000;	/*  47000pF = 0.047uF */
-		if ((offset & 0x010) != 0) C += 470000;	/* 470000pF = 0.47uF */
+		if (offset & 0x008) C +=  47000;	/*  47000pF = 0.047uF */
+		if (offset & 0x010) C += 470000;	/* 470000pF = 0.47uF */
 		set_RC_filter(0,1000,2200,1000,C);
 	
 		/* 76489 #1 (optional) */
 		C = 0;
-		if ((offset & 0x020) != 0) C +=  47000;	/*  47000pF = 0.047uF */
-		if ((offset & 0x040) != 0) C += 470000;	/* 470000pF = 0.47uF */
+		if (offset & 0x020) C +=  47000;	/*  47000pF = 0.047uF */
+		if (offset & 0x040) C += 470000;	/* 470000pF = 0.47uF */
 	//	set_RC_filter(1,1000,2200,1000,C);
 	
 		/* 76489 #2 */
 		C = 0;
-		if ((offset & 0x080) != 0) C += 470000;	/* 470000pF = 0.47uF */
+		if (offset & 0x080) C += 470000;	/* 470000pF = 0.47uF */
 		set_RC_filter(1,1000,2200,1000,C);
 	
 		/* 76489 #3 */
 		C = 0;
-		if ((offset & 0x100) != 0) C += 470000;	/* 470000pF = 0.47uF */
+		if (offset & 0x100) C += 470000;	/* 470000pF = 0.47uF */
 		set_RC_filter(2,1000,2200,1000,C);
 	} };
 	
-	public static WriteHandlerPtr tp84_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	} };
 	
@@ -236,7 +231,7 @@ public class tp84
 	
 	
 	
-	static InputPortPtr input_ports_tp84 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tp84 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tp84 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -327,7 +322,7 @@ public class tp84
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tp84a = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tp84a = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tp84a )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -460,8 +455,7 @@ public class tp84
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tp84 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tp84 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)	/* ??? */
@@ -495,9 +489,7 @@ public class tp84
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -571,6 +563,6 @@ public class tp84
 	
 	
 	
-	public static GameDriver driver_tp84	   = new GameDriver("1984"	,"tp84"	,"tp84.java"	,rom_tp84,null	,machine_driver_tp84	,input_ports_tp84	,null	,ROT90	,	"Konami", "Time Pilot '84 (set 1)" )
-	public static GameDriver driver_tp84a	   = new GameDriver("1984"	,"tp84a"	,"tp84.java"	,rom_tp84a,driver_tp84	,machine_driver_tp84	,input_ports_tp84a	,null	,ROT90	,	"Konami", "Time Pilot '84 (set 2)" )
+	GAME( 1984, tp84,  0,    tp84, tp84, 0, ROT90, "Konami", "Time Pilot '84 (set 1)" )
+	GAME( 1984, tp84a, tp84, tp84, tp84a,0, ROT90, "Konami", "Time Pilot '84 (set 2)" )
 }

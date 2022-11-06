@@ -86,7 +86,7 @@ codes for the ones we have (could just be protection tho)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -145,7 +145,7 @@ public class pgm
 		static struct tm *today;
 	
 		// initialize the time, otherwise it crashes
-		if (ltime == 0)
+		if( !ltime )
 		{
 			time(&ltime);
 			today = localtime(&ltime);
@@ -166,19 +166,19 @@ public class pgm
 					break;
 	
 				case 0:
-					CalVal=bcd(today.tm_wday); //??
+					CalVal=bcd(today->tm_wday); //??
 					break;
 	
 				case 2:  //Hours
-					CalVal=bcd(today.tm_hour);
+					CalVal=bcd(today->tm_hour);
 					break;
 	
 				case 4:  //Seconds
-					CalVal=bcd(today.tm_sec);
+					CalVal=bcd(today->tm_sec);
 					break;
 	
 				case 6:  //Month
-					CalVal=bcd(today.tm_mon + 1); //?? not bcd in MVS
+					CalVal=bcd(today->tm_mon + 1); //?? not bcd in MVS
 					break;
 	
 				case 8:
@@ -186,15 +186,15 @@ public class pgm
 					break;
 	
 				case 0xa: //Day
-					CalVal=bcd(today.tm_mday);
+					CalVal=bcd(today->tm_mday);
 					break;
 	
 				case 0xc: //Minute
-					CalVal=bcd(today.tm_min);
+					CalVal=bcd(today->tm_min);
 					break;
 	
 				case 0xe:  //Year
-					CalVal=bcd(today.tm_year % 100);
+					CalVal=bcd(today->tm_year % 100);
 					break;
 	
 				case 0xf:  //Load Date
@@ -264,7 +264,7 @@ public class pgm
 	
 	/* enough for 4 players, the basic dips mapped are listed in the test mode */
 	
-	static InputPortPtr input_ports_pgm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pgm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pgm )
 		PORT_START(); 	/* DSW */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START1                       );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -353,7 +353,7 @@ public class pgm
 		PORT_DIPSETTING(      0x0003, "China" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sango = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sango = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sango )
 		PORT_START(); 	/* DSW */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START1                       );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -485,15 +485,14 @@ public class pgm
 	
 	/*** Machine Driver **********************************************************/
 	
-	public static InterruptHandlerPtr pgm_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr pgm_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops() == 0 )
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 4, HOLD_LINE);
-	} };
+	}
 	
-	public static MachineHandlerPtr machine_driver_pgm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pgm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 20000000) /* 20 mhz! verified on real board */
@@ -515,9 +514,7 @@ public class pgm
 		MDRV_VIDEO_START(pgm)
 		MDRV_VIDEO_EOF(pgm)
 		MDRV_VIDEO_UPDATE(pgm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*** Init Stuff **************************************************************/
 	
@@ -541,7 +538,7 @@ public class pgm
 			pix =  ((src[3+5*cnt] >> 1)& 0x1f );							  dst[5+8*cnt]=pix;
 			pix =  ((src[3+5*cnt] >> 6)& 0x03) | ((src[4+5*cnt] << 2) & 0x1c);dst[6+8*cnt]=pix;
 			pix =  ((src[4+5*cnt] >> 3)& 0x1f );							  dst[7+8*cnt]=pix;
-		}
+		} };
 	}
 	
 	/* This function expands the sprite colour data (in the A Roms) from 3 pixels
@@ -594,8 +591,7 @@ public class pgm
 		return pgm_mainram[0x00a70e/2];
 	}
 	
-	public static DriverInitHandlerPtr init_orlegend  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_orlegend  = new DriverInitHandlerPtr() { public void handler(){
 		pgm_basic_init();
 	
 		install_mem_read16_handler (0, 0xC0400e, 0xC0400f, pgm_asic3_r);
@@ -604,8 +600,7 @@ public class pgm
 		install_mem_read16_handler (0, 0x80a70e, 0x80a70f, orlegend_speedup);
 	} };
 	
-	public static DriverInitHandlerPtr init_dragwld2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dragwld2  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *mem16 = (data16_t *)memory_region(REGION_CPU1);
 	
 		pgm_basic_init();
@@ -636,8 +631,7 @@ public class pgm
 	
 	} };
 	
-	public static DriverInitHandlerPtr init_kov  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kov  = new DriverInitHandlerPtr() { public void handler(){
 		pgm_basic_init();
 	
 		install_mem_read16_handler(0, 0x500000, 0x500003, ASIC28_r16);
@@ -650,8 +644,7 @@ public class pgm
 	 	pgm_kov_decrypt();
 	} };
 	
-	public static DriverInitHandlerPtr init_kovsh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kovsh  = new DriverInitHandlerPtr() { public void handler(){
 		pgm_basic_init();
 	
 		install_mem_read16_handler(0, 0x500000, 0x500003, ASIC28_r16);
@@ -664,8 +657,7 @@ public class pgm
 	 	pgm_kovsh_decrypt();
 	} };
 	
-	public static DriverInitHandlerPtr init_djlzz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_djlzz  = new DriverInitHandlerPtr() { public void handler(){
 		pgm_basic_init();
 	
 		install_mem_read16_handler(0, 0x500000, 0x500003, ASIC28_r16);
@@ -949,18 +941,18 @@ public class pgm
 	
 	/*** GAME ********************************************************************/
 	
-	public static GameDriver driver_pgm	   = new GameDriver("1997"	,"pgm"	,"pgm.java"	,rom_pgm,null	,machine_driver_pgm	,input_ports_pgm	,null	,ROT0	,	"IGS", "PGM (Polygame Master) System BIOS", NOT_A_DRIVER )
+	GAMEX( 1997, pgm,      0,          pgm, pgm,   0,          ROT0, "IGS", "PGM (Polygame Master) System BIOS", NOT_A_DRIVER )
 	
-	public static GameDriver driver_orlegend	   = new GameDriver("1997"	,"orlegend"	,"pgm.java"	,rom_orlegend,driver_pgm	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 126)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	public static GameDriver driver_orlegnde	   = new GameDriver("1997"	,"orlegnde"	,"pgm.java"	,rom_orlegnde,driver_orlegend	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	public static GameDriver driver_orlegndc	   = new GameDriver("1997"	,"orlegndc"	,"pgm.java"	,rom_orlegndc,driver_orlegend	,machine_driver_pgm	,input_ports_pgm	,init_orlegend	,ROT0	,	"IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112, Chinese Board)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
-	public static GameDriver driver_dragwld2	   = new GameDriver("1997"	,"dragwld2"	,"pgm.java"	,rom_dragwld2,driver_pgm	,machine_driver_pgm	,input_ports_pgm	,init_dragwld2	,ROT0	,	"IGS", "Zhong Guo Long II (ver. 100C, China)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
-	public static GameDriver driver_kov	   = new GameDriver("1999"	,"kov"	,"pgm.java"	,rom_kov,driver_pgm	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour / Sangoku Senki (ver. 117)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
-	public static GameDriver driver_kov115	   = new GameDriver("1999"	,"kov115"	,"pgm.java"	,rom_kov115,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour / Sangoku Senki (ver. 115)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
-	public static GameDriver driver_kovplus	   = new GameDriver("1999"	,"kovplus"	,"pgm.java"	,rom_kovplus,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kov	,ROT0	,	"IGS", "Knights of Valour Plus / Sangoku Senki Plus (ver. 119)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1997, orlegend, pgm,        pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 126)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	GAMEX( 1997, orlegnde, orlegend,   pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	GAMEX( 1997, orlegndc, orlegend,   pgm, pgm,   orlegend,   ROT0, "IGS", "Oriental Legend / Xi Yo Gi Shi Re Zuang (ver. 112, Chinese Board)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND  )
+	GAMEX( 1997, dragwld2, pgm,        pgm, pgm,   dragwld2,   ROT0, "IGS", "Zhong Guo Long II (ver. 100C, China)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1999, kov,      pgm,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour / Sangoku Senki (ver. 117)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
+	GAMEX( 1999, kov115,   kov,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour / Sangoku Senki (ver. 115)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND ) /* ver # provided by protection? */
+	GAMEX( 1999, kovplus,  kov,        pgm, sango, kov, 	   ROT0, "IGS", "Knights of Valour Plus / Sangoku Senki Plus (ver. 119)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 	
 	/* not working */
 	
-	public static GameDriver driver_photoy2k	   = new GameDriver("1999"	,"photoy2k"	,"pgm.java"	,rom_photoy2k,driver_pgm	,machine_driver_pgm	,input_ports_sango	,init_djlzz	,ROT0	,	"IGS", "Photo Y2K", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_kovsh	   = new GameDriver("1999"	,"kovsh"	,"pgm.java"	,rom_kovsh,driver_kov	,machine_driver_pgm	,input_ports_sango	,init_kovsh	,ROT0	,	"IGS", "Knights of Valour Superheroes / Sangoku Senki Superheroes (ver. 322)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1999, photoy2k, pgm,        pgm, sango, djlzz, 	   ROT0, "IGS", "Photo Y2K", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1999, kovsh,    kov,        pgm, sango, kovsh,	   ROT0, "IGS", "Knights of Valour Superheroes / Sangoku Senki Superheroes (ver. 322)", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

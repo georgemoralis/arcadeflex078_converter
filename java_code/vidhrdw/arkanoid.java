@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class arkanoid
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr arkanoid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -28,8 +27,7 @@ public class arkanoid
 		}
 	} };
 	
-	public static WriteHandlerPtr arkanoid_d008_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arkanoid_d008_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank;
 	
 		/* bits 0 and 1 flip X and Y, I don't know which is which */
@@ -80,12 +78,11 @@ public class arkanoid
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_arkanoid  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_arkanoid  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -101,23 +98,23 @@ public class arkanoid
 	
 			sx = spriteram.read(offs);
 			sy = 248 - spriteram.read(offs + 1);
-			if (flip_screen_x != 0) sx = 248 - sx;
-			if (flip_screen_y != 0) sy = 248 - sy;
+			if (flip_screen_x) sx = 248 - sx;
+			if (flip_screen_y) sy = 248 - sy;
 	
 			code = spriteram.read(offs + 3)+ ((spriteram.read(offs + 2)& 0x03) << 8) + 1024 * gfxbank;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					2 * code,
 					((spriteram.read(offs + 2)& 0xf8) >> 3) + 32 * palettebank,
 					flip_screen_x,flip_screen_y,
 					sx,sy + (flip_screen_y ? 8 : -8),
-					Machine.visible_area,TRANSPARENCY_PEN,0);
-			drawgfx(bitmap,Machine.gfx[0],
+					Machine->visible_area,TRANSPARENCY_PEN,0);
+			drawgfx(bitmap,Machine->gfx[0],
 					2 * code + 1,
 					((spriteram.read(offs + 2)& 0xf8) >> 3) + 32 * palettebank,
 					flip_screen_x,flip_screen_y,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -128,8 +125,7 @@ public class arkanoid
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_arkanoid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_arkanoid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		arkanoid_draw_sprites(bitmap);
 	} };

@@ -42,10 +42,10 @@ A780-A7FF  |R/W| D D D D D D D D | 2k sprite RAM (PIC)
 B000-BFFF  |R/W| D D D D D D D D | 4k playfeild RAM ( ATTRIB)
 C000-CFFF  |R/W| D D D D D D D D | 4k playfeild RAM ( PIC )
 -----------+---+-----------------+-------------------------
-D000-D00F  | W | D D D D D D D D | A0.D8:background Y scroll position
-D010-D01F  | W | D D D D D D D D | A0.D8:font Y scroll position ??
-D020-D02F  | W | D D D D D D D D | A0.D8:background X scroll position ??
-D030-D03F  | W | D D D D D D D D | A0.D8:font X scroll position ?
+D000-D00F  | W | D D D D D D D D | A0->D8:background Y scroll position
+D010-D01F  | W | D D D D D D D D | A0->D8:font Y scroll position ??
+D020-D02F  | W | D D D D D D D D | A0->D8:background X scroll position ??
+D030-D03F  | W | D D D D D D D D | A0->D8:font X scroll position ?
 D070-D07F  | W |               D | display flip mode ?
 -----------+---+-----------------+-------------------------
 F000       | W | D D D D D D D D | planet map position low ?
@@ -199,7 +199,7 @@ S-RAMS in schematic
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -357,7 +357,7 @@ public class xevious
 	
 	
 	
-	static InputPortPtr input_ports_xevious = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xevious = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xevious )
 		PORT_START(); 	/* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_DIPNAME( 0x02, 0x02, "Flags Award Bonus Life" );
@@ -445,7 +445,7 @@ public class xevious
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as xevious but different "Coin B" Dip Switch and "Copyright" Dip Switch instead of "Freeze?" */
-	static InputPortPtr input_ports_xeviousa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xeviousa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xeviousa )
 		PORT_START(); 	/* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_DIPNAME( 0x02, 0x02, "Flags Award Bonus Life" );
@@ -534,7 +534,7 @@ public class xevious
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as xevious but "Copyright" Dip Switch instead of "Freeze?" */
-	static InputPortPtr input_ports_xeviousb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xeviousb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xeviousb )
 		PORT_START(); 	/* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_DIPNAME( 0x02, 0x02, "Flags Award Bonus Life" );
@@ -622,7 +622,7 @@ public class xevious
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battles = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battles = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battles )
 		PORT_START(); 	/* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_DIPNAME( 0x02, 0x02, "Flags Award Bonus Life" );
@@ -711,7 +711,7 @@ public class xevious
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as xevious but different "Coin B" Dip Switch and inverted "Freeze?" Dip Switch */
-	static InputPortPtr input_ports_sxevious = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sxevious = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sxevious )
 		PORT_START(); 	/* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_DIPNAME( 0x02, 0x02, "Flags Award Bonus Life" );
@@ -946,8 +946,7 @@ public class xevious
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_xevious = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xevious )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.125 MHz (?) */
@@ -983,13 +982,10 @@ public class xevious
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_xevios = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xevios )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.125 MHz (?) */
@@ -1029,13 +1025,10 @@ public class xevious
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, xevios_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_battles = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battles )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)
@@ -1076,9 +1069,7 @@ public class xevious
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, battles_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1371,8 +1362,7 @@ public class xevious
 	
 	
 	
-	public static DriverInitHandlerPtr init_xevios  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xevios  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 	
 	
@@ -1395,11 +1385,11 @@ public class xevious
 	
 	
 	
-	public static GameDriver driver_xevious	   = new GameDriver("1982"	,"xevious"	,"xevious.java"	,rom_xevious,null	,machine_driver_xevious	,input_ports_xevious	,null	,ROT90	,	"Namco", "Xevious (Namco)" )
-	public static GameDriver driver_xeviousa	   = new GameDriver("1982"	,"xeviousa"	,"xevious.java"	,rom_xeviousa,driver_xevious	,machine_driver_xevious	,input_ports_xeviousa	,null	,ROT90	,	"Namco (Atari license)", "Xevious (Atari set 1)" )
-	public static GameDriver driver_xeviousb	   = new GameDriver("1982"	,"xeviousb"	,"xevious.java"	,rom_xeviousb,driver_xevious	,machine_driver_xevious	,input_ports_xeviousb	,null	,ROT90	,	"Namco (Atari license)", "Xevious (Atari set 2)" )
-	public static GameDriver driver_xevios	   = new GameDriver("1982"	,"xevios"	,"xevious.java"	,rom_xevios,driver_xevious	,machine_driver_xevios	,input_ports_xevious	,init_xevios	,ROT90	,	"bootleg", "Xevios" )
-	public static GameDriver driver_battles	   = new GameDriver("1982"	,"battles"	,"xevious.java"	,rom_battles,driver_xevious	,machine_driver_battles	,input_ports_battles	,null	,ROT90	,	"bootleg", "Battles" )
-	public static GameDriver driver_sxevious	   = new GameDriver("1984"	,"sxevious"	,"xevious.java"	,rom_sxevious,driver_xevious	,machine_driver_xevious	,input_ports_sxevious	,null	,ROT90	,	"Namco", "Super Xevious" )
+	GAME( 1982, xevious,  0,       xevious, xevious,  0,      ROT90, "Namco", "Xevious (Namco)" )
+	GAME( 1982, xeviousa, xevious, xevious, xeviousa, 0,      ROT90, "Namco (Atari license)", "Xevious (Atari set 1)" )
+	GAME( 1982, xeviousb, xevious, xevious, xeviousb, 0,      ROT90, "Namco (Atari license)", "Xevious (Atari set 2)" )
+	GAME( 1982, xevios,   xevious, xevios,  xevious,  xevios, ROT90, "bootleg", "Xevios" )
+	GAME( 1982, battles,  xevious, battles, battles,  0,      ROT90, "bootleg", "Battles" )
+	GAME( 1984, sxevious, xevious, xevious, sxevious, 0,      ROT90, "Namco", "Super Xevious" )
 	
 }

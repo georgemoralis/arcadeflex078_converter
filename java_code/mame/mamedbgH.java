@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -111,7 +111,7 @@ public class mamedbgH
 	 * if MAME_DEBUG is not specified, so a CPU core can simply add
 	 * CALL_MAME_DEBUG; before executing an instruction
 	 ***************************************************************************/
-	#define CALL_MAME_DEBUG if (mame_debug != 0) MAME_Debug()
+	#define CALL_MAME_DEBUG if( mame_debug ) MAME_Debug()
 	
 	#ifndef DECL_SPEC
 	#define DECL_SPEC

@@ -58,7 +58,7 @@ Any comments/updates/bug reports to:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i86;
 
@@ -776,7 +776,7 @@ public class i86dasm
 	static char *addr_to_hex(UINT32 addr, int splitup) {
 	  static char buffer[11];
 	
-	  if (splitup != 0) {
+	  if (splitup) {
 	    if (fp_segment(addr)==0 || fp_offset(addr)==0xffff) /* 'coz of wraparound */
 	      sprintf(buffer, "%04X", (unsigned)fp_offset(addr) );
 	    else
@@ -790,11 +790,11 @@ public class i86dasm
 	    else
 	#endif
 	
-			if (addr20bit != 0) {
+			if (addr20bit) {
 				sprintf(buffer, "%05X", addr&0xfffff );
-			} else if (addr24bit != 0) {
+			} else if (addr24bit) {
 				sprintf(buffer, "%06X", addr&0xffffff );
-			} else if (addr32bit != 0) {
+			} else if (addr32bit) {
 				sprintf(buffer, "%08X", addr );
 			}
 	  }
@@ -878,7 +878,7 @@ public class i86dasm
 	
 	  switch (subtype) {
 	  case 'q':
-	       if (wordop != 0) {
+	       if (wordop) {
 	         if (opsize==16) {
 	           n = 2;
 	         } else {
@@ -926,7 +926,7 @@ public class i86dasm
 	    buff[i] = getbyte();
 	  for (; i<extend; i++)
 	    buff[i] = (buff[i-1] & 0x80) ? 0xff : 0;
-	  if (s != 0) {
+	  if (s) {
 	    uprintf("%02X%02X:", (unsigned)buff[n-1], (unsigned)buff[n-2]);
 	    n -= 2;
 	  }
@@ -969,7 +969,7 @@ public class i86dasm
 	         signchar = '-';
 	       } else
 	         signchar = '+';
-	       if (sign != 0)
+	       if (sign)
 			 uprintf("%c%02lX", (char)signchar, delta & 0xFFL);
 	       else
 			 uprintf("%02lX", delta & 0xFFL);
@@ -981,7 +981,7 @@ public class i86dasm
 	         delta = -delta;
 	       } else
 	         signchar = '+';
-	       if (sign != 0)
+	       if (sign)
 			 uprintf("%c%04lX", (char)signchar, delta & 0xFFFFL);
 	       else
 			 uprintf("%04lX", delta & 0xFFFFL);
@@ -993,7 +993,7 @@ public class i86dasm
 	         signchar = '-';
 	       } else
 	         signchar = '+';
-	       if (sign != 0)
+	       if (sign)
 			 uprintf("%c%08lX", (char)signchar, delta & 0xFFFFFFFFL);
 	       else
 			 uprintf("%08lX", delta & 0xFFFFFFFFL);
@@ -1083,8 +1083,8 @@ public class i86dasm
 	    reg_name(rm, subtype);
 	    return;
 	  }
-	  if (must_do_size != 0) {
-	    if (wordop != 0) {
+	  if (must_do_size) {
+	    if (wordop) {
 	      if (addrsize==32 || opsize==32) {       /* then must specify size */
 			ua_str("dword ");
 	      } else {
@@ -1352,7 +1352,7 @@ public class i86dasm
 	            ua_str((*opmap1)[c]);
 	            break;
 	       case ':':
-	            if (prefix != 0)
+	            if (prefix)
 	              uprintf("%cs:", prefix);
 	            break;
 	       case ' ':
@@ -1455,7 +1455,7 @@ public class i86dasm
 		opmap1=&op86map1;
 		ua_str(op86map1[c]);
 	
-		if (invalid_opcode != 0) {
+		if (invalid_opcode) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */
@@ -1494,7 +1494,7 @@ public class i86dasm
 		opmap1=&op186map1;
 		ua_str(op186map1[c]);
 	
-	  	if (invalid_opcode != 0) {
+	  	if (invalid_opcode) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */
@@ -1533,7 +1533,7 @@ public class i86dasm
 		opmap1=&opv30map1;
 		ua_str(opv30map1[c]);
 	
-	  	if (invalid_opcode != 0) {
+	  	if (invalid_opcode) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */
@@ -1573,7 +1573,7 @@ public class i86dasm
 		opmap1=&op286map1;
 		ua_str(op286map1[c]);
 	
-	  	if (invalid_opcode != 0) {
+	  	if (invalid_opcode) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */
@@ -1614,7 +1614,7 @@ public class i86dasm
 		opmap1=&op386map1;
 		ua_str(op386map1[c]);
 	
-	  	if (invalid_opcode != 0) {
+	  	if (invalid_opcode) {
 			/* restart output buffer */
 			ubufp = buffer;
 			/* invalid instruction, use db xx */

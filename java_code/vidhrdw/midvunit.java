@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,8 +61,7 @@ public class midvunit
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_midvunit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_midvunit  = new VideoStartHandlerPtr() { public int handler(){
 		scanline_timer = timer_alloc(scanline_timer_cb);
 		return 0;
 	} };
@@ -172,7 +171,7 @@ public class midvunit
 	
 	static void render_straight_flat_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, x, y;
 	
@@ -183,14 +182,14 @@ public class midvunit
 		ey = vert[botleft].y;
 	
 		/* clip */
-		if (sx < Machine.visible_area.min_x)
-			sx = Machine.visible_area.min_x;
-		if (ex > Machine.visible_area.max_x)
-			ex = Machine.visible_area.max_x;
-		if (sy < Machine.visible_area.min_y)
-			sy = Machine.visible_area.min_y;
-		if (ey > Machine.visible_area.max_y)
-			ey = Machine.visible_area.max_y;
+		if (sx < Machine->visible_area.min_x)
+			sx = Machine->visible_area.min_x;
+		if (ex > Machine->visible_area.max_x)
+			ex = Machine->visible_area.max_x;
+		if (sy < Machine->visible_area.min_y)
+			sy = Machine->visible_area.min_y;
+		if (ey > Machine->visible_area.max_y)
+			ey = Machine->visible_area.max_y;
 	
 		ADD_TO_PIXEL_COUNT((ey - sy + 1) * (ex - sx + 1));
 	
@@ -198,7 +197,7 @@ public class midvunit
 		for (y = sy; y <= ey; y++)
 		{
 			UINT16 *d = dest + y * 512 + sx;
-			if (pixdata != 0)
+			if (pixdata)
 				for (x = sx; x <= ex; x++)
 					*d++ = pixdata;
 			else
@@ -209,7 +208,7 @@ public class midvunit
 	
 	static void render_straight_flat_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, x, y;
 	
@@ -220,14 +219,14 @@ public class midvunit
 		ey = vert[botleft].y;
 	
 		/* clip */
-		if (sx < Machine.visible_area.min_x)
-			sx = Machine.visible_area.min_x;
-		if (ex > Machine.visible_area.max_x)
-			ex = Machine.visible_area.max_x;
-		if (sy < Machine.visible_area.min_y)
-			sy = Machine.visible_area.min_y;
-		if (ey > Machine.visible_area.max_y)
-			ey = Machine.visible_area.max_y;
+		if (sx < Machine->visible_area.min_x)
+			sx = Machine->visible_area.min_x;
+		if (ex > Machine->visible_area.max_x)
+			ex = Machine->visible_area.max_x;
+		if (sy < Machine->visible_area.min_y)
+			sy = Machine->visible_area.min_y;
+		if (ey > Machine->visible_area.max_y)
+			ey = Machine->visible_area.max_y;
 	
 		ADD_TO_PIXEL_COUNT((ey - sy + 1) * (ex - sx + 1));
 	
@@ -251,7 +250,7 @@ public class midvunit
 	
 	static void render_straight_tex_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -281,22 +280,22 @@ public class midvunit
 			dudy = dvdy = 1;
 	
 		/* clip */
-		if (sx < Machine.visible_area.min_x)
+		if (sx < Machine->visible_area.min_x)
 		{
-			su += (Machine.visible_area.min_x - sx) * dudx;
-			sv += (Machine.visible_area.min_x - sx) * dvdx;
-			sx = Machine.visible_area.min_x;
+			su += (Machine->visible_area.min_x - sx) * dudx;
+			sv += (Machine->visible_area.min_x - sx) * dvdx;
+			sx = Machine->visible_area.min_x;
 		}
-		if (ex > Machine.visible_area.max_x)
-			ex = Machine.visible_area.max_x;
-		if (sy < Machine.visible_area.min_y)
+		if (ex > Machine->visible_area.max_x)
+			ex = Machine->visible_area.max_x;
+		if (sy < Machine->visible_area.min_y)
 		{
-			su += (Machine.visible_area.min_y - sy) * dudy;
-			sv += (Machine.visible_area.min_y - sy) * dvdy;
-			sy = Machine.visible_area.min_y;
+			su += (Machine->visible_area.min_y - sy) * dudy;
+			sv += (Machine->visible_area.min_y - sy) * dvdy;
+			sy = Machine->visible_area.min_y;
 		}
-		if (ey > Machine.visible_area.max_y)
-			ey = Machine.visible_area.max_y;
+		if (ey > Machine->visible_area.max_y)
+			ey = Machine->visible_area.max_y;
 	
 		ADD_TO_PIXEL_COUNT((ey - sy + 1) * (ex - sx + 1));
 	
@@ -322,7 +321,7 @@ public class midvunit
 	
 	static void render_straight_textrans_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -352,22 +351,22 @@ public class midvunit
 			dudy = dvdy = 1;
 	
 		/* clip */
-		if (sx < Machine.visible_area.min_x)
+		if (sx < Machine->visible_area.min_x)
 		{
-			su += (Machine.visible_area.min_x - sx) * dudx;
-			sv += (Machine.visible_area.min_x - sx) * dvdx;
-			sx = Machine.visible_area.min_x;
+			su += (Machine->visible_area.min_x - sx) * dudx;
+			sv += (Machine->visible_area.min_x - sx) * dvdx;
+			sx = Machine->visible_area.min_x;
 		}
-		if (ex > Machine.visible_area.max_x)
-			ex = Machine.visible_area.max_x;
-		if (sy < Machine.visible_area.min_y)
+		if (ex > Machine->visible_area.max_x)
+			ex = Machine->visible_area.max_x;
+		if (sy < Machine->visible_area.min_y)
 		{
-			su += (Machine.visible_area.min_y - sy) * dudy;
-			sv += (Machine.visible_area.min_y - sy) * dvdy;
-			sy = Machine.visible_area.min_y;
+			su += (Machine->visible_area.min_y - sy) * dudy;
+			sv += (Machine->visible_area.min_y - sy) * dvdy;
+			sy = Machine->visible_area.min_y;
 		}
-		if (ey > Machine.visible_area.max_y)
-			ey = Machine.visible_area.max_y;
+		if (ey > Machine->visible_area.max_y)
+			ey = Machine->visible_area.max_y;
 	
 		ADD_TO_PIXEL_COUNT((ey - sy + 1) * (ex - sx + 1));
 	
@@ -384,7 +383,7 @@ public class midvunit
 			for (x = sx; x <= ex; x++)
 			{
 				int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-				if (pix != 0) d[x] = pixdata | pix;
+				if (pix) d[x] = pixdata | pix;
 				u += dudx;
 				v += dvdx;
 			}
@@ -394,7 +393,7 @@ public class midvunit
 	
 	static void render_straight_textransmask_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		INT32 sx, sy, ex, ey, su, sv, dudx, dvdx, dudy, dvdy, x, y, u, v;
@@ -424,22 +423,22 @@ public class midvunit
 			dudy = dvdy = 1;
 	
 		/* clip */
-		if (sx < Machine.visible_area.min_x)
+		if (sx < Machine->visible_area.min_x)
 		{
-			su += (Machine.visible_area.min_x - sx) * dudx;
-			sv += (Machine.visible_area.min_x - sx) * dvdx;
-			sx = Machine.visible_area.min_x;
+			su += (Machine->visible_area.min_x - sx) * dudx;
+			sv += (Machine->visible_area.min_x - sx) * dvdx;
+			sx = Machine->visible_area.min_x;
 		}
-		if (ex > Machine.visible_area.max_x)
-			ex = Machine.visible_area.max_x;
-		if (sy < Machine.visible_area.min_y)
+		if (ex > Machine->visible_area.max_x)
+			ex = Machine->visible_area.max_x;
+		if (sy < Machine->visible_area.min_y)
 		{
-			su += (Machine.visible_area.min_y - sy) * dudy;
-			sv += (Machine.visible_area.min_y - sy) * dvdy;
-			sy = Machine.visible_area.min_y;
+			su += (Machine->visible_area.min_y - sy) * dudy;
+			sv += (Machine->visible_area.min_y - sy) * dvdy;
+			sy = Machine->visible_area.min_y;
 		}
-		if (ey > Machine.visible_area.max_y)
-			ey = Machine.visible_area.max_y;
+		if (ey > Machine->visible_area.max_y)
+			ey = Machine->visible_area.max_y;
 	
 		ADD_TO_PIXEL_COUNT((ey - sy + 1) * (ex - sx + 1));
 	
@@ -456,7 +455,7 @@ public class midvunit
 			for (x = sx; x <= ex; x++)
 			{
 				int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-				if (pix != 0) d[x] = pixdata;
+				if (pix) d[x] = pixdata;
 				u += dudx;
 				v += dvdx;
 			}
@@ -473,7 +472,7 @@ public class midvunit
 	
 	static void render_flat_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
 		const struct poly_scanline *curscan;
@@ -484,21 +483,21 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_0(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_0(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				UINT16 *d = dest + y * 512 + curscan.sx;
-				int width = curscan.ex - curscan.sx + 1;
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				UINT16 *d = dest + y * 512 + curscan->sx;
+				int width = curscan->ex - curscan->sx + 1;
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				for (x = 0; x < width; x++)
 					d[x] = pixdata;
 			}
@@ -508,7 +507,7 @@ public class midvunit
 	
 	static void render_flat_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
 		const struct poly_scanline *curscan;
@@ -519,22 +518,22 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_0(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_0(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_0(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				int tsx = curscan.sx + ((curscan.sx ^ y) & 1);
+				int tsx = curscan->sx + ((curscan->sx ^ y) & 1);
 				UINT16 *d = dest + y * 512;
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
-				for (x = tsx; x <= curscan.ex; x += 2)
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
+				for (x = tsx; x <= curscan->ex; x += 2)
 					d[x] = pixdata;
 			}
 		}
@@ -550,7 +549,7 @@ public class midvunit
 	
 	static void render_tex_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -572,23 +571,23 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				UINT16 *d = dest + y * 512 + curscan.sx;
-				int width = curscan.ex - curscan.sx + 1;
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				UINT16 *d = dest + y * 512 + curscan->sx;
+				int width = curscan->ex - curscan->sx + 1;
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				for (x = 0; x < width; x++)
 				{
 					d[x] = pixdata | texbase[((v >> 8) & 0xff00) + (u >> 16)];
@@ -602,7 +601,7 @@ public class midvunit
 	
 	static void render_textrans_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -624,27 +623,27 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				UINT16 *d = dest + y * 512 + curscan.sx;
-				int width = curscan.ex - curscan.sx + 1;
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				UINT16 *d = dest + y * 512 + curscan->sx;
+				int width = curscan->ex - curscan->sx + 1;
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				for (x = 0; x < width; x++)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix != 0) d[x] = pixdata | pix;
+					if (pix) d[x] = pixdata | pix;
 					u += dudx;
 					v += dvdx;
 				}
@@ -655,7 +654,7 @@ public class midvunit
 	
 	static void render_textransmask_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
@@ -677,27 +676,27 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				UINT16 *d = dest + y * 512 + curscan.sx;
-				int width = curscan.ex - curscan.sx + 1;
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				UINT16 *d = dest + y * 512 + curscan->sx;
+				int width = curscan->ex - curscan->sx + 1;
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				for (x = 0; x < width; x++)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix != 0) d[x] = pixdata;
+					if (pix) d[x] = pixdata;
 					u += dudx;
 					v += dvdx;
 				}
@@ -715,7 +714,7 @@ public class midvunit
 	
 	static void render_tex_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -737,24 +736,24 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
 				UINT16 *d = dest + y * 512;
-				int tsx = curscan.sx;
+				int tsx = curscan->sx;
 	
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				if ((tsx ^ y) & 1)
 				{
 					tsx++;
@@ -765,7 +764,7 @@ public class midvunit
 				dudx *= 2;
 				dvdx *= 2;
 	
-				for (x = tsx; x <= curscan.ex; x += 2)
+				for (x = tsx; x <= curscan->ex; x += 2)
 				{
 					d[x] = pixdata | texbase[((v >> 8) & 0xff00) + (u >> 16)];
 					u += dudx;
@@ -778,7 +777,7 @@ public class midvunit
 	
 	static void render_textrans_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1];
 		const struct poly_scanline_data *scans;
@@ -800,24 +799,24 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
 				UINT16 *d = dest + y * 512;
-				int tsx = curscan.sx;
+				int tsx = curscan->sx;
 	
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				if ((tsx ^ y) & 1)
 				{
 					tsx++;
@@ -828,10 +827,10 @@ public class midvunit
 				dudx *= 2;
 				dvdx *= 2;
 	
-				for (x = tsx; x <= curscan.ex; x += 2)
+				for (x = tsx; x <= curscan->ex; x += 2)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix != 0) d[x] = pixdata | pix;
+					if (pix) d[x] = pixdata | pix;
 					u += dudx;
 					v += dvdx;
 				}
@@ -842,7 +841,7 @@ public class midvunit
 	
 	static void render_textransmask_dither_quad(void)
 	{
-		UINT16 *dest = &midvunit_videoram.read((page_control & 4) ? 0x40000 : 0x00000);
+		UINT16 *dest = &midvunit_videoram[(page_control & 4) ? 0x40000 : 0x00000];
 		UINT8 *texbase = (UINT8 *)midvunit_textureram + (dma_data[14] * 256);
 		UINT16 pixdata = dma_data[1] | (dma_data[0] & 0x00ff);
 		const struct poly_scanline_data *scans;
@@ -864,24 +863,24 @@ public class midvunit
 		{
 			/* first tri is 0,1,2; second is 0,3,2 */
 			if (i == 0)
-				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[1], &vert[2], Machine->visible_area);
 			else
-				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine.visible_area);
+				scans = setup_triangle_2(&vert[0], &vert[3], &vert[2], Machine->visible_area);
 	
 			/* skip if we're clipped out */
-			if (scans == 0)
+			if (!scans)
 				continue;
 	
 			/* loop over scanlines */
-			curscan = scans.scanline;
-			for (y = scans.sy; y <= scans.ey; y++, curscan++)
+			curscan = scans->scanline;
+			for (y = scans->sy; y <= scans->ey; y++, curscan++)
 			{
-				int u = curscan.p[0], dudx = scans.dp[0];
-				int v = curscan.p[1], dvdx = scans.dp[1];
+				int u = curscan->p[0], dudx = scans->dp[0];
+				int v = curscan->p[1], dvdx = scans->dp[1];
 				UINT16 *d = dest + y * 512;
-				int tsx = curscan.sx;
+				int tsx = curscan->sx;
 	
-				ADD_TO_PIXEL_COUNT(curscan.ex - curscan.sx + 1);
+				ADD_TO_PIXEL_COUNT(curscan->ex - curscan->sx + 1);
 				if ((tsx ^ y) & 1)
 				{
 					tsx++;
@@ -892,10 +891,10 @@ public class midvunit
 				dudx *= 2;
 				dvdx *= 2;
 	
-				for (x = tsx; x <= curscan.ex; x += 2)
+				for (x = tsx; x <= curscan->ex; x += 2)
 				{
 					int pix = texbase[((v >> 8) & 0xff00) + (u >> 16)];
-					if (pix != 0) d[x] = pixdata;
+					if (pix) d[x] = pixdata;
 					u += dudx;
 					v += dvdx;
 				}
@@ -935,19 +934,19 @@ public class midvunit
 		straight = quad_is_straight();
 	
 		/* handle flat-shaded quads here */
-		if (textured == 0)
+		if (!textured)
 		{
 			/* two cases: straight on and arbitrary */
-			if (straight != 0)
+			if (straight)
 			{
-				if (dithered == 0)
+				if (!dithered)
 					render_straight_flat_quad();
 				else
 					render_straight_flat_dither_quad();
 			}
 			else
 			{
-				if (dithered == 0)
+				if (!dithered)
 					render_flat_quad();
 				else
 					render_flat_dither_quad();
@@ -976,7 +975,7 @@ public class midvunit
 				else
 					render_straight_flat_quad();
 			}
-			else if (dithered == 0)
+			else if (!dithered)
 			{
 				/* handle non-masked, non-transparent quads */
 				if ((dma_data[0] & 0xc00) == 0x000)
@@ -1041,7 +1040,7 @@ public class midvunit
 	
 	READ32_HANDLER( midvunit_dma_trigger_r )
 	{
-		if (offset != 0)
+		if (offset)
 		{
 	if (keyboard_pressed(KEYCODE_L))
 		logerror("%06X:trigger\n", activecpu_get_pc());
@@ -1114,13 +1113,13 @@ public class midvunit
 	
 	WRITE32_HANDLER( midvunit_videoram_w )
 	{
-		COMBINE_DATA(&midvunit_videoram.read(offset));
+		COMBINE_DATA(&midvunit_videoram[offset]);
 	}
 	
 	
 	READ32_HANDLER( midvunit_videoram_r )
 	{
-		return midvunit_videoram.read(offset);
+		return midvunit_videoram[offset];
 	}
 	
 	
@@ -1180,8 +1179,7 @@ public class midvunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_midvunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_midvunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y, width, xoffs;
 		UINT32 offset;
 	
@@ -1214,7 +1212,7 @@ public class midvunit
 		{
 			UINT16 *dest = (UINT16 *)bitmap.base + y * bitmap.rowpixels + cliprect.min_x;
 			for (x = 0; x < width; x++)
-				*dest++ = midvunit_videoram.read(offset + x)& 0x7fff;
+				*dest++ = midvunit_videoram[offset + x] & 0x7fff;
 			offset += 512;
 		}
 	} };

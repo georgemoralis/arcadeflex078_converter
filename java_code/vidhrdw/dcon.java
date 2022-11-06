@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,7 +28,7 @@ public class dcon
 	
 	WRITE16_HANDLER( dcon_control_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			dcon_enable=data;
 			if ((dcon_enable&4)==4)
@@ -50,7 +50,7 @@ public class dcon
 	
 	WRITE16_HANDLER( dcon_gfxbank_w )
 	{
-		if ((data & 1) != 0)
+		if (data&1)
 			dcon_gfx_bank_select=0x1000;
 		else
 			dcon_gfx_bank_select=0;
@@ -144,8 +144,7 @@ public class dcon
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_dcon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dcon  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		midground_layer =  tilemap_create(get_mid_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -178,9 +177,9 @@ public class dcon
 			y = spriteram16[offs+3];
 			x = spriteram16[offs+2];
 	
-			if ((x & 0x8000) != 0) x=0-(0x200-(x&0x1ff));
+			if (x&0x8000) x=0-(0x200-(x&0x1ff));
 			else x&=0x1ff;
-			if ((y & 0x8000) != 0) y=0-(0x200-(y&0x1ff));
+			if (y&0x8000) y=0-(0x200-(y&0x1ff));
 			else y&=0x1ff;
 	
 			color = spriteram16[offs+0]&0x3f;
@@ -191,13 +190,13 @@ public class dcon
 	
 			for (ax=0; ax<dx; ax++)
 				for (ay=0; ay<dy; ay++) {
-					if (fx == 0)
-						drawgfx(bitmap,Machine.gfx[4],
+					if (!fx)
+						drawgfx(bitmap,Machine->gfx[4],
 							sprite++,
 							color,fx,fy,x+ax*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);
 					else
-						drawgfx(bitmap,Machine.gfx[4],
+						drawgfx(bitmap,Machine->gfx[4],
 							sprite++,
 							color,fx,fy,x+(dx-1-ax)*16,y+ay*16,
 							cliprect,TRANSPARENCY_PEN,15);
@@ -205,8 +204,7 @@ public class dcon
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dcon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps */
 		tilemap_set_scrollx( background_layer,0, dcon_scroll_ram[0] );
 		tilemap_set_scrolly( background_layer,0, dcon_scroll_ram[1] );
@@ -229,8 +227,7 @@ public class dcon
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sdgndmps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sdgndmps  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_gfx_bank=0;
 	
 		/* Gfx banking */

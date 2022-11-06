@@ -16,7 +16,7 @@ OSC.  : 6.000MHz 3.579545MHz
 
 Interrupts: 1-7]	d17a:	clears 20018 etc.
 
-f4b2	print string:	a1.(char)*,0x25(%) d7.w=color	a0.screen (30000)
+f4b2	print string:	a1->(char)*,0x25(%) d7.w=color	a0->screen (30000)
 f5d6	print 7 digit BCD number: d0.l to (a1)+ color $3000
 
 
@@ -50,7 +50,7 @@ f5d6	print 7 digit BCD number: d0.l to (a1)+ color $3000
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -116,14 +116,13 @@ public class ginganin
 	static int MC6809_FLAG = 0;
 	
 	
-	public static WriteHandlerPtr MC6840_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr MC6840_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
 	
 		MC6840_index0 = data;
 	
-		if ((MC6840_index0 & 0x80) != 0)	/* enable timer output */
+		if (MC6840_index0 & 0x80)	/* enable timer output */
 		{
 			if ((MC6840_register0 != S_TEMPO) && (MC6840_register0 != 0))
 			{
@@ -143,24 +142,21 @@ public class ginganin
 	#endif
 	} };
 	
-	public static WriteHandlerPtr MC6840_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr MC6840_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
 	
 		MC6840_index1 = data;
 	} };
 	
-	public static WriteHandlerPtr MC6840_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr MC6840_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
 	
 		MC6840_register0 = data;
 	} };
 	
-	public static WriteHandlerPtr MC6840_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr MC6840_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
 	
@@ -195,7 +191,7 @@ public class ginganin
 	
 	/*	Input Ports:	[0] Controls	[1] DSWs */
 	
-	static InputPortPtr input_ports_ginganin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ginganin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ginganin )
 	
 		PORT_START(); 	/* IN0 - Controls - Read from 70000.w */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
@@ -319,8 +315,7 @@ public class ginganin
 	
 	
 	/* Modified by Takahiro Nogi. 1999/09/27 */
-	public static InterruptHandlerPtr ginganin_sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ginganin_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* MC6840 Emulation by Takahiro Nogi. 1999/09/27
 		(This routine hasn't been completed yet.) */
 	
@@ -372,8 +367,7 @@ public class ginganin
 		{ 0 }	/* I/O write */
 	};
 	
-	public static MachineHandlerPtr machine_driver_ginganin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ginganin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000)	/* ? */
@@ -381,9 +375,9 @@ public class ginganin
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) /* ? (vectors 1-7 cointain the same address) */
 	
 		MDRV_CPU_ADD(M6809, 1000000)
-		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)	/* ? */ /* Takahiro Nogi. 1999/09/27 (3579545 . 1000000) */
+		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)	/* ? */ /* Takahiro Nogi. 1999/09/27 (3579545 -> 1000000) */
 		MDRV_CPU_MEMORY(sound_readmem,sound_writemem)
-		MDRV_CPU_VBLANK_INT(ginganin_sound_interrupt,60)	/* Takahiro Nogi. 1999/09/27 (1 . 60) */
+		MDRV_CPU_VBLANK_INT(ginganin_sound_interrupt,60)	/* Takahiro Nogi. 1999/09/27 (1 -> 60) */
 	
 		MDRV_FRAMES_PER_SECOND(60)
 		MDRV_VBLANK_DURATION(DEFAULT_60HZ_VBLANK_DURATION)
@@ -401,9 +395,7 @@ public class ginganin
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, AY8910_interface)
 		MDRV_SOUND_ADD(Y8950, y8950_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -450,8 +442,7 @@ public class ginganin
 	
 	
 	
-	public static DriverInitHandlerPtr init_ginganin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ginganin  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom;
 	
 		/* main cpu patches */
@@ -467,6 +458,6 @@ public class ginganin
 	} };
 	
 	
-	public static GameDriver driver_ginganin	   = new GameDriver("1987"	,"ginganin"	,"ginganin.java"	,rom_ginganin,null	,machine_driver_ginganin	,input_ports_ginganin	,init_ginganin	,ROT0	,	"Jaleco", "Ginga NinkyouDen" )
+	GAME( 1987, ginganin, 0, ginganin, ginganin, ginganin, ROT0, "Jaleco", "Ginga NinkyouDen" )
 	
 }

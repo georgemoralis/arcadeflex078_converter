@@ -20,7 +20,7 @@ plaintext version of the roms produces things like 30 second long coinup sounds.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -186,11 +186,10 @@ public class strtheat
 	}
 	
 	
-	public static ReadHandlerPtr strtheat_decrypt_rom  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr strtheat_decrypt_rom  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if ((offset & 0x01) != 0)
+		if (offset & 0x01)
 		{
 			counter = counter - 1;
 			if (counter < 0)
@@ -216,8 +215,7 @@ public class strtheat
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_strtheat  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_strtheat  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* While the PAL supports up to 16 decryption methods, only four
@@ -236,8 +234,7 @@ public class strtheat
 	} };
 	
 	/*
-	public static WriteHandlerPtr strtheat_writeport = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strtheat_writeport = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("Port Write: pc = %4x ############## \n",activecpu_get_pc());
 	} };
 	*/

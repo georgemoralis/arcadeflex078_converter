@@ -57,7 +57,7 @@ Port I/O Write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -66,13 +66,11 @@ public class thepit
 	
 	
 	
-	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data);
 	} };
 	
@@ -179,7 +177,7 @@ public class thepit
 	};
 	
 	
-	static InputPortPtr input_ports_thepit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thepit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thepit )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -239,7 +237,7 @@ public class thepit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_roundup = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roundup = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roundup )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -296,7 +294,7 @@ public class thepit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_fitter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fitter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fitter )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -355,7 +353,7 @@ public class thepit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_intrepid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_intrepid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( intrepid )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -415,7 +413,7 @@ public class thepit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dockman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dockman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dockman )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -474,7 +472,7 @@ public class thepit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_suprmous = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprmous = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprmous )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -622,8 +620,7 @@ public class thepit
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_thepit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thepit )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)     /* 3.072 MHz */
@@ -653,13 +650,10 @@ public class thepit
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_intrepid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( intrepid )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(thepit)
@@ -669,13 +663,10 @@ public class thepit
 		/* video hardware */
 		MDRV_GFXDECODE(intrepid_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(thepit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_suprmous = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( suprmous )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(intrepid)
@@ -683,9 +674,7 @@ public class thepit
 		/* video hardware */
 		MDRV_GFXDECODE(suprmous_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(suprmous)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -922,15 +911,15 @@ public class thepit
 	
 	
 	
-	public static GameDriver driver_roundup	   = new GameDriver("1981"	,"roundup"	,"thepit.java"	,rom_roundup,null	,machine_driver_thepit	,input_ports_roundup	,null	,ROT90	,	"Amenip/Centuri", "Round-Up" )
-	public static GameDriver driver_fitter	   = new GameDriver("1981"	,"fitter"	,"thepit.java"	,rom_fitter,driver_roundup	,machine_driver_thepit	,input_ports_fitter	,null	,ROT90	,	"Taito Corporation", "Fitter" )
-	public static GameDriver driver_thepit	   = new GameDriver("1982"	,"thepit"	,"thepit.java"	,rom_thepit,null	,machine_driver_thepit	,input_ports_thepit	,null	,ROT90	,	"Centuri", "The Pit" )
-	public static GameDriver driver_dockman	   = new GameDriver("1982"	,"dockman"	,"thepit.java"	,rom_dockman,null	,machine_driver_intrepid	,input_ports_dockman	,null	,ROT90	,	"Taito Corporation", "Dock Man" )
-	public static GameDriver driver_portman	   = new GameDriver("1982"	,"portman"	,"thepit.java"	,rom_portman,driver_dockman	,machine_driver_intrepid	,input_ports_dockman	,null	,ROT90	,	"Nova Games Ltd.", "Port Man" )
-	public static GameDriver driver_funnymou	   = new GameDriver("1982"	,"funnymou"	,"thepit.java"	,rom_funnymou,null	,machine_driver_suprmous	,input_ports_suprmous	,null	,ROT90	,	"Chuo Co. Ltd", "Funny Mouse" )
-	public static GameDriver driver_suprmous	   = new GameDriver("1982"	,"suprmous"	,"thepit.java"	,rom_suprmous,driver_funnymou	,machine_driver_suprmous	,input_ports_suprmous	,null	,ROT90	,	"Taito Corporation", "Super Mouse" )
-	public static GameDriver driver_machomou	   = new GameDriver("1982"	,"machomou"	,"thepit.java"	,rom_machomou,null	,machine_driver_suprmous	,input_ports_suprmous	,null	,ROT90	,	"Techstar", "Macho Mouse" )
-	public static GameDriver driver_intrepid	   = new GameDriver("1983"	,"intrepid"	,"thepit.java"	,rom_intrepid,null	,machine_driver_intrepid	,input_ports_intrepid	,null	,ROT90	,	"Nova Games Ltd.", "Intrepid (set 1)" )
-	public static GameDriver driver_intrepi2	   = new GameDriver("1983"	,"intrepi2"	,"thepit.java"	,rom_intrepi2,driver_intrepid	,machine_driver_intrepid	,input_ports_intrepid	,null	,ROT90	,	"Nova Games Ltd.", "Intrepid (set 2)" )
-	public static GameDriver driver_zaryavos	   = new GameDriver("1984"	,"zaryavos"	,"thepit.java"	,rom_zaryavos,null	,machine_driver_intrepid	,input_ports_intrepid	,null	,ROT90	,	"Nova Games of Canada", "Zarya Vostoka", GAME_NOT_WORKING )
+	GAME( 1981, roundup,  0,        thepit,   roundup,  0, ROT90, "Amenip/Centuri", "Round-Up" )
+	GAME( 1981, fitter,   roundup,  thepit,   fitter,   0, ROT90, "Taito Corporation", "Fitter" )
+	GAME( 1982, thepit,   0,        thepit,   thepit,   0, ROT90, "Centuri", "The Pit" )
+	GAME( 1982, dockman,  0,        intrepid, dockman,  0, ROT90, "Taito Corporation", "Dock Man" )
+	GAME( 1982, portman,  dockman,  intrepid, dockman,  0, ROT90, "Nova Games Ltd.", "Port Man" )
+	GAME( 1982, funnymou, 0,        suprmous, suprmous, 0, ROT90, "Chuo Co. Ltd", "Funny Mouse" )
+	GAME( 1982, suprmous, funnymou, suprmous, suprmous, 0, ROT90, "Taito Corporation", "Super Mouse" )
+	GAME( 1982, machomou, 0,        suprmous, suprmous, 0, ROT90, "Techstar", "Macho Mouse" )
+	GAME( 1983, intrepid, 0,        intrepid, intrepid, 0, ROT90, "Nova Games Ltd.", "Intrepid (set 1)" )
+	GAME( 1983, intrepi2, intrepid, intrepid, intrepid, 0, ROT90, "Nova Games Ltd.", "Intrepid (set 2)" )
+	GAMEX(1984, zaryavos, 0,        intrepid, intrepid, 0, ROT90, "Nova Games of Canada", "Zarya Vostoka", GAME_NOT_WORKING )
 }

@@ -13,7 +13,7 @@ ToDo: Fix Sprites for Cocktail
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,9 +31,9 @@ public class mcatadv
 	{
 		int tileno, colour, pri;
 	
-		tileno = mcatadv_videoram1.read(tile_index*2+1);
-		colour = (mcatadv_videoram1.read(tile_index*2)& 0x3f00)>>8;
-		pri = (mcatadv_videoram1.read(tile_index*2)& 0xc000)>>14;
+		tileno = mcatadv_videoram1[tile_index*2+1];
+		colour = (mcatadv_videoram1[tile_index*2] & 0x3f00)>>8;
+		pri = (mcatadv_videoram1[tile_index*2] & 0xc000)>>14;
 	
 		SET_TILE_INFO(0,tileno,colour + palette_bank1*0x40,0)
 		tile_info.priority = pri;
@@ -41,9 +41,9 @@ public class mcatadv
 	
 	WRITE16_HANDLER( mcatadv_videoram1_w )
 	{
-		if (mcatadv_videoram1.read(offset)!= data)
+		if (mcatadv_videoram1[offset] != data)
 		{
-			COMBINE_DATA(&mcatadv_videoram1.read(offset));
+			COMBINE_DATA(&mcatadv_videoram1[offset]);
 			tilemap_mark_tile_dirty(mcatadv_tilemap1,offset/2);
 		}
 	}
@@ -52,9 +52,9 @@ public class mcatadv
 	{
 		int tileno, colour, pri;
 	
-		tileno = mcatadv_videoram2.read(tile_index*2+1);
-		colour = (mcatadv_videoram2.read(tile_index*2)& 0x3f00)>>8;
-		pri = (mcatadv_videoram2.read(tile_index*2)& 0xc000)>>14;
+		tileno = mcatadv_videoram2[tile_index*2+1];
+		colour = (mcatadv_videoram2[tile_index*2] & 0x3f00)>>8;
+		pri = (mcatadv_videoram2[tile_index*2] & 0xc000)>>14;
 	
 		SET_TILE_INFO(1,tileno,colour + palette_bank2*0x40,0)
 		tile_info.priority = pri;
@@ -62,9 +62,9 @@ public class mcatadv
 	
 	WRITE16_HANDLER( mcatadv_videoram2_w )
 	{
-		if (mcatadv_videoram2.read(offset)!= data)
+		if (mcatadv_videoram2[offset] != data)
 		{
-			COMBINE_DATA(&mcatadv_videoram2.read(offset));
+			COMBINE_DATA(&mcatadv_videoram2[offset]);
 			tilemap_mark_tile_dirty(mcatadv_tilemap2,offset/2);
 		}
 	}
@@ -113,8 +113,8 @@ public class mcatadv
 			int xcnt,ycnt;
 			int pix;
 	
-			if ((x & 0x200) != 0) x-=0x400;
-			if ((y & 0x200) != 0) y-=0x400;
+			if (x & 0x200) x-=0x400;
+			if (y & 0x200) y-=0x400;
 	
 	#if 0 // For Flipscreen/Cocktail
 			if(mcatadv_vidregs[0]&0x8000)
@@ -129,17 +129,17 @@ public class mcatadv
 	
 			if (source[3] != source[0]) // 'hack' don't draw sprites while its testing the ram!
 			{
-				if (flipx == 0) { xstart = 0;        xend = width;  xinc = 1; }
+				if(NOT(flipx)) { xstart = 0;        xend = width;  xinc = 1; }
 				else       { xstart = width-1;  xend = -1;     xinc = -1; }
-				if (flipy == 0) { ystart = 0;        yend = height; yinc = 1; }
+				if(NOT(flipy)) { ystart = 0;        yend = height; yinc = 1; }
 				else       { ystart = height-1; yend = -1;     yinc = -1; }
 	
 				for (ycnt = ystart; ycnt != yend; ycnt += yinc) {
 					drawypos = y+ycnt-global_y;
 	
-					if ((drawypos >= cliprect.min_y) && (drawypos <= cliprect.max_y)) {
-						destline = (UINT16 *)(bitmap.line[drawypos]);
-						priline = (UINT8 *)(priority_bitmap.line[drawypos]);
+					if ((drawypos >= cliprect->min_y) && (drawypos <= cliprect->max_y)) {
+						destline = (UINT16 *)(bitmap->line[drawypos]);
+						priline = (UINT8 *)(priority_bitmap->line[drawypos]);
 	
 						for (xcnt = xstart; xcnt != xend; xcnt += xinc) {
 							drawxpos = x+xcnt-global_x;
@@ -147,10 +147,10 @@ public class mcatadv
 							if (offset >= 0x500000*2) offset = 0;
 							pix = sprdata[offset/2];
 	
-							if ((offset & 1) != 0)  pix = pix >> 4;
+							if (offset & 1)  pix = pix >> 4;
 							pix &= 0x0f;
 	
-							if ((drawxpos >= cliprect.min_x) && (drawxpos <= cliprect.max_x) && pix)
+							if ((drawxpos >= cliprect->min_x) && (drawxpos <= cliprect->max_x) && pix)
 								if((priline[drawxpos] < pri))
 									destline[drawxpos] = (pix + (pen<<4));
 	
@@ -166,8 +166,7 @@ public class mcatadv
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mcatadv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, scrollx, scrolly, flip;
 	
 		fillbitmap(bitmap, get_black_pen(), cliprect);
@@ -227,8 +226,7 @@ public class mcatadv
 		profiler_mark(PROFILER_END);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mcatadv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mcatadv  = new VideoStartHandlerPtr() { public int handler(){
 		mcatadv_tilemap1 = tilemap_create(get_mcatadv_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
 		tilemap_set_transparent_pen(mcatadv_tilemap1,0);
 	
@@ -249,8 +247,7 @@ public class mcatadv
 		return 0;
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_mcatadv  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_mcatadv  = new VideoEofHandlerPtr() { public void handler(){
 		memcpy(spriteram_old,spriteram16,spriteram_size[0]);
 		memcpy(vidregs_old,mcatadv_vidregs,0xf);
 	} };

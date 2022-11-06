@@ -163,7 +163,7 @@ Changes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -183,25 +183,24 @@ public class dkong
 	#define ACTIVELOW_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | ((D ^ 1) << A))
 	
 	
-	public static WriteHandlerPtr dkong_sh_sound3_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
-	public static WriteHandlerPtr dkong_sh_sound4_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[1] = ~data & 1; } };
-	public static WriteHandlerPtr dkong_sh_sound5_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[0] = ~data & 1; } };
-	public static WriteHandlerPtr dkong_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data ^ 0x0f); } };
+	public static WriteHandlerPtr dkong_sh_sound3_w = new WriteHandlerPtr() {public void handler(int offset, int data)   { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
+	public static WriteHandlerPtr dkong_sh_sound4_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { t[1] = ~data & 1; } };
+	public static WriteHandlerPtr dkong_sh_sound5_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { t[0] = ~data & 1; } };
+	public static WriteHandlerPtr dkong_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) soundlatch_w.handler(offset,data ^ 0x0f); }
 	
-	public static WriteHandlerPtr dkongjr_sh_test6_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],6,data); } };
-	public static WriteHandlerPtr dkongjr_sh_test5_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
-	public static WriteHandlerPtr dkongjr_sh_test4_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); } };
-	public static WriteHandlerPtr dkongjr_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data); } };
+	public static WriteHandlerPtr dkongjr_sh_test6_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { p[2] = ACTIVELOW_PORT_BIT(p[2],6,data); } };
+	public static WriteHandlerPtr dkongjr_sh_test5_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { p[2] = ACTIVELOW_PORT_BIT(p[2],5,data); } };
+	public static WriteHandlerPtr dkongjr_sh_test4_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { p[2] = ACTIVELOW_PORT_BIT(p[2],4,data); } };
+	public static WriteHandlerPtr dkongjr_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) soundlatch_w.handler(offset,data); }
 	
 	
-	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
-	public static ReadHandlerPtr dkong_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[2]; } };
-	public static ReadHandlerPtr dkong_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[0]; } };
-	public static ReadHandlerPtr dkong_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[1]; } };
-	public static ReadHandlerPtr dkong_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dkong_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset) { return p[1]; } };
+	public static ReadHandlerPtr dkong_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset) { return p[2]; } };
+	public static ReadHandlerPtr dkong_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset) { return t[0]; } };
+	public static ReadHandlerPtr dkong_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset) { return t[1]; } };
+	public static ReadHandlerPtr dkong_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *SND = memory_region(REGION_CPU2);
-		if ((page & 0x40) != 0)
+		if (page & 0x40)
 		{
 			switch (offset)
 			{
@@ -219,20 +218,18 @@ public class dkong
 	
 	#define TSTEP 0.001
 	
-	public static WriteHandlerPtr dkong_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkong_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		envelope=exp(-tt);
 		DAC_data_w(0,(int)(data*envelope));
-		if (decay != 0) tt+=TSTEP;
+		if (decay) tt+=TSTEP;
 		else tt=0;
 	} };
 	
-	public static WriteHandlerPtr dkong_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		/*   If P2.Bit7 . is apparently an external signal decay or other output control
-		 *   If P2.Bit6 . activates the external compressed sample ROM
-		 *   If P2.Bit4 . status code to main cpu
-		 *   P2.Bit2-0  . select the 256 byte bank for external ROM
+	public static WriteHandlerPtr dkong_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		/*   If P2.Bit7 -> is apparently an external signal decay or other output control
+		 *   If P2.Bit6 -> activates the external compressed sample ROM
+		 *   If P2.Bit4 -> status code to main cpu
+		 *   P2.Bit2-0  -> select the 256 byte bank for external ROM
 		 */
 	
 		decay = !(data & 0x80);
@@ -241,8 +238,7 @@ public class dkong
 	} };
 	
 	
-	public static ReadHandlerPtr dkong_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dkong_in2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_2_r.handler(offset) | (mcustatus << 6);
 	} };
 	
@@ -409,13 +405,11 @@ public class dkong
 	
 	int hunchloopback;
 	
-	public static WriteHandlerPtr hunchbkd_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hunchbkd_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hunchloopback=data;
 	} };
 	
-	public static ReadHandlerPtr hunchbkd_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hunchbkd_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("port 0 : pc = %4x\n",activecpu_get_pc());
 	
 		switch (activecpu_get_pc())
@@ -427,13 +421,11 @@ public class dkong
 	    return 0;
 	} };
 	
-	public static ReadHandlerPtr hunchbkd_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hunchbkd_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return hunchloopback;
 	} };
 	
-	public static ReadHandlerPtr herbiedk_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr herbiedk_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 	        case 0x002b:
@@ -443,8 +435,7 @@ public class dkong
 	    return 1;
 	} };
 	
-	public static ReadHandlerPtr spclforc_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spclforc_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x00a3: // spclforc
@@ -455,8 +446,7 @@ public class dkong
 	    return 0;
 	} };
 	
-	public static ReadHandlerPtr eightact_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr eightact_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x0021:
@@ -466,8 +456,7 @@ public class dkong
 	    return 1;
 	} };
 	
-	public static ReadHandlerPtr shootgal_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shootgal_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x0079:
@@ -624,9 +613,8 @@ public class dkong
 	};
 	
 	
-	public static WriteHandlerPtr dkong3_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr dkong3_2a03_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -701,7 +689,7 @@ public class dkong
 	
 	
 	
-	static InputPortPtr input_ports_dkong = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dkong = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dkong )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -761,7 +749,7 @@ public class dkong
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dkong3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dkong3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dkong3 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -829,7 +817,7 @@ public class dkong
 		PORT_DIPSETTING(    0xc0, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dkong3b = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dkong3b = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dkong3b )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -895,7 +883,7 @@ public class dkong
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hunchbkd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hunchbkd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hunchbkd )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -957,7 +945,7 @@ public class dkong
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sbdk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbdk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbdk )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1020,7 +1008,7 @@ public class dkong
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_herbiedk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_herbiedk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( herbiedk )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1087,7 +1075,7 @@ public class dkong
 	     - you ALWAYS get an extra life at 150000 points.
 	     - having more than 6 lives will reset the game.
 	*/
-	static InputPortPtr input_ports_herodk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_herodk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( herodk )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1150,7 +1138,7 @@ public class dkong
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pestplce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pestplce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pestplce )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER1 );
@@ -1207,7 +1195,7 @@ public class dkong
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spclforc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spclforc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spclforc )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1268,7 +1256,7 @@ public class dkong
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_8ballact = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_8ballact = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 8ballact )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1331,7 +1319,7 @@ public class dkong
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_strtheat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_strtheat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( strtheat )
 		PORT_START();       /* IN0 */
 		PORT_ANALOG ( 0x03, 0x03, IPT_DIAL | IPF_REVERSE, 60, 10, 0x00, 0xff );
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -1483,8 +1471,7 @@ public class dkong
 		dkongjr_sample_names
 	);
 	
-	public static MachineHandlerPtr machine_driver_radarscp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( radarscp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1514,12 +1501,9 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkong_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dkong = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dkong )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1549,17 +1533,13 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkong_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static InterruptHandlerPtr hunchbkd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hunchbkd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x03);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_hunchbkd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hunchbkd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", S2650, 3072000/2/3)	/* ??? */
@@ -1589,12 +1569,9 @@ public class dkong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_herbiedk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( herbiedk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
@@ -1602,12 +1579,9 @@ public class dkong
 		MDRV_CPU_PORTS(herbiedk_readport,hunchbkd_writeport)
 	
 		MDRV_VBLANK_DURATION(1000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_spclforc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spclforc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
@@ -1620,34 +1594,25 @@ public class dkong
 		MDRV_VIDEO_UPDATE(spclforc)
 	
 		/* analog sound */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_eightact = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( eightact )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(eightact_readport,hunchbkd_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_shootgal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shootgal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hunchbkd)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(shootgal_readport,hunchbkd_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dkongjr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dkongjr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1677,12 +1642,9 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkongjr_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_pestplce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pestplce )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1713,12 +1675,9 @@ public class dkong
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 	
 		/* samples*/
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_strtheat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( strtheat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -1750,9 +1709,7 @@ public class dkong
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dkong_dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, dkongjr_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static struct NESinterface nes_interface =
 	{
@@ -1762,8 +1719,7 @@ public class dkong
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_dkong3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dkong3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)	/* 4 MHz */
@@ -1798,9 +1754,7 @@ public class dkong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2641,8 +2595,7 @@ public class dkong
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_herodk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_herodk  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
@@ -2661,8 +2614,7 @@ public class dkong
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_radarscp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_radarscp  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 	
@@ -2675,43 +2627,43 @@ public class dkong
 	
 	
 	
-	public static GameDriver driver_radarscp	   = new GameDriver("1980"	,"radarscp"	,"dkong.java"	,rom_radarscp,null	,machine_driver_radarscp	,input_ports_dkong	,init_radarscp	,ROT90	,	"Nintendo", "Radar Scope", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1980, radarscp, 0,        radarscp, dkong,    radarscp, ROT90, "Nintendo", "Radar Scope", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
 	
-	public static GameDriver driver_dkong	   = new GameDriver("1981"	,"dkong"	,"dkong.java"	,rom_dkong,null	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Nintendo of America", "Donkey Kong (US set 1)" )
-	public static GameDriver driver_dkongo	   = new GameDriver("1981"	,"dkongo"	,"dkong.java"	,rom_dkongo,driver_dkong	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong (US set 2)" )
-	public static GameDriver driver_dkongjp	   = new GameDriver("1981"	,"dkongjp"	,"dkong.java"	,rom_dkongjp,driver_dkong	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong (Japan set 1)" )
-	public static GameDriver driver_dkongjo	   = new GameDriver("1981"	,"dkongjo"	,"dkong.java"	,rom_dkongjo,driver_dkong	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong (Japan set 2)" )
-	public static GameDriver driver_dkongjo1	   = new GameDriver("1981"	,"dkongjo1"	,"dkong.java"	,rom_dkongjo1,driver_dkong	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong (Japan set 3) (bad dump?)" )
+	GAME( 1981, dkong,    0,        dkong,    dkong,    0,        ROT90, "Nintendo of America", "Donkey Kong (US set 1)" )
+	GAME( 1981, dkongo,   dkong,    dkong,    dkong,    0,        ROT90, "Nintendo", "Donkey Kong (US set 2)" )
+	GAME( 1981, dkongjp,  dkong,    dkong,    dkong,    0,        ROT90, "Nintendo", "Donkey Kong (Japan set 1)" )
+	GAME( 1981, dkongjo,  dkong,    dkong,    dkong,    0,        ROT90, "Nintendo", "Donkey Kong (Japan set 2)" )
+	GAME( 1981, dkongjo1, dkong,    dkong,    dkong,    0,        ROT90, "Nintendo", "Donkey Kong (Japan set 3) (bad dump?)" )
 	
-	public static GameDriver driver_dkongjr	   = new GameDriver("1982"	,"dkongjr"	,"dkong.java"	,rom_dkongjr,null	,machine_driver_dkongjr	,input_ports_dkong	,null	,ROT90	,	"Nintendo of America", "Donkey Kong Junior (US)" )
-	public static GameDriver driver_dkongjrj	   = new GameDriver("1982"	,"dkongjrj"	,"dkong.java"	,rom_dkongjrj,driver_dkongjr	,machine_driver_dkongjr	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong Jr. (Japan)" )
-	public static GameDriver driver_dkngjnrj	   = new GameDriver("1982"	,"dkngjnrj"	,"dkong.java"	,rom_dkngjnrj,driver_dkongjr	,machine_driver_dkongjr	,input_ports_dkong	,null	,ROT90	,	"Nintendo", "Donkey Kong Junior (Japan?)" )
-	public static GameDriver driver_dkongjrb	   = new GameDriver("1982"	,"dkongjrb"	,"dkong.java"	,rom_dkongjrb,driver_dkongjr	,machine_driver_dkongjr	,input_ports_dkong	,null	,ROT90	,	"bootleg", "Donkey Kong Jr. (bootleg)" )
-	public static GameDriver driver_dkngjnrb	   = new GameDriver("1982"	,"dkngjnrb"	,"dkong.java"	,rom_dkngjnrb,driver_dkongjr	,machine_driver_dkongjr	,input_ports_dkong	,null	,ROT90	,	"Nintendo of America", "Donkey Kong Junior (bootleg?)" )
+	GAME( 1982, dkongjr,  0,        dkongjr,  dkong,    0,        ROT90, "Nintendo of America", "Donkey Kong Junior (US)" )
+	GAME( 1982, dkongjrj, dkongjr,  dkongjr,  dkong,    0,        ROT90, "Nintendo", "Donkey Kong Jr. (Japan)" )
+	GAME( 1982, dkngjnrj, dkongjr,  dkongjr,  dkong,    0,        ROT90, "Nintendo", "Donkey Kong Junior (Japan?)" )
+	GAME( 1982, dkongjrb, dkongjr,  dkongjr,  dkong,    0,        ROT90, "bootleg", "Donkey Kong Jr. (bootleg)" )
+	GAME( 1982, dkngjnrb, dkongjr,  dkongjr,  dkong,    0,        ROT90, "Nintendo of America", "Donkey Kong Junior (bootleg?)" )
 	
-	public static GameDriver driver_dkong3	   = new GameDriver("1983"	,"dkong3"	,"dkong.java"	,rom_dkong3,null	,machine_driver_dkong3	,input_ports_dkong3	,null	,ROT90	,	"Nintendo of America", "Donkey Kong 3 (US)" )
-	public static GameDriver driver_dkong3j	   = new GameDriver("1983"	,"dkong3j"	,"dkong.java"	,rom_dkong3j,driver_dkong3	,machine_driver_dkong3	,input_ports_dkong3	,null	,ROT90	,	"Nintendo", "Donkey Kong 3 (Japan)" )
-	public static GameDriver driver_dkong3b	   = new GameDriver("1984"	,"dkong3b"	,"dkong.java"	,rom_dkong3b,driver_dkong3	,machine_driver_dkongjr	,input_ports_dkong3b	,null	,ROT90	,	"bootleg", "Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)", GAME_WRONG_COLORS )
+	GAME( 1983, dkong3,   0,        dkong3,   dkong3,   0,        ROT90, "Nintendo of America", "Donkey Kong 3 (US)" )
+	GAME( 1983, dkong3j,  dkong3,   dkong3,   dkong3,   0,        ROT90, "Nintendo", "Donkey Kong 3 (Japan)" )
+	GAMEX(1984, dkong3b,  dkong3,	dkongjr,  dkong3b,  0,        ROT90, "bootleg", "Donkey Kong 3 (bootleg on Donkey Kong Jr. hardware)", GAME_WRONG_COLORS )
 	
-	public static GameDriver driver_herbiedk	   = new GameDriver("1984"	,"herbiedk"	,"dkong.java"	,rom_herbiedk,driver_huncholy	,machine_driver_herbiedk	,input_ports_herbiedk	,null	,ROT90	,	"CVS", "Herbie at the Olympics (DK conversion)")
+	GAME( 1984, herbiedk, huncholy, herbiedk, herbiedk, 0,        ROT90, "CVS", "Herbie at the Olympics (DK conversion)")
 	
-	public static GameDriver driver_hunchbkd	   = new GameDriver("1983"	,"hunchbkd"	,"dkong.java"	,rom_hunchbkd,driver_hunchbak	,machine_driver_hunchbkd	,input_ports_hunchbkd	,null	,ROT90	,	"Century Electronics", "Hunchback (DK conversion)", GAME_WRONG_COLORS | GAME_NOT_WORKING )
+	GAMEX(1983, hunchbkd, hunchbak, hunchbkd, hunchbkd, 0,        ROT90, "Century Electronics", "Hunchback (DK conversion)", GAME_WRONG_COLORS | GAME_NOT_WORKING )
 	
-	public static GameDriver driver_sbdk	   = new GameDriver("1984"	,"sbdk"	,"dkong.java"	,rom_sbdk,driver_superbik	,machine_driver_hunchbkd	,input_ports_sbdk	,null	,ROT90	,	"Century Electronics", "Super Bike (DK conversion)" )
+	GAME( 1984, sbdk,	  superbik,	hunchbkd, sbdk,		0,        ROT90, "Century Electronics", "Super Bike (DK conversion)" )
 	
-	public static GameDriver driver_herodk	   = new GameDriver("1984"	,"herodk"	,"dkong.java"	,rom_herodk,driver_hero	,machine_driver_hunchbkd	,input_ports_herodk	,init_herodk	,ROT90	,	"Seatongrove Ltd (Crown license)", "Hero in the Castle of Doom (DK conversion)" )
-	public static GameDriver driver_herodku	   = new GameDriver("1984"	,"herodku"	,"dkong.java"	,rom_herodku,driver_hero	,machine_driver_hunchbkd	,input_ports_herodk	,null	,ROT90	,	"Seatongrove Ltd (Crown license)", "Hero in the Castle of Doom (DK conversion not encrypted)" )
+	GAME( 1984, herodk,   hero,     hunchbkd, herodk,   herodk,   ROT90, "Seatongrove Ltd (Crown license)", "Hero in the Castle of Doom (DK conversion)" )
+	GAME( 1984, herodku,  hero,     hunchbkd, herodk,   0,        ROT90, "Seatongrove Ltd (Crown license)", "Hero in the Castle of Doom (DK conversion not encrypted)" )
 	
-	public static GameDriver driver_8ballact	   = new GameDriver("1984"	,"8ballact"	,"dkong.java"	,rom_8ballact,null	,machine_driver_eightact	,input_ports_8ballact	,null	,ROT90	,	"Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (DK conversion)" )
-	public static GameDriver driver_8ballat2	   = new GameDriver("1984"	,"8ballat2"	,"dkong.java"	,rom_8ballat2,driver_8ballact	,machine_driver_eightact	,input_ports_8ballact	,null	,ROT90	,	"Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (DKJr conversion)" )
+	GAME( 1984, 8ballact, 0,    	eightact, 8ballact, 0,        ROT90, "Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (DK conversion)" )
+	GAME( 1984, 8ballat2, 8ballact,	eightact, 8ballact, 0,        ROT90, "Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (DKJr conversion)" )
 	
-	public static GameDriver driver_shootgal	   = new GameDriver("1984"	,"shootgal"	,"dkong.java"	,rom_shootgal,null	,machine_driver_shootgal	,input_ports_hunchbkd	,null	,ROT180	,	"Seatongrove Ltd (Zaccaria licence)", "Shooting Gallery", GAME_NOT_WORKING )
+	GAMEX(1984, shootgal, 0,		shootgal, hunchbkd, 0,		  ROT180, "Seatongrove Ltd (Zaccaria licence)", "Shooting Gallery", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_pestplce	   = new GameDriver("1983"	,"pestplce"	,"dkong.java"	,rom_pestplce,driver_mario	,machine_driver_pestplce	,input_ports_pestplce	,null	,ROT180	,	"bootleg", "Pest Place", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX(1983, pestplce, mario,	pestplce, pestplce, 0,        ROT180, "bootleg", "Pest Place", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
 	
-	public static GameDriver driver_spclforc	   = new GameDriver("1985"	,"spclforc"	,"dkong.java"	,rom_spclforc,null	,machine_driver_spclforc	,input_ports_spclforc	,null	,ROT90	,	"Senko Industries (Magic Eletronics Inc. licence)", "Special Forces", GAME_NO_SOUND )
-	public static GameDriver driver_spcfrcii	   = new GameDriver("1985"	,"spcfrcii"	,"dkong.java"	,rom_spcfrcii,null	,machine_driver_spclforc	,input_ports_spclforc	,null	,ROT90	,	"Senko Industries (Magic Eletronics Inc. licence)", "Special Forces II", GAME_NO_SOUND )
+	GAMEX(1985, spclforc, 0,		spclforc, spclforc, 0,        ROT90, "Senko Industries (Magic Eletronics Inc. licence)", "Special Forces", GAME_NO_SOUND )
+	GAMEX(1985, spcfrcii, 0,		spclforc, spclforc, 0,        ROT90, "Senko Industries (Magic Eletronics Inc. licence)", "Special Forces II", GAME_NO_SOUND )
 	
-	public static GameDriver driver_drakton	   = new GameDriver("198?"	,"drakton"	,"dkong.java"	,rom_drakton,null	,machine_driver_dkong	,input_ports_dkong	,null	,ROT90	,	"Epos Corporation", "Drakton", GAME_NOT_WORKING )
-	public static GameDriver driver_strtheat	   = new GameDriver("1985"	,"strtheat"	,"dkong.java"	,rom_strtheat,null	,machine_driver_strtheat	,input_ports_strtheat	,null	,ROT90	,	"Epos Corporation", "Street Heat - Cardinal Amusements", GAME_NO_SOUND)
+	GAMEX(198?, drakton,  0,        dkong,    dkong,    0,        ROT90, "Epos Corporation", "Drakton", GAME_NOT_WORKING )
+	GAMEX(1985, strtheat, 0,        strtheat, strtheat, 0,        ROT90, "Epos Corporation", "Street Heat - Cardinal Amusements", GAME_NO_SOUND)
 }

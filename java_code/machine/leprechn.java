@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -10,13 +10,11 @@ public class leprechn
 	
 	static data8_t input_port_select;
 	
-	public static WriteHandlerPtr leprechn_input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leprechn_input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    input_port_select = data;
 	} };
 	
-	public static ReadHandlerPtr leprechn_input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leprechn_input_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    switch (input_port_select)
 	    {
 	    case 0x01:
@@ -37,14 +35,12 @@ public class leprechn
 	} };
 	
 	
-	public static WriteHandlerPtr leprechn_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leprechn_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, !data);
 	} };
 	
 	
-	public static WriteHandlerPtr leprechn_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leprechn_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    soundlatch_w.handler(offset,data);
 	    cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	} };
@@ -76,8 +72,7 @@ public class leprechn
 	};
 	
 	
-	public static DriverInitHandlerPtr init_leprechn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_leprechn  = new DriverInitHandlerPtr() { public void handler(){
 		via_config(0, &leprechn_via_0_interface);
 		via_config(1, &leprechn_via_1_interface);
 		via_config(2, &leprechn_via_2_interface);
@@ -86,8 +81,7 @@ public class leprechn
 	} };
 	
 	
-	public static ReadHandlerPtr leprechn_sh_0805_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leprechn_sh_0805_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return 0xc0;
 	} };
 }

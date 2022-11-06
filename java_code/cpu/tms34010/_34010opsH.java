@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms34010;
 
@@ -217,7 +217,7 @@ public class _34010opsH
 		}																				\
 	
 	#define WFIELDMAC_8																	\
-		if ((offset & 0x07) != 0)																\
+		if (offset & 0x07)																\
 		{																				\
 			WFIELDMAC(0xff,9);															\
 		}																				\
@@ -225,7 +225,7 @@ public class _34010opsH
 			TMS34010_WRMEM(TOBYTE(offset), data);										\
 	
 	#define RFIELDMAC_8																	\
-		if ((offset & 0x07) != 0)																\
+		if (offset & 0x07)																\
 		{																				\
 			RFIELDMAC(0xff,9);															\
 		}																				\
@@ -233,7 +233,7 @@ public class _34010opsH
 			return TMS34010_RDMEM(TOBYTE(offset));										\
 	
 	#define WFIELDMAC_32																\
-		if ((offset & 0x0f) != 0)																\
+		if (offset & 0x0f)																\
 		{																				\
 			UINT32 shift = offset&0x0f;													\
 			UINT32 old;																	\
@@ -272,7 +272,7 @@ public class _34010opsH
 		ret &= MASK;																	\
 	
 	#define RFIELDMAC_32																\
-		if ((offset & 0x0f) != 0)																\
+		if (offset&0x0f)																\
 		{																				\
 			UINT32 shift = offset&0x0f;													\
 			offset &= 0xfffffff0;														\

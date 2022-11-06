@@ -60,7 +60,7 @@ correctly.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,8 +73,7 @@ public class _1942
 	
 	
 	
-	public static WriteHandlerPtr c1942_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1942_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -85,8 +84,7 @@ public class _1942
 	
 	
 	
-	public static InterruptHandlerPtr c1942_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr c1942_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0)
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);/* RST 08h */
 		else
@@ -147,7 +145,7 @@ public class _1942
 	
 	
 	
-	static InputPortPtr input_ports_1942 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_1942 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 1942 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -288,8 +286,7 @@ public class _1942
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_1942 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 1942 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -318,9 +315,7 @@ public class _1942
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -455,7 +450,7 @@ public class _1942
 	
 	
 	
-	public static GameDriver driver_1942	   = new GameDriver("1984"	,"1942"	,"_1942.java"	,rom_1942,null	,machine_driver_1942	,input_ports_1942	,null	,ROT270	,	"Capcom", "1942 (set 1)" )
-	public static GameDriver driver_1942a	   = new GameDriver("1984"	,"1942a"	,"_1942.java"	,rom_1942a,driver_1942	,machine_driver_1942	,input_ports_1942	,null	,ROT270	,	"Capcom", "1942 (set 2)" )
-	public static GameDriver driver_1942b	   = new GameDriver("1984"	,"1942b"	,"_1942.java"	,rom_1942b,driver_1942	,machine_driver_1942	,input_ports_1942	,null	,ROT270	,	"Capcom", "1942 (set 3)" )
+	GAME( 1984, 1942,  0,    1942, 1942, 0, ROT270, "Capcom", "1942 (set 1)" )
+	GAME( 1984, 1942a, 1942, 1942, 1942, 0, ROT270, "Capcom", "1942 (set 2)" )
+	GAME( 1984, 1942b, 1942, 1942, 1942, 0, ROT270, "Capcom", "1942 (set 3)" )
 }

@@ -32,7 +32,7 @@ EEPROM chip: 93C46
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,14 +47,13 @@ public class xorworld
 	/****************************************************************
 					NVRAM load/save/init
 	****************************************************************/
-	public static NVRAMHandlerPtr nvram_handler_xorworld  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0){
+	public static NVRAMHandlerPtr nvram_handler_xorworld  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write){
 			EEPROM_save(file);
 		} else {
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file != 0) {
+			if (file) {
 				EEPROM_load(file);
 			}
 		}
@@ -68,8 +67,7 @@ public class xorworld
 	
 	/*	patch some strange protection (without this, strange characters appear
 		after level 5 and some pieces don't rotate properly some times) */
-	public static DriverInitHandlerPtr init_xorworld  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xorworld  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)(memory_region(REGION_CPU1) + 0x1390);
 	
 		PATCH(0x4239); PATCH(0x00ff); PATCH(0xe196);	/* clr.b $ffe196 */
@@ -115,8 +113,7 @@ public class xorworld
 	}
 	
 	
-	public static InterruptHandlerPtr xorworld_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr xorworld_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0){		
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		}
@@ -183,7 +180,7 @@ public class xorworld
 	};
 	
 	
-	static InputPortPtr input_ports_xorworld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xorworld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xorworld )
 	
 	PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x07, 0x07, "Coin A & B" );
@@ -234,8 +231,7 @@ public class xorworld
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_xorworld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xorworld )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -262,9 +258,7 @@ public class xorworld
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAA1099, xorworld_saa1099_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_xorworld = new RomLoadPtr(){ public void handler(){ 
@@ -284,5 +278,5 @@ public class xorworld
 	
 	
 	
-	public static GameDriver driver_xorworld	   = new GameDriver("1990"	,"xorworld"	,"xorworld.java"	,rom_xorworld,null	,machine_driver_xorworld	,input_ports_xorworld	,init_xorworld	,ROT0	,	"Gaelco", "Xor World (prototype)" )
+	GAME( 1990, xorworld, 0, xorworld, xorworld, xorworld, ROT0, "Gaelco", "Xor World (prototype)" )
 }

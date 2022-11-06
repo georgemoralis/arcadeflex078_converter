@@ -49,7 +49,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -157,16 +157,15 @@ public class taito_l
 	
 		for(i=0;i<512;i++)
 		{
-			decodechar(Machine.gfx[2], i, taitol_rambanks,
-					   Machine.drv.gfxdecodeinfo[2].gfxlayout);
-			decodechar(Machine.gfx[2], i+512, taitol_rambanks + 0x4000,
-					   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine->gfx[2], i, taitol_rambanks,
+					   Machine->drv->gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine->gfx[2], i+512, taitol_rambanks + 0x4000,
+					   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		}
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_fhawk  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fhawk  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
@@ -174,8 +173,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_raimais  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_raimais  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
@@ -183,8 +181,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_champwr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_champwr  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
@@ -193,8 +190,7 @@ public class taito_l
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_kurikint  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_kurikint  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
@@ -202,8 +198,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_evilston  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_evilston  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = 0;
 		porte1_r = 0;
@@ -211,8 +206,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_puzznic  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_puzznic  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
@@ -220,8 +214,7 @@ public class taito_l
 		portf1_r = input_port_3_r;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_plotting  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_plotting  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
@@ -229,8 +222,7 @@ public class taito_l
 		portf1_r = input_port_3_r;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_palamed  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_palamed  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = 0;
@@ -238,8 +230,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_cachat  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cachat  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = 0;
@@ -247,8 +238,7 @@ public class taito_l
 		portf1_r = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_horshoes  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_horshoes  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init();
 		porte0_r = input_port_0_r;
 		porte1_r = input_port_1_r;
@@ -258,8 +248,7 @@ public class taito_l
 	
 	
 	
-	public static InterruptHandlerPtr vbl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vbl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* kludge to make plgirls boot */
 		if (cpunum_get_reg(0,Z80_IM) != 2) return;
 	
@@ -273,31 +262,26 @@ public class taito_l
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_adr_table[2]);
 	} };
 	
-	public static WriteHandlerPtr irq_adr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irq_adr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("irq_adr_table[%d] = %02x\n",offset,data);
 		irq_adr_table[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr irq_adr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irq_adr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return irq_adr_table[offset];
 	} };
 	
-	public static WriteHandlerPtr irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("irq_enable = %02x\n",data);
 		irq_enable = data;
 	} };
 	
-	public static ReadHandlerPtr irq_enable_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irq_enable_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return irq_enable;
 	} };
 	
 	
-	public static WriteHandlerPtr rombankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rombankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int high = 0;
 		if(cur_rombank != data)
 		{
@@ -313,8 +297,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr rombank2switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rombank2switch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int high = 0;
 	
 		data &= 0xf;
@@ -334,18 +317,15 @@ public class taito_l
 		}
 	} };
 	
-	public static ReadHandlerPtr rombankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rombankswitch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cur_rombank;
 	} };
 	
-	public static ReadHandlerPtr rombank2switch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rombank2switch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cur_rombank2;
 	} };
 	
-	public static WriteHandlerPtr rambankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rambankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(cur_rambank[offset]!=data)
 		{
 			cur_rambank[offset]=data;
@@ -371,13 +351,11 @@ public class taito_l
 		}
 	} };
 	
-	public static ReadHandlerPtr rambankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rambankswitch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cur_rambank[offset];
 	} };
 	
-	public static WriteHandlerPtr bank0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(current_base[0][offset]!=data)
 		{
 			current_base[0][offset] = data;
@@ -386,8 +364,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr bank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(current_base[1][offset]!=data)
 		{
 			current_base[1][offset] = data;
@@ -396,8 +373,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(current_base[2][offset]!=data)
 		{
 			current_base[2][offset] = data;
@@ -406,8 +382,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr bank3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(current_base[3][offset]!=data)
 		{
 			current_base[3][offset] = data;
@@ -416,8 +391,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr control2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0,~data & 0x01);
 		coin_lockout_w(1,~data & 0x02);
 		coin_counter_w(0,data & 0x04);
@@ -426,26 +400,22 @@ public class taito_l
 	
 	static int extport;
 	
-	public static ReadHandlerPtr portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (extport == 0) return porte0_r(0);
 		else return porte1_r(0);
 	} };
 	
-	public static ReadHandlerPtr portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (extport == 0) return portf0_r(0);
 		else return portf1_r(0);
 	} };
 	
-	public static ReadHandlerPtr ym2203_data0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ym2203_data0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		extport = 0;
 		return YM2203_read_port_0_r(offset);
 	} };
 	
-	public static ReadHandlerPtr ym2203_data1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ym2203_data1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		extport = 1;
 		return YM2203_read_port_0_r(offset);
 	} };
@@ -456,8 +426,7 @@ public class taito_l
 	
 	static int puzznic_mcu_reply[] = { 0x50, 0x1f, 0xb6, 0xba, 0x06, 0x03, 0x47, 0x05, 0x00 };
 	
-	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		last_data = data;
 		last_data_adr = activecpu_get_pc();
 	//	logerror("mcu write %02x (%04x)\n", data, activecpu_get_pc());
@@ -471,13 +440,11 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("mcu control %02x (%04x)\n", data, activecpu_get_pc());
 	} };
 	
-	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("mcu read (%04x) [%02x, %04x]\n", activecpu_get_pc(), last_data, last_data_adr);
 		if(mcu_pos==mcu_reply_len)
 			return 0;
@@ -485,33 +452,28 @@ public class taito_l
 		return mcu_reply[mcu_pos++];
 	} };
 	
-	public static ReadHandlerPtr mcu_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("mcu control read (%04x)\n", activecpu_get_pc());
 		return 0x1;
 	} };
 	
 	#if 0
-	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("Sound_w %02x (%04x)\n", data, activecpu_get_pc());
 	} };
 	#endif
 	
-	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram[offset] = data;
 	} };
 	
 	static int mux_ctrl = 0;
 	
-	public static ReadHandlerPtr mux_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mux_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(mux_ctrl)
 		{
 		case 0:
@@ -530,8 +492,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr mux_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mux_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(mux_ctrl)
 		{
 		case 4:
@@ -542,8 +503,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr mux_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mux_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mux_ctrl = data;
 	} };
 	
@@ -552,13 +512,11 @@ public class taito_l
 	
 	static int champwr_adpcm_start;
 	
-	public static WriteHandlerPtr champwr_adpcm_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champwr_adpcm_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		champwr_adpcm_start = (champwr_adpcm_start & 0xff00ff) | (data << 8);
 	} };
 	
-	public static WriteHandlerPtr champwr_adpcm_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champwr_adpcm_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_SOUND1);
 		int romlen = memory_region_length(REGION_SOUND1);
 		int length;
@@ -577,37 +535,31 @@ public class taito_l
 	
 	static int trackx,tracky;
 	
-	public static ReadHandlerPtr horshoes_tracky_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_tracky_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* reset the trackball counter */
 		tracky = readinputport(4);
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr horshoes_trackx_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_trackx_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* reset the trackball counter */
 		trackx = readinputport(5);
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr horshoes_tracky_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_tracky_lo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(4) - tracky) & 0xff;
 	} };
 	
-	public static ReadHandlerPtr horshoes_tracky_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_tracky_hi_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(4) - tracky) >> 8;
 	} };
 	
-	public static ReadHandlerPtr horshoes_trackx_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_trackx_lo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(5) - trackx) & 0xff;
 	} };
 	
-	public static ReadHandlerPtr horshoes_trackx_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr horshoes_trackx_hi_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(5) - trackx) >> 8;
 	} };
 	
@@ -773,8 +725,7 @@ public class taito_l
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int banknum = (data - 1) & 3;
 	
@@ -1047,11 +998,10 @@ public class taito_l
 	
 	
 	
-	static WRITE_HANDLER (evilston_snd_w)
-	{
+	public static WriteHandlerPtr evilston_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram[0x7fe]=data&0x7f;
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
-	}
+	} };
 	
 	
 	
@@ -1177,7 +1127,7 @@ public class taito_l
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") ); \
 		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
 	
-	static InputPortPtr input_ports_fhawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fhawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fhawk )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1212,7 +1162,7 @@ public class taito_l
 		TAITO_L_SYSTEM_INPUT( IP_ACTIVE_LOW, 4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fhawkj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fhawkj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fhawkj )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1247,7 +1197,7 @@ public class taito_l
 		TAITO_L_SYSTEM_INPUT( IP_ACTIVE_LOW, 4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_raimais = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raimais = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raimais )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1332,7 +1282,7 @@ public class taito_l
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );\
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 	
-	static InputPortPtr input_ports_champwr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_champwr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( champwr )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 2 in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1345,7 +1295,7 @@ public class taito_l
 		CHAMPWR_INPUTS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_champwrj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_champwrj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( champwrj )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1358,7 +1308,7 @@ public class taito_l
 		CHAMPWR_INPUTS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_champwru = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_champwru = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( champwru )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1393,7 +1343,7 @@ public class taito_l
 		PORT_DIPSETTING(    0x80, "5 Times" );\
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	
-	static InputPortPtr input_ports_kurikint = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kurikint = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kurikint )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1410,7 +1360,7 @@ public class taito_l
 		TAITO_L_SYSTEM_INPUT( IP_ACTIVE_HIGH, 4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kurikinj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kurikinj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kurikinj )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1427,7 +1377,7 @@ public class taito_l
 		TAITO_L_SYSTEM_INPUT( IP_ACTIVE_HIGH, 4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kurikina = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kurikina = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kurikina )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1475,7 +1425,7 @@ public class taito_l
 		TAITO_L_SYSTEM_INPUT( IP_ACTIVE_HIGH, 4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_puzznic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_puzznic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puzznic )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1545,7 +1495,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_plotting = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_plotting = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( plotting )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, "Max Players" );
 		PORT_DIPSETTING(    0x00, "1" );
@@ -1594,7 +1544,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_palamed = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_palamed = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( palamed )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1655,7 +1605,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cachat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cachat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cachat )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1721,7 +1671,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tubeit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tubeit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tubeit )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1787,7 +1737,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_horshoes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_horshoes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( horshoes )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1855,7 +1805,7 @@ public class taito_l
 		PORT_ANALOG( 0xffff, 0x0000, IPT_TRACKBALL_X, 50, 30, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_plgirls = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_plgirls = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( plgirls )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -1933,7 +1883,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_plgirls2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_plgirls2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( plgirls2 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1999,7 +1949,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cubybop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cubybop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cubybop )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2065,7 +2015,7 @@ public class taito_l
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_evilston = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_evilston = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( evilston )
 	
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
@@ -2208,8 +2158,7 @@ public class taito_l
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	public static WriteHandlerPtr portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int cur_bank = 0;
 	
 		if (cur_bank != (data & 0x03) )
@@ -2299,8 +2248,7 @@ public class taito_l
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_fhawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fhawk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("cpu1", Z80, 6000000)	/* ? xtal is 13.33056 */
@@ -2334,13 +2282,10 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("2203", YM2203, ym2203_interface_triple)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_champwr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( champwr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(fhawk)
@@ -2357,13 +2302,10 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_raimais = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raimais )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(fhawk)
@@ -2380,13 +2322,10 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("2203", YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kurikint = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kurikint )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* ? xtal is 13.33056 */
@@ -2416,26 +2355,20 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_double)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kurikina = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kurikina )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(kurikint)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_plotting = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( plotting )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 6000000)	/* ? xtal is 13.33056 */
@@ -2460,13 +2393,10 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_single)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_puzznic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( puzznic )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(plotting)
@@ -2474,13 +2404,10 @@ public class taito_l
 		MDRV_CPU_MEMORY(puzznic_readmem,puzznic_writemem)
 	
 		MDRV_MACHINE_INIT(puzznic)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_horshoes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( horshoes )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(plotting)
@@ -2488,13 +2415,10 @@ public class taito_l
 		MDRV_CPU_MEMORY(horshoes_readmem,horshoes_writemem)
 	
 		MDRV_MACHINE_INIT(horshoes)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_palamed = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( palamed )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(plotting)
@@ -2502,13 +2426,10 @@ public class taito_l
 		MDRV_CPU_MEMORY(palamed_readmem,palamed_writemem)
 	
 		MDRV_MACHINE_INIT(palamed)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cachat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cachat )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(plotting)
@@ -2516,12 +2437,9 @@ public class taito_l
 		MDRV_CPU_MEMORY(cachat_readmem,cachat_writemem)
 	
 		MDRV_MACHINE_INIT(cachat)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_evilston = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( evilston )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)
@@ -2551,9 +2469,7 @@ public class taito_l
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_evilston)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2871,8 +2787,7 @@ public class taito_l
 	
 	
 	// bits 7..0 => bits 0..7
-	public static DriverInitHandlerPtr init_plotting  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_plotting  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char tab[256];
 		unsigned char *p;
 		int i;
@@ -2893,34 +2808,33 @@ public class taito_l
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_evilston  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_evilston  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU2);
-		ROM[0x72]=0x45;	/* reti . retn  ('dead' loop @ $1104 )*/
+		ROM[0x72]=0x45;	/* reti -> retn  ('dead' loop @ $1104 )*/
 		install_mem_write_handler( 0, 0xa7fe, 0xa7fe, evilston_snd_w);
 	} };
 	
 	
-	public static GameDriver driver_raimais	   = new GameDriver("1988"	,"raimais"	,"taito_l.java"	,rom_raimais,null	,machine_driver_raimais	,input_ports_raimais	,null	,ROT0	,	"Taito Corporation", "Raimais (Japan)" )
-	public static GameDriver driver_fhawk	   = new GameDriver("1988"	,"fhawk"	,"taito_l.java"	,rom_fhawk,null	,machine_driver_fhawk	,input_ports_fhawk	,null	,ROT270	,	"Taito Corporation Japan", "Fighting Hawk (World)" )
-	public static GameDriver driver_fhawkj	   = new GameDriver("1988"	,"fhawkj"	,"taito_l.java"	,rom_fhawkj,driver_fhawk	,machine_driver_fhawk	,input_ports_fhawkj	,null	,ROT270	,	"Taito Corporation", "Fighting Hawk (Japan)" )
-	public static GameDriver driver_champwr	   = new GameDriver("1989"	,"champwr"	,"taito_l.java"	,rom_champwr,null	,machine_driver_champwr	,input_ports_champwr	,null	,ROT0	,	"Taito Corporation Japan", "Champion Wrestler (World)" )
-	public static GameDriver driver_champwru	   = new GameDriver("1989"	,"champwru"	,"taito_l.java"	,rom_champwru,driver_champwr	,machine_driver_champwr	,input_ports_champwru	,null	,ROT0	,	"Taito America Corporation", "Champion Wrestler (US)" )
-	public static GameDriver driver_champwrj	   = new GameDriver("1989"	,"champwrj"	,"taito_l.java"	,rom_champwrj,driver_champwr	,machine_driver_champwr	,input_ports_champwrj	,null	,ROT0	,	"Taito Corporation", "Champion Wrestler (Japan)" )
-	public static GameDriver driver_kurikint	   = new GameDriver("1988"	,"kurikint"	,"taito_l.java"	,rom_kurikint,null	,machine_driver_kurikint	,input_ports_kurikint	,null	,ROT0	,	"Taito Corporation Japan", "Kuri Kinton (World)" )
-	public static GameDriver driver_kurikinu	   = new GameDriver("1988"	,"kurikinu"	,"taito_l.java"	,rom_kurikinu,driver_kurikint	,machine_driver_kurikint	,input_ports_kurikinj	,null	,ROT0	,	"Taito America Corporation", "Kuri Kinton (US)" )
-	public static GameDriver driver_kurikinj	   = new GameDriver("1988"	,"kurikinj"	,"taito_l.java"	,rom_kurikinj,driver_kurikint	,machine_driver_kurikint	,input_ports_kurikinj	,null	,ROT0	,	"Taito Corporation", "Kuri Kinton (Japan)" )
-	public static GameDriver driver_kurikina	   = new GameDriver("1988"	,"kurikina"	,"taito_l.java"	,rom_kurikina,driver_kurikint	,machine_driver_kurikina	,input_ports_kurikina	,null	,ROT0	,	"Taito Corporation Japan", "Kuri Kinton (World, prototype?)" )
-	public static GameDriver driver_plotting	   = new GameDriver("1989"	,"plotting"	,"taito_l.java"	,rom_plotting,null	,machine_driver_plotting	,input_ports_plotting	,init_plotting	,ROT0	,	"Taito Corporation Japan", "Plotting (World)" )
-	public static GameDriver driver_puzznic	   = new GameDriver("1989"	,"puzznic"	,"taito_l.java"	,rom_puzznic,null	,machine_driver_puzznic	,input_ports_puzznic	,null	,ROT0	,	"Taito Corporation", "Puzznic (Japan)" )
-	public static GameDriver driver_horshoes	   = new GameDriver("1990"	,"horshoes"	,"taito_l.java"	,rom_horshoes,null	,machine_driver_horshoes	,input_ports_horshoes	,null	,ROT270	,	"Taito America Corporation", "American Horseshoes (US)" )
-	public static GameDriver driver_palamed	   = new GameDriver("1990"	,"palamed"	,"taito_l.java"	,rom_palamed,null	,machine_driver_palamed	,input_ports_palamed	,null	,ROT0	,	"Taito Corporation", "Palamedes (Japan)" )
-	public static GameDriver driver_cachat	   = new GameDriver("1993"	,"cachat"	,"taito_l.java"	,rom_cachat,null	,machine_driver_cachat	,input_ports_cachat	,null	,ROT0	,	"Taito Corporation", "Cachat (Japan)" )
-	public static GameDriver driver_tubeit	   = new GameDriver("1993"	,"tubeit"	,"taito_l.java"	,rom_tubeit,driver_cachat	,machine_driver_cachat	,input_ports_tubeit	,null	,ROT0	,	"Taito Corporation", "Tube-It" )  // No (c) message
-	public static GameDriver driver_cubybop	   = new GameDriver("199?"	,"cubybop"	,"taito_l.java"	,rom_cubybop,null	,machine_driver_cachat	,input_ports_cubybop	,null	,ROT0	,	"Taito Corporation", "Cuby Bop (Location Test)" ) // No (c) message
+	GAME( 1988, raimais,  0,        raimais,  raimais,  0,        ROT0,   "Taito Corporation", "Raimais (Japan)" )
+	GAME( 1988, fhawk,    0,        fhawk,    fhawk,    0,        ROT270, "Taito Corporation Japan", "Fighting Hawk (World)" )
+	GAME( 1988, fhawkj,   fhawk,    fhawk,    fhawkj,   0,        ROT270, "Taito Corporation", "Fighting Hawk (Japan)" )
+	GAME( 1989, champwr,  0,        champwr,  champwr,  0,        ROT0,   "Taito Corporation Japan", "Champion Wrestler (World)" )
+	GAME( 1989, champwru, champwr,  champwr,  champwru, 0,        ROT0,   "Taito America Corporation", "Champion Wrestler (US)" )
+	GAME( 1989, champwrj, champwr,  champwr,  champwrj, 0,        ROT0,   "Taito Corporation", "Champion Wrestler (Japan)" )
+	GAME( 1988, kurikint, 0,        kurikint, kurikint, 0,        ROT0,   "Taito Corporation Japan", "Kuri Kinton (World)" )
+	GAME( 1988, kurikinu, kurikint, kurikint, kurikinj, 0,        ROT0,   "Taito America Corporation", "Kuri Kinton (US)" )
+	GAME( 1988, kurikinj, kurikint, kurikint, kurikinj, 0,        ROT0,   "Taito Corporation", "Kuri Kinton (Japan)" )
+	GAME( 1988, kurikina, kurikint, kurikina, kurikina, 0,        ROT0,   "Taito Corporation Japan", "Kuri Kinton (World, prototype?)" )
+	GAME( 1989, plotting, 0,        plotting, plotting, plotting, ROT0,   "Taito Corporation Japan", "Plotting (World)" )
+	GAME( 1989, puzznic,  0,        puzznic,  puzznic,  0,        ROT0,   "Taito Corporation", "Puzznic (Japan)" )
+	GAME( 1990, horshoes, 0,        horshoes, horshoes, 0,        ROT270, "Taito America Corporation", "American Horseshoes (US)" )
+	GAME( 1990, palamed,  0,        palamed,  palamed,  0,        ROT0,   "Taito Corporation", "Palamedes (Japan)" )
+	GAME( 1993, cachat,   0,        cachat,   cachat,   0,        ROT0,   "Taito Corporation", "Cachat (Japan)" )
+	GAME( 1993, tubeit,   cachat,   cachat,   tubeit,   0,        ROT0,   "Taito Corporation", "Tube-It" )  // No (c) message
+	GAME( 199?, cubybop,  0,        cachat,   cubybop,  0,        ROT0,   "Taito Corporation", "Cuby Bop (Location Test)" ) // No (c) message
 	
-	public static GameDriver driver_plgirls	   = new GameDriver("1992"	,"plgirls"	,"taito_l.java"	,rom_plgirls,null	,machine_driver_cachat	,input_ports_plgirls	,null	,ROT270	,	"Hot-B.", "Play Girls" )
-	public static GameDriver driver_plgirls2	   = new GameDriver("1993"	,"plgirls2"	,"taito_l.java"	,rom_plgirls2,null	,machine_driver_cachat	,input_ports_plgirls2	,null	,ROT270	,	"Hot-B.", "Play Girls 2" )
+	GAME( 1992, plgirls,  0,        cachat,   plgirls,  0,        ROT270, "Hot-B.", "Play Girls" )
+	GAME( 1993, plgirls2, 0,        cachat,   plgirls2, 0,        ROT270, "Hot-B.", "Play Girls 2" )
 	
-	public static GameDriver driver_evilston	   = new GameDriver("1990"	,"evilston"	,"taito_l.java"	,rom_evilston,null	,machine_driver_evilston	,input_ports_evilston	,init_evilston	,ROT270	,	"Spacy Industrial, Ltd.", "Evil Stone" )
+	GAME( 1990, evilston, 0,        evilston, evilston, evilston, ROT270, "Spacy Industrial, Ltd.", "Evil Stone" )
 }

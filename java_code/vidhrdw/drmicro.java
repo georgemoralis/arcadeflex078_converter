@@ -9,7 +9,7 @@ Video hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,7 @@ public class drmicro
 		flip_screen_set(flip);
 	}
 	
-	public static WriteHandlerPtr drmicro_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr drmicro_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drmicro_videoram[offset] = data;
 	
 		if (offset<0x800)
@@ -40,8 +39,7 @@ public class drmicro
 			tilemap_mark_tile_dirty(drmicro_bg1,(offset & 0x3ff));
 	} };
 	
-	public static ReadHandlerPtr drmicro_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr drmicro_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return drmicro_videoram[offset];
 	} };
 	
@@ -77,8 +75,7 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_drmicro  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_drmicro  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -106,8 +103,7 @@ public class drmicro
 			colortable[i] = color_prom.read(i)& 0x0f;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_drmicro  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_drmicro  = new VideoStartHandlerPtr() { public int handler(){
 		drmicro_videoram = auto_malloc(0x1000);
 	
 		drmicro_bg1 = tilemap_create(get_bg1_tile_info, tilemap_scan_rows,TILEMAP_OPAQUE, 8,8,32,32);
@@ -121,8 +117,7 @@ public class drmicro
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_drmicro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,adr,g;
 		int chr,col,attr;
 		int x,y,fx,fy;
@@ -150,7 +145,7 @@ public class drmicro
 	
 				col = (attr & 0x0f) + 0x00;
 	
-				if (flipscreen == 0)
+				if (!flipscreen)
 					y = (240-y) & 0xff;
 				else
 					x = (240-x) & 0xff;

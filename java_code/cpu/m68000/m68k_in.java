@@ -123,7 +123,7 @@ M68KMAKE_TABLE_HEADER
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m68000;
 
@@ -177,80 +177,80 @@ public class m68k_in
 		}
 	
 		ostruct = m68k_opcode_handler_table;
-		while(ostruct.mask != 0xff00)
+		while(ostruct->mask != 0xff00)
 		{
 			for(i = 0;i < 0x10000;i++)
 			{
-				if((i & ostruct.mask) == ostruct.match)
+				if((i & ostruct->mask) == ostruct->match)
 				{
-					m68ki_instruction_jump_table[i] = ostruct.opcode_handler;
+					m68ki_instruction_jump_table[i] = ostruct->opcode_handler;
 					for(k=0;k<NUM_CPU_TYPES;k++)
-						m68ki_cycles[k][i] = ostruct.cycles[k];
+						m68ki_cycles[k][i] = ostruct->cycles[k];
 				}
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xff00)
+		while(ostruct->mask == 0xff00)
 		{
 			for(i = 0;i <= 0xff;i++)
 			{
-				m68ki_instruction_jump_table[ostruct.match | i] = ostruct.opcode_handler;
+				m68ki_instruction_jump_table[ostruct->match | i] = ostruct->opcode_handler;
 				for(k=0;k<NUM_CPU_TYPES;k++)
-					m68ki_cycles[k][ostruct.match | i] = ostruct.cycles[k];
+					m68ki_cycles[k][ostruct->match | i] = ostruct->cycles[k];
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xf1f8)
+		while(ostruct->mask == 0xf1f8)
 		{
 			for(i = 0;i < 8;i++)
 			{
 				for(j = 0;j < 8;j++)
 				{
-					instr = ostruct.match | (i << 9) | j;
-					m68ki_instruction_jump_table[instr] = ostruct.opcode_handler;
+					instr = ostruct->match | (i << 9) | j;
+					m68ki_instruction_jump_table[instr] = ostruct->opcode_handler;
 					for(k=0;k<NUM_CPU_TYPES;k++)
-						m68ki_cycles[k][instr] = ostruct.cycles[k];
+						m68ki_cycles[k][instr] = ostruct->cycles[k];
 					if((instr & 0xf000) == 0xe000 && (!(instr & 0x20)))
-						m68ki_cycles[0][instr] = m68ki_cycles[1][instr] = ostruct.cycles[k] + ((((j-1)&7)+1)<<1);
+						m68ki_cycles[0][instr] = m68ki_cycles[1][instr] = ostruct->cycles[k] + ((((j-1)&7)+1)<<1);
 				}
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xfff0)
+		while(ostruct->mask == 0xfff0)
 		{
 			for(i = 0;i <= 0x0f;i++)
 			{
-				m68ki_instruction_jump_table[ostruct.match | i] = ostruct.opcode_handler;
+				m68ki_instruction_jump_table[ostruct->match | i] = ostruct->opcode_handler;
 				for(k=0;k<NUM_CPU_TYPES;k++)
-					m68ki_cycles[k][ostruct.match | i] = ostruct.cycles[k];
+					m68ki_cycles[k][ostruct->match | i] = ostruct->cycles[k];
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xf1ff)
+		while(ostruct->mask == 0xf1ff)
 		{
 			for(i = 0;i <= 0x07;i++)
 			{
-				m68ki_instruction_jump_table[ostruct.match | (i << 9)] = ostruct.opcode_handler;
+				m68ki_instruction_jump_table[ostruct->match | (i << 9)] = ostruct->opcode_handler;
 				for(k=0;k<NUM_CPU_TYPES;k++)
-					m68ki_cycles[k][ostruct.match | (i << 9)] = ostruct.cycles[k];
+					m68ki_cycles[k][ostruct->match | (i << 9)] = ostruct->cycles[k];
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xfff8)
+		while(ostruct->mask == 0xfff8)
 		{
 			for(i = 0;i <= 0x07;i++)
 			{
-				m68ki_instruction_jump_table[ostruct.match | i] = ostruct.opcode_handler;
+				m68ki_instruction_jump_table[ostruct->match | i] = ostruct->opcode_handler;
 				for(k=0;k<NUM_CPU_TYPES;k++)
-					m68ki_cycles[k][ostruct.match | i] = ostruct.cycles[k];
+					m68ki_cycles[k][ostruct->match | i] = ostruct->cycles[k];
 			}
 			ostruct++;
 		}
-		while(ostruct.mask == 0xffff)
+		while(ostruct->mask == 0xffff)
 		{
-			m68ki_instruction_jump_table[ostruct.match] = ostruct.opcode_handler;
+			m68ki_instruction_jump_table[ostruct->match] = ostruct->opcode_handler;
 			for(k=0;k<NUM_CPU_TYPES;k++)
-				m68ki_cycles[k][ostruct.match] = ostruct.cycles[k];
+				m68ki_cycles[k][ostruct->match] = ostruct->cycles[k];
 			ostruct++;
 		}
 	}
@@ -902,7 +902,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if (FLAG_C != 0)
+		if(FLAG_C)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -928,7 +928,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if (FLAG_C != 0)
+		if(FLAG_C)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -954,7 +954,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if (FLAG_C != 0)
+		if(FLAG_C)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -980,7 +980,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if (FLAG_C != 0)
+		if(FLAG_C)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -1006,7 +1006,7 @@ public class m68k_in
 			res += 6;
 		res += HIGH_NIBBLE(src) + HIGH_NIBBLE(dst);
 		FLAG_X = FLAG_C = (res > 0x99) << 8;
-		if (FLAG_C != 0)
+		if(FLAG_C)
 			res -= 0xa0;
 	
 		FLAG_V &= res; /* Undefined V behavior part II */
@@ -1799,7 +1799,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(andi, 16, tos, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -2221,7 +2221,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(bcc, 8, ., .)
 	{
-		if (M68KMAKE_CC != 0)
+		if(M68KMAKE_CC)
 		{
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
 			m68ki_branch_8(MASK_OUT_ABOVE_8(REG_IR));
@@ -2233,7 +2233,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(bcc, 16, ., .)
 	{
-		if (M68KMAKE_CC != 0)
+		if(M68KMAKE_CC)
 		{
 			uint offset = OPER_I_16();
 			REG_PC -= 2;
@@ -2250,7 +2250,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if (M68KMAKE_CC != 0)
+			if(M68KMAKE_CC)
 			{
 				uint offset = OPER_I_32();
 				REG_PC -= 4;
@@ -3245,7 +3245,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_8(*compare, dest, res);
 			FLAG_C = CFLAG_8(res);
 	
-			if (COND_NE() != 0)
+			if(COND_NE())
 				*compare = MASK_OUT_BELOW_8(*compare) | dest;
 			else
 			{
@@ -3274,7 +3274,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_16(*compare, dest, res);
 			FLAG_C = CFLAG_16(res);
 	
-			if (COND_NE() != 0)
+			if(COND_NE())
 				*compare = MASK_OUT_BELOW_16(*compare) | dest;
 			else
 			{
@@ -3303,7 +3303,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_32(*compare, dest, res);
 			FLAG_C = CFLAG_SUB_32(*compare, dest, res);
 	
-			if (COND_NE() != 0)
+			if(COND_NE())
 				*compare = dest;
 			else
 			{
@@ -3336,7 +3336,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_16(*compare1, dest1, res1);
 			FLAG_C = CFLAG_16(res1);
 	
-			if (COND_EQ() != 0)
+			if(COND_EQ())
 			{
 				res2 = dest2 - MASK_OUT_ABOVE_16(*compare2);
 	
@@ -3345,7 +3345,7 @@ public class m68k_in
 				FLAG_V = VFLAG_SUB_16(*compare2, dest2, res2);
 				FLAG_C = CFLAG_16(res2);
 	
-				if (COND_EQ() != 0)
+				if(COND_EQ())
 				{
 					USE_CYCLES(3);
 					m68ki_write_16(ea1, REG_D[(word2 >> 22) & 7]);
@@ -3381,7 +3381,7 @@ public class m68k_in
 			FLAG_V = VFLAG_SUB_32(*compare1, dest1, res1);
 			FLAG_C = CFLAG_SUB_32(*compare1, dest1, res1);
 	
-			if (COND_EQ() != 0)
+			if(COND_EQ())
 			{
 				res2 = dest2 - *compare2;
 	
@@ -3390,7 +3390,7 @@ public class m68k_in
 				FLAG_V = VFLAG_SUB_32(*compare2, dest2, res2);
 				FLAG_C = CFLAG_SUB_32(*compare2, dest2, res2);
 	
-				if (COND_EQ() != 0)
+				if(COND_EQ())
 				{
 					USE_CYCLES(3);
 					m68ki_write_32(ea1, REG_D[(word2 >> 22) & 7]);
@@ -3503,7 +3503,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3534,7 +3534,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3565,7 +3565,7 @@ public class m68k_in
 			else
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3597,7 +3597,7 @@ public class m68k_in
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3633,7 +3633,7 @@ public class m68k_in
 				FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3670,7 +3670,7 @@ public class m68k_in
 	
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_16(FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3703,7 +3703,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3733,7 +3733,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -3763,7 +3763,7 @@ public class m68k_in
 			FLAG_C = compare - lower_bound;
 			FLAG_Z = !((upper_bound==compare) | (lower_bound==compare));
 			FLAG_C = CFLAG_SUB_32(lower_bound, compare, FLAG_C);
-			if (COND_CS() != 0)
+			if(COND_CS())
 			{
 				if(BIT_B(word2))
 					m68ki_exception_trap(EXCEPTION_CHK);
@@ -4383,7 +4383,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(dbcc, 16, ., .)
 	{
-		if (M68KMAKE_NOT_CC != 0)
+		if(M68KMAKE_NOT_CC)
 		{
 			uint* r_dst = &DY;
 			uint res = MASK_OUT_ABOVE_16(*r_dst - 1);
@@ -4688,12 +4688,12 @@ public class m68k_in
 							FLAG_V = VFLAG_SET;
 							return;
 						}
-						if (dividend_neg != 0)
+						if(dividend_neg)
 						{
 							remainder = (uint)MASK_OUT_ABOVE_32(-(sint)remainder);
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 						}
-						if (divisor_neg != 0)
+						if(divisor_neg)
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 					}
 	
@@ -4899,12 +4899,12 @@ public class m68k_in
 							FLAG_V = VFLAG_SET;
 							return;
 						}
-						if (dividend_neg != 0)
+						if(dividend_neg)
 						{
 							remainder = (uint)MASK_OUT_ABOVE_32(-(sint)remainder);
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 						}
-						if (divisor_neg != 0)
+						if(divisor_neg)
 							quotient = (uint)MASK_OUT_ABOVE_32(-(sint)quotient);
 					}
 	
@@ -5117,7 +5117,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(eori, 16, tos, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -6670,7 +6670,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 16, tos, d)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			m68ki_set_sr(DY);
 			return;
@@ -6681,7 +6681,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 16, tos, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint new_sr = M68KMAKE_GET_OPER_AY_16;
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -6694,7 +6694,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 32, fru, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			AY = REG_USP;
 			return;
@@ -6705,7 +6705,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(move, 32, tou, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
 			REG_USP = AY;
@@ -6719,7 +6719,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if (FLAG_S != 0)
+			if(FLAG_S)
 			{
 				uint word2 = OPER_I_16();
 	
@@ -6785,7 +6785,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if (FLAG_S != 0)
+			if(FLAG_S)
 			{
 				uint word2 = OPER_I_16();
 	
@@ -6824,7 +6824,7 @@ public class m68k_in
 					if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 					{
 						/* we are in supervisor mode so just check for M flag */
-						if (FLAG_M == 0)
+						if(!FLAG_M)
 						{
 							REG_MSP = REG_DA[(word2 >> 12) & 15];
 							return;
@@ -6837,7 +6837,7 @@ public class m68k_in
 				case 0x804:			   /* ISP */
 					if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 					{
-						if (FLAG_M == 0)
+						if(!FLAG_M)
 						{
 							REG_SP = REG_DA[(word2 >> 12) & 15];
 							return;
@@ -7135,7 +7135,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if (FLAG_S != 0)
+			if(FLAG_S)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_8;
@@ -7170,7 +7170,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if (FLAG_S != 0)
+			if(FLAG_S)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_16;
@@ -7205,7 +7205,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_010_PLUS(CPU_TYPE))
 		{
-			if (FLAG_S != 0)
+			if(FLAG_S)
 			{
 				uint word2 = OPER_I_16();
 				uint ea = M68KMAKE_GET_EA_AY_32;
@@ -8080,7 +8080,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(ori, 16, tos, .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint src = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -8183,7 +8183,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(reset, 0, ., .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			m68ki_output_reset();		   /* auto-disable (see m68kcpu.h) */
 			USE_CYCLES(CYC_RESET);
@@ -8942,7 +8942,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(rte, 32, ., .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint new_sr;
 			uint new_pc;
@@ -9240,7 +9240,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(scc, 8, ., d)
 	{
-		if (M68KMAKE_CC != 0)
+		if(M68KMAKE_CC)
 		{
 			DY |= 0xff;
 			return;
@@ -9257,7 +9257,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(stop, 0, ., .)
 	{
-		if (FLAG_S != 0)
+		if(FLAG_S)
 		{
 			uint new_sr = OPER_I_16();
 			m68ki_trace_t0();			   /* auto-disable (see m68kcpu.h) */
@@ -9979,7 +9979,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if (M68KMAKE_CC != 0)
+			if(M68KMAKE_CC)
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 			return;
 		}
@@ -9991,7 +9991,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if (M68KMAKE_CC != 0)
+			if(M68KMAKE_CC)
 			{
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 				return;
@@ -10007,7 +10007,7 @@ public class m68k_in
 	{
 		if(CPU_TYPE_IS_EC020_PLUS(CPU_TYPE))
 		{
-			if (M68KMAKE_CC != 0)
+			if(M68KMAKE_CC)
 			{
 				m68ki_exception_trap(EXCEPTION_TRAPV);	/* HJB 990403 */
 				return;
@@ -10021,7 +10021,7 @@ public class m68k_in
 	
 	M68KMAKE_OP(trapv, 0, ., .)
 	{
-		if (COND_VC() != 0)
+		if(COND_VC())
 		{
 			return;
 		}

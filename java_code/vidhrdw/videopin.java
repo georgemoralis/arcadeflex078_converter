@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class videopin
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_videopin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_videopin  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info, get_memory_offset, TILEMAP_OPAQUE, 8, 8, 48, 32);
 	
 		if (tilemap == NULL)
@@ -48,8 +47,7 @@ public class videopin
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_videopin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_videopin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int col;
 		int row;
 	
@@ -114,15 +112,13 @@ public class videopin
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_ball_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_ball_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ball_x = data & 15;
 		ball_y = data >> 4;
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videopin_video_ram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(tilemap, offset);

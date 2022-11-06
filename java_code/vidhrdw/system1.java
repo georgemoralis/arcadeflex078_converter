@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -65,19 +65,17 @@ public class system1
 	  accurate to +/- .003K ohms.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_system1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_system1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		system1_color_prom = color_prom;
 	} };
 	
-	public static WriteHandlerPtr system1_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr system1_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int val,r,g,b;
 	
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
-		if (system1_color_prom != 0)
+		if (system1_color_prom)
 		{
 			int bit0,bit1,bit2,bit3;
 	
@@ -111,7 +109,7 @@ public class system1
 			g = (val << 5) | (val << 2) | (val >> 1);
 	
 			val = (data >> 5) & 0x06;
-			if (val != 0) val++;
+			if (val) val++;
 			b = (val << 5) | (val << 2) | (val >> 1);
 		}
 	
@@ -120,8 +118,7 @@ public class system1
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_system1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_system1  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sprite_onscreen_map = auto_malloc(256*256)) == 0)
 			return 1;
 		memset(sprite_onscreen_map,255,256*256);
@@ -138,9 +135,8 @@ public class system1
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr system1_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	if ((data & 0x6e) != 0) logerror("videomode = %02x\n",data);
+	public static WriteHandlerPtr system1_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	if (data & 0x6e) logerror("videomode = %02x\n",data);
 	
 		/* bit 0 is coin counter */
 		coin_counter_w(0, data & 1);
@@ -152,8 +148,7 @@ public class system1
 		flip_screen_set(data & 0x80);
 	} };
 	
-	public static ReadHandlerPtr system1_videomode_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr system1_videomode_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return system1_video_mode;
 	} };
 	
@@ -176,8 +171,8 @@ public class system1
 		int sprite_onscreen;
 	
 	
-		if (x < 0 || x >= Machine.scrbitmap.width ||
-			y < 0 || y >= Machine.scrbitmap.height)
+		if (x < 0 || x >= Machine->scrbitmap->width ||
+			y < 0 || y >= Machine->scrbitmap->height)
 			return;
 	
 		if (sprite_onscreen_map[256*y+x] != 255)
@@ -188,10 +183,10 @@ public class system1
 	
 		sprite_onscreen_map[256*y+x] = spr_number;
 	
-		if (x_flipped >= Machine.visible_area.min_x ||
-			x_flipped <= Machine.visible_area.max_x ||
-			y_flipped >= Machine.visible_area.min_y ||
-			y_flipped <= Machine.visible_area.max_y)
+		if (x_flipped >= Machine->visible_area.min_x ||
+			x_flipped <= Machine->visible_area.max_x ||
+			y_flipped >= Machine->visible_area.min_y ||
+			y_flipped <= Machine->visible_area.max_y)
 		{
 			plot_pixel(bitmap, x_flipped, y_flipped, color);
 		}
@@ -220,15 +215,13 @@ public class system1
 		/* (TeddyBoy Blues, head of the tiger in girl bonus round) */
 	}
 	
-	public static WriteHandlerPtr system1_background_collisionram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr system1_background_collisionram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* to do the RAM check, Mister Viking writes 0xff and immediately */
 		/* reads it back, expecting bit 0 to be NOT set. */
 		system1_background_collisionram[offset] = 0x7e;
 	} };
 	
-	public static WriteHandlerPtr system1_sprites_collisionram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr system1_sprites_collisionram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* to do the RAM check, Mister Viking write 0xff and immediately */
 		/* reads it back, expecting bit 0 to be NOT set. */
 		/* Up'n Down expects to find 0x7e at f800 before doing the whole */
@@ -256,7 +249,7 @@ public class system1
 		skip = sprite_base[SPR_SKIP_LO] + (sprite_base[SPR_SKIP_HI] << 8);
 	
 		height = sprite_base[SPR_Y_BOTTOM] - sprite_base[SPR_Y_TOP];
-		sprite_palette = Machine.remapped_colortable + 0x10 * spr_number;
+		sprite_palette = Machine->remapped_colortable + 0x10 * spr_number;
 	
 		sy = sprite_base[SPR_Y_TOP] + 1;
 	
@@ -273,14 +266,14 @@ public class system1
 	
 			/* the +1 prevents sprite lag in Wonder Boy */
 			x = sprite_base[SPR_X_LO] + ((sprite_base[SPR_X_HI] & 0x01) << 8) + 1;
-			if (Machine.gamedrv == &driver_wbml || Machine.gamedrv.clone_of == &driver_wbml)
+			if (Machine->gamedrv == &driver_wbml || Machine->gamedrv->clone_of == &driver_wbml)
 			{
 				x += 7*2;
 			}
 			x_flipped = x;
 			y = y_flipped = sy+row;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				y_flipped = 258 - sy - height + row;
 				x_flipped = (252*2) - x;
@@ -295,7 +288,7 @@ public class system1
 	
 				data = gfx[src2 & 0x7fff];
 	
-				if ((src & 0x8000) != 0)
+				if (src & 0x8000)
 				{
 					src2--;
 	
@@ -311,13 +304,13 @@ public class system1
 				}
 	
 				if (color1 == 15) break;
-				if (color1 != 0)
+				if (color1)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color1]);
 				x++;
 				x_flipped += flip_screen() ? -1 : 1;
 	
 				if (color2 == 15) break;
-				if (color2 != 0)
+				if (color2)
 					draw_pixel(bitmap,x,y,x_flipped,y_flipped,spr_number,sprite_palette[color2]);
 				x++;
 				x_flipped += flip_screen() ? -1 : 1;
@@ -346,8 +339,7 @@ public class system1
 	
 	
 	
-	public static WriteHandlerPtr system1_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr system1_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		system1_backgroundram[offset] = data;
 		bg_dirtybuffer[offset>>1] = 1;
 	} };
@@ -363,34 +355,34 @@ public class system1
 	
 		for (offs = 0;offs < system1_videoram_size;offs += 2)
 		{
-			if ((system1_videoram.read(offs+1)& 0x08) == priority)
+			if ((system1_videoram[offs+1] & 0x08) == priority)
 			{
 				int code,color;
 	
 	
-				code = (system1_videoram.read(offs)| (system1_videoram.read(offs+1)<< 8));
+				code = (system1_videoram[offs] | (system1_videoram[offs+1] << 8));
 				code = ((code >> 4) & 0x800) | (code & 0x7ff);	/* Heavy Metal only */
 				color = ((code >> 5) & 0x3f);
 				sx = (offs/2) % 32;
 				sy = (offs/2) / 32;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
 				}
 	
-				code %= Machine.gfx[0].total_elements;
-				if (Machine.gfx[0].pen_usage[code] & ~1)
+				code %= Machine->gfx[0]->total_elements;
+				if (Machine->gfx[0]->pen_usage[code] & ~1)
 				{
 					drawn = 1;
 	
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							8*sx + blockgal_kludgeoffset,8*sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -433,13 +425,13 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
 					}
 	
-					drawgfx(tmp_bitmap,Machine.gfx[0],
+					drawgfx(tmp_bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
@@ -449,10 +441,10 @@ public class system1
 			}
 	
 			/* copy the temporary bitmap to the screen */
-			if (flip_screen != 0)
-				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx_flip,1,&background_scrolly_flip,Machine.visible_area,TRANSPARENCY_NONE,0);
+			if (flip_screen())
+				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx_flip,1,&background_scrolly_flip,Machine->visible_area,TRANSPARENCY_NONE,0);
 			else
-				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx,1,&background_scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
+				copyscrollbitmap(bitmap,tmp_bitmap,1,&background_scrollx,1,&background_scrolly,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 		else
 		{
@@ -471,7 +463,7 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 8*(31-sx) + background_scrollx_flip;
 						sy = 8*(31-sy) + background_scrolly_flip;
@@ -483,50 +475,49 @@ public class system1
 					}
 	
 					/* draw it 4 times because of possible wrap around */
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[0],
+							Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx-256,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[0],
+							Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx,sy-256,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[0],
+							Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx-256,sy-256,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_system1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int drawn;
 	
 	
 		system1_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn != 0) system1_draw_bg(bitmap,0);
+		if (drawn) system1_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		system1_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if ((system1_video_mode & 0x10) != 0)  /* screen off */
+		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	} };
 	
@@ -538,8 +529,7 @@ public class system1
 	
 	
 	
-	public static WriteHandlerPtr choplifter_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr choplifter_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		system1_scrollx_ram[offset] = data;
 	
 		scrollx_row[offset/2] = (system1_scrollx_ram[offset & ~1] >> 1) + ((system1_scrollx_ram[offset | 1] & 1) << 7);
@@ -574,13 +564,13 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 31 - sx;
 						sy = 31 - sy;
 					}
 	
-					drawgfx(tmp_bitmap,Machine.gfx[0],
+					drawgfx(tmp_bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
@@ -590,22 +580,22 @@ public class system1
 			}
 	
 			/* copy the temporary bitmap to the screen */
-			if (choplifter_scroll_x_on != 0)
+			if (choplifter_scroll_x_on)
 			{
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					int scrollx_row_flip[32],i;
 	
 					for (i = 0; i < 32; i++)
 						scrollx_row_flip[31-i] = (256-scrollx_row[i]) & 0xff;
 	
-					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row_flip,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row_flip,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 				}
 				else
-					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+					copyscrollbitmap(bitmap,tmp_bitmap,32,scrollx_row,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 			}
 			else
-				copybitmap(bitmap,tmp_bitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+				copybitmap(bitmap,tmp_bitmap,0,0,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 		else
 		{
@@ -624,11 +614,11 @@ public class system1
 					sx = (offs/2) % 32;
 					sy = (offs/2) / 32;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 8*(31-sx);
 	
-						if (choplifter_scroll_x_on != 0)
+						if (choplifter_scroll_x_on)
 							sx = (sx - scrollx_row[sy]) & 0xff;
 	
 						sy = 31 - sy;
@@ -637,36 +627,35 @@ public class system1
 					{
 						sx = 8*sx;
 	
-						if (choplifter_scroll_x_on != 0)
+						if (choplifter_scroll_x_on)
 							sx = (sx + scrollx_row[sy]) & 0xff;
 					}
 	
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flip_screen(),flip_screen(),
 							sx,8*sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_choplifter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_choplifter  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int drawn;
 	
 	
 		chplft_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn != 0) chplft_draw_bg(bitmap,0);
+		if (drawn) chplft_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		chplft_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if ((system1_video_mode & 0x10) != 0)  /* screen off */
+		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 	
@@ -680,24 +669,20 @@ public class system1
 	
 	
 	
-	public static ReadHandlerPtr wbml_videoram_bank_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wbml_videoram_bank_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wbml_videoram_bank_latch;
 	} };
 	
-	public static WriteHandlerPtr wbml_videoram_bank_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wbml_videoram_bank_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wbml_videoram_bank_latch = data;
 		wbml_videoram_bank = (data >> 1) & 0x03;	/* Select 4 banks of 4k, bit 2,1 */
 	} };
 	
-	public static ReadHandlerPtr wbml_paged_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wbml_paged_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wbml_paged_videoram[0x1000*wbml_videoram_bank + offset];
 	} };
 	
-	public static WriteHandlerPtr wbml_paged_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wbml_paged_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wbml_paged_videoram[0x1000*wbml_videoram_bank + offset] = data;
 	} };
 	
@@ -727,7 +712,7 @@ public class system1
 					if (x > 256) x -= 512;
 					if (y > 224) y -= 512;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						x = 248 - x;
 						y = 248 - y;
@@ -737,20 +722,20 @@ public class system1
 					priority = code & 0x800;
 					code = ((code >> 4) & 0x800) | (code & 0x7ff);
 	
-					if (trasp == 0)
-						drawgfx(bitmap,Machine.gfx[0],
+					if (!trasp)
+						drawgfx(bitmap,Machine->gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
 								flip_screen(),flip_screen(),
 								x,y,
-								Machine.visible_area, TRANSPARENCY_NONE, 0);
-					else if (priority != 0)
-						drawgfx(bitmap,Machine.gfx[0],
+								Machine->visible_area, TRANSPARENCY_NONE, 0);
+					else if (priority)
+						drawgfx(bitmap,Machine->gfx[0],
 								code,
 								((code >> 5) & 0x3f) + 64,
 								flip_screen(),flip_screen(),
 								x,y,
-								Machine.visible_area, TRANSPARENCY_PEN, 0);
+								Machine->visible_area, TRANSPARENCY_PEN, 0);
 	
 					source+=2;
 				}
@@ -773,36 +758,34 @@ public class system1
 			code = wbml_paged_videoram[offs] | (wbml_paged_videoram[offs+1] << 8);
 			code = ((code >> 4) & 0x800) | (code & 0x7ff);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					(code >> 5) & 0x3f,
 					flip_screen(),flip_screen(),
 					8*sx,8*sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_wbml  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wbml  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		wbml_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		wbml_draw_bg(bitmap,1);
 		wbml_draw_fg(bitmap);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if ((system1_video_mode & 0x10) != 0)  /* screen off */
+		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blockgal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int drawn;
 	
 	
@@ -811,13 +794,13 @@ public class system1
 		system1_draw_bg(bitmap,-1);
 		drawn = system1_draw_fg(bitmap,0);
 		/* redraw low priority bg tiles if necessary */
-		if (drawn != 0) system1_draw_bg(bitmap,0);
+		if (drawn) system1_draw_bg(bitmap,0);
 		draw_sprites(bitmap);
 		system1_draw_bg(bitmap,1);
 		system1_draw_fg(bitmap,1);
 	
 		/* even if screen is off, sprites must still be drawn to update the collision table */
-		if ((system1_video_mode & 0x10) != 0)  /* screen off */
+		if (system1_video_mode & 0x10)  /* screen off */
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		blockgal_kludgeoffset = 0;

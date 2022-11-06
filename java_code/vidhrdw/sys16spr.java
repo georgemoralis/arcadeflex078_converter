@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -56,20 +56,20 @@ public class sys16spr
 			UINT16 zoomx = source[5]&0x3ff;
 			UINT16 zoomy = (source[6]&0x3ff);
 			if( zoomy==0 || source[6]==0xffff ) zoomy = zoomx; /* if zoomy is 0, use zoomx instead */
-			sprite.x = source[1] + sys16_sprxoffset;
-			sprite.y = top;
-			sprite.priority = (attributes>>6)&0x3;
-			sprite.color = 1024/16 + (attributes&0x3f);
-			sprite.screen_height = bottom-top;
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if ((width & 0x100) != 0) sprite.flags |= SYS16_SPR_FLIPX;
+			sprite->x = source[1] + sys16_sprxoffset;
+			sprite->y = top;
+			sprite->priority = (attributes>>6)&0x3;
+			sprite->color = 1024/16 + (attributes&0x3f);
+			sprite->screen_height = bottom-top;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
-			if ((attributes&0x3f)==0x3f) sprite.flags|= SYS16_SPR_SHADOW;
+			if ((attributes&0x3f)==0x3f) sprite->flags|= SYS16_SPR_SHADOW;
 	#endif
-			sprite.zoomx = zoomx;
-			sprite.zoomy = zoomy;
-			sprite.pitch = source[2]&0xff;
-			sprite.gfx = ( source[3] + (sys16_obj_bank[(attributes>>8)&0xf]<<(16+sys16_wwfix)) ) << 1; //*
+			sprite->zoomx = zoomx;
+			sprite->zoomy = zoomy;
+			sprite->pitch = source[2]&0xff;
+			sprite->gfx = ( source[3] + (sys16_obj_bank[(attributes>>8)&0xf]<<(16+sys16_wwfix)) ) << 1; //*
 		}
 		return 0;
 	}
@@ -97,28 +97,28 @@ public class sys16spr
 			UINT16 width = source[3];
 			int zoom = source[4]&0x3ff;
 			int xpos = source[0] + sys16_sprxoffset;
-			sprite.screen_height = bottom - top;
-			sprite.priority = attributes>>14;
-			sprite.color = 1024/16+ ((attributes>>8)&0x3f);
+			sprite->screen_height = bottom - top;
+			sprite->priority = attributes>>14;
+			sprite->color = 1024/16+ ((attributes>>8)&0x3f);
 			/* hack */
-			if (passshot_width != 0) { /* 4 player bootleg version */
+			if( passshot_width) { /* 4 player bootleg version */
 				width = -width;
 				number -= width*(bottom-top-1)-1;
 			}
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if ((number & 0x8000) != 0) sprite.flags |= SYS16_SPR_FLIPX;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( number & 0x8000 ) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if (((attributes>>8)&0x3f)==0x3f)	// shadow sprite
-				sprite.flags|= SYS16_SPR_SHADOW;
+				sprite->flags|= SYS16_SPR_SHADOW;
 	#endif
-			sprite.pitch = width&0xff;
-			if( sprite.flags&SYS16_SPR_FLIPX ){
+			sprite->pitch = width&0xff;
+			if( sprite->flags&SYS16_SPR_FLIPX ){
 				bank = (bank-1) & 0xf; /* ? */
 			}
-			sprite.gfx = ((number-(short)width)*4 + (sys16_obj_bank[bank] << 17))/2; //*
-			sprite.x = xpos;
-			sprite.y = top+2; //*
-			sprite.zoomx = sprite.zoomy = zoom;
+			sprite->gfx = ((number-(short)width)*4 + (sys16_obj_bank[bank] << 17))/2; //*
+			sprite->x = xpos;
+			sprite->y = top+2; //*
+			sprite->zoomx = sprite->zoomy = zoom;
 		}
 		return 0;
 	}
@@ -149,22 +149,22 @@ public class sys16spr
 			UINT16 zoomx = source[5]&0x3ff;
 			UINT16 zoomy = (source[6]&0x3ff);
 			if( zoomy==0 ) zoomy = zoomx; /* if zoomy is 0, use zoomx instead */
-			sprite.color = 1024/16 + (attributes&0x3f);
-			sprite.x = source[1] + sys16_sprxoffset;;
-			sprite.y = top;
-			sprite.priority = (attributes>>6)&0x3;
-			sprite.screen_height = bottom-top;
-			sprite.pitch = width&0xff;
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if ((width & 0x100) != 0) sprite.flags |= SYS16_SPR_FLIPX;
+			sprite->color = 1024/16 + (attributes&0x3f);
+			sprite->x = source[1] + sys16_sprxoffset;;
+			sprite->y = top;
+			sprite->priority = (attributes>>6)&0x3;
+			sprite->screen_height = bottom-top;
+			sprite->pitch = width&0xff;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if ((attributes&0x3f)==0x3f)	// shadow sprite
-				sprite.flags|= SYS16_SPR_SHADOW;
+				sprite->flags|= SYS16_SPR_SHADOW;
 	#endif
-				sprite.zoomx = zoomx;
-				sprite.zoomy = zoomy;
-				sprite.gfx = (source[3] + sys16_obj_bank[(attributes>>8)&0xf]*0x10000)*2;
-	//			sprite.gfx = ((gfx &0x3ffff) + (sys16_obj_bank[(attributes>>8)&0xf] << 17))/2;
+				sprite->zoomx = zoomx;
+				sprite->zoomy = zoomy;
+				sprite->gfx = (source[3] + sys16_obj_bank[(attributes>>8)&0xf]*0x10000)*2;
+	//			sprite->gfx = ((gfx &0x3ffff) + (sys16_obj_bank[(attributes>>8)&0xf] << 17))/2;
 		}
 		return 0;
 	}
@@ -192,24 +192,24 @@ public class sys16spr
 		{
 			UINT16 bank=(source[4]>>4)&0x3;
 			int gfx = 4*(source[3]&0x7fff);
-			sprite.priority = source[4]&0x3;
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if( source[3]&0x8000 ) sprite.flags |= SYS16_SPR_FLIPX;
+			sprite->priority = source[4]&0x3;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( source[3]&0x8000 ) sprite->flags |= SYS16_SPR_FLIPX;
 			if( (source[3] & 0x7f80) == 0x7f80 ){ /* ? */
 				bank=(bank-1)&0x3;
-				sprite.flags ^= SYS16_SPR_FLIPX;
+				sprite->flags ^= SYS16_SPR_FLIPX;
 			}
-			sprite.screen_height = bottom-top;
+			sprite->screen_height = bottom-top;
 			//top++; bottom++;
-			sprite.x = source[1] + sys16_sprxoffset;
-			if( sprite.x > 0x140 ) sprite.x -= 0x200;
-			sprite.y = top;
-			sprite.color = 1024/16 + pal;
-			sprite.pitch = source[2]&0xff;
+			sprite->x = source[1] + sys16_sprxoffset;
+			if( sprite->x > 0x140 ) sprite->x -= 0x200;
+			sprite->y = top;
+			sprite->color = 1024/16 + pal;
+			sprite->pitch = source[2]&0xff;
 	#ifdef TRANSPARENT_SHADOWS
-			if( pal==0x3f ) sprite.flags|= SYS16_SPR_SHADOW;
+			if( pal==0x3f ) sprite->flags|= SYS16_SPR_SHADOW;
 	#endif
-			sprite.gfx = ( (gfx &0x3ffff) + (bank<<17) )/2;
+			sprite->gfx = ( (gfx &0x3ffff) + (bank<<17) )/2;
 		}
 		return 0;
 	}
@@ -237,7 +237,7 @@ public class sys16spr
 			UINT16 width;
 			int gfx;
 	
-			if (spr_pri != 0) { /* MASH - ?? */
+			if (spr_pri) { /* MASH - ?? */
 				tsource[2]=source[2];
 				tsource[3]=source[3];
 	#ifndef TRANSPARENT_SHADOWS
@@ -256,19 +256,19 @@ public class sys16spr
 				width = tsource[2];
 				//top++;
 				//bottom++;
-				sprite.x = source[1] + sys16_sprxoffset;
-				if(sprite.x > 0x140) sprite.x-=0x200;
-				sprite.y = top;
-				sprite.priority = spr_pri;
-				sprite.color = 1024/16 + pal;
-				sprite.screen_height = bottom-top;
-				sprite.pitch = width&0xff;
-				sprite.flags = SYS16_SPR_VISIBLE;
-				if ((width & 0x100) != 0) sprite.flags |= SYS16_SPR_FLIPX;
+				sprite->x = source[1] + sys16_sprxoffset;
+				if(sprite->x > 0x140) sprite->x-=0x200;
+				sprite->y = top;
+				sprite->priority = spr_pri;
+				sprite->color = 1024/16 + pal;
+				sprite->screen_height = bottom-top;
+				sprite->pitch = width&0xff;
+				sprite->flags = SYS16_SPR_VISIBLE;
+				if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
-				if( pal==0x3f ) sprite.flags|= SYS16_SPR_SHADOW; // shadow sprite
+				if( pal==0x3f ) sprite->flags|= SYS16_SPR_SHADOW; // shadow sprite
 	#endif
-				sprite.gfx = ((gfx &0x3ffff) + (sys16_obj_bank[bank] << 17))/2;
+				sprite->gfx = ((gfx &0x3ffff) + (sys16_obj_bank[bank] << 17))/2;
 			}
 		}
 		return 0;
@@ -310,20 +310,20 @@ public class sys16spr
 			}
 			gfx = tsource[3]*4;
 			width = tsource[2];
-			sprite.x = ((source[1] & 0x3ff) + sys16_sprxoffset);
-			if(sprite.x >= 0x200) sprite.x-=0x200;
-			sprite.y = top;
-			sprite.priority = 0;
-			sprite.color = 1024/16 + pal;
-			sprite.screen_height = bottom-top;
-			sprite.pitch = width&0xff;
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if ((width & 0x100) != 0) sprite.flags |= SYS16_SPR_FLIPX;
-	//			sprite.flags|= SYS16_SPR_PARTIAL_SHADOW;
-	//			sprite.shadow_pen=10;
-			sprite.zoomx = zoomx;
-			sprite.zoomy = zoomy;
-			sprite.gfx = ((gfx &0x3ffff) + (sys16_obj_bank[bank] << 17))/2;
+			sprite->x = ((source[1] & 0x3ff) + sys16_sprxoffset);
+			if(sprite->x >= 0x200) sprite->x-=0x200;
+			sprite->y = top;
+			sprite->priority = 0;
+			sprite->color = 1024/16 + pal;
+			sprite->screen_height = bottom-top;
+			sprite->pitch = width&0xff;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( width&0x100 ) sprite->flags |= SYS16_SPR_FLIPX;
+	//			sprite->flags|= SYS16_SPR_PARTIAL_SHADOW;
+	//			sprite->shadow_pen=10;
+			sprite->zoomx = zoomx;
+			sprite->zoomy = zoomy;
+			sprite->gfx = ((gfx &0x3ffff) + (sys16_obj_bank[bank] << 17))/2;
 		}
 		return 0;
 	}
@@ -345,30 +345,30 @@ public class sys16spr
 		if( bottom == 0xff ) return 1; /* end of spritelist marker */
 		if( bottom !=0 && bottom > top ){
 			int bank=(source[1]>>12);
-			sprite.color = 1024/16 + ((source[2]>>8)&0x3f);
-			sprite.zoomx = (source[4]&0x3f)*(1024/64);
-			sprite.zoomy = (1024*sprite.zoomx)/(2048-sprite.zoomx);
+			sprite->color = 1024/16 + ((source[2]>>8)&0x3f);
+			sprite->zoomx = (source[4]&0x3f)*(1024/64);
+			sprite->zoomy = (1024*sprite->zoomx)/(2048-sprite->zoomx);
 	#ifndef TRANSPARENT_SHADOWS
 	//		if (pal==0x3f) pal=(bank<<1); // shadow sprite
 	#endif
-			sprite.x = ((source[1] & 0x3ff) + sys16_sprxoffset);
-			if(sprite.x >= 0x200) sprite.x-=0x200;
-			sprite.y = top;
-			sprite.priority = 0;
-			sprite.screen_height = bottom-top;
-			sprite.pitch = (source[2]&0x7f)*2;
-			sprite.flags = SYS16_SPR_VISIBLE;
-			if( source[3]&0x8000 ) sprite.flags |= SYS16_SPR_FLIPX;
+			sprite->x = ((source[1] & 0x3ff) + sys16_sprxoffset);
+			if(sprite->x >= 0x200) sprite->x-=0x200;
+			sprite->y = top;
+			sprite->priority = 0;
+			sprite->screen_height = bottom-top;
+			sprite->pitch = (source[2]&0x7f)*2;
+			sprite->flags = SYS16_SPR_VISIBLE;
+			if( source[3]&0x8000 ) sprite->flags |= SYS16_SPR_FLIPX;
 	#ifdef TRANSPARENT_SHADOWS
 			if (sys16_sh_shadowpal == 0){ // space harrier
-				if( ((source[2]>>8)&0x3f)==sys16_sh_shadowpal ) sprite.flags|= SYS16_SPR_SHADOW;
+				if( ((source[2]>>8)&0x3f)==sys16_sh_shadowpal ) sprite->flags|= SYS16_SPR_SHADOW;
 			}
 			else { // enduro
-				sprite.flags|= SYS16_SPR_PARTIAL_SHADOW;
-				sprite.shadow_pen=10;
+				sprite->flags|= SYS16_SPR_PARTIAL_SHADOW;
+				sprite->shadow_pen=10;
 			}
 	#endif
-			sprite.gfx = ((bank<<15)|(source[3]&0x7fff))*4;// + (sys16_obj_bank[bank] << 17);
+			sprite->gfx = ((bank<<15)|(source[3]&0x7fff))*4;// + (sys16_obj_bank[bank] << 17);
 		}
 		return 0;
 	}
@@ -396,28 +396,28 @@ public class sys16spr
 			int x = (source[2]&0x1ff);
 			int bank = (source[0]>>9)&7;
 			int gfx = (source[1]+(bank<<16))*4;
-			sprite.flags = SYS16_SPR_VISIBLE;
+			sprite->flags = SYS16_SPR_VISIBLE;
 			zoomx&=0x3ff;
 			zoomy&=0x3ff;
 			if(zoomx==0) zoomx=1;
 			if(zoomy==0) zoomy=1;
-			sprite.y = source[0]&0xff;
-			sprite.priority = 3;
-			sprite.color = 0x80 + (source[5]&0x7f);
-			sprite.screen_height = (source[5]>>8);
-			sprite.pitch = (source[2]>>8)&0xfe; /* 32 bit sprites */
-			if( (source[4]&0x4000)==0 ) sprite.flags |= SYS16_SPR_FLIPX;
-			if( (source[4]&0x2000)==0 ) sprite.flags |= SYS16_SPR_DRAW_TO_LEFT;
-			if( (source[4]&0x8000)==0 ) sprite.flags |= SYS16_SPR_DRAW_TO_TOP;
-			sprite.x = x + sys16_sprxoffset;
-			sprite.zoomx = zoomx;
-			sprite.zoomy = zoomy;
-			sprite.gfx = gfx;
+			sprite->y = source[0]&0xff;
+			sprite->priority = 3;
+			sprite->color = 0x80 + (source[5]&0x7f);
+			sprite->screen_height = (source[5]>>8);
+			sprite->pitch = (source[2]>>8)&0xfe; /* 32 bit sprites */
+			if( (source[4]&0x4000)==0 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if( (source[4]&0x2000)==0 ) sprite->flags |= SYS16_SPR_DRAW_TO_LEFT;
+			if( (source[4]&0x8000)==0 ) sprite->flags |= SYS16_SPR_DRAW_TO_TOP;
+			sprite->x = x + sys16_sprxoffset;
+			sprite->zoomx = zoomx;
+			sprite->zoomy = zoomy;
+			sprite->gfx = gfx;
 	#ifdef TRANSPARENT_SHADOWS
-			if( (source[5]&0x7f)==0 ) sprite.flags|= SYS16_SPR_SHADOW;
+			if( (source[5]&0x7f)==0 ) sprite->flags|= SYS16_SPR_SHADOW;
 			else if( source[3]&0x4000 ){
-				sprite.flags|= SYS16_SPR_PARTIAL_SHADOW;
-				sprite.shadow_pen=10;
+				sprite->flags|= SYS16_SPR_PARTIAL_SHADOW;
+				sprite->shadow_pen=10;
 			}
 	#endif
 		}
@@ -447,23 +447,23 @@ public class sys16spr
 			int x = (source[2]&0x1ff);
 			int bank = (source[0]>>9)&7;
 			int gfx = (source[1]+(bank<<16))*4;
-			sprite.flags = SYS16_SPR_VISIBLE;
+			sprite->flags = SYS16_SPR_VISIBLE;
 			zoomx&=0x3ff;
 			zoomy&=0x3ff;
 			if(zoomx==0) zoomx=1;
 			if(zoomy==0) zoomy=1;
-			sprite.y = source[0]&0xff;
-			sprite.priority = 0;
-			sprite.color = source[6]&0xff;
-			sprite.screen_height = (source[5]&0xff);
-			sprite.pitch = (source[2]>>8)&0xfe; /* 32 bit sprites */
-			if( (source[4]&0x4000)==0 ) sprite.flags |= SYS16_SPR_FLIPX;
-			if( (source[4]&0x2000)==0 ) sprite.flags |= SYS16_SPR_DRAW_TO_LEFT;
-			if( (source[4]&0x8000)==0 ) sprite.flags |= SYS16_SPR_DRAW_TO_TOP;
-			sprite.x = x + sys16_sprxoffset;
-			sprite.zoomx = zoomx;
-			sprite.zoomy = zoomy;
-			sprite.gfx = gfx;
+			sprite->y = source[0]&0xff;
+			sprite->priority = 0;
+			sprite->color = source[6]&0xff;
+			sprite->screen_height = (source[5]&0xff);
+			sprite->pitch = (source[2]>>8)&0xfe; /* 32 bit sprites */
+			if( (source[4]&0x4000)==0 ) sprite->flags |= SYS16_SPR_FLIPX;
+			if( (source[4]&0x2000)==0 ) sprite->flags |= SYS16_SPR_DRAW_TO_LEFT;
+			if( (source[4]&0x8000)==0 ) sprite->flags |= SYS16_SPR_DRAW_TO_TOP;
+			sprite->x = x + sys16_sprxoffset;
+			sprite->zoomx = zoomx;
+			sprite->zoomy = zoomy;
+			sprite->gfx = gfx;
 		}
 		return 0;
 	}

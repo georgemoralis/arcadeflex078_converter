@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -19,7 +19,7 @@ public class taito_f3
 	#define M68000_CLOCK	16000000
 	#define M68681_CLOCK	2000000 /* Actually X1, not the main clock */
 	
-	static final int TIMER_SINGLESHOT = 0, TIMER_PULSE = 1;
+	enum { TIMER_SINGLESHOT, TIMER_PULSE };
 	
 	READ16_HANDLER(f3_68000_share_r)
 	{
@@ -66,7 +66,7 @@ public class taito_f3
 		if (offset==0) latch=(data>>8)&0x7;
 		if (offset==1) channel[latch]=data>>8;
 	
-		if(Machine.sample_rate) {
+		if(Machine->sample_rate) {
 	//		if (channel[7]!=last_l) mixer_set_volume(0, (int)((float)channel[7]*1.58)); /* Left master volume */
 	//		if (channel[6]!=last_r) mixer_set_volume(1, (int)((float)channel[6]*1.58)); /* Right master volume */
 			last_l=channel[7];
@@ -80,7 +80,7 @@ public class taito_f3
 	static void timer_callback(int param)
 	{
 		/* Only cause IRQ if the mask is set to allow it */
-		if ((m68681_imr & 8) != 0) {
+		if (m68681_imr&8) {
 			cpu_irq_line_vector_w(1, 6, vector_reg);
 			cpu_set_irq_line(1, 6, ASSERT_LINE);
 			imr_status|=0x8;
@@ -175,7 +175,7 @@ public class taito_f3
 	READ16_HANDLER(es5510_dsp_r)
 	{
 	//	logerror("%06x: DSP read offset %04x (data is %04x)\n",activecpu_get_pc(),offset,es5510_dsp_ram[offset]);
-	//	if (es_tmp != 0) return es5510_dsp_ram[offset];
+	//	if (es_tmp) return es5510_dsp_ram[offset];
 	/*
 		switch (offset) {
 			case 0x00: return (es5510_gpr_latch>>16)&0xff;

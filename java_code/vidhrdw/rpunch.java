@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -51,7 +51,7 @@ public class rpunch
 	{
 		int data = videoram16[tile_index];
 		int code;
-		if ((videoflags & 0x0400) != 0)	code = (data & 0x0fff) | 0x2000;
+		if (videoflags & 0x0400)	code = (data & 0x0fff) | 0x2000;
 		else						code = (data & 0x1fff);
 	
 		SET_TILE_INFO(
@@ -65,7 +65,7 @@ public class rpunch
 	{
 		int data = videoram16[videoram_size / 4 + tile_index];
 		int code;
-		if ((videoflags & 0x0800) != 0)	code = (data & 0x0fff) | 0x2000;
+		if (videoflags & 0x0800)	code = (data & 0x0fff) | 0x2000;
 		else						code = (data & 0x1fff);
 	
 		SET_TILE_INFO(
@@ -86,12 +86,11 @@ public class rpunch
 	{
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 		if (param != 0)
-			timer_adjust(crtc_timer, TIME_IN_HZ(Machine.drv.frames_per_second * param), 0, TIME_IN_HZ(Machine.drv.frames_per_second * param));
+			timer_adjust(crtc_timer, TIME_IN_HZ(Machine->drv->frames_per_second * param), 0, TIME_IN_HZ(Machine->drv->frames_per_second * param));
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_rpunch  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rpunch  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		/* allocate tilemaps for the backgrounds and a bitmap for the direct-mapped bitmap */
@@ -111,7 +110,7 @@ public class rpunch
 		/* reset the sums and bitmap */
 		for (i = 0; i < BITMAP_HEIGHT; i++)
 			rpunch_bitmapsum[i] = (BITMAP_WIDTH/4) * 0xffff;
-		if (rpunch_bitmapram != 0)
+		if (rpunch_bitmapram)
 			memset(rpunch_bitmapram, 0xff, rpunch_bitmapram_size);
 	
 		/* reset the timer */
@@ -129,7 +128,7 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_bitmap_w )
 	{
-		if (rpunch_bitmapram != 0)
+		if (rpunch_bitmapram)
 		{
 			int oldword = rpunch_bitmapram[offset];
 			int newword = oldword;
@@ -207,14 +206,14 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_crtc_data_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xff;
 			switch (crtc_register)
 			{
 				/* only register we know about.... */
 				case 0x0b:
-					timer_adjust(crtc_timer, cpu_getscanlinetime(Machine.visible_area.max_y + 1), (data == 0xc0) ? 2 : 1, 0);
+					timer_adjust(crtc_timer, cpu_getscanlinetime(Machine->visible_area.max_y + 1), (data == 0xc0) ? 2 : 1, 0);
 					break;
 	
 				default:
@@ -227,14 +226,14 @@ public class rpunch
 	
 	WRITE16_HANDLER( rpunch_crtc_register_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			crtc_register = data & 0xff;
 	}
 	
 	
 	WRITE16_HANDLER( rpunch_ins_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (offset == 0)
 			{
@@ -282,7 +281,7 @@ public class rpunch
 				if (x >= BITMAP_WIDTH) x -= 512;
 				if (y >= BITMAP_HEIGHT) y -= 512;
 	
-				drawgfx(bitmap, Machine.gfx[2],
+				drawgfx(bitmap, Machine->gfx[2],
 						code, color + (rpunch_sprite_palette / 16), xflip, yflip, x, y, cliprect, TRANSPARENCY_PEN, 15);
 			}
 		}
@@ -297,12 +296,12 @@ public class rpunch
 	
 	static void draw_bitmap(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		pen_t *pens = Machine.pens[512 + (videoflags & 15) * 16];
+		pen_t *pens = Machine->pens[512 + (videoflags & 15) * 16];
 		int x, y;
 	
 		/* draw any non-transparent scanlines from the VRAM directly */
 		for (y = 0; y < BITMAP_HEIGHT; y++)
-			if (y >= cliprect.min_y && y <= cliprect.max_y)
+			if (y >= cliprect->min_y && y <= cliprect->max_y)
 				if (rpunch_bitmapsum[y] != (BITMAP_WIDTH/4) * 0xffff)
 				{
 					data16_t *src = &rpunch_bitmapram[y * 128 + BITMAP_XOFFSET/4];
@@ -330,8 +329,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rpunch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int effbins;
 	
 		/* this seems like the most plausible explanation */
@@ -341,7 +339,7 @@ public class rpunch
 		draw_sprites(bitmap,cliprect, 0, effbins);
 		tilemap_draw(bitmap,cliprect, background[1], 0,0);
 		draw_sprites(bitmap,cliprect, effbins, gins);
-		if (rpunch_bitmapram != 0)
+		if (rpunch_bitmapram)
 			draw_bitmap(bitmap,cliprect);
 	} };
 }

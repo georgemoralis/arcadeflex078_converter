@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,8 +37,7 @@ public class hyperspt
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_hyperspt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_hyperspt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -80,8 +79,7 @@ public class hyperspt
 			COLOR(0,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	public static WriteHandlerPtr hyperspt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyperspt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -89,8 +87,7 @@ public class hyperspt
 		}
 	} };
 	
-	public static WriteHandlerPtr hyperspt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyperspt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -98,8 +95,7 @@ public class hyperspt
 		}
 	} };
 	
-	public static WriteHandlerPtr hyperspt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyperspt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -116,12 +112,11 @@ public class hyperspt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_hyperspt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hyperspt  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 32);
@@ -140,7 +135,7 @@ public class hyperspt
 			int flipx = ~spriteram.read(offs)& 0x40;
 			int flipy = spriteram.read(offs)& 0x80;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
@@ -151,34 +146,33 @@ public class hyperspt
 	
 			sy += 1;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
 				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 	
 			/* redraw with wraparound */
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 				spriteram.read(offs + 2)+ 8 * (spriteram.read(offs)& 0x20),
 				spriteram.read(offs)& 0x0f,
 				flipx, flipy,
 				sx - 256, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_hyperspt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hyperspt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int row;
 	
 		for (row = 0; row < 32; row++)
 		{
 			int scrollx = hyperspt_scroll[row * 2] + (hyperspt_scroll[(row * 2) + 1] & 0x01) * 256;
-			if (flip_screen != 0) scrollx = -scrollx;
+			if (flip_screen()) scrollx = -scrollx;
 			tilemap_set_scrollx(bg_tilemap, row, scrollx);
 		}
 	
@@ -197,12 +191,11 @@ public class hyperspt
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_roadf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_roadf  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(roadf_get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 32);

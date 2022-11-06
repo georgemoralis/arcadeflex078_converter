@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_eprom  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_eprom  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -89,7 +88,7 @@ public class eprom
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -98,7 +97,7 @@ public class eprom
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -135,8 +134,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_eprom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_eprom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -199,7 +197,7 @@ public class eprom
 						int forcemc0 = 0, shade = 1, pfm = 1, m7 = 0;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 							continue;
 	
 						/* compute the FORCEMC signal */
@@ -233,16 +231,16 @@ public class eprom
 						/* PF/M and M7 go in the GPC ASIC and select playfield or MO layers */
 						if (!pfm && !m7)
 						{
-							if (forcemc0 == 0)
+							if (!forcemc0)
 								pf[x] = mo[x] & ATARIMO_DATA_MASK;
 							else
 								pf[x] = mo[x] & ATARIMO_DATA_MASK & ~0x70;
 						}
 						else
 						{
-							if (shade != 0)
+							if (shade)
 								pf[x] |= 0x100;
-							if (m7 != 0)
+							if (m7)
 								pf[x] |= 0x080;
 						}
 	
@@ -266,7 +264,7 @@ public class eprom
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

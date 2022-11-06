@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -9,7 +9,7 @@ public class namcos3d
 	
 	/*
 	Renderer:
-		each pixel.(BN,TX,TY,BRI,FLAGS,CZ,PAL)
+		each pixel->(BN,TX,TY,BRI,FLAGS,CZ,PAL)
 			BN:    texture bank
 			TX,TY: texture coordinates
 			BRI:   brightness for gouraud shading
@@ -17,24 +17,24 @@ public class namcos3d
 			CZ:    index for depth cueing
 	
 	Shader:
-		(TX,TY,BN).COL
-		(PAL,COL).palette index
-		(palette index,BRI).RGB
+		(TX,TY,BN)->COL
+		(PAL,COL)->palette index
+		(palette index,BRI)->RGB
 	
 	Depth BIAS:
 		notes: blend function is expressed by a table
 		it may be possible to specify multiple backcolors
-		RGB,CZ,BackColor.RGB'
+		RGB,CZ,BackColor->RGB'
 	
 	Mixer:
-		(RGB',gamma table).RGB''
+		(RGB',gamma table)->RGB''
 	
 	
 		Other techniques:
 			bump mapping perturbation (BX,BY)
 			normal vector on polygon surface for lighting
-			(normal vector, perturbation) . N
-			(lighting,N) . BRI
+			(normal vector, perturbation) -> N
+			(lighting,N) -> BRI
 	
 	
 			BRI=IaKa+{II/(Z+K)}.times.(Kd cost .phi.+Ks cos.sup.n.psi.) (1)
@@ -78,9 +78,9 @@ public class namcos3d
 				for( x=0; x<16; x++ )
 				{
 					ix = x; iy = y;
-					if ((attr & 4) != 0) ix = 15-ix;
-					if ((attr & 2) != 0) iy = 15-iy;
-					if ((attr & 8) != 0){ temp = ix; ix = iy; iy = temp; }
+					if( attr&4 ) ix = 15-ix;
+					if( attr&2 ) iy = 15-iy;
+					if( attr&8 ){ temp = ix; ix = iy; iy = temp; }
 					mXYAttrToPixel[attr][x][y] = (iy<<4)|ix;
 				}
 			}
@@ -91,14 +91,14 @@ public class namcos3d
 	namcos3d_Init( int width, int height, void *pTilemapROM, void *pTextureROM )
 	{
 		namco_zbuffer = auto_malloc( width*height*sizeof(*namco_zbuffer) );
-		if (namco_zbuffer != 0)
+		if( namco_zbuffer )
 		{
 			if( pTilemapROM && pTextureROM )
 			{ /* following setup is Namco System 22 specific */
 				int i;
 				const data8_t *pSource = 0x200000 + (data8_t *)pTilemapROM;
 				data8_t *pDest = auto_malloc(0x80000*2); /* TBA: recycle pTilemapROM */
-				if (pDest != 0)
+				if( pDest )
 				{
 					InitXYAttrToPixel();
 					mpTextureTileMapAttr = pDest;
@@ -131,40 +131,40 @@ public class namcos3d
 	void
 	namcos3d_Rotate( double M[4][4], const struct RotParam *pParam )
 	{
-		switch( pParam.rolt )
+		switch( pParam->rolt )
 		{
 		case 0:
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
 			break;
 		case 1:
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
 			break;
 		case 2:
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
 			break;
 		case 3:
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
 			break;
 		case 4:
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
 			break;
 		case 5:
-			matrix3d_RotZ( M, pParam.thz_sin, pParam.thz_cos );
-			matrix3d_RotY( M, pParam.thy_sin, pParam.thy_cos );
-			matrix3d_RotX( M, pParam.thx_sin, pParam.thx_cos );
+			matrix3d_RotZ( M, pParam->thz_sin, pParam->thz_cos );
+			matrix3d_RotY( M, pParam->thy_sin, pParam->thy_cos );
+			matrix3d_RotX( M, pParam->thx_sin, pParam->thx_cos );
 			break;
 		default:
-			logerror( "unknown rolt:%08x\n",pParam.rolt );
+			logerror( "unknown rolt:%08x\n",pParam->rolt );
 			break;
 		}
 	} /* namcos3d_Rotate */
@@ -172,7 +172,7 @@ public class namcos3d
 	void
 	namcos3d_Start( struct mame_bitmap *pBitmap )
 	{
-		memset( namco_zbuffer, 0x7f, pBitmap.width*pBitmap.height*sizeof(*namco_zbuffer) );
+		memset( namco_zbuffer, 0x7f, pBitmap->width*pBitmap->height*sizeof(*namco_zbuffer) );
 	}
 	
 	/*********************************************************************************************/
@@ -203,54 +203,54 @@ public class namcos3d
 	static void
 	renderscanline( const edge *e1, const edge *e2, int sy, const struct rectangle *clip )
 	{
-		if( e1.x > e2.x )
+		if( e1->x > e2->x )
 		{
 			SWAP(e1,e2);
 		}
 	
 		{
-			struct mame_bitmap *pBitmap = Machine.scrbitmap;
-			UINT32 *pDest = (UINT32 *)pBitmap.line[sy];
-			INT32 *pZBuf = namco_zbuffer + pBitmap.width*sy;
+			struct mame_bitmap *pBitmap = Machine->scrbitmap;
+			UINT32 *pDest = (UINT32 *)pBitmap->line[sy];
+			INT32 *pZBuf = namco_zbuffer + pBitmap->width*sy;
 	
-			int x0 = (int)e1.x;
-			int x1 = (int)e2.x;
+			int x0 = (int)e1->x;
+			int x1 = (int)e2->x;
 			int w = x1-x0;
-			if (w != 0)
+			if( w )
 			{
-				double u = e1.u; /* u/z */
-				double v = e1.v; /* v/z */
-				double i = e1.i; /* i/z */
-				double z = e1.z; /* 1/z */
-				double du = (e2.u - e1.u)/w;
-				double dv = (e2.v - e1.v)/w;
-				double dz = (e2.z - e1.z)/w;
-				double di = (e2.i - e1.i)/w;
+				double u = e1->u; /* u/z */
+				double v = e1->v; /* v/z */
+				double i = e1->i; /* i/z */
+				double z = e1->z; /* 1/z */
+				double du = (e2->u - e1->u)/w;
+				double dv = (e2->v - e1->v)/w;
+				double dz = (e2->z - e1->z)/w;
+				double di = (e2->i - e1->i)/w;
 				int x, crop;
 	
-				crop = clip.min_x - x0;
+				crop = clip->min_x - x0;
 				if( crop>0 )
 				{
 					u += crop*du;
 					v += crop*dv;
 					i += crop*di;
 					z += crop*dz;
-					x0 = clip.min_x;
+					x0 = clip->min_x;
 				}
-				if( x1>clip.max_x )
+				if( x1>clip->max_x )
 				{
-					x1 = clip.max_x;
+					x1 = clip->max_x;
 				}
 	
 				for( x=x0; x<x1; x++ )
 				{
 					if( mZSort<pZBuf[x] )
 					{
-						UINT32 color = Machine.pens[texel(u/z,v/z)|mColor];
+						UINT32 color = Machine->pens[texel(u/z,v/z)|mColor];
 						int r = color>>16;
 						int g = (color>>8)&0xff;
 						int b = color&0xff;
-						if (mbShade != 0)
+						if( mbShade )
 						{
 							int shade = i/z;
 							r+=shade; if( r<0 ) r = 0; else if( r>0xff ) r = 0xff;
@@ -278,14 +278,14 @@ public class namcos3d
 	{
 		int dy,ystart,yend,crop;
 	
-		/* first, sort so that v0.y <= v1.y <= v2.y */
+		/* first, sort so that v0->y <= v1->y <= v2->y */
 		for(;;)
 		{
-			if( v0.y > v1.y )
+			if( v0->y > v1->y )
 			{
 				SWAP(v0,v1);
 			}
-			else if( v1.y > v2.y )
+			else if( v1->y > v2->y )
 			{
 				SWAP(v1,v2);
 			}
@@ -295,20 +295,20 @@ public class namcos3d
 			}
 		}
 	
-		ystart = v0.y;
-		yend   = v2.y;
+		ystart = v0->y;
+		yend   = v2->y;
 		dy = yend-ystart;
-		if (dy != 0)
+		if( dy )
 		{
 			int y;
 			edge e1; /* short edge (top and bottom) */
 			edge e2; /* long (common) edge */
 	
-			double dx2dy = (v2.x - v0.x)/dy;
-			double du2dy = (v2.u - v0.u)/dy;
-			double dv2dy = (v2.v - v0.v)/dy;
-			double di2dy = (v2.i - v0.i)/dy;
-			double dz2dy = (v2.z - v0.z)/dy;
+			double dx2dy = (v2->x - v0->x)/dy;
+			double du2dy = (v2->u - v0->u)/dy;
+			double dv2dy = (v2->v - v0->v)/dy;
+			double di2dy = (v2->i - v0->i)/dy;
+			double dz2dy = (v2->z - v0->z)/dy;
 	
 			double dx1dy;
 			double du1dy;
@@ -316,12 +316,12 @@ public class namcos3d
 			double di1dy;
 			double dz1dy;
 	
-			e2.x = v0.x;
-			e2.u = v0.u;
-			e2.v = v0.v;
-			e2.i = v0.i;
-			e2.z = v0.z;
-			crop = clip.min_y - ystart;
+			e2.x = v0->x;
+			e2.u = v0->u;
+			e2.v = v0->v;
+			e2.i = v0->i;
+			e2.z = v0->z;
+			crop = clip->min_y - ystart;
 			if( crop>0 )
 			{
 				e2.x += dx2dy*crop;
@@ -331,24 +331,24 @@ public class namcos3d
 				e2.z += dz2dy*crop;
 			}
 	
-			ystart = v0.y;
-			yend = v1.y;
+			ystart = v0->y;
+			yend = v1->y;
 			dy = yend-ystart;
-			if (dy != 0)
+			if( dy )
 			{
-				e1.x = v0.x;
-				e1.u = v0.u;
-				e1.v = v0.v;
-				e1.i = v0.i;
-				e1.z = v0.z;
+				e1.x = v0->x;
+				e1.u = v0->u;
+				e1.v = v0->v;
+				e1.i = v0->i;
+				e1.z = v0->z;
 	
-				dx1dy = (v1.x - v0.x)/dy;
-				du1dy = (v1.u - v0.u)/dy;
-				dv1dy = (v1.v - v0.v)/dy;
-				di1dy = (v1.i - v0.i)/dy;
-				dz1dy = (v1.z - v0.z)/dy;
+				dx1dy = (v1->x - v0->x)/dy;
+				du1dy = (v1->u - v0->u)/dy;
+				dv1dy = (v1->v - v0->v)/dy;
+				di1dy = (v1->i - v0->i)/dy;
+				dz1dy = (v1->z - v0->z)/dy;
 	
-				crop = clip.min_y - ystart;
+				crop = clip->min_y - ystart;
 				if( crop>0 )
 				{
 					e1.x += dx1dy*crop;
@@ -356,9 +356,9 @@ public class namcos3d
 					e1.v += dv1dy*crop;
 					e1.i += di1dy*crop;
 					e1.z += dz1dy*crop;
-					ystart = clip.min_y;
+					ystart = clip->min_y;
 				}
-				if( yend>clip.max_y ) yend = clip.max_y;
+				if( yend>clip->max_y ) yend = clip->max_y;
 	
 				for( y=ystart; y<yend; y++ )
 				{
@@ -378,24 +378,24 @@ public class namcos3d
 				}
 			}
 	
-			ystart = v1.y;
-			yend = v2.y;
+			ystart = v1->y;
+			yend = v2->y;
 			dy = yend-ystart;
-			if (dy != 0)
+			if( dy )
 			{
-				e1.x = v1.x;
-				e1.u = v1.u;
-				e1.v = v1.v;
-				e1.i = v1.i;
-				e1.z = v1.z;
+				e1.x = v1->x;
+				e1.u = v1->u;
+				e1.v = v1->v;
+				e1.i = v1->i;
+				e1.z = v1->z;
 	
-				dx1dy = (v2.x - v1.x)/dy;
-				du1dy = (v2.u - v1.u)/dy;
-				dv1dy = (v2.v - v1.v)/dy;
-				di1dy = (v2.i - v1.i)/dy;
-				dz1dy = (v2.z - v1.z)/dy;
+				dx1dy = (v2->x - v1->x)/dy;
+				du1dy = (v2->u - v1->u)/dy;
+				dv1dy = (v2->v - v1->v)/dy;
+				di1dy = (v2->i - v1->i)/dy;
+				dz1dy = (v2->z - v1->z)/dy;
 	
-				crop = clip.min_y - ystart;
+				crop = clip->min_y - ystart;
 				if( crop>0 )
 				{
 					e1.x += dx1dy*crop;
@@ -403,9 +403,9 @@ public class namcos3d
 					e1.v += dv1dy*crop;
 					e1.i += di1dy*crop;
 					e1.z += dz1dy*crop;
-					ystart = clip.min_y;
+					ystart = clip->min_y;
 				}
-				if( yend>clip.max_y ) yend = clip.max_y;
+				if( yend>clip->max_y ) yend = clip->max_y;
 	
 				for( y=ystart; y<yend; y++ )
 				{
@@ -430,12 +430,12 @@ public class namcos3d
 	static void
 	ProjectPoint( const struct VerTex *v, vertex *pv, const namcos22_camera *camera )
 	{
-		pv.x = camera.cx + v.x*camera.zoom/v.z;
-		pv.y = camera.cy - v.y*camera.zoom/v.z;
-		pv.u = (v.u+0.5)/v.z;
-		pv.v = (v.v+0.5)/v.z;
-		pv.i = (v.i+0.5 - 0x40)/v.z;
-		pv.z = 1/v.z;
+		pv->x = camera->cx + v->x*camera->zoom/v->z;
+		pv->y = camera->cy - v->y*camera->zoom/v->z;
+		pv->u = (v->u+0.5)/v->z;
+		pv->v = (v->v+0.5)/v->z;
+		pv->i = (v->i+0.5 - 0x40)/v->z;
+		pv->z = 1/v->z;
 	}
 	
 	static void
@@ -452,7 +452,7 @@ public class namcos3d
 		ProjectPoint( v1,&b,camera );
 		ProjectPoint( v2,&c,camera );
 		mColor = color;
-		rendertri( &a, &b, &c, &camera.clip );
+		rendertri( &a, &b, &c, &camera->clip );
 	}
 	
 	
@@ -468,7 +468,7 @@ public class namcos3d
 	static int
 	VertexEqual( const struct VerTex *a, const struct VerTex *b )
 	{
-		return a.x == b.x && a.y == b.y && a.z == b.z;
+		return a->x == b->x && a->y == b->y && a->z == b->z;
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class namcos3d
 		if( VertexEqual(&v[0],&v[2]) ) return;
 		if( VertexEqual(&v[1],&v[2]) ) return;
 	
-		if ((flags & 0x0020) != 0) /* one-sided */
+		if( flags&0x0020 ) /* one-sided */
 		{
 			if( (v[2].x*((v[0].z*v[1].y)-(v[0].y*v[1].z)))+
 				(v[2].y*((v[0].x*v[1].z)-(v[0].z*v[1].x)))+
@@ -523,9 +523,9 @@ public class namcos3d
 			uz /= dist;
 	
 			{
-				double dotproduct = ux*camera.x + uy*camera.y + uz*camera.z;
+				double dotproduct = ux*camera->x + uy*camera->y + uz*camera->z;
 				if( dotproduct<0 ) dotproduct = -dotproduct;
-				mLight = dotproduct*camera.power + camera.ambient;
+				mLight = dotproduct*camera->power + camera->ambient;
 				if( mLight<0 ) mLight = 0;
 				if( mLight>1.0 ) mLight = 1.0;
 			}
@@ -612,11 +612,11 @@ public class namcos3d
 	BlitFlatSpan(
 		UINT16 *pDest, INT32 *pZBuf, const struct poly_scanline *scan, const INT64 *deltas, unsigned color)
 	{
-		INT64 z = scan.p[0];
+		INT64 z = scan->p[0];
 		INT64 dz = deltas[0];
 		INT32 x;
 	
-		for (x = scan.sx; x <= scan.ex; x++)
+		for (x = scan->sx; x <= scan->ex; x++)
 		{
 			INT32 sz = (z >> 16);
 			if( sz<pZBuf[x] )
@@ -642,8 +642,8 @@ public class namcos3d
 		int i;
 	
 		cliprect.min_x = cliprect.min_y = 0;
-		cliprect.max_x = pBitmap.width - 1;
-		cliprect.max_y = pBitmap.height - 1;
+		cliprect.max_x = pBitmap->width - 1;
+		cliprect.max_y = pBitmap->height - 1;
 	
 		if( (v[2].x*((v[0].z*v[1].y)-(v[0].y*v[1].z)))+
 			(v[2].y*((v[0].x*v[1].z)-(v[0].z*v[1].x)))+
@@ -656,19 +656,19 @@ public class namcos3d
 		{
 			if( v[i].z <=0 ) return; /* TBA: near plane clipping */
 			/* HACK! */
-			pv[i].x = pBitmap.width/2 + v[i].x*0x248/v[i].z;
-			pv[i].y = pBitmap.height/2 - v[i].y*0x2a0/v[i].z;
+			pv[i].x = pBitmap->width/2 + v[i].x*0x248/v[i].z;
+			pv[i].y = pBitmap->height/2 - v[i].y*0x2a0/v[i].z;
 			pv[i].p[0] = v[i].z;
 		}
 		scans = setup_triangle_1(&pv[0], &pv[1], &pv[2], &cliprect);
-		if (scans == 0)
+		if (!scans)
 			return;
-		curscan = scans.scanline;
-		for (y = scans.sy; y <= scans.ey; y++, curscan++)
+		curscan = scans->scanline;
+		for (y = scans->sy; y <= scans->ey; y++, curscan++)
 		{
-			UINT16 *pDest = (UINT16 *)pBitmap.line[y];
-			INT32 *pZBuf = namco_zbuffer + pBitmap.width*y;
-			BlitFlatSpan(pDest, pZBuf, curscan, scans.dp, color);
+			UINT16 *pDest = (UINT16 *)pBitmap->line[y];
+			INT32 *pZBuf = namco_zbuffer + pBitmap->width*y;
+			BlitFlatSpan(pDest, pZBuf, curscan, scans->dp, color);
 		}
 	} /* BlitTri */
 }

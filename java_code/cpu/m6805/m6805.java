@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6805;
 
@@ -136,7 +136,7 @@ public class m6805
 	#define CLR_ZC	  CC&=~(ZFLAG|CFLAG)
 	
 	/* macros for CC -- CC bits affected should be reset before calling */
-	#define SET_Z(a)       if (a == 0)SEZ
+	#define SET_Z(a)       if(!a)SEZ
 	#define SET_Z8(a)	   SET_Z((UINT8)a)
 	#define SET_N8(a)	   CC|=((a&0x80)>>5)
 	#define SET_H(a,b,r)   CC|=((a^b^r)&0x10)
@@ -217,7 +217,7 @@ public class m6805
 	#define IDX1BYTE(b) {INDEXED1;b=RM(EAD);}
 	#define IDX2BYTE(b) {INDEXED2;b=RM(EAD);}
 	/* Macros for branch instructions */
-	#define BRANCH(f) { UINT8 t; IMMBYTE(t); if (f != 0) { PC+=SIGNED(t); if (t==0xfe) { /* speed up busy loops */ if(m6805_ICount > 0) m6805_ICount = 0; } } }
+	#define BRANCH(f) { UINT8 t; IMMBYTE(t); if(f) { PC+=SIGNED(t); if (t==0xfe) { /* speed up busy loops */ if(m6805_ICount > 0) m6805_ICount = 0; } } }
 	
 	/* what they say it is ... */
 	static unsigned char cycles1[] =
@@ -243,7 +243,7 @@ public class m6805
 	
 	
 	/* pre-clear a PAIR union; clearing h2 and h3 only might be faster? */
-	#define CLEAR_PAIR(p)   p.d = 0
+	#define CLEAR_PAIR(p)   p->d = 0
 	
 	INLINE void rd_s_handler_b( UINT8 *b )
 	{
@@ -255,9 +255,9 @@ public class m6805
 	{
 		CLEAR_PAIR(p);
 		SP_INC;
-		p.b.h = RM( S );
+		p->b.h = RM( S );
 		SP_INC;
-		p.b.l = RM( S );
+		p->b.l = RM( S );
 	}
 	
 	INLINE void wr_s_handler_b( UINT8 *b )
@@ -268,25 +268,25 @@ public class m6805
 	
 	INLINE void wr_s_handler_w( PAIR *p )
 	{
-		WM( S, p.b.l );
+		WM( S, p->b.l );
 	    SP_DEC;
-		WM( S, p.b.h );
+		WM( S, p->b.h );
 	    SP_DEC;
 	}
 	
 	INLINE void RM16( UINT32 Addr, PAIR *p )
 	{
 		CLEAR_PAIR(p);
-	    p.b.h = RM(Addr);
+	    p->b.h = RM(Addr);
 		if( ++Addr > AMASK ) Addr = 0;
-		p.b.l = RM(Addr);
+		p->b.l = RM(Addr);
 	}
 	
 	INLINE void WM16( UINT32 Addr, PAIR *p )
 	{
-		WM( Addr, p.b.h );
+		WM( Addr, p->b.h );
 		if( ++Addr > AMASK ) Addr = 0;
-		WM( Addr, p.b.l );
+		WM( Addr, p->b.l );
 	}
 	
 	/* Generate interrupts */
@@ -438,7 +438,7 @@ public class m6805
 	 ****************************************************************************/
 	unsigned m6805_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(m6805_Regs*)dst = m6805;
 	    return sizeof(m6805_Regs);
 	}
@@ -449,7 +449,7 @@ public class m6805
 	 ****************************************************************************/
 	void m6805_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			m6805 = *(m6805_Regs*)src;
 			S = SP_ADJUST( S );
@@ -827,7 +827,7 @@ public class m6805
 		which = (which+1) % 8;
 	    buffer[which][0] = '\0';
 	
-	    if (context == 0)
+	    if( !context )
 			r = &m6805;
 	
 		switch( regnum )
@@ -842,21 +842,21 @@ public class m6805
 	
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.cc & 0x80 ? '?':'.',
-	                r.cc & 0x40 ? '?':'.',
-	                r.cc & 0x20 ? '?':'.',
-	                r.cc & 0x10 ? 'H':'.',
-	                r.cc & 0x08 ? 'I':'.',
-	                r.cc & 0x04 ? 'N':'.',
-	                r.cc & 0x02 ? 'Z':'.',
-	                r.cc & 0x01 ? 'C':'.');
+					r->cc & 0x80 ? '?':'.',
+	                r->cc & 0x40 ? '?':'.',
+	                r->cc & 0x20 ? '?':'.',
+	                r->cc & 0x10 ? 'H':'.',
+	                r->cc & 0x08 ? 'I':'.',
+	                r->cc & 0x04 ? 'N':'.',
+	                r->cc & 0x02 ? 'Z':'.',
+	                r->cc & 0x01 ? 'C':'.');
 	            break;
-			case CPU_INFO_REG+M6805_A: sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+M6805_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+M6805_S: sprintf(buffer[which], "S:%02X", r.s.w.l); break;
-			case CPU_INFO_REG+M6805_X: sprintf(buffer[which], "X:%02X", r.x); break;
-			case CPU_INFO_REG+M6805_CC: sprintf(buffer[which], "CC:%02X", r.cc); break;
-			case CPU_INFO_REG+M6805_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state[0]); break;
+			case CPU_INFO_REG+M6805_A: sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+M6805_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+M6805_S: sprintf(buffer[which], "S:%02X", r->s.w.l); break;
+			case CPU_INFO_REG+M6805_X: sprintf(buffer[which], "X:%02X", r->x); break;
+			case CPU_INFO_REG+M6805_CC: sprintf(buffer[which], "CC:%02X", r->cc); break;
+			case CPU_INFO_REG+M6805_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state[0]); break;
 	    }
 		return buffer[which];
 	}
@@ -899,7 +899,7 @@ public class m6805
 		m6805_reset(param);
 		/* Overide default 6805 type */
 		m6805.subtype = SUBTYPE_M68705;
-		if (p_amask != 0)
+		if (p_amask)
 			AMASK = *p_amask;
 		else
 			AMASK = 0x7ff; /* default if no AMASK is specified */
@@ -1018,7 +1018,7 @@ public class m6805
 		which = (which+1) % 8;
 	    buffer[which][0] = '\0';
 	
-	    if (context == 0)
+	    if( !context )
 			r = &m6805;
 	
 		switch( regnum )
@@ -1028,10 +1028,10 @@ public class m6805
 			case CPU_INFO_CREDITS: return "Keith Wilkins, Juergen Buchmueller";
 			case CPU_INFO_REG_LAYOUT: return (const char *)hd63705_reg_layout;
 			case CPU_INFO_WIN_LAYOUT: return (const char *)hd63705_win_layout;
-			case CPU_INFO_REG+HD63705_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); return buffer[which];
-			case CPU_INFO_REG+HD63705_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r.irq_state[HD63705_INT_IRQ1]); return buffer[which];
-			case CPU_INFO_REG+HD63705_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r.irq_state[HD63705_INT_IRQ2]); return buffer[which];
-			case CPU_INFO_REG+HD63705_ADCONV_STATE: sprintf(buffer[which], "ADCONV:%X", r.irq_state[HD63705_INT_ADCONV]); return buffer[which];
+			case CPU_INFO_REG+HD63705_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); return buffer[which];
+			case CPU_INFO_REG+HD63705_IRQ1_STATE: sprintf(buffer[which], "IRQ1:%X", r->irq_state[HD63705_INT_IRQ1]); return buffer[which];
+			case CPU_INFO_REG+HD63705_IRQ2_STATE: sprintf(buffer[which], "IRQ2:%X", r->irq_state[HD63705_INT_IRQ2]); return buffer[which];
+			case CPU_INFO_REG+HD63705_ADCONV_STATE: sprintf(buffer[which], "ADCONV:%X", r->irq_state[HD63705_INT_ADCONV]); return buffer[which];
 	    }
 		return m6805_info(context,regnum);
 	}

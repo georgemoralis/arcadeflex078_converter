@@ -57,14 +57,14 @@ struct tilemap; /* appease compiler */
 } tile_info;
 
 #define SET_TILE_INFO(GFX,CODE,COLOR,FLAGS) { \
-	const struct GfxElement *gfx = Machine.gfx[(GFX)]; \
-	int _code = (CODE) % gfx.total_elements; \
+	const struct GfxElement *gfx = Machine->gfx[(GFX)]; \
+	int _code = (CODE) % gfx->total_elements; \
 	tile_info.tile_number = _code; \
-	tile_info.pen_data = gfx.gfxdata + _code*gfx.char_modulo; \
-	tile_info.pal_data = &gfx.colortable[gfx.color_granularity * (COLOR)]; \
-	tile_info.pen_usage = gfx.pen_usage?gfx.pen_usage[_code]:0; \
+	tile_info.pen_data = gfx->gfxdata + _code*gfx->char_modulo; \
+	tile_info.pal_data = &gfx->colortable[gfx->color_granularity * (COLOR)]; \
+	tile_info.pen_usage = gfx->pen_usage?gfx->pen_usage[_code]:0; \
 	tile_info.flags = FLAGS; \
-	if (gfx.flags & GFX_PACKED) tile_info.flags |= TILE_4BPP; \
+	if (gfx->flags & GFX_PACKED) tile_info.flags |= TILE_4BPP; \
 }
 
 /* tile flags, set by get_tile_info callback */

@@ -23,7 +23,7 @@ the variable GorfBaseFrequency, this is defaulted to 8000
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -136,8 +136,7 @@ public class gorf
 	    return 0;
 	}
 	
-	public static ReadHandlerPtr gorf_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gorf_speech_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int Phoneme,Intonation;
 	    int i = 0;
 	
@@ -208,8 +207,7 @@ public class gorf
 	
 	/* Read from port 2 (0x12) returns speech status as 0x80 */
 	
-	public static ReadHandlerPtr gorf_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gorf_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int Ans;
 	
 	    Ans = (input_port_2_r.handler(0) & 0x7F);

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -122,11 +122,11 @@ public class balsente
 		timer_set(cpu_getscanlineperiod() * 0.9, 0, irq_off);
 	
 		/* if this is Grudge Match, update the steering */
-		if ((grudge_steering_result & 0x80) != 0)
+		if (grudge_steering_result & 0x80)
 			update_grudge_steering();
 	
 		/* if we're a shooter, we do a little more work */
-		if (balsente_shooter != 0)
+		if (balsente_shooter)
 		{
 			UINT8 tempx, tempy;
 	
@@ -146,8 +146,7 @@ public class balsente
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_balsente  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_balsente  = new MachineInitHandlerPtr() { public void handler(){
 		/* create the polynomial tables */
 		poly17_init();
 	
@@ -232,14 +231,14 @@ public class balsente
 	
 	void balsente_noise_gen(int chip, int count, short *buffer)
 	{
-		if (Machine.sample_rate)
+		if (Machine->sample_rate)
 		{
 			/* noise generator runs at 100kHz */
-			UINT32 step = (100000 << 14) / Machine.sample_rate;
+			UINT32 step = (100000 << 14) / Machine->sample_rate;
 			UINT32 noise_counter = noise_position[chip];
 	
 			/* try to use the poly17 if we can */
-			if (poly17 != 0)
+			if (poly17)
 			{
 				while (count--)
 				{
@@ -268,17 +267,15 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_random_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_random_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset random number generator */
 	} };
 	
 	
-	public static ReadHandlerPtr balsente_random_num_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_random_num_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned int cc;
 	
-		/* CPU runs at 1.25MHz, noise source at 100kHz -. multiply by 12.5 */
+		/* CPU runs at 1.25MHz, noise source at 100kHz --> multiply by 12.5 */
 		cc = activecpu_gettotalcycles();
 	
 		/* 12.5 = 8 + 4 + 0.5 */
@@ -294,8 +291,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_rombank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_rombank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_offset = 0x6000 * ((data >> 4) & 7);
 	
 		/* the bank number comes from bits 4-6 */
@@ -304,8 +300,7 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_rombank2_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_rombank2_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Night Stocker and Name that Tune only so far.... */
 		int bank = data & 7;
 	
@@ -313,7 +308,7 @@ public class balsente
 		if (memory_region_length(REGION_CPU1) > 0x40000) bank |= (data >> 4) & 8;
 	
 		/* when they set the AB bank, it appears as though the CD bank is reset */
-		if ((data & 0x20) != 0)
+		if (data & 0x20)
 		{
 			cpu_setbank(1, &memory_region(REGION_CPU1)[0x10000 + 0x6000 * bank]);
 			cpu_setbank(2, &memory_region(REGION_CPU1)[0x12000 + 0x6000 * 6]);
@@ -335,8 +330,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_misc_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_misc_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (offset / 4) % 8;
 		data >>= 7;
 	
@@ -364,11 +358,11 @@ public class balsente
 	{
 		UINT8 new_state;
 	
-		/* sound . main CPU communications */
+		/* sound -> main CPU communications */
 		if (!(m6850_sound_status & 0x02))
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */
-			if ((m6850_status & 0x01) != 0)
+			if (m6850_status & 0x01)
 				m6850_status |= 0x20;
 	
 			/* copy the sound's output to our input */
@@ -381,11 +375,11 @@ public class balsente
 			m6850_sound_status |= 0x02;
 		}
 	
-		/* main . sound CPU communications */
-		if (m6850_data_ready != 0)
+		/* main -> sound CPU communications */
+		if (m6850_data_ready)
 		{
 			/* set the overrun bit if the data in the destination hasn't been read yet */
-			if ((m6850_sound_status & 0x01) != 0)
+			if (m6850_sound_status & 0x01)
 				m6850_sound_status |= 0x20;
 	
 			/* copy the main CPU's output to our input */
@@ -452,8 +446,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr balsente_m6850_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_m6850_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result;
 	
 		/* status register is at offset 0 */
@@ -497,8 +490,7 @@ public class balsente
 	}
 	
 	
-	public static WriteHandlerPtr balsente_m6850_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_m6850_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* control register is at offset 0 */
 		if (offset == 0)
 		{
@@ -521,8 +513,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr balsente_m6850_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_m6850_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result;
 	
 		/* status register is at offset 0 */
@@ -545,8 +536,7 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_m6850_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_m6850_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* control register is at offset 0 */
 		if (offset == 0)
 			m6850_sound_control = data;
@@ -570,8 +560,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr balsente_update_analog_inputs = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr balsente_update_analog_inputs = new InterruptHandlerPtr() {public void handler(){
 		int i;
 	
 		/* the analog input system helpfully scales the value read by the percentage of time */
@@ -615,15 +604,13 @@ public class balsente
 	}
 	
 	
-	public static ReadHandlerPtr balsente_adc_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_adc_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* just return the last value read */
 		return adc_value;
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* set a timer to go off and read the value after 50us */
 		/* it's important that we do this for Mini Golf */
 	logerror("adc_select %d\n", offset & 7);
@@ -757,8 +744,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr balsente_counter_8253_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_counter_8253_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int which;
 	
 		switch (offset & 3)
@@ -791,8 +777,7 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_counter_8253_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_counter_8253_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int which;
 	
 		switch (offset & 3)
@@ -897,7 +882,7 @@ public class balsente
 		int i;
 	
 		/* if there's already a timer, remove it */
-		if (counter_0_timer_active != 0)
+		if (counter_0_timer_active)
 			timer_adjust(counter_0_timer, TIME_NEVER, 0, 0);
 		counter_0_timer_active = 0;
 	
@@ -935,8 +920,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr balsente_counter_state_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr balsente_counter_state_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit D0 is the inverse of the flip-flop state */
 		int result = !counter_0_ff;
 	
@@ -947,15 +931,14 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_counter_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_counter_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 diff_counter_control = counter_control ^ data;
 	
 		/* set the new global value */
 		counter_control = data;
 	
 		/* bit D0 enables/disables audio */
-		if ((diff_counter_control & 0x01) != 0)
+		if (diff_counter_control & 0x01)
 		{
 			int ch;
 			for (ch = 0; ch < MIXER_MAX_CHANNELS; ch++)
@@ -999,8 +982,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_chip_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_chip_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const UINT8 register_map[8] =
 		{
 			CEM3394_VCO_FREQUENCY,
@@ -1053,16 +1035,15 @@ public class balsente
 			}
 	
 		/* if a timer for counter 0 is running, recompute */
-		if (counter_0_timer_active != 0)
+		if (counter_0_timer_active)
 			update_counter_0_timer();
 	} };
 	
 	
 	
-	public static WriteHandlerPtr balsente_dac_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_dac_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* LSB or MSB? */
-		if ((offset & 1) != 0)
+		if (offset & 1)
 			dac_value = (dac_value & 0xfc0) | ((data >> 2) & 0x03f);
 		else
 			dac_value = (dac_value & 0x03f) | ((data << 6) & 0xfc0);
@@ -1077,8 +1058,7 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr balsente_register_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_register_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dac_register = data & 7;
 	} };
 	
@@ -1090,14 +1070,12 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr nstocker_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nstocker_port2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(2) & 0xf0) | nstocker_bits;
 	} };
 	
 	
-	public static WriteHandlerPtr spiker_expand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spiker_expand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* offset 0 is the bit pattern */
 		if (offset == 0)
 			spiker_expand_bits = data;
@@ -1112,8 +1090,7 @@ public class balsente
 	} };
 	
 	
-	public static ReadHandlerPtr spiker_expand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spiker_expand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 left, right;
 	
 		/* first rotate each nibble */
@@ -1172,8 +1149,7 @@ public class balsente
 	}
 	
 	
-	public static ReadHandlerPtr grudge_steering_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr grudge_steering_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("%04X:grudge_steering_r(@%d)\n", activecpu_get_pc(), cpu_getscanline());
 		grudge_steering_result |= 0x80;
 		return grudge_steering_result;
@@ -1199,8 +1175,7 @@ public class balsente
 	}
 	
 	
-	public static ReadHandlerPtr shrike_shared_6809_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shrike_shared_6809_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0)
 			return 0;
 		if (offset == 9)
@@ -1210,8 +1185,7 @@ public class balsente
 	} };
 	
 	
-	public static WriteHandlerPtr shrike_shared_6809_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shrike_shared_6809_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	if (offset != 0x0a || data != 0x55)
 	logerror("6809 wrote %02x = %02x\n", offset, data);
 		shrike_shared[offset] = (shrike_shared[offset] & ~0xff) | data;

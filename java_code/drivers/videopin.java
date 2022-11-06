@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,8 +28,6 @@ public class videopin
 	static UINT8 prev = 0;
 	static UINT8 mask = 0;
 	
-	static WRITE_HANDLER(videopin_out1_w);
-	static WRITE_HANDLER(videopin_out2_w);
 	
 	
 	static void update_plunger(void)
@@ -42,7 +40,7 @@ public class videopin
 			{
 				time_released = timer_get_time();
 	
-				if (mask == 0)
+				if (!mask)
 				{
 					cpu_set_nmi_line(0, ASSERT_LINE);
 				}
@@ -74,8 +72,7 @@ public class videopin
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_videopin  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_videopin  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(32), 32, interrupt_callback);
 	
 		/* both output latches are cleared on reset */
@@ -91,8 +88,7 @@ public class videopin
 	}
 	
 	
-	public static ReadHandlerPtr videopin_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr videopin_misc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		double plunger = calc_plunger_pos();
 	
 		// The plunger of the ball shooter has a black piece of
@@ -119,8 +115,7 @@ public class videopin
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const char* matrix[8][4] =
 		{
 			{ "LED26", "LED18", "LED11", "LED13" },
@@ -149,8 +144,7 @@ public class videopin
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 => OCTAVE0  */
 		/* D1 => OCTACE1  */
 		/* D2 => OCTAVE2  */
@@ -162,7 +156,7 @@ public class videopin
 	
 		mask = ~data & 0x10;
 	
-		if (mask != 0)
+		if (mask)
 		{
 			cpu_set_nmi_line(0, CLEAR_LINE);
 		}
@@ -171,8 +165,7 @@ public class videopin
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 => VOL0      */
 		/* D1 => VOL1      */
 		/* D2 => VOL2      */
@@ -186,8 +179,7 @@ public class videopin
 	} };
 	
 	
-	public static WriteHandlerPtr videopin_note_dvsr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr videopin_note_dvsr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* sound not implemented */
 	} };
 	
@@ -232,7 +224,7 @@ public class videopin
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_videopin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_videopin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( videopin )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -339,8 +331,7 @@ public class videopin
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_videopin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( videopin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -362,9 +353,7 @@ public class videopin
 		MDRV_VIDEO_UPDATE(videopin)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -414,5 +403,5 @@ public class videopin
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_videopin	   = new GameDriver("1979"	,"videopin"	,"videopin.java"	,rom_videopin,null	,machine_driver_videopin	,input_ports_videopin	,null	,ROT270	,	"Atari", "Video Pinball", GAME_NO_SOUND )
+	GAMEX( 1979, videopin, 0, videopin, videopin, 0, ROT270, "Atari", "Video Pinball", GAME_NO_SOUND )
 }

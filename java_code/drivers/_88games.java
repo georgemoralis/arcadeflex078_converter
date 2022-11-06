@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,34 +21,30 @@ public class _88games
 	
 	
 	
-	public static InterruptHandlerPtr k88games_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr k88games_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled())
 			irq0_line_hold();
 	} };
 	
 	static int zoomreadroms;
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (videobank != 0) return ram[offset];
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (videobank) return ram[offset];
 		else
 		{
-			if (zoomreadroms != 0)
+			if (zoomreadroms)
 				return K051316_rom_0_r(offset);
 			else
 				return K051316_0_r(offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (videobank != 0) ram[offset] = data;
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (videobank) ram[offset] = data;
 		else K051316_0_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr k88games_5f84_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k88games_5f84_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0/1 coin counters */
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
@@ -57,18 +53,16 @@ public class _88games
 		/* also 5fce == 2 read roms, == 3 read ram */
 		zoomreadroms = data & 0x04;
 	
-		if ((data & 0xf8) != 0)
+		if (data & 0xf8)
 			usrintf_showmessage("5f84 = %02x",data);
 	} };
 	
-	public static WriteHandlerPtr k88games_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k88games_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
 	} };
 	
 	/* handle fake button for speed cheat for players 1 and 2 */
-	public static ReadHandlerPtr cheat1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cheat1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		static int cheat = 0;
 		static int bits[] = { 0xee, 0xff, 0xbb, 0xaa };
@@ -85,8 +79,7 @@ public class _88games
 	} };
 	
 	/* handle fake button for speed cheat for players 3 and 4 */
-	public static ReadHandlerPtr cheat2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cheat2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		static int cheat = 0;
 		static int bits[] = { 0xee, 0xff, 0xbb, 0xaa };
@@ -103,15 +96,13 @@ public class _88games
 	} };
 	
 	static int speech_chip;
-	public static WriteHandlerPtr speech_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speech_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speech_chip = ( data & 4 ) ? 1 : 0;
 		UPD7759_reset_w( speech_chip, data & 2 );
 		UPD7759_start_w( speech_chip, data & 1 );
 	} };
 	
-	public static WriteHandlerPtr speech_msg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speech_msg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_port_w( speech_chip, data );
 	} };
 	
@@ -177,7 +168,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_88games = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_88games = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 88games )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -299,8 +290,7 @@ public class _88games
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_88games = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 88games )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000) /* ? */
@@ -329,9 +319,7 @@ public class _88games
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -517,7 +505,7 @@ public class _88games
 		/* bit 4: when 0, 051316 RAM at 3800-3fff; when 1, work RAM at 2000-3fff (NVRAM 3370-37ff) */
 		offs = 0x10000 + (lines & 0x07) * 0x2000;
 		memcpy(RAM,&RAM[offs],0x1000);
-		if ((lines & 0x08) != 0)
+		if (lines & 0x08)
 		{
 			if (paletteram != &RAM[0x1000])
 			{
@@ -545,23 +533,21 @@ public class _88games
 		k88games_priority = lines & 0x80;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_88games  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_88games  = new MachineInitHandlerPtr() { public void handler(){
 		konami_cpu_setlines_callback = k88games_banking;
 		paletteram = &memory_region(REGION_CPU1)[0x20000];
 	} };
 	
 	
 	
-	public static DriverInitHandlerPtr init_88games  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_88games  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_88games	   = new GameDriver("1988"	,"88games"	,"_88games.java"	,rom_88games,null	,machine_driver_88games	,input_ports_88games	,init_88games	,ROT0	,	"Konami", "'88 Games" )
-	public static GameDriver driver_konami88	   = new GameDriver("1988"	,"konami88"	,"_88games.java"	,rom_konami88,driver_88games	,machine_driver_88games	,input_ports_88games	,init_88games	,ROT0	,	"Konami", "Konami '88" )
-	public static GameDriver driver_hypsptsp	   = new GameDriver("1988"	,"hypsptsp"	,"_88games.java"	,rom_hypsptsp,driver_88games	,machine_driver_88games	,input_ports_88games	,init_88games	,ROT0	,	"Konami", "Hyper Sports Special (Japan)" )
+	GAME( 1988, 88games,  0,       88games, 88games, 88games, ROT0, "Konami", "'88 Games" )
+	GAME( 1988, konami88, 88games, 88games, 88games, 88games, ROT0, "Konami", "Konami '88" )
+	GAME( 1988, hypsptsp, 88games, 88games, 88games, 88games, ROT0, "Konami", "Hyper Sports Special (Japan)" )
 }

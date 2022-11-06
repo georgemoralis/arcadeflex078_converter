@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -94,8 +94,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM3812_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM3812_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM3812_control_port_0_w(0,data);
@@ -106,8 +105,7 @@ public class stadhero
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -139,7 +137,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_stadhero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stadhero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stadhero )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -304,8 +302,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_stadhero = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stadhero )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -333,9 +330,7 @@ public class stadhero
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -372,5 +367,5 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_stadhero	   = new GameDriver("1988"	,"stadhero"	,"stadhero.java"	,rom_stadhero,null	,machine_driver_stadhero	,input_ports_stadhero	,null	,ROT0	,	"Data East Corporation", "Stadium Hero (Japan)" )
+	GAME( 1988, stadhero, 0, stadhero, stadhero, 0, ROT0, "Data East Corporation", "Stadium Hero (Japan)" )
 }

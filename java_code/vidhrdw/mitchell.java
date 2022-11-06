@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,15 +52,14 @@ public class mitchell
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_pang  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pang  = new VideoStartHandlerPtr() { public int handler(){
 		pang_objram=NULL;
 		paletteram=NULL;
 	
 	
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap,15);
@@ -69,7 +68,7 @@ public class mitchell
 			OBJ RAM
 		*/
 		pang_objram=auto_malloc(pang_videoram_size);
-		if (pang_objram == 0)
+		if (!pang_objram)
 			return 1;
 		memset(pang_objram, 0, pang_videoram_size);
 	
@@ -77,7 +76,7 @@ public class mitchell
 			Palette RAM
 		*/
 		paletteram = auto_malloc(2*Machine.drv.total_colors);
-		if (paletteram == 0)
+		if (!paletteram)
 			return 1;
 		memset(paletteram, 0, 2*Machine.drv.total_colors);
 	
@@ -98,14 +97,12 @@ public class mitchell
 	
 	static int video_bank;
 	
-	public static WriteHandlerPtr pang_video_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pang_video_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bank handler (sets base pointers for video write) (doesn't apply to mgakuen) */
 		video_bank = data;
 	} };
 	
-	public static WriteHandlerPtr mgakuen_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mgakuen_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (pang_videoram[offset] != data)
 		{
 			pang_videoram[offset] = data;
@@ -113,30 +110,25 @@ public class mitchell
 		}
 	} };
 	
-	public static ReadHandlerPtr mgakuen_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mgakuen_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pang_videoram[offset];
 	} };
 	
-	public static WriteHandlerPtr mgakuen_objram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mgakuen_objram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pang_objram[offset]=data;
 	} };
 	
-	public static ReadHandlerPtr mgakuen_objram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mgakuen_objram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pang_objram[offset];
 	} };
 	
-	public static WriteHandlerPtr pang_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (video_bank != 0) mgakuen_objram_w(offset,data);
-		else mgakuen_videoram_w.handler(offset,data);
+	public static WriteHandlerPtr pang_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (video_bank) mgakuen_objram_w(offset,data);
+		else mgakuen_videoram_w(offset,data);
 	} };
 	
-	public static ReadHandlerPtr pang_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (video_bank != 0) return mgakuen_objram_r(offset);
+	public static ReadHandlerPtr pang_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (video_bank) return mgakuen_objram_r(offset);
 		else return mgakuen_videoram_r(offset);
 	} };
 	
@@ -144,8 +136,7 @@ public class mitchell
 	  COLOUR RAM
 	****************************************************************************/
 	
-	public static WriteHandlerPtr pang_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pang_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (pang_colorram[offset] != data)
 		{
 			pang_colorram[offset] = data;
@@ -153,8 +144,7 @@ public class mitchell
 		}
 	} };
 	
-	public static ReadHandlerPtr pang_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pang_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pang_colorram[offset];
 	} };
 	
@@ -164,8 +154,7 @@ public class mitchell
 	
 	static int paletteram_bank;
 	
-	public static WriteHandlerPtr pang_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pang_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("PC %04x: pang_gfxctrl_w %02x\n",activecpu_get_pc(),data);
 	{
 		char baf[40];
@@ -199,25 +188,21 @@ public class mitchell
 		/* up marukin - you can see partially built up screens during attract mode. */
 	} };
 	
-	public static WriteHandlerPtr pang_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (paletteram_bank != 0) paletteram_xxxxRRRRGGGGBBBB_w(offset + 0x800,data);
+	public static WriteHandlerPtr pang_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (paletteram_bank) paletteram_xxxxRRRRGGGGBBBB_w(offset + 0x800,data);
 		else paletteram_xxxxRRRRGGGGBBBB_w(offset,data);
 	} };
 	
-	public static ReadHandlerPtr pang_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (paletteram_bank != 0) return paletteram_r(offset + 0x800);
+	public static ReadHandlerPtr pang_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (paletteram_bank) return paletteram_r(offset + 0x800);
 		return paletteram_r(offset);
 	} };
 	
-	public static WriteHandlerPtr mgakuen_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mgakuen_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		paletteram_xxxxRRRRGGGGBBBB_w(offset,data);
 	} };
 	
-	public static ReadHandlerPtr mgakuen_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mgakuen_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return paletteram_r(offset);
 	} };
 	
@@ -243,12 +228,12 @@ public class mitchell
 			sx = pang_objram[offs+3] + ((attr & 0x10) << 4);
 			sy = ((pang_objram[offs+2] + 8) & 0xff) - 8;
 			code += (attr & 0xe0) << 3;
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
 			}
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					 code,
 					 color,
 					 flipscreen,flipscreen,
@@ -257,8 +242,7 @@ public class mitchell
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);

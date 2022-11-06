@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class deniam
 	
 	
 	
-	public static DriverInitHandlerPtr init_logicpro  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_logicpro  = new DriverInitHandlerPtr() { public void handler(){
 		bg_scrollx_reg = 0x00a4/2;
 		bg_scrolly_reg = 0x00a8/2;
 		bg_page_reg    = 0x00ac/2;
@@ -33,8 +32,7 @@ public class deniam
 		fg_scrollx_offs = 0x009;
 		fg_scrolly_offs = 0x000;
 	} };
-	public static DriverInitHandlerPtr init_karianx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_karianx  = new DriverInitHandlerPtr() { public void handler(){
 		bg_scrollx_reg = 0x00a4/2;
 		bg_scrolly_reg = 0x00a8/2;
 		bg_page_reg    = 0x00ac/2;
@@ -58,7 +56,7 @@ public class deniam
 	
 	static UINT32 scan_pages(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x3f) + ((row & 0x1f) << 6) + ((col & 0x40) << 5) + ((row & 0x20) << 7);
 	}
 	
@@ -102,8 +100,7 @@ public class deniam
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_deniam  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_deniam  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,scan_pages,       TILEMAP_OPAQUE,     8,8,128,64);
 		fg_tilemap = tilemap_create(get_fg_tile_info,scan_pages,       TILEMAP_TRANSPARENT,8,8,128,64);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8, 64,32);
@@ -241,7 +238,7 @@ public class deniam
 	
 			width = spriteram16[offs+2] & 0x007f;
 			flipx = spriteram16[offs+2] & 0x0100;
-			if (flipx != 0) sx++;
+			if (flipx) sx++;
 	
 			color = 0x40 + (spriteram16[offs+4] & 0x3f);
 	
@@ -267,23 +264,23 @@ public class deniam
 				x = 0;
 				while (i < 512)	/* safety check */
 				{
-					if (flipx != 0)
+					if (flipx)
 					{
 						if ((rom[i] & 0x0f) == 0x0f)
 						{
-							if (drawing == 0) drawing = 1;
+							if (!drawing) drawing = 1;
 							else break;
 						}
 						else
 						{
 							if (rom[i] & 0x0f)
 							{
-								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
-									y >= cliprect.min_y && y <= cliprect.max_y)
+								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
+									y >= cliprect->min_y && y <= cliprect->max_y)
 								{
-									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]&0x0f)]);
-									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]&0x0f)]);
+									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -291,19 +288,19 @@ public class deniam
 	
 						if ((rom[i] & 0xf0) == 0xf0)
 						{
-							if (drawing == 0) drawing = 1;
+							if (!drawing) drawing = 1;
 							else break;
 						}
 						else
 						{
 							if (rom[i] & 0xf0)
 							{
-								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
-									y >= cliprect.min_y && y <= cliprect.max_y)
+								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
+									y >= cliprect->min_y && y <= cliprect->max_y)
 								{
-									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]>>4)]);
-									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]>>4)]);
+									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -315,19 +312,19 @@ public class deniam
 					{
 						if ((rom[i] & 0xf0) == 0xf0)
 						{
-							if (drawing == 0) drawing = 1;
+							if (!drawing) drawing = 1;
 							else break;
 						}
 						else
 						{
 							if (rom[i] & 0xf0)
 							{
-								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
-									y >= cliprect.min_y && y <= cliprect.max_y)
+								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
+									y >= cliprect->min_y && y <= cliprect->max_y)
 								{
-									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]>>4)]);
-									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]>>4)]);
+									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -335,19 +332,19 @@ public class deniam
 	
 						if ((rom[i] & 0x0f) == 0x0f)
 						{
-							if (drawing == 0) drawing = 1;
+							if (!drawing) drawing = 1;
 							else break;
 						}
 						else
 						{
 							if (rom[i] & 0x0f)
 							{
-								if (sx+x >= cliprect.min_x && sx+x <= cliprect.max_x && 
-									y >= cliprect.min_y && y <= cliprect.max_y)
+								if (sx+x >= cliprect->min_x && sx+x <= cliprect->max_x && 
+									y >= cliprect->min_y && y <= cliprect->max_y)
 								{
-									if ((((UINT8 *)priority_bitmap.line[y])[sx+x] & primask) == 0)
-										plot_pixel(bitmap,sx+x,y,Machine.pens[color*16+(rom[i]&0x0f)]);
-									((UINT8 *)priority_bitmap.line[y])[sx+x] = 8;
+									if ((((UINT8 *)priority_bitmap->line[y])[sx+x] & primask) == 0)
+										plot_pixel(bitmap,sx+x,y,Machine->pens[color*16+(rom[i]&0x0f)]);
+									((UINT8 *)priority_bitmap->line[y])[sx+x] = 8;
 								}
 							}
 							x++;
@@ -384,13 +381,12 @@ public class deniam
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_deniam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_deniam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int bg_scrollx,bg_scrolly,fg_scrollx,fg_scrolly;
 		int page;
 	
 	
-		if (display_enable == 0) return;	/* don't update (freeze display) */
+		if (!display_enable) return;	/* don't update (freeze display) */
 	
 		bg_scrollx = deniam_textram[bg_scrollx_reg] - bg_scrollx_offs;
 		bg_scrolly = (deniam_textram[bg_scrolly_reg] & 0xff) - bg_scrolly_offs;

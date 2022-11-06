@@ -58,7 +58,7 @@ driver by Zsolt Vasvari and Alex Pasadyn
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -86,8 +86,7 @@ public class exterm
 	WRITE16_HANDLER( gottlieb_sh_word_w );
 	
 	
-	public static MachineInitHandlerPtr machine_init_exterm  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_exterm  = new MachineInitHandlerPtr() { public void handler(){
 		gottlieb_sound_init();
 	} };
 	
@@ -131,7 +130,7 @@ public class exterm
 		trackball_old[which] = trackball_pos;
 	
 		/* Move the sign bit to the high bit of the 6-bit trackball count. */
-		if ((trackball_diff & 0x80) != 0)
+		if (trackball_diff & 0x80)
 			trackball_diff |= 0x20;
 	
 		/* Keep adding the changes.  The counters will be reset later by a hardware write. */
@@ -168,7 +167,7 @@ public class exterm
 	
 		static data16_t last = 0;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* Bit 0-1= Resets analog controls */
 			if ((data & 0x0001) && !(last & 0x0001))
@@ -178,7 +177,7 @@ public class exterm
 				aimpos[1] = 0;
 		}
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* Bit 13 = Resets the slave CPU */
 			if ((data & 0x2000) && !(last & 0x2000))
@@ -220,8 +219,7 @@ public class exterm
 		COMBINE_DATA(&exterm_slave_speedup[offset]);
 	}
 	
-	public static ReadHandlerPtr exterm_sound_dac_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exterm_sound_dac_speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *RAM = memory_region(REGION_CPU3);
 		int value = RAM[0x0007];
 	
@@ -232,8 +230,7 @@ public class exterm
 		return value;
 	} };
 	
-	public static ReadHandlerPtr exterm_sound_ym2151_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exterm_sound_ym2151_speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Doing this won't flash the LED, but we're not emulating that anyhow, so
 		   it doesn't matter */
 		UINT8 *RAM = memory_region(REGION_CPU4);
@@ -347,7 +344,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_exterm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exterm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exterm )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -464,8 +461,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_exterm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exterm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010,40000000/TMS34010_CLOCK_DIVIDER)
@@ -505,9 +501,7 @@ public class exterm
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -559,8 +553,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_exterm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_exterm  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(exterm_code_rom, memory_region(REGION_USER1), code_rom_size);
 	
 		/* install speedups */
@@ -582,5 +575,5 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_exterm	   = new GameDriver("1989"	,"exterm"	,"exterm.java"	,rom_exterm,null	,machine_driver_exterm	,input_ports_exterm	,init_exterm	,ROT0	,	"Gottlieb / Premier Technology", "Exterminator" )
+	GAME( 1989, exterm, 0, exterm, exterm, exterm, ROT0, "Gottlieb / Premier Technology", "Exterminator" )
 }

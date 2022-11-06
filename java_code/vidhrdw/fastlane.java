@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class fastlane
 	static struct rectangle clip0, clip1;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_fastlane  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_fastlane  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int pal,col;
 	
 		for (pal = 0;pal < 16;pal++)
@@ -33,8 +32,8 @@ public class fastlane
 	
 	static void get_tile_info0(int tile_index)
 	{
-		int attr = fastlane_videoram1.read(tile_index);
-		int code = fastlane_videoram1.read(tile_index + 0x400);
+		int attr = fastlane_videoram1[tile_index];
+		int code = fastlane_videoram1[tile_index + 0x400];
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -58,8 +57,8 @@ public class fastlane
 	
 	static void get_tile_info1(int tile_index)
 	{
-		int attr = fastlane_videoram2.read(tile_index);
-		int code = fastlane_videoram2.read(tile_index + 0x400);
+		int attr = fastlane_videoram2[tile_index];
+		int code = fastlane_videoram2[tile_index + 0x400];
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -87,8 +86,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_fastlane  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fastlane  = new VideoStartHandlerPtr() { public int handler(){
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -113,21 +111,19 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr fastlane_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (fastlane_videoram1.read(offset)!= data)
+	public static WriteHandlerPtr fastlane_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (fastlane_videoram1[offset] != data)
 		{
 			tilemap_mark_tile_dirty(layer0,offset & 0x3ff);
-			fastlane_videoram1.write(data,data);
+			fastlane_videoram1[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr fastlane_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (fastlane_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr fastlane_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (fastlane_videoram2[offset] != data)
 		{
 			tilemap_mark_tile_dirty(layer1,offset & 0x3ff);
-			fastlane_videoram2.write(data,data);
+			fastlane_videoram2[offset] = data;
 		}
 	} };
 	
@@ -139,8 +135,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fastlane  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle finalclip0 = clip0, finalclip1 = clip1;
 		int i, xoffs;
 		

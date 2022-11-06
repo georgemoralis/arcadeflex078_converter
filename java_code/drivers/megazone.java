@@ -8,7 +8,7 @@ To enter service mode, keep 1&2 pressed on reset
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,8 +28,7 @@ public class megazone
 	
 	
 	
-	public static ReadHandlerPtr megazone_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megazone_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int clock,timer;
 	
 	
@@ -48,8 +47,7 @@ public class megazone
 		return (timer << 4) | i8039_status;
 	} };
 	
-	public static WriteHandlerPtr megazone_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 	
@@ -59,53 +57,46 @@ public class megazone
 	
 	
 			C = 0;
-			if ((data & 1) != 0) C +=  10000;	/*  10000pF = 0.01uF */
-			if ((data & 2) != 0) C += 220000;	/* 220000pF = 0.22uF */
+			if (data & 1) C +=  10000;	/*  10000pF = 0.01uF */
+			if (data & 2) C += 220000;	/* 220000pF = 0.22uF */
 			data >>= 2;
 			set_RC_filter(i,1000,2200,200,C);
 		}
 	} };
 	
-	public static WriteHandlerPtr megazone_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (megazone_videoram2[offset] != data)
 		{
 			megazone_videoram2[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr megazone_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (megazone_colorram2[offset] != data)
 		{
 			megazone_colorram2[offset] = data;
 		}
 	} };
 	
-	public static ReadHandlerPtr megazone_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megazone_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(megazone_sharedram[offset]);
 	} };
 	
-	public static WriteHandlerPtr megazone_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		megazone_sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr megazone_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x80) == 0)
 			cpu_set_irq_line(2, 0, CLEAR_LINE);
 		i8039_status = (data & 0x70) >> 4;
 	} };
 	
-	public static WriteHandlerPtr megazone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(1-offset,data);		/* 1-offset, because coin counters are in reversed order */
 	} };
 	
@@ -116,7 +107,7 @@ public class megazone
 		new Memory_ReadAddress( 0x2000, 0x2fff, MRA_RAM ),
 		new Memory_ReadAddress( 0x3000, 0x33ff, MRA_RAM ),
 		new Memory_ReadAddress( 0x3800, 0x3fff, megazone_sharedram_r ),
-		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),		/* 4000.5FFF is a debug rom */
+		new Memory_ReadAddress( 0x4000, 0xffff, MRA_ROM ),		/* 4000->5FFF is a debug rom */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -146,7 +137,7 @@ public class megazone
 		new Memory_ReadAddress( 0x6002, 0x6002, input_port_2_r ), /* P2 IO */
 		new Memory_ReadAddress( 0x8000, 0x8000, input_port_3_r ), /* DIP 1 */
 		new Memory_ReadAddress( 0x8001, 0x8001, input_port_4_r ), /* DIP 2 */
-		new Memory_ReadAddress( 0xe000, 0xe7ff, megazone_sharedram_r ),  /* Shared with $3800.3fff of main CPU */
+		new Memory_ReadAddress( 0xe000, 0xe7ff, megazone_sharedram_r ),  /* Shared with $3800->3fff of main CPU */
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -158,7 +149,7 @@ public class megazone
 		new Memory_WriteAddress( 0xa000, 0xa000, MWA_RAM ),				/* INTMAIN - Interrupts main CPU (unused) */
 		new Memory_WriteAddress( 0xc000, 0xc000, MWA_RAM ),				/* INT (Actually is NMI) enable/disable (unused)*/
 		new Memory_WriteAddress( 0xc001, 0xc001, watchdog_reset_w ),
-		new Memory_WriteAddress( 0xe000, 0xe7ff, megazone_sharedram_w ),	/* Shared with $3800.3fff of main CPU */
+		new Memory_WriteAddress( 0xe000, 0xe7ff, megazone_sharedram_w ),	/* Shared with $3800->3fff of main CPU */
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
@@ -200,7 +191,7 @@ public class megazone
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_megazone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_megazone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megazone )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -345,8 +336,7 @@ public class megazone
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_megazone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( megazone )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/9)        /* 2 MHz */
@@ -382,9 +372,7 @@ public class megazone
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -459,12 +447,11 @@ public class megazone
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_megazone  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_megazone  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_megazone	   = new GameDriver("1983"	,"megazone"	,"megazone.java"	,rom_megazone,null	,machine_driver_megazone	,input_ports_megazone	,init_megazone	,ROT90	,	"Konami", "Mega Zone" )
-	public static GameDriver driver_megaznik	   = new GameDriver("1983"	,"megaznik"	,"megazone.java"	,rom_megaznik,driver_megazone	,machine_driver_megazone	,input_ports_megazone	,init_megazone	,ROT90	,	"Konami / Interlogic + Kosuka", "Mega Zone (Kosuka)" )
+	GAME( 1983, megazone, 0,        megazone, megazone, megazone, ROT90, "Konami", "Mega Zone" )
+	GAME( 1983, megaznik, megazone, megazone, megazone, megazone, ROT90, "Konami / Interlogic + Kosuka", "Mega Zone (Kosuka)" )
 }

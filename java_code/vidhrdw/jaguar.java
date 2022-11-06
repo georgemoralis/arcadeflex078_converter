@@ -136,7 +136,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -242,8 +242,8 @@ public class jaguar
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = ((readinputport(3 + player * 2) & 0xff) * Machine.drv.screen_width) >> 8;
-		*y = ((readinputport(4 + player * 2) & 0xff) * Machine.drv.screen_height) >> 8;
+		*x = ((readinputport(3 + player * 2) & 0xff) * Machine->drv->screen_width) >> 8;
+		*y = ((readinputport(4 + player * 2) & 0xff) * Machine->drv->screen_height) >> 8;
 	}
 	
 	
@@ -419,7 +419,7 @@ public class jaguar
 					UINT8 b = (blu_lookup[i >> 8] * (i & 0xff)) >> 8;
 	
 					/* if the low bit is set, treat it as 5-5-5 RGB instead */
-					if ((i & 1) != 0)
+					if (i & 1)
 					{
 						r = (i >> 11) & 31;
 						g = (i >> 1) & 31;
@@ -641,7 +641,7 @@ public class jaguar
 				return cpu_irq_state;
 	
 			case HC:
-				return cpu_gethorzbeampos() % (Machine.drv.screen_width / 2);
+				return cpu_gethorzbeampos() % (Machine->drv->screen_width / 2);
 	
 			case VC:
 				return cpu_getscanline() * 2 + gpu_regs[VBE];
@@ -697,9 +697,9 @@ public class jaguar
 	
 	WRITE32_HANDLER( jaguar_tom_regs32_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			jaguar_tom_regs_w(offset * 2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			jaguar_tom_regs_w(offset * 2 + 1, data, mem_mask);
 	}
 	
@@ -743,13 +743,12 @@ public class jaguar
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_cojag  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (jagobj_init() != 0)
+	public static VideoStartHandlerPtr video_start_cojag  = new VideoStartHandlerPtr() { public int handler(){
+		if (jagobj_init())
 			return 1;
 	
 		pen_table = auto_malloc(65536 * sizeof(pen_t));
-		if (pen_table == 0)
+		if (!pen_table)
 			return 1;
 	
 		vi_timer = timer_alloc(vi_callback);
@@ -770,8 +769,7 @@ public class jaguar
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cojag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* if not enabled, just blank */
 		if (!(gpu_regs[VMODE] & 1))
 		{
@@ -783,7 +781,7 @@ public class jaguar
 		process_object_list(bitmap, cliprect);
 	
 		/* render the crosshair */
-		if (cojag_draw_crosshair != 0)
+		if (cojag_draw_crosshair)
 		{
 			int beamx, beamy;
 	

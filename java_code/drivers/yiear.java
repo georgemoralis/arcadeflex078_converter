@@ -49,7 +49,7 @@ The 6809 NMI is used for sound timing.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,23 +62,20 @@ public class yiear
 	/* in sndhrdw/trackfld.c */
 	
 	
-	public static ReadHandlerPtr yiear_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (VLM5030_BSY() != 0) return 1;
+	public static ReadHandlerPtr yiear_speech_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (VLM5030_BSY()) return 1;
 		else return 0;
 	} };
 	
-	public static WriteHandlerPtr yiear_VLM5030_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yiear_VLM5030_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 is latch direction */
 		VLM5030_ST( ( data >> 1 ) & 1 );
 		VLM5030_RST( ( data >> 2 ) & 1 );
 	} };
 	
-	public static InterruptHandlerPtr yiear_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr yiear_nmi_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* can't use nmi_line_pulse() because interrupt_enable_w() effects it */
-		if (nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if (nmi_enable) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	
@@ -115,7 +112,7 @@ public class yiear
 	
 	
 	
-	static InputPortPtr input_ports_yiear = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yiear = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yiear )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -267,8 +264,7 @@ public class yiear
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_yiear = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yiear )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/16)	/* ???? */
@@ -294,9 +290,7 @@ public class yiear
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -351,6 +345,6 @@ public class yiear
 	
 	
 	
-	public static GameDriver driver_yiear	   = new GameDriver("1985"	,"yiear"	,"yiear.java"	,rom_yiear,null	,machine_driver_yiear	,input_ports_yiear	,null	,ROT0	,	"Konami", "Yie Ar Kung-Fu (set 1)" )
-	public static GameDriver driver_yiear2	   = new GameDriver("1985"	,"yiear2"	,"yiear.java"	,rom_yiear2,driver_yiear	,machine_driver_yiear	,input_ports_yiear	,null	,ROT0	,	"Konami", "Yie Ar Kung-Fu (set 2)" )
+	GAME( 1985, yiear,  0,     yiear, yiear, 0, ROT0, "Konami", "Yie Ar Kung-Fu (set 1)" )
+	GAME( 1985, yiear2, yiear, yiear, yiear, 0, ROT0, "Konami", "Yie Ar Kung-Fu (set 2)" )
 }

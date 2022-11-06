@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -193,8 +193,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_qix  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_qix  = new MachineInitHandlerPtr() { public void handler(){
 		/* set a timer for the first scanline */
 		timer_set(cpu_getscanlinetime(0), 0, qix_scanline_callback);
 	
@@ -210,8 +209,7 @@ public class qix
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_qixmcu  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_qixmcu  = new MachineInitHandlerPtr() { public void handler(){
 		/* set a timer for the first scanline */
 		timer_set(cpu_getscanlinetime(0), 0, qix_scanline_callback);
 	
@@ -230,8 +228,7 @@ public class qix
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_slither  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_slither  = new MachineInitHandlerPtr() { public void handler(){
 		/* set a timer for the first scanline */
 		timer_set(cpu_getscanlinetime(0), 0, qix_scanline_callback);
 	
@@ -258,8 +255,7 @@ public class qix
 	}
 	
 	
-	public static InterruptHandlerPtr qix_vblank_start = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr qix_vblank_start = new InterruptHandlerPtr() {public void handler(){
 		pia_3_cb1_w(0, 1);
 		timer_set(cpu_getscanlinetime(0), 0, vblank_stop);
 	} };
@@ -272,14 +268,12 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qix_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return qix_sharedram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr qix_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qix_sharedram[offset] = data;
 	} };
 	
@@ -291,11 +285,10 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr zoo_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zoo_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU2);
 	
-		if ((data & 0x04) != 0)
+		if (data & 0x04)
 			cpu_setbank(1, &RAM[0x10000]);
 		else
 			cpu_setbank(1, &RAM[0xa000]);
@@ -309,27 +302,23 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_data_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_data_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr qix_data_firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_data_firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
 	
-	public static ReadHandlerPtr qix_data_firq_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_data_firq_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
 		return 0xff;
 	} };
 	
 	
-	public static ReadHandlerPtr qix_data_firq_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_data_firq_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 		return 0xff;
 	} };
@@ -342,27 +331,23 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_video_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_video_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, ASSERT_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr qix_video_firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_video_firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
 	
-	public static ReadHandlerPtr qix_video_firq_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_video_firq_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, ASSERT_LINE);
 		return 0xff;
 	} };
 	
 	
-	public static ReadHandlerPtr qix_video_firq_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_video_firq_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, CLEAR_LINE);
 		return 0xff;
 	} };
@@ -375,8 +360,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0, data);
 	} };
 	
@@ -387,8 +371,7 @@ public class qix
 	}
 	
 	
-	public static WriteHandlerPtr sync_pia_4_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sync_pia_4_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* we need to synchronize this so the sound CPU doesn't drop anything important */
 		timer_set(TIME_NOW, data, deferred_pia_4_porta_w);
 	} };
@@ -422,23 +405,20 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qixmcu_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qixmcu_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return qix_68705_port_out[0];
 	} };
 	
 	
-	public static WriteHandlerPtr qixmcu_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qixmcu_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this is a callback called by pia_0_w(), so I don't need to synchronize */
 		/* the CPUs - they have already been synchronized by qix_pia_0_w() */
 		qix_68705_port_in[0] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr qixmcu_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x04) != 0)
+	public static WriteHandlerPtr qixmcu_coinctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x04)
 		{
 			cpu_set_irq_line(3, M6809_IRQ_LINE, ASSERT_LINE);
 			/* spin for a while to let the 68705 write the result */
@@ -460,8 +440,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qix_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 ddr = qix_68705_ddr[0];
 		UINT8 out = qix_68705_port_out[0];
 		UINT8 in = qix_68705_port_in[0];
@@ -469,8 +448,7 @@ public class qix
 	} };
 	
 	
-	public static ReadHandlerPtr qix_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 ddr = qix_68705_ddr[1];
 		UINT8 out = qix_68705_port_out[1];
 		UINT8 in = (readinputport(1) & 0x0f) | ((readinputport(1) & 0x80) >> 3);
@@ -478,8 +456,7 @@ public class qix
 	} };
 	
 	
-	public static ReadHandlerPtr qix_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 ddr = qix_68705_ddr[2];
 		UINT8 out = qix_68705_port_out[2];
 		UINT8 in = (~qix_coinctrl & 0x08) | ((readinputport(1) & 0x70) >> 4);
@@ -494,22 +471,19 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qix_68705_port_out[0] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr qix_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qix_68705_port_out[1] = data;
 		coin_lockout_w(0, (~data >> 6) & 1);
 		coin_counter_w(0, (data >> 7) & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr qix_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qix_68705_port_out[2] = data;
 	} };
 	
@@ -527,8 +501,7 @@ public class qix
 	}
 	
 	
-	public static WriteHandlerPtr qix_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* make all the CPUs synchronize, and only AFTER that write the command to the PIA */
 		/* otherwise the 68705 will miss commands */
 		timer_set(TIME_NOW, data | (offset << 8), pia_0_w_callback);
@@ -542,8 +515,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr zookeep_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zookeep_pia_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Hack: Kram and Zoo Keeper for some reason (protection?) leave the port A */
 		/* DDR set to 0xff, so they cannot read the player 1 controls. Here we force */
 		/* the DDR to 0, so the controls work correctly. */
@@ -553,8 +525,7 @@ public class qix
 	} };
 	
 	
-	public static WriteHandlerPtr zookeep_pia_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zookeep_pia_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Hack: Zoo Keeper for some reason (protection?) leaves the port A */
 		/* DDR set to 0xff, so they cannot read the player 2 controls. Here we force */
 		/* the DDR to 0, so the controls work correctly. */
@@ -571,8 +542,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_inv_flag_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_inv_flag_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qix_cocktail_flip = data;
 	} };
 	
@@ -584,15 +554,13 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_coinctl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_coinctl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0, (~data >> 2) & 1);
 		coin_counter_w(0, (data >> 1) & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr slither_coinctl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slither_coinctl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0, (~data >> 6) & 1);
 		coin_counter_w(0, (data >> 5) & 1);
 	} };
@@ -605,8 +573,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr slither_76489_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slither_76489_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write to the sound chip */
 		SN76496_0_w(0, data);
 	
@@ -616,8 +583,7 @@ public class qix
 	} };
 	
 	
-	public static WriteHandlerPtr slither_76489_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slither_76489_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write to the sound chip */
 		SN76496_1_w(0, data);
 	
@@ -634,14 +600,12 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr slither_trak_lr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr slither_trak_lr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(qix_cocktail_flip ? 6 : 4);
 	} };
 	
 	
-	public static ReadHandlerPtr slither_trak_ud_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr slither_trak_ud_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(qix_cocktail_flip ? 5 : 3);
 	} };
 }

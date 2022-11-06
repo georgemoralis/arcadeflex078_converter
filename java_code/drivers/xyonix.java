@@ -21,7 +21,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,12 +31,9 @@ public class xyonix
 	data8_t *xyonix_vidram;
 	
 	/* in vidhrdw/xyonix.c */
-	VIDEO_START(xyonix);
-	VIDEO_UPDATE(xyonix);
 	
 	
-	public static WriteHandlerPtr xyonix_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xyonix_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
@@ -52,7 +49,7 @@ public class xyonix
 	
 	//	usrintf_showmessage("Coin %d",coin);
 	
-		if ((coin & 1) != 0)	// Coin 2 !
+		if (coin & 1)	// Coin 2 !
 		{
 			tmp = (readinputport(2) & 0xc0) >> 6;
 			coins++;
@@ -65,7 +62,7 @@ public class xyonix
 			coin_counter_w(1,1); coin_counter_w(1,0); /* Count slot B */
 		}
 	
-		if ((coin & 2) != 0)	// Coin 1 !
+		if (coin & 2)	// Coin 1 !
 		{
 			tmp = (readinputport(2) & 0x30) >> 4;
 			coins++;
@@ -83,8 +80,7 @@ public class xyonix
 	}
 	
 	
-	public static ReadHandlerPtr xyonix_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xyonix_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int regPC = activecpu_get_pc();
 	
 		if (regPC == 0x27ba)
@@ -143,8 +139,7 @@ public class xyonix
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr xyonix_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xyonix_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror ("xyonix_port_e0_w %02x - PC = %04x\n", data, activecpu_get_pc());
 		e0_data = data;
 	} };
@@ -185,7 +180,7 @@ public class xyonix
 	
 	/* Inputs Ports **************************************************************/
 	
-	static InputPortPtr input_ports_xyonix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xyonix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xyonix )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -257,8 +252,7 @@ public class xyonix
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_xyonix = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xyonix )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)		 /* 4 MHz ? */
@@ -283,9 +277,7 @@ public class xyonix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROM Loading ***************************************************************/
 	
@@ -303,5 +295,5 @@ public class xyonix
 	
 	/* GAME drivers **************************************************************/
 	
-	public static GameDriver driver_xyonix	   = new GameDriver("1989"	,"xyonix"	,"xyonix.java"	,rom_xyonix,null	,machine_driver_xyonix	,input_ports_xyonix	,null	,ROT0	,	"Philko", "Xyonix" )
+	GAME( 1989, xyonix, 0, xyonix, xyonix, 0, ROT0, "Philko", "Xyonix" )
 }

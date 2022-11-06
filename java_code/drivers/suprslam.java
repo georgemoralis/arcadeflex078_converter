@@ -82,7 +82,7 @@ EB26IC73.BIN	27C240		/  Main Program
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -104,7 +104,7 @@ public class suprslam
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -119,13 +119,11 @@ public class suprslam
 	}
 	#endif
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
-	public static WriteHandlerPtr suprslam_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr suprslam_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bankaddress;
 	
@@ -203,7 +201,7 @@ public class suprslam
 	
 	/*** INPUT PORTS *************************************************************/
 	
-	static InputPortPtr input_ports_suprslam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprslam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprslam )
 	
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -343,8 +341,7 @@ public class suprslam
 	
 	/*** MACHINE DRIVER **********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_suprslam = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( suprslam )
 		MDRV_CPU_ADD(M68000, 16000000)
 		MDRV_CPU_MEMORY(suprslam_readmem,suprslam_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -369,9 +366,7 @@ public class suprslam
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*** ROM LOADING *************************************************************/
 	
@@ -406,6 +401,6 @@ public class suprslam
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	public static GameDriver driver_suprslam	   = new GameDriver("1995"	,"suprslam"	,"suprslam.java"	,rom_suprslam,null	,machine_driver_suprslam	,input_ports_suprslam	,null	,ROT0	,	"Banpresto / Toei Animation", "Super Slams", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, suprslam, 0, suprslam, suprslam, 0, ROT0, "Banpresto / Toei Animation", "Super Slams", GAME_IMPERFECT_GRAPHICS )
 	
 }

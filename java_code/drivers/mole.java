@@ -43,7 +43,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,7 +80,7 @@ public class mole
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static ReadHandlerPtr mole_prot_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mole_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
 		/*	Following are all known examples of Mole Attack
 		**	code reading from the protection circuitry:
 		**
@@ -113,7 +113,7 @@ public class mole
 			}
 		case 0x86: return 0x91; /* game over */
 		case 0xae: return 0x32; /* coinage */
-		}
+		} };
 	
 		/*	The above are critical protection reads.
 		**	It isn't clear what effect (if any) the
@@ -121,7 +121,7 @@ public class mole
 		**	return 0x00
 		*/
 		return 0x00;
-	} };
+	}
 	
 	public static Memory_ReadAddress moleattack_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -150,8 +150,7 @@ public class mole
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_mole = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mole )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 4000000) /* ? */
@@ -174,9 +173,7 @@ public class mole
 		MDRV_VIDEO_UPDATE(moleattack)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_mole = new RomLoadPtr(){ public void handler(){  /* ALL ROMS ARE 2732 */
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for 6502 code */
@@ -196,7 +193,7 @@ public class mole
 		ROM_LOAD( "mba.8a",	0x5000, 0x1000, CRC(50c43fc9) SHA1(af478f3d89cd6c87f32dcdda7fabce25738c340b) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_mole = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mole = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mole )
 		PORT_START();  // 0x8d00
 		PORT_DIPNAME( 0x01, 0x00, "Round Points" );
 		PORT_DIPSETTING(	0x00, DEF_STR( "Off") );
@@ -255,5 +252,5 @@ public class mole
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static GameDriver driver_mole	   = new GameDriver("1982"	,"mole"	,"mole.java"	,rom_mole,null	,machine_driver_mole	,input_ports_mole	,null	,ROT0	,	"Yachiyo Electronics, Ltd.", "Mole Attack" )
+	GAME(1982, mole, 0, mole, mole, 0, ROT0, "Yachiyo Electronics, Ltd.", "Mole Attack" )
 }

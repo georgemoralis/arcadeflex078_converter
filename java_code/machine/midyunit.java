@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -130,7 +130,7 @@ public class midyunit
 		logerror("%08x:Protection write = %04X\n", activecpu_get_pc(), data);
 	
 		/* only go down this path if we have a data structure */
-		if (prot_data != 0)
+		if (prot_data)
 		{
 			/* mask off the data */
 			data &= 0x0f00;
@@ -141,7 +141,7 @@ public class midyunit
 			prot_sequence[2] = data;
 	
 			/* special case: sequence entry 1234 means Strike Force, which is different */
-			if (prot_data.reset_sequence[0] == 0x1234)
+			if (prot_data->reset_sequence[0] == 0x1234)
 			{
 				if (data == 0x500)
 				{
@@ -154,9 +154,9 @@ public class midyunit
 			else
 			{
 				/* look for a reset */
-				if (prot_sequence[0] == prot_data.reset_sequence[0] &&
-					prot_sequence[1] == prot_data.reset_sequence[1] &&
-					prot_sequence[2] == prot_data.reset_sequence[2])
+				if (prot_sequence[0] == prot_data->reset_sequence[0] &&
+					prot_sequence[1] == prot_data->reset_sequence[1] &&
+					prot_sequence[2] == prot_data->reset_sequence[2])
 				{
 					logerror("Protection reset\n");
 					prot_index = 0;
@@ -165,7 +165,7 @@ public class midyunit
 				/* look for a clock */
 				if ((prot_sequence[1] & 0x0800) != 0 && (prot_sequence[2] & 0x0800) == 0)
 				{
-					prot_result = prot_data.data_sequence[prot_index++];
+					prot_result = prot_data->data_sequence[prot_index++];
 					logerror("Protection clock (new data = %04X)\n", prot_result);
 				}
 			}
@@ -400,7 +400,7 @@ public class midyunit
 	
 	static READ16_HANDLER( term2_speedup_r )
 	{
-		if (offset != 0)
+		if (offset)
 		{
 			return midyunit_scratch_ram[TOWORD(0xaa050)];
 		}
@@ -418,7 +418,7 @@ public class midyunit
 	
 				b1 = 0;			 									/* CLR    B1 */
 				b2 = (INT32)(READ_INT16(0x100F640));				/* MOVE   @100F640h,B2,0 */
-				if (b2 == 0)											/* JREQ   FFC029F0h */
+				if (!b2)											/* JREQ   FFC029F0h */
 				{
 					cpu_spinuntil_int();
 					return value1;
@@ -456,7 +456,7 @@ public class midyunit
 					a8  = READ_INT32(a1+0x1c0);						/* MOVE   *A1(1C0h),A8,1 */
 					a7  = READ_INT32(a1+0x1a0);						/* MOVE   *A1(1A0h),A7,1 */
 					a14 = (INT32)(READ_INT16(a1+0x220));			/* MOVE   *A1(220h),A14,0 */
-					if ((a14 & 0x6000) != 0)								/* BTST   Eh,A14 */
+					if (a14 & 0x6000)								/* BTST   Eh,A14 */
 					{												/* JRNE   FFC07C50h */
 						goto t2_FFC07C50;							/* BTST   Dh,A14 */
 					}												/* JRNE   FFC07C50h */
@@ -684,8 +684,7 @@ public class midyunit
 	 *************************************/
 	
 	static UINT8 *cvsd_protection_base;
-	public static WriteHandlerPtr cvsd_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvsd_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* because the entire CVSD ROM is banked, we have to make sure that writes */
 		/* go to the proper location (i.e., bank 0); currently bank 0 always lives */
 		/* in the 0x10000-0x17fff space, so we just need to add 0x8000 to get the  */
@@ -785,8 +784,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_narc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_narc  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_generic(8, SOUND_NARC, 0xcdff, 0xce29);
 	
@@ -794,8 +792,7 @@ public class midyunit
 		INSTALL_SPEEDUP_1_32BIT(0x0101b310, 0xffde33e0, 0x1000040, 0xc0, 0xa0);
 	} };
 	
-	public static DriverInitHandlerPtr init_narc3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_narc3  = new DriverInitHandlerPtr() { public void handler(){
 		UINT32 bank, offset;
 	
 		/* common init */
@@ -840,25 +837,21 @@ public class midyunit
 		init_generic(4, SOUND_CVSD_SMALL, 0x9eaf, 0x9ed9);
 	}
 	
-	public static DriverInitHandlerPtr init_trog  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trog  = new DriverInitHandlerPtr() { public void handler(){
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a20a0, 0xffe20630, 0x1000040, 0xc0, 0xa0);
 	} };
 	
-	public static DriverInitHandlerPtr init_trog3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trog3  = new DriverInitHandlerPtr() { public void handler(){
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a2090, 0xffe20660, 0x1000040, 0xc0, 0xa0);
 	} };
 	
-	public static DriverInitHandlerPtr init_trogpa6  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trogpa6  = new DriverInitHandlerPtr() { public void handler(){
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a1f80, 0xffe21200, 0x1000040, 0xc0, 0xa0);
 	} };
-	public static DriverInitHandlerPtr init_trogp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trogp  = new DriverInitHandlerPtr() { public void handler(){
 		init_trog_common();
 		INSTALL_SPEEDUP_1_32BIT(0x010a1ee0, 0xffe210d0, 0x1000040, 0xc0, 0xa0);
 	} };
@@ -872,14 +865,12 @@ public class midyunit
 		init_generic(6, SOUND_CVSD_SMALL, 0x9cf6, 0x9d21);
 	}
 	
-	public static DriverInitHandlerPtr init_smashtv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_smashtv  = new DriverInitHandlerPtr() { public void handler(){
 		init_smashtv_common();
 		INSTALL_SPEEDUP_1_MIXEDBITS(0x01086760, 0xffe0a340, 0x1000040, 0xa0, 0x80);
 	} };
 	
-	public static DriverInitHandlerPtr init_smashtv4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_smashtv4  = new DriverInitHandlerPtr() { public void handler(){
 		init_smashtv_common();
 		INSTALL_SPEEDUP_1_MIXEDBITS(0x01086790, 0xffe0a320, 0x1000040, 0xa0, 0x80);
 	} };
@@ -902,8 +893,7 @@ public class midyunit
 		init_generic(6, SOUND_CVSD, 0x9b79, 0x9ba3);
 	}
 	
-	public static DriverInitHandlerPtr init_hiimpact  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hiimpact  = new DriverInitHandlerPtr() { public void handler(){
 		init_hiimpact_common();
 		INSTALL_SPEEDUP_3(0x01053150, 0xffe28bb0, 0x1000080, 0x10000a0, 0x10000c0);
 	} };
@@ -926,14 +916,12 @@ public class midyunit
 		init_generic(6, SOUND_CVSD, 0x9c06, 0x9c15);
 	}
 	
-	public static DriverInitHandlerPtr init_shimpact  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shimpact  = new DriverInitHandlerPtr() { public void handler(){
 		init_shimpact_common();
 		INSTALL_SPEEDUP_3(0x01052070, 0xffe27f00, 0x1000000, 0x1000020, 0x1000040);
 	} };
 	
-	public static DriverInitHandlerPtr init_shimpacp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shimpacp  = new DriverInitHandlerPtr() { public void handler(){
 		init_shimpact_common();
 		INSTALL_SPEEDUP_3(0x01052050, 0xffe27950, 0x1000000, 0x1000020, 0x1000040);
 	} };
@@ -954,8 +942,7 @@ public class midyunit
 		init_generic(4, SOUND_CVSD_SMALL, 0x9f7d, 0x9fa7);
 	}
 	
-	public static DriverInitHandlerPtr init_strkforc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_strkforc  = new DriverInitHandlerPtr() { public void handler(){
 		init_strkforc_common();
 		INSTALL_SPEEDUP_1_32BIT(0x01071dd0, 0xffe0a290, 0x1000060, 0xc0, 0xa0);
 	} };
@@ -989,32 +976,27 @@ public class midyunit
 		init_generic(6, SOUND_ADPCM, 0xfb9c, 0xfbc6);
 	}
 	
-	public static DriverInitHandlerPtr init_mkprot9  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkprot9  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104ef90, 0xffcdb3f0, 0x104b6b0, 0x104b6f0, 0x104b710);
 	} };
 	
-	public static DriverInitHandlerPtr init_mkla1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkla1  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f000, 0xffcddc00, 0x104b6b0, 0x104b6f0, 0x104b710);
 	} };
 	
-	public static DriverInitHandlerPtr init_mkla2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkla2  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f020, 0xffcde000, 0x104b6b0, 0x104b6f0, 0x104b710);
 	} };
 	
-	public static DriverInitHandlerPtr init_mkla3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkla3  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f040, 0xffce1ec0, 0x104b6b0, 0x104b6f0, 0x104b710);
 	} };
 	
-	public static DriverInitHandlerPtr init_mkla4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkla4  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_common();
 		INSTALL_SPEEDUP_3(0x0104f050, 0xffce21d0, 0x104b6b0, 0x104b6f0, 0x104b710);
 	} };
@@ -1040,8 +1022,7 @@ public class midyunit
 		install_mem_write16_handler(0, TOBYTE(0x01e00000), TOBYTE(0x01e0001f), term2_sound_w);
 	}
 	
-	public static DriverInitHandlerPtr init_term2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_term2  = new DriverInitHandlerPtr() { public void handler(){
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
 	
@@ -1050,8 +1031,7 @@ public class midyunit
 		t2_hack_mem = install_mem_write16_handler(0, TOBYTE(0x010aa0e0), TOBYTE(0x010aa0ff), term2_hack_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_term2la2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_term2la2  = new DriverInitHandlerPtr() { public void handler(){
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
 	
@@ -1060,8 +1040,7 @@ public class midyunit
 		t2_hack_mem = install_mem_write16_handler(0, TOBYTE(0x010aa0e0), TOBYTE(0x010aa0ff), term2la2_hack_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_term2la1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_term2la1  = new DriverInitHandlerPtr() { public void handler(){
 		init_term2_common();
 		install_mem_read16_handler(0, TOBYTE(0x010aa040), TOBYTE(0x010aa05f), term2_speedup_r);
 	
@@ -1088,14 +1067,12 @@ public class midyunit
 		init_generic(6, SOUND_ADPCM, 0xfc04, 0xfc2e);
 	}
 	
-	public static DriverInitHandlerPtr init_totcarn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_totcarn  = new DriverInitHandlerPtr() { public void handler(){
 		init_totcarn_common();
 		INSTALL_SPEEDUP_1_16BIT(0x0107dde0, 0xffc0c970, 0x1000040, 0xa0, 0x90);
 	} };
 	
-	public static DriverInitHandlerPtr init_totcarnp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_totcarnp  = new DriverInitHandlerPtr() { public void handler(){
 		init_totcarn_common();
 		INSTALL_SPEEDUP_1_16BIT(0x0107dde0, 0xffc0c970, 0x1000040, 0xa0, 0x90);
 	} };
@@ -1108,8 +1085,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_midyunit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midyunit  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset sound */
 		switch (sound_type)
 		{
@@ -1141,7 +1117,7 @@ public class midyunit
 	WRITE16_HANDLER( midyunit_sound_w )
 	{
 		/* check for out-of-bounds accesses */
-		if (offset != 0)
+		if (offset)
 		{
 			logerror("%08X:Unexpected write to sound (hi) = %04X\n", activecpu_get_pc(), data);
 			return;

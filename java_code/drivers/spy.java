@@ -19,7 +19,7 @@ Revisions:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,9 +31,8 @@ public class spy
 	static data8_t *pmcram;
 	
 	
-	public static InterruptHandlerPtr spy_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr spy_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -41,15 +40,14 @@ public class spy
 	static int rambank,pmcbank;
 	static unsigned char *ram;
 	
-	public static ReadHandlerPtr spy_bankedram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((rambank & 1) != 0)
+	public static ReadHandlerPtr spy_bankedram1_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (rambank & 1)
 		{
 			return paletteram_r(offset);
 		}
-		else if ((rambank & 2) != 0)
+		else if (rambank & 2)
 		{
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 				//logerror("%04x read pmcram %04x\n",activecpu_get_pc(),offset);
 				return pmcram[offset];
@@ -64,15 +62,14 @@ public class spy
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr spy_bankedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((rambank & 1) != 0)
+	public static WriteHandlerPtr spy_bankedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (rambank & 1)
 		{
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		}
-		else if ((rambank & 2) != 0)
+		else if (rambank & 2)
 		{
-			if (pmcbank != 0)
+			if (pmcbank)
 			{
 				//logerror("%04x pmcram %04x = %02x\n",activecpu_get_pc(),offset,data);
 				pmcram[offset] = data;
@@ -152,8 +149,7 @@ public class spy
 	3f: 5f 7e 00 ce 08
 	*/
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int offs;
 	
@@ -161,7 +157,7 @@ public class spy
 	if ((data & 1) == 0) usrintf_showmessage("bankswitch RAM bank 0");
 	
 		/* bit 1-4 = ROM bank */
-		if ((data & 0x10) != 0) offs = 0x20000 + (data & 0x06) * 0x1000;
+		if (data & 0x10) offs = 0x20000 + (data & 0x06) * 0x1000;
 		else offs = 0x10000 + (data & 0x0e) * 0x1000;
 		cpu_setbank(1,&rom[offs]);
 	} };
@@ -229,7 +225,7 @@ public class spy
 	
 			// fail safe
 			if (loopend > MAX_SPRITES) loopend = MAX_SPRITES;
-			if (nearplane == 0) nearplane = DEF_NEAR_PLANE;
+			if (!nearplane) nearplane = DEF_NEAR_PLANE;
 	
 			loopend = (loopend<<1) + 4;
 	
@@ -246,8 +242,7 @@ public class spy
 	}
 	//ZT
 	
-	public static WriteHandlerPtr spy_3f90_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spy_3f90_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			static int old;
 	
 		/*********************************************************************
@@ -269,22 +264,22 @@ public class spy
 		*
 		*   See "MCPU" page of S.P.Y schematics for more...
 		*
-		*    PMC ERWE . ~WR of 2128SL
-		*    PMC ERCS . ~CE of 2128SL
-		*    PMC EROE . ~OE of 2128SL
+		*    PMC ERWE -> ~WR of 2128SL
+		*    PMC ERCS -> ~CE of 2128SL
+		*    PMC EROE -> ~OE of 2128SL
 		*
-		*    PMCOUTO . PMCFIRQ . 6809E ~FIRQ and PORT4, bit 0x08
+		*    PMCOUTO -> PMCFIRQ -> 6809E ~FIRQ and PORT4, bit 0x08
 		*
 		*   PMC selected by PMC/RVRAMCS signal: pin 16 of PAL20P 05318
 		*
-		*    AB0xC . 0x1000, so if address & 0x1000, appears PMC is selected.
+		*    AB0xC -> 0x1000, so if address & 0x1000, appears PMC is selected.
 		*
 		*   Other apparent selects:
 		*
-		*    0x0800 . COLORCS (color enable?)
-		*    0x2000 . ~CS1 on 6264W
-		*    0x4000 . ~OE on S63 27512
-		*    0x8000 . ~OE on S22 27512
+		*    0x0800 -> COLORCS (color enable?)
+		*    0x2000 -> ~CS1 on 6264W
+		*    0x4000 -> ~OE on S63 27512
+		*    0x8000 -> ~OE on S22 27512
 		*
 		********************************************************************/
 	
@@ -330,13 +325,11 @@ public class spy
 	} };
 	
 	
-	public static WriteHandlerPtr spy_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spy_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_A,bank_B;
 	
 		bank_A = (data >> 0) & 0x03;
@@ -404,7 +397,7 @@ public class spy
 	
 	
 	
-	static InputPortPtr input_ports_spy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spy )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -541,8 +534,7 @@ public class spy
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_spy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 3000000) /* ? */
@@ -568,9 +560,7 @@ public class spy
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -641,8 +631,7 @@ public class spy
 		konami_rom_deinterleave_2(REGION_GFX2);
 	}
 	
-	public static DriverInitHandlerPtr init_spy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spy  = new DriverInitHandlerPtr() { public void handler(){
 		paletteram = &memory_region(REGION_CPU1)[0x28000];
 		pmcram =     &memory_region(REGION_CPU1)[0x28800];
 		gfx_untangle();
@@ -650,6 +639,6 @@ public class spy
 	
 	
 	
-	public static GameDriver driver_spy	   = new GameDriver("1989"	,"spy"	,"spy.java"	,rom_spy,null	,machine_driver_spy	,input_ports_spy	,init_spy	,ROT0	,	"Konami", "S.P.Y. - Special Project Y (World ver. N)")
-	public static GameDriver driver_spyu	   = new GameDriver("1989"	,"spyu"	,"spy.java"	,rom_spyu,driver_spy	,machine_driver_spy	,input_ports_spy	,init_spy	,ROT0	,	"Konami", "S.P.Y. - Special Project Y (US ver. M)")
+	GAME( 1989, spy,  0,   spy, spy, spy, ROT0, "Konami", "S.P.Y. - Special Project Y (World ver. N)")
+	GAME( 1989, spyu, spy, spy, spy, spy, ROT0, "Konami", "S.P.Y. - Special Project Y (US ver. M)")
 }

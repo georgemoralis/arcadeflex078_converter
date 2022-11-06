@@ -35,7 +35,7 @@ dip: 6.7 7.7
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,30 +50,25 @@ public class wiping
 	
 	static unsigned char *sharedram1,*sharedram2;
 	
-	public static ReadHandlerPtr shared1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram1[offset];
 	} };
 	
-	public static ReadHandlerPtr shared2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram2[offset];
 	} };
 	
-	public static WriteHandlerPtr shared1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram1[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr shared2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram2[offset] = data;
 	} };
 	
 	
 	/* input ports are rotated 90 degrees */
-	public static ReadHandlerPtr ports_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ports_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i,res;
 	
 	
@@ -84,9 +79,8 @@ public class wiping
 		return res;
 	} };
 	
-	public static WriteHandlerPtr subcpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr subcpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -144,7 +138,7 @@ public class wiping
 	
 	
 	
-	static InputPortPtr input_ports_wiping = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wiping = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wiping )
 		PORT_START(); 	/* 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY );
@@ -209,7 +203,7 @@ public class wiping
 	INPUT_PORTS_END(); }}; 
 	
 	/* identical apart from bonus life */
-	static InputPortPtr input_ports_rugrats = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rugrats = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rugrats )
 		PORT_START(); 	/* 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -317,8 +311,7 @@ public class wiping
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_wiping = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wiping )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz */
@@ -347,9 +340,7 @@ public class wiping
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -383,7 +374,7 @@ public class wiping
 		ROM_LOAD( "rugr5c8",	  0x0000, 0x2000, CRC(67bafbbf) SHA1(2085492b58ce44f61a42320c54595b79fdf7a91c) )
 		ROM_LOAD( "rugr6c9",	  0x2000, 0x2000, CRC(cac84a87) SHA1(90f6c514d0cdbeb4c8c979597db79ebcdf443df4) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
 		ROM_LOAD( "wip-e8.bin",   0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "wip-e9.bin",   0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END(); }}; 
@@ -412,13 +403,13 @@ public class wiping
 		ROM_LOAD( "rugr5c8",	  0x0000, 0x2000, CRC(67bafbbf) SHA1(2085492b58ce44f61a42320c54595b79fdf7a91c) )
 		ROM_LOAD( "rugr6c9",	  0x2000, 0x2000, CRC(cac84a87) SHA1(90f6c514d0cdbeb4c8c979597db79ebcdf443df4) )
 	
-		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit.8bit sample expansion PROMs */
+		ROM_REGION( 0x0200, REGION_SOUND2, 0 )	/* 4bit->8bit sample expansion PROMs */
 		ROM_LOAD( "wip-e8.bin",   0x0000, 0x0100, CRC(bd2c080b) SHA1(9782bb5001e96db56bc29df398187f700bce4f8e) )	/* low 4 bits */
 		ROM_LOAD( "wip-e9.bin",   0x0100, 0x0100, CRC(4017a2a6) SHA1(dadef2de7a1119758c8e6d397aa42815b0218889) )	/* high 4 bits */
 	ROM_END(); }}; 
 	
 	
 	
-	public static GameDriver driver_wiping	   = new GameDriver("1982"	,"wiping"	,"wiping.java"	,rom_wiping,null	,machine_driver_wiping	,input_ports_wiping	,null	,ROT90	,	"Nichibutsu", "Wiping" )
-	public static GameDriver driver_rugrats	   = new GameDriver("1983"	,"rugrats"	,"wiping.java"	,rom_rugrats,driver_wiping	,machine_driver_wiping	,input_ports_rugrats	,null	,ROT90	,	"Nichibutsu", "Rug Rats" )
+	GAME( 1982, wiping,  0,      wiping, wiping,  0, ROT90, "Nichibutsu", "Wiping" )
+	GAME( 1983, rugrats, wiping, wiping, rugrats, 0, ROT90, "Nichibutsu", "Rug Rats" )
 }

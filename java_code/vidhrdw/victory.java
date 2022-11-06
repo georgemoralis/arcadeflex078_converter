@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -75,8 +75,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_victory  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_victory  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate bitmapram */
 		rram = auto_malloc(0x4000);
 		gram = auto_malloc(0x4000);
@@ -130,8 +129,7 @@ public class victory
 	}
 	
 	
-	public static InterruptHandlerPtr victory_vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr victory_vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		vblank_irq = 1;
 		victory_update_irq();
 		logerror("------------- VBLANK ----------------\n");
@@ -145,8 +143,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr victory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr victory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -162,8 +159,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr victory_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr victory_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (victory_charram[offset] != data)
 		{
 			victory_charram[offset] = data;
@@ -179,8 +175,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr victory_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr victory_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int red = ((offset & 0x80) >> 5) | ((data & 0xc0) >> 6);
 		int blue = (data & 0x38) >> 3;
 		int green = data & 0x07;
@@ -202,40 +197,39 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr victory_video_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr victory_video_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		switch (offset)
 		{
 			case 0:		/* 5XFIQ */
 				result = fgcollx;
-				if (LOG_COLLISION != 0) logerror("%04X:5XFIQ read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION) logerror("%04X:5XFIQ read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 1:		/* 5CLFIQ */
 				result = fgcolly;
-				if (fgcoll != 0)
+				if (fgcoll)
 				{
 					fgcoll = 0;
 					victory_update_irq();
 				}
-				if (LOG_COLLISION != 0) logerror("%04X:5CLFIQ read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION) logerror("%04X:5CLFIQ read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 2:		/* 5BACKX */
 				result = bgcollx & 0xfc;
-				if (LOG_COLLISION != 0) logerror("%04X:5BACKX read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION) logerror("%04X:5BACKX read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 3:		/* 5BACKY */
 				result = bgcolly;
-				if (bgcoll != 0)
+				if (bgcoll)
 				{
 					bgcoll = 0;
 					victory_update_irq();
 				}
-				if (LOG_COLLISION != 0) logerror("%04X:5BACKY read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION) logerror("%04X:5BACKY read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			case 4:		/* 5STAT */
@@ -250,7 +244,7 @@ public class victory
 				result |= (~vblank_irq & 1) << 5;
 				result |= (~bgcoll & 1) << 4;
 				result |= (cpu_getscanline() & 0x100) >> 5;
-				if (LOG_COLLISION != 0) logerror("%04X:5STAT read = %02X\n", activecpu_get_previouspc(), result);
+				if (LOG_COLLISION) logerror("%04X:5STAT read = %02X\n", activecpu_get_previouspc(), result);
 				return result;
 	
 			default:
@@ -268,27 +262,26 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr victory_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr victory_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:		/* LOAD IL */
-				if (LOG_MICROCODE != 0) logerror("%04X:IL=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:IL=%02X\n", activecpu_get_previouspc(), data);
 				micro.i = (micro.i & 0xff00) | (data & 0x00ff);
 				break;
 	
 			case 1:		/* LOAD IH */
-				if (LOG_MICROCODE != 0) logerror("%04X:IH=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:IH=%02X\n", activecpu_get_previouspc(), data);
 				micro.i = (micro.i & 0x00ff) | ((data << 8) & 0xff00);
 				if (micro.cmdlo == 5)
 				{
-					if (LOG_MICROCODE != 0) logerror("  Command 5 triggered by write to IH\n");
+					if (LOG_MICROCODE) logerror("  Command 5 triggered by write to IH\n");
 					command5();
 				}
 				break;
 	
 			case 2:		/* LOAD CMD */
-				if (LOG_MICROCODE != 0) logerror("%04X:CMD=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:CMD=%02X\n", activecpu_get_previouspc(), data);
 				micro.cmd = data;
 				micro.cmdlo = data & 7;
 				if (micro.cmdlo == 0)
@@ -297,63 +290,63 @@ public class victory
 					logerror("  Command 1 triggered\n");
 				else if (micro.cmdlo == 6)
 				{
-					if (LOG_MICROCODE != 0) logerror("  Command 6 triggered\n");
+					if (LOG_MICROCODE) logerror("  Command 6 triggered\n");
 					command6();
 				}
 				break;
 	
 			case 3:		/* LOAD G */
-				if (LOG_MICROCODE != 0) logerror("%04X:G=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:G=%02X\n", activecpu_get_previouspc(), data);
 				micro.g = data;
 				break;
 	
 			case 4:		/* LOAD X */
-				if (LOG_MICROCODE != 0) logerror("%04X:X=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:X=%02X\n", activecpu_get_previouspc(), data);
 				micro.xp = data;
 				if (micro.cmdlo == 3)
 				{
-					if (LOG_MICROCODE != 0) logerror(" Command 3 triggered by write to X\n");
+					if (LOG_MICROCODE) logerror(" Command 3 triggered by write to X\n");
 					command3();
 				}
 				break;
 	
 			case 5:		/* LOAD Y */
-				if (LOG_MICROCODE != 0) logerror("%04X:Y=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:Y=%02X\n", activecpu_get_previouspc(), data);
 				micro.yp = data;
 				if (micro.cmdlo == 4)
 				{
-					if (LOG_MICROCODE != 0) logerror("  Command 4 triggered by write to Y\n");
+					if (LOG_MICROCODE) logerror("  Command 4 triggered by write to Y\n");
 					command4();
 				}
 				break;
 	
 			case 6:		/* LOAD R */
-				if (LOG_MICROCODE != 0) logerror("%04X:R=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:R=%02X\n", activecpu_get_previouspc(), data);
 				micro.r = data;
 				break;
 	
 			case 7:		/* LOAD B */
-				if (LOG_MICROCODE != 0) logerror("%04X:B=%02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:B=%02X\n", activecpu_get_previouspc(), data);
 				micro.b = data;
 				if (micro.cmdlo == 2)
 				{
-					if (LOG_MICROCODE != 0) logerror("  Command 2 triggered by write to B\n");
+					if (LOG_MICROCODE) logerror("  Command 2 triggered by write to B\n");
 					command2();
 				}
 				else if (micro.cmdlo == 7)
 				{
-					if (LOG_MICROCODE != 0) logerror("  Command 7 triggered by write to B\n");
+					if (LOG_MICROCODE) logerror("  Command 7 triggered by write to B\n");
 					command7();
 				}
 				break;
 	
 			case 8:		/* SCROLLX */
-				if (LOG_MICROCODE != 0) logerror("%04X:SCROLLX write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:SCROLLX write = %02X\n", activecpu_get_previouspc(), data);
 				scrollx = data;
 				break;
 	
 			case 9:		/* SCROLLY */
-				if (LOG_MICROCODE != 0) logerror("%04X:SCROLLY write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:SCROLLY write = %02X\n", activecpu_get_previouspc(), data);
 				scrolly = data;
 				break;
 	
@@ -365,18 +358,18 @@ public class victory
 				// D3 = SINVERT
 				// D2 = BIR12
 				// D1 = SELOVER
-				if (LOG_MICROCODE != 0) logerror("%04X:CONTROL write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:CONTROL write = %02X\n", activecpu_get_previouspc(), data);
 				video_control = data;
 				break;
 	
 			case 11:	/* CLRVIRQ */
-				if (LOG_MICROCODE != 0) logerror("%04X:CLRVIRQ write = %02X\n", activecpu_get_previouspc(), data);
+				if (LOG_MICROCODE) logerror("%04X:CLRVIRQ write = %02X\n", activecpu_get_previouspc(), data);
 				vblank_irq = 0;
 				victory_update_irq();
 				break;
 	
 			default:
-				if (LOG_MICROCODE != 0) logerror("%04X:victory_video_control_w(%02X) = %02X\n", activecpu_get_previouspc(), offset, data);
+				if (LOG_MICROCODE) logerror("%04X:victory_video_control_w(%02X) = %02X\n", activecpu_get_previouspc(), offset, data);
 				break;
 		}
 	} };
@@ -437,10 +430,10 @@ public class victory
 	
 		The command register is actually broken down into bitfields as follows:
 	
-			D7    . must be high for a program to continue execution; otherwise, it will stop
-			D4-D6 . for non-vector commands, enables VRAM writes to the red, blue and green planes
-			D3    . enable collision detection for commands 3,5,7
-			D0-D2 . command
+			D7    -> must be high for a program to continue execution; otherwise, it will stop
+			D4-D6 -> for non-vector commands, enables VRAM writes to the red, blue and green planes
+			D3    -> enable collision detection for commands 3,5,7
+			D0-D2 -> command
 	
 		The microcode is actually a big state machine, driven by the 4 PROMs at 19B,19C,19D and 19E.
 		Below are some of the gory details of the state machine.
@@ -448,49 +441,49 @@ public class victory
 	***************************************************************************************************
 	
 		19E:
-			D7 . inverter . ZERO RAM [11C8, 13D8]
-			D6 . select on the mux at 18F
-			D5 . BUSY [4B6]
-			D4 . D on flip flop at 16E
-			D3 . D3 of alternate selection from mux at 18F
-			D2 . D2 of alternate selection from mux at 18F
-			D1 . D1 of alternate selection from mux at 18F
-			D0 . D0 of alternate selection from mux at 18F
+			D7 -> inverter -> ZERO RAM [11C8, 13D8]
+			D6 -> select on the mux at 18F
+			D5 -> BUSY [4B6]
+			D4 -> D on flip flop at 16E
+			D3 -> D3 of alternate selection from mux at 18F
+			D2 -> D2 of alternate selection from mux at 18F
+			D1 -> D1 of alternate selection from mux at 18F
+			D0 -> D0 of alternate selection from mux at 18F
 	
 		19B:
-			D7 . S LOAD LH [11B8]
-			D6 . INC I (AND with WRITE EA) [8A8]
-			D5 . S INC Y (AND with WRITE EA) [8C8]
-			D4 . SXFERY (AND with WRITE EA) [8C8]
-			D3 . D on flip flop at 15E, output goes to SADDX [8C8]
-			D2 . S LOAD PC [8B8]
-			D1 . CPU0 [11C8, 13C7]
-			D0 . INC X (AND with WRITE EA) [8C8]
+			D7 -> S LOAD LH [11B8]
+			D6 -> INC I (AND with WRITE EA) [8A8]
+			D5 -> S INC Y (AND with WRITE EA) [8C8]
+			D4 -> SXFERY (AND with WRITE EA) [8C8]
+			D3 -> D on flip flop at 15E, output goes to SADDX [8C8]
+			D2 -> S LOAD PC [8B8]
+			D1 -> CPU0 [11C8, 13C7]
+			D0 -> INC X (AND with WRITE EA) [8C8]
 	
 		19C:
-			D7 . SXFERX/INC X (AND with WRITE EA) [8C8, 11B8, 12C8]
-			D6 . see D5
-			D5 . selects one of 4 with D6:
-					0 . SEA VDATA
-					1 . SEA BUFF
-					2 . SEA SR 1
-					3 . SEA SR 2
-			D4 . ADD 128 [11C8, 12C8]
+			D7 -> SXFERX/INC X (AND with WRITE EA) [8C8, 11B8, 12C8]
+			D6 -> see D5
+			D5 -> selects one of 4 with D6:
+					0 -> SEA VDATA
+					1 -> SEA BUFF
+					2 -> SEA SR 1
+					3 -> SEA SR 2
+			D4 -> ADD 128 [11C8, 12C8]
 			      also: S ACC CLEAR (AND with WRITE EA) [10B8]
-			D3 . S ACC CLK (AND with S SEQ CLK) [10B8]
-			D2 . INC PC [8B8]
-			D1 . INC L [11B8]
-			D0 . INC H [11B8]
+			D3 -> S ACC CLK (AND with S SEQ CLK) [10B8]
+			D2 -> INC PC [8B8]
+			D1 -> INC L [11B8]
+			D0 -> INC H [11B8]
 	
 		19D:
-			D7 . S W VRAM (AND with WRITE EA) [14A8]
-			D6 . S WRITE BUSS1 (AND with WRITE EA) [7A8]
-			D5 . S WRITE BUSS2 (AND with WRITE EA) [7A8]
-			D4 . D2 of alternate selection from mux at 18E
-			D3 . D1 of alternate selection from mux at 18E
-			D2 . D0 of alternate selection from mux at 18E
-			D1 . ASEL1 (AND with WRITE EA) [8D8]
-			D0 . ASEL0 (AND with WRITE EA) [8D8]
+			D7 -> S W VRAM (AND with WRITE EA) [14A8]
+			D6 -> S WRITE BUSS1 (AND with WRITE EA) [7A8]
+			D5 -> S WRITE BUSS2 (AND with WRITE EA) [7A8]
+			D4 -> D2 of alternate selection from mux at 18E
+			D3 -> D1 of alternate selection from mux at 18E
+			D2 -> D0 of alternate selection from mux at 18E
+			D1 -> ASEL1 (AND with WRITE EA) [8D8]
+			D0 -> ASEL0 (AND with WRITE EA) [8D8]
 	
 	
 		Always on in non-zero states: BUSY, CPU0
@@ -524,48 +517,48 @@ public class victory
 	Registers:
 	
 		X' = 8-bit value = 2 x 4-bit counters at 11B/13B
-				SADDX  . enables clock to count
-				LF/RT  . controls direction of counting
-				SLDX   . loads data from RED VRAM or D0-D7 into X'
-				OUT    . to X
+				SADDX  -> enables clock to count
+				LF/RT  -> controls direction of counting
+				SLDX   -> loads data from RED VRAM or D0-D7 into X'
+				OUT    -> to X
 	
 		X  = 8-bit value = 2 x 4-bit counters at 12D/13D
-				SINCX  . enables clock to count
-				SXFERX . loads data from X' into X, with an XOR of 7
-				OUT    . to X1-X128
+				SINCX  -> enables clock to count
+				SXFERX -> loads data from X' into X, with an XOR of 7
+				OUT    -> to X1-X128
 	
 		Y' = 8-bit value = 8-bit latch
-				SLDY   . loads data from BLUE VRAM or D0-D7 into Y'
-				OUT    . to Y
+				SLDY   -> loads data from BLUE VRAM or D0-D7 into Y'
+				OUT    -> to Y
 	
 		Y  = 8-bit value = 2 x 4-bit counters at 10B/8B
-				SINCY  . enables clock to count
-				SXFERY . loads data from Y' into Y
-				OUT    . to Y1-Y128
+				SINCY  -> enables clock to count
+				SXFERY -> loads data from Y' into Y
+				OUT    -> to Y1-Y128
 	
 		I  = 16-bit value = 4 x 4-bit counters at 12C/11C/12B/14B
-				INCI   . enables clock to count
-				SLDIH  . loads data from BLUE VRAM or D0-D7 into upper 8 bits of I
-				SLDIL  . loads data from RED VRAM or D0-D7 into lower 8 bits of I
-				OUT    . to I1-I32000
+				INCI   -> enables clock to count
+				SLDIH  -> loads data from BLUE VRAM or D0-D7 into upper 8 bits of I
+				SLDIL  -> loads data from RED VRAM or D0-D7 into lower 8 bits of I
+				OUT    -> to I1-I32000
 	
 		PC = 9-bit value = 2 x 4-bit counters at 9B/7B plus JK flip-flop at 12E
-				INCPC  . toggles flip-flop and increments
-				SLOADPC. loads data from Y' into PC
+				INCPC  -> toggles flip-flop and increments
+				SLOADPC-> loads data from Y' into PC
 	
 		L  = 5-bit value = 2 x 4-bit counters at 3H/4H
-				INCL   . enables clock to count
-				SLOADLH. loads data from SEA
+				INCL   -> enables clock to count
+				SLOADLH-> loads data from SEA
 	
 		H  = 3-bit value = 1 x 4-bit counter at 5H
-				INCH   . enables clock to count
-				SLOADLH. loads data from SEA
+				INCH   -> enables clock to count
+				SLOADLH-> loads data from SEA
 	
 		14-bit VRAM address comes from one of several sources, depending on ASEL
-			ASEL0 . I & 0x3fff
-			ASEL1 . ((Y & 0xff) << 5) | ((X & 0xff) >> 3)
-			ASEL2 . 0x2000 | (PC & 0x1ff)
-			ASEL3 . ((L & 0xff) << 5) | ((E & 0xff) >> 3) 	[video refresh]
+			ASEL0 -> I & 0x3fff
+			ASEL1 -> ((Y & 0xff) << 5) | ((X & 0xff) >> 3)
+			ASEL2 -> 0x2000 | (PC & 0x1ff)
+			ASEL3 -> ((L & 0xff) << 5) | ((E & 0xff) >> 3) 	[video refresh]
 	
 	***************************************************************************************************/
 	
@@ -650,7 +643,7 @@ public class victory
 			L = (R & 0x1f) << 1
 			Y = Y'
 			state1C:
-				if ((H & 8) != 0) goto state19
+				if (H & 8) goto state19
 				X = X'; L++
 				WRITE
 				I++; Y++
@@ -724,7 +717,7 @@ public class victory
 						rram[dstoffs + 0] ^= src >> shift;
 						rram[dstoffs + 1] ^= src << nshift;
 					}
-					if (fgcoll != 0) victory_update_irq();
+					if (fgcoll) victory_update_irq();
 				}
 			}
 		}
@@ -768,7 +761,7 @@ public class victory
 	*/
 		int keep_going = 0;
 	
-		if (LOG_MICROCODE != 0) logerror("================= EXECUTE BEGIN\n");
+		if (LOG_MICROCODE) logerror("================= EXECUTE BEGIN\n");
 	
 		count_states(4);
 	
@@ -781,7 +774,7 @@ public class victory
 			micro.r = gram[0x2001 + micro.pc];
 			micro.xp = rram[0x2001 + micro.pc];
 			micro.yp = bram[0x2001 + micro.pc];
-			if (LOG_MICROCODE != 0) logerror("PC=%03X  CMD=%02X I=%04X R=%02X X=%02X Y=%02X\n", micro.pc, micro.cmd, micro.i, micro.r, micro.xp, micro.yp);
+			if (LOG_MICROCODE) logerror("PC=%03X  CMD=%02X I=%04X R=%02X X=%02X Y=%02X\n", micro.pc, micro.cmd, micro.i, micro.r, micro.xp, micro.yp);
 			micro.pc = (micro.pc + 2) & 0x1ff;
 	
 			switch (micro.cmdlo)
@@ -797,7 +790,7 @@ public class victory
 			}
 		} while (keep_going);
 	
-		if (LOG_MICROCODE != 0) logerror("================= EXECUTE END\n");
+		if (LOG_MICROCODE) logerror("================= EXECUTE END\n");
 	
 		return micro.cmd & 0x80;
 	}
@@ -832,14 +825,14 @@ public class victory
 	
 					no carry			carry
 					--------			-----
-			case 0: 1011 . X++, Y		1101 . X++, Y--
-			case 1:	0101 . X, Y--		1101 . X++, Y--
-			case 2: 0101 . X, Y--		1100 . X--, Y--
-			case 3:	1010 . X--, Y		1100 . X--, Y--
-			case 4: 1010 . X--, Y		1110 . X--, Y++
-			case 5: 0111 . X, Y++		1110 . X--, Y++
-			case 6: 0111 . X, Y++		1111 . X++, Y++
-			case 7: 1011 . X++, Y		1111 . X++, Y++
+			case 0: 1011 -> X++, Y		1101 -> X++, Y--
+			case 1:	0101 -> X, Y--		1101 -> X++, Y--
+			case 2: 0101 -> X, Y--		1100 -> X--, Y--
+			case 3:	1010 -> X--, Y		1100 -> X--, Y--
+			case 4: 1010 -> X--, Y		1110 -> X--, Y++
+			case 5: 0111 -> X, Y++		1110 -> X--, Y++
+			case 6: 0111 -> X, Y++		1111 -> X++, Y++
+			case 7: 1011 -> X++, Y		1111 -> X++, Y++
 	
 	*/
 		static const INT8 inctable[8][4] =
@@ -882,7 +875,7 @@ public class victory
 				scandirty[y] = 1;
 	
 				acc += i;
-				if ((acc & 0x100) != 0)
+				if (acc & 0x100)
 				{
 					x += xincc;
 					y += yincc;
@@ -919,7 +912,7 @@ public class victory
 				scandirty[y] = 1;
 	
 				acc += i;
-				if ((acc & 0x100) != 0)
+				if (acc & 0x100)
 				{
 					x += xincc;
 					y += yincc;
@@ -931,7 +924,7 @@ public class victory
 				}
 				acc &= 0xff;
 			}
-			if (fgcoll != 0) victory_update_irq();
+			if (fgcoll) victory_update_irq();
 		}
 	
 		micro.xp = x;
@@ -1063,7 +1056,7 @@ public class victory
 				rram[addr + 0] ^= micro.r >> shift;
 				rram[addr + 1] ^= micro.r << nshift;
 			}
-			if (fgcoll != 0) victory_update_irq();
+			if (fgcoll) victory_update_irq();
 		}
 	
 		count_states(4);
@@ -1185,14 +1178,13 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoEofHandlerPtr video_eof_victory  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_victory  = new VideoEofHandlerPtr() { public void handler(){
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;
 		int x, y;
 	
 		/* if we already did it, skip it */
-		if (update_complete != 0)
+		if (update_complete)
 		{
 			update_complete = 0;
 			return;
@@ -1229,8 +1221,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_victory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int bgcollmask = (video_control & 4) ? 4 : 7;
 		int count = 0;
 		int x, y;

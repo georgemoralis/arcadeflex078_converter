@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class moo
 		*color = layer_colorbase[layer] | (*color>>2 & 0x0f);
 	}
 	
-	VIDEO_START(moo)
-	{
+	public static VideoStartHandlerPtr video_start_moo  = new VideoStartHandlerPtr() { public int handler(){
 		int offsx, offsy;
 	
 		if (Machine.color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
@@ -86,7 +85,7 @@ public class moo
 		K054338_invert_alpha(0);
 	
 		return 0;
-	}
+	} };
 	
 	/* useful function to sort the three tile layers by priority order */
 	static void sortlayers(int *layer,int *pri)
@@ -104,8 +103,7 @@ public class moo
 		SWAP(1,2)
 	}
 	
-	VIDEO_UPDATE(moo)
-	{
+	public static VideoUpdateHandlerPtr video_update_moo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layers[3];
 		int bg_colorbase, new_colorbase, plane, dirty, alpha;
@@ -114,7 +112,7 @@ public class moo
 		sprite_colorbase   = K053251_get_palette_index(K053251_CI0);
 		layer_colorbase[0] = 0x70;
 	
-		if (K056832_get_LayerAssociation() != 0)
+		if (K056832_get_LayerAssociation())
 		{
 			for (plane=1; plane<4; plane++)
 			{
@@ -137,7 +135,7 @@ public class moo
 					dirty = 1;
 				}
 			}
-			if (dirty != 0) K056832_MarkAllTilemapsDirty();
+			if (dirty) K056832_MarkAllTilemapsDirty();
 		}
 	
 		layers[0] = 1;
@@ -171,5 +169,5 @@ public class moo
 		K053247_sprites_draw(bitmap,cliprect);
 	
 		K056832_tilemap_draw(bitmap, cliprect, 0, 0, 0);
-	}
+	} };
 }

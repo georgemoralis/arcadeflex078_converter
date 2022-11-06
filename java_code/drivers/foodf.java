@@ -75,7 +75,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -117,12 +117,12 @@ public class foodf
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate |= 1;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate |= 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -132,13 +132,12 @@ public class foodf
 	static void scanline_update(int scanline)
 	{
 		/* INT 1 is on 32V */
-		if ((scanline & 32) != 0)
+		if (scanline & 32)
 			atarigen_scanline_int_gen();
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_foodf  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_foodf  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
 	} };
@@ -153,7 +152,7 @@ public class foodf
 	
 	static WRITE16_HANDLER( digital_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			foodf_set_flip(data & 0x01);
 	
@@ -198,9 +197,9 @@ public class foodf
 	static READ16_HANDLER( pokey2_word_r ) { return pokey2_r(offset); }
 	static READ16_HANDLER( pokey3_word_r ) { return pokey3_r(offset); }
 	
-	static WRITE16_HANDLER( pokey1_word_w ) { if (ACCESSING_LSB != 0) pokey1_w(offset, data & 0xff); }
-	static WRITE16_HANDLER( pokey2_word_w ) { if (ACCESSING_LSB != 0) pokey2_w(offset, data & 0xff); }
-	static WRITE16_HANDLER( pokey3_word_w ) { if (ACCESSING_LSB != 0) pokey3_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey1_word_w ) { if (ACCESSING_LSB) pokey1_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey2_word_w ) { if (ACCESSING_LSB) pokey2_w(offset, data & 0xff); }
+	static WRITE16_HANDLER( pokey3_word_w ) { if (ACCESSING_LSB) pokey3_w(offset, data & 0xff); }
 	
 	
 	
@@ -249,7 +248,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_foodf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_foodf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( foodf )
 		PORT_START(); 	/* IN0 */
 		PORT_ANALOG( 0xff, 0x7f, IPT_AD_STICK_X | IPF_PLAYER1 | IPF_REVERSE, 100, 10, 0, 255 );
 	
@@ -341,8 +340,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr pot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pot_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(5) >> offset) << 7;
 	} };
 	
@@ -372,8 +370,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_foodf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( foodf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000)
@@ -398,9 +395,7 @@ public class foodf
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -477,7 +472,7 @@ public class foodf
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_foodf	   = new GameDriver("1982"	,"foodf"	,"foodf.java"	,rom_foodf,null	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (rev 3)" )
-	public static GameDriver driver_foodf2	   = new GameDriver("1982"	,"foodf2"	,"foodf.java"	,rom_foodf2,driver_foodf	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (rev 2)" )
-	public static GameDriver driver_foodfc	   = new GameDriver("1982"	,"foodfc"	,"foodf.java"	,rom_foodfc,driver_foodf	,machine_driver_foodf	,input_ports_foodf	,null	,ROT0	,	"Atari", "Food Fight (cocktail)" )
+	GAME( 1982, foodf,  0,     foodf, foodf, 0, ROT0, "Atari", "Food Fight (rev 3)" )
+	GAME( 1982, foodf2, foodf, foodf, foodf, 0, ROT0, "Atari", "Food Fight (rev 2)" )
+	GAME( 1982, foodfc, foodf, foodf, foodf, 0, ROT0, "Atari", "Food Fight (cocktail)" )
 }

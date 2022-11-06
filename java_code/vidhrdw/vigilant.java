@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,8 +45,7 @@ public class vigilant
 	static struct mame_bitmap *bg_bitmap;
 	
 	
-	public static VideoStartHandlerPtr video_start_vigilant  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vigilant  = new VideoStartHandlerPtr() { public int handler(){
 		video_start_generic.handler();
 	
 		if ((bg_bitmap = auto_bitmap_alloc(512*3,256)) == 0)
@@ -79,7 +78,7 @@ public class vigilant
 				for( col=0; col<512; col+=32 )
 				{
 					drawgfx(bg_bitmap,
-							Machine.gfx[2],
+							Machine->gfx[2],
 							charcode,
 							row < 128 ? 0 : 1,
 							0,0,
@@ -107,19 +106,18 @@ public class vigilant
 	 These are used to index a color triplet of RGB.  The triplet is read
 	 from RAM, and output to R0-R4, G0-G4, and B0-B4.
 	 **************************************************************************/
-	public static WriteHandlerPtr vigilant_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank,r,g,b;
 	
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		bank = offset & 0x400;
 		offset &= 0xff;
 	
-		r = (paletteram[bank + offset + 0x000] << 3) & 0xFF;
-		g = (paletteram[bank + offset + 0x100] << 3) & 0xFF;
-		b = (paletteram[bank + offset + 0x200] << 3) & 0xFF;
+		r = (paletteram.read(bank + offset + 0x000)<< 3) & 0xFF;
+		g = (paletteram.read(bank + offset + 0x100)<< 3) & 0xFF;
+		b = (paletteram.read(bank + offset + 0x200)<< 3) & 0xFF;
 	
 		palette_set_color((bank >> 2) + offset,r,g,b);
 	} };
@@ -132,8 +130,7 @@ public class vigilant
 	 horiz_scroll_low  = HSPL, an 8-bit register
 	 horiz_scroll_high = HSPH, a 1-bit register
 	 **************************************************************************/
-	public static WriteHandlerPtr vigilant_horiz_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_horiz_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0)
 			horiz_scroll_low = data;
 		else
@@ -146,8 +143,7 @@ public class vigilant
 	 rear_horiz_scroll_low  = RHSPL, an 8-bit register
 	 rear_horiz_scroll_high = RHSPH, an 8-bit register but only 3 bits are saved
 	***************************************************************************/
-	public static WriteHandlerPtr vigilant_rear_horiz_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_rear_horiz_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0)
 			rear_horiz_scroll_low = data;
 		else
@@ -169,8 +165,7 @@ public class vigilant
 	 palette.  However, the top four bits of the palette inputs are labelled:
 	 "RCC3", "RCC2", "V256E", "RCC0".  Methinks there's a typo.
 	 **************************************************************************/
-	public static WriteHandlerPtr vigilant_rear_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_rear_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rear_disable = data & 0x40;
 		rear_color = (data & 0x0d);
 	} };
@@ -194,7 +189,7 @@ public class vigilant
 			int color = attributes & 0x0F;
 			int tile_number = videoram.read(offs)| ((attributes & 0xF0) << 4);
 	
-			if (priority != 0)	 /* foreground */
+			if (priority)	 /* foreground */
 			{
 				if ((color & 0x0c) == 0x0c)	/* mask sprites */
 				{
@@ -202,7 +197,7 @@ public class vigilant
 					{
 						sx = (sx + scroll) & 0x1ff;
 	
-						drawgfx(bitmap,Machine.gfx[0],
+						drawgfx(bitmap,Machine->gfx[0],
 								tile_number,
 								color,
 								0,0,
@@ -216,12 +211,12 @@ public class vigilant
 				if (sy >= 48)
 					sx = (sx + scroll) & 0x1ff;
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						tile_number,
 						color,
 						0,0,
 						sx,sy,
-						Machine.visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
+						Machine->visible_area,(opaque || color >= 8) ? TRANSPARENCY_NONE : TRANSPARENCY_PEN,0);
 			}
 		}
 	}
@@ -238,7 +233,7 @@ public class vigilant
 		int scrollx = 0x17a + 16*8 - (rear_horiz_scroll_low + rear_horiz_scroll_high);
 	
 	
-		if (rear_refresh != 0)
+		if (rear_refresh)
 		{
 			update_background( );
 			rear_refresh=0;
@@ -276,10 +271,10 @@ public class vigilant
 			{
 				int c = code;
 	
-				if (flipy != 0) c += h-1-y;
+				if (flipy) c += h-1-y;
 				else c += y;
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						c,
 						color,
 						flipx,flipy,
@@ -289,8 +284,7 @@ public class vigilant
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vigilant  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vigilant  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	
@@ -300,20 +294,20 @@ public class vigilant
 			int r,g,b;
 	
 	
-			r = (paletteram[0x400 + 16 * rear_color + i] << 3) & 0xFF;
-			g = (paletteram[0x500 + 16 * rear_color + i] << 3) & 0xFF;
-			b = (paletteram[0x600 + 16 * rear_color + i] << 3) & 0xFF;
+			r = (paletteram.read(0x400 + 16 * rear_color + i)<< 3) & 0xFF;
+			g = (paletteram.read(0x500 + 16 * rear_color + i)<< 3) & 0xFF;
+			b = (paletteram.read(0x600 + 16 * rear_color + i)<< 3) & 0xFF;
 	
 			palette_set_color(512 + i,r,g,b);
 	
-			r = (paletteram[0x400 + 16 * rear_color + 32 + i] << 3) & 0xFF;
-			g = (paletteram[0x500 + 16 * rear_color + 32 + i] << 3) & 0xFF;
-			b = (paletteram[0x600 + 16 * rear_color + 32 + i] << 3) & 0xFF;
+			r = (paletteram.read(0x400 + 16 * rear_color + 32 + i)<< 3) & 0xFF;
+			g = (paletteram.read(0x500 + 16 * rear_color + 32 + i)<< 3) & 0xFF;
+			b = (paletteram.read(0x600 + 16 * rear_color + 32 + i)<< 3) & 0xFF;
 	
 			palette_set_color(512 + 16 + i,r,g,b);
 		}
 	
-		if (rear_disable != 0)	 /* opaque foreground */
+		if (rear_disable)	 /* opaque foreground */
 		{
 			draw_foreground(bitmap,0,1);
 			draw_sprites(bitmap,&bottomvisiblearea);
@@ -328,8 +322,7 @@ public class vigilant
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_kikcubic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kikcubic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	

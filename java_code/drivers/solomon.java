@@ -7,7 +7,7 @@ driver by Mirko Buffoni
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -17,8 +17,7 @@ public class solomon
 	
 	
 	
-	public static WriteHandlerPtr solomon_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr solomon_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -86,7 +85,7 @@ public class solomon
 	
 	
 	
-	static InputPortPtr input_ports_solomon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_solomon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( solomon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -210,8 +209,7 @@ public class solomon
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_solomon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( solomon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4.0 MHz (?????) */
@@ -239,9 +237,7 @@ public class solomon
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -276,5 +272,5 @@ public class solomon
 	
 	
 	
-	public static GameDriver driver_solomon	   = new GameDriver("1986"	,"solomon"	,"solomon.java"	,rom_solomon,null	,machine_driver_solomon	,input_ports_solomon	,null	,ROT0	,	"Tecmo", "Solomon's Key (Japan)" )
+	GAME( 1986, solomon, 0, solomon, solomon, 0, ROT0, "Tecmo", "Solomon's Key (Japan)" )
 }

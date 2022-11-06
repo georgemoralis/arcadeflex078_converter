@@ -42,7 +42,7 @@ Sprite layout.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -69,7 +69,7 @@ public class ddragon
 	
 	static UINT32 background_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
@@ -110,8 +110,7 @@ public class ddragon
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ddragon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ddragon  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,  TILEMAP_OPAQUE,     16,16,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 	
@@ -123,8 +122,7 @@ public class ddragon
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_chinagat  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_chinagat  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,  TILEMAP_OPAQUE,     16,16,32,32);
 		fg_tilemap = tilemap_create(get_fg_16color_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 	
@@ -143,8 +141,7 @@ public class ddragon
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr ddragon_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ddragon_bgvideoram[offset] != data)
 		{
 			ddragon_bgvideoram[offset] = data;
@@ -152,8 +149,7 @@ public class ddragon
 		}
 	} };
 	
-	public static WriteHandlerPtr ddragon_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ddragon_fgvideoram[offset] != data)
 		{
 			ddragon_fgvideoram[offset] = data;
@@ -174,7 +170,7 @@ public class ddragon
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		data8_t *src;
 		int i;
@@ -187,7 +183,7 @@ public class ddragon
 	
 		for( i = 0; i < ( 64 * 5 ); i += 5 ) {
 			int attr = src[i+1];
-			if ((attr & 0x80) != 0) { /* visible */
+			if ( attr & 0x80 ) { /* visible */
 				int sx = 240 - src[i+4] + ( ( attr & 2 ) << 7 );
 				int sy = 240 - src[i+0] + ( ( attr & 1 ) << 8 );
 				int size = ( attr & 0x30 ) >> 4;
@@ -214,7 +210,7 @@ public class ddragon
 					which = src[i+3] + ( ( src[i+2] & 0x0f ) << 8 );
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -253,8 +249,7 @@ public class ddragon
 	#undef DRAW_SPRITE
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ddragon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ddragon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx = ddragon_scrollx_hi + *ddragon_scrollx_lo;
 		int scrolly = ddragon_scrolly_hi + *ddragon_scrolly_lo;
 	

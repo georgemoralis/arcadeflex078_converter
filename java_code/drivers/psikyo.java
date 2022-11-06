@@ -62,7 +62,7 @@ This was pointed out by Bart Puype
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -103,7 +103,7 @@ public class psikyo
 			{
 						const int bit = 0x80;
 						int ret = ack_latch ? bit : 0;
-						if (Machine.sample_rate == 0)	ret = 0;
+						if (Machine->sample_rate == 0)	ret = 0;
 						return (((readinputport(1) & ~bit) | ret) << 16) | readinputport(3);
 			}
 			default:	logerror("PC %06X - Read input %02X !\n", activecpu_get_pc(), offset*2);
@@ -120,7 +120,7 @@ public class psikyo
 						const int bit = 0x80;
 						int ret = ack_latch ? bit : 0;
 	
-						if (Machine.sample_rate == 0)	ret = 0;
+						if (Machine->sample_rate == 0)	ret = 0;
 						return (readinputport(0) << 16) | (readinputport(1) & ~bit) | ret;
 			}
 			case 0x1:	return (readinputport(2) << 16) | readinputport(3);
@@ -132,9 +132,9 @@ public class psikyo
 	
 	WRITE32_HANDLER( psikyo_soundlatch_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 		{
-			if (Machine.sample_rate == 0)		return;
+			if (Machine->sample_rate == 0)		return;
 	
 			ack_latch = 1;
 			soundlatch_w(0, data & 0xff);
@@ -151,7 +151,7 @@ public class psikyo
 	{
 		if (!(mem_mask & 0x00ff0000))
 		{
-			if (Machine.sample_rate == 0)		return;
+			if (Machine->sample_rate == 0)		return;
 	
 			ack_latch = 1;
 			soundlatch_w(0, (data >> 16) & 0xff);
@@ -259,7 +259,7 @@ public class psikyo
 		switch(offset) {
 		case 0: {
 			UINT32 res;
-			if ((s1945_mcu_control & 16) != 0) {
+			if(s1945_mcu_control & 16) {
 				res = s1945_mcu_latching & 4 ? 0x0000ff00 : s1945_mcu_latch1 << 8;
 				s1945_mcu_latching |= 4;
 			} else {
@@ -283,7 +283,7 @@ public class psikyo
 			{
 						const int bit = 0x04;
 						int ret = ack_latch ? bit : 0;
-						if (Machine.sample_rate == 0)	ret = 0;
+						if (Machine->sample_rate == 0)	ret = 0;
 						return (readinputport(0) << 16) | (readinputport(1) & ~bit) | ret;
 			}
 			case 0x1:	return (((readinputport(2) << 16) | readinputport(3)) & 0xffff000f) | s1945_mcu_r(offset-1, mem_mask);
@@ -305,9 +305,9 @@ public class psikyo
 	static WRITE32_HANDLER( paletteram32_xRRRRRGGGGGBBBBB_dword_w )
 	{
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	
@@ -349,8 +349,7 @@ public class psikyo
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	public static WriteHandlerPtr psikyo_ack_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psikyo_ack_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ack_latch = 0;
 	} };
 	
@@ -358,8 +357,7 @@ public class psikyo
 							Sengoku Ace / Samurai Aces
 	***************************************************************************/
 	
-	public static WriteHandlerPtr sngkace_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sngkace_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bank = data & 3;
 		cpu_setbank(1, &RAM[bank * 0x8000 + 0x10000]);
@@ -406,8 +404,7 @@ public class psikyo
 									Gun Bird
 	***************************************************************************/
 	
-	public static WriteHandlerPtr gunbird_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gunbird_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bank = (data >> 4) & 3;
 	
@@ -524,7 +521,7 @@ public class psikyo
 							Samurai Aces / Sengoku Ace (Japan)
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_samuraia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_samuraia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( samuraia )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -643,7 +640,7 @@ public class psikyo
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sngkace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sngkace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sngkace )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -768,7 +765,7 @@ public class psikyo
 									Battle K-Road
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_btlkroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_btlkroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( btlkroad )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -895,7 +892,7 @@ public class psikyo
 									Gun Bird
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gunbird = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunbird = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunbird )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -1005,7 +1002,7 @@ public class psikyo
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunbirdj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunbirdj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunbirdj )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -1098,7 +1095,7 @@ public class psikyo
 									Strikers 1945
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_s1945 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_s1945 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( s1945 )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -1209,7 +1206,7 @@ public class psikyo
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_s1945j = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_s1945j = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( s1945j )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -1302,7 +1299,7 @@ public class psikyo
 									Tengai
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_tengai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tengai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tengai )
 	
 		PORT_START(); 	// IN0 - c00000&1
 		PSIKYO_PORT_PLAYER2
@@ -1458,8 +1455,7 @@ public class psikyo
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_sngkace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sngkace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -1488,9 +1484,7 @@ public class psikyo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, sngkace_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1514,8 +1508,7 @@ public class psikyo
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_gunbird = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunbird )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -1544,9 +1537,7 @@ public class psikyo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, gunbird_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1558,7 +1549,7 @@ public class psikyo
 	
 	static void irqhandler(int linestate)
 	{
-		if (linestate != 0)
+		if (linestate)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
@@ -1573,8 +1564,7 @@ public class psikyo
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_s1945 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( s1945 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -1605,9 +1595,7 @@ public class psikyo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1689,8 +1677,7 @@ public class psikyo
 	
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_sngkace  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sngkace  = new DriverInitHandlerPtr() { public void handler(){
 		{
 			unsigned char *RAM	=	memory_region(REGION_SOUND1);
 			int len				=	memory_region_length(REGION_SOUND1);
@@ -1716,7 +1703,7 @@ public class psikyo
 	
 		/* Enable other regions */
 	#if 0
-		if (!strcmp(Machine.gamedrv.name,"sngkace"))
+		if (!strcmp(Machine->gamedrv->name,"sngkace"))
 		{
 			unsigned char *ROM	=	memory_region(REGION_CPU1);
 			ROM[0x995] = 0x4e;
@@ -1870,8 +1857,7 @@ public class psikyo
 	
 	
 	
-	public static DriverInitHandlerPtr init_gunbird  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunbird  = new DriverInitHandlerPtr() { public void handler(){
 		/* input ports */
 		install_mem_read32_handler(0, 0xc00000, 0xc0000b, gunbird_input_r);
 	
@@ -1928,8 +1914,7 @@ public class psikyo
 	
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_s1945jn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_s1945jn  = new DriverInitHandlerPtr() { public void handler(){
 		/* input ports */
 		install_mem_read32_handler(0, 0xc00000, 0xc0000b, gunbird_input_r);
 	
@@ -2023,8 +2008,7 @@ public class psikyo
 	
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_s1945  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_s1945  = new DriverInitHandlerPtr() { public void handler(){
 		/* input ports */
 		install_mem_read32_handler(0, 0xc00000, 0xc0000b, s1945_input_r);
 	
@@ -2038,8 +2022,7 @@ public class psikyo
 		psikyo_ka302c_banking = 0; // Banking is controlled by mcu
 	} };
 	
-	public static DriverInitHandlerPtr init_s1945j  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_s1945j  = new DriverInitHandlerPtr() { public void handler(){
 		/* input ports*/
 		install_mem_read32_handler(0, 0xc00000, 0xc0000b, s1945_input_r);
 	
@@ -2104,8 +2087,7 @@ public class psikyo
 	
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_tengai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tengai  = new DriverInitHandlerPtr() { public void handler(){
 		/* input ports */
 		install_mem_read32_handler(0, 0xc00000, 0xc0000b, s1945_input_r);
 	
@@ -2129,14 +2111,14 @@ public class psikyo
 	***************************************************************************/
 	
 	/* Working Games */
-	public static GameDriver driver_samuraia	   = new GameDriver("1993"	,"samuraia"	,"psikyo.java"	,rom_samuraia,null	,machine_driver_sngkace	,input_ports_samuraia	,init_sngkace	,ROT270	,	"Psikyo", "Samurai Aces (World)"  ) // Banpresto?
-	public static GameDriver driver_sngkace	   = new GameDriver("1993"	,"sngkace"	,"psikyo.java"	,rom_sngkace,driver_samuraia	,machine_driver_sngkace	,input_ports_sngkace	,init_sngkace	,ROT270	,	"Psikyo", "Sengoku Ace (Japan)"   ) // Banpresto?
-	public static GameDriver driver_gunbird	   = new GameDriver("1994"	,"gunbird"	,"psikyo.java"	,rom_gunbird,null	,machine_driver_gunbird	,input_ports_gunbird	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (World)"      )
-	public static GameDriver driver_gunbirdk	   = new GameDriver("1994"	,"gunbirdk"	,"psikyo.java"	,rom_gunbirdk,driver_gunbird	,machine_driver_gunbird	,input_ports_gunbirdj	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (Korea)"      )
-	public static GameDriver driver_gunbirdj	   = new GameDriver("1994"	,"gunbirdj"	,"psikyo.java"	,rom_gunbirdj,driver_gunbird	,machine_driver_gunbird	,input_ports_gunbirdj	,init_gunbird	,ROT270	,	"Psikyo", "Gunbird (Japan)"      )
-	public static GameDriver driver_btlkroad	   = new GameDriver("1994"	,"btlkroad"	,"psikyo.java"	,rom_btlkroad,null	,machine_driver_gunbird	,input_ports_btlkroad	,init_gunbird	,ROT0	,	"Psikyo", "Battle K-Road" )
-	public static GameDriver driver_s1945	   = new GameDriver("1995"	,"s1945"	,"psikyo.java"	,rom_s1945,null	,machine_driver_s1945	,input_ports_s1945	,init_s1945	,ROT270	,	"Psikyo", "Strikers 1945" )
-	public static GameDriver driver_s1945j	   = new GameDriver("1995"	,"s1945j"	,"psikyo.java"	,rom_s1945j,driver_s1945	,machine_driver_s1945	,input_ports_s1945j	,init_s1945j	,ROT270	,	"Psikyo", "Strikers 1945 (Japan)" )
-	public static GameDriver driver_s1945jn	   = new GameDriver("1995"	,"s1945jn"	,"psikyo.java"	,rom_s1945jn,driver_s1945	,machine_driver_gunbird	,input_ports_s1945j	,init_s1945jn	,ROT270	,	"Psikyo", "Strikers 1945 (Japan, unprotected)" )
-	public static GameDriver driver_tengai	   = new GameDriver("1996"	,"tengai"	,"psikyo.java"	,rom_tengai,null	,machine_driver_s1945	,input_ports_tengai	,init_tengai	,ROT0	,	"Psikyo", "Tengai / Sengoku Blade: Sengoku Ace Episode II" )
+	GAME ( 1993, samuraia, 0,        sngkace,  samuraia, sngkace,  ROT270, "Psikyo", "Samurai Aces (World)"  ) // Banpresto?
+	GAME ( 1993, sngkace,  samuraia, sngkace,  sngkace,  sngkace,  ROT270, "Psikyo", "Sengoku Ace (Japan)"   ) // Banpresto?
+	GAME ( 1994, gunbird,  0,        gunbird,  gunbird,  gunbird,  ROT270, "Psikyo", "Gunbird (World)"      )
+	GAME ( 1994, gunbirdk, gunbird,  gunbird,  gunbirdj, gunbird,  ROT270, "Psikyo", "Gunbird (Korea)"      )
+	GAME ( 1994, gunbirdj, gunbird,  gunbird,  gunbirdj, gunbird,  ROT270, "Psikyo", "Gunbird (Japan)"      )
+	GAME ( 1994, btlkroad, 0,        gunbird,  btlkroad, gunbird,  ROT0,   "Psikyo", "Battle K-Road" )
+	GAME ( 1995, s1945,    0,        s1945,    s1945,    s1945,    ROT270, "Psikyo", "Strikers 1945" )
+	GAME ( 1995, s1945j,   s1945,    s1945,    s1945j,   s1945j,   ROT270, "Psikyo", "Strikers 1945 (Japan)" )
+	GAME ( 1995, s1945jn,  s1945,    gunbird,  s1945j,   s1945jn,  ROT270, "Psikyo", "Strikers 1945 (Japan, unprotected)" )
+	GAME ( 1996, tengai,   0,        s1945,    tengai,   tengai,   ROT0,   "Psikyo", "Tengai / Sengoku Blade: Sengoku Ace Episode II" )
 }

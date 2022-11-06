@@ -9,7 +9,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -19,40 +19,34 @@ public class dogfgt
 	
 	static data8_t *sharedram;
 	
-	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr subirqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subirqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 used but unknown */
 	
-		if ((data & 0x04) != 0)
+		if (data & 0x04)
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr sub_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sub_irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,0,CLEAR_LINE);
 	} };
 	
 	
 	static int soundlatch;
 	
-	public static WriteHandlerPtr dogfgt_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch = data;
 	} };
 	
-	public static WriteHandlerPtr dogfgt_soundcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_soundcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -60,7 +54,7 @@ public class dogfgt
 		if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
-			if ((last & 0x10) != 0)
+			if (last & 0x10)
 				AY8910_control_port_0_w.handler(0,soundlatch);
 			else
 				AY8910_write_port_0_w.handler(0,soundlatch);
@@ -69,7 +63,7 @@ public class dogfgt
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
-			if ((last & 0x40) != 0)
+			if (last & 0x40)
 				AY8910_control_port_1_w.handler(0,soundlatch);
 			else
 				AY8910_write_port_1_w.handler(0,soundlatch);
@@ -128,7 +122,7 @@ public class dogfgt
 	
 	
 	
-	static InputPortPtr input_ports_dogfgt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dogfgt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dogfgt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -264,8 +258,7 @@ public class dogfgt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_dogfgt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dogfgt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ???? */
@@ -292,9 +285,7 @@ public class dogfgt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -368,6 +359,6 @@ public class dogfgt
 	
 	
 	
-	public static GameDriver driver_dogfgt	   = new GameDriver("1984"	,"dogfgt"	,"dogfgt.java"	,rom_dogfgt,null	,machine_driver_dogfgt	,input_ports_dogfgt	,null	,ROT0	,	"Technos", "Acrobatic Dog-Fight" )
-	public static GameDriver driver_dogfgtj	   = new GameDriver("1984"	,"dogfgtj"	,"dogfgt.java"	,rom_dogfgtj,driver_dogfgt	,machine_driver_dogfgt	,input_ports_dogfgt	,null	,ROT0	,	"Technos", "Dog-Fight (Japan) " )
+	GAME( 1984, dogfgt,  0,      dogfgt, dogfgt, 0, ROT0, "Technos", "Acrobatic Dog-Fight" )
+	GAME( 1984, dogfgtj, dogfgt, dogfgt, dogfgt, 0, ROT0, "Technos", "Dog-Fight (Japan) " )
 }

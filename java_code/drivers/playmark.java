@@ -35,7 +35,7 @@ World Beach Volley:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,12 +62,12 @@ public class playmark
 	
 	static WRITE16_HANDLER( coinctrl_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_counter_w(0,data & 0x0100);
 			coin_counter_w(1,data & 0x0200);
 		}
-		if ((data & 0xfcff) != 0)
+		if (data & 0xfcff)
 			logerror("Writing %04x to unknown coin control bits\n",data);
 	}
 	
@@ -91,9 +91,8 @@ public class playmark
 		5				/* reset_delay (otherwise wbeachvl will hang when saving settings) */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_wbeachvl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_wbeachvl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			EEPROM_save(file);
 		}
@@ -101,7 +100,7 @@ public class playmark
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 			{
@@ -123,7 +122,7 @@ public class playmark
 	
 	static WRITE16_HANDLER( wbeachvl_coin_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bits 0-3 are coin counters? (only 0 used?) */
 			coin_counter_w(0,data & 0x01);
@@ -141,15 +140,14 @@ public class playmark
 	
 	static WRITE16_HANDLER( playmark_snd_command_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 			playmark_snd_command = (data & 0xff);
 			playmark_snd_flag = 1;
 			cpu_yield();
 		}
 	}
 	
-	public static ReadHandlerPtr playmark_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr playmark_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		if ((playmark_oki_control & 0x38) == 0x30) {
@@ -164,9 +162,8 @@ public class playmark
 		return data;
 	} };
 	
-	public static ReadHandlerPtr playmark_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (playmark_snd_flag != 0) {
+	public static ReadHandlerPtr playmark_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (playmark_snd_flag) {
 			playmark_snd_flag = 0;
 			return 0x00;
 		}
@@ -175,13 +172,11 @@ public class playmark
 	} };
 	
 	
-	public static WriteHandlerPtr playmark_oki_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr playmark_oki_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		playmark_oki_command = data;
 	} };
 	
-	public static WriteHandlerPtr playmark_snd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr playmark_snd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This port controls communications to and from the 68K, and the OKI
 			device.
 	
@@ -206,8 +201,7 @@ public class playmark
 	} };
 	
 	
-	public static ReadHandlerPtr PIC16C5X_T0_clk_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr PIC16C5X_T0_clk_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
@@ -311,7 +305,7 @@ public class playmark
 	
 	
 	
-	static InputPortPtr input_ports_bigtwin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigtwin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigtwin )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -413,7 +407,7 @@ public class playmark
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wbeachvl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wbeachvl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wbeachvl )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -576,8 +570,7 @@ public class playmark
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_bigtwin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigtwin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz? */
@@ -603,13 +596,10 @@ public class playmark
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wbeachvl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wbeachvl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz? */
@@ -633,9 +623,7 @@ public class playmark
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -712,8 +700,7 @@ public class playmark
 	}
 	
 	
-	public static DriverInitHandlerPtr init_bigtwin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bigtwin  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *playmark_PICROM_HEX = memory_region(REGION_USER1);
 		data8_t *playmark_PICROM = memory_region(REGION_CPU2);
 		INT32   offs, data;
@@ -772,6 +759,6 @@ public class playmark
 	
 	
 	
-	public static GameDriver driver_bigtwin	   = new GameDriver("1995"	,"bigtwin"	,"playmark.java"	,rom_bigtwin,null	,machine_driver_bigtwin	,input_ports_bigtwin	,init_bigtwin	,ROT0	,	"Playmark", "Big Twin", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_wbeachvl	   = new GameDriver("1995"	,"wbeachvl"	,"playmark.java"	,rom_wbeachvl,null	,machine_driver_wbeachvl	,input_ports_wbeachvl	,null	,ROT0	,	"Playmark", "World Beach Volley", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, bigtwin,  0, bigtwin,  bigtwin,  bigtwin, ROT0, "Playmark", "Big Twin", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, wbeachvl, 0, wbeachvl, wbeachvl, 0,       ROT0, "Playmark", "World Beach Volley", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

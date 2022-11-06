@@ -169,7 +169,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -192,8 +192,7 @@ public class taito_b
 	WRITE16_HANDLER( hitice_pixelram_w );
 	WRITE16_HANDLER( hitice_pixel_scroll_w );
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int banknum = (data - 1) & 3;
 	
@@ -207,8 +206,7 @@ public class taito_b
 		cpu_set_irq_line(0,2,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr rastansaga2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr rastansaga2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,rsaga2_interrupt2);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -219,8 +217,7 @@ public class taito_b
 		cpu_set_irq_line(0,3,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr crimec_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr crimec_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,crimec_interrupt3);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
@@ -231,8 +228,7 @@ public class taito_b
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr hitice_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hitice_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,hitice_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -243,8 +239,7 @@ public class taito_b
 		cpu_set_irq_line(0,1,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr rambo3_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr rambo3_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,rambo3_interrupt1);
 		cpu_set_irq_line(0, 6, HOLD_LINE);
 	} };
@@ -255,8 +250,7 @@ public class taito_b
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr pbobble_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr pbobble_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,pbobble_interrupt5);
 		cpu_set_irq_line(0, 3, HOLD_LINE);
 	} };
@@ -266,8 +260,7 @@ public class taito_b
 		cpu_set_irq_line(0,1,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr viofight_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr viofight_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,viofight_interrupt1);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -277,8 +270,7 @@ public class taito_b
 		cpu_set_irq_line(0,4,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr masterw_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr masterw_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,masterw_interrupt4);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
@@ -288,8 +280,7 @@ public class taito_b
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr silentd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr silentd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,silentd_interrupt6);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -299,8 +290,7 @@ public class taito_b
 		cpu_set_irq_line(0,4,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr selfeena_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr selfeena_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(5000,0),0,selfeena_interrupt4);
 		cpu_set_irq_line(0, 6, HOLD_LINE);
 	} };
@@ -310,7 +300,7 @@ public class taito_b
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr sbm_interrupt = new InterruptHandlerPtr() {public void handler()//5
+	public static InterruptHandlerPtr sbm_interrupt = new InterruptHandlerPtr() {public void handler()5
 	{
 		timer_set(TIME_IN_CYCLES(10000,0),0,sbm_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
@@ -354,7 +344,7 @@ public class taito_b
 	
 	static WRITE16_HANDLER( gain_control_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			if (offset==0)
 			{
@@ -386,14 +376,13 @@ public class taito_b
 		"0100110000" 	/* unlock command*/
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_taito_b  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_taito_b  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file != 0)
+			if (file)
 			{
 				EEPROM_load(file);
 			}
@@ -421,7 +410,7 @@ public class taito_b
 	{
 		COMBINE_DATA(&eep_latch);
 	
-	    if (ACCESSING_MSB != 0)
+	    if (ACCESSING_MSB)
 	    {
 			data >>= 8; /*M68k byte write*/
 	
@@ -1132,7 +1121,7 @@ public class taito_b
 		PORT_DIPSETTING(    0x08, DEF_STR( "On") );
 	
 	
-	static InputPortPtr input_ports_rastsag2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rastsag2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rastsag2 )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 2 "unused" in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1173,7 +1162,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nastar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nastar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nastar )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1214,7 +1203,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nastarw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nastarw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nastarw )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1255,7 +1244,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_masterw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_masterw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( masterw )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1297,7 +1286,7 @@ public class taito_b
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crimec = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crimec = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crimec )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Hi Score" );
 		PORT_DIPSETTING(    0x01, "Scribble" );
@@ -1337,7 +1326,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crimecj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crimecj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crimecj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Hi Score" );
 		PORT_DIPSETTING(    0x01, "Scribble" );
@@ -1377,7 +1366,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crimecu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crimecu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crimecu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Hi Score" );
 		PORT_DIPSETTING(    0x01, "Scribble" );
@@ -1418,7 +1407,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tetrist = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tetrist = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tetrist )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1461,7 +1450,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ashura = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ashura = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ashura )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1502,7 +1491,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ashurau = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ashurau = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ashurau )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1588,7 +1577,7 @@ public class taito_b
 	5,6,7 are set to off
 	*/
 	
-	static InputPortPtr input_ports_hitice = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hitice = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hitice )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, "Cabinet Style" );
 		PORT_DIPSETTING(    0x01, "4 Players");
@@ -1671,7 +1660,7 @@ public class taito_b
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rambo3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rambo3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rambo3 )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 5 "unused" in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1714,7 +1703,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rambo3a = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rambo3a = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rambo3a )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1799,7 +1788,7 @@ public class taito_b
 	
 	/* Helps document the input ports. */
 	
-	static InputPortPtr input_ports_pbobble = new InputPortPtr(){ public void handler() { 	/* Missing P3&4 controls ! */
+	static InputPortPtr input_ports_pbobble = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pbobble )	/* Missing P3&4 controls ! */
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/*unused in test mode*/
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/*unused in test mode*/
@@ -1871,7 +1860,7 @@ public class taito_b
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacedxo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacedxo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacedxo )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Upright") );
@@ -1960,7 +1949,7 @@ public class taito_b
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qzshowby = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qzshowby = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qzshowby )
 		PORT_START();  /* DSW B */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/*unused in test mode*/
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/*unused in test mode*/
@@ -2032,7 +2021,7 @@ public class taito_b
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_viofight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_viofight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( viofight )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 7 "unused" in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2075,7 +2064,7 @@ public class taito_b
 		TAITO_B_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_silentd = new InputPortPtr(){ public void handler() { 	/* World Version */
+	static InputPortPtr input_ports_silentd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( silentd )	/* World Version */
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	/* Listed as "NOT USED" in the manual and only shown as "OFF" */
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2199,7 +2188,7 @@ public class taito_b
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_silentdj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_silentdj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( silentdj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	/* Listed as "NOT USED" in the manual and only shown as "OFF" */
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2294,7 +2283,7 @@ public class taito_b
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_selfeena = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_selfeena = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( selfeena )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2352,7 +2341,7 @@ public class taito_b
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ryujin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ryujin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ryujin )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2411,7 +2400,7 @@ public class taito_b
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sbm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbm )
 		PORT_START();  /* DSW A *///+-ok
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2651,9 +2640,8 @@ public class taito_b
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_mb87078  = new MachineInitHandlerPtr() { public void handler()
-	{
-		if (Machine.sample_rate != 0)
+	public static MachineInitHandlerPtr machine_init_mb87078  = new MachineInitHandlerPtr() { public void handler(){
+		if (Machine->sample_rate != 0)
 			MB87078_start(0, &mb87078_interface); /*chip #0*/
 	/*
 		{
@@ -2665,8 +2653,7 @@ public class taito_b
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_rastsag2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rastsag2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2693,13 +2680,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_rsaga2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ashura = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ashura )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2726,13 +2710,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_crimec = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crimec )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2759,13 +2740,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tetrist = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tetrist )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ???*/
@@ -2792,13 +2770,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_rsaga2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hitice = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hitice )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2826,13 +2801,10 @@ public class taito_b
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rambo3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rambo3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2859,13 +2831,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rambo3a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rambo3a )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2892,13 +2861,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pbobble = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pbobble )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2928,13 +2894,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacedx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacedx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2964,13 +2927,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacedxo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacedxo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2997,13 +2957,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qzshowby = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qzshowby )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz according to the readme*/
@@ -3033,13 +2990,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_viofight = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( viofight )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -3067,9 +3021,7 @@ public class taito_b
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_viofight)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	#if 0
 	static void masterw_patch(void)
@@ -3079,8 +3031,7 @@ public class taito_b
 	}
 	#endif
 	
-	public static MachineHandlerPtr machine_driver_masterw = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( masterw )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -3107,13 +3058,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_silentd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( silentd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -3140,13 +3088,10 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_rsaga2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_selfeena = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( selfeena )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -3173,9 +3118,7 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	#if 0
 	static void ryujin_patch(void)
@@ -3187,8 +3130,7 @@ public class taito_b
 	}
 	#endif
 	
-	public static MachineHandlerPtr machine_driver_ryujin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ryujin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -3215,9 +3157,7 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	#if 0
 	static void sbm_patch(void)
@@ -3227,8 +3167,7 @@ public class taito_b
 	}
 	#endif
 	
-	public static MachineHandlerPtr machine_driver_sbm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sbm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -3255,9 +3194,7 @@ public class taito_b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface_crimec)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -3792,30 +3729,30 @@ public class taito_b
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_masterw	   = new GameDriver("1989"	,"masterw"	,"taito_b.java"	,rom_masterw,null	,machine_driver_masterw	,input_ports_masterw	,null	,ROT270	,	"Taito Corporation Japan", "Master of Weapon (World)" )
-	public static GameDriver driver_nastar	   = new GameDriver("1988"	,"nastar"	,"taito_b.java"	,rom_nastar,null	,machine_driver_rastsag2	,input_ports_nastar	,null	,ROT0	,	"Taito Corporation Japan", "Nastar (World)" )
-	public static GameDriver driver_nastarw	   = new GameDriver("1988"	,"nastarw"	,"taito_b.java"	,rom_nastarw,driver_nastar	,machine_driver_rastsag2	,input_ports_nastarw	,null	,ROT0	,	"Taito America Corporation", "Nastar Warrior (US)" )
-	public static GameDriver driver_rastsag2	   = new GameDriver("1988"	,"rastsag2"	,"taito_b.java"	,rom_rastsag2,driver_nastar	,machine_driver_rastsag2	,input_ports_rastsag2	,null	,ROT0	,	"Taito Corporation", "Rastan Saga 2 (Japan)" )
-	public static GameDriver driver_rambo3	   = new GameDriver("1989"	,"rambo3"	,"taito_b.java"	,rom_rambo3,null	,machine_driver_rambo3	,input_ports_rambo3	,null	,ROT0	,	"Taito Europe Corporation", "Rambo III (Europe set 1)" )
-	public static GameDriver driver_rambo3ae	   = new GameDriver("1989"	,"rambo3ae"	,"taito_b.java"	,rom_rambo3ae,driver_rambo3	,machine_driver_rambo3a	,input_ports_rambo3a	,null	,ROT0	,	"Taito Europe Corporation", "Rambo III (Europe set 2)" )
-	public static GameDriver driver_rambo3a	   = new GameDriver("1989"	,"rambo3a"	,"taito_b.java"	,rom_rambo3a,driver_rambo3	,machine_driver_rambo3a	,input_ports_rambo3a	,null	,ROT0	,	"Taito America Corporation", "Rambo III (US)" )
-	public static GameDriver driver_crimec	   = new GameDriver("1989"	,"crimec"	,"taito_b.java"	,rom_crimec,null	,machine_driver_crimec	,input_ports_crimec	,null	,ROT0	,	"Taito Corporation Japan", "Crime City (World)" )
-	public static GameDriver driver_crimecu	   = new GameDriver("1989"	,"crimecu"	,"taito_b.java"	,rom_crimecu,driver_crimec	,machine_driver_crimec	,input_ports_crimecu	,null	,ROT0	,	"Taito America Corporation", "Crime City (US)" )
-	public static GameDriver driver_crimecj	   = new GameDriver("1989"	,"crimecj"	,"taito_b.java"	,rom_crimecj,driver_crimec	,machine_driver_crimec	,input_ports_crimecj	,null	,ROT0	,	"Taito Corporation", "Crime City (Japan)" )
-	public static GameDriver driver_tetrist	   = new GameDriver("1989"	,"tetrist"	,"taito_b.java"	,rom_tetrist,driver_tetris	,machine_driver_tetrist	,input_ports_tetrist	,null	,ROT0	,	"Sega", "Tetris (Japan, B-System)" )
-	public static GameDriver driver_viofight	   = new GameDriver("1989"	,"viofight"	,"taito_b.java"	,rom_viofight,null	,machine_driver_viofight	,input_ports_viofight	,null	,ROT0	,	"Taito Corporation Japan", "Violence Fight (World)" )
-	public static GameDriver driver_ashura	   = new GameDriver("1990"	,"ashura"	,"taito_b.java"	,rom_ashura,null	,machine_driver_ashura	,input_ports_ashura	,null	,ROT270	,	"Taito Corporation", "Ashura Blaster (Japan)" )
-	public static GameDriver driver_ashurau	   = new GameDriver("1990"	,"ashurau"	,"taito_b.java"	,rom_ashurau,driver_ashura	,machine_driver_ashura	,input_ports_ashurau	,null	,ROT270	,	"Taito America Corporation", "Ashura Blaster (US)" )
-	public static GameDriver driver_hitice	   = new GameDriver("1990"	,"hitice"	,"taito_b.java"	,rom_hitice,null	,machine_driver_hitice	,input_ports_hitice	,null	,ROT0	,	"Williams", "Hit the Ice (US)" )
-	public static GameDriver driver_selfeena	   = new GameDriver("1991"	,"selfeena"	,"taito_b.java"	,rom_selfeena,null	,machine_driver_selfeena	,input_ports_selfeena	,null	,ROT0	,	"East Technology", "Sel Feena" )
-	public static GameDriver driver_silentd	   = new GameDriver("1992"	,"silentd"	,"taito_b.java"	,rom_silentd,null	,machine_driver_silentd	,input_ports_silentd	,null	,ROT0	,	"Taito Corporation Japan", "Silent Dragon (World)" )
-	public static GameDriver driver_silentdj	   = new GameDriver("1992"	,"silentdj"	,"taito_b.java"	,rom_silentdj,driver_silentd	,machine_driver_silentd	,input_ports_silentdj	,null	,ROT0	,	"Taito Corporation", "Silent Dragon (Japan)" )
-	public static GameDriver driver_ryujin	   = new GameDriver("1993"	,"ryujin"	,"taito_b.java"	,rom_ryujin,null	,machine_driver_ryujin	,input_ports_ryujin	,null	,ROT270	,	"Taito Corporation", "Ryu Jin (Japan)" )
-	public static GameDriver driver_qzshowby	   = new GameDriver("1993"	,"qzshowby"	,"taito_b.java"	,rom_qzshowby,null	,machine_driver_qzshowby	,input_ports_qzshowby	,null	,ROT0	,	"Taito Corporation", "Quiz Sekai wa SHOW by shobai (Japan)" )
-	public static GameDriver driver_pbobble	   = new GameDriver("1994"	,"pbobble"	,"taito_b.java"	,rom_pbobble,null	,machine_driver_pbobble	,input_ports_pbobble	,null	,ROT0	,	"Taito Corporation", "Puzzle Bobble (Japan, B-System)" )
-	public static GameDriver driver_spacedx	   = new GameDriver("1994"	,"spacedx"	,"taito_b.java"	,rom_spacedx,null	,machine_driver_spacedx	,input_ports_pbobble	,null	,ROT0	,	"Taito Corporation", "Space Invaders DX (US) v2.1" )
-	public static GameDriver driver_spacedxj	   = new GameDriver("1994"	,"spacedxj"	,"taito_b.java"	,rom_spacedxj,driver_spacedx	,machine_driver_spacedx	,input_ports_pbobble	,null	,ROT0	,	"Taito Corporation", "Space Invaders DX (Japan) v2.1" )
-	public static GameDriver driver_spacedxo	   = new GameDriver("1994"	,"spacedxo"	,"taito_b.java"	,rom_spacedxo,driver_spacedx	,machine_driver_spacedxo	,input_ports_spacedxo	,null	,ROT0	,	"Taito Corporation", "Space Invaders DX (Japan) v2.0" )
+	GAME( 1989, masterw,  0,       masterw,  masterw,  0, ROT270, "Taito Corporation Japan", "Master of Weapon (World)" )
+	GAME( 1988, nastar,   0,       rastsag2, nastar,   0, ROT0,   "Taito Corporation Japan", "Nastar (World)" )
+	GAME( 1988, nastarw,  nastar,  rastsag2, nastarw,  0, ROT0,   "Taito America Corporation", "Nastar Warrior (US)" )
+	GAME( 1988, rastsag2, nastar,  rastsag2, rastsag2, 0, ROT0,   "Taito Corporation", "Rastan Saga 2 (Japan)" )
+	GAME( 1989, rambo3,   0,       rambo3,   rambo3,   0, ROT0,   "Taito Europe Corporation", "Rambo III (Europe set 1)" )
+	GAME( 1989, rambo3ae, rambo3,  rambo3a,  rambo3a,  0, ROT0,   "Taito Europe Corporation", "Rambo III (Europe set 2)" )
+	GAME( 1989, rambo3a,  rambo3,  rambo3a,  rambo3a,  0, ROT0,   "Taito America Corporation", "Rambo III (US)" )
+	GAME( 1989, crimec,   0,       crimec,   crimec,   0, ROT0,   "Taito Corporation Japan", "Crime City (World)" )
+	GAME( 1989, crimecu,  crimec,  crimec,   crimecu,  0, ROT0,   "Taito America Corporation", "Crime City (US)" )
+	GAME( 1989, crimecj,  crimec,  crimec,   crimecj,  0, ROT0,   "Taito Corporation", "Crime City (Japan)" )
+	GAME( 1989, tetrist,  tetris,  tetrist,  tetrist,  0, ROT0,   "Sega", "Tetris (Japan, B-System)" )
+	GAME( 1989, viofight, 0,       viofight, viofight, 0, ROT0,   "Taito Corporation Japan", "Violence Fight (World)" )
+	GAME( 1990, ashura,   0,       ashura,   ashura,   0, ROT270, "Taito Corporation", "Ashura Blaster (Japan)" )
+	GAME( 1990, ashurau,  ashura,  ashura,   ashurau,  0, ROT270, "Taito America Corporation", "Ashura Blaster (US)" )
+	GAME( 1990, hitice,   0,       hitice,   hitice,   0, ROT0,   "Williams", "Hit the Ice (US)" )
+	GAME( 1991, selfeena, 0,       selfeena, selfeena, 0, ROT0,   "East Technology", "Sel Feena" )
+	GAME( 1992, silentd,  0,       silentd,  silentd,  0, ROT0,   "Taito Corporation Japan", "Silent Dragon (World)" )
+	GAME( 1992, silentdj, silentd, silentd,  silentdj, 0, ROT0,   "Taito Corporation", "Silent Dragon (Japan)" )
+	GAME( 1993, ryujin,   0,       ryujin,   ryujin,   0, ROT270, "Taito Corporation", "Ryu Jin (Japan)" )
+	GAME( 1993, qzshowby, 0,       qzshowby, qzshowby, 0, ROT0,   "Taito Corporation", "Quiz Sekai wa SHOW by shobai (Japan)" )
+	GAME( 1994, pbobble,  0,       pbobble,  pbobble,  0, ROT0,   "Taito Corporation", "Puzzle Bobble (Japan, B-System)" )
+	GAME( 1994, spacedx,  0,       spacedx,  pbobble,  0, ROT0,   "Taito Corporation", "Space Invaders DX (US) v2.1" )
+	GAME( 1994, spacedxj, spacedx, spacedx,  pbobble,  0, ROT0,   "Taito Corporation", "Space Invaders DX (Japan) v2.1" )
+	GAME( 1994, spacedxo, spacedx, spacedxo, spacedxo, 0, ROT0,   "Taito Corporation", "Space Invaders DX (Japan) v2.0" )
 	/*
 		Sonic Blast Man is a ticket dispensing game.
 		(Japanese version however does not dispense them, only US does - try the "sbm_patch" in the machine_driver).
@@ -3823,5 +3760,5 @@ public class taito_b
 		in that it has a punching pad that player needs to punch to hit
 	 	the enemy.
 	*/
-	public static GameDriver driver_sbm	   = new GameDriver("1990"	,"sbm"	,"taito_b.java"	,rom_sbm,null	,machine_driver_sbm	,input_ports_sbm	,null	,ROT0	,	"Taito Corporation", "Sonic Blast Man (Japan)" )
+	GAME(  1990, sbm,      0,       sbm,      sbm,      0, ROT0,   "Taito Corporation", "Sonic Blast Man (Japan)" )
 }

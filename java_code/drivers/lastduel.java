@@ -18,7 +18,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,7 +38,7 @@ public class lastduel
 	
 	static WRITE16_HANDLER( lastduel_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -122,8 +122,7 @@ public class lastduel
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr mg_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mg_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -266,20 +265,17 @@ public class lastduel
 		{ irqhandler }
 	};
 	
-	public static InterruptHandlerPtr lastduel_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr lastduel_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 2, HOLD_LINE); /* VBL */
 		else cpu_set_irq_line(0, 4, HOLD_LINE); /* Controls */
 	} };
 	
-	public static InterruptHandlerPtr madgear_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr madgear_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 5, HOLD_LINE); /* VBL */
 		else cpu_set_irq_line(0, 6, HOLD_LINE); /* Controls */
 	} };
 	
-	public static MachineHandlerPtr machine_driver_lastduel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lastduel )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* Could be 8 MHz */
@@ -306,13 +302,10 @@ public class lastduel
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_madgear = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( madgear )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* Accurate */
@@ -340,13 +333,11 @@ public class lastduel
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_lastduel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lastduel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lastduel )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -449,7 +440,7 @@ public class lastduel
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_madgear = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_madgear = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( madgear )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "Allow Continue" );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "No") );
@@ -810,10 +801,10 @@ public class lastduel
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_lastduel	   = new GameDriver("1988"	,"lastduel"	,"lastduel.java"	,rom_lastduel,null	,machine_driver_lastduel	,input_ports_lastduel	,null	,ROT270	,	"Capcom", "Last Duel (US set 1)" )
-	public static GameDriver driver_lstduela	   = new GameDriver("1988"	,"lstduela"	,"lastduel.java"	,rom_lstduela,driver_lastduel	,machine_driver_lastduel	,input_ports_lastduel	,null	,ROT270	,	"Capcom", "Last Duel (US set 2)" )
-	public static GameDriver driver_lstduelb	   = new GameDriver("1988"	,"lstduelb"	,"lastduel.java"	,rom_lstduelb,driver_lastduel	,machine_driver_lastduel	,input_ports_lastduel	,null	,ROT270	,	"bootleg", "Last Duel (bootleg)" )
-	public static GameDriver driver_madgear	   = new GameDriver("1989"	,"madgear"	,"lastduel.java"	,rom_madgear,null	,machine_driver_madgear	,input_ports_madgear	,null	,ROT270	,	"Capcom", "Mad Gear (US)" )
-	public static GameDriver driver_madgearj	   = new GameDriver("1989"	,"madgearj"	,"lastduel.java"	,rom_madgearj,driver_madgear	,machine_driver_madgear	,input_ports_madgear	,null	,ROT270	,	"Capcom", "Mad Gear (Japan)" )
-	public static GameDriver driver_ledstorm	   = new GameDriver("1988"	,"ledstorm"	,"lastduel.java"	,rom_ledstorm,driver_madgear	,machine_driver_madgear	,input_ports_madgear	,null	,ROT270	,	"Capcom", "Led Storm (US)" )
+	GAME( 1988, lastduel, 0,        lastduel, lastduel, 0, ROT270, "Capcom", "Last Duel (US set 1)" )
+	GAME( 1988, lstduela, lastduel, lastduel, lastduel, 0, ROT270, "Capcom", "Last Duel (US set 2)" )
+	GAME( 1988, lstduelb, lastduel, lastduel, lastduel, 0, ROT270, "bootleg", "Last Duel (bootleg)" )
+	GAME( 1989, madgear,  0,        madgear,  madgear,  0, ROT270, "Capcom", "Mad Gear (US)" )
+	GAME( 1989, madgearj, madgear,  madgear,  madgear,  0, ROT270, "Capcom", "Mad Gear (Japan)" )
+	GAME( 1988, ledstorm, madgear,  madgear,  madgear,  0, ROT270, "Capcom", "Led Storm (US)" )
 }

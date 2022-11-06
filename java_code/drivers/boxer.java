@@ -10,7 +10,7 @@ Atari Boxer (prototype) driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,7 +25,7 @@ public class boxer
 	
 	static void pot_interrupt(int mask)
 	{
-		if ((pot_latch & mask) != 0)
+		if (pot_latch & mask)
 		{
 			cpu_set_nmi_line(0, ASSERT_LINE);
 		}
@@ -75,8 +75,7 @@ public class boxer
 	}
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_boxer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_boxer  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0xff, 0xff, 0xff);
 	
@@ -87,16 +86,14 @@ public class boxer
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_boxer  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_boxer  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(0), 0, periodic_callback);
 	
 		pot_latch = 0;
 	} };
 	
 	
-	public static ReadHandlerPtr boxer_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boxer_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(0);
 	
 		if (readinputport(9) < cpu_getscanline())
@@ -108,8 +105,7 @@ public class boxer
 	} };
 	
 	
-	public static ReadHandlerPtr boxer_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boxer_misc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		switch (offset & 3)
@@ -135,26 +131,22 @@ public class boxer
 	} };
 	
 	
-	public static ReadHandlerPtr boxer_bad_address_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boxer_bad_address_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_reset_line(0, PULSE_LINE);
 	
 		return 0;
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_bell_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_bell_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_pot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_pot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* BIT0 => HPOT1 */
 		/* BIT1 => VPOT1 */
 		/* BIT2 => RPOT1 */
@@ -168,14 +160,12 @@ public class boxer
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_crowd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_crowd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* BIT0 => ATTRACT */
 		/* BIT1 => CROWD-1 */
 		/* BIT2 => CROWD-2 */
@@ -185,15 +175,13 @@ public class boxer
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1, !(data & 1));
 		set_led_status(0, !(data & 2));
 	} };
 	
 	
-	public static WriteHandlerPtr boxer_bad_address_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr boxer_bad_address_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(0, PULSE_LINE);
 	} };
 	
@@ -230,7 +218,7 @@ public class boxer
 	};
 	
 	
-	static InputPortPtr input_ports_boxer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boxer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boxer )
 	
 		PORT_START(); 
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_UNUSED );
@@ -345,9 +333,7 @@ public class boxer
 		MDRV_VIDEO_UPDATE(boxer)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_boxer = new RomLoadPtr(){ public void handler(){ 
@@ -386,5 +372,5 @@ public class boxer
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_boxer	   = new GameDriver("1978"	,"boxer"	,"boxer.java"	,rom_boxer,null	,machine_driver_boxer	,input_ports_boxer	,null	,0	,	"Atari", "Boxer (prototype)", GAME_NO_SOUND )
+	GAMEX( 1978, boxer, 0, boxer, boxer, 0, 0, "Atari", "Boxer (prototype)", GAME_NO_SOUND )
 }

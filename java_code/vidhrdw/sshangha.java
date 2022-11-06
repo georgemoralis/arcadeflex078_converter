@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,7 +27,7 @@ public class sshangha
 		int r,g,b;
 	
 		COMBINE_DATA(&paletteram16[offset]);
-		if ((offset & 1) != 0) offset--;
+		if (offset&1) offset--;
 	
 		b = (paletteram16[offset] >> 0) & 0xff;
 		g = (paletteram16[offset+1] >> 8) & 0xff;
@@ -44,10 +44,10 @@ public class sshangha
 	
 		for (y=0; y<240; y++) {
 			for (x=0; x<320; x++) {
-				p=(((UINT16*)bitmap0.line[y])[x])&0xf;
-				p|=((((UINT16*)bitmap1.line[y])[x])&0xf)<<4;
+				p=(((UINT16*)bitmap0->line[y])[x])&0xf;
+				p|=((((UINT16*)bitmap1->line[y])[x])&0xf)<<4;
 	
-				plot_pixel(bitmap, x, y, Machine.pens[p|0x300]);
+				plot_pixel(bitmap, x, y, Machine->pens[p|0x300]);
 			}
 		}
 	}
@@ -70,7 +70,7 @@ public class sshangha
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult;
 	
 			sprite = spritesrc[offs+1] & 0x3fff;
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			if ((spritesrc[offs+2]&pmask)!=pval)
 				continue;
@@ -93,16 +93,16 @@ public class sshangha
 	
 			sprite &= ~multi;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				y=240-y;
 				x=304-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=-16;
 			}
 	
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -112,17 +112,17 @@ public class sshangha
 	
 			mult=+16;
 	
-			if (fx != 0) fx=0; else fx=1;
-			if (fy != 0) fy=0; else fy=1;
+			if (fx) fx=0; else fx=1;
+			if (fy) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				multi--;
 			}
@@ -159,7 +159,7 @@ public class sshangha
 	#if 0
 	static UINT32 sshangha_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	#endif
@@ -182,8 +182,7 @@ public class sshangha
 		SET_TILE_INFO(0,(tile&0xfff)|sshangha_pf1_bank,tile>>12,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_sshangha  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sshangha  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_8x8_tilemap   = tilemap_create(get_pf1_8x8_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1_16x16_tilemap = tilemap_create(get_pf1_16x16_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_rows,    TILEMAP_OPAQUE,     16,16,32,32);
@@ -199,8 +198,7 @@ public class sshangha
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sshangha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_pf1_bank,last_pf2_bank;
 		int offs;
 	

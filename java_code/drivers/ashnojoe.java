@@ -62,7 +62,7 @@ Dips:
                    Rank C           OFF ON  OFF OFF OFF OFF OFF OFF
                    Rank D           ON  ON  OFF OFF OFF OFF OFF OFF
 
-   Easy (A) . Difficult (D)
+   Easy (A) -> Difficult (D)
 
 Game is controled with 4-direction lever and two buttons
 Coin B is not used
@@ -71,7 +71,7 @@ Coin B is not used
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -91,7 +91,7 @@ public class ashnojoe
 	
 	static WRITE16_HANDLER( ashnojoe_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			//needed?
@@ -130,8 +130,7 @@ public class ashnojoe
 		{ 0x080000, 0x0bffff, MWA16_ROM },
 	MEMORY_END
 	
-	static READ_HANDLER(fake_6_r)
-	{
+	public static ReadHandlerPtr fake_6_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// if it returns 0 the cpu doesn't read from port $4 ?
 		int ret = 0;
 		ret ^= 1;
@@ -139,10 +138,9 @@ public class ashnojoe
 		return 1;
 		return 0;
 		return rand();
-	}
+	} };
 	
-	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w(0, data & 0xf);
 		MSM5205_data_w(0, data>>4);
 	} };
@@ -167,8 +165,8 @@ public class ashnojoe
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
 		new IO_ReadPort( 0x00, 0x00, YM2203_status_port_0_r ),
 		new IO_ReadPort( 0x01, 0x01, YM2203_read_port_0_r ),
-		new IO_ReadPort( 0x04, 0x04, soundlatch_r ), //PC: 15D . cp $7f
-		new IO_ReadPort( 0x06, 0x06, fake_6_r/*soundlatch_r */), //PC: 14A . and $1
+		new IO_ReadPort( 0x04, 0x04, soundlatch_r ), //PC: 15D -> cp $7f
+		new IO_ReadPort( 0x06, 0x06, fake_6_r/*soundlatch_r */), //PC: 14A -> and $1
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
@@ -180,7 +178,7 @@ public class ashnojoe
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_ashnojoe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ashnojoe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ashnojoe )
 		PORT_START(); 	/* player 1 16-bit */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
@@ -306,17 +304,15 @@ public class ashnojoe
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	static WRITE_HANDLER(writeA)
-	{
+	public static WriteHandlerPtr writeA = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == 0xff) return;	// this gets called at 8910 startup with 0xff before the 5205 exists, causing a crash
 	
 		MSM5205_reset_w(0, !(data & 0x01));
-	}
+	} };
 	
-	static WRITE_HANDLER(writeB)
-	{
+	public static WriteHandlerPtr writeB = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(4, memory_region(REGION_SOUND1) + ((data & 0xf) * 0x8000));
-	}
+	} };
 	
 	static void ashnojoe_adpcm_int (int data)
 	{
@@ -344,13 +340,11 @@ public class ashnojoe
 		{ irqhandler }
 	};
 	
-	public static DriverInitHandlerPtr init_ashnojoe  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ashnojoe  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank(4, memory_region(REGION_SOUND1));
 	} };
 	
-	public static MachineHandlerPtr machine_driver_ashnojoe = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ashnojoe )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -379,9 +373,7 @@ public class ashnojoe
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_ashnojoe = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xc0000, REGION_CPU1, 0 )     /* 68000 code */
@@ -420,5 +412,5 @@ public class ashnojoe
 		ROM_LOAD( "sj401-nw.bin", 0x00000, 0x80000, CRC(25dfab59) SHA1(7d50159204ba05323a2442778f35192e66117dda) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ashnojoe	   = new GameDriver("1990"	,"ashnojoe"	,"ashnojoe.java"	,rom_ashnojoe,null	,machine_driver_ashnojoe	,input_ports_ashnojoe	,init_ashnojoe	,ROT0	,	"WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1990, ashnojoe, 0, ashnojoe, ashnojoe, ashnojoe, ROT0, "WAVE / Taito Corporation", "Ashita no Joe (Japan)", GAME_IMPERFECT_SOUND )
 }

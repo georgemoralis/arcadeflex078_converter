@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -455,7 +455,7 @@ public class input
 			goto out_of_keyboards;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &keyboard_device[keyboard_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &keyboard_device[keyboard_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -512,7 +512,7 @@ public class input
 			goto out_of_mice;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &mouse_device[mouse_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &mouse_device[mouse_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -543,7 +543,7 @@ public class input
 			goto cant_set_format;
 	
 		// set the cooperative level
-		if (use_lightgun != 0)
+		if (use_lightgun)
 			result = IDirectInputDevice_SetCooperativeLevel(mouse_device[mouse_count], win_video_window,
 						DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 		else
@@ -554,7 +554,7 @@ public class input
 			goto cant_set_coop_level;
 	
 		// increment the count
-		if (use_lightgun != 0)
+		if (use_lightgun)
 			lightgun_count++;
 		mouse_count++;
 		return DIENUM_CONTINUE;
@@ -588,7 +588,7 @@ public class input
 			goto out_of_joysticks;
 	
 		// attempt to create a device
-		result = IDirectInput_CreateDevice(dinput, &instance.guidInstance, &joystick_device[joystick_count], NULL);
+		result = IDirectInput_CreateDevice(dinput, &instance->guidInstance, &joystick_device[joystick_count], NULL);
 		if (result != DI_OK)
 			goto cant_create_device;
 	
@@ -665,7 +665,7 @@ public class input
 			if (result != DI_OK)
 				goto cant_create_dinput;
 		}
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "Using DirectInput %d\n", dinput_version >> 8);
 	
 		// initialize keyboard devices
@@ -696,7 +696,7 @@ public class input
 		init_joylist();
 	
 		// print the results
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "Keyboards=%d  Mice=%d  Joysticks=%d Lightguns=%d\n", keyboard_count, mouse_count, joystick_count, lightgun_count);
 		return 0;
 	
@@ -745,7 +745,7 @@ public class input
 		}
 	
 		// release DirectInput
-		if (dinput != 0)
+		if (dinput)
 			IDirectInput_Release(dinput);
 		dinput = NULL;
 	}
@@ -761,7 +761,7 @@ public class input
 		int i;
 	
 		// if paused, unacquire all devices
-		if (paused != 0)
+		if (paused)
 		{
 			// unacquire all keyboards
 			for (i = 0; i < keyboard_count; i++)
@@ -809,7 +809,7 @@ public class input
 		win_process_events_periodic();
 	
 		// if we don't have focus, turn off all keys
-		if (focus == 0)
+		if (!focus)
 		{
 			memset(&keyboard_state[0][0], 0, sizeof(keyboard_state[i]));
 			updatekeyboard();
@@ -848,7 +848,7 @@ public class input
 				int vk = VKCODE(keylist[i].code);
 	
 				// if we have a non-zero VK, query it
-				if (vk != 0)
+				if (vk)
 					keyboard_state[0][dik] = (GetAsyncKeyState(vk) >> 15) & 1;
 			}
 	
@@ -947,7 +947,7 @@ public class input
 			}
 	
 		// if keyboard state is stable, copy it over
-		if (changed == 0)
+		if (!changed)
 			memcpy(currkey, &keyboard_state[0][0], sizeof(currkey));
 	
 		// remember the previous state
@@ -982,13 +982,13 @@ public class input
 			// keyboard events before the system is initialized, they are all of the
 			// "press any key" to continue variety
 			int result = _kbhit();
-			if (result != 0)
+			if (result)
 				_getch();
 			return result;
 		}
 	
 		// otherwise, just return the current keystate
-		if (steadykey != 0)
+		if (steadykey)
 			return currkey[dik];
 		else
 			return keyboard_state[0][dik];
@@ -1003,8 +1003,8 @@ public class input
 	int osd_readkey_unicode(int flush)
 	{
 	#if 0
-		if (flush != 0) clear_keybuf();
-		if (keypressed() != 0)
+		if (flush) clear_keybuf();
+		if (keypressed())
 			return ureadkey(NULL);
 		else
 			return 0;
@@ -1038,7 +1038,7 @@ public class input
 	
 				// copy the name
 				char *namecopy = malloc(strlen(instance.tszName) + 1);
-				if (namecopy != 0)
+				if (namecopy)
 				{
 					unsigned code, standardcode;
 					int entry;
@@ -1070,7 +1070,7 @@ public class input
 						temp = realloc (osd_input_keywords, (size_osd_ik + 16)*sizeof (struct ik));
 	
 						// if the realloc was successful
-						if (temp != 0)
+						if (temp)
 						{
 							// point to the new buffer and increase the size indicator
 							osd_input_keywords =  temp;
@@ -1132,7 +1132,7 @@ public class input
 	
 		// copy the name
 		char *namecopy = malloc(strlen(name) + 1);
-		if (namecopy != 0)
+		if (namecopy)
 		{
 			int entry;
 	
@@ -1156,7 +1156,7 @@ public class input
 				temp = realloc (osd_input_keywords, (size_osd_ik + 16)*sizeof (struct ik));
 	
 				// if the realloc was successful
-				if (temp != 0)
+				if (temp)
 				{
 					// point to the new buffer and increase the size indicator
 					osd_input_keywords =  temp;
@@ -1355,7 +1355,7 @@ public class input
 					return lightgun_dual_player_state[joyindex];
 				}
 							
-				if (use_lightgun != 0) {
+				if (use_lightgun) {
 					if (use_lightgun_reload && joynum==0) {
 						if (joyindex==0 && (mouse_state[0].rgbButtons[1]&0x80))
 							return 1;
@@ -1474,7 +1474,7 @@ public class input
 	
 	void input_mouse_button_down(int button, int x, int y)
 	{
-		if (use_lightgun_dual == 0)
+		if (!use_lightgun_dual)
 			return;
 	
 		lightgun_dual_player_state[button]=1;
@@ -1486,7 +1486,7 @@ public class input
 	
 	void input_mouse_button_up(int button)
 	{
-		if (use_lightgun_dual == 0)
+		if (!use_lightgun_dual)
 			return;
 	
 		lightgun_dual_player_state[button]=0;
@@ -1511,16 +1511,16 @@ public class input
 		}
 	
 		// Warning message to users - design wise this probably isn't the best function to put this in...
-		if (win_window_mode != 0)
+		if (win_window_mode)
 			usrintf_showmessage("Lightgun not supported in windowed mode");
 	
 		// Hack - if button 2 is pressed on lightgun, then return 0,0 (off-screen) to simulate reload
-		if (use_lightgun_reload != 0)
+		if (use_lightgun_reload)
 		{
 			int return_offscreen=0;
 	
 			// In dualmode we need to use the buttons returned from Windows messages
-			if (use_lightgun_dual != 0)
+			if (use_lightgun_dual)
 			{
 				if (player==0 && lightgun_dual_player_state[1])
 					return_offscreen=1;
@@ -1534,7 +1534,7 @@ public class input
 					return_offscreen=1;
 			}
 	
-			if (return_offscreen != 0)
+			if (return_offscreen)
 			{
 				*deltax = -128;
 				*deltay = -128;
@@ -1543,7 +1543,7 @@ public class input
 		}
 	
 		// Act-Labs dual lightgun - _only_ works with Windows messages for input location
-		if (use_lightgun_dual != 0)
+		if (use_lightgun_dual)
 		{
 			if (player==0)
 			{
@@ -1560,7 +1560,7 @@ public class input
 				point.x=point.y=0;
 			}
 	
-			// Map absolute pixel values into -128 . 128 range
+			// Map absolute pixel values into -128 -> 128 range
 			*deltax = (point.x * 256 + win_physical_width/2) / (win_physical_width-1) - 128;
 			*deltay = (point.y * 256 + win_physical_height/2) / (win_physical_height-1) - 128;
 		}
@@ -1576,7 +1576,7 @@ public class input
 			//
 			GetCursorPos(&point);
 	
-			// Map absolute pixel values into -128 . 128 range
+			// Map absolute pixel values into -128 -> 128 range
 			*deltax = (point.x * 256 + win_physical_width/2) / (win_physical_width-1) - 128;
 			*deltay = (point.y * 256 + win_physical_height/2) / (win_physical_height-1) - 128;
 		}
@@ -1671,11 +1671,11 @@ public class input
 		// open the specified controller type/filename
 		f = mame_fopen (ctype, filename, FILETYPE_CTRLR, 0);
 	
-		if (f != 0)
+		if (f)
 		{
-			if (verbose != 0)
+			if (verbose)
 			{
-				if (ctype != 0)
+				if (ctype)
 					fprintf (stderr, "trying to parse ctrlr file %s/%s.ini\n", ctype, filename);
 				else
 					fprintf (stderr, "trying to parse ctrlr file %s.ini\n", filename);
@@ -1684,9 +1684,9 @@ public class input
 			// process this file
 			if(osd_rc_read(iptrc, f, filename, 1, 1))
 			{
-				if (verbose != 0)
+				if (verbose)
 				{
-					if (ctype != 0)
+					if (ctype)
 						fprintf (stderr, "problem parsing ctrlr file %s/%s.ini\n", ctype, filename);
 					else
 						fprintf (stderr, "problem parsing ctrlr file %s.ini\n", filename);
@@ -1695,19 +1695,19 @@ public class input
 		}
 	
 		// close the file
-		if (f != 0)
+		if (f)
 			mame_fclose (f);
 	}
 	
 	void process_ctrlr_game(struct rc_struct *iptrc, const char *ctype, const struct GameDriver *drv)
 	{
 		// recursive call to process parents first
-		if (drv.clone_of)
-			process_ctrlr_game (iptrc, ctype, drv.clone_of);
+		if (drv->clone_of)
+			process_ctrlr_game (iptrc, ctype, drv->clone_of);
 	
 		// now process this game
-		if (drv.name && *(drv.name) != 0)
-			process_ctrlr_file (iptrc, ctype, drv.name);
+		if (drv->name && *(drv->name) != 0)
+			process_ctrlr_file (iptrc, ctype, drv->name);
 	}
 	
 	// nice hack: load source_file.ini (omit if referenced later any)
@@ -1716,14 +1716,14 @@ public class input
 		char buffer[128];
 		const struct GameDriver *tmp_gd;
 	
-		sprintf(buffer, "%s", drv.source_file+12);
+		sprintf(buffer, "%s", drv->source_file+12);
 		buffer[strlen(buffer) - 2] = 0;
 	
 		tmp_gd = drv;
 		while (tmp_gd != NULL)
 		{
-			if (strcmp(tmp_gd.name, buffer) == 0) break;
-			tmp_gd = tmp_gd.clone_of;
+			if (strcmp(tmp_gd->name, buffer) == 0) break;
+			tmp_gd = tmp_gd->clone_of;
 		}
 	
 		// not referenced later, so load it here
@@ -1734,15 +1734,15 @@ public class input
 	
 	static int ipdef_custom_rc_func(struct rc_option *option, const char *arg, int priority)
 	{
-		struct ik *pinput_keywords = (struct ik *)option.dest;
+		struct ik *pinput_keywords = (struct ik *)option->dest;
 		struct ipd *idef = ipddef_ptr;
 	
 		// only process the default definitions if the input port definitions
 		// pointer has been defined
-		if (idef != 0)
+		if (idef)
 		{
 			// if a keycode was re-assigned
-			if (pinput_keywords.type == IKT_STD)
+			if (pinput_keywords->type == IKT_STD)
 			{
 				InputSeq is;
 	
@@ -1752,11 +1752,11 @@ public class input
 				// was a sequence was assigned to a keycode? - not valid!
 				if (is[1] != CODE_NONE)
 				{
-					fprintf(stderr, "error: can't map \"%s\" to \"%s\"\n",pinput_keywords.name,arg);
+					fprintf(stderr, "error: can't map \"%s\" to \"%s\"\n",pinput_keywords->name,arg);
 				}
 	
 				// for all definitions
-				while (idef.type != IPT_END)
+				while (idef->type != IPT_END)
 				{
 					int j;
 	
@@ -1764,10 +1764,10 @@ public class input
 					for (j = 0; j < SEQ_MAX; j++)
 					{
 						// if the keystroke matches
-						if (idef.seq[j] == pinput_keywords.val)
+						if (idef->seq[j] == pinput_keywords->val)
 						{
 							// re-assign
-							idef.seq[j] = is[0];
+							idef->seq[j] = is[0];
 						}
 					}
 					// move to the next definition
@@ -1776,18 +1776,18 @@ public class input
 			}
 	
 			// if an input definition was re-defined
-			else if (pinput_keywords.type == IKT_IPT ||
-	                 pinput_keywords.type == IKT_IPT_EXT)
+			else if (pinput_keywords->type == IKT_IPT ||
+	                 pinput_keywords->type == IKT_IPT_EXT)
 			{
 				// loop through all definitions
-				while (idef.type != IPT_END)
+				while (idef->type != IPT_END)
 				{
 					// if the definition matches
-					if (idef.type == pinput_keywords.val)
+					if (idef->type == pinput_keywords->val)
 					{
-	                    if (pinput_keywords.type == IKT_IPT_EXT)
+	                    if (pinput_keywords->type == IKT_IPT_EXT)
 	                        idef++;
-						seq_set_string(&idef.seq, arg);
+						seq_set_string(&idef->seq, arg);
 						// and abort (there shouldn't be duplicate definitions)
 						break;
 					}
@@ -1810,28 +1810,28 @@ public class input
 		int i;
 	
 		// loop over all the defaults
-		while (idef.type != IPT_END)
+		while (idef->type != IPT_END)
 		{
 			// if the type is OSD reserved
-			if (idef.type == IPT_OSD_RESERVED)
+			if (idef->type == IPT_OSD_RESERVED)
 			{
 				// process the next reserved entry
 				switch (next_reserved)
 				{
 					// OSD_1 is alt-enter for fullscreen
 					case IPT_OSD_1:
-						idef.type = next_reserved;
-						idef.name = "Toggle fullscreen";
-						seq_set_2 (&idef.seq, KEYCODE_LALT, KEYCODE_ENTER);
+						idef->type = next_reserved;
+						idef->name = "Toggle fullscreen";
+						seq_set_2 (&idef->seq, KEYCODE_LALT, KEYCODE_ENTER);
 					break;
 	
 	#ifdef MESS
 					case IPT_OSD_2:
 						if (options.disable_normal_ui)
 						{
-							idef.type = next_reserved;
-							idef.name = "Toggle menubar";
-							seq_set_1 (&idef.seq, KEYCODE_SCRLOCK);
+							idef->type = next_reserved;
+							idef->name = "Toggle menubar";
+							seq_set_1 (&idef->seq, KEYCODE_SCRLOCK);
 						}
 					break;
 	#endif /* MESS */
@@ -1844,16 +1844,16 @@ public class input
 	
 			// disable the config menu if the ALT key is down
 			// (allows ALT-TAB to switch between windows apps)
-			if (idef.type == IPT_UI_CONFIGURE)
+			if (idef->type == IPT_UI_CONFIGURE)
 			{
-				seq_copy(&idef.seq, &no_alt_tab_seq);
+				seq_copy(&idef->seq, &no_alt_tab_seq);
 			}
 	
 	#ifdef MESS
-			if (idef.type == IPT_UI_THROTTLE)
+			if (idef->type == IPT_UI_THROTTLE)
 			{
 				static InputSeq empty_seq = SEQ_DEF_0;
-				seq_copy(&idef.seq, &empty_seq);
+				seq_copy(&idef->seq, &empty_seq);
 			}
 	#endif /* MESS */
 	
@@ -1864,14 +1864,14 @@ public class input
 				static InputSeq p2b1 = SEQ_DEF_5(KEYCODE_A, CODE_OR, JOYCODE_2_BUTTON1, CODE_OR, JOYCODE_MOUSE_1_BUTTON3);
 				static InputSeq p2b2 = SEQ_DEF_3(KEYCODE_S, CODE_OR, JOYCODE_2_BUTTON2);
 	
-				if (idef.type == (IPT_BUTTON2 | IPF_PLAYER1))
-					seq_copy(&idef.seq, &p1b2);
-				if (idef.type == (IPT_BUTTON3 | IPF_PLAYER1))
-					seq_copy(&idef.seq, &p1b3);
-				if (idef.type == (IPT_BUTTON1 | IPF_PLAYER2))
-					seq_copy(&idef.seq, &p2b1);
-				if (idef.type == (IPT_BUTTON2 | IPF_PLAYER2))
-					seq_copy(&idef.seq, &p2b2);
+				if (idef->type == (IPT_BUTTON2 | IPF_PLAYER1))
+					seq_copy(&idef->seq, &p1b2);
+				if (idef->type == (IPT_BUTTON3 | IPF_PLAYER1))
+					seq_copy(&idef->seq, &p1b3);
+				if (idef->type == (IPT_BUTTON1 | IPF_PLAYER2))
+					seq_copy(&idef->seq, &p2b1);
+				if (idef->type == (IPT_BUTTON2 | IPF_PLAYER2))
+					seq_copy(&idef->seq, &p2b2);
 			}
 	
 			// find the next one
@@ -1883,10 +1883,10 @@ public class input
 		if (ctrlrtype == NULL || *ctrlrtype == 0 || (stricmp(ctrlrtype,"Standard") == 0))
 		{
 			// default to the legacy controller types if selected
-			if (hotrod != 0)
+			if (hotrod)
 				ctrlrtype = "hotrod";
 	
-			if (hotrodse != 0)
+			if (hotrodse)
 				ctrlrtype = "hotrodse";
 		}
 	#endif
@@ -1947,26 +1947,26 @@ public class input
 		// if a custom controller has been selected
 		if (ctrlrtype && *ctrlrtype != 0 && (stricmp(ctrlrtype,"Standard") != 0))
 		{
-			const struct InputPortTiny* input = Machine.gamedrv.input_ports;
+			const struct InputPortTiny* input = Machine->gamedrv->input_ports;
 			int paddle = 0, dial = 0, trackball = 0, adstick = 0, pedal = 0, lightgun = 0;
 	
 			// process the controller-specific default file
 			process_ctrlr_file (rc, ctrlrtype, "default");
 	
 			// process the system-specific files for this controller
-			process_ctrlr_system (rc, ctrlrtype, Machine.gamedrv);
+			process_ctrlr_system (rc, ctrlrtype, Machine->gamedrv);
 	
 			// process the game-specific files for this controller
-			process_ctrlr_game (rc, ctrlrtype, Machine.gamedrv);
+			process_ctrlr_game (rc, ctrlrtype, Machine->gamedrv);
 	
 	
-			while ((input.type & ~IPF_MASK) != IPT_END)
+			while ((input->type & ~IPF_MASK) != IPT_END)
 			{
-				switch (input.type & ~IPF_MASK)
+				switch (input->type & ~IPF_MASK)
 				{
 					case IPT_PADDLE:
 					case IPT_PADDLE_V:
-						if (paddle == 0)
+						if (!paddle)
 						{
 							if ((paddle_ini != NULL) && (*paddle_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, paddle_ini);
@@ -1976,7 +1976,7 @@ public class input
 	
 					case IPT_DIAL:
 					case IPT_DIAL_V:
-						if (dial == 0)
+						if (!dial)
 						{
 							if ((dial_ini != NULL) && (*dial_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, dial_ini);
@@ -1986,7 +1986,7 @@ public class input
 	
 					case IPT_TRACKBALL_X:
 					case IPT_TRACKBALL_Y:
-						if (trackball == 0)
+						if (!trackball)
 						{
 							if ((trackball_ini != NULL) && (*trackball_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, trackball_ini);
@@ -1996,7 +1996,7 @@ public class input
 	
 					case IPT_AD_STICK_X:
 					case IPT_AD_STICK_Y:
-						if (adstick == 0)
+						if (!adstick)
 						{
 							if ((ad_stick_ini != NULL) && (*ad_stick_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, ad_stick_ini);
@@ -2006,7 +2006,7 @@ public class input
 	
 					case IPT_LIGHTGUN_X:
 					case IPT_LIGHTGUN_Y:
-						if (lightgun == 0)
+						if (!lightgun)
 						{
 							if ((lightgun_ini != NULL) && (*lightgun_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, lightgun_ini);
@@ -2015,7 +2015,7 @@ public class input
 						break;
 	
 					case IPT_PEDAL:
-						if (pedal == 0)
+						if (!pedal)
 						{
 							if ((pedal_ini != NULL) && (*pedal_ini != 0))
 								process_ctrlr_file (rc, ctrlrtype, pedal_ini);
@@ -2029,9 +2029,9 @@ public class input
 		}
 	
 		// print the results
-		if (verbose != 0)
+		if (verbose)
 		{
-			if (ctrlrname != 0)
+			if (ctrlrname)
 				fprintf (stderr,"\"%s\" controller support enabled\n",ctrlrname);
 	
 			fprintf(stderr, "Mouse support %sabled\n",use_mouse ? "en" : "dis");
@@ -2053,7 +2053,7 @@ public class input
 	{
 		int result = 0;
 	
-		if (use_keyboard_leds == 0)
+		if (!use_keyboard_leds)
 			return 0;
 	
 		// if we're on Win9x, use GetKeyboardState
@@ -2100,7 +2100,7 @@ public class input
 	
 	void osd_set_leds(int state)
 	{
-		if (use_keyboard_leds == 0)
+		if (!use_keyboard_leds)
 			return;
 	
 		// if we're on Win9x, use SetKeyboardState
@@ -2127,9 +2127,9 @@ public class input
 			UINT				LedFlags=0;
 	
 			// Demangle lights to match 95/98
-			if ((state & 0x1) != 0) LedFlags |= KEYBOARD_NUM_LOCK_ON;
-			if ((state & 0x2) != 0) LedFlags |= KEYBOARD_CAPS_LOCK_ON;
-			if ((state & 0x4) != 0) LedFlags |= KEYBOARD_SCROLL_LOCK_ON;
+			if (state & 0x1) LedFlags |= KEYBOARD_NUM_LOCK_ON;
+			if (state & 0x2) LedFlags |= KEYBOARD_CAPS_LOCK_ON;
+			if (state & 0x4) LedFlags |= KEYBOARD_SCROLL_LOCK_ON;
 	
 			// Address first keyboard
 			InputBuffer.UnitId = 0;
@@ -2152,7 +2152,7 @@ public class input
 	
 	void start_led(void)
 	{
-		if (use_keyboard_leds == 0)
+		if (!use_keyboard_leds)
 			return;
 	
 		// retrive windows version
@@ -2198,7 +2198,7 @@ public class input
 	{
 		int error_number = 0;
 	
-		if (use_keyboard_leds == 0)
+		if (!use_keyboard_leds)
 			return;
 	
 		// restore the initial LED states

@@ -144,7 +144,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -207,7 +207,7 @@ public class jaguar
 	
 	/*************************************
 	 *
-	 *	Jerry . GPU interrupts
+	 *	Jerry -> GPU interrupts
 	 *
 	 *************************************/
 	
@@ -349,9 +349,9 @@ public class jaguar
 	
 	WRITE32_HANDLER( jaguar_jerry_regs32_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			jaguar_jerry_regs_w(offset * 2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			jaguar_jerry_regs_w(offset * 2 + 1, data, mem_mask);
 	}
 	

@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -44,10 +44,9 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_starwars  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_starwars  = new MachineInitHandlerPtr() { public void handler(){
 		/* ESB-specific */
-		if (is_esb != 0)
+		if (is_esb)
 		{
 			/* reset the slapstic */
 			slapstic_reset();
@@ -70,8 +69,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, M6809_IRQ_LINE, CLEAR_LINE);
 	} };
 	
@@ -83,8 +81,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr esb_slapstic_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr esb_slapstic_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = slapstic_base[offset];
 		int new_bank = slapstic_tweak(offset);
 	
@@ -98,8 +95,7 @@ public class starwars
 	} };
 	
 	
-	public static WriteHandlerPtr esb_slapstic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr esb_slapstic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int new_bank = slapstic_tweak(offset);
 	
 		/* update for the new bank */
@@ -238,7 +234,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_starwars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starwars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starwars )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -315,7 +311,7 @@ public class starwars
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_esb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_esb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( esb )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -433,8 +429,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_starwars = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starwars )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,1500000)
@@ -462,9 +457,7 @@ public class starwars
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -565,16 +558,14 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_starwars  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starwars  = new DriverInitHandlerPtr() { public void handler(){
 		/* prepare the mathbox */
 		is_esb = 0;
 		swmathbox_init();
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_esb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_esb  = new DriverInitHandlerPtr() { public void handler(){
 		/* init the slapstic */
 		slapstic_init(101);
 		slapstic_source = &memory_region(REGION_CPU1)[0x14000];
@@ -603,7 +594,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_starwars	   = new GameDriver("1983"	,"starwars"	,"starwars.java"	,rom_starwars,null	,machine_driver_starwars	,input_ports_starwars	,init_starwars	,ROT0	,	"Atari", "Star Wars (rev 2)" )
-	public static GameDriver driver_starwar1	   = new GameDriver("1983"	,"starwar1"	,"starwars.java"	,rom_starwar1,driver_starwars	,machine_driver_starwars	,input_ports_starwars	,init_starwars	,ROT0	,	"Atari", "Star Wars (rev 1)" )
-	public static GameDriver driver_esb	   = new GameDriver("1985"	,"esb"	,"starwars.java"	,rom_esb,null	,machine_driver_starwars	,input_ports_esb	,init_esb	,ROT0	,	"Atari Games", "The Empire Strikes Back" )
+	GAME( 1983, starwars, 0,        starwars, starwars, starwars, ROT0, "Atari", "Star Wars (rev 2)" )
+	GAME( 1983, starwar1, starwars, starwars, starwars, starwars, ROT0, "Atari", "Star Wars (rev 1)" )
+	GAME( 1985, esb,      0,        starwars, esb,      esb,      ROT0, "Atari Games", "The Empire Strikes Back" )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -33,7 +33,7 @@ public class citycon
 	
 	static UINT32 citycon_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x60) << 5);
 	}
 	
@@ -41,7 +41,7 @@ public class citycon
 	{
 		SET_TILE_INFO(
 				0,
-				citycon_videoram.read(tile_index),
+				citycon_videoram[tile_index],
 				(tile_index & 0x03e0) >> 5,	/* color depends on scanline only */
 				0)
 	}
@@ -65,8 +65,7 @@ public class citycon
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_citycon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_citycon  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,citycon_scan,TILEMAP_TRANSPARENT,8,8,128,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,citycon_scan,TILEMAP_OPAQUE,     8,8,128,32);
 	
@@ -87,24 +86,21 @@ public class citycon
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr citycon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (citycon_videoram.read(offset)!= data)
+	public static WriteHandlerPtr citycon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (citycon_videoram[offset] != data)
 		{
-			citycon_videoram.write(data,data);
+			citycon_videoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr citycon_linecolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr citycon_linecolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		citycon_linecolor[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr citycon_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr citycon_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 4-7 control the background image */
 		if (bg_image != (data >> 4))
 		{
@@ -142,14 +138,14 @@ public class citycon
 			sx = spriteram.read(offs + 3);
 			sy = 239 - spriteram.read(offs);
 			flipx = ~spriteram.read(offs + 2)& 0x10;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 238 - sy;
 				flipx = NOT(flipx);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],
+			drawgfx(bitmap,Machine->gfx[spriteram.read(offs + 1)& 0x80 ? 2 : 1],
 					spriteram.read(offs + 1)& 0x7f,
 					spriteram.read(offs + 2)& 0x0f,
 					flipx,flip_screen(),
@@ -175,8 +171,7 @@ public class citycon
 		palette_set_color(color,r,g,b);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_citycon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_citycon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,scroll;
 	
 	

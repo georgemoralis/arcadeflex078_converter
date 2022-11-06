@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -18,8 +18,7 @@ public class hcastle
 	
 	
 	
-	public static WriteHandlerPtr hcastle_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -27,19 +26,16 @@ public class hcastle
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr hcastle_soundirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_soundirq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr hcastle_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hcastle_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 0x40);
 		coin_counter_w(1,data & 0x80);
 	} };
 	
-	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		int data = ( RAM[0x18dc] << 8 ) | RAM[0x18dd];
@@ -100,8 +96,7 @@ public class hcastle
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_A=(data&0x3);
 		int bank_B=((data>>2)&0x3);
 		K007232_set_bank( 0, bank_A, bank_B );
@@ -134,7 +129,7 @@ public class hcastle
 	
 	/*****************************************************************************/
 	
-	static InputPortPtr input_ports_hcastle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hcastle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hcastle )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -295,8 +290,7 @@ public class hcastle
 		45,			/* Volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_hcastle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hcastle )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* Derived from 24 MHz clock */
@@ -326,9 +320,7 @@ public class hcastle
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(K051649, k051649_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -442,8 +434,8 @@ public class hcastle
 	
 	
 	
-	public static GameDriver driver_hcastle	   = new GameDriver("1988"	,"hcastle"	,"hcastle.java"	,rom_hcastle,null	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Haunted Castle (version M)" )
-	public static GameDriver driver_hcastleo	   = new GameDriver("1988"	,"hcastleo"	,"hcastle.java"	,rom_hcastleo,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Haunted Castle (version K)" )
-	public static GameDriver driver_hcastlej	   = new GameDriver("1988"	,"hcastlej"	,"hcastle.java"	,rom_hcastlej,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Akuma-Jou Dracula (Japan version P)" )
-	public static GameDriver driver_hcastljo	   = new GameDriver("1988"	,"hcastljo"	,"hcastle.java"	,rom_hcastljo,driver_hcastle	,machine_driver_hcastle	,input_ports_hcastle	,null	,ROT0	,	"Konami", "Akuma-Jou Dracula (Japan version N)" )
+	GAME( 1988, hcastle,  0,       hcastle, hcastle, 0, ROT0, "Konami", "Haunted Castle (version M)" )
+	GAME( 1988, hcastleo, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Haunted Castle (version K)" )
+	GAME( 1988, hcastlej, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Akuma-Jou Dracula (Japan version P)" )
+	GAME( 1988, hcastljo, hcastle, hcastle, hcastle, 0, ROT0, "Konami", "Akuma-Jou Dracula (Japan version N)" )
 }

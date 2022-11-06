@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class nyny
 	
 	
 	/* used by nyny and spiders */
-	public static PaletteInitHandlerPtr palette_init_nyny  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_nyny  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -38,8 +37,7 @@ public class nyny
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_nyny  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_nyny  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -56,33 +54,27 @@ public class nyny
 	  Stop the video hardware emulation.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr nyny_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nyny_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
-	public static ReadHandlerPtr nyny_videoram0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nyny_videoram0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return( nyny_videoram[offset] ) ;
 	} };
 	
-	public static ReadHandlerPtr nyny_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nyny_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return( nyny_videoram[offset+0x2000] ) ;
 	} };
 	
-	public static ReadHandlerPtr nyny_colourram0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nyny_colourram0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return( nyny_colourram[offset] ) ;
 	} };
 	
-	public static ReadHandlerPtr nyny_colourram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nyny_colourram1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return( nyny_colourram[offset+0x2000] ) ;
 	} };
 	
-	public static WriteHandlerPtr nyny_colourram0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nyny_colourram0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,z,d,v,c;
 		nyny_colourram[offset] = data;
 		v = nyny_videoram[offset] ;
@@ -94,13 +86,12 @@ public class nyny
 		for ( z=0; z<8; z++ )
 		{
 			c = v & 1 ;
-		  	plot_pixel.handler( tmpbitmap1, x*8+z, y, Machine.pens[c*d]);
+		  	plot_pixel( tmpbitmap1, x*8+z, y, Machine->pens[c*d]);
 			v >>= 1 ;
 		}
 	} };
 	
-	public static WriteHandlerPtr nyny_videoram0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nyny_videoram0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,z,c,d;
 		nyny_videoram[offset] = data;
 		d = nyny_colourram[offset] & 7 ;
@@ -111,13 +102,12 @@ public class nyny
 		for ( z=0; z<8; z++ )
 		{
 			c = data & 1 ;
-	  		plot_pixel.handler( tmpbitmap1, x*8+z, y, Machine.pens[c*d]);
+	  		plot_pixel( tmpbitmap1, x*8+z, y, Machine->pens[c*d]);
 			data >>= 1 ;
 		}
 	} };
 	
-	public static WriteHandlerPtr nyny_colourram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nyny_colourram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,z,d,v,c;
 		nyny_colourram[offset+0x2000] = data;
 		v = nyny_videoram[offset+0x2000] ;
@@ -129,14 +119,13 @@ public class nyny
 		for ( z=0; z<8; z++ )
 		{
 			c = v & 1 ;
-		  	plot_pixel.handler( tmpbitmap2, x*8+z, y, Machine.pens[c*d]);
+		  	plot_pixel( tmpbitmap2, x*8+z, y, Machine->pens[c*d]);
 			v >>= 1 ;
 		}
 	
 	} };
 	
-	public static WriteHandlerPtr nyny_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nyny_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,z,c,d;
 		nyny_videoram[offset+0x2000] = data;
 		d = nyny_colourram[offset+0x2000] & 7 ;
@@ -147,13 +136,12 @@ public class nyny
 		for ( z=0; z<8; z++ )
 		{
 			c = data & 1 ;
-		  	plot_pixel.handler( tmpbitmap2, x*8+z, y, Machine.pens[c*d]);
+		  	plot_pixel( tmpbitmap2, x*8+z, y, Machine->pens[c*d]);
 			data >>= 1 ;
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_nyny  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_nyny  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,tmpbitmap2,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 		copybitmap(bitmap,tmpbitmap1,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);
 	} };

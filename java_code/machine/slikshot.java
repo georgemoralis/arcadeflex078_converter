@@ -69,7 +69,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -115,7 +115,7 @@ public class slikshot
 		*beams = 0;
 	
 		/* if sensor 1 fired first, set bit 0 */
-		if (sens0 == 0)
+		if (!sens0)
 			*beams |= 1;
 	
 		/* if sensor 3 has the larger value, set bit 1 */
@@ -213,13 +213,13 @@ public class slikshot
 		_283e = ((UINT64)_27d8 * 0x4a574b) >> 16;
 	
 		/* adjust X based on the low bit of the beams */
-		if ((beams & 1) != 0)
+		if (beams & 1)
 			x = 0x7a + (_283e >> 16) - xoffs;
 		else
 			x = 0x7a - (_283e >> 16) - xoffs;
 	
 		/* apply a constant X scale */
-		if (xscale != 0)
+		if (xscale)
 			x = ((xscale * (x & 0xff)) >> 8) & 0xff;
 	
 		/* clamp if out of range */
@@ -228,7 +228,7 @@ public class slikshot
 	
 		/* put the sign back in Vx */
 		vx &= 0xff;
-		if (vxsgn == 0)
+		if (!vxsgn)
 			vx = -vx;
 	
 		/* clamp VY */
@@ -375,13 +375,13 @@ public class slikshot
 								UINT16 *sens0, UINT16 *sens1, UINT16 *sens2, UINT16 *sens3)
 	{
 		/* if bit 0 of the beams is set, sensor 1 fired first; otherwise sensor 0 fired */
-		if ((beams & 1) != 0)
+		if (beams & 1)
 			*sens0 = 0, *sens1 = word3;
 		else
 			*sens0 = word3, *sens1 = 0;
 	
 		/* if bit 1 of the beams is set, sensor 3 had a larger value */
-		if ((beams & 2) != 0)
+		if (beams & 2)
 			*sens3 = word2 + word1, *sens2 = word2;
 		else
 			*sens2 = word2 + word1, *sens3 = word2;
@@ -421,8 +421,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr slikz80_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr slikz80_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		/* if we have nothing, return 0x03 */
@@ -430,13 +429,13 @@ public class slikshot
 			return 0x03 | (z80_clear_to_send << 7);
 	
 		/* 1 bit for each sensor */
-		if (sensor0 != 0)
+		if (sensor0)
 			result |= 1, sensor0--;
-		if (sensor1 != 0)
+		if (sensor1)
 			result |= 2, sensor1--;
-		if (sensor2 != 0)
+		if (sensor2)
 			result |= 4, sensor2--;
-		if (sensor3 != 0)
+		if (sensor3)
 			result |= 8, sensor3--;
 		result |= z80_clear_to_send << 7;
 	
@@ -451,8 +450,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr slikz80_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slikz80_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		z80_port_val = data;
 		z80_clear_to_send = 0;
 	} };
@@ -465,8 +463,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr slikshot_z80_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr slikshot_z80_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* allow the Z80 to send us stuff now */
 		z80_clear_to_send = 1;
 		timer_set(TIME_NOW, 0, NULL);
@@ -482,8 +479,7 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr slikshot_z80_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr slikshot_z80_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return z80_ctrl;
 	} };
 	
@@ -495,13 +491,12 @@ public class slikshot
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr slikshot_z80_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slikshot_z80_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 delta = z80_ctrl ^ data;
 		z80_ctrl = data;
 	
 		/* reset the Z80 on bit 4 changing */
-		if ((delta & 0x10) != 0)
+		if (delta & 0x10)
 		{
 	//		logerror("%15f: Reset Z80: %02x  PC=%04x\n", timer_get_time(), data & 0x10, cpunum_get_reg(2, Z80_PC));
 	
@@ -512,7 +507,7 @@ public class slikshot
 				cpu_set_reset_line(2, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 	
 				/* on the rising edge, do housekeeping */
-				if ((data & 0x10) != 0)
+				if (data & 0x10)
 				{
 					sensor0 = nextsensor0;
 					sensor1 = nextsensor1;
@@ -604,13 +599,13 @@ public class slikshot
 		{
 			int px = xstart >> 16, py = ystart >> 16;
 	
-			if (px >= cliprect.min_x && px <= cliprect.max_x &&
-				py >= cliprect.min_y && py <= cliprect.max_y)
+			if (px >= cliprect->min_x && px <= cliprect->max_x &&
+				py >= cliprect->min_y && py <= cliprect->max_y)
 			{
-				if (bitmap.depth == 8)
-					((UINT8 *)bitmap.line[py])[px] = Machine.pens[256];
+				if (bitmap->depth == 8)
+					((UINT8 *)bitmap->line[py])[px] = Machine->pens[256];
 				else
-					((UINT16 *)bitmap.line[py])[px] = Machine.pens[256];
+					((UINT16 *)bitmap->line[py])[px] = Machine->pens[256];
 			}
 			xstart += dx;
 			ystart += dy;

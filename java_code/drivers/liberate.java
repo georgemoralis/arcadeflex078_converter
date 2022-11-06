@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -30,12 +30,11 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static ReadHandlerPtr deco16_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr deco16_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const data8_t *ROM = memory_region(REGION_USER1);
 	
 		/* The tilemap bank can be swapped into main memory */
-		if (deco16_bank != 0)
+		if (deco16_bank)
 			return ROM[offset];
 	
 		/* Else the handler falls through to read the usual address */
@@ -48,16 +47,14 @@ public class liberate
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr deco16_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deco16_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		deco16_bank=data;
 	} };
 	
-	public static ReadHandlerPtr deco16_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr deco16_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const data8_t *ROM = memory_region(REGION_CPU1);
 	
-		if (deco16_bank != 0) {
+		if (deco16_bank) {
 			if (offset==0) return readinputport(1); /* Player 1 controls */
 			if (offset==1) return readinputport(2); /* Player 2 controls */
 			if (offset==2) return readinputport(3); /* Vblank, coins */
@@ -194,7 +191,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_boomrang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boomrang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boomrang )
 		PORT_START(); 
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
@@ -275,7 +272,7 @@ public class liberate
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kamikcab = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kamikcab = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kamikcab )
 		PORT_START(); 
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
@@ -358,7 +355,7 @@ public class liberate
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_liberate = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_liberate = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( liberate )
 		PORT_START(); 
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
@@ -532,8 +529,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static InterruptHandlerPtr deco16_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr deco16_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch=0;
 		int p=~readinputport(3);
 		if (p&0x43 && !latch) {
@@ -556,8 +552,7 @@ public class liberate
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_prosoccr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( prosoccr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(DECO16, 3000000)
@@ -586,12 +581,9 @@ public class liberate
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_prosport = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( prosport )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(DECO16, 2000000)
@@ -619,12 +611,9 @@ public class liberate
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_boomrang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( boomrang )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(DECO16, 2000000)
@@ -654,12 +643,9 @@ public class liberate
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_liberate = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( liberate )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(DECO16, 2000000)
@@ -689,12 +675,9 @@ public class liberate
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_liberatb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( liberatb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000)
@@ -724,9 +707,7 @@ public class liberate
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -912,8 +893,7 @@ public class liberate
 		memory_set_opcode_base(1,RAM+0x10000);
 	}
 	
-	public static DriverInitHandlerPtr init_prosport  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_prosport  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -924,8 +904,7 @@ public class liberate
 		sound_cpu_decrypt();
 	} };
 	
-	public static DriverInitHandlerPtr init_liberate  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_liberate  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
@@ -944,10 +923,10 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_prosoccr	   = new GameDriver("1983"	,"prosoccr"	,"liberate.java"	,rom_prosoccr,null	,machine_driver_prosoccr	,input_ports_liberate	,init_prosport	,ROT270	,	"Data East Corporation", "Pro Soccer", GAME_NOT_WORKING )
-	public static GameDriver driver_prosport	   = new GameDriver("1983"	,"prosport"	,"liberate.java"	,rom_prosport,null	,machine_driver_prosport	,input_ports_liberate	,init_prosport	,ROT270	,	"Data East Corporation", "Prosport", GAME_NOT_WORKING )
-	public static GameDriver driver_boomrang	   = new GameDriver("1983"	,"boomrang"	,"liberate.java"	,rom_boomrang,null	,machine_driver_boomrang	,input_ports_boomrang	,init_prosport	,ROT270	,	"Data East Corporation", "Boomer Rang'r / Genesis" )
-	public static GameDriver driver_kamikcab	   = new GameDriver("1984"	,"kamikcab"	,"liberate.java"	,rom_kamikcab,null	,machine_driver_boomrang	,input_ports_kamikcab	,init_prosport	,ROT270	,	"Data East Corporation", "Kamikaze Cabbie" )
-	public static GameDriver driver_liberate	   = new GameDriver("1984"	,"liberate"	,"liberate.java"	,rom_liberate,null	,machine_driver_liberate	,input_ports_liberate	,init_liberate	,ROT270	,	"Data East Corporation", "Liberation" )
-	public static GameDriver driver_liberatb	   = new GameDriver("1984"	,"liberatb"	,"liberate.java"	,rom_liberatb,driver_liberate	,machine_driver_liberatb	,input_ports_liberate	,init_prosport	,ROT270	,	"bootleg",               "Liberation (bootleg)", GAME_NOT_WORKING )
+	GAMEX(1983, prosoccr, 0,        prosoccr,  liberate, prosport, ROT270, "Data East Corporation", "Pro Soccer", GAME_NOT_WORKING )
+	GAMEX(1983, prosport, 0,        prosport,  liberate, prosport, ROT270, "Data East Corporation", "Prosport", GAME_NOT_WORKING )
+	GAME( 1983, boomrang, 0,        boomrang,  boomrang, prosport, ROT270, "Data East Corporation", "Boomer Rang'r / Genesis" )
+	GAME( 1984, kamikcab, 0,        boomrang,  kamikcab, prosport, ROT270, "Data East Corporation", "Kamikaze Cabbie" )
+	GAME( 1984, liberate, 0,        liberate,  liberate, liberate, ROT270, "Data East Corporation", "Liberation" )
+	GAMEX(1984, liberatb, liberate, liberatb,  liberate, prosport, ROT270, "bootleg",               "Liberation (bootleg)", GAME_NOT_WORKING )
 }

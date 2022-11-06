@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -79,7 +79,7 @@ public class midwunit
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_mk3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mk3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mk3 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -178,7 +178,7 @@ public class midwunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_openice = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_openice = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( openice )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -287,7 +287,7 @@ public class midwunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nbahangt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nbahangt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nbahangt )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -380,7 +380,7 @@ public class midwunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rmpgwt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rmpgwt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rmpgwt )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -473,7 +473,7 @@ public class midwunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wwfmania = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wwfmania = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wwfmania )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -597,8 +597,7 @@ public class midwunit
 		nbamaxht: 0014-0112 / 0120 (254)     0065-001F5 / 01F9 (400)
 	*/
 	
-	public static MachineHandlerPtr machine_driver_wunit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wunit )
 	
 		MDRV_CPU_ADD(TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
 		MDRV_CPU_CONFIG(cpu_config)
@@ -620,9 +619,7 @@ public class midwunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1070,16 +1067,16 @@ public class midwunit
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_mk3	   = new GameDriver("1994"	,"mk3"	,"midwunit.java"	,rom_mk3,null	,machine_driver_wunit	,input_ports_mk3	,init_mk3	,ROT0	,	"Midway", "Mortal Kombat 3 (rev 2.1)" )
-	public static GameDriver driver_mk3r20	   = new GameDriver("1994"	,"mk3r20"	,"midwunit.java"	,rom_mk3r20,driver_mk3	,machine_driver_wunit	,input_ports_mk3	,init_mk3r20	,ROT0	,	"Midway", "Mortal Kombat 3 (rev 2.0)" )
-	public static GameDriver driver_mk3r10	   = new GameDriver("1994"	,"mk3r10"	,"midwunit.java"	,rom_mk3r10,driver_mk3	,machine_driver_wunit	,input_ports_mk3	,init_mk3r10	,ROT0	,	"Midway", "Mortal Kombat 3 (rev 1.0)" )
-	public static GameDriver driver_umk3	   = new GameDriver("1994"	,"umk3"	,"midwunit.java"	,rom_umk3,driver_mk3	,machine_driver_wunit	,input_ports_mk3	,init_umk3	,ROT0	,	"Midway", "Ultimate Mortal Kombat 3 (rev 1.2)" )
-	public static GameDriver driver_umk3r11	   = new GameDriver("1994"	,"umk3r11"	,"midwunit.java"	,rom_umk3r11,driver_mk3	,machine_driver_wunit	,input_ports_mk3	,init_umk3r11	,ROT0	,	"Midway", "Ultimate Mortal Kombat 3 (rev 1.1)" )
+	GAME( 1994, mk3,     0,         wunit, mk3,     mk3,     ROT0, "Midway", "Mortal Kombat 3 (rev 2.1)" )
+	GAME( 1994, mk3r20,  mk3,       wunit, mk3,     mk3r20,  ROT0, "Midway", "Mortal Kombat 3 (rev 2.0)" )
+	GAME( 1994, mk3r10,  mk3,       wunit, mk3,     mk3r10,  ROT0, "Midway", "Mortal Kombat 3 (rev 1.0)" )
+	GAME( 1994, umk3,    mk3,       wunit, mk3,     umk3,    ROT0, "Midway", "Ultimate Mortal Kombat 3 (rev 1.2)" )
+	GAME( 1994, umk3r11, mk3,       wunit, mk3,     umk3r11, ROT0, "Midway", "Ultimate Mortal Kombat 3 (rev 1.1)" )
 	
-	public static GameDriver driver_wwfmania	   = new GameDriver("1995"	,"wwfmania"	,"midwunit.java"	,rom_wwfmania,null	,machine_driver_wunit	,input_ports_wwfmania	,init_wwfmania	,ROT0	,	"Midway", "WWF: Wrestlemania (rev 1.30 08/10/95)" )
-	public static GameDriver driver_openice	   = new GameDriver("1995"	,"openice"	,"midwunit.java"	,rom_openice,null	,machine_driver_wunit	,input_ports_openice	,init_openice	,ROT0	,	"Midway", "2 On 2 Open Ice Challenge (rev 1.21)" )
-	public static GameDriver driver_nbahangt	   = new GameDriver("1996"	,"nbahangt"	,"midwunit.java"	,rom_nbahangt,null	,machine_driver_wunit	,input_ports_nbahangt	,init_nbahangt	,ROT0	,	"Midway", "NBA Hangtime (rev L1.1 04/16/96)" )
-	public static GameDriver driver_nbamaxht	   = new GameDriver("1996"	,"nbamaxht"	,"midwunit.java"	,rom_nbamaxht,driver_nbahangt	,machine_driver_wunit	,input_ports_nbahangt	,init_nbahangt	,ROT0	,	"Midway", "NBA Maximum Hangtime (rev 1.0 11/8/96)" )
-	public static GameDriver driver_rmpgwt	   = new GameDriver("1997"	,"rmpgwt"	,"midwunit.java"	,rom_rmpgwt,null	,machine_driver_wunit	,input_ports_rmpgwt	,init_rmpgwt	,ROT0	,	"Midway", "Rampage: World Tour (rev 1.3)" )
-	public static GameDriver driver_rmpgwt11	   = new GameDriver("1997"	,"rmpgwt11"	,"midwunit.java"	,rom_rmpgwt11,driver_rmpgwt	,machine_driver_wunit	,input_ports_rmpgwt	,init_rmpgwt	,ROT0	,	"Midway", "Rampage: World Tour (rev 1.1)" )
+	GAME( 1995, wwfmania,0,         wunit, wwfmania,wwfmania,ROT0, "Midway", "WWF: Wrestlemania (rev 1.30 08/10/95)" )
+	GAME( 1995, openice, 0,         wunit, openice, openice, ROT0, "Midway", "2 On 2 Open Ice Challenge (rev 1.21)" )
+	GAME( 1996, nbahangt,0,         wunit, nbahangt,nbahangt,ROT0, "Midway", "NBA Hangtime (rev L1.1 04/16/96)" )
+	GAME( 1996, nbamaxht,nbahangt,  wunit, nbahangt,nbahangt,ROT0, "Midway", "NBA Maximum Hangtime (rev 1.0 11/8/96)" )
+	GAME( 1997, rmpgwt,  0,         wunit, rmpgwt,  rmpgwt,  ROT0, "Midway", "Rampage: World Tour (rev 1.3)" )
+	GAME( 1997, rmpgwt11,rmpgwt,    wunit, rmpgwt,  rmpgwt,  ROT0, "Midway", "Rampage: World Tour (rev 1.1)" )
 }

@@ -17,7 +17,7 @@ settings, but music runs too fast.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -83,7 +83,7 @@ public class shanghai
 	{
 		fifo_counter = 0;
 		HD63484_ram = auto_malloc(HD63484_RAM_SIZE);
-		if (HD63484_ram == 0) return 1;
+		if (!HD63484_ram) return 1;
 		memset(HD63484_ram,0,HD63484_RAM_SIZE);
 		return 0;
 	}
@@ -195,7 +195,7 @@ public class shanghai
 						break;
 				}
 	
-				if ((opcode & 0x0800) != 0)
+				if (opcode & 0x0800)
 				{
 					if (ay == 0) break;
 					else if (ay > 0)
@@ -229,7 +229,7 @@ public class shanghai
 				}
 			}
 	
-			if ((opcode & 0x0800) != 0)
+			if (opcode & 0x0800)
 			{
 				ay = _ay;
 				if (_ax < 0)
@@ -618,16 +618,14 @@ public class shanghai
 	
 	static int regno;
 	
-	public static ReadHandlerPtr HD63484_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr HD63484_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 1) return 0xff;	/* high 8 bits - not used */
 	
 		if (activecpu_get_pc() != 0xfced6 && activecpu_get_pc() != 0xfe1d6) logerror("%05x: HD63484 status read\n",activecpu_get_pc());
 		return 0x22|4;	/* write FIFO ready + command end    + read FIFO ready */
 	} };
 	
-	public static WriteHandlerPtr HD63484_address_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HD63484_address_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char reg[2];
 	
 		reg[offset] = data;
@@ -636,8 +634,7 @@ public class shanghai
 	//	logerror("PC %05x: HD63484 select register %02x\n",activecpu_get_pc(),regno);
 	} };
 	
-	public static WriteHandlerPtr HD63484_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HD63484_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char dat[2];
 	
 		dat[offset] = data;
@@ -651,13 +648,12 @@ public class shanghai
 			{
 	logerror("PC %05x: HD63484 register %02x write %04x\n",activecpu_get_pc(),regno,val);
 				HD63484_reg[regno/2] = val;
-				if ((regno & 0x80) != 0) regno += 2;	/* autoincrement */
+				if (regno & 0x80) regno += 2;	/* autoincrement */
 			}
 		}
 	} };
 	
-	public static ReadHandlerPtr HD63484_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr HD63484_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		if (regno == 0x80)
@@ -684,8 +680,7 @@ public class shanghai
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_shanghai  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_shanghai  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -714,18 +709,15 @@ public class shanghai
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_shanghai  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_shanghai  = new VideoStartHandlerPtr() { public int handler(){
 		return HD63484_start();
 	} };
 	
-	public static VideoStopHandlerPtr video_stop_shanghai  = new VideoStopHandlerPtr() { public void handler()
-	{
+	public static VideoStopHandlerPtr video_stop_shanghai  = new VideoStopHandlerPtr() { public void handler(){
 		HD63484_stop();
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shanghai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x,y,b;
 	
 	
@@ -735,7 +727,7 @@ public class shanghai
 			for (x = 0;x < 384;x++)
 			{
 				b &= (HD63484_RAM_SIZE-1);
-				plot_pixel.handler(bitmap,x,y,Machine.pens[HD63484_ram[b]]);
+				plot_pixel(bitmap,x,y,Machine.pens[HD63484_ram[b]]);
 				b++;
 			}
 		}
@@ -755,7 +747,7 @@ public class shanghai
 				{
 					b &= (HD63484_RAM_SIZE-1);
 					if (x <= w && x + sx >= 0 && x+sx < 384)
-						plot_pixel.handler(bitmap,x+sx,y,Machine.pens[HD63484_ram[b]]);
+						plot_pixel(bitmap,x+sx,y,Machine.pens[HD63484_ram[b]]);
 					b++;
 				}
 			}
@@ -763,13 +755,11 @@ public class shanghai
 	} };
 	
 	
-	public static InterruptHandlerPtr shanghai_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr shanghai_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0x80);
 	} };
 	
-	public static WriteHandlerPtr shanghai_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shanghai_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
 	} };
@@ -850,7 +840,7 @@ public class shanghai
 	
 	
 	
-	static InputPortPtr input_ports_shanghai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shanghai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shanghai )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -929,7 +919,7 @@ public class shanghai
 		PORT_DIPSETTING(    0x00, "120" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shangha2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shangha2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shangha2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -1022,8 +1012,7 @@ public class shanghai
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_shanghai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shanghai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,16000000/2)	/* ? */
@@ -1046,13 +1035,10 @@ public class shanghai
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shangha2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shangha2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,16000000/2)	/* ? */
@@ -1074,9 +1060,7 @@ public class shanghai
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1106,6 +1090,6 @@ public class shanghai
 	
 	
 	
-	public static GameDriver driver_shanghai	   = new GameDriver("1988"	,"shanghai"	,"shanghai.java"	,rom_shanghai,null	,machine_driver_shanghai	,input_ports_shanghai	,null	,ROT0	,	"Sunsoft", "Shanghai (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_shangha2	   = new GameDriver("1989"	,"shangha2"	,"shanghai.java"	,rom_shangha2,null	,machine_driver_shangha2	,input_ports_shangha2	,null	,ROT0	,	"Sunsoft", "Shanghai II (Japan)" )
+	GAMEX(1988, shanghai, 0, shanghai, shanghai, 0, ROT0, "Sunsoft", "Shanghai (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1989, shangha2, 0, shangha2, shangha2, 0, ROT0, "Sunsoft", "Shanghai II (Japan)" )
 }

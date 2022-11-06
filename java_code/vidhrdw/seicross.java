@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class seicross
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_seicross  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_seicross  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -63,8 +62,7 @@ public class seicross
 		}
 	} };
 	
-	public static WriteHandlerPtr seicross_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seicross_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -72,8 +70,7 @@ public class seicross
 		}
 	} };
 	
-	public static WriteHandlerPtr seicross_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seicross_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			/* bit 5 of the address is not used for color memory. There is just */
@@ -98,12 +95,11 @@ public class seicross
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_seicross  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seicross  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap, 32);
@@ -118,42 +114,41 @@ public class seicross
 		for (offs = spriteram_size - 4;offs >= 0;offs -= 4)
 		{
 			int x = spriteram.read(offs + 3);
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					(spriteram.read(offs)& 0x3f) + ((spriteram.read(offs + 1)& 0x10) << 2) + 128,
 					spriteram.read(offs + 1)& 0x0f,
 					spriteram.read(offs)& 0x40,spriteram.read(offs)& 0x80,
 					x,240-spriteram.read(offs + 2),
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 			if(x>0xf0)
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						(spriteram.read(offs)& 0x3f) + ((spriteram.read(offs + 1)& 0x10) << 2) + 128,
 						spriteram.read(offs + 1)& 0x0f,
 						spriteram.read(offs)& 0x40,spriteram.read(offs)& 0x80,
 						x-256,240-spriteram.read(offs + 2),
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	
 		for (offs = spriteram_2_size - 4;offs >= 0;offs -= 4)
 		{
 			int x = spriteram_2.read(offs + 3);
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					(spriteram_2.read(offs)& 0x3f) + ((spriteram_2.read(offs + 1)& 0x10) << 2),
 					spriteram_2.read(offs + 1)& 0x0f,
 					spriteram_2.read(offs)& 0x40,spriteram_2.read(offs)& 0x80,
 					x,240-spriteram_2.read(offs + 2),
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 			if(x>0xf0)
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						(spriteram_2.read(offs)& 0x3f) + ((spriteram_2.read(offs + 1)& 0x10) << 2),
 						spriteram_2.read(offs + 1)& 0x0f,
 						spriteram_2.read(offs)& 0x40,spriteram_2.read(offs)& 0x80,
 						x-256,240-spriteram_2.read(offs + 2),
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_seicross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_seicross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int col;
 	
 		for (col = 0; col < 32; col++)

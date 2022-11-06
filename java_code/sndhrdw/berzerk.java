@@ -18,7 +18,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -103,19 +103,18 @@ public class berzerk
 	
 		berzerknoisemulate = 1;
 	
-		if (Machine.samples)
+		if (Machine->samples)
 		{
 			for (i = 0;i < 5;i++)
 			{
-				if (Machine.samples.sample[i])
+				if (Machine->samples->sample[i])
 					berzerknoisemulate = 0;
 			}
 		}
 		return 0;
 	}
 	
-	public static WriteHandlerPtr berzerk_sound_control_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_sound_control_a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int noise = 0;
 		int voice = 0;
 		int voicefrequency = 0;
@@ -219,7 +218,7 @@ public class berzerk
 	
 	/* One day I'll do this... */
 	
-		if (berzerknoisemulate != 0)
+		if (berzerknoisemulate)
 		{
 			return;
 			if (voicefrequency != 1750*(4-noise))
@@ -228,7 +227,7 @@ public class berzerk
 				voicevolume = 85*noise;
 			}
 	
-			if (noise != 0)
+			if (noise)
 			{
 				sample_set_freq(2,voicefrequency);
 				sample_set_volume(2,voicevolume);
@@ -293,8 +292,7 @@ public class berzerk
 		} /* End of berzerknoisemulate */
 	} };
 	
-	public static WriteHandlerPtr berzerk_sound_control_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr berzerk_sound_control_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("B Data value %d and offset %d at %d\n", data, offset, lastfreq);
 	} };
 	
@@ -306,9 +304,8 @@ public class berzerk
 	}
 	
 	
-	public static ReadHandlerPtr berzerk_voiceboard_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-	   if (voice_playing == 0)
+	public static ReadHandlerPtr berzerk_voiceboard_r  = new ReadHandlerPtr() { public int handler(int offset){
+	   if (!voice_playing)
 	      return 0x00;
 	   else
 	      return 0x40;

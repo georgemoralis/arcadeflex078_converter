@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class yiear
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_yiear  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_yiear  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -68,8 +67,7 @@ public class yiear
 		}
 	} };
 	
-	public static WriteHandlerPtr yiear_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yiear_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -77,8 +75,7 @@ public class yiear
 		}
 	} };
 	
-	public static WriteHandlerPtr yiear_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yiear_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 flips screen */
 	
 		if (flip_screen() != (data & 0x01))
@@ -112,12 +109,11 @@ public class yiear
 		SET_TILE_INFO(0, code, 0, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_yiear  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_yiear  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -137,7 +133,7 @@ public class yiear
 			int sy = 240 - spriteram.read(offs + 1);
 			int sx = spriteram_2.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
@@ -148,17 +144,16 @@ public class yiear
 				sy++;	/* fix title screen & garbage at the bottom of the screen */
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_yiear  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yiear  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		yiear_draw_sprites(bitmap);
 	} };

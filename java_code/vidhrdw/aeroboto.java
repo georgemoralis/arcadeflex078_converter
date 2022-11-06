@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,7 +31,7 @@ public class aeroboto
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char code = aeroboto_videoram.read(tile_index);
+		unsigned char code = aeroboto_videoram[tile_index];
 		SET_TILE_INFO(
 				0,
 				code + (aeroboto_charbank << 8),
@@ -47,11 +47,10 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_aeroboto  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_aeroboto  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,64);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap,0);
@@ -85,13 +84,11 @@ public class aeroboto
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr aeroboto_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr aeroboto_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(flip_screen() ? 1 : 0);
 	} };
 	
-	public static WriteHandlerPtr aeroboto_3000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aeroboto_3000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 selects both flip screen and player1/player2 controls */
 		flip_screen_set(data & 0x01);
 	
@@ -106,17 +103,15 @@ public class aeroboto
 		aeroboto_starsoff = data & 0x4;
 	} };
 	
-	public static WriteHandlerPtr aeroboto_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (aeroboto_videoram.read(offset)!= data)
+	public static WriteHandlerPtr aeroboto_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (aeroboto_videoram[offset] != data)
 		{
-			aeroboto_videoram.write(data,data);
+			aeroboto_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr aeroboto_tilecolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aeroboto_tilecolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (aeroboto_tilecolor[offset] != data)
 		{
 			aeroboto_tilecolor[offset] = data;
@@ -141,13 +136,13 @@ public class aeroboto
 			int x = spriteram.read(offs+3);
 			int y = 240 - spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				x = 248 - x;
 				y = 240 - y;
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 					spriteram.read(offs+1),
 					spriteram.read(offs+2)& 0x07,
 					flip_screen(), flip_screen(),
@@ -157,8 +152,7 @@ public class aeroboto
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_aeroboto  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static struct rectangle splitrect1 = { 0, 255, 0, 39 };
 		static struct rectangle splitrect2 = { 0, 255, 40, 255 };
 		static int sx=0, sy=0;
@@ -169,7 +163,7 @@ public class aeroboto
 		sky_color = star_color = *aeroboto_bgcolor << 2;
 	
 		// the star field is supposed to be seen through tile pen 0 when active
-		if (aeroboto_starsoff == 0)
+		if (!aeroboto_starsoff)
 		{
 			if (star_color < 0xd0) { star_color = 0xd0; sky_color = 0; }
 			star_color += 2;
@@ -198,7 +192,7 @@ public class aeroboto
 				for (j=0; j<256; j++)
 				{
 					src_rowptr = src_colptr + (((y + j) & 0xff) << 5 );
-					if (!((unsigned)*src_rowptr & src_colmask)) plot_pixel.handler(bitmap, i, j, pen);
+					if (!((unsigned)*src_rowptr & src_colmask)) plot_pixel(bitmap, i, j, pen);
 				}
 			}
 		}

@@ -70,7 +70,7 @@ ff-100	address of int: 0x16
 3cd7	hiscores table (0x40 bytes, copied to e160)
 		Try entering TERU as your name :)
 
-7fff	country code: 0 <. Japan; else World
+7fff	country code: 0 <-> Japan; else World
 
 e615	rank:	0-easy	1-normal	2-hard	3-hardest
 e624	sound code during sound test
@@ -78,7 +78,7 @@ e624	sound code during sound test
 -- Shared RAM --
 
 f148<-	sound code (copied from e624)
-f14a.	read on nmi routine. main cpu writes the value and writes to port 02
+f14a->	read on nmi routine. main cpu writes the value and writes to port 02
 f150<-	index of table of routines at 2907
 
 ----------------
@@ -146,7 +146,7 @@ port 06 <- f100 + f140	x		port 04 <- f104 + f142	y
 port 0a <- f120 + f140	x		port 08 <- f124 + f142	y
 port 0c <- f14c = bit 0/1/2/3 = port 6/4/a/8 val < FF
 
-f148.	sound code (from main cpu)
+f148->	sound code (from main cpu)
 f14c	scroll regs high bits
 
 ----------------
@@ -187,7 +187,7 @@ c760	rom bank
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -209,8 +209,7 @@ public class airbustr
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_airbustr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_airbustr  = new MachineInitHandlerPtr() { public void handler(){
 		soundlatch_status = soundlatch2_status = 0;
 		bankswitch_w(0,2);
 		bankswitch2_w(0,2);
@@ -227,8 +226,7 @@ public class airbustr
 	/*	Runs in IM 2	fd-fe	address of int: 0x38
 						ff-100	address of int: 0x16	*/
 	
-	public static InterruptHandlerPtr airbustr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr airbustr_interrupt = new InterruptHandlerPtr() {public void handler(){
 	static int addr = 0xff;
 	
 		addr ^= 0x02;
@@ -236,13 +234,12 @@ public class airbustr
 	} };
 	
 	
-	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return sharedram[offset]; } };
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) return sharedram[offset]; }
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data) sharedram[offset] = data; }
 	
 	
 	/* There's an MCU here, possibly */
-	public static ReadHandlerPtr devram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr devram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			/* Reading efe0 probably resets a watchdog mechanism
@@ -274,11 +271,10 @@ public class airbustr
 		}
 	
 	} };
-	public static WriteHandlerPtr devram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{	devram[offset] = data; } };
+	public static WriteHandlerPtr devram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	devram[offset] = data; }
 	
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if ((data & 7) <  3)	RAM = &RAM[0x4000 * (data & 7)];
@@ -314,8 +310,7 @@ public class airbustr
 	
 	/* Ports */
 	
-	public static WriteHandlerPtr cause_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cause_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -346,8 +341,7 @@ public class airbustr
 	/*	Runs in IM 2	fd-fe	address of int: 0x36e	(same as 0x38)
 						ff-100	address of int: 0x4b0	(only writes to port 38h)	*/
 	
-	public static InterruptHandlerPtr airbustr_interrupt2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr airbustr_interrupt2 = new InterruptHandlerPtr() {public void handler(){
 	static int addr = 0xfd;
 	
 		addr ^= 0x02;
@@ -355,8 +349,7 @@ public class airbustr
 	} };
 	
 	
-	public static WriteHandlerPtr bankswitch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		if ((data & 7) <  3)	RAM = &RAM[0x4000 * (data & 7)];
@@ -372,8 +365,7 @@ public class airbustr
 	} };
 	
 	
-	public static WriteHandlerPtr airbustr_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr airbustr_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int val;
 	
@@ -381,8 +373,8 @@ public class airbustr
 		/*	xGGG GGRR 	RRRB BBBB	*/
 		/*	x432 1043 	2104 3210	*/
 	
-		paletteram[offset] = data;
-		val = (paletteram[offset | 1] << 8) | paletteram[offset & ~1];
+		paletteram.write(offset,data);
+		val = (paletteram.read(offset | 1)<< 8) | paletteram.read(offset & ~1);
 	
 		g = (val >> 10) & 0x1f;
 		r = (val >>  5) & 0x1f;
@@ -439,29 +431,26 @@ public class airbustr
 	*/
 	
 	
-	public static ReadHandlerPtr soundcommand_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-	/* bits: 2 <. ?	1 <. soundlatch full	0 <. soundlatch2 empty */
+	public static ReadHandlerPtr soundcommand_status_r  = new ReadHandlerPtr() { public int handler(int offset){
+	/* bits: 2 <-> ?	1 <-> soundlatch full	0 <-> soundlatch2 empty */
 		return 4 + soundlatch_status * 2 + (1-soundlatch2_status);
 	} };
 	
 	
-	public static ReadHandlerPtr soundcommand2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundcommand2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		soundlatch2_status = 0;				// soundlatch2 has been read
 		return soundlatch2_r(0);
 	} };
 	
 	
-	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		soundlatch_status = 1;				// soundlatch has been written
 		cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);	// cause a nmi to sub cpu
 	} };
 	
 	
-	public static WriteHandlerPtr port_38_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{	u4 = data; } }; // for debug
+	public static WriteHandlerPtr port_38_w = new WriteHandlerPtr() {public void handler(int offset, int data)	u4 = data; } // for debug
 	
 	
 	public static IO_ReadPort readport2[]={
@@ -499,8 +488,7 @@ public class airbustr
 	**
 	*/
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	unsigned char *RAM = memory_region(REGION_CPU3);
 	
 		if ((data & 7) <  3)	RAM = &RAM[0x4000 * (data & 7)];
@@ -533,15 +521,13 @@ public class airbustr
 	
 	/* Ports */
 	
-	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		soundlatch_status = 0;		// soundlatch has been read
 		return soundlatch_r(0);
 	} };
 	
 	
-	public static WriteHandlerPtr soundcommand2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundcommand2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch2_status = 1;		// soundlatch2 has been written
 		soundlatch2_w.handler(0,data);
 	} };
@@ -574,7 +560,7 @@ public class airbustr
 		[2] Service
 		[3] Dsw 1			[4] Dsw 2	*/
 	
-	static InputPortPtr input_ports_airbustr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_airbustr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( airbustr )
 	
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
@@ -667,7 +653,7 @@ public class airbustr
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_airbustj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_airbustj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( airbustj )
 	
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
@@ -799,14 +785,13 @@ public class airbustr
 	static struct OKIM6295interface okim6295_interface =
 	{
 		1,
-		{ 12000000/4/165 }, /* 3MHz . 6295 (mode A) */
+		{ 12000000/4/165 }, /* 3MHz -> 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 50 }
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_airbustr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( airbustr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* ?? */
@@ -843,9 +828,7 @@ public class airbustr
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -905,8 +888,7 @@ public class airbustr
 	
 	
 	
-	public static DriverInitHandlerPtr init_airbustr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_airbustr  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char *RAM;
 	
@@ -927,8 +909,7 @@ public class airbustr
 										// It's an hack to repair nested nmi troubles
 	} };
 	
-	public static DriverInitHandlerPtr init_airbustj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_airbustj  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char *RAM;
 	
@@ -951,6 +932,6 @@ public class airbustr
 	
 	
 	
-	public static GameDriver driver_airbustr	   = new GameDriver("1990"	,"airbustr"	,"airbustr.java"	,rom_airbustr,null	,machine_driver_airbustr	,input_ports_airbustr	,init_airbustr	,ROT0	,	"Kaneko (Namco license)", "Air Buster" )	// 891220
-	public static GameDriver driver_airbustj	   = new GameDriver("1990"	,"airbustj"	,"airbustr.java"	,rom_airbustj,driver_airbustr	,machine_driver_airbustr	,input_ports_airbustj	,init_airbustj	,ROT0	,	"Kaneko (Namco license)", "Air Buster (Japan)" )	// 891229
+	GAME( 1990, airbustr, 0,        airbustr, airbustr, airbustr, ROT0, "Kaneko (Namco license)", "Air Buster" )	// 891220
+	GAME( 1990, airbustj, airbustr, airbustr, airbustj, airbustj, ROT0, "Kaneko (Namco license)", "Air Buster (Japan)" )	// 891229
 }

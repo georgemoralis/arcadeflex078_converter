@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -13,8 +13,7 @@ public class mogura
 	data8_t* mogura_gfxram;
 	static struct tilemap *mogura_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_mogura  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mogura  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,j;
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
@@ -59,14 +58,12 @@ public class mogura
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_mogura  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mogura  = new VideoStartHandlerPtr() { public int handler(){
 		mogura_tilemap = tilemap_create(get_mogura_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64, 32);
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mogura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mogura  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* tilemap layout is a bit strange ... */
 		struct rectangle clip;
 		clip.min_x = Machine.visible_area.min_x;
@@ -85,8 +82,7 @@ public class mogura
 	
 	} };
 	
-	public static WriteHandlerPtr mogura_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mogura_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mogura_tileram[offset] = data;
 		tilemap_mark_tile_dirty(mogura_tilemap,offset&0x7ff);
 	} };
@@ -104,11 +100,10 @@ public class mogura
 	};
 	
 	
-	static WRITE_HANDLER(dac_w)
-	{
+	public static WriteHandlerPtr dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_0_data_w(0, data & 0xf0 );	/* left */
 		DAC_1_data_w(0, (data & 0x0f)<<4 );	/* right */
-	}
+	} };
 	
 	
 	public static IO_WritePort writeport[]={
@@ -119,11 +114,10 @@ public class mogura
 	};
 	
 	
-	public static WriteHandlerPtr mogura_gfxram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mogura_gfxram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mogura_gfxram[offset] = data ;
 	
-		decodechar(Machine.gfx[0], offset/16, mogura_gfxram, Machine.drv.gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine->gfx[0], offset/16, mogura_gfxram, Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		tilemap_mark_all_tiles_dirty(mogura_tilemap);
 	} };
@@ -148,7 +142,7 @@ public class mogura
 	};
 	
 	
-	static InputPortPtr input_ports_mogura = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mogura = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mogura )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -229,8 +223,7 @@ public class mogura
 		{ MIXER(50, MIXER_PAN_LEFT), MIXER(50, MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_mogura = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mogura )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,3000000)		 /* 3 MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -255,9 +248,7 @@ public class mogura
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_mogura = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -270,5 +261,5 @@ public class mogura
 		ROM_LOAD( "gx141.7j", 0x00, 0x20,  CRC(b21c5d5f) SHA1(6913c840dd69a7d4687f4c4cbe3ff12300f62bc2) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mogura	   = new GameDriver("1991"	,"mogura"	,"mogura.java"	,rom_mogura,null	,machine_driver_mogura	,input_ports_mogura	,null	,ROT0	,	"Konami", "Mogura Desse" )
+	GAME( 1991, mogura, 0, mogura, mogura, 0, ROT0, "Konami", "Mogura Desse" )
 }

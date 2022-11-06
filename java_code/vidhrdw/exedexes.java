@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class exedexes
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_exedexes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_exedexes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -98,8 +97,7 @@ public class exedexes
 		}
 	} };
 	
-	public static WriteHandlerPtr exedexes_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exedexes_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -107,8 +105,7 @@ public class exedexes
 		}
 	} };
 	
-	public static WriteHandlerPtr exedexes_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exedexes_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -116,8 +113,7 @@ public class exedexes
 		}
 	} };
 	
-	public static WriteHandlerPtr exedexes_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exedexes_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
@@ -131,8 +127,7 @@ public class exedexes
 		/* other bits seem to be unused */
 	} };
 	
-	public static WriteHandlerPtr exedexes_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exedexes_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 4 is bg enable */
 		sc2on = data & 0x10;
 	
@@ -175,34 +170,33 @@ public class exedexes
 	
 	static UINT32 exedexes_bg_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col * 32 & 0xe0) >> 5) + ((row * 32 & 0xe0) >> 2) + ((col * 32 & 0x3f00) >> 1) + 0x4000;
 	}
 	
 	static UINT32 exedexes_fg_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col * 16 & 0xf0) >> 4) + (row * 16 & 0xf0) + (col * 16 & 0x700) + ((row * 16 & 0x700) << 3);
 	}
 	
-	public static VideoStartHandlerPtr video_start_exedexes  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exedexes  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, exedexes_bg_tilemap_scan, 
 			TILEMAP_OPAQUE, 32, 32, 64, 64);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, exedexes_fg_tilemap_scan, 
 			TILEMAP_TRANSPARENT, 16, 16, 128, 128);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tx_tilemap = tilemap_create(get_tx_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
 	
-		if (tx_tilemap == 0)
+		if ( !tx_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -215,7 +209,7 @@ public class exedexes
 	{
 		int offs;
 	
-		if (objon == 0) return;
+		if (!objon) return;
 	
 		priority = priority ? 0x40 : 0x00;
 	
@@ -232,19 +226,18 @@ public class exedexes
 				sx = buffered_spriteram[offs + 3] - ((buffered_spriteram[offs + 1] & 0x80) << 1);
 				sy = buffered_spriteram[offs + 2];
 	
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (sc2on != 0)
+	public static VideoUpdateHandlerPtr video_update_exedexes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (sc2on)
 		{
 			tilemap_set_scrollx(bg_tilemap, 0, ((exedexes_bg_scroll[1]) << 8) + exedexes_bg_scroll[0]);
 			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
@@ -256,7 +249,7 @@ public class exedexes
 	
 		exedexes_draw_sprites(bitmap, 1);
 	
-		if (sc1on != 0)
+		if (sc1on)
 		{
 			tilemap_set_scrollx(fg_tilemap, 0, ((exedexes_nbg_yscroll[1]) << 8) + exedexes_nbg_yscroll[0]);
 			tilemap_set_scrolly(fg_tilemap, 0, ((exedexes_nbg_xscroll[1]) << 8) + exedexes_nbg_xscroll[0]);
@@ -265,14 +258,13 @@ public class exedexes
 		
 		exedexes_draw_sprites(bitmap, 0);
 	
-		if (chon != 0)
+		if (chon)
 		{
 			tilemap_draw(bitmap, Machine.visible_area, tx_tilemap, 0, 0);
 		}
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_exedexes  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_exedexes  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 }

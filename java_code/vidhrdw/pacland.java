@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class pacland
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_pacland  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pacland  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -92,8 +91,7 @@ public class pacland
 		}
 	} };
 	
-	public static WriteHandlerPtr pacland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -101,8 +99,7 @@ public class pacland
 		}
 	} };
 	
-	public static WriteHandlerPtr pacland_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (pacland_videoram2[offset] != data)
 		{
 			pacland_videoram2[offset] = data;
@@ -110,8 +107,7 @@ public class pacland
 		}
 	} };
 	
-	public static WriteHandlerPtr pacland_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int row;
 	
 		for (row = 5; row < 29; row++)
@@ -120,13 +116,11 @@ public class pacland
 		}
 	} };
 	
-	public static WriteHandlerPtr pacland_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data + 256 * offset);
 	} };
 	
-	public static WriteHandlerPtr pacland_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
@@ -171,8 +165,7 @@ public class pacland
 		}
 	} };
 	
-	public static WriteHandlerPtr pacland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacland_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 0xa0);
 	} };
 	
@@ -200,18 +193,17 @@ public class pacland
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_pacland  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pacland  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 64, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_scrolldx(bg_tilemap, 0, -22*8);
@@ -225,7 +217,7 @@ public class pacland
 	} };
 	
 	#define DRAW_SPRITE( code, sx, sy ) \
-			{ drawgfx( bitmap, Machine.gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
+			{ drawgfx( bitmap, Machine->gfx[ 2+gfx ], code, color, flipx, flipy, sx, sy, \
 			spritevisiblearea, TRANSPARENCY_COLOR,0xff); }
 	
 	static void pacland_draw_sprites( struct mame_bitmap *bitmap,int priority)
@@ -242,7 +234,7 @@ public class pacland
 			int flipy = spriteram_3.read(offs)& 2;
 			int flipx = spriteram_3.read(offs)& 1;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				x += 8;
 				flipx = NOT(flipx);
@@ -257,7 +249,7 @@ public class pacland
 	
 				case 4:		/* 2x horizontal */
 					sprite &= ~1;
-					if (flipx == 0)
+					if (NOT(flipx))
 					{
 						DRAW_SPRITE( sprite, x, y )
 						DRAW_SPRITE( 1+sprite, x+16, y )
@@ -269,7 +261,7 @@ public class pacland
 	
 				case 8:		/* 2x vertical */
 					sprite &= ~2;
-					if (flipy == 0)
+					if (NOT(flipy))
 					{
 						DRAW_SPRITE( sprite, x, y-16 )
 						DRAW_SPRITE( 2+sprite, x, y )
@@ -292,7 +284,7 @@ public class pacland
 						DRAW_SPRITE( 2+sprite, x+16, y-16 )
 						DRAW_SPRITE( 1+sprite, x, y )
 						DRAW_SPRITE( sprite, x+16, y )
-					} else if (flipx != 0) {
+					} else if ( flipx ) {
 						DRAW_SPRITE( 1+sprite, x, y-16 )
 						DRAW_SPRITE( sprite, x+16, y-16 )
 						DRAW_SPRITE( 3+sprite, x, y )
@@ -308,8 +300,7 @@ public class pacland
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pacland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pacland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 		pacland_draw_sprites(bitmap, 2);

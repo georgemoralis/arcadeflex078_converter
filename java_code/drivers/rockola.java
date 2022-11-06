@@ -88,7 +88,7 @@ Interrupts: VBlank causes an IRQ. Coin insertion causes a NMI.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -248,8 +248,7 @@ public class rockola
 	
 	
 	
-	public static InterruptHandlerPtr satansat_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr satansat_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0)
 		{
 			/* user asks to insert coin: generate a NMI interrupt. */
@@ -259,8 +258,7 @@ public class rockola
 		else cpu_set_irq_line(0, 0, HOLD_LINE);	/* one IRQ per frame */
 	} };
 	
-	public static InterruptHandlerPtr rockola_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr rockola_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0)
 		{
 			/* user asks to insert coin: generate a NMI interrupt. */
@@ -271,7 +269,7 @@ public class rockola
 	} };
 	
 	/* Derived from Zarzon. Might not reflect the actual hardware. */
-	static InputPortPtr input_ports_sasuke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sasuke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sasuke )
 	    PORT_START();   /* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_2WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -319,7 +317,7 @@ public class rockola
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );/* connected to a counter - random number generator? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_satansat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_satansat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( satansat )
 	    PORT_START();   /* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_2WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -366,7 +364,7 @@ public class rockola
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );/* connected to a counter - random number generator? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vanguard = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vanguard = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vanguard )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON3 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON4 );
@@ -430,7 +428,7 @@ public class rockola
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fantasy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fantasy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fantasy )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -494,7 +492,7 @@ public class rockola
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pballoon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pballoon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pballoon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -558,7 +556,7 @@ public class rockola
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nibbler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nibbler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nibbler )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Slow down */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* debug command? */
@@ -689,8 +687,7 @@ public class rockola
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_sasuke = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sasuke )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16)    /* 700 kHz */
@@ -713,13 +710,10 @@ public class rockola
 		MDRV_VIDEO_UPDATE(rockola)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_satansat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( satansat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16)    /* 700 kHz */
@@ -744,13 +738,10 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vanguard = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vanguard )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -775,13 +766,10 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fantasy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fantasy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -806,14 +794,11 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* note that in this driver the visible area is different! */
-	public static MachineHandlerPtr machine_driver_pballoon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pballoon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)    /* 1 MHz??? */
@@ -838,9 +823,7 @@ public class rockola
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, vanguard_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1134,14 +1117,14 @@ public class rockola
 	
 	
 	
-	public static GameDriver driver_sasuke	   = new GameDriver("1980"	,"sasuke"	,"rockola.java"	,rom_sasuke,null	,machine_driver_sasuke	,input_ports_sasuke	,null	,ROT90	,	"SNK", "Sasuke vs. Commander", GAME_NO_SOUND )
-	public static GameDriver driver_satansat	   = new GameDriver("1981"	,"satansat"	,"rockola.java"	,rom_satansat,null	,machine_driver_satansat	,input_ports_satansat	,null	,ROT90	,	"SNK", "Satan of Saturn", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_zarzon	   = new GameDriver("1981"	,"zarzon"	,"rockola.java"	,rom_zarzon,driver_satansat	,machine_driver_satansat	,input_ports_satansat	,null	,ROT90	,	"[SNK] (Taito America license)", "Zarzon", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_vanguard	   = new GameDriver("1981"	,"vanguard"	,"rockola.java"	,rom_vanguard,null	,machine_driver_vanguard	,input_ports_vanguard	,null	,ROT90	,	"SNK", "Vanguard (SNK)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_vangrdce	   = new GameDriver("1981"	,"vangrdce"	,"rockola.java"	,rom_vangrdce,driver_vanguard	,machine_driver_vanguard	,input_ports_vanguard	,null	,ROT90	,	"SNK (Centuri license)", "Vanguard (Centuri)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_fantasy	   = new GameDriver("1981"	,"fantasy"	,"rockola.java"	,rom_fantasy,null	,machine_driver_fantasy	,input_ports_fantasy	,null	,ROT90	,	"[SNK] (Rock-ola license)", "Fantasy (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_fantasyj	   = new GameDriver("1981"	,"fantasyj"	,"rockola.java"	,rom_fantasyj,driver_fantasy	,machine_driver_fantasy	,input_ports_fantasy	,null	,ROT90	,	"SNK", "Fantasy (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_pballoon	   = new GameDriver("1982"	,"pballoon"	,"rockola.java"	,rom_pballoon,null	,machine_driver_pballoon	,input_ports_pballoon	,null	,ROT90	,	"SNK", "Pioneer Balloon", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_nibbler	   = new GameDriver("1982"	,"nibbler"	,"rockola.java"	,rom_nibbler,null	,machine_driver_fantasy	,input_ports_nibbler	,null	,ROT90	,	"Rock-ola", "Nibbler (set 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_nibblera	   = new GameDriver("1982"	,"nibblera"	,"rockola.java"	,rom_nibblera,driver_nibbler	,machine_driver_fantasy	,input_ports_nibbler	,null	,ROT90	,	"Rock-ola", "Nibbler (set 2)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, sasuke,   0,        sasuke,   sasuke,   0, ROT90, "SNK", "Sasuke vs. Commander", GAME_NO_SOUND )
+	GAMEX( 1981, satansat, 0,        satansat, satansat, 0, ROT90, "SNK", "Satan of Saturn", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, zarzon,   satansat, satansat, satansat, 0, ROT90, "[SNK] (Taito America license)", "Zarzon", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, vanguard, 0,        vanguard, vanguard, 0, ROT90, "SNK", "Vanguard (SNK)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, vangrdce, vanguard, vanguard, vanguard, 0, ROT90, "SNK (Centuri license)", "Vanguard (Centuri)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, fantasy,  0,        fantasy,  fantasy,  0, ROT90, "[SNK] (Rock-ola license)", "Fantasy (US)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, fantasyj, fantasy,  fantasy,  fantasy,  0, ROT90, "SNK", "Fantasy (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1982, pballoon, 0,        pballoon, pballoon, 0, ROT90, "SNK", "Pioneer Balloon", GAME_IMPERFECT_SOUND )
+	GAMEX( 1982, nibbler,  0,        fantasy,  nibbler,  0, ROT90, "Rock-ola", "Nibbler (set 1)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1982, nibblera, nibbler,  fantasy,  nibbler,  0, ROT90, "Rock-ola", "Nibbler (set 2)", GAME_IMPERFECT_SOUND )
 }

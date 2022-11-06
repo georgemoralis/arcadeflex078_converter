@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,8 +41,6 @@ public class bigstrkb
 	WRITE16_HANDLER( bsb_videoram_w );
 	WRITE16_HANDLER( bsb_videoram2_w );
 	WRITE16_HANDLER( bsb_videoram3_w );
-	VIDEO_START(bigstrkb);
-	VIDEO_UPDATE(bigstrkb);
 	
 	
 	/* Memory Maps */
@@ -122,7 +120,7 @@ public class bigstrkb
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | player );\
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, start );
 	
-	static InputPortPtr input_ports_bigstrkb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigstrkb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigstrkb )
 		PORT_START(); 	/* DSW0 (0x700000.w) */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "4C_1C") );
@@ -239,8 +237,7 @@ public class bigstrkb
 		{ MIXER(30,MIXER_PAN_LEFT), MIXER(30,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_bigstrkb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigstrkb )
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(bigstrkb_readmem,bigstrkb_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -263,9 +260,7 @@ public class bigstrkb
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	//	MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Rom Loading */
 	
@@ -301,5 +296,5 @@ public class bigstrkb
 	
 	/* GAME drivers */
 	
-	public static GameDriver driver_bigstrkb	   = new GameDriver("1992"	,"bigstrkb"	,"bigstrkb.java"	,rom_bigstrkb,driver_bigstrik	,machine_driver_bigstrkb	,input_ports_bigstrkb	,null	,ROT0	,	"bootleg", "Big Striker (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1992, bigstrkb, bigstrik, bigstrkb, bigstrkb, 0, ROT0, "bootleg", "Big Striker (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,10 +58,9 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_crimfght  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_crimfght  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram = auto_malloc(0x400);
-		if (paletteram == 0) return 1;
+		if (!paletteram) return 1;
 	
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 4;
@@ -83,8 +82,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_crimfght  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],TILEMAP_IGNORE_TRANSPARENCY,0);

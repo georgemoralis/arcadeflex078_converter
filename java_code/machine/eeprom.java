@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -98,12 +98,12 @@ public class eeprom
 	
 	void nvram_handler_93C46(mame_file *file,int read_or_write)
 	{
-		if (read_or_write != 0)
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
-			if (file != 0)	EEPROM_load(file);
+			if (file)	EEPROM_load(file);
 		}
 	}
 	
@@ -112,20 +112,20 @@ public class eeprom
 	{
 		intf = interface;
 	
-		if ((1 << intf.address_bits) * intf.data_bits / 8 > MEMORY_SIZE)
+		if ((1 << intf->address_bits) * intf->data_bits / 8 > MEMORY_SIZE)
 		{
 			usrintf_showmessage("EEPROM larger than eeprom.c allows");
 			return;
 		}
 	
-		memset(eeprom_data,0xff,(1 << intf.address_bits) * intf.data_bits / 8);
+		memset(eeprom_data,0xff,(1 << intf->address_bits) * intf->data_bits / 8);
 		serial_count = 0;
 		latch = 0;
 		reset_line = ASSERT_LINE;
 		clock_line = ASSERT_LINE;
 		eeprom_read_address = 0;
 		sending = 0;
-		if (intf.cmd_unlock) locked = 1;
+		if (intf->cmd_unlock) locked = 1;
 		else locked = 0;
 	
 		state_save_register_UINT8("eeprom", 0, "data",          eeprom_data,   MEMORY_SIZE);
@@ -156,18 +156,18 @@ public class eeprom
 		serial_buffer[serial_count++] = (bit ? '1' : '0');
 		serial_buffer[serial_count] = 0;	/* nul terminate so we can treat it as a string */
 	
-		if ( (serial_count > intf.address_bits) &&
-		      EEPROM_command_match((char*)serial_buffer,intf.cmd_read,strlen((char*)serial_buffer)-intf.address_bits) )
+		if ( (serial_count > intf->address_bits) &&
+		      EEPROM_command_match((char*)serial_buffer,intf->cmd_read,strlen((char*)serial_buffer)-intf->address_bits) )
 		{
 			int i,address;
 	
 			address = 0;
-			for (i = serial_count-intf.address_bits;i < serial_count;i++)
+			for (i = serial_count-intf->address_bits;i < serial_count;i++)
 			{
 				address <<= 1;
 				if (serial_buffer[i] == '1') address |= 1;
 			}
-			if (intf.data_bits == 16)
+			if (intf->data_bits == 16)
 				eeprom_data_bits = (eeprom_data[2*address+0] << 8) + eeprom_data[2*address+1];
 			else
 				eeprom_data_bits = eeprom_data[address];
@@ -177,13 +177,13 @@ public class eeprom
 			serial_count = 0;
 	logerror("EEPROM read %04x from address %02x\n",eeprom_data_bits,address);
 		}
-		else if ( (serial_count > intf.address_bits) &&
-		           EEPROM_command_match((char*)serial_buffer,intf.cmd_erase,strlen((char*)serial_buffer)-intf.address_bits) )
+		else if ( (serial_count > intf->address_bits) &&
+		           EEPROM_command_match((char*)serial_buffer,intf->cmd_erase,strlen((char*)serial_buffer)-intf->address_bits) )
 		{
 			int i,address;
 	
 			address = 0;
-			for (i = serial_count-intf.address_bits;i < serial_count;i++)
+			for (i = serial_count-intf->address_bits;i < serial_count;i++)
 			{
 				address <<= 1;
 				if (serial_buffer[i] == '1') address |= 1;
@@ -191,7 +191,7 @@ public class eeprom
 	logerror("EEPROM erase address %02x\n",address);
 			if (locked == 0)
 			{
-				if (intf.data_bits == 16)
+				if (intf->data_bits == 16)
 				{
 					eeprom_data[2*address+0] = 0x00;
 					eeprom_data[2*address+1] = 0x00;
@@ -203,19 +203,19 @@ public class eeprom
 	logerror("Error: EEPROM is locked\n");
 			serial_count = 0;
 		}
-		else if ( (serial_count > (intf.address_bits + intf.data_bits)) &&
-		           EEPROM_command_match((char*)serial_buffer,intf.cmd_write,strlen((char*)serial_buffer)-(intf.address_bits + intf.data_bits)) )
+		else if ( (serial_count > (intf->address_bits + intf->data_bits)) &&
+		           EEPROM_command_match((char*)serial_buffer,intf->cmd_write,strlen((char*)serial_buffer)-(intf->address_bits + intf->data_bits)) )
 		{
 			int i,address,data;
 	
 			address = 0;
-			for (i = serial_count-intf.data_bits-intf.address_bits;i < (serial_count-intf.data_bits);i++)
+			for (i = serial_count-intf->data_bits-intf->address_bits;i < (serial_count-intf->data_bits);i++)
 			{
 				address <<= 1;
 				if (serial_buffer[i] == '1') address |= 1;
 			}
 			data = 0;
-			for (i = serial_count-intf.data_bits;i < serial_count;i++)
+			for (i = serial_count-intf->data_bits;i < serial_count;i++)
 			{
 				data <<= 1;
 				if (serial_buffer[i] == '1') data |= 1;
@@ -223,7 +223,7 @@ public class eeprom
 	logerror("EEPROM write %04x to address %02x\n",data,address);
 			if (locked == 0)
 			{
-				if (intf.data_bits == 16)
+				if (intf->data_bits == 16)
 				{
 					eeprom_data[2*address+0] = data >> 8;
 					eeprom_data[2*address+1] = data & 0xff;
@@ -235,13 +235,13 @@ public class eeprom
 	logerror("Error: EEPROM is locked\n");
 			serial_count = 0;
 		}
-		else if ( EEPROM_command_match((char*)serial_buffer,intf.cmd_lock,strlen((char*)serial_buffer)) )
+		else if ( EEPROM_command_match((char*)serial_buffer,intf->cmd_lock,strlen((char*)serial_buffer)) )
 		{
 	logerror("EEPROM lock\n");
 			locked = 1;
 			serial_count = 0;
 		}
-		else if ( EEPROM_command_match((char*)serial_buffer,intf.cmd_unlock,strlen((char*)serial_buffer)) )
+		else if ( EEPROM_command_match((char*)serial_buffer,intf->cmd_unlock,strlen((char*)serial_buffer)) )
 		{
 	logerror("EEPROM unlock\n");
 			locked = 0;
@@ -251,12 +251,12 @@ public class eeprom
 	
 	static void EEPROM_reset(void)
 	{
-	if (serial_count != 0)
+	if (serial_count)
 		logerror("EEPROM reset, buffer = %s\n",serial_buffer);
 	
 		serial_count = 0;
 		sending = 0;
-		reset_delay = intf.reset_delay;	/* delay a little before returning setting data to 1 (needed by wbeachvl) */
+		reset_delay = intf->reset_delay;	/* delay a little before returning setting data to 1 (needed by wbeachvl) */
 	}
 	
 	
@@ -272,8 +272,8 @@ public class eeprom
 	{
 		int res;
 	
-		if (sending != 0)
-			res = (eeprom_data_bits >> intf.data_bits) & 1;
+		if (sending)
+			res = (eeprom_data_bits >> intf->data_bits) & 1;
 		else
 		{
 			if (reset_delay > 0)
@@ -313,12 +313,12 @@ public class eeprom
 		{
 			if (reset_line == CLEAR_LINE)
 			{
-				if (sending != 0)
+				if (sending)
 				{
-					if (eeprom_clock_count == intf.data_bits && intf.enable_multi_read)
+					if (eeprom_clock_count == intf->data_bits && intf->enable_multi_read)
 					{
-						eeprom_read_address = (eeprom_read_address + 1) & ((1 << intf.address_bits) - 1);
-						if (intf.data_bits == 16)
+						eeprom_read_address = (eeprom_read_address + 1) & ((1 << intf->address_bits) - 1);
+						if (intf->data_bits == 16)
 							eeprom_data_bits = (eeprom_data[2*eeprom_read_address+0] << 8) + eeprom_data[2*eeprom_read_address+1];
 						else
 							eeprom_data_bits = eeprom_data[eeprom_read_address];
@@ -339,12 +339,12 @@ public class eeprom
 	
 	void EEPROM_load(mame_file *f)
 	{
-		mame_fread(f,eeprom_data,(1 << intf.address_bits) * intf.data_bits / 8);
+		mame_fread(f,eeprom_data,(1 << intf->address_bits) * intf->data_bits / 8);
 	}
 	
 	void EEPROM_save(mame_file *f)
 	{
-		mame_fwrite(f,eeprom_data,(1 << intf.address_bits) * intf.data_bits / 8);
+		mame_fwrite(f,eeprom_data,(1 << intf->address_bits) * intf->data_bits / 8);
 	}
 	
 	void EEPROM_set_data(UINT8 *data, int length)
@@ -354,7 +354,7 @@ public class eeprom
 	
 	UINT8 * EEPROM_get_data_pointer(int * length)
 	{
-		if (length != 0)
+		if(length)
 			*length = MEMORY_SIZE;
 	
 		return eeprom_data;

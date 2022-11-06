@@ -62,7 +62,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -116,7 +116,7 @@ public class pengo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_pengo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pengo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pengo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_4WAY );
@@ -271,8 +271,7 @@ public class pengo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_pengo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pengo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3020000)		/* The correct speed is 3.072 MHz, but 3.020 gives a more */
@@ -299,9 +298,7 @@ public class pengo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -476,14 +473,12 @@ public class pengo
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_pengo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pengo  = new DriverInitHandlerPtr() { public void handler(){
 		pengo_decode();
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_penta  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_penta  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 		the values vary, but the translation mask is always laid out like this:
 	
@@ -545,7 +540,7 @@ public class pengo
 			/* pick the offset in the table from bits 1, 3 and 5 of the source data */
 			j = ((src >> 1) & 1) + (((src >> 3) & 1) << 1) + (((src >> 5) & 1) << 2);
 			/* the bottom half of the translation table is the mirror image of the top */
-			if ((src & 0x80) != 0) j = 7 - j;
+			if (src & 0x80) j = 7 - j;
 	
 			/* decode the ROM data */
 			rom[A] = src ^ data_xortable[i][j];
@@ -565,10 +560,10 @@ public class pengo
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_pengo	   = new GameDriver("1982"	,"pengo"	,"pengo.java"	,rom_pengo,null	,machine_driver_pengo	,input_ports_pengo	,init_pengo	,ROT90	,	"Sega", "Pengo (set 1 rev c)" )
-	public static GameDriver driver_pengo2	   = new GameDriver("1982"	,"pengo2"	,"pengo.java"	,rom_pengo2,driver_pengo	,machine_driver_pengo	,input_ports_pengo	,init_pengo	,ROT90	,	"Sega", "Pengo (set 2)" )
-	public static GameDriver driver_pengo2u	   = new GameDriver("1982"	,"pengo2u"	,"pengo.java"	,rom_pengo2u,driver_pengo	,machine_driver_pengo	,input_ports_pengo	,null	,ROT90	,	"Sega", "Pengo (set 2 not encrypted)" )
-	public static GameDriver driver_pengo3u	   = new GameDriver("1982"	,"pengo3u"	,"pengo.java"	,rom_pengo3u,driver_pengo	,machine_driver_pengo	,input_ports_pengo	,null	,ROT90	,	"Sega", "Pengo (set 3 not encrypted)" )
-	public static GameDriver driver_pengob	   = new GameDriver("1982"	,"pengob"	,"pengo.java"	,rom_pengob,driver_pengo	,machine_driver_pengo	,input_ports_pengo	,init_penta	,ROT90	,	"bootleg", "Pengo (bootleg)" )
-	public static GameDriver driver_penta	   = new GameDriver("1982"	,"penta"	,"pengo.java"	,rom_penta,driver_pengo	,machine_driver_pengo	,input_ports_pengo	,init_penta	,ROT90	,	"bootleg", "Penta" )
+	GAME( 1982, pengo,   0,     pengo, pengo, pengo, ROT90, "Sega", "Pengo (set 1 rev c)" )
+	GAME( 1982, pengo2,  pengo, pengo, pengo, pengo, ROT90, "Sega", "Pengo (set 2)" )
+	GAME( 1982, pengo2u, pengo, pengo, pengo, 0,     ROT90, "Sega", "Pengo (set 2 not encrypted)" )
+	GAME( 1982, pengo3u, pengo, pengo, pengo, 0,     ROT90, "Sega", "Pengo (set 3 not encrypted)" )
+	GAME( 1982, pengob,  pengo, pengo, pengo, penta, ROT90, "bootleg", "Pengo (bootleg)" )
+	GAME( 1982, penta,   pengo, pengo, pengo, penta, ROT90, "bootleg", "Penta" )
 }

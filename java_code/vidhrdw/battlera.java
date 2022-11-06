@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_battlera  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battlera  = new VideoStartHandlerPtr() { public int handler(){
 		HuC6270_vram=auto_malloc(0x20000);
 		tile_dirty=auto_malloc(0x1000);
 		sprite_dirty=auto_malloc(0x400);
@@ -56,14 +55,13 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr battlera_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlera_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b,pal_word;
 	
-		paletteram[offset]=data;
+		paletteram.write(offset,data);
 		if (offset%2) offset-=1;
 	
-		pal_word=paletteram[offset] | (paletteram[offset+1]<<8);
+		pal_word=paletteram.read(offset)| (paletteram.read(offset+1)<<8);
 	
 		r = ((pal_word >> 3) & 7) << 5;
 		g = ((pal_word >> 6) & 7) << 5;
@@ -73,17 +71,14 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr HuC6270_debug_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr HuC6270_debug_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return HuC6270_vram[offset];
 	} };
 	
-	public static WriteHandlerPtr HuC6270_debug_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HuC6270_debug_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		HuC6270_vram[offset]=data;
 	} };
-	public static ReadHandlerPtr HuC6270_register_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr HuC6270_register_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int rr;
 	
 		if ((current_scanline+56)==HuC6270_registers[6]) rr=1; else rr=0;
@@ -98,8 +93,7 @@ public class battlera
 			| (0 << 7);	/* Always zero */
 	} };
 	
-	public static WriteHandlerPtr HuC6270_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HuC6270_register_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0: /* Select data region */
 			VDC_register=data;
@@ -111,8 +105,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr HuC6270_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr HuC6270_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result;
 	
 		switch (offset) {
@@ -128,8 +121,7 @@ public class battlera
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr HuC6270_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr HuC6270_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 			case 0: /* LSB */
 				switch (VDC_register) {
@@ -292,22 +284,22 @@ public class battlera
 			else code2=code+1;
 	
 			for (i=0; i<cgy; i++) {
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 					code,
 					colour,
 					fx,fy,
 					mx,my,
 					clip,TRANSPARENCY_PEN,0);
 	
-				if (cgx != 0)
-					drawgfx(bitmap,Machine.gfx[1],
+				if (cgx)
+					drawgfx(bitmap,Machine->gfx[1],
 							code2,
 							colour,
 							fx,fy,
 							mx+16,my,
 							clip,TRANSPARENCY_PEN,0);
 				my+=16;
-				/* if (cgx != 0) */ /* Different from console? */
+				/* if (cgx) */ /* Different from console? */
 				code+=2;
 				code2+=2;
 				/*else code+=1; */ /* Different from console? */
@@ -323,12 +315,12 @@ public class battlera
 		/* Dynamically decode chars if dirty */
 		for (code = 0x0000;code < 0x1000;code++)
 			if (tile_dirty[code])
-				decodechar(Machine.gfx[0],code,HuC6270_vram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine->gfx[0],code,HuC6270_vram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		/* Dynamically decode sprites if dirty */
 		for (code = 0x0000;code < 0x400;code++)
 			if (sprite_dirty[code])
-				decodechar(Machine.gfx[1],code,HuC6270_vram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
+				decodechar(Machine->gfx[1],code,HuC6270_vram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
 	
 		/* NB: If first 0x1000 byte is always tilemap, no need to decode the first batch of tiles/sprites */
 	
@@ -343,19 +335,19 @@ public class battlera
 			/* If this tile was changed OR tilemap was changed, redraw */
 			if (tile_dirty[code] || vram_dirty[offs/2]) {
 				vram_dirty[offs/2]=0;
-		        drawgfx(tile_bitmap,Machine.gfx[0],
+		        drawgfx(tile_bitmap,Machine->gfx[0],
 						code,
 						HuC6270_vram[offs] >> 4,
 						0,0,
 						8*mx,8*my,
 						0,TRANSPARENCY_NONE,0);
-				drawgfx(front_bitmap,Machine.gfx[2],
+				drawgfx(front_bitmap,Machine->gfx[2],
 						0,
 						0,	/* fill the spot with pen 256 */
 						0,0,
 						8*mx,8*my,
 						0,TRANSPARENCY_NONE,0);
-		        drawgfx(front_bitmap,Machine.gfx[0],
+		        drawgfx(front_bitmap,Machine->gfx[0],
 						code,
 						HuC6270_vram[offs] >> 4,
 						0,0,
@@ -372,26 +364,25 @@ public class battlera
 	
 		/* Render bitmap */
 		scrollx=-HuC6270_registers[7];
-		scrolly=-HuC6270_registers[8]+clip.min_y-1;
+		scrolly=-HuC6270_registers[8]+clip->min_y-1;
 	
 		copyscrollbitmap(bitmap,tile_bitmap,1,&scrollx,1,&scrolly,clip,TRANSPARENCY_NONE,0);
 	
 		/* Todo:  Background enable (not used anyway) */
 	
 		/* Render low priority sprites, if enabled */
-		if (sb_enable != 0) draw_sprites(bitmap,clip,0);
+		if (sb_enable) draw_sprites(bitmap,clip,0);
 	
 		/* Render background over sprites */
 		copyscrollbitmap(bitmap,front_bitmap,1,&scrollx,1,&scrolly,clip,TRANSPARENCY_COLOR,256);
 	
 		/* Render high priority sprites, if enabled */
-		if (sb_enable != 0) draw_sprites(bitmap,clip,1);
+		if (sb_enable) draw_sprites(bitmap,clip,1);
 	}
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_battlera  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Nothing */
 	} };
 	
@@ -400,14 +391,14 @@ public class battlera
 	{
 		struct rectangle clip;
 	
-		clip.min_x = Machine.visible_area.min_x;
-		clip.max_x = Machine.visible_area.max_x;
+		clip.min_x = Machine->visible_area.min_x;
+		clip.max_x = Machine->visible_area.max_x;
 		clip.min_y = next_update_first_line;
 		clip.max_y = current_line;
-		if (clip.min_y < Machine.visible_area.min_y)
-			clip.min_y = Machine.visible_area.min_y;
-		if (clip.max_y > Machine.visible_area.max_y)
-			clip.max_y = Machine.visible_area.max_y;
+		if (clip.min_y < Machine->visible_area.min_y)
+			clip.min_y = Machine->visible_area.min_y;
+		if (clip.max_y > Machine->visible_area.max_y)
+			clip.max_y = Machine->visible_area.max_y;
 	
 		if (clip.max_y >= clip.min_y)
 		{
@@ -422,14 +413,14 @@ public class battlera
 	{
 		struct rectangle clip;
 	
-		clip.min_x = Machine.visible_area.min_x;
-		clip.max_x = Machine.visible_area.max_x;
+		clip.min_x = Machine->visible_area.min_x;
+		clip.max_x = Machine->visible_area.max_x;
 		clip.min_y = start_line;
 		clip.max_y = end_line;
-		if (clip.min_y < Machine.visible_area.min_y)
-			clip.min_y = Machine.visible_area.min_y;
-		if (clip.max_y > Machine.visible_area.max_y)
-			clip.max_y = Machine.visible_area.max_y;
+		if (clip.min_y < Machine->visible_area.min_y)
+			clip.min_y = Machine->visible_area.min_y;
+		if (clip.max_y > Machine->visible_area.max_y)
+			clip.max_y = Machine->visible_area.max_y;
 	
 		if (clip.max_y > clip.min_y)
 		{
@@ -439,15 +430,14 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static InterruptHandlerPtr battlera_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr battlera_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int last_line=0;
 	
 		current_scanline=255-cpu_getiloops(); /* 8 lines clipped at top */
 	
 		/* If raster interrupt occurs, refresh screen _up_ to this point */
 		if (rcr_enable && (current_scanline+56)==HuC6270_registers[6]) {
-			battlera_raster_partial_refresh(Machine.scrbitmap,last_line,current_scanline);
+			battlera_raster_partial_refresh(Machine->scrbitmap,last_line,current_scanline);
 			last_line=current_scanline;
 			cpu_set_irq_line(0, 0, HOLD_LINE); /* RCR interrupt */
 		}
@@ -455,8 +445,8 @@ public class battlera
 		/* Start of vblank */
 		else if (current_scanline==240) {
 			bldwolf_vblank=1;
-			battlera_raster_partial_refresh(Machine.scrbitmap,last_line,240);
-			if (irq_enable != 0)
+			battlera_raster_partial_refresh(Machine->scrbitmap,last_line,240);
+			if (irq_enable)
 				cpu_set_irq_line(0, 0, HOLD_LINE); /* VBL */
 		}
 	

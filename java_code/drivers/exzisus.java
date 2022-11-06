@@ -29,7 +29,7 @@ Known issues :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -58,8 +58,7 @@ public class exzisus
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr exzisus_cpua_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_cpua_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		if ( (data & 0x0f) != exzisus_cpua_bank )
@@ -74,8 +73,7 @@ public class exzisus
 		flip_screen_set(data & 0x40);
 	} };
 	
-	public static WriteHandlerPtr exzisus_cpub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_cpub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU4);
 	
 		if ( (data & 0x0f) != exzisus_cpub_bank )
@@ -90,31 +88,26 @@ public class exzisus
 		flip_screen_set(data & 0x40);
 	} };
 	
-	public static WriteHandlerPtr exzisus_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0,~data & 0x01);
 		coin_lockout_w(1,~data & 0x02);
 		coin_counter_w(0,data & 0x04);
 		coin_counter_w(1,data & 0x08);
 	} };
 	
-	public static ReadHandlerPtr exzisus_sharedram_ac_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_sharedram_ac_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_sharedram_ac[offset];
 	} };
 	
-	public static ReadHandlerPtr exzisus_sharedram_bc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_sharedram_bc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_sharedram_bc[offset];
 	} };
 	
-	public static WriteHandlerPtr exzisus_sharedram_ac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_sharedram_ac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_sharedram_ac[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr exzisus_sharedram_bc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_sharedram_bc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_sharedram_bc[offset] = data;
 	} };
 	
@@ -125,8 +118,7 @@ public class exzisus
 	
 	**************************************************************************/
 	
-	public static DriverInitHandlerPtr init_exzisus  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_exzisus  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *RAM = memory_region(REGION_CPU4);
 	
 		/* Fix ROM 1 error */
@@ -281,7 +273,7 @@ public class exzisus
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_exzisus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exzisus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exzisus )
 		/* IN0 */
 		EXZISUS_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -358,8 +350,7 @@ public class exzisus
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_exzisus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exzisus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)			/* 6 MHz ??? */
@@ -393,9 +384,7 @@ public class exzisus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -444,5 +433,5 @@ public class exzisus
 	
 	
 	/*  ( YEAR      NAME  PARENT  MACHINE    INPUT     INIT  MONITOR  COMPANY              FULLNAME ) */
-	public static GameDriver driver_exzisus	   = new GameDriver("1987"	,"exzisus"	,"exzisus.java"	,rom_exzisus,null	,machine_driver_exzisus	,input_ports_exzisus	,init_exzisus	,ROT0	,	"Taito Corporation", "Exzisus (Japan)" )
+	GAME( 1987,  exzisus,      0, exzisus, exzisus, exzisus,    ROT0, "Taito Corporation", "Exzisus (Japan)" )
 }

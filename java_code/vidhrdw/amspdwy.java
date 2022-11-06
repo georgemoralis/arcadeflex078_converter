@@ -13,7 +13,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,15 +25,13 @@ public class amspdwy
 	static struct tilemap *tilemap;
 	
 	
-	public static WriteHandlerPtr amspdwy_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr amspdwy_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data ^= 0xff;
 		paletteram_BBGGGRRR_w(offset,data);
 	//	paletteram_RRRGGGBB_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr amspdwy_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr amspdwy_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int flip = 0;
 		flip ^= 1;
 		flip_screen_set( flip );
@@ -63,8 +61,7 @@ public class amspdwy
 				0)
 	}
 	
-	public static WriteHandlerPtr amspdwy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr amspdwy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -72,8 +69,7 @@ public class amspdwy
 		}
 	} };
 	
-	public static WriteHandlerPtr amspdwy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr amspdwy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -82,19 +78,18 @@ public class amspdwy
 	} };
 	
 	
-	/* logical (col,row) . memory offset */
+	/* logical (col,row) -> memory offset */
 	UINT32 tilemap_scan_cols_back( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
 		return col*num_rows + (num_rows - row - 1);
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_amspdwy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_amspdwy  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap	=	tilemap_create(	get_tile_info,	tilemap_scan_cols_back,
 									TILEMAP_OPAQUE,	8,8,	0x20, 0x20 );
 	
-		if (tilemap != 0)	return 0;
+		if (tilemap)	return 0;
 		else			return 1;
 	} };
 	
@@ -121,8 +116,8 @@ public class amspdwy
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
 		int i;
-		int max_x = Machine.drv.screen_width  - 1;
-		int max_y = Machine.drv.screen_height - 1;
+		int max_x = Machine->drv->screen_width  - 1;
+		int max_y = Machine->drv->screen_height - 1;
 	
 		for (i = 0; i < spriteram_size ; i += 4)
 		{
@@ -133,13 +128,13 @@ public class amspdwy
 			int flipx	=	attr & 0x80;
 			int flipy	=	attr & 0x40;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				x = max_x - x - 8;	y = max_y - y - 8;
 				flipx = NOT(flipx);	flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 	//				code + ((attr & 0x18)<<5),
 					code + ((attr & 0x08)<<5),
 					attr,
@@ -158,8 +153,7 @@ public class amspdwy
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_amspdwy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 	} };

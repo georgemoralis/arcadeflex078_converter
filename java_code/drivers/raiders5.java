@@ -25,7 +25,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,13 +40,11 @@ public class raiders5
 	
 	
 	
-	public static WriteHandlerPtr raiders5_shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_shared_workram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiders5_shared_workram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr raiders5_shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiders5_shared_workram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return raiders5_shared_workram[offset];
 	} };
 	
@@ -92,9 +90,11 @@ public class raiders5
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static PORT_READ_START ( readport1 )
-		{ 0x00, 0x00, IORP_NOP }, /* watchdog? */
-	PORT_END
+	public static IO_ReadPort readport1[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, IORP_NOP ), /* watchdog? */
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
 	public static Memory_ReadAddress readmem2[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -132,7 +132,7 @@ public class raiders5
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_raiders5 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raiders5 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raiders5 )
 		PORT_START(); 
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_VBLANK );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -256,8 +256,7 @@ public class raiders5
 		new WriteHandlerPtr[] { 0, 0 },
 	);
 	
-	public static MachineHandlerPtr machine_driver_raiders5 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raiders5 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/4)	/* 3.0MHz? */
@@ -285,9 +284,7 @@ public class raiders5
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -321,6 +318,6 @@ public class raiders5
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_raiders5	   = new GameDriver("1985"	,"raiders5"	,"raiders5.java"	,rom_raiders5,null	,machine_driver_raiders5	,input_ports_raiders5	,null	,ROT0	,	"UPL", "Raiders5" )
-	public static GameDriver driver_raidrs5t	   = new GameDriver("1985"	,"raidrs5t"	,"raiders5.java"	,rom_raidrs5t,driver_raiders5	,machine_driver_raiders5	,input_ports_raiders5	,null	,ROT0	,	"UPL (Taito license)", "Raiders5 (Japan)" )
+	GAME( 1985, raiders5, 0,        raiders5, raiders5, 0, ROT0, "UPL", "Raiders5" )
+	GAME( 1985, raidrs5t, raiders5, raiders5, raiders5, 0, ROT0, "UPL (Taito license)", "Raiders5 (Japan)" )
 }

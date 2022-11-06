@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -54,61 +54,56 @@ public class trackfld
 	    the no of cycles by 4 to undo the 14.318/4 operation
 	*/
 	
-	public static ReadHandlerPtr trackfld_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr trackfld_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int clock = activecpu_gettotalcycles() / TIMER_RATE;
 	
 	    return clock & 0xF;
 	} };
 	
-	public static ReadHandlerPtr trackfld_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr trackfld_speech_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return VLM5030_BSY() ? 0x10 : 0;
 	} };
 	
 	static int last_addr = 0;
 	
-	public static WriteHandlerPtr trackfld_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trackfld_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if( (offset & 0x07) == 0x03 )
 	    {
 	        int changes = offset^last_addr;
 	        /* A7 = data enable for VLM5030 (don't care )          */
-	        /* A8 = STA pin (1.0 data data  , 0.1 start speech   */
+	        /* A8 = STA pin (1->0 data data  , 0->1 start speech   */
 	        /* A9 = RST pin 1=reset                                */
 	
 	        /* A8 VLM5030 ST pin */
-	        if ((changes & 0x100) != 0)
+	        if( changes & 0x100 )
 	            VLM5030_ST( offset&0x100 );
 	        /* A9 VLM5030 RST pin */
-	        if ((changes & 0x200) != 0)
+	        if( changes & 0x200 )
 	            VLM5030_RST( offset&0x200 );
 	    }
 	    last_addr = offset;
 	} };
 	
-	public static ReadHandlerPtr hyperspt_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hyperspt_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int clock = activecpu_gettotalcycles() / TIMER_RATE;
 	
 	    return (clock & 0x3) | (VLM5030_BSY()? 0x04 : 0);
 	} };
 	
-	public static WriteHandlerPtr hyperspt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyperspt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int changes = offset^last_addr;
 	    /* A3 = data enable for VLM5030 (don't care )          */
-	    /* A4 = STA pin (1.0 data data  , 0.1 start speech   */
+	    /* A4 = STA pin (1->0 data data  , 0->1 start speech   */
 	    /* A5 = RST pin 1=reset                                */
 	    /* A6 = VLM5030    output disable (don't care ) */
 	    /* A7 = kONAMI DAC output disable (don't care ) */
 	    /* A8 = SN76489    output disable (don't care ) */
 	
 	    /* A4 VLM5030 ST pin */
-	    if ((changes & 0x10) != 0)
+	    if( changes & 0x10 )
 	        VLM5030_ST( offset&0x10 );
 	    /* A5 VLM5030 RST pin */
-	    if ((changes & 0x20) != 0)
+	    if( changes & 0x20 )
 	        VLM5030_RST( offset&0x20 );
 	
 	    last_addr = offset;
@@ -116,8 +111,7 @@ public class trackfld
 	
 	
 	
-	public static WriteHandlerPtr konami_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr konami_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    static int last;
 	
 	    if (last == 0 && data)
@@ -130,27 +124,23 @@ public class trackfld
 	} };
 	
 	
-	public static WriteHandlerPtr konami_SN76496_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr konami_SN76496_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    SN76496_latch = data;
 	} };
 	
 	
-	public static WriteHandlerPtr konami_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr konami_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    SN76496_0_w(offset, SN76496_latch);
 	} };
 	
 	
 	
 	
-	public static ReadHandlerPtr hyprolyb_speech_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hyprolyb_speech_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return ADPCM_playing(0) ? 0x10 : 0x00;
 	} };
 	
-	public static WriteHandlerPtr hyprolyb_ADPCM_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hyprolyb_ADPCM_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int cmd,start,end;
 	    unsigned char *RAM = memory_region(REGION_CPU3);
 	

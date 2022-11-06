@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -42,8 +42,7 @@ public class konamigx
 		ldw = 0;
 	}
 	
-	public static WriteHandlerPtr tms57002_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms57002_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		chk_ldw();
 	
 		switch(tms57002.control)
@@ -83,14 +82,12 @@ public class konamigx
 		}
 	} };
 	
-	public static ReadHandlerPtr tms57002_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tms57002_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		chk_ldw();
 		return 1;
 	} };
 	
-	public static WriteHandlerPtr tms57002_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms57002_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(tms57002.control)
 		{
 			case 0xf8:
@@ -129,8 +126,7 @@ public class konamigx
 		}
 	} };
 	
-	public static ReadHandlerPtr tms57002_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tms57002_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char res;
 	
 		chk_ldw();
@@ -210,10 +206,10 @@ public class konamigx
 	void K053936GP_set_cliprect(int chip, int minx, int maxx, int miny, int maxy)
 	{
 		struct rectangle *cliprect = &K053936_cliprect[chip];
-		cliprect.min_x = minx;
-		cliprect.max_x = maxx;
-		cliprect.min_y = miny;
-		cliprect.max_y = maxy;
+		cliprect->min_x = minx;
+		cliprect->max_x = maxx;
+		cliprect->min_y = miny;
+		cliprect->max_y = maxy;
 	}
 	
 	#define BLEND32_MACRO {  \
@@ -272,36 +268,36 @@ public class konamigx
 	
 		if (src_cliprect && clip) // set source clip range to some extreme values when disabled
 		{
-			src_minx = src_cliprect.min_x;
-			src_maxx = src_cliprect.max_x;
-			src_miny = src_cliprect.min_y;
-			src_maxy = src_cliprect.max_y;
+			src_minx = src_cliprect->min_x;
+			src_maxx = src_cliprect->max_x;
+			src_miny = src_cliprect->min_y;
+			src_maxy = src_cliprect->max_y;
 		}
 		else { src_minx = src_miny = -0x10000; src_maxx = src_maxy = 0x10000; }
 	
-		if (dst_cliprect != 0) // set target clip range
+		if (dst_cliprect) // set target clip range
 		{
-			sx = dst_cliprect.min_x;
-			tx = dst_cliprect.max_x - sx + 1;
-			sy = dst_cliprect.min_y;
-			ty = dst_cliprect.max_y - sy + 1;
+			sx = dst_cliprect->min_x;
+			tx = dst_cliprect->max_x - sx + 1;
+			sy = dst_cliprect->min_y;
+			ty = dst_cliprect->max_y - sy + 1;
 	
 			startx += sx * incxx + sy * incyx;
 			starty += sx * incxy + sy * incyy;
 		}
-		else { sx = sy = 0; tx = dst_bitmap.width; ty = dst_bitmap.height; }
+		else { sx = sy = 0; tx = dst_bitmap->width; ty = dst_bitmap->height; }
 	
 		// adjust entry points and other loop constants
-		dst_pitch = dst_bitmap.rowpixels;
-		dst_base = (UINT32*)dst_bitmap.base + sy * dst_pitch + sx + tx;
+		dst_pitch = dst_bitmap->rowpixels;
+		dst_base = (UINT32*)dst_bitmap->base + sy * dst_pitch + sx + tx;
 		ecx = tx = -tx;
 	
 		tilebpp = (tilebpp-1) & 7;
-		pal_base = Machine.remapped_colortable;
+		pal_base = Machine->remapped_colortable;
 		cmask = colormask[tilebpp];
 	
-		src_pitch = src_bitmap.rowpixels;
-		src_base = src_bitmap.base;
+		src_pitch = src_bitmap->rowpixels;
+		src_base = src_bitmap->base;
 	
 		src_miny *= src_pitch;
 		src_maxy *= src_pitch;
@@ -316,7 +312,7 @@ public class konamigx
 			starty += incyy;
 			startx += incyx;
 	
-			if (blend == 0)
+			if (!blend)
 				goto DRAW_SOLID;
 			else
 			{
@@ -418,10 +414,10 @@ public class konamigx
 	
 		if (ctrl[0x07] & 0x0040)    /* "super" mode */
 		{
-			my_clip.min_x = cliprect.min_x;
-			my_clip.max_x = cliprect.max_x;
-			y = cliprect.min_y;
-			maxy = cliprect.max_y;
+			my_clip.min_x = cliprect->min_x;
+			my_clip.max_x = cliprect->max_x;
+			y = cliprect->min_y;
+			maxy = cliprect->max_y;
 	
 			while (y <= maxy)
 			{
@@ -539,7 +535,7 @@ public class konamigx
 		if (!scalex || !scaley) return;
 	
 		// find shadow pens and cull invisible shadows
-		granularity = shdpen = gfx.color_granularity;
+		granularity = shdpen = gfx->color_granularity;
 		shdpen--;
 	
 		if (zcode >= 0)
@@ -550,7 +546,7 @@ public class konamigx
 			if (drawmode >= 4) return;
 	
 		// alpha blend necessary?
-		if ((drawmode & 2) != 0)
+		if (drawmode & 2)
 		{
 			if (alpha <= 0) return;
 			if (alpha >= 255) drawmode &= ~2;
@@ -566,17 +562,17 @@ public class konamigx
 		src_pitch = 16;
 		src_fw    = 16;
 		src_fh    = 16;
-		src_base  = gfx.gfxdata + (code % gfx.total_elements) * gfx.char_modulo;
+		src_base  = gfx->gfxdata + (code % gfx->total_elements) * gfx->char_modulo;
 	
-		pal_base  = gfx.colortable + (color % gfx.total_colors) * granularity;
+		pal_base  = gfx->colortable + (color % gfx->total_colors) * granularity;
 		shd_base  = (UINT32 *)palette_shadow_table;
 	
-		dst_ptr   = bitmap.base;
+		dst_ptr   = bitmap->base;
 		dst_pitch = GX_BMPPW;
-		dst_minx  = cliprect.min_x;
-		dst_maxx  = cliprect.max_x;
-		dst_miny  = cliprect.min_y;
-		dst_maxy  = cliprect.max_y;
+		dst_minx  = cliprect->min_x;
+		dst_maxx  = cliprect->max_x;
+		dst_miny  = cliprect->min_y;
+		dst_maxy  = cliprect->max_y;
 		dst_x     = sx;
 		dst_y     = sy;
 	
@@ -612,15 +608,15 @@ public class konamigx
 		eax = dst_lasty; if ((eax -= dst_maxy) > 0) dst_h -= eax;
 	
 		// calculate zoom factors and clip source
-		if (nozoom != 0)
+		if (nozoom)
 		{
-			if (flipx == 0) src_fbx = 0; else { src_fbx = src_fw - 1; src_fdx = -src_fdx; }
-			if (flipy == 0) src_fby = 0; else { src_fby = src_fh - 1; src_fdy = -src_fdy; src_pitch = -src_pitch; }
+			if (NOT(flipx)) src_fbx = 0; else { src_fbx = src_fw - 1; src_fdx = -src_fdx; }
+			if (NOT(flipy)) src_fby = 0; else { src_fby = src_fh - 1; src_fdy = -src_fdy; src_pitch = -src_pitch; }
 		}
 		else
 		{
-			if (flipx == 0) src_fbx = FPENT; else { src_fbx = src_fw - FPENT - 1; src_fdx = -src_fdx; }
-			if (flipy == 0) src_fby = FPENT; else { src_fby = src_fh - FPENT - 1; src_fdy = -src_fdy; }
+			if (NOT(flipx)) src_fbx = FPENT; else { src_fbx = src_fw - FPENT - 1; src_fdx = -src_fdx; }
+			if (NOT(flipy)) src_fby = FPENT; else { src_fby = src_fh - FPENT - 1; src_fdy = -src_fdy; }
 		}
 		src_fbx += dst_skipx * src_fdx;
 		src_fby += dst_skipy * src_fdy;
@@ -634,7 +630,7 @@ public class konamigx
 		dst_ptr += dst_y * dst_pitch + dst_x + dst_w;
 		dst_w = -dst_w;
 	
-		if (nozoom == 0) goto DRAWZOOM;
+		if (!nozoom) goto DRAWZOOM;
 	
 		src_ptr = src_base + (src_fby<<4) + src_fbx;
 		src_fdy = src_fdx * dst_w + src_pitch;
@@ -1000,7 +996,7 @@ public class konamigx
 	
 		c18 = (attrib & 0xff)<<K053247_coregshift | K053247_coreg;
 	
-		if ((konamigx_wrport2 & 4) != 0) c18 &= 0x3fff; else
+		if (konamigx_wrport2 & 4) c18 &= 0x3fff; else
 		if (!(konamigx_wrport2 & 8)) c18 = (c18 & 0x3fff) | (attrib<<6 & 0xc000);
 	
 		return(c18);
@@ -1127,7 +1123,7 @@ public class konamigx
 		osmx   =  osinmix>>shift & 3;
 		oson   =  osmixon>>shift & 3;
 	
-		if (layer != 0)
+		if (layer)
 		{
 			// layer 1-3 are external tile layers
 			scb    =  vcblk[layer+3]<<6;
@@ -1162,14 +1158,14 @@ public class konamigx
 		int w, h;
 		register int ecx;
 	
-		w = Machine.visible_area.max_x - Machine.visible_area.min_x + 1;
-		h = Machine.visible_area.max_y - Machine.visible_area.min_y + 1;
+		w = Machine->visible_area.max_x - Machine->visible_area.min_x + 1;
+		h = Machine->visible_area.max_y - Machine->visible_area.min_y + 1;
 	
 		zptr = gx_objzbuf;
 		ecx = h;
 		do { memset(zptr, -1, w); zptr += GX_ZBUFW; } while (--ecx);
 	
-		if (noshadow == 0)
+		if (!noshadow)
 		{
 			zptr = gx_shdzbuf;
 			w <<= 1;
@@ -1234,14 +1230,14 @@ public class konamigx
 		gx_objdma = 0;
 		gx_primode = 0;
 	
-		gx_objzbuf = (UINT8 *)priority_bitmap.base;
+		gx_objzbuf = (UINT8 *)priority_bitmap->base;
 		if (!(gx_shdzbuf = auto_malloc(GX_ZBUFSIZE))) return(1);
 		if (!(gx_objpool = auto_malloc(sizeof(struct GX_OBJ) * (GX_MAX_OBJECTS)))) return(1);
 	
 		K053247_export_config(&K053247_ram, &K053247_gfx, (void**)&K053247_callback, &K053247_dx, &K053247_dy);
 		K054338_export_config(&K054338_shdRGB);
 	
-		if (objdma != 0)
+		if (objdma)
 		{
 			if (!(gx_spriteram = auto_malloc(0x1000))) return(1);
 			gx_objdma = 1;
@@ -1301,7 +1297,7 @@ public class konamigx
 		cltc_shdpri &= K338_CTL_SHDPRI;
 	
 		// wipe z-buffer
-		if ((mixerflags & GXMIX_NOZBUF) != 0)
+		if (mixerflags & GXMIX_NOZBUF)
 			mixerflags |= GXMIX_NOSHADOW;
 		else
 			gx_wipezbuf(mixerflags & GXMIX_NOSHADOW);
@@ -1320,7 +1316,7 @@ public class konamigx
 		// init OBJSET2 and mixer parameters (see p.51 and chapter 7)
 		layerid[0] = 0; layerid[1] = 1; layerid[2] = 2; layerid[3] = 3; layerid[4] = 4; layerid[5] = 5;
 	
-		if ((K053247_opset & 0x40) != 0)
+		if (K053247_opset & 0x40)
 		{
 			wrapsize = 512;
 			xwraplim = 512 - 64;
@@ -1420,20 +1416,20 @@ public class konamigx
 				*/
 				case 4 :
 					offs = -128;
-					if ((sub1flags & 0xf) != 0) { if ((sub1flags & GXSUB_K053250) != 0) offs = -4; else if (sub1 != 0) offs = -2; }
+					if (sub1flags & 0xf) { if (sub1flags & GXSUB_K053250) offs = -4; else if (sub1) offs = -2; }
 				break;
 				case 5 :
 					offs = -128;
-					if ((sub2flags & 0xf) != 0) { if ((sub2flags & GXSUB_K053250) != 0) offs = -5; else if (sub2 != 0) offs = -3; }
+					if (sub2flags & 0xf) { if (sub2flags & GXSUB_K053250) offs = -5; else if (sub2) offs = -3; }
 				break;
 				default: offs = -1;
 			}
 	
 			if (offs != -128)
 			{
-				objptr.order = layerpri[i]<<24;
-				objptr.code  = code;
-				objptr.offs = offs;
+				objptr->order = layerpri[i]<<24;
+				objptr->code  = code;
+				objptr->offs = offs;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1450,7 +1446,7 @@ public class konamigx
 			zcode = gx_spriteram[offs] & 0xff;
 	
 			// invert z-order when opset_pri is set (see p.51 OPSET PRI)
-			if ((K053247_opset & 0x10) != 0) zcode = 0xff - zcode;
+			if (K053247_opset & 0x10) zcode = 0xff - zcode;
 	
 			code  = gx_spriteram[offs+1];
 			color = k = gx_spriteram[offs+6];
@@ -1468,7 +1464,7 @@ public class konamigx
 			*/
 			temp4 = temp3 = temp2 = temp1 = spri = shadow = 0;
 	
-			if ((color & K055555_FULLSHADOW) != 0)
+			if (color & K055555_FULLSHADOW)
 			{
 				shadow = 3; // use default intensity and color
 				spri = pri; // retain host priority
@@ -1505,13 +1501,13 @@ public class konamigx
 					temp2 = 0; // draw full solid
 				}
 	
-				if (temp1 != 0)
+				if (temp1)
 				{
 					// tag sprite for alpha blending
 					if (color>>K055555_MIXSHIFT & 3) temp2 |= 2;
 				}
 	
-				if (temp3 != 0)
+				if (temp3)
 				{
 					// determine shadow priority
 					spri = (K053247_opset & 0x20) ? pri : shdpri[shadow]; // (see p.51 OPSET SDSEL)
@@ -1544,14 +1540,14 @@ public class konamigx
 				------------------------xxxx---- (shadow mode)
 				----------------------------xxxx (shadow code)
 			*/
-			if (temp1 != 0)
+			if (temp1)
 			{
 				// add objects with solid or alpha pens
 				order = pri<<24 | zcode<<16 | offs<<(8-3) | temp2<<4;
-				objptr.order = order;
-				objptr.offs  = offs;
-				objptr.code  = code;
-				objptr.color = color;
+				objptr->order = order;
+				objptr->offs  = offs;
+				objptr->code  = code;
+				objptr->color = color;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1562,10 +1558,10 @@ public class konamigx
 			{
 				// add objects with shadows if enabled
 				order = spri<<24 | zcode<<16 | offs<<(8-3) | temp4<<4 | shadow;
-				objptr.order = order;
-				objptr.offs  = offs;
-				objptr.code  = code;
-				objptr.color = color;
+				objptr->order = order;
+				objptr->offs  = offs;
+				objptr->code  = code;
+				objptr->color = color;
 				objptr++;
 	
 				objbuf[nobj] = nobj;
@@ -1590,15 +1586,15 @@ public class konamigx
 		}
 	
 		// traverse draw list
-		screenwidth = Machine.drv.screen_width;
+		screenwidth = Machine->drv->screen_width;
 	
 		for (count=0; count<nobj; count++)
 		{
 			objptr = objpool + objbuf[count];
-			order  = objptr.order;
-			offs   = objptr.offs;
-			code   = objptr.code;
-			color  = objptr.color;
+			order  = objptr->order;
+			offs   = objptr->offs;
+			code   = objptr->code;
+			color  = objptr->color;
 	
 			if (offs >= 0)
 			{
@@ -1645,7 +1641,7 @@ public class konamigx
 					continue;
 					case -2:
 					case -4:
-					if ((disp & K55_INP_SUB1) != 0)
+					if (disp & K55_INP_SUB1)
 					{
 						if (j == GXMIX_BLEND_NONE)  { temp1 = 0xff; temp2 = temp3 = 0; } else
 						if (j == GXMIX_BLEND_FORCE) { temp1 = 0x00; temp2 = mixerflags>>24; temp3 = 3; }
@@ -1674,7 +1670,7 @@ public class konamigx
 					continue;
 					case -3:
 					case -5:
-					if ((disp & K55_INP_SUB2) != 0)
+					if (disp & K55_INP_SUB2)
 					{
 						if (j == GXMIX_BLEND_NONE)  { temp1 = 0xff; temp2 = temp3 = 0; } else
 						if (j == GXMIX_BLEND_FORCE) { temp1 = 0x00; temp2 = mixerflags>>26; temp3 = 3; }
@@ -1708,7 +1704,7 @@ public class konamigx
 			drawmode = order>>4 & 0xf;
 	
 			alpha = 255;
-			if ((drawmode & 2) != 0)
+			if (drawmode & 2)
 			{
 				if ((alpha = color>>K055555_MIXSHIFT & 3)) alpha = K054338_set_alpha_level(alpha);
 				if (alpha <= 0) continue;
@@ -1726,12 +1722,12 @@ public class konamigx
 				zcode = -1; // negative zcode values turn off z-buffering
 	
 			xa = ya = 0;
-			if ((code & 0x01) != 0) xa += 1;
-			if ((code & 0x02) != 0) ya += 1;
-			if ((code & 0x04) != 0) xa += 2;
-			if ((code & 0x08) != 0) ya += 2;
-			if ((code & 0x10) != 0) xa += 4;
-			if ((code & 0x20) != 0) ya += 4;
+			if (code & 0x01) xa += 1;
+			if (code & 0x02) ya += 1;
+			if (code & 0x04) xa += 2;
+			if (code & 0x08) ya += 2;
+			if (code & 0x10) xa += 4;
+			if (code & 0x20) ya += 4;
 			code &= ~0x3f;
 	
 			temp4 = gx_spriteram[offs];
@@ -1741,12 +1737,12 @@ public class konamigx
 			ox = gx_spriteram[offs+3] & 0x3ff;
 	
 			scaley = zoomy = gx_spriteram[offs+4] & 0x3ff;
-			if (zoomy != 0) zoomy = (0x400000+(zoomy>>1)) / zoomy;
+			if (zoomy) zoomy = (0x400000+(zoomy>>1)) / zoomy;
 			else zoomy = 0x800000;
 			if (!(temp4 & 0x4000))
 			{
 				scalex = zoomx = gx_spriteram[offs+5] & 0x3ff;
-				if (zoomx != 0) zoomx = (0x400000+(zoomx>>1)) / zoomx;
+				if (zoomx) zoomx = (0x400000+(zoomx>>1)) / zoomx;
 				else zoomx = 0x800000;
 			}
 			else { zoomx = zoomy; scalex = scaley; }
@@ -1758,20 +1754,20 @@ public class konamigx
 	
 			temp = gx_spriteram[offs+6];
 			mirrorx = temp & 0x4000;
-			if (mirrorx != 0) flipx = 0; // only applies to x mirror, proven
+			if (mirrorx) flipx = 0; // only applies to x mirror, proven
 			mirrory = temp & 0x8000;
 	
 			// for Escape Kids (GX975)
-			if ((K053246_objset1 & 8) != 0) // Check only "Bit #3 is '1'?"
+			if ( K053246_objset1 & 8 ) // Check only "Bit #3 is '1'?"
 			{
 				zoomx = zoomx>>1; // Fix sprite width to HALF size
 				ox = (ox>>1) + 1; // Fix sprite draw position
 	
-				if (flipscreenx != 0) ox += screenwidth;
+				if (flipscreenx) ox += screenwidth;
 			}
 	
-			if (flipscreenx != 0) { ox = -ox; if (mirrorx == 0) flipx = NOT(flipx); }
-			if (flipscreeny != 0) { oy = -oy; if (mirrory == 0) flipy = NOT(flipy); }
+			if (flipscreenx) { ox = -ox; if (!mirrorx) flipx = NOT(flipx); }
+			if (flipscreeny) { oy = -oy; if (!mirrory) flipy = NOT(flipy); }
 	
 			// apply wrapping and global offsets
 			temp = wrapsize-1;
@@ -1802,7 +1798,7 @@ public class konamigx
 					zw = (ox + ((zoomx * (i+1) + (1<<11)) >> 12)) - temp3;
 					temp = code;
 	
-					if (mirrorx != 0)
+					if (mirrorx)
 					{
 						if ((NOT(flipx))^((i<<1)<k))
 						{
@@ -1818,12 +1814,12 @@ public class konamigx
 					}
 					else
 					{
-						if (flipx != 0) temp += xoffset[(k-1-i+xa)&7];
+						if (flipx) temp += xoffset[(k-1-i+xa)&7];
 						else temp += xoffset[(i+xa)&7];
 						temp1 = flipx;
 					}
 	
-					if (mirrory != 0)
+					if (mirrory)
 					{
 						if ((NOT(flipy))^((j<<1)>=l))
 						{
@@ -1839,12 +1835,12 @@ public class konamigx
 					}
 					else
 					{
-						if (flipy != 0) temp += yoffset[(l-1-j+ya)&7];
+						if (flipy) temp += yoffset[(l-1-j+ya)&7];
 						else temp += yoffset[(j+ya)&7];
 						temp2 = flipy;
 					}
 	
-					if (nozoom != 0) { scaley = scalex = 0x10000; } else { scalex = zw << 12; scaley = zh << 12; };
+					if (nozoom) { scaley = scalex = 0x10000; } else { scalex = zw << 12; scaley = zh << 12; };
 	
 					zdrawgfxzoom32GP(bitmap, K053247_gfx, cliprect,
 							temp,
@@ -1970,9 +1966,9 @@ public class konamigx
 	
 					// it's not necessary to use lookup tables because Violent Storm
 					// only calls the service once per enemy per frame.
-					if (dx != 0)
+					if (dx)
 					{
-						if (dy != 0)
+						if (dy)
 						{
 							angle = (atan((double)dy / dx) * 128.0) / 3.1415926535897932384626433832795;
 							if (dx < 0) angle += 128;
@@ -2277,7 +2273,7 @@ public class konamigx
 			while ((src+=0x30)<srcend);
 	
 			// clear residual data
-			if (j != 0) do { *dst = 0; dst += 8; } while (--j);
+			if (j) do { *dst = 0; dst += 8; } while (--j);
 		}
 	
 	#undef EXTRACT_ODD

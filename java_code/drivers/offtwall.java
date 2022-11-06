@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,12 +38,12 @@ public class offtwall
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -57,8 +57,7 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_offtwall  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_offtwall  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 1);
 		atarigen_interrupt_reset(update_interrupts);
@@ -76,7 +75,7 @@ public class offtwall
 	static READ16_HANDLER( special_port3_r )
 	{
 		int result = readinputport(3);
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0020;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0020;
 		return result;
 	}
 	
@@ -84,7 +83,7 @@ public class offtwall
 	static WRITE16_HANDLER( io_latch_w )
 	{
 		/* lower byte */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 4 resets the sound CPU */
 			cpu_set_reset_line(1, (data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
@@ -139,7 +138,7 @@ public class offtwall
 	{
 		/* this is the table lookup; the bank is determined by the address that was requested */
 		bank_offset = (offset & 3) * 0x1000;
-		logerror("Bankswitch index %d . %04X\n", offset, bank_offset);
+		logerror("Bankswitch index %d -> %04X\n", offset, bank_offset);
 	
 		return bankswitch_base[offset];
 	}
@@ -304,7 +303,7 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_offtwall = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_offtwall = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( offtwall )
 		PORT_START(); 	/* 260000 */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_START2 );
@@ -402,8 +401,7 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_offtwall = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( offtwall )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -427,9 +425,7 @@ public class offtwall
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono_noadpcm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -499,8 +495,7 @@ public class offtwall
 	};
 	
 	
-	public static DriverInitHandlerPtr init_offtwall  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_offtwall  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = default_eeprom;
 		atarijsa_init(1, 2, 3, 0x0040);
 		atarigen_init_6502_speedup(1, 0x41dd, 0x41f5);
@@ -512,8 +507,7 @@ public class offtwall
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_offtwalc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_offtwalc  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = default_eeprom;
 		atarijsa_init(1, 2, 3, 0x0040);
 		atarigen_init_6502_speedup(1, 0x41dd, 0x41f5);
@@ -532,6 +526,6 @@ public class offtwall
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_offtwall	   = new GameDriver("1991"	,"offtwall"	,"offtwall.java"	,rom_offtwall,null	,machine_driver_offtwall	,input_ports_offtwall	,init_offtwall	,ROT0	,	"Atari Games", "Off the Wall (2/3-player upright)" )
-	public static GameDriver driver_offtwalc	   = new GameDriver("1991"	,"offtwalc"	,"offtwall.java"	,rom_offtwalc,driver_offtwall	,machine_driver_offtwall	,input_ports_offtwall	,init_offtwalc	,ROT0	,	"Atari Games", "Off the Wall (2-player cocktail)" )
+	GAME( 1991, offtwall, 0,        offtwall, offtwall, offtwall, ROT0, "Atari Games", "Off the Wall (2/3-player upright)" )
+	GAME( 1991, offtwalc, offtwall, offtwall, offtwall, offtwalc, ROT0, "Atari Games", "Off the Wall (2-player cocktail)" )
 }

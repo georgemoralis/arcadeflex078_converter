@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,10 +41,10 @@ public class rampart
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -66,8 +66,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_rampart  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_rampart  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -90,7 +89,7 @@ public class rampart
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			OKIM6295_data_0_w(offset, (data >> 8) & 0xff);
 	}
 	
@@ -104,9 +103,9 @@ public class rampart
 	
 	static WRITE16_HANDLER( ym2413_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
-			if ((offset & 1) != 0)
+			if (offset & 1)
 				YM2413_data_port_0_w(0, (data >> 8) & 0xff);
 			else
 				YM2413_register_port_0_w(0, (data >> 8) & 0xff);
@@ -138,14 +137,14 @@ public class rampart
 		*/
 	
 		/* upper byte being modified? */
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
-			if ((data & 0x1000) != 0)
+			if (data & 0x1000)
 				logerror("Color bank set to 1!\n");
 		}
 	
 		/* lower byte being modified? */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			atarigen_set_ym2413_vol(((data >> 1) & 7) * 100 / 7);
 			atarigen_set_oki6295_vol((data & 0x0020) ? 100 : 0);
@@ -205,7 +204,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_rampart = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rampart = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rampart )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 );// alternate button1
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 );
@@ -247,7 +246,7 @@ public class rampart
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ramprt2p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ramprt2p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ramprt2p )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER3 );// alternate button1
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER3 );
@@ -299,7 +298,7 @@ public class rampart
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rampartj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rampartj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rampartj )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -406,8 +405,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_rampart = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rampart )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -433,9 +431,7 @@ public class rampart
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -504,8 +500,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_rampart  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rampart  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT16 compressed_default_eeprom[] =
 		{
 			0x0001,0x01FF,0x0E00,0x01FF,0x0E00,0x01FF,0x0150,0x0101,
@@ -544,7 +539,7 @@ public class rampart
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_rampart	   = new GameDriver("1990"	,"rampart"	,"rampart.java"	,rom_rampart,null	,machine_driver_rampart	,input_ports_rampart	,init_rampart	,ROT0	,	"Atari Games", "Rampart (Trackball)" )
-	public static GameDriver driver_ramprt2p	   = new GameDriver("1990"	,"ramprt2p"	,"rampart.java"	,rom_ramprt2p,driver_rampart	,machine_driver_rampart	,input_ports_ramprt2p	,init_rampart	,ROT0	,	"Atari Games", "Rampart (Joystick)" )
-	public static GameDriver driver_rampartj	   = new GameDriver("1990"	,"rampartj"	,"rampart.java"	,rom_rampartj,driver_rampart	,machine_driver_rampart	,input_ports_rampartj	,init_rampart	,ROT0	,	"Atari Games", "Rampart (Japan, Joystick)" )
+	GAME( 1990, rampart,  0,       rampart, rampart,  rampart, ROT0, "Atari Games", "Rampart (Trackball)" )
+	GAME( 1990, ramprt2p, rampart, rampart, ramprt2p, rampart, ROT0, "Atari Games", "Rampart (Joystick)" )
+	GAME( 1990, rampartj, rampart, rampart, rampartj, rampart, ROT0, "Atari Games", "Rampart (Japan, Joystick)" )
 }

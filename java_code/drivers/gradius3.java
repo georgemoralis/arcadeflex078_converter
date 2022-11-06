@@ -21,7 +21,7 @@ a symmetrical visible area).
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -42,11 +42,11 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K052109_halfword_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K052109_w(offset,data & 0xff);
 	
 		/* is this a bug in the game or something else? */
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 			K052109_w(offset,(data >> 8) & 0xff);
 	//		logerror("%06x half %04x = %04x\n",activecpu_get_pc(),offset,data);
 	}
@@ -58,7 +58,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K051937_halfword_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051937_w(offset,data & 0xff);
 	}
 	
@@ -69,7 +69,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( K051960_halfword_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051960_w(offset,data & 0xff);
 	}
 	
@@ -78,8 +78,7 @@ public class gradius3
 	static int irqAen,irqBmask;
 	
 	
-	public static MachineInitHandlerPtr machine_init_gradius3  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gradius3  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with cpu B halted */
 		cpu_set_reset_line(1,ASSERT_LINE);
 		irqAen = 0;
@@ -100,7 +99,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( cpuA_ctrl_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			data >>= 8;
 	
@@ -124,33 +123,31 @@ public class gradius3
 	
 	static WRITE16_HANDLER( cpuB_irqenable_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			irqBmask = (data >> 8) & 0x07;
 	}
 	
-	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (irqAen != 0)
+	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (irqAen)
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() & 1)	/* ??? */
 		{
-			if ((irqBmask & 2) != 0)
+			if (irqBmask & 2)
 				cpu_set_irq_line(1, 2, HOLD_LINE);
 		}
 		else
 		{
-			if ((irqBmask & 1) != 0)
+			if (irqBmask & 1)
 				cpu_set_irq_line(1, 1, HOLD_LINE);
 		}
 	} };
 	
 	static WRITE16_HANDLER( cpuB_irqtrigger_w )
 	{
-		if ((irqBmask & 4) != 0)
+		if (irqBmask & 4)
 		{
 	logerror("%04x trigger cpu B irq 4 %02x\n",activecpu_get_pc(),data);
 			cpu_set_irq_line(1,4,HOLD_LINE);
@@ -161,7 +158,7 @@ public class gradius3
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			soundlatch_w(0,(data >> 8) & 0xff);
 	}
 	
@@ -170,8 +167,7 @@ public class gradius3
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	}
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_A, bank_B;
 	
 		/* banks # for the 007232 (chip 1) */
@@ -258,7 +254,7 @@ public class gradius3
 	
 	
 	
-	static InputPortPtr input_ports_gradius3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gradius3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gradius3 )
 		PORT_START();       /* COINS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -389,8 +385,7 @@ public class gradius3
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gradius3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gradius3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -425,9 +420,7 @@ public class gradius3
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -564,14 +557,13 @@ public class gradius3
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_gradius3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gradius3  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_gradius3	   = new GameDriver("1989"	,"gradius3"	,"gradius3.java"	,rom_gradius3,null	,machine_driver_gradius3	,input_ports_gradius3	,init_gradius3	,ROT0	,	"Konami", "Gradius III (Japan)" )
-	public static GameDriver driver_grdius3a	   = new GameDriver("1989"	,"grdius3a"	,"gradius3.java"	,rom_grdius3a,driver_gradius3	,machine_driver_gradius3	,input_ports_gradius3	,init_gradius3	,ROT0	,	"Konami", "Gradius III (Asia)" )
-	public static GameDriver driver_grdius3e	   = new GameDriver("1989"	,"grdius3e"	,"gradius3.java"	,rom_grdius3e,driver_gradius3	,machine_driver_gradius3	,input_ports_gradius3	,init_gradius3	,ROT0	,	"Konami", "Gradius III (World ?)" )
+	GAME( 1989, gradius3, 0,        gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (Japan)" )
+	GAME( 1989, grdius3a, gradius3, gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (Asia)" )
+	GAME( 1989, grdius3e, gradius3, gradius3, gradius3, gradius3, ROT0, "Konami", "Gradius III (World ?)" )
 }

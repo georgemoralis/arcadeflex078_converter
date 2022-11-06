@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -39,7 +39,7 @@ public class _2612intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf.handler[n]) intf.handler[n](irq);
+		if(intf->handler[n]) intf->handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -98,22 +98,22 @@ public class _2612intf
 	int YM2612_sh_start(const struct MachineSound *msound)
 	{
 		int i,j;
-		int rate = Machine.sample_rate;
+		int rate = Machine->sample_rate;
 		char buf[YM2612_NUMBUF][40];
 		const char *name[YM2612_NUMBUF];
 	
-		intf = msound.sound_interface;
-		if( intf.num > MAX_2612 ) return 1;
+		intf = msound->sound_interface;
+		if( intf->num > MAX_2612 ) return 1;
 	
 		/* FM init */
 		/* Timer Handler set */
 		FMTimerInit();
 		/* stream system initialize */
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 		{
 			int vol[YM2612_NUMBUF];
 			/* stream setup */
-			int mixed_vol = intf.mixing_level[i];
+			int mixed_vol = intf->mixing_level[i];
 			/* stream setup */
 			for (j = 0 ; j < YM2612_NUMBUF ; j++)
 			{
@@ -128,7 +128,7 @@ public class _2612intf
 		}
 	
 		/**** initialize YM2612 ****/
-		if (YM2612Init(intf.num,intf.baseclock,rate,TimerHandler,IRQHandler) == 0)
+		if (YM2612Init(intf->num,intf->baseclock,rate,TimerHandler,IRQHandler) == 0)
 		  return 0;
 		/* error */
 		return 1;
@@ -147,59 +147,55 @@ public class _2612intf
 	{
 		int i;
 	
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 			YM2612ResetChip(i);
 	}
 	
 	/************************************************/
 	/* Status Read for YM2612 - Chip 0				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2612_status_port_0_A_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YM2612_status_port_0_A_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return YM2612Read(0,0);
 	} };
 	
-	public static ReadHandlerPtr YM2612_status_port_0_B_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YM2612_status_port_0_B_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return YM2612Read(0,2);
 	} };
 	
 	/************************************************/
 	/* Status Read for YM2612 - Chip 1				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2612_status_port_1_A_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YM2612_status_port_1_A_r  = new ReadHandlerPtr() { public int handler(int offset)
 	  return YM2612Read(1,0);
-	} };
+	}
 	
-	public static ReadHandlerPtr YM2612_status_port_1_B_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YM2612_status_port_1_B_r  = new ReadHandlerPtr() { public int handler(int offset)
 	  return YM2612Read(1,2);
-	} };
+	}
 	
 	/************************************************/
 	/* Port Read for YM2612 - Chip 0				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2612_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr YM2612_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 	  return YM2612Read(0,1);
-	} };
+	}
 	
 	/************************************************/
 	/* Port Read for YM2612 - Chip 1				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2612_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr YM2612_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 	  return YM2612Read(1,1);
-	} };
+	}
 	
 	/************************************************/
 	/* Control Write for YM2612 - Chip 0			*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2612_control_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2612_control_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  YM2612Write(0,0,data);
 	} };
 	
-	public static WriteHandlerPtr YM2612_control_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2612_control_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  YM2612Write(0,2,data);
 	} };
 	
@@ -207,25 +203,23 @@ public class _2612intf
 	/* Control Write for YM2612 - Chip 1			*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2612_control_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2612_control_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	  YM2612Write(1,0,data);
-	} };
+	}
 	
-	public static WriteHandlerPtr YM2612_control_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2612_control_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	  YM2612Write(1,2,data);
-	} };
+	}
 	
 	/************************************************/
 	/* Data Write for YM2612 - Chip 0				*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2612_data_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2612_data_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  YM2612Write(0,1,data);
 	} };
 	
-	public static WriteHandlerPtr YM2612_data_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2612_data_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  YM2612Write(0,3,data);
 	} };
 	
@@ -233,12 +227,12 @@ public class _2612intf
 	/* Data Write for YM2612 - Chip 1				*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2612_data_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2612_data_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	  YM2612Write(1,1,data);
-	} };
-	public static WriteHandlerPtr YM2612_data_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	}
+	public static WriteHandlerPtr YM2612_data_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	  YM2612Write(1,3,data);
-	} };
+	}
 	
 	/**************** end of file ****************/
 	

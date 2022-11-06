@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,11 +15,10 @@ public class mainsnk
 	data8_t *me_bgram;
 	static int me_gfx_ctrl;
 	
-	WRITE_HANDLER(me_c600_w)
-	{
+	public static WriteHandlerPtr me_c600_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_color = data&0xf;
 		me_gfx_ctrl=data;
-	}
+	} };
 	
 	static void get_me_fg_tile_info(int tile_index)
 	{
@@ -78,14 +77,12 @@ public class mainsnk
 	}
 	
 	
-	public static ReadHandlerPtr me_fgram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr me_fgram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return me_fgram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr me_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr me_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		me_fgram[offset] = data;
 		tilemap_mark_tile_dirty(me_fg_tilemap,offset);
 	} };
@@ -103,21 +100,18 @@ public class mainsnk
 	}
 	
 	
-	public static ReadHandlerPtr me_bgram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr me_bgram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return me_bgram[offset];
 	
 	} };
 	
-	public static WriteHandlerPtr me_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr me_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		me_bgram[offset] = data;
 		tilemap_mark_tile_dirty(me_bg_tilemap,offset);
 	} };
 	
 	
-	VIDEO_START(mainsnk)
-	{
+	public static VideoStartHandlerPtr video_start_mainsnk  = new VideoStartHandlerPtr() { public int handler(){
 		old_bg_color = -1;
 		stuff_palette( 0, 0, 16*8 );
 		stuff_palette( 16*8*3, 16*8, 16*8 );
@@ -127,11 +121,11 @@ public class mainsnk
 		tilemap_set_scrollx( me_fg_tilemap, 0, -mainsnk_offset );
 		tilemap_set_scrollx( me_bg_tilemap, 0, -mainsnk_offset );
 		return 0;
-	}
+	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly )
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		const unsigned char *source, *finish;
 		source =  memory_region(REGION_CPU1)+0xe800;
 		finish =  source + 0x64;
@@ -162,7 +156,7 @@ public class mainsnk
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect,int dx,int off )
 	{
 		const unsigned char *base = memory_region(REGION_CPU1)+0xf000+off;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -190,8 +184,7 @@ public class mainsnk
 		}
 	}
 	
-	VIDEO_UPDATE(mainsnk)
-	{
+	public static VideoUpdateHandlerPtr video_update_mainsnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle myclip;
 		myclip.min_x = cliprect.min_x+8;
 		myclip.max_x = cliprect.max_x-8;
@@ -203,6 +196,6 @@ public class mainsnk
 		draw_status( bitmap,cliprect,0,0x400 );
 		draw_status( bitmap,cliprect,32*8,0x40 );
 		update_palette(1);
-	}
+	} };
 	
 }

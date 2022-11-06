@@ -10,7 +10,7 @@ Functions to emulate the video hardware of the machine.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,50 +31,42 @@ public class exzisus
 	  Memory handlers
 	***************************************************************************/
 	
-	public static ReadHandlerPtr exzisus_videoram_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_videoram_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_videoram0[offset];
 	} };
 	
 	
-	public static ReadHandlerPtr exzisus_videoram_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_videoram_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_videoram1[offset];
 	} };
 	
 	
-	public static ReadHandlerPtr exzisus_objectram_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_objectram_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_objectram0[offset];
 	} };
 	
 	
-	public static ReadHandlerPtr exzisus_objectram_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exzisus_objectram_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return exzisus_objectram1[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr exzisus_videoram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_videoram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_videoram0[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr exzisus_videoram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_videoram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_videoram1[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr exzisus_objectram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_objectram_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_objectram0[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr exzisus_objectram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exzisus_objectram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exzisus_objectram1[offset] = data;
 	} };
 	
@@ -83,8 +75,7 @@ public class exzisus
 	  Screen refresh
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exzisus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exzisus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx, sy, xc, yc;
 		int gfx_num, gfx_attr, gfx_offs;
@@ -120,7 +111,7 @@ public class exzisus
 				gfx_offs = ((gfx_num & 0x3f) << 7) + 0x0400;
 				height = 32;
 	
-				if ((gfx_num & 0x40) != 0)			/* Next column */
+				if (gfx_num & 0x40)			/* Next column */
 				{
 					sx += 16;
 				}
@@ -145,7 +136,7 @@ public class exzisus
 					x = (sx + (xc << 3)) & 0xff;
 					y = (sy + (yc << 3)) & 0xff;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						x = 248 - x;
 						y = 248 - y;
@@ -191,7 +182,7 @@ public class exzisus
 				gfx_offs = ((gfx_num & 0x3f) << 7) + 0x0400;	///
 				height = 32;
 	
-				if ((gfx_num & 0x40) != 0)			/* Next column */
+				if (gfx_num & 0x40)			/* Next column */
 				{
 					sx += 16;
 				}
@@ -215,7 +206,7 @@ public class exzisus
 					x = (sx + (xc << 3)) & 0xff;
 					y = (sy + (yc << 3)) & 0xff;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						x = 248 - x;
 						y = 248 - y;

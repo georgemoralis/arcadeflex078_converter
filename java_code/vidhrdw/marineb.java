@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,25 +21,21 @@ public class marineb
 	static int palbank;
 	
 	
-	public static WriteHandlerPtr marineb_palbank0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marineb_palbank0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int new_palbank = (palbank & ~1) | (data & 1);
 		set_vh_global_attribute(&palbank, new_palbank);
 	} };
 	
-	public static WriteHandlerPtr marineb_palbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marineb_palbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int new_palbank = (palbank & ~2) | ((data << 1) & 2);
 		set_vh_global_attribute(&palbank, new_palbank);
 	} };
 	
-	public static WriteHandlerPtr marineb_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marineb_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data ^ marineb_active_low_flipscreen);
 	} };
 	
-	public static WriteHandlerPtr marineb_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marineb_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data ^ marineb_active_low_flipscreen);
 	} };
 	
@@ -57,7 +53,7 @@ public class marineb
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size);
 		}
@@ -80,19 +76,19 @@ public class marineb
 				flipx = colorram.read(offs)& 0x20;
 				flipy = colorram.read(offs)& 0x10;
 	
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 31 - sy;
 					flipy = NOT(flipy);
 				}
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 31 - sx;
 					flipx = NOT(flipx);
 				}
 	
-				drawgfx(_tmpbitmap,Machine.gfx[0],
+				drawgfx(_tmpbitmap,Machine->gfx[0],
 						videoram.read(offs)| ((colorram.read(offs)& 0xc0) << 2),
 						(colorram.read(offs)& 0x0f) + 16 * palbank,
 						flipx,flipy,
@@ -107,7 +103,7 @@ public class marineb
 			int scroll[32];
 	
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				for (offs = 0;offs < 32 - scroll_cols;offs++)
 					scroll[offs] = 0;
@@ -123,13 +119,12 @@ public class marineb
 				for (;offs < 32;offs++)
 					scroll[offs] = 0;
 			}
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_marineb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_marineb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -175,13 +170,13 @@ public class marineb
 				code >>= 2;
 			}
 	
-			if (flip_screen_y == 0)
+			if (!flip_screen_y)
 			{
 				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = NOT(flipy);
 			}
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx++;
 			}
@@ -196,8 +191,7 @@ public class marineb
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_changes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_changes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy,code,col,flipx,flipy;
 	
 	
@@ -219,13 +213,13 @@ public class marineb
 			flipx =   code & 0x02;
 			flipy = !(code & 0x01);
 	
-			if (flip_screen_y == 0)
+			if (!flip_screen_y)
 			{
 				sy = 256 - Machine.gfx[1].width - sy;
 				flipy = NOT(flipy);
 			}
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx++;
 			}
@@ -247,13 +241,13 @@ public class marineb
 		flipx =   code & 0x02;
 		flipy = !(code & 0x01);
 	
-		if (flip_screen_y == 0)
+		if (!flip_screen_y)
 		{
 			sy = 256 - Machine.gfx[2].width - sy;
 			flipy = NOT(flipy);
 		}
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			sx++;
 		}
@@ -278,8 +272,7 @@ public class marineb
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_springer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_springer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -319,13 +312,13 @@ public class marineb
 				code >>= 2;
 			}
 	
-			if (flip_screen_y == 0)
+			if (!flip_screen_y)
 			{
 				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = NOT(flipy);
 			}
 	
-			if (flip_screen_x == 0)
+			if (!flip_screen_x)
 			{
 				sx--;
 			}
@@ -340,8 +333,7 @@ public class marineb
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hoccer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hoccer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -364,13 +356,13 @@ public class marineb
 			flipx =   code & 0x02;
 			flipy = !(code & 0x01);
 	
-			if (flip_screen_y == 0)
+			if (!flip_screen_y)
 			{
 				sy = 256 - Machine.gfx[1].width - sy;
 				flipy = NOT(flipy);
 			}
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 256 - Machine.gfx[1].width - sx;
 				flipx = NOT(flipx);
@@ -386,8 +378,7 @@ public class marineb
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hopprobo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hopprobo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -426,13 +417,13 @@ public class marineb
 				code >>= 2;
 			}
 	
-			if (flip_screen_y == 0)
+			if (!flip_screen_y)
 			{
 				sy = 256 - Machine.gfx[gfx].width - sy;
 				flipy = NOT(flipy);
 			}
 	
-			if (flip_screen_x == 0)
+			if (!flip_screen_x)
 			{
 				sx--;
 			}

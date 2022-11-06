@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class missile
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_missile  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_missile  = new VideoStartHandlerPtr() { public int handler(){
 		/* force video ram to be $0000-$FFFF even though only $1900-$FFFF is used */
 		if ((missile_videoram = auto_malloc (256 * 256)) == 0)
 			return 1;
@@ -38,8 +37,7 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static ReadHandlerPtr missile_video_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr missile_video_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (missile_videoram[offset] & 0xe0);
 	} };
 	
@@ -50,7 +48,7 @@ public class missile
 		int bottom;
 		int color;
 	
-		/* The top 25 lines ($0000 . $18ff) aren't used or drawn */
+		/* The top 25 lines ($0000 -> $18ff) aren't used or drawn */
 		y = (offset >> 8) - 25;
 		x = offset & 0xff;
 		if( y < 231 - 32)
@@ -59,21 +57,20 @@ public class missile
 			bottom = 0;
 	
 		/* cocktail mode */
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
-			y = tmpbitmap.height - 1 - y;
+			y = tmpbitmap->height - 1 - y;
 		}
 	
 		color = (missile_videoram[offset] >> 5);
 	
-		if (bottom != 0) color &= 0x06;
+		if (bottom) color &= 0x06;
 	
-		plot_pixel(tmpbitmap, x, y, Machine.pens[color]);
+		plot_pixel(tmpbitmap, x, y, Machine->pens[color]);
 	}
 	
 	/********************************************************************************************/
-	public static WriteHandlerPtr missile_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr missile_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* $0640 - $4fff */
 		int wbyte, wbit;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -90,23 +87,21 @@ public class missile
 			missile_blit_w (offset);
 			wbyte = ((offset - 0xf800) >> 2) & 0xfffe;
 			wbit = (offset - 0xf800) % 8;
-			if ((data & 0x20) != 0)
+			if(data & 0x20)
 				RAM[0x401 + wbyte] |= (1 << wbit);
 			else
 				RAM[0x401 + wbyte] &= ((1 << wbit) ^ 0xff);
 		}
 	} };
 	
-	public static WriteHandlerPtr missile_video2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr missile_video2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* $5000 - $ffff */
 		offset += 0x5000;
 		missile_video_w (offset, data);
 	} };
 	
 	/********************************************************************************************/
-	public static WriteHandlerPtr missile_video_mult_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr missile_video_mult_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			$1900 - $3fff
 	
@@ -135,8 +130,7 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static WriteHandlerPtr missile_video_3rd_bit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr missile_video_3rd_bit_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		offset = offset + 0x400;
@@ -157,9 +151,8 @@ public class missile
 	
 	
 	/********************************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_missile  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -115,7 +115,7 @@ public class splash
 	
 		color = splash_pixelram[offset];
 	
-		plot_pixel(screen2, sx-9, sy, Machine.pens[0x300 + (color & 0xff)]);
+		plot_pixel(screen2, sx-9, sy, Machine->pens[0x300 + (color & 0xff)]);
 	}
 	
 	
@@ -125,8 +125,7 @@ public class splash
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_splash  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_splash  = new VideoStartHandlerPtr() { public int handler(){
 		screen[0] = tilemap_create(get_tile_info_splash_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		screen[1] = tilemap_create(get_tile_info_splash_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		screen2 = auto_bitmap_alloc (512, 256);
@@ -174,16 +173,16 @@ public class splash
 	static void splash_draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		for (i = 0; i < 0x400; i += 4){
-			int sx = splash_spriteram.read(i+2)& 0xff;
-			int sy = (240 - (splash_spriteram.read(i+1)& 0xff)) & 0xff;
-			int attr = splash_spriteram.read(i+3)& 0xff;
-			int attr2 = splash_spriteram.read(i+0x400)>> 8;
-			int number = (splash_spriteram.read(i)& 0xff) + (attr & 0xf)*256;
+			int sx = splash_spriteram[i+2] & 0xff;
+			int sy = (240 - (splash_spriteram[i+1] & 0xff)) & 0xff;
+			int attr = splash_spriteram[i+3] & 0xff;
+			int attr2 = splash_spriteram[i+0x400] >> 8;
+			int number = (splash_spriteram[i] & 0xff) + (attr & 0xf)*256;
 	
-			if ((attr2 & 0x80) != 0) sx += 256;
+			if (attr2 & 0x80) sx += 256;
 	
 			drawgfx(bitmap,gfx,number,
 				0x10 + (attr2 & 0x0f),attr & 0x40,attr & 0x80,
@@ -198,8 +197,7 @@ public class splash
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_splash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_splash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* set scroll registers */
 		tilemap_set_scrolly(screen[0], 0, splash_vregs[0]);
 		tilemap_set_scrolly(screen[1], 0, splash_vregs[1]);

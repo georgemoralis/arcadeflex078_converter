@@ -15,7 +15,7 @@
 		P &= ~(F_V | F_C);										\
 		if( ~(A^tmp) & (A^sum) & F_N )							\
 			P |= F_V;											\
-		if ((sum & 0xff00) != 0)										\
+		if( sum & 0xff00 )										\
 			P |= F_C;											\
 		A = (UINT8) sum;										\
 	}															\

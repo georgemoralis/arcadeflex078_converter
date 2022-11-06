@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,22 +35,19 @@ public class m107
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if (offset==1) return; /* Unused top byte */
 		cpu_setbank(1,&RAM[0x100000 + ((data&0x7)*0x10000)]);
 	} };
 	
-	public static ReadHandlerPtr m107_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (m107_vblank != 0) return readinputport(4) | 0;
+	public static ReadHandlerPtr m107_port_4_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (m107_vblank) return readinputport(4) | 0;
 		return readinputport(4) | 0x80;
 	} };
 	
-	public static WriteHandlerPtr m107_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m107_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0) {
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
@@ -59,7 +56,7 @@ public class m107
 	
 	
 	
-	static final int VECTOR_INIT = 0, YM2151_ASSERT = 1, YM2151_CLEAR = 2, V30_ASSERT = 3, V30_CLEAR = 4;
+	enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, V30_ASSERT, V30_CLEAR };
 	
 	static void setvector_callback(int param)
 	{
@@ -74,9 +71,9 @@ public class m107
 			case V30_CLEAR:		irqvector &= ~0x1;	break;
 		}
 	
-		if ((irqvector & 0x2) != 0)		/* YM2151 has precedence */
+		if (irqvector & 0x2)		/* YM2151 has precedence */
 			cpu_irq_line_vector_w(1,0,0x18);
-		else if ((irqvector & 0x1) != 0)	/* V30 */
+		else if (irqvector & 0x1)	/* V30 */
 			cpu_irq_line_vector_w(1,0,0x19);
 	
 		if (irqvector == 0)	/* no IRQs pending */
@@ -85,8 +82,7 @@ public class m107
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr m92_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0)
 		{
 			timer_set(TIME_NOW,V30_ASSERT,setvector_callback);
@@ -97,13 +93,11 @@ public class m107
 	
 	static int sound_status;
 	
-	public static ReadHandlerPtr m92_sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_sound_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr m92_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0)
 		{
 			int res = soundlatch_r(offset);
@@ -113,16 +107,14 @@ public class m107
 		else return 0xff;
 	} };
 	
-	public static WriteHandlerPtr m92_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			timer_set(TIME_NOW,V30_CLEAR,setvector_callback);
 		}
 	} };
 	
-	public static WriteHandlerPtr m92_sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 	//		usrintf_showmessage("sound answer %02x",data);
@@ -210,7 +202,7 @@ public class m107
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_firebarr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_firebarr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( firebarr )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -268,7 +260,7 @@ public class m107
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dsoccr94 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dsoccr94 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dsoccr94 )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -326,7 +318,7 @@ public class m107
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wpksoc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wpksoc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wpksoc )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_START();  /* not used */
@@ -443,7 +435,7 @@ public class m107
 	
 	static void sound_irq(int state)
 	{
-		if (state != 0)
+		if (state)
 			timer_set(TIME_NOW,YM2151_ASSERT,setvector_callback);
 		else
 			timer_set(TIME_NOW,YM2151_CLEAR,setvector_callback);
@@ -466,21 +458,19 @@ public class m107
 	
 	/***************************************************************************/
 	
-	public static InterruptHandlerPtr m107_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr m107_interrupt = new InterruptHandlerPtr() {public void handler(){
 		m107_vblank=0;
-		m107_vh_raster_partial_refresh(Machine.scrbitmap,0,248);
+		m107_vh_raster_partial_refresh(Machine->scrbitmap,0,248);
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_0); /* VBL */
 	} };
 	
-	public static InterruptHandlerPtr m107_raster_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr m107_raster_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int last_line=0;
 		int line = 256 - cpu_getiloops();
 	
 		if (keyboard_pressed_memory(KEYCODE_F1)) {
 			raster_enable ^= 1;
-			if (raster_enable != 0)
+			if (raster_enable)
 				usrintf_showmessage("Raster IRQ enabled");
 			else
 				usrintf_showmessage("Raster IRQ disabled");
@@ -489,7 +479,7 @@ public class m107
 		/* Raster interrupt */
 		if (raster_enable && line==m107_raster_irq_position) {
 			if (osd_skip_this_frame()==0)
-				m107_vh_raster_partial_refresh(Machine.scrbitmap,last_line,line);
+				m107_vh_raster_partial_refresh(Machine->scrbitmap,last_line,line);
 			last_line=line+1;
 	
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_2);
@@ -504,7 +494,7 @@ public class m107
 		/* Redraw screen, then set vblank and trigger the VBL interrupt */
 		else if (line==248) {
 			if (osd_skip_this_frame()==0)
-				m107_vh_raster_partial_refresh(Machine.scrbitmap,last_line,248);
+				m107_vh_raster_partial_refresh(Machine->scrbitmap,last_line,248);
 			last_line=0;
 			m107_vblank=1;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, m107_IRQ_0);
@@ -515,8 +505,7 @@ public class m107
 			m107_vblank=0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_firebarr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( firebarr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 28000000/2)	/* NEC V33, 28MHz clock */
@@ -545,13 +534,10 @@ public class m107
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dsoccr94 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dsoccr94 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 20000000/2)	/* NEC V33, Could be 28MHz clock? */
@@ -580,9 +566,7 @@ public class m107
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -679,8 +663,7 @@ public class m107
 	
 	/***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_firebarr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_firebarr  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		memcpy(RAM+0xffff0,RAM+0x7fff0,0x10); /* Start vector */
@@ -697,8 +680,7 @@ public class m107
 		raster_enable=1;
 	} };
 	
-	public static DriverInitHandlerPtr init_dsoccr94  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dsoccr94  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		memcpy(RAM+0xffff0,RAM+0x7fff0,0x10); /* Start vector */
@@ -716,8 +698,7 @@ public class m107
 		raster_enable=0;
 	} };
 	
-	public static DriverInitHandlerPtr init_wpksoc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wpksoc  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		memcpy(RAM+0xffff0,RAM+0x7fff0,0x10); /* Start vector */
@@ -736,7 +717,7 @@ public class m107
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_firebarr	   = new GameDriver("1993"	,"firebarr"	,"m107.java"	,rom_firebarr,null	,machine_driver_firebarr	,input_ports_firebarr	,init_firebarr	,ROT270	,	"Irem", "Fire Barrel (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_dsoccr94	   = new GameDriver("1994"	,"dsoccr94"	,"m107.java"	,rom_dsoccr94,null	,machine_driver_dsoccr94	,input_ports_dsoccr94	,init_dsoccr94	,ROT0	,	"Irem (Data East Corporation license)", "Dream Soccer '94" )
-	public static GameDriver driver_wpksoc	   = new GameDriver("1995"	,"wpksoc"	,"m107.java"	,rom_wpksoc,null	,machine_driver_firebarr	,input_ports_wpksoc	,init_wpksoc	,ROT0	,	"Jaleco", "World PK Soccer", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, firebarr, 0, firebarr, firebarr, firebarr, ROT270, "Irem", "Fire Barrel (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAME( 1994, dsoccr94, 0, dsoccr94, dsoccr94, dsoccr94, ROT0,   "Irem (Data East Corporation license)", "Dream Soccer '94" )
+	GAMEX(1995, wpksoc,   0, firebarr, wpksoc,	 wpksoc,   ROT0,   "Jaleco", "World PK Soccer", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
 }

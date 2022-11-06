@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -27,8 +27,7 @@ public class digdug
 	void digdug_nmi_generate (int param);
 	
 	
-	public static MachineInitHandlerPtr machine_init_digdig  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_digdig  = new MachineInitHandlerPtr() { public void handler(){
 		credits = 0;
 		nmi_timer = timer_alloc(digdug_nmi_generate);
 		interrupt_enable_1 = interrupt_enable_2 = interrupt_enable_3 = 0;
@@ -36,14 +35,12 @@ public class digdug
 	} };
 	
 	
-	public static ReadHandlerPtr digdug_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr digdug_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return digdug_sharedram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr digdug_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* a video ram write */
 		if (offset < 0x400)
 			dirtybuffer[offset] = 1;
@@ -67,8 +64,7 @@ public class digdug
 	static unsigned char customio[16];
 	static int mode;
 	
-	public static WriteHandlerPtr digdug_customio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_customio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		customio[offset] = data;
 	
 	logerror("%04x: custom IO offset %02x data %02x\n",activecpu_get_pc(),offset,data);
@@ -88,14 +84,13 @@ public class digdug
 	} };
 	
 	
-	public static ReadHandlerPtr digdug_customio_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr digdug_customio_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (customio_command)
 		{
 			case 0x71:
 				if (offset == 0)
 				{
-					if (mode != 0)	/* switch mode */
+					if (mode)	/* switch mode */
 					{
 						/* bit 7 is the service switch */
 	                    return readinputport(4);
@@ -216,8 +211,7 @@ public class digdug
 	} };
 	
 	
-	public static ReadHandlerPtr digdug_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr digdug_customio_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return customio_command;
 	} };
 	
@@ -227,8 +221,7 @@ public class digdug
 	}
 	
 	
-	public static WriteHandlerPtr digdug_customio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_customio_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != 0x10 && data != 0x71)
 			logerror("%04x: custom IO command %02x\n",activecpu_get_pc(),data);
 	
@@ -259,9 +252,8 @@ public class digdug
 	
 	
 	
-	public static WriteHandlerPtr digdug_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr digdug_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -275,46 +267,40 @@ public class digdug
 	
 	
 	
-	public static WriteHandlerPtr digdug_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_1 = (data&1);
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr digdug_interrupt_1 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_1 != 0)
+	public static InterruptHandlerPtr digdug_interrupt_1 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr digdug_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_2 = data & 1;
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr digdug_interrupt_2 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_2 != 0)
+	public static InterruptHandlerPtr digdug_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_2)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr digdug_interrupt_enable_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_interrupt_enable_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_3 = !(data & 1);
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr digdug_interrupt_3 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_3 != 0)
+	public static InterruptHandlerPtr digdug_interrupt_3 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_3)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 }

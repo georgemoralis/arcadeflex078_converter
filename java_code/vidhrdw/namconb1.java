@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,7 +23,7 @@ public class namconb1
 	INLINE data16_t nth_word32( const data32_t *source, int which )
 	{
 		source += which/2;
-		if ((which & 1) != 0)
+		if( which&1 )
 		{
 			return (*source)&0xffff;
 		}
@@ -153,7 +153,7 @@ public class namconb1
 		unsigned p3;
 		unsigned p4;
 		toggle = !toggle;
-		if (toggle != 0) dsw &= ~(0x80<<16);
+		if( toggle ) dsw &= ~(0x80<<16);
 		if( namcos2_gametype == NAMCONB2_MACH_BREAKERS )
 		{
 			p3 = readinputport(4);
@@ -218,7 +218,7 @@ public class namconb1
 	
 		for( pri=0; pri<8; pri++ )
 		{
-			if (bROZ != 0)
+			if( bROZ )
 			{
 				namco_roz_draw( bitmap,cliprect,pri );
 			}
@@ -236,8 +236,7 @@ public class namconb1
 	
 	/************************************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_namconb1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namconb1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int beamx,beamy;
 	
 		video_update_common( bitmap, cliprect, 0 );
@@ -261,8 +260,7 @@ public class namconb1
 		return (code&0x7ff) + bank*0x800;
 	}
 	
-	public static VideoStartHandlerPtr video_start_namconb1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namconb1  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 		static void (*get_info[6])(int tile_index) =
 		{
@@ -312,8 +310,8 @@ public class namconb1
 		{
 			/* the pixmap index is mangled, the transparency bitmask index is not */
 			mangle = tile&~(0x140);
-			if ((tile & 0x100) != 0) mangle |= 0x040;
-			if ((tile & 0x040) != 0) mangle |= 0x100;
+			if( tile&0x100 ) mangle |= 0x040;
+			if( tile&0x040 ) mangle |= 0x100;
 		}
 		SET_TILE_INFO( NAMCONB1_TILEGFX,mangle,tilemap_palette_bank[which],0)
 		tile_info.mask_data = 8*tile + mpMaskData;
@@ -326,8 +324,7 @@ public class namconb1
 	static void tilemapNB2_get_info4(int tile_index) { tilemapNB2_get_info(tile_index,4,&videoram32[NAMCONB1_FG1BASE/2]); }
 	static void tilemapNB2_get_info5(int tile_index) { tilemapNB2_get_info(tile_index,5,&videoram32[NAMCONB1_FG2BASE/2]); }
 	
-	public static VideoUpdateHandlerPtr video_update_namconb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namconb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_common( bitmap, cliprect, 1 );
 	} }; /* namconb2_vh_screenrefresh */
 	
@@ -338,27 +335,26 @@ public class namconb1
 		code &= 0x7ff;
 		if( namcos2_gametype == NAMCONB2_MACH_BREAKERS )
 		{
-			if ((bank & 0x01) != 0) code |= 0x01*0x800;
-			if ((bank & 0x02) != 0) code |= 0x02*0x800;
-			if ((bank & 0x04) != 0) code |= 0x04*0x800;
-			if ((bank & 0x08) != 0) code |= 0x08*0x800;
-			if ((bank & 0x10) != 0) code |= 0x10*0x800;
-			if ((bank & 0x40) != 0) code |= 0x20*0x800;
+			if( bank&0x01 ) code |= 0x01*0x800;
+			if( bank&0x02 ) code |= 0x02*0x800;
+			if( bank&0x04 ) code |= 0x04*0x800;
+			if( bank&0x08 ) code |= 0x08*0x800;
+			if( bank&0x10 ) code |= 0x10*0x800;
+			if( bank&0x40 ) code |= 0x20*0x800;
 		}
 		else
 		{
-			if ((bank & 0x01) != 0) code |= 0x01*0x800;
-			if ((bank & 0x02) != 0) code |= 0x04*0x800;
-			if ((bank & 0x04) != 0) code |= 0x02*0x800;
-			if ((bank & 0x08) != 0) code |= 0x08*0x800;
-			if ((bank & 0x10) != 0) code |= 0x10*0x800;
-			if ((bank & 0x40) != 0) code |= 0x20*0x800;
+			if( bank&0x01 ) code |= 0x01*0x800;
+			if( bank&0x02 ) code |= 0x04*0x800;
+			if( bank&0x04 ) code |= 0x02*0x800;
+			if( bank&0x08 ) code |= 0x08*0x800;
+			if( bank&0x10 ) code |= 0x10*0x800;
+			if( bank&0x40 ) code |= 0x20*0x800;
 		}
 		return code;
 	}
 	
-	public static VideoStartHandlerPtr video_start_namconb2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namconb2  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 		static void (*get_info[6])(int tile_index) =
 			{ tilemapNB2_get_info0, tilemapNB2_get_info1, tilemapNB2_get_info2,

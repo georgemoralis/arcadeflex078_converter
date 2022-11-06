@@ -6,7 +6,7 @@
 
 To use, /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -80,11 +80,11 @@ public class memdbg
 		{
 			printf( "%p\tsize: %d\t file %s line %d\n",
 				MEMPTR_TO_PDATA(pMemPtr),
-				pMemPtr.numBytes,
-				pMemPtr.pModule,
-				pMemPtr.line );
+				pMemPtr->numBytes,
+				pMemPtr->pModule,
+				pMemPtr->line );
 	
-			pMemPtr = pMemPtr.pNextAllocation;
+			pMemPtr = pMemPtr->pNextAllocation;
 		}
 	
 		EndCriticalSection();
@@ -99,24 +99,24 @@ public class memdbg
 		BeginCriticalSection();
 	
 		pData = NULL; /* default */
-		if (numBytes == 0)
+		if( !numBytes )
 		{
 			printf( "WARNING: attempt to memdbg_Alloc zero bytes!\n" );
 		}
 		else
 		{
 			MemPtr *pMemPtr = malloc(sizeof(MemPtr)+numBytes+sizeof(mGuardData));
-			if (pMemPtr == 0)
+			if( !pMemPtr )
 			{
 				printf( "memdbg_Alloc failure: insufficient memory!\n" );
 			}
 			else
 			{
-				pMemPtr.pNextAllocation = mpFirstAllocation;
+				pMemPtr->pNextAllocation = mpFirstAllocation;
 				mpFirstAllocation = pMemPtr;
-				pMemPtr.numBytes = numBytes;
-				pMemPtr.pModule = pModule;
-				pMemPtr.line = line;
+				pMemPtr->numBytes = numBytes;
+				pMemPtr->pModule = pModule;
+				pMemPtr->line = line;
 				pData = MEMPTR_TO_PDATA(pMemPtr);
 				memset( pData, MEM_UNINITIALIZED_VALUE, numBytes );
 				memcpy( numBytes+(char *)pData,mGuardData,sizeof(mGuardData) );
@@ -133,7 +133,7 @@ public class memdbg
 	{
 		BeginCriticalSection();
 	
-		if (pData == 0)
+		if( !pData )
 		{
 			printf( "WARNING: attempt to memdbg_Free a NULL pointer!\n" );
 		}
@@ -142,7 +142,7 @@ public class memdbg
 			const char *pErrorString = "attempt to memdbg_Free a bogus pointer";
 	
 			MemPtr *pMemPtr = PDATA_TO_MEMPTR(pData);
-			if( memcmp(pMemPtr.numBytes+(char *)pData, mGuardData, sizeof(mGuardData) )!=0 )
+			if( memcmp(pMemPtr->numBytes+(char *)pData, mGuardData, sizeof(mGuardData) )!=0 )
 			{
 				pErrorString = "corruption detected";
 			}
@@ -154,30 +154,30 @@ public class memdbg
 				{
 					if( pCurAlloc == pMemPtr )
 					{
-						if (pPrevAlloc != 0)
+						if( pPrevAlloc )
 						{
-							pPrevAlloc.pNextAllocation = pMemPtr.pNextAllocation;
+							pPrevAlloc->pNextAllocation = pMemPtr->pNextAllocation;
 						}
 						else
 						{
-							mpFirstAllocation = pMemPtr.pNextAllocation;
+							mpFirstAllocation = pMemPtr->pNextAllocation;
 						}
-						memset( pData, MEM_UNINITIALIZED_VALUE, pMemPtr.numBytes );
+						memset( pData, MEM_UNINITIALIZED_VALUE, pMemPtr->numBytes );
 						free( pMemPtr );
 						pErrorString = NULL;
 						break;
 					}
 					pPrevAlloc = pCurAlloc;
-					pCurAlloc = pCurAlloc.pNextAllocation;
+					pCurAlloc = pCurAlloc->pNextAllocation;
 				}
 			}
-			if (pErrorString != 0)
+			if( pErrorString )
 			{
 				printf( "ERROR!!! %s!: %p %s.%d\n",
 					pErrorString,
 					pData,
-					pMemPtr.pModule,
-					pMemPtr.line );
+					pMemPtr->pModule,
+					pMemPtr->line );
 	
 				assert(0);
 			}

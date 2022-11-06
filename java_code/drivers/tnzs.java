@@ -175,7 +175,7 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/11/06
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -205,12 +205,12 @@ public class tnzs
 	
 		size = sizeof(struct GameSamples) + MAX_SAMPLES * sizeof(struct GameSamples *);
 	
-		if ((Machine.samples = auto_malloc(size)) == NULL) return 1;
+		if ((Machine->samples = auto_malloc(size)) == NULL) return 1;
 	
-		samples = Machine.samples;
-		samples.total = MAX_SAMPLES;
+		samples = Machine->samples;
+		samples->total = MAX_SAMPLES;
 	
-		for (i = 0; i < samples.total; i++)
+		for (i = 0; i < samples->total; i++)
 		{
 			src = memory_region(REGION_SOUND1) + 0x0090;
 			start = (src[(i * 2) + 1] * 256) + src[(i * 2)];
@@ -227,16 +227,16 @@ public class tnzs
 					size++;
 				}
 			}
-			if ((samples.sample[i] = auto_malloc(sizeof(struct GameSample) + size * sizeof(unsigned char))) == NULL) return 1;
+			if ((samples->sample[i] = auto_malloc(sizeof(struct GameSample) + size * sizeof(unsigned char))) == NULL) return 1;
 	
 			if (start < 0x100) start = size = 0;
 	
-			samples.sample[i].smpfreq = 7000;	/* 7 KHz??? */
-			samples.sample[i].resolution = 8;	/* 8 bit */
-			samples.sample[i].length = size;
+			samples->sample[i]->smpfreq = 7000;	/* 7 KHz??? */
+			samples->sample[i]->resolution = 8;	/* 8 bit */
+			samples->sample[i]->length = size;
 	
 			// signed 8-bit sample to unsigned 8-bit sample convert
-			dest = (unsigned char *)samples.sample[i].data;
+			dest = (unsigned char *)samples->sample[i]->data;
 			scan = &src[start];
 			for (n = 0; n < size; n++)
 			{
@@ -250,8 +250,7 @@ public class tnzs
 	
 	
 	static int kageki_csport_sel = 0;
-	public static ReadHandlerPtr kageki_csport_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kageki_csport_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int	dsw, dsw1, dsw2;
 	
 		dsw1 = readinputport(0); 		// DSW1
@@ -279,8 +278,7 @@ public class tnzs
 		return (dsw & 0xff);
 	} };
 	
-	public static WriteHandlerPtr kageki_csport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kageki_csport_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		char mess[80];
 	
 		if (data > 0x3f)
@@ -387,8 +385,7 @@ public class tnzs
 	
 	/* the bootleg board is different, it has a third CPU (and of course no mcu) */
 	
-	public static WriteHandlerPtr tnzsb_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tnzsb_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	} };
@@ -479,7 +476,7 @@ public class tnzs
 	
 	
 	
-	static InputPortPtr input_ports_extrmatn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_extrmatn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( extrmatn )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -565,7 +562,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_arknoid2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arknoid2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arknoid2 )
 		PORT_START(); 		/* DSW1 - IN2 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -653,7 +650,7 @@ public class tnzs
 		PORT_BIT   ( 0xf000, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_arknid2u = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arknid2u = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arknid2u )
 		PORT_START(); 		/* DSW1 - IN2 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -741,7 +738,7 @@ public class tnzs
 		PORT_BIT   ( 0xf000, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_plumppop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_plumppop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( plumppop )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -832,7 +829,7 @@ public class tnzs
 		PORT_ANALOG( 0xffff, 0x0000, IPT_DIAL | IPF_PLAYER2, 70, 15, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_drtoppel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drtoppel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drtoppel )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -917,7 +914,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_drtopplu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drtopplu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drtopplu )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1002,7 +999,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chukatai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chukatai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chukatai )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1087,7 +1084,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chukatau = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chukatau = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chukatau )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1172,7 +1169,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tnzs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tnzs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tnzs )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1257,7 +1254,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tnzsb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tnzsb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tnzsb )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1334,7 +1331,7 @@ public class tnzs
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tnzs2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tnzs2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tnzs2 )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1419,7 +1416,7 @@ public class tnzs
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_insectx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_insectx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( insectx )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1496,7 +1493,7 @@ public class tnzs
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kageki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kageki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kageki )
 		PORT_START(); 		/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1690,8 +1687,7 @@ public class tnzs
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_arknoid2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( arknoid2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* ?? Hz (only crystal is 12MHz) */
@@ -1721,13 +1717,10 @@ public class tnzs
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_drtoppel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drtoppel )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.0 MHz ??? - Main board Crystal is 12MHz */
@@ -1756,13 +1749,10 @@ public class tnzs
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tnzs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tnzs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.0 MHz ??? - Main board Crystal is 12MHz */
@@ -1794,13 +1784,10 @@ public class tnzs
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tnzsb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tnzsb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 6 MHz(?) */
@@ -1832,13 +1819,10 @@ public class tnzs
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_insectx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( insectx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz(?) */
@@ -1866,13 +1850,10 @@ public class tnzs
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kageki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kageki )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -1902,9 +1883,7 @@ public class tnzs
 		MDRV_SOUND_ADD(YM2203, kageki_ym2203_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2337,21 +2316,21 @@ public class tnzs
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR COMPANY    FULLNAME     FLAGS ) */
-	public static GameDriver driver_plumppop	   = new GameDriver("1987"	,"plumppop"	,"tnzs.java"	,rom_plumppop,null	,machine_driver_drtoppel	,input_ports_plumppop	,init_drtoppel	,ROT0	,	"Taito Corporation", "Plump Pop (Japan)" )
-	public static GameDriver driver_extrmatn	   = new GameDriver("1987"	,"extrmatn"	,"tnzs.java"	,rom_extrmatn,null	,machine_driver_arknoid2	,input_ports_extrmatn	,init_extrmatn	,ROT270	,	"[Taito] World Games", "Extermination (US)" )
-	public static GameDriver driver_arknoid2	   = new GameDriver("1987"	,"arknoid2"	,"tnzs.java"	,rom_arknoid2,null	,machine_driver_arknoid2	,input_ports_arknoid2	,init_arknoid2	,ROT270	,	"Taito Corporation Japan", "Arkanoid - Revenge of DOH (World)" )
-	public static GameDriver driver_arknid2u	   = new GameDriver("1987"	,"arknid2u"	,"tnzs.java"	,rom_arknid2u,driver_arknoid2	,machine_driver_arknoid2	,input_ports_arknid2u	,init_arknoid2	,ROT270	,	"Taito America Corporation (Romstar license)", "Arkanoid - Revenge of DOH (US)" )
-	public static GameDriver driver_arknid2j	   = new GameDriver("1987"	,"arknid2j"	,"tnzs.java"	,rom_arknid2j,driver_arknoid2	,machine_driver_arknoid2	,input_ports_arknid2u	,init_arknoid2	,ROT270	,	"Taito Corporation", "Arkanoid - Revenge of DOH (Japan)" )
-	public static GameDriver driver_drtoppel	   = new GameDriver("1987"	,"drtoppel"	,"tnzs.java"	,rom_drtoppel,null	,machine_driver_drtoppel	,input_ports_drtoppel	,init_drtoppel	,ROT90	,	"Taito Corporation Japan", "Dr. Toppel's Adventure (World)" )
-	public static GameDriver driver_drtopplu	   = new GameDriver("1987"	,"drtopplu"	,"tnzs.java"	,rom_drtopplu,driver_drtoppel	,machine_driver_drtoppel	,input_ports_drtopplu	,init_drtoppel	,ROT90	,	"Taito America Corporation", "Dr. Toppel's Adventure (US)" )
-	public static GameDriver driver_drtopplj	   = new GameDriver("1987"	,"drtopplj"	,"tnzs.java"	,rom_drtopplj,driver_drtoppel	,machine_driver_drtoppel	,input_ports_drtopplu	,init_drtoppel	,ROT90	,	"Taito Corporation", "Dr. Toppel's Tankentai (Japan)" )
-	public static GameDriver driver_kageki	   = new GameDriver("1988"	,"kageki"	,"tnzs.java"	,rom_kageki,null	,machine_driver_kageki	,input_ports_kageki	,init_kageki	,ROT90	,	"Taito America Corporation (Romstar license)", "Kageki (US)" )
-	public static GameDriver driver_kagekij	   = new GameDriver("1988"	,"kagekij"	,"tnzs.java"	,rom_kagekij,driver_kageki	,machine_driver_kageki	,input_ports_kageki	,init_kageki	,ROT90	,	"Taito Corporation", "Kageki (Japan)" )
-	public static GameDriver driver_chukatai	   = new GameDriver("1988"	,"chukatai"	,"tnzs.java"	,rom_chukatai,null	,machine_driver_tnzs	,input_ports_chukatai	,init_chukatai	,ROT0	,	"Taito Corporation Japan", "Chuka Taisen (World)" )
-	public static GameDriver driver_chukatau	   = new GameDriver("1988"	,"chukatau"	,"tnzs.java"	,rom_chukatau,driver_chukatai	,machine_driver_tnzs	,input_ports_chukatau	,init_chukatai	,ROT0	,	"Taito America Corporation", "Chuka Taisen (US)" )
-	public static GameDriver driver_chukataj	   = new GameDriver("1988"	,"chukataj"	,"tnzs.java"	,rom_chukataj,driver_chukatai	,machine_driver_tnzs	,input_ports_chukatau	,init_chukatai	,ROT0	,	"Taito Corporation", "Chuka Taisen (Japan)" )
-	public static GameDriver driver_tnzs	   = new GameDriver("1988"	,"tnzs"	,"tnzs.java"	,rom_tnzs,null	,machine_driver_tnzs	,input_ports_tnzs	,init_tnzs	,ROT0	,	"Taito Corporation", "The NewZealand Story (Japan)" )
-	public static GameDriver driver_tnzsb	   = new GameDriver("1988"	,"tnzsb"	,"tnzs.java"	,rom_tnzsb,driver_tnzs	,machine_driver_tnzsb	,input_ports_tnzsb	,init_tnzsb	,ROT0	,	"bootleg", "The NewZealand Story (World, bootleg)" )
-	public static GameDriver driver_tnzs2	   = new GameDriver("1988"	,"tnzs2"	,"tnzs.java"	,rom_tnzs2,driver_tnzs	,machine_driver_tnzs	,input_ports_tnzs2	,init_tnzs	,ROT0	,	"Taito Corporation Japan", "The NewZealand Story 2 (World)" )
-	public static GameDriver driver_insectx	   = new GameDriver("1989"	,"insectx"	,"tnzs.java"	,rom_insectx,null	,machine_driver_insectx	,input_ports_insectx	,init_insectx	,ROT0	,	"Taito Corporation Japan", "Insector X (World)" )
+	GAME( 1987, plumppop, 0,        drtoppel, plumppop, drtoppel, ROT0,   "Taito Corporation", "Plump Pop (Japan)" )
+	GAME( 1987, extrmatn, 0,        arknoid2, extrmatn, extrmatn, ROT270, "[Taito] World Games", "Extermination (US)" )
+	GAME( 1987, arknoid2, 0,        arknoid2, arknoid2, arknoid2, ROT270, "Taito Corporation Japan", "Arkanoid - Revenge of DOH (World)" )
+	GAME( 1987, arknid2u, arknoid2, arknoid2, arknid2u, arknoid2, ROT270, "Taito America Corporation (Romstar license)", "Arkanoid - Revenge of DOH (US)" )
+	GAME( 1987, arknid2j, arknoid2, arknoid2, arknid2u, arknoid2, ROT270, "Taito Corporation", "Arkanoid - Revenge of DOH (Japan)" )
+	GAME( 1987, drtoppel, 0,        drtoppel, drtoppel, drtoppel, ROT90,  "Taito Corporation Japan", "Dr. Toppel's Adventure (World)" )
+	GAME( 1987, drtopplu, drtoppel, drtoppel, drtopplu, drtoppel, ROT90,  "Taito America Corporation", "Dr. Toppel's Adventure (US)" )
+	GAME( 1987, drtopplj, drtoppel, drtoppel, drtopplu, drtoppel, ROT90,  "Taito Corporation", "Dr. Toppel's Tankentai (Japan)" )
+	GAME( 1988, kageki,   0,        kageki,   kageki,   kageki,   ROT90,  "Taito America Corporation (Romstar license)", "Kageki (US)" )
+	GAME( 1988, kagekij,  kageki,   kageki,   kageki,   kageki,   ROT90,  "Taito Corporation", "Kageki (Japan)" )
+	GAME( 1988, chukatai, 0,        tnzs,     chukatai, chukatai, ROT0,   "Taito Corporation Japan", "Chuka Taisen (World)" )
+	GAME( 1988, chukatau, chukatai, tnzs,     chukatau, chukatai, ROT0,   "Taito America Corporation", "Chuka Taisen (US)" )
+	GAME( 1988, chukataj, chukatai, tnzs,     chukatau, chukatai, ROT0,   "Taito Corporation", "Chuka Taisen (Japan)" )
+	GAME( 1988, tnzs,     0,        tnzs,     tnzs,     tnzs,     ROT0,   "Taito Corporation", "The NewZealand Story (Japan)" )
+	GAME( 1988, tnzsb,    tnzs,     tnzsb,    tnzsb,    tnzsb,    ROT0,   "bootleg", "The NewZealand Story (World, bootleg)" )
+	GAME( 1988, tnzs2,    tnzs,     tnzs,     tnzs2,    tnzs,     ROT0,   "Taito Corporation Japan", "The NewZealand Story 2 (World)" )
+	GAME( 1989, insectx,  0,        insectx,  insectx,  insectx,  ROT0,   "Taito Corporation Japan", "Insector X (World)" )
 }

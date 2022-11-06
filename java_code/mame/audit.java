@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -21,9 +21,9 @@ public class audit
 		const struct GameDriver *drv;
 	
 		/* attempt reading up the chain through the parents */
-		for (drv = chd_gamedrv; drv != NULL; drv = drv.clone_of)
+		for (drv = chd_gamedrv; drv != NULL; drv = drv->clone_of)
 		{
-			void* file = mame_fopen(drv.name, filename, FILETYPE_IMAGE, 0);
+			void* file = mame_fopen(drv->name, filename, FILETYPE_IMAGE, 0);
 	
 			if (file != NULL)
 				return file;
@@ -112,7 +112,7 @@ public class audit
 	{
 		const struct GameDriver *gamedrv = drivers[game];
 	
-		if (gamedrv.clone_of)
+		if (gamedrv->clone_of)
 		{
 			tAuditRecord	*aud;
 			int				count;
@@ -129,7 +129,7 @@ public class audit
 	
 	        /* count number of roms found that are unique to clone */
 	        for (i = 0; i < count; i++)
-				if (!RomInSet (gamedrv.clone_of, aud[i].exphash))
+				if (!RomInSet (gamedrv->clone_of, aud[i].exphash))
 				{
 					uniqueRomsFound++;
 					if (aud[i].status != AUD_ROM_NOT_FOUND)
@@ -146,14 +146,14 @@ public class audit
 			/* count number of roms found that are unique to clone */
 			for (i = 0; i < count; i++)
 				if (aud[i].status != AUD_ROM_NOT_FOUND)
-					if (!RomInSet (gamedrv.clone_of, aud[i].exphash))
+					if (!RomInSet (gamedrv->clone_of, aud[i].exphash))
 						cloneRomsFound++;
 	#endif
 	
 			return !cloneRomsFound;
 		}
 		else
-			return !mame_faccess (gamedrv.name, FILETYPE_ROM);
+			return !mame_faccess (gamedrv->name, FILETYPE_ROM);
 	}
 	
 	/* Fills in an audit record for each rom in the romset. Sets 'audit' to
@@ -169,7 +169,7 @@ public class audit
 		tAuditRecord *aud;
 		int	err;
 	
-		if (gAudits == 0)
+		if (!gAudits)
 		{
 			gAudits = (tAuditRecord *)malloc (AUD_MAX_ROMS * sizeof (tAuditRecord));
 	
@@ -178,21 +178,21 @@ public class audit
 			memset(gAudits, 0, AUD_MAX_ROMS * sizeof(tAuditRecord));
 		}
 	
-		if (gAudits != 0)
+		if (gAudits)
 			*audit = aud = gAudits;
 		else
 			return 0;
 	
 		gamedrv = drivers[game];
 	
-		if (!gamedrv.rom) return -1;
+		if (!gamedrv->rom) return -1;
 	
 		/* check for existence of romset */
-		if (!mame_faccess (gamedrv.name, FILETYPE_ROM))
+		if (!mame_faccess (gamedrv->name, FILETYPE_ROM))
 		{
 			/* if the game is a clone, check for parent */
-			if (gamedrv.clone_of == 0 || (gamedrv.clone_of.flags & NOT_A_DRIVER) ||
-					!mame_faccess(gamedrv.clone_of.name,FILETYPE_ROM))
+			if (gamedrv->clone_of == 0 || (gamedrv->clone_of->flags & NOT_A_DRIVER) ||
+					!mame_faccess(gamedrv->clone_of->name,FILETYPE_ROM))
 				return 0;
 		}
 	
@@ -204,14 +204,14 @@ public class audit
 					const struct GameDriver *drv;
 	
 					name = ROM_GETNAME(rom);
-					strcpy (aud.rom, name);
-					aud.explength = 0;
-					aud.length = 0;
-					aud.exphash = ROM_GETHASHDATA(rom);
+					strcpy (aud->rom, name);
+					aud->explength = 0;
+					aud->length = 0;
+					aud->exphash = ROM_GETHASHDATA(rom);
 	
 					/* Copy into the variable we pass to the functions
 					   to support load-by-checksum */
-					hash_data_copy(aud.hash, aud.exphash);
+					hash_data_copy(aud->hash, aud->exphash);
 	
 					count++;
 	
@@ -219,49 +219,49 @@ public class audit
 					drv = gamedrv;
 					do
 					{
-						err = mame_fchecksum(drv.name, name, &aud.length, aud.hash);
-						drv = drv.clone_of;
+						err = mame_fchecksum(drv->name, name, &aud->length, aud->hash);
+						drv = drv->clone_of;
 					} while (err && drv);
 	
 					/* spin through ROM_CONTINUEs, totaling length */
 					for (chunk = rom_first_chunk(rom); chunk; chunk = rom_next_chunk(chunk))
-						aud.explength += ROM_GETLENGTH(chunk);
+						aud->explength += ROM_GETLENGTH(chunk);
 	
-					if (err != 0)
+					if (err)
 					{
-						if (hash_data_has_info(aud.exphash, HASH_INFO_NO_DUMP))
+						if (hash_data_has_info(aud->exphash, HASH_INFO_NO_DUMP))
 						{
 							/* not found but it's not good anyway */
-							aud.status = AUD_NOT_AVAILABLE;
+							aud->status = AUD_NOT_AVAILABLE;
 						}
 						else if (ROM_ISOPTIONAL(rom))
 						{
 							/* optional ROM not found */
-							aud.status = AUD_OPTIONAL_ROM_NOT_FOUND;
+							aud->status = AUD_OPTIONAL_ROM_NOT_FOUND;
 						}
 						else
 						{
 							/* not found */
-							aud.status = AUD_ROM_NOT_FOUND;
+							aud->status = AUD_ROM_NOT_FOUND;
 						}
 					}
 					/* all cases below assume the ROM was at least found */
-					else if (aud.explength != aud.length)
-						aud.status = AUD_LENGTH_MISMATCH;
-					else if (hash_data_has_info(aud.exphash, HASH_INFO_NO_DUMP))
-							aud.status = AUD_ROM_NEED_DUMP; /* new case - found but not known to be dumped */
-					else if (!hash_data_is_equal(aud.exphash, aud.hash, 0))
+					else if (aud->explength != aud->length)
+						aud->status = AUD_LENGTH_MISMATCH;
+					else if (hash_data_has_info(aud->exphash, HASH_INFO_NO_DUMP))
+							aud->status = AUD_ROM_NEED_DUMP; /* new case - found but not known to be dumped */
+					else if (!hash_data_is_equal(aud->exphash, aud->hash, 0))
 					{
 						/* non-matching hash */
-							aud.status = AUD_BAD_CHECKSUM;
+							aud->status = AUD_BAD_CHECKSUM;
 					}
 					else
 					{
 						/* matching hash */
-						if (hash_data_has_info(aud.exphash, HASH_INFO_BAD_DUMP))
-							aud.status = AUD_ROM_NEED_REDUMP;
+						if (hash_data_has_info(aud->exphash, HASH_INFO_BAD_DUMP))
+							aud->status = AUD_ROM_NEED_REDUMP;
 						else
-						aud.status = AUD_ROM_GOOD;
+						aud->status = AUD_ROM_GOOD;
 					}
 	
 					aud++;
@@ -273,11 +273,11 @@ public class audit
 					struct chd_header header;
 	
 					name = ROM_GETNAME(rom);
-					strcpy (aud.rom, name);
-					aud.explength = 0;
-					aud.length = 0;
-					aud.exphash = ROM_GETHASHDATA(rom);
-					hash_data_clear(aud.hash);
+					strcpy (aud->rom, name);
+					aud->explength = 0;
+					aud->length = 0;
+					aud->exphash = ROM_GETHASHDATA(rom);
+					hash_data_clear(aud->hash);
 					count++;
 	
 					chd_gamedrv = gamedrv;
@@ -288,11 +288,11 @@ public class audit
 						err = chd_get_last_error();
 						if( err == CHDERR_OUT_OF_MEMORY )
 						{
-							aud.status = AUD_MEM_ERROR;
+							aud->status = AUD_MEM_ERROR;
 						}
 						else
 						{
-							aud.status = AUD_DISK_NOT_FOUND;
+							aud->status = AUD_DISK_NOT_FOUND;
 						}
 					}
 					else
@@ -300,17 +300,17 @@ public class audit
 						header = *chd_get_header(source);
 	
 						if (memcmp(nullhash, header.md5, sizeof(header.md5)))
-							hash_data_insert_binary_checksum(aud.hash, HASH_MD5, header.md5);
+							hash_data_insert_binary_checksum(aud->hash, HASH_MD5, header.md5);
 						if (memcmp(nullhash, header.sha1, sizeof(header.sha1)))
-							hash_data_insert_binary_checksum(aud.hash, HASH_SHA1, header.sha1);
+							hash_data_insert_binary_checksum(aud->hash, HASH_SHA1, header.sha1);
 						
-						if (hash_data_is_equal(aud.exphash, aud.hash, 0))
+						if (hash_data_is_equal(aud->exphash, aud->hash, 0))
 						{
-							aud.status = AUD_DISK_GOOD;
+							aud->status = AUD_DISK_GOOD;
 						}
 						else
 						{
-							aud.status = AUD_DISK_BAD_MD5;
+							aud->status = AUD_DISK_BAD_MD5;
 						}
 	
 						chd_close( source );
@@ -321,7 +321,7 @@ public class audit
 			}
 	
 	        #ifdef MESS
-	        if (count == 0)
+	        if (!count)
 	                return -1;
 	        else
 	        #endif
@@ -353,7 +353,7 @@ public class audit
 		if (count == -1) return CORRECT;
 	
 	#if 1
-	    if (gamedrv.clone_of)
+	    if (gamedrv->clone_of)
 	    {
 	        int i;
 	        int cloneRomsFound = 0;
@@ -361,7 +361,7 @@ public class audit
 	
 	        /* count number of roms found that are unique to clone */
 	        for (i = 0; i < count; i++)
-				if (!RomInSet (gamedrv.clone_of, aud[i].exphash))
+				if (!RomInSet (gamedrv->clone_of, aud[i].exphash))
 				{
 					uniqueRomsFound++;
 					if (aud[i].status != AUD_ROM_NOT_FOUND)
@@ -374,7 +374,7 @@ public class audit
 	        #endif
 	    }
 	#else
-		if (gamedrv.clone_of)
+		if (gamedrv->clone_of)
 		{
 			int i;
 			int cloneRomsFound = 0;
@@ -382,7 +382,7 @@ public class audit
 			/* count number of roms found that are unique to clone */
 			for (i = 0; i < count; i++)
 				if (aud[i].status != AUD_ROM_NOT_FOUND)
-					if (!RomInSet (gamedrv.clone_of, aud[i].exphash))
+					if (!RomInSet (gamedrv->clone_of, aud[i].exphash))
 						cloneRomsFound++;
 	
 	                #ifndef MESS
@@ -395,70 +395,70 @@ public class audit
 	
 		while (count--)
 		{
-			archive_status |= aud.status;
+			archive_status |= aud->status;
 	
-			switch (aud.status)
+			switch (aud->status)
 			{
 				case AUD_ROM_NOT_FOUND:
 					verify_printf ("%-8s: %-12s %7d bytes NOT FOUND\n",
-						drivers[game].name, aud.rom, aud.explength);
-					VerifyDumpHashData(aud.exphash, NULL, verify_printf);
+						drivers[game]->name, aud->rom, aud->explength);
+					VerifyDumpHashData(aud->exphash, NULL, verify_printf);
 					break;
 				case AUD_OPTIONAL_ROM_NOT_FOUND:
 					verify_printf ("%-8s: %-12s %7d bytes NOT FOUND BUT OPTIONAL\n",
-						drivers[game].name, aud.rom, aud.explength);
-					VerifyDumpHashData(aud.exphash, NULL, verify_printf);
+						drivers[game]->name, aud->rom, aud->explength);
+					VerifyDumpHashData(aud->exphash, NULL, verify_printf);
 					break;
 				case AUD_NOT_AVAILABLE:
 					verify_printf ("%-8s: %-12s %7d bytes NOT FOUND - NO GOOD DUMP KNOWN\n",
-						drivers[game].name, aud.rom, aud.explength);
+						drivers[game]->name, aud->rom, aud->explength);
 					break;
 				case AUD_ROM_NEED_DUMP:
 					verify_printf ("%-8s: %-12s %7d bytes FOUND BUT NO GOOD DUMP KNOWN\n",
-						drivers[game].name, aud.rom, aud.explength);
+						drivers[game]->name, aud->rom, aud->explength);
 					break;
 				case AUD_BAD_CHECKSUM:
 					verify_printf ("%-8s: %-12s %7d bytes INCORRECT CHECKSUM:\n",
-						drivers[game].name, aud.rom, aud.explength);
-					VerifyDumpHashData(aud.exphash, "EXPECTED: ", verify_printf);
-					VerifyDumpHashData(aud.hash,    "   FOUND: ", verify_printf);
+						drivers[game]->name, aud->rom, aud->explength);
+					VerifyDumpHashData(aud->exphash, "EXPECTED: ", verify_printf);
+					VerifyDumpHashData(aud->hash,    "   FOUND: ", verify_printf);
 					break;
 				case AUD_ROM_NEED_REDUMP:
 					verify_printf ("%-8s: %-12s %7d bytes ROM NEEDS REDUMP\n",
-						drivers[game].name, aud.rom, aud.explength);
+						drivers[game]->name, aud->rom, aud->explength);
 					break;
 				case AUD_MEM_ERROR:
-					verify_printf ("Out of memory reading ROM %s\n", aud.rom);
+					verify_printf ("Out of memory reading ROM %s\n", aud->rom);
 					break;
 				case AUD_LENGTH_MISMATCH:
 					verify_printf ("%-8s: %-12s %7d bytes INCORRECT LENGTH: %8d\n",
-						drivers[game].name, aud.rom, aud.explength, aud.length);
-					VerifyDumpHashData(aud.exphash, NULL, verify_printf);
+						drivers[game]->name, aud->rom, aud->explength, aud->length);
+					VerifyDumpHashData(aud->exphash, NULL, verify_printf);
 					break;
 				case AUD_ROM_GOOD:
 	#if 0    /* if you want a full accounting of roms */
 					verify_printf ("%-8s: %-12s %7d bytes ROM GOOD\n",
-						drivers[game].name, aud.rom, aud.explength);
-					VerifyDumpHashData(aud.hash, NULL, verify_printf);
+						drivers[game]->name, aud->rom, aud->explength);
+					VerifyDumpHashData(aud->hash, NULL, verify_printf);
 	#endif
 					break;
 				case AUD_DISK_GOOD:
 	#if 0    /* if you want a full accounting of roms */
 					verify_printf ("%-8s: %-12s GOOD\n",
-						drivers[game].name, aud.rom);
-					VerifyDumpHashData(aud.hash, NULL, verify_printf);				
+						drivers[game]->name, aud->rom);
+					VerifyDumpHashData(aud->hash, NULL, verify_printf);				
 	#endif
 					break;
 				case AUD_DISK_NOT_FOUND:
 					verify_printf ("%-8s: %-12s NOT FOUND\n",
-						drivers[game].name, aud.rom);
-					VerifyDumpHashData(aud.exphash, NULL, verify_printf);
+						drivers[game]->name, aud->rom);
+					VerifyDumpHashData(aud->exphash, NULL, verify_printf);
 					break;
 				case AUD_DISK_BAD_MD5:
 					verify_printf ("%-8s: %-12s INCORRECT CHECKSUM:\n",
-						drivers[game].name, aud.rom);
-					VerifyDumpHashData(aud.exphash, "EXPECTED: ", verify_printf);
-					VerifyDumpHashData(aud.hash,    "   FOUND: ", verify_printf);
+						drivers[game]->name, aud->rom);
+					VerifyDumpHashData(aud->exphash, "EXPECTED: ", verify_printf);
+					VerifyDumpHashData(aud->hash,    "   FOUND: ", verify_printf);
 					break;
 			}
 			aud++;
@@ -494,7 +494,7 @@ public class audit
 		tMissingSample *aud;
 	
 		gamedrv = drivers[game];
-		expand_machine_driver(gamedrv.drv, &drv);
+		expand_machine_driver(gamedrv->drv, &drv);
 	
 		samplenames = NULL;
 	#if (HAS_SAMPLES || HAS_VLM5030)
@@ -502,7 +502,7 @@ public class audit
 		{
 	#if (HAS_SAMPLES)
 			if( drv.sound[j].sound_type == SOUND_SAMPLES )
-				samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface).samplenames;
+				samplenames = ((struct Samplesinterface *)drv.sound[j].sound_interface)->samplenames;
 	#endif
 		}
 	#endif
@@ -523,21 +523,21 @@ public class audit
 		}
 	
 		/* do we have samples for this game? */
-		exist = mame_faccess (gamedrv.name, FILETYPE_SAMPLE);
+		exist = mame_faccess (gamedrv->name, FILETYPE_SAMPLE);
 	
 		/* try shared samples */
 		if (!exist && skipfirst)
 			exist = mame_faccess (sharedname, FILETYPE_SAMPLE);
 	
 		/* if still not found, we're done */
-		if (exist == 0)
+		if (!exist)
 			return -1;
 	
 		/* allocate missing samples list (if necessary) */
-		if (gMissingSamples == 0)
+		if (!gMissingSamples)
 			gMissingSamples = (tMissingSample *)malloc (AUD_MAX_SAMPLES * sizeof (tMissingSample));
 	
-		if (gMissingSamples != 0)
+		if (gMissingSamples)
 			*audit = aud = gMissingSamples;
 		else
 			return 0;
@@ -547,15 +547,15 @@ public class audit
 			/* skip empty definitions */
 			if (strlen (samplenames[j]) == 0)
 				continue;
-			f = mame_fopen (gamedrv.name, samplenames[j], FILETYPE_SAMPLE, 0);
+			f = mame_fopen (gamedrv->name, samplenames[j], FILETYPE_SAMPLE, 0);
 			if (f == NULL && skipfirst)
 				f = mame_fopen (sharedname, samplenames[j], FILETYPE_SAMPLE, 0);
 	
-			if (f != 0)
+			if (f)
 				mame_fclose(f);
 			else
 			{
-				strcpy (aud.name, samplenames[j]);
+				strcpy (aud->name, samplenames[j]);
 				count++;
 				aud++;
 			}
@@ -580,7 +580,7 @@ public class audit
 		/* list missing samples */
 		while (count--)
 		{
-			verify_printf ("%-8s: %s NOT FOUND\n", drivers[game].name, aud.name);
+			verify_printf ("%-8s: %s NOT FOUND\n", drivers[game]->name, aud->name);
 			aud++;
 		}
 	

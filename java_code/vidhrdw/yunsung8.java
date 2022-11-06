@@ -29,7 +29,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,14 +54,12 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr yunsung8_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		yunsung8_videobank = data;
 	} };
 	
 	
-	public static ReadHandlerPtr yunsung8_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr yunsung8_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bank;
 	
 		/*	Bit 1 of the bankswitching register contols the c000-c7ff
@@ -70,20 +68,19 @@ public class yunsung8
 		if (offset < 0x0800)	bank = yunsung8_videobank & 2;
 		else					bank = yunsung8_videobank & 1;
 	
-		if (bank != 0)	return yunsung8_videoram_0[offset];
+		if (bank)	return yunsung8_videoram_0[offset];
 		else		return yunsung8_videoram_1[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr yunsung8_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x0800)		// c000-c7ff	Banked Palette RAM
 		{
 			int bank = yunsung8_videobank & 2;
 			unsigned char *RAM;
 			int r,g,b,color;
 	
-			if (bank != 0)	RAM = yunsung8_videoram_0;
+			if (bank)	RAM = yunsung8_videoram_0;
 			else		RAM = yunsung8_videoram_1;
 	
 			RAM[offset] = data;
@@ -104,7 +101,7 @@ public class yunsung8
 			if (offset < 0x1000)	tile = (offset-0x0800);		// c800-cfff: Banked Color RAM
 			else				 	tile = (offset-0x1000)/2;	// d000-dfff: Banked Tiles RAM
 	
-			if (bank != 0)	{	yunsung8_videoram_0[offset] = data;
+			if (bank)	{	yunsung8_videoram_0[offset] = data;
 							tilemap_mark_tile_dirty(tilemap_0, tile);	}
 			else		{	yunsung8_videoram_1[offset] = data;
 							tilemap_mark_tile_dirty(tilemap_1, tile);	}
@@ -112,8 +109,7 @@ public class yunsung8
 	} };
 	
 	
-	public static WriteHandlerPtr yunsung8_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yunsung8_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_flip(ALL_TILEMAPS, (data & 1) ? (TILEMAP_FLIPX|TILEMAP_FLIPY) : 0);
 	} };
 	
@@ -175,8 +171,7 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_yunsung8  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_yunsung8  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE, 8,8, DIM_NX_0, DIM_NY_0 );
 	
@@ -201,8 +196,7 @@ public class yunsung8
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_yunsung8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yunsung8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = (~yunsung8_layers_ctrl) >> 4;
 	
 	#ifdef MAME_DEBUG
@@ -215,9 +209,9 @@ public class yunsung8
 	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
+		if (layers_ctrl&1)	tilemap_draw(bitmap,cliprect, tilemap_0, 0,0);
 		else				fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
+		if (layers_ctrl&2)	tilemap_draw(bitmap,cliprect, tilemap_1, 0,0);
 	} };
 }

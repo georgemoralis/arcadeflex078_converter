@@ -9,7 +9,7 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/10/04
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,13 +21,12 @@ public class ssozumo
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	#define TOTAL_COLORS(gfxn)	(Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
-	#define COLOR(gfxn,offs)	(colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
+	#define TOTAL_COLORS(gfxn)	(Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
+	#define COLOR(gfxn,offs)	(colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	/**************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_ssozumo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ssozumo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int	bit0, bit1, bit2, bit3, r, g, b;
 		int	i;
 	
@@ -54,8 +53,7 @@ public class ssozumo
 		}
 	} };
 	
-	public static WriteHandlerPtr ssozumo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -63,8 +61,7 @@ public class ssozumo
 		}
 	} };
 	
-	public static WriteHandlerPtr ssozumo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -72,8 +69,7 @@ public class ssozumo
 		}
 	} };
 	
-	public static WriteHandlerPtr ssozumo_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ssozumo_videoram2[offset] != data)
 		{
 			ssozumo_videoram2[offset] = data;
@@ -81,8 +77,7 @@ public class ssozumo
 		}
 	} };
 	
-	public static WriteHandlerPtr ssozumo_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ssozumo_colorram2[offset] != data)
 		{
 			ssozumo_colorram2[offset] = data;
@@ -90,30 +85,29 @@ public class ssozumo
 		}
 	} };
 	
-	public static WriteHandlerPtr ssozumo_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int	bit0, bit1, bit2, bit3, val;
 		int	r, g, b;
 		int	offs2;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 		offs2 = offset & 0x0f;
 	
-		val = paletteram[offs2];
+		val = paletteram.read(offs2);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
 		bit3 = (val >> 3) & 0x01;
 		r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-		val = paletteram[offs2 | 0x10];
+		val = paletteram.read(offs2 | 0x10);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
 		bit3 = (val >> 3) & 0x01;
 		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-		val = paletteram[offs2 | 0x20];
+		val = paletteram.read(offs2 | 0x20);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
@@ -123,13 +117,11 @@ public class ssozumo
 		palette_set_color(offs2 + 64, r, g, b);
 	} };
 	
-	public static WriteHandlerPtr ssozumo_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr ssozumo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x80);
 	} };
 	
@@ -150,18 +142,17 @@ public class ssozumo
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_ssozumo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ssozumo  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_OPAQUE, 16, 16, 16, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -184,7 +175,7 @@ public class ssozumo
 				int sx = 239 - spriteram.read(offs + 3);
 				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -192,18 +183,17 @@ public class ssozumo
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap, Machine.gfx[2],
+				drawgfx(bitmap, Machine->gfx[2],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ssozumo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ssozumo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		ssozumo_draw_sprites(bitmap);

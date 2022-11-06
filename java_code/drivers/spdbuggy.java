@@ -24,8 +24,8 @@ write 1004-1005
 read word 3f00 & 300e
 clear 1800-1eff
 
-chcksum 0-3fff even:	5ac4 . [670]
-chcksum 0-3fff odd :	2c77 . [672]
+chcksum 0-3fff even:	5ac4 -> [670]
+chcksum 0-3fff odd :	2c77 -> [672]
 
 added together (=873b), subtracted [f840] (=87d9)
 
@@ -35,7 +35,7 @@ added together (=873b), subtracted [f840] (=87d9)
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -64,8 +64,8 @@ public class spdbuggy
 	
 	***************************************************************************/
 	#if 0
-	static public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return sharedram[offset]; } };
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)	{ sharedram[offset] = data; } };
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) return sharedram[offset]; }
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data) sharedram[offset] = data; }
 	#endif
 	
 	/*
@@ -91,8 +91,7 @@ public class spdbuggy
 		a400		shared with sub 1800
 	
 	*/
-	public static ReadHandlerPtr spdbuggy_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spdbuggy_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0x0aa6:
@@ -105,29 +104,33 @@ public class spdbuggy
 	} };
 	
 	// f002 read : watchdog reset
-	static MEMORY_READ_START ( spdbuggy_readmem )
-		{ 0x00000, 0x023ff, MRA_RAM },
+	public static Memory_ReadAddress spdbuggy_readmem[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x00000, 0x023ff, MRA_RAM ),
 	
-		{ 0x08000, 0x08fff, MRA_RAM },
-		{ 0x0a000, 0x0afff, MRA_RAM },	// shared?
-		{ 0x18000, 0x18fff, MRA_RAM },
+		new Memory_ReadAddress( 0x08000, 0x08fff, MRA_RAM ),
+		new Memory_ReadAddress( 0x0a000, 0x0afff, MRA_RAM ),	// shared?
+		new Memory_ReadAddress( 0x18000, 0x18fff, MRA_RAM ),
 	
-		{ 0x10000, 0x17fff, MRA_ROM },
-		{ 0x20000, 0x2ffff, MRA_ROM },
-		{ 0xf0000, 0xfffff, MRA_ROM },
-	MEMORY_END
+		new Memory_ReadAddress( 0x10000, 0x17fff, MRA_ROM ),
+		new Memory_ReadAddress( 0x20000, 0x2ffff, MRA_ROM ),
+		new Memory_ReadAddress( 0xf0000, 0xfffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START ( spdbuggy_writemem )
-		{ 0x00000, 0x023ff, MWA_RAM },
+	public static Memory_WriteAddress spdbuggy_writemem[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x00000, 0x023ff, MWA_RAM ),
 	
-		{ 0x08000, 0x08fff, spdbuggy_fgram_w, &spdbuggy_fgram	},	// fg
-		{ 0x18000, 0x18fff, spdbuggy_bgram_w, &spdbuggy_bgram	},	// bg
-		{ 0x0a000, 0x0afff, MWA_RAM },	// shared?
+		new Memory_WriteAddress( 0x08000, 0x08fff, spdbuggy_fgram_w, spdbuggy_fgram	),	// fg
+		new Memory_WriteAddress( 0x18000, 0x18fff, spdbuggy_bgram_w, spdbuggy_bgram	),	// bg
+		new Memory_WriteAddress( 0x0a000, 0x0afff, MWA_RAM ),	// shared?
 	
-		{ 0x10000, 0x17fff, MWA_ROM },
-		{ 0x20000, 0x2ffff, MWA_ROM },
-		{ 0xf0000, 0xfffff, MWA_ROM },
-	MEMORY_END
+		new Memory_WriteAddress( 0x10000, 0x17fff, MWA_ROM ),
+		new Memory_WriteAddress( 0x20000, 0x2ffff, MWA_ROM ),
+		new Memory_WriteAddress( 0xf0000, 0xfffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -143,8 +146,7 @@ public class spdbuggy
 	***************************************************************************/
 	
 	
-	public static ReadHandlerPtr spdbuggy_ram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spdbuggy_ram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0x3e00:
@@ -161,15 +163,19 @@ public class spdbuggy
 	} };
 	
 	
-	static MEMORY_READ_START ( spdbuggy_readmem2 )
-		{ 0x0000, 0x7fff, spdbuggy_ram2_r },
-		{ 0x8000, 0xffff, MRA_ROM },
-	MEMORY_END
+	public static Memory_ReadAddress spdbuggy_readmem2[]={
+		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_ReadAddress( 0x0000, 0x7fff, spdbuggy_ram2_r ),
+		new Memory_ReadAddress( 0x8000, 0xffff, MRA_ROM ),
+		new Memory_ReadAddress(MEMPORT_MARKER, 0)
+	};
 	
-	static MEMORY_WRITE_START ( spdbuggy_writemem2 )
-		{ 0x0000, 0x7fff, MWA_RAM, &spdbuggy_ram2 },
-		{ 0x8000, 0xffff, MWA_ROM },
-	MEMORY_END
+	public static Memory_WriteAddress spdbuggy_writemem2[]={
+		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
+		new Memory_WriteAddress( 0x0000, 0x7fff, MWA_RAM, spdbuggy_ram2 ),
+		new Memory_WriteAddress( 0x8000, 0xffff, MWA_ROM ),
+		new Memory_WriteAddress(MEMPORT_MARKER, 0)
+	};
 	
 	
 	
@@ -184,7 +190,7 @@ public class spdbuggy
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_spdbuggy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spdbuggy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spdbuggy )
 	
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
@@ -371,8 +377,7 @@ public class spdbuggy
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_spdbuggy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spdbuggy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V20, 4000000)	/* ?? */
@@ -396,9 +401,7 @@ public class spdbuggy
 		MDRV_VIDEO_UPDATE(spdbuggy)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -511,7 +514,7 @@ public class spdbuggy
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_spdbuggy	   = new GameDriver("1986"	,"spdbuggy"	,"spdbuggy.java"	,rom_spdbuggy,null	,machine_driver_spdbuggy	,input_ports_spdbuggy	,null	,ROT0	,	"Tatsumi", "Speed Buggy", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1986, spdbuggy, 0, spdbuggy, spdbuggy, 0, ROT0, "Tatsumi", "Speed Buggy", GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	
 	
@@ -576,8 +579,7 @@ public class spdbuggy
 		SET_TILE_INFO(BG_GFX, code & 0x0fff, code >> 12, 0 );	// $3000 tiles!
 	}
 	
-	public static WriteHandlerPtr spdbuggy_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spdbuggy_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != spdbuggy_bgram[offset])
 		{
 			spdbuggy_bgram[offset] = data;
@@ -601,8 +603,7 @@ public class spdbuggy
 		SET_TILE_INFO(FG_GFX, code & 0x07ff, code >> 12, 0 );
 	}
 	
-	public static WriteHandlerPtr spdbuggy_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spdbuggy_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != spdbuggy_fgram[offset])
 		{
 			spdbuggy_fgram[offset] = data;
@@ -618,8 +619,7 @@ public class spdbuggy
 							[ Video Hardware Start ]
 	------------------------------------------------------------------------*/
 	
-	public static VideoStartHandlerPtr video_start_spdbuggy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spdbuggy  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(spdbuggy_get_bg_tile_info,
 									tilemap_scan_rows,
 									TILEMAP_OPAQUE,
@@ -667,8 +667,7 @@ public class spdbuggy
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spdbuggy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spdbuggy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = 0xFFFF;
 	
 	#if 0
@@ -706,13 +705,13 @@ public class spdbuggy
 	
 	
 		/* Draw the background */
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap, cliprect, bg_tilemap,  0, 0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap, cliprect, bg_tilemap,  0, 0);
 		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		/* Draw the sprites */
-		if ((layers_ctrl & 8) != 0)	draw_sprites(bitmap, cliprect);
+		if (layers_ctrl & 8)	draw_sprites(bitmap, cliprect);
 	
 		/* Draw the foreground (text) */
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap, cliprect, fg_tilemap,  0, 0);
 	} };
 }

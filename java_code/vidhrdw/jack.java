@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,8 +17,7 @@ public class jack
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr jack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -26,8 +25,7 @@ public class jack
 		}
 	} };
 	
-	public static WriteHandlerPtr jack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -35,20 +33,17 @@ public class jack
 		}
 	} };
 	
-	public static WriteHandlerPtr jack_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jack_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset,~data);
 	} };
 	
-	public static ReadHandlerPtr jack_flipscreen_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jack_flipscreen_r  = new ReadHandlerPtr() { public int handler(int offset){
 		flip_screen_set(offset);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr jack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(offset);
 	} };
 	
@@ -62,16 +57,15 @@ public class jack
 	
 	static UINT32 tilemap_scan_cols_flipy( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col * num_rows) + (num_rows - 1 - row);
 	}
 	
-	public static VideoStartHandlerPtr video_start_jack  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jack  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flipy, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -92,7 +86,7 @@ public class jack
 			flipx = (spriteram.read(offs + 3)& 0x80);
 			flipy = (spriteram.read(offs + 3)& 0x40);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;
@@ -100,17 +94,16 @@ public class jack
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					num,
 					color,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_jack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		jack_draw_sprites(bitmap);
 	} };

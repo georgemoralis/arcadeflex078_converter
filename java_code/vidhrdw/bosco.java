@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -75,8 +75,7 @@ public class bosco
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_bosco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bosco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -133,8 +132,7 @@ public class bosco
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_bosco  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bosco  = new VideoStartHandlerPtr() { public int handler(){
 		int generator;
 		int x,y;
 		int set = 0;
@@ -197,20 +195,18 @@ public class bosco
 	} };
 	
 	
-	public static WriteHandlerPtr bosco_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (bosco_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr bosco_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (bosco_videoram2[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			bosco_videoram2.write(offset,data);
+			bosco_videoram2[offset] = data;
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr bosco_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bosco_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bosco_colorram2[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
@@ -220,8 +216,7 @@ public class bosco
 	} };
 	
 	
-	public static WriteHandlerPtr bosco_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bosco_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (~data & 1))
 		{
 			flipscreen = ~data & 1;
@@ -230,18 +225,15 @@ public class bosco
 		}
 	} };
 	
-	public static WriteHandlerPtr bosco_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bosco_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bosco_scrollx = data;
 	} };
 	
-	public static WriteHandlerPtr bosco_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bosco_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bosco_scrolly = data;
 	} };
 	
-	public static WriteHandlerPtr bosco_starcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bosco_starcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bosco_starcontrol = data;
 	} };
 	
@@ -253,8 +245,7 @@ public class bosco
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_bosco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bosco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 	
 	
@@ -273,7 +264,7 @@ public class bosco
 				sy = offs / 32;
 				flipx = ~bosco_colorram2[offs] & 0x40;
 				flipy = bosco_colorram2[offs] & 0x80;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -282,7 +273,7 @@ public class bosco
 				}
 	
 				drawgfx(tmpbitmap1,Machine.gfx[0],
-						bosco_videoram2.read(offs),
+						bosco_videoram2[offs],
 						bosco_colorram2[offs] & 0x3f,
 						flipx,flipy,
 						8*sx,8*sy,
@@ -304,7 +295,7 @@ public class bosco
 				sy = offs / 32 - 2;
 				flipx = ~colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -329,7 +320,7 @@ public class bosco
 		for (offs = 0;offs < spriteram_size[0];offs += 2)
 		{
 			sx = spriteram.read(offs + 1)- displacement;
-	if (flipscreen != 0) sx += 32;
+	if (flipscreen) sx += 32;
 			sy = 225 - spriteram_2.read(offs)- displacement;
 	
 			drawgfx(bitmap,Machine.gfx[1],
@@ -346,7 +337,7 @@ public class bosco
 			int scrollx,scrolly;
 	
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				scrollx = (bosco_scrollx +32);//- 3*displacement) + 32;
 				scrolly = (bosco_scrolly + 16) - 32;
@@ -362,7 +353,7 @@ public class bosco
 	
 	
 		/* radar */
-		if (flipscreen != 0)
+		if (flipscreen)
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -376,7 +367,7 @@ public class bosco
 	
 			x = bosco_radarx[offs] + ((~bosco_radarattr[offs] & 0x01) << 8) - 2;
 			y = 235 - bosco_radary[offs];
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				x -= 1;
 				y += 2;
@@ -413,7 +404,7 @@ public class bosco
 				{
 					if (read_pixel(bitmap, x, y) == bpen)
 					{
-						plot_pixel.handler(bitmap, x, y, stars[offs].col);
+						plot_pixel(bitmap, x, y, stars[offs].col);
 					}
 				}
 			}

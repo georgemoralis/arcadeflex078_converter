@@ -36,7 +36,7 @@ DSW1          6116
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,7 +69,7 @@ public class gumbo
 		{ 0x1f0000, 0x1f3fff, gumbo_fg_videoram_w, &gumbo_fg_videoram }, // fg tilemap
 	MEMORY_END
 	
-	static InputPortPtr input_ports_gumbo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gumbo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gumbo )
 		PORT_START(); 	/* DSW */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -151,8 +151,7 @@ public class gumbo
 		{ 47 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_gumbo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gumbo )
 		MDRV_CPU_ADD(M68000, 14318180 /2) // or 10mhz? ?
 		MDRV_CPU_MEMORY(gumbo_readmem,gumbo_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) // all the same
@@ -172,9 +171,7 @@ public class gumbo
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_gumbo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x40000, REGION_CPU1, 0 ) /* 68000 Code */
@@ -193,5 +190,5 @@ public class gumbo
 		ROM_LOAD( "u511.bin", 0x20000, 0x20000, CRC(1411451b) SHA1(941d5f311f727e3a8d41ecbbe35b687d48cc2cef) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_gumbo	   = new GameDriver("1994"	,"gumbo"	,"gumbo.java"	,rom_gumbo,null	,machine_driver_gumbo	,input_ports_gumbo	,null	,ROT0	,	"Min Corp.", "Gumbo" )
+	GAME( 1994, gumbo, 0, gumbo, gumbo, 0, ROT0, "Min Corp.", "Gumbo" )
 }

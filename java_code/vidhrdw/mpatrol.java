@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class mpatrol
 	  bit 0 -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mpatrol  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mpatrol  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -203,8 +202,7 @@ public class mpatrol
 	  Stop the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_mpatrol  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mpatrol  = new VideoStartHandlerPtr() { public int handler(){
 		int i,j;
 	
 	
@@ -239,50 +237,43 @@ public class mpatrol
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollreg[offset] = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_bg1xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_bg1xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg1xpos = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_bg1ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_bg1ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg1ypos = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_bg2xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_bg2xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg2xpos = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_bg2ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_bg2ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg2ypos = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_bgcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_bgcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bgcontrol = data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mpatrol_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mpatrol_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
 		flip_screen_set(data & 1);
@@ -292,8 +283,7 @@ public class mpatrol
 	} };
 	
 	
-	public static ReadHandlerPtr mpatrol_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mpatrol_input_port_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = input_port_3_r.handler(0);
 	
 		/* Based on the coin mode fill in the upper bits */
@@ -315,18 +305,18 @@ public class mpatrol
 	
 	static void get_clip(struct rectangle *clip, int min_y, int max_y)
 	{
-		clip.min_x = Machine.visible_area.min_x;
-		clip.max_x = Machine.visible_area.max_x;
+		clip->min_x = Machine->visible_area.min_x;
+		clip->max_x = Machine->visible_area.max_x;
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
-			clip.min_y = Machine.drv.screen_height - 1 - max_y;
-			clip.max_y = Machine.drv.screen_height - 1 - min_y;
+			clip->min_y = Machine->drv->screen_height - 1 - max_y;
+			clip->max_y = Machine->drv->screen_height - 1 - min_y;
 		}
 		else
 		{
-			clip.min_y = min_y;
-			clip.max_y = max_y;
+			clip->min_y = min_y;
+			clip->max_y = max_y;
 		}
 	}
 	
@@ -339,14 +329,14 @@ public class mpatrol
 		get_clip(&clip1, ypos,            ypos + BGHEIGHT - 1);
 		get_clip(&clip2, ypos + BGHEIGHT, ypos_end);
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			xpos = 256 - xpos;
-			ypos = Machine.drv.screen_height - BGHEIGHT - ypos;
+			ypos = Machine->drv->screen_height - BGHEIGHT - ypos;
 		}
 		copybitmap(bitmap,bgbitmap[image],flip_screen(),flip_screen(),xpos,      ypos,&clip1,transparency,128);
 		copybitmap(bitmap,bgbitmap[image],flip_screen(),flip_screen(),xpos - 256,ypos,&clip1,transparency,128);
-		fillbitmap(bitmap,Machine.gfx[image*2+2].colortable[3],&clip2);
+		fillbitmap(bitmap,Machine->gfx[image*2+2]->colortable[3],&clip2);
 	}
 	
 	/***************************************************************************
@@ -356,12 +346,11 @@ public class mpatrol
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_mpatrol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mpatrol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,i;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(dirtybuffer,1,videoram_size[0]);
 	
 	
@@ -382,7 +371,7 @@ public class mpatrol
 				color = colorram.read(offs)& 0x1f;
 				if (sy >= 7) color += 32;	/* lines 7-31 are transparent */
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -422,7 +411,7 @@ public class mpatrol
 			clip.min_x = Machine.visible_area.min_x;
 			clip.max_x = Machine.visible_area.max_x;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				clip.min_y = 25 * 8;
 				clip.max_y = 32 * 8 - 1;
@@ -463,7 +452,7 @@ public class mpatrol
 			sy = 241 - spriteram_2.read(offs);
 			flipx = spriteram_2.read(offs + 1)& 0x40;
 			flipy = spriteram_2.read(offs + 1)& 0x80;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -486,7 +475,7 @@ public class mpatrol
 			sy = 241 - spriteram.read(offs);
 			flipx = spriteram.read(offs + 1)& 0x40;
 			flipy = spriteram.read(offs + 1)& 0x80;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);

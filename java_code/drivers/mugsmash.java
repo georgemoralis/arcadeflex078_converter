@@ -41,7 +41,7 @@ behavior we use .
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -245,7 +245,7 @@ public class mugsmash
 	
 	
 	#if USE_FAKE_INPUT_PORTS
-	static InputPortPtr input_ports_mugsmash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mugsmash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mugsmash )
 		PORT_START(); 	/* Fake IN0 (player 1 inputs) */
 		MUGSMASH_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 	
@@ -306,7 +306,7 @@ public class mugsmash
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	#else
-	static InputPortPtr input_ports_mugsmash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mugsmash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mugsmash )
 		PORT_START(); 	/* IN0 - $180000.w */
 		MUGSMASH_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -446,8 +446,7 @@ public class mugsmash
 		{ 47 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_mugsmash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mugsmash )
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(mugsmash_readmem,mugsmash_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -472,9 +471,7 @@ public class mugsmash
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_mugsmash = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 Code */
@@ -503,5 +500,5 @@ public class mugsmash
 		ROM_LOAD( "mugs_15.bin", 0x180000, 0x080000, CRC(82e8187c) SHA1(c7a0e1b3d90dbbe2588886a27a07a9c336447ae3) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mugsmash	   = new GameDriver("1990?"	,"mugsmash"	,"mugsmash.java"	,rom_mugsmash,null	,machine_driver_mugsmash	,input_ports_mugsmash	,null	,ROT0	,	"Electronic Devices Italy / 3D Games England", "Mug Smashers" )
+	GAME( 1990?, mugsmash, 0, mugsmash, mugsmash, 0, ROT0, "Electronic Devices Italy / 3D Games England", "Mug Smashers" )
 }

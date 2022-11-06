@@ -1,25 +1,24 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class system24
 {
 	
-	VIDEO_START(system24)
-	{
+	public static VideoStartHandlerPtr video_start_system24  = new VideoStartHandlerPtr() { public int handler(){
 		if(sys24_tile_vh_start(0xfff))
 			return 1;
 	
-		if (sys24_sprite_vh_start() != 0)
+		if(sys24_sprite_vh_start())
 			return 1;
 	
-		if (sys24_mixer_vh_start() != 0)
+		if(sys24_mixer_vh_start())
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
 	static int layer_cmp(const void *pl1, const void *pl2)
 	{
@@ -33,8 +32,7 @@ public class system24
 		return default_pri[l2] - default_pri[l1];
 	}
 	
-	VIDEO_UPDATE(system24)
-	{
+	public static VideoUpdateHandlerPtr video_update_system24  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, level;
 		int order[12], spri[4];
 	
@@ -62,5 +60,5 @@ public class system24
 			}
 	
 		sys24_sprite_draw(bitmap, cliprect, spri);
-	}
+	} };
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class skykid
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_skykid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skykid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int bit0,bit1,bit2,bit3,r,g,b;
 		int totcolors = Machine.drv.total_colors;
@@ -101,11 +100,10 @@ public class skykid
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_skykid  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_skykid  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (background == 0)
+		if (!background)
 			return 1;
 	
 		{
@@ -126,37 +124,32 @@ public class skykid
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr skykid_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skykid_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return skykid_videoram[offset];
 	} };
 	
-	public static WriteHandlerPtr skykid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (skykid_videoram[offset] != data){
 			skykid_videoram[offset] = data;
 			tilemap_mark_tile_dirty(background,offset & 0x7ff);
 		}
 	} };
 	
-	public static WriteHandlerPtr skykid_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (flipscreen != 0)
+	public static WriteHandlerPtr skykid_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (flipscreen)
 			tilemap_set_scrollx(background, 0, (189 - (offset ^ 1)) & 0x1ff);
 		else
 			tilemap_set_scrollx(background, 0, ((offset) + 35) & 0x1ff);
 	} };
 	
-	public static WriteHandlerPtr skykid_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (flipscreen != 0)
+	public static WriteHandlerPtr skykid_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (flipscreen)
 			tilemap_set_scrolly(background, 0, (261 - offset) & 0xff);
 		else
 			tilemap_set_scrolly(background, 0, (offset + 27) & 0xff);
 	} };
 	
-	public static WriteHandlerPtr skykid_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		priority = data;
 		flipscreen = offset;
 		tilemap_set_flip(background,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
@@ -181,7 +174,7 @@ public class skykid
 			int flipx = spriteram_3.read(offs)& 0x01;
 			int width, height;
 	
-			if (flipscreen != 0){
+			if (flipscreen){
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 			}
@@ -209,7 +202,7 @@ public class skykid
 						ex = flipx ? (width-1-x) : x;
 						ey = flipy ? (height-1-y) : y;
 	
-						drawgfx(bitmap,Machine.gfx[2+(number >> 7)],
+						drawgfx(bitmap,Machine->gfx[2+(number >> 7)],
 							(number)+x_offset[ex]+y_offset[ey],
 							color,
 							flipx, flipy,
@@ -222,8 +215,7 @@ public class skykid
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skykid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_draw(bitmap,cliprect,background,0,0);
@@ -251,7 +243,7 @@ public class skykid
 					sx = mx + 2;
 					sy = my - 2;
 				}
-				if (flipscreen != 0){
+				if (flipscreen){
 					sx = 35 - sx;
 					sy = 27 - sy;
 				}

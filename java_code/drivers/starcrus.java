@@ -11,7 +11,7 @@ palazzol@home.com
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,7 +62,7 @@ public class starcrus
 	
 	
 	
-	static InputPortPtr input_ports_starcrus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starcrus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starcrus )
 			PORT_START(); 	/* player 1 */
 			PORT_BIT (0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_2WAY );/* ccw */
 			PORT_BIT (0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );/* engine */
@@ -150,8 +150,7 @@ public class starcrus
 	{
 		0x00, 0x01, /* White on Black */
 	};
-	static public static PaletteInitHandlerPtr palette_init_starcrus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_starcrus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* Black */
 	    palette_set_color(1,0xff,0xff,0xff); /* White */
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
@@ -175,8 +174,7 @@ public class starcrus
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_starcrus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starcrus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,9750000/9)  /* 8224 chip is a divide by 9 */
@@ -201,9 +199,7 @@ public class starcrus
 	
 	    /* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -234,5 +230,5 @@ public class starcrus
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_starcrus	   = new GameDriver("1977"	,"starcrus"	,"starcrus.java"	,rom_starcrus,null	,machine_driver_starcrus	,input_ports_starcrus	,null	,ROT0	,	"RamTek", "Star Cruiser" )
+	GAME( 1977, starcrus, 0, starcrus, starcrus, 0, ROT0, "RamTek", "Star Cruiser" )
 }

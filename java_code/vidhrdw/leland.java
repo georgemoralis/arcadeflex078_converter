@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -62,8 +62,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_leland  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_leland  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate memory */
 	    leland_video_ram = auto_malloc(VRAM_SIZE);
 	    fgbitmap = auto_bitmap_alloc(VIDEO_WIDTH * 8, VIDEO_HEIGHT * 8);
@@ -78,15 +77,14 @@ public class leland
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_ataxx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ataxx  = new VideoStartHandlerPtr() { public int handler(){
 		/* first do the standard stuff */
-		if (video_start_leland() != 0)
+		if (video_start_leland())
 			return 1;
 	
 		/* allocate memory */
 		ataxx_qram = auto_malloc(QRAM_SIZE);
-	    if (ataxx_qram == 0)
+	    if (!ataxx_qram)
 			return 1;
 	
 		/* reset QRAM */
@@ -102,8 +100,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_gfx_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_gfx_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* adjust the proper scroll value */
 	    switch (offset)
 	    {
@@ -161,13 +158,13 @@ public class leland
 	{
 		struct vram_state_data *state = vram_state + num;
 	
-		if (offset == 0)
-			state.addr = (state.addr & 0xfe00) | ((data << 1) & 0x01fe);
+		if (!offset)
+			state->addr = (state->addr & 0xfe00) | ((data << 1) & 0x01fe);
 		else
-			state.addr = ((data << 9) & 0xfe00) | (state.addr & 0x01fe);
+			state->addr = ((data << 9) & 0xfe00) | (state->addr & 0x01fe);
 	
 		if (num == 0)
-			sync_next_write = (state.addr >= 0xf000);
+			sync_next_write = (state->addr >= 0xf000);
 	}
 	
 	
@@ -229,7 +226,7 @@ public class leland
 	static int leland_vram_port_r(int offset, int num)
 	{
 		struct vram_state_data *state = vram_state + num;
-		int addr = state.addr;
+		int addr = state->addr;
 		int inc = (offset >> 2) & 2;
 	    int ret;
 	
@@ -257,7 +254,7 @@ public class leland
 	            ret = 0;
 	            break;
 	    }
-	    state.addr = addr;
+	    state->addr = addr;
 	
 		if (LOG_COMM && addr >= 0xf000)
 			logerror("%04X:%s comm read %04X = %02X\n", activecpu_get_previouspc(), num ? "slave" : "master", addr, ret);
@@ -276,7 +273,7 @@ public class leland
 	static void leland_vram_port_w(int offset, int data, int num)
 	{
 		struct vram_state_data *state = vram_state + num;
-		int addr = state.addr;
+		int addr = state->addr;
 		int inc = (offset >> 2) & 2;
 		int trans = (offset >> 4) & num;
 	
@@ -297,19 +294,19 @@ public class leland
 	    switch (offset & 7)
 	    {
 	        case 1:	/* write hi = data, lo = latch */
-	        	leland_video_ram[addr & ~1] = state.latch[0];
+	        	leland_video_ram[addr & ~1] = state->latch[0];
 	        	leland_video_ram[addr |  1] = data;
 	        	addr += inc;
 	        	break;
 	
 	        case 2:	/* write hi = latch, lo = data */
 	        	leland_video_ram[addr & ~1] = data;
-	        	leland_video_ram[addr |  1] = state.latch[1];
+	        	leland_video_ram[addr |  1] = state->latch[1];
 	        	addr += inc;
 	        	break;
 	
 	        case 3:	/* write hi/lo = data (alternating) */
-	        	if (trans != 0)
+	        	if (trans)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr] & 0x0f;
@@ -320,8 +317,8 @@ public class leland
 	            break;
 	
 	        case 5:	/* write hi = data */
-	        	state.latch[1] = data;
-	        	if (trans != 0)
+	        	state->latch[1] = data;
+	        	if (trans)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr | 1] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr | 1] & 0x0f;
@@ -331,8 +328,8 @@ public class leland
 	            break;
 	
 	        case 6:	/* write lo = data */
-	        	state.latch[0] = data;
-	        	if (trans != 0)
+	        	state->latch[0] = data;
+	        	if (trans)
 	        	{
 	        		if (!(data & 0xf0)) data |= leland_video_ram[addr & ~1] & 0xf0;
 	        		if (!(data & 0x0f)) data |= leland_video_ram[addr & ~1] & 0x0f;
@@ -348,7 +345,7 @@ public class leland
 	    }
 	
 	    /* update the address and plane */
-	    state.addr = addr;
+	    state->addr = addr;
 	}
 	
 	
@@ -359,8 +356,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_master_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_master_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    leland_video_addr_w(offset, data, 0);
 	} };
 	
@@ -374,9 +370,8 @@ public class leland
 	}
 	
 	
-	public static WriteHandlerPtr leland_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (sync_next_write != 0)
+	public static WriteHandlerPtr leland_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (sync_next_write)
 		{
 			timer_set(TIME_NOW, 0x00000 | (offset << 8) | data, leland_delayed_mvram_w);
 			sync_next_write = 0;
@@ -386,8 +381,7 @@ public class leland
 	} };
 	
 	
-	public static ReadHandlerPtr leland_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return leland_vram_port_r(offset, 0);
 	} };
 	
@@ -399,20 +393,17 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr leland_slave_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_slave_video_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    leland_video_addr_w(offset, data, 1);
 	} };
 	
 	
-	public static WriteHandlerPtr leland_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr leland_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    leland_vram_port_w(offset, data, 1);
 	} };
 	
 	
-	public static ReadHandlerPtr leland_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr leland_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return leland_vram_port_r(offset, 1);
 	} };
 	
@@ -424,10 +415,9 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr ataxx_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ataxx_mvram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
-		if (sync_next_write != 0)
+		if (sync_next_write)
 		{
 			timer_set(TIME_NOW, 0x00000 | (offset << 8) | data, leland_delayed_mvram_w);
 			sync_next_write = 0;
@@ -437,8 +427,7 @@ public class leland
 	} };
 	
 	
-	public static WriteHandlerPtr ataxx_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ataxx_svram_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 		leland_vram_port_w(offset, data, 1);
 	} };
@@ -451,15 +440,13 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr ataxx_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ataxx_mvram_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 	    return leland_vram_port_r(offset, 0);
 	} };
 	
 	
-	public static ReadHandlerPtr ataxx_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ataxx_svram_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = ((offset >> 1) & 0x07) | ((offset << 3) & 0x08) | (offset & 0x10);
 	    return leland_vram_port_r(offset, 1);
 	} };
@@ -482,8 +469,7 @@ public class leland
 	}
 	
 	
-	public static VideoEofHandlerPtr video_eof_leland  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_leland  = new VideoEofHandlerPtr() { public void handler(){
 		/* update anything remaining */
 		update_for_scanline(VIDEO_HEIGHT * 8);
 	
@@ -499,8 +485,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_leland  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const UINT8 *background_prom = memory_region(REGION_USER1);
 		const struct GfxElement *gfx = Machine.gfx[0];
 		int char_bank = ((gfxbank >> 4) & 0x03) * 0x0400;
@@ -550,8 +535,7 @@ public class leland
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ataxx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const struct GfxElement *gfx = Machine.gfx[0];
 		int xcoarse = xscroll / 8;
 		int ycoarse = yscroll / 8;

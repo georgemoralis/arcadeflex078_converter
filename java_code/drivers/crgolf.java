@@ -27,7 +27,7 @@ WHO AM I?      (In place of "ARIES ELECA")
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -51,15 +51,13 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr rom_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rom_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *region_base = memory_region(REGION_CPU1);
 		cpu_setbank(1, region_base + 0x10000 + (data & 15) * 0x2000);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_crgolf  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_crgolf  = new MachineInitHandlerPtr() { public void handler(){
 		rom_bank_select_w(0, 0);
 	} };
 	
@@ -71,20 +69,17 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr switch_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr switch_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(port_select);
 	} };
 	
 	
-	public static ReadHandlerPtr analog_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr analog_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ((readinputport(7) >> 4) | (readinputport(8) & 0xf0)) ^ 0x88;
 	} };
 	
 	
-	public static WriteHandlerPtr switch_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr switch_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!(data & 0x40)) port_select = 6;
 		if (!(data & 0x20)) port_select = 5;
 		if (!(data & 0x10)) port_select = 4;
@@ -95,8 +90,7 @@ public class crgolf
 	} };
 	
 	
-	public static WriteHandlerPtr unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%04X:unknown_w = %02X\n", activecpu_get_pc(), data);
 	} };
 	
@@ -104,7 +98,7 @@ public class crgolf
 	
 	/*************************************
 	 *
-	 *	Main.Sound CPU communications
+	 *	Main->Sound CPU communications
 	 *
 	 *************************************/
 	
@@ -115,14 +109,12 @@ public class crgolf
 	}
 	
 	
-	public static WriteHandlerPtr main_to_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr main_to_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, main_to_sound_callback);
 	} };
 	
 	
-	public static ReadHandlerPtr main_to_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr main_to_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, IRQ_LINE_NMI, CLEAR_LINE);
 		return main_to_sound_data;
 	} };
@@ -131,7 +123,7 @@ public class crgolf
 	
 	/*************************************
 	 *
-	 *	Sound.Main CPU communications
+	 *	Sound->Main CPU communications
 	 *
 	 *************************************/
 	
@@ -142,14 +134,12 @@ public class crgolf
 	}
 	
 	
-	public static WriteHandlerPtr sound_to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, sound_to_main_callback);
 	} };
 	
 	
-	public static ReadHandlerPtr sound_to_main_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_to_main_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(0, IRQ_LINE_NMI, CLEAR_LINE);
 		return sound_to_main_data;
 	} };
@@ -233,7 +223,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_crgolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crgolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crgolf )
 		PORT_START(); 	/* CREDIT */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SERVICE1 );
@@ -328,8 +318,7 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_crgolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crgolf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,MASTER_CLOCK/3/2)
@@ -358,9 +347,7 @@ public class crgolf
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -479,8 +466,8 @@ public class crgolf
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_crgolf	   = new GameDriver("1984"	,"crgolf"	,"crgolf.java"	,rom_crgolf,null	,machine_driver_crgolf	,input_ports_crgolf	,null	,ROT0	,	"Nasco Japan", "Crowns Golf (set 1)" )
-	public static GameDriver driver_crgolfa	   = new GameDriver("1984"	,"crgolfa"	,"crgolf.java"	,rom_crgolfa,driver_crgolf	,machine_driver_crgolf	,input_ports_crgolf	,null	,ROT0	,	"Nasco Japan", "Crowns Golf (set 2)" )
-	public static GameDriver driver_crgolfc	   = new GameDriver("1984"	,"crgolfc"	,"crgolf.java"	,rom_crgolfc,driver_crgolf	,machine_driver_crgolf	,input_ports_crgolf	,null	,ROT0	,	"Nasco Japan", "Champion Golf" )
-	public static GameDriver driver_crgolfb	   = new GameDriver("1984"	,"crgolfb"	,"crgolf.java"	,rom_crgolfb,driver_crgolf	,machine_driver_crgolf	,input_ports_crgolf	,null	,ROT0	,	"Nasco Japan", "Champion Golf (bootleg Set 1)" )
+	GAME( 1984, crgolf,  0,      crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Crowns Golf (set 1)" )
+	GAME( 1984, crgolfa, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Crowns Golf (set 2)" )
+	GAME( 1984, crgolfc, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Champion Golf" )
+	GAME( 1984, crgolfb, crgolf, crgolf,  crgolf,  0, ROT0, "Nasco Japan", "Champion Golf (bootleg Set 1)" )
 }

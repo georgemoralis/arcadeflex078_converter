@@ -47,7 +47,7 @@ Stephh's notes (based on the game M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,12 +65,9 @@ public class aquarium
 	WRITE16_HANDLER( aquarium_mid_videoram_w );
 	WRITE16_HANDLER( aquarium_bak_videoram_w );
 	
-	VIDEO_START(aquarium);
-	VIDEO_UPDATE(aquarium);
 	
 	#if AQUARIUS_HACK
-	public static MachineInitHandlerPtr machine_init_aquarium  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_aquarium  = new MachineInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(3);
 	
@@ -96,8 +93,7 @@ public class aquarium
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
 	}
 	
-	public static WriteHandlerPtr aquarium_z80_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aquarium_z80_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int soundbank = ((data & 0x7) + 1) * 0x8000;
 		data8_t *Z80 = (data8_t *)memory_region(REGION_CPU2);
 	
@@ -163,7 +159,7 @@ public class aquarium
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_aquarium = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aquarium = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aquarium )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy" );
@@ -281,8 +277,7 @@ public class aquarium
 		128*8	/* every sprite takes 128 consecutive bytes */
 	);
 	
-	public static DriverInitHandlerPtr init_aquarium  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aquarium  = new DriverInitHandlerPtr() { public void handler(){
 		/* The BG tiles are 5bpp, this rearranges the data from
 		   the roms containing the 1bpp data so we can decode it
 		   correctly */
@@ -353,8 +348,7 @@ public class aquarium
 		{ 47 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_aquarium = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aquarium )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 32000000/2)
@@ -387,9 +381,7 @@ public class aquarium
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_aquarium = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x080000, REGION_CPU1, 0 )     /* 68000 code */
@@ -422,8 +414,8 @@ public class aquarium
 	ROM_END(); }}; 
 	
 	#if !AQUARIUS_HACK
-	public static GameDriver driver_aquarium	   = new GameDriver("1996"	,"aquarium"	,"aquarium.java"	,rom_aquarium,null	,machine_driver_aquarium	,input_ports_aquarium	,init_aquarium	,ROT0	,	"Excellent System", "Aquarium (Japan)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System", "Aquarium (Japan)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 	#else
-	public static GameDriver driver_aquarium	   = new GameDriver("1996"	,"aquarium"	,"aquarium.java"	,rom_aquarium,null	,machine_driver_aquarium	,input_ports_aquarium	,init_aquarium	,ROT0	,	"Excellent System", "Aquarium", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX( 1996, aquarium, 0, aquarium, aquarium, aquarium, ROT0, "Excellent System", "Aquarium", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 	#endif
 }

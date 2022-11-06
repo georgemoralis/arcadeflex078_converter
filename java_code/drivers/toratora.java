@@ -21,7 +21,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,8 +31,7 @@ public class toratora
 	
 	
 	
-	public static WriteHandlerPtr toratora_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toratora_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			int i,x,y;
@@ -44,7 +43,7 @@ public class toratora
 	
 			for (i = 0; i < 8; i++)
 			{
-				plot_pixel.handler(tmpbitmap, x, y, Machine.pens[(data & 0x80) ? 1 : 0]);
+				plot_pixel(tmpbitmap, x, y, Machine->pens[(data & 0x80) ? 1 : 0]);
 	
 				x++;
 				data <<= 1;
@@ -52,8 +51,7 @@ public class toratora
 		}
 	} };
 	
-	public static WriteHandlerPtr toratora_clear_tv_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toratora_clear_tv_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		for (offset = 0;offset < 0x2000;offset++)
 			toratora_videoram_w(offset,0);
 	} };
@@ -61,8 +59,7 @@ public class toratora
 	
 	
 	
-	public static InterruptHandlerPtr toratora_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr toratora_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* for simplicity, I generate an IRQ every vblank. In reality, the IRQ
 		   should be generated every time the status of an input
 		   (buttons + coins) changes. */
@@ -71,23 +68,19 @@ public class toratora
 	
 	
 	
-	public static ReadHandlerPtr porta_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr porta_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(0) & 0x0f;
 	} };
 	
-	public static ReadHandlerPtr ca1_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ca1_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(0) & 0x10) >> 4;	/* coin A */
 	} };
 	
-	public static ReadHandlerPtr ca2_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ca2_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(0) & 0x20) >> 5;	/* coin B */
 	} };
 	
-	public static WriteHandlerPtr portb_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portb_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this is the coin counter output, however it is controlled by changing
 		   the PIA DDR (FF/DF) so we don't have a way to know which is which
 		   because we always get a 00 write. */
@@ -95,19 +88,16 @@ public class toratora
 	
 	
 	
-	public static ReadHandlerPtr portb_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr portb_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("%04x: read DIP\n",activecpu_get_pc());
 		return readinputport(1);
 	} };
 	
-	public static WriteHandlerPtr ca2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ca2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("76477 #0 VCO SEL = %d\n",data & 1);
 	} };
 	
-	public static WriteHandlerPtr cb2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cb2_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("DIP tristate %sactive\n",(data & 1) ? "in" : "");
 	} };
 	
@@ -132,8 +122,7 @@ public class toratora
 		/*irqs   : A/B             */ 0, 0,
 	};
 	
-	public static MachineInitHandlerPtr machine_init_toratora  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_toratora  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia0_intf);
 		pia_config(1, PIA_STANDARD_ORDERING, &pia1_intf);
@@ -144,21 +133,18 @@ public class toratora
 	
 	static int timer;
 	
-	public static InterruptHandlerPtr toratora_timer = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr toratora_timer = new InterruptHandlerPtr() {public void handler(){
 		timer++;	/* timer counting at 16 Hz */
 	
 		/* also, when the timer overflows (16 seconds) watchdog would kick in */
-		if ((timer & 0x100) != 0) usrintf_showmessage("watchdog!");
+		if (timer & 0x100) usrintf_showmessage("watchdog!");
 	} };
 	
-	public static ReadHandlerPtr toratora_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr toratora_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return timer;
 	} };
 	
-	public static WriteHandlerPtr toratora_clear_timer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toratora_clear_timer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer = 0;
 	} };
 	
@@ -193,7 +179,7 @@ public class toratora
 	
 	
 	
-	static InputPortPtr input_ports_toratora = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toratora = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toratora )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT );
@@ -227,8 +213,7 @@ public class toratora
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_toratora = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toratora )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800,500000)	/* ?????? game speed is entirely controlled by this */
@@ -252,9 +237,7 @@ public class toratora
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -275,5 +258,5 @@ public class toratora
 	
 	
 	
-	public static GameDriver driver_toratora	   = new GameDriver("1980"	,"toratora"	,"toratora.java"	,rom_toratora,null	,machine_driver_toratora	,input_ports_toratora	,null	,ROT90	,	"GamePlan", "Tora Tora", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1980, toratora, 0, toratora, toratora, 0, ROT90, "GamePlan", "Tora Tora", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

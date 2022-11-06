@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -55,8 +55,7 @@ public class tp84
 				220 ohm
 				100 ohm
 	*/
-	public static PaletteInitHandlerPtr palette_init_tp84  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tp84  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -123,8 +122,7 @@ public class tp84
 	} };
 	
 	
-	public static WriteHandlerPtr tp84_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -132,8 +130,7 @@ public class tp84
 		}
 	} };
 	
-	public static WriteHandlerPtr tp84_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -141,36 +138,31 @@ public class tp84
 		}
 	} };
 	
-	public static WriteHandlerPtr tp84_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tp84_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr tp84_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tp84_videoram2[offset] != data)
 		{
-			tp84_videoram2.write(data,data);
+			tp84_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tp84_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tp84_colorram2.read(offset)!= data)
+	public static WriteHandlerPtr tp84_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tp84_colorram2[offset] != data)
 		{
-			tp84_colorram2.write(data,data);
+			tp84_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tp84_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr tp84_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr tp84_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_x != (data & 0x01))
 		{
 			flip_screen_x_set(data & 0x01);
@@ -178,8 +170,7 @@ public class tp84
 		}
 	} };
 	
-	public static WriteHandlerPtr tp84_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_y != (data & 0x01))
 		{
 			flip_screen_y_set(data & 0x01);
@@ -190,8 +181,7 @@ public class tp84
 	/*****
 	  col0 is a register to index the color Proms
 	*****/
-	public static WriteHandlerPtr tp84_col0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tp84_col0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (col0 != data)
 		{
 			col0 = data;
@@ -200,8 +190,7 @@ public class tp84
 	} };
 	
 	/* Return the current video scan line */
-	public static ReadHandlerPtr tp84_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tp84_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return scanline;
 	} };
 	
@@ -219,33 +208,32 @@ public class tp84
 	static void get_fg_tile_info(int tile_index)
 	{
 		int coloffs = ((col0 & 0x18) << 1) + ((col0 & 0x07) << 6);
-		int attr = tp84_colorram2.read(tile_index);
-		int code = tp84_videoram2.read(tile_index)+ ((attr & 0x30) << 4);
+		int attr = tp84_colorram2[tile_index];
+		int code = tp84_videoram2[tile_index]+ ((attr & 0x30) << 4);
 		int color = (attr & 0x0f) + coloffs;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0) | TILE_IGNORE_TRANSPARENCY;
 	
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_tp84  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tp84  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
 	
 		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
 	
-		if (sprite_mux_buffer == 0)
+		if (!sprite_mux_buffer)
 			return 1;
 	
 		return 0;
@@ -253,15 +241,15 @@ public class tp84
 	
 	static void tp84_draw_sprites(struct mame_bitmap *bitmap)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
-		struct rectangle clip = Machine.visible_area;
+		const struct GfxElement *gfx = Machine->gfx[1];
+		struct rectangle clip = Machine->visible_area;
 		int offs;
 		int line;
 		int coloffset = ((col0&0x07) << 4);
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= Machine.visible_area.min_y && line <= Machine.visible_area.max_y)
+			if (line >= Machine->visible_area.min_y && line <= Machine->visible_area.max_y)
 			{
 				UINT8 *sr;
 	
@@ -294,8 +282,7 @@ public class tp84
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tp84  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tp84  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle clip;
 	
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
@@ -318,8 +305,7 @@ public class tp84
 		tilemap_draw(bitmap, &clip, fg_tilemap, 0, 0);
 	} };
 	
-	public static InterruptHandlerPtr tp84_6809_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tp84_6809_interrupt = new InterruptHandlerPtr() {public void handler(){
 		scanline = 255 - cpu_getiloops();
 	
 		memcpy(sprite_mux_buffer + scanline * spriteram_size,spriteram,spriteram_size);

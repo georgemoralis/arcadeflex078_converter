@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class exctsccr
 	  Convert the color PROMs into a more useable format.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_exctsccr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_exctsccr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,idx;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -108,8 +107,7 @@ public class exctsccr
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 	}
 	
-	public static WriteHandlerPtr exctsccr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exctsccr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -117,8 +115,7 @@ public class exctsccr
 		}
 	} };
 	
-	public static WriteHandlerPtr exctsccr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exctsccr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -126,8 +123,7 @@ public class exctsccr
 		}
 	} };
 	
-	public static WriteHandlerPtr exctsccr_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exctsccr_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
@@ -135,8 +131,7 @@ public class exctsccr
 		}
 	} };
 	
-	public static WriteHandlerPtr exctsccr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exctsccr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != data)
 		{
 			flip_screen_set(data);
@@ -152,12 +147,11 @@ public class exctsccr
 		SET_TILE_INFO(gfx_bank, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_exctsccr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exctsccr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		timer_pulse( TIME_IN_HZ( 75.0 ), 0, exctsccr_fm_callback ); /* updates fm */
@@ -185,12 +179,12 @@ public class exctsccr
 			bank = 2;
 			bank += ( ( OBJ1[offs+1] >> 4 ) & 1 );
 	
-			drawgfx(bitmap,Machine.gfx[bank],
+			drawgfx(bitmap,Machine->gfx[bank],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN,0);
 		}
 	
@@ -217,48 +211,47 @@ public class exctsccr
 	
 			if ( color > 0x10 && color < 0x17 )
 			{
-				drawgfx(bitmap,Machine.gfx[4],
+				drawgfx(bitmap,Machine->gfx[4],
 					code,
 					0x0e,
 					flipx, flipy,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN,0);
 	
 				color += 6;
 			}
 			if ( color==0x1d && gfx_bank==1 )
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine.gfx[4],
+				drawgfx(bitmap,Machine->gfx[4],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_COLOR, 16);
 	
 			} else
 			{
-			drawgfx(bitmap,Machine.gfx[bank],
+			drawgfx(bitmap,Machine->gfx[bank],
 					code,
 					color,
 					flipx, flipy,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exctsccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		exctsccr_draw_sprites( bitmap );
 	} };

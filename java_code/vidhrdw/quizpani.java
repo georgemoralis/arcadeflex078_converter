@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,7 +22,7 @@ public class quizpani
 	
 	static UINT32 bg_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x0f) + ((col & 0xff) << 4) + ((row & 0x70) << 8);
 	}
 	
@@ -39,7 +39,7 @@ public class quizpani
 	
 	static void txt_tile_info(int tile_index)
 	{
-		int code = quizpani_txt_videoram.read(tile_index);
+		int code = quizpani_txt_videoram[tile_index];
 	
 		SET_TILE_INFO(
 				0,
@@ -56,13 +56,13 @@ public class quizpani
 	
 	WRITE16_HANDLER( quizpani_txt_videoram_w )
 	{
-		quizpani_txt_videoram.write(data,data);
+		quizpani_txt_videoram[offset] = data;
 		tilemap_mark_tile_dirty(txt_tilemap, offset);
 	}
 	
 	WRITE16_HANDLER( quizpani_tilesbank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if(quizpani_txtbank != (data & 0x30)>>4)
 			{
@@ -78,8 +78,7 @@ public class quizpani
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_quizpani  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_quizpani  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap  = tilemap_create(bg_tile_info, bg_scan,TILEMAP_OPAQUE,16,16,256,32);
 		txt_tilemap = tilemap_create(txt_tile_info,bg_scan,TILEMAP_TRANSPARENT,16,16,256,32);
 		tilemap_set_transparent_pen(txt_tilemap,15);
@@ -90,8 +89,7 @@ public class quizpani
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_quizpani  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, quizpani_scrollreg[0] - 64);
 		tilemap_set_scrolly(bg_tilemap, 0, quizpani_scrollreg[1] + 16);
 		tilemap_set_scrollx(txt_tilemap, 0, quizpani_scrollreg[2] - 64);

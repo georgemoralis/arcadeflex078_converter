@@ -29,13 +29,13 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 		The game only uses this scheme:
 
-		Back . Front:	Layer 0, Layer 1, Sprites
+		Back -> Front:	Layer 0, Layer 1, Sprites
 
 ***************************************************************************/
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -128,8 +128,7 @@ public class esd16
 	***************************************************************************/
 	
 	
-	public static VideoStartHandlerPtr video_start_esd16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_esd16  = new VideoStartHandlerPtr() { public int handler(){
 		esdtilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_OPAQUE,			8,8,	0x80,0x40);
 	
@@ -186,8 +185,8 @@ public class esd16
 	{
 		int offs;
 	
-		int max_x		=	Machine.drv.screen_width;
-		int max_y		=	Machine.drv.screen_height;
+		int max_x		=	Machine->drv->screen_width;
+		int max_y		=	Machine->drv->screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 8/2 )
 		{
@@ -211,16 +210,16 @@ public class esd16
 			sy	 =	0x100 - ((sy & 0xff)  - (sy & 0x100));
 			sy	-=	dimy*16;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{	flipx = NOT(flipx);		sx = max_x - sx -    1 * 16 + 2;	// small offset
 				flipy = NOT(flipy);		sy = max_y - sy - dimy * 16;	}
 	
-			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
+			if (flipy)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy;				endy = sy+dimy*16;	incy = +16;	}
 	
 			for (y = starty ; y != endy ; y += incy)
 			{
-				drawgfx(	bitmap, Machine.gfx[0],
+				drawgfx(	bitmap, Machine->gfx[0],
 							code++,
 							color,
 							flipx, flipy,
@@ -235,8 +234,8 @@ public class esd16
 	{
 		int offs;
 	
-		int max_x		=	Machine.drv.screen_width;
-		int max_y		=	Machine.drv.screen_height;
+		int max_x		=	Machine->drv->screen_width;
+		int max_y		=	Machine->drv->screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 8/2 )
 		{
@@ -263,16 +262,16 @@ public class esd16
 	
 			sy = 0x1ff-sy;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{	flipx = NOT(flipx);		sx = max_x - sx -    1 * 16 + 2;	// small offset
 				flipy = NOT(flipy);		sy = max_y - sy - dimy * 16;	}
 	
-			if (flipy != 0)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
+			if (flipy)	{	starty = sy+(dimy-1)*16;	endy = sy-16;		incy = -16;	}
 			else		{	starty = sy-dimy*16;				endy = sy;	incy = +16;	}
 	
 			for (y = starty ; y != endy ; y += incy)
 			{
-				drawgfx(	bitmap, Machine.gfx[0],
+				drawgfx(	bitmap, Machine->gfx[0],
 							code++,
 							color,
 							flipx, flipy,
@@ -292,8 +291,7 @@ public class esd16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_esd16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_esd16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		tilemap_set_scrollx(esdtilemap_0, 0, esd16_scroll_0[0]);
@@ -311,17 +309,16 @@ public class esd16
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
 		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_1,0,0);
+		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,esdtilemap_1,0,0);
 	
-		if ((layers_ctrl & 4) != 0)	esd16_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 4)	esd16_draw_sprites(bitmap,cliprect);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hedpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hedpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		tilemap_set_scrollx(esdtilemap_0, 0, esd16_scroll_0[0]);
@@ -337,10 +334,10 @@ public class esd16
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,esdtilemap_0,0,0);
 		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((layers_ctrl & 2) != 0)
+		if (layers_ctrl & 2)
 		{
 			if (head_layersize[0]&0x0002)
 			{
@@ -356,7 +353,7 @@ public class esd16
 			}
 	
 		}
-		if ((layers_ctrl & 4) != 0)	hedpanic_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 4)	hedpanic_draw_sprites(bitmap,cliprect);
 	
 	
 	//	usrintf_showmessage("%04x %04x %04x %04x %04x",head_unknown1[0],head_layersize[0],head_unknown3[0],head_unknown4[0],head_unknown5[0]);

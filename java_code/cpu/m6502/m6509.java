@@ -39,7 +39,7 @@ addresses take place.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6502;
 
@@ -123,25 +123,21 @@ public class m6509
 	 ***************************************************************/
 	
 	
-	public static ReadHandlerPtr m6509_read_00000  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6509_read_00000  = new ReadHandlerPtr() { public int handler(int offset){
 		return m6509.pc_bank.b.h2;
 	} };
 	
-	public static ReadHandlerPtr m6509_read_00001  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6509_read_00001  = new ReadHandlerPtr() { public int handler(int offset){
 		return m6509.ind_bank.b.h2;
 	} };
 	
-	public static WriteHandlerPtr m6509_write_00000 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6509_write_00000 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6509.pc_bank.b.h2=data&0xf;
 		m6509.pc.w.h=m6509.pc_bank.w.h;
 		change_pc20(PCD);
 	} };
 	
-	public static WriteHandlerPtr m6509_write_00001 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6509_write_00001 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6509.ind_bank.b.h2=data&0xf;
 	} };
 	
@@ -173,14 +169,14 @@ public class m6509
 	
 	unsigned m6509_get_context (void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(m6509_Regs*)dst = m6509;
 		return sizeof(m6509_Regs);
 	}
 	
 	void m6509_set_context (void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			m6509 = *(m6509_Regs*)src;
 			change_pc20(PCD);
@@ -374,34 +370,34 @@ public class m6509
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &m6509;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M6509_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+M6509_S: sprintf(buffer[which], "S:%02X", r.sp.b.l); break;
-			case CPU_INFO_REG+M6509_P: sprintf(buffer[which], "P:%02X", r.p); break;
-			case CPU_INFO_REG+M6509_A: sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+M6509_X: sprintf(buffer[which], "X:%02X", r.x); break;
-			case CPU_INFO_REG+M6509_Y: sprintf(buffer[which], "Y:%02X", r.y); break;
-			case CPU_INFO_REG+M6509_PC_BANK: sprintf(buffer[which], "0:%01X", r.pc_bank.b.h2); break;
-			case CPU_INFO_REG+M6509_IND_BANK: sprintf(buffer[which], "1:%01X", r.ind_bank.b.h2); break;
-			case CPU_INFO_REG+M6509_EA: sprintf(buffer[which], "EA:%05X", r.ea.d); break;
-			case CPU_INFO_REG+M6509_ZP: sprintf(buffer[which], "ZP:%05X", r.zp.d); break;
-			case CPU_INFO_REG+M6509_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+M6509_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
-			case CPU_INFO_REG+M6509_SO_STATE: sprintf(buffer[which], "SO:%X", r.so_state); break;
+			case CPU_INFO_REG+M6509_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+M6509_S: sprintf(buffer[which], "S:%02X", r->sp.b.l); break;
+			case CPU_INFO_REG+M6509_P: sprintf(buffer[which], "P:%02X", r->p); break;
+			case CPU_INFO_REG+M6509_A: sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+M6509_X: sprintf(buffer[which], "X:%02X", r->x); break;
+			case CPU_INFO_REG+M6509_Y: sprintf(buffer[which], "Y:%02X", r->y); break;
+			case CPU_INFO_REG+M6509_PC_BANK: sprintf(buffer[which], "0:%01X", r->pc_bank.b.h2); break;
+			case CPU_INFO_REG+M6509_IND_BANK: sprintf(buffer[which], "1:%01X", r->ind_bank.b.h2); break;
+			case CPU_INFO_REG+M6509_EA: sprintf(buffer[which], "EA:%05X", r->ea.d); break;
+			case CPU_INFO_REG+M6509_ZP: sprintf(buffer[which], "ZP:%05X", r->zp.d); break;
+			case CPU_INFO_REG+M6509_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+M6509_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
+			case CPU_INFO_REG+M6509_SO_STATE: sprintf(buffer[which], "SO:%X", r->so_state); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.p & 0x80 ? 'N':'.',
-					r.p & 0x40 ? 'V':'.',
-					r.p & 0x20 ? 'R':'.',
-					r.p & 0x10 ? 'B':'.',
-					r.p & 0x08 ? 'D':'.',
-					r.p & 0x04 ? 'I':'.',
-					r.p & 0x02 ? 'Z':'.',
-					r.p & 0x01 ? 'C':'.');
+					r->p & 0x80 ? 'N':'.',
+					r->p & 0x40 ? 'V':'.',
+					r->p & 0x20 ? 'R':'.',
+					r->p & 0x10 ? 'B':'.',
+					r->p & 0x08 ? 'D':'.',
+					r->p & 0x04 ? 'I':'.',
+					r->p & 0x02 ? 'Z':'.',
+					r->p & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "M6509";
 			case CPU_INFO_FAMILY: return "MOS Technology 6509";

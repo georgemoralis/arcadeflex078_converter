@@ -314,7 +314,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -335,8 +335,7 @@ public class welltris
 	
 	
 	
-	public static WriteHandlerPtr welltris_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr welltris_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x03) * 0x8000);
@@ -347,7 +346,7 @@ public class welltris
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(0, data & 0xff);
@@ -360,8 +359,7 @@ public class welltris
 		return readinputport(0) | (pending_command ? 0x80 : 0);
 	}
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
@@ -441,7 +439,7 @@ public class welltris
 	
 	
 	
-	static InputPortPtr input_ports_welltris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_welltris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( welltris )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -601,7 +599,7 @@ public class welltris
 	  	PORT_SERVICE( 0x0080, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quiz18k = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quiz18k = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quiz18k )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -766,8 +764,7 @@ public class welltris
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_welltris = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( welltris )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz */
@@ -794,20 +791,15 @@ public class welltris
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_quiz18k = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quiz18k )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( welltris )
 	
 		MDRV_VISIBLE_AREA(15, 335-1, 0, 224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -869,6 +861,6 @@ public class welltris
 	
 	
 	
-	public static GameDriver driver_welltris	   = new GameDriver("1991"	,"welltris"	,"welltris.java"	,rom_welltris,null	,machine_driver_welltris	,input_ports_welltris	,init_welltris	,ROT0	,	"Video System Co.", "Welltris (Japan, 2 players)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_quiz18k	   = new GameDriver("1992"	,"quiz18k"	,"welltris.java"	,rom_quiz18k,null	,machine_driver_quiz18k	,input_ports_quiz18k	,init_quiz18k	,ROT0	,	"EIM", "Miyasu Nonki no Quiz 18-Kin", GAME_NO_COCKTAIL )
+	GAMEX( 1991, welltris, 0,        welltris, welltris, welltris, ROT0,   "Video System Co.", "Welltris (Japan, 2 players)", GAME_NO_COCKTAIL )
+	GAMEX( 1992, quiz18k,  0,        quiz18k,  quiz18k,  quiz18k,  ROT0,   "EIM", "Miyasu Nonki no Quiz 18-Kin", GAME_NO_COCKTAIL )
 }

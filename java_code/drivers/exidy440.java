@@ -216,7 +216,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -248,14 +248,13 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_exidy440  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_exidy440  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			/* the EEROM lives in the uppermost 8k of the top bank */
 			mame_fwrite(file, &memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0x2000);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file, &memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0x2000);
 			else
 				memset(&memory_region(REGION_CPU1)[0x10000 + 15 * 0x4000 + 0x2000], 0, 0x2000);
@@ -289,16 +288,14 @@ public class exidy440
 	}
 	
 	
-	public static InterruptHandlerPtr main_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr main_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* generate coin interrupts */
 		handle_coins();
 		exidy440_vblank_interrupt();
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_exidy440  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_exidy440  = new MachineInitHandlerPtr() { public void handler(){
 		exidy440_bank = 0;
 		cpu_setbank(1, &memory_region(REGION_CPU1)[0x10000]);
 	
@@ -314,19 +311,18 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = input_port_0_r.handler(offset);
 	
 		/* the FIRQ cause is reflected in the upper 2 bits */
-		if (exidy440_firq_vblank != 0) result ^= 0x80;
-		if (exidy440_firq_beam != 0) result ^= 0x40;
+		if (exidy440_firq_vblank) result ^= 0x80;
+		if (exidy440_firq_beam) result ^= 0x40;
 	
 		/* Whodunit needs the VBLANK bit mirrored to bit 0 */
 		if (mirror_vblank_bit && exidy440_firq_vblank) result ^= 0x01;
 	
 		/* Hit'N Miss needs the trigger bit mirrored to bit 0 */
-		if (mirror_trigger_bit != 0) result = (result & 0xfe) | ((result >> 1) & 1);
+		if (mirror_trigger_bit) result = (result & 0xfe) | ((result >> 1) & 1);
 	
 		/* return with the appropriate XOR */
 		return result ^ port_0_xor;
@@ -340,8 +336,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr bankram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* EEROM lives in the upper 8k of bank 15 */
 		if (exidy440_bank == 15 && offset >= 0x2000)
 		{
@@ -360,8 +355,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr io1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0xe0)
@@ -375,7 +369,7 @@ public class exidy440
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
-				if (exidy440_sound_command_ack == 0)
+				if (!exidy440_sound_command_ack)
 					result ^= 0x08;
 	
 				/* I/O1 accesses clear the CIRQ flip/flop */
@@ -399,7 +393,7 @@ public class exidy440
 				result ^= port_3_xor;
 	
 				/* sound command acknowledgements come on bit 3 here */
-				if (exidy440_sound_command_ack != 0)
+				if (exidy440_sound_command_ack)
 					result ^= 0x08;
 				break;
 	
@@ -440,8 +434,7 @@ public class exidy440
 	}
 	
 	
-	public static WriteHandlerPtr io1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("W I/O1[%02X]=%02X\n", offset, data);
 	
 		/* switch off the upper 4 bits of the offset */
@@ -486,8 +479,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr showdown_pld_trigger_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr showdown_pld_trigger_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bank 0 is where the PLD lives - a read here will set the trigger */
 		if (exidy440_bank == 0)
 			showdown_bank_triggered = 1;
@@ -497,8 +489,7 @@ public class exidy440
 	} };
 	
 	
-	public static ReadHandlerPtr showdown_pld_select1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr showdown_pld_select1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bank 0 is where the PLD lives - a read here after a trigger will set bank "1" */
 		if (exidy440_bank == 0 && showdown_bank_triggered)
 		{
@@ -519,8 +510,7 @@ public class exidy440
 	} };
 	
 	
-	public static ReadHandlerPtr showdown_pld_select2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr showdown_pld_select2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bank 0 is where the PLD lives - a read here after a trigger will set bank "2" */
 		if (exidy440_bank == 0 && showdown_bank_triggered)
 		{
@@ -643,7 +633,7 @@ public class exidy440
 		PORT_DIPSETTING(    0x0c, DEF_STR( "1C_4C") );
 	
 	
-	static InputPortPtr input_ports_crossbow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crossbow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crossbow )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -683,7 +673,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_cheyenne = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cheyenne = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cheyenne )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -723,7 +713,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_combat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_combat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( combat )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -763,7 +753,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_catch22 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_catch22 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( catch22 )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -803,7 +793,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_cracksht = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cracksht = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cracksht )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -843,7 +833,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_claypign = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_claypign = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( claypign )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -879,7 +869,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_chiller = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chiller = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chiller )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -916,7 +906,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_topsecex = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topsecex = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topsecex )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -963,7 +953,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hitnmiss = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hitnmiss = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hitnmiss )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1003,7 +993,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_whodunit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_whodunit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( whodunit )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1040,7 +1030,7 @@ public class exidy440
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_showdown = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_showdown = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( showdown )
 		PORT_START(); 				/* player inputs and logic board dips */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1099,8 +1089,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_exidy440 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exidy440 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,12979200/8)
@@ -1131,9 +1120,7 @@ public class exidy440
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1765,17 +1752,16 @@ public class exidy440
 		mirror_trigger_bit 		= mt;\
 		copy_protection_read 	= cpr
 	
-	public static DriverInitHandlerPtr init_crossbow  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0x00, 0x00, 0x00, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_cheyenne  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0x00, 0x00, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_combat  = new DriverInitHandlerPtr() { public void handler()   { SET_PARAMS(0, 0xff, 0xff, 0x00, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_cracksht  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_claypign  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x76); } };
-	public static DriverInitHandlerPtr init_chiller  = new DriverInitHandlerPtr() { public void handler()  { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_topsecex  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(1, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_hitnmiss  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 1, 0x00); } };
-	public static DriverInitHandlerPtr init_whodunit  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x04, 1, 0, 0x00); } };
-	public static DriverInitHandlerPtr init_showdown  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crossbow  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0x00, 0x00, 0x00, 0, 0, 0x00); }
+	public static DriverInitHandlerPtr init_cheyenne  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0xff, 0x00, 0x00, 0, 0, 0x00); }
+	public static DriverInitHandlerPtr init_combat  = new DriverInitHandlerPtr() { public void handler() { SET_PARAMS(0, 0xff, 0xff, 0x00, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_cracksht  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); }
+	public static DriverInitHandlerPtr init_claypign  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x76); }
+	public static DriverInitHandlerPtr init_chiller  = new DriverInitHandlerPtr() { public void handler(){ SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00); } };
+	public static DriverInitHandlerPtr init_topsecex  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(1, 0xff, 0xff, 0x04, 0, 0, 0x00); }
+	public static DriverInitHandlerPtr init_hitnmiss  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 1, 0x00); }
+	public static DriverInitHandlerPtr init_whodunit  = new DriverInitHandlerPtr() { public void handler() SET_PARAMS(0, 0xff, 0xff, 0x04, 1, 0, 0x00); }
+	public static DriverInitHandlerPtr init_showdown  = new DriverInitHandlerPtr() { public void handler(){
 		SET_PARAMS(0, 0xff, 0xff, 0x04, 0, 0, 0x00);
 	
 		/* set up the fake PLD */
@@ -1798,16 +1784,16 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_crossbow	   = new GameDriver("1983"	,"crossbow"	,"exidy440.java"	,rom_crossbow,null	,machine_driver_exidy440	,input_ports_crossbow	,init_crossbow	,ROT0	,	"Exidy", "Crossbow (version 2.0)" )
-	public static GameDriver driver_cheyenne	   = new GameDriver("1984"	,"cheyenne"	,"exidy440.java"	,rom_cheyenne,null	,machine_driver_exidy440	,input_ports_cheyenne	,init_cheyenne	,ROT0	,	"Exidy", "Cheyenne (version 1.0)" )
-	public static GameDriver driver_combat	   = new GameDriver("1985"	,"combat"	,"exidy440.java"	,rom_combat,null	,machine_driver_exidy440	,input_ports_combat	,init_combat	,ROT0	,	"Exidy", "Combat (version 3.0)" )
-	public static GameDriver driver_catch22	   = new GameDriver("1985"	,"catch22"	,"exidy440.java"	,rom_catch22,driver_combat	,machine_driver_exidy440	,input_ports_catch22	,init_combat	,ROT0	,	"Exidy", "Catch-22 (version 8.0)" )
-	public static GameDriver driver_cracksht	   = new GameDriver("1985"	,"cracksht"	,"exidy440.java"	,rom_cracksht,null	,machine_driver_exidy440	,input_ports_cracksht	,init_cracksht	,ROT0	,	"Exidy", "Crackshot (version 2.0)" )
-	public static GameDriver driver_claypign	   = new GameDriver("1986"	,"claypign"	,"exidy440.java"	,rom_claypign,null	,machine_driver_exidy440	,input_ports_claypign	,init_claypign	,ROT0	,	"Exidy", "Clay Pigeon (version 2.0)" )
-	public static GameDriver driver_chiller	   = new GameDriver("1986"	,"chiller"	,"exidy440.java"	,rom_chiller,null	,machine_driver_exidy440	,input_ports_chiller	,init_chiller	,ROT0	,	"Exidy", "Chiller (version 3.0)" )
-	public static GameDriver driver_topsecex	   = new GameDriver("1986"	,"topsecex"	,"exidy440.java"	,rom_topsecex,null	,machine_driver_exidy440	,input_ports_topsecex	,init_topsecex	,ROT0	,	"Exidy", "Top Secret (Exidy) (version 1.0)" )
-	public static GameDriver driver_hitnmiss	   = new GameDriver("1987"	,"hitnmiss"	,"exidy440.java"	,rom_hitnmiss,null	,machine_driver_exidy440	,input_ports_hitnmiss	,init_hitnmiss	,ROT0	,	"Exidy", "Hit 'n Miss (version 3.0)" )
-	public static GameDriver driver_hitnmis2	   = new GameDriver("1987"	,"hitnmis2"	,"exidy440.java"	,rom_hitnmis2,driver_hitnmiss	,machine_driver_exidy440	,input_ports_hitnmiss	,init_hitnmiss	,ROT0	,	"Exidy", "Hit 'n Miss (version 2.0)" )
-	public static GameDriver driver_whodunit	   = new GameDriver("1988"	,"whodunit"	,"exidy440.java"	,rom_whodunit,null	,machine_driver_exidy440	,input_ports_whodunit	,init_whodunit	,ROT0	,	"Exidy", "Who Dunit (version 8.0)" )
-	public static GameDriver driver_showdown	   = new GameDriver("1988"	,"showdown"	,"exidy440.java"	,rom_showdown,null	,machine_driver_exidy440	,input_ports_showdown	,init_showdown	,ROT0	,	"Exidy", "Showdown (version 5.0)" )
+	GAME( 1983, crossbow, 0,        exidy440, crossbow, crossbow, ROT0, "Exidy", "Crossbow (version 2.0)" )
+	GAME( 1984, cheyenne, 0,        exidy440, cheyenne, cheyenne, ROT0, "Exidy", "Cheyenne (version 1.0)" )
+	GAME( 1985, combat,   0,        exidy440, combat,   combat,   ROT0, "Exidy", "Combat (version 3.0)" )
+	GAME( 1985, catch22,  combat,   exidy440, catch22,  combat,   ROT0, "Exidy", "Catch-22 (version 8.0)" )
+	GAME( 1985, cracksht, 0,        exidy440, cracksht, cracksht, ROT0, "Exidy", "Crackshot (version 2.0)" )
+	GAME( 1986, claypign, 0,        exidy440, claypign, claypign, ROT0, "Exidy", "Clay Pigeon (version 2.0)" )
+	GAME( 1986, chiller,  0,        exidy440, chiller,  chiller,  ROT0, "Exidy", "Chiller (version 3.0)" )
+	GAME( 1986, topsecex, 0,        exidy440, topsecex, topsecex, ROT0, "Exidy", "Top Secret (Exidy) (version 1.0)" )
+	GAME( 1987, hitnmiss, 0,        exidy440, hitnmiss, hitnmiss, ROT0, "Exidy", "Hit 'n Miss (version 3.0)" )
+	GAME( 1987, hitnmis2, hitnmiss, exidy440, hitnmiss, hitnmiss, ROT0, "Exidy", "Hit 'n Miss (version 2.0)" )
+	GAME( 1988, whodunit, 0,        exidy440, whodunit, whodunit, ROT0, "Exidy", "Who Dunit (version 8.0)" )
+	GAME( 1988, showdown, 0,        exidy440, showdown, showdown, ROT0, "Exidy", "Showdown (version 5.0)" )
 }

@@ -21,7 +21,7 @@ struct K054539interface {
 int K054539_sh_start( const struct MachineSound *msound );
 void K054539_sh_stop( void );
 
-//* control flags, may be set at public static DriverInitHandlerPtr init_  = new DriverInitHandlerPtr() { public void handler().
+//* control flags, may be set at public static DriverInitHandlerPtr init_  = new DriverInitHandlerPtr() { public void handler()
 #define K054539_RESET_FLAGS     0
 #define K054539_REVERSE_STEREO  1
 #define K054539_DISABLE_REVERB  2
@@ -34,7 +34,7 @@ void K054539_init_flags(int flags);
 	volume controls. Considering the global attenuation equation may not
 	be entirely accurate, K054539_set_gain() provides means to control
 	channel gain. It can be called anywhere but preferrably from
-	public static DriverInitHandlerPtr init_  = new DriverInitHandlerPtr() { public void handler().
+	public static DriverInitHandlerPtr init_  = new DriverInitHandlerPtr() { public void handler()
 
 	Parameters:
 		chip    : 0 / 1

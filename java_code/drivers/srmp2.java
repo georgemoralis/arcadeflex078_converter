@@ -57,7 +57,7 @@ Note:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -88,8 +88,7 @@ public class srmp2
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr srmp2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr srmp2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 4, HOLD_LINE);	break;	/* vblank */
@@ -98,16 +97,14 @@ public class srmp2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_srmp2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_srmp2  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
 		/* Fix "ERROR BACK UP" and "ERROR IOX" */
 		RAM[0x20c80 / 2] = 0x4e75;								// RTS
 	} };
 	
-	public static DriverInitHandlerPtr init_srmp3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_srmp3  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
 		/* BANK ROM (0x08000 - 0x1ffff) Check skip [MAIN ROM side] */
@@ -129,13 +126,11 @@ public class srmp2
 		RAM[0x00000 + 0x7850] = 0x00;							// NOP
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_srmp2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_srmp2  = new MachineInitHandlerPtr() { public void handler(){
 		srmp2_port_select = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_srmp3  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_srmp3  = new MachineInitHandlerPtr() { public void handler(){
 		srmp2_port_select = 0;
 	} };
 	
@@ -208,8 +203,7 @@ public class srmp2
 	}
 	
 	
-	public static WriteHandlerPtr srmp3_adpcm_code_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srmp3_adpcm_code_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		- Received data may be playing ADPCM number.
 		- 0x000000 - 0x0000ff and 0x010000 - 0x0100ff are offset table.
@@ -235,7 +229,7 @@ public class srmp2
 	{
 		unsigned char *ROM = memory_region(REGION_SOUND1);
 	
-		if (srmp2_adpcm_sptr != 0)
+		if (srmp2_adpcm_sptr)
 		{
 			if (srmp2_adpcm_data == -1)
 			{
@@ -285,7 +279,7 @@ public class srmp2
 		--x- ---- : Player 1 and 2 side flag
 	*/
 	
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 		{
 			return 0xffff;
 		}
@@ -318,7 +312,7 @@ public class srmp2
 	
 	static READ16_HANDLER( srmp2_input_2_r )
 	{
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 		{
 			return 0x0001;
 		}
@@ -354,8 +348,7 @@ public class srmp2
 	}
 	
 	
-	public static WriteHandlerPtr srmp3_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srmp3_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		---x xxxx : MAIN ROM bank
 		xxx- ---- : ADPCM ROM bank
@@ -366,7 +359,7 @@ public class srmp2
 	
 		srmp2_adpcm_bank = ((data & 0xe0) >> 5);
 	
-		if ((data & 0x1f) != 0) addr = ((0x10000 + (0x2000 * (data & 0x0f))) - 0x8000);
+		if (data & 0x1f) addr = ((0x10000 + (0x2000 * (data & 0x0f))) - 0x8000);
 		else addr = 0x10000;
 	
 		cpu_setbank(1, &ROM[addr]);
@@ -450,18 +443,15 @@ public class srmp2
 	MEMORY_END
 	
 	
-	public static ReadHandlerPtr srmp3_cchip_status_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr srmp3_cchip_status_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x01;
 	} };
 	
-	public static ReadHandlerPtr srmp3_cchip_status_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr srmp3_cchip_status_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x01;
 	} };
 	
-	public static WriteHandlerPtr srmp3_input_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srmp3_input_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		---- --x- : Player 1 side flag ?
 		---- -x-- : Player 2 side flag ?
@@ -486,8 +476,7 @@ public class srmp2
 		}
 	} };
 	
-	public static WriteHandlerPtr srmp3_input_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srmp3_input_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		/* Key matrix reading related ? */
 	
@@ -497,8 +486,7 @@ public class srmp2
 	
 	} };
 	
-	public static ReadHandlerPtr srmp3_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr srmp3_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/*
 		---x xxxx : Key code
 		--x- ---- : Player 1 and 2 side flag
@@ -542,8 +530,7 @@ public class srmp2
 		return keydata;
 	} };
 	
-	public static WriteHandlerPtr srmp3_flags_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srmp3_flags_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		---- ---x : Coin Counter
 		---x ---- : Coin Lock Out
@@ -658,7 +645,7 @@ public class srmp2
 		PORT_BIT ( 0x0080, IP_ACTIVE_LOW, IPT_UNKNOWN );\
 		PORT_BIT ( 0xff00, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-	static InputPortPtr input_ports_srmp2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_srmp2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( srmp2 )
 		PORT_START(); 			/* Coinnage (0) */
 		PORT_BIT ( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -737,7 +724,7 @@ public class srmp2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_srmp3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_srmp3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( srmp3 )
 		PORT_START(); 			/* Coinnage (0) */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -814,7 +801,7 @@ public class srmp2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mjyuugi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjyuugi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjyuugi )
 		PORT_START(); 			/* Coinnage (0) */
 		PORT_BIT ( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -924,7 +911,7 @@ public class srmp2
 		PORT_BIT ( 0xfff0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ponchin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ponchin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ponchin )
 		PORT_START(); 			/* Coinnage (0) */
 		PORT_BIT ( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1124,8 +1111,7 @@ public class srmp2
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_srmp2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( srmp2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)				/* 8.00 MHz */
@@ -1152,13 +1138,10 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, srmp2_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp2_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_srmp3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( srmp3 )
 	
 		/* basic machine hardware */
 	
@@ -1187,13 +1170,10 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, srmp3_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp3_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjyuugi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjyuugi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)				/* 8.00 MHz */
@@ -1218,9 +1198,7 @@ public class srmp2
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, mjyuugi_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, srmp2_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1357,10 +1335,10 @@ public class srmp2
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_srmp2	   = new GameDriver("1987"	,"srmp2"	,"srmp2.java"	,rom_srmp2,null	,machine_driver_srmp2	,input_ports_srmp2	,init_srmp2	,ROT0	,	"Seta", "Super Real Mahjong Part 2 (Japan)" )
-	public static GameDriver driver_srmp3	   = new GameDriver("1988"	,"srmp3"	,"srmp2.java"	,rom_srmp3,null	,machine_driver_srmp3	,input_ports_srmp3	,init_srmp3	,ROT0	,	"Seta", "Super Real Mahjong Part 3 (Japan)" )
-	public static GameDriver driver_mjyuugi	   = new GameDriver("1990"	,"mjyuugi"	,"srmp2.java"	,rom_mjyuugi,null	,machine_driver_mjyuugi	,input_ports_mjyuugi	,null	,ROT0	,	"Visco", "Mahjong Yuugi (Japan set 1)" )
-	public static GameDriver driver_mjyuugia	   = new GameDriver("1990"	,"mjyuugia"	,"srmp2.java"	,rom_mjyuugia,driver_mjyuugi	,machine_driver_mjyuugi	,input_ports_mjyuugi	,null	,ROT0	,	"Visco", "Mahjong Yuugi (Japan set 2)" )
-	public static GameDriver driver_ponchin	   = new GameDriver("1991"	,"ponchin"	,"srmp2.java"	,rom_ponchin,null	,machine_driver_mjyuugi	,input_ports_ponchin	,null	,ROT0	,	"Visco", "Mahjong Pon Chin Kan (Japan set 1)" )
-	public static GameDriver driver_ponchina	   = new GameDriver("1991"	,"ponchina"	,"srmp2.java"	,rom_ponchina,driver_ponchin	,machine_driver_mjyuugi	,input_ports_ponchin	,null	,ROT0	,	"Visco", "Mahjong Pon Chin Kan (Japan set 2)" )
+	GAME( 1987, srmp2,     0,        srmp2,    srmp2,    srmp2,   ROT0, "Seta", "Super Real Mahjong Part 2 (Japan)" )
+	GAME( 1988, srmp3,     0,        srmp3,    srmp3,    srmp3,   ROT0, "Seta", "Super Real Mahjong Part 3 (Japan)" )
+	GAME( 1990, mjyuugi,   0,        mjyuugi,  mjyuugi,  0,       ROT0, "Visco", "Mahjong Yuugi (Japan set 1)" )
+	GAME( 1990, mjyuugia,  mjyuugi,  mjyuugi,  mjyuugi,  0,       ROT0, "Visco", "Mahjong Yuugi (Japan set 2)" )
+	GAME( 1991, ponchin,   0,        mjyuugi,  ponchin,  0,       ROT0, "Visco", "Mahjong Pon Chin Kan (Japan set 1)" )
+	GAME( 1991, ponchina,  ponchin,  mjyuugi,  ponchin,  0,       ROT0, "Visco", "Mahjong Pon Chin Kan (Japan set 2)" )
 }

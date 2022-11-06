@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -13,10 +13,9 @@ public class diverboy
 	size_t diverboy_spriteram_size;
 	
 	
-	VIDEO_START(diverboy)
-	{
+	public static VideoStartHandlerPtr video_start_diverboy  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
 	static void diverboy_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -41,7 +40,7 @@ public class diverboy
 	
 			if (!flash || (cpu_getcurrentframe() & 1))
 			{
-				drawgfx(bitmap,Machine.gfx[bank],
+				drawgfx(bitmap,Machine->gfx[bank],
 						number,
 						colr,
 						0,0,
@@ -53,9 +52,8 @@ public class diverboy
 		}
 	}
 	
-	VIDEO_UPDATE(diverboy)
-	{
+	public static VideoUpdateHandlerPtr video_update_diverboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	//	fillbitmap(bitmap,get_black_pen(),cliprect);
 		diverboy_drawsprites(bitmap,cliprect);
-	}
+	} };
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,20 +15,18 @@ public class taxidrvr
 	static int spritectrl[9];
 	
 	
-	public static WriteHandlerPtr taxidrvr_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taxidrvr_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spritectrl[offset] = data;
 	} };
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taxidrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taxidrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy;
 	
 	
-		if (taxidrvr_bghide != 0)
+		if (taxidrvr_bghide)
 		{
 			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
@@ -75,10 +73,10 @@ public class taxidrvr
 					sy = ((offs/2) / 64-spritectrl[1]-128*(spritectrl[2]&2))&0x1ff;
 	
 					color = (taxidrvr_vram5[offs/4]>>(2*(offs&3)))&0x03;
-					if (color != 0)
+					if (color)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel.handler(bitmap,sx,sy,color);
+							plot_pixel(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -93,10 +91,10 @@ public class taxidrvr
 					sy = ((offs/2) / 64-spritectrl[4]-128*(spritectrl[5]&2))&0x1ff;
 	
 					color = (taxidrvr_vram6[offs/4]>>(2*(offs&3)))&0x03;
-					if (color != 0)
+					if (color)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel.handler(bitmap,sx,sy,color);
+							plot_pixel(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -111,10 +109,10 @@ public class taxidrvr
 					sy = ((offs/2) / 64-spritectrl[7]-128*(spritectrl[8]&2))&0x1ff;
 	
 					color = (taxidrvr_vram7[offs/4]>>(2*(offs&3)))&0x03;
-					if (color != 0)
+					if (color)
 					{
 						if (sx > 0 && sx < 256 && sy > 0 && sy < 256)
-							plot_pixel.handler(bitmap,sx,sy,color);
+							plot_pixel(bitmap,sx,sy,color);
 					}
 				}
 			}
@@ -140,9 +138,9 @@ public class taxidrvr
 				sy = (offs/2) / 64;
 	
 				color = (taxidrvr_vram4[offs/4]>>(2*(offs&3)))&0x03;
-				if (color != 0)
+				if (color)
 				{
-					plot_pixel.handler(bitmap,sx,sy,2*color);
+					plot_pixel(bitmap,sx,sy,2*color);
 				}
 			}
 		}

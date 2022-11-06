@@ -29,7 +29,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -82,8 +82,7 @@ public class lasso
 		palette_set_color( i,r,g,b );
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_lasso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_lasso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 0x40;i++)
@@ -94,8 +93,7 @@ public class lasso
 	} };
 	
 	/* 16 color tiles with a 4 color step for the palettes */
-	public static PaletteInitHandlerPtr palette_init_wwjgtin  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wwjgtin  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 	
 		palette_init_lasso(colortable,color_prom);
@@ -150,18 +148,16 @@ public class lasso
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_lasso  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lasso  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(lasso_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_wwjgtin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wwjgtin  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap =    tilemap_create(lasso_get_bg_tile_info,      tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8,  32,  32);
 		track_tilemap = tilemap_create(wwjgtin_get_track_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16,16, 0x80,0x40);
 	
@@ -172,11 +168,10 @@ public class lasso
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_pinbo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pinbo  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(pinbo_get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		return 0;
@@ -189,8 +184,7 @@ public class lasso
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr lasso_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (lasso_videoram[offset] != data)
 		{
 			lasso_videoram[offset] = data;
@@ -198,8 +192,7 @@ public class lasso
 		}
 	} };
 	
-	public static WriteHandlerPtr lasso_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (lasso_colorram[offset] != data)
 		{
 			lasso_colorram[offset] = data;
@@ -208,8 +201,7 @@ public class lasso
 	} };
 	
 	
-	public static WriteHandlerPtr lasso_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* don't know which is which, but they are always set together */
 		flip_screen_x = data & 0x01;
 		flip_screen_y = data & 0x02;
@@ -219,8 +211,7 @@ public class lasso
 	} };
 	
 	
-	public static WriteHandlerPtr lasso_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank = (data & 0x04) >> 2;
 	
 		if (gfxbank != bank)
@@ -232,8 +223,7 @@ public class lasso
 		lasso_flip_screen_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr wwjgtin_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wwjgtin_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank = ((data & 0x04) ? 0 : 1) + ((data & 0x10) ? 2 : 0);
 		wwjgtin_track_enable = data & 0x08;
 	
@@ -246,8 +236,7 @@ public class lasso
 		lasso_flip_screen_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr pinbo_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pinbo_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* no need to dirty the tilemap -- only the sprites use the global bank */
 		gfxbank = (data & 0x0c) >> 2;
 	
@@ -256,8 +245,7 @@ public class lasso
 	
 	
 	/* The bg_tilemap color can be changed */
-	public static WriteHandlerPtr lasso_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		for( i=0; i<0x40; i+=4 ) /* stuff into color#0 of each palette */
 			lasso_set_color(i,data);
@@ -265,8 +253,7 @@ public class lasso
 	
 	
 	/* The last 4 color (= last palette) entries can be changed */
-	public static WriteHandlerPtr wwjgtin_lastcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wwjgtin_lastcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lasso_set_color(0x3f - offset,data);
 	} };
 	
@@ -282,7 +269,7 @@ public class lasso
 		const data8_t *finish, *source;
 		int inc;
 	
-		if (reverse != 0)
+		if (reverse)
 		{
 			source = lasso_spriteram;
 			finish = lasso_spriteram + lasso_spriteram_size;
@@ -305,13 +292,13 @@ public class lasso
 			flipx = source[1] & 0x40;
 			flipy = source[1] & 0x80;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 			}
@@ -324,7 +311,7 @@ public class lasso
 			color = source[2] & 0x0f;
 	
 	
-	        drawgfx(bitmap, Machine.gfx[1],
+	        drawgfx(bitmap, Machine->gfx[1],
 					code | (gfxbank << 6),
 					color,
 					flipx, flipy,
@@ -340,7 +327,7 @@ public class lasso
 	{
 		const data8_t *source = lasso_bitmap_ram;
 		int x,y;
-		pen_t pen = Machine.pens[0x3f];
+		pen_t pen = Machine->pens[0x3f];
 	
 	
 		for (y = 0; y < 256; y++)
@@ -349,24 +336,24 @@ public class lasso
 			{
 				data8_t data = *source++;
 	
-				if (data != 0)
+				if (data)
 				{
 					int bit;
 	
 					for (bit = 0; bit < 8; bit++)
 					{
-						if ((data & 0x80) != 0)
+						if (data & 0x80)
 						{
-							if (flip_screen_x != 0)
+							if (flip_screen_x)
 							{
-								if (flip_screen_y != 0)
+								if (flip_screen_y)
 									plot_pixel(bitmap, 255-x, 255-y, pen);
 								else
 									plot_pixel(bitmap, 255-x,     y, pen);
 							}
 							else
 							{
-								if (flip_screen_y != 0)
+								if (flip_screen_y)
 									plot_pixel(bitmap,     x, 255-y, pen);
 								else
 									plot_pixel(bitmap,     x,     y, pen);
@@ -386,26 +373,23 @@ public class lasso
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_lasso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lasso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_lasso  (bitmap);
 		draw_sprites(bitmap, cliprect, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_chameleo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_chameleo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, cliprect, 0);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_wwjgtin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wwjgtin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(track_tilemap,0,wwjgtin_track_scroll[0] + wwjgtin_track_scroll[1]*256);
 		tilemap_set_scrolly(track_tilemap,0,wwjgtin_track_scroll[2] + wwjgtin_track_scroll[3]*256);
 	
-		if (wwjgtin_track_enable != 0)
+		if (wwjgtin_track_enable)
 			tilemap_draw(bitmap, cliprect, track_tilemap, 0, 0);
 		else
 			fillbitmap(bitmap, Machine.pens[0x40], cliprect);	// black

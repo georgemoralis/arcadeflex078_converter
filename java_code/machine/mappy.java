@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -24,50 +24,42 @@ public class mappy
 	static int credits, coin, start1, start2;
 	static int io_chip_1_enabled, io_chip_2_enabled;
 	
-	public static MachineInitHandlerPtr machine_init_mappy  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mappy  = new MachineInitHandlerPtr() { public void handler(){
 		/* Reset all flags */
 		credits = coin = start1 = start2 = 0;
 		interrupt_enable_1 = interrupt_enable_2 = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_motos  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_motos  = new MachineInitHandlerPtr() { public void handler(){
 		/* Reset all flags */
 		credits = coin = start1 = start2 = 0;
 	} };
 	
 	
-	public static ReadHandlerPtr mappy_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mappy_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mappy_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr mappy_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mappy_sharedram[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr mappy_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mappy_customio_1[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr mappy_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mappy_customio_2[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr mappy_reset_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_reset_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		io_chip_1_enabled = io_chip_2_enabled = 0;
 		cpu_set_reset_line(1,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr mappy_io_chips_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_io_chips_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		io_chip_1_enabled = io_chip_2_enabled = 1;
 	} };
 	
@@ -77,8 +69,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	public static ReadHandlerPtr mappy_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mappy_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int crednum[] = { 1, 2, 3, 6, 1, 3, 1, 2 };
 		static int credden[] = { 1, 1, 1, 1, 2, 2, 3, 3 };
 		int val, temp, mode = mappy_customio_1[8];
@@ -160,8 +151,7 @@ public class mappy
 	} };
 	
 	
-	public static ReadHandlerPtr mappy_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mappy_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int mode = mappy_customio_2[8];
 	
 		logerror("I/O read 2: mode %d, offset %d\n", mappy_customio_2[8], offset);
@@ -212,15 +202,14 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	public static ReadHandlerPtr digdug2_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr digdug2_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int crednum[] = { 1, 1, 2, 2 };
 		static int credden[] = { 1, 2, 1, 3 };
 		int val, temp, mode = mappy_customio_1[8];
 	
 		/*logerror("I/O read 1: mode %d offset %d\n", mode, offset);*/
 	
-		if (io_chip_1_enabled != 0)
+		if (io_chip_1_enabled)
 		{
 			/* mode 3 is the standard, and returns actual important values */
 			if (mode == 1 || mode == 3)
@@ -283,13 +272,12 @@ public class mappy
 	} };
 	
 	
-	public static ReadHandlerPtr digdug2_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr digdug2_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int mode = mappy_customio_2[8];
 	
 		/*logerror("I/O read 2: mode %d, offset %d\n", mode, offset);*/
 	
-		if (io_chip_2_enabled != 0)
+		if (io_chip_2_enabled)
 		{
 			/* mode 4 is the standard, and returns actual important values */
 			if (mode == 4)
@@ -329,8 +317,7 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	public static ReadHandlerPtr motos_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr motos_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val, mode = mappy_customio_1[8];
 	
 		logerror("I/O read 1: mode %d offset %d\n", mode, offset);
@@ -387,8 +374,7 @@ public class mappy
 	} };
 	
 	
-	public static ReadHandlerPtr motos_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr motos_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int mode = mappy_customio_2[8];
 	
 		logerror("I/O read 2: mode %d, offset %d\n", mode, offset);
@@ -442,15 +428,14 @@ public class mappy
 	 *
 	 *************************************************************************************/
 	
-	public static ReadHandlerPtr todruaga_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr todruaga_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int crednum[] = { 1, 1, 2, 2 };
 		static int credden[] = { 1, 2, 1, 3 };
 		int val, temp, mode = mappy_customio_1[8];
 	
 		logerror("%04x: I/O read 1: mode %d offset %d\n", activecpu_get_pc(), mode, offset);
 	
-		if (io_chip_1_enabled != 0)
+		if (io_chip_1_enabled)
 		{
 			/* mode 3 is the standard, and returns actual important values */
 			if (mode == 1 || mode == 3)
@@ -514,13 +499,12 @@ public class mappy
 	} };
 	
 	
-	public static ReadHandlerPtr todruaga_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr todruaga_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int mode = mappy_customio_2[8];
 	
 		logerror("%04x: I/O read 2: mode %d, offset %d\n", activecpu_get_pc(), mode, offset);
 	
-		if (io_chip_1_enabled != 0)
+		if (io_chip_1_enabled)
 		{
 			/* mode 4 is the standard, and returns actual important values */
 			if (mode == 4)
@@ -556,37 +540,32 @@ public class mappy
 	
 	
 	
-	public static WriteHandlerPtr mappy_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_1 = offset;
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr mappy_interrupt_1 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_1 != 0)
+	public static InterruptHandlerPtr mappy_interrupt_1 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mappy_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_2 = offset;
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr mappy_interrupt_2 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_2 != 0)
+	public static InterruptHandlerPtr mappy_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_2)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr mappy_cpu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_cpu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
 	} };
 }

@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -55,7 +55,7 @@ public class tmp68301
 			cpu_set_irq_line(0,level,HOLD_LINE);
 		}
 	
-		if ((TCR & 0x0080) != 0)	// N/1
+		if (TCR & 0x0080)	// N/1
 		{
 			// Repeat
 			tmp68301_update_timer(i);
@@ -91,11 +91,11 @@ public class tmp68301
 		switch ( (TCR & 0xc000)>>14 )					// CK2..1
 		{
 		case 0:	// System clock (CLK)
-			if (max != 0)
+			if (max)
 			{
 				int scale = (TCR & 0x3c00)>>10;			// P4..1
 				if (scale > 8) scale = 8;
-				duration = Machine.drv.cpu[0].cpu_clock;
+				duration = Machine->drv->cpu[0].cpu_clock;
 				duration /= 1 << scale;
 				duration /= max;
 			}
@@ -106,15 +106,14 @@ public class tmp68301
 	
 		if (!(TCR & 0x0002))				// CS
 		{
-			if (duration != 0)
+			if (duration)
 				timer_adjust(tmp68301_timer[i],TIME_IN_HZ(duration),i,0);
 			else
 				logerror("CPU #0 PC %06X: TMP68301 error, timer %d duration is 0\n",activecpu_get_pc(),i);
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tmp68301  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tmp68301  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 		for (i = 0; i < 3; i++)
 			tmp68301_timer[i] = timer_alloc(tmp68301_timer_callback);
@@ -161,7 +160,7 @@ public class tmp68301
 	{
 		COMBINE_DATA(&tmp68301_regs[offset]);
 	
-		if (ACCESSING_LSB == 0)	return;
+		if (!ACCESSING_LSB)	return;
 	
 	//	logerror("CPU #0 PC %06X: TMP68301 Reg %04X<-%04X & %04X\n",activecpu_get_pc(),offset*2,data,mem_mask^0xffff);
 	

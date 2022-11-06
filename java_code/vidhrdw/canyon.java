@@ -6,7 +6,7 @@ Atari Canyon Bomber video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,8 +18,7 @@ public class canyon
 	UINT8* canyon_videoram;
 	
 	
-	public static WriteHandlerPtr canyon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr canyon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (canyon_videoram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(tilemap, offset);
@@ -37,8 +36,7 @@ public class canyon
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_canyon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_canyon  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
@@ -56,7 +54,7 @@ public class canyon
 			int y = canyon_videoram[0x3d0 + 2 * i + 0x8];
 			int c = canyon_videoram[0x3d0 + 2 * i + 0x9];
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				c >> 3,
 				i,
 				!(c & 0x80), 0,
@@ -84,18 +82,17 @@ public class canyon
 			rect.max_x = sx + 1;
 			rect.max_y = sy + 1;
 	
-			if (rect.min_x < cliprect.min_x) rect.min_x = cliprect.min_x;
-			if (rect.min_y < cliprect.min_y) rect.min_y = cliprect.min_y;
-			if (rect.max_x > cliprect.max_x) rect.max_x = cliprect.max_x;
-			if (rect.max_y > cliprect.max_y) rect.max_y = cliprect.max_y;
+			if (rect.min_x < cliprect->min_x) rect.min_x = cliprect->min_x;
+			if (rect.min_y < cliprect->min_y) rect.min_y = cliprect->min_y;
+			if (rect.max_x > cliprect->max_x) rect.max_x = cliprect->max_x;
+			if (rect.max_y > cliprect->max_y) rect.max_y = cliprect->max_y;
 	
 			fillbitmap(bitmap, i, &rect);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_canyon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_canyon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
 		canyon_draw_sprites(bitmap, cliprect);

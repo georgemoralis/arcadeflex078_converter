@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class dkong
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr dkong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -51,8 +50,7 @@ public class dkong
 	  bit 0 -- 470 ohm resistor -- inverter  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_dkong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dkong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -117,8 +115,7 @@ public class dkong
 	  bit 0 -- 2.2kohm resistor -- inverter  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_dkong3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dkong3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -165,23 +162,21 @@ public class dkong
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_dkong  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dkong  = new VideoStartHandlerPtr() { public int handler(){
 		gfx_bank = 0;
 		palette_bank = 0;
 	
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
 	
-	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkongjr_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
@@ -189,8 +184,7 @@ public class dkong
 		}
 	} };
 	
-	public static WriteHandlerPtr dkong3_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkong3_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfx_bank != (~data & 0x01))
 		{
 			gfx_bank = ~data & 0x01;
@@ -198,13 +192,12 @@ public class dkong
 		}
 	} };
 	
-	public static WriteHandlerPtr dkong_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkong_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int newbank;
 	
 		newbank = palette_bank;
 	
-		if ((data & 1) != 0)
+		if (data & 1)
 			newbank |= 1 << offset;
 		else
 			newbank &= ~(1 << offset);
@@ -216,13 +209,11 @@ public class dkong
 		}
 	} };
 	
-	public static WriteHandlerPtr radarscp_grid_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr radarscp_grid_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grid_on = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr radarscp_grid_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr radarscp_grid_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 	
 		r = ((~data >> 0) & 0x01) * 0xff;
@@ -232,8 +223,7 @@ public class dkong
 		palette_set_color(257,0x00,0x00,0xff);
 	} };
 	
-	public static WriteHandlerPtr dkong_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkong_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 0x01);
 	} };
 	
@@ -265,42 +255,42 @@ public class dkong
 				x = spriteram.read(offs + 3)- 8;
 				y = 240 - spriteram.read(offs)+ 7;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					x = 240 - x;
 					y = 240 - y;
 	
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							!(spriteram.read(offs + 2)& 0x80),!(spriteram.read(offs + 1)& 0x80),
 							x,y,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x-256,y,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x,y,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 					/* draw with wrap around - this fixes the 'beheading' bug */
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							(spriteram.read(offs + 1)& 0x7f) + ((spriteram.read(offs + 2)& mask_bank) << shift_bits),
 							(spriteram.read(offs + 2)& 0x0f) + 16 * palette_bank,
 							(spriteram.read(offs + 2)& 0x80),(spriteram.read(offs + 1)& 0x80),
 							x+256,y,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -313,21 +303,21 @@ public class dkong
 	
 		counter = flip_screen() ? 0x000 : 0x400;
 	
-		x = Machine.visible_area.min_x;
-		y = Machine.visible_area.min_y;
-		while (y <= Machine.visible_area.max_y)
+		x = Machine->visible_area.min_x;
+		y = Machine->visible_area.min_y;
+		while (y <= Machine->visible_area.max_y)
 		{
 			x = 4 * (table[counter] & 0x7f);
-			if (x >= Machine.visible_area.min_x &&
-					x <= Machine.visible_area.max_x)
+			if (x >= Machine->visible_area.min_x &&
+					x <= Machine->visible_area.max_x)
 			{
 				if (table[counter] & 0x80)	/* star */
 				{
 					if (rand() & 1)	/* noise coming from sound board */
-						plot_pixel(bitmap,x,y,Machine.pens[256]);
+						plot_pixel(bitmap,x,y,Machine->pens[256]);
 				}
-				else if (grid_on != 0)			/* radar */
-					plot_pixel(bitmap,x,y,Machine.pens[257]);
+				else if (grid_on)			/* radar */
+					plot_pixel(bitmap,x,y,Machine->pens[257]);
 			}
 	
 			counter++;
@@ -337,8 +327,7 @@ public class dkong
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_radarscp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_radarscp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		palette_set_color(256,0xff,0x00,0x00);	/* stars */
 	
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
@@ -346,14 +335,12 @@ public class dkong
 		draw_sprites(bitmap, 0x40, 1);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dkong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, 0x40, 1);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_pestplce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pestplce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
@@ -373,8 +360,7 @@ public class dkong
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_spclforc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spclforc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	
 		/* it uses spriteram.read(offs + 2)& 0x10 for sprite bank */

@@ -80,7 +80,7 @@ TO DO :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -94,19 +94,16 @@ public class tehkanwc
 	
 	static UINT8 *shared_ram;
 	
-	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (data != 0)
+	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
@@ -116,42 +113,37 @@ public class tehkanwc
 	
 	static int track0[2],track1[2];
 	
-	public static ReadHandlerPtr tehkanwc_track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tehkanwc_track_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int joy;
 	
 		joy = readinputport(10) >> (2*offset);
-		if ((joy & 1) != 0) return -63;
-		if ((joy & 2) != 0) return 63;
+		if (joy & 1) return -63;
+		if (joy & 2) return 63;
 		return readinputport(3 + offset) - track0[offset];
 	} };
 	
-	public static ReadHandlerPtr tehkanwc_track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tehkanwc_track_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int joy;
 	
 		joy = readinputport(10) >> (4+2*offset);
-		if ((joy & 1) != 0) return -63;
-		if ((joy & 2) != 0) return 63;
+		if (joy & 1) return -63;
+		if (joy & 2) return 63;
 		return readinputport(6 + offset) - track1[offset];
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_track_0_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_track_0_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset the trackball counters */
 		track0[offset] = readinputport(3 + offset) + data;
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_track_1_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_track_1_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset the trackball counters */
 		track1[offset] = readinputport(6 + offset) + data;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -161,8 +153,7 @@ public class tehkanwc
 		cpu_set_reset_line(2,PULSE_LINE);
 	}
 	
-	public static WriteHandlerPtr sound_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch2_w.handler(0,data);
 	
 		/* in Gridiron, the sound CPU goes in a tight loop after the self test, */
@@ -175,28 +166,23 @@ public class tehkanwc
 	
 	static int msm_data_offs;
 	
-	public static ReadHandlerPtr tehkanwc_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tehkanwc_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return msm_data_offs & 0xff;
 	} };
 	
-	public static ReadHandlerPtr tehkanwc_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tehkanwc_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (msm_data_offs >> 8) & 0xff;
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm_data_offs = (msm_data_offs & 0xff00) | data;
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm_data_offs = (msm_data_offs & 0x00ff) | (data << 8);
 	} };
 	
-	public static WriteHandlerPtr msm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(0,data ? 0 : 1);
 	} };
 	
@@ -445,7 +431,7 @@ public class tehkanwc
 	
 	
 	
-	static InputPortPtr input_ports_tehkanwc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tehkanwc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tehkanwc )
 		PORT_START();  /* DSW1 - Active LOW */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "2C_1C") );
@@ -563,7 +549,7 @@ public class tehkanwc
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gridiron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gridiron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gridiron )
 		PORT_START();  /* DSW1 - Active LOW */
 		PORT_DIPNAME( 0x03, 0x03, "Start Credits (P1&P2);Extra" )
 		PORT_DIPSETTING (   0x01, "1&1/200%" );
@@ -665,7 +651,7 @@ public class tehkanwc
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_teedoff = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_teedoff = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( teedoff )
 		PORT_START();  /* DSW1 - Active LOW */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING (   0x02, DEF_STR( "2C_1C") );
@@ -808,8 +794,7 @@ public class tehkanwc
 		{ 45 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_tehkanwc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tehkanwc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4608000)	/* 18.432000 / 4 */
@@ -842,36 +827,27 @@ public class tehkanwc
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gridiron = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gridiron )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tehkanwc)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gridiron_readmem,gridiron_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_teedoff = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( teedoff )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tehkanwc)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(teedoff_readmem,teedoff_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
-	public static DriverInitHandlerPtr init_teedoff  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_teedoff  = new DriverInitHandlerPtr() { public void handler(){
 		/* Patch to avoid the game jumping in shared memory */
 	
 		/* Code at 0x0233 (main CPU) :
@@ -990,7 +966,7 @@ public class tehkanwc
 	
 	
 	
-	public static GameDriver driver_tehkanwc	   = new GameDriver("1985"	,"tehkanwc"	,"tehkanwc.java"	,rom_tehkanwc,null	,machine_driver_tehkanwc	,input_ports_tehkanwc	,null	,ROT0	,	"Tehkan", "Tehkan World Cup" )
-	public static GameDriver driver_gridiron	   = new GameDriver("1985"	,"gridiron"	,"tehkanwc.java"	,rom_gridiron,null	,machine_driver_gridiron	,input_ports_gridiron	,null	,ROT0	,	"Tehkan", "Gridiron Fight" )
-	public static GameDriver driver_teedoff	   = new GameDriver("1986"	,"teedoff"	,"tehkanwc.java"	,rom_teedoff,null	,machine_driver_teedoff	,input_ports_teedoff	,init_teedoff	,ROT90	,	"Tecmo", "Tee'd Off (Japan)" )
+	GAME( 1985, tehkanwc, 0, tehkanwc, tehkanwc, 0,        ROT0,  "Tehkan", "Tehkan World Cup" )
+	GAME( 1985, gridiron, 0, gridiron, gridiron, 0,        ROT0,  "Tehkan", "Gridiron Fight" )
+	GAME( 1986, teedoff,  0, teedoff,  teedoff,  teedoff,  ROT90, "Tecmo", "Tee'd Off (Japan)" )
 }

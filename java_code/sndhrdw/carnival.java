@@ -36,7 +36,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -117,8 +117,7 @@ public class carnival
 	static int psgData = 0;
 	
 	
-	public static WriteHandlerPtr carnival_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carnival_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int port1State = 0;
 		int bitsChanged;
 		int bitsGoneHigh;
@@ -142,62 +141,61 @@ public class carnival
 	
 		port1State = data;
 	
-		if ((bitsGoneLow & OUT_PORT_1_RIFLE_SHOT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_RIFLE_SHOT )
 		{
 			PLAY( SND_RIFLE_SHOT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_CLANG) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_CLANG )
 		{
 			PLAY( SND_CLANG, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_DUCK_1) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_DUCK_1 )
 		{
 			PLAY( SND_DUCK_1, 1 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_1_DUCK_1) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_DUCK_1 )
 		{
 			STOP( SND_DUCK_1 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_DUCK_2) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_DUCK_2 )
 		{
 			PLAY( SND_DUCK_2, 1 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_1_DUCK_2) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_DUCK_2 )
 		{
 			STOP( SND_DUCK_2 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_DUCK_3) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_DUCK_3 )
 		{
 			PLAY( SND_DUCK_3, 1 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_1_DUCK_3) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_DUCK_3 )
 		{
 			STOP( SND_DUCK_3 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_PIPE_HIT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_PIPE_HIT )
 		{
 			PLAY( SND_PIPE_HIT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_BONUS_1) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_BONUS_1 )
 		{
 			PLAY( SND_BONUS_1, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_BONUS_2) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_BONUS_2 )
 		{
 			PLAY( SND_BONUS_2, 0 );
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr carnival_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carnival_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bitsChanged;
 		int bitsGoneHigh;
 		int bitsGoneLow;
@@ -219,17 +217,17 @@ public class carnival
 	
 		port2State = data;
 	
-		if ((bitsGoneLow & OUT_PORT_2_BEAR) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_BEAR )
 		{
 			PLAY( SND_BEAR, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_RANKING) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_RANKING )
 		{
 			PLAY( SND_RANKING, 0 );
 		}
 	
-		if ((bitsGoneHigh & OUT_PORT_2_MUSIC_RESET) != 0)
+		if ( bitsGoneHigh & OUT_PORT_2_MUSIC_RESET )
 		{
 			/* reset output is no longer asserted active low */
 			cpu_set_reset_line( CPU_MUSIC_ID, PULSE_LINE );
@@ -237,21 +235,18 @@ public class carnival
 	} };
 	
 	
-	public static ReadHandlerPtr carnival_music_port_t1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr carnival_music_port_t1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* note: 8039 T1 signal is inverted on music board */
 		return ( port2State & OUT_PORT_2_MUSIC_T1 ) ? 0 : 1;
 	} };
 	
 	
-	public static WriteHandlerPtr carnival_music_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carnival_music_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		psgData = data;
 	} };
 	
 	
-	public static WriteHandlerPtr carnival_music_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr carnival_music_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int psgSelect = 0;
 		int newSelect;
 	

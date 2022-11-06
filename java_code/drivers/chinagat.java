@@ -70,7 +70,7 @@ Input is unique but has a few similarities to DD2 (the coin inputs)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -96,15 +96,13 @@ public class chinagat
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_chinagat  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_chinagat  = new MachineInitHandlerPtr() { public void handler(){
 		technos_video_hw = 1;
 		sprite_irq = M6809_IRQ_LINE;
 		sound_irq = IRQ_LINE_NMI;
 	} };
 	
-	public static WriteHandlerPtr chinagat_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chinagat_video_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/***************************
 		---- ---x   X Scroll MSB
 		---- --x-   Y Scroll MSB
@@ -118,31 +116,26 @@ public class chinagat
 		flip_screen_set(~data & 0x04);
 	} };
 	
-	public static WriteHandlerPtr chinagat_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chinagat_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		cpu_setbank( 1,&RAM[ 0x10000 + (0x4000 * (data & 7)) ] );
 	} };
 	
-	public static WriteHandlerPtr chinagat_sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chinagat_sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region( REGION_CPU2 );
 		cpu_setbank( 4,&RAM[ 0x10000 + (0x4000 * (data & 7)) ] );
 	} };
 	
-	public static WriteHandlerPtr chinagat_sub_IRQ_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chinagat_sub_IRQ_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr chinagat_cpu_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chinagat_cpu_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 2, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 	} };
 	
-	public static ReadHandlerPtr saiyugb1_mcu_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr saiyugb1_mcu_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if 0
 		if (saiyugb1_mcu_command == 0x78)
 		{
@@ -152,8 +145,7 @@ public class chinagat
 		return saiyugb1_mcu_command;
 	} };
 	
-	public static WriteHandlerPtr saiyugb1_mcu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr saiyugb1_mcu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		saiyugb1_mcu_command = data;
 	#if 0
 		if (data != 0x78)
@@ -163,19 +155,17 @@ public class chinagat
 	#endif
 	} };
 	
-	public static WriteHandlerPtr saiyugb1_adpcm_rom_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr saiyugb1_adpcm_rom_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* i8748 Port 1 write */
 		saiyugb1_i8748_P1 = data;
 	} };
 	
-	public static WriteHandlerPtr saiyugb1_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr saiyugb1_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* i8748 Port 2 write */
 	
 		data8_t *saiyugb1_adpcm_rom = memory_region(REGION_SOUND1);
 	
-		if ((data & 0x80) != 0)	/* Reset m5205 and disable ADPCM ROM outputs */
+		if (data & 0x80)	/* Reset m5205 and disable ADPCM ROM outputs */
 		{
 			logerror("ADPCM output disabled\n");
 			saiyugb1_pcm_nibble = 0x0f;
@@ -216,8 +206,7 @@ public class chinagat
 		saiyugb1_i8748_P2 = data;
 	} };
 	
-	public static WriteHandlerPtr saiyugb1_m5205_clk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr saiyugb1_m5205_clk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* i8748 T0 output clk mode */
 		/* This signal goes through a divide by 8 counter */
 		/* to the xtal pins of the MSM5205 */
@@ -238,9 +227,8 @@ public class chinagat
 	#endif
 	}
 	
-	public static ReadHandlerPtr saiyugb1_m5205_irq_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (adpcm_sound_irq != 0)
+	public static ReadHandlerPtr saiyugb1_m5205_irq_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (adpcm_sound_irq)
 		{
 			adpcm_sound_irq = 0;
 			return 1;
@@ -410,7 +398,7 @@ public class chinagat
 	
 	
 	
-	static InputPortPtr input_ports_chinagat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chinagat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chinagat )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_VBLANK );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -549,8 +537,7 @@ public class chinagat
 		{ 60 }
 	};
 	
-	public static InterruptHandlerPtr chinagat_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr chinagat_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 1, HOLD_LINE);	/* hold the FIRQ line */
 		cpu_set_nmi_line(0, PULSE_LINE);	/* pulse the NMI line */
 	} };
@@ -568,8 +555,7 @@ public class chinagat
 		{ chinagat_irq_handler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_chinagat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chinagat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309,12000000/8)		/* 1.5 MHz (12MHz oscillator ???) */
@@ -584,7 +570,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	
@@ -601,12 +587,9 @@ public class chinagat
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_saiyugb1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( saiyugb1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,12000000/8)		/* 68B09EP 1.5 MHz (12MHz oscillator) */
@@ -625,7 +608,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100)	/* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100)	/* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	
@@ -642,12 +625,9 @@ public class chinagat
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_saiyugb2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( saiyugb2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,12000000/8)		/* 1.5 MHz (12MHz oscillator) */
@@ -662,7 +642,7 @@ public class chinagat
 	
 		MDRV_FRAMES_PER_SECOND(56)
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(chinagat)
 	
@@ -678,9 +658,7 @@ public class chinagat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -895,8 +873,8 @@ public class chinagat
 	
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT    MONITOR COMPANY    FULLNAME     FLAGS ) */
-	public static GameDriver driver_chinagat	   = new GameDriver("1988"	,"chinagat"	,"chinagat.java"	,rom_chinagat,null	,machine_driver_chinagat	,input_ports_chinagat	,null	,	,	ROT0, "[Technos] (Taito Romstar license)", "China Gate (US)" )
-	public static GameDriver driver_saiyugou	   = new GameDriver("1988"	,"saiyugou"	,"chinagat.java"	,rom_saiyugou,driver_chinagat	,machine_driver_chinagat	,input_ports_chinagat	,null	,	,	ROT0, "Technos", "Sai Yu Gou Ma Roku (Japan)" )
-	public static GameDriver driver_saiyugb1	   = new GameDriver("1988"	,"saiyugb1"	,"chinagat.java"	,rom_saiyugb1,driver_chinagat	,machine_driver_saiyugb1	,input_ports_chinagat	,null	,	,	ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_saiyugb2	   = new GameDriver("1988"	,"saiyugb2"	,"chinagat.java"	,rom_saiyugb2,driver_chinagat	,machine_driver_saiyugb2	,input_ports_chinagat	,null	,	,	ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 2)" )
+	GAME ( 1988, chinagat, 0,        chinagat, chinagat, 0     , ROT0, "[Technos] (Taito Romstar license)", "China Gate (US)" )
+	GAME ( 1988, saiyugou, chinagat, chinagat, chinagat, 0     , ROT0, "Technos", "Sai Yu Gou Ma Roku (Japan)" )
+	GAMEX( 1988, saiyugb1, chinagat, saiyugb1, chinagat, 0     , ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 1)", GAME_IMPERFECT_SOUND )
+	GAME ( 1988, saiyugb2, chinagat, saiyugb2, chinagat, 0     , ROT0, "bootleg", "Sai Yu Gou Ma Roku (Japan bootleg 2)" )
 }

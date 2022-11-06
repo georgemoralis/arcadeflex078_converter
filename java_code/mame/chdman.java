@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -114,7 +114,7 @@ public class chdman
 	
 		chunk = intvalue % 1000;
 		intvalue /= 1000;
-		if (intvalue != 0)
+		if (intvalue)
 		{
 			print_big_int(intvalue, output);
 			strcat(output, ",");
@@ -206,7 +206,7 @@ public class chdman
 	{
 		/* set the input chd and logical bytes */
 		special_chd = chd;
-		special_original_logicalbytes = chd_get_header(chd).logicalbytes;
+		special_original_logicalbytes = chd_get_header(chd)->logicalbytes;
 		special_logicalbytes = logicalbytes ? logicalbytes : special_original_logicalbytes;
 	
 		/* init the checksums */
@@ -239,15 +239,15 @@ public class chdman
 		if (special_bytes_checksummed == special_original_logicalbytes)
 		{
 			/* check the MD5 */
-			if (memcmp(header.md5, empty_checksum, CHD_MD5_BYTES))
+			if (memcmp(header->md5, empty_checksum, CHD_MD5_BYTES))
 			{
-				if (memcmp(header.md5, final_md5, CHD_MD5_BYTES))
+				if (memcmp(header->md5, final_md5, CHD_MD5_BYTES))
 				{
 					printf("WARNING: expected input MD5 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-							header.md5[0], header.md5[1], header.md5[2], header.md5[3],
-							header.md5[4], header.md5[5], header.md5[6], header.md5[7],
-							header.md5[8], header.md5[9], header.md5[10], header.md5[11],
-							header.md5[12], header.md5[13], header.md5[14], header.md5[15]);
+							header->md5[0], header->md5[1], header->md5[2], header->md5[3],
+							header->md5[4], header->md5[5], header->md5[6], header->md5[7],
+							header->md5[8], header->md5[9], header->md5[10], header->md5[11],
+							header->md5[12], header->md5[13], header->md5[14], header->md5[15]);
 					printf("                 actual MD5 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
 							final_md5[0], final_md5[1], final_md5[2], final_md5[3],
 							final_md5[4], final_md5[5], final_md5[6], final_md5[7],
@@ -259,16 +259,16 @@ public class chdman
 			}
 	
 			/* check the SHA1 */
-			if (memcmp(header.sha1, empty_checksum, CHD_SHA1_BYTES))
+			if (memcmp(header->sha1, empty_checksum, CHD_SHA1_BYTES))
 			{
-				if (memcmp(header.sha1, final_sha1, CHD_SHA1_BYTES))
+				if (memcmp(header->sha1, final_sha1, CHD_SHA1_BYTES))
 				{
 					printf("WARNING: expected input SHA1 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
-							header.sha1[0], header.sha1[1], header.sha1[2], header.sha1[3],
-							header.sha1[4], header.sha1[5], header.sha1[6], header.sha1[7],
-							header.sha1[8], header.sha1[9], header.sha1[10], header.sha1[11],
-							header.sha1[12], header.sha1[13], header.sha1[14], header.sha1[15],
-							header.sha1[16], header.sha1[17], header.sha1[18], header.sha1[19]);
+							header->sha1[0], header->sha1[1], header->sha1[2], header->sha1[3],
+							header->sha1[4], header->sha1[5], header->sha1[6], header->sha1[7],
+							header->sha1[8], header->sha1[9], header->sha1[10], header->sha1[11],
+							header->sha1[12], header->sha1[13], header->sha1[14], header->sha1[15],
+							header->sha1[16], header->sha1[17], header->sha1[18], header->sha1[19]);
 					printf("                 actual SHA1 = %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x\n",
 							final_sha1[0], final_sha1[1], final_sha1[2], final_sha1[3],
 							final_sha1[4], final_sha1[5], final_sha1[6], final_sha1[7],
@@ -280,7 +280,7 @@ public class chdman
 					printf("Input SHA1 verified\n");
 			}
 		}
-		else if (special_error_count != 0)
+		else if (special_error_count)
 			printf("WARNING: found %d errors in the input file, checksums not verified\n", special_error_count);
 		else
 			printf("WARNING: entire input file not read, checksums not verified\n");
@@ -441,7 +441,7 @@ public class chdman
 	
 		/* open the new hard drive */
 		chd = chd_open(outputfile, 1, NULL);
-		if (chd == 0)
+		if (!chd)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			remove(outputfile);
@@ -504,7 +504,7 @@ public class chdman
 	
 		/* get the header */
 		infile = chd_open(inputfile, 0, NULL);
-		if (infile == 0)
+		if (!infile)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(chd_get_last_error()));
 			goto error;
@@ -513,7 +513,7 @@ public class chdman
 	
 		/* allocate memory to hold a hunk */
 		hunk = malloc(header.hunkbytes);
-		if (hunk == 0)
+		if (!hunk)
 		{
 			printf("Out of memory allocating hunk buffer!\n");
 			goto error;
@@ -521,7 +521,7 @@ public class chdman
 	
 		/* create the output file */
 		outfile = (*chdman_interface.open)(outputfile, "wb");
-		if (outfile == 0)
+		if (!outfile)
 		{
 			printf("Error opening output file '%s'\n", outputfile);
 			goto error;
@@ -566,11 +566,11 @@ public class chdman
 	
 	error:
 		/* clean up our mess */
-		if (outfile != 0)
+		if (outfile)
 			(*chdman_interface.close)(outfile);
-		if (hunk != 0)
+		if (hunk)
 			free(hunk);
-		if (infile != 0)
+		if (infile)
 			chd_close(infile);
 	}
 	
@@ -601,7 +601,7 @@ public class chdman
 	
 		/* open the new hard drive */
 		chd = chd_open(inputfile, 0, NULL);
-		if (chd == 0)
+		if (!chd)
 		{
 			printf("Error opening CHD file: %s\n", error_string(chd_get_last_error()));
 			return;
@@ -637,7 +637,7 @@ public class chdman
 					actualmd5[12], actualmd5[13], actualmd5[14], actualmd5[15]);
 	
 			/* fix it */
-			if (fix != 0)
+			if (fix)
 			{
 				memcpy(header.md5, actualmd5, sizeof(header.md5));
 				fixed = 1;
@@ -665,7 +665,7 @@ public class chdman
 						actualsha1[16], actualsha1[17], actualsha1[18], actualsha1[19]);
 	
 				/* fix it */
-				if (fix != 0)
+				if (fix)
 				{
 					memcpy(header.sha1, actualsha1, sizeof(header.sha1));
 					fixed = 1;
@@ -677,7 +677,7 @@ public class chdman
 		chd_close(chd);
 	
 		/* update the header */
-		if (fixed != 0)
+		if (fixed)
 		{
 			err = chd_set_header(inputfile, &header);
 			if (err != CHDERR_NONE)
@@ -718,7 +718,7 @@ public class chdman
 	
 		/* get the header */
 		chd = chd_open(inputfile, 0, NULL);
-		if (chd == 0)
+		if (!chd)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(chd_get_last_error()));
 			return;
@@ -803,9 +803,9 @@ public class chdman
 	static int handle_custom_chomp(const char *name, struct chd_file *chd, UINT32 *maxhunk)
 	{
 		const struct chd_header *header = chd_get_header(chd);
-		int sectors_per_hunk = (header.hunkbytes / IDE_SECTOR_SIZE);
-		UINT8 *temp = malloc(header.hunkbytes);
-		if (temp == 0)
+		int sectors_per_hunk = (header->hunkbytes / IDE_SECTOR_SIZE);
+		UINT8 *temp = malloc(header->hunkbytes);
+		if (!temp)
 			return CHDERR_OUT_OF_MEMORY;
 	
 		/* check for midway */
@@ -832,10 +832,10 @@ public class chdman
 			}
 			*maxhunk = (maxsector + sectors_per_hunk - 1) / sectors_per_hunk;
 			printf("Maximum hunk: %d\n", *maxhunk);
-			if (*maxhunk >= header.totalhunks)
+			if (*maxhunk >= header->totalhunks)
 			{
 				printf("Warning: chomp will have no effect\n");
-				*maxhunk = header.totalhunks;
+				*maxhunk = header->totalhunks;
 			}
 		}
 	
@@ -846,9 +846,9 @@ public class chdman
 			UINT8 *data;
 			int i;
 	
-			if (!chd_read(chd, 0x200 / header.hunkbytes, 1, temp))
+			if (!chd_read(chd, 0x200 / header->hunkbytes, 1, temp))
 				goto error;
-			data = &temp[0x200 % header.hunkbytes];
+			data = &temp[0x200 % header->hunkbytes];
 	
 			if (data[0] != 0x0d || data[1] != 0xf0 || data[2] != 0xed || data[3] != 0xfe)
 				goto error;
@@ -858,10 +858,10 @@ public class chdman
 				goto error;
 			*maxhunk = (sectors[3] + (sectors[3] - sectors[2]) + sectors_per_hunk - 1) / sectors_per_hunk;
 			printf("Maximum hunk: %d\n", *maxhunk);
-			if (*maxhunk >= header.totalhunks)
+			if (*maxhunk >= header->totalhunks)
 			{
 				printf("Warning: chomp will have no effect\n");
-				*maxhunk = header.totalhunks;
+				*maxhunk = header->totalhunks;
 			}
 		}
 	
@@ -921,7 +921,7 @@ public class chdman
 		}
 	
 		/* print some info */
-		if (parentfile != 0)
+		if (parentfile)
 		{
 			printf("Parent file:  %s\n", parentfile);
 			printf("Diff file:    %s\n", inputfile);
@@ -933,10 +933,10 @@ public class chdman
 			printf("Maximum hunk: %d\n", maxhunk);
 	
 		/* open the parent CHD */
-		if (parentfile != 0)
+		if (parentfile)
 		{
 			parentchd = chd_open(parentfile, 0, NULL);
-			if (parentchd == 0)
+			if (!parentchd)
 			{
 				printf("Error opening CHD file '%s': %s\n", parentfile, error_string(err = chd_get_last_error()));
 				goto error;
@@ -945,7 +945,7 @@ public class chdman
 	
 		/* open the diff CHD */
 		inputchd = chd_open(inputfile, 0, parentchd);
-		if (inputchd == 0)
+		if (!inputchd)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -960,7 +960,7 @@ public class chdman
 	#endif
 	
 		/* create the new merged CHD */
-		err = chd_create(outputfile, inputheader.logicalbytes, inputheader.hunkbytes, CHDCOMPRESSION_ZLIB_PLUS, NULL);
+		err = chd_create(outputfile, inputheader->logicalbytes, inputheader->hunkbytes, CHDCOMPRESSION_ZLIB_PLUS, NULL);
 		if (err != CHDERR_NONE)
 		{
 			printf("Error creating CHD file: %s\n", error_string(err));
@@ -969,7 +969,7 @@ public class chdman
 	
 		/* open the new CHD */
 		outputchd = chd_open(outputfile, 1, NULL);
-		if (outputchd == 0)
+		if (!outputchd)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			goto error;
@@ -992,7 +992,7 @@ public class chdman
 		}
 	
 		/* do the compression; our interface will route reads for us */
-		special_chd_init(inputchd, (operation == OPERATION_CHOMP) ? ((UINT64)(maxhunk + 1) * (UINT64)inputheader.hunkbytes) : inputheader.logicalbytes);
+		special_chd_init(inputchd, (operation == OPERATION_CHOMP) ? ((UINT64)(maxhunk + 1) * (UINT64)inputheader->hunkbytes) : inputheader->logicalbytes);
 		err = chd_compress(outputchd, SPECIAL_CHD_NAME, 0, progress);
 		if (err != CHDERR_NONE)
 			printf("Error during compression: %s\n", error_string(err));
@@ -1000,11 +1000,11 @@ public class chdman
 	
 	error:
 		/* close everything down */
-		if (outputchd != 0)
+		if (outputchd)
 			chd_close(outputchd);
-		if (inputchd != 0)
+		if (inputchd)
 			chd_close(inputchd);
-		if (parentchd != 0)
+		if (parentchd)
 			chd_close(parentchd);
 		if (err != CHDERR_NONE)
 			remove(outputfile);
@@ -1044,7 +1044,7 @@ public class chdman
 	
 		/* open the soon-to-be-parent CHD */
 		parentchd = chd_open(parentfile, 0, NULL);
-		if (parentchd == 0)
+		if (!parentchd)
 		{
 			printf("Error opening CHD file '%s': %s\n", parentfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -1052,7 +1052,7 @@ public class chdman
 	
 		/* open the input CHD */
 		inputchd = chd_open(inputfile, 0, NULL);
-		if (inputchd == 0)
+		if (!inputchd)
 		{
 			printf("Error opening CHD file '%s': %s\n", inputfile, error_string(err = chd_get_last_error()));
 			goto error;
@@ -1068,7 +1068,7 @@ public class chdman
 	
 		/* open the new CHD */
 		outputchd = chd_open(outputfile, 1, parentchd);
-		if (outputchd == 0)
+		if (!outputchd)
 		{
 			printf("Error opening new CHD file: %s\n", error_string(chd_get_last_error()));
 			goto error;
@@ -1083,11 +1083,11 @@ public class chdman
 	
 	error:
 		/* close everything down */
-		if (outputchd != 0)
+		if (outputchd)
 			chd_close(outputchd);
-		if (inputchd != 0)
+		if (inputchd)
 			chd_close(inputchd);
-		if (parentchd != 0)
+		if (parentchd)
 			chd_close(parentchd);
 		if (err != CHDERR_NONE)
 			remove(outputfile);
@@ -1131,7 +1131,7 @@ public class chdman
 	
 		/* open the file read-only and get the header */
 		chd = chd_open(inoutfile, 0, NULL);
-		if (chd == 0)
+		if (!chd)
 		{
 			printf("Error opening CHD file '%s' read-only: %s\n", inoutfile, error_string(chd_get_last_error()));
 			return;
@@ -1156,7 +1156,7 @@ public class chdman
 	
 		/* open the file read/write */
 		chd = chd_open(inoutfile, 1, NULL);
-		if (chd == 0)
+		if (!chd)
 		{
 			printf("Error opening CHD file '%s' read/write: %s\n", inoutfile, error_string(chd_get_last_error()));
 			return;
@@ -1189,7 +1189,7 @@ public class chdman
 		chd_close(chd);
 	
 		/* restore the read-only state */
-		if (was_readonly != 0)
+		if (was_readonly)
 			header.flags &= ~CHDFLAGS_IS_WRITEABLE;
 	
 		/* set the new logical size */
@@ -1208,9 +1208,9 @@ public class chdman
 		return;
 	
 	cleanup:
-		if (chd != 0)
+		if (chd)
 			chd_close(chd);
-		if (was_readonly != 0)
+		if (was_readonly)
 		{
 			header.flags &= ~CHDFLAGS_IS_WRITEABLE;
 			chd_set_header(inoutfile, &header);
@@ -1251,7 +1251,7 @@ public class chdman
 	
 		/* attempt to open the file */
 		f = fopen(file, "rb");
-		if (f == 0)
+		if (!f)
 			return 0;
 	
 		/* get the size */
@@ -1344,12 +1344,12 @@ public class chdman
 			UINT32 result;
 	
 			/* validate the read: we can only handle block-aligned reads here */
-			if (offset % header.hunkbytes != 0)
+			if (offset % header->hunkbytes != 0)
 			{
 				printf("Error: chdman read from non-aligned offset %08X%08X\n", (UINT32)(offset >> 32), (UINT32)offset);
 				return 0;
 			}
-			if (count % header.hunkbytes != 0)
+			if (count % header->hunkbytes != 0)
 			{
 				printf("Error: chdman read non-aligned amount %08X\n", count);
 				return 0;
@@ -1360,7 +1360,7 @@ public class chdman
 				return 0;
 	
 			/* read the block(s) */
-			result = header.hunkbytes * chd_read(special_chd, offset / header.hunkbytes, count / header.hunkbytes, buffer);
+			result = header->hunkbytes * chd_read(special_chd, offset / header->hunkbytes, count / header->hunkbytes, buffer);
 	
 			/* count errors */
 			if (result != count && chd_get_last_error() != CHDERR_NONE)
@@ -1376,7 +1376,7 @@ public class chdman
 					bytestochecksum = special_original_logicalbytes - special_bytes_checksummed;
 	
 				/* update the two checksums */
-				if (bytestochecksum != 0)
+				if (bytestochecksum)
 				{
 					MD5Update(&special_md5, buffer, bytestochecksum);
 					sha1_update(&special_sha1, bytestochecksum, buffer);

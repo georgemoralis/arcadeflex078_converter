@@ -13,7 +13,7 @@ drivers by Acho A. Tang
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,11 +54,11 @@ public class equites
 		pen_t *colortable;
 		int i;
 	
-		colortable = Machine.remapped_colortable;
+		colortable = Machine->remapped_colortable;
 	
 		// set defaults
 		maskwidth = 8;
-		maskheight = Machine.visible_area.max_y - Machine.visible_area.min_y + 1;
+		maskheight = Machine->visible_area.max_y - Machine->visible_area.min_y + 1;
 		maskcolor = get_black_pen();
 		scrollx = scrolly = 0;
 		for (i=0; i<4; i++) bgcolor[i] = 0;
@@ -81,8 +81,7 @@ public class equites
 	}
 	
 	// Equites Hardware
-	public static PaletteInitHandlerPtr palette_init_equites  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_equites  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		UINT8 *clut_ptr;
 		int i, r, g, b;
 	
@@ -117,8 +116,7 @@ public class equites
 		SET_TILE_INFO(0, tile, color, 0);
 	}
 	
-	public static VideoStartHandlerPtr video_start_equites  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_equites  = new VideoStartHandlerPtr() { public int handler(){
 		charmap0 = tilemap_create(equites_charinfo, tilemap_scan_cols, TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 		tilemap_set_transparent_pen(charmap0, 0);
 		tilemap_set_scrolldx(charmap0, BMPAD, BMPAD);
@@ -130,8 +128,7 @@ public class equites
 	} };
 	
 	// Splendor Blast Hardware
-	public static PaletteInitHandlerPtr palette_init_splndrbt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_splndrbt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		UINT8 *prom_ptr;
 		int i, r, g, b;
 	
@@ -204,7 +201,7 @@ public class equites
 		double DA, DB, DC, D0, D1, Dsum;
 		int i, dst_vish;
 	
-		dst_vish = dst_clip.max_y - dst_clip.min_y;
+		dst_vish = dst_clip->max_y - dst_clip->min_y;
 	
 		DA = (double)(src_w << FP_PRECISION) * dst_vish;
 		DB = dst_endw - dst_startw;
@@ -231,8 +228,7 @@ public class equites
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_splndrbt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_splndrbt  = new VideoStartHandlerPtr() { public int handler(){
 	#define BMW (1<<BMW_l2)
 	
 		unsigned char *buf8ptr;
@@ -274,8 +270,7 @@ public class equites
 		return (0);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_splndrbt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_splndrbt  = new MachineInitHandlerPtr() { public void handler(){
 		splndrbt_video_reset();
 	} };
 	
@@ -288,7 +283,7 @@ public class equites
 		pen_t *colortable;
 		int i, c;
 	
-		colortable = Machine.remapped_colortable;
+		colortable = Machine->remapped_colortable;
 		c = *bgcolor;
 	
 		for (i=0x80; i<0x100; i+=0x08) colortable[i] = c;
@@ -332,7 +327,7 @@ public class equites
 			y = skipy - dispy + BMPAD;
 	
 			drawgfx( bitmap,
-				 Machine.gfx[bank],
+				 Machine->gfx[bank],
 				 tile, color,
 				 fx, fy,
 				 x, y,
@@ -359,10 +354,10 @@ public class equites
 		for (; sptr<eptr; sptr+=2)
 		{
 			encode = *(sptr + 1);
-			if (encode != 0)
+			if (encode)
 			{
 				bank = (encode>>8 & 0x01) + SPRITE_BANKBASE;
-				gfx = Machine.gfx[bank];
+				gfx = Machine->gfx[bank];
 				tile = encode & 0xff;
 				fxy = encode & 0x800;
 				encode = ~encode & 0xf600;
@@ -391,8 +386,7 @@ public class equites
 	#undef SPRITE_BANKBASE
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_equites  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		equites_update_clut();
 		equites_draw_scroll(bitmap);
 		equites_draw_sprites(bitmap);
@@ -407,7 +401,7 @@ public class equites
 		pen_t *colortable;
 		int c;
 	
-		colortable = Machine.remapped_colortable;
+		colortable = Machine->remapped_colortable;
 		c = *bgcolor;
 	
 		switch(equites_id)
@@ -441,7 +435,7 @@ public class equites
 			fy = data & 2;
 	
 			drawgfx(bitmap,
-				Machine.gfx[bank],
+				Machine->gfx[bank],
 				tile, color,
 				fx, fy,
 				x, y,
@@ -466,16 +460,16 @@ public class equites
 		int src_pitch, dst_pitch, dst_wdiff, dst_visw, dst_vish;
 		int dst_curline, dst_xend, src_fsx, src_fdx, eax, ebx, ecx, edx;
 	
-		src_base = (data16_t*)src_bitmap.base;
-		src_pitch = src_bitmap.rowpixels;
+		src_base = (data16_t*)src_bitmap->base;
+		src_pitch = src_bitmap->rowpixels;
 		ebx = ((src_x + (src_w>>1)) & WARP) << FP_PRECISION;
 	
-		eax = dst_clip.min_x;
-		edx = dst_clip.min_y;
-		dst_visw = dst_clip.max_x - eax + 1;
-		dst_vish = dst_clip.max_y - edx;
-		dst_pitch = dst_bitmap.rowpixels;
-		dst_ptr = (data16_t*)dst_bitmap.base + edx * dst_pitch + eax + (dst_visw >> 1);
+		eax = dst_clip->min_x;
+		edx = dst_clip->min_y;
+		dst_visw = dst_clip->max_x - eax + 1;
+		dst_vish = dst_clip->max_y - edx;
+		dst_pitch = dst_bitmap->rowpixels;
+		dst_ptr = (data16_t*)dst_bitmap->base + edx * dst_pitch + eax + (dst_visw >> 1);
 	
 		dst_wdiff = dst_endw - dst_startw;
 		dst_curline = 0;
@@ -525,13 +519,13 @@ public class equites
 		data16_t *data_ptr;
 		int data, sprite, fx, fy, absx, absy, sx, sy, adjy, scalex, scaley, color, i;
 	
-		gfx = Machine.gfx[SPRITE_BANKBASE];
+		gfx = Machine->gfx[SPRITE_BANKBASE];
 		data_ptr = spriteram16 + 1;
 	
 		for (i=0; i<0x7e; i+=2)
 		{
 			data = data_ptr[i];
-			if (data == 0) continue;
+			if (!data) continue;
 	
 			fx = data & 0x2000;
 			fy = data & 0x1000;
@@ -571,8 +565,7 @@ public class equites
 	#undef SPRITE_BANKBASE
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_splndrbt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		splndrbt_update_clut();
 		fillbitmap(bitmap, *bgcolor, &halfclip);
 		splndrbt_draw_scroll(tmpbitmap);
@@ -606,14 +599,14 @@ public class equites
 	
 	WRITE16_HANDLER(equites_bgcolor_w)
 	{
-		if (ACCESSING_MSB == 0) return;
+		if (!ACCESSING_MSB) return;
 	
 		data >>= 8;
 	
 		switch (equites_id)
 		{
 			case 0x8400:
-				if (data == 0) bgcolor[0] = 0;
+				if (!data) bgcolor[0] = 0;
 				else if (data==0x0e) bgcolor[0] = bgcolor[2];
 				else
 				{
@@ -628,8 +621,8 @@ public class equites
 	
 	WRITE16_HANDLER(equites_scrollreg_w)
 	{
-		if (ACCESSING_LSB != 0) scrolly = data & 0xff;
-		if (ACCESSING_MSB != 0) scrollx = data >> 8;
+		if (ACCESSING_LSB) scrolly = data & 0xff;
+		if (ACCESSING_MSB) scrollx = data >> 8;
 	}
 	
 	// Splendor Blast Hardware

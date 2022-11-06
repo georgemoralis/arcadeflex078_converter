@@ -68,7 +68,7 @@ FF3F Should be written an 0x80 for Mode 0
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -113,8 +113,7 @@ public class zaxxon
 		{ 11, 11, 1, 1, 1 },	/* background */
 	};
 	
-	public static WriteHandlerPtr zaxxon_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaxxon_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int line;
 		int noise;
 	

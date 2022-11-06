@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class ambush
 	  I'm not sure about the resistor value, I'm using the Galaxian ones.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_ambush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ambush  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors; i++)
@@ -88,25 +87,24 @@ public class ambush
 	
 			code = videoram.read(offs)| ((col & 0x60) << 3);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
 				scroll = ~scroll - 1;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					(col & 0x0f) | ((*ambush_colorbank & 0x03) << 4),
 					flip_screen(),flip_screen(),
 					8*sx, (8*sy + scroll) & 0xff,
-					Machine.visible_area,transparency,0);
+					Machine->visible_area,transparency,0);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ambush  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ambush  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -139,7 +137,7 @@ public class ambush
 				/* 16x16 sprites */
 				gfx = 1;
 	
-				if (flip_screen == 0)
+				if (!flip_screen())
 				{
 					sy = 240 - sy;
 				}
@@ -154,7 +152,7 @@ public class ambush
 				gfx = 0;
 				code <<= 2;
 	
-				if (flip_screen == 0)
+				if (!flip_screen())
 				{
 					sy = 248 - sy;
 				}
@@ -168,7 +166,7 @@ public class ambush
 			flipx = spriteram.read(offs + 1)& 0x40;
 			flipy = spriteram.read(offs + 1)& 0x80;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);

@@ -42,7 +42,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -118,7 +118,7 @@ public class carjmbre
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_carjmbre = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_carjmbre = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( carjmbre )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );	//coin error if held high for 1s
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );	//or if many coins inserted quickly
@@ -204,8 +204,7 @@ public class carjmbre
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_carjmbre = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( carjmbre )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)
@@ -235,9 +234,7 @@ public class carjmbre
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, carjmbre_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_carjmbre = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -268,5 +265,5 @@ public class carjmbre
 		ROM_LOAD( "c.d18",  0x0020, 0x0020, CRC(7b9ed1b0) SHA1(ec5e1f56e5a2fc726083866c08ac0e1de0ed6ace) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_carjmbre	   = new GameDriver("1983"	,"carjmbre"	,"carjmbre.java"	,rom_carjmbre,null	,machine_driver_carjmbre	,input_ports_carjmbre	,null	,ROT90	,	"Omori Electric Co., Ltd.", "Car Jamboree", GAME_IMPERFECT_COLORS )
+	GAMEX(1983, carjmbre, 0, carjmbre, carjmbre, 0, ROT90, "Omori Electric Co., Ltd.", "Car Jamboree", GAME_IMPERFECT_COLORS )
 }

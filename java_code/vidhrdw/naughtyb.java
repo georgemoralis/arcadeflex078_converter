@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -72,8 +72,7 @@ public class naughtyb
 	  plus 270 ohm pullup and pulldown resistors on all lines
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_naughtyb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_naughtyb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -154,8 +153,7 @@ public class naughtyb
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_naughtyb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_naughtyb  = new VideoStartHandlerPtr() { public int handler(){
 		videoreg = palreg = bankreg = 0;
 	
 		/* Naughty Boy has a virtual screen twice as large as the visible screen */
@@ -172,20 +170,18 @@ public class naughtyb
 	
 	
 	
-	public static WriteHandlerPtr naughtyb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (naughtyb_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr naughtyb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (naughtyb_videoram2[offset] != data)
 		{
 			dirtybuffer[offset] = 1;
 	
-			naughtyb_videoram2.write(data,data);
+			naughtyb_videoram2[offset] = data;
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr naughtyb_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr naughtyb_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 4+5 control the sound circuit */
 		pleiads_sound_control_c_w(offset,data);
 	
@@ -200,8 +196,7 @@ public class naughtyb
 		}
 	} };
 	
-	public static WriteHandlerPtr popflame_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popflame_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 4+5 control the sound circuit */
 		pleiads_sound_control_c_w(offset,data);
 	
@@ -266,8 +261,7 @@ public class naughtyb
 	
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_naughtyb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -294,8 +288,8 @@ public class naughtyb
 				}
 	
 				drawgfx(tmpbitmap,Machine.gfx[0],
-						naughtyb_videoram2.read(offs)+ 256 * bankreg,
-						(naughtyb_videoram2.read(offs)>> 5) + 8 * palreg,
+						naughtyb_videoram2[offs] + 256 * bankreg,
+						(naughtyb_videoram2[offs] >> 5) + 8 * palreg,
 						0,0,
 						8*sx,8*sy,
 						0,TRANSPARENCY_NONE,0);

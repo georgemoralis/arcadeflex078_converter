@@ -69,7 +69,7 @@ Revision History:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -273,7 +273,7 @@ public class fmopl
 	
 		UINT8	rhythm;					/* Rhythm mode					*/
 	
-		UINT32	fn_tab[1024];			/* fnumber.increment counter	*/
+		UINT32	fn_tab[1024];			/* fnumber->increment counter	*/
 	
 		/* LFO */
 		UINT8	lfo_am_depth;
@@ -669,14 +669,14 @@ public class fmopl
 	INLINE void OPL_STATUS_SET(FM_OPL *OPL,int flag)
 	{
 		/* set status flag */
-		OPL.status |= flag;
-		if(!(OPL.status & 0x80))
+		OPL->status |= flag;
+		if(!(OPL->status & 0x80))
 		{
-			if(OPL.status & OPL.statusmask)
+			if(OPL->status & OPL->statusmask)
 			{	/* IRQ on */
-				OPL.status |= 0x80;
+				OPL->status |= 0x80;
 				/* callback user interrupt handler (IRQ is OFF to ON) */
-				if(OPL.IRQHandler) (OPL.IRQHandler)(OPL.IRQParam,1);
+				if(OPL->IRQHandler) (OPL->IRQHandler)(OPL->IRQParam,1);
 			}
 		}
 	}
@@ -685,14 +685,14 @@ public class fmopl
 	INLINE void OPL_STATUS_RESET(FM_OPL *OPL,int flag)
 	{
 		/* reset status flag */
-		OPL.status &=~flag;
-		if((OPL.status & 0x80))
+		OPL->status &=~flag;
+		if((OPL->status & 0x80))
 		{
-			if (!(OPL.status & OPL.statusmask) )
+			if (!(OPL->status & OPL->statusmask) )
 			{
-				OPL.status &= 0x7f;
+				OPL->status &= 0x7f;
 				/* callback user interrupt handler (IRQ is ON to OFF) */
-				if(OPL.IRQHandler) (OPL.IRQHandler)(OPL.IRQParam,0);
+				if(OPL->IRQHandler) (OPL->IRQHandler)(OPL->IRQParam,0);
 			}
 		}
 	}
@@ -700,7 +700,7 @@ public class fmopl
 	/* IRQ mask set */
 	INLINE void OPL_STATUSMASK_SET(FM_OPL *OPL,int flag)
 	{
-		OPL.statusmask = flag;
+		OPL->statusmask = flag;
 		/* IRQ handling check */
 		OPL_STATUS_SET(OPL,0);
 		OPL_STATUS_RESET(OPL,0);
@@ -713,19 +713,19 @@ public class fmopl
 		UINT8 tmp;
 	
 		/* LFO */
-		OPL.lfo_am_cnt += OPL.lfo_am_inc;
-		if (OPL.lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
-			OPL.lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
+		OPL->lfo_am_cnt += OPL->lfo_am_inc;
+		if (OPL->lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
+			OPL->lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
 	
-		tmp = lfo_am_table[ OPL.lfo_am_cnt >> LFO_SH ];
+		tmp = lfo_am_table[ OPL->lfo_am_cnt >> LFO_SH ];
 	
-		if (OPL.lfo_am_depth)
+		if (OPL->lfo_am_depth)
 			LFO_AM = tmp;
 		else
 			LFO_AM = tmp>>2;
 	
-		OPL.lfo_pm_cnt += OPL.lfo_pm_inc;
-		LFO_PM = ((OPL.lfo_pm_cnt>>LFO_SH) & 7) | OPL.lfo_pm_depth_range;
+		OPL->lfo_pm_cnt += OPL->lfo_pm_inc;
+		LFO_PM = ((OPL->lfo_pm_cnt>>LFO_SH) & 7) | OPL->lfo_pm_depth_range;
 	}
 	
 	/* advance to next sample */
@@ -735,45 +735,45 @@ public class fmopl
 		OPL_SLOT *op;
 		int i;
 	
-		OPL.eg_timer += OPL.eg_timer_add;
+		OPL->eg_timer += OPL->eg_timer_add;
 	
-		while (OPL.eg_timer >= OPL.eg_timer_overflow)
+		while (OPL->eg_timer >= OPL->eg_timer_overflow)
 		{
-			OPL.eg_timer -= OPL.eg_timer_overflow;
+			OPL->eg_timer -= OPL->eg_timer_overflow;
 	
-			OPL.eg_cnt++;
+			OPL->eg_cnt++;
 	
 			for (i=0; i<9*2; i++)
 			{
-				CH  = &OPL.P_CH[i/2];
-				op  = &CH.SLOT[i&1];
+				CH  = &OPL->P_CH[i/2];
+				op  = &CH->SLOT[i&1];
 	
 				/* Envelope Generator */
-				switch(op.state)
+				switch(op->state)
 				{
 				case EG_ATT:		/* attack phase */
-					if ( !(OPL.eg_cnt & ((1<<op.eg_sh_ar)-1) ) )
+					if ( !(OPL->eg_cnt & ((1<<op->eg_sh_ar)-1) ) )
 					{
-						op.volume += (~op.volume *
-		                        		           (eg_inc[op.eg_sel_ar + ((OPL.eg_cnt>>op.eg_sh_ar)&7)])
+						op->volume += (~op->volume *
+		                        		           (eg_inc[op->eg_sel_ar + ((OPL->eg_cnt>>op->eg_sh_ar)&7)])
 	        			                          ) >>3;
 	
-						if (op.volume <= MIN_ATT_INDEX)
+						if (op->volume <= MIN_ATT_INDEX)
 						{
-							op.volume = MIN_ATT_INDEX;
-							op.state = EG_DEC;
+							op->volume = MIN_ATT_INDEX;
+							op->state = EG_DEC;
 						}
 	
 					}
 				break;
 	
 				case EG_DEC:	/* decay phase */
-					if ( !(OPL.eg_cnt & ((1<<op.eg_sh_dr)-1) ) )
+					if ( !(OPL->eg_cnt & ((1<<op->eg_sh_dr)-1) ) )
 					{
-						op.volume += eg_inc[op.eg_sel_dr + ((OPL.eg_cnt>>op.eg_sh_dr)&7)];
+						op->volume += eg_inc[op->eg_sel_dr + ((OPL->eg_cnt>>op->eg_sh_dr)&7)];
 	
-						if ( op.volume >= op.sl )
-							op.state = EG_SUS;
+						if ( op->volume >= op->sl )
+							op->state = EG_SUS;
 	
 					}
 				break;
@@ -784,33 +784,33 @@ public class fmopl
 					one can change percusive/non-percussive modes on the fly and
 					the chip will remain in sustain phase - verified on real YM3812 */
 	
-					if(op.eg_type)		/* non-percussive mode */
+					if(op->eg_type)		/* non-percussive mode */
 					{
 										/* do nothing */
 					}
 					else				/* percussive mode */
 					{
 						/* during sustain phase chip adds Release Rate (in percussive mode) */
-						if ( !(OPL.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
+						if ( !(OPL->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
 						{
-							op.volume += eg_inc[op.eg_sel_rr + ((OPL.eg_cnt>>op.eg_sh_rr)&7)];
+							op->volume += eg_inc[op->eg_sel_rr + ((OPL->eg_cnt>>op->eg_sh_rr)&7)];
 	
-							if ( op.volume >= MAX_ATT_INDEX )
-								op.volume = MAX_ATT_INDEX;
+							if ( op->volume >= MAX_ATT_INDEX )
+								op->volume = MAX_ATT_INDEX;
 						}
 						/* else do nothing in sustain phase */
 					}
 				break;
 	
 				case EG_REL:	/* release phase */
-					if ( !(OPL.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
+					if ( !(OPL->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
 					{
-						op.volume += eg_inc[op.eg_sel_rr + ((OPL.eg_cnt>>op.eg_sh_rr)&7)];
+						op->volume += eg_inc[op->eg_sel_rr + ((OPL->eg_cnt>>op->eg_sh_rr)&7)];
 	
-						if ( op.volume >= MAX_ATT_INDEX )
+						if ( op->volume >= MAX_ATT_INDEX )
 						{
-							op.volume = MAX_ATT_INDEX;
-							op.state = EG_OFF;
+							op->volume = MAX_ATT_INDEX;
+							op->state = EG_OFF;
 						}
 	
 					}
@@ -824,33 +824,33 @@ public class fmopl
 	
 		for (i=0; i<9*2; i++)
 		{
-			CH  = &OPL.P_CH[i/2];
-			op  = &CH.SLOT[i&1];
+			CH  = &OPL->P_CH[i/2];
+			op  = &CH->SLOT[i&1];
 	
 			/* Phase Generator */
-			if(op.vib)
+			if(op->vib)
 			{
 				UINT8 block;
-				unsigned int block_fnum = CH.block_fnum;
+				unsigned int block_fnum = CH->block_fnum;
 	
 				unsigned int fnum_lfo   = (block_fnum&0x0380) >> 7;
 	
 				signed int lfo_fn_table_index_offset = lfo_pm_table[LFO_PM + 16*fnum_lfo ];
 	
-				if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
+				if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
 				{
 					block_fnum += lfo_fn_table_index_offset;
 					block = (block_fnum&0x1c00) >> 10;
-					op.Cnt += (OPL.fn_tab[block_fnum&0x03ff] >> (7-block)) * op.mul;
+					op->Cnt += (OPL->fn_tab[block_fnum&0x03ff] >> (7-block)) * op->mul;
 				}
 				else	/* LFO phase modulation  = zero */
 				{
-					op.Cnt += op.Incr;
+					op->Cnt += op->Incr;
 				}
 			}
 			else	/* LFO phase modulation disabled for this operator */
 			{
-				op.Cnt += op.Incr;
+				op->Cnt += op->Incr;
 			}
 		}
 	
@@ -865,15 +865,15 @@ public class fmopl
 		*	Simply use bit 22 as the noise output.
 		*/
 	
-		OPL.noise_p += OPL.noise_f;
-		i = OPL.noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
-		OPL.noise_p &= FREQ_MASK;
+		OPL->noise_p += OPL->noise_f;
+		i = OPL->noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
+		OPL->noise_p &= FREQ_MASK;
 		while (i)
 		{
 			/*
 			UINT32 j;
-			j = ( (OPL.noise_rng) ^ (OPL.noise_rng>>14) ^ (OPL.noise_rng>>15) ^ (OPL.noise_rng>>22) ) & 1;
-			OPL.noise_rng = (j<<22) | (OPL.noise_rng>>1);
+			j = ( (OPL->noise_rng) ^ (OPL->noise_rng>>14) ^ (OPL->noise_rng>>15) ^ (OPL->noise_rng>>22) ) & 1;
+			OPL->noise_rng = (j<<22) | (OPL->noise_rng>>1);
 			*/
 	
 			/*
@@ -884,8 +884,8 @@ public class fmopl
 				what is real state of the noise_rng after the reset.
 			*/
 	
-			if (OPL.noise_rng & 1) OPL.noise_rng ^= 0x800302;
-			OPL.noise_rng >>= 1;
+			if (OPL->noise_rng & 1) OPL->noise_rng ^= 0x800302;
+			OPL->noise_rng >>= 1;
 	
 			i--;
 		}
@@ -915,7 +915,7 @@ public class fmopl
 	}
 	
 	
-	#define volume_calc(OP) ((OP).TLL + ((UINT32)(OP).volume) + (LFO_AM & (OP).AMmask))
+	#define volume_calc(OP) ((OP)->TLL + ((UINT32)(OP)->volume) + (LFO_AM & (OP)->AMmask))
 	
 	/* calculate output */
 	INLINE void OPL_CALC_CH( OPL_CH *CH )
@@ -927,24 +927,24 @@ public class fmopl
 		phase_modulation = 0;
 	
 		/* SLOT 1 */
-		SLOT = &CH.SLOT[SLOT1];
+		SLOT = &CH->SLOT[SLOT1];
 		env  = volume_calc(SLOT);
-		out  = SLOT.op1_out[0] + SLOT.op1_out[1];
-		SLOT.op1_out[0] = SLOT.op1_out[1];
-		*SLOT.connect1 += SLOT.op1_out[0];
-		SLOT.op1_out[1] = 0;
+		out  = SLOT->op1_out[0] + SLOT->op1_out[1];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
+		*SLOT->connect1 += SLOT->op1_out[0];
+		SLOT->op1_out[1] = 0;
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.FB)
+			if (!SLOT->FB)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.Cnt, env, (out<<SLOT.FB), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->Cnt, env, (out<<SLOT->FB), SLOT->wavetable );
 		}
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			output[0] += op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable);
+			output[0] += op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable);
 	}
 	
 	/*
@@ -993,8 +993,8 @@ public class fmopl
 	
 		/* Bass Drum (verified on real YM3812):
 		  - depends on the channel 6 'connect' register:
-		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1.op2.out)
-		      when connect = 1 _only_ operator 2 is present on output (op2.out), operator 1 is ignored
+		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1->op2->out)
+		      when connect = 1 _only_ operator 2 is present on output (op2->out), operator 1 is ignored
 		  - output sample always is multiplied by 2
 		*/
 	
@@ -1003,39 +1003,39 @@ public class fmopl
 		SLOT = &CH[6].SLOT[SLOT1];
 		env = volume_calc(SLOT);
 	
-		out = SLOT.op1_out[0] + SLOT.op1_out[1];
-		SLOT.op1_out[0] = SLOT.op1_out[1];
+		out = SLOT->op1_out[0] + SLOT->op1_out[1];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
 	
-		if (!SLOT.CON)
-			phase_modulation = SLOT.op1_out[0];
+		if (!SLOT->CON)
+			phase_modulation = SLOT->op1_out[0];
 		/* else ignore output of operator 1 */
 	
-		SLOT.op1_out[1] = 0;
+		SLOT->op1_out[1] = 0;
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.FB)
+			if (!SLOT->FB)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.Cnt, env, (out<<SLOT.FB), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->Cnt, env, (out<<SLOT->FB), SLOT->wavetable );
 		}
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			output[0] += op_calc(SLOT.Cnt, env, phase_modulation, SLOT.wavetable) * 2;
+			output[0] += op_calc(SLOT->Cnt, env, phase_modulation, SLOT->wavetable) * 2;
 	
 	
 		/* Phase generation is based on: */
-		/* HH  (13) channel 7.slot 1 combined with channel 8.slot 2 (same combination as TOP CYMBAL but different output phases) */
-		/* SD  (16) channel 7.slot 1 */
-		/* TOM (14) channel 8.slot 1 */
-		/* TOP (17) channel 7.slot 1 combined with channel 8.slot 2 (same combination as HIGH HAT but different output phases) */
+		/* HH  (13) channel 7->slot 1 combined with channel 8->slot 2 (same combination as TOP CYMBAL but different output phases) */
+		/* SD  (16) channel 7->slot 1 */
+		/* TOM (14) channel 8->slot 1 */
+		/* TOP (17) channel 7->slot 1 combined with channel 8->slot 2 (same combination as HIGH HAT but different output phases) */
 	
 		/* Envelope generation based on: */
-		/* HH  channel 7.slot1 */
-		/* SD  channel 7.slot2 */
-		/* TOM channel 8.slot1 */
-		/* TOP channel 8.slot2 */
+		/* HH  channel 7->slot1 */
+		/* SD  channel 7->slot2 */
+		/* TOM channel 8->slot1 */
+		/* TOP channel 8->slot2 */
 	
 	
 		/* The following formulas can be well optimized.
@@ -1053,9 +1053,9 @@ public class fmopl
 			*/
 	
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.Cnt>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.Cnt>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.Cnt>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->Cnt>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->Cnt>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1064,33 +1064,33 @@ public class fmopl
 			UINT32 phase = res1 ? (0x200|(0xd0>>2)) : 0xd0;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.Cnt>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->Cnt>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->Cnt>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e ^ bit5e);
 	
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | (0xd0>>2); */
-			if (res2 != 0)
+			if (res2)
 				phase = (0x200|(0xd0>>2));
 	
 	
 			/* when phase & 0x200 is set and noise=1 then phase = 0x200|0xd0 */
 			/* when phase & 0x200 is set and noise=0 then phase = 0x200|(0xd0>>2), ie no change */
-			if ((phase & 0x200) != 0)
+			if (phase&0x200)
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0x200|0xd0;
 			}
 			else
 			/* when phase & 0x200 is clear and noise=1 then phase = 0xd0>>2 */
 			/* when phase & 0x200 is clear and noise=0 then phase = 0xd0, ie no change */
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0xd0>>2;
 			}
 	
-			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1.wavetable) * 2;
+			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1->wavetable) * 2;
 		}
 	
 		/* Snare Drum (verified on real YM3812) */
@@ -1098,7 +1098,7 @@ public class fmopl
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit8 = ((SLOT7_1.Cnt>>FREQ_SH)>>8)&1;
+			unsigned char bit8 = ((SLOT7_1->Cnt>>FREQ_SH)>>8)&1;
 	
 			/* when bit8 = 0 phase = 0x100; */
 			/* when bit8 = 1 phase = 0x200; */
@@ -1108,25 +1108,25 @@ public class fmopl
 			/* when noisebit = 0 pass the phase from calculation above */
 			/* when noisebit = 1 phase ^= 0x100; */
 			/* in other words: phase ^= (noisebit<<8); */
-			if (noise != 0)
+			if (noise)
 				phase ^= 0x100;
 	
-			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2.wavetable) * 2;
+			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2->wavetable) * 2;
 		}
 	
 		/* Tom Tom (verified on real YM3812) */
 		env = volume_calc(SLOT8_1);
 		if( env < ENV_QUIET )
-			output[0] += op_calc(SLOT8_1.Cnt, env, 0, SLOT8_1.wavetable) * 2;
+			output[0] += op_calc(SLOT8_1->Cnt, env, 0, SLOT8_1->wavetable) * 2;
 	
 		/* Top Cymbal (verified on real YM3812) */
 		env = volume_calc(SLOT8_2);
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.Cnt>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.Cnt>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.Cnt>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->Cnt>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->Cnt>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1135,16 +1135,16 @@ public class fmopl
 			UINT32 phase = res1 ? 0x300 : 0x100;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.Cnt>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.Cnt>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->Cnt>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->Cnt>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e ^ bit5e);
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | 0x100; */
-			if (res2 != 0)
+			if (res2)
 				phase = 0x300;
 	
-			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2.wavetable) * 2;
+			output[0] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2->wavetable) * 2;
 		}
 	
 	}
@@ -1168,7 +1168,7 @@ public class fmopl
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if ((n & 1) != 0)		/* round to nearest */
+			if (n&1)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1207,7 +1207,7 @@ public class fmopl
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if ((n & 1) != 0)						/* round to nearest */
+			if (n&1)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1271,25 +1271,25 @@ public class fmopl
 		int i;
 	
 		/* frequency base */
-		OPL.freqbase  = (OPL.rate) ? ((double)OPL.clock / 72.0) / OPL.rate  : 0;
+		OPL->freqbase  = (OPL->rate) ? ((double)OPL->clock / 72.0) / OPL->rate  : 0;
 	#if 0
-		OPL.rate = (double)OPL.clock / 72.0;
-		OPL.freqbase  = 1.0;
+		OPL->rate = (double)OPL->clock / 72.0;
+		OPL->freqbase  = 1.0;
 	#endif
 	
-		/*logerror("freqbase=%f\n", OPL.freqbase);*/
+		/*logerror("freqbase=%f\n", OPL->freqbase);*/
 	
 		/* Timer base time */
-		OPL.TimerBase = 1.0 / ((double)OPL.clock / 72.0 );
+		OPL->TimerBase = 1.0 / ((double)OPL->clock / 72.0 );
 	
-		/* make fnumber . increment counter table */
+		/* make fnumber -> increment counter table */
 		for( i=0 ; i < 1024 ; i++ )
 		{
 			/* opn phase increment counter = 20bit */
-			OPL.fn_tab[i] = (UINT32)( (double)i * 64 * OPL.freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
+			OPL->fn_tab[i] = (UINT32)( (double)i * 64 * OPL->freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
 	#if 0
 			logerror("FMOPL.C: fn_tab[%4i] = %08x (dec=%8i)\n",
-					 i, OPL.fn_tab[i]>>6, OPL.fn_tab[i]>>6 );
+					 i, OPL->fn_tab[i]>>6, OPL->fn_tab[i]>>6 );
 	#endif
 		}
 	
@@ -1314,45 +1314,45 @@ public class fmopl
 	
 		/* Amplitude modulation: 27 output levels (triangle waveform); 1 level takes one of: 192, 256 or 448 samples */
 		/* One entry from LFO_AM_TABLE lasts for 64 samples */
-		OPL.lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * OPL.freqbase;
+		OPL->lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * OPL->freqbase;
 	
 		/* Vibrato: 8 output levels (triangle waveform); 1 level takes 1024 samples */
-		OPL.lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * OPL.freqbase;
+		OPL->lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * OPL->freqbase;
 	
-		/*logerror ("OPL.lfo_am_inc = %8x ; OPL.lfo_pm_inc = %8x\n", OPL.lfo_am_inc, OPL.lfo_pm_inc);*/
+		/*logerror ("OPL->lfo_am_inc = %8x ; OPL->lfo_pm_inc = %8x\n", OPL->lfo_am_inc, OPL->lfo_pm_inc);*/
 	
 		/* Noise generator: a step takes 1 sample */
-		OPL.noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * OPL.freqbase;
+		OPL->noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * OPL->freqbase;
 	
-		OPL.eg_timer_add  = (1<<EG_SH)  * OPL.freqbase;
-		OPL.eg_timer_overflow = ( 1 ) * (1<<EG_SH);
-		/*logerror("OPLinit eg_timer_add=%8x eg_timer_overflow=%8x\n", OPL.eg_timer_add, OPL.eg_timer_overflow);*/
+		OPL->eg_timer_add  = (1<<EG_SH)  * OPL->freqbase;
+		OPL->eg_timer_overflow = ( 1 ) * (1<<EG_SH);
+		/*logerror("OPLinit eg_timer_add=%8x eg_timer_overflow=%8x\n", OPL->eg_timer_add, OPL->eg_timer_overflow);*/
 	
 	}
 	
 	INLINE void FM_KEYON(OPL_SLOT *SLOT, UINT32 key_set)
 	{
-		if( !SLOT.key )
+		if( !SLOT->key )
 		{
 			/* restart Phase Generator */
-			SLOT.Cnt = 0;
-			/* phase . Attack */
-			SLOT.state = EG_ATT;
+			SLOT->Cnt = 0;
+			/* phase -> Attack */
+			SLOT->state = EG_ATT;
 		}
-		SLOT.key |= key_set;
+		SLOT->key |= key_set;
 	}
 	
 	INLINE void FM_KEYOFF(OPL_SLOT *SLOT, UINT32 key_clr)
 	{
-		if( SLOT.key )
+		if( SLOT->key )
 		{
-			SLOT.key &= key_clr;
+			SLOT->key &= key_clr;
 	
-			if( !SLOT.key )
+			if( !SLOT->key )
 			{
-				/* phase . Release */
-				if (SLOT.state>EG_REL)
-					SLOT.state = EG_REL;
+				/* phase -> Release */
+				if (SLOT->state>EG_REL)
+					SLOT->state = EG_REL;
 			}
 		}
 	}
@@ -1363,93 +1363,93 @@ public class fmopl
 		int ksr;
 	
 		/* (frequency) phase increment counter */
-		SLOT.Incr = CH.fc * SLOT.mul;
-		ksr = CH.kcode >> SLOT.KSR;
+		SLOT->Incr = CH->fc * SLOT->mul;
+		ksr = CH->kcode >> SLOT->KSR;
 	
-		if( SLOT.ksr != ksr )
+		if( SLOT->ksr != ksr )
 		{
-			SLOT.ksr = ksr;
+			SLOT->ksr = ksr;
 	
 			/* calculate envelope generator rates */
-			if ((SLOT.ar + SLOT.ksr) < 16+62)
+			if ((SLOT->ar + SLOT->ksr) < 16+62)
 			{
-				SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-				SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+				SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+				SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 			}
 			else
 			{
-				SLOT.eg_sh_ar  = 0;
-				SLOT.eg_sel_ar = 13*RATE_STEPS;
+				SLOT->eg_sh_ar  = 0;
+				SLOT->eg_sel_ar = 13*RATE_STEPS;
 			}
-			SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-			SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
-			SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-			SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+			SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+			SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
+			SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+			SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 		}
 	}
 	
 	/* set multi,am,vib,EG-TYP,KSR,mul */
 	INLINE void set_mul(FM_OPL *OPL,int slot,int v)
 	{
-		OPL_CH   *CH   = &OPL.P_CH[slot/2];
-		OPL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL_CH   *CH   = &OPL->P_CH[slot/2];
+		OPL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.mul     = mul_tab[v&0x0f];
-		SLOT.KSR     = (v&0x10) ? 0 : 2;
-		SLOT.eg_type = (v&0x20);
-		SLOT.vib     = (v&0x40);
-		SLOT.AMmask  = (v&0x80) ? ~0 : 0;
+		SLOT->mul     = mul_tab[v&0x0f];
+		SLOT->KSR     = (v&0x10) ? 0 : 2;
+		SLOT->eg_type = (v&0x20);
+		SLOT->vib     = (v&0x40);
+		SLOT->AMmask  = (v&0x80) ? ~0 : 0;
 		CALC_FCSLOT(CH,SLOT);
 	}
 	
 	/* set ksl & tl */
 	INLINE void set_ksl_tl(FM_OPL *OPL,int slot,int v)
 	{
-		OPL_CH   *CH   = &OPL.P_CH[slot/2];
-		OPL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL_CH   *CH   = &OPL->P_CH[slot/2];
+		OPL_SLOT *SLOT = &CH->SLOT[slot&1];
 		int ksl = v>>6; /* 0 / 1.5 / 3.0 / 6.0 dB/OCT */
 	
-		SLOT.ksl = ksl ? 3-ksl : 31;
-		SLOT.TL  = (v&0x3f)<<(ENV_BITS-1-7); /* 7 bits TL (bit 6 = always 0) */
+		SLOT->ksl = ksl ? 3-ksl : 31;
+		SLOT->TL  = (v&0x3f)<<(ENV_BITS-1-7); /* 7 bits TL (bit 6 = always 0) */
 	
-		SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+		SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 	}
 	
 	/* set attack rate & decay rate  */
 	INLINE void set_ar_dr(FM_OPL *OPL,int slot,int v)
 	{
-		OPL_CH   *CH   = &OPL.P_CH[slot/2];
-		OPL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL_CH   *CH   = &OPL->P_CH[slot/2];
+		OPL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
+		SLOT->ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
 	
-		if ((SLOT.ar + SLOT.ksr) < 16+62)
+		if ((SLOT->ar + SLOT->ksr) < 16+62)
 		{
-			SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-			SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+			SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+			SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 		}
 		else
 		{
-			SLOT.eg_sh_ar  = 0;
-			SLOT.eg_sel_ar = 13*RATE_STEPS;
+			SLOT->eg_sh_ar  = 0;
+			SLOT->eg_sel_ar = 13*RATE_STEPS;
 		}
 	
-		SLOT.dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-		SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
+		SLOT->dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+		SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
 	}
 	
 	/* set sustain level & release rate */
 	INLINE void set_sl_rr(FM_OPL *OPL,int slot,int v)
 	{
-		OPL_CH   *CH   = &OPL.P_CH[slot/2];
-		OPL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPL_CH   *CH   = &OPL->P_CH[slot/2];
+		OPL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.sl  = sl_tab[ v>>4 ];
+		SLOT->sl  = sl_tab[ v>>4 ];
 	
-		SLOT.rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-		SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+		SLOT->rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+		SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 	}
 	
 	
@@ -1480,20 +1480,20 @@ public class fmopl
 			switch(r&0x1f)
 			{
 			case 0x01:	/* waveform select enable */
-				if(OPL.type&OPL_TYPE_WAVESEL)
+				if(OPL->type&OPL_TYPE_WAVESEL)
 				{
-					OPL.wavesel = v&0x20;
+					OPL->wavesel = v&0x20;
 					/* do not change the waveform previously selected */
 				}
 				break;
 			case 0x02:	/* Timer 1 */
-				OPL.T[0] = (256-v)*4;
+				OPL->T[0] = (256-v)*4;
 				break;
 			case 0x03:	/* Timer 2 */
-				OPL.T[1] = (256-v)*16;
+				OPL->T[1] = (256-v)*16;
 				break;
 			case 0x04:	/* IRQ clear / mask and Timer enable */
-				if ((v & 0x80) != 0)
+				if(v&0x80)
 				{	/* IRQ flag clear */
 					OPL_STATUS_RESET(OPL,0x7f-0x08); /* don't reset BFRDY flag or we will have to call deltat module to set the flag */
 				}
@@ -1507,41 +1507,41 @@ public class fmopl
 					OPL_STATUSMASK_SET(OPL, (~v) & 0x78 );
 	
 					/* timer 2 */
-					if(OPL.st[1] != st2)
+					if(OPL->st[1] != st2)
 					{
-						double interval = st2 ? (double)OPL.T[1]*OPL.TimerBase : 0.0;
-						OPL.st[1] = st2;
-						if (OPL.TimerHandler) (OPL.TimerHandler)(OPL.TimerParam+1,interval);
+						double interval = st2 ? (double)OPL->T[1]*OPL->TimerBase : 0.0;
+						OPL->st[1] = st2;
+						if (OPL->TimerHandler) (OPL->TimerHandler)(OPL->TimerParam+1,interval);
 					}
 					/* timer 1 */
-					if(OPL.st[0] != st1)
+					if(OPL->st[0] != st1)
 					{
-						double interval = st1 ? (double)OPL.T[0]*OPL.TimerBase : 0.0;
-						OPL.st[0] = st1;
-						if (OPL.TimerHandler) (OPL.TimerHandler)(OPL.TimerParam+0,interval);
+						double interval = st1 ? (double)OPL->T[0]*OPL->TimerBase : 0.0;
+						OPL->st[0] = st1;
+						if (OPL->TimerHandler) (OPL->TimerHandler)(OPL->TimerParam+0,interval);
 					}
 				}
 				break;
 	#if BUILD_Y8950
 			case 0x06:		/* Key Board OUT */
-				if(OPL.type&OPL_TYPE_KEYBOARD)
+				if(OPL->type&OPL_TYPE_KEYBOARD)
 				{
-					if(OPL.keyboardhandler_w)
-						OPL.keyboardhandler_w(OPL.keyboard_param,v);
+					if(OPL->keyboardhandler_w)
+						OPL->keyboardhandler_w(OPL->keyboard_param,v);
 					else
 						logerror("Y8950: write unmapped KEYBOARD port\n");
 				}
 				break;
 			case 0x07:	/* DELTA-T control 1 : START,REC,MEMDATA,REPT,SPOFF,x,x,RST */
-				if(OPL.type&OPL_TYPE_ADPCM)
-					YM_DELTAT_ADPCM_Write(OPL.deltat,r-0x07,v);
+				if(OPL->type&OPL_TYPE_ADPCM)
+					YM_DELTAT_ADPCM_Write(OPL->deltat,r-0x07,v);
 				break;
 	#endif
 			case 0x08:	/* MODE,DELTA-T control 2 : CSM,NOTESEL,x,x,smpl,da/ad,64k,rom */
-				OPL.mode = v;
+				OPL->mode = v;
 	#if BUILD_Y8950
-				if(OPL.type&OPL_TYPE_ADPCM)
-					YM_DELTAT_ADPCM_Write(OPL.deltat,r-0x07,v&0x0f); /* mask 4 LSBs in register 08 for DELTA-T unit */
+				if(OPL->type&OPL_TYPE_ADPCM)
+					YM_DELTAT_ADPCM_Write(OPL->deltat,r-0x07,v&0x0f); /* mask 4 LSBs in register 08 for DELTA-T unit */
 	#endif
 				break;
 	
@@ -1556,8 +1556,8 @@ public class fmopl
 			case 0x10: 		/* DELTA-N    */
 			case 0x11: 		/* DELTA-N    */
 			case 0x12: 		/* ADPCM volume */
-				if(OPL.type&OPL_TYPE_ADPCM)
-					YM_DELTAT_ADPCM_Write(OPL.deltat,r-0x07,v);
+				if(OPL->type&OPL_TYPE_ADPCM)
+					YM_DELTAT_ADPCM_Write(OPL->deltat,r-0x07,v);
 				break;
 	
 			case 0x15:		/* DAC data high 8 bits (F7,F6...F2) */
@@ -1567,15 +1567,15 @@ public class fmopl
 				break;
 	
 			case 0x18:		/* I/O CTRL (Direction) */
-				if(OPL.type&OPL_TYPE_IO)
-					OPL.portDirection = v&0x0f;
+				if(OPL->type&OPL_TYPE_IO)
+					OPL->portDirection = v&0x0f;
 				break;
 			case 0x19:		/* I/O DATA */
-				if(OPL.type&OPL_TYPE_IO)
+				if(OPL->type&OPL_TYPE_IO)
 				{
-					OPL.portLatch = v;
-					if(OPL.porthandler_w)
-						OPL.porthandler_w(OPL.port_param,v&OPL.portDirection);
+					OPL->portLatch = v;
+					if(OPL->porthandler_w)
+						OPL->porthandler_w(OPL->port_param,v&OPL->portDirection);
 				}
 				break;
 	#endif
@@ -1607,122 +1607,122 @@ public class fmopl
 		case 0xa0:
 			if (r == 0xbd)			/* am depth, vibrato depth, r,bd,sd,tom,tc,hh */
 			{
-				OPL.lfo_am_depth = v & 0x80;
-				OPL.lfo_pm_depth_range = (v&0x40) ? 8 : 0;
+				OPL->lfo_am_depth = v & 0x80;
+				OPL->lfo_pm_depth_range = (v&0x40) ? 8 : 0;
 	
-				OPL.rhythm  = v&0x3f;
+				OPL->rhythm  = v&0x3f;
 	
-				if(OPL.rhythm&0x20)
+				if(OPL->rhythm&0x20)
 				{
 					/* BD key on/off */
-					if ((v & 0x10) != 0)
+					if(v&0x10)
 					{
-						FM_KEYON (&OPL.P_CH[6].SLOT[SLOT1], 2);
-						FM_KEYON (&OPL.P_CH[6].SLOT[SLOT2], 2);
+						FM_KEYON (&OPL->P_CH[6].SLOT[SLOT1], 2);
+						FM_KEYON (&OPL->P_CH[6].SLOT[SLOT2], 2);
 					}
 					else
 					{
-						FM_KEYOFF(&OPL.P_CH[6].SLOT[SLOT1],~2);
-						FM_KEYOFF(&OPL.P_CH[6].SLOT[SLOT2],~2);
+						FM_KEYOFF(&OPL->P_CH[6].SLOT[SLOT1],~2);
+						FM_KEYOFF(&OPL->P_CH[6].SLOT[SLOT2],~2);
 					}
 					/* HH key on/off */
-					if ((v & 0x01) != 0) FM_KEYON (&OPL.P_CH[7].SLOT[SLOT1], 2);
-					else       FM_KEYOFF(&OPL.P_CH[7].SLOT[SLOT1],~2);
+					if(v&0x01) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT1], 2);
+					else       FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key on/off */
-					if ((v & 0x08) != 0) FM_KEYON (&OPL.P_CH[7].SLOT[SLOT2], 2);
-					else       FM_KEYOFF(&OPL.P_CH[7].SLOT[SLOT2],~2);
+					if(v&0x08) FM_KEYON (&OPL->P_CH[7].SLOT[SLOT2], 2);
+					else       FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key on/off */
-					if ((v & 0x04) != 0) FM_KEYON (&OPL.P_CH[8].SLOT[SLOT1], 2);
-					else       FM_KEYOFF(&OPL.P_CH[8].SLOT[SLOT1],~2);
+					if(v&0x04) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT1], 2);
+					else       FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY key on/off */
-					if ((v & 0x02) != 0) FM_KEYON (&OPL.P_CH[8].SLOT[SLOT2], 2);
-					else       FM_KEYOFF(&OPL.P_CH[8].SLOT[SLOT2],~2);
+					if(v&0x02) FM_KEYON (&OPL->P_CH[8].SLOT[SLOT2], 2);
+					else       FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT2],~2);
 				}
 				else
 				{
 					/* BD key off */
-					FM_KEYOFF(&OPL.P_CH[6].SLOT[SLOT1],~2);
-					FM_KEYOFF(&OPL.P_CH[6].SLOT[SLOT2],~2);
+					FM_KEYOFF(&OPL->P_CH[6].SLOT[SLOT1],~2);
+					FM_KEYOFF(&OPL->P_CH[6].SLOT[SLOT2],~2);
 					/* HH key off */
-					FM_KEYOFF(&OPL.P_CH[7].SLOT[SLOT1],~2);
+					FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key off */
-					FM_KEYOFF(&OPL.P_CH[7].SLOT[SLOT2],~2);
+					FM_KEYOFF(&OPL->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key off */
-					FM_KEYOFF(&OPL.P_CH[8].SLOT[SLOT1],~2);
+					FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY off */
-					FM_KEYOFF(&OPL.P_CH[8].SLOT[SLOT2],~2);
+					FM_KEYOFF(&OPL->P_CH[8].SLOT[SLOT2],~2);
 				}
 				return;
 			}
 			/* keyon,block,fnum */
 			if( (r&0x0f) > 8) return;
-			CH = &OPL.P_CH[r&0x0f];
+			CH = &OPL->P_CH[r&0x0f];
 			if(!(r&0x10))
 			{	/* a0-a8 */
-				block_fnum  = (CH.block_fnum&0x1f00) | v;
+				block_fnum  = (CH->block_fnum&0x1f00) | v;
 			}
 			else
 			{	/* b0-b8 */
-				block_fnum = ((v&0x1f)<<8) | (CH.block_fnum&0xff);
+				block_fnum = ((v&0x1f)<<8) | (CH->block_fnum&0xff);
 	
-				if ((v & 0x20) != 0)
+				if(v&0x20)
 				{
-					FM_KEYON (&CH.SLOT[SLOT1], 1);
-					FM_KEYON (&CH.SLOT[SLOT2], 1);
+					FM_KEYON (&CH->SLOT[SLOT1], 1);
+					FM_KEYON (&CH->SLOT[SLOT2], 1);
 				}
 				else
 				{
-					FM_KEYOFF(&CH.SLOT[SLOT1],~1);
-					FM_KEYOFF(&CH.SLOT[SLOT2],~1);
+					FM_KEYOFF(&CH->SLOT[SLOT1],~1);
+					FM_KEYOFF(&CH->SLOT[SLOT2],~1);
 				}
 			}
 			/* update */
-			if(CH.block_fnum != block_fnum)
+			if(CH->block_fnum != block_fnum)
 			{
 				UINT8 block  = block_fnum >> 10;
 	
-				CH.block_fnum = block_fnum;
+				CH->block_fnum = block_fnum;
 	
-				CH.ksl_base = ksl_tab[block_fnum>>6];
-				CH.fc       = OPL.fn_tab[block_fnum&0x03ff] >> (7-block);
+				CH->ksl_base = ksl_tab[block_fnum>>6];
+				CH->fc       = OPL->fn_tab[block_fnum&0x03ff] >> (7-block);
 	
-				/* BLK 2,1,0 bits . bits 3,2,1 of kcode */
-				CH.kcode    = (CH.block_fnum&0x1c00)>>9;
+				/* BLK 2,1,0 bits -> bits 3,2,1 of kcode */
+				CH->kcode    = (CH->block_fnum&0x1c00)>>9;
 	
 				 /* the info below is actually opposite to what is stated in the Manuals (verifed on real YM3812) */
-				/* if notesel == 0 . lsb of kcode is bit 10 (MSB) of fnum  */
-				/* if notesel == 1 . lsb of kcode is bit 9 (MSB-1) of fnum */
-				if (OPL.mode&0x40)
-					CH.kcode |= (CH.block_fnum&0x100)>>8;	/* notesel == 1 */
+				/* if notesel == 0 -> lsb of kcode is bit 10 (MSB) of fnum  */
+				/* if notesel == 1 -> lsb of kcode is bit 9 (MSB-1) of fnum */
+				if (OPL->mode&0x40)
+					CH->kcode |= (CH->block_fnum&0x100)>>8;	/* notesel == 1 */
 				else
-					CH.kcode |= (CH.block_fnum&0x200)>>9;	/* notesel == 0 */
+					CH->kcode |= (CH->block_fnum&0x200)>>9;	/* notesel == 0 */
 	
 				/* refresh Total Level in both SLOTs of this channel */
-				CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-				CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+				CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+				CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 				/* refresh frequency counter in both SLOTs of this channel */
-				CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-				CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+				CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+				CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 			}
 			break;
 		case 0xc0:
 			/* FB,C */
 			if( (r&0x0f) > 8) return;
-			CH = &OPL.P_CH[r&0x0f];
-			CH.SLOT[SLOT1].FB  = (v>>1)&7 ? ((v>>1)&7) + 7 : 0;
-			CH.SLOT[SLOT1].CON = v&1;
-			CH.SLOT[SLOT1].connect1 = CH.SLOT[SLOT1].CON ? &output[0] : &phase_modulation;
+			CH = &OPL->P_CH[r&0x0f];
+			CH->SLOT[SLOT1].FB  = (v>>1)&7 ? ((v>>1)&7) + 7 : 0;
+			CH->SLOT[SLOT1].CON = v&1;
+			CH->SLOT[SLOT1].connect1 = CH->SLOT[SLOT1].CON ? &output[0] : &phase_modulation;
 			break;
 		case 0xe0: /* waveform select */
 			/* simply ignore write to the waveform select register if selecting not enabled in test register */
-			if(OPL.wavesel)
+			if(OPL->wavesel)
 			{
 				slot = slot_array[r&0x1f];
 				if(slot < 0) return;
-				CH = &OPL.P_CH[slot/2];
+				CH = &OPL->P_CH[slot/2];
 	
-				CH.SLOT[slot&1].wavetable = (v&0x03)*SIN_LEN;
+				CH->SLOT[slot&1].wavetable = (v&0x03)*SIN_LEN;
 			}
 			break;
 		}
@@ -1731,7 +1731,7 @@ public class fmopl
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile != 0)
+		if (cymfile)
 		{
 			fputc( (unsigned char)0, cymfile );
 		}
@@ -1756,7 +1756,7 @@ public class fmopl
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("3812_.cym","wb");
-		if (cymfile != 0)
+		if (cymfile)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create file 3812_.cym\n");
@@ -1767,8 +1767,8 @@ public class fmopl
 	
 	static void OPL_UnLockTable(void)
 	{
-		if (num_lock != 0) num_lock--;
-		if (num_lock != 0) return;
+		if(num_lock) num_lock--;
+		if(num_lock) return;
 	
 		/* last time */
 	
@@ -1787,11 +1787,11 @@ public class fmopl
 		int c,s;
 		int i;
 	
-		OPL.eg_timer = 0;
-		OPL.eg_cnt   = 0;
+		OPL->eg_timer = 0;
+		OPL->eg_cnt   = 0;
 	
-		OPL.noise_rng = 1;	/* noise shift register */
-		OPL.mode   = 0;	/* normal mode */
+		OPL->noise_rng = 1;	/* noise shift register */
+		OPL->mode   = 0;	/* normal mode */
 		OPL_STATUS_RESET(OPL,0x7f);
 	
 		/* reset with register write */
@@ -1804,24 +1804,24 @@ public class fmopl
 		/* reset operator parameters */
 		for( c = 0 ; c < 9 ; c++ )
 		{
-			OPL_CH *CH = &OPL.P_CH[c];
+			OPL_CH *CH = &OPL->P_CH[c];
 			for(s = 0 ; s < 2 ; s++ )
 			{
 				/* wave table */
-				CH.SLOT[s].wavetable = 0;
-				CH.SLOT[s].state     = EG_OFF;
-				CH.SLOT[s].volume    = MAX_ATT_INDEX;
+				CH->SLOT[s].wavetable = 0;
+				CH->SLOT[s].state     = EG_OFF;
+				CH->SLOT[s].volume    = MAX_ATT_INDEX;
 			}
 		}
 	#if BUILD_Y8950
-		if(OPL.type&OPL_TYPE_ADPCM)
+		if(OPL->type&OPL_TYPE_ADPCM)
 		{
-			YM_DELTAT *DELTAT = OPL.deltat;
+			YM_DELTAT *DELTAT = OPL->deltat;
 	
-			DELTAT.freqbase = OPL.freqbase;
-			DELTAT.output_pointer = &output_deltat[0];
-			DELTAT.portshift = 5;
-			DELTAT.output_range = 1<<23;
+			DELTAT->freqbase = OPL->freqbase;
+			DELTAT->output_pointer = &output_deltat[0];
+			DELTAT->portshift = 5;
+			DELTAT->output_range = 1<<23;
 			YM_DELTAT_ADPCM_Reset(DELTAT,0);
 		}
 	#endif
@@ -1842,7 +1842,7 @@ public class fmopl
 		state_size  = sizeof(FM_OPL);
 	
 	#if BUILD_Y8950
-		if ((type & OPL_TYPE_ADPCM) != 0) state_size+= sizeof(YM_DELTAT);
+		if (type&OPL_TYPE_ADPCM) state_size+= sizeof(YM_DELTAT);
 	#endif
 	
 		/* allocate memory block */
@@ -1859,16 +1859,16 @@ public class fmopl
 		ptr += sizeof(FM_OPL);
 	
 	#if BUILD_Y8950
-		if ((type & OPL_TYPE_ADPCM) != 0)
+		if (type&OPL_TYPE_ADPCM)
 		{
-			OPL.deltat = (YM_DELTAT *)ptr;
+			OPL->deltat = (YM_DELTAT *)ptr;
 		}
 		ptr += sizeof(YM_DELTAT);
 	#endif
 	
-		OPL.type  = type;
-		OPL.clock = clock;
-		OPL.rate  = rate;
+		OPL->type  = type;
+		OPL->clock = clock;
+		OPL->rate  = rate;
 	
 		/* init global tables */
 		OPL_initalize(OPL);
@@ -1887,32 +1887,32 @@ public class fmopl
 	
 	static void OPLSetTimerHandler(FM_OPL *OPL,OPL_TIMERHANDLER TimerHandler,int channelOffset)
 	{
-		OPL.TimerHandler   = TimerHandler;
-		OPL.TimerParam = channelOffset;
+		OPL->TimerHandler   = TimerHandler;
+		OPL->TimerParam = channelOffset;
 	}
 	static void OPLSetIRQHandler(FM_OPL *OPL,OPL_IRQHANDLER IRQHandler,int param)
 	{
-		OPL.IRQHandler     = IRQHandler;
-		OPL.IRQParam = param;
+		OPL->IRQHandler     = IRQHandler;
+		OPL->IRQParam = param;
 	}
 	static void OPLSetUpdateHandler(FM_OPL *OPL,OPL_UPDATEHANDLER UpdateHandler,int param)
 	{
-		OPL.UpdateHandler = UpdateHandler;
-		OPL.UpdateParam = param;
+		OPL->UpdateHandler = UpdateHandler;
+		OPL->UpdateParam = param;
 	}
 	
 	static int OPLWrite(FM_OPL *OPL,int a,int v)
 	{
 		if( !(a&1) )
 		{	/* address port */
-			OPL.address = v & 0xff;
+			OPL->address = v & 0xff;
 		}
 		else
 		{	/* data port */
-			if(OPL.UpdateHandler) OPL.UpdateHandler(OPL.UpdateParam,0);
-			OPLWriteReg(OPL,OPL.address,v);
+			if(OPL->UpdateHandler) OPL->UpdateHandler(OPL->UpdateParam,0);
+			OPLWriteReg(OPL,OPL->address,v);
 		}
-		return OPL.status>>7;
+		return OPL->status>>7;
 	}
 	
 	static unsigned char OPLRead(FM_OPL *OPL,int a)
@@ -1923,53 +1923,53 @@ public class fmopl
 	
 			#if BUILD_Y8950
 	
-			if(OPL.type&OPL_TYPE_ADPCM)	/* Y8950 */
+			if(OPL->type&OPL_TYPE_ADPCM)	/* Y8950 */
 			{
-				return (OPL.status & (OPL.statusmask|0x80)) | (OPL.deltat.PCM_BSY&1);
+				return (OPL->status & (OPL->statusmask|0x80)) | (OPL->deltat->PCM_BSY&1);
 			}
 			
 			#endif
 			
 			/* OPL and OPL2 */
-			return OPL.status & (OPL.statusmask|0x80);
+			return OPL->status & (OPL->statusmask|0x80);
 		}
 	
 	#if BUILD_Y8950
 		/* data port */
-		switch(OPL.address)
+		switch(OPL->address)
 		{
 		case 0x05: /* KeyBoard IN */
-			if(OPL.type&OPL_TYPE_KEYBOARD)
+			if(OPL->type&OPL_TYPE_KEYBOARD)
 			{
-				if(OPL.keyboardhandler_r)
-					return OPL.keyboardhandler_r(OPL.keyboard_param);
+				if(OPL->keyboardhandler_r)
+					return OPL->keyboardhandler_r(OPL->keyboard_param);
 				else
 					logerror("Y8950: read unmapped KEYBOARD port\n");
 			}
 			return 0;
 	
 		case 0x0f: /* ADPCM-DATA  */
-			if(OPL.type&OPL_TYPE_ADPCM)
+			if(OPL->type&OPL_TYPE_ADPCM)
 			{
 				UINT8 val;
 	
-				val = YM_DELTAT_ADPCM_Read(OPL.deltat);
+				val = YM_DELTAT_ADPCM_Read(OPL->deltat);
 				/*logerror("Y8950: read ADPCM value read=%02x\n",val);*/
 				return val;
 			}
 			return 0;
 	
 		case 0x19: /* I/O DATA    */
-			if(OPL.type&OPL_TYPE_IO)
+			if(OPL->type&OPL_TYPE_IO)
 			{
-				if(OPL.porthandler_r)
-					return OPL.porthandler_r(OPL.port_param);
+				if(OPL->porthandler_r)
+					return OPL->porthandler_r(OPL->port_param);
 				else
 					logerror("Y8950:read unmapped I/O port\n");
 			}
 			return 0;
 		case 0x1a: /* PCM-DATA    */
-			if(OPL.type&OPL_TYPE_ADPCM)
+			if(OPL->type&OPL_TYPE_ADPCM)
 			{
 				logerror("Y8950 A/D convertion is accessed but not implemented !\n");
 				return 0x80; /* 2's complement PCM data - result from A/D convertion */
@@ -1984,19 +1984,19 @@ public class fmopl
 	/* CSM Key Controll */
 	INLINE void CSMKeyControll(OPL_CH *CH)
 	{
-		FM_KEYON (&CH.SLOT[SLOT1], 4);
-		FM_KEYON (&CH.SLOT[SLOT2], 4);
+		FM_KEYON (&CH->SLOT[SLOT1], 4);
+		FM_KEYON (&CH->SLOT[SLOT2], 4);
 	
 		/* The key off should happen exactly one sample later - not implemented correctly yet */
 	
-		FM_KEYOFF(&CH.SLOT[SLOT1], ~4);
-		FM_KEYOFF(&CH.SLOT[SLOT2], ~4);
+		FM_KEYOFF(&CH->SLOT[SLOT1], ~4);
+		FM_KEYOFF(&CH->SLOT[SLOT2], ~4);
 	}
 	
 	
 	static int OPLTimerOver(FM_OPL *OPL,int c)
 	{
-		if (c != 0)
+		if( c )
 		{	/* Timer B */
 			OPL_STATUS_SET(OPL,0x20);
 		}
@@ -2004,17 +2004,17 @@ public class fmopl
 		{	/* Timer A */
 			OPL_STATUS_SET(OPL,0x40);
 			/* CSM mode key,TL controll */
-			if( OPL.mode & 0x80 )
+			if( OPL->mode & 0x80 )
 			{	/* CSM mode total level latch and auto key on */
 				int ch;
-				if(OPL.UpdateHandler) OPL.UpdateHandler(OPL.UpdateParam,0);
+				if(OPL->UpdateHandler) OPL->UpdateHandler(OPL->UpdateParam,0);
 				for(ch=0; ch<9; ch++)
-					CSMKeyControll( &OPL.P_CH[ch] );
+					CSMKeyControll( &OPL->P_CH[ch] );
 			}
 		}
 		/* reload timer */
-		if (OPL.TimerHandler) (OPL.TimerHandler)(OPL.TimerParam+c,(double)OPL.T[c]*OPL.TimerBase);
-		return OPL.status>>7;
+		if (OPL->TimerHandler) (OPL->TimerHandler)(OPL->TimerParam+c,(double)OPL->T[c]*OPL->TimerBase);
+		return OPL->status>>7;
 	}
 	
 	
@@ -2030,7 +2030,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (YM3812NumChips != 0)
+		if (YM3812NumChips)
 			return -1;	/* duplicate init. */
 	
 		YM3812NumChips = num;
@@ -2108,17 +2108,17 @@ public class fmopl
 	void YM3812UpdateOne(int which, INT16 *buffer, int length)
 	{
 		FM_OPL		*OPL = OPL_YM3812[which];
-		UINT8		rhythm = OPL.rhythm&0x20;
+		UINT8		rhythm = OPL->rhythm&0x20;
 		OPLSAMPLE	*buf = buffer;
 		int i;
 	
 		if( (void *)OPL != cur_chip ){
 			cur_chip = (void *)OPL;
 			/* rhythm slots */
-			SLOT7_1 = &OPL.P_CH[7].SLOT[SLOT1];
-			SLOT7_2 = &OPL.P_CH[7].SLOT[SLOT2];
-			SLOT8_1 = &OPL.P_CH[8].SLOT[SLOT1];
-			SLOT8_2 = &OPL.P_CH[8].SLOT[SLOT2];
+			SLOT7_1 = &OPL->P_CH[7].SLOT[SLOT1];
+			SLOT7_2 = &OPL->P_CH[7].SLOT[SLOT2];
+			SLOT8_1 = &OPL->P_CH[8].SLOT[SLOT1];
+			SLOT8_2 = &OPL->P_CH[8].SLOT[SLOT2];
 		}
 		for( i=0; i < length ; i++ )
 		{
@@ -2129,22 +2129,22 @@ public class fmopl
 			advance_lfo(OPL);
 	
 			/* FM part */
-			OPL_CALC_CH(&OPL.P_CH[0]);
-			OPL_CALC_CH(&OPL.P_CH[1]);
-			OPL_CALC_CH(&OPL.P_CH[2]);
-			OPL_CALC_CH(&OPL.P_CH[3]);
-			OPL_CALC_CH(&OPL.P_CH[4]);
-			OPL_CALC_CH(&OPL.P_CH[5]);
+			OPL_CALC_CH(&OPL->P_CH[0]);
+			OPL_CALC_CH(&OPL->P_CH[1]);
+			OPL_CALC_CH(&OPL->P_CH[2]);
+			OPL_CALC_CH(&OPL->P_CH[3]);
+			OPL_CALC_CH(&OPL->P_CH[4]);
+			OPL_CALC_CH(&OPL->P_CH[5]);
 	
-			if (rhythm == 0)
+			if(!rhythm)
 			{
-				OPL_CALC_CH(&OPL.P_CH[6]);
-				OPL_CALC_CH(&OPL.P_CH[7]);
-				OPL_CALC_CH(&OPL.P_CH[8]);
+				OPL_CALC_CH(&OPL->P_CH[6]);
+				OPL_CALC_CH(&OPL->P_CH[7]);
+				OPL_CALC_CH(&OPL->P_CH[8]);
 			}
 			else		/* Rhythm part */
 			{
-				OPL_CALC_RH(&OPL.P_CH[0], (OPL.noise_rng>>0)&1 );
+				OPL_CALC_RH(&OPL->P_CH[0], (OPL->noise_rng>>0)&1 );
 			}
 	
 			lt = output[0];
@@ -2181,7 +2181,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (YM3526NumChips != 0)
+		if (YM3526NumChips)
 			return -1;	/* duplicate init. */
 	
 		YM3526NumChips = num;
@@ -2259,17 +2259,17 @@ public class fmopl
 	void YM3526UpdateOne(int which, INT16 *buffer, int length)
 	{
 		FM_OPL		*OPL = OPL_YM3526[which];
-		UINT8		rhythm = OPL.rhythm&0x20;
+		UINT8		rhythm = OPL->rhythm&0x20;
 		OPLSAMPLE	*buf = buffer;
 		int i;
 	
 		if( (void *)OPL != cur_chip ){
 			cur_chip = (void *)OPL;
 			/* rhythm slots */
-			SLOT7_1 = &OPL.P_CH[7].SLOT[SLOT1];
-			SLOT7_2 = &OPL.P_CH[7].SLOT[SLOT2];
-			SLOT8_1 = &OPL.P_CH[8].SLOT[SLOT1];
-			SLOT8_2 = &OPL.P_CH[8].SLOT[SLOT2];
+			SLOT7_1 = &OPL->P_CH[7].SLOT[SLOT1];
+			SLOT7_2 = &OPL->P_CH[7].SLOT[SLOT2];
+			SLOT8_1 = &OPL->P_CH[8].SLOT[SLOT1];
+			SLOT8_2 = &OPL->P_CH[8].SLOT[SLOT2];
 		}
 		for( i=0; i < length ; i++ )
 		{
@@ -2280,22 +2280,22 @@ public class fmopl
 			advance_lfo(OPL);
 	
 			/* FM part */
-			OPL_CALC_CH(&OPL.P_CH[0]);
-			OPL_CALC_CH(&OPL.P_CH[1]);
-			OPL_CALC_CH(&OPL.P_CH[2]);
-			OPL_CALC_CH(&OPL.P_CH[3]);
-			OPL_CALC_CH(&OPL.P_CH[4]);
-			OPL_CALC_CH(&OPL.P_CH[5]);
+			OPL_CALC_CH(&OPL->P_CH[0]);
+			OPL_CALC_CH(&OPL->P_CH[1]);
+			OPL_CALC_CH(&OPL->P_CH[2]);
+			OPL_CALC_CH(&OPL->P_CH[3]);
+			OPL_CALC_CH(&OPL->P_CH[4]);
+			OPL_CALC_CH(&OPL->P_CH[5]);
 	
-			if (rhythm == 0)
+			if(!rhythm)
 			{
-				OPL_CALC_CH(&OPL.P_CH[6]);
-				OPL_CALC_CH(&OPL.P_CH[7]);
-				OPL_CALC_CH(&OPL.P_CH[8]);
+				OPL_CALC_CH(&OPL->P_CH[6]);
+				OPL_CALC_CH(&OPL->P_CH[7]);
+				OPL_CALC_CH(&OPL->P_CH[8]);
 			}
 			else		/* Rhythm part */
 			{
-				OPL_CALC_RH(&OPL.P_CH[0], (OPL.noise_rng>>0)&1 );
+				OPL_CALC_RH(&OPL->P_CH[0], (OPL->noise_rng>>0)&1 );
 			}
 	
 			lt = output[0];
@@ -2342,7 +2342,7 @@ public class fmopl
 	{
 		int i;
 	
-		if (Y8950NumChips != 0)
+		if (Y8950NumChips)
 			return -1;	/* duplicate init. */
 	
 		Y8950NumChips = num;
@@ -2357,14 +2357,14 @@ public class fmopl
 				Y8950NumChips = 0;
 				return -1;
 			}
-			OPL_Y8950[i].deltat.status_set_handler = Y8950_deltat_status_set;
-			OPL_Y8950[i].deltat.status_reset_handler = Y8950_deltat_status_reset;
-			OPL_Y8950[i].deltat.status_change_which_chip = i;
-			OPL_Y8950[i].deltat.status_change_EOS_bit = 0x10;		/* status flag: set bit4 on End Of Sample */
-			OPL_Y8950[i].deltat.status_change_BRDY_bit = 0x08;	/* status flag: set bit3 on BRDY (End Of: ADPCM analysis/synthesis, memory reading/writing) */
+			OPL_Y8950[i]->deltat->status_set_handler = Y8950_deltat_status_set;
+			OPL_Y8950[i]->deltat->status_reset_handler = Y8950_deltat_status_reset;
+			OPL_Y8950[i]->deltat->status_change_which_chip = i;
+			OPL_Y8950[i]->deltat->status_change_EOS_bit = 0x10;		/* status flag: set bit4 on End Of Sample */
+			OPL_Y8950[i]->deltat->status_change_BRDY_bit = 0x08;	/* status flag: set bit3 on BRDY (End Of: ADPCM analysis/synthesis, memory reading/writing) */
 	
-			/*OPL_Y8950[i].deltat.write_time = 10.0 / clock;*/		/* a single byte write takes 10 cycles of main clock */
-			/*OPL_Y8950[i].deltat.read_time  = 8.0 / clock;*/		/* a single byte read takes 8 cycles of main clock */
+			/*OPL_Y8950[i]->deltat->write_time = 10.0 / clock;*/		/* a single byte write takes 10 cycles of main clock */
+			/*OPL_Y8950[i]->deltat->read_time  = 8.0 / clock;*/		/* a single byte read takes 8 cycles of main clock */
 			/* reset */
 			Y8950ResetChip(i);
 		}
@@ -2419,8 +2419,8 @@ public class fmopl
 	void Y8950SetDeltaTMemory(int which, void * deltat_mem_ptr, int deltat_mem_size )
 	{
 		FM_OPL		*OPL = OPL_Y8950[which];
-		OPL.deltat.memory = (UINT8 *)(deltat_mem_ptr);
-		OPL.deltat.memory_size = deltat_mem_size;
+		OPL->deltat->memory = (UINT8 *)(deltat_mem_ptr);
+		OPL->deltat->memory_size = deltat_mem_size;
 	}
 	
 	/*
@@ -2434,17 +2434,17 @@ public class fmopl
 	{
 		int i;
 		FM_OPL		*OPL = OPL_Y8950[which];
-		UINT8		rhythm  = OPL.rhythm&0x20;
-		YM_DELTAT	*DELTAT = OPL.deltat;
+		UINT8		rhythm  = OPL->rhythm&0x20;
+		YM_DELTAT	*DELTAT = OPL->deltat;
 		OPLSAMPLE	*buf    = buffer;
 	
 		if( (void *)OPL != cur_chip ){
 			cur_chip = (void *)OPL;
 			/* rhythm slots */
-			SLOT7_1 = &OPL.P_CH[7].SLOT[SLOT1];
-			SLOT7_2 = &OPL.P_CH[7].SLOT[SLOT2];
-			SLOT8_1 = &OPL.P_CH[8].SLOT[SLOT1];
-			SLOT8_2 = &OPL.P_CH[8].SLOT[SLOT2];
+			SLOT7_1 = &OPL->P_CH[7].SLOT[SLOT1];
+			SLOT7_2 = &OPL->P_CH[7].SLOT[SLOT2];
+			SLOT8_1 = &OPL->P_CH[8].SLOT[SLOT1];
+			SLOT8_2 = &OPL->P_CH[8].SLOT[SLOT2];
 	
 		}
 		for( i=0; i < length ; i++ )
@@ -2457,26 +2457,26 @@ public class fmopl
 			advance_lfo(OPL);
 	
 			/* deltaT ADPCM */
-			if( DELTAT.portstate&0x80 )
+			if( DELTAT->portstate&0x80 )
 				YM_DELTAT_ADPCM_CALC(DELTAT);
 	
 			/* FM part */
-			OPL_CALC_CH(&OPL.P_CH[0]);
-			OPL_CALC_CH(&OPL.P_CH[1]);
-			OPL_CALC_CH(&OPL.P_CH[2]);
-			OPL_CALC_CH(&OPL.P_CH[3]);
-			OPL_CALC_CH(&OPL.P_CH[4]);
-			OPL_CALC_CH(&OPL.P_CH[5]);
+			OPL_CALC_CH(&OPL->P_CH[0]);
+			OPL_CALC_CH(&OPL->P_CH[1]);
+			OPL_CALC_CH(&OPL->P_CH[2]);
+			OPL_CALC_CH(&OPL->P_CH[3]);
+			OPL_CALC_CH(&OPL->P_CH[4]);
+			OPL_CALC_CH(&OPL->P_CH[5]);
 	
-			if (rhythm == 0)
+			if(!rhythm)
 			{
-				OPL_CALC_CH(&OPL.P_CH[6]);
-				OPL_CALC_CH(&OPL.P_CH[7]);
-				OPL_CALC_CH(&OPL.P_CH[8]);
+				OPL_CALC_CH(&OPL->P_CH[6]);
+				OPL_CALC_CH(&OPL->P_CH[7]);
+				OPL_CALC_CH(&OPL->P_CH[8]);
 			}
 			else		/* Rhythm part */
 			{
-				OPL_CALC_RH(&OPL.P_CH[0], (OPL.noise_rng>>0)&1 );
+				OPL_CALC_RH(&OPL->P_CH[0], (OPL->noise_rng>>0)&1 );
 			}
 	
 			lt = output[0] + (output_deltat[0]>>11);
@@ -2504,17 +2504,17 @@ public class fmopl
 	void Y8950SetPortHandler(int which,OPL_PORTHANDLER_W PortHandler_w,OPL_PORTHANDLER_R PortHandler_r,int param)
 	{
 		FM_OPL		*OPL = OPL_Y8950[which];
-		OPL.porthandler_w = PortHandler_w;
-		OPL.porthandler_r = PortHandler_r;
-		OPL.port_param = param;
+		OPL->porthandler_w = PortHandler_w;
+		OPL->porthandler_r = PortHandler_r;
+		OPL->port_param = param;
 	}
 	
 	void Y8950SetKeyboardHandler(int which,OPL_PORTHANDLER_W KeyboardHandler_w,OPL_PORTHANDLER_R KeyboardHandler_r,int param)
 	{
 		FM_OPL		*OPL = OPL_Y8950[which];
-		OPL.keyboardhandler_w = KeyboardHandler_w;
-		OPL.keyboardhandler_r = KeyboardHandler_r;
-		OPL.keyboard_param = param;
+		OPL->keyboardhandler_w = KeyboardHandler_w;
+		OPL->keyboardhandler_r = KeyboardHandler_r;
+		OPL->keyboard_param = param;
 	}
 	
 	#endif

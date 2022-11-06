@@ -125,7 +125,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -154,8 +154,7 @@ public class crshrace
 		return rom[offset] | (rom[offset+1] << 8);
 	}
 	
-	public static WriteHandlerPtr crshrace_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crshrace_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x03) * 0x8000);
@@ -166,7 +165,7 @@ public class crshrace
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -179,8 +178,7 @@ public class crshrace
 		return readinputport(5) | (pending_command ? 0x8000 : 0);
 	}
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
@@ -257,7 +255,7 @@ public class crshrace
 	
 	
 	
-	static InputPortPtr input_ports_crshrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crshrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crshrace )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -413,7 +411,7 @@ public class crshrace
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'crshrace', but additional "unknown" Dip Switch (see notes) */
-	static InputPortPtr input_ports_crshrac2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crshrac2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crshrac2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -639,8 +637,7 @@ public class crshrace
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_crshrace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crshrace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000)	/* 16 MHz ??? */
@@ -668,9 +665,7 @@ public class crshrace
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_crshrace = new RomLoadPtr(){ public void handler(){ 
@@ -752,21 +747,19 @@ public class crshrace
 	}
 	
 	
-	public static DriverInitHandlerPtr init_crshrace  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crshrace  = new DriverInitHandlerPtr() { public void handler(){
 		#if CRSHRACE_3P_HACK
 		crshrace_patch_code(0x003778);
 		#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_crshrac2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crshrac2  = new DriverInitHandlerPtr() { public void handler(){
 		#if CRSHRACE_3P_HACK
 		crshrace_patch_code(0x003796);
 		#endif
 	} };
 	
 	
-	public static GameDriver driver_crshrace	   = new GameDriver("1993"	,"crshrace"	,"crshrace.java"	,rom_crshrace,null	,machine_driver_crshrace	,input_ports_crshrace	,init_crshrace	,ROT270	,	"Video System Co.", "Lethal Crash Race (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_crshrac2	   = new GameDriver("1993"	,"crshrac2"	,"crshrace.java"	,rom_crshrac2,driver_crshrace	,machine_driver_crshrace	,input_ports_crshrac2	,init_crshrac2	,ROT270	,	"Video System Co.", "Lethal Crash Race (set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, crshrace, 0,        crshrace, crshrace, crshrace, ROT270, "Video System Co.", "Lethal Crash Race (set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, crshrac2, crshrace, crshrace, crshrac2, crshrac2, ROT270, "Video System Co.", "Lethal Crash Race (set 2)", GAME_NO_COCKTAIL )
 }

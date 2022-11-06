@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -14,8 +14,7 @@ public class galpanic
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_galpanic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_galpanic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* first 1024 colors are dynamic */
@@ -43,12 +42,12 @@ public class galpanic
 		int sx,sy;
 	
 	
-		data = COMBINE_DATA(&galpanic_bgvideoram.read(offset));
+		data = COMBINE_DATA(&galpanic_bgvideoram[offset]);
 	
 		sy = offset / 256;
 		sx = offset % 256;
 	
-		plot_pixel(tmpbitmap, sx, sy, Machine.pens[1024 + (data >> 1)]);
+		plot_pixel(tmpbitmap, sx, sy, Machine->pens[1024 + (data >> 1)]);
 	}
 	
 	WRITE16_HANDLER( galpanic_paletteram_w )
@@ -92,7 +91,7 @@ public class galpanic
 			attr1 = spriteram16[offs + 3];
 			x = spriteram16[offs + 4] - ((attr1 & 0x01) << 8);
 			y = spriteram16[offs + 5] + ((attr1 & 0x02) << 7);
-			if ((attr1 & 0x04) != 0)	/* multi sprite */
+			if (attr1 & 0x04)	/* multi sprite */
 			{
 				sx += x;
 				sy += y;
@@ -112,12 +111,12 @@ public class galpanic
 			flipx = attr2 & 0x80;
 			flipy = attr2 & 0x40;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy - 16,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -136,12 +135,12 @@ public class galpanic
 			flipx = spriteram16[offs] & 0x0002;
 			flipy = spriteram16[offs] & 0x0001;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -155,14 +154,13 @@ public class galpanic
 	
 			sx = offs % 256;
 			sy = offs / 256;
-			color = galpanic_fgvideoram.read(offs);
-			if (color != 0)
-				plot_pixel(bitmap, sx, sy, Machine.pens[color]);
+			color = galpanic_fgvideoram[offs];
+			if (color)
+				plot_pixel(bitmap, sx, sy, Machine->pens[color]);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_galpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galpanic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* copy the temporary bitmap to the screen */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
@@ -171,8 +169,7 @@ public class galpanic
 		galpanic_draw_sprites(bitmap);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_comad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_comad  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* copy the temporary bitmap to the screen */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	

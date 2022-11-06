@@ -137,7 +137,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -239,7 +239,7 @@ public class seta
 			---- ---- ---- -2--		Coin #0 Lock Out
 			---- ---- ---- --1-		Coin #1 Counter
 			---- ---- ---- ---0		Coin #0 Counter		*/
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					seta_coin_lockout_w (data & 0x0f);
 					seta_sound_enable_w (data & 0x20);
@@ -249,7 +249,7 @@ public class seta
 				break;
 	
 			case 2/2:
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					int new_bank;
 	
@@ -366,7 +366,7 @@ public class seta
 		data16_t newword = COMBINE_DATA(&seta_vram_0[offset]);
 		if (oldword != newword)
 		{
-			if ((offset & 0x1000) != 0)
+			if (offset & 0x1000)
 				tilemap_mark_tile_dirty(tilemap_1, offset & 0x7ff);
 			else
 				tilemap_mark_tile_dirty(tilemap_0, offset & 0x7ff);
@@ -379,7 +379,7 @@ public class seta
 		data16_t newword = COMBINE_DATA(&seta_vram_2[offset]);
 		if (oldword != newword)
 		{
-			if ((offset & 0x1000) != 0)
+			if (offset & 0x1000)
 				tilemap_mark_tile_dirty(tilemap_3, offset & 0x7ff);
 			else
 				tilemap_mark_tile_dirty(tilemap_2, offset & 0x7ff);
@@ -388,7 +388,7 @@ public class seta
 	
 	WRITE16_HANDLER( twineagl_tilebank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xff;
 			if (twineagl_tilebank[offset] != data)
@@ -404,13 +404,12 @@ public class seta
 	static void find_offsets(void)
 	{
 		global_offsets = game_offsets;
-		while (global_offsets.gamename && strcmp(Machine.gamedrv.name,global_offsets.gamename))
+		while (global_offsets->gamename && strcmp(Machine->gamedrv->name,global_offsets->gamename))
 			global_offsets++;
 	}
 	
 	/* 2 layers */
-	public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHandlerPtr() { public int handler(){
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
 	
@@ -448,8 +447,7 @@ public class seta
 	
 	
 	/* 1 layer */
-	public static VideoStartHandlerPtr video_start_seta_1_layer  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seta_1_layer  = new VideoStartHandlerPtr() { public int handler(){
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
 	
@@ -480,8 +478,7 @@ public class seta
 		else return 1;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_twineagl_1_layer  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_twineagl_1_layer  = new VideoStartHandlerPtr() { public int handler(){
 		/* Each layer consists of 2 tilemaps: only one can be displayed
 		   at any given time */
 	
@@ -514,8 +511,7 @@ public class seta
 	
 	
 	/* NO layers, only sprites */
-	public static VideoStartHandlerPtr video_start_seta_no_layers  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seta_no_layers  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = 0;
 		tilemap_1 = 0;
 		tilemap_2 = 0;
@@ -525,9 +521,8 @@ public class seta
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_oisipuzl_2_layers  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_seta_2_layers() != 0)
+	public static VideoStartHandlerPtr video_start_oisipuzl_2_layers  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_seta_2_layers())
 			return 1;
 		tilemaps_flip = 1;
 		return 0;
@@ -553,8 +548,7 @@ public class seta
 	
 	   I think that's because this game's a prototype..
 	*/
-	public static PaletteInitHandlerPtr palette_init_blandia  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_blandia  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
@@ -568,8 +562,7 @@ public class seta
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity,
 	   even if the low 2 bits are ignored (so there are only 4 different palettes) */
-	public static PaletteInitHandlerPtr palette_init_gundhara  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gundhara  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
@@ -582,8 +575,7 @@ public class seta
 	
 	
 	/* layers have 6 bits per pixel, but the color code has a 16 colors granularity */
-	public static PaletteInitHandlerPtr palette_init_jjsquawk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_jjsquawk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
@@ -595,8 +587,7 @@ public class seta
 	
 	
 	/* layer 0 is 6 bit per pixel, but the color code has a 16 colors granularity */
-	public static PaletteInitHandlerPtr palette_init_zingzip  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_zingzip  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
@@ -607,8 +598,7 @@ public class seta
 	
 	
 	/* 6 bit layer. The colors are still WRONG */
-	public static PaletteInitHandlerPtr palette_init_usclssic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_usclssic  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 32; color++ )
 			for( pen = 0; pen < 64; pen++ )
@@ -632,7 +622,7 @@ public class seta
 		int offs, col;
 		int xoffs, yoffs;
 	
-		int total_color_codes	=	Machine.drv.gfxdecodeinfo[0].total_color_codes;
+		int total_color_codes	=	Machine->drv->gfxdecodeinfo[0].total_color_codes;
 	
 		int ctrl	=	spriteram16[ 0x600/2 ];
 		int ctrl2	=	spriteram16[ 0x602/2 ];
@@ -700,7 +690,7 @@ public class seta
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip != 0)
+				if (flip)
 				{
 					sy = max_y - sy;
 					flipx = NOT(flipx);
@@ -710,7 +700,7 @@ public class seta
 				color	=	( color >> (16-5) ) % total_color_codes;
 				code	=	(code & 0x3fff) + (bank * 0x4000);
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						code,
 						color,
 						flipx, flipy,
@@ -729,7 +719,7 @@ public class seta
 		int offs;
 		int xoffs, yoffs;
 	
-		int total_color_codes	=	Machine.drv.gfxdecodeinfo[0].total_color_codes;
+		int total_color_codes	=	Machine->drv->gfxdecodeinfo[0].total_color_codes;
 	
 		int ctrl	=	spriteram16[ 0x600/2 ];
 		int ctrl2	=	spriteram16[ 0x602/2 ];
@@ -745,7 +735,7 @@ public class seta
 		seta_draw_sprites_map(bitmap,cliprect);
 	
 	
-		xoffs = global_offsets.sprite_offs[flip ? 1 : 0];
+		xoffs = global_offsets->sprite_offs[flip ? 1 : 0];
 		yoffs = -2;
 	
 		for ( offs = (0x400-2)/2 ; offs >= 0/2; offs -= 2/2 )
@@ -761,9 +751,9 @@ public class seta
 			int bank	=	(x & 0x0600) >> 9;
 			int color	=	( x >> (16-5) ) % total_color_codes;
 	
-			if (flip != 0)
+			if (flip)
 			{
-				y = (0x100 - Machine.drv.screen_height) + max_y - y;
+				y = (0x100 - Machine->drv->screen_height) + max_y - y;
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
 			}
@@ -772,7 +762,7 @@ public class seta
 	
 			y = max_y - y;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx, flipy,
@@ -807,16 +797,14 @@ public class seta
 	
 	
 	/* For games without tilemaps */
-	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_seta_no_layers  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		seta_draw_sprites(bitmap,cliprect);
 	} };
 	
 	
 	/* For games with 1 or 2 tilemaps */
-	public static VideoUpdateHandlerPtr video_update_seta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_seta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 		int enab_0, enab_1, x_0, x_1, y_0, y_1;
 	
@@ -847,7 +835,7 @@ public class seta
 	
 		x_0 += 0x10 - global_offsets.tilemap_offs[flip ? 1 : 0];
 		y_0 -= (256 - vis_dimy)/2;
-		if (flip != 0)
+		if (flip)
 		{
 			x_0 = -x_0 - 512;
 			y_0 = y_0 - vis_dimy;
@@ -858,7 +846,7 @@ public class seta
 		tilemap_set_scrolly (tilemap_0, 0, y_0);
 		tilemap_set_scrolly (tilemap_1, 0, y_0);
 	
-		if (tilemap_2 != 0)
+		if (tilemap_2)
 		{
 			x_1		=	seta_vctrl_2[ 0/2 ];
 			y_1		=	seta_vctrl_2[ 2/2 ];
@@ -869,7 +857,7 @@ public class seta
 	
 			x_1 += 0x10 - global_offsets.tilemap_offs[flip ? 1 : 0];
 			y_1 -= (256 - vis_dimy)/2;
-			if (flip != 0)
+			if (flip)
 			{
 				x_1 = -x_1 - 512;
 				y_1 = y_1 - vis_dimy;
@@ -892,58 +880,58 @@ public class seta
 		if (keyboard_pressed(KEYCODE_A))	msk |= 8;
 		if (msk != 0) layers_ctrl &= msk;
 	
-		if (tilemap_2 != 0)		usrintf_showmessage("VR:%04X-%04X-%04X L0:%04X L1:%04X",seta_vregs[0],seta_vregs[1],seta_vregs[2],seta_vctrl_0[4/2],seta_vctrl_2[4/2]);
-		else if (tilemap_0 != 0)	usrintf_showmessage("L0:%04X",seta_vctrl_0[4/2]);
+		if (tilemap_2)		usrintf_showmessage("VR:%04X-%04X-%04X L0:%04X L1:%04X",seta_vregs[0],seta_vregs[1],seta_vregs[2],seta_vctrl_0[4/2],seta_vctrl_2[4/2]);
+		else if (tilemap_0)	usrintf_showmessage("L0:%04X",seta_vctrl_0[4/2]);
 	}
 	#endif
 	
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((order & 1) != 0)	// swap the layers?
+		if (order & 1)	// swap the layers?
 		{
-			if (tilemap_2 != 0)
+			if (tilemap_2)
 			{
-				if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2, TILEMAP_IGNORE_TRANSPARENCY, 0);
-				if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3, TILEMAP_IGNORE_TRANSPARENCY, 0);
+				if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2, TILEMAP_IGNORE_TRANSPARENCY, 0);
+				if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3, TILEMAP_IGNORE_TRANSPARENCY, 0);
 			}
 	
-			if ((order & 2) != 0)	// layer-sprite priority?
+			if (order & 2)	// layer-sprite priority?
 			{
-				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
-				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
-				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
+				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
+				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
+				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
 			}
 			else
 			{
-				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
-				if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
-				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
+				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  0, 0);
+				if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  0, 0);
+				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
 			}
 		}
 		else
 		{
-			if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_0,  TILEMAP_IGNORE_TRANSPARENCY, 0);
-			if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect, tilemap_1,  TILEMAP_IGNORE_TRANSPARENCY, 0);
+			if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_0,  TILEMAP_IGNORE_TRANSPARENCY, 0);
+			if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect, tilemap_1,  TILEMAP_IGNORE_TRANSPARENCY, 0);
 	
-			if ((order & 2) != 0)	// layer-sprite priority?
+			if (order & 2)	// layer-sprite priority?
 			{
-				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
+				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
 	
-				if (tilemap_2 != 0)
+				if (tilemap_2)
 				{
-					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
-					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
+					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
+					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
 				}
 			}
 			else
 			{
-				if (tilemap_2 != 0)
+				if (tilemap_2)
 				{
-					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
-					if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
+					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_2,  0, 0);
+					if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect, tilemap_3,  0, 0);
 				}
 	
-				if ((layers_ctrl & 8) != 0)	seta_draw_sprites(bitmap,cliprect);
+				if (layers_ctrl & 8)	seta_draw_sprites(bitmap,cliprect);
 			}
 		}
 	

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,18 +31,15 @@ public class chaknpop
 	
 	***************************************************************************/
 	
-	static public static WriteHandlerPtr unknown_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr unknown_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("%04x: write to unknow port 1: 0x%02x\n", activecpu_get_pc(), data);
 	} };
 	
-	static public static WriteHandlerPtr unknown_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr unknown_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//logerror("%04x: write to unknow port 2: 0x%02x\n", activecpu_get_pc(), data);
 	} };
 	
-	static public static WriteHandlerPtr coinlock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coinlock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%04x: coin lock %sable\n", activecpu_get_pc(), data ? "dis" : "en");
 	} };
 	
@@ -114,7 +111,7 @@ public class chaknpop
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_chaknpop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chaknpop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chaknpop )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -270,8 +267,7 @@ public class chaknpop
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_chaknpop = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chaknpop )
 	
 		/* basic machine hardware */
 		/* the real board is 3.072MHz, but it is faster for MAME */
@@ -298,9 +294,7 @@ public class chaknpop
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -337,5 +331,5 @@ public class chaknpop
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR  COMPANY              FULLNAME ) */
-	public static GameDriver driver_chaknpop	   = new GameDriver("1983"	,"chaknpop"	,"chaknpop.java"	,rom_chaknpop,null	,machine_driver_chaknpop	,input_ports_chaknpop	,init_chaknpop	,ROT0	,	"Taito Corporation", "Chack'n Pop")
+	GAME( 1983, chaknpop, 0,        chaknpop, chaknpop, chaknpop, ROT0,    "Taito Corporation", "Chack'n Pop")
 }

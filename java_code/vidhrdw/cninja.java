@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_cninja  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cninja  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(1))
 			return 1;
 	
@@ -56,8 +55,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_stoneage  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stoneage  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(1))
 			return 1;
 	
@@ -73,8 +71,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_edrandy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_edrandy  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -85,8 +82,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_robocop2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_robocop2  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -98,8 +94,7 @@ public class cninja
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mutantf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mutantf  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -119,8 +114,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_cninja  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_cninja  = new VideoEofHandlerPtr() { public void handler(){
 		deco16_raster_display_position=0;
 	} };
 	
@@ -131,8 +125,8 @@ public class cninja
 		struct rectangle clip;
 		int overflow=deco16_raster_display_position;
 	
-		clip.min_x = cliprect.min_x;
-		clip.max_x = cliprect.max_x;
+		clip.min_x = cliprect->min_x;
+		clip.max_x = cliprect->max_x;
 	
 		/* Finish list up to end of visible display */
 		deco16_raster_display_list[overflow++]=255;
@@ -179,7 +173,7 @@ public class cninja
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult,pri=0;
 	
 			sprite = buffered_spriteram16[offs+1];
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			x = buffered_spriteram16[offs+2];
 	
@@ -208,7 +202,7 @@ public class cninja
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -216,18 +210,18 @@ public class cninja
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine.gfx[3],
+				pdrawgfx(bitmap,Machine->gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -247,7 +241,7 @@ public class cninja
 		{
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult,pri=0;
 			sprite = buffered_spriteram16[offs+1];
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			x = buffered_spriteram16[offs+2];
 	
@@ -276,7 +270,7 @@ public class cninja
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -284,18 +278,18 @@ public class cninja
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=304-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				pdrawgfx(bitmap,Machine.gfx[3],
+				pdrawgfx(bitmap,Machine->gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -348,7 +342,7 @@ public class cninja
 			int trans=TRANSPARENCY_PEN;
 	
 			sprite = spriteptr[offs+3];
-			if (sprite == 0) {
+			if (!sprite) {
 				offs+=inc;
 				continue;
 			}
@@ -374,38 +368,38 @@ public class cninja
 			fx = (spriteptr[offs+0]&0x4000);
 			fy = (spriteptr[offs+0]&0x8000);
 	
-			if (flip_screen != 0) {
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+			if (flip_screen()) {
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 	
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
 				if (sx>0x180) sx=-(0x200 - sx);
 				if (sy>0x180) sy=-(0x200 - sy);
 	
-				if (fx != 0) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
-				if (fy != 0) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
+				if (fx) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
+				if (fy) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
 			} else {
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
-				if ((sx & 0x100) != 0) sx=-(0x100 - (sx&0xff));
-				if ((sy & 0x100) != 0) sy=-(0x100 - (sy&0xff));
+				if (sx&0x100) sx=-(0x100 - (sx&0xff));
+				if (sy&0x100) sy=-(0x100 - (sy&0xff));
 				sx = 304 - sx;
 				sy = 240 - sy;
 				if (sx >= 432) sx -= 512;
 				if (sy >= 384) sy -= 512;
-				if (fx != 0) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
-				if (fy != 0) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
+				if (fx) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
+				if (fy) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
 			}
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					pdrawgfx(bitmap,Machine.gfx[gfxbank],
+					pdrawgfx(bitmap,Machine->gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							Machine.visible_area,trans,0,0);
+							Machine->visible_area,trans,0,0);
 				}
 			}
 	
@@ -415,8 +409,7 @@ public class cninja
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cninja  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
@@ -432,8 +425,7 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_edrandy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
@@ -441,7 +433,7 @@ public class cninja
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 		deco16_tilemap_4_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,1);
-		if (deco16_raster_display_position != 0)
+		if (deco16_raster_display_position)
 			raster_pf3_draw(bitmap,cliprect,0,2);
 		else
 			deco16_tilemap_3_draw(bitmap,cliprect,0,2);
@@ -450,10 +442,9 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_robocop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* One of the tilemap chips can switch between 2 tilemaps at 4bpp, or 1 at 8bpp */
-		if ((deco16_priority & 4) != 0) {
+		if (deco16_priority&4) {
 			deco16_set_tilemap_colour_mask(2,0);
 			deco16_set_tilemap_colour_mask(3,0);
 			deco16_pf34_set_gfxbank(0,4);
@@ -478,14 +469,14 @@ public class cninja
 		switch (deco16_priority&0x8) {
 			case 8:
 				deco16_tilemap_2_draw(bitmap,cliprect,0,2);
-				if (deco16_raster_display_position != 0)
+				if (deco16_raster_display_position)
 					raster_pf3_draw(bitmap,cliprect,0,4);
 				else
 					deco16_tilemap_3_draw(bitmap,cliprect,0,4);
 				break;
 			default:
 			case 0:
-				if (deco16_raster_display_position != 0)
+				if (deco16_raster_display_position)
 					raster_pf3_draw(bitmap,cliprect,0,2);
 				else
 					deco16_tilemap_3_draw(bitmap,cliprect,0,2);
@@ -497,8 +488,7 @@ public class cninja
 		deco16_tilemap_1_draw(bitmap,cliprect,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mutantf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
 		deco16_pf34_update(deco16_pf3_rowscroll,deco16_pf4_rowscroll);
@@ -527,7 +517,7 @@ public class cninja
 			priority between sprites in each layer.  Ie, if we didn't do this,
 			then when two alpha blended shadows overlapped then they would be 25%
 			transparent against the background, rather than 50% */
-		if ((deco16_priority & 1) != 0) {
+		if (deco16_priority&1) {
 			fillbitmap(priority_bitmap,0,cliprect);
 			mutantf_drawsprites(bitmap,cliprect,buffered_spriteram16,3);
 			fillbitmap(priority_bitmap,0,cliprect);

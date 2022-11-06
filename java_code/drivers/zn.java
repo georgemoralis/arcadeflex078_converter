@@ -118,7 +118,7 @@ Sound: Analog Devices ADSP-2181
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -420,13 +420,11 @@ public class zn
 		logerror( "%08x: sio0_w( %04x, %08x )%s\n", activecpu_get_pc(), offset, data, s_char );
 	}
 	
-	public static WriteHandlerPtr qsound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qsound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) + 0x10000 + ( ( data & 0x0f ) * 0x4000 ) );
 	} };
 	
-	public static WriteHandlerPtr fx1a_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fx1a_sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) + 0x10000 + ( ( ( data - 1 ) & 0x07 ) * 0x4000 ) );
 	} };
 	
@@ -521,8 +519,7 @@ public class zn
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static DriverInitHandlerPtr init_zn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zn  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank( 1, memory_region( REGION_USER1 ) ); /* game rom */
 		cpu_setbank( 3, memory_region( REGION_CPU1 ) + 0x0480000 ); /* scratch pad */
 		cpu_setbank( 4, memory_region( REGION_CPU1 ) ); /* ram mirror */
@@ -530,8 +527,8 @@ public class zn
 		cpu_setbank( 6, memory_region( REGION_USER2 ) ); /* capcom country rom */
 		cpu_setbank( 7, memory_region( REGION_CPU1 ) + 0x0400000 ); /* bios */
 	
-		if( strcmp( Machine.gamedrv.name, "glpracr" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "glprac2l" ) == 0 )
+		if( strcmp( Machine->gamedrv->name, "glpracr" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "glprac2l" ) == 0 )
 		{
 			/* disable:
 				the QSound CPU for glpracr as it doesn't have any roms &
@@ -540,61 +537,61 @@ public class zn
 		}
 	
 	#if PROTECTION_HACK
-		if( strcmp( Machine.gamedrv.name, "doapp" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "glpracr2" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "glprac2j" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "glprac2l" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "tondemo" ) == 0 )
+		if( strcmp( Machine->gamedrv->name, "doapp" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "glpracr2" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "glprac2j" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "glprac2l" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "tondemo" ) == 0 )
 		{
 			p_sio0_ret = mg_protection_hack;
 			n_sio0_ret_size = sizeof( mg_protection_hack );
 		}
-		else if( strcmp( Machine.gamedrv.name, "sncwgltd" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "sncwgltd" ) == 0 )
 		{
 			p_sio0_ret = kn_protection_hack;
 			n_sio0_ret_size = sizeof( kn_protection_hack );
 		}
-		else if( strcmp( Machine.gamedrv.name, "ftimpcta" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "gdarius" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "gdarius2" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "mgcldate" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "psyforce" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "raystorm" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfchamp" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "beastrzb" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "ftimpcta" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "gdarius" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "gdarius2" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "mgcldate" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "psyforce" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "raystorm" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfchamp" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "beastrzb" ) == 0 )
 		{
 			p_sio0_ret = tt_protection_hack;
 			n_sio0_ret_size = sizeof( tt_protection_hack );
 		}
-		else if( strcmp( Machine.gamedrv.name, "starglad" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "ts2u" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "ts2j" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfex" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfexj" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "glpracr" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfexp" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfexpj" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "rvschool" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "jgakuen" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "tgmj" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "starglad" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "ts2u" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "ts2j" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfex" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfexj" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "glpracr" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfexp" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfexpj" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "rvschool" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "jgakuen" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "tgmj" ) == 0 )
 		{
 			p_sio0_ret = cpzn1_protection_hack;
 			n_sio0_ret_size = sizeof( cpzn1_protection_hack );
 		}
-		else if( strcmp( Machine.gamedrv.name, "sfex2" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sg2j" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "techromn" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "kikaioh" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfex2p" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "strider2" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "stridr2a" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "shiryu2" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "sfex2" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sg2j" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "techromn" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "kikaioh" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfex2p" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "strider2" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "stridr2a" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "shiryu2" ) == 0 )
 		{
 			p_sio0_ret = cpzn2_protection_hack;
 			n_sio0_ret_size = sizeof( cpzn2_protection_hack );
 		}
-		else if ( strcmp( Machine.gamedrv.name, "beastrzr" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "brvblade" ) == 0 )
+		else if ( strcmp( Machine->gamedrv->name, "beastrzr" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "brvblade" ) == 0 )
 		{
 			p_sio0_ret = psarc95_protection_hack;
 			n_sio0_ret_size = sizeof( psarc95_protection_hack );
@@ -608,8 +605,7 @@ public class zn
 		psx_driver_init();
 	} };
 	
-	public static DriverInitHandlerPtr init_fx1b  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fx1b  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank( 10, memory_region( REGION_CPU2 ) );
 		init_zn();
 	} };
@@ -639,14 +635,14 @@ public class zn
 		queue_len = 0;
 		scode_last = -1;
 	
-		if( strcmp( Machine.gamedrv.name, "sfex2" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "sfex2p" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "tgmj" ) == 0 )
+		if( strcmp( Machine->gamedrv->name, "sfex2" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "sfex2p" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "tgmj" ) == 0 )
 		{
 			scode = 0x0400;
 		}
-		else if( strcmp( Machine.gamedrv.name, "techromn" ) == 0 ||
-			strcmp( Machine.gamedrv.name, "kikaioh" ) == 0 )
+		else if( strcmp( Machine->gamedrv->name, "techromn" ) == 0 ||
+			strcmp( Machine->gamedrv->name, "kikaioh" ) == 0 )
 		{
 			scode = 0x8000;
 		}
@@ -666,8 +662,7 @@ public class zn
 		}
 	}
 	
-	static public static VideoUpdateHandlerPtr video_update_player  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_player  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if( keyboard_pressed_memory( KEYCODE_F1 ) )
 		{
 			n_playermode = !n_playermode;
@@ -750,15 +745,13 @@ public class zn
 		}
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_zn  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zn  = new MachineInitHandlerPtr() { public void handler(){
 		n_playermode = 0;
 		player_reset();
 		psx_machine_init();
 	} };
 	
-	public static InterruptHandlerPtr qsound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr qsound_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( queue_len == 4 )
 		{
 			soundlatch_w( 0, queue_data >> 8 );
@@ -777,8 +770,7 @@ public class zn
 		}
 	} };
 	
-	public static InterruptHandlerPtr fx1a_sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fx1a_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( queue_len == 4 )
 		{
 			taitosound_port_w( 0, 0 );
@@ -833,8 +825,7 @@ public class zn
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_zn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zn )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33868800) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -858,12 +849,9 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_znqsound = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( znqsound )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -894,12 +882,9 @@ public class zn
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(QSOUND, qsound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_znlink = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( znlink )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -926,12 +911,9 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fx1a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fx1a )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -961,12 +943,9 @@ public class zn
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fx1b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fx1b )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(PSXCPU, 33000000) /* 33MHz ?? */
 		MDRV_CPU_MEMORY(zn_readmem,zn_writemem)
@@ -990,11 +969,9 @@ public class zn
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_zn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zn )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );
@@ -1907,35 +1884,35 @@ public class zn
 	/* A dummy driver, so that the bios can be debugged, and to serve as */
 	/* parent for the coh1002c.bin file, so that we do not have to include */
 	/* it in every zip file */
-	public static GameDriver driver_cpzn1	   = new GameDriver("1997"	,"cpzn1"	,"zn.java"	,rom_cpzn1,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Sony/Capcom", "ZN1", NOT_A_DRIVER )
+	GAMEX( 1997, cpzn1,    0,        zn,       zn, zn,   ROT0, "Sony/Capcom", "ZN1", NOT_A_DRIVER )
 	
-	public static GameDriver driver_ts2	   = new GameDriver("1995"	,"ts2"	,"zn.java"	,rom_ts2,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Takara", "Battle Arena Toshinden 2 (USA 951124)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_ts2j	   = new GameDriver("1995"	,"ts2j"	,"zn.java"	,rom_ts2j,driver_ts2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Takara", "Battle Arena Toshinden 2 (JAPAN 951124)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_starglad	   = new GameDriver("1996"	,"starglad"	,"zn.java"	,rom_starglad,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/", "Star Gladiator (USA 960627)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sfex	   = new GameDriver("1996"	,"sfex"	,"zn.java"	,rom_sfex,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX (ASIA 961219)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sfexj	   = new GameDriver("1996"	,"sfexj"	,"zn.java"	,rom_sfexj,driver_sfex	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX (JAPAN 961130)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_glpracr	   = new GameDriver("1996"	,"glpracr"	,"zn.java"	,rom_glpracr,driver_cpzn1	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Gallop Racer (JAPAN Ver 9.01.12)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_sfexp	   = new GameDriver("1997"	,"sfexp"	,"zn.java"	,rom_sfexp,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX Plus (USA 970311)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sfexpj	   = new GameDriver("1997"	,"sfexpj"	,"zn.java"	,rom_sfexpj,driver_sfexp	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX Plus (JAPAN 970311)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_rvschool	   = new GameDriver("1997"	,"rvschool"	,"zn.java"	,rom_rvschool,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Rival Schools (ASIA 971117)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_jgakuen	   = new GameDriver("1997"	,"jgakuen"	,"zn.java"	,rom_jgakuen,driver_rvschool	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Justice Gakuen (JAPAN 971117)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_tgmj	   = new GameDriver("1998"	,"tgmj"	,"zn.java"	,rom_tgmj,driver_cpzn1	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Akira", "Tetris The Grand Master (JAPAN 980710)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1995, ts2,      cpzn1,    znqsound, zn, zn,   ROT0, "Capcom/Takara", "Battle Arena Toshinden 2 (USA 951124)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1995, ts2j,     ts2,      znqsound, zn, zn,   ROT0, "Capcom/Takara", "Battle Arena Toshinden 2 (JAPAN 951124)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, starglad, cpzn1,    znqsound, zn, zn,   ROT0, "Capcom/", "Star Gladiator (USA 960627)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, sfex,     cpzn1,    znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX (ASIA 961219)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, sfexj,    sfex,     znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX (JAPAN 961130)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, glpracr,  cpzn1,    zn,       zn, zn,   ROT0, "Tecmo", "Gallop Racer (JAPAN Ver 9.01.12)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, sfexp,    cpzn1,    znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX Plus (USA 970311)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1997, sfexpj,   sfexp,    znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX Plus (JAPAN 970311)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1997, rvschool, cpzn1,    znqsound, zn, zn,   ROT0, "Capcom", "Rival Schools (ASIA 971117)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1997, jgakuen,  rvschool, znqsound, zn, zn,   ROT0, "Capcom", "Justice Gakuen (JAPAN 971117)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1998, tgmj,     cpzn1,    znqsound, zn, zn,   ROT0, "Capcom/Akira", "Tetris The Grand Master (JAPAN 980710)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
 	/* Capcom ZN2 */
 	
 	/* A dummy driver, so that the bios can be debugged, and to serve as */
 	/* parent for the coh3002c.bin file, so that we do not have to include */
 	/* it in every zip file */
-	public static GameDriver driver_cpzn2	   = new GameDriver("1997"	,"cpzn2"	,"zn.java"	,rom_cpzn2,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Sony/Capcom", "ZN2", NOT_A_DRIVER )
+	GAMEX( 1997, cpzn2,    0,        zn,       zn, zn,   ROT0, "Sony/Capcom", "ZN2", NOT_A_DRIVER )
 	
-	public static GameDriver driver_sfex2	   = new GameDriver("1998"	,"sfex2"	,"zn.java"	,rom_sfex2,driver_cpzn2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX 2 (JAPAN 980312)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sg2j	   = new GameDriver("1998"	,"sg2j"	,"zn.java"	,rom_sg2j,driver_cpzn2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom","Star Gladiator 2 (JAPAN 980316)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_techromn	   = new GameDriver("1998"	,"techromn"	,"zn.java"	,rom_techromn,driver_cpzn2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Tech Romancer (USA 980914)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_kikaioh	   = new GameDriver("1998"	,"kikaioh"	,"zn.java"	,rom_kikaioh,driver_techromn	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Kikaioh (JAPAN 980914)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sfex2p	   = new GameDriver("1999"	,"sfex2p"	,"zn.java"	,rom_sfex2p,driver_sfex2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom/Arika", "Street Fighter EX 2 Plus (JAPAN 990611)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_strider2	   = new GameDriver("1999"	,"strider2"	,"zn.java"	,rom_strider2,driver_cpzn2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Strider 2 (USA 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_stridr2a	   = new GameDriver("1999"	,"stridr2a"	,"zn.java"	,rom_stridr2a,driver_strider2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Strider 2 (ASIA 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_shiryu2	   = new GameDriver("1999"	,"shiryu2"	,"zn.java"	,rom_shiryu2,driver_strider2	,machine_driver_znqsound	,input_ports_zn	,init_zn	,ROT0	,	"Capcom", "Strider Hiryu 2 (JAPAN 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1998, sfex2,    cpzn2,    znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX 2 (JAPAN 980312)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1998, sg2j,     cpzn2,    znqsound, zn, zn,   ROT0, "Capcom","Star Gladiator 2 (JAPAN 980316)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1998, techromn, cpzn2,    znqsound, zn, zn,   ROT0, "Capcom", "Tech Romancer (USA 980914)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1998, kikaioh,  techromn, znqsound, zn, zn,   ROT0, "Capcom", "Kikaioh (JAPAN 980914)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1999, sfex2p,   sfex2,    znqsound, zn, zn,   ROT0, "Capcom/Arika", "Street Fighter EX 2 Plus (JAPAN 990611)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1999, strider2, cpzn2,    znqsound, zn, zn,   ROT0, "Capcom", "Strider 2 (USA 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1999, stridr2a, strider2, znqsound, zn, zn,   ROT0, "Capcom", "Strider 2 (ASIA 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1999, shiryu2,  strider2, znqsound, zn, zn,   ROT0, "Capcom", "Strider Hiryu 2 (JAPAN 991213)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
 	/* Atari */
 	
@@ -1943,9 +1920,9 @@ public class zn
 	/* parent for the coh1000t.bin file, so that we do not have to include */
 	/* it in every zip file */
 	
-	public static GameDriver driver_atpsx	   = new GameDriver("1996"	,"atpsx"	,"zn.java"	,rom_atpsx,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Atari", "Atari PSX", NOT_A_DRIVER )
+	GAMEX( 1996, atpsx,    0,        zn,       zn, zn,   ROT0, "Atari", "Atari PSX", NOT_A_DRIVER )
 	
-	public static GameDriver driver_primrag2	   = new GameDriver("1996"	,"primrag2"	,"zn.java"	,rom_primrag2,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Atari", "Primal Rage 2", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, primrag2, 0,        zn,       zn, zn,   ROT0, "Atari", "Primal Rage 2", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	/* Acclaim */
 	
@@ -1953,46 +1930,46 @@ public class zn
 	/* parent for the coh1000a.bin file, so that we do not have to include */
 	/* it in every zip file */
 	
-	public static GameDriver driver_acpsx	   = new GameDriver("1996"	,"acpsx"	,"zn.java"	,rom_acpsx,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Acclaim", "Acclaim PSX", NOT_A_DRIVER )
+	GAMEX( 1996, acpsx,    0,        zn,       zn, zn,   ROT0, "Acclaim", "Acclaim PSX", NOT_A_DRIVER )
 	
-	public static GameDriver driver_nbajamex	   = new GameDriver("1996"	,"nbajamex"	,"zn.java"	,rom_nbajamex,driver_acpsx	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Acclaim", "NBA Jam Extreme", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_jdredd	   = new GameDriver("1996"	,"jdredd"	,"zn.java"	,rom_jdredd,driver_acpsx	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Acclaim", "Judge Dredd (Rev C)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_jdreddb	   = new GameDriver("1996"	,"jdreddb"	,"zn.java"	,rom_jdreddb,driver_jdredd	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Acclaim", "Judge Dredd (Rev B)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, nbajamex, acpsx,    zn,       zn, zn,   ROT0, "Acclaim", "NBA Jam Extreme", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, jdredd,   acpsx,    zn,       zn, zn,   ROT0, "Acclaim", "Judge Dredd (Rev C)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, jdreddb,  jdredd,   zn,       zn, zn,   ROT0, "Acclaim", "Judge Dredd (Rev B)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	/* Tecmo */
 	
 	/* A dummy driver, so that the bios can be debugged, and to serve as */
 	/* parent for the coh1002m.bin file, so that we do not have to include */
 	/* it in every zip file */
-	public static GameDriver driver_tps	   = new GameDriver("1997"	,"tps"	,"zn.java"	,rom_tps,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Sony/Tecmo", "TPS", NOT_A_DRIVER )
+	GAMEX( 1997, tps,      0,        zn,       zn, zn,   ROT0, "Sony/Tecmo", "TPS", NOT_A_DRIVER )
 	
-	public static GameDriver driver_glpracr2	   = new GameDriver("1997"	,"glpracr2"	,"zn.java"	,rom_glpracr2,driver_tps	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Gallop Racer 2 (USA)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_glprac2j	   = new GameDriver("1997"	,"glprac2j"	,"zn.java"	,rom_glprac2j,driver_glpracr2	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Gallop Racer 2 (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_glprac2l	   = new GameDriver("1997"	,"glprac2l"	,"zn.java"	,rom_glprac2l,driver_glpracr2	,machine_driver_znlink	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Gallop Racer 2 Link HW (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_doapp	   = new GameDriver("1998"	,"doapp"	,"zn.java"	,rom_doapp,driver_tps	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Dead Or Alive ++ (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_tondemo	   = new GameDriver("1999"	,"tondemo"	,"zn.java"	,rom_tondemo,driver_tps	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Tecmo", "Tondemo Crisis (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, glpracr2, tps,      zn,       zn, zn,   ROT0, "Tecmo", "Gallop Racer 2 (USA)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, glprac2j, glpracr2, zn,       zn, zn,   ROT0, "Tecmo", "Gallop Racer 2 (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, glprac2l, glpracr2, znlink,   zn, zn,   ROT0, "Tecmo", "Gallop Racer 2 Link HW (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1998, doapp,    tps,      zn,       zn, zn,   ROT0, "Tecmo", "Dead Or Alive ++ (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1999, tondemo,  tps,      zn,       zn, zn,   ROT0, "Tecmo", "Tondemo Crisis (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	/* Video System */
 	
 	/* only one game dumped on this system, so coh1002v.bin is included in the game zip file */
 	
-	public static GameDriver driver_sncwgltd	   = new GameDriver("1996"	,"sncwgltd"	,"zn.java"	,rom_sncwgltd,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Video System", "Sonic Wings Limited (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, sncwgltd, 0,        zn,       zn, zn,   ROT0, "Video System", "Sonic Wings Limited (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	/* Taito */
 	
 	/* A dummy driver, so that the bios can be debugged, and to serve as */
 	/* parent for the coh1002t.bin file, so that we do not have to include */
 	/* it in every zip file */
-	public static GameDriver driver_taitofx1	   = new GameDriver("1995"	,"taitofx1"	,"zn.java"	,rom_taitofx1,null	,machine_driver_fx1b	,input_ports_zn	,init_zn	,ROT0	,	"Sony/Taito", "Taito FX1", NOT_A_DRIVER )
+	GAMEX( 1995, taitofx1, 0,        fx1b,     zn, zn,   ROT0, "Sony/Taito", "Taito FX1", NOT_A_DRIVER )
 	
-	public static GameDriver driver_psyforce	   = new GameDriver("1995"	,"psyforce"	,"zn.java"	,rom_psyforce,driver_taitofx1	,machine_driver_fx1a	,input_ports_zn	,init_zn	,ROT0	,	"Taito", "Psychic Force (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_sfchamp	   = new GameDriver("1995"	,"sfchamp"	,"zn.java"	,rom_sfchamp,driver_taitofx1	,machine_driver_fx1a	,input_ports_zn	,init_zn	,ROT0	,	"Taito", "Super Football Champ (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_raystorm	   = new GameDriver("1996"	,"raystorm"	,"zn.java"	,rom_raystorm,driver_taitofx1	,machine_driver_fx1b	,input_ports_zn	,init_fx1b	,ROT0	,	"Taito", "Ray Storm (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_ftimpcta	   = new GameDriver("1996"	,"ftimpcta"	,"zn.java"	,rom_ftimpcta,driver_taitofx1	,machine_driver_fx1b	,input_ports_zn	,init_fx1b	,ROT0	,	"Taito", "Fighter's Impact Ace (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_mgcldate	   = new GameDriver("1996"	,"mgcldate"	,"zn.java"	,rom_mgcldate,driver_taitofx1	,machine_driver_fx1a	,input_ports_zn	,init_zn	,ROT0	,	"Taito", "Magical Date (JAPAN) set 1", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_mgcldtea	   = new GameDriver("1996"	,"mgcldtea"	,"zn.java"	,rom_mgcldtea,driver_mgcldate	,machine_driver_fx1a	,input_ports_zn	,init_fx1b	,ROT0	,	"Taito", "Magical Date (JAPAN) set 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_gdarius	   = new GameDriver("1997"	,"gdarius"	,"zn.java"	,rom_gdarius,driver_taitofx1	,machine_driver_fx1b	,input_ports_zn	,init_fx1b	,ROT0	,	"Taito", "G-Darius (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_gdarius2	   = new GameDriver("1997"	,"gdarius2"	,"zn.java"	,rom_gdarius2,driver_gdarius	,machine_driver_fx1b	,input_ports_zn	,init_fx1b	,ROT0	,	"Taito", "G-Darius Ver.2 (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1995, psyforce, taitofx1, fx1a,     zn, zn,   ROT0, "Taito", "Psychic Force (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1995, sfchamp,  taitofx1, fx1a,     zn, zn,   ROT0, "Taito", "Super Football Champ (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, raystorm, taitofx1, fx1b,     zn, fx1b, ROT0, "Taito", "Ray Storm (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, ftimpcta, taitofx1, fx1b,     zn, fx1b, ROT0, "Taito", "Fighter's Impact Ace (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1996, mgcldate, taitofx1, fx1a,     zn, zn,   ROT0, "Taito", "Magical Date (JAPAN) set 1", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1996, mgcldtea, mgcldate, fx1a,     zn, fx1b, ROT0, "Taito", "Magical Date (JAPAN) set 2", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1997, gdarius,  taitofx1, fx1b,     zn, fx1b, ROT0, "Taito", "G-Darius (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, gdarius2, gdarius,  fx1b,     zn, fx1b, ROT0, "Taito", "G-Darius Ver.2 (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 	/* Eighting/Raizing */
 	
@@ -2000,9 +1977,9 @@ public class zn
 	/* parent for the coh1002e.bin file, so that we do not have to include */
 	/* it in every zip file */
 	
-	public static GameDriver driver_psarc95	   = new GameDriver("1997"	,"psarc95"	,"zn.java"	,rom_psarc95,null	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Sony/Eighting/Raizing", "PS Arcade 95", NOT_A_DRIVER )
+	GAMEX( 1997, psarc95,  0,        zn,       zn, zn,   ROT0, "Sony/Eighting/Raizing", "PS Arcade 95", NOT_A_DRIVER )
 	
-	public static GameDriver driver_beastrzr	   = new GameDriver("1997"	,"beastrzr"	,"zn.java"	,rom_beastrzr,driver_psarc95	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Eighting/Raizing", "Beastorizer", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_beastrzb	   = new GameDriver("1997"	,"beastrzb"	,"zn.java"	,rom_beastrzb,driver_taitofx1	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Eighting/Raizing", "Beastorizer (bootleg)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_brvblade	   = new GameDriver("2000"	,"brvblade"	,"zn.java"	,rom_brvblade,driver_psarc95	,machine_driver_zn	,input_ports_zn	,init_zn	,ROT0	,	"Eighting/Raizing", "Brave Blade (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, beastrzr, psarc95,  zn,       zn, zn,   ROT0, "Eighting/Raizing", "Beastorizer", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1997, beastrzb, taitofx1, zn,       zn, zn,   ROT0, "Eighting/Raizing", "Beastorizer (bootleg)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 2000, brvblade, psarc95,  zn,       zn, zn,   ROT0, "Eighting/Raizing", "Brave Blade (JAPAN)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
 }

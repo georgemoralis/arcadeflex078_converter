@@ -89,7 +89,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -97,11 +97,9 @@ public class pirates
 {
 	
 	
-	VIDEO_START(pirates);
 	WRITE16_HANDLER( pirates_tx_tileram_w );
 	WRITE16_HANDLER( pirates_fg_tileram_w );
 	WRITE16_HANDLER( pirates_bg_tileram_w );
-	VIDEO_UPDATE(pirates);
 	
 	
 	
@@ -116,19 +114,18 @@ public class pirates
 		"*10011xxxx"	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_pirates  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0) EEPROM_save(file);
+	public static NVRAMHandlerPtr nvram_handler_pirates  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write) EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 		}
 	} };
 	
 	static WRITE16_HANDLER( pirates_out_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bits 0-2 control EEPROM */
 			EEPROM_write_bit(data & 0x04);
@@ -211,7 +208,7 @@ public class pirates
 	
 	/* Input Ports */
 	
-	static InputPortPtr input_ports_pirates = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pirates = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pirates )
 		PORT_START(); 	// IN0 - 0x300000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -298,8 +295,7 @@ public class pirates
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_pirates = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pirates )
 		MDRV_CPU_ADD(M68000, 16000000) /* 16mhz */
 		MDRV_CPU_MEMORY(pirates_readmem,pirates_writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -320,9 +316,7 @@ public class pirates
 		MDRV_VIDEO_UPDATE(pirates)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -383,7 +377,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (buf == 0) return;
+	    if (!buf) return;
 	
 	    rom = (UINT16 *)memory_region(REGION_CPU1);
 	    memcpy (buf, rom, rom_size);
@@ -414,7 +408,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (buf == 0) return;
+	    if (!buf) return;
 	
 	    rom = memory_region(REGION_GFX1);
 	    memcpy (buf, rom, rom_size);
@@ -440,7 +434,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (buf == 0) return;
+	    if (!buf) return;
 	
 	    rom = memory_region(REGION_GFX2);
 	    memcpy (buf, rom, rom_size);
@@ -467,7 +461,7 @@ public class pirates
 	
 	    buf = malloc(rom_size);
 	
-	    if (buf == 0) return;
+	    if (!buf) return;
 	
 	    rom = memory_region(REGION_SOUND1);
 	    memcpy (buf, rom, rom_size);
@@ -481,8 +475,7 @@ public class pirates
 	}
 	
 	
-	public static DriverInitHandlerPtr init_pirates  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pirates  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		pirates_decrypt_68k();
@@ -491,13 +484,12 @@ public class pirates
 		pirates_decrypt_oki();
 	
 		/* patch out protection check */
-		rom[0x62c0/2] = 0x6006; // beq . bra
+		rom[0x62c0/2] = 0x6006; // beq -> bra
 	} };
 	
-	static READ16_HANDLER( genix_prot_r ) {	if (offset == 0)	return 0x0004; else	return 0x0000; }
+	static READ16_HANDLER( genix_prot_r ) {	if(!offset)	return 0x0004; else	return 0x0000; }
 	
-	public static DriverInitHandlerPtr init_genix  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_genix  = new DriverInitHandlerPtr() { public void handler(){
 		pirates_decrypt_68k();
 		pirates_decrypt_p();
 		pirates_decrypt_s();
@@ -511,6 +503,6 @@ public class pirates
 	
 	/* GAME */
 	
-	public static GameDriver driver_pirates	   = new GameDriver("1994"	,"pirates"	,"pirates.java"	,rom_pirates,null	,machine_driver_pirates	,input_ports_pirates	,init_pirates	,0	,	"NIX", "Pirates" )
-	public static GameDriver driver_genix	   = new GameDriver("1994"	,"genix"	,"pirates.java"	,rom_genix,null	,machine_driver_pirates	,input_ports_pirates	,init_genix	,0	,	"NIX", "Genix Family" )
+	GAME( 1994, pirates, 0, pirates, pirates, pirates, 0, "NIX", "Pirates" )
+	GAME( 1994, genix,   0, pirates, pirates, genix,   0, "NIX", "Genix Family" )
 }

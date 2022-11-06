@@ -34,7 +34,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -76,7 +76,7 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( tetrisp2_systemregs_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			tetrisp2_systemregs[offset] = data;
 		}
@@ -86,7 +86,7 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( rockn_systemregs_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			tetrisp2_systemregs[offset] = data;
 			if (offset == 0x0c)
@@ -113,9 +113,9 @@ public class tetrisp2
 	
 	static WRITE16_HANDLER( tetrisp2_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if (offset != 0)	YMZ280B_data_0_w     (offset, data & 0xff);
+			if (offset)	YMZ280B_data_0_w     (offset, data & 0xff);
 			else		YMZ280B_register_0_w (offset, data & 0xff);
 		}
 	}
@@ -179,13 +179,12 @@ public class tetrisp2
 	static data16_t *tetrisp2_nvram;
 	static size_t tetrisp2_nvram_size;
 	
-	public static NVRAMHandlerPtr nvram_handler_tetrisp2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_tetrisp2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file,tetrisp2_nvram,tetrisp2_nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file,tetrisp2_nvram,tetrisp2_nvram_size);
 			else
 			{
@@ -349,7 +348,7 @@ public class tetrisp2
 								Tetris Plus 2 (World)
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_tetrisp2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tetrisp2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tetrisp2 )
 	
 		PORT_START(); 	// IN0 - $be0002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -445,7 +444,7 @@ public class tetrisp2
 	***************************************************************************/
 	
 	
-	static InputPortPtr input_ports_teplus2j = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_teplus2j = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( teplus2j )
 	
 		PORT_START(); 	// IN0 - $be0002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -545,7 +544,7 @@ public class tetrisp2
 	***************************************************************************/
 	
 	
-	static InputPortPtr input_ports_rockn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rockn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rockn )
 		PORT_START(); 	// IN0 - $be0002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN  );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN  );
@@ -707,21 +706,18 @@ public class tetrisp2
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 	}
 	
-	public static DriverInitHandlerPtr init_rockn_timer  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rockn_timer  = new DriverInitHandlerPtr() { public void handler(){
 		timer_pulse(TIME_IN_MSEC(32), 0, rockn_timer_level1_callback);
 		rockn_timer_l4 = timer_alloc(rockn_timer_level4_callback);
 	} };
 	
-	public static DriverInitHandlerPtr init_rockn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rockn  = new DriverInitHandlerPtr() { public void handler(){
 		init_rockn_timer();
 		rockn_protectdata = 1;
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_tetrisp2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tetrisp2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -746,12 +742,9 @@ public class tetrisp2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rockn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rockn )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -776,9 +769,7 @@ public class tetrisp2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -930,7 +921,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_tetrisp2	   = new GameDriver("1997"	,"tetrisp2"	,"tetrisp2.java"	,rom_tetrisp2,null	,machine_driver_tetrisp2	,input_ports_tetrisp2	,null	,ROT0	,	"Jaleco / The Tetris Company", "Tetris Plus 2 (World?)" )
-	public static GameDriver driver_teplus2j	   = new GameDriver("1997"	,"teplus2j"	,"tetrisp2.java"	,rom_teplus2j,driver_tetrisp2	,machine_driver_tetrisp2	,input_ports_teplus2j	,null	,ROT0	,	"Jaleco / The Tetris Company", "Tetris Plus 2 (Japan)" )
-	public static GameDriver driver_rockn	   = new GameDriver("1999"	,"rockn"	,"tetrisp2.java"	,rom_rockn,null	,machine_driver_rockn	,input_ports_rockn	,init_rockn	,ROT270	,	"Jaleco", "Rock'n Tread (Japan)", GAME_NO_SOUND )
+	GAME( 1997, tetrisp2, 0,        tetrisp2, tetrisp2, 0,       ROT0,   "Jaleco / The Tetris Company", "Tetris Plus 2 (World?)" )
+	GAME( 1997, teplus2j, tetrisp2, tetrisp2, teplus2j, 0,       ROT0,   "Jaleco / The Tetris Company", "Tetris Plus 2 (Japan)" )
+	GAMEX(1999, rockn,    0,        rockn,   rockn,   rockn,  ROT270, "Jaleco", "Rock'n Tread (Japan)", GAME_NO_SOUND )
 }

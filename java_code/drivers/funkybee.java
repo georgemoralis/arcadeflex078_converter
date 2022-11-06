@@ -45,7 +45,7 @@ Known issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,14 +56,12 @@ public class funkybee
 	
 	
 	
-	public static ReadHandlerPtr funkybee_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr funkybee_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		watchdog_reset_r(0);
 		return input_port_0_r.handler(offset);
 	} };
 	
-	public static WriteHandlerPtr funkybee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr funkybee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -108,7 +106,7 @@ public class funkybee
 	};
 	
 	
-	static InputPortPtr input_ports_funkybee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_funkybee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( funkybee )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -158,7 +156,7 @@ public class funkybee
 		PORT_DIPSETTING(	0x80, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skylancr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skylancr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skylancr )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -256,8 +254,7 @@ public class funkybee
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_funkybee = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( funkybee )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -282,9 +279,7 @@ public class funkybee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -328,6 +323,6 @@ public class funkybee
 	
 	
 	
-	public static GameDriver driver_funkybee	   = new GameDriver("1982"	,"funkybee"	,"funkybee.java"	,rom_funkybee,null	,machine_driver_funkybee	,input_ports_funkybee	,null	,ROT90	,	"Orca", "Funky Bee" )
-	public static GameDriver driver_skylancr	   = new GameDriver("1983"	,"skylancr"	,"funkybee.java"	,rom_skylancr,null	,machine_driver_funkybee	,input_ports_skylancr	,null	,ROT90	,	"Orca (Esco Trading Co license)", "Sky Lancer" )
+	GAME( 1982, funkybee, 0, funkybee, funkybee, 0, ROT90, "Orca", "Funky Bee" )
+	GAME( 1983, skylancr, 0, funkybee, skylancr, 0, ROT90, "Orca (Esco Trading Co license)", "Sky Lancer" )
 }

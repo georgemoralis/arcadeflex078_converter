@@ -37,7 +37,7 @@ Also....
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -91,14 +91,13 @@ public class astrof
 	  slots.
 	
 	***************************************************************************/
-	public static InterruptHandlerPtr astrof_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr astrof_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(2) & 1)	/* Coin */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	
-	static InputPortPtr input_ports_astrof = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astrof = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astrof )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -151,7 +150,7 @@ public class astrof
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tomahawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tomahawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tomahawk )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -202,8 +201,7 @@ public class astrof
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_astrof = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( astrof )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 10595000/16)	/* 0.66 MHz */
@@ -225,13 +223,10 @@ public class astrof
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("samples", SAMPLES, astrof_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tomahawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tomahawk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(astrof)
@@ -243,9 +238,7 @@ public class astrof
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, tomahawk_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -340,9 +333,9 @@ public class astrof
 	
 	
 	
-	public static GameDriver driver_astrof	   = new GameDriver("1979"	,"astrof"	,"astrof.java"	,rom_astrof,null	,machine_driver_astrof	,input_ports_astrof	,null	,ROT90	,	"Data East", "Astro Fighter (set 1)" )
-	public static GameDriver driver_astrof2	   = new GameDriver("1979"	,"astrof2"	,"astrof.java"	,rom_astrof2,driver_astrof	,machine_driver_astrof	,input_ports_astrof	,null	,ROT90	,	"Data East", "Astro Fighter (set 2)" )
-	public static GameDriver driver_astrof3	   = new GameDriver("1979"	,"astrof3"	,"astrof.java"	,rom_astrof3,driver_astrof	,machine_driver_astrof	,input_ports_astrof	,null	,ROT90	,	"Data East", "Astro Fighter (set 3)" )
-	public static GameDriver driver_tomahawk	   = new GameDriver("1980"	,"tomahawk"	,"astrof.java"	,rom_tomahawk,null	,machine_driver_tomahawk	,input_ports_tomahawk	,null	,ROT90	,	"Data East", "Tomahawk 777 (Revision 1)", GAME_NO_SOUND )
-	public static GameDriver driver_tomahaw5	   = new GameDriver("1980"	,"tomahaw5"	,"astrof.java"	,rom_tomahaw5,driver_tomahawk	,machine_driver_tomahawk	,input_ports_tomahawk	,null	,ROT90	,	"Data East", "Tomahawk 777 (Revision 5)", GAME_NO_SOUND )
+	GAME( 1979, astrof,   0,        astrof,   astrof,   0, ROT90, "Data East", "Astro Fighter (set 1)" )
+	GAME( 1979, astrof2,  astrof,   astrof,   astrof,   0, ROT90, "Data East", "Astro Fighter (set 2)" )
+	GAME( 1979, astrof3,  astrof,   astrof,   astrof,   0, ROT90, "Data East", "Astro Fighter (set 3)" )
+	GAMEX(1980, tomahawk, 0,        tomahawk, tomahawk, 0, ROT90, "Data East", "Tomahawk 777 (Revision 1)", GAME_NO_SOUND )
+	GAMEX(1980, tomahaw5, tomahawk, tomahawk, tomahawk, 0, ROT90, "Data East", "Tomahawk 777 (Revision 5)", GAME_NO_SOUND )
 }

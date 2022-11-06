@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,7 +31,7 @@ public class legionna
 	WRITE16_HANDLER( legionna_control_w )
 	{
 	#if 0
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			legionna_enable=data;
 			if ((legionna_enable&4)==4)
@@ -138,8 +138,7 @@ public class legionna
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_legionna  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_legionna  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		midground_layer =  tilemap_create(get_mid_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -150,7 +149,7 @@ public class legionna
 	
 		legionna_scrollram16 = auto_malloc(0x60);
 	
-		if (legionna_scrollram16 == 0)	return 1;
+		if (!legionna_scrollram16)	return 1;
 	
 		tilemap_set_transparent_pen(background_layer,15);
 		tilemap_set_transparent_pen(midground_layer,15);
@@ -160,8 +159,7 @@ public class legionna
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_cupsoc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cupsoc  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		midground_layer =  tilemap_create(get_mid_tile_info_cupsoc, tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -172,7 +170,7 @@ public class legionna
 	
 		legionna_scrollram16 = auto_malloc(0x60);
 	
-		if (legionna_scrollram16 == 0)	return 1;
+		if (!legionna_scrollram16)	return 1;
 	
 		tilemap_set_transparent_pen(background_layer,15);
 		tilemap_set_transparent_pen(midground_layer,15);
@@ -224,9 +222,9 @@ public class legionna
 			y = spriteram16[offs+3];
 			x = spriteram16[offs+2];
 	
-			if ((x & 0x8000) != 0)	x = -(0x200-(x &0x1ff));
+			if (x &0x8000)	x = -(0x200-(x &0x1ff));
 			else	x &= 0x1ff;
-			if ((y & 0x8000) != 0)	y = -(0x200-(y &0x1ff));
+			if (y &0x8000)	y = -(0x200-(y &0x1ff));
 			else	y &= 0x1ff;
 	
 			color = (data &0x3f) + 0x40;
@@ -235,12 +233,12 @@ public class legionna
 			dy = ((data &0x0380) >> 7)  + 1;
 			dx = ((data &0x1c00) >> 10) + 1;
 	
-			if (fx == 0)
+			if (!fx)
 			{
 				for (ax=0; ax<dx; ax++)
 					for (ay=0; ay<dy; ay++)
 					{
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 						sprite++,
 						color,fx,fy,x+ax*16,y+ay*16,
 						cliprect,TRANSPARENCY_PEN,15);
@@ -251,7 +249,7 @@ public class legionna
 				for (ax=0; ax<dx; ax++)
 					for (ay=0; ay<dy; ay++)
 					{
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 						sprite++,
 						color,fx,fy,x+(dx-ax-1)*16,y+ay*16,
 						cliprect,TRANSPARENCY_PEN,15);
@@ -261,8 +259,7 @@ public class legionna
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_legionna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_legionna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#ifdef MAME_DEBUG
 		static int dislayer[5];	/* Layer toggles to help get the layers correct */
 	#endif
@@ -337,8 +334,7 @@ public class legionna
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_godzilla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_godzilla  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( text_layer, 0, 0 );
 		tilemap_set_scrolly( text_layer, 0, 112 );
 	
@@ -354,8 +350,7 @@ public class legionna
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sdgndmrb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sdgndmrb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps */
 		tilemap_set_scrollx( background_layer, 0, legionna_scrollram16[0] );
 		tilemap_set_scrolly( background_layer, 0, legionna_scrollram16[1] );

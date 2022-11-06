@@ -91,7 +91,7 @@ FG-3J ROM-J 507KA0301P04       Rev:1.3
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -114,7 +114,7 @@ public class fuukifg3
 	
 	static WRITE32_HANDLER( paletteram32_xRRRRRGGGGGBBBBB_dword_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if(ACCESSING_MSW32)
 		{
 			int r,g,b;
 			COMBINE_DATA(&paletteram32[offset]);
@@ -130,7 +130,7 @@ public class fuukifg3
 			palette_set_color(offset*2,r,g,b);
 		}
 	
-		if (ACCESSING_LSW32 != 0)
+		if(ACCESSING_LSW32)
 		{
 			int r,g,b;
 			COMBINE_DATA(&paletteram32[offset]);
@@ -259,8 +259,7 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	static public static WriteHandlerPtr fuuki32_sound_bw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fuuki32_sound_bw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2);
 	
 		cpu_setbank(1,rom + data * 0x4000);
@@ -312,7 +311,7 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_asurabld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asurabld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asurabld )
 		PORT_START(); 	// IN0 - $800000.w/$800002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
@@ -476,8 +475,7 @@ public class fuukifg3
 	***************************************************************************/
 	
 	#define INTERRUPTS_NUM	(256-1) // Give much better results than 256..
-	public static InterruptHandlerPtr fuuki32_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fuuki32_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if ( cpu_getiloops() == 1 )
 			cpu_set_irq_line(0, 1, PULSE_LINE);
 	
@@ -495,12 +493,11 @@ public class fuukifg3
 		if ( ((fuuki32_vregs[0x1c/4]>>16) & 0xff) == (INTERRUPTS_NUM-1 - cpu_getiloops()) )
 		{
 			cpu_set_irq_line(0, 5, PULSE_LINE);	// Raster Line IRQ
-			if (fuuki32_raster_enable != 0) force_partial_update(cpu_getscanline());
+			if(fuuki32_raster_enable) force_partial_update(cpu_getscanline());
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_fuuki32 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fuuki32 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 20000000) /* verified */
@@ -529,9 +526,7 @@ public class fuukifg3
 	//	MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	//	MDRV_SOUND_ADD(YM2151, ym2151_interface)
 	//	MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -602,5 +597,5 @@ public class fuukifg3
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_asurabld	   = new GameDriver("1998"	,"asurabld"	,"fuukifg3.java"	,rom_asurabld,null	,machine_driver_fuuki32	,input_ports_asurabld	,null	,ROT0	,	"Fuuki", "Asura Blade - Sword of Dynasty (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, asurabld,	0, fuuki32, asurabld, 0, ROT0, "Fuuki", "Asura Blade - Sword of Dynasty (Japan)", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

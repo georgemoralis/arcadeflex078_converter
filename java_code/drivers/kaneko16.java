@@ -62,7 +62,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -83,8 +83,7 @@ public class kaneko16
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_kaneko16  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_kaneko16  = new MachineInitHandlerPtr() { public void handler(){
 		kaneko16_sprite_type  = 0;
 	
 		kaneko16_sprite_xoffs = 0;
@@ -92,7 +91,7 @@ public class kaneko16
 	
 	/*
 		Sx = Sprites with priority x, x = tiles with priority x,
-		Sprites - Tiles Order (bottom . top):
+		Sprites - Tiles Order (bottom -> top):
 	
 		0	S0	1	2	3
 		0	1	S1	2	3
@@ -111,15 +110,13 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_berlwall  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_berlwall  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 2;	// like type 0, but using 16 instead of 8 bytes
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_blazeon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_blazeon  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_xoffs = 0x10000 - 0x680;
@@ -127,7 +124,7 @@ public class kaneko16
 	
 	/*
 		Sx = Sprites with priority x, x = tiles with priority x,
-		Sprites - Tiles Order (bottom . top):
+		Sprites - Tiles Order (bottom -> top):
 	
 		0	S0	1	2	3
 		0	1	S1	2	3
@@ -140,8 +137,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_bloodwar  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bloodwar  = new MachineInitHandlerPtr() { public void handler(){
 		/* Priorities unknown */
 		kaneko16_priority.tile[0] = 0;
 		kaneko16_priority.tile[1] = 1;
@@ -158,8 +154,7 @@ public class kaneko16
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_bakubrkr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bakubrkr  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_priority.tile[0] = 0;
@@ -173,8 +168,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// above all
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_gtmr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gtmr  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 1;
@@ -182,8 +176,7 @@ public class kaneko16
 		memset(gtmr_mcu_com, 0, 4 * sizeof( data16_t) );
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_mgcrystl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mgcrystl  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	/*
 		Sx = Sprites with priority x, x = tiles with priority x,
@@ -212,8 +205,7 @@ public class kaneko16
 		kaneko16_priority.sprite[3] = 0x0000;	// ""
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_sandscrp  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sandscrp  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 3;	// "different" sprites layout
@@ -221,8 +213,7 @@ public class kaneko16
 		watchdog_reset16_r(0,0);	// start with an armed watchdog
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_shogwarr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_shogwarr  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		shogwarr_mcu_status = 0;
@@ -274,7 +265,7 @@ public class kaneko16
 			case 0x02:	// Read from NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,0)) != 0)
+				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,0)) != 0)
 				{
 					mame_fread(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -287,7 +278,7 @@ public class kaneko16
 			case 0x42:	// Write to NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,1)) != 0)
+				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,1)) != 0)
 				{
 					mame_fwrite(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -436,7 +427,7 @@ public class kaneko16
 			case 0x02:	// Read from NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,0)) != 0)
+				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,0)) != 0)
 				{
 					mame_fread(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -447,7 +438,7 @@ public class kaneko16
 			case 0x42:	// Write to NVRAM
 			{
 				mame_file *f;
-				if ((f = mame_fopen(Machine.gamedrv.name,0,FILETYPE_NVRAM,1)) != 0)
+				if ((f = mame_fopen(Machine->gamedrv->name,0,FILETYPE_NVRAM,1)) != 0)
 				{
 					mame_fwrite(f,&mcu_ram[mcu_offset], 128);
 					mame_fclose(f);
@@ -463,7 +454,7 @@ public class kaneko16
 	
 			case 0x04:	// TEST (2 versions)
 			{
-				if (Machine.gamedrv == &driver_gtmr)
+				if (Machine->gamedrv == &driver_gtmr)
 				{
 					/* MCU writes the string "MM0525-TOYBOX199" to shared ram */
 					mcu_ram[mcu_offset+0] = 0x4d4d;
@@ -475,9 +466,9 @@ public class kaneko16
 					mcu_ram[mcu_offset+6] = 0x5831;
 					mcu_ram[mcu_offset+7] = 0x3939;
 				}
-				else if ( (Machine.gamedrv == &driver_gtmre)  ||
-						  (Machine.gamedrv == &driver_gtmrusa) ||
-						  (Machine.gamedrv == &driver_gtmr2) )
+				else if ( (Machine->gamedrv == &driver_gtmre)  ||
+						  (Machine->gamedrv == &driver_gtmrusa) ||
+						  (Machine->gamedrv == &driver_gtmr2) )
 				{
 					/* MCU writes the string "USMM0713-TB1994 " to shared ram */
 					mcu_ram[mcu_offset+0] = 0x5553;
@@ -803,7 +794,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( kaneko16_coin_lockout_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_counter_w(0,   data  & 0x0100);
 			coin_counter_w(1,   data  & 0x0200);
@@ -830,15 +821,13 @@ public class kaneko16
 	
 	
 	/* Called once/frame to generate the VBLANK interrupt */
-	public static InterruptHandlerPtr sandscrp_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sandscrp_interrupt = new InterruptHandlerPtr() {public void handler(){
 		vblank_irq = 1;
 		update_irq_state();
 	} };
 	
 	
-	static public static VideoEofHandlerPtr video_eof_sandscrp  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_sandscrp  = new VideoEofHandlerPtr() { public void handler(){
 		sprite_irq = 1;
 		update_irq_state();
 	} };
@@ -855,14 +844,14 @@ public class kaneko16
 	/* Clear the cause of the interrupt */
 	static WRITE16_HANDLER( sandscrp_irq_cause_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			kaneko16_sprite_flipx	=	data & 1;
 			kaneko16_sprite_flipy	=	data & 1;
 	
-			if ((data & 0x08) != 0)	sprite_irq  = 0;
-			if ((data & 0x10) != 0)	unknown_irq = 0;
-			if ((data & 0x20) != 0)	vblank_irq  = 0;
+			if (data & 0x08)	sprite_irq  = 0;
+			if (data & 0x10)	unknown_irq = 0;
+			if (data & 0x20)	vblank_irq  = 0;
 		}
 	
 		update_irq_state();
@@ -879,7 +868,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( kaneko16_soundlatch_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(0, (data & 0xff00) >> 8 );
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -906,7 +895,7 @@ public class kaneko16
 		/* Each 2149 register is mapped to a different address */
 		AY8910_control_port_0_w(0,offset);
 		/* The registers are mapped to odd addresses, except one! */
-		if (ACCESSING_LSB != 0)	AY8910_write_port_0_w(0, data       & 0xff);
+		if (ACCESSING_LSB)	AY8910_write_port_0_w(0, data       & 0xff);
 		else				AY8910_write_port_0_w(0,(data >> 8) & 0xff);
 	}
 	WRITE16_HANDLER( kaneko16_YM2149_1_w )
@@ -914,7 +903,7 @@ public class kaneko16
 		/* Each 2149 register is mapped to a different address */
 		AY8910_control_port_1_w(0,offset);
 		/* The registers are mapped to odd addresses, except one! */
-		if (ACCESSING_LSB != 0)	AY8910_write_port_1_w(0, data       & 0xff);
+		if (ACCESSING_LSB)	AY8910_write_port_1_w(0, data       & 0xff);
 		else				AY8910_write_port_1_w(0,(data >> 8) & 0xff);
 	}
 	
@@ -927,20 +916,18 @@ public class kaneko16
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr kaneko16_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kaneko16_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return EEPROM_read_bit() & 1;
 	} };
 	
-	public static WriteHandlerPtr kaneko16_eeprom_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kaneko16_eeprom_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// reset line asserted: reset.
 		EEPROM_set_cs_line((data & 0x01) ? CLEAR_LINE : ASSERT_LINE );
 	} };
 	
 	WRITE16_HANDLER( kaneko16_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x02);
@@ -1101,7 +1088,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_oki_0_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * (data & 0x3) );
 	//		logerror("CPU #0 PC %06X : OKI0  bank %08X\n",activecpu_get_pc(),data);
@@ -1110,7 +1097,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_oki_1_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(1, 0x40000 * (data & 0x3) );
 	//		logerror("CPU #0 PC %06X : OKI1  bank %08X\n",activecpu_get_pc(),data);
@@ -1119,7 +1106,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( bloodwar_coin_lockout_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_counter_w(0, data & 0x0100);
 	
@@ -1201,7 +1188,7 @@ public class kaneko16
 	static int bank0;
 	WRITE16_HANDLER( gtmr_oki_0_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x10000 * (data & 0xF) );
 			bank0 = (data & 0xF);
@@ -1211,7 +1198,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( gtmr_oki_1_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(1, 0x40000 * (data & 0x1) );
 	//		logerror("CPU #0 PC %06X : OKI1 bank %08X\n",activecpu_get_pc(),data);
@@ -1233,13 +1220,13 @@ public class kaneko16
 	{
 		static int pend = 0;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 	
-			if (pend != 0)	pend = 0;
+			if (pend)	pend = 0;
 			else
 			{
-				if ((data & 0x80) != 0)
+				if (data & 0x80)
 				{
 					int samp = data &0x7f;
 	
@@ -1263,7 +1250,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( gtmr_oki_1_data_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_data_1_w(0,data);
 	//		logerror("CPU #0 PC %06X : OKI1 <- %08X\n",activecpu_get_pc(),data);
@@ -1434,7 +1421,7 @@ public class kaneko16
 	
 	WRITE16_HANDLER( sandscrp_coin_counter_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0,   data  & 0x0001);
 			coin_counter_w(1,   data  & 0x0002);
@@ -1452,7 +1439,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( sandscrp_latchstatus_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			latch1_full = data & 0x80;
 			latch2_full = data & 0x40;
@@ -1467,7 +1454,7 @@ public class kaneko16
 	
 	static WRITE16_HANDLER( sandscrp_soundlatch_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			latch1_full = 1;
 			soundlatch_w(0, data & 0xff);
@@ -1520,7 +1507,7 @@ public class kaneko16
 	/* Untested */
 	WRITE16_HANDLER( shogwarr_oki_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x10000 * ((data >> 0) & 0x3) );
 			OKIM6295_set_bank_base(1, 0x10000 * ((data >> 4) & 0x3) );
@@ -1585,8 +1572,7 @@ public class kaneko16
 	***************************************************************************/
 	
 	#if 0
-	public static WriteHandlerPtr blazeon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blazeon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bank = data & 7;
 		cpu_setbank(15, &RAM[bank * 0x10000 + 0x1000]);
@@ -1624,8 +1610,7 @@ public class kaneko16
 									Sand Scorpion
 	***************************************************************************/
 	
-	public static WriteHandlerPtr sandscrp_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sandscrp_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x07;
 	
@@ -1637,20 +1622,17 @@ public class kaneko16
 		cpu_setbank(1, RAM);
 	} };
 	
-	public static ReadHandlerPtr sandscrp_latchstatus_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sandscrp_latchstatus_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return	(latch2_full ? 0x80 : 0) |	// swapped!?
 				(latch1_full ? 0x40 : 0) ;
 	} };
 	
-	public static ReadHandlerPtr sandscrp_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sandscrp_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		latch1_full = 0;
 		return soundlatch_r(0);
 	} };
 	
-	public static WriteHandlerPtr sandscrp_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sandscrp_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		latch2_full = 1;
 		soundlatch2_w.handler(0,data);
 	} };
@@ -1703,7 +1685,7 @@ public class kaneko16
 								Bakuretsu Breaker
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bakubrkr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bakubrkr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bakubrkr )
 		PORT_START(); 	// IN0 - Player 1 + DSW - e00000.w
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1773,7 +1755,7 @@ public class kaneko16
 								The Berlin Wall (set 1)
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_berlwall = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_berlwall = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( berlwall )
 		PORT_START(); 	// IN0 - Player 1 - 680000.w
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -1869,7 +1851,7 @@ public class kaneko16
 	
 	//	Same as berlwall, but for a different lives setting
 	
-	static InputPortPtr input_ports_berlwalt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_berlwalt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( berlwalt )
 		PORT_START(); 	// IN0 - Player 1 - 680000.w
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -1963,7 +1945,7 @@ public class kaneko16
 										Blaze On
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blazeon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blazeon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blazeon )
 		PORT_START(); 	// IN0 - Player 1 + DSW - c00000.w
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy"    );
@@ -2059,7 +2041,7 @@ public class kaneko16
 									Blood Warrior
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bloodwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bloodwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bloodwar )
 		PORT_START(); 	// IN0 - Player 2 - b00000.w
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP		|	IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN		|	IPF_PLAYER1 );
@@ -2130,7 +2112,7 @@ public class kaneko16
 								Great 1000 Miles Rally
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gtmr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gtmr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gtmr )
 		PORT_START(); 	// IN0 - Player 1 - b00000.w
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -2202,7 +2184,7 @@ public class kaneko16
 								Great 1000 Miles Rally 2
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gtmr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gtmr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gtmr2 )
 		PORT_START(); 	// IN0 - Player 1 - 100004.w <- b00000.w (cpl)
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -2293,7 +2275,7 @@ public class kaneko16
 									Magical Crystal
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_mgcrystl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mgcrystl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mgcrystl )
 		PORT_START(); 	// IN0 - Player 1 + DSW - c00000.w
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -2379,7 +2361,7 @@ public class kaneko16
 									Sand Scorpion
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_sandscrp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sandscrp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sandscrp )
 		PORT_START(); 	// IN0 - $b00000.w
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	| IPF_PLAYER1 );
@@ -2476,7 +2458,7 @@ public class kaneko16
 									Shogun Warriors
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_shogwarr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shogwarr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shogwarr )
 		PORT_START(); 	// IN0 - - b80000.w
 		PORT_BIT(  0x0100, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x0200, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -2633,8 +2615,7 @@ public class kaneko16
 	***************************************************************************/
 	
 	#define KANEKO16_INTERRUPTS_NUM	3
-	public static InterruptHandlerPtr kaneko16_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr kaneko16_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 2:  cpu_set_irq_line(0, 3, HOLD_LINE);	break;
@@ -2653,21 +2634,21 @@ public class kaneko16
 	static struct OKIM6295interface okim6295_intf_12kHz =
 	{
 		1,
-		{ 12000000/6/165 }, /* 2MHz . 6295 (mode A) */
+		{ 12000000/6/165 }, /* 2MHz -> 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
 	static struct OKIM6295interface okim6295_intf_15kHz =
 	{
 		1,
-		{ 12000000/6/132 }, /* 2MHz . 6295 (mode B) */
+		{ 12000000/6/132 }, /* 2MHz -> 6295 (mode B) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
 	static struct OKIM6295interface okim6295_intf_18kHz =
 	{
 		1,
-		{ 12000000/4/165 }, /* 3MHz . 6295 (mode A) */
+		{ 12000000/4/165 }, /* 3MHz -> 6295 (mode A) */
 		{ REGION_SOUND1 },
 		{ 100 }
 	};
@@ -2723,8 +2704,7 @@ public class kaneko16
 		6-7]	rte
 	*/
 	
-	public static MachineHandlerPtr machine_driver_berlwall = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( berlwall )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* MC68000P12 */
@@ -2751,17 +2731,14 @@ public class kaneko16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x1MHz_DSW)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_12kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 								Bakuretsu Breaker
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bakubrkr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bakubrkr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* TMP68HC000-12 */
@@ -2787,9 +2764,7 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x2MHz_EEPROM)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2806,8 +2781,7 @@ public class kaneko16
 			6-7]	busy loop
 	*/
 	
-	public static MachineHandlerPtr machine_driver_blazeon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blazeon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)	/* TMP68HC000-12 */
@@ -2836,9 +2810,7 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_intf_blazeon)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2850,14 +2822,13 @@ public class kaneko16
 		gtmr interrupts:
 	
 		3] 476:			time, input ports, scroll registers
-		4] 466.258e:	set sprite ram
+		4] 466->258e:	set sprite ram
 		5] 438:			set sprite colors
 	
 		VIDEO_UPDATE_AFTER_VBLANK fixes the mangled/wrong colored sprites
 	*/
 	
-	public static MachineHandlerPtr machine_driver_gtmr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gtmr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("gtmr", M68000, 16000000)	/* ? Most likely a 68000-HC16 */
@@ -2881,16 +2852,13 @@ public class kaneko16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_2x12kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 									Blood Warrior
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bloodwar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bloodwar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
@@ -2899,45 +2867,36 @@ public class kaneko16
 	
 		MDRV_MACHINE_INIT( bloodwar )
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 								Great 1000 Miles Rally 2
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_gtmr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gtmr2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
 		MDRV_CPU_MODIFY("gtmr")
 		MDRV_CPU_MEMORY(gtmr2_readmem,gtmr_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 								Bonks Adventure
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bonkadv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bonkadv )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gtmr)
 		MDRV_NVRAM_HANDLER(93C46)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 									Magical Crystal
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_mgcrystl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mgcrystl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -2963,9 +2922,7 @@ public class kaneko16
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_intf_2x2MHz_EEPROM)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_18kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2992,8 +2949,7 @@ public class kaneko16
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_sandscrp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sandscrp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)	/* TMP68HC000N-12 */
@@ -3024,9 +2980,7 @@ public class kaneko16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_15kHz)
 		MDRV_SOUND_ADD(YM2203, ym2203_intf_sandscrp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -3046,8 +3000,7 @@ public class kaneko16
 		other: busy loop
 	*/
 	#define SHOGWARR_INTERRUPTS_NUM	3
-	public static InterruptHandlerPtr shogwarr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr shogwarr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 2:  cpu_set_irq_line(0, 2, HOLD_LINE); break;
@@ -3056,8 +3009,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_shogwarr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shogwarr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -3081,9 +3033,7 @@ public class kaneko16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_2x12kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -3113,14 +3063,12 @@ public class kaneko16
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_kaneko16  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kaneko16  = new DriverInitHandlerPtr() { public void handler(){
 		kaneko16_unscramble_tiles(REGION_GFX2);
 		kaneko16_unscramble_tiles(REGION_GFX3);
 	} };
 	
-	public static DriverInitHandlerPtr init_berlwall  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_berlwall  = new DriverInitHandlerPtr() { public void handler(){
 		kaneko16_unscramble_tiles(REGION_GFX2);
 	} };
 	
@@ -3517,7 +3465,7 @@ public class kaneko16
 	
 	ROUTINES:
 	
-	dd6	print string: a2.scr ; a1.string ; d1.l = xpos.w<<6|ypos.w<<6
+	dd6	print string: a2->scr ; a1->string ; d1.l = xpos.w<<6|ypos.w<<6
 	
 	Trap #2 = 43a0 ; d0.w = routine index ; (where not specified: 43c0):
 	1:  43C4	2:  43F8	3:  448E	4:  44EE
@@ -3916,10 +3864,10 @@ public class kaneko16
 	---------------------------------------------------------------------------
 	
 	102e04-7	<- !b80004-7
-	102e18.w	. $800000
-	102e1c.w	. $800002 , $800006
-	102e1a.w	. $800004
-	102e20.w	. $800008
+	102e18.w	-> $800000
+	102e1c.w	-> $800002 , $800006
+	102e1a.w	-> $800004
+	102e20.w	-> $800008
 	
 	ROUTINES:
 	
@@ -3960,8 +3908,7 @@ public class kaneko16
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_shogwarr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shogwarr  = new DriverInitHandlerPtr() { public void handler(){
 		/* Code patches */
 	#if 0
 		data16_t *RAM = memory_region(REGION_CPU1);
@@ -4055,8 +4002,7 @@ public class kaneko16
 		ROM_LOAD( "fb003.u45",   0x080000, 0x080000, CRC(405722e9) SHA1(92e51093d50f74f650ba137f5fc2910e0f85337e) )	// 2 x $40000
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_fjbuster  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fjbuster  = new DriverInitHandlerPtr() { public void handler(){
 		/* Code patches */
 	#if 0
 	/*
@@ -4310,23 +4256,23 @@ public class kaneko16
 	
 	/* Working games */
 	
-	public static GameDriver driver_berlwall	   = new GameDriver("1991"	,"berlwall"	,"kaneko16.java"	,rom_berlwall,null	,machine_driver_berlwall	,input_ports_berlwall	,init_berlwall	,ROT0	,	"Kaneko", "The Berlin Wall (set 1)" )
-	public static GameDriver driver_berlwalt	   = new GameDriver("1991"	,"berlwalt"	,"kaneko16.java"	,rom_berlwalt,driver_berlwall	,machine_driver_berlwall	,input_ports_berlwalt	,init_berlwall	,ROT0	,	"Kaneko", "The Berlin Wall (set 2)" )
-	public static GameDriver driver_mgcrystl	   = new GameDriver("1991"	,"mgcrystl"	,"kaneko16.java"	,rom_mgcrystl,null	,machine_driver_mgcrystl	,input_ports_mgcrystl	,init_kaneko16	,ROT0	,	"Kaneko", "Magical Crystals (World)" )
-	public static GameDriver driver_mgcrystj	   = new GameDriver("1991"	,"mgcrystj"	,"kaneko16.java"	,rom_mgcrystj,driver_mgcrystl	,machine_driver_mgcrystl	,input_ports_mgcrystl	,init_kaneko16	,ROT0	,	"Kaneko (Atlus license)", "Magical Crystals (Japan)" )
-	public static GameDriver driver_blazeon	   = new GameDriver("1992"	,"blazeon"	,"kaneko16.java"	,rom_blazeon,null	,machine_driver_blazeon	,input_ports_blazeon	,init_kaneko16	,ROT0	,	"Atlus",  "Blaze On (Japan)" )
-	public static GameDriver driver_sandscrp	   = new GameDriver("1992"	,"sandscrp"	,"kaneko16.java"	,rom_sandscrp,null	,machine_driver_sandscrp	,input_ports_sandscrp	,null	,ROT90	,	"Face",   "Sand Scorpion" )
-	public static GameDriver driver_gtmr	   = new GameDriver("1994"	,"gtmr"	,"kaneko16.java"	,rom_gtmr,null	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally" )
-	public static GameDriver driver_gtmre	   = new GameDriver("1994"	,"gtmre"	,"kaneko16.java"	,rom_gtmre,driver_gtmr	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally (Evolution Model)" )
-	public static GameDriver driver_gtmrusa	   = new GameDriver("1994"	,"gtmrusa"	,"kaneko16.java"	,rom_gtmrusa,driver_gtmr	,machine_driver_gtmr	,input_ports_gtmr	,init_kaneko16	,ROT0	,	"Kaneko", "Great 1000 Miles Rally (USA)" )
-	public static GameDriver driver_gtmr2	   = new GameDriver("1995"	,"gtmr2"	,"kaneko16.java"	,rom_gtmr2,null	,machine_driver_gtmr2	,input_ports_gtmr2	,init_kaneko16	,ROT0	,	"Kaneko", "Mille Miglia 2: Great 1000 Miles Rally" )
+	GAME( 1991, berlwall, 0,        berlwall, berlwall, berlwall, ROT0,  "Kaneko", "The Berlin Wall (set 1)" )
+	GAME( 1991, berlwalt, berlwall, berlwall, berlwalt, berlwall, ROT0,  "Kaneko", "The Berlin Wall (set 2)" )
+	GAME( 1991, mgcrystl, 0,        mgcrystl, mgcrystl, kaneko16, ROT0,  "Kaneko", "Magical Crystals (World)" )
+	GAME( 1991, mgcrystj, mgcrystl, mgcrystl, mgcrystl, kaneko16, ROT0,  "Kaneko (Atlus license)", "Magical Crystals (Japan)" )
+	GAME( 1992, blazeon,  0,        blazeon,  blazeon,  kaneko16, ROT0,  "Atlus",  "Blaze On (Japan)" )
+	GAME( 1992, sandscrp, 0,        sandscrp, sandscrp, 0,        ROT90, "Face",   "Sand Scorpion" )
+	GAME( 1994, gtmr,     0,        gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally" )
+	GAME( 1994, gtmre,    gtmr,     gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally (Evolution Model)" )
+	GAME( 1994, gtmrusa,  gtmr,     gtmr,     gtmr,     kaneko16, ROT0,  "Kaneko", "Great 1000 Miles Rally (USA)" )
+	GAME( 1995, gtmr2,    0,        gtmr2,    gtmr2,    kaneko16, ROT0,  "Kaneko", "Mille Miglia 2: Great 1000 Miles Rally" )
 	
 	/* Non-working games (mainly due to protection) */
 	
-	public static GameDriver driver_bakubrkr	   = new GameDriver("1992"	,"bakubrkr"	,"kaneko16.java"	,rom_bakubrkr,null	,machine_driver_bakubrkr	,input_ports_bakubrkr	,init_kaneko16	,ROT90	,	"Kaneko", "Bakuretsu Breaker",       GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_shogwarr	   = new GameDriver("1992"	,"shogwarr"	,"kaneko16.java"	,rom_shogwarr,null	,machine_driver_shogwarr	,input_ports_shogwarr	,init_shogwarr	,ROT0	,	"Kaneko", "Shogun Warriors",         GAME_NOT_WORKING )
-	public static GameDriver driver_fjbuster	   = new GameDriver("1992"	,"fjbuster"	,"kaneko16.java"	,rom_fjbuster,driver_shogwarr	,machine_driver_shogwarr	,input_ports_shogwarr	,init_fjbuster	,ROT0	,	"Kaneko", "Fujiyama Buster (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_brapboys	   = new GameDriver("1992"	,"brapboys"	,"kaneko16.java"	,rom_brapboys,null	,machine_driver_shogwarr	,input_ports_shogwarr	,null	,ROT0	,	"Kaneko", "B.Rap Boys",              GAME_NOT_WORKING )
-	public static GameDriver driver_bloodwar	   = new GameDriver("1994"	,"bloodwar"	,"kaneko16.java"	,rom_bloodwar,null	,machine_driver_bloodwar	,input_ports_bloodwar	,init_kaneko16	,ROT0	,	"Kaneko", "Blood Warrior",           GAME_NOT_WORKING )
-	public static GameDriver driver_bonkadv	   = new GameDriver("1994"	,"bonkadv"	,"kaneko16.java"	,rom_bonkadv,null	,machine_driver_bonkadv	,input_ports_bakubrkr	,null	,ROT0	,	"Kaneko", "Bonks Adventure",		  GAME_NOT_WORKING )
+	GAMEX(1992, bakubrkr, 0,        bakubrkr, bakubrkr, kaneko16, ROT90, "Kaneko", "Bakuretsu Breaker",       GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, shogwarr, 0,        shogwarr, shogwarr, shogwarr, ROT0,  "Kaneko", "Shogun Warriors",         GAME_NOT_WORKING )
+	GAMEX(1992, fjbuster, shogwarr, shogwarr, shogwarr, fjbuster, ROT0,  "Kaneko", "Fujiyama Buster (Japan)", GAME_NOT_WORKING )
+	GAMEX(1992, brapboys, 0,        shogwarr, shogwarr, 0,        ROT0,  "Kaneko", "B.Rap Boys",              GAME_NOT_WORKING )
+	GAMEX(1994, bloodwar, 0,        bloodwar, bloodwar, kaneko16, ROT0,  "Kaneko", "Blood Warrior",           GAME_NOT_WORKING )
+	GAMEX(1994, bonkadv,  0,        bonkadv,  bakubrkr, 0,		  ROT0,  "Kaneko", "Bonks Adventure",		  GAME_NOT_WORKING )
 }

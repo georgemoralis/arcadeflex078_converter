@@ -132,7 +132,7 @@ Add in cpuintrf.c
 #if (HAS_E132XS)
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.e132xs;
 
@@ -140,7 +140,7 @@ public class e132xs
 {
 	#endif
 	
-	//TODO: check . nirq,dirq,mem,shift,bits,align
+	//TODO: check -> nirq,dirq,mem,shift,bits,align
 	#if (HAS_E132XS)
 		CPU0(E132XS,   e132xs, 	 1,0,1.00, 32, 32bedw,	  0,32,BE,4, 6	),
 	#endif
@@ -416,7 +416,7 @@ public class e132xs
 	UINT32 get_trap_addr(UINT8 trap_no)
 	{
 		UINT32 addr;
-		if ((entry_point & 0xffffff00) != 0) /* @ MEM3 */
+		if( entry_point & 0xffffff00 ) /* @ MEM3 */
 		{
 			addr = trap_no * 4;
 		}
@@ -432,7 +432,7 @@ public class e132xs
 	UINT32 get_emu_code_addr(UINT8 num) /* num is OP */
 	{
 		UINT32 addr;
-		if ((entry_point & 0xffffff00) != 0) /* @ MEM3 */
+		if( entry_point & 0xffffff00 ) /* @ MEM3 */
 		{
 			addr = (entry_point - 0x100) | (num << 4);
 		}
@@ -494,7 +494,7 @@ public class e132xs
 	#define INC						1
 	
 	#define SET_RD(val,inc)										\
-			if (D_BIT != 0)											\
+			if( D_BIT )											\
 			{													\
 				SET_L_REG(D_CODE + inc, val);					\
 			}													\
@@ -504,13 +504,13 @@ public class e132xs
 			}
 	
 	#define SET_LD(val,inc)										\
-			if (D_CODE == 0)										\
+			if( !D_CODE )										\
 				SET_L_REG(16 + inc, val);						\
 			else												\
 				SET_L_REG(D_CODE + inc, val);
 	
 	#define SET_RS(val,inc)										\
-			if (S_BIT != 0)											\
+			if( S_BIT )											\
 			{													\
 				SET_L_REG(S_CODE + inc, val);					\
 			}													\
@@ -731,7 +731,7 @@ public class e132xs
 	{
 		INT32 ret;
 	
-		if ((OP & 0x80) != 0)
+		if( OP & 0x80 )
 		{
 			UINT16 next;
 			PC += 2;
@@ -741,14 +741,14 @@ public class e132xs
 	
 			ret |= (next & 0xfffe);
 	
-			if ((next & 1) != 0)
+			if( next & 1 )
 				ret |= 0xff800000;
 		}
 		else
 		{
 			ret = OP & 0x7e;
 	
-			if ((OP & 1) != 0)
+			if( OP & 1 )
 				ret |= 0xffffff80;
 		}
 	
@@ -899,7 +899,7 @@ public class e132xs
 	
 			verboselog( 2, "Executing opcode %04x at PC %08x\n", OP, PC );
 	
-			if (GET_H != 0)
+			if(GET_H)
 			{
 				h_clear = 1;
 			}
@@ -927,7 +927,7 @@ public class e132xs
 	unsigned e132xs_get_context(void *regs)
 	{
 		/* copy the context */
-		if (regs != 0)
+		if( regs )
 			*(e132xs_regs *)regs = e132xs;
 	
 		/* return the context size */
@@ -937,7 +937,7 @@ public class e132xs
 	void e132xs_set_context(void *regs)
 	{
 		/* copy the context */
-		if (regs != 0)
+		if (regs)
 			e132xs = *(e132xs_regs *)regs;
 	
 		//TODO: other to do? check interrupt?
@@ -1019,75 +1019,75 @@ public class e132xs
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &e132xs;
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+E132XS_PC:  sprintf(buffer[which], "PC:%08X",  r.global_regs[0]); break;
-			case CPU_INFO_REG+E132XS_SR:  sprintf(buffer[which], "SR:%08X",  r.global_regs[1]); break;
-			case CPU_INFO_REG+E132XS_FER: sprintf(buffer[which], "FER:%08X", r.global_regs[2]); break;
-			case CPU_INFO_REG+E132XS_SP:  sprintf(buffer[which], "SP:%08X",  r.global_regs[18]); break;
-			case CPU_INFO_REG+E132XS_UB:  sprintf(buffer[which], "UB:%08X",  r.global_regs[19]); break;
-			case CPU_INFO_REG+E132XS_BCR: sprintf(buffer[which], "BCR:%08X", r.global_regs[20]); break;
-			case CPU_INFO_REG+E132XS_TPR: sprintf(buffer[which], "TPR:%08X", r.global_regs[21]); break;
-			case CPU_INFO_REG+E132XS_TCR: sprintf(buffer[which], "TCR:%08X", r.global_regs[22]); break;
-			case CPU_INFO_REG+E132XS_TR:  sprintf(buffer[which], "TR:%08X",  r.global_regs[23]); break;
-			case CPU_INFO_REG+E132XS_WCR: sprintf(buffer[which], "WCR:%08X", r.global_regs[24]); break;
-			case CPU_INFO_REG+E132XS_ISR: sprintf(buffer[which], "ISR:%08X", r.global_regs[25]); break;
-			case CPU_INFO_REG+E132XS_FCR: sprintf(buffer[which], "FCR:%08X", r.global_regs[26]); break;
-			case CPU_INFO_REG+E132XS_MCR: sprintf(buffer[which], "MCR:%08X", r.global_regs[27]); break;
-			case CPU_INFO_REG+E132XS_G0:  sprintf(buffer[which], "G0 :%08X", r.global_regs[0]); break;
-			case CPU_INFO_REG+E132XS_G1:  sprintf(buffer[which], "G1 :%08X", r.global_regs[1]); break;
-			case CPU_INFO_REG+E132XS_G2:  sprintf(buffer[which], "G2 :%08X", r.global_regs[2]); break;
-			case CPU_INFO_REG+E132XS_G3:  sprintf(buffer[which], "G3 :%08X", r.global_regs[3]); break;
-			case CPU_INFO_REG+E132XS_G4:  sprintf(buffer[which], "G4 :%08X", r.global_regs[4]); break;
-			case CPU_INFO_REG+E132XS_G5:  sprintf(buffer[which], "G5 :%08X", r.global_regs[5]); break;
-			case CPU_INFO_REG+E132XS_G6:  sprintf(buffer[which], "G6 :%08X", r.global_regs[6]); break;
-			case CPU_INFO_REG+E132XS_G7:  sprintf(buffer[which], "G7 :%08X", r.global_regs[7]); break;
-			case CPU_INFO_REG+E132XS_G8:  sprintf(buffer[which], "G8 :%08X", r.global_regs[8]); break;
-			case CPU_INFO_REG+E132XS_G9:  sprintf(buffer[which], "G9 :%08X", r.global_regs[9]); break;
-			case CPU_INFO_REG+E132XS_G10: sprintf(buffer[which], "G10:%08X", r.global_regs[10]); break;
-			case CPU_INFO_REG+E132XS_G11: sprintf(buffer[which], "G11:%08X", r.global_regs[11]); break;
-			case CPU_INFO_REG+E132XS_G12: sprintf(buffer[which], "G12:%08X", r.global_regs[12]); break;
-			case CPU_INFO_REG+E132XS_G13: sprintf(buffer[which], "G13:%08X", r.global_regs[13]); break;
-			case CPU_INFO_REG+E132XS_G14: sprintf(buffer[which], "G14:%08X", r.global_regs[14]); break;
-			case CPU_INFO_REG+E132XS_G15: sprintf(buffer[which], "G15:%08X", r.global_regs[15]); break;
-			case CPU_INFO_REG+E132XS_L0:  sprintf(buffer[which], "L0 :%08X", r.local_regs[0]); break;
-			case CPU_INFO_REG+E132XS_L1:  sprintf(buffer[which], "L1 :%08X", r.local_regs[1]); break;
-			case CPU_INFO_REG+E132XS_L2:  sprintf(buffer[which], "L2 :%08X", r.local_regs[2]); break;
-			case CPU_INFO_REG+E132XS_L3:  sprintf(buffer[which], "L3 :%08X", r.local_regs[3]); break;
-			case CPU_INFO_REG+E132XS_L4:  sprintf(buffer[which], "L4 :%08X", r.local_regs[4]); break;
-			case CPU_INFO_REG+E132XS_L5:  sprintf(buffer[which], "L5 :%08X", r.local_regs[5]); break;
-			case CPU_INFO_REG+E132XS_L6:  sprintf(buffer[which], "L6 :%08X", r.local_regs[6]); break;
-			case CPU_INFO_REG+E132XS_L7:  sprintf(buffer[which], "L7 :%08X", r.local_regs[7]); break;
-			case CPU_INFO_REG+E132XS_L8:  sprintf(buffer[which], "L8 :%08X", r.local_regs[8]); break;
-			case CPU_INFO_REG+E132XS_L9:  sprintf(buffer[which], "L9 :%08X", r.local_regs[9]); break;
-			case CPU_INFO_REG+E132XS_L10: sprintf(buffer[which], "L10:%08X", r.local_regs[10]); break;
-			case CPU_INFO_REG+E132XS_L11: sprintf(buffer[which], "L11:%08X", r.local_regs[11]); break;
-			case CPU_INFO_REG+E132XS_L12: sprintf(buffer[which], "L12:%08X", r.local_regs[12]); break;
-			case CPU_INFO_REG+E132XS_L13: sprintf(buffer[which], "L13:%08X", r.local_regs[13]); break;
-			case CPU_INFO_REG+E132XS_L14: sprintf(buffer[which], "L14:%08X", r.local_regs[14]); break;
-			case CPU_INFO_REG+E132XS_L15: sprintf(buffer[which], "L15:%08X", r.local_regs[15]); break;
+			case CPU_INFO_REG+E132XS_PC:  sprintf(buffer[which], "PC:%08X",  r->global_regs[0]); break;
+			case CPU_INFO_REG+E132XS_SR:  sprintf(buffer[which], "SR:%08X",  r->global_regs[1]); break;
+			case CPU_INFO_REG+E132XS_FER: sprintf(buffer[which], "FER:%08X", r->global_regs[2]); break;
+			case CPU_INFO_REG+E132XS_SP:  sprintf(buffer[which], "SP:%08X",  r->global_regs[18]); break;
+			case CPU_INFO_REG+E132XS_UB:  sprintf(buffer[which], "UB:%08X",  r->global_regs[19]); break;
+			case CPU_INFO_REG+E132XS_BCR: sprintf(buffer[which], "BCR:%08X", r->global_regs[20]); break;
+			case CPU_INFO_REG+E132XS_TPR: sprintf(buffer[which], "TPR:%08X", r->global_regs[21]); break;
+			case CPU_INFO_REG+E132XS_TCR: sprintf(buffer[which], "TCR:%08X", r->global_regs[22]); break;
+			case CPU_INFO_REG+E132XS_TR:  sprintf(buffer[which], "TR:%08X",  r->global_regs[23]); break;
+			case CPU_INFO_REG+E132XS_WCR: sprintf(buffer[which], "WCR:%08X", r->global_regs[24]); break;
+			case CPU_INFO_REG+E132XS_ISR: sprintf(buffer[which], "ISR:%08X", r->global_regs[25]); break;
+			case CPU_INFO_REG+E132XS_FCR: sprintf(buffer[which], "FCR:%08X", r->global_regs[26]); break;
+			case CPU_INFO_REG+E132XS_MCR: sprintf(buffer[which], "MCR:%08X", r->global_regs[27]); break;
+			case CPU_INFO_REG+E132XS_G0:  sprintf(buffer[which], "G0 :%08X", r->global_regs[0]); break;
+			case CPU_INFO_REG+E132XS_G1:  sprintf(buffer[which], "G1 :%08X", r->global_regs[1]); break;
+			case CPU_INFO_REG+E132XS_G2:  sprintf(buffer[which], "G2 :%08X", r->global_regs[2]); break;
+			case CPU_INFO_REG+E132XS_G3:  sprintf(buffer[which], "G3 :%08X", r->global_regs[3]); break;
+			case CPU_INFO_REG+E132XS_G4:  sprintf(buffer[which], "G4 :%08X", r->global_regs[4]); break;
+			case CPU_INFO_REG+E132XS_G5:  sprintf(buffer[which], "G5 :%08X", r->global_regs[5]); break;
+			case CPU_INFO_REG+E132XS_G6:  sprintf(buffer[which], "G6 :%08X", r->global_regs[6]); break;
+			case CPU_INFO_REG+E132XS_G7:  sprintf(buffer[which], "G7 :%08X", r->global_regs[7]); break;
+			case CPU_INFO_REG+E132XS_G8:  sprintf(buffer[which], "G8 :%08X", r->global_regs[8]); break;
+			case CPU_INFO_REG+E132XS_G9:  sprintf(buffer[which], "G9 :%08X", r->global_regs[9]); break;
+			case CPU_INFO_REG+E132XS_G10: sprintf(buffer[which], "G10:%08X", r->global_regs[10]); break;
+			case CPU_INFO_REG+E132XS_G11: sprintf(buffer[which], "G11:%08X", r->global_regs[11]); break;
+			case CPU_INFO_REG+E132XS_G12: sprintf(buffer[which], "G12:%08X", r->global_regs[12]); break;
+			case CPU_INFO_REG+E132XS_G13: sprintf(buffer[which], "G13:%08X", r->global_regs[13]); break;
+			case CPU_INFO_REG+E132XS_G14: sprintf(buffer[which], "G14:%08X", r->global_regs[14]); break;
+			case CPU_INFO_REG+E132XS_G15: sprintf(buffer[which], "G15:%08X", r->global_regs[15]); break;
+			case CPU_INFO_REG+E132XS_L0:  sprintf(buffer[which], "L0 :%08X", r->local_regs[0]); break;
+			case CPU_INFO_REG+E132XS_L1:  sprintf(buffer[which], "L1 :%08X", r->local_regs[1]); break;
+			case CPU_INFO_REG+E132XS_L2:  sprintf(buffer[which], "L2 :%08X", r->local_regs[2]); break;
+			case CPU_INFO_REG+E132XS_L3:  sprintf(buffer[which], "L3 :%08X", r->local_regs[3]); break;
+			case CPU_INFO_REG+E132XS_L4:  sprintf(buffer[which], "L4 :%08X", r->local_regs[4]); break;
+			case CPU_INFO_REG+E132XS_L5:  sprintf(buffer[which], "L5 :%08X", r->local_regs[5]); break;
+			case CPU_INFO_REG+E132XS_L6:  sprintf(buffer[which], "L6 :%08X", r->local_regs[6]); break;
+			case CPU_INFO_REG+E132XS_L7:  sprintf(buffer[which], "L7 :%08X", r->local_regs[7]); break;
+			case CPU_INFO_REG+E132XS_L8:  sprintf(buffer[which], "L8 :%08X", r->local_regs[8]); break;
+			case CPU_INFO_REG+E132XS_L9:  sprintf(buffer[which], "L9 :%08X", r->local_regs[9]); break;
+			case CPU_INFO_REG+E132XS_L10: sprintf(buffer[which], "L10:%08X", r->local_regs[10]); break;
+			case CPU_INFO_REG+E132XS_L11: sprintf(buffer[which], "L11:%08X", r->local_regs[11]); break;
+			case CPU_INFO_REG+E132XS_L12: sprintf(buffer[which], "L12:%08X", r->local_regs[12]); break;
+			case CPU_INFO_REG+E132XS_L13: sprintf(buffer[which], "L13:%08X", r->local_regs[13]); break;
+			case CPU_INFO_REG+E132XS_L14: sprintf(buffer[which], "L14:%08X", r->local_regs[14]); break;
+			case CPU_INFO_REG+E132XS_L15: sprintf(buffer[which], "L15:%08X", r->local_regs[15]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c FTE:%x FRM:%x ILC:%x FL:%x FP:%x",
-					r.global_regs[1] & 0x40000 ? 'S':'.',
-					r.global_regs[1] & 0x20000 ? 'P':'.',
-					r.global_regs[1] & 0x10000 ? 'T':'.',
-					r.global_regs[1] & 0x80000 ? 'L':'.',
-					r.global_regs[1] & 0x00080 ? 'I':'.',
-					r.global_regs[1] & 0x00040 ? '?':'.',
-					r.global_regs[1] & 0x00020 ? 'H':'.',
-					r.global_regs[1] & 0x00010 ? 'M':'.',
-					r.global_regs[1] & 0x00008 ? 'V':'.',
-					r.global_regs[1] & 0x00004 ? 'N':'.',
-					r.global_regs[1] & 0x00002 ? 'Z':'.',
-					r.global_regs[1] & 0x00001 ? 'C':'.',
-					(r.global_regs[1] & 0x00001f00)>>8,
-					(r.global_regs[1] & 0x00006000)>>13,
-					(r.global_regs[1] & 0x00180000)>>19,
-					(r.global_regs[1] & 0x01e00000)>>21,
-					(r.global_regs[1] & 0xfe000000)>>25);
+					r->global_regs[1] & 0x40000 ? 'S':'.',
+					r->global_regs[1] & 0x20000 ? 'P':'.',
+					r->global_regs[1] & 0x10000 ? 'T':'.',
+					r->global_regs[1] & 0x80000 ? 'L':'.',
+					r->global_regs[1] & 0x00080 ? 'I':'.',
+					r->global_regs[1] & 0x00040 ? '?':'.',
+					r->global_regs[1] & 0x00020 ? 'H':'.',
+					r->global_regs[1] & 0x00010 ? 'M':'.',
+					r->global_regs[1] & 0x00008 ? 'V':'.',
+					r->global_regs[1] & 0x00004 ? 'N':'.',
+					r->global_regs[1] & 0x00002 ? 'Z':'.',
+					r->global_regs[1] & 0x00001 ? 'C':'.',
+					(r->global_regs[1] & 0x00001f00)>>8,
+					(r->global_regs[1] & 0x00006000)>>13,
+					(r->global_regs[1] & 0x00180000)>>19,
+					(r->global_regs[1] & 0x01e00000)>>21,
+					(r->global_regs[1] & 0xfe000000)>>25);
 				break;
 	
 			case CPU_INFO_NAME: return "E1-32XS";
@@ -1119,7 +1119,7 @@ public class e132xs
 	{
 		UINT32 val1, val2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val1 = GET_L_REG(S_CODE);
 		}
@@ -1128,7 +1128,7 @@ public class e132xs
 			val1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val2 = GET_L_REG(D_CODE);
 		}
@@ -1139,7 +1139,7 @@ public class e132xs
 	
 		//TODO: test it with Rs = PC and CHK, PC, PC
 	
-		//if CHK, L0, L0 . NOP, only in the debugger, here it's the same
+		//if CHK, L0, L0 -> NOP, only in the debugger, here it's the same
 		if( (!(S_CODE == SR_CODE && !S_BIT) && (val2 > val1)) || ((S_CODE == SR_CODE && !S_BIT) && (val2 == 0)) )
 		{
 			UINT32 addr = get_trap_addr(RANGE_ERROR);
@@ -1174,7 +1174,7 @@ public class e132xs
 				old_l = GET_L;
 				PPC = PC;
 	
-				if (S_BIT != 0)
+				if( S_BIT )
 				{
 					PC = GET_L_REG(S_CODE) & 0xfffffffe;
 					SR = (GET_L_REG(S_CODE + INC) & 0xffe00000) | ((GET_L_REG(S_CODE) & 0x01) << 18 ) | (GET_L_REG(S_CODE + INC) & 0x3ffff);
@@ -1198,7 +1198,7 @@ public class e132xs
 				difference = GET_FP - ( ( SP & 0x1fc ) >> 2 );
 	
 				// bit 6 of difference is sign
-				if ((difference & 0x40) != 0) //else it's finished
+				if( difference & 0x40 ) //else it's finished
 				{
 					do
 					{
@@ -1233,7 +1233,7 @@ public class e132xs
 			UINT32 val1, val2;
 			UINT64 tmp;
 	
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				val1 = GET_L_REG(S_CODE);
 				val2 = GET_L_REG(S_CODE + INC);
@@ -1275,7 +1275,7 @@ public class e132xs
 			}
 			else
 			{
-				if (S_BIT != 0)
+				if( S_BIT )
 				{
 					divisor = GET_L_REG(S_CODE);
 				}
@@ -1284,7 +1284,7 @@ public class e132xs
 					divisor = GET_G_REG(S_CODE);
 				}
 	
-				if (D_BIT != 0)
+				if( D_BIT )
 				{
 					dividend_high = GET_L_REG(D_CODE);
 					dividend_low  = GET_L_REG(D_CODE + INC);
@@ -1299,9 +1299,9 @@ public class e132xs
 	
 				if( divisor == 0 || dividend > 0xffffffff )
 				{
-					//Rd//Rdf . undefined
-					//Z . undefined
-					//N . undefined
+					//Rd//Rdf -> undefined
+					//Z -> undefined
+					//N -> undefined
 					UINT32 addr;
 					SET_V(1);
 					addr = get_trap_addr(RANGE_ERROR);
@@ -1346,7 +1346,7 @@ public class e132xs
 			}
 			else
 			{
-				if (S_BIT != 0)
+				if( S_BIT )
 				{
 					divisor = GET_L_REG(S_CODE);
 				}
@@ -1355,7 +1355,7 @@ public class e132xs
 					divisor = GET_G_REG(S_CODE);
 				}
 	
-				if (D_BIT != 0)
+				if( D_BIT )
 				{
 					dividend_high = GET_L_REG(D_CODE);
 					dividend_low  = GET_L_REG(D_CODE + INC);
@@ -1370,9 +1370,9 @@ public class e132xs
 	
 				if( divisor == 0 || dividend > 0xffffffff || (dividend_high & 0x80000000) )
 				{
-					//Rd//Rdf . undefined
-					//Z . undefined
-					//N . undefined
+					//Rd//Rdf -> undefined
+					//Z -> undefined
+					//N -> undefined
 					UINT32 addr;
 					SET_V(1);
 					addr = get_trap_addr(RANGE_ERROR);
@@ -1405,7 +1405,7 @@ public class e132xs
 		UINT16 next_source;
 		unsigned int x_code, lim;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
@@ -1472,7 +1472,7 @@ public class e132xs
 	{
 		INT32 val, const_val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
@@ -1497,7 +1497,7 @@ public class e132xs
 		UINT32 op1;
 		INT32 const_val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1528,7 +1528,7 @@ public class e132xs
 	{
 		INT32 op1, const_val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1561,7 +1561,7 @@ public class e132xs
 	{
 		UINT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1573,7 +1573,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1606,13 +1606,13 @@ public class e132xs
 	{
 		UINT32 val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
 		else
 		{
-			if (GET_H == 0)
+			if( !GET_H )
 			{
 				val = GET_G_REG(S_CODE);
 			}
@@ -1632,7 +1632,7 @@ public class e132xs
 			}
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			SET_L_REG(D_CODE, val);
 		}
@@ -1662,7 +1662,7 @@ public class e132xs
 	{
 		UINT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1674,7 +1674,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1700,7 +1700,7 @@ public class e132xs
 	{
 		INT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1712,7 +1712,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1729,7 +1729,7 @@ public class e132xs
 	
 		e132xs_ICount -= 1;
 	
-		if (GET_V != 0)
+		if( GET_V )
 		{
 			UINT32 addr = get_trap_addr(RANGE_ERROR);
 			execute_trap(addr);
@@ -1740,7 +1740,7 @@ public class e132xs
 	{
 		UINT32 val1, val2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val1 = GET_L_REG(S_CODE);
 		}
@@ -1749,7 +1749,7 @@ public class e132xs
 			val1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val2 = GET_L_REG(D_CODE);
 		}
@@ -1767,7 +1767,7 @@ public class e132xs
 	{
 		UINT32 op1, op2, ret;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = ~GET_L_REG(S_CODE);
 		}
@@ -1776,7 +1776,7 @@ public class e132xs
 			op1 = ~GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1797,7 +1797,7 @@ public class e132xs
 	{
 		UINT32 op1, op2, ret;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1806,7 +1806,7 @@ public class e132xs
 			op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1827,7 +1827,7 @@ public class e132xs
 	{
 		UINT32 op1, op2, ret;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1836,7 +1836,7 @@ public class e132xs
 			op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1858,7 +1858,7 @@ public class e132xs
 		UINT32 op1, op2;
 	
 		op1 = GET_C;
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 += GET_L_REG(S_CODE);
 		}
@@ -1868,7 +1868,7 @@ public class e132xs
 				op1 += GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1891,7 +1891,7 @@ public class e132xs
 	{
 		UINT32 ret;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			ret = ~GET_L_REG(S_CODE);
 		}
@@ -1910,7 +1910,7 @@ public class e132xs
 	{
 		UINT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1922,7 +1922,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1948,7 +1948,7 @@ public class e132xs
 	{
 		INT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -1960,7 +1960,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -1977,7 +1977,7 @@ public class e132xs
 	
 		e132xs_ICount -= 1;
 	
-		if (GET_V != 0)
+		if( GET_V )
 		{
 			UINT32 addr = get_trap_addr(RANGE_ERROR);
 			execute_trap(addr);
@@ -1989,7 +1989,7 @@ public class e132xs
 		UINT32 op1, op2;
 	
 		op1 = GET_C;
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 += GET_L_REG(S_CODE);
 		}
@@ -1999,7 +1999,7 @@ public class e132xs
 				op1 += GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2022,7 +2022,7 @@ public class e132xs
 	{
 		UINT32 op1, op2, ret;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -2031,7 +2031,7 @@ public class e132xs
 			op1 = GET_G_REG(S_CODE);
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2052,7 +2052,7 @@ public class e132xs
 	{
 		UINT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 	
@@ -2080,7 +2080,7 @@ public class e132xs
 	{
 		INT32 op1, op2;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			op1 = GET_L_REG(S_CODE);
 		}
@@ -2114,7 +2114,7 @@ public class e132xs
 	
 		op1 = immediate_value();
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2151,7 +2151,7 @@ public class e132xs
 	
 		verboselog( 2, "Setting register %02x to value %08x\n", D_CODE, val );
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			SET_L_REG(D_CODE, val);
 		}
@@ -2181,7 +2181,7 @@ public class e132xs
 	{
 		UINT32 op1, op2;
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2190,7 +2190,7 @@ public class e132xs
 			op2 = GET_G_REG(D_CODE);
 		}
 	
-		if (N_VALUE == 0)
+		if( !N_VALUE )
 			op1 = GET_C & ((GET_Z == 0 ? 1 : 0) | (op2 & 0x01));
 		else
 			op1 = immediate_value();
@@ -2212,7 +2212,7 @@ public class e132xs
 	{
 		INT32 op1, op2;
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2221,7 +2221,7 @@ public class e132xs
 			op2 = GET_G_REG(D_CODE);
 		}
 	
-		if (N_VALUE == 0)
+		if( !N_VALUE )
 			op1 = GET_C & ((GET_Z == 0 ? 1 : 0) | (op2 & 0x01));
 		else
 			op1 = immediate_value();
@@ -2234,7 +2234,7 @@ public class e132xs
 	
 		e132xs_ICount -= 1;
 	
-		if (GET_V != 0)
+		if( GET_V )
 		{
 			UINT32 addr = get_trap_addr(RANGE_ERROR);
 			execute_trap(addr);
@@ -2246,7 +2246,7 @@ public class e132xs
 		UINT32 val1, val2;
 	
 		val1 = 0;
-		if (N_VALUE != 0)
+		if( N_VALUE )
 		{
 			if( N_VALUE == 31 )
 				val1 = 0x7fffffff; //bit 31 = 0, others = 1
@@ -2254,7 +2254,7 @@ public class e132xs
 				val1 = (UINT32) immediate_value();
 		}
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val2 = GET_L_REG(D_CODE);
 		}
@@ -2263,7 +2263,7 @@ public class e132xs
 			val2 = GET_G_REG(D_CODE);
 		}
 	
-		if (N_VALUE != 0)
+		if( N_VALUE )
 		{
 			SET_Z(((val1 & val2) == 0 ? 1: 0));
 		}
@@ -2288,7 +2288,7 @@ public class e132xs
 		else
 			op1 = ~immediate_value();
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2311,7 +2311,7 @@ public class e132xs
 	
 		op1 = immediate_value();
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2334,7 +2334,7 @@ public class e132xs
 	
 		op1 = immediate_value();
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			op2 = GET_L_REG(D_CODE);
 		}
@@ -2434,7 +2434,7 @@ public class e132xs
 		sign_bit = (val & 0x8000000000000000) >> 63;
 		val >>= N_VALUE;
 	
-		if (sign_bit != 0)
+		if( sign_bit )
 		{
 			int i;
 			for( i = 0; i < N_VALUE; i++ )
@@ -2473,7 +2473,7 @@ public class e132xs
 	
 			val >>= n;
 	
-			if (sign_bit != 0)
+			if( sign_bit )
 			{
 				int i;
 				for( i = 0; i < n; i++ )
@@ -2506,7 +2506,7 @@ public class e132xs
 	
 		ret >>= n;
 	
-		if (sign_bit != 0)
+		if( sign_bit )
 		{
 			int i;
 			for( i = 0; i < n; i++ )
@@ -2608,7 +2608,7 @@ public class e132xs
 	
 		for( mask = 0x80000000; ; mask >>= 1 )
 		{
-			if ((code & mask) != 0)
+			if( code & mask )
 				break;
 			else
 				zeros++;
@@ -2638,8 +2638,8 @@ public class e132xs
 	
 		SET_Z((val == 0 ? 1: 0));
 		SET_N(SIGN_BIT(val));
-		//V . undefined
-		//C . undefined
+		//V -> undefined
+		//C -> undefined
 	
 		e132xs_ICount -= 1;
 	}
@@ -2675,7 +2675,7 @@ public class e132xs
 	
 				case 2:
 					// LDHS.A
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
 						load = (INT16) READ_HW(dis);
 						SET_RS( load, NOINC );
@@ -2731,7 +2731,7 @@ public class e132xs
 			{
 				case 0:
 					// LDBS.D
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						load = (INT8) READ_B( GET_L_REG(D_CODE) + dis );
 					}
@@ -2745,7 +2745,7 @@ public class e132xs
 	
 				case 1:
 					// LDBU.D
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						load = (UINT8) READ_B( GET_L_REG(D_CODE) + dis );
 					}
@@ -2759,9 +2759,9 @@ public class e132xs
 	
 				case 2:
 					// LDHS.D
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = (INT16) READ_HW( GET_L_REG(D_CODE) + dis );
 						}
@@ -2774,7 +2774,7 @@ public class e132xs
 					// LDHU.D
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = (UINT16) READ_HW( GET_L_REG(D_CODE) + dis );
 						}
@@ -2793,7 +2793,7 @@ public class e132xs
 					{
 						// used in an I/O address
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis );
 						}
@@ -2803,7 +2803,7 @@ public class e132xs
 						}
 						SET_RS( load, NOINC );
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis + 4 );
 						}
@@ -2820,7 +2820,7 @@ public class e132xs
 					{
 						// used in an I/O address
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis );
 						}
@@ -2833,7 +2833,7 @@ public class e132xs
 					// LDD.D
 					else if( !( dis & 2 ) && ( dis & 1 ) )
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis );
 						}
@@ -2843,7 +2843,7 @@ public class e132xs
 						}
 						SET_RS( load, NOINC );
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis + 4 );
 						}
@@ -2858,7 +2858,7 @@ public class e132xs
 					// LDW.D
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) + dis );
 						}
@@ -2897,7 +2897,7 @@ public class e132xs
 			{
 				case 0:
 					// LDBS.N
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						load = (INT8) READ_B( GET_L_REG(D_CODE) );
 						SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -2913,7 +2913,7 @@ public class e132xs
 	
 				case 1:
 					// LDBU.N
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						load = (UINT8) READ_B( GET_L_REG(D_CODE) );
 						SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -2929,9 +2929,9 @@ public class e132xs
 	
 				case 2:
 					// LDHS.N
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = (INT16) READ_HW( GET_L_REG(D_CODE) );
 							SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -2946,7 +2946,7 @@ public class e132xs
 					// LDHU.N
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = (UINT16) READ_HW( GET_L_REG(D_CODE) );
 							SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -2966,7 +2966,7 @@ public class e132xs
 					if( ( dis & 2 ) && ( dis & 1 ) )
 					{
 						//TODO: other? read notes in the docs
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) );
 							SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -2988,7 +2988,7 @@ public class e132xs
 					// LDD.N
 					else if( !( dis & 2 ) && ( dis & 1 ) )
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) );
 							SET_RS( READ_W( GET_L_REG(D_CODE) + 4 ), INC );
@@ -3007,7 +3007,7 @@ public class e132xs
 					// LDW.N
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							load = READ_W( GET_L_REG(D_CODE) );
 							SET_RD( GET_L_REG(D_CODE) + dis, NOINC );
@@ -3039,7 +3039,7 @@ public class e132xs
 		next_op = READ_OP(PC);
 		dis = get_dis( next_op );
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
@@ -3066,7 +3066,7 @@ public class e132xs
 	
 				case 2:
 					// STHS.A
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
 						WRITE_HW( dis, (INT16) val );
 					}
@@ -3085,7 +3085,7 @@ public class e132xs
 						// used in an I/O address
 						UINT32 val2;
 	
-						if (S_BIT != 0)
+						if( S_BIT )
 						{
 							val2 = GET_L_REG(S_CODE + INC);
 						}
@@ -3110,7 +3110,7 @@ public class e132xs
 					{
 						UINT32 val2;
 	
-						if (S_BIT != 0)
+						if( S_BIT )
 						{
 							val2 = GET_L_REG(S_CODE + INC);
 						}
@@ -3139,7 +3139,7 @@ public class e132xs
 			{
 				case 0:
 					// STBS.D
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						WRITE_B( GET_L_REG(D_CODE) + dis, (INT8) val );
 					}
@@ -3152,7 +3152,7 @@ public class e132xs
 	
 				case 1:
 					// STBU.D
-					if (D_BIT != 0)
+					if( D_BIT )
 					{
 						WRITE_B( GET_L_REG(D_CODE) + dis, (UINT8) val );
 					}
@@ -3165,9 +3165,9 @@ public class e132xs
 	
 				case 2:
 					// STHS.D
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_HW( GET_L_REG(D_CODE) + dis, (INT16) val );
 						}
@@ -3179,7 +3179,7 @@ public class e132xs
 					// STHU.D
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_HW( GET_L_REG(D_CODE) + dis, (UINT16) val );
 						}
@@ -3198,7 +3198,7 @@ public class e132xs
 						// used in an I/O address
 						UINT32 val2;
 	
-						if (S_BIT != 0)
+						if( S_BIT )
 						{
 							val2 = GET_L_REG(S_CODE + INC);
 						}
@@ -3207,7 +3207,7 @@ public class e132xs
 							val2 = GET_G_REG(S_CODE + INC);
 						}
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_W( GET_L_REG(D_CODE) + dis, val );
 							WRITE_W( GET_L_REG(D_CODE) + dis + 4, val2 );
@@ -3224,7 +3224,7 @@ public class e132xs
 					else if( ( dis & 2 ) && !( dis & 1 ) )
 					{
 						// used in an I/O address
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_W( GET_L_REG(D_CODE) + dis, val );
 						}
@@ -3238,7 +3238,7 @@ public class e132xs
 					{
 						UINT32 val2;
 	
-						if (S_BIT != 0)
+						if( S_BIT )
 						{
 							val2 = GET_L_REG(S_CODE + INC);
 						}
@@ -3247,7 +3247,7 @@ public class e132xs
 							val2 = GET_G_REG(S_CODE + INC);
 						}
 	
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_W( GET_L_REG(D_CODE) + dis, val );
 							WRITE_W( GET_L_REG(D_CODE) + dis + 4, val2 );
@@ -3263,7 +3263,7 @@ public class e132xs
 					// STW.D
 					else
 					{
-						if (D_BIT != 0)
+						if( D_BIT )
 						{
 							WRITE_W( GET_L_REG(D_CODE) + dis, val );
 						}
@@ -3297,7 +3297,7 @@ public class e132xs
 		else
 		{
 	
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				val = GET_L_REG(S_CODE);
 			}
@@ -3306,7 +3306,7 @@ public class e132xs
 				val = GET_G_REG(S_CODE);
 			}
 	
-			if (D_BIT != 0)
+			if( D_BIT )
 			{
 				addr = GET_L_REG(D_CODE);
 				SET_L_REG( D_CODE, addr + dis );
@@ -3333,7 +3333,7 @@ public class e132xs
 	
 				case 2:
 					// STHS.N
-					if ((dis & 1) != 0)
+					if( dis & 1 )
 					{
 						WRITE_HW( addr, (INT16) val );
 					}
@@ -3363,7 +3363,7 @@ public class e132xs
 					{
 						UINT32 val2;
 	
-						if (S_BIT != 0)
+						if( S_BIT )
 						{
 							val2 = GET_L_REG(S_CODE + INC);
 						}
@@ -3394,7 +3394,7 @@ public class e132xs
 	{
 		UINT32 val;
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val = GET_L_REG(D_CODE);
 		}
@@ -3408,7 +3408,7 @@ public class e132xs
 		SET_RD(val, NOINC);
 		SET_Z((val == 0 ? 1: 0));
 		SET_N(SIGN_BIT(val));
-	//	SET_C(); // 1 if ((val & n) != 0) ? //TODO!
+	//	SET_C(); // 1 if( val & n ) ? //TODO!
 	
 		e132xs_ICount -= 1;
 	}
@@ -3418,7 +3418,7 @@ public class e132xs
 		INT32 val;
 		int sign_bit;
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val = GET_L_REG(D_CODE);
 		}
@@ -3430,7 +3430,7 @@ public class e132xs
 		sign_bit = (val & 0x80000000) >> 31;
 		val >>= N_VALUE;
 	
-		if (sign_bit != 0)
+		if( sign_bit )
 		{
 			int i;
 			for( i = 0; i < N_VALUE; i++ )
@@ -3442,7 +3442,7 @@ public class e132xs
 		SET_RD(val, NOINC);
 		SET_Z((val == 0 ? 1: 0));
 		SET_N(SIGN_BIT(val));
-	//	SET_C(); // 1 if ((val & n) != 0) ? //TODO!
+	//	SET_C(); // 1 if( val & n ) ? //TODO!
 	
 		e132xs_ICount -= 1;
 	}
@@ -3451,7 +3451,7 @@ public class e132xs
 	{
 		UINT32 val;
 	
-		if (D_BIT != 0)
+		if( D_BIT )
 		{
 			val = GET_L_REG(D_CODE);
 		}
@@ -3484,7 +3484,7 @@ public class e132xs
 		}
 		else
 		{
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				op1 = GET_L_REG(S_CODE);
 			}
@@ -3493,7 +3493,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 			}
 	
-			if (D_BIT != 0)
+			if( D_BIT )
 			{
 				op2 = GET_L_REG(D_CODE);
 			}
@@ -3534,7 +3534,7 @@ public class e132xs
 		}
 		else
 		{
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				op1 = GET_L_REG(S_CODE);
 			}
@@ -3543,7 +3543,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 			}
 	
-			if (D_BIT != 0)
+			if( D_BIT )
 			{
 				op2 = GET_L_REG(D_CODE);
 			}
@@ -3644,7 +3644,7 @@ public class e132xs
 					break;
 	
 				case 6:
-					if (GET_N != 0)
+					if( GET_N )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3656,7 +3656,7 @@ public class e132xs
 					break;
 	
 				case 7:
-					if (GET_N == 0)
+					if( !GET_N )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3692,7 +3692,7 @@ public class e132xs
 					break;
 	
 				case 10:
-					if (GET_C != 0)
+					if( GET_C )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3704,7 +3704,7 @@ public class e132xs
 					break;
 	
 				case 11:
-					if (GET_C == 0)
+					if( !GET_C )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3716,7 +3716,7 @@ public class e132xs
 					break;
 	
 				case 12:
-					if (GET_Z != 0)
+					if( GET_Z )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3728,7 +3728,7 @@ public class e132xs
 					break;
 	
 				case 13:
-					if (GET_Z == 0)
+					if( !GET_Z )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3740,7 +3740,7 @@ public class e132xs
 					break;
 	
 				case 14:
-					if (GET_V != 0)
+					if( GET_V )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3752,7 +3752,7 @@ public class e132xs
 					break;
 	
 				case 15:
-					if (GET_V == 0)
+					if( !GET_V )
 					{
 						SET_RD(1, NOINC);
 					}
@@ -3793,7 +3793,7 @@ public class e132xs
 					break;
 	
 				case 22:
-					if (GET_N != 0)
+					if( GET_N )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3805,7 +3805,7 @@ public class e132xs
 					break;
 	
 				case 23:
-					if (GET_N == 0)
+					if( !GET_N )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3841,7 +3841,7 @@ public class e132xs
 					break;
 	
 				case 26:
-					if (GET_C != 0)
+					if( GET_C )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3853,7 +3853,7 @@ public class e132xs
 					break;
 	
 				case 27:
-					if (GET_C == 0)
+					if( !GET_C )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3865,7 +3865,7 @@ public class e132xs
 					break;
 	
 				case 28:
-					if (GET_Z != 0)
+					if( GET_Z )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3877,7 +3877,7 @@ public class e132xs
 					break;
 	
 				case 29:
-					if (GET_Z == 0)
+					if( !GET_Z )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3889,7 +3889,7 @@ public class e132xs
 					break;
 	
 				case 30:
-					if (GET_V != 0)
+					if( GET_V )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3901,7 +3901,7 @@ public class e132xs
 					break;
 	
 				case 31:
-					if (GET_V == 0)
+					if( !GET_V )
 					{
 						SET_RD(-1, NOINC);
 					}
@@ -3934,7 +3934,7 @@ public class e132xs
 		}
 		else
 		{
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				op1 = GET_L_REG(S_CODE);
 			}
@@ -3943,7 +3943,7 @@ public class e132xs
 				op1 = GET_G_REG(S_CODE);
 			}
 	
-			if (D_BIT != 0)
+			if( D_BIT )
 			{
 				op2 = GET_L_REG(D_CODE);
 			}
@@ -4237,7 +4237,7 @@ public class e132xs
 	
 		val = GET_L_REG( D_CODE );
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			SET_L_REG( S_CODE, READ_W(val) );
 		}
@@ -4256,7 +4256,7 @@ public class e132xs
 		val_high = GET_L_REG( D_CODE );
 		val_low = GET_L_REG( D_CODE ) + 4;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			SET_L_REG( S_CODE, READ_W(val_high) );
 			SET_L_REG( S_CODE + INC, READ_W(val_low) );
@@ -4276,7 +4276,7 @@ public class e132xs
 	
 		val = GET_L_REG( D_CODE );
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			SET_L_REG( S_CODE, READ_W(val) );
 		}
@@ -4297,7 +4297,7 @@ public class e132xs
 		val_high = GET_L_REG( D_CODE );
 		val_low = GET_L_REG( D_CODE ) + 4;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			SET_L_REG( S_CODE, READ_W(val_high) );
 			SET_L_REG( S_CODE + INC, READ_W(val_low) );
@@ -4317,7 +4317,7 @@ public class e132xs
 	{
 		UINT32 val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
@@ -4335,7 +4335,7 @@ public class e132xs
 	{
 		UINT32 val_high, val_low;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val_high = GET_L_REG(S_CODE);
 			val_low  = GET_L_REG(S_CODE + INC);
@@ -4356,7 +4356,7 @@ public class e132xs
 	{
 		UINT32 val;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val = GET_L_REG(S_CODE);
 		}
@@ -4375,7 +4375,7 @@ public class e132xs
 	{
 		UINT32 val_high, val_low;
 	
-		if (S_BIT != 0)
+		if( S_BIT )
 		{
 			val_high = GET_L_REG(S_CODE);
 			val_low  = GET_L_REG(S_CODE + INC);
@@ -4395,7 +4395,7 @@ public class e132xs
 	
 	void e132xs_dbv(void)
 	{
-		if (GET_V != 0)
+		if( GET_V )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4403,7 +4403,7 @@ public class e132xs
 	
 	void e132xs_dbnv(void)
 	{
-		if (GET_V == 0)
+		if( !GET_V )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4411,7 +4411,7 @@ public class e132xs
 	
 	void e132xs_dbe(void) //or DBZ
 	{
-		if (GET_Z != 0)
+		if( GET_Z )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4419,7 +4419,7 @@ public class e132xs
 	
 	void e132xs_dbne(void) //or DBNZ
 	{
-		if (GET_Z == 0)
+		if( !GET_Z )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4427,7 +4427,7 @@ public class e132xs
 	
 	void e132xs_dbc(void) //or DBST
 	{
-		if (GET_C != 0)
+		if( GET_C )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4435,7 +4435,7 @@ public class e132xs
 	
 	void e132xs_dbnc(void) //or DBHE
 	{
-		if (GET_C == 0)
+		if( !GET_C )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4459,7 +4459,7 @@ public class e132xs
 	
 	void e132xs_dbn(void) //or DBLT
 	{
-		if (GET_N != 0)
+		if( GET_N )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4467,7 +4467,7 @@ public class e132xs
 	
 	void e132xs_dbnn(void) //or DBGE
 	{
-		if (GET_N == 0)
+		if( !GET_N )
 			execute_dbr(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4502,7 +4502,7 @@ public class e132xs
 	
 		SET_FP((GET_FP - S_CODE));
 	
-		if (D_CODE != 0)
+		if( D_CODE )
 			SET_FL( D_CODE );
 		else
 			SET_FL( 16 ); //when Ld is L0
@@ -4510,13 +4510,13 @@ public class e132xs
 		SET_M( 0 );
 	
 		//TODO: SP uses bits 8..0 as in the doc or 7..2 ?
-		if (GET_FL != 0)
+		if( GET_FL )
 			difference = ( SP & 0x1fc ) + ( 64 - 10 ) - ( GET_FP + GET_FL );
 		else
 			difference = ( SP & 0x1fc ) + ( 64 - 10 ) - ( GET_FP + 16 );
 	
 		// bit 6 of difference is sign
-		if ((difference & 0x40) != 0) //else it's finished
+		if( difference & 0x40 ) //else it's finished
 		{
 			unsigned char tmp_flag;
 	
@@ -4531,7 +4531,7 @@ public class e132xs
 	
 			} while( !( difference & 0x40 ) );
 	
-			if (tmp_flag != 0)
+			if( tmp_flag )
 			{
 				UINT32 addr = get_trap_addr(FRAME_ERROR);
 				execute_trap(addr);
@@ -4546,14 +4546,14 @@ public class e132xs
 	{
 		INT32 const_val;
 	
-		//TODO: add . bit 0 of const must be 0 ?
+		//TODO: add -> bit 0 of const must be 0 ?
 		const_val = get_const();
 	
 		verboselog( 0, "Immediate value for CALL: %04x\n", const_val );
 	
 		if( !(S_CODE == SR_CODE && !S_BIT) )
 		{
-			if (S_BIT != 0)
+			if( S_BIT )
 			{
 				const_val += GET_L_REG(S_CODE);
 			}
@@ -4566,7 +4566,7 @@ public class e132xs
 		SET_LD(((PC & 0xfffffffe) | GET_S), NOINC);
 		SET_LD(SR, INC);
 	
-		if (D_CODE != 0)
+		if( D_CODE )
 			SET_FP((GET_FP + D_CODE));
 		else
 			SET_FP((GET_FP + 16));
@@ -4585,7 +4585,7 @@ public class e132xs
 	
 	void e132xs_bv(void)
 	{
-		if (GET_V != 0)
+		if( GET_V )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4593,7 +4593,7 @@ public class e132xs
 	
 	void e132xs_bnv(void)
 	{
-		if (GET_V == 0)
+		if( !GET_V )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4601,7 +4601,7 @@ public class e132xs
 	
 	void e132xs_be(void) //or BZ
 	{
-		if (GET_Z != 0)
+		if( GET_Z )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4609,7 +4609,7 @@ public class e132xs
 	
 	void e132xs_bne(void) //or BNZ
 	{
-		if (GET_Z == 0)
+		if( !GET_Z )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4617,7 +4617,7 @@ public class e132xs
 	
 	void e132xs_bc(void) //or BST
 	{
-		if (GET_C != 0)
+		if( GET_C )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4625,7 +4625,7 @@ public class e132xs
 	
 	void e132xs_bnc(void) //or BHE
 	{
-		if (GET_C == 0)
+		if( !GET_C )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4649,7 +4649,7 @@ public class e132xs
 	
 	void e132xs_bn(void) //or BLT
 	{
-		if (GET_N != 0)
+		if( GET_N )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4657,7 +4657,7 @@ public class e132xs
 	
 	void e132xs_bnn(void) //or BGE
 	{
-		if (GET_N == 0)
+		if( !GET_N )
 			execute_br(get_pcrel());
 		else
 			e132xs_ICount -= 1;
@@ -4715,13 +4715,13 @@ public class e132xs
 				break;
 	
 			case TRAPLT:
-				if (GET_N != 0)
+				if( GET_N )
 					execute_trap(addr);
 	
 				break;
 	
 			case TRAPGE:
-				if (GET_N == 0)
+				if( !GET_N )
 					execute_trap(addr);
 	
 				break;
@@ -4739,31 +4739,31 @@ public class e132xs
 				break;
 	
 			case TRAPST:
-				if (GET_C != 0)
+				if( GET_C )
 					execute_trap(addr);
 	
 				break;
 	
 			case TRAPHE:
-				if (GET_C == 0)
+				if( !GET_C )
 					execute_trap(addr);
 	
 				break;
 	
 			case TRAPE:
-				if (GET_Z != 0)
+				if( GET_Z )
 					execute_trap(addr);
 	
 				break;
 	
 			case TRAPNE:
-				if (GET_Z == 0)
+				if( !GET_Z )
 					execute_trap(addr);
 	
 				break;
 	
 			case TRAPV:
-				if (GET_V != 0)
+				if( GET_V )
 					execute_trap(addr);
 	
 				break;

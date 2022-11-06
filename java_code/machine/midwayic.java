@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -105,7 +105,7 @@ public class midwayic
 	
 	static void generate_serial_data(int upper)
 	{
-		int year = atoi(Machine.gamedrv.year), month = 12, day = 11;
+		int year = atoi(Machine->gamedrv->year), month = 12, day = 11;
 		UINT32 serial_number, temp;
 		UINT8 serial_digit[9];
 	
@@ -174,7 +174,7 @@ public class midwayic
 	
 	void midway_serial_pic_reset_w(int state)
 	{
-		if (state != 0)
+		if (state)
 		{
 			serial.index = 0;
 			serial.status = 0;
@@ -209,7 +209,7 @@ public class midwayic
 		{
 			/* the self-test writes 1F, 0F, and expects to read an F in the low 4 bits */
 			/* Cruis'n World expects the high bit to be set as well */
-			if ((data & 0x0f) != 0)
+			if (data & 0x0f)
 				serial.buffer = serial.ormask | data;
 			else
 				serial.buffer = serial.data[serial.index++ % sizeof(serial.data)];
@@ -297,7 +297,7 @@ public class midwayic
 	
 		/* store in the latch, along with a bit to indicate we have data */
 		pic.latch = (data & 0x00f) | 0x480;
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 		{
 			int cmd = pic.state ? (pic.state & 0x0f) : (pic.latch & 0x0f);
 			switch (cmd)
@@ -338,13 +338,13 @@ public class midwayic
 					/* stuff it into the data bytes */
 					pic.index = 0;
 					pic.total = 0;
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_sec);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_min);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_hour);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_wday + 1);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_mday);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_mon + 1);
-					pic.buffer[pic.total++] = make_bcd(exptime.tm_year - pic.yearoffs);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_sec);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_min);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_hour);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_wday + 1);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_mday);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_mon + 1);
+					pic.buffer[pic.total++] = make_bcd(exptime->tm_year - pic.yearoffs);
 					break;
 				}
 	
@@ -381,7 +381,7 @@ public class midwayic
 					{
 						pic.state = 0;
 						pic.nvram[pic.nvram_addr] |= pic.latch << 4;
-						if (nvramlog != 0)
+						if (nvramlog)
 							fprintf(nvramlog, "Write byte %02X = %02X\n", pic.nvram_addr, pic.nvram[pic.nvram_addr]);
 					}
 					break;
@@ -409,7 +409,7 @@ public class midwayic
 						pic.total = 0;
 						pic.index = 0;
 						pic.buffer[pic.total++] = pic.nvram[pic.nvram_addr];
-						if (nvramlog != 0)
+						if (nvramlog)
 							fprintf(nvramlog, "Read byte %02X = %02X\n", pic.nvram_addr, pic.nvram[pic.nvram_addr]);
 					}
 					break;
@@ -418,11 +418,10 @@ public class midwayic
 	}
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_midway_serial_pic2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_midway_serial_pic2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, pic.nvram, sizeof(pic.nvram));
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, pic.nvram, sizeof(pic.nvram));
 		else
 			memcpy(pic.nvram, pic.default_nvram, sizeof(pic.nvram));
@@ -533,9 +532,9 @@ public class midwayic
 		UINT8 new_state;
 		
 		irqbits |= ioasic.sound_irq_state;
-		if ((fifo_state & 8) != 0)
+		if (fifo_state & 8)
 			irqbits |= 0x0008;
-		if (irqbits != 0)
+		if (irqbits)
 			irqbits |= 0x0001;
 	
 		ioasic.reg[IOASIC_INTSTAT] = irqbits;
@@ -554,9 +553,9 @@ public class midwayic
 	{
 		logerror("CAGE irq handler: %d\n", reason);
 		ioasic.sound_irq_state = 0;
-		if ((reason & CAGE_IRQ_REASON_DATA_READY) != 0)
+		if (reason & CAGE_IRQ_REASON_DATA_READY)
 			ioasic.sound_irq_state |= 0x0040;
-		if ((reason & CAGE_IRQ_REASON_BUFFER_EMPTY) != 0)
+		if (reason & CAGE_IRQ_REASON_BUFFER_EMPTY)
 			ioasic.sound_irq_state |= 0x0080;
 		update_ioasic_irq();
 	}
@@ -565,7 +564,7 @@ public class midwayic
 	static void ioasic_input_empty(int state)
 	{
 		logerror("ioasic_input_empty(%d)\n", state);
-		if (state != 0)
+		if (state)
 			ioasic.sound_irq_state |= 0x0080;
 		else
 			ioasic.sound_irq_state &= ~0x0080;
@@ -576,7 +575,7 @@ public class midwayic
 	static void ioasic_output_full(int state)
 	{
 		logerror("ioasic_output_full(%d)\n", state);
-		if (state != 0)
+		if (state)
 			ioasic.sound_irq_state |= 0x0040;
 		else
 			ioasic.sound_irq_state &= ~0x0040;
@@ -613,13 +612,13 @@ public class midwayic
 			if (ioasic.fifo_bytes == 0 && ioasic.has_dcs)
 			{
 				ioasic.fifo_force_buffer_empty_pc = activecpu_get_pc();
-				if (LOG_FIFO != 0)
+				if (LOG_FIFO)
 					logerror("fifo_r(%04X): FIFO empty, PC = %04X\n", result, ioasic.fifo_force_buffer_empty_pc);
 			}
 		}
 		else
 		{
-			if (LOG_FIFO != 0)
+			if (LOG_FIFO)
 				logerror("fifo_r(): nothing to read!\n");
 		}
 		return result;
@@ -647,7 +646,7 @@ public class midwayic
 			{
 				ioasic.fifo_force_buffer_empty_pc = 0;
 				result |= 0x08;
-				if (LOG_FIFO != 0)
+				if (LOG_FIFO)
 					logerror("ioasic_fifo_status_r(%04X): force empty, PC = %04X\n", result, currpc);
 			}
 		}
@@ -659,14 +658,14 @@ public class midwayic
 	static void ioasic_fifo_reset_w(int state)
 	{
 		/* on the high state, reset the FIFO data */
-		if (state != 0)
+		if (state)
 		{
 			ioasic.fifo_in = 0;
 			ioasic.fifo_out = 0;
 			ioasic.fifo_bytes = 0;
 			update_ioasic_irq();
 		}
-		if (LOG_FIFO != 0)
+		if (LOG_FIFO)
 			logerror("fifo_reset(%d)\n", state);
 	}
 	
@@ -684,7 +683,7 @@ public class midwayic
 		}
 		else
 		{
-			if (LOG_FIFO != 0)
+			if (LOG_FIFO)
 				logerror("fifo_w(%04X): out of space!\n", data);
 		}
 	}
@@ -783,7 +782,7 @@ public class midwayic
 				break;
 		}
 	
-		if (LOG_IOASIC != 0)
+		if (LOG_IOASIC)
 			logerror("%06X:ioasic_r(%d) = %08X\n", activecpu_get_pc(), offset, result);
 	
 		return result;
@@ -808,7 +807,7 @@ public class midwayic
 		COMBINE_DATA(&ioasic.reg[offset]);
 		newreg = ioasic.reg[offset];
 	
-		if (LOG_IOASIC != 0)
+		if (LOG_IOASIC)
 			logerror("%06X:ioasic_w(%d) = %08X\n", activecpu_get_pc(), offset, data);
 	
 		switch (offset)
@@ -832,7 +831,7 @@ public class midwayic
 				break;
 		
 			case IOASIC_DEBUGOUT:
-				if (PRINTF_DEBUG != 0)
+				if (PRINTF_DEBUG)
 					printf("%c", data & 0xff);
 				break;
 				

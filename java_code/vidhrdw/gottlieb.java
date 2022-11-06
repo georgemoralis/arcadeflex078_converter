@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,16 +49,15 @@ public class gottlieb
 	  bit 0 -- 2  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static WriteHandlerPtr gottlieb_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit0, bit1, bit2, bit3;
 		int r, g, b, val;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		/* red component */
 	
-		val = paletteram[offset | 1];
+		val = paletteram.read(offset | 1);
 	
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
@@ -69,7 +68,7 @@ public class gottlieb
 	
 		/* green component */
 	
-		val = paletteram[offset & ~1];
+		val = paletteram.read(offset & ~1);
 	
 		bit0 = (val >> 4) & 0x01;
 		bit1 = (val >> 5) & 0x01;
@@ -80,7 +79,7 @@ public class gottlieb
 	
 		/* blue component */
 	
-		val = paletteram[offset & ~1];
+		val = paletteram.read(offset & ~1);
 	
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
@@ -92,8 +91,7 @@ public class gottlieb
 		palette_set_color(offset / 2, r, g, b);
 	} };
 	
-	public static WriteHandlerPtr gottlieb_video_outputs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_video_outputs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			int last = 0;
 	
 		background_priority = data & 0x01;
@@ -118,8 +116,7 @@ public class gottlieb
 		last = data;
 	} };
 	
-	public static WriteHandlerPtr usvsthem_video_outputs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr usvsthem_video_outputs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_priority = data & 0x01;
 	
 		/* in most games, bits 1 and 2 flip screen, however in the laser */
@@ -133,8 +130,7 @@ public class gottlieb
 		/* bit 3 genlock control (1 = show laserdisc image) */
 	} };
 	
-	public static WriteHandlerPtr gottlieb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -142,14 +138,13 @@ public class gottlieb
 		}
 	} };
 	
-	public static WriteHandlerPtr gottlieb_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gottlieb_charram[offset] != data)
 		{
 			gottlieb_charram[offset] = data;
 	
-			decodechar(Machine.gfx[0], offset / 32, gottlieb_charram, 
-				Machine.drv.gfxdecodeinfo[0].gfxlayout);
+			decodechar(Machine->gfx[0], offset / 32, gottlieb_charram, 
+				Machine->drv->gfxdecodeinfo[0].gfxlayout);
 			
 			tilemap_mark_all_tiles_dirty(bg_tilemap);
 		}
@@ -162,12 +157,11 @@ public class gottlieb
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_gottlieb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gottlieb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap, 0);
@@ -187,22 +181,21 @@ public class gottlieb
 			int sy = (spriteram.read(offs)) - 13;
 			int code = (255 ^ spriteram.read(offs + 2)) + 256 * spritebank;
 	
-			if (flip_screen_x != 0) sx = 233 - sx;
-			if (flip_screen_y != 0) sy = 244 - sy;
+			if (flip_screen_x) sx = 233 - sx;
+			if (flip_screen_y) sy = 244 - sy;
 	
 			if (spriteram.read(offs)|| spriteram.read(offs + 1))	/* needed to avoid garbage on screen */
-				drawgfx(bitmap, Machine.gfx[1],
+				drawgfx(bitmap, Machine->gfx[1],
 					code, 0,
 					flip_screen_x, flip_screen_y,
 					sx,sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gottlieb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (background_priority == 0)
+	public static VideoUpdateHandlerPtr video_update_gottlieb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (!background_priority)
 		{
 			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, TILEMAP_IGNORE_TRANSPARENCY, 0);
 		}
@@ -213,7 +206,7 @@ public class gottlieb
 	
 		gottlieb_draw_sprites(bitmap);
 	
-		if (background_priority != 0)
+		if (background_priority)
 		{
 			tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		}

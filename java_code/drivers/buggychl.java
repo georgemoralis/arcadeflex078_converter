@@ -79,7 +79,7 @@ dcxx = /SPOSI (S36)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -95,8 +95,7 @@ public class buggychl
 	
 	
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,&memory_region(REGION_CPU1)[0x10000 + (data & 7) * 0x2000]);
 	} };
 	
@@ -105,33 +104,29 @@ public class buggychl
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
 		}
 	} };
 	
-	public static WriteHandlerPtr sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mixer_sound_enable_global_w(data & 1);
 	} };
 	
@@ -242,7 +237,7 @@ public class buggychl
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_buggychl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_buggychl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( buggychl )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x03, "Game Over Bonus" );// Arks/Flags/Fuel
 		PORT_DIPSETTING(    0x03, "2000/1000/50" );
@@ -377,20 +372,16 @@ public class buggychl
 	
 	
 	
-	public static WriteHandlerPtr portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* VOL/BAL   for the 7630 on this 8910 output */
 	} };
-	public static WriteHandlerPtr portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* TRBL/BASS for the 7630 on this 8910 output */
 	} };
-	public static WriteHandlerPtr portA_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portA_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* VOL/BAL   for the 7630 on this 8910 output */
 	} };
-	public static WriteHandlerPtr portB_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portB_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* TRBL/BASS for the 7630 on this 8910 output */
 	} };
 	
@@ -415,8 +406,7 @@ public class buggychl
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_buggychl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( buggychl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz??? */
@@ -450,9 +440,7 @@ public class buggychl
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -521,6 +509,6 @@ public class buggychl
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_buggychl	   = new GameDriver("1984"	,"buggychl"	,"buggychl.java"	,rom_buggychl,null	,machine_driver_buggychl	,input_ports_buggychl	,null	,ROT270	,	"Taito Corporation", "Buggy Challenge", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_buggycht	   = new GameDriver("1984"	,"buggycht"	,"buggychl.java"	,rom_buggycht,driver_buggychl	,machine_driver_buggychl	,input_ports_buggychl	,null	,ROT270	,	"Taito Corporation (Tecfri license)", "Buggy Challenge (Tecfri)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, buggychl, 0,        buggychl, buggychl, 0, ROT270, "Taito Corporation", "Buggy Challenge", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, buggycht, buggychl, buggychl, buggychl, 0, ROT270, "Taito Corporation (Tecfri license)", "Buggy Challenge (Tecfri)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

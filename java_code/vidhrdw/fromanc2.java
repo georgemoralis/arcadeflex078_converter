@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -451,8 +451,7 @@ public class fromanc2
 	
 	******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_fromanc2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fromanc2  = new VideoStartHandlerPtr() { public int handler(){
 		fromanc2_tilemap[0][0] = tilemap_create(fromanc2_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromanc2_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 		fromanc2_tilemap[0][2] = tilemap_create(fromanc2_get_v0_l2_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -507,8 +506,7 @@ public class fromanc2
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_fromancr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fromancr  = new VideoStartHandlerPtr() { public int handler(){
 		fromanc2_tilemap[0][0] = tilemap_create(fromancr_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromancr_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 		fromanc2_tilemap[0][2] = tilemap_create(fromancr_get_v0_l2_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
@@ -556,8 +554,7 @@ public class fromanc2
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_fromanc4  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fromanc4  = new VideoStartHandlerPtr() { public int handler(){
 		fromanc2_tilemap[0][0] = tilemap_create(fromancr_get_v0_l0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 256, 64);
 		fromanc2_tilemap[0][1] = tilemap_create(fromancr_get_v0_l1_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 256, 64);
 		fromanc2_tilemap[0][2] = tilemap_create(fromancr_get_v0_l2_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 256, 64);
@@ -610,8 +607,7 @@ public class fromanc2
 	
 	******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_fromanc2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fromanc2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (fromanc2_tilemap[fromanc2_dispvram][0]) {
 			tilemap_set_scrollx(fromanc2_tilemap[fromanc2_dispvram][0], 0, -fromanc2_scrollx[fromanc2_dispvram][0]);
 			tilemap_set_scrolly(fromanc2_tilemap[fromanc2_dispvram][0], 0, -fromanc2_scrolly[fromanc2_dispvram][0]);

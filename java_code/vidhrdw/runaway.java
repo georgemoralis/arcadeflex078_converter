@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,8 +23,7 @@ public class runaway
 	
 	
 	
-	public static WriteHandlerPtr runaway_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr runaway_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int R =
 			0x21 * ((~data >> 2) & 1) +
 			0x47 * ((~data >> 3) & 1) +
@@ -45,8 +44,7 @@ public class runaway
 	
 	
 	
-	public static WriteHandlerPtr runaway_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr runaway_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != runaway_video_ram[offset])
 		{
 			tilemap_mark_tile_dirty(tilemap, offset);
@@ -57,8 +55,7 @@ public class runaway
 	
 	
 	
-	public static WriteHandlerPtr runaway_tile_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr runaway_tile_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 1) != tile_bank)
 		{
 			tilemap_mark_all_tiles_dirty(tilemap);
@@ -85,16 +82,14 @@ public class runaway
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_runaway  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_runaway  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(runaway_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_qwak  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_qwak  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(qwak_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8, 8, 32, 30);
 	
 		return tilemap == NULL;
@@ -102,8 +97,7 @@ public class runaway
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_runaway  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_runaway  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
@@ -137,8 +131,7 @@ public class runaway
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_qwak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_qwak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);

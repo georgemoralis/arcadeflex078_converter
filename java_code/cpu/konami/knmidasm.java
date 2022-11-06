@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.konami;
 
@@ -357,8 +357,8 @@ public class knmidasm
 		type = mode & 0x0f;
 	
 		/* special modes */
-		if ((mode & 0x80) != 0) {
-			if ((type & 8) != 0) { /* indirect */
+		if ( mode & 0x80 ) {
+			if ( type & 8 ) { /* indirect */
 				switch ( type & 7 ) {
 					case 0x00: /* register a */
 						sprintf( buf2, "[a,%s]", index_reg[idx] );
@@ -404,7 +404,7 @@ public class knmidasm
 				}
 			}
 		} else {
-			if ((type & 8) != 0) { /* indirect */
+			if ( type & 8 ) { /* indirect */
 				switch ( type & 7 ) {
 					case 0: /* auto increment */
 						sprintf( buf2, "[,%s+]", index_reg[idx] );
@@ -426,7 +426,7 @@ public class knmidasm
 						{
 							int val = get_next_byte();
 	
-							if ((val & 0x80) != 0)
+							if ( val & 0x80 )
 								sprintf( buf2, "[#$-%02x,%s]", 0x100 - val, index_reg[idx] );
 							else
 								sprintf( buf2, "[#$%02x,%s]", val, index_reg[idx] );
@@ -439,7 +439,7 @@ public class knmidasm
 	
 							val |= get_next_byte();
 	
-							if ((val & 0x8000) != 0)
+							if ( val & 0x8000 )
 								sprintf( buf2, "[#$-%04x,%s]", 0x10000 - val, index_reg[idx] );
 							else
 								sprintf( buf2, "[#$%04x,%s]", val, index_reg[idx] );
@@ -482,7 +482,7 @@ public class knmidasm
 						{
 							int val = get_next_byte();
 	
-							if ((val & 0x80) != 0)
+							if ( val & 0x80 )
 								sprintf( buf2, "#$-%02x,%s", 0x100 - val , index_reg[idx] );
 							else
 								sprintf( buf2, "#$%02x,%s", val, index_reg[idx] );
@@ -495,7 +495,7 @@ public class knmidasm
 	
 							val |= get_next_byte();
 	
-							if ((val & 0x8000) != 0)
+							if ( val & 0x8000 )
 								sprintf( buf2, "#$-%04x,%s", 0x10000 - val, index_reg[idx] );
 							else
 								sprintf( buf2, "#$%04x,%s", val, index_reg[idx] );
@@ -1382,7 +1382,7 @@ public class knmidasm
 			if ( ( mask >> i ) & 1 ) {
 				strcat( buf, stack_reg_s[i] );
 				mask &= ~( 1 << i );
-				if (mask != 0)
+				if ( mask )
 					strcat( buf, "," );
 				else
 					return;
@@ -1399,7 +1399,7 @@ public class knmidasm
 			if ( ( mask >> i ) & 1 ) {
 				strcat( buf, stack_reg_u[i] );
 				mask &= ~( 1 << i );
-				if (mask != 0)
+				if ( mask )
 					strcat( buf, "," );
 				else
 					return;
@@ -1416,7 +1416,7 @@ public class knmidasm
 			if ( ( mask >> i ) & 1 ) {
 				strcat( buf, stack_reg_s[i] );
 				mask &= ~( 1 << i );
-				if (mask != 0)
+				if ( mask )
 					strcat( buf, "," );
 				else
 					return;
@@ -1433,7 +1433,7 @@ public class knmidasm
 			if ( ( mask >> i ) & 1 ) {
 				strcat( buf, stack_reg_s[i] );
 				mask &= ~( 1 << i );
-				if (mask != 0)
+				if ( mask )
 					strcat( buf, "," );
 				else
 					return;

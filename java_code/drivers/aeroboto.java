@@ -23,7 +23,7 @@ Revisions:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,8 +38,7 @@ public class aeroboto
 	static int disable_irq = 0;
 	
 	
-	public static ReadHandlerPtr aeroboto_201_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr aeroboto_201_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* if you keep a button pressed during boot, the game will expect this */
 		/* serie of values to be returned from 3004, and display "PASS 201" if it is */
 		int res[4] = { 0xff,0x9f,0x1b,0x03};
@@ -49,24 +48,21 @@ public class aeroboto
 	} };
 	
 	
-	public static InterruptHandlerPtr aeroboto_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (disable_irq == 0)
+	public static InterruptHandlerPtr aeroboto_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (!disable_irq)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else
 			disable_irq--;
 	} };
 	
-	public static ReadHandlerPtr aeroboto_2973_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr aeroboto_2973_r  = new ReadHandlerPtr() { public int handler(int offset){
 		aeroboto_mainram[0x02be] = 0;
 		return(0xff);
 	} };
 	
-	static public static WriteHandlerPtr aeroboto_1a2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aeroboto_1a2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		aeroboto_mainram[0x01a2] = data;
-		if (data != 0) disable_irq = 1;
+		if (data) disable_irq = 1;
 	} };
 	
 	public static Memory_ReadAddress readmem[]={
@@ -132,7 +128,7 @@ public class aeroboto
 	
 	
 	
-	static InputPortPtr input_ports_formatz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_formatz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( formatz )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -262,8 +258,7 @@ public class aeroboto
 		new WriteHandlerPtr[] { 0, 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_formatz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( formatz )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000) // 1.25MHz
@@ -292,9 +287,7 @@ public class aeroboto
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -358,6 +351,6 @@ public class aeroboto
 	
 	
 	
-	public static GameDriver driver_formatz	   = new GameDriver("1984"	,"formatz"	,"aeroboto.java"	,rom_formatz,null	,machine_driver_formatz	,input_ports_formatz	,null	,ROT0	,	"Jaleco", "Formation Z", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_aeroboto	   = new GameDriver("1984"	,"aeroboto"	,"aeroboto.java"	,rom_aeroboto,driver_formatz	,machine_driver_formatz	,input_ports_formatz	,null	,ROT0	,	"[Jaleco] (Williams license)", "Aeroboto", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, formatz,  0,       formatz, formatz, 0, ROT0, "Jaleco", "Formation Z", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, aeroboto, formatz, formatz, formatz, 0, ROT0, "[Jaleco] (Williams license)", "Aeroboto", GAME_IMPERFECT_GRAPHICS )
 }

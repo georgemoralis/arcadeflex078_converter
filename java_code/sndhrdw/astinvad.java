@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -63,8 +63,7 @@ public class astinvad
 	);
 	
 	
-	public static WriteHandlerPtr astinvad_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astinvad_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int state;
 	
 		int bitsGoneHi = data & ~state;
@@ -76,10 +75,10 @@ public class astinvad
 			sample_stop(0);
 		}
 	
-		if ((bitsGoneHi & 0x01) != 0) sample_start(0, SND_UFO, 1);
-		if ((bitsGoneHi & 0x02) != 0) sample_start(1, SND_SHOT, 0);
-		if ((bitsGoneHi & 0x04) != 0) sample_start(2, SND_BASEHIT, 0);
-		if ((bitsGoneHi & 0x08) != 0) sample_start(3, SND_INVADERHIT, 0);
+		if (bitsGoneHi & 0x01) sample_start(0, SND_UFO, 1);
+		if (bitsGoneHi & 0x02) sample_start(1, SND_SHOT, 0);
+		if (bitsGoneHi & 0x04) sample_start(2, SND_BASEHIT, 0);
+		if (bitsGoneHi & 0x08) sample_start(3, SND_INVADERHIT, 0);
 	
 		astinvad_set_flash(data & 0x04); /* LT 20-3-1998 */
 	
@@ -87,17 +86,16 @@ public class astinvad
 	} };
 	
 	
-	public static WriteHandlerPtr astinvad_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astinvad_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int state;
 	
 		int bitsGoneHi = data & ~state;
 	
-		if ((bitsGoneHi & 0x01) != 0) sample_start(5, SND_FLEET1, 0);
-		if ((bitsGoneHi & 0x02) != 0) sample_start(5, SND_FLEET2, 0);
-		if ((bitsGoneHi & 0x04) != 0) sample_start(5, SND_FLEET3, 0);
-		if ((bitsGoneHi & 0x08) != 0) sample_start(5, SND_FLEET4, 0);
-		if ((bitsGoneHi & 0x10) != 0) sample_start(4, SND_UFOHIT, 0);
+		if (bitsGoneHi & 0x01) sample_start(5, SND_FLEET1, 0);
+		if (bitsGoneHi & 0x02) sample_start(5, SND_FLEET2, 0);
+		if (bitsGoneHi & 0x04) sample_start(5, SND_FLEET3, 0);
+		if (bitsGoneHi & 0x08) sample_start(5, SND_FLEET4, 0);
+		if (bitsGoneHi & 0x10) sample_start(4, SND_UFOHIT, 0);
 	
 		flip_screen_set(readinputport(3) & data & 0x20);
 	
@@ -105,8 +103,7 @@ public class astinvad
 	} };
 	
 	
-	public static WriteHandlerPtr spaceint_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceint_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int state;
 	
 		int bitsGoneHi = data & ~state;
@@ -116,29 +113,28 @@ public class astinvad
 			sample_stop(0);
 		}
 	
-		if ((bitsGoneHi & 0x01) != 0) sample_start(1, SND_SHOT, 0);
-		if ((bitsGoneHi & 0x02) != 0) sample_start(2, SND_BASEHIT, 0);
-		if ((bitsGoneHi & 0x04) != 0) sample_start(4, SND_UFOHIT, 0);
-		if ((bitsGoneHi & 0x08) != 0) sample_start(0, SND_UFO, 1);
+		if (bitsGoneHi & 0x01) sample_start(1, SND_SHOT, 0);
+		if (bitsGoneHi & 0x02) sample_start(2, SND_BASEHIT, 0);
+		if (bitsGoneHi & 0x04) sample_start(4, SND_UFOHIT, 0);
+		if (bitsGoneHi & 0x08) sample_start(0, SND_UFO, 1);
 	
-		if ((bitsGoneHi & 0x10) != 0) sample_start(5, SND_FLEET1, 0);
-		if ((bitsGoneHi & 0x20) != 0) sample_start(5, SND_FLEET2, 0);
-		if ((bitsGoneHi & 0x40) != 0) sample_start(5, SND_FLEET3, 0);
-		if ((bitsGoneHi & 0x80) != 0) sample_start(5, SND_FLEET4, 0);
+		if (bitsGoneHi & 0x10) sample_start(5, SND_FLEET1, 0);
+		if (bitsGoneHi & 0x20) sample_start(5, SND_FLEET2, 0);
+		if (bitsGoneHi & 0x40) sample_start(5, SND_FLEET3, 0);
+		if (bitsGoneHi & 0x80) sample_start(5, SND_FLEET4, 0);
 	
 		state = data;
 	} };
 	
 	
-	public static WriteHandlerPtr spaceint_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceint_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int state;
 	
 		int bitsGoneHi = data & ~state;
 	
 		mixer_sound_enable_global_w(data & 0x02);
 	
-		if ((bitsGoneHi & 0x04) != 0) sample_start(3, SND_INVADERHIT, 0);
+		if (bitsGoneHi & 0x04) sample_start(3, SND_INVADERHIT, 0);
 	
 		flip_screen_set(readinputport(3) & data & 0x80);
 	

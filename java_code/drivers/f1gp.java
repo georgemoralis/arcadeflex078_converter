@@ -21,7 +21,7 @@ f1gp2:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -60,8 +60,7 @@ public class f1gp
 		return rom[offset] | (rom[offset+1] << 8);
 	}
 	
-	public static WriteHandlerPtr f1gp_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr f1gp_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU3) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x01) * 0x8000);
@@ -72,7 +71,7 @@ public class f1gp
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -85,8 +84,7 @@ public class f1gp
 		return (pending_command ? 0xff : 0);
 	}
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
@@ -221,7 +219,7 @@ public class f1gp
 	
 	
 	
-	static InputPortPtr input_ports_f1gp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1gp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1gp )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -326,7 +324,7 @@ public class f1gp
 	
 	
 	/* the same as f1gp, but with an extra button */
-	static InputPortPtr input_ports_f1gp2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1gp2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1gp2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -504,8 +502,7 @@ public class f1gp
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_f1gp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f1gp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,10000000)	/* 10 MHz ??? */
@@ -537,12 +534,9 @@ public class f1gp
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_f1gp2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f1gp2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(f1gp)
@@ -555,9 +549,7 @@ public class f1gp
 	
 		MDRV_VIDEO_START(f1gp2)
 		MDRV_VIDEO_UPDATE(f1gp2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -646,6 +638,6 @@ public class f1gp
 	
 	
 	
-	public static GameDriver driver_f1gp	   = new GameDriver("1991"	,"f1gp"	,"f1gp.java"	,rom_f1gp,null	,machine_driver_f1gp	,input_ports_f1gp	,null	,ROT90	,	"Video System Co.", "F-1 Grand Prix",         GAME_NO_COCKTAIL )
-	public static GameDriver driver_f1gp2	   = new GameDriver("1992"	,"f1gp2"	,"f1gp.java"	,rom_f1gp2,null	,machine_driver_f1gp2	,input_ports_f1gp2	,null	,ROT90	,	"Video System Co.", "F-1 Grand Prix Part II", GAME_NO_COCKTAIL )
+	GAMEX( 1991, f1gp,  0, f1gp,  f1gp,  0, ROT90, "Video System Co.", "F-1 Grand Prix",         GAME_NO_COCKTAIL )
+	GAMEX( 1992, f1gp2, 0, f1gp2, f1gp2, 0, ROT90, "Video System Co.", "F-1 Grand Prix Part II", GAME_NO_COCKTAIL )
 }

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -190,7 +190,7 @@ public class exidy440
 		/* allocate the sample cache */
 		length = memory_region_length(REGION_SOUND1) * 16 + MAX_CACHE_ENTRIES * sizeof(sound_cache_entry);
 		sound_cache = auto_malloc(length);
-		if (sound_cache == 0)
+		if (!sound_cache)
 			return 1;
 	
 		/* determine the hard end of the cache and reset */
@@ -199,11 +199,11 @@ public class exidy440
 	
 		/* allocate the mixer buffer */
 		mixer_buffer_left = auto_malloc(2 * SAMPLE_RATE_FAST * sizeof(INT32));
-		if (mixer_buffer_left == 0)
+		if (!mixer_buffer_left)
 			return 1;
 		mixer_buffer_right = mixer_buffer_left + SAMPLE_RATE_FAST;
 	
-		if (SOUND_LOG != 0)
+		if (SOUND_LOG)
 			debuglog = fopen("sound.log", "w");
 	
 		return 0;
@@ -250,12 +250,12 @@ public class exidy440
 		int i;
 	
 		/* channels 2 and 3 are half-rate samples */
-		if ((ch & 2) != 0)
+		if (ch & 2)
 		{
-			srcdata = &channel.base[channel.offset >> 1];
+			srcdata = &channel->base[channel->offset >> 1];
 	
 			/* handle the edge case */
-			if (channel.offset & 1)
+			if (channel->offset & 1)
 			{
 				*dest++ += *srcdata++ * volume / 256;
 				samples--;
@@ -273,7 +273,7 @@ public class exidy440
 		/* channels 0 and 1 are full-rate samples */
 		else
 		{
-			srcdata = &channel.base[channel.offset];
+			srcdata = &channel->base[channel->offset];
 			for (i = 0; i < samples; i++)
 				*dest++ += *srcdata++ * volume / 256;
 		}
@@ -330,29 +330,29 @@ public class exidy440
 			int effective_offset;
 	
 			/* if we're not active, bail */
-			if (channel.remaining <= 0)
+			if (channel->remaining <= 0)
 				continue;
 	
 			/* see how many samples to copy */
-			samples = (left > channel.remaining) ? channel.remaining : left;
+			samples = (left > channel->remaining) ? channel->remaining : left;
 	
 			/* get a pointer to the sample data and copy to the left */
 			volume = exidy440_sound_volume[2 * ch + 0];
-			if (volume != 0)
+			if (volume)
 				add_and_scale_samples(ch, mixer_buffer_left, samples, volume);
 	
 			/* get a pointer to the sample data and copy to the left */
 			volume = exidy440_sound_volume[2 * ch + 1];
-			if (volume != 0)
+			if (volume)
 				add_and_scale_samples(ch, mixer_buffer_right, samples, volume);
 	
 			/* update our counters */
-			channel.offset += samples;
-			channel.remaining -= samples;
+			channel->offset += samples;
+			channel->remaining -= samples;
 			left -= samples;
 	
 			/* update the MC6844 */
-			effective_offset = (ch & 2) ? channel.offset / 2 : channel.offset;
+			effective_offset = (ch & 2) ? channel->offset / 2 : channel->offset;
 			m6844_channel[ch].address = m6844_channel[ch].start_address + effective_offset / 8;
 			m6844_channel[ch].counter = m6844_channel[ch].start_counter - effective_offset / 8;
 			if (m6844_channel[ch].counter <= 0)
@@ -375,8 +375,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* clear the FIRQ that got us here and acknowledge the read to the main CPU */
 		cpu_set_irq_line(1, 1, CLEAR_LINE);
 		exidy440_sound_command_ack = 1;
@@ -392,8 +391,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy440_sound_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_sound_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (SOUND_LOG && debuglog)
 			fprintf(debuglog, "Volume %02X=%02X\n", offset, data);
 	
@@ -412,8 +410,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr exidy440_sound_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_sound_interrupt_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 0, CLEAR_LINE);
 	} };
 	
@@ -437,15 +434,15 @@ public class exidy440
 		m6844_channel_data *channel = &m6844_channel[ch];
 	
 		/* mark us inactive */
-		channel.active = 0;
+		channel->active = 0;
 	
 		/* set the final address and counter */
-		channel.counter = 0;
-		channel.address = channel.start_address + channel.start_counter;
+		channel->counter = 0;
+		channel->address = channel->start_address + channel->start_counter;
 	
 		/* clear the DMA busy bit and set the DMA end bit */
-		channel.control &= ~0x40;
-		channel.control |= 0x80;
+		channel->control &= ~0x40;
+		channel->control |= 0x80;
 	}
 	
 	
@@ -456,8 +453,7 @@ public class exidy440
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr exidy440_m6844_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exidy440_m6844_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		/* first update the current state of the DMA transfers */
@@ -537,8 +533,7 @@ public class exidy440
 	} };
 	
 	
-	public static WriteHandlerPtr exidy440_m6844_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exidy440_m6844_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		/* first update the current state of the DMA transfers */
@@ -665,15 +660,15 @@ public class exidy440
 		}
 	
 		/* fill in this entry */
-		current.next = sound_cache_end;
-		current.address = address;
-		current.length = length;
-		current.bits = bits;
-		current.frequency = frequency;
+		current->next = sound_cache_end;
+		current->address = address;
+		current->length = length;
+		current->bits = bits;
+		current->frequency = frequency;
 	
 		/* decode the data into the cache */
-		decode_and_filter_cvsd(input, length, bits, frequency, current.data);
-		return current.data;
+		decode_and_filter_cvsd(input, length, bits, frequency, current->data);
+		return current->data;
 	}
 	
 	
@@ -681,9 +676,9 @@ public class exidy440
 	{
 		sound_cache_entry *current;
 	
-		for (current = sound_cache; current < sound_cache_end; current = current.next)
-			if (current.address == address && current.length == length && current.bits == bits && current.frequency == frequency)
-				return current.data;
+		for (current = sound_cache; current < sound_cache_end; current = current->next)
+			if (current->address == address && current->length == length && current->bits == bits && current->frequency == frequency)
+				return current->data;
 	
 		return add_to_sound_cache(&memory_region(REGION_SOUND1)[address], address, length, bits, frequency);
 	}
@@ -715,15 +710,15 @@ public class exidy440
 	
 		/* compute the base address in the converted samples array */
 		base = find_or_add_to_sound_cache(address, length, channel_bits[ch], channel_frequency[ch]);
-		if (base == 0)
+		if (!base)
 			return;
 	
 		/* if the length is 0 or 1, just do an immediate end */
 		if (length <= 3)
 		{
-			channel.base = base;
-			channel.offset = length;
-			channel.remaining = 0;
+			channel->base = base;
+			channel->offset = length;
+			channel->remaining = 0;
 			m6844_finished(ch);
 			return;
 		}
@@ -734,12 +729,12 @@ public class exidy440
 					m6844_channel[ch].counter, exidy440_sound_volume[ch * 2], exidy440_sound_volume[ch * 2 + 1]);
 	
 		/* set the pointer and count */
-		channel.base = base;
-		channel.offset = 0;
-		channel.remaining = length * 8;
+		channel->base = base;
+		channel->offset = 0;
+		channel->remaining = length * 8;
 	
 		/* channels 2 and 3 play twice as slow, so we need to count twice as many samples */
-		if ((ch & 2) != 0) channel.remaining *= 2;
+		if (ch & 2) channel->remaining *= 2;
 	}
 	
 	
@@ -930,7 +925,7 @@ public class exidy440
 	#endif
 	
 		/* make sure the volume goes smoothly to 0 over the last 512 samples */
-		if (FADE_TO_ZERO != 0)
+		if (FADE_TO_ZERO)
 		{
 			INT16 *data;
 	

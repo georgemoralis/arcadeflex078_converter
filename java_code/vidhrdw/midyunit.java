@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -80,8 +80,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate memory */
 		midyunit_cmos_ram = auto_malloc(0x2000 * 4);
 		local_videoram = auto_malloc(0x80000);
@@ -109,13 +108,12 @@ public class midyunit
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_midyunit_4bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_midyunit_4bit  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_common();
 		int i;
 	
 		/* handle failure */
-		if (result != 0)
+		if (result)
 			return result;
 	
 		/* init for 4-bit */
@@ -127,13 +125,12 @@ public class midyunit
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_midyunit_6bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_midyunit_6bit  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_common();
 		int i;
 	
 		/* handle failure */
-		if (result != 0)
+		if (result)
 			return result;
 	
 		/* init for 6-bit */
@@ -145,13 +142,12 @@ public class midyunit
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_midzunit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_midzunit  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_common();
 		int i;
 	
 		/* handle failure */
-		if (result != 0)
+		if (result)
 			return result;
 	
 		/* init for 8-bit */
@@ -191,18 +187,18 @@ public class midyunit
 	WRITE16_HANDLER( midyunit_vram_w )
 	{
 		offset *= 2;
-		if (videobank_select != 0)
+		if (videobank_select)
 		{
-			if (ACCESSING_LSB != 0)
+			if (ACCESSING_LSB)
 				local_videoram[offset] = (data & 0x00ff) | (dma_register[DMA_PALETTE] << 8);
-			if (ACCESSING_MSB != 0)
+			if (ACCESSING_MSB)
 				local_videoram[offset + 1] = (data >> 8) | (dma_register[DMA_PALETTE] & 0xff00);
 		}
 		else
 		{
-			if (ACCESSING_LSB != 0)
+			if (ACCESSING_LSB)
 				local_videoram[offset] = (local_videoram[offset] & 0x00ff) | (data << 8);
-			if (ACCESSING_MSB != 0)
+			if (ACCESSING_MSB)
 				local_videoram[offset + 1] = (local_videoram[offset + 1] & 0x00ff) | (data & 0xff00);
 		}
 	}
@@ -211,7 +207,7 @@ public class midyunit
 	READ16_HANDLER( midyunit_vram_r )
 	{
 		offset *= 2;
-		if (videobank_select != 0)
+		if (videobank_select)
 			return (local_videoram[offset] & 0x00ff) | (local_videoram[offset + 1] << 8);
 		else
 			return (local_videoram[offset] >> 8) | (local_videoram[offset + 1] & 0xff00);
@@ -260,7 +256,7 @@ public class midyunit
 		 *
 		 */
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* CMOS page is bits 6-7 */
 			midyunit_cmos_page = ((data >> 6) & 3) * 0x1000;
@@ -269,9 +265,9 @@ public class midyunit
 			videobank_select = (data >> 5) & 1;
 	
 			/* handle autoerase disable (bit 4) */
-			if ((data & 0x10) != 0)
+			if (data & 0x10)
 			{
-				if (autoerase_enable != 0)
+				if (autoerase_enable)
 				{
 					logerror("autoerase off @ %d\n", cpu_getscanline());
 					update_partial(cpu_getscanline() - 1, 1);
@@ -282,7 +278,7 @@ public class midyunit
 			/* handle autoerase enable (bit 4)  */
 			else
 			{
-				if (autoerase_enable == 0)
+				if (!autoerase_enable)
 				{
 					logerror("autoerase on @ %d\n", cpu_getscanline());
 					update_partial(cpu_getscanline() - 1, 1);
@@ -382,7 +378,7 @@ public class midyunit
 					int pixel = base[o];											\
 																					\
 					/* non-zero pixel case */										\
-					if (pixel != 0)														\
+					if (pixel)														\
 					{																\
 						if (nonzero == PIXEL_COLOR)									\
 							dest[tx] = color;										\
@@ -401,7 +397,7 @@ public class midyunit
 				}																	\
 																					\
 				/* update pointers */												\
-				if (xflip != 0) tx--;													\
+				if (xflip) tx--;													\
 				else tx++;															\
 			}																		\
 		}																			\
@@ -478,7 +474,7 @@ public class midyunit
 	static void dma_callback(int is_in_34010_context)
 	{
 		dma_register[DMA_COMMAND] &= ~0x8000; /* tell the cpu we're done */
-		if (is_in_34010_context != 0)
+		if (is_in_34010_context)
 		{
 			tms34010_set_irq_callback(temp_irq_callback);
 			tms34010_set_irq_line(0, ASSERT_LINE);
@@ -609,7 +605,7 @@ public class midyunit
 	
 		/* determine the offset and adjust the rowbytes */
 		gfxoffset = dma_register[DMA_OFFSETLO] | (dma_register[DMA_OFFSETHI] << 16);
-		if ((command & 0x10) != 0)
+		if (command & 0x10)
 		{
 			gfxoffset -= (dma_state.width - 1) * 8;
 			dma_state.rowbytes = (dma_state.rowbytes - dma_state.width + 3) & ~3;
@@ -667,7 +663,7 @@ public class midyunit
 		}
 	
 		/* signal we're done */
-		if (FAST_DMA != 0)
+		if (FAST_DMA)
 			dma_callback(1);
 		else
 			timer_set(TIME_IN_NSEC(41 * dma_state.width * dma_state.height), 0, dma_callback);
@@ -686,27 +682,27 @@ public class midyunit
 	static void update_partial(int scanline, int render)
 	{
 		/* force a partial refresh */
-		if (render != 0)
+		if (render)
 			force_partial_update(scanline);
 	
 		/* if no autoerase is enabled, quit now */
-		if (autoerase_enable != 0)
+		if (autoerase_enable)
 		{
 			int starty, stopy;
 			int v, width, xoffs;
 			UINT32 offset;
 	
 			/* autoerase the lines here */
-			starty = (last_update_scanline > Machine.visible_area.min_y) ? last_update_scanline : Machine.visible_area.min_y;
-			stopy = (scanline < Machine.visible_area.max_y) ? scanline : Machine.visible_area.max_y;
+			starty = (last_update_scanline > Machine->visible_area.min_y) ? last_update_scanline : Machine->visible_area.min_y;
+			stopy = (scanline < Machine->visible_area.max_y) ? scanline : Machine->visible_area.max_y;
 	
 			/* determine the base of the videoram */
 			offset = (~tms34010_get_DPYSTRT(0) & 0x1ff0) << 5;
-			offset += 512 * (starty - Machine.visible_area.min_y);
+			offset += 512 * (starty - Machine->visible_area.min_y);
 	
 			/* determine how many pixels to copy */
-			xoffs = Machine.visible_area.min_x;
-			width = Machine.visible_area.max_x - xoffs + 1;
+			xoffs = Machine->visible_area.min_x;
+			width = Machine->visible_area.max_x - xoffs + 1;
 			offset += xoffs;
 	
 			/* loop over rows */
@@ -776,10 +772,9 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static VideoEofHandlerPtr video_eof_midyunit  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_midyunit  = new VideoEofHandlerPtr() { public void handler(){
 		/* finish updating/autoerasing, even if we skipped a frame */
-		update_partial(Machine.visible_area.max_y, 0);
+		update_partial(Machine->visible_area.max_y, 0);
 	} };
 	
 	
@@ -797,8 +792,7 @@ public class midyunit
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_midyunit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int hsblnk, heblnk, leftscroll;
 		int v, width, xoffs;
 		UINT32 offset;

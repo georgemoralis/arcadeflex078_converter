@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,8 +49,7 @@ public class ccastles
 	  bit 0 -- inverter -- 1  kohm resistor  -- GREEN
 	
 	***************************************************************************/
-	public static WriteHandlerPtr ccastles_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccastles_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int bit0,bit1,bit2;
 	
@@ -59,7 +58,7 @@ public class ccastles
 		b = (data & 0x38) >> 3;
 		g = (data & 0x07);
 		/* a write to offset 32-63 means to set the msb of the red component */
-		if ((offset & 0x20) != 0) r += 4;
+		if (offset & 0x20) r += 4;
 	
 		/* bits are inverted */
 		r = 7-r;
@@ -89,8 +88,7 @@ public class ccastles
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_ccastles  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ccastles  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -105,8 +103,7 @@ public class ccastles
 	
 	
 	
-	public static ReadHandlerPtr ccastles_bitmode_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ccastles_bitmode_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int addr;
 	
 		addr = (ccastles_screen_addr[1]<<7) | (ccastles_screen_addr[0]>>1);
@@ -142,8 +139,7 @@ public class ccastles
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr ccastles_bitmode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ccastles_bitmode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int addr;
 	
 	
@@ -171,16 +167,16 @@ public class ccastles
 			j = 2*addr;
 			x = j%256;
 			y = j/256;
-			if (flip_screen == 0)
+			if (!flip_screen())
 			{
-				plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
-				plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
+				plot_pixel(tmpbitmap, x  , y, Machine->pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
+				plot_pixel(tmpbitmap, x+1, y, Machine->pens[16 +  (videoram.read(addr)& 0x0f)      ]);
 	
 				/* if bit 3 of the pixel is set, background has priority over sprites when */
 				/* the sprite has the priority bit set. We use a second bitmap to remember */
 				/* which pixels have priority. */
-				plot_pixel.handler(maskbitmap, x  , y, videoram.read(addr)& 0x80);
-				plot_pixel.handler(maskbitmap, x+1, y, videoram.read(addr)& 0x08);
+				plot_pixel(maskbitmap, x  , y, videoram.read(addr)& 0x80);
+				plot_pixel(maskbitmap, x+1, y, videoram.read(addr)& 0x08);
 			}
 			else
 			{
@@ -188,14 +184,14 @@ public class ccastles
 				x = 254-x;
 				if (y >= 0)
 				{
-					plot_pixel.handler(tmpbitmap, x+1, y, Machine.pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
-					plot_pixel.handler(tmpbitmap, x  , y, Machine.pens[16 +  (videoram.read(addr)& 0x0f)      ]);
+					plot_pixel(tmpbitmap, x+1, y, Machine->pens[16 + ((videoram.read(addr)& 0xf0) >> 4)]);
+					plot_pixel(tmpbitmap, x  , y, Machine->pens[16 +  (videoram.read(addr)& 0x0f)      ]);
 	
 					/* if bit 3 of the pixel is set, background has priority over sprites when */
 					/* the sprite has the priority bit set. We use a second bitmap to remember */
 					/* which pixels have priority. */
-					plot_pixel.handler(maskbitmap, x+1, y, videoram.read(addr)& 0x80);
-					plot_pixel.handler(maskbitmap, x  , y, videoram.read(addr)& 0x08);
+					plot_pixel(maskbitmap, x+1, y, videoram.read(addr)& 0x80);
+					plot_pixel(maskbitmap, x  , y, videoram.read(addr)& 0x08);
 				}
 			}
 		}
@@ -267,14 +263,13 @@ public class ccastles
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ccastles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ccastles  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		unsigned char *spriteaddr;
 		int scrollx,scrolly;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			redraw_bitmap();
 		}
@@ -282,7 +277,7 @@ public class ccastles
 		scrollx = 255 - *ccastles_scrollx;
 		scrolly = 255 - *ccastles_scrolly;
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			scrollx = 254 - scrollx;
 			scrolly = 231 - scrolly;
@@ -332,7 +327,7 @@ public class ccastles
 							/* if background has priority over sprite, make the */
 							/* temporary bitmap transparent */
 							if (pixb != 0 && (pixa != Machine.pens[0]))
-								plot_pixel.handler(sprite_bm, i, j, Machine.pens[7]);
+								plot_pixel(sprite_bm, i, j, Machine.pens[7]);
 						}
 					}
 				}

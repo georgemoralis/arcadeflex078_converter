@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.xml2info;
 
@@ -220,14 +220,14 @@ public class xmltok
 	#endif
 	
 	#ifdef XML_MIN_SIZE
-	#define MINBPC(enc) ((enc).minBytesPerChar)
+	#define MINBPC(enc) ((enc)->minBytesPerChar)
 	#else
 	/* minimum bytes per character */
 	#define MINBPC(enc) 1
 	#endif
 	
 	#define SB_BYTE_TYPE(enc, p) \
-	  (((struct normal_encoding *)(enc)).type[(unsigned char)*(p)])
+	  (((struct normal_encoding *)(enc))->type[(unsigned char)*(p)])
 	
 	#ifdef XML_MIN_SIZE
 	static int PTRFASTCALL
@@ -236,14 +236,14 @@ public class xmltok
 	  return SB_BYTE_TYPE(enc, p);
 	}
 	#define BYTE_TYPE(enc, p) \
-	 (AS_NORMAL_ENCODING(enc).byteType(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->byteType(enc, p))
 	#else
 	#define BYTE_TYPE(enc, p) SB_BYTE_TYPE(enc, p)
 	#endif
 	
 	#ifdef XML_MIN_SIZE
 	#define BYTE_TO_ASCII(enc, p) \
-	 (AS_NORMAL_ENCODING(enc).byteToAscii(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->byteToAscii(enc, p))
 	static int PTRFASTCALL
 	sb_byteToAscii(const ENCODING *enc, const char *p)
 	{
@@ -254,17 +254,17 @@ public class xmltok
 	#endif
 	
 	#define IS_NAME_CHAR(enc, p, n) \
-	 (AS_NORMAL_ENCODING(enc).isName ## n(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->isName ## n(enc, p))
 	#define IS_NMSTRT_CHAR(enc, p, n) \
-	 (AS_NORMAL_ENCODING(enc).isNmstrt ## n(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->isNmstrt ## n(enc, p))
 	#define IS_INVALID_CHAR(enc, p, n) \
-	 (AS_NORMAL_ENCODING(enc).isInvalid ## n(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->isInvalid ## n(enc, p))
 	
 	#ifdef XML_MIN_SIZE
 	#define IS_NAME_CHAR_MINBPC(enc, p) \
-	 (AS_NORMAL_ENCODING(enc).isNameMin(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->isNameMin(enc, p))
 	#define IS_NMSTRT_CHAR_MINBPC(enc, p) \
-	 (AS_NORMAL_ENCODING(enc).isNmstrtMin(enc, p))
+	 (AS_NORMAL_ENCODING(enc)->isNmstrtMin(enc, p))
 	#else
 	#define IS_NAME_CHAR_MINBPC(enc, p) (0)
 	#define IS_NMSTRT_CHAR_MINBPC(enc, p) (0)
@@ -272,7 +272,7 @@ public class xmltok
 	
 	#ifdef XML_MIN_SIZE
 	#define CHAR_MATCHES(enc, p, c) \
-	 (AS_NORMAL_ENCODING(enc).charMatches(enc, p, c))
+	 (AS_NORMAL_ENCODING(enc)->charMatches(enc, p, c))
 	static int PTRCALL
 	sb_charMatches(const ENCODING *enc, const char *p, int c)
 	{
@@ -329,7 +329,7 @@ public class xmltok
 	  unsigned short *to = *toP;
 	  const char *from = *fromP;
 	  while (from != fromLim && to != toLim) {
-	    switch (((struct normal_encoding *)enc).type[(unsigned char)*from]) {
+	    switch (((struct normal_encoding *)enc)->type[(unsigned char)*from]) {
 	    case BT_LEAD2:
 	      *to++ = (unsigned short)(((from[0] & 0x1f) << 6) | (from[1] & 0x3f));
 	      from += 2;
@@ -411,7 +411,7 @@ public class xmltok
 	    if (*fromP == fromLim)
 	      break;
 	    c = (unsigned char)**fromP;
-	    if ((c & 0x80) != 0) {
+	    if (c & 0x80) {
 	      if (toLim - *toP < 2)
 	        break;
 	      *(*toP)++ = (char)((c >> 6) | UTF8_cval2);
@@ -608,7 +608,7 @@ public class xmltok
 	
 	#define LITTLE2_BYTE_TYPE(enc, p) \
 	 ((p)[1] == 0 \
-	  ? ((struct normal_encoding *)(enc)).type[(unsigned char)*(p)] \
+	  ? ((struct normal_encoding *)(enc))->type[(unsigned char)*(p)] \
 	  : unicode_byte_type((p)[1], (p)[0]))
 	#define LITTLE2_BYTE_TO_ASCII(enc, p) ((p)[1] == 0 ? (p)[0] : -1)
 	#define LITTLE2_CHAR_MATCHES(enc, p, c) ((p)[1] == 0 && (p)[0] == c)
@@ -738,7 +738,7 @@ public class xmltok
 	
 	#define BIG2_BYTE_TYPE(enc, p) \
 	 ((p)[0] == 0 \
-	  ? ((struct normal_encoding *)(enc)).type[(unsigned char)(p)[1]] \
+	  ? ((struct normal_encoding *)(enc))->type[(unsigned char)(p)[1]] \
 	  : unicode_byte_type((p)[0], (p)[1]))
 	#define BIG2_BYTE_TO_ASCII(enc, p) ((p)[0] == 0 ? (p)[1] : -1)
 	#define BIG2_CHAR_MATCHES(enc, p, c) ((p)[0] == 0 && (p)[1] == c)
@@ -879,7 +879,7 @@ public class xmltok
 	      c2 += ASCII_A - ASCII_a;
 	    if (c1 != c2)
 	      return 0;
-	    if (c1 == 0)
+	    if (!c1)
 	      break;
 	  }
 	  return 1;
@@ -940,7 +940,7 @@ public class xmltok
 	    return 0;
 	  }
 	  do {
-	    ptr += enc.minBytesPerChar;
+	    ptr += enc->minBytesPerChar;
 	  } while (isSpace(toAscii(enc, ptr, end)));
 	  if (ptr == end) {
 	    *namePtr = NULL;
@@ -960,7 +960,7 @@ public class xmltok
 	    if (isSpace(c)) {
 	      *nameEndPtr = ptr;
 	      do {
-	        ptr += enc.minBytesPerChar;
+	        ptr += enc->minBytesPerChar;
 	      } while (isSpace(c = toAscii(enc, ptr, end)));
 	      if (c != ASCII_EQUALS) {
 	        *nextTokPtr = ptr;
@@ -968,16 +968,16 @@ public class xmltok
 	      }
 	      break;
 	    }
-	    ptr += enc.minBytesPerChar;
+	    ptr += enc->minBytesPerChar;
 	  }
 	  if (ptr == *namePtr) {
 	    *nextTokPtr = ptr;
 	    return 0;
 	  }
-	  ptr += enc.minBytesPerChar;
+	  ptr += enc->minBytesPerChar;
 	  c = toAscii(enc, ptr, end);
 	  while (isSpace(c)) {
-	    ptr += enc.minBytesPerChar;
+	    ptr += enc->minBytesPerChar;
 	    c = toAscii(enc, ptr, end);
 	  }
 	  if (c != ASCII_QUOT && c != ASCII_APOS) {
@@ -985,9 +985,9 @@ public class xmltok
 	    return 0;
 	  }
 	  open = (char)c;
-	  ptr += enc.minBytesPerChar;
+	  ptr += enc->minBytesPerChar;
 	  *valPtr = ptr;
-	  for (;; ptr += enc.minBytesPerChar) {
+	  for (;; ptr += enc->minBytesPerChar) {
 	    c = toAscii(enc, ptr, end);
 	    if (c == open)
 	      break;
@@ -1001,7 +1001,7 @@ public class xmltok
 	      return 0;
 	    }
 	  }
-	  *nextTokPtr = ptr + enc.minBytesPerChar;
+	  *nextTokPtr = ptr + enc->minBytesPerChar;
 	  return 1;
 	}
 	
@@ -1044,30 +1044,30 @@ public class xmltok
 	  const char *val = NULL;
 	  const char *name = NULL;
 	  const char *nameEnd = NULL;
-	  ptr += 5 * enc.minBytesPerChar;
-	  end -= 2 * enc.minBytesPerChar;
+	  ptr += 5 * enc->minBytesPerChar;
+	  end -= 2 * enc->minBytesPerChar;
 	  if (!parsePseudoAttribute(enc, ptr, end, &name, &nameEnd, &val, &ptr)
 	      || !name) {
 	    *badPtr = ptr;
 	    return 0;
 	  }
 	  if (!XmlNameMatchesAscii(enc, name, nameEnd, KW_version)) {
-	    if (isGeneralTextEntity == 0) {
+	    if (!isGeneralTextEntity) {
 	      *badPtr = name;
 	      return 0;
 	    }
 	  }
 	  else {
-	    if (versionPtr != 0)
+	    if (versionPtr)
 	      *versionPtr = val;
-	    if (versionEndPtr != 0)
+	    if (versionEndPtr)
 	      *versionEndPtr = ptr;
 	    if (!parsePseudoAttribute(enc, ptr, end, &name, &nameEnd, &val, &ptr)) {
 	      *badPtr = ptr;
 	      return 0;
 	    }
-	    if (name == 0) {
-	      if (isGeneralTextEntity != 0) {
+	    if (!name) {
+	      if (isGeneralTextEntity) {
 	        /* a TextDecl must have an EncodingDecl */
 	        *badPtr = ptr;
 	        return 0;
@@ -1081,15 +1081,15 @@ public class xmltok
 	      *badPtr = val;
 	      return 0;
 	    }
-	    if (encodingName != 0)
+	    if (encodingName)
 	      *encodingName = val;
-	    if (encoding != 0)
-	      *encoding = encodingFinder(enc, val, ptr - enc.minBytesPerChar);
+	    if (encoding)
+	      *encoding = encodingFinder(enc, val, ptr - enc->minBytesPerChar);
 	    if (!parsePseudoAttribute(enc, ptr, end, &name, &nameEnd, &val, &ptr)) {
 	      *badPtr = ptr;
 	      return 0;
 	    }
-	    if (name == 0)
+	    if (!name)
 	      return 1;
 	  }
 	  if (!XmlNameMatchesAscii(enc, name, nameEnd, KW_standalone)
@@ -1097,12 +1097,12 @@ public class xmltok
 	    *badPtr = name;
 	    return 0;
 	  }
-	  if (XmlNameMatchesAscii(enc, val, ptr - enc.minBytesPerChar, KW_yes)) {
-	    if (standalone != 0)
+	  if (XmlNameMatchesAscii(enc, val, ptr - enc->minBytesPerChar, KW_yes)) {
+	    if (standalone)
 	      *standalone = 1;
 	  }
-	  else if (XmlNameMatchesAscii(enc, val, ptr - enc.minBytesPerChar, KW_no)) {
-	    if (standalone != 0)
+	  else if (XmlNameMatchesAscii(enc, val, ptr - enc->minBytesPerChar, KW_no)) {
+	    if (standalone)
 	      *standalone = 0;
 	  }
 	  else {
@@ -1110,7 +1110,7 @@ public class xmltok
 	    return 0;
 	  }
 	  while (isSpace(toAscii(enc, ptr, end)))
-	    ptr += enc.minBytesPerChar;
+	    ptr += enc->minBytesPerChar;
 	  if (ptr != end) {
 	    *badPtr = ptr;
 	    return 0;
@@ -1212,7 +1212,7 @@ public class xmltok
 	unknown_isName(const ENCODING *enc, const char *p)
 	{
 	  const struct unknown_encoding *uenc = AS_UNKNOWN_ENCODING(enc);
-	  int c = uenc.convert(uenc.userData, p);
+	  int c = uenc->convert(uenc->userData, p);
 	  if (c & ~0xFFFF)
 	    return 0;
 	  return UCS2_GET_NAMING(namePages, c >> 8, c & 0xFF);
@@ -1222,7 +1222,7 @@ public class xmltok
 	unknown_isNmstrt(const ENCODING *enc, const char *p)
 	{
 	  const struct unknown_encoding *uenc = AS_UNKNOWN_ENCODING(enc);
-	  int c = uenc.convert(uenc.userData, p);
+	  int c = uenc->convert(uenc->userData, p);
 	  if (c & ~0xFFFF)
 	    return 0;
 	  return UCS2_GET_NAMING(nmstrtPages, c >> 8, c & 0xFF);
@@ -1232,7 +1232,7 @@ public class xmltok
 	unknown_isInvalid(const ENCODING *enc, const char *p)
 	{
 	  const struct unknown_encoding *uenc = AS_UNKNOWN_ENCODING(enc);
-	  int c = uenc.convert(uenc.userData, p);
+	  int c = uenc->convert(uenc->userData, p);
 	  return (c & ~0xFFFF) || checkCharRefNumber(c) < 0;
 	}
 	
@@ -1248,15 +1248,15 @@ public class xmltok
 	    int n;
 	    if (*fromP == fromLim)
 	      break;
-	    utf8 = uenc.utf8[(unsigned char)**fromP];
+	    utf8 = uenc->utf8[(unsigned char)**fromP];
 	    n = *utf8++;
 	    if (n == 0) {
-	      int c = uenc.convert(uenc.userData, *fromP);
+	      int c = uenc->convert(uenc->userData, *fromP);
 	      n = XmlUtf8Encode(c, buf);
 	      if (n > toLim - *toP)
 	        break;
 	      utf8 = buf;
-	      *fromP += (AS_NORMAL_ENCODING(enc).type[(unsigned char)**fromP]
+	      *fromP += (AS_NORMAL_ENCODING(enc)->type[(unsigned char)**fromP]
 	                 - (BT_LEAD2 - 2));
 	    }
 	    else {
@@ -1277,11 +1277,11 @@ public class xmltok
 	{
 	  const struct unknown_encoding *uenc = AS_UNKNOWN_ENCODING(enc);
 	  while (*fromP != fromLim && *toP != toLim) {
-	    unsigned short c = uenc.utf16[(unsigned char)**fromP];
+	    unsigned short c = uenc->utf16[(unsigned char)**fromP];
 	    if (c == 0) {
 	      c = (unsigned short)
-	          uenc.convert(uenc.userData, *fromP);
-	      *fromP += (AS_NORMAL_ENCODING(enc).type[(unsigned char)**fromP]
+	          uenc->convert(uenc->userData, *fromP);
+	      *fromP += (AS_NORMAL_ENCODING(enc)->type[(unsigned char)**fromP]
 	                 - (BT_LEAD2 - 2));
 	    }
 	    else
@@ -1308,65 +1308,65 @@ public class xmltok
 	  for (i = 0; i < 256; i++) {
 	    int c = table[i];
 	    if (c == -1) {
-	      e.normal.type[i] = BT_MALFORM;
+	      e->normal.type[i] = BT_MALFORM;
 	      /* This shouldn't really get used. */
-	      e.utf16[i] = 0xFFFF;
-	      e.utf8[i][0] = 1;
-	      e.utf8[i][1] = 0;
+	      e->utf16[i] = 0xFFFF;
+	      e->utf8[i][0] = 1;
+	      e->utf8[i][1] = 0;
 	    }
 	    else if (c < 0) {
 	      if (c < -4)
 	        return 0;
-	      e.normal.type[i] = (unsigned char)(BT_LEAD2 - (c + 2));
-	      e.utf8[i][0] = 0;
-	      e.utf16[i] = 0;
+	      e->normal.type[i] = (unsigned char)(BT_LEAD2 - (c + 2));
+	      e->utf8[i][0] = 0;
+	      e->utf16[i] = 0;
 	    }
 	    else if (c < 0x80) {
 	      if (latin1_encoding.type[c] != BT_OTHER
 	          && latin1_encoding.type[c] != BT_NONXML
 	          && c != i)
 	        return 0;
-	      e.normal.type[i] = latin1_encoding.type[c];
-	      e.utf8[i][0] = 1;
-	      e.utf8[i][1] = (char)c;
-	      e.utf16[i] = (unsigned short)(c == 0 ? 0xFFFF : c);
+	      e->normal.type[i] = latin1_encoding.type[c];
+	      e->utf8[i][0] = 1;
+	      e->utf8[i][1] = (char)c;
+	      e->utf16[i] = (unsigned short)(c == 0 ? 0xFFFF : c);
 	    }
 	    else if (checkCharRefNumber(c) < 0) {
-	      e.normal.type[i] = BT_NONXML;
+	      e->normal.type[i] = BT_NONXML;
 	      /* This shouldn't really get used. */
-	      e.utf16[i] = 0xFFFF;
-	      e.utf8[i][0] = 1;
-	      e.utf8[i][1] = 0;
+	      e->utf16[i] = 0xFFFF;
+	      e->utf8[i][0] = 1;
+	      e->utf8[i][1] = 0;
 	    }
 	    else {
 	      if (c > 0xFFFF)
 	        return 0;
 	      if (UCS2_GET_NAMING(nmstrtPages, c >> 8, c & 0xff))
-	        e.normal.type[i] = BT_NMSTRT;
+	        e->normal.type[i] = BT_NMSTRT;
 	      else if (UCS2_GET_NAMING(namePages, c >> 8, c & 0xff))
-	        e.normal.type[i] = BT_NAME;
+	        e->normal.type[i] = BT_NAME;
 	      else
-	        e.normal.type[i] = BT_OTHER;
-	      e.utf8[i][0] = (char)XmlUtf8Encode(c, e.utf8[i] + 1);
-	      e.utf16[i] = (unsigned short)c;
+	        e->normal.type[i] = BT_OTHER;
+	      e->utf8[i][0] = (char)XmlUtf8Encode(c, e->utf8[i] + 1);
+	      e->utf16[i] = (unsigned short)c;
 	    }
 	  }
-	  e.userData = userData;
-	  e.convert = convert;
-	  if (convert != 0) {
-	    e.normal.isName2 = unknown_isName;
-	    e.normal.isName3 = unknown_isName;
-	    e.normal.isName4 = unknown_isName;
-	    e.normal.isNmstrt2 = unknown_isNmstrt;
-	    e.normal.isNmstrt3 = unknown_isNmstrt;
-	    e.normal.isNmstrt4 = unknown_isNmstrt;
-	    e.normal.isInvalid2 = unknown_isInvalid;
-	    e.normal.isInvalid3 = unknown_isInvalid;
-	    e.normal.isInvalid4 = unknown_isInvalid;
+	  e->userData = userData;
+	  e->convert = convert;
+	  if (convert) {
+	    e->normal.isName2 = unknown_isName;
+	    e->normal.isName3 = unknown_isName;
+	    e->normal.isName4 = unknown_isName;
+	    e->normal.isNmstrt2 = unknown_isNmstrt;
+	    e->normal.isNmstrt3 = unknown_isNmstrt;
+	    e->normal.isNmstrt4 = unknown_isNmstrt;
+	    e->normal.isInvalid2 = unknown_isInvalid;
+	    e->normal.isInvalid3 = unknown_isInvalid;
+	    e->normal.isInvalid4 = unknown_isInvalid;
 	  }
-	  e.normal.enc.utf8Convert = unknown_toUtf8;
-	  e.normal.enc.utf16Convert = unknown_toUtf16;
-	  return &(e.normal.enc);
+	  e->normal.enc.utf8Convert = unknown_toUtf8;
+	  e->normal.enc.utf16Convert = unknown_toUtf16;
+	  return &(e->normal.enc);
 	}
 	
 	/* If this enumeration is changed, getEncodingIndex and encodings
@@ -1430,8 +1430,8 @@ public class xmltok
 	   specified at initialization in the isUtf16 member.
 	*/
 	
-	#define INIT_ENC_INDEX(enc) ((int)(enc).initEnc.isUtf16)
-	#define SET_INIT_ENC_INDEX(enc, i) ((enc).initEnc.isUtf16 = (char)i)
+	#define INIT_ENC_INDEX(enc) ((int)(enc)->initEnc.isUtf16)
+	#define SET_INIT_ENC_INDEX(enc, i) ((enc)->initEnc.isUtf16 = (char)i)
 	
 	/* This is what detects the encoding.  encodingTable maps from
 	   encoding indices to encodings; INIT_ENC_INDEX(enc) is the index of
@@ -1453,7 +1453,7 @@ public class xmltok
 	
 	  if (ptr == end)
 	    return XML_TOK_NONE;
-	  encPtr = enc.encPtr;
+	  encPtr = enc->encPtr;
 	  if (ptr + 1 == end) {
 	    /* only a single byte available for auto-detection */
 	#ifndef XML_DTD /* FIXME */
@@ -1585,8 +1585,8 @@ public class xmltok
 	                         void *userData)
 	{
 	  ENCODING *enc = XmlInitUnknownEncoding(mem, table, convert, userData);
-	  if (enc != 0)
-	    ((struct normal_encoding *)enc).type[ASCII_COLON] = BT_COLON;
+	  if (enc)
+	    ((struct normal_encoding *)enc)->type[ASCII_COLON] = BT_COLON;
 	  return enc;
 	}
 	

@@ -34,7 +34,7 @@ Merge with other Video System games ?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -203,7 +203,7 @@ public class gstriker
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pending_command = 1;
 			soundlatch_w(offset,data & 0xff);
@@ -218,13 +218,11 @@ public class gstriker
 	}
 	#endif
 	
-	public static WriteHandlerPtr gs_sh_pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gs_sh_pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
-	public static WriteHandlerPtr gs_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gs_sh_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bankaddress;
 	
@@ -275,7 +273,7 @@ public class gstriker
 	
 	static void gs_ym2610_irq(int irq)
 	{
-		if (irq != 0)
+		if (irq)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
@@ -365,7 +363,7 @@ public class gstriker
 	
 	/*** INPUT PORTS *************************************************************/
 	
-	static InputPortPtr input_ports_gstriker = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gstriker = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gstriker )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -450,8 +448,7 @@ public class gstriker
 	
 	/*** MACHINE DRIVER **********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_gstriker = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gstriker )
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -475,9 +472,7 @@ public class gstriker
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*** ROM LOADING *************************************************************/
 	
@@ -589,10 +584,10 @@ public class gstriker
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	public static GameDriver driver_gstriker	   = new GameDriver("1993"	,"gstriker"	,"gstriker.java"	,rom_gstriker,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Human", "Grand Striker", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, gstriker, 0,        gstriker, gstriker, 0,        ROT0, "Human", "Grand Striker", GAME_IMPERFECT_GRAPHICS )
 	
 	/* Similar, but not identical hardware, appear to be protected by an MCU :-( */
-	public static GameDriver driver_vgoalsoc	   = new GameDriver("199?"	,"vgoalsoc"	,"gstriker.java"	,rom_vgoalsoc,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "V Goal Soccer", GAME_NOT_WORKING )
-	public static GameDriver driver_vgoalsca	   = new GameDriver("199?"	,"vgoalsca"	,"gstriker.java"	,rom_vgoalsca,driver_vgoalsoc	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "V Goal Soccer (alt)", GAME_NOT_WORKING )
-	public static GameDriver driver_worldc94	   = new GameDriver("199?"	,"worldc94"	,"gstriker.java"	,rom_worldc94,null	,machine_driver_gstriker	,input_ports_gstriker	,null	,ROT0	,	"Tecmo", "World Cup '94", GAME_NOT_WORKING )
+	GAMEX(199?, vgoalsoc, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer", GAME_NOT_WORKING )
+	GAMEX(199?, vgoalsca, vgoalsoc, gstriker, gstriker, 0,        ROT0, "Tecmo", "V Goal Soccer (alt)", GAME_NOT_WORKING )
+	GAMEX(199?, worldc94, 0,        gstriker, gstriker, 0,        ROT0, "Tecmo", "World Cup '94", GAME_NOT_WORKING )
 }

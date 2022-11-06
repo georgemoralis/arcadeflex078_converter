@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -80,8 +80,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_atarisy2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_atarisy2  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			1,					/* index to which gfx system */
@@ -121,7 +120,7 @@ public class atarisy2
 	
 		/* allocate banked memory */
 		vram = auto_malloc(0x8000);
-		if (vram == 0)
+		if (!vram)
 			return 1;
 		memset(vram, 0, 0x8000);
 		atarigen_alpha = &vram[0x0000];
@@ -130,7 +129,7 @@ public class atarisy2
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 128,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -139,7 +138,7 @@ public class atarisy2
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,48);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -334,8 +333,7 @@ public class atarisy2
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarisy2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atarisy2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;

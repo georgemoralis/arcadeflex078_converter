@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,19 +43,18 @@ public class nbmj8991
 	
 	******************************************************************************/
 	
-	public static WriteHandlerPtr pstadium_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pstadium_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		if (!(offset & 1)) return;
 	
 		offset &= 0x1fe;
 	
-		r = ((paletteram[offset + 1] & 0x0f) << 4);
-		g = ((paletteram[offset + 0] & 0xf0) << 0);
-		b = ((paletteram[offset + 0] & 0x0f) << 4);
+		r = ((paletteram.read(offset + 1)& 0x0f) << 4);
+		g = ((paletteram.read(offset + 0)& 0xf0) << 0);
+		b = ((paletteram.read(offset + 0)& 0x0f) << 4);
 	
 		r = (r | (r >> 4));
 		g = (g | (g >> 4));
@@ -64,19 +63,18 @@ public class nbmj8991
 		palette_set_color((offset >> 1), r, g, b);
 	} };
 	
-	public static WriteHandlerPtr galkoku_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galkoku_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		if (!(offset & 1)) return;
 	
 		offset &= 0x1fe;
 	
-		r = ((paletteram[offset + 0] & 0x0f) << 4);
-		g = ((paletteram[offset + 1] & 0xf0) << 0);
-		b = ((paletteram[offset + 1] & 0x0f) << 4);
+		r = ((paletteram.read(offset + 0)& 0x0f) << 4);
+		g = ((paletteram.read(offset + 1)& 0xf0) << 0);
+		b = ((paletteram.read(offset + 1)& 0x0f) << 4);
 	
 		r = (r | (r >> 4));
 		g = (g | (g >> 4));
@@ -85,19 +83,18 @@ public class nbmj8991
 		palette_set_color((offset >> 1), r, g, b);
 	} };
 	
-	public static WriteHandlerPtr galkaika_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galkaika_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		if (!(offset & 1)) return;
 	
 		offset &= 0x1fe;
 	
-		r = ((paletteram[offset + 0] & 0x7c) >> 2);
-		g = (((paletteram[offset + 0] & 0x03) << 3) | ((paletteram[offset + 1] & 0xe0) >> 5));
-		b = ((paletteram[offset + 1] & 0x1f) >> 0);
+		r = ((paletteram.read(offset + 0)& 0x7c) >> 2);
+		g = (((paletteram.read(offset + 0)& 0x03) << 3) | ((paletteram.read(offset + 1)& 0xe0) >> 5));
+		b = ((paletteram.read(offset + 1)& 0x1f) >> 0);
 	
 		r = ((r << 3) | (r >> 2));
 		g = ((g << 3) | (g >> 2));
@@ -117,7 +114,7 @@ public class nbmj8991
 	
 	static void pstadium_calc_scrolly(void)
 	{
-		if (pstadium_flipscreen != 0) pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 - 0xf0) ^ 0x1ff) & 0x1ff);
+		if (pstadium_flipscreen) pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 - 0xf0) ^ 0x1ff) & 0x1ff);
 		else pstadium_scrolly = (((pstadium_scrolly2 + pstadium_scrolly1 + 1) - 0x10) & 0x1ff);
 	}
 	
@@ -216,13 +213,11 @@ public class nbmj8991
 		pstadium_paltblnum = data;
 	}
 	
-	public static ReadHandlerPtr pstadium_paltbl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pstadium_paltbl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pstadium_paltbl[offset];
 	} };
 	
-	public static WriteHandlerPtr pstadium_paltbl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pstadium_paltbl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pstadium_paltbl[((pstadium_paltblnum & 0x7f) * 0x10) + (offset & 0x0f)] = data;
 	} };
 	
@@ -235,15 +230,15 @@ public class nbmj8991
 		int x, y;
 		unsigned char color1, color2;
 	
-		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
+		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine.drv.screen_width; x++)
+			for (x = 0; x < Machine->drv->screen_width; x++)
 			{
-				color1 = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
-				color2 = pstadium_videoram.read(((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff));
+				color1 = pstadium_videoram[(y * Machine->drv->screen_width) + x];
+				color2 = pstadium_videoram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)];
 	
-				pstadium_videoram.write(color2,color2);
-				pstadium_videoram.write(color1,color1);
+				pstadium_videoram[(y * Machine->drv->screen_width) + x] = color2;
+				pstadium_videoram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)] = color1;
 			}
 		}
 	}
@@ -266,7 +261,7 @@ public class nbmj8991
 		pstadium_calc_drawx();
 		pstadium_calc_drawy();
 	
-		if (pstadium_flipx != 0)
+		if (pstadium_flipx)
 		{
 			pstadium_drawx -= pstadium_sizex;
 			startx = pstadium_sizex;
@@ -281,7 +276,7 @@ public class nbmj8991
 			skipx = 1;
 		}
 	
-		if (pstadium_flipy != 0)
+		if (pstadium_flipy)
 		{
 			pstadium_drawy -= (pstadium_sizey + 1);
 			starty = pstadium_sizey;
@@ -312,7 +307,7 @@ public class nbmj8991
 	
 				color = GFX[gfxaddr++];
 	
-				if (pstadium_flipscreen != 0)
+				if (pstadium_flipscreen)
 				{
 					dx1 = (((((pstadium_drawx + x) * 2) + 0) ^ 0x3ff) & 0x3ff);
 					dx2 = (((((pstadium_drawx + x) * 2) + 1) ^ 0x3ff) & 0x3ff);
@@ -325,7 +320,7 @@ public class nbmj8991
 					dy = ((pstadium_drawy + y) & 0x1ff);
 				}
 	
-				if (pstadium_flipx != 0)
+				if (pstadium_flipx)
 				{
 					// flip
 					color1 = (color & 0xf0) >> 4;
@@ -346,15 +341,15 @@ public class nbmj8991
 	
 				nb1413m3_busyctr++;
 	
-				if (tflag1 != 0)
+				if (tflag1)
 				{
-					pstadium_videoram.write(drawcolor1,drawcolor1);
-					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine.pens[drawcolor1]);
+					pstadium_videoram[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+					plot_pixel(pstadium_tmpbitmap, dx1, dy, Machine->pens[drawcolor1]);
 				}
-				if (tflag2 != 0)
+				if (tflag2)
 				{
-					pstadium_videoram.write(drawcolor2,drawcolor2);
-					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine.pens[drawcolor2]);
+					pstadium_videoram[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+					plot_pixel(pstadium_tmpbitmap, dx2, dy, Machine->pens[drawcolor2]);
 				}
 			}
 		}
@@ -367,8 +362,7 @@ public class nbmj8991
 	
 	
 	******************************************************************************/
-	public static VideoStartHandlerPtr video_start_pstadium  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pstadium  = new VideoStartHandlerPtr() { public int handler(){
 		if ((pstadium_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((pstadium_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((pstadium_paltbl = auto_malloc(0x800 * sizeof(char))) == 0) return 1;
@@ -376,8 +370,7 @@ public class nbmj8991
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_pstadium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pstadium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		int color;
 	
@@ -389,8 +382,8 @@ public class nbmj8991
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
-					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
+					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
@@ -398,7 +391,7 @@ public class nbmj8991
 		pstadium_calc_scrollx();
 		pstadium_calc_scrolly();
 	
-		if ((nb1413m3_inputport & 0x20) != 0)
+		if (nb1413m3_inputport & 0x20)
 		{
 			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}
@@ -408,8 +401,7 @@ public class nbmj8991
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_galkoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galkoku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		int color;
 	
@@ -421,8 +413,8 @@ public class nbmj8991
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pstadium_videoram.read((y * Machine->drv->screen_width) + x);
-					plot_pixel.handler(pstadium_tmpbitmap, x, y, Machine.pens[color]);
+					color = pstadium_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pstadium_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
@@ -430,7 +422,7 @@ public class nbmj8991
 		pstadium_calc_scrollx();
 		pstadium_calc_scrolly();
 	
-		if (pstadium_dispflag != 0)
+		if (pstadium_dispflag)
 		{
 			copyscrollbitmap(bitmap, pstadium_tmpbitmap, 1, &pstadium_scrollx, 1, &pstadium_scrolly, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}

@@ -8,7 +8,7 @@ Driver by Zsolt Vasvari
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,21 +22,18 @@ public class mermaid
 	
 	static unsigned char *mermaid_AY8910_enable;
 	
-	public static WriteHandlerPtr mermaid_AY8910_write_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mermaid_AY8910_write_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mermaid_AY8910_enable[0])  AY8910_write_port_0_w.handler(offset, data);
 		if (mermaid_AY8910_enable[1])  AY8910_write_port_1_w.handler(offset, data);
 	} };
 	
-	public static WriteHandlerPtr mermaid_AY8910_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mermaid_AY8910_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mermaid_AY8910_enable[0])  AY8910_control_port_0_w.handler(offset, data);
 		if (mermaid_AY8910_enable[1])  AY8910_control_port_1_w.handler(offset, data);
 	} };
 	
 	#if 0
-	public static ReadHandlerPtr mermaid_f800_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mermaid_f800_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// collision register active LO
 		// Bit 0
 		// Bit 1 - Sprite - Foreground
@@ -89,7 +86,7 @@ public class mermaid
 	};
 	
 	
-	static InputPortPtr input_ports_mermaid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mermaid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mermaid )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -134,7 +131,7 @@ public class mermaid
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START(); 		/* Fake IN for debug features (0xf800 . 0xc01a, cpl) */
+		PORT_START(); 		/* Fake IN for debug features (0xf800 -> 0xc01a, cpl) */
 		PORT_DIPNAME( 0x01, 0x00, "0xf800 bit 0" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
@@ -219,8 +216,7 @@ public class mermaid
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_mermaid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mermaid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.00 MHz??? */
@@ -244,9 +240,7 @@ public class mermaid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -324,6 +318,6 @@ public class mermaid
 		ROM_LOAD( "rou-42.bin",  0x2000,  0x1000, CRC(5ce13444) SHA1(e6da83190b26b094159a3a97deffd31d0d20a061) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mermaid	   = new GameDriver("1982"	,"mermaid"	,"mermaid.java"	,rom_mermaid,null	,machine_driver_mermaid	,input_ports_mermaid	,null	,ROT0	,	"[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
-	public static GameDriver driver_rougien	   = new GameDriver("1982"	,"rougien"	,"mermaid.java"	,rom_rougien,null	,machine_driver_mermaid	,input_ports_mermaid	,null	,ROT0	,	"Sanritsu", "Rougien", GAME_NOT_WORKING )
+	GAMEX( 1982, mermaid, 0, mermaid, mermaid, 0, ROT0, "[Sanritsu] Rock-ola", "Mermaid", GAME_NOT_WORKING )
+	GAMEX( 1982, rougien, 0, mermaid, mermaid, 0, ROT0, "Sanritsu", "Rougien", GAME_NOT_WORKING )
 }

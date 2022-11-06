@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,34 +39,28 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	public static ReadHandlerPtr m6502_a_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6502_a_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return m6502_a_shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr m6502_a_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6502_a_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6502_a_shared_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr m6502_b_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6502_b_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return m6502_b_shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr m6502_b_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6502_b_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6502_b_shared_ram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr m68k_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m68k_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return m68k_shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr m68k_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m68k_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m68k_shared_ram[offset] = data;
 	} };
 	
@@ -77,46 +71,40 @@ public class tceptor
 	
 	static WRITE16_HANDLER( m68k_shared_word_w )
 	{
-		if (ACCESSING_LSB16 != 0)
+		if (ACCESSING_LSB16)
 			m68k_shared_ram[offset] = data & 0xff;
 	}
 	
 	
-	public static ReadHandlerPtr mcu_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mcu_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mcu_shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr mcu_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mcu_shared_ram[offset] = data;
 	} };
 	
 	
 	/*******************************************************************/
 	
-	public static InterruptHandlerPtr m6809_vb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (m6809_irq_enable != 0)
+	public static InterruptHandlerPtr m6809_vb_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (m6809_irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else
 			m6809_irq_enable = 1;
 	} };
 	
-	public static WriteHandlerPtr m6809_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6809_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6809_irq_enable = 1;
 	} };
 	
-	public static WriteHandlerPtr m6809_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6809_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6809_irq_enable = 0;
 	} };
 	
 	
-	public static InterruptHandlerPtr m68k_vb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (m68k_irq_enable != 0)
+	public static InterruptHandlerPtr m68k_vb_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (m68k_irq_enable)
 			cpu_set_irq_line(3, MC68000_IRQ_1, HOLD_LINE);
 	} };
 	
@@ -126,27 +114,23 @@ public class tceptor
 	}
 	
 	
-	public static InterruptHandlerPtr mcu_vb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (mcu_irq_enable != 0)
+	public static InterruptHandlerPtr mcu_vb_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (mcu_irq_enable)
 			cpu_set_irq_line(4, 0, HOLD_LINE);
 		else
 			mcu_irq_enable = 1;
 	} };
 	
-	public static WriteHandlerPtr mcu_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mcu_irq_enable = 1;
 	} };
 	
-	public static WriteHandlerPtr mcu_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcu_irq_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mcu_irq_enable = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr voice_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr voice_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_16_w(0, data ? (data + 1) * 0x100 : 0x8000);
 	} };
 	
@@ -184,28 +168,23 @@ public class tceptor
 		return r;
 	}
 	
-	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fix_input0(readinputport(0), readinputport(1));
 	} };
 	
-	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fix_input1(readinputport(0), readinputport(1));
 	} };
 	
-	public static ReadHandlerPtr input0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fix_input0(readinputport(2), readinputport(3));
 	} };
 	
-	public static ReadHandlerPtr input1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fix_input1(readinputport(2), readinputport(3));
 	} };
 	
-	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -373,7 +352,7 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	static InputPortPtr input_ports_tceptor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tceptor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tceptor )
 		PORT_START();       /* DSW 1 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "3C_1C") );
@@ -429,7 +408,7 @@ public class tceptor
 		PORT_ANALOG(  0xff, 0x7f, IPT_AD_STICK_Y | IPF_CENTER, 100, 16, 0x00, 0xfe );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tceptor2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tceptor2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tceptor2 )
 		PORT_START();       /* DSW 1 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "3C_1C") );
@@ -543,8 +522,7 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_tceptor  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tceptor  = new MachineInitHandlerPtr() { public void handler(){
 		m6809_irq_enable = 0;
 		m68k_irq_enable = 0;
 		mcu_irq_enable = 0;
@@ -552,8 +530,7 @@ public class tceptor
 	
 	/*******************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_tceptor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tceptor )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 49152000/32)
@@ -602,15 +579,12 @@ public class tceptor
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************************/
 	
-	public static DriverInitHandlerPtr init_tceptor  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tceptor  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("tceptor", 0, "m6809_irq_enable",  &m6809_irq_enable);
 		state_save_register_int("tceptor", 0, "m68k_irq_enable",   &m68k_irq_enable);
 		state_save_register_int("tceptor", 0, "mcu_irq_enable",    &mcu_irq_enable);
@@ -732,6 +706,6 @@ public class tceptor
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT      MONITOR   COMPANY FULLNAME ) */
-	public static GameDriver driver_tceptor	   = new GameDriver("1986"	,"tceptor"	,"tceptor.java"	,rom_tceptor,null	,machine_driver_tceptor	,input_ports_tceptor	,init_tceptor	,ROT0	,	"Namco",  "Thunder Ceptor")
-	public static GameDriver driver_tceptor2	   = new GameDriver("1986"	,"tceptor2"	,"tceptor.java"	,rom_tceptor2,driver_tceptor	,machine_driver_tceptor	,input_ports_tceptor2	,init_tceptor	,ROT0	,	"Namco",  "Thunder Ceptor II")
+	GAME( 1986, tceptor,  0,        tceptor,  tceptor,  tceptor,  ROT0,     "Namco",  "Thunder Ceptor")
+	GAME( 1986, tceptor2, tceptor,  tceptor,  tceptor2, tceptor,  ROT0,     "Namco",  "Thunder Ceptor II")
 }

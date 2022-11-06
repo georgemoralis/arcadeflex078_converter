@@ -11,7 +11,7 @@ The blitter reads compressed data from ROM and copies it to the bitmap RAM.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,13 +43,11 @@ public class hnayayoi
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_hnayayoi  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hnayayoi  = new VideoStartHandlerPtr() { public int handler(){
 		return common_vh_start(4);	/* 4 bitmaps . 2 layers */
 	} };
 	
-	public static VideoStartHandlerPtr video_start_untoucha  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_untoucha  = new VideoStartHandlerPtr() { public int handler(){
 		return common_vh_start(8);	/* 8 bitmaps . 4 layers */
 	} };
 	
@@ -101,8 +99,7 @@ public class hnayayoi
 	static UINT16 blit_dest;
 	static UINT32 blit_src;
 	
-	public static WriteHandlerPtr dynax_blitter_rev1_param_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blitter_rev1_param_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: blit_dest = (blit_dest & 0xff00) | (data << 0); break;
@@ -128,8 +125,7 @@ public class hnayayoi
 		}
 	}
 	
-	public static WriteHandlerPtr dynax_blitter_rev1_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blitter_rev1_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_GFX1);
 		int romlen = memory_region_length(REGION_GFX1);
 		int sx = blit_dest & 0xff;
@@ -203,8 +199,7 @@ public class hnayayoi
 		usrintf_showmessage("GFXROM OVER %06x",blit_src);
 	} };
 	
-	public static WriteHandlerPtr dynax_blitter_rev1_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blitter_rev1_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int pen = data >> 4;
 		int i;
 	
@@ -216,8 +211,7 @@ public class hnayayoi
 	} };
 	
 	
-	public static WriteHandlerPtr hnayayoi_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hnayayoi_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset *= 8;
 		palbank = (palbank & (0xff00 >> offset)) | (data << offset);
 	} };
@@ -229,23 +223,23 @@ public class hnayayoi
 		int county,countx,pen,offs;
 		UINT8 *src1 = pixmap[left_pixmap];
 		UINT8 *src2 = pixmap[right_pixmap];
-		UINT16 *dstbase = (UINT16 *)bitmap.base;
+		UINT16 *dstbase = (UINT16 *)bitmap->base;
 	
 		palbase *= 16;
 		offs = 0;
 	
-		for (county = 255; county >= 0; county--, dstbase += bitmap.rowpixels)
+		for (county = 255; county >= 0; county--, dstbase += bitmap->rowpixels)
 		{
 			UINT16 *dst = dstbase;
 	
-			if (transp != 0)
+			if (transp)
 			{
 				for (countx = 255; countx >= 0; countx--, dst += 2)
 				{
 					pen = *(src1++);
-					if (pen != 0) *dst     = palbase + pen;
+					if (pen) *dst     = palbase + pen;
 					pen = *(src2++);
-					if (pen != 0) *(dst+1) = palbase + pen;
+					if (pen) *(dst+1) = palbase + pen;
 				}
 			}
 			else
@@ -260,8 +254,7 @@ public class hnayayoi
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hnayayoi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int col0 = (palbank >>  0) & 0x0f;
 		int col1 = (palbank >>  4) & 0x0f;
 		int col2 = (palbank >>  8) & 0x0f;

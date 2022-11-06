@@ -8,7 +8,7 @@ Kikiippatsu Mayumi-chan (c) 1988 Victory L.L.C.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,14 +24,12 @@ public class mayumi
 	
 	/****************************************************************************/
 	
-	public static InterruptHandlerPtr mayumi_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (int_enable != 0)
+	public static InterruptHandlerPtr mayumi_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (int_enable)
 			 cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 		int bank = ((data & 0x80)) >> 7 | ((data & 0x40) >> 5);
 		cpu_setbank(1, &BANKROM[0x10000+bank*0x4000]);
@@ -41,18 +39,15 @@ public class mayumi
 		flip_screen_set(data & 2);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_mayumi  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mayumi  = new MachineInitHandlerPtr() { public void handler(){
 		bank_sel_w(0,0);
 	} };
 	
-	public static WriteHandlerPtr input_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr input_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		input_sel = data;
 	} };
 	
-	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int p,i,ret;
 	
 		ret = 0xff;
@@ -107,7 +102,7 @@ public class mayumi
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_mayumi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mayumi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mayumi )
 	
 	    PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Flip_Screen") );
@@ -282,8 +277,7 @@ public class mayumi
 		{ 0 },
 	};
 	
-	public static MachineHandlerPtr machine_driver_mayumi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mayumi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MCLK/2) /* 5.000 MHz ? */
@@ -311,9 +305,7 @@ public class mayumi
 	
 		MDRV_NVRAM_HANDLER(generic_0fill)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -334,5 +326,5 @@ public class mayumi
 		ROM_LOAD( "my-9k.bin", 0x0200,  0x0100, CRC(3e7a8012) SHA1(24129586a1c39f68dad274b5afbdd6c027ab0901) ) // B
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mayumi	   = new GameDriver("1988"	,"mayumi"	,"mayumi.java"	,rom_mayumi,null	,machine_driver_mayumi	,input_ports_mayumi	,null	,ROT0	,	"[Sanritsu] Victory L.L.C.",  "Kikiippatsu Mayumi-chan (Japan)" )
+	GAME ( 1988, mayumi, 0, mayumi, mayumi, 0, ROT0, "[Sanritsu] Victory L.L.C.",  "Kikiippatsu Mayumi-chan (Japan)" )
 }

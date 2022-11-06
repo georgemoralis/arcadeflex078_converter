@@ -89,7 +89,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -104,13 +104,12 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_capbowl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_capbowl  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file,generic_nvram,generic_nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file,generic_nvram,generic_nvram_size);
 			else
 			{
@@ -130,8 +129,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr capbowl_sndcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr capbowl_sndcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 		soundlatch_w.handler(offset, data);
 	} };
@@ -160,8 +158,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr capbowl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr capbowl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(4) & 1)	/* get status of the F2 key */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* trigger self test */
 	} };
@@ -176,18 +173,15 @@ public class capbowl
 	
 	static int track[2];
 	
-	public static ReadHandlerPtr track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr track_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (input_port_0_r.handler(offset) & 0xf0) | ((input_port_2_r.handler(offset) - track[0]) & 0x0f);
 	} };
 	
-	public static ReadHandlerPtr track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr track_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (input_port_1_r.handler(offset) & 0xf0) | ((input_port_3_r.handler(offset) - track[1]) & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset the trackball counters */
 		track[0] = input_port_2_r(offset);
 		track[1] = input_port_3_r(offset);
@@ -276,7 +270,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_capbowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_capbowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( capbowl )
 		PORT_START(); 	/* IN0 */
 		/* low 4 bits are for the trackball */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -340,8 +334,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_capbowl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( capbowl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 2000000)
@@ -370,13 +363,10 @@ public class capbowl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(DAC,    dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bowlrama = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bowlrama )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(capbowl)
@@ -386,9 +376,7 @@ public class capbowl
 		
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 359, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -453,8 +441,8 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_capbowl	   = new GameDriver("1988"	,"capbowl"	,"capbowl.java"	,rom_capbowl,null	,machine_driver_capbowl	,input_ports_capbowl	,null	,ROT270	,	"Incredible Technologies", "Capcom Bowling (set 1)" )
-	public static GameDriver driver_capbowl2	   = new GameDriver("1988"	,"capbowl2"	,"capbowl.java"	,rom_capbowl2,driver_capbowl	,machine_driver_capbowl	,input_ports_capbowl	,null	,ROT270	,	"Incredible Technologies", "Capcom Bowling (set 2)" )
-	public static GameDriver driver_clbowl	   = new GameDriver("1989"	,"clbowl"	,"capbowl.java"	,rom_clbowl,driver_capbowl	,machine_driver_capbowl	,input_ports_capbowl	,null	,ROT270	,	"Incredible Technologies", "Coors Light Bowling" )
-	public static GameDriver driver_bowlrama	   = new GameDriver("1991"	,"bowlrama"	,"capbowl.java"	,rom_bowlrama,null	,machine_driver_bowlrama	,input_ports_capbowl	,null	,ROT270	,	"P&P Marketing", "Bowl-O-Rama" )
+	GAME( 1988, capbowl,  0,       capbowl,  capbowl, 0, ROT270, "Incredible Technologies", "Capcom Bowling (set 1)" )
+	GAME( 1988, capbowl2, capbowl, capbowl,  capbowl, 0, ROT270, "Incredible Technologies", "Capcom Bowling (set 2)" )
+	GAME( 1989, clbowl,   capbowl, capbowl,  capbowl, 0, ROT270, "Incredible Technologies", "Coors Light Bowling" )
+	GAME( 1991, bowlrama, 0,       bowlrama, capbowl, 0, ROT270, "P&P Marketing", "Bowl-O-Rama" )
 }

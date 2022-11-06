@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -135,11 +135,11 @@ public class tms5110
 			fifo_tail = (fifo_tail + 1) % FIFO_SIZE;
 			fifo_count++;
 	
-			if (DEBUG_5110 != 0) logerror("Added bit to FIFO (size=%2d)\n", fifo_count);
+			if (DEBUG_5110) logerror("Added bit to FIFO (size=%2d)\n", fifo_count);
 		}
 		else
 		{
-			if (DEBUG_5110 != 0) logerror("Ran out of room in the FIFO!\n");
+			if (DEBUG_5110) logerror("Ran out of room in the FIFO!\n");
 		}
 	}
 	
@@ -167,25 +167,25 @@ public class tms5110
 	int i;
 		for (i=0; i<no; i++)
 		{
-			if (M0_callback != 0)
+			if (M0_callback)
 			{
 				int data = (*M0_callback)();
 				FIFO_data_write(data);
 			}
 			else
-				if (DEBUG_5110 != 0) logerror("-.ERROR: TMS5110 missing M0 callback function\n");
+				if (DEBUG_5110) logerror("-->ERROR: TMS5110 missing M0 callback function\n");
 		}
 	}
 	
 	static void perform_dummy_read(void)
 	{
-		if (M0_callback != 0)
+		if (M0_callback)
 		{
 			int data = (*M0_callback)();
-		        if (DEBUG_5110 != 0) logerror("TMS5110 performing dummy read; value read = %1i\n", data&1);
+		        if (DEBUG_5110) logerror("TMS5110 performing dummy read; value read = %1i\n", data&1);
 		}
 	    	else
-		        if (DEBUG_5110 != 0) logerror("-.ERROR: TMS5110 missing M0 callback function\n");
+		        if (DEBUG_5110) logerror("-->ERROR: TMS5110 missing M0 callback function\n");
 	}
 	
 	/**********************************************************************************************
@@ -205,7 +205,7 @@ public class tms5110
 	int tms5110_status_read(void)
 	{
 	
-	    if (DEBUG_5110 != 0) logerror("Status read: TS=%d\n", talk_status);
+	    if (DEBUG_5110) logerror("Status read: TS=%d\n", talk_status);
 	
 	    return (talk_status << 0); /*CTL1 = still talking ? */
 	}
@@ -239,11 +239,11 @@ public class tms5110
 	/* tryagain: */
 	
 	    /* if we're not speaking, fill with nothingness */
-	    if (speaking_now == 0)
+	    if (!speaking_now)
 	        goto empty;
 	
 	    /* if we're to speak, but haven't started */
-	    if (talk_status == 0)
+	    if (!talk_status)
 	    {
 	
 	/*"perform dummy read" is not mentioned in the datasheet */
@@ -259,7 +259,7 @@ public class tms5110
 	    }
 	#if 0
 	    /* apply some delay before we actually consume data */
-	    if (speak_delay_frames != 0)
+	    if (speak_delay_frames)
 	    {
 	    	if (size <= speak_delay_frames)
 	    	{
@@ -304,7 +304,7 @@ public class tms5110
 	            /* is this a stop frame? */
 	            else if (current_energy == (energytable[15] >> 6))
 	            {
-	                /*if (DEBUG_5110 != 0) logerror("processing frame: stop frame\n");*/
+	                /*if (DEBUG_5110) logerror("processing frame: stop frame\n");*/
 	                current_energy = energytable[0] >> 6;
 	                target_energy = current_energy;
 	                speaking_now = talk_status = 0;
@@ -459,7 +459,7 @@ public class tms5110
 		if (PDC != (data & 0x1) )
 		{
 			PDC = data & 0x1;
-			if (PDC == 0) /* toggling 1.0 processes command on CTL_pins */
+			if (PDC == 0) /* toggling 1->0 processes command on CTL_pins */
 			{
 				/* only real commands we handle now are SPEAK and RESET */
 	
@@ -534,12 +534,12 @@ public class tms5110
 		/* if the index is 0 or 15, we're done */
 		if (indx == 0 || indx == 15)
 		{
-			if (DEBUG_5110 != 0) logerror("  (4-bit energy=%d frame)\n",new_energy);
+			if (DEBUG_5110) logerror("  (4-bit energy=%d frame)\n",new_energy);
 	
 			/* clear fifo if stop frame encountered */
 			if (indx == 15)
 			{
-				if (DEBUG_5110 != 0) logerror("  (4-bit energy=%d STOP frame)\n",new_energy);
+				if (DEBUG_5110) logerror("  (4-bit energy=%d STOP frame)\n",new_energy);
 				fifo_head = fifo_tail = fifo_count = 0;
 				removeit = 1;
 	            speaking_now = talk_status = 0;
@@ -567,12 +567,12 @@ public class tms5110
 	    new_pitch = pitchtable[indx] / 256;
 	
 	    /* if this is a repeat frame, just copy the k's */
-	    if (rep_flag != 0)
+	    if (rep_flag)
 	    {
 	        for (i = 0; i < 10; i++)
 	            new_k[i] = old_k[i];
 	
-	        if (DEBUG_5110 != 0) logerror("  (10-bit energy=%d pitch=%d rep=%d frame)\n", new_energy, new_pitch, rep_flag);
+	        if (DEBUG_5110) logerror("  (10-bit energy=%d pitch=%d rep=%d frame)\n", new_energy, new_pitch, rep_flag);
 	        goto done;
 	    }
 	
@@ -591,7 +591,7 @@ public class tms5110
 	        new_k[2] = k3table[extract_bits(4)];
 	        new_k[3] = k4table[extract_bits(4)];
 	
-	        if (DEBUG_5110 != 0) logerror("  (28-bit energy=%d pitch=%d rep=%d 4K frame)\n", new_energy, new_pitch, rep_flag);
+	        if (DEBUG_5110) logerror("  (28-bit energy=%d pitch=%d rep=%d 4K frame)\n", new_energy, new_pitch, rep_flag);
 	        goto done;
 	    }
 	
@@ -613,15 +613,15 @@ public class tms5110
 	    new_k[8] = k9table[extract_bits(3)];
 	    new_k[9] = k10table[extract_bits(3)];
 	
-	    if (DEBUG_5110 != 0) logerror("  (49-bit energy=%d pitch=%d rep=%d 10K frame)\n", new_energy, new_pitch, rep_flag);
+	    if (DEBUG_5110) logerror("  (49-bit energy=%d pitch=%d rep=%d 10K frame)\n", new_energy, new_pitch, rep_flag);
 	
 	done:
 	
-	    if (DEBUG_5110 != 0) logerror("Parsed a frame successfully - %d bits remaining\n", bits);
+	    if (DEBUG_5110) logerror("Parsed a frame successfully - %d bits remaining\n", bits);
 	
 	#if 0
 	    /* if we're not to remove this one, restore the FIFO */
-	    if (removeit == 0)
+	    if (!removeit)
 	    {
 	        fifo_count = old_count;
 	        fifo_head = old_head;

@@ -78,7 +78,7 @@ Multi monitor notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -221,10 +221,10 @@ public class gaelco2
 	
 		The sprite's pens define the color adjustment:
 	
-		0x00 . Transparent
-		0x01-0x07 . Shadow level (0x01 = min, 0x07 = max)
-		0x08-0x0f . Highlight level (0x08 = max, 0x0f = min)
-		0x10-0x1f . not used?
+		0x00 -> Transparent
+		0x01-0x07 -> Shadow level (0x01 = min, 0x07 = max)
+		0x08-0x0f -> Highlight level (0x08 = max, 0x0f = min)
+		0x10-0x1f -> not used?
 	
 	***************************************************************************/
 	
@@ -277,8 +277,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gaelco2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gaelco2  = new VideoStartHandlerPtr() { public int handler(){
 		gaelco2_videoram = spriteram16;
 	
 		/* create tilemaps */
@@ -303,8 +302,7 @@ public class gaelco2
 	
 	#ifdef ONE_MONITOR
 	
-	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler(){
 		gaelco2_videoram = spriteram16;
 	
 		/* create tilemaps */
@@ -326,8 +324,7 @@ public class gaelco2
 	
 	#else
 	
-	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gaelco2_dual  = new VideoStartHandlerPtr() { public int handler(){
 		gaelco2_videoram = spriteram16;
 	
 		/* create tilemaps */
@@ -390,18 +387,18 @@ public class gaelco2
 	static void gaelco2_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int mask, int xoffs)
 	{
 		int j, x, y, ex, ey, px, py;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		/* get sprite ram start and end offsets */
 		int start_offset = (gaelco2_vregs[1] & 0x10)*0x100;
 		int end_offset = start_offset + 0x1000;
 	
 		/* sprite offset is based on the visible area */
-		int spr_x_adjust = (Machine.visible_area.max_x - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
+		int spr_x_adjust = (Machine->visible_area.max_x - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 	
 	#ifndef ONE_MONITOR
-		if (dual_monitor != 0){
-			spr_x_adjust = ((Machine.visible_area.max_x/2) - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
+		if (dual_monitor){
+			spr_x_adjust = ((Machine->visible_area.max_x/2) - 320 + 1) - (511 - 320 - 1) - ((gaelco2_vregs[0] >> 4) & 0x01) + xoffs;
 		}
 	#endif
 	
@@ -446,31 +443,31 @@ public class gaelco2
 						} else { /* last palette entry is reserved for shadows and highlights */
 	
 							/* get a pointer to the current sprite's gfx data */
-							UINT8 *gfx_src = gfx.gfxdata + (number % gfx.total_elements)*gfx.char_modulo;
+							UINT8 *gfx_src = gfx->gfxdata + (number % gfx->total_elements)*gfx->char_modulo;
 	
-							for (py = 0; py < gfx.height; py++){
+							for (py = 0; py < gfx->height; py++){
 								/* get a pointer to the current line in the screen bitmap */
 								int ypos = ((sy + ey*16 + py) & 0x1ff);
-								UINT16 *srcy = ((UINT16 *)bitmap.line[ypos]);
+								UINT16 *srcy = ((UINT16 *)bitmap->line[ypos]);
 	
-								int gfx_py = yflip ? (gfx.height - 1 - py) : py;
+								int gfx_py = yflip ? (gfx->height - 1 - py) : py;
 	
-								if ((ypos < cliprect.min_y) || (ypos > cliprect.max_y)) continue;
+								if ((ypos < cliprect->min_y) || (ypos > cliprect->max_y)) continue;
 	
-								for (px = 0; px < gfx.width; px++){
+								for (px = 0; px < gfx->width; px++){
 									/* get current pixel */
 									int xpos = (((sx + ex*16 + px) & 0x3ff) + spr_x_adjust) & 0x3ff;
 									UINT16 *pixel = srcy + xpos;
 									int src_color = *pixel;
 	
-									int gfx_px = xflip ? (gfx.width - 1 - px) : px;
+									int gfx_px = xflip ? (gfx->width - 1 - px) : px;
 	
 									/* get asociated pen for the current sprite pixel */
-									int gfx_pen = gfx_src[gfx.line_modulo*gfx_py + gfx_px];
+									int gfx_pen = gfx_src[gfx->line_modulo*gfx_py + gfx_px];
 	
 									if ((gfx_pen == 0) || (gfx_pen >= 16)) continue;
 	
-									if ((xpos < cliprect.min_x) || (xpos > cliprect.max_x)) continue;
+									if ((xpos < cliprect->min_x) || (xpos > cliprect->max_x)) continue;
 	
 									/* make background color darker or brighter */
 									*pixel = src_color + 4096*gfx_pen;
@@ -489,8 +486,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gaelco2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		/* read scroll values */
@@ -517,8 +513,7 @@ public class gaelco2
 		gaelco2_draw_sprites(bitmap, cliprect, 0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_bang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    /* standard rendering on this hardware */
 	    video_update_gaelco2(bitmap, cliprect);
 	
@@ -541,8 +536,7 @@ public class gaelco2
 	
 	#ifdef ONE_MONITOR
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		/* read scroll values */
@@ -574,8 +568,7 @@ public class gaelco2
 	
 	#else
 	
-	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gaelco2_dual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		/* read scroll values */
@@ -620,8 +613,7 @@ public class gaelco2
 	
 	#endif
 	
-	public static VideoEofHandlerPtr video_eof_gaelco2  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_gaelco2  = new VideoEofHandlerPtr() { public void handler(){
 		/* sprites are one frame ahead */
 		buffer_spriteram16_w(0, 0, 0);
 	} };

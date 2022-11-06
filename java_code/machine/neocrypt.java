@@ -58,7 +58,7 @@ analyzed, quickly leading to the algorithm.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -467,7 +467,7 @@ public class neocrypt
 		xor0 = (table0hi[(base >> 8) & 0xff] & 0xfe) | (tmp & 0x01);
 		xor1 = (tmp & 0xfe) | (table0lo[(base >> 8) & 0xff] & 0x01);
 	
-		if (invert != 0)
+		if (invert)
 		{
 			*r0 = c1 ^ xor0;
 			*r1 = c0 ^ xor1;
@@ -490,7 +490,7 @@ public class neocrypt
 	
 		buf = malloc(rom_size);
 	
-		if (buf == 0) return;
+		if (!buf) return;
 	
 		rom = memory_region(REGION_GFX3);
 	

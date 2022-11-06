@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,8 +40,7 @@ public class subs
 		0x02, 0x03		/* Left screen */
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_subs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_subs  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK - modified on video invert */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE - modified on video invert */
 		palette_set_color(2,0x00,0x00,0x00); /* BLACK - modified on video invert */
@@ -99,7 +98,7 @@ public class subs
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_subs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_subs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( subs )
 		PORT_START();  /* OPTIONS */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -312,8 +311,7 @@ public class subs
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_subs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( subs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/16)		/* clock input is the "4H" signal */
@@ -341,9 +339,7 @@ public class subs
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, subs_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -384,8 +380,7 @@ public class subs
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_subs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_subs  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -404,5 +399,5 @@ public class subs
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_subs	   = new GameDriver("1977"	,"subs"	,"subs.java"	,rom_subs,null	,machine_driver_subs	,input_ports_subs	,init_subs	,ROT0	,	"Atari", "Subs", GAME_IMPERFECT_SOUND )
+	GAMEX( 1977, subs, 0, subs, subs, subs, ROT0, "Atari", "Subs", GAME_IMPERFECT_SOUND )
 }

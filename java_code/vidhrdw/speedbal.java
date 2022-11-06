@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class speedbal
 	static struct mame_bitmap *bitmap_bg;   /* background tiles */
 	static struct mame_bitmap *bitmap_ch;   /* foreground char  */
 	
-	public static PaletteInitHandlerPtr palette_init_speedbal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_speedbal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -82,8 +81,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_speedbal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_speedbal  = new VideoStartHandlerPtr() { public int handler(){
 		if ((bg_dirtybuffer = auto_malloc (speedbal_background_videoram_size)) == 0)
 			return 1;
 	
@@ -112,14 +110,12 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static WriteHandlerPtr speedbal_foreground_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedbal_foreground_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	   ch_dirtybuffer[offset] = 1;
 	   speedbal_foreground_videoram[offset]=data;
 	} };
 	
-	public static ReadHandlerPtr speedbal_foreground_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedbal_foreground_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	   return speedbal_foreground_videoram[offset];
 	} };
 	
@@ -131,14 +127,12 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static WriteHandlerPtr speedbal_background_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedbal_background_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	   bg_dirtybuffer[offset] = 1;
 	   speedbal_background_videoram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr speedbal_background_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedbal_background_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	   return speedbal_background_videoram[offset];
 	} };
 	
@@ -174,12 +168,12 @@ public class speedbal
 	
 			if (!(SPTRegs[SPRITE_PALETTE]&0x40)) SPTTile+=256;
 	
-			drawgfx (bitmap,Machine.gfx[2],
+			drawgfx (bitmap,Machine->gfx[2],
 					SPTTile,
 					SPTColor,
 					0,0,
 					SPTX,SPTY,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -209,7 +203,7 @@ public class speedbal
 				sx = 15 - (offset / 2) / 16;
 				sy = (offset / 2) % 16;
 	
-				drawgfx (bitmap_bg,Machine.gfx[1],
+				drawgfx (bitmap_bg,Machine->gfx[1],
 						tile,
 						color,
 						0,0,
@@ -218,7 +212,7 @@ public class speedbal
 			}
 		}
 	
-		copybitmap (bitmap,bitmap_bg,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
+		copybitmap (bitmap,bitmap_bg,0,0,0,0,Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	
@@ -245,12 +239,12 @@ public class speedbal
 				sx = 31 - (offset / 2) / 32;
 				sy = (offset / 2) % 32;
 	
-				drawgfx (bitmap,Machine.gfx[0],
+				drawgfx (bitmap,Machine->gfx[0],
 						caracter,
 						color,
 						0,0,
 						8*sx,8*sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				ch_dirtybuffer[offset] = 0;
 			}
@@ -265,8 +259,7 @@ public class speedbal
 	 *				   *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_speedbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		// first background
 		speedbal_draw_background (bitmap);
 	

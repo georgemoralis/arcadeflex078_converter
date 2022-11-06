@@ -37,7 +37,7 @@ write
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,14 +52,12 @@ public class marineb
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_marineb  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_marineb  = new MachineInitHandlerPtr() { public void handler(){
 		marineb_active_low_flipscreen = 0;
 		machine_init_espial();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_springer  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_springer  = new MachineInitHandlerPtr() { public void handler(){
 		marineb_active_low_flipscreen = 1;
 		machine_init_espial();
 	} };
@@ -111,7 +109,7 @@ public class marineb
 	};
 	
 	
-	static InputPortPtr input_ports_marineb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_marineb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( marineb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
@@ -161,7 +159,7 @@ public class marineb
 		PORT_BIT( 0xc0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_changes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_changes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( changes )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
@@ -208,7 +206,7 @@ public class marineb
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hoccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hoccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hoccer )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER2 );
@@ -256,7 +254,7 @@ public class marineb
 		PORT_BIT( 0xc0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wanted = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wanted = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wanted )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
@@ -334,7 +332,7 @@ public class marineb
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bcruzm12 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bcruzm12 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bcruzm12 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
@@ -564,8 +562,7 @@ public class marineb
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_marineb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( marineb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3072000)	/* 3.072 MHz */
@@ -591,13 +588,10 @@ public class marineb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, marineb_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_changes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( changes )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(marineb)
@@ -605,13 +599,10 @@ public class marineb
 		/* video hardware */
 		MDRV_GFXDECODE(changes_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(changes)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_springer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( springer )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(marineb)
@@ -619,13 +610,10 @@ public class marineb
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(springer)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hoccer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hoccer )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(marineb)
@@ -633,13 +621,10 @@ public class marineb
 		/* video hardware */
 		MDRV_GFXDECODE(hoccer_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(hoccer)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wanted = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wanted )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(marineb)
@@ -653,13 +638,10 @@ public class marineb
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("8910", AY8910, wanted_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hopprobo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hopprobo )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(marineb)
@@ -667,13 +649,10 @@ public class marineb
 		/* video hardware */
 		MDRV_GFXDECODE(hopprobo_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(hopprobo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bcruzm12 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bcruzm12 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz  */
@@ -698,9 +677,7 @@ public class marineb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, wanted_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -917,13 +894,13 @@ public class marineb
 	
 	
 	/*    year  name      parent   machine   inputs */
-	public static GameDriver driver_marineb	   = new GameDriver("1982"	,"marineb"	,"marineb.java"	,rom_marineb,null	,machine_driver_marineb	,input_ports_marineb	,null	,ROT0	,	"Orca", "Marine Boy" )
-	public static GameDriver driver_changes	   = new GameDriver("1982"	,"changes"	,"marineb.java"	,rom_changes,null	,machine_driver_changes	,input_ports_changes	,null	,ROT0	,	"Orca", "Changes" )
-	public static GameDriver driver_looper	   = new GameDriver("1982"	,"looper"	,"marineb.java"	,rom_looper,driver_changes	,machine_driver_changes	,input_ports_changes	,null	,ROT0	,	"Orca", "Looper" )
-	public static GameDriver driver_springer	   = new GameDriver("1982"	,"springer"	,"marineb.java"	,rom_springer,null	,machine_driver_springer	,input_ports_marineb	,null	,ROT270	,	"Orca", "Springer" )
-	public static GameDriver driver_hoccer	   = new GameDriver("1983"	,"hoccer"	,"marineb.java"	,rom_hoccer,null	,machine_driver_hoccer	,input_ports_hoccer	,null	,ROT90	,	"Eastern Micro Electronics, Inc.", "Hoccer (set 1)" )
-	public static GameDriver driver_hoccer2	   = new GameDriver("1983"	,"hoccer2"	,"marineb.java"	,rom_hoccer2,driver_hoccer	,machine_driver_hoccer	,input_ports_hoccer	,null	,ROT90	,	"Eastern Micro Electronics, Inc.", "Hoccer (set 2)" )	/* earlier */
-	public static GameDriver driver_bcruzm12	   = new GameDriver("1983"	,"bcruzm12"	,"marineb.java"	,rom_bcruzm12,null	,machine_driver_bcruzm12	,input_ports_bcruzm12	,null	,ROT90	,	"Sigma Enterprises Inc.", "Battle Cruiser M-12" )
-	public static GameDriver driver_hopprobo	   = new GameDriver("1983"	,"hopprobo"	,"marineb.java"	,rom_hopprobo,null	,machine_driver_hopprobo	,input_ports_marineb	,null	,ROT90	,	"Sega", "Hopper Robo" )
-	public static GameDriver driver_wanted	   = new GameDriver("1984"	,"wanted"	,"marineb.java"	,rom_wanted,null	,machine_driver_wanted	,input_ports_wanted	,null	,ROT90	,	"Sigma Enterprises Inc.", "Wanted" )
+	GAME( 1982, marineb,  0,       marineb,  marineb, 0, ROT0,   "Orca", "Marine Boy" )
+	GAME( 1982, changes,  0,       changes,  changes, 0, ROT0,   "Orca", "Changes" )
+	GAME( 1982, looper,   changes, changes,  changes, 0, ROT0,   "Orca", "Looper" )
+	GAME( 1982, springer, 0,       springer, marineb, 0, ROT270, "Orca", "Springer" )
+	GAME( 1983, hoccer,   0,       hoccer,   hoccer,  0, ROT90,  "Eastern Micro Electronics, Inc.", "Hoccer (set 1)" )
+	GAME( 1983, hoccer2,  hoccer,  hoccer,   hoccer,  0, ROT90,  "Eastern Micro Electronics, Inc.", "Hoccer (set 2)" )	/* earlier */
+	GAME( 1983, bcruzm12, 0,       bcruzm12, bcruzm12,0, ROT90,  "Sigma Enterprises Inc.", "Battle Cruiser M-12" )
+	GAME( 1983, hopprobo, 0,       hopprobo, marineb, 0, ROT90,  "Sega", "Hopper Robo" )
+	GAME( 1984, wanted,   0,       wanted,   wanted,  0, ROT90,  "Sigma Enterprises Inc.", "Wanted" )
 }

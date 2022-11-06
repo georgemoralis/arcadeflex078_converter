@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,20 +55,19 @@ public class vindictr
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate |= 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_vindictr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vindictr  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(vindictr_scanline_update, 8);
@@ -88,27 +87,27 @@ public class vindictr
 		int result = readinputport(real_port);
 		int fake = readinputport(fake_port);
 	
-		if ((fake & 0x01) != 0)			/* up */
+		if (fake & 0x01)			/* up */
 		{
-			if ((fake & 0x04) != 0)		/* up and left */
+			if (fake & 0x04)		/* up and left */
 				result &= ~0x2000;
-			else if ((fake & 0x08) != 0)	/* up and right */
+			else if (fake & 0x08)	/* up and right */
 				result &= ~0x1000;
 			else					/* up only */
 				result &= ~0x3000;
 		}
-		else if ((fake & 0x02) != 0)		/* down */
+		else if (fake & 0x02)		/* down */
 		{
-			if ((fake & 0x04) != 0)		/* down and left */
+			if (fake & 0x04)		/* down and left */
 				result &= ~0x8000;
-			else if ((fake & 0x08) != 0)	/* down and right */
+			else if (fake & 0x08)	/* down and right */
 				result &= ~0x4000;
 			else					/* down only */
 				result &= ~0xc000;
 		}
-		else if ((fake & 0x04) != 0)		/* left only */
+		else if (fake & 0x04)		/* left only */
 			result &= ~0x6000;
-		else if ((fake & 0x08) != 0)		/* right only */
+		else if (fake & 0x08)		/* right only */
 			result &= ~0x9000;
 	
 		return result;
@@ -124,8 +123,8 @@ public class vindictr
 	static READ16_HANDLER( port1_r )
 	{
 		int result = fake_inputs(1, 4);
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0004;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0008;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x0004;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0008;
 		result ^= 0x0010;
 		return result;
 	}
@@ -187,7 +186,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_vindictr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vindictr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vindictr )
 		PORT_START(); 		/* 26000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -283,8 +282,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_vindictr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vindictr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_14MHz/2)
@@ -308,9 +306,7 @@ public class vindictr
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo_pokey)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -583,8 +579,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_vindictr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vindictr  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 5, 1, 0x0002);
 	} };
@@ -597,12 +592,12 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_vindictr	   = new GameDriver("1988"	,"vindictr"	,"vindictr.java"	,rom_vindictr,null	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 5)" )
-	public static GameDriver driver_vindicte	   = new GameDriver("1988"	,"vindicte"	,"vindictr.java"	,rom_vindicte,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 5)" )
-	public static GameDriver driver_vindictg	   = new GameDriver("1988"	,"vindictg"	,"vindictr.java"	,rom_vindictg,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (German, rev 1)" )
-	public static GameDriver driver_vindice4	   = new GameDriver("1988"	,"vindice4"	,"vindictr.java"	,rom_vindice4,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 4)" )
-	public static GameDriver driver_vindict4	   = new GameDriver("1988"	,"vindict4"	,"vindictr.java"	,rom_vindict4,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 4)" )
-	public static GameDriver driver_vindice3	   = new GameDriver("1988"	,"vindice3"	,"vindictr.java"	,rom_vindice3,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (Europe, rev 3)" )
-	public static GameDriver driver_vindict2	   = new GameDriver("1988"	,"vindict2"	,"vindictr.java"	,rom_vindict2,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 2)" )
-	public static GameDriver driver_vindict1	   = new GameDriver("1988"	,"vindict1"	,"vindictr.java"	,rom_vindict1,driver_vindictr	,machine_driver_vindictr	,input_ports_vindictr	,init_vindictr	,ROT0	,	"Atari Games", "Vindicators (rev 1)" )
+	GAME( 1988, vindictr, 0,        vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 5)" )
+	GAME( 1988, vindicte, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 5)" )
+	GAME( 1988, vindictg, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (German, rev 1)" )
+	GAME( 1988, vindice4, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 4)" )
+	GAME( 1988, vindict4, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 4)" )
+	GAME( 1988, vindice3, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (Europe, rev 3)" )
+	GAME( 1988, vindict2, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 2)" )
+	GAME( 1988, vindict1, vindictr, vindictr, vindictr, vindictr, ROT0, "Atari Games", "Vindicators (rev 1)" )
 }

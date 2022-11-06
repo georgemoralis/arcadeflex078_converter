@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,50 +22,42 @@ public class rollrace
 	#define RA_BGCHAR_BASE 	4
 	#define RA_SP_BASE	5
 	
-	public static WriteHandlerPtr rollrace_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollrace_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		ra_charbank[offset&1] = data;
 		ra_chrbank = ra_charbank[0] | (ra_charbank[1] << 1) ;
 	} };
 	
 	
-	public static WriteHandlerPtr rollrace_bkgpen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollrace_bkgpen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ra_bkgpen = data;
 	} };
 	
-	WRITE_HANDLER(rollrace_spritebank_w)
-	{
+	public static WriteHandlerPtr rollrace_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ra_spritebank = data;
-	}
+	} };
 	
-	WRITE_HANDLER(rollrace_backgroundpage_w)
-	{
+	public static WriteHandlerPtr rollrace_backgroundpage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		ra_bkgpage = data & 0x1f;
 		ra_bkgflip = ( data & 0x80 ) >> 7;
 	
 		/* 0x80 flip vertical */
-	}
+	} };
 	
-	public static WriteHandlerPtr rollrace_backgroundcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollrace_backgroundcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ra_bkgcol = data;
 	} };
 	
-	public static WriteHandlerPtr rollrace_flipy_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollrace_flipy_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ra_flipy = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr rollrace_flipx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rollrace_flipx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ra_flipx = data & 0x01;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_rollrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rollrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		int offs;
 		int sx, sy;
@@ -87,10 +79,10 @@ public class rollrace
 	
 				sx = ( offs%32 ) ;
 	
-				if (ra_flipx != 0)
+				if(ra_flipx)
 					sx = 31-sx ;
 	
-				if (ra_flipy != 0)
+				if(ra_flipy)
 					sy = 31-sy ;
 	
 				drawgfx(bitmap,
@@ -120,9 +112,9 @@ public class rollrace
 			if(sx && sy)
 			{
 	
-			if (ra_flipx != 0)
+			if(ra_flipx)
 				sx = 224 - sx;
-			if (ra_flipy != 0)
+			if(ra_flipy)
 				sy = 224 - sy;
 	
 			if(spriteram.read(offs+1)& 0x80)
@@ -130,7 +122,7 @@ public class rollrace
 	
 			bank = (( spriteram.read(offs+1)& 0x40 ) >> 6 ) ;
 	
-			if (bank != 0)
+			if(bank)
 				bank += ra_spritebank;
 	
 			drawgfx(bitmap, Machine.gfx[ RA_SP_BASE + bank ],
@@ -155,12 +147,12 @@ public class rollrace
 			scroll = ( 8 * sy + colorram.read(2 * sx)) % 256;
 			col = colorram.read( sx * 2 + 1 )&0x1f;
 	
-			if (ra_flipy == 0)
+			if (!ra_flipy)
 			{
 			   scroll = (248 - scroll) % 256;
 			}
 	
-			if (ra_flipx != 0) sx = 31 - sx;
+			if (ra_flipx) sx = 31 - sx;
 	
 			drawgfx(bitmap,Machine.gfx[RA_FGCHAR_BASE + ra_chrbank]  ,
 				videoram.read( offs ),

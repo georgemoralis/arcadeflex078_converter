@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -14,8 +14,7 @@ public class avalnche
 {
 	
 	
-	public static WriteHandlerPtr avalnche_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avalnche_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 	
 		if (offset >= 0x200)
@@ -26,14 +25,13 @@ public class avalnche
 			y = offset / 32;
 	
 			for (i = 0;i < 8;i++)
-				plot_pixel.handler(tmpbitmap,x+7-i,y,Machine.pens[(data >> i) & 1]);
+				plot_pixel(tmpbitmap,x+7-i,y,Machine->pens[(data >> i) & 1]);
 		}
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_avalnche  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_avalnche  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -51,8 +51,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_phoenix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_phoenix  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
@@ -90,8 +89,7 @@ public class phoenix
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_pleiads  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pleiads  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -140,7 +138,7 @@ public class phoenix
 	{
 		int code;
 	
-		code = current_videoram_pg.read(tile_index);
+		code = current_videoram_pg[tile_index];
 		SET_TILE_INFO(
 				1,
 				code,
@@ -152,7 +150,7 @@ public class phoenix
 	{
 		int code;
 	
-		code = current_videoram_pg.read(tile_index + 0x800);
+		code = current_videoram_pg[tile_index + 0x800];
 		SET_TILE_INFO(
 				0,
 				code,
@@ -167,8 +165,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_phoenix  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_phoenix  = new VideoStartHandlerPtr() { public int handler(){
 		if ((videoram_pg1 = auto_malloc(0x1000)) == 0)
 			return 1;
 	
@@ -201,20 +198,18 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr phoenix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return current_videoram_pg.read(offset);
+	public static ReadHandlerPtr phoenix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return current_videoram_pg[offset];
 	} };
 	
-	public static WriteHandlerPtr phoenix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phoenix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
-		current_videoram_pg.write(data,data);
+		current_videoram_pg[offset] = data;
 	
 		if ((offset & 0x7ff) < 0x340)
 		{
-			if ((offset & 0x800) != 0)
+			if (offset & 0x800)
 				tilemap_mark_tile_dirty(bg_tilemap,offset & 0x3ff);
 			else
 				tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
@@ -225,8 +220,7 @@ public class phoenix
 	} };
 	
 	
-	public static WriteHandlerPtr phoenix_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phoenix_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (current_videoram_pg_index != (data & 1))
 		{
 			/* set memory bank */
@@ -248,8 +242,7 @@ public class phoenix
 		}
 	} };
 	
-	public static WriteHandlerPtr pleiads_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pleiads_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (current_videoram_pg_index != (data & 1))
 		{
 			/* set memory bank */
@@ -283,22 +276,19 @@ public class phoenix
 	} };
 	
 	
-	public static WriteHandlerPtr phoenix_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr phoenix_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap,0,data);
 	} };
 	
 	
-	public static ReadHandlerPtr phoenix_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (cocktail_mode != 0)
+	public static ReadHandlerPtr phoenix_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (cocktail_mode)
 			return (input_port_0_r.handler(0) & 0x07) | (input_port_1_r.handler(0) & 0xf8);
 		else
 			return input_port_0_r.handler(0);
 	} };
 	
-	public static ReadHandlerPtr pleiads_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pleiads_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = phoenix_input_port_0_r(0) & 0xf7;
 	
 		/* handle Pleiads protection */
@@ -320,11 +310,10 @@ public class phoenix
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr survival_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr survival_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = phoenix_input_port_0_r(0);
 	
-		if (survival_protection_value != 0)
+		if (survival_protection_value)
 		{
 			ret ^= 0xf0;
 		}
@@ -332,8 +321,7 @@ public class phoenix
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr survival_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr survival_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc() == 0x2017)
 		{
 			survival_protection_value ^= 1;
@@ -348,8 +336,7 @@ public class phoenix
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_phoenix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_phoenix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };

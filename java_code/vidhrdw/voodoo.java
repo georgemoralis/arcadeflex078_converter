@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -652,7 +652,7 @@ public class voodoo
 		
 	#if DISPLAY_STATISTICS
 	{
-		int screen_area = (Machine.visible_area.max_x - Machine.visible_area.min_x + 1) * (Machine.visible_area.max_y - Machine.visible_area.min_y + 1);
+		int screen_area = (Machine->visible_area.max_x - Machine->visible_area.min_x + 1) * (Machine->visible_area.max_y - Machine->visible_area.min_y + 1);
 		usrintf_showmessage("Polys:%d  Render:%d%%  FPS:%d",
 				polycount, pixelcount * 100 / screen_area, lastfps);
 		polycount = pixelcount = 0;
@@ -662,7 +662,7 @@ public class voodoo
 	
 		logerror("---- swapbuffers\n");
 	
-		if (pending_fastfill != 0)
+		if (pending_fastfill)
 		{
 			UINT32 temp_zaColor = voodoo_regs[zaColor];
 			UINT32 temp_color1 = voodoo_regs[color1];
@@ -695,7 +695,7 @@ public class voodoo
 			swaps_pending--;
 			swap_buffers();
 	
-			if (blocked_on_swap != 0)
+			if (blocked_on_swap)
 				blocked_on_swap = 0;
 		}
 	
@@ -733,10 +733,10 @@ public class voodoo
 			return 1;
 		
 		/* allocate memory for the cmdfifo */
-		if (voodoo2 != 0)
+		if (voodoo2)
 		{
 			cmdfifo = auto_malloc(CMDFIFO_SIZE);
-			if (cmdfifo == 0)
+			if (!cmdfifo)
 				return 1;
 		}
 		
@@ -788,8 +788,8 @@ public class voodoo
 			palette_set_color(i - 1, r, g, b);
 			pen_lookup[i] = i - 1;
 		}
-		pen_lookup[0] = Machine.uifont.colortable[0];
-		pen_lookup[65535] = Machine.uifont.colortable[1];
+		pen_lookup[0] = Machine->uifont->colortable[0];
+		pen_lookup[65535] = Machine->uifont->colortable[1];
 		
 		/* allocate a vblank timer */
 		vblank_timer = timer_alloc(vblank_callback);
@@ -867,8 +867,8 @@ public class voodoo
 		lfb_flipy = 0;
 	
 		/* videoDimensions variables */
-		video_width = Machine.visible_area.max_x + 1;
-		video_height = Machine.visible_area.max_y + 1;
+		video_width = Machine->visible_area.max_x + 1;
+		video_height = Machine->visible_area.max_y + 1;
 	
 		/* fbiInit variables */
 		triple_buffer = 0;
@@ -881,8 +881,7 @@ public class voodoo
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_voodoo_1x4mb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_voodoo_1x4mb  = new VideoStartHandlerPtr() { public int handler(){
 		tmus = 1;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
@@ -890,8 +889,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_voodoo_2x4mb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_voodoo_2x4mb  = new VideoStartHandlerPtr() { public int handler(){
 		tmus = 2;
 		voodoo2 = 0;
 		texram_mask = 4 * 1024 * 1024 - 1;
@@ -899,8 +897,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_voodoo2_1x4mb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_voodoo2_1x4mb  = new VideoStartHandlerPtr() { public int handler(){
 		tmus = 1;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
@@ -908,8 +905,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_voodoo2_2x4mb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_voodoo2_2x4mb  = new VideoStartHandlerPtr() { public int handler(){
 		tmus = 2;
 		voodoo2 = 1;
 		texram_mask = 4 * 1024 * 1024 - 1;
@@ -917,8 +913,7 @@ public class voodoo
 	} };
 	
 	
-	public static VideoStopHandlerPtr video_stop_voodoo  = new VideoStopHandlerPtr() { public void handler()
-	{
+	public static VideoStopHandlerPtr video_stop_voodoo  = new VideoStopHandlerPtr() { public void handler(){
 	#if LOG_RENDERERS
 		int i;
 	
@@ -944,8 +939,7 @@ public class voodoo
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_voodoo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
 	#if DISPLAY_STATISTICS
@@ -1043,7 +1037,7 @@ public class voodoo
 		int x, y;
 	
 		/* frame buffer clear? */
-		if (fbz_rgb_write != 0)
+		if (fbz_rgb_write)
 		{
 			/* determine dithering */
 			dither_to_matrix(voodoo_regs[color1], dither);
@@ -1054,7 +1048,7 @@ public class voodoo
 				UINT16 *dest = &buffer[(fbz_invert_y ? (inverted_yorigin - y) : y) * FRAMEBUF_WIDTH + sx];
 	
 				/* if not dithered, it's easy */
-				if (fbz_dithering == 0)
+				if (!fbz_dithering)
 				{
 					UINT16 color = dither[0];
 					for (x = sx; x < ex; x++)
@@ -1072,7 +1066,7 @@ public class voodoo
 		}
 		
 		/* depth buffer clear? */
-		if (fbz_depth_write != 0)
+		if (fbz_depth_write)
 		{
 			UINT16 color = voodoo_regs[zaColor];
 			logerror("FASTFILL depth = %04X\n", color);
@@ -1146,7 +1140,7 @@ public class voodoo
 		
 		voodoo_regs[fbiTrianglesOut] = (voodoo_regs[fbiTrianglesOut] + 1) & 0xffffff;
 		
-		if (LOG_COMMANDS != 0)
+		if (LOG_COMMANDS)
 			logerror("%06X:FLOAT TRIANGLE command\n", activecpu_get_pc());
 	
 		SETUP_FPU();
@@ -1444,23 +1438,23 @@ public class voodoo
 			/* packet type 3 */
 			case 3:
 				count = 2;		/* X/Y */
-				if ((command & 0x10000000) != 0)
+				if (command & 0x10000000)
 				{
-					if ((command & 0xc00) != 0) count++;		/* ARGB */
+					if (command & 0xc00) count++;		/* ARGB */
 				}
 				else
 				{
-					if ((command & 0x400) != 0) count += 3;	/* RGB */
-					if ((command & 0x800) != 0) count++;		/* A */
+					if (command & 0x400) count += 3;	/* RGB */
+					if (command & 0x800) count++;		/* A */
 				}
-				if ((command & 0x1000) != 0) count++;			/* Z */
-				if ((command & 0x2000) != 0) count++;			/* Wb */
-				if ((command & 0x4000) != 0) count++;			/* W0 */
-				if ((command & 0x8000) != 0) count += 2;		/* S0/T0 */
-				if ((command & 0x10000) != 0) count++;			/* W1 */
-				if ((command & 0x20000) != 0) count += 2;		/* S1/T1 */
+				if (command & 0x1000) count++;			/* Z */
+				if (command & 0x2000) count++;			/* Wb */
+				if (command & 0x4000) count++;			/* W0 */
+				if (command & 0x8000) count += 2;		/* S0/T0 */
+				if (command & 0x10000) count++;			/* W1 */
+				if (command & 0x20000) count += 2;		/* S1/T1 */
 				count *= (command >> 6) & 15;			/* numverts */
-	//			if ((command & 0xfc00000) != 0)				/* smode != 0 */
+	//			if (command & 0xfc00000)				/* smode != 0 */
 	//				count++;
 				return 1 + count + (command >> 29);
 			
@@ -1497,25 +1491,25 @@ public class voodoo
 				switch ((command >> 3) & 7)
 				{
 					case 0:		/* NOP */
-						if (LOG_CMDFIFO != 0) logerror("  NOP\n");
+						if (LOG_CMDFIFO) logerror("  NOP\n");
 						break;
 					
 					case 1:		/* JSR */
-						if (LOG_CMDFIFO != 0) logerror("  JSR $%06X\n", target);
+						if (LOG_CMDFIFO) logerror("  JSR $%06X\n", target);
 						voodoo_regs[cmdFifoAMin] = voodoo_regs[cmdFifoAMax] = target - 4;
 						return target;
 					
 					case 2:		/* RET */
-						if (LOG_CMDFIFO != 0) logerror("  RET $%06X\n", target);
+						if (LOG_CMDFIFO) logerror("  RET $%06X\n", target);
 						break;
 					
 					case 3:		/* JMP LOCAL FRAME BUFFER */
-						if (LOG_CMDFIFO != 0) logerror("  JMP LOCAL FRAMEBUF $%06X\n", target);
+						if (LOG_CMDFIFO) logerror("  JMP LOCAL FRAMEBUF $%06X\n", target);
 						voodoo_regs[cmdFifoAMin] = voodoo_regs[cmdFifoAMax] = target - 4;
 						return target;
 					
 					case 4:		/* JMP AGP */
-						if (LOG_CMDFIFO != 0) logerror("  JMP AGP $%06X\n", target);
+						if (LOG_CMDFIFO) logerror("  JMP AGP $%06X\n", target);
 						voodoo_regs[cmdFifoAMin] = voodoo_regs[cmdFifoAMax] = target - 4;
 						return target;
 					
@@ -1531,14 +1525,14 @@ public class voodoo
 				inc = (command >> 15) & 1;
 				target = (command >> 3) & 0xfff;
 				
-				if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 1: count=%d inc=%d reg=%04X\n", count, inc, target);
+				if (LOG_CMDFIFO) logerror("  PACKET TYPE 1: count=%d inc=%d reg=%04X\n", count, inc, target);
 				for (i = 0; i < count; i++, target += inc)
 					voodoo_regs_w(target, *src++, 0);
 				break;
 			
 			/* packet type 2 */
 			case 2:
-				if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 2: mask=%X\n", (command >> 3) & 0x1ffffff);
+				if (LOG_CMDFIFO) logerror("  PACKET TYPE 2: mask=%X\n", (command >> 3) & 0x1ffffff);
 				for (i = 3; i <= 31; i++)
 					if (command & (1 << i))
 						voodoo_regs_w(bltSrcBaseAddr + (i - 3), *src++, 0);
@@ -1548,7 +1542,7 @@ public class voodoo
 			case 3:
 				count = (command >> 6) & 15;
 				code = (command >> 3) & 7;
-				if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 3: count=%d code=%d mask=%03X\n", count, code, (command >> 10) & 0xfff);
+				if (LOG_CMDFIFO) logerror("  PACKET TYPE 3: count=%d code=%d mask=%03X\n", count, code, (command >> 10) & 0xfff);
 				
 				voodoo_regs[sSetupMode] = ((command >> 10) & 0xfff) | ((command >> 6) & 0xf0000);
 				for (i = 0; i < count; i++)
@@ -1556,7 +1550,7 @@ public class voodoo
 					setup_pending.x = TRUNC_TO_INT(*(float *)src++ * 16. + 0.5) * (1. / 16.);
 					setup_pending.y = TRUNC_TO_INT(*(float *)src++ * 16. + 0.5) * (1. / 16.);
 	
-					if ((command & 0x10000000) != 0)
+					if (command & 0x10000000)
 					{
 						if (voodoo_regs[sSetupMode] & 0x0003)
 						{
@@ -1624,7 +1618,7 @@ public class voodoo
 			case 4:
 				target = (command >> 3) & 0xfff;
 	
-				if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 4: mask=%X reg=%04X pad=%d\n", (command >> 15) & 0x3fff, target, command >> 29);
+				if (LOG_CMDFIFO) logerror("  PACKET TYPE 4: mask=%X reg=%04X pad=%d\n", (command >> 15) & 0x3fff, target, command >> 29);
 				for (i = 15; i <= 28; i++)
 					if (command & (1 << i))
 						voodoo_regs_w(target + (i - 15), *src++, 0);
@@ -1638,13 +1632,13 @@ public class voodoo
 	
 				if ((command >> 30) == 2)
 				{
-					if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 5: LFB count=%d dest=%08X bd2=%X bdN=%X\n", count, target, (command >> 26) & 15, (command >> 22) & 15);
+					if (LOG_CMDFIFO) logerror("  PACKET TYPE 5: LFB count=%d dest=%08X bd2=%X bdN=%X\n", count, target, (command >> 26) & 15, (command >> 22) & 15);
 					for (i = 0; i < count; i++)
 						voodoo_framebuf_w(target++, *src++, 0);
 				}
 				else if ((command >> 30) == 3)
 				{
-					if (LOG_CMDFIFO != 0) logerror("  PACKET TYPE 5: textureRAM count=%d dest=%08X bd2=%X bdN=%X\n", count, target, (command >> 26) & 15, (command >> 22) & 15);
+					if (LOG_CMDFIFO) logerror("  PACKET TYPE 5: textureRAM count=%d dest=%08X bd2=%X bdN=%X\n", count, target, (command >> 26) & 15, (command >> 22) & 15);
 					for (i = 0; i < count; i++)
 						voodoo_textureram_w(target++, *src++, 0);
 				}
@@ -1697,7 +1691,7 @@ public class voodoo
 			data32_t old_depth = voodoo_regs[cmdFifoDepth];
 			
 			/* swizzling */
-			if ((offset & 0x10000) != 0)
+			if (offset & 0x10000)
 				data = (data >> 24) | ((data >> 8) & 0xff00) | ((data << 8) & 0xff0000) | (data << 24);
 			cmdfifo[addr/4] = data;
 			
@@ -1726,7 +1720,7 @@ public class voodoo
 				voodoo_regs[cmdFifoHoles] += (voodoo_regs[cmdFifoAMax] - voodoo_regs[cmdFifoAMin]) / 4 - 1;
 			}
 			
-			if (LOG_CMDFIFO_VERBOSE != 0) 
+			if (LOG_CMDFIFO_VERBOSE) 
 			{
 				if ((cmdfifo[voodoo_regs[cmdFifoRdPtr]/4] & 7) == 3)
 					logerror("CMDFIFO(%06X)=%f  (min=%06X max=%06X d=%d h=%d)\n", addr, *(float *)&data, voodoo_regs[cmdFifoAMin], voodoo_regs[cmdFifoAMax], voodoo_regs[cmdFifoDepth], voodoo_regs[cmdFifoHoles]);
@@ -1741,7 +1735,7 @@ public class voodoo
 				if (old_depth == 0)
 				{
 					cmdfifo_expected = compute_expected_depth();
-					if (LOG_CMDFIFO_VERBOSE != 0) logerror("PACKET TYPE %d, expecting %d words\n", cmdfifo[voodoo_regs[cmdFifoRdPtr]/4] & 7, cmdfifo_expected);
+					if (LOG_CMDFIFO_VERBOSE) logerror("PACKET TYPE %d, expecting %d words\n", cmdfifo[voodoo_regs[cmdFifoRdPtr]/4] & 7, cmdfifo_expected);
 				}
 				
 				/* if we got everything, execute */
@@ -1765,18 +1759,18 @@ public class voodoo
 		else
 			offset &= 0xff;
 		
-		if ((chips & 1) != 0)
+		if (chips & 1)
 			voodoo_regs[0x000 + offset] = data;
-		if ((chips & 2) != 0)
+		if (chips & 2)
 			voodoo_regs[0x100 + offset] = data;
-		if ((chips & 4) != 0)
+		if (chips & 4)
 			voodoo_regs[0x200 + offset] = data;
-		if ((chips & 8) != 0)
+		if (chips & 8)
 			voodoo_regs[0x300 + offset] = data;
 	
 		status_lastpc = ~0;
 	
-		if (LOG_REGISTERS != 0)
+		if (LOG_REGISTERS)
 		{
 			if (offset < fvertexAx || offset > fdWdY)
 				logerror("%06X:voodoo %s(%d) write = %08X\n", activecpu_get_pc(), (offset < 0x384/4) ? voodoo_reg_name[offset] : "oob", chips, data);
@@ -1788,222 +1782,222 @@ public class voodoo
 		{
 			/* fixed-point vertex data */
 			case vertexAx:
-				if ((chips & 1) != 0) tri_va.x = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_va.x = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			case vertexAy:
-				if ((chips & 1) != 0) tri_va.y = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_va.y = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			case vertexBx:
-				if ((chips & 1) != 0) tri_vb.x = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_vb.x = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			case vertexBy:
-				if ((chips & 1) != 0) tri_vb.y = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_vb.y = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			case vertexCx:
-				if ((chips & 1) != 0) tri_vc.x = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_vc.x = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			case vertexCy:
-				if ((chips & 1) != 0) tri_vc.y = (float)(INT16)data * (1.0f / 16.0f);
+				if (chips & 1) tri_vc.y = (float)(INT16)data * (1.0f / 16.0f);
 				break;
 			
 			/* fixed point starting data */
 			case startR:
-				if ((chips & 1) != 0) tri_startr = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_startr = ((INT32)data << 8) >> 4;
 				break;
 			case startG:
-				if ((chips & 1) != 0) tri_startg = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_startg = ((INT32)data << 8) >> 4;
 				break;
 			case startB:
-				if ((chips & 1) != 0) tri_startb = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_startb = ((INT32)data << 8) >> 4;
 				break;
 			case startA:
-				if ((chips & 1) != 0) tri_starta = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_starta = ((INT32)data << 8) >> 4;
 				break;
 			case startZ:
-				if ((chips & 1) != 0) tri_startz = (INT32)data;
+				if (chips & 1) tri_startz = (INT32)data;
 				break;
 			case startW:
-				if ((chips & 1) != 0) tri_startw = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 2) != 0) tri_startw0 = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 4) != 0) tri_startw1 = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 1) tri_startw = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 2) tri_startw0 = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 4) tri_startw1 = (float)(INT32)data * (1.0 / (float)(1 << 30));
 				break;
 			case startS:
-				if ((chips & 2) != 0) tri_starts0 = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_starts1 = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_starts0 = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_starts1 = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			case startT:
-				if ((chips & 2) != 0) tri_startt0 = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_startt1 = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_startt0 = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_startt1 = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			
 			/* fixed point delta X data */
 			case dRdX:
-				if ((chips & 1) != 0) tri_drdx = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_drdx = ((INT32)data << 8) >> 4;
 				break;
 			case dGdX:
-				if ((chips & 1) != 0) tri_dgdx = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dgdx = ((INT32)data << 8) >> 4;
 				break;
 			case dBdX:
-				if ((chips & 1) != 0) tri_dbdx = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dbdx = ((INT32)data << 8) >> 4;
 				break;
 			case dAdX:
-				if ((chips & 1) != 0) tri_dadx = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dadx = ((INT32)data << 8) >> 4;
 				break;
 			case dZdX:
-				if ((chips & 1) != 0) tri_dzdx = (INT32)data;
+				if (chips & 1) tri_dzdx = (INT32)data;
 				break;
 			case dWdX:
-				if ((chips & 1) != 0) tri_dwdx = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 2) != 0) tri_dw0dx = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 4) != 0) tri_dw1dx = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 1) tri_dwdx = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 2) tri_dw0dx = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 4) tri_dw1dx = (float)(INT32)data * (1.0 / (float)(1 << 30));
 				break;
 			case dSdX:
-				if ((chips & 2) != 0) tri_ds0dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_ds1dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_ds0dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_ds1dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			case dTdX:
-				if ((chips & 2) != 0) tri_dt0dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_dt1dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_dt0dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_dt1dx = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			
 			/* fixed point delta Y data */
 			case dRdY:
-				if ((chips & 1) != 0) tri_drdy = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_drdy = ((INT32)data << 8) >> 4;
 				break;
 			case dGdY:
-				if ((chips & 1) != 0) tri_dgdy = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dgdy = ((INT32)data << 8) >> 4;
 				break;
 			case dBdY:
-				if ((chips & 1) != 0) tri_dbdy = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dbdy = ((INT32)data << 8) >> 4;
 				break;
 			case dAdY:
-				if ((chips & 1) != 0) tri_dady = ((INT32)data << 8) >> 4;
+				if (chips & 1) tri_dady = ((INT32)data << 8) >> 4;
 				break;
 			case dZdY:
-				if ((chips & 1) != 0) tri_dzdy = (INT32)data;
+				if (chips & 1) tri_dzdy = (INT32)data;
 				break;
 			case dWdY:
-				if ((chips & 1) != 0) tri_dwdy = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 2) != 0) tri_dw0dy = (float)(INT32)data * (1.0 / (float)(1 << 30));
-				if ((chips & 4) != 0) tri_dw1dy = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 1) tri_dwdy = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 2) tri_dw0dy = (float)(INT32)data * (1.0 / (float)(1 << 30));
+				if (chips & 4) tri_dw1dy = (float)(INT32)data * (1.0 / (float)(1 << 30));
 				break;
 			case dSdY:
-				if ((chips & 2) != 0) tri_ds0dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_ds1dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_ds0dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_ds1dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			case dTdY:
-				if ((chips & 2) != 0) tri_dt0dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
-				if ((chips & 4) != 0) tri_dt1dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 2) tri_dt0dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
+				if (chips & 4) tri_dt1dy = (float)(INT32)data * (1.0 / (float)(1 << 18));
 				break;
 			
 			/* floating-point vertex data */
 			case fvertexAx:
-				if ((chips & 1) != 0) tri_va.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_va.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			case fvertexAy:
-				if ((chips & 1) != 0) tri_va.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_va.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			case fvertexBx:
-				if ((chips & 1) != 0) tri_vb.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_vb.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			case fvertexBy:
-				if ((chips & 1) != 0) tri_vb.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_vb.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			case fvertexCx:
-				if ((chips & 1) != 0) tri_vc.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_vc.x = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			case fvertexCy:
-				if ((chips & 1) != 0) tri_vc.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
+				if (chips & 1) tri_vc.y = TRUNC_TO_INT(*(float *)&data * 16. + 0.5) * (1. / 16.);
 				break;
 			
 			/* floating-point starting data */
 			case fstartR:
-				if ((chips & 1) != 0) tri_startr = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_startr = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fstartG:
-				if ((chips & 1) != 0) tri_startg = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_startg = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fstartB:
-				if ((chips & 1) != 0) tri_startb = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_startb = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fstartA:
-				if ((chips & 1) != 0) tri_starta = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_starta = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fstartZ:
-				if ((chips & 1) != 0) tri_startz = (INT32)(*(float *)&data * 4096.0);
+				if (chips & 1) tri_startz = (INT32)(*(float *)&data * 4096.0);
 				break;
 			case fstartW:
-				if ((chips & 1) != 0) tri_startw = *(float *)&data;
-				if ((chips & 2) != 0) tri_startw0 = *(float *)&data;
-				if ((chips & 4) != 0) tri_startw1 = *(float *)&data;
+				if (chips & 1) tri_startw = *(float *)&data;
+				if (chips & 2) tri_startw0 = *(float *)&data;
+				if (chips & 4) tri_startw1 = *(float *)&data;
 				break;
 			case fstartS:
-				if ((chips & 2) != 0) tri_starts0 = *(float *)&data;
-				if ((chips & 4) != 0) tri_starts1 = *(float *)&data;
+				if (chips & 2) tri_starts0 = *(float *)&data;
+				if (chips & 4) tri_starts1 = *(float *)&data;
 				break;
 			case fstartT:
-				if ((chips & 2) != 0) tri_startt0 = *(float *)&data;
-				if ((chips & 4) != 0) tri_startt1 = *(float *)&data;
+				if (chips & 2) tri_startt0 = *(float *)&data;
+				if (chips & 4) tri_startt1 = *(float *)&data;
 				break;
 			
 			/* floating-point delta X data */
 			case fdRdX:
-				if ((chips & 1) != 0) tri_drdx = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_drdx = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdGdX:
-				if ((chips & 1) != 0) tri_dgdx = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dgdx = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdBdX:
-				if ((chips & 1) != 0) tri_dbdx = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dbdx = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdAdX:
-				if ((chips & 1) != 0) tri_dadx = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dadx = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdZdX:
-				if ((chips & 1) != 0) tri_dzdx = (INT32)(*(float *)&data * 4096.0);
+				if (chips & 1) tri_dzdx = (INT32)(*(float *)&data * 4096.0);
 				break;
 			case fdWdX:
-				if ((chips & 1) != 0) tri_dwdx = *(float *)&data;
-				if ((chips & 2) != 0) tri_dw0dx = *(float *)&data;
-				if ((chips & 4) != 0) tri_dw1dx = *(float *)&data;
+				if (chips & 1) tri_dwdx = *(float *)&data;
+				if (chips & 2) tri_dw0dx = *(float *)&data;
+				if (chips & 4) tri_dw1dx = *(float *)&data;
 				break;
 			case fdSdX:
-				if ((chips & 2) != 0) tri_ds0dx = *(float *)&data;
-				if ((chips & 4) != 0) tri_ds1dx = *(float *)&data;
+				if (chips & 2) tri_ds0dx = *(float *)&data;
+				if (chips & 4) tri_ds1dx = *(float *)&data;
 				break;
 			case fdTdX:
-				if ((chips & 2) != 0) tri_dt0dx = *(float *)&data;
-				if ((chips & 4) != 0) tri_dt1dx = *(float *)&data;
+				if (chips & 2) tri_dt0dx = *(float *)&data;
+				if (chips & 4) tri_dt1dx = *(float *)&data;
 				break;
 			
 			/* floating-point delta Y data */
 			case fdRdY:
-				if ((chips & 1) != 0) tri_drdy = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_drdy = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdGdY:
-				if ((chips & 1) != 0) tri_dgdy = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dgdy = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdBdY:
-				if ((chips & 1) != 0) tri_dbdy = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dbdy = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdAdY:
-				if ((chips & 1) != 0) tri_dady = (INT32)(*(float *)&data * 65536.0);
+				if (chips & 1) tri_dady = (INT32)(*(float *)&data * 65536.0);
 				break;
 			case fdZdY:
-				if ((chips & 1) != 0) tri_dzdy = (INT32)(*(float *)&data * 4096.0);
+				if (chips & 1) tri_dzdy = (INT32)(*(float *)&data * 4096.0);
 				break;
 			case fdWdY:
-				if ((chips & 1) != 0) tri_dwdy = *(float *)&data;
-				if ((chips & 2) != 0) tri_dw0dy = *(float *)&data;
-				if ((chips & 4) != 0) tri_dw1dy = *(float *)&data;
+				if (chips & 1) tri_dwdy = *(float *)&data;
+				if (chips & 2) tri_dw0dy = *(float *)&data;
+				if (chips & 4) tri_dw1dy = *(float *)&data;
 				break;
 			case fdSdY:
-				if ((chips & 2) != 0) tri_ds0dy = *(float *)&data;
-				if ((chips & 4) != 0) tri_ds1dy = *(float *)&data;
+				if (chips & 2) tri_ds0dy = *(float *)&data;
+				if (chips & 4) tri_ds1dy = *(float *)&data;
 				break;
 			case fdTdY:
-				if ((chips & 2) != 0) tri_dt0dy = *(float *)&data;
-				if ((chips & 4) != 0) tri_dt1dy = *(float *)&data;
+				if (chips & 2) tri_dt0dy = *(float *)&data;
+				if (chips & 4) tri_dt1dy = *(float *)&data;
 				break;
 			
 			/* triangle setup (voodoo 2 only) */
@@ -2148,7 +2142,7 @@ public class voodoo
 				fbz_dither_matrix = ((data >> 11) & 1) ? dither_matrix_2x2 : dither_matrix_4x4;
 				fbz_draw_buffer = buffer_access[(data >> 14) & 3];
 				fbz_invert_y = (data >> 17) & 1;
-				if (voodoo2 == 0)
+				if (!voodoo2)
 					voodoo_regs[fbzMode] &= ~(1 << 21);
 				break;
 			
@@ -2183,14 +2177,14 @@ public class voodoo
 				break;
 		
 			case nopCMD:
-				if (LOG_COMMANDS != 0)
+				if (LOG_COMMANDS)
 					logerror("%06X:NOP command\n", activecpu_get_pc());
 				break;
 		
 			case fastfillCMD:
-				if (LOG_COMMANDS != 0)
+				if (LOG_COMMANDS)
 					logerror("%06X:FASTFILL command\n", activecpu_get_pc());
-				if (blocked_on_swap != 0)
+				if (blocked_on_swap)
 				{
 					pending_fastfill = 1;
 					pending_fastfill_zaColor = voodoo_regs[zaColor];
@@ -2214,7 +2208,7 @@ public class voodoo
 					blocked_on_swap = 1;
 				}
 			
-				if (LOG_COMMANDS != 0)
+				if (LOG_COMMANDS)
 					logerror("%06X:SWAPBUFFER command = %08X\n", activecpu_get_pc(), data);
 				break;
 		
@@ -2225,9 +2219,9 @@ public class voodoo
 				break;
 			
 			case videoDimensions:
-				if ((data & 0x3ff) != 0)
+				if (data & 0x3ff)
 					video_width = data & 0x3ff;
-				if ((data & 0x3ff0000) != 0)
+				if (data & 0x3ff0000)
 					video_height = (data >> 16) & 0x3ff;
 				set_visible_area(0, video_width - 1, 0, video_height - 1);
 				timer_adjust(vblank_timer, cpu_getscanlinetime(video_height), video_height, 0);
@@ -2280,16 +2274,16 @@ public class voodoo
 				/* bit 0-7 = data to write */
 				/* bit 8-10 = register number */
 				/* bit 11 = write (0) or read (1) */
-				if ((data & 0x800) != 0)
+				if (data & 0x800)
 				{
 					dac_read = ramdac_r((data >> 8) & 7);
-					if (LOG_REGISTERS != 0)
+					if (LOG_REGISTERS)
 						logerror("-- dacData read reg %d; result = %02X\n", (data >> 8) & 7, dac_read);
 				}
 				else
 				{
 					ramdac_w((data >> 8) & 7, data);
-					if (LOG_REGISTERS != 0)
+					if (LOG_REGISTERS)
 						logerror("-- dacData write reg %d = %02X\n", (data >> 8) & 7, data & 0xff);
 				}
 				break;
@@ -2331,7 +2325,7 @@ public class voodoo
 				/* bit 30 = enable trilinear (0=point sampled/bilinear, 1=trilinear) */
 				/* bit 31 = sequential 8-bit download (0=even 32-bit word addresses, 1=sequential addresses) */
 				
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					trex_perspective[0] = (data >> 0) & 1;
 					trex_minification[0] = (data >> 1) & 1;
@@ -2343,7 +2337,7 @@ public class voodoo
 						trex_format[0] += 6;
 					modes_used |= 1 << trex_format[0];
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					trex_perspective[1] = (data >> 0) & 1;
 					trex_minification[1] = (data >> 1) & 1;
@@ -2354,7 +2348,7 @@ public class voodoo
 					if ((trex_format[1] & 7) == 1 && (data & 0x20))
 						trex_format[1] += 6;
 				}
-				if ((chips & 8) != 0)
+				if (chips & 8)
 				{
 					trex_perspective[2] = (data >> 0) & 1;
 					trex_minification[2] = (data >> 1) & 1;
@@ -2380,7 +2374,7 @@ public class voodoo
 				/* bit 25 = byte swap incoming texture data */
 				/* bit 26 = short swap incoming texture data */
 				/* bit 27 = enable raw direct texture memory writes (1=enable) */
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					trex_lodmin[0] = (data >> 0) & 0x3f;
 					trex_lodmax[0] = (data >> 6) & 0x3f;
@@ -2391,10 +2385,10 @@ public class voodoo
 	
 					trex_lod_offset[0] = &lod_offset_table[(data >> 21) & 3][0];
 					trex_lod_width_shift[0] = &lod_width_shift[(data >> 20) & 7][0];
-					if (LOG_REGISTERS != 0)
+					if (LOG_REGISTERS)
 						logerror("%06X:trex[0] -- lodmin=%02X lodmax=%02X size=%dx%d\n", activecpu_get_pc(), trex_lodmin[0], trex_lodmax[0], trex_width[0], trex_height[0]);
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					trex_lodmin[1] = (data >> 0) & 0x3f;
 					trex_lodmax[1] = (data >> 6) & 0x3f;
@@ -2405,10 +2399,10 @@ public class voodoo
 	
 					trex_lod_offset[1] = &lod_offset_table[(data >> 21) & 3][0];
 					trex_lod_width_shift[1] = &lod_width_shift[(data >> 20) & 7][0];
-					if (LOG_REGISTERS != 0)
+					if (LOG_REGISTERS)
 						logerror("%06X:trex[1] -- lodmin=%02X lodmax=%02X size=%dx%d\n", activecpu_get_pc(), trex_lodmin[1], trex_lodmax[1], trex_width[1], trex_height[1]);
 				}
-				if ((chips & 8) != 0)
+				if (chips & 8)
 				{
 					trex_lodmin[2] = (data >> 0) & 0x3f;
 					trex_lodmax[2] = (data >> 6) & 0x3f;
@@ -2419,7 +2413,7 @@ public class voodoo
 	
 					trex_lod_offset[2] = &lod_offset_table[(data >> 21) & 3][0];
 					trex_lod_width_shift[2] = &lod_width_shift[(data >> 20) & 7][0];
-					if (LOG_REGISTERS != 0)
+					if (LOG_REGISTERS)
 						logerror("%06X:trex[2] -- lodmin=%02X lodmax=%02X size=%dx%d\n",activecpu_get_pc(),  trex_lodmin[2], trex_lodmax[2], trex_width[2], trex_height[2]);
 				}
 				break;
@@ -2428,7 +2422,7 @@ public class voodoo
 			case nccTable+1:
 			case nccTable+2:
 			case nccTable+3:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					int base = 4 * (offset - (nccTable+0));
 					ncc_y[0][0][base+0] = (data >>  0) & 0xff;
@@ -2438,7 +2432,7 @@ public class voodoo
 					texel_lookup_dirty[0][1] = 1;
 					texel_lookup_dirty[0][9] = 1;
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					int base = 4 * (offset - (nccTable+0));
 					ncc_y[1][0][base+0] = (data >>  0) & 0xff;
@@ -2454,9 +2448,9 @@ public class voodoo
 			case nccTable+5:
 			case nccTable+6:
 			case nccTable+7:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
-					if ((data & 0x80000000) != 0)
+					if (data & 0x80000000)
 					{
 						texel_lookup[0][5][((data >> 23) & 0xfe) | (~offset & 1)] = 0xff000000 | data;
 						texel_lookup_dirty[0][14] = 1;
@@ -2471,9 +2465,9 @@ public class voodoo
 						texel_lookup_dirty[0][9] = 1;
 					}
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
-					if ((data & 0x80000000) != 0)
+					if (data & 0x80000000)
 					{
 						texel_lookup[1][5][((data >> 23) & 0xfe) | (~offset & 1)] = 0xff000000 | data;
 						texel_lookup_dirty[1][14] = 1;
@@ -2494,9 +2488,9 @@ public class voodoo
 			case nccTable+9:
 			case nccTable+10:
 			case nccTable+11:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
-					if ((data & 0x80000000) != 0)
+					if (data & 0x80000000)
 					{
 						texel_lookup[0][5][((data >> 23) & 0xfe) | (~offset & 1)] = 0xff000000 | data;
 						texel_lookup_dirty[0][14] = 1;
@@ -2511,9 +2505,9 @@ public class voodoo
 						texel_lookup_dirty[0][9] = 1;
 					}
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
-					if ((data & 0x80000000) != 0)
+					if (data & 0x80000000)
 					{
 						texel_lookup[1][5][((data >> 23) & 0xfe) | (~offset & 1)] = 0xff000000 | data;
 						texel_lookup_dirty[1][14] = 1;
@@ -2534,7 +2528,7 @@ public class voodoo
 			case nccTable+13:
 			case nccTable+14:
 			case nccTable+15:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					int base = 4 * (offset - (nccTable+12));
 					ncc_y[0][1][base+0] = (data >>  0) & 0xff;
@@ -2544,7 +2538,7 @@ public class voodoo
 					texel_lookup_dirty[0][7] = 1;
 					texel_lookup_dirty[0][15] = 1;
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					int base = 4 * (offset - (nccTable+12));
 					ncc_y[1][1][base+0] = (data >>  0) & 0xff;
@@ -2560,7 +2554,7 @@ public class voodoo
 			case nccTable+17:
 			case nccTable+18:
 			case nccTable+19:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					int base = offset - (nccTable+16);
 					ncc_ir[0][1][base] = (INT32)(data <<  5) >> 23;
@@ -2569,7 +2563,7 @@ public class voodoo
 					texel_lookup_dirty[0][7] = 1;
 					texel_lookup_dirty[0][15] = 1;
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					int base = offset - (nccTable+16);
 					ncc_ir[1][1][base] = (INT32)(data <<  5) >> 23;
@@ -2584,7 +2578,7 @@ public class voodoo
 			case nccTable+21:
 			case nccTable+22:
 			case nccTable+23:
-				if ((chips & 2) != 0)
+				if (chips & 2)
 				{
 					int base = offset - (nccTable+20);
 					ncc_qr[0][1][base] = (INT32)(data <<  5) >> 23;
@@ -2593,7 +2587,7 @@ public class voodoo
 					texel_lookup_dirty[0][7] = 1;
 					texel_lookup_dirty[0][15] = 1;
 				}
-				if ((chips & 4) != 0)
+				if (chips & 4)
 				{
 					int base = offset - (nccTable+20);
 					ncc_qr[1][1][base] = (INT32)(data <<  5) >> 23;
@@ -2652,7 +2646,7 @@ public class voodoo
 				result = 0;
 				
 				/* FIFO free space */
-				if (blocked_on_swap == 0)
+				if (!blocked_on_swap)
 					result |= 0x3f;
 				
 				/* vertical retrace */
@@ -2671,7 +2665,7 @@ public class voodoo
 				result |= (frontbuf == framebuf[1]) << 10;
 				
 				/* memory FIFO free space */
-				if (blocked_on_swap == 0)
+				if (!blocked_on_swap)
 					result |= 0xffff << 12;
 				
 				/* swap buffers pending */
@@ -2679,14 +2673,14 @@ public class voodoo
 				
 				activecpu_eat_cycles(100);
 				
-				if (LOG_REGISTERS != 0)
+				if (LOG_REGISTERS)
 				{
 					offs_t pc = activecpu_get_pc();
 					if (pc == status_lastpc)
 						status_lastpc_count++;
 					else
 					{
-						if (status_lastpc_count != 0)
+						if (status_lastpc_count)
 							logerror("%06X:voodoo status read = %08X (x%d)\n", activecpu_get_pc(), result, status_lastpc_count);
 						status_lastpc_count = 0;
 						status_lastpc = pc;
@@ -2698,16 +2692,16 @@ public class voodoo
 			
 			case fbiInit2:
 				/* bit 2 of the initEnable register maps this to dacRead */
-				if ((init_enable & 0x00000004) != 0)
+				if (init_enable & 0x00000004)
 					result = dac_read;
 	
-				if (LOG_REGISTERS != 0)
+				if (LOG_REGISTERS)
 					logerror("%06X:voodoo fbiInit2 read = %08X\n", activecpu_get_pc(), result);
 				break;
 			
 			case vRetrace:
 				result = cpu_getscanline();
-	//			if (LOG_REGISTERS != 0)
+	//			if (LOG_REGISTERS)
 	//				logerror("%06X:voodoo vRetrace read = %08X\n", activecpu_get_pc(), result);
 				break;
 			
@@ -2718,7 +2712,7 @@ public class voodoo
 				break;
 	
 			default:
-				if (LOG_REGISTERS != 0)
+				if (LOG_REGISTERS)
 					logerror("%06X:voodoo %s read = %08X\n", activecpu_get_pc(), (offset < 0x340/4) ? voodoo_reg_name[offset] : "oob", result);
 				break;
 		}
@@ -2738,11 +2732,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / (FRAMEBUF_WIDTH/2);
 		int x = (offset % (FRAMEBUF_WIDTH/2)) * 2;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = data;
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			buffer[y * FRAMEBUF_WIDTH + x + 1] = data >> 16;
 	//	logerror("%06X:LFB write mode 0 @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2752,11 +2746,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / (FRAMEBUF_WIDTH/2);
 		int x = (offset % (FRAMEBUF_WIDTH/2)) * 2;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = ((data << 1) & 0xffe0) | (data & 0x001f);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			buffer[y * FRAMEBUF_WIDTH + x + 1] = ((data >> 15) & 0xffe0) | ((data >> 16) & 0x001f);
 	//	logerror("%06X:LFB write mode 1 @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2766,11 +2760,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / (FRAMEBUF_WIDTH/2);
 		int x = (offset % (FRAMEBUF_WIDTH/2)) * 2;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = ((data << 1) & 0xffe0) | (data & 0x001f);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			buffer[y * FRAMEBUF_WIDTH + x + 1] = ((data >> 15) & 0xffe0) | ((data >> 16) & 0x001f);
 	//	logerror("%06X:LFB write mode 2 @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2785,7 +2779,7 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / FRAMEBUF_WIDTH;
 		int x = offset % FRAMEBUF_WIDTH;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
 		buffer[y * FRAMEBUF_WIDTH + x] = (((data >> 19) & 0x1f) << 11) | (((data >> 10) & 0x3f) << 5) | (((data >> 3) & 0x1f) << 0);
 	//	logerror("%06X:LFB write mode 4 @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
@@ -2796,7 +2790,7 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / FRAMEBUF_WIDTH;
 		int x = offset % FRAMEBUF_WIDTH;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
 		buffer[y * FRAMEBUF_WIDTH + x] = (((data >> 19) & 0x1f) << 11) | (((data >> 10) & 0x3f) << 5) | (((data >> 3) & 0x1f) << 0);
 	//	logerror("%06X:LFB write mode 5 @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
@@ -2837,11 +2831,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / FRAMEBUF_WIDTH;
 		int x = offset % FRAMEBUF_WIDTH;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = data;
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			depthbuf[y * FRAMEBUF_WIDTH + x] = data >> 16;
 	//	logerror("%06X:LFB write mode c @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2851,11 +2845,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / FRAMEBUF_WIDTH;
 		int x = offset % FRAMEBUF_WIDTH;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = ((data << 1) & 0xffc0) | (data & 0x001f);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			depthbuf[y * FRAMEBUF_WIDTH + x] = data >> 16;
 	//	logerror("%06X:LFB write mode d @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2865,11 +2859,11 @@ public class voodoo
 		UINT16 *buffer = *lfb_write_buffer;
 		int y = offset / FRAMEBUF_WIDTH;
 		int x = offset % FRAMEBUF_WIDTH;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			buffer[y * FRAMEBUF_WIDTH + x] = ((data << 1) & 0xffc0) | (data & 0x001f);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			depthbuf[y * FRAMEBUF_WIDTH + x] = data >> 16;
 	//	logerror("%06X:LFB write mode e @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2878,11 +2872,11 @@ public class voodoo
 	{
 		int y = offset / (FRAMEBUF_WIDTH/2);
 		int x = (offset % (FRAMEBUF_WIDTH/2)) * 2;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			depthbuf[y * FRAMEBUF_WIDTH + x] = ((data << 1) & 0xffe0) | (data & 0x001f);
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			depthbuf[y * FRAMEBUF_WIDTH + x + 1] = ((data >> 15) & 0xffe0) | ((data >> 16) & 0x001f);
 	//	logerror("%06X:LFB write mode f @ %08X = %08X & %08X\n", activecpu_get_pc(), offset, data, ~mem_mask);
 	}
@@ -2897,7 +2891,7 @@ public class voodoo
 	
 	WRITE32_HANDLER( voodoo_framebuf_w )
 	{
-		if (blocked_on_swap != 0)
+		if (blocked_on_swap)
 			cpu_spinuntil_trigger(13579);
 		(*lfbwrite[lfb_write_format])(offset, data, mem_mask);
 	}
@@ -2915,7 +2909,7 @@ public class voodoo
 		UINT16 *buffer = *lfb_read_buffer;
 	/*
 		UINT32 result;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 		{
 			int y = offset / (1024/4);
 			y = inverted_yorigin - y;
@@ -2926,7 +2920,7 @@ public class voodoo
 		int y = offset / (FRAMEBUF_WIDTH/2);
 		int x = (offset % (FRAMEBUF_WIDTH/2)) * 2;
 		UINT32 result;
-		if (lfb_flipy != 0)
+		if (lfb_flipy)
 			y = inverted_yorigin - y;
 		result = buffer[y * FRAMEBUF_WIDTH + x] | (buffer[y * FRAMEBUF_WIDTH + x + 1] << 16);
 	
@@ -2998,7 +2992,7 @@ public class voodoo
 			else
 				tbaseaddr += t * twidth + (s & 0xfc);
 	if (s == 0 && t == 0)	
-		logerror(" . %06X = %08X\n", tbaseaddr, data);
+		logerror(" -> %06X = %08X\n", tbaseaddr, data);
 			dest[BYTE4_XOR_LE(tbaseaddr + 0)] = (data >> 0) & 0xff;
 			dest[BYTE4_XOR_LE(tbaseaddr + 1)] = (data >> 8) & 0xff;
 			dest[BYTE4_XOR_LE(tbaseaddr + 2)] = (data >> 16) & 0xff;
@@ -3010,7 +3004,7 @@ public class voodoo
 			tbaseaddr /= 2;
 			tbaseaddr += t * twidth + s;
 	if (s == 0 && t == 0)	
-		logerror(" . %06X = %08X\n", tbaseaddr*2, data);
+		logerror(" -> %06X = %08X\n", tbaseaddr*2, data);
 			dest[BYTE_XOR_LE(tbaseaddr + 0)] = (data >> 0) & 0xffff;
 			dest[BYTE_XOR_LE(tbaseaddr + 1)] = (data >> 16) & 0xffff;
 		}

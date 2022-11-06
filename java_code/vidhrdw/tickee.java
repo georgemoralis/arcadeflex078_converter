@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,8 @@ public class tickee
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = ((readinputport(4 + player * 2) & 0xff) * Machine.drv.screen_width) >> 8;
-		*y = ((readinputport(5 + player * 2) & 0xff) * Machine.drv.screen_height) >> 8;
+		*x = ((readinputport(4 + player * 2) & 0xff) * Machine->drv->screen_width) >> 8;
+		*y = ((readinputport(5 + player * 2) & 0xff) * Machine->drv->screen_height) >> 8;
 	}
 	
 	
@@ -91,8 +91,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_tickee  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tickee  = new VideoStartHandlerPtr() { public int handler(){
 		/* start a timer going on the first scanline of every frame */
 		setup_gun_timer = timer_alloc(setup_gun_interrupts);
 		timer_adjust(setup_gun_timer, cpu_getscanlinetime(0), 0, 0);
@@ -108,8 +107,7 @@ public class tickee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tickee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int v, h, width, xoffs, beamx, beamy;
 		UINT8 *base1 = (UINT8 *)tickee_vram;
 		pen_t pen_lookup[256];

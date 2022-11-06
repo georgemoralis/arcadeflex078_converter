@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,7 +56,7 @@ public class beezer
 	
 	
 	
-	static InputPortPtr input_ports_beezer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_beezer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( beezer )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_TILT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -101,8 +101,7 @@ public class beezer
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_beezer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( beezer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1000000)        /* 1 MHz */
@@ -126,9 +125,7 @@ public class beezer
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -180,6 +177,6 @@ public class beezer
 		ROM_LOAD( "e1.cpu", 0x100, 0x0100, CRC(3c775c5e) SHA1(ac86f45938c0c9d5fec1245bf86718442baf445b) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_beezer	   = new GameDriver("1982"	,"beezer"	,"beezer.java"	,rom_beezer,null	,machine_driver_beezer	,input_ports_beezer	,init_beezer	,ORIENTATION_FLIP_X	,	"Tong Electronic", "Beezer (set 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_beezer1	   = new GameDriver("1982"	,"beezer1"	,"beezer.java"	,rom_beezer1,driver_beezer	,machine_driver_beezer	,input_ports_beezer	,init_beezer	,ORIENTATION_FLIP_X	,	"Tong Electronic", "Beezer (set 2)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1982, beezer,  0,       beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 1)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1982, beezer1,  beezer, beezer, beezer, beezer, ORIENTATION_FLIP_X, "Tong Electronic", "Beezer (set 2)", GAME_IMPERFECT_SOUND )
 }

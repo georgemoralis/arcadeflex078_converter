@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,8 +45,7 @@ public class cloak
 	  bit 0 -- diode |< -- pullup 1 kohm -- 10  kohm resistor -- pulldown 100 pf -- BLUE
 	
 	***************************************************************************/
-	public static WriteHandlerPtr cloak_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int bit0,bit1,bit2;
 	
@@ -75,20 +74,19 @@ public class cloak
 		palette_set_color(offset & 0x3f,r,g,b);
 	} };
 	
-	public static WriteHandlerPtr cloak_clearbmp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_clearbmp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bmap = data & 0x01;
 	
-		if ((data & 0x02) != 0)	/* clear */
+		if (data & 0x02)	/* clear */
 		{
-			if (bmap != 0)
+			if (bmap)
 			{
-				fillbitmap(tmpbitmap, Machine.pens[16], Machine.visible_area);
+				fillbitmap(tmpbitmap, Machine->pens[16], Machine->visible_area);
 				memset(tmpvideoram, 0, 256*256);
 			}
 			else
 			{
-				fillbitmap(tmpbitmap2, Machine.pens[16], Machine.visible_area);
+				fillbitmap(tmpbitmap2, Machine->pens[16], Machine->visible_area);
 				memset(tmpvideoram2, 0, 256*256);
 			}
 		}
@@ -107,11 +105,10 @@ public class cloak
 		}
 	}
 	
-	public static ReadHandlerPtr graph_processor_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr graph_processor_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
-		if (bmap != 0)
+		if (bmap)
 		{
 			ret = tmpvideoram2[y * 256 + x];
 		}
@@ -125,8 +122,7 @@ public class cloak
 		return ret;
 	} };
 	
-	public static WriteHandlerPtr graph_processor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr graph_processor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int color;
 	
 		switch (offset)
@@ -136,14 +132,14 @@ public class cloak
 			default:
 				color = data & 0x07;
 	
-				if (bmap != 0)
+				if (bmap)
 				{
-					plot_pixel.handler(tmpbitmap, (x-6)&0xff, y, Machine.pens[16 + color]);
+					plot_pixel(tmpbitmap, (x-6)&0xff, y, Machine->pens[16 + color]);
 					tmpvideoram[y*256+x] = color;
 				}
 				else
 				{
-					plot_pixel.handler(tmpbitmap2, (x-6)&0xff, y, Machine.pens[16 + color]);
+					plot_pixel(tmpbitmap2, (x-6)&0xff, y, Machine->pens[16 + color]);
 					tmpvideoram2[y*256+x] = color;
 				}
 	
@@ -152,8 +148,7 @@ public class cloak
 			}
 	} };
 	
-	public static WriteHandlerPtr cloak_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -161,8 +156,7 @@ public class cloak
 		}
 	} };
 	
-	public static WriteHandlerPtr cloak_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cloak_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x80);
 	} };
 	
@@ -173,12 +167,11 @@ public class cloak
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_cloak  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cloak  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
@@ -205,8 +198,8 @@ public class cloak
 		{
 			for (lx = 0; lx < 256; lx++)
 			{
-				plot_pixel(tmpbitmap,  (lx-6)&0xff, ly, Machine.pens[16 + tmpvideoram[ly*256+lx]]);
-				plot_pixel(tmpbitmap2, (lx-6)&0xff, ly, Machine.pens[16 + tmpvideoram2[ly*256+lx]]);
+				plot_pixel(tmpbitmap,  (lx-6)&0xff, ly, Machine->pens[16 + tmpvideoram[ly*256+lx]]);
+				plot_pixel(tmpbitmap2, (lx-6)&0xff, ly, Machine->pens[16 + tmpvideoram2[ly*256+lx]]);
 			}
 		}
 	}
@@ -224,7 +217,7 @@ public class cloak
 			int sx = spriteram.read(offs + 192);
 			int sy = 240 - spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx -= 9;
 				sy = 240 - sy;
@@ -232,13 +225,12 @@ public class cloak
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1], code, 0, flipx, flipy,
+			drawgfx(bitmap, Machine->gfx[1], code, 0, flipx, flipy,
 				sx, sy,	cliprect, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_cloak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cloak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		copybitmap(bitmap, (bmap ? tmpbitmap2 : tmpbitmap),flip_screen(),flip_screen(),0,0,cliprect,TRANSPARENCY_COLOR,16);
 		cloak_draw_sprites(bitmap, cliprect);

@@ -6,7 +6,7 @@ Atari Sprint 8 driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,7 +46,7 @@ public class sprint8
 	
 			signed char delta = (val - dial[i]) & 15;
 	
-			if ((delta & 8) != 0)
+			if (delta & 8)
 			{
 				delta |= 0xf0; /* extend sign to 8 bits */
 			}
@@ -73,7 +73,7 @@ public class sprint8
 	
 		for (i = 0; i < 16; i += 8)
 		{
-			if (team != 0)
+			if (team)
 			{
 				palette_set_color(i + 0, 0xff, 0x00, 0x00); /* red     */
 				palette_set_color(i + 1, 0x00, 0x00, 0xff); /* blue    */
@@ -102,8 +102,7 @@ public class sprint8
 	}
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_sprint8  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sprint8  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		fill_palette(0);
@@ -121,8 +120,7 @@ public class sprint8
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_sprint8  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sprint8  = new MachineInitHandlerPtr() { public void handler(){
 		collision_reset = 0;
 		collision_index = 0;
 	
@@ -130,14 +128,12 @@ public class sprint8
 	} };
 	
 	
-	public static ReadHandlerPtr sprint8_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint8_collision_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return collision_index;
 	} };
 	
 	
-	public static ReadHandlerPtr sprint8_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint8_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(offset);
 	
 		if (steer_dir[offset])
@@ -153,23 +149,20 @@ public class sprint8
 	} };
 	
 	
-	public static WriteHandlerPtr sprint8_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint8_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(offset, !(data & 1));
 	} };
 	
 	
-	public static WriteHandlerPtr sprint8_team_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint8_team_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fill_palette(!(data & 1));
 	} };
 	
 	
-	public static WriteHandlerPtr sprint8_int_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint8_int_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		collision_reset = !(data & 1);
 	
-		if (collision_reset != 0)
+		if (collision_reset)
 		{
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
@@ -178,12 +171,12 @@ public class sprint8
 	
 	/* names of sound effects taken from Tank 8, might differ for Sprint 8 */
 	
-	public static WriteHandlerPtr sprint8_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr sprint8_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr sprint8_bugle_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr sprint8_bug_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr sprint8_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
-	public static WriteHandlerPtr sprint8_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data) {} };
+	public static WriteHandlerPtr sprint8_crash_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr sprint8_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr sprint8_bugle_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr sprint8_bug_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr sprint8_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
+	public static WriteHandlerPtr sprint8_motor_w = new WriteHandlerPtr() {public void handler(int offset, int data)}
 	
 	
 	public static Memory_ReadAddress readmem[]={
@@ -223,7 +216,7 @@ public class sprint8
 	};
 	
 	
-	static InputPortPtr input_ports_sprint8 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprint8 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprint8 )
 	
 		PORT_START(); 
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW,  IPT_COIN1 );
@@ -358,7 +351,7 @@ public class sprint8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sprint8p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprint8p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprint8p )
 	
 		PORT_START(); 
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW,  IPT_COIN1 );
@@ -542,8 +535,7 @@ public class sprint8
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_sprint8 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprint8 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 11055000 / 11) /* ? */
@@ -567,9 +559,7 @@ public class sprint8
 		MDRV_VIDEO_EOF(sprint8)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_sprint8 = new RomLoadPtr(){ public void handler(){ 
@@ -605,6 +595,6 @@ public class sprint8
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_sprint8	   = new GameDriver("1977"	,"sprint8"	,"sprint8.java"	,rom_sprint8,null	,machine_driver_sprint8	,input_ports_sprint8	,null	,ROT0	,	"Atari", "Sprint 8",             GAME_NO_SOUND )
-	public static GameDriver driver_sprint8a	   = new GameDriver("1977"	,"sprint8a"	,"sprint8.java"	,rom_sprint8a,driver_sprint8	,machine_driver_sprint8	,input_ports_sprint8p	,null	,ROT0	,	"Atari", "Sprint 8 (play tag & chase)", GAME_NO_SOUND )
+	GAMEX( 1977, sprint8,  0,       sprint8, sprint8,  0, ROT0, "Atari", "Sprint 8",             GAME_NO_SOUND )
+	GAMEX( 1977, sprint8a, sprint8, sprint8, sprint8p, 0, ROT0, "Atari", "Sprint 8 (play tag & chase)", GAME_NO_SOUND )
 }

@@ -91,7 +91,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.i8085;
 
@@ -1284,16 +1284,16 @@ public class i8085
 		{
 			zs = 0;
 			if (i==0) zs |= ZF;
-			if ((i & 128) != 0) zs |= SF;
+			if (i&128) zs |= SF;
 			p = 0;
-			if ((i & 1) != 0) ++p;
-			if ((i & 2) != 0) ++p;
-			if ((i & 4) != 0) ++p;
-			if ((i & 8) != 0) ++p;
-			if ((i & 16) != 0) ++p;
-			if ((i & 32) != 0) ++p;
-			if ((i & 64) != 0) ++p;
-			if ((i & 128) != 0) ++p;
+			if (i&1) ++p;
+			if (i&2) ++p;
+			if (i&4) ++p;
+			if (i&8) ++p;
+			if (i&16) ++p;
+			if (i&32) ++p;
+			if (i&64) ++p;
+			if (i&128) ++p;
 			ZS[i] = zs;
 			ZSP[i] = zs | ((p&1) ? 0 : VF);
 		}
@@ -1352,7 +1352,7 @@ public class i8085
 	 ****************************************************************************/
 	unsigned i8085_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(i8085_Regs*)dst = I;
 		return sizeof(i8085_Regs);
 	}
@@ -1362,7 +1362,7 @@ public class i8085
 	 ****************************************************************************/
 	void i8085_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			I = *(i8085_Regs*)src;
 			change_pc16(I.PC.d);
@@ -1450,7 +1450,7 @@ public class i8085
 	void i8085_set_SID(int state)
 	{
 		LOG(("i8085: SID %d\n", state));
-		if (state != 0)
+		if (state)
 			I.IM |= IM_SID;
 		else
 			I.IM &= ~IM_SID;
@@ -1470,7 +1470,7 @@ public class i8085
 	void i8085_set_TRAP(int state)
 	{
 		LOG(("i8085: TRAP %d\n", state));
-		if (state != 0)
+		if (state)
 		{
 			I.IREQ |= IM_TRAP;
 			if( I.ISRV & IM_TRAP ) return;	/* already servicing TRAP ? */
@@ -1489,7 +1489,7 @@ public class i8085
 	void i8085_set_RST75(int state)
 	{
 		LOG(("i8085: RST7.5 %d\n", state));
-		if (state != 0)
+		if( state )
 		{
 	
 			I.IREQ |= IM_RST75; 			/* request RST7.5 */
@@ -1509,7 +1509,7 @@ public class i8085
 	void i8085_set_RST65(int state)
 	{
 		LOG(("i8085: RST6.5 %d\n", state));
-		if (state != 0)
+		if( state )
 		{
 			I.IREQ |= IM_RST65; 			/* request RST6.5 */
 			if( I.IM & IM_RST65 ) return;	/* if masked, ignore it for now */
@@ -1531,7 +1531,7 @@ public class i8085
 	void i8085_set_RST55(int state)
 	{
 		LOG(("i8085: RST5.5 %d\n", state));
-		if (state != 0)
+		if( state )
 		{
 			I.IREQ |= IM_RST55; 			/* request RST5.5 */
 			if( I.IM & IM_RST55 ) return;	/* if masked, ignore it for now */
@@ -1553,7 +1553,7 @@ public class i8085
 	void i8085_set_INTR(int state)
 	{
 		LOG(("i8085: INTR %d\n", state));
-		if (state != 0)
+		if( state )
 		{
 			I.IREQ |= IM_INTR;				/* request INTR */
 			//I.INTR = state;
@@ -1627,19 +1627,19 @@ public class i8085
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &I;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+I8085_AF: sprintf(buffer[which], "AF:%04X", r.AF.w.l); break;
-			case CPU_INFO_REG+I8085_BC: sprintf(buffer[which], "BC:%04X", r.BC.w.l); break;
-			case CPU_INFO_REG+I8085_DE: sprintf(buffer[which], "DE:%04X", r.DE.w.l); break;
-			case CPU_INFO_REG+I8085_HL: sprintf(buffer[which], "HL:%04X", r.HL.w.l); break;
-			case CPU_INFO_REG+I8085_SP: sprintf(buffer[which], "SP:%04X", r.SP.w.l); break;
-			case CPU_INFO_REG+I8085_PC: sprintf(buffer[which], "PC:%04X", r.PC.w.l); break;
-			case CPU_INFO_REG+I8085_IM: sprintf(buffer[which], "IM:%02X", r.IM); break;
-			case CPU_INFO_REG+I8085_HALT: sprintf(buffer[which], "HALT:%d", r.HALT); break;
+			case CPU_INFO_REG+I8085_AF: sprintf(buffer[which], "AF:%04X", r->AF.w.l); break;
+			case CPU_INFO_REG+I8085_BC: sprintf(buffer[which], "BC:%04X", r->BC.w.l); break;
+			case CPU_INFO_REG+I8085_DE: sprintf(buffer[which], "DE:%04X", r->DE.w.l); break;
+			case CPU_INFO_REG+I8085_HL: sprintf(buffer[which], "HL:%04X", r->HL.w.l); break;
+			case CPU_INFO_REG+I8085_SP: sprintf(buffer[which], "SP:%04X", r->SP.w.l); break;
+			case CPU_INFO_REG+I8085_PC: sprintf(buffer[which], "PC:%04X", r->PC.w.l); break;
+			case CPU_INFO_REG+I8085_IM: sprintf(buffer[which], "IM:%02X", r->IM); break;
+			case CPU_INFO_REG+I8085_HALT: sprintf(buffer[which], "HALT:%d", r->HALT); break;
 			case CPU_INFO_REG+I8085_IREQ: sprintf(buffer[which], "IREQ:%02X", I.IREQ); break;
 			case CPU_INFO_REG+I8085_ISRV: sprintf(buffer[which], "ISRV:%02X", I.ISRV); break;
 			case CPU_INFO_REG+I8085_VECTOR: sprintf(buffer[which], "VEC:%02X", I.INTR); break;
@@ -1650,14 +1650,14 @@ public class i8085
 			case CPU_INFO_REG+I8085_RST75_STATE: sprintf(buffer[which], "RST75:%X", I.irq_state[I8085_RST75_LINE]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.AF.b.l & 0x80 ? 'S':'.',
-					r.AF.b.l & 0x40 ? 'Z':'.',
-					r.AF.b.l & 0x20 ? '?':'.',
-					r.AF.b.l & 0x10 ? 'H':'.',
-					r.AF.b.l & 0x08 ? '?':'.',
-					r.AF.b.l & 0x04 ? 'P':'.',
-					r.AF.b.l & 0x02 ? 'N':'.',
-					r.AF.b.l & 0x01 ? 'C':'.');
+					r->AF.b.l & 0x80 ? 'S':'.',
+					r->AF.b.l & 0x40 ? 'Z':'.',
+					r->AF.b.l & 0x20 ? '?':'.',
+					r->AF.b.l & 0x10 ? 'H':'.',
+					r->AF.b.l & 0x08 ? '?':'.',
+					r->AF.b.l & 0x04 ? 'P':'.',
+					r->AF.b.l & 0x02 ? 'N':'.',
+					r->AF.b.l & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "8085A";
 			case CPU_INFO_FAMILY: return "Intel 8080";

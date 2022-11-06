@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,7 +61,7 @@ public class lemmings
 			if (x>320 || x<-16) continue;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = 1;
 			else
 			{
@@ -72,12 +72,12 @@ public class lemmings
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[gfxbank],
+				drawgfx(bitmap,Machine->gfx[gfxbank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 				multi--;
 			}
@@ -97,8 +97,7 @@ public class lemmings
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_lemmings  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lemmings  = new VideoStartHandlerPtr() { public int handler(){
 		bitmap0 = bitmap_alloc(2048,256);
 		vram_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -116,22 +115,20 @@ public class lemmings
 		return 0;
 	} };
 	
-	public static VideoStopHandlerPtr video_stop_lemmings  = new VideoStopHandlerPtr() { public void handler()
-	{
-		if (bitmap0 != 0)
+	public static VideoStopHandlerPtr video_stop_lemmings  = new VideoStopHandlerPtr() { public void handler(){
+		if (bitmap0)
 			bitmap_free(bitmap0);
-		if (vram_buffer != 0)
+		if (vram_buffer)
 			free(vram_buffer);
-		if (vram_dirty != 0)
+		if (vram_dirty)
 			free(vram_dirty);
-		if (sprite_triple_buffer_0 != 0)
+		if (sprite_triple_buffer_0)
 			free(sprite_triple_buffer_0);
-		if (sprite_triple_buffer_1 != 0)
+		if (sprite_triple_buffer_1)
 			free(sprite_triple_buffer_1);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_lemmings  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_lemmings  = new VideoEofHandlerPtr() { public void handler(){
 		memcpy(sprite_triple_buffer_0,buffered_spriteram16,0x800);
 		memcpy(sprite_triple_buffer_1,buffered_spriteram16_2,0x800);
 	} };
@@ -154,8 +151,8 @@ public class lemmings
 		if (sx>2047 || sy>255)
 			return;
 	
-		plot_pixel(bitmap0,sx+0,sy,Machine.pens[((src>>8)&0xf)|0x100]);
-		plot_pixel(bitmap0,sx+1,sy,Machine.pens[((src>>0)&0xf)|0x100]);
+		plot_pixel(bitmap0,sx+0,sy,Machine->pens[((src>>8)&0xf)|0x100]);
+		plot_pixel(bitmap0,sx+1,sy,Machine->pens[((src>>0)&0xf)|0x100]);
 	}
 	
 	WRITE16_HANDLER( lemmings_pixel_1_w )
@@ -186,8 +183,7 @@ public class lemmings
 		tilemap_mark_tile_dirty(vram_tilemap,offset);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lemmings  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x1=-lemmings_control_data[0],x0=-lemmings_control_data[2],i,y=0;
 		struct rectangle rect;
 		rect.max_y=cliprect.max_y;

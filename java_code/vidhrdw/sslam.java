@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,7 +16,7 @@ public class sslam
 	{
 		/* there are still some sprite problems .. */
 	
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		data16_t *source = sslam_spriteram;
 		data16_t *finish = source + 0x20000/2;
 	
@@ -43,9 +43,9 @@ public class sslam
 			if (source[0]&0x2000) break;
 	
 	
-			if (eightbyeight == 0)
+			if (!eightbyeight)
 			{
-				if (flipx != 0)
+				if (flipx)
 				{
 					drawgfx(bitmap,gfx,number,colr,1,0,xpos+8,ypos,cliprect,TRANSPARENCY_PEN,0);
 					drawgfx(bitmap,gfx,number+1,colr,1,0,xpos+8,ypos+8,cliprect,TRANSPARENCY_PEN,0);
@@ -62,7 +62,7 @@ public class sslam
 			}
 			else
 			{
-				if (flipx != 0)
+				if (flipx)
 				{
 					drawgfx(bitmap,gfx,number+2,colr>>12,1,0,xpos,ypos,cliprect,TRANSPARENCY_PEN,0);
 				}
@@ -127,25 +127,23 @@ public class sslam
 		tilemap_mark_tile_dirty(sslam_bg_tilemap,offset);
 	}
 	
-	VIDEO_START(sslam)
-	{
+	public static VideoStartHandlerPtr video_start_sslam  = new VideoStartHandlerPtr() { public int handler(){
 		sslam_tx_tilemap = tilemap_create(get_sslam_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
-		if (sslam_tx_tilemap == 0) return 1;
+		if (!sslam_tx_tilemap) return 1;
 		tilemap_set_transparent_pen(sslam_tx_tilemap,0);
 	
 		sslam_md_tilemap = tilemap_create(get_sslam_md_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
-		if (sslam_md_tilemap == 0) return 1;
+		if (!sslam_md_tilemap) return 1;
 		tilemap_set_transparent_pen(sslam_md_tilemap,0);
 	
 		sslam_bg_tilemap = tilemap_create(get_sslam_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
-		if (sslam_bg_tilemap == 0) return 1;
+		if (!sslam_bg_tilemap) return 1;
 	
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE(sslam)
-	{
+	public static VideoUpdateHandlerPtr video_update_sslam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(sslam_tx_tilemap,0, sslam_regs[0]);
 		tilemap_set_scrolly(sslam_tx_tilemap,0, sslam_regs[1]+8);
 		tilemap_set_scrollx(sslam_md_tilemap,0, sslam_regs[2]+2);
@@ -172,7 +170,7 @@ public class sslam
 			sslam_regs[7]
 		);
 	*/
-	}
+	} };
 	
 	
 }

@@ -23,7 +23,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,7 +47,7 @@ public class galpani2
 	WRITE16_HANDLER(galpani2_eeprom_w)
 	{
 		COMBINE_DATA( &eeprom_word );
-		if (ACCESSING_LSB != 0)
+		if ( ACCESSING_LSB )
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x02);
@@ -73,8 +73,7 @@ public class galpani2
 	
 	static data16_t *galpani2_ram, *galpani2_ram2;
 	
-	public static MachineInitHandlerPtr machine_init_galpani2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_galpani2  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_kaneko16();
 	
 		kaneko16_sprite_type = 1;
@@ -142,7 +141,7 @@ public class galpani2
 				mcu_size	=	(cpunum_read_byte(0, mcu_address + 8)<<8) +
 								(cpunum_read_byte(0, mcu_address + 9)<<0) ;
 	
-				logerror("CPU #0 PC %06X : MCU executes command $A, %04X %02X. %04x\n",activecpu_get_pc(),mcu_src,mcu_size,mcu_dst);
+				logerror("CPU #0 PC %06X : MCU executes command $A, %04X %02X-> %04x\n",activecpu_get_pc(),mcu_src,mcu_size,mcu_dst);
 	
 				for( ; mcu_size > 0 ; mcu_size-- )
 				{
@@ -189,7 +188,7 @@ public class galpani2
 	
 	WRITE16_HANDLER( galpani2_coin_lockout_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_counter_w(0, data & 0x0100);
 			coin_counter_w(1, data & 0x0200);
@@ -203,18 +202,18 @@ public class galpani2
 	
 	WRITE16_HANDLER( galpani2_oki_0_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data8_t *ROM = memory_region(REGION_SOUND1);
 			logerror("CPU #0 PC %06X : OKI 0 bank %08X\n",activecpu_get_pc(),data);
-			if (Machine.sample_rate == 0)	return;
+			if (Machine->sample_rate == 0)	return;
 			memcpy(ROM + 0x30000, ROM + 0x40000 + 0x10000 * (~data & 0xf), 0x10000);
 		}
 	}
 	
 	WRITE16_HANDLER( galpani2_oki_1_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(1, 0x40000 * (data & 0xf) );
 			logerror("CPU #0 PC %06X : OKI 1 bank %08X\n",activecpu_get_pc(),data);
@@ -267,8 +266,8 @@ public class galpani2
 		{ 0x5c0000, 0x5c0001, MWA16_NOP								},	// ? 0 at startup only
 		{ 0x600000, 0x600001, MWA16_NOP								},	// Watchdog
 	//	{ 0x640000, 0x640001, MWA16_NOP								},	// ? 0 before resetting and at startup
-	//	{ 0x680000, 0x680001, MWA16_NOP								},	// ? 0 . 1 . 0 (lev 5) / 0 . $10 . 0
-	{ 0x680000, 0x680001, galpani2_mcu_nmi_w	},	// ? 0 . 1 . 0 (lev 5) / 0 . $10 . 0
+	//	{ 0x680000, 0x680001, MWA16_NOP								},	// ? 0 -> 1 -> 0 (lev 5) / 0 -> $10 -> 0
+	{ 0x680000, 0x680001, galpani2_mcu_nmi_w	},	// ? 0 -> 1 -> 0 (lev 5) / 0 -> $10 -> 0
 		{ 0x6c0000, 0x6c0001, galpani2_coin_lockout_w				},	// Coin + Card Lockout
 		{ 0xc00000, 0xc00001, OKIM6295_data_0_lsb_w					},	// 2 x OKIM6295
 		{ 0xc40000, 0xc40001, OKIM6295_data_1_lsb_w					},	//
@@ -317,7 +316,7 @@ public class galpani2
 		{ 0x680000, 0x680001, MWA16_NOP						},	// ? 0 at startup only
 		{ 0x6c0000, 0x6c0001, MWA16_NOP						},	// ? 0 at startup only
 		{ 0x700000, 0x700001, MWA16_NOP						},	// Watchdog
-		{ 0x780000, 0x780001, MWA16_NOP						},	// ? 0 . 1 . 0 (lev 5)
+		{ 0x780000, 0x780001, MWA16_NOP						},	// ? 0 -> 1 -> 0 (lev 5)
 		{ 0x7c0000, 0x7c0001, MWA16_RAM, &galpani2_rombank	},	// Rom Bank
 	MEMORY_END
 	
@@ -330,7 +329,7 @@ public class galpani2
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_galpani2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galpani2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galpani2 )
 		PORT_START(); 	// IN0 - DSW + Player - 780000.w
 		PORT_DIPNAME( 0x0007, 0x0007, "Unknown 2-0&1&2*" );
 		PORT_DIPSETTING(      0x007, "7" );
@@ -476,8 +475,7 @@ public class galpani2
 	
 	/* CPU#1 Interrups */
 	#define GALPANI2_INTERRUPTS_NUM	4
-	public static InterruptHandlerPtr galpani2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr galpani2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 3:  cpu_set_irq_line(0, 3, HOLD_LINE); break;
@@ -490,8 +488,7 @@ public class galpani2
 	/* CPU#2 Interrups */
 	/* lev 3,4 & 5 are tested on power up. The rest is rte, but lev 7 */
 	#define GALPANI2_INTERRUPTS_NUM2	3
-	public static InterruptHandlerPtr galpani2_interrupt2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr galpani2_interrupt2 = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 2:  cpu_set_irq_line(1, 3, HOLD_LINE); break;
@@ -500,8 +497,7 @@ public class galpani2
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_galpani2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galpani2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16MHz */
@@ -533,9 +529,7 @@ public class galpani2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, galpani2_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -660,5 +654,5 @@ public class galpani2
 	045(8 banks):	0x40000 *: -
 	*/
 	
-	public static GameDriver driver_galpani2	   = new GameDriver("1993"	,"galpani2"	,"galpani2.java"	,rom_galpani2,null	,machine_driver_galpani2	,input_ports_galpani2	,null	,ROT90	,	"Kaneko", "Gals Panic II (Japan?)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1993, galpani2, 0, galpani2, galpani2, 0, ROT90, "Kaneko", "Gals Panic II (Japan?)", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION )
 }

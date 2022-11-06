@@ -5,7 +5,7 @@ Omori Electric CAD (OEC) 1983
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,8 +18,7 @@ public class popper
 	static int popper_flipscreen, popper_e002, popper_gfx_bank;
 	static struct rectangle tilemap_clip;
 	
-	public static PaletteInitHandlerPtr palette_init_popper  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_popper  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors; i++)
@@ -45,8 +44,7 @@ public class popper
 		}
 	} };
 	
-	public static WriteHandlerPtr popper_ol_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_ol_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (popper_ol_videoram[offset] != data)
 		{
 			popper_ol_videoram[offset] = data;
@@ -55,8 +53,7 @@ public class popper
 		}
 	} };
 	
-	public static WriteHandlerPtr popper_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (popper_videoram[offset] != data)
 		{
 			popper_videoram[offset] = data;
@@ -65,8 +62,7 @@ public class popper
 		}
 	} };
 	
-	public static WriteHandlerPtr popper_ol_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_ol_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (popper_ol_attribram[offset] != data)
 		{
 			popper_ol_attribram[offset] = data;
@@ -75,8 +71,7 @@ public class popper
 		}
 	} };
 	
-	public static WriteHandlerPtr popper_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_attribram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (popper_attribram[offset] != data)
 		{
 			popper_attribram[offset] = data;
@@ -85,26 +80,23 @@ public class popper
 		}
 	} };
 	
-	public static WriteHandlerPtr popper_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		popper_flipscreen = data;
 		tilemap_set_flip( ALL_TILEMAPS,popper_flipscreen?(TILEMAP_FLIPX|TILEMAP_FLIPY):0 );
 	
-		tilemap_clip = Machine.visible_area;
+		tilemap_clip = Machine->visible_area;
 	
-		if (popper_flipscreen != 0)
+		if (popper_flipscreen)
 			tilemap_clip.min_x=tilemap_clip.max_x-15;
 		else
 			tilemap_clip.max_x=15;
 	} };
 	
-	public static WriteHandlerPtr popper_e002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_e002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		popper_e002 = data;
 	} };
 	
-	public static WriteHandlerPtr popper_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (popper_gfx_bank != data)
 		{
 			popper_gfx_bank = data;
@@ -133,7 +125,7 @@ public class popper
 		tile_number += popper_gfx_bank << 8;
 	
 		//pen 0 only in front if colour set as well
-		if ((attr & 0x70) != 0) flags=TILE_SPLIT((attr & 0x80)>>7);
+		if (attr&0x70) flags=TILE_SPLIT((attr & 0x80)>>7);
 	
 		SET_TILE_INFO(
 				0,
@@ -163,7 +155,7 @@ public class popper
 		tile_number += popper_gfx_bank << 8;
 	
 		//pen 0 only in front if colour set as well
-		if ((attr & 0x70) != 0) flags=TILE_SPLIT((attr & 0x80)>>7);
+		if (attr&0x70) flags=TILE_SPLIT((attr & 0x80)>>7);
 	
 		SET_TILE_INFO(
 				0,
@@ -172,8 +164,7 @@ public class popper
 				flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_popper  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_popper  = new VideoStartHandlerPtr() { public int handler(){
 		popper_p123_tilemap    = tilemap_create( get_popper_p123_tile_info,   tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
 		popper_p0_tilemap      = tilemap_create( get_popper_p0_tile_info,     tilemap_scan_cols,TILEMAP_SPLIT,8,8,33,32 );
 		popper_ol_p123_tilemap = tilemap_create( get_popper_ol_p123_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,8,8,2 ,32 );
@@ -207,7 +198,7 @@ public class popper
 		for (offs = 0; offs < popper_spriteram_size-4; offs += 4)
 		{
 			//if y position is in the current strip
-			if(popper_spriteram.read(offs+1)&& (((popper_spriteram.read(offs)+(popper_flipscreen?2:0))&0xf0) == (0x0f-offs/0x80)<<4))
+			if(popper_spriteram[offs+1] && (((popper_spriteram[offs]+(popper_flipscreen?2:0))&0xf0) == (0x0f-offs/0x80)<<4))
 			{
 				//offs     y pos
 				//offs+1   sprite number
@@ -219,12 +210,12 @@ public class popper
 				//----xxxx colour
 				//offs+3   x pos
 	
-				sx = popper_spriteram.read(offs+3);
-				sy = 240-popper_spriteram.read(offs);
-				flipx = (popper_spriteram.read(offs+2)&0x40)>>6;
-				flipy = (popper_spriteram.read(offs+2)&0x80)>>7;
+				sx = popper_spriteram[offs+3];
+				sy = 240-popper_spriteram[offs];
+				flipx = (popper_spriteram[offs+2]&0x40)>>6;
+				flipy = (popper_spriteram[offs+2]&0x80)>>7;
 	
-				if (popper_flipscreen != 0)
+				if (popper_flipscreen)
 				{
 					sx = 248 - sx;
 					sy = 242 - sy;
@@ -232,9 +223,9 @@ public class popper
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
-						popper_spriteram.read(offs+1),
-						(popper_spriteram.read(offs+2)&0x0f),
+				drawgfx(bitmap,Machine->gfx[1],
+						popper_spriteram[offs+1],
+						(popper_spriteram[offs+2]&0x0f),
 						flipx,flipy,
 						sx,sy,
 						cliprect,TRANSPARENCY_PEN,0);
@@ -242,8 +233,7 @@ public class popper
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_popper  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle finalclip = tilemap_clip;
 		sect_rect(&finalclip, cliprect);
 	

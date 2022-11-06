@@ -10,7 +10,7 @@ Video hardware driver by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,17 +25,14 @@ public class xxmissio
 	static UINT8 xxmissio_bg_redraw;
 	
 	
-	public static WriteHandlerPtr xxmissio_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xxmissio_xscroll = data;
 	} };
-	public static WriteHandlerPtr xxmissio_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xxmissio_yscroll = data;
 	} };
 	
-	public static WriteHandlerPtr xxmissio_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x01) != flipscreen)
 		{
 			flipscreen = data & 0x01;
@@ -43,17 +40,14 @@ public class xxmissio
 		}
 	} };
 	
-	public static ReadHandlerPtr xxmissio_fgram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xxmissio_fgram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return xxmissio_fgram[offset];
 	} };
-	public static WriteHandlerPtr xxmissio_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xxmissio_fgram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr xxmissio_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xxmissio_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs = offset & 0x7e0;
 		int x = (offset + (xxmissio_xscroll >> 3) ) & 0x1f;
 		offs |= x;
@@ -61,8 +55,7 @@ public class xxmissio
 		videoram.write(offs,data);
 		dirtybuffer[offs & 0x3ff] = 1;
 	} };
-	public static ReadHandlerPtr xxmissio_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xxmissio_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int offs = offset & 0x7e0;
 		int x = (offset + (xxmissio_xscroll >> 3) ) & 0x1f;
 		offs |= x;
@@ -70,9 +63,8 @@ public class xxmissio
 		return videoram.read(offs);
 	} };
 	
-	public static WriteHandlerPtr xxmissio_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (paletteram[offset] != data)
+	public static WriteHandlerPtr xxmissio_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (paletteram.read(offset)!= data)
 		{
 			paletteram_BBGGRRII_w(offset,data);
 	
@@ -83,8 +75,7 @@ public class xxmissio
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xxmissio  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xxmissio  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int chr,col;
 		int x,y,px,py,fx,fy,sx,sy;

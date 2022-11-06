@@ -23,7 +23,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -46,13 +46,11 @@ public class hyhoo
 	void hyhoo_romsel_w(int data);
 	
 	
-	public static DriverInitHandlerPtr init_hyhoo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyhoo  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_HYHOO;
 	} };
 	
-	public static DriverInitHandlerPtr init_hyhoo2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyhoo2  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_HYHOO2;
 	} };
 	
@@ -72,8 +70,7 @@ public class hyhoo
 	};
 	
 	
-	public static ReadHandlerPtr io_hyhoo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_hyhoo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if (offset < 0x8000) return nb1413m3_sndrom_r(offset);
@@ -98,8 +95,7 @@ public class hyhoo
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_hyhoo_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_hyhoo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if ((0xc000 <= offset) && (0xd000 > offset))
@@ -145,7 +141,7 @@ public class hyhoo
 	};
 	
 	
-	static InputPortPtr input_ports_hyhoo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyhoo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyhoo )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x00, "4 (Easy"));
@@ -231,7 +227,7 @@ public class hyhoo
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hyhoo2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyhoo2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyhoo2 )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x00, "4 (Easy"));
@@ -325,8 +321,7 @@ public class hyhoo
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_hyhoo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyhoo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000/1)	/* 2.50 MHz */
@@ -355,9 +350,7 @@ public class hyhoo
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_hyhoo = new RomLoadPtr(){ public void handler(){ 
@@ -403,6 +396,6 @@ public class hyhoo
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_hyhoo	   = new GameDriver("1987"	,"hyhoo"	,"hyhoo.java"	,rom_hyhoo,null	,machine_driver_hyhoo	,input_ports_hyhoo	,init_hyhoo	,ROT90	,	"Nichibutsu", "Taisen Quiz HYHOO (Japan)" )
-	public static GameDriver driver_hyhoo2	   = new GameDriver("1987"	,"hyhoo2"	,"hyhoo.java"	,rom_hyhoo2,null	,machine_driver_hyhoo	,input_ports_hyhoo2	,init_hyhoo2	,ROT90	,	"Nichibutsu", "Taisen Quiz HYHOO 2 (Japan)" )
+	GAME( 1987, hyhoo,  0, hyhoo,  hyhoo,  hyhoo,  ROT90, "Nichibutsu", "Taisen Quiz HYHOO (Japan)" )
+	GAME( 1987, hyhoo2, 0, hyhoo,  hyhoo2, hyhoo2, ROT90, "Nichibutsu", "Taisen Quiz HYHOO 2 (Japan)" )
 }

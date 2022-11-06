@@ -27,7 +27,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,10 +37,9 @@ public class bladestl
 	/* from vidhrdw */
 	int bladestl_spritebank;
 	
-	public static InterruptHandlerPtr bladestl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bladestl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0){
-			if (K007342_is_INT_enabled() != 0)
+			if (K007342_is_INT_enabled())
 				cpu_set_irq_line(0, HD6309_FIRQ_LINE, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2){
@@ -48,8 +47,7 @@ public class bladestl
 		}
 	} };
 	
-	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int last[4];
 		int curr,delta;
 	
@@ -60,8 +58,7 @@ public class bladestl
 		return (delta & 0x80) | (curr >> 1);
 	} };
 	
-	public static WriteHandlerPtr bladestl_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bladestl_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -84,22 +81,21 @@ public class bladestl
 	
 	} };
 	
-	public static WriteHandlerPtr bladestl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bladestl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset, data);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
 		//logerror("(sound) write %02x\n", data);
 	} };
 	
-	public static WriteHandlerPtr bladestl_port_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr bladestl_port_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/* bit 1, 2 unknown */
 		UPD7759_set_bank_base(0, ((data & 0x38) >> 3)*0x20000);
-	} };
+	}
 	
-	public static WriteHandlerPtr bladestl_speech_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr bladestl_speech_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		UPD7759_reset_w(0, data & 1);
 		UPD7759_start_w(0, data & 2);
-	} };
+	}
 	
 	public static Memory_ReadAddress bladestl_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -166,7 +162,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bladestl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bladestl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bladestl )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -277,7 +273,7 @@ public class bladestl
 		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X | IPF_PLAYER2, 100, 63, 0, 0);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bladstle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bladstle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bladstle )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -443,8 +439,7 @@ public class bladestl
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_bladestl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bladestl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* 24MHz/8 (?) */
@@ -476,9 +471,7 @@ public class bladestl
 		   called at initialization time */
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -528,6 +521,6 @@ public class bladestl
 	
 	
 	
-	public static GameDriver driver_bladestl	   = new GameDriver("1987"	,"bladestl"	,"bladestl.java"	,rom_bladestl,null	,machine_driver_bladestl	,input_ports_bladestl	,null	,ROT90	,	"Konami", "Blades of Steel (version T)" )
-	public static GameDriver driver_bladstle	   = new GameDriver("1987"	,"bladstle"	,"bladestl.java"	,rom_bladstle,driver_bladestl	,machine_driver_bladestl	,input_ports_bladstle	,null	,ROT90	,	"Konami", "Blades of Steel (version E)" )
+	GAME( 1987, bladestl, 0,        bladestl, bladestl, 0, ROT90, "Konami", "Blades of Steel (version T)" )
+	GAME( 1987, bladstle, bladestl, bladestl, bladstle, 0, ROT90, "Konami", "Blades of Steel (version E)" )
 }

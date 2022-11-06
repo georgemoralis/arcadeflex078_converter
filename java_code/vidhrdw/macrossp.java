@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -131,7 +131,7 @@ public class macrossp
 	
 	WRITE32_HANDLER( macrossp_text_videoram_w )
 	{
-		COMBINE_DATA(&macrossp_text_videoram.read(offset));
+		COMBINE_DATA(&macrossp_text_videoram[offset]);
 	
 		tilemap_mark_tile_dirty(macrossp_text_tilemap,offset);
 	}
@@ -141,8 +141,8 @@ public class macrossp
 	{
 		UINT32 tileno, colour;
 	
-		tileno = macrossp_text_videoram.read(tile_index)& 0x0000ffff;
-		colour = (macrossp_text_videoram.read(tile_index)& 0x00fe0000) >> 17;
+		tileno = macrossp_text_videoram[tile_index] & 0x0000ffff;
+		colour = (macrossp_text_videoram[tile_index] & 0x00fe0000) >> 17;
 	
 		SET_TILE_INFO(4,tileno,colour,0)
 	}
@@ -151,16 +151,15 @@ public class macrossp
 	
 	/*** VIDEO START / UPDATE ***/
 	
-	VIDEO_START(macrossp)
-	{
-		spriteram_old = auto_malloc(spriteram_size);
-		spriteram_old2 = auto_malloc(spriteram_size);
+	public static VideoStartHandlerPtr video_start_macrossp  = new VideoStartHandlerPtr() { public int handler(){
+		spriteram_old = auto_malloc(spriteram_size[0]);
+		spriteram_old2 = auto_malloc(spriteram_size[0]);
 	
 		if (!spriteram_old || !spriteram_old2)
 			return 1;
 	
-		memset(spriteram_old,0,spriteram_size);
-		memset(spriteram_old2,0,spriteram_size);
+		memset(spriteram_old,0,spriteram_size[0]);
+		memset(spriteram_old2,0,spriteram_size[0]);
 	
 		macrossp_text_tilemap = tilemap_create(get_macrossp_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		macrossp_scra_tilemap = tilemap_create(get_macrossp_scra_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
@@ -183,13 +182,13 @@ public class macrossp
 		alpha_set_level(0x80); /* guess */
 	
 		return 0;
-	}
+	} };
 	
 	
 	
 	static void macrossp_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int priority )
 	{
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	//	data32_t *source = macrossp_spriteram;
 		data32_t *source = spriteram_old2; /* buffers by two frames */
 		data32_t *finish = source + spriteram_size/4;
@@ -254,8 +253,8 @@ public class macrossp
 				if (xpos > 0x1ff) xpos -=0x400;
 				if (ypos > 0x1ff) ypos -=0x400;
 	
-				if (flipx == 0) {
-					if (flipy == 0) { /* noxflip, noyflip */
+				if (NOT(flipx)) {
+					if (NOT(flipy)) { /* noxflip, noyflip */
 						yoffset = 0; /* I'm doing this so rounding errors are cumulative, still looks a touch crappy when multiple sprites used together */
 						for (ycnt = 0; ycnt <= high; ycnt++) {
 							xoffset = 0;
@@ -281,7 +280,7 @@ public class macrossp
 						}
 					}
 				}else{
-					if (flipy == 0) { /* xflip, noyflip */
+					if (NOT(flipy)) { /* xflip, noyflip */
 						yoffset = 0;
 						for (ycnt = 0; ycnt <= high; ycnt++) {
 							xoffset = ((wide*xzoom*16) >> 8);
@@ -379,8 +378,7 @@ public class macrossp
 		SWAP(1,2)
 	}
 	
-	VIDEO_UPDATE(macrossp)
-	{
+	public static VideoUpdateHandlerPtr video_update_macrossp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers[3],layerpri[3];
 	
 	
@@ -418,10 +416,9 @@ public class macrossp
 	macrossp_scrc_videoregs[1], // 04 - 07
 	macrossp_scrc_videoregs[2]);// 08 - 0b
 	#endif
-	}
+	} };
 	
-	public static VideoEofHandlerPtr video_eof_macrossp  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_macrossp  = new VideoEofHandlerPtr() { public void handler(){
 		/* looks like sprites are *two* frames ahead, like nmk16 */
 		memcpy(spriteram_old2,spriteram_old,spriteram_size[0]);
 		memcpy(spriteram_old,macrossp_spriteram,spriteram_size[0]);

@@ -5,7 +5,7 @@
  */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,13 +20,11 @@ public class djboy
 		djboy_videoreg = data;
 	}
 	
-	public static WriteHandlerPtr djboy_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr djboy_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		djboy_scrollx = data;
 	} };
 	
-	public static WriteHandlerPtr djboy_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr djboy_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		djboy_scrolly = data;
 	} };
 	
@@ -41,8 +39,7 @@ public class djboy
 				0)
 	}
 	
-	public static WriteHandlerPtr djboy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr djboy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -50,10 +47,9 @@ public class djboy
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_djboy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_djboy  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,32);
-		if (background != 0)
+		if( background )
 		{
 			return 0;
 		}
@@ -79,7 +75,7 @@ public class djboy
 				int code	=	pSource[offs + 0x600] + ((gfx & 0x3f) << 8);
 				int flipx	=	gfx & 0x80;
 				int flipy	=	gfx & 0x40;
-				if ((attr & 0x04) != 0)
+				if( attr & 0x04 )
 				{
 					sx += x;
 					sy += y;
@@ -90,7 +86,7 @@ public class djboy
 					sy  = y;
 				}
 				drawgfx(
-					bitmap,Machine.gfx[1],
+					bitmap,Machine->gfx[1],
 					code,
 					attr >> 4,
 					flipx, flipy,
@@ -100,14 +96,13 @@ public class djboy
 		} /* next page */
 	} /* draw_sprites */
 	
-	public static WriteHandlerPtr djboy_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr djboy_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int val;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 		offset &= ~1;
-		val = (paletteram[offset]<<8) | paletteram[offset+1];
+		val = (paletteram.read(offset)<<8) | paletteram.read(offset+1);
 	
 		r = (val >> 8) & 0xf;
 		g = (val >> 4) & 0xf;
@@ -120,8 +115,7 @@ public class djboy
 			(b * 0xff) / 0xf );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_djboy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/**
 		 * xx------ msb x
 		 * --x----- msb y

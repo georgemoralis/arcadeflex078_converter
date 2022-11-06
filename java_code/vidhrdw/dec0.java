@@ -100,7 +100,7 @@ Priority word (Midres):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -192,7 +192,7 @@ public class dec0
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -200,18 +200,18 @@ public class dec0
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -496,8 +496,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hbarrel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hbarrel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		dec0_pf1_update();
 		dec0_pf2_update();
 		dec0_pf3_update();
@@ -516,8 +515,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_baddudes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_baddudes  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* WARNING: priority inverted wrt all the other games */
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -534,12 +532,12 @@ public class dec0
 			if (!(dec0_pri & 4))
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
-			if ((dec0_pri & 2) != 0)
+			if (dec0_pri & 2)
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-			if ((dec0_pri & 4) != 0)
+			if (dec0_pri & 4)
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1); /* Foreground pens only */
 		}
 		else
@@ -552,12 +550,12 @@ public class dec0
 			if (!(dec0_pri & 4))
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
-			if ((dec0_pri & 2) != 0)
+			if (dec0_pri & 2)
 				dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-			if ((dec0_pri & 4) != 0)
+			if (dec0_pri & 4)
 				dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
@@ -566,20 +564,19 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_robocop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_robocop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int trans;
 	
 		dec0_pf1_update();
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if ((dec0_pri & 0x04) != 0)
+		if (dec0_pri & 0x04)
 			trans = 0x08;
 		else
 			trans = 0x00;
 	
-		if ((dec0_pri & 0x01) != 0)
+		if (dec0_pri & 0x01)
 		{
 			/* WARNING: inverted wrt Midnight Resistance */
 			/* Robocop uses it only for the title screen, so this might be just */
@@ -588,7 +585,7 @@ public class dec0
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if ((dec0_pri & 0x02) != 0)
+			if (dec0_pri & 0x02)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK,0);
@@ -599,14 +596,14 @@ public class dec0
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if ((dec0_pri & 0x02) != 0)
+			if (dec0_pri & 0x02)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
-		if ((dec0_pri & 0x02) != 0)
+		if (dec0_pri & 0x02)
 			dec0_drawsprites(bitmap,cliprect,0x08,trans ^ 0x08);
 		else
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
@@ -616,8 +613,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_birdtry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_birdtry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* This game doesn't have the extra playfield chip on the game board */
 		dec0_pf1_update();
 		dec0_pf2_update();
@@ -629,13 +625,12 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hippodrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hippodrm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		dec0_pf1_update();
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if ((dec0_pri & 0x01) != 0)
+		if (dec0_pri & 0x01)
 		{
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
@@ -656,8 +651,7 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_slyspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_slyspy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		dec0_pf1_update();
 		dec0_pf2_update();
 		dec0_pf3_update();
@@ -670,7 +664,7 @@ public class dec0
 	
 		dec0_drawsprites(bitmap,cliprect,0x00,0x00);
 	
-		if ((dec0_pri & 0x80) != 0)
+		if (dec0_pri&0x80)
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 	
 		dec0_pf1_draw(bitmap,cliprect,0,0);
@@ -678,11 +672,10 @@ public class dec0
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_midres  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_midres  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int trans;
 	
-		if ((dec0_pri & 0x04) != 0)
+		if (dec0_pri & 0x04)
 			trans = 0x00;
 		else trans = 0x08;
 	
@@ -690,12 +683,12 @@ public class dec0
 		dec0_pf2_update();
 		dec0_pf3_update();
 	
-		if ((dec0_pri & 0x01) != 0)
+		if (dec0_pri & 0x01)
 		{
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if ((dec0_pri & 0x02) != 0)
+			if (dec0_pri & 0x02)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK,0);
@@ -706,14 +699,14 @@ public class dec0
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_BACK|TILEMAP_IGNORE_TRANSPARENCY,0);
 			dec0_pf3_draw(bitmap,cliprect,TILEMAP_FRONT|TILEMAP_IGNORE_TRANSPARENCY,1);
 	
-			if ((dec0_pri & 0x02) != 0)
+			if (dec0_pri & 0x02)
 				dec0_drawsprites(bitmap,cliprect,0x08,trans);
 	
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_BACK,0);
 			dec0_pf2_draw(bitmap,cliprect,TILEMAP_FRONT,1);
 		}
 	
-		if ((dec0_pri & 0x02) != 0)
+		if (dec0_pri & 0x02)
 			dec0_drawsprites(bitmap,cliprect,0x08,trans ^ 0x08);
 		else
 			dec0_drawsprites(bitmap,cliprect,0x00,0x00);
@@ -791,8 +784,7 @@ public class dec0
 	  	COMBINE_DATA(&dec0_pri);
 	}
 	
-	public static WriteHandlerPtr dec0_pf3_control_8bit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec0_pf3_control_8bit_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int buffer[0x20];
 		data16_t myword;
 	
@@ -806,9 +798,8 @@ public class dec0
 		else dec0_pf3_control_1_w((offset-0x10)/2,myword,0);
 	} };
 	
-	public static WriteHandlerPtr dec0_pf3_data_8bit_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 1) != 0) { /* MSB has changed */
+	public static WriteHandlerPtr dec0_pf3_data_8bit_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset&1) { /* MSB has changed */
 			data16_t lsb=dec0_pf3_data[offset>>1];
 			data16_t newword=(lsb&0xff) | (data<<8);
 			dec0_pf3_data[offset>>1]=newword;
@@ -823,9 +814,8 @@ public class dec0
 		tilemap_mark_tile_dirty(pf3_tilemap_2,offset>>1);
 	} };
 	
-	public static ReadHandlerPtr dec0_pf3_data_8bit_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 1) != 0) /* MSB */
+	public static ReadHandlerPtr dec0_pf3_data_8bit_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (offset&1) /* MSB */
 			return dec0_pf3_data[offset>>1]>>8;
 	
 		return dec0_pf3_data[offset>>1]&0xff;
@@ -883,8 +873,7 @@ public class dec0
 		SET_TILE_INFO(2,tile&0xfff,tile>>12,TILE_SPLIT(pri))
 	}
 	
-	public static VideoStartHandlerPtr video_start_dec0_nodma  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dec0_nodma  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap_0 = tilemap_create(get_pf1_tile_info,tile_shape0_8x8_scan,TILEMAP_TRANSPARENT, 8, 8,128, 32);
 		pf1_tilemap_1 = tilemap_create(get_pf1_tile_info,tile_shape1_8x8_scan,TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 		pf1_tilemap_2 = tilemap_create(get_pf1_tile_info,tile_shape2_8x8_scan,TILEMAP_TRANSPARENT, 8, 8, 32,128);
@@ -927,8 +916,7 @@ public class dec0
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_dec0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dec0  = new VideoStartHandlerPtr() { public int handler(){
 		video_start_dec0_nodma();
 		dec0_spriteram=auto_malloc(0x800);
 	

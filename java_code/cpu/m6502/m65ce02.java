@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6502;
 
@@ -142,14 +142,14 @@ public class m65ce02
 	
 	unsigned m65ce02_get_context (void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(m65ce02_Regs*)dst = m65ce02;
 		return sizeof(m65ce02_Regs);
 	}
 	
 	void m65ce02_set_context (void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			m65ce02 = *(m65ce02_Regs*)src;
 			change_pc16(PCD);
@@ -365,33 +365,33 @@ public class m65ce02
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &m65ce02;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M65CE02_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+M65CE02_S: sprintf(buffer[which], "S:%04X", r.sp.w.l); break;
-			case CPU_INFO_REG+M65CE02_P: sprintf(buffer[which], "P:%02X", r.p); break;
-			case CPU_INFO_REG+M65CE02_A: sprintf(buffer[which], "A:%02X", r.a); break;
-			case CPU_INFO_REG+M65CE02_X: sprintf(buffer[which], "X:%02X", r.x); break;
-			case CPU_INFO_REG+M65CE02_Y: sprintf(buffer[which], "Y:%02X", r.y); break;
-			case CPU_INFO_REG+M65CE02_Z: sprintf(buffer[which], "Z:%02X", r.z); break;
-			case CPU_INFO_REG+M65CE02_B: sprintf(buffer[which], "B:%02X", r.zp.b.h); break;
-			case CPU_INFO_REG+M65CE02_EA: sprintf(buffer[which], "EA:%04X", r.ea.w.l); break;
-			case CPU_INFO_REG+M65CE02_ZP: sprintf(buffer[which], "ZP:%04X", r.zp.w.l); break;
-			case CPU_INFO_REG+M65CE02_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+M65CE02_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
+			case CPU_INFO_REG+M65CE02_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+M65CE02_S: sprintf(buffer[which], "S:%04X", r->sp.w.l); break;
+			case CPU_INFO_REG+M65CE02_P: sprintf(buffer[which], "P:%02X", r->p); break;
+			case CPU_INFO_REG+M65CE02_A: sprintf(buffer[which], "A:%02X", r->a); break;
+			case CPU_INFO_REG+M65CE02_X: sprintf(buffer[which], "X:%02X", r->x); break;
+			case CPU_INFO_REG+M65CE02_Y: sprintf(buffer[which], "Y:%02X", r->y); break;
+			case CPU_INFO_REG+M65CE02_Z: sprintf(buffer[which], "Z:%02X", r->z); break;
+			case CPU_INFO_REG+M65CE02_B: sprintf(buffer[which], "B:%02X", r->zp.b.h); break;
+			case CPU_INFO_REG+M65CE02_EA: sprintf(buffer[which], "EA:%04X", r->ea.w.l); break;
+			case CPU_INFO_REG+M65CE02_ZP: sprintf(buffer[which], "ZP:%04X", r->zp.w.l); break;
+			case CPU_INFO_REG+M65CE02_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+M65CE02_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.p & 0x80 ? 'N':'.',
-					r.p & 0x40 ? 'V':'.',
-					r.p & 0x20 ? 'E':'.',
-					r.p & 0x10 ? 'B':'.',
-					r.p & 0x08 ? 'D':'.',
-					r.p & 0x04 ? 'I':'.',
-					r.p & 0x02 ? 'Z':'.',
-					r.p & 0x01 ? 'C':'.');
+					r->p & 0x80 ? 'N':'.',
+					r->p & 0x40 ? 'V':'.',
+					r->p & 0x20 ? 'E':'.',
+					r->p & 0x10 ? 'B':'.',
+					r->p & 0x08 ? 'D':'.',
+					r->p & 0x04 ? 'I':'.',
+					r->p & 0x02 ? 'Z':'.',
+					r->p & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "M65CE02";
 			case CPU_INFO_FAMILY: return "CBM Semiconductor Group CSG 65CE02";

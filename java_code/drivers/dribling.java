@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -57,9 +57,8 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr dribling_irq_gen = new InterruptHandlerPtr() {public void handler()
-	{
-		if (di != 0)
+	public static InterruptHandlerPtr dribling_irq_gen = new InterruptHandlerPtr() {public void handler(){
+		if (di)
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 	} };
 	
@@ -71,15 +70,13 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr dsr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* return DSR0-7 */
 		return (ds << sh) | (dr >> (8 - sh));
 	} };
 	
 	
-	public static ReadHandlerPtr input_mux0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_mux0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* low value in the given bit selects */
 		if (!(input_mux & 0x01))
 			return readinputport(0);
@@ -98,11 +95,10 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7 = di */
 		di = (data >> 7) & 1;
-		if (di == 0)
+		if (!di)
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 	
 		/* bit 6 = parata */
@@ -121,8 +117,7 @@ public class dribling
 	} };
 	
 	
-	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7 = stop palla */
 		/* bit 6 = contrasto */
 		/* bit 5 = calgio a */
@@ -135,17 +130,15 @@ public class dribling
 	} };
 	
 	
-	public static WriteHandlerPtr pb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write PB0-7 */
 		logerror("%04X:pb_w(%02X)\n", activecpu_get_previouspc(), data);
 	} };
 	
 	
-	public static WriteHandlerPtr shr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 3 = watchdog */
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 			watchdog_reset_w(0, 0);
 	
 		/* bit 2-0 = SH0-2 */
@@ -160,23 +153,21 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr ioread  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 0x08) != 0)
+	public static ReadHandlerPtr ioread  = new ReadHandlerPtr() { public int handler(int offset){
+		if (offset & 0x08)
 			return ppi8255_0_r(offset & 3);
-		else if ((offset & 0x10) != 0)
+		else if (offset & 0x10)
 			return ppi8255_1_r(offset & 3);
 		return 0xff;
 	} };
 	
 	
-	public static WriteHandlerPtr iowrite = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 0x08) != 0)
+	public static WriteHandlerPtr iowrite = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 0x08)
 			ppi8255_0_w(offset & 3, data);
-		else if ((offset & 0x10) != 0)
+		else if (offset & 0x10)
 			ppi8255_1_w(offset & 3, data);
-		else if ((offset & 0x40) != 0)
+		else if (offset & 0x40)
 		{
 			dr = ds;
 			ds = data;
@@ -202,8 +193,7 @@ public class dribling
 		{ misc_w,       shr_w          }
 	};
 	
-	public static MachineInitHandlerPtr machine_init_dribling  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_dribling  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
@@ -254,7 +244,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_dribling = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dribling = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dribling )
 		PORT_START(); 	/* IN0 (mux 0) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_LEFT  | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_RIGHT | IPF_PLAYER1 );
@@ -303,8 +293,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_dribling = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dribling )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -327,9 +316,7 @@ public class dribling
 		MDRV_VIDEO_UPDATE(dribling)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -384,6 +371,6 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_dribling	   = new GameDriver("1983"	,"dribling"	,"dribling.java"	,rom_dribling,null	,machine_driver_dribling	,input_ports_dribling	,null	,ROT0	,	"Model Racing", "Dribbling", GAME_NO_SOUND )
-	public static GameDriver driver_driblino	   = new GameDriver("1983"	,"driblino"	,"dribling.java"	,rom_driblino,driver_dribling	,machine_driver_dribling	,input_ports_dribling	,null	,ROT0	,	"Model Racing (Olympia license)", "Dribbling (Olympia)", GAME_NO_SOUND )
+	GAMEX( 1983, dribling, 0,        dribling, dribling, 0, ROT0, "Model Racing", "Dribbling", GAME_NO_SOUND )
+	GAMEX( 1983, driblino, dribling, dribling, dribling, 0, ROT0, "Model Racing (Olympia license)", "Dribbling (Olympia)", GAME_NO_SOUND )
 }

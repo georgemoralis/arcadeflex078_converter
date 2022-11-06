@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -128,8 +128,7 @@ public class bsktball
 		0x01, 0x03, 0x03, 0x03,
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_bsktball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bsktball  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0x80,0x80,0x80); /* LIGHT GREY */
 		palette_set_color(2,0x50,0x50,0x50); /* DARK GREY */
@@ -185,7 +184,7 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_bsktball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bsktball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bsktball )
 		PORT_START(); 	/* IN0 */
 		PORT_ANALOG( 0xFF, 0x00, IPT_TRACKBALL_X, 100, 10, 0, 0 );/* Sensitivity, clip, min, max */
 	
@@ -375,8 +374,7 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_bsktball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bsktball )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,750000)
@@ -400,9 +398,7 @@ public class bsktball
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, bsktball_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -433,5 +429,5 @@ public class bsktball
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_bsktball	   = new GameDriver("1979"	,"bsktball"	,"bsktball.java"	,rom_bsktball,null	,machine_driver_bsktball	,input_ports_bsktball	,null	,ROT0	,	"Atari", "Basketball" )
+	GAME( 1979, bsktball, 0, bsktball, bsktball, 0, ROT0, "Atari", "Basketball" )
 }

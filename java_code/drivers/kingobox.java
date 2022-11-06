@@ -17,7 +17,7 @@ Main CPU:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,39 +34,39 @@ public class kingobox
 	static UINT8 *sprite_shared;
 	int kingofb_nmi_enable = 0;
 	
-	public static ReadHandlerPtr video_shared_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr video_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return video_shared[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr video_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr video_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		video_shared[offset] = data;
-	} };
+	}
 	
-	public static ReadHandlerPtr sprite_shared_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr sprite_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return sprite_shared[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr sprite_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sprite_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		sprite_shared[offset] = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr video_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr video_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
-	} };
+	}
 	
-	public static WriteHandlerPtr sprite_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sprite_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		cpu_set_irq_line_and_vector( 2, 0, HOLD_LINE, 0xff );
-	} };
+	}
 	
-	public static WriteHandlerPtr scroll_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr scroll_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		sprite_interrupt_w( offset, data );
 		*kingofb_scroll_y = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		soundlatch_w.handler( 0, data );
 		cpu_set_irq_line_and_vector( 3, 0, HOLD_LINE, 0xff );
-	} };
+	}
 	
 	
 	public static Memory_ReadAddress main_readmem[]={
@@ -264,7 +264,7 @@ public class kingobox
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_kingofb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kingofb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kingofb )
 	    PORT_START();  /* DSW0 - 0xfc01 */
 	    PORT_DIPNAME( 0x03, 0x01, "Rest Up Points" );
 	    PORT_DIPSETTING(    0x02, "70000" );
@@ -355,7 +355,7 @@ public class kingobox
 	INPUT_PORTS_END(); }}; 
 	
 	/* Ring King */
-	static InputPortPtr input_ports_ringking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ringking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ringking )
 	    PORT_START();  /* DSW0 - 0xe000 */
 	    PORT_DIPNAME( 0x03, 0x03, "Replay" );
 	    PORT_DIPSETTING(    0x01, "70000" );
@@ -580,14 +580,13 @@ public class kingobox
 		{ 25 }
 	};
 	
-	public static InterruptHandlerPtr kingofb_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr kingofb_interrupt = new InterruptHandlerPtr() {public void handler()
 	
-		if (kingofb_nmi_enable != 0)
+		if ( kingofb_nmi_enable )
 			cpu_set_irq_line(cpu_getactivecpu(), IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	}
 	
-	public static MachineHandlerPtr machine_driver_kingofb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kingofb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.0 MHz */
@@ -627,14 +626,11 @@ public class kingobox
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Ring King */
-	public static MachineHandlerPtr machine_driver_ringking = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ringking )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.0 MHz */
@@ -674,9 +670,7 @@ public class kingobox
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -844,8 +838,7 @@ public class kingobox
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_ringkin3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ringkin3  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		UINT8 *RAM = memory_region(REGION_PROMS);
 	
@@ -856,8 +849,8 @@ public class kingobox
 	
 	
 	
-	public static GameDriver driver_kingofb	   = new GameDriver("1985"	,"kingofb"	,"kingobox.java"	,rom_kingofb,null	,machine_driver_kingofb	,input_ports_kingofb	,null	,ROT90	,	"Woodplace", "King of Boxer (English)" )
-	public static GameDriver driver_ringking	   = new GameDriver("1985"	,"ringking"	,"kingobox.java"	,rom_ringking,driver_kingofb	,machine_driver_ringking	,input_ports_ringking	,null	,ROT90	,	"Data East USA", "Ring King (US set 1)" )
-	public static GameDriver driver_ringkin2	   = new GameDriver("1985"	,"ringkin2"	,"kingobox.java"	,rom_ringkin2,driver_kingofb	,machine_driver_ringking	,input_ports_ringking	,null	,ROT90	,	"Data East USA", "Ring King (US set 2)" )
-	public static GameDriver driver_ringkin3	   = new GameDriver("1985"	,"ringkin3"	,"kingobox.java"	,rom_ringkin3,driver_kingofb	,machine_driver_kingofb	,input_ports_kingofb	,init_ringkin3	,ROT90	,	"Data East USA", "Ring King (US set 3)" )
+	GAME( 1985, kingofb,  0,       kingofb,  kingofb,  0,        ROT90, "Woodplace", "King of Boxer (English)" )
+	GAME( 1985, ringking, kingofb, ringking, ringking, 0,        ROT90, "Data East USA", "Ring King (US set 1)" )
+	GAME( 1985, ringkin2, kingofb, ringking, ringking, 0,        ROT90, "Data East USA", "Ring King (US set 2)" )
+	GAME( 1985, ringkin3, kingofb, kingofb,  kingofb,  ringkin3, ROT90, "Data East USA", "Ring King (US set 3)" )
 }

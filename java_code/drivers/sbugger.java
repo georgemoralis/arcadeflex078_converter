@@ -5,7 +5,7 @@ the only remaining rom has fixed bits, then the game crashes .. */
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -57,9 +57,6 @@ public class sbugger
 	
 	data8_t* sbugger_videoram, *sbugger_videoram_attr;
 	
-	PALETTE_INIT(sbugger);
-	VIDEO_UPDATE(sbugger);
-	VIDEO_START(sbugger);
 	
 	/* memory maps */
 	
@@ -123,7 +120,7 @@ public class sbugger
 	
 	/* input ports */
 	
-	static InputPortPtr input_ports_sbugger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbugger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbugger )
 		PORT_START(); 	/* 8-bit */
 		PORT_DIPNAME( 0x01, 0x01, "E1" );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -201,8 +198,7 @@ public class sbugger
 	
 	/* machine driver */
 	
-	public static MachineHandlerPtr machine_driver_sbugger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sbugger )
 		MDRV_CPU_ADD(8085A, 6000000/2)        /* 3.00 MHz??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,0)
@@ -223,9 +219,7 @@ public class sbugger
 		MDRV_VIDEO_UPDATE(sbugger)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* rom loading */
 	
@@ -246,6 +240,6 @@ public class sbugger
 	
 	/* game drivers */
 	
-	public static GameDriver driver_sbugger	   = new GameDriver("1981"	,"sbugger"	,"sbugger.java"	,rom_sbugger,null	,machine_driver_sbugger	,input_ports_sbugger	,null	,ROT270	,	"Game-A-Tron", "Space Bugger", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1981, sbugger, 0, sbugger, sbugger, 0, ROT270, "Game-A-Tron", "Space Bugger", GAME_NO_SOUND | GAME_NOT_WORKING )
 	
 }

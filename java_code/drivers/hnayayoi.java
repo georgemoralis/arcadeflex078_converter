@@ -34,7 +34,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,8 +48,7 @@ public class hnayayoi
 	
 	static int keyb;
 	
-	public static ReadHandlerPtr keyboard_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr keyboard_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 0x3f;
 		int i;
 	
@@ -59,40 +58,33 @@ public class hnayayoi
 		return res;
 	} };
 	
-	public static ReadHandlerPtr keyboard_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr keyboard_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Player 2 not supported */
 		return 0x3f;
 	} };
 	
-	public static WriteHandlerPtr keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr keyboard_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		keyb = data;
 	} };
 	
 	
-	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr adpcm_vclk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_vclk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_vclk_w(0,data & 1);
 	} };
 	
-	public static WriteHandlerPtr adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(0,data & 1);
 	} };
 	
-	public static WriteHandlerPtr adpcm_reset_inv_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_reset_inv_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(0,~data & 1);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_hnayayoi  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_hnayayoi  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with the MSM5205 reset */
 		MSM5205_reset_w(0,1);
 	} };
@@ -237,7 +229,7 @@ public class hnayayoi
 	
 	
 	
-	static InputPortPtr input_ports_hnayayoi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hnayayoi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hnayayoi )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -366,7 +358,7 @@ public class hnayayoi
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hnfubuki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hnfubuki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hnfubuki )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -497,7 +489,7 @@ public class hnayayoi
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_untoucha = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_untoucha = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( untoucha )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -641,8 +633,7 @@ public class hnayayoi
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_hnayayoi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hnayayoi )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 20000000/4 )        /* 5 MHz ???? */
 		MDRV_CPU_MEMORY(hnayayoi_readmem,hnayayoi_writemem)
@@ -669,31 +660,23 @@ public class hnayayoi
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hnfubuki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hnfubuki )
 		MDRV_IMPORT_FROM(hnayayoi)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(hnfubuki_readmem,hnfubuki_writemem)
 		MDRV_CPU_PORTS(hnfubuki_readport,hnfubuki_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_untoucha = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( untoucha )
 		MDRV_IMPORT_FROM(hnayayoi)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(untoucha_readmem,untoucha_writemem)
 		MDRV_CPU_PORTS(untoucha_readport,untoucha_writeport)
 	
 		MDRV_VIDEO_START(untoucha)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -760,8 +743,7 @@ public class hnayayoi
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_hnfubuki  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hnfubuki  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_GFX1);
 		int len = memory_region_length(REGION_GFX1);
 		int i,j;
@@ -787,7 +769,7 @@ public class hnayayoi
 	} };
 	
 	
-	public static GameDriver driver_hnayayoi	   = new GameDriver("1987"	,"hnayayoi"	,"hnayayoi.java"	,rom_hnayayoi,null	,machine_driver_hnayayoi	,input_ports_hnayayoi	,null	,ROT0	,	"Dyna Electronics", "Hana Yayoi (Japan)" )
-	public static GameDriver driver_hnfubuki	   = new GameDriver("1987"	,"hnfubuki"	,"hnayayoi.java"	,rom_hnfubuki,driver_hnayayoi	,machine_driver_hnfubuki	,input_ports_hnfubuki	,init_hnfubuki	,ROT0	,	"Dynax", "Hana Fubuki [BET] (Japan)" )
-	public static GameDriver driver_untoucha	   = new GameDriver("1987"	,"untoucha"	,"hnayayoi.java"	,rom_untoucha,null	,machine_driver_untoucha	,input_ports_untoucha	,null	,ROT0	,	"Dynax", "Untouchable (Japan)" )
+	GAME( 1987, hnayayoi, 0,        hnayayoi, hnayayoi, 0,        ROT0, "Dyna Electronics", "Hana Yayoi (Japan)" )
+	GAME( 1987, hnfubuki, hnayayoi, hnfubuki, hnfubuki, hnfubuki, ROT0, "Dynax", "Hana Fubuki [BET] (Japan)" )
+	GAME( 1987, untoucha, 0,        untoucha, untoucha, 0,        ROT0, "Dynax", "Untouchable (Japan)" )
 }

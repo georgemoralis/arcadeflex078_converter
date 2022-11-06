@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,16 +12,14 @@ public class ssrj
 	
 	/* tilemap 1 */
 	
-	WRITE_HANDLER(ssrj_vram1_w)
-	{
+	public static WriteHandlerPtr ssrj_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssrj_vram1[offset]=data;
 		tilemap_mark_tile_dirty(tilemap1,offset>>1);
-	}
+	} };
 	
-	READ_HANDLER(ssrj_vram1_r)
-	{
+	public static ReadHandlerPtr ssrj_vram1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ssrj_vram1[offset];
-	}
+	} };
 	
 	static void get_tile_info1(int tile_index)
 	{
@@ -36,16 +34,14 @@ public class ssrj
 	
 	/* tilemap 2 */
 	
-	WRITE_HANDLER(ssrj_vram2_w)
-	{
+	public static WriteHandlerPtr ssrj_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssrj_vram2[offset]=data;
 		tilemap_mark_tile_dirty(tilemap2,offset>>1);
-	}
+	} };
 	
-	READ_HANDLER(ssrj_vram2_r)
-	{
+	public static ReadHandlerPtr ssrj_vram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ssrj_vram2[offset];
-	}
+	} };
 	
 	static void get_tile_info2(int tile_index)
 	{
@@ -60,16 +56,14 @@ public class ssrj
 	
 	/* tilemap 4 */
 	
-	WRITE_HANDLER(ssrj_vram4_w)
-	{
+	public static WriteHandlerPtr ssrj_vram4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ssrj_vram4[offset]=data;
 		tilemap_mark_tile_dirty(tilemap4,offset>>1);
-	}
+	} };
 	
-	READ_HANDLER(ssrj_vram4_r)
-	{
+	public static ReadHandlerPtr ssrj_vram4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ssrj_vram4[offset];
-	}
+	} };
 	
 	static void get_tile_info4(int tile_index)
 	{
@@ -237,8 +231,7 @@ public class ssrj
 	
 	};
 	
-	public static VideoStartHandlerPtr video_start_ssrj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ssrj  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap1 = tilemap_create( get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap2 = tilemap_create( get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
 		tilemap4 = tilemap_create( get_tile_info4,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
@@ -264,7 +257,7 @@ public class ssrj
 			int code;
 			code=ssrj_vram3[(i*5+k)*64+(31-j)*2]+256*ssrj_vram3[(i*5+k)*64+(31-j)*2+1];
 			drawgfx(bitmap,
-				Machine.gfx[0], 
+				Machine->gfx[0], 
 				code&1023,
 				((code>>12)&0x3)+8,
 				code&0x8000,
@@ -278,16 +271,14 @@ public class ssrj
 	}
 	
 	
-	public static PaletteInitHandlerPtr palette_init_ssrj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ssrj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,j;
 		for(i=0;i<4*4;i++)
 		 for(j=0;j<8;j++)
 		  palette_set_color(i*8+j,fakecols[i][j][0],fakecols[i][j][1],fakecols[i][j][2]);	
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ssrj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(tilemap1 , 0, 0xff-ssrj_scrollram[2] );
 		tilemap_set_scrollx(tilemap1 , 0, ssrj_scrollram[0] );
 		tilemap_draw(bitmap,cliprect,tilemap1, 0,0);

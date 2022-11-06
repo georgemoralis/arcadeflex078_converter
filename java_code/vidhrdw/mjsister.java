@@ -9,7 +9,7 @@ Video hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class mjsister
 	
 	/****************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mjsister  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mjsister  = new VideoStartHandlerPtr() { public int handler(){
 		if ((mjsister_tmpbitmap0 = bitmap_alloc(256,256)) == 0)
 			return 1;
 		if ((mjsister_tmpbitmap1 = bitmap_alloc(256,256)) == 0)
@@ -52,8 +51,8 @@ public class mjsister
 		c1 = (data & 0x0f)        + colorbank * 0x20;
 		c2 = ((data & 0xf0) >> 4) + colorbank * 0x20;
 	
-		plot_pixel(mjsister_tmpbitmap0, x*2,   y, Machine.pens[c1] );
-		plot_pixel(mjsister_tmpbitmap0, x*2+1, y, Machine.pens[c2] );
+		plot_pixel(mjsister_tmpbitmap0, x*2,   y, Machine->pens[c1] );
+		plot_pixel(mjsister_tmpbitmap0, x*2+1, y, Machine->pens[c2] );
 	}
 	
 	void mjsister_plot1(int offset,unsigned char data)
@@ -66,53 +65,51 @@ public class mjsister
 		c1 = data & 0x0f;
 		c2 = (data & 0xf0) >> 4;
 	
-		if (c1 != 0)
+		if (c1)
 			c1 += colorbank * 0x20 + 0x10;
-		if (c2 != 0)
+		if (c2)
 			c2 += colorbank * 0x20 + 0x10;
 	
-		plot_pixel(mjsister_tmpbitmap1, x*2,   y, Machine.pens[c1] );
-		plot_pixel(mjsister_tmpbitmap1, x*2+1, y, Machine.pens[c2] );
+		plot_pixel(mjsister_tmpbitmap1, x*2,   y, Machine->pens[c1] );
+		plot_pixel(mjsister_tmpbitmap1, x*2+1, y, Machine->pens[c2] );
 	}
 	
-	public static WriteHandlerPtr mjsister_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (vrambank != 0)
+	public static WriteHandlerPtr mjsister_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (vrambank)
 		{
-			mjsister_videoram1.write(data,data);
+			mjsister_videoram1[offset] = data;
 			mjsister_plot1(offset,data);
 		}
 		else
 		{
-			mjsister_videoram0.write(data,data);
+			mjsister_videoram0[offset] = data;
 			mjsister_plot0(offset,data);
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mjsister  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int f = mjsister_flip_screen;
 		int i,j;
 	
-		if (mjsister_screen_redraw != 0)
+		if (mjsister_screen_redraw)
 		{
 			int offs;
 	
 			for (offs=0; offs<0x8000; offs++)
 			{
-				mjsister_plot0(offs,mjsister_videoram0.read(offs));
-				mjsister_plot1(offs,mjsister_videoram1.read(offs));
+				mjsister_plot0(offs,mjsister_videoram0[offs]);
+				mjsister_plot1(offs,mjsister_videoram1[offs]);
 			}
 	
 			mjsister_screen_redraw = 0;
 		}
 	
-		if (mjsister_video_enable != 0)
+		if (mjsister_video_enable)
 		{
 			for (i=0; i<256; i++)
 			{
 				for (j=0; j<4; j++)
-					plot_pixel.handler(bitmap, 256+j, i, Machine.pens[colorbank * 0x20] );
+					plot_pixel(bitmap, 256+j, i, Machine.pens[colorbank * 0x20] );
 			}
 	
 			copybitmap(bitmap,mjsister_tmpbitmap0,f,f,0,0,cliprect,TRANSPARENCY_NONE,0);

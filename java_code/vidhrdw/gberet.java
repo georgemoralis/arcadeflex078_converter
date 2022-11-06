@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class gberet
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_gberet  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gberet  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -95,10 +94,10 @@ public class gberet
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = gberet_colorram.read(tile_index);
+		unsigned char attr = gberet_colorram[tile_index];
 		SET_TILE_INFO(
 				0,
-				gberet_videoram.read(tile_index)+ ((attr & 0x40) << 2),
+				gberet_videoram[tile_index] + ((attr & 0x40) << 2),
 				attr & 0x0f,
 				TILE_FLIPYX((attr & 0x30) >> 4))
 		tile_info.priority = (attr & 0x80) >> 7;
@@ -112,11 +111,10 @@ public class gberet
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gberet  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gberet  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 0;
 	
 		tilemap_set_transparent_pen(bg_tilemap,0x10);
@@ -133,26 +131,23 @@ public class gberet
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr gberet_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (gberet_videoram.read(offset)!= data)
+	public static WriteHandlerPtr gberet_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (gberet_videoram[offset] != data)
 		{
-			gberet_videoram.write(data,data);
+			gberet_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr gberet_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (gberet_colorram.read(offset)!= data)
+	public static WriteHandlerPtr gberet_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (gberet_colorram[offset] != data)
 		{
-			gberet_colorram.write(data,data);
+			gberet_colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr gberet_e044_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gberet_e044_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 enables interrupts */
 		interruptenable = data & 1;
 	
@@ -163,8 +158,7 @@ public class gberet
 		/* don't know about the other bits */
 	} };
 	
-	public static WriteHandlerPtr gberet_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gberet_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int scroll;
 	
 		gberet_scrollram[offset] = data;
@@ -173,25 +167,23 @@ public class gberet
 		tilemap_set_scrollx(bg_tilemap,offset & 0x1f,scroll);
 	} };
 	
-	public static WriteHandlerPtr gberetb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gberetb_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int scroll;
 	
 		scroll = data;
-		if (offset != 0) scroll |= 0x100;
+		if (offset) scroll |= 0x100;
 	
 		for (offset = 6;offset < 29;offset++)
 			tilemap_set_scrollx(bg_tilemap,offset,scroll + 64-8);
 	} };
 	
 	
-	public static InterruptHandlerPtr gberet_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gberet_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if (cpu_getiloops() % 2)
 		{
-			if (interruptenable != 0)
+			if (interruptenable)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
@@ -225,7 +217,7 @@ public class gberet
 				flipx = sr[offs+1] & 0x10;
 				flipy = sr[offs+1] & 0x20;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -233,7 +225,7 @@ public class gberet
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						sr[offs+0] + ((sr[offs+1] & 0x40) << 2),
 						sr[offs+1] & 0x0f,
 						flipx,flipy,
@@ -263,7 +255,7 @@ public class gberet
 				flipx = sr[offs+3] & 0x10;
 				flipy = sr[offs+3] & 0x20;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -271,7 +263,7 @@ public class gberet
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						sr[offs+0] + ((sr[offs+3] & 0x40) << 2),
 						sr[offs+3] & 0x0f,
 						flipx,flipy,
@@ -282,16 +274,14 @@ public class gberet
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gberet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gberet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_gberetb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gberetb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|0,0);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_IGNORE_TRANSPARENCY|1,0);
 		draw_sprites_bootleg(bitmap,cliprect);

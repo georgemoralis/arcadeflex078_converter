@@ -60,7 +60,7 @@ bottom line of the screen
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -156,8 +156,7 @@ public class stactics
 	static int firebeam_state;
 	static int old_firebeam_state;
 	
-	public static PaletteInitHandlerPtr palette_init_stactics  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_stactics  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	    int i,j;
 	
 	    #define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -229,8 +228,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_stactics  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stactics  = new VideoStartHandlerPtr() { public int handler(){
 	    int i,j;
 	    const unsigned char *firebeam_data;
 	    unsigned char firechar[256*8*9];
@@ -334,8 +332,7 @@ public class stactics
 	} };
 	
 	
-	public static WriteHandlerPtr stactics_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int old_palette_select = palette_select;
 	
 	    switch (offset)
@@ -361,8 +358,7 @@ public class stactics
 	} };
 	
 	
-	public static WriteHandlerPtr stactics_scroll_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_scroll_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int temp;
 	
 	    if (stactics_scroll_ram[offset] != data)
@@ -373,19 +369,19 @@ public class stactics
 	        {
 	            case 4:  // Page D
 	            {
-	                if ((data & 0x01) != 0)
+	                if (data&0x01)
 	                    d_offset = offset&0xff;
 	                break;
 	            }
 	            case 5:  // Page E
 	            {
-	                if ((data & 0x01) != 0)
+	                if (data&0x01)
 	                    e_offset = offset&0xff;
 	                break;
 	            }
 	            case 6:  // Page F
 	            {
-	                if ((data & 0x01) != 0)
+	                if (data&0x01)
 	                    f_offset = offset&0xff;
 	                break;
 	            }
@@ -393,8 +389,7 @@ public class stactics
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_speed_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_speed_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* This writes to a shift register which is clocked by   */
 	    /* a 555 oscillator.  This value determines the speed of */
 	    /* the LED fire beams as follows:                        */
@@ -417,27 +412,23 @@ public class stactics
 	    states_per_frame = num_rising_edges*19/8;
 	} };
 	
-	public static WriteHandlerPtr stactics_shot_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_shot_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    stactics_shot_standby = 0;
 	} };
 	
-	public static WriteHandlerPtr stactics_shot_flag_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_shot_flag_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    stactics_shot_arrive = 0;
 	} };
 	
-	public static WriteHandlerPtr stactics_videoram_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if (stactics_videoram_b.read(offset)!= data)
+	public static WriteHandlerPtr stactics_videoram_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (stactics_videoram_b[offset] != data)
 	    {
-	        stactics_videoram_b.write(data,data);
-	        dirty_videoram_b.write(1,1);
+	        stactics_videoram_b[offset] = data;
+	        dirty_videoram_b[offset] = 1;
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_chardata_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_chardata_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (stactics_chardata_b[offset] != data)
 	    {
 	        stactics_chardata_b[offset] = data;
@@ -445,17 +436,15 @@ public class stactics
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_videoram_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if (stactics_videoram_d.read(offset)!= data)
+	public static WriteHandlerPtr stactics_videoram_d_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (stactics_videoram_d[offset] != data)
 	    {
-	        stactics_videoram_d.write(data,data);
-	        dirty_videoram_d.write(1,1);
+	        stactics_videoram_d[offset] = data;
+	        dirty_videoram_d[offset] = 1;
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_chardata_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_chardata_d_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (stactics_chardata_d[offset] != data)
 	    {
 	        stactics_chardata_d[offset] = data;
@@ -463,17 +452,15 @@ public class stactics
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_videoram_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if (stactics_videoram_e.read(offset)!= data)
+	public static WriteHandlerPtr stactics_videoram_e_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (stactics_videoram_e[offset] != data)
 	    {
-	        stactics_videoram_e.write(data,data);
-	        dirty_videoram_e.write(1,1);
+	        stactics_videoram_e[offset] = data;
+	        dirty_videoram_e[offset] = 1;
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_chardata_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_chardata_e_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (stactics_chardata_e[offset] != data)
 	    {
 	        stactics_chardata_e[offset] = data;
@@ -481,17 +468,15 @@ public class stactics
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_videoram_f_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if (stactics_videoram_f.read(offset)!= data)
+	public static WriteHandlerPtr stactics_videoram_f_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (stactics_videoram_f[offset] != data)
 	    {
-	        stactics_videoram_f.write(data,data);
-	        dirty_videoram_f.write(1,1);
+	        stactics_videoram_f[offset] = data;
+	        dirty_videoram_f[offset] = 1;
 	    }
 	} };
 	
-	public static WriteHandlerPtr stactics_chardata_f_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stactics_chardata_f_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if (stactics_chardata_f[offset] != data)
 	    {
 	        stactics_chardata_f[offset] = data;
@@ -512,8 +497,7 @@ public class stactics
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_stactics  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    int offs, sx, sy, i;
 	    int char_number;
 	    int color_code;
@@ -526,11 +510,11 @@ public class stactics
 	        sx = offs%32;
 	        sy = offs/32;
 	
-	        color_code = palette_offset + (stactics_videoram_b.read(offs)>>4);
+	        color_code = palette_offset + (stactics_videoram_b[offs]>>4);
 	
 	        /* Draw aliens in Page D */
 	
-	        char_number = stactics_videoram_d.read(offs);
+	        char_number = stactics_videoram_d[offs];
 	
 	        if (dirty_chardata_d[char_number] == 1)
 	        {
@@ -539,14 +523,14 @@ public class stactics
 	                       stactics_chardata_d,
 	                       Machine.drv.gfxdecodeinfo[3].gfxlayout);
 	            dirty_chardata_d[char_number] = 2;
-	            dirty_videoram_d.write(1,1);
+	            dirty_videoram_d[offs] = 1;
 	        }
 	        else if (dirty_chardata_d[char_number] == 2)
 	        {
-	            dirty_videoram_d.write(1,1);
+	            dirty_videoram_d[offs] = 1;
 	        }
 	
-	        if (dirty_videoram_d.read(offs))
+	        if (dirty_videoram_d[offs])
 	        {
 	            drawgfx(bitmap_D,Machine.gfx[3],
 	                    char_number,
@@ -554,12 +538,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_d.write(0,0);
+	            dirty_videoram_d[offs] = 0;
 	        }
 	
 	        /* Draw aliens in Page E */
 	
-	        char_number = stactics_videoram_e.read(offs);
+	        char_number = stactics_videoram_e[offs];
 	
 	        if (dirty_chardata_e[char_number] == 1)
 	        {
@@ -568,14 +552,14 @@ public class stactics
 	                       stactics_chardata_e,
 	                       Machine.drv.gfxdecodeinfo[2].gfxlayout);
 	            dirty_chardata_e[char_number] = 2;
-	            dirty_videoram_e.write(1,1);
+	            dirty_videoram_e[offs] = 1;
 	        }
 	        else if (dirty_chardata_e[char_number] == 2)
 	        {
-	            dirty_videoram_e.write(1,1);
+	            dirty_videoram_e[offs] = 1;
 	        }
 	
-	        if (dirty_videoram_e.read(offs))
+	        if (dirty_videoram_e[offs])
 	        {
 	            drawgfx(bitmap_E,Machine.gfx[2],
 	                    char_number,
@@ -583,12 +567,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_e.write(0,0);
+	            dirty_videoram_e[offs] = 0;
 	        }
 	
 	        /* Draw aliens in Page F */
 	
-	        char_number = stactics_videoram_f.read(offs);
+	        char_number = stactics_videoram_f[offs];
 	
 	        if (dirty_chardata_f[char_number] == 1)
 	        {
@@ -597,14 +581,14 @@ public class stactics
 	                       stactics_chardata_f,
 	                       Machine.drv.gfxdecodeinfo[1].gfxlayout);
 	            dirty_chardata_f[char_number] = 2;
-	            dirty_videoram_f.write(1,1);
+	            dirty_videoram_f[offs] = 1;
 	        }
 	        else if (dirty_chardata_f[char_number] == 2)
 	        {
-	            dirty_videoram_f.write(1,1);
+	            dirty_videoram_f[offs] = 1;
 	        }
 	
-	        if (dirty_videoram_f.read(offs))
+	        if (dirty_videoram_f[offs])
 	        {
 	            drawgfx(bitmap_F,Machine.gfx[1],
 	                    char_number,
@@ -612,12 +596,12 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_f.write(0,0);
+	            dirty_videoram_f[offs] = 0;
 	        }
 	
 	        /* Draw the page B stuff */
 	
-	        char_number = stactics_videoram_b.read(offs);
+	        char_number = stactics_videoram_b[offs];
 	
 	        if (dirty_chardata_b[char_number] == 1)
 	        {
@@ -626,14 +610,14 @@ public class stactics
 	                       stactics_chardata_b,
 	                       Machine.drv.gfxdecodeinfo[0].gfxlayout);
 	            dirty_chardata_b[char_number] = 2;
-	            dirty_videoram_b.write(1,1);
+	            dirty_videoram_b[offs] = 1;
 	        }
 	        else if (dirty_chardata_b[char_number] == 2)
 	        {
-	            dirty_videoram_b.write(1,1);
+	            dirty_videoram_b[offs] = 1;
 	        }
 	
-	        if (dirty_videoram_b.read(offs))
+	        if (dirty_videoram_b[offs])
 	        {
 	            drawgfx(bitmap_B,Machine.gfx[0],
 	                    char_number,
@@ -641,7 +625,7 @@ public class stactics
 	                    0,0,
 	                    sx*8,sy*8,
 	                    Machine.visible_area,TRANSPARENCY_NONE,0);
-	            dirty_videoram_b.write(0,0);
+	            dirty_videoram_b[offs] = 0;
 	        }
 	
 	    }

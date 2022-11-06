@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,17 +39,14 @@ public class dlair
 	
 	static int led0,led1;
 	
-	public static WriteHandlerPtr dlair_led0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dlair_led0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		led0 = data;
 	} };
-	public static WriteHandlerPtr dlair_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dlair_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		led1 = data;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_dlair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dlair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -81,7 +78,7 @@ public class dlair
 		/* copy the character mapped graphics */
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	
-	if ((led0 & 128) != 0)
+	if (led0 & 128)
 	{
 	if ((led0 & 1) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
 		8,0,Machine.visible_area,TRANSPARENCY_NONE,0);
@@ -98,7 +95,7 @@ public class dlair
 	if ((led0 & 64) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
 		8,16,Machine.visible_area,TRANSPARENCY_NONE,0);
 	}
-	if ((led1 & 128) != 0)
+	if (led1 & 128)
 	{
 	if ((led1 & 1) == 0) drawgfx(bitmap,Machine.uifont,'x',0,0,0,
 		32+8,0,Machine.visible_area,TRANSPARENCY_NONE,0);
@@ -137,10 +134,9 @@ public class dlair
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_dlair  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_dlair  = new MachineInitHandlerPtr() { public void handler(){
 	   /* initialize the CTC */
-	   ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
+	   ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
 	   z80ctc_init(&ctc_intf);
 	} };
 	
@@ -166,13 +162,11 @@ public class dlair
 	};
 	
 	static unsigned char pip[4];
-	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pip_r  = new ReadHandlerPtr() { public int handler(int offset){
 	logerror("PC %04x: read I/O port %02x\n",activecpu_get_pc(),offset);
 		return pip[offset];
 	} };
-	public static WriteHandlerPtr pip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("PC %04x: write %02x to I/O port %02x\n",activecpu_get_pc(),data,offset);
 		pip[offset] = data;
 	z80ctc_0_w(offset,data);
@@ -194,7 +188,7 @@ public class dlair
 	
 	
 	
-	static InputPortPtr input_ports_dlair = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dlair = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dlair )
 		PORT_START(); 
 	INPUT_PORTS_END(); }}; 
 	
@@ -229,8 +223,7 @@ public class dlair
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_dlair = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dlair )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -254,9 +247,7 @@ public class dlair
 		MDRV_VIDEO_UPDATE(dlair)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -279,6 +270,6 @@ public class dlair
 	
 	
 	
-	public static GameDriver driver_dlair	   = new GameDriver("1983"	,"dlair"	,"dlair.java"	,rom_dlair,null	,machine_driver_dlair	,input_ports_dlair	,null	,ROT0	,	"Cinematronics", "Dragon's Lair", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1983, dlair, 0, dlair, dlair, 0, ROT0, "Cinematronics", "Dragon's Lair", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 }

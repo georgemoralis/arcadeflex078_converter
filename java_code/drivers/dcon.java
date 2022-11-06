@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -106,7 +106,7 @@ public class dcon
 		PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_UNKNOWN );\
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-	static InputPortPtr input_ports_dcon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dcon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dcon )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -164,7 +164,7 @@ public class dcon
 		DCON_SYSTEM
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sdgndmps = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sdgndmps = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sdgndmps )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -279,8 +279,7 @@ public class dcon
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(4000000,8000,REGION_SOUND1);
 	SEIBU_SOUND_SYSTEM_YM2151_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	public static MachineHandlerPtr machine_driver_dcon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dcon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -305,12 +304,9 @@ public class dcon
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sdgndmps = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sdgndmps )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -335,9 +331,7 @@ public class dcon
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2151_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -412,10 +406,9 @@ public class dcon
 	ROM_END(); }}; 
 	
 	/***************************************************************************/
-	public static DriverInitHandlerPtr init_sdgndmps  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sdgndmps  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
-		RAM[0x1356/2] = 0x4e71; /* beq . nop */
+		RAM[0x1356/2] = 0x4e71; /* beq -> nop */
 		RAM[0x1358/2] = 0x4e71;
 		
 		RAM[0x4de/2]  = 0x4245; /* ROM checksum */
@@ -424,6 +417,6 @@ public class dcon
 	} };
 	
 	
-	public static GameDriver driver_sdgndmps	   = new GameDriver("1991"	,"sdgndmps"	,"dcon.java"	,rom_sdgndmps,null	,machine_driver_sdgndmps	,input_ports_sdgndmps	,init_sdgndmps	,ROT0	,	"Banpresto / Bandai", "SD Gundam Psycho Salamander no Kyoui", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dcon	   = new GameDriver("1992"	,"dcon"	,"dcon.java"	,rom_dcon,null	,machine_driver_dcon	,input_ports_dcon	,null	,ROT0	,	"Success",            "D-Con", GAME_NO_COCKTAIL )
+	GAMEX( 1991, sdgndmps, 0, sdgndmps, sdgndmps, sdgndmps, ROT0, "Banpresto / Bandai", "SD Gundam Psycho Salamander no Kyoui", GAME_NO_COCKTAIL )
+	GAMEX( 1992, dcon,     0, dcon,     dcon,     0, ROT0, "Success",            "D-Con", GAME_NO_COCKTAIL )
 }

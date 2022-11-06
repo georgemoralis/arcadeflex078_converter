@@ -18,7 +18,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -44,8 +44,7 @@ public class ultratnk
 		0x02, 0x01
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_ultratnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ultratnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		palette_set_color(2,0x80,0x80,0x80); /* LT GREY */
@@ -71,37 +70,37 @@ public class ultratnk
 			into a wall, or firing
 		*/
 		{
-			drawgfx( bitmap, Machine.gfx[1], /* tank */
+			drawgfx( bitmap, Machine->gfx[1], /* tank */
 				pMem[0x99]>>3,
 				0,
 				0,0, /* no flip */
 				pMem[0x90]-16,pMem[0x98]-16,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0 );
 	
-			drawgfx( bitmap, Machine.gfx[1], /* tank */
+			drawgfx( bitmap, Machine->gfx[1], /* tank */
 				pMem[0x9b]>>3,
 				1,
 				0,0, /* no flip */
 				pMem[0x92]-16,pMem[0x9a]-16,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0 );
 		}
 	
-		drawgfx( bitmap, Machine.gfx[1], /* bullet */
+		drawgfx( bitmap, Machine->gfx[1], /* bullet */
 			(pMem[0x9f]>>3)|0x20,
 			0,
 			0,0, /* no flip */
 			pMem[0x96]-16,pMem[0x9e]-16,
-			Machine.visible_area,
+			Machine->visible_area,
 			TRANSPARENCY_PEN, 0 );
 	
-		drawgfx( bitmap, Machine.gfx[1], /* bullet */
+		drawgfx( bitmap, Machine->gfx[1], /* bullet */
 			(pMem[0x9d]>>3)|0x20,
 			1,
 			0,0, /* no flip */
 			pMem[0x94]-16,pMem[0x9c]-16,
-			Machine.visible_area,
+			Machine->visible_area,
 			TRANSPARENCY_PEN, 0 );
 	}
 	
@@ -113,8 +112,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr ultratnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ultratnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -131,19 +129,17 @@ public class ultratnk
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_ultratnk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ultratnk  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ultratnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ultratnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		ultratnk_draw_sprites(bitmap);
 	
@@ -158,46 +154,42 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr da_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int joybits = readinputport(4);
 		ultratnk_controls = readinputport(3); /* start and fire buttons */
 	
 		switch( data )
 		{
 		case 0x0a:
-			if ((joybits & 0x08) != 0) ultratnk_controls &= ~0x40;
-			if ((joybits & 0x04) != 0) ultratnk_controls &= ~0x04;
+			if( joybits&0x08 ) ultratnk_controls &= ~0x40;
+			if( joybits&0x04 ) ultratnk_controls &= ~0x04;
 	
-			if ((joybits & 0x80) != 0) ultratnk_controls &= ~0x10;
-			if ((joybits & 0x40) != 0) ultratnk_controls &= ~0x01;
+			if( joybits&0x80 ) ultratnk_controls &= ~0x10;
+			if( joybits&0x40 ) ultratnk_controls &= ~0x01;
 			break;
 	
 		case 0x05:
-			if ((joybits & 0x02) != 0) ultratnk_controls &= ~0x40;
-			if ((joybits & 0x01) != 0) ultratnk_controls &= ~0x04;
+			if( joybits&0x02 ) ultratnk_controls &= ~0x40;
+			if( joybits&0x01 ) ultratnk_controls &= ~0x04;
 	
-			if ((joybits & 0x20) != 0) ultratnk_controls &= ~0x10;
-			if ((joybits & 0x10) != 0) ultratnk_controls &= ~0x01;
+			if( joybits&0x20 ) ultratnk_controls &= ~0x10;
+			if( joybits&0x10 ) ultratnk_controls &= ~0x01;
 			break;
 		}
 	} };
 	
 	
-	public static ReadHandlerPtr ultratnk_controls_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_controls_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (ultratnk_controls << offset) & 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr ultratnk_barrier_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_barrier_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2) & 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr ultratnk_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset & 0x06)
 		{
 			case 0x00: return (readinputport(2) << 3) & 0x80;	/* left coin */
@@ -210,14 +202,12 @@ public class ultratnk
 	} };
 	
 	
-	public static ReadHandlerPtr ultratnk_tilt_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_tilt_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(2) << 5) & 0x80;	/* tilt */
 	} };
 	
 	
-	public static ReadHandlerPtr ultratnk_dipsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_dipsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int dipsw = readinputport(0);
 		switch( offset )
 		{
@@ -236,18 +226,15 @@ public class ultratnk
 	 *	Sound handlers
 	 *
 	 *************************************/
-	public static WriteHandlerPtr ultratnk_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ultratnk_fire_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(offset/2, offset&1);
 	} };
 	
-	public static WriteHandlerPtr ultratnk_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ultratnk_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(5, (data & 1));
 	} };
 	
-	public static WriteHandlerPtr ultratnk_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ultratnk_explosion_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(4, data % 16);
 	} };
 	
@@ -259,8 +246,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr ultratnk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ultratnk_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(1) & 0x40 )
 		{
 			/* only do NMI interrupt if not in TEST mode */
@@ -276,8 +262,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr ultratnk_collision_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ultratnk_collision_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/**	Note: hardware collision detection is not emulated.
 		 *	However, the game is fully playable, since the game software uses it
 		 *	only as a hint to check for tanks bumping into walls/mines.
@@ -291,20 +276,17 @@ public class ultratnk
 	} };
 	
 	
-	public static WriteHandlerPtr ultratnk_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ultratnk_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset/2,offset&1);
 	} };
 	
 	
-	public static ReadHandlerPtr mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mirror_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mirror_ram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mirror_ram[offset] = data;
 	} };
 	
@@ -363,7 +345,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_ultratnk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ultratnk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ultratnk )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, "Extended Play" );
 		PORT_DIPSETTING(	0x01, "25 Points" );
@@ -644,8 +626,7 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_ultratnk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ultratnk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1500000)
@@ -669,9 +650,7 @@ public class ultratnk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, ultratnk_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -709,5 +688,5 @@ public class ultratnk
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_ultratnk	   = new GameDriver("1978"	,"ultratnk"	,"ultratnk.java"	,rom_ultratnk,null	,machine_driver_ultratnk	,input_ports_ultratnk	,null	,0	,	"Atari", "Ultra Tank" )
+	GAME( 1978, ultratnk, 0, ultratnk, ultratnk, 0, 0, "Atari", "Ultra Tank" )
 }

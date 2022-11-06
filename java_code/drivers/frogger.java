@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,7 +73,7 @@ public class frogger
 	
 	
 	
-	static InputPortPtr input_ports_frogger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_frogger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( frogger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* 1P shoot2 - unused */
@@ -126,8 +126,7 @@ public class frogger
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_frogger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( frogger )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -149,9 +148,7 @@ public class frogger
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -220,7 +217,7 @@ public class frogger
 	
 	
 	
-	public static GameDriver driver_frogger	   = new GameDriver("1981"	,"frogger"	,"frogger.java"	,rom_frogger,null	,machine_driver_frogger	,input_ports_frogger	,init_frogger	,ROT90	,	"Konami", "Frogger" )
-	public static GameDriver driver_frogseg1	   = new GameDriver("1981"	,"frogseg1"	,"frogger.java"	,rom_frogseg1,driver_frogger	,machine_driver_frogger	,input_ports_frogger	,init_frogger	,ROT90	,	"[Konami] (Sega license)", "Frogger (Sega set 1)" )
-	public static GameDriver driver_frogseg2	   = new GameDriver("1981"	,"frogseg2"	,"frogger.java"	,rom_frogseg2,driver_frogger	,machine_driver_frogger	,input_ports_frogger	,init_frogger	,ROT90	,	"[Konami] (Sega license)", "Frogger (Sega set 2)" )
+	GAME( 1981, frogger,  0,	   frogger,  frogger,  frogger,  ROT90, "Konami", "Frogger" )
+	GAME( 1981, frogseg1, frogger, frogger,  frogger,  frogger,  ROT90, "[Konami] (Sega license)", "Frogger (Sega set 1)" )
+	GAME( 1981, frogseg2, frogger, frogger,  frogger,  frogger,  ROT90, "[Konami] (Sega license)", "Frogger (Sega set 2)" )
 }

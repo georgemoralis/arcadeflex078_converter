@@ -38,7 +38,7 @@ The 2 ay-8910 read ports are responsible for reading the sound commands.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,16 +50,14 @@ public class jack
 	
 	static int timer_rate;
 	
-	public static ReadHandlerPtr timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* wrong! there should be no need for timer_rate, the same function */
 		/* should work for both games */
 		return activecpu_gettotalcycles() / timer_rate;
 	} };
 	
 	
-	public static WriteHandlerPtr jack_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jack_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
@@ -126,7 +124,7 @@ public class jack
 	};
 	
 	
-	static InputPortPtr input_ports_jack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jack )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -194,7 +192,7 @@ public class jack
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'jack', but different coinage */
-	static InputPortPtr input_ports_jack2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jack2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jack2 )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "4C_3C") );
@@ -262,7 +260,7 @@ public class jack
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'jack', but another different coinage */
-	static InputPortPtr input_ports_jack3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jack3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jack3 )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -331,7 +329,7 @@ public class jack
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'jack', but different "Bullets per Bean Collected" and "Difficulty" Dip Switches */
-	static InputPortPtr input_ports_treahunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_treahunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( treahunt )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -398,7 +396,7 @@ public class jack
 		PORT_BIT( 0xfc, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zzyzzyxx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zzyzzyxx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zzyzzyxx )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -470,7 +468,7 @@ public class jack
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_freeze = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_freeze = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( freeze )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Flip_Screen") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -538,7 +536,7 @@ public class jack
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sucasino = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sucasino = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sucasino )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -589,7 +587,7 @@ public class jack
 		PORT_BIT( 0xfe, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tripool = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tripool = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tripool )
 		PORT_START(); 	/* DSW 1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -705,8 +703,7 @@ public class jack
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_jack = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jack )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18000000/6)	/* 3 MHz */
@@ -733,20 +730,15 @@ public class jack
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tripool = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tripool )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(jack)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,2) /* tripool needs 2 or the palette is broken */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -999,7 +991,7 @@ public class jack
 		{
 			data = rom[A];
 	
-			if ((A & 0x1000) != 0)
+			if (A & 0x1000)
 			{
 				/* unencrypted = D0 D2 D5 D1 D3 D6 D4 D7 */
 				rom[A+diff] =
@@ -1029,33 +1021,30 @@ public class jack
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_jack  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jack  = new DriverInitHandlerPtr() { public void handler(){
 		timer_rate = 128;
 	} };
 	
-	public static DriverInitHandlerPtr init_treahunt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_treahunt  = new DriverInitHandlerPtr() { public void handler(){
 		timer_rate = 128;
 		treahunt_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_zzyzzyxx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zzyzzyxx  = new DriverInitHandlerPtr() { public void handler(){
 		timer_rate = 16;
 	} };
 	
 	
 	
-	public static GameDriver driver_jack	   = new GameDriver("1982"	,"jack"	,"jack.java"	,rom_jack,null	,machine_driver_jack	,input_ports_jack	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 1)" )
-	public static GameDriver driver_jack2	   = new GameDriver("1982"	,"jack2"	,"jack.java"	,rom_jack2,driver_jack	,machine_driver_jack	,input_ports_jack2	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 2)" )
-	public static GameDriver driver_jack3	   = new GameDriver("1982"	,"jack3"	,"jack.java"	,rom_jack3,driver_jack	,machine_driver_jack	,input_ports_jack3	,init_jack	,ROT90	,	"Cinematronics", "Jack the Giantkiller (set 3)" )
-	public static GameDriver driver_treahunt	   = new GameDriver("1982"	,"treahunt"	,"jack.java"	,rom_treahunt,driver_jack	,machine_driver_jack	,input_ports_treahunt	,init_treahunt	,ROT90	,	"Hara Industries", "Treasure Hunt (Japan?)" )
-	public static GameDriver driver_zzyzzyxx	   = new GameDriver("1982"	,"zzyzzyxx"	,"jack.java"	,rom_zzyzzyxx,null	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 1)" )
-	public static GameDriver driver_zzyzzyx2	   = new GameDriver("1982"	,"zzyzzyx2"	,"jack.java"	,rom_zzyzzyx2,driver_zzyzzyxx	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 2)" )
-	public static GameDriver driver_brix	   = new GameDriver("1982"	,"brix"	,"jack.java"	,rom_brix,driver_zzyzzyxx	,machine_driver_jack	,input_ports_zzyzzyxx	,init_zzyzzyxx	,ROT90	,	"Cinematronics + Advanced Microcomputer Systems", "Brix" )
-	public static GameDriver driver_freeze	   = new GameDriver("1984"	,"freeze"	,"jack.java"	,rom_freeze,null	,machine_driver_jack	,input_ports_freeze	,init_jack	,ROT90	,	"Cinematronics", "Freeze" )
-	public static GameDriver driver_sucasino	   = new GameDriver("1984"	,"sucasino"	,"jack.java"	,rom_sucasino,null	,machine_driver_jack	,input_ports_sucasino	,init_jack	,ROT90	,	"Data Amusement", "Super Casino" )
-	public static GameDriver driver_tripool	   = new GameDriver("1981"	,"tripool"	,"jack.java"	,rom_tripool,null	,machine_driver_tripool	,input_ports_tripool	,init_jack	,ROT90	,	"Noma (Casino Tech license)", "Tri-Pool (Casino Tech)" )
-	public static GameDriver driver_tripoola	   = new GameDriver("1981"	,"tripoola"	,"jack.java"	,rom_tripoola,driver_tripool	,machine_driver_tripool	,input_ports_tripool	,init_jack	,ROT90	,	"Noma (Costal Games license)", "Tri-Pool (Costal Games)" )
+	GAME( 1982, jack,     0,        jack, jack,     jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 1)" )
+	GAME( 1982, jack2,    jack,     jack, jack2,    jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 2)" )
+	GAME( 1982, jack3,    jack,     jack, jack3,    jack,     ROT90, "Cinematronics", "Jack the Giantkiller (set 3)" )
+	GAME( 1982, treahunt, jack,     jack, treahunt, treahunt, ROT90, "Hara Industries", "Treasure Hunt (Japan?)" )
+	GAME( 1982, zzyzzyxx, 0,        jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 1)" )
+	GAME( 1982, zzyzzyx2, zzyzzyxx, jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Zzyzzyxx (set 2)" )
+	GAME( 1982, brix,     zzyzzyxx, jack, zzyzzyxx, zzyzzyxx, ROT90, "Cinematronics + Advanced Microcomputer Systems", "Brix" )
+	GAME( 1984, freeze,   0,        jack, freeze,   jack,     ROT90, "Cinematronics", "Freeze" )
+	GAME( 1984, sucasino, 0,        jack, sucasino, jack,     ROT90, "Data Amusement", "Super Casino" )
+	GAME( 1981, tripool,  0,        tripool, tripool,  jack,     ROT90, "Noma (Casino Tech license)", "Tri-Pool (Casino Tech)" )
+	GAME( 1981, tripoola, tripool,  tripool, tripool,  jack,     ROT90, "Noma (Costal Games license)", "Tri-Pool (Costal Games)" )
 }

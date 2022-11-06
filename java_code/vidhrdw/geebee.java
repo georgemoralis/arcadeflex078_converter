@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -53,8 +53,7 @@ public class geebee
 	};
 	
 	
-	public static VideoStartHandlerPtr video_start_geebee  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_geebee  = new VideoStartHandlerPtr() { public int handler(){
 		if( video_start_generic.handler() )
 			return 1;
 	
@@ -64,8 +63,7 @@ public class geebee
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_navalone  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_navalone  = new VideoStartHandlerPtr() { public int handler(){
 		if( video_start_generic.handler() )
 			return 1;
 	
@@ -74,8 +72,7 @@ public class geebee
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sos  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sos  = new VideoStartHandlerPtr() { public int handler(){
 		if( video_start_generic.handler() )
 			return 1;
 	
@@ -84,8 +81,7 @@ public class geebee
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_kaitei  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kaitei  = new VideoStartHandlerPtr() { public int handler(){
 		if( video_start_generic.handler() )
 		return 1;
 	
@@ -95,8 +91,7 @@ public class geebee
 	} };
 	
 	/* Initialise the palette */
-	public static PaletteInitHandlerPtr palette_init_geebee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_geebee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0; i < sizeof(geebee_palette)/3; i++)
 			palette_set_color(i,geebee_palette[i*3+0],geebee_palette[i*3+1],geebee_palette[i*3+2]);
@@ -104,8 +99,7 @@ public class geebee
 	} };
 	
 	/* Initialise the palette */
-	public static PaletteInitHandlerPtr palette_init_navalone  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_navalone  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0; i < sizeof(geebee_palette)/3; i++)
 			palette_set_color(i,geebee_palette[i*3+0],geebee_palette[i*3+1],geebee_palette[i*3+2]);
@@ -115,12 +109,11 @@ public class geebee
 	
 	INLINE void geebee_plot(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int x, int y)
 	{
-		if (x >= cliprect.min_x && x <= cliprect.max_x && y >= cliprect.min_y && y <= cliprect.max_y)
-			plot_pixel(bitmap,x,y,Machine.pens[1]);
+		if (x >= cliprect->min_x && x <= cliprect->max_x && y >= cliprect->min_y && y <= cliprect->max_y)
+			plot_pixel(bitmap,x,y,Machine->pens[1]);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_geebee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	#ifdef MAME_DEBUG
@@ -130,7 +123,7 @@ public class geebee
 	    }
 	#endif
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer, 1, videoram_size[0]);
 	
 		for( offs = 0; offs < videoram_size[0]; offs++ )
@@ -160,7 +153,7 @@ public class geebee
 					sy = 8*my;
 				}
 	
-				if (geebee_inv != 0)
+				if (geebee_inv)
 				{
 					sx = 33*8 - sx;
 					sy = 31*8 - sy;
@@ -176,7 +169,7 @@ public class geebee
 		}
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	
-		if (geebee_ball_on != 0)
+		if( geebee_ball_on )
 		{
 			int x, y;
 	

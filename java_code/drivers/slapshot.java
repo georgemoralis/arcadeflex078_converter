@@ -133,7 +133,7 @@ Region byte at offset 0x031:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -181,8 +181,7 @@ public class slapshot
 	}
 	
 	
-	public static InterruptHandlerPtr slapshot_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr slapshot_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, slapshot_interrupt6);
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	} };
@@ -240,8 +239,7 @@ public class slapshot
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -254,7 +252,7 @@ public class slapshot
 			taitosound_comm_w (0,(data >> 8) & 0xff);
 	
 	#ifdef MAME_DEBUG
-		if ((data & 0xff) != 0)
+		if (data & 0xff)
 			usrintf_showmessage("taito_msb_sound_w to low byte: %04x",data);
 	#endif
 	}
@@ -367,7 +365,7 @@ public class slapshot
 				 INPUT PORTS (DIPs in nvram)
 	***********************************************************/
 	
-	static InputPortPtr input_ports_slapshot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_slapshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( slapshot )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -422,7 +420,7 @@ public class slapshot
 		PORT_BITX(0x10, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_opwolf3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_opwolf3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( opwolf3 )
 		PORT_START();       /* IN0, all bogus */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -560,8 +558,7 @@ public class slapshot
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_slapshot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slapshot )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14346000)	/* 28.6860 MHz / 2 ??? */
@@ -592,12 +589,9 @@ public class slapshot
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_opwolf3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( opwolf3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14346000)	/* 28.6860 MHz / 2 ??? */
@@ -628,9 +622,7 @@ public class slapshot
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610B, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 						DRIVERS
@@ -724,8 +716,7 @@ public class slapshot
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_slapshot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_slapshot  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX2);
 		int size=memory_region_length(REGION_GFX2);
@@ -754,7 +745,7 @@ public class slapshot
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static GameDriver driver_slapshot	   = new GameDriver("1994"	,"slapshot"	,"slapshot.java"	,rom_slapshot,null	,machine_driver_slapshot	,input_ports_slapshot	,init_slapshot	,ROT0	,	"Taito Corporation",         "Slap Shot (Japan)" )
-	public static GameDriver driver_opwolf3	   = new GameDriver("1994"	,"opwolf3"	,"slapshot.java"	,rom_opwolf3,null	,machine_driver_opwolf3	,input_ports_opwolf3	,init_slapshot	,ROT0	,	"Taito Corporation Japan",   "Operation Wolf 3 (World)" )
-	public static GameDriver driver_opwolf3u	   = new GameDriver("1994"	,"opwolf3u"	,"slapshot.java"	,rom_opwolf3u,driver_opwolf3	,machine_driver_opwolf3	,input_ports_opwolf3	,init_slapshot	,ROT0	,	"Taito America Corporation", "Operation Wolf 3 (US)" )
+	GAME( 1994, slapshot, 0,       slapshot, slapshot, slapshot, ROT0, "Taito Corporation",         "Slap Shot (Japan)" )
+	GAME( 1994, opwolf3,  0,       opwolf3,  opwolf3,  slapshot, ROT0, "Taito Corporation Japan",   "Operation Wolf 3 (World)" )
+	GAME( 1994, opwolf3u, opwolf3, opwolf3,  opwolf3,  slapshot, ROT0, "Taito America Corporation", "Operation Wolf 3 (US)" )
 }

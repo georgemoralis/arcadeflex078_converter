@@ -13,7 +13,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,22 +26,20 @@ public class chqflag
 	/* from vidhrdw/chqflag.c */
 	
 	
-	public static InterruptHandlerPtr chqflag_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr chqflag_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
-			if (K051960_is_IRQ_enabled() != 0)
+			if (K051960_is_IRQ_enabled())
 				cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2)
 		{
-			if (K051960_is_NMI_enabled() != 0)
+			if (K051960_is_NMI_enabled())
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
 	
-	public static WriteHandlerPtr chqflag_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chqflag_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -50,10 +48,10 @@ public class chqflag
 		cpu_setbank(4,&RAM[bankaddress]);
 	
 		/* bit 5 = memory bank select */
-		if ((data & 0x20) != 0){
+		if (data & 0x20){
 			memory_set_bankhandler_r (2, 0, paletteram_r);							/* palette */
 			memory_set_bankhandler_w (2, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w);	/* palette */
-			if (K051316_readroms != 0){
+			if (K051316_readroms){
 				memory_set_bankhandler_r (1, 0, K051316_rom_0_r);	/* 051316 #1 (ROM test) */
 				memory_set_bankhandler_w (1, 0, K051316_0_w);		/* 051316 #1 */
 			}
@@ -72,8 +70,7 @@ public class chqflag
 		/* other bits unknown/unused */
 	} };
 	
-	public static WriteHandlerPtr chqflag_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chqflag_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		/* bits 0 & 1 = coin counters */
@@ -93,7 +90,7 @@ public class chqflag
 		/* Bits 3 and 7 are set in night stages, where the background should get darker and */
 		/* the headlight (which have the shadow bit set) become highlights */
 		/* Maybe one of the bits inverts the SHAD line while the other darkens the background. */
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 			palette_set_shadow_factor(1/PALETTE_DEFAULT_SHADOW_FACTOR);
 		else
 			palette_set_shadow_factor(PALETTE_DEFAULT_SHADOW_FACTOR);
@@ -119,13 +116,11 @@ public class chqflag
 	
 	static int analog_ctrl;
 	
-	public static WriteHandlerPtr select_analog_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr select_analog_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		analog_ctrl = data;
 	} };
 	
-	public static ReadHandlerPtr analog_read_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr analog_read_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int accel, wheel;
 	
 		switch (analog_ctrl & 0x03){
@@ -138,8 +133,7 @@ public class chqflag
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr chqflag_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chqflag_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,0,HOLD_LINE);
 	} };
 	
@@ -201,8 +195,7 @@ public class chqflag
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr k007232_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k007232_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_A, bank_B;
 	
 		/* banks # for the 007232 (chip 1) */
@@ -232,7 +225,7 @@ public class chqflag
 	};
 	
 	
-	static InputPortPtr input_ports_chqflag = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chqflag = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chqflag )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -352,8 +345,7 @@ public class chqflag
 		K007232_set_volume(0,1,0,(v >> 4)*0x11);
 	}
 	
-	public static WriteHandlerPtr k007232_extvolume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k007232_extvolume_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007232_set_volume(1,1,(data & 0x0f)*0x11/2,(data >> 4)*0x11/2);
 	} };
 	
@@ -372,8 +364,7 @@ public class chqflag
 		{ volume_callback0,  volume_callback1 }						/* external port callback */
 	};
 	
-	public static MachineHandlerPtr machine_driver_chqflag = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chqflag )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI,3000000)	/* 052001 */
@@ -401,9 +392,7 @@ public class chqflag
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -469,14 +458,13 @@ public class chqflag
 	
 	
 	
-	public static DriverInitHandlerPtr init_chqflag  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chqflag  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_rom_deinterleave_2(REGION_GFX1);
 		paletteram = &RAM[0x58000];
 	} };
 	
-	public static GameDriver driver_chqflag	   = new GameDriver("1988"	,"chqflag"	,"chqflag.java"	,rom_chqflag,null	,machine_driver_chqflag	,input_ports_chqflag	,init_chqflag	,ROT90	,	"Konami", "Chequered Flag", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_chqflagj	   = new GameDriver("1988"	,"chqflagj"	,"chqflag.java"	,rom_chqflagj,driver_chqflag	,machine_driver_chqflag	,input_ports_chqflag	,init_chqflag	,ROT90	,	"Konami", "Chequered Flag (Japan)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	GAMEX( 1988, chqflag,        0, chqflag, chqflag, chqflag, ROT90, "Konami", "Chequered Flag", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	GAMEX( 1988, chqflagj, chqflag, chqflag, chqflag, chqflag, ROT90, "Konami", "Chequered Flag (Japan)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
 }

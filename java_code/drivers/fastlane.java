@@ -13,7 +13,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,8 +22,7 @@ public class fastlane
 	
 	/* from vidhrdw/fastlane.c */
 	
-	public static InterruptHandlerPtr fastlane_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fastlane_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			if (K007121_ctrlram[0][0x07] & 0x02)
@@ -36,16 +35,14 @@ public class fastlane
 		}
 	} };
 	
-	public static WriteHandlerPtr k007121_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k007121_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 8)
 			K007121_ctrl_0_w(offset,data);
 		else	/* scroll registers */
 			fastlane_k007121_regs[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr fastlane_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastlane_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -66,20 +63,16 @@ public class fastlane
 	/* Read and write handlers for one K007232 chip:
 	   even and odd register are mapped swapped */
 	
-	public static ReadHandlerPtr fastlane_K007232_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fastlane_K007232_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K007232_read_port_0_r(offset ^ 1);
 	} };
-	public static WriteHandlerPtr fastlane_K007232_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastlane_K007232_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007232_write_port_0_w(offset ^ 1, data);
 	} };
-	public static ReadHandlerPtr fastlane_K007232_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fastlane_K007232_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K007232_read_port_1_r(offset ^ 1);
 	} };
-	public static WriteHandlerPtr fastlane_K007232_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastlane_K007232_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007232_write_port_1_w(offset ^ 1, data);
 	} };
 	
@@ -127,7 +120,7 @@ public class fastlane
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_fastlane = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fastlane = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fastlane )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x02, DEF_STR( "4C_1C") );
@@ -276,8 +269,7 @@ public class fastlane
 		{ volume_callback0,  volume_callback1 } /* external port callback */
 	};
 	
-	public static MachineHandlerPtr machine_driver_fastlane = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fastlane )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* 24MHz/8? */
@@ -301,9 +293,7 @@ public class fastlane
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -332,5 +322,5 @@ public class fastlane
 	
 	
 	
-	public static GameDriver driver_fastlane	   = new GameDriver("1987"	,"fastlane"	,"fastlane.java"	,rom_fastlane,null	,machine_driver_fastlane	,input_ports_fastlane	,null	,ROT90	,	"Konami", "Fast Lane", GAME_IMPERFECT_COLORS )
+	GAMEX( 1987, fastlane, 0, fastlane, fastlane, 0, ROT90, "Konami", "Fast Lane", GAME_IMPERFECT_COLORS )
 }

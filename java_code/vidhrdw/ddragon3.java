@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -103,18 +103,17 @@ public class ddragon3
 		SET_TILE_INFO(0, code, color, flags);
 	}
 	
-	public static VideoStartHandlerPtr video_start_ddragon3  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ddragon3  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 16, 16, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 16, 16, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -156,7 +155,7 @@ public class ddragon3
 		{
 			UINT16 attr = source[1];
 	
-			if ((attr & 0x01) != 0)	/* enable */
+			if (attr & 0x01)	/* enable */
 			{
 				int i;
 				int bank = source[3] & 0xff;
@@ -168,11 +167,11 @@ public class ddragon3
 				int sy = source[0] & 0xff;
 				int height = (attr >> 5) & 0x07;
 	
-				if ((attr & 0x04) != 0) sx |= 0x100;
-				if ((attr & 0x02) != 0) sy = 239 + (0x100 - sy); else sy = 240 - sy;
+				if (attr & 0x04) sx |= 0x100;
+				if (attr & 0x02) sy = 239 + (0x100 - sy); else sy = 240 - sy;
 				if (sx > 0x17f) sx = 0 - (0x200 - sx);
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 304 - sx;
 					sy = 224 - sy;
@@ -182,7 +181,7 @@ public class ddragon3
 	
 				for (i = 0; i <= height; i++)
 				{
-					drawgfx(bitmap, Machine.gfx[1], code + i, color, flipx, flipy,
+					drawgfx(bitmap, Machine->gfx[1], code + i, color, flipx, flipy,
 						sx, sy + (flip_screen() ? (i * 16) : (-i * 16)), cliprect, 
 						TRANSPARENCY_PEN, 0);
 				}
@@ -192,14 +191,13 @@ public class ddragon3
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ddragon3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, ddragon3_bg_scrollx);
 		tilemap_set_scrolly(bg_tilemap, 0, ddragon3_bg_scrolly);
 		tilemap_set_scrollx(fg_tilemap, 0, ddragon3_fg_scrollx);
 		tilemap_set_scrolly(fg_tilemap, 0, ddragon3_fg_scrolly);
 	
-		if ((ddragon3_vreg & 0x40) != 0)
+		if (ddragon3_vreg & 0x40)
 		{
 			tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
@@ -213,8 +211,7 @@ public class ddragon3
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ctribe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ctribe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( bg_tilemap, 0, ddragon3_bg_scrollx );
 		tilemap_set_scrolly( bg_tilemap, 0, ddragon3_bg_scrolly );
 		tilemap_set_scrollx( fg_tilemap, 0, ddragon3_fg_scrollx );

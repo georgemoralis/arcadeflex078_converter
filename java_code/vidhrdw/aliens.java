@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -57,10 +57,9 @@ public class aliens
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_aliens  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_aliens  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram = auto_malloc(0x400);
-		if (paletteram == 0)
+		if (!paletteram)
 			return 1;
 	
 		layer_colorbase[0] = 0;
@@ -83,8 +82,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_aliens  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap,0,cliprect);

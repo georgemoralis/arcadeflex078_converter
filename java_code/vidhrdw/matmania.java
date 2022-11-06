@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class matmania
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_matmania  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_matmania  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -93,31 +92,30 @@ public class matmania
 	
 	
 	
-	public static WriteHandlerPtr matmania_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr matmania_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit0,bit1,bit2,bit3,val;
 		int r,g,b;
 		int offs2;
 	
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 		offs2 = offset & 0x0f;
 	
-		val = paletteram[offs2];
+		val = paletteram.read(offs2);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
 		bit3 = (val >> 3) & 0x01;
 		r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-		val = paletteram[offs2 | 0x10];
+		val = paletteram.read(offs2 | 0x10);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
 		bit3 = (val >> 3) & 0x01;
 		g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 	
-		val = paletteram[offs2 | 0x20];
+		val = paletteram.read(offs2 | 0x20);
 		bit0 = (val >> 0) & 0x01;
 		bit1 = (val >> 1) & 0x01;
 		bit2 = (val >> 2) & 0x01;
@@ -133,8 +131,7 @@ public class matmania
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_matmania  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_matmania  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset(dirtybuffer,1,videoram_size[0]);
@@ -156,31 +153,28 @@ public class matmania
 	
 	
 	
-	public static WriteHandlerPtr matmania_videoram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (matmania_videoram3.read(offset)!= data)
+	public static WriteHandlerPtr matmania_videoram3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (matmania_videoram3[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			matmania_videoram3.write(data,data);
+			matmania_videoram3[offset] = data;
 		}
 	} };
 	
 	
 	
-	public static WriteHandlerPtr matmania_colorram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (matmania_colorram3.read(offset)!= data)
+	public static WriteHandlerPtr matmania_colorram3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (matmania_colorram3[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			matmania_colorram3.write(data,data);
+			matmania_colorram3[offset] = data;
 		}
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_matmania  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_matmania  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -220,8 +214,8 @@ public class matmania
 				sy = offs % 32;
 	
 				drawgfx(tmpbitmap2,Machine.gfx[1],
-						matmania_videoram3.read(offs)+ ((matmania_colorram3.read(offs)& 0x08) << 5),
-						(matmania_colorram3.read(offs)& 0x30) >> 4,
+						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x08) << 5),
+						(matmania_colorram3[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
 						16*sx,16*sy,
 						0,TRANSPARENCY_NONE,0);
@@ -267,16 +261,15 @@ public class matmania
 			sy = offs % 32;
 	
 			drawgfx(bitmap,Machine.gfx[0],
-					matmania_videoram2.read(offs)+ 256 * (matmania_colorram2.read(offs)& 0x07),
-					(matmania_colorram2.read(offs)& 0x30) >> 4,
+					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
+					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_maniach  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_maniach  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -316,8 +309,8 @@ public class matmania
 				sy = offs % 32;
 	
 				drawgfx(tmpbitmap2,Machine.gfx[1],
-						matmania_videoram3.read(offs)+ ((matmania_colorram3.read(offs)& 0x03) << 8),
-						(matmania_colorram3.read(offs)& 0x30) >> 4,
+						matmania_videoram3[offs] + ((matmania_colorram3[offs] & 0x03) << 8),
+						(matmania_colorram3[offs] & 0x30) >> 4,
 						0,sy >= 16,	/* flip horizontally tiles on the right half of the bitmap */
 						16*sx,16*sy,
 						0,TRANSPARENCY_NONE,0);
@@ -363,8 +356,8 @@ public class matmania
 			sy = offs % 32;
 	
 			drawgfx(bitmap,Machine.gfx[0],
-					matmania_videoram2.read(offs)+ 256 * (matmania_colorram2.read(offs)& 0x07),
-					(matmania_colorram2.read(offs)& 0x30) >> 4,
+					matmania_videoram2[offs] + 256 * (matmania_colorram2[offs] & 0x07),
+					(matmania_colorram2[offs] & 0x30) >> 4,
 					0,0,
 					8*sx,8*sy,
 					Machine.visible_area,TRANSPARENCY_PEN,0);

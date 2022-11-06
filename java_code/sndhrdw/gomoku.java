@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -64,7 +64,7 @@ public class gomoku
 	
 		/* allocate memory */
 		mixer_table = auto_malloc(256 * voices * sizeof(INT16));
-		if (mixer_table == 0)
+		if (!mixer_table)
 			return 1;
 	
 		/* find the middle of the table */
@@ -103,14 +103,14 @@ public class gomoku
 		/* loop over each voice and add its contribution */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			int f = 16*voice.frequency;
-			int v = voice.volume;
+			int f = 16*voice->frequency;
+			int v = voice->volume;
 	
 			/* only update if we have non-zero volume and frequency */
 			if (v && f)
 			{
-				const unsigned char *w = voice.wave;
-				int c = voice.counter;
+				const unsigned char *w = voice->wave;
+				int c = voice->counter;
 	
 				mix = mixer_buffer;
 	
@@ -121,20 +121,20 @@ public class gomoku
 	
 					c += f;
 	
-					if (voice.oneshot)
+					if (voice->oneshot)
 					{
-						if (voice.oneshotplaying)
+						if (voice->oneshotplaying)
 						{
 							offs = (c >> 15);
 							if (w[offs>>1] == 0xff)
 							{
-								voice.oneshotplaying = 0;
+								voice->oneshotplaying = 0;
 							}
 	
-							if (voice.oneshotplaying)
+							if (voice->oneshotplaying)
 							{
 								/* use full byte, first the high 4 bits, then the low 4 bits */
-								if ((offs & 1) != 0)
+								if (offs & 1)
 									*mix++ += ((w[offs>>1] & 0x0f) - 8) * v;
 								else
 									*mix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * v;
@@ -146,7 +146,7 @@ public class gomoku
 						offs = (c >> 15) & 0x1f;
 	
 						/* use full byte, first the high 4 bits, then the low 4 bits */
-						if ((offs & 1) != 0)
+						if (offs & 1)
 							*mix++ += ((w[offs>>1] & 0x0f) - 8) * v;
 						else
 							*mix++ += (((w[offs>>1]>>4) & 0x0f) - 8) * v;
@@ -154,7 +154,7 @@ public class gomoku
 				}
 	
 				/* update the counter for this voice */
-				voice.counter = c;
+				voice->counter = c;
 			}
 		}
 	
@@ -196,10 +196,10 @@ public class gomoku
 		/* reset all the voices */
 		for (voice = channel_list; voice < last_channel; voice++)
 		{
-			voice.frequency = 0;
-			voice.volume = 0;
-			voice.wave = &sound_prom[0];
-			voice.counter = 0;
+			voice->frequency = 0;
+			voice->volume = 0;
+			voice->wave = &sound_prom[0];
+			voice->counter = 0;
 		}
 	
 		return 0;
@@ -213,8 +213,7 @@ public class gomoku
 	
 	/********************************************************************************/
 	
-	public static WriteHandlerPtr gomoku_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gomoku_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_channel *voice;
 		int base;
 	
@@ -229,31 +228,31 @@ public class gomoku
 		{
 			for (base = 0, voice = channel_list; voice < last_channel; voice++, base += 8)
 			{
-				voice.frequency = gomoku_soundregs[0x02 + base] & 0x0f;
-				voice.frequency = voice.frequency * 16 + ((gomoku_soundregs[0x01 + base]) & 0x0f);
-				voice.frequency = voice.frequency * 16 + ((gomoku_soundregs[0x00 + base]) & 0x0f);
+				voice->frequency = gomoku_soundregs[0x02 + base] & 0x0f;
+				voice->frequency = voice->frequency * 16 + ((gomoku_soundregs[0x01 + base]) & 0x0f);
+				voice->frequency = voice->frequency * 16 + ((gomoku_soundregs[0x00 + base]) & 0x0f);
 	
-				voice.volume = gomoku_soundregs[0x806 + base] & 0x0f;
+				voice->volume = gomoku_soundregs[0x806 + base] & 0x0f;
 				if (gomoku_soundregs[0x800 + base] & 0xf0)
 				{
-					voice.wave = &sound_rom[128 * (16 * (gomoku_soundregs[0x805 + base] & 0x0f)
+					voice->wave = &sound_rom[128 * (16 * (gomoku_soundregs[0x805 + base] & 0x0f)
 							+ (gomoku_soundregs[0x805 + base] & 0x0f))];
-					voice.oneshot = 1;
+					voice->oneshot = 1;
 				}
 				else
 				{
-					voice.wave = &sound_rom[16 * (gomoku_soundregs[0x6 + base] & 0x0f)];
-					voice.oneshot = 0;
+					voice->wave = &sound_rom[16 * (gomoku_soundregs[0x6 + base] & 0x0f)];
+					voice->oneshot = 0;
 				}
 			}
 		}
 		else if (offset >= 0x800)
 		{
 			voice = &channel_list[(offset & 0x1f) / 8];
-			if (voice.oneshot)
+			if (voice->oneshot)
 			{
-				voice.counter = 0;
-				voice.oneshotplaying = 1;
+				voice->counter = 0;
+				voice->oneshotplaying = 1;
 			}
 		}
 	} };

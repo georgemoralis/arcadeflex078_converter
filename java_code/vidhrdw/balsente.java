@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,29 +40,28 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_balsente  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_balsente  = new VideoStartHandlerPtr() { public int handler(){
 		/* reset the system */
 		palettebank_vis = 0;
 		
 		/* allocate a bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (tmpbitmap == 0)
+		if (!tmpbitmap)
 			return 1;
 	
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
-		if (local_videoram == 0)
+		if (!local_videoram)
 			return 1;
 	
 		/* allocate a scanline dirty array */
 		scanline_dirty = auto_malloc(256);
-		if (scanline_dirty == 0)
+		if (!scanline_dirty)
 			return 1;
 	
 		/* allocate a scanline palette array */
 		scanline_palette = auto_malloc(256);
-		if (scanline_palette == 0)
+		if (!scanline_palette)
 			return 1;
 	
 		/* mark everything dirty to start */
@@ -87,8 +86,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 	
 		/* expand the two pixel values into two bytes */
@@ -144,8 +142,7 @@ public class balsente
 	}
 	
 	
-	public static WriteHandlerPtr balsente_palette_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_palette_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* only update if changed */
 		if (palettebank_vis != (data & 3))
 		{
@@ -165,15 +162,14 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr balsente_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr balsente_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data & 0x0f;
+		paletteram.write(offset,data & 0x0f);
 	
-		r = paletteram[(offset & ~3) + 0];
-		g = paletteram[(offset & ~3) + 1];
-		b = paletteram[(offset & ~3) + 2];
+		r = paletteram.read((offset & ~3) + 0);
+		g = paletteram.read((offset & ~3) + 1);
+		b = paletteram.read((offset & ~3) + 2);
 		palette_set_color(offset / 4, (r << 4) | r, (g << 4) | g, (b << 4) | b);
 	} };
 	
@@ -202,14 +198,14 @@ public class balsente
 	
 		/* get a pointer to the source image */
 		src = &sprite_data[(64 * image) & sprite_mask];
-		if ((flags & 0x80) != 0) src += 4 * 15;
+		if (flags & 0x80) src += 4 * 15;
 	
 		/* loop over y */
 		for (y = 0; y < 16; y++, ypos = (ypos + 1) & 255)
 		{
 			if (ypos >= finalclip.min_y && ypos <= finalclip.max_y)
 			{
-				UINT32 *pens = Machine.pens[scanline_palette[y] * 256];
+				UINT32 *pens = Machine->pens[scanline_palette[y] * 256];
 				UINT8 *old = &local_videoram[ypos * 256 + xpos];
 				int currx = xpos;
 	
@@ -262,7 +258,7 @@ public class balsente
 			}
 			else
 				src += 4;
-			if ((flags & 0x80) != 0) src -= 2 * 4;
+			if (flags & 0x80) src -= 2 * 4;
 		}
 	}
 	
@@ -274,8 +270,7 @@ public class balsente
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_balsente  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int update_all = get_vh_global_attribute_changed();
 		int y, i;
 	
@@ -301,7 +296,7 @@ public class balsente
 			draw_one_sprite(bitmap, cliprect, &spriteram.read((0xe0 + i * 4) & 0xff));
 	
 		/* draw a crosshair */
-		if (balsente_shooter != 0)
+		if (balsente_shooter)
 		{
 			int beamx = balsente_shooter_x;
 			int beamy = balsente_shooter_y - 10;

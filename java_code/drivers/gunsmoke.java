@@ -56,7 +56,7 @@ Stephh's notes (based on the games Z80 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -72,8 +72,7 @@ public class gunsmoke
 	
 	
 	#if GUNSMOKE_HACK
-	public static ReadHandlerPtr gunsmoke_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunsmoke_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((activecpu_get_pc() == 0x0173) || (activecpu_get_pc() == 0x0181))	// to get correct coinage
 			return (readinputport(4));
 	
@@ -85,8 +84,7 @@ public class gunsmoke
 	#endif
 	
 	
-	public static ReadHandlerPtr gunsmoke_unknown_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunsmoke_unknown_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    static int gunsmoke_fixed_data[]={ 0xff, 0x00, 0x00 };
 	    /*
 	    The routine at 0x0e69 tries to read data starting at 0xc4c9.
@@ -166,7 +164,7 @@ public class gunsmoke
 	
 	
 	
-	static InputPortPtr input_ports_gunsmoke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunsmoke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunsmoke )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -273,7 +271,7 @@ public class gunsmoke
 	
 	/* Same as 'gunsmoke', but "Lives" Dip Switch instead of "Demonstration" Dip Switch */
 	/* And swapped starting levels 3 and 6 in the fake Dip Switch */
-	static InputPortPtr input_ports_gunsmoka = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunsmoka = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunsmoka )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -443,8 +441,7 @@ public class gunsmoke
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gunsmoke = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunsmoke )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz (?) */
@@ -473,9 +470,7 @@ public class gunsmoke
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -678,8 +673,8 @@ public class gunsmoke
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_gunsmoke	   = new GameDriver("1985"	,"gunsmoke"	,"gunsmoke.java"	,rom_gunsmoke,null	,machine_driver_gunsmoke	,input_ports_gunsmoke	,null	,ROT270	,	"Capcom", "Gun.Smoke (World)" )
-	public static GameDriver driver_gunsmokj	   = new GameDriver("1985"	,"gunsmokj"	,"gunsmoke.java"	,rom_gunsmokj,driver_gunsmoke	,machine_driver_gunsmoke	,input_ports_gunsmoke	,null	,ROT270	,	"Capcom", "Gun.Smoke (Japan)" )
-	public static GameDriver driver_gunsmoku	   = new GameDriver("1985"	,"gunsmoku"	,"gunsmoke.java"	,rom_gunsmoku,driver_gunsmoke	,machine_driver_gunsmoke	,input_ports_gunsmoke	,null	,ROT270	,	"Capcom (Romstar license)", "Gun.Smoke (US set 1)" )
-	public static GameDriver driver_gunsmoka	   = new GameDriver("1986"	,"gunsmoka"	,"gunsmoke.java"	,rom_gunsmoka,driver_gunsmoke	,machine_driver_gunsmoke	,input_ports_gunsmoka	,null	,ROT270	,	"Capcom (Romstar license)", "Gun.Smoke (US set 2)" )
+	GAME( 1985, gunsmoke, 0,        gunsmoke, gunsmoke, 0, ROT270, "Capcom", "Gun.Smoke (World)" )
+	GAME( 1985, gunsmokj, gunsmoke, gunsmoke, gunsmoke, 0, ROT270, "Capcom", "Gun.Smoke (Japan)" )
+	GAME( 1985, gunsmoku, gunsmoke, gunsmoke, gunsmoke, 0, ROT270, "Capcom (Romstar license)", "Gun.Smoke (US set 1)" )
+	GAME( 1986, gunsmoka, gunsmoke, gunsmoke, gunsmoka, 0, ROT270, "Capcom (Romstar license)", "Gun.Smoke (US set 2)" )
 }

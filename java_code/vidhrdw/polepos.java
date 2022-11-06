@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class polepos
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_polepos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_polepos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, j;
 	
 		/*******************************************************
@@ -155,16 +154,15 @@ public class polepos
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_polepos  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_polepos  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate view bitmap */
 		view_bitmap = auto_bitmap_alloc(64*8, 16*8);
-		if (view_bitmap == 0)
+		if (!view_bitmap)
 			return 1;
 	
 		/* allocate view dirty buffer */
 		view_dirty = auto_malloc(64*16);
-		if (view_dirty == 0)
+		if (!view_dirty)
 			return 1;
 	
 		return 0;
@@ -187,13 +185,11 @@ public class polepos
 		COMBINE_DATA(&polepos_sprite16_memory[offset]);
 	}
 	
-	public static ReadHandlerPtr polepos_sprite_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_sprite_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return polepos_sprite16_memory[offset] & 0xff;
 	} };
 	
-	public static WriteHandlerPtr polepos_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		polepos_sprite16_memory[offset] = (polepos_sprite16_memory[offset] & 0xff00) | data;
 	} };
 	
@@ -214,13 +210,11 @@ public class polepos
 		COMBINE_DATA(&polepos_road16_memory[offset]);
 	}
 	
-	public static ReadHandlerPtr polepos_road_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_road_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return polepos_road16_memory[offset] & 0xff;
 	} };
 	
-	public static WriteHandlerPtr polepos_road_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_road_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		polepos_road16_memory[offset] = (polepos_road16_memory[offset] & 0xff00) | data;
 	} };
 	
@@ -252,13 +246,11 @@ public class polepos
 		}
 	}
 	
-	public static ReadHandlerPtr polepos_view_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_view_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return polepos_view16_memory[offset] & 0xff;
 	} };
 	
-	public static WriteHandlerPtr polepos_view_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_view_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data16_t oldword = polepos_view16_memory[offset];
 		polepos_view16_memory[offset] = (polepos_view16_memory[offset] & 0xff00) | data;
 		if (oldword != polepos_view16_memory[offset])
@@ -290,13 +282,11 @@ public class polepos
 		COMBINE_DATA(&polepos_alpha16_memory[offset]);
 	}
 	
-	public static ReadHandlerPtr polepos_alpha_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_alpha_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return polepos_alpha16_memory[offset] & 0xff;
 	} };
 	
-	public static WriteHandlerPtr polepos_alpha_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_alpha_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		polepos_alpha16_memory[offset] = (polepos_alpha16_memory[offset] & 0xff00) | data;
 	} };
 	
@@ -309,7 +299,7 @@ public class polepos
 	
 	static void draw_view(struct mame_bitmap *bitmap)
 	{
-		struct rectangle clip = Machine.visible_area;
+		struct rectangle clip = Machine->visible_area;
 		int x, y, offs;
 	
 		/* look for dirty tiles */
@@ -321,7 +311,7 @@ public class polepos
 					int code = (word & 0xff) | ((word >> 6) & 0x100);
 					int color = (word >> 8) & 0x3f;
 	
-					drawgfx(view_bitmap, Machine.gfx[1], code, color,
+					drawgfx(view_bitmap, Machine->gfx[1], code, color,
 							0, 0, 8*x, 8*y, NULL, TRANSPARENCY_NONE, 0);
 					view_dirty[offs] = 0;
 				}
@@ -351,7 +341,7 @@ public class polepos
 			roadpal = polepos_road16_memory[yoffs] & 15;
 	
 			/* this becomes the palette base for the scanline */
-			colortable = Machine.remapped_colortable[0x1000 + (roadpal << 6)];
+			colortable = Machine->remapped_colortable[0x1000 + (roadpal << 6)];
 	
 			/* now fetch the horizontal scroll offset for this scanline */
 			xoffs = polepos_road16_memory[0x380 + (y & 0x7f)] & 0x3ff;
@@ -366,7 +356,7 @@ public class polepos
 			{
 				/* if the 0x200 bit of the xoffset is set, a special pin on the custom */
 				/* chip is set and the /CE and /OE for the road chips is disabled */
-				if ((xoffs & 0x200) != 0)
+				if (xoffs & 0x200)
 				{
 					/* in this case, it looks like we just fill with 0 */
 					for (i = 0; i < 8; i++)
@@ -412,7 +402,7 @@ public class polepos
 	
 		for (i = 0; i < 64; i++, posmem += 2, sizmem += 2)
 		{
-			const struct GfxElement *gfx = Machine.gfx[(sizmem[0] & 0x8000) ? 3 : 2];
+			const struct GfxElement *gfx = Machine->gfx[(sizmem[0] & 0x8000) ? 3 : 2];
 			int vpos = (~posmem[0] & 0x1ff) + 4;
 			int hpos = (posmem[1] & 0x3ff) - 0x40;
 			int vsize = ((sizmem[0] >> 8) & 0x3f) + 1;
@@ -424,7 +414,7 @@ public class polepos
 			if (vpos >= 128) color |= 0x40;
 			drawgfxzoom(bitmap, gfx,
 					 code, color, hflip, 0, hpos, vpos,
-					 Machine.visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
+					 Machine->visible_area, TRANSPARENCY_COLOR, 0, hsize << 11, vsize << 11);
 		}
 	}
 	
@@ -440,33 +430,33 @@ public class polepos
 				int color = (word >> 8) & 0x3f; /* 6 bits color */
 	
 				if (y >= 16) color |= 0x40;
-				drawgfx(bitmap, Machine.gfx[0],
+				drawgfx(bitmap, Machine->gfx[0],
 						 code, color, 0, 0, 8*x, 8*y,
-						 Machine.visible_area, TRANSPARENCY_COLOR, 0);
+						 Machine->visible_area, TRANSPARENCY_COLOR, 0);
 			}
 	
 		/* Now draw the shift if selected on the fake dipswitch */
 		in = readinputport( 0 );
 	
-		if ((in & 8) != 0) {
+		if ( in & 8 ) {
 			if ( ( in & 2 ) == 0 ) {
 				/* L */
-				drawgfx(bitmap, Machine.gfx[0],
+				drawgfx(bitmap, Machine->gfx[0],
 						 0x15, 0, 0, 0, 30*8-1, 29*8,
-						 Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine->visible_area, TRANSPARENCY_PEN, 0);
 				/* O */
-				drawgfx(bitmap, Machine.gfx[0],
+				drawgfx(bitmap, Machine->gfx[0],
 						 0x18, 0, 0, 0, 31*8-1, 29*8,
-						 Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine->visible_area, TRANSPARENCY_PEN, 0);
 			} else {
 				/* H */
-				drawgfx(bitmap, Machine.gfx[0],
+				drawgfx(bitmap, Machine->gfx[0],
 						 0x11, 0, 0, 0, 30*8-1, 29*8,
-						 Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine->visible_area, TRANSPARENCY_PEN, 0);
 				/* I */
-				drawgfx(bitmap, Machine.gfx[0],
+				drawgfx(bitmap, Machine->gfx[0],
 						 0x12, 0, 0, 0, 31*8-1, 29*8,
-						 Machine.visible_area, TRANSPARENCY_PEN, 0);
+						 Machine->visible_area, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
@@ -478,8 +468,7 @@ public class polepos
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_polepos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_polepos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_view(bitmap);
 		draw_road(bitmap);
 		draw_sprites(bitmap);

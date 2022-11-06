@@ -78,7 +78,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -90,8 +90,7 @@ public class ddenlovr
 	static struct mame_bitmap *framebuffer;
 	static int extra_layers;
 	
-	VIDEO_START(ddenlovr)
-	{
+	public static VideoStartHandlerPtr video_start_ddenlovr  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 		for (i = 0; i < 8; i++)
 			if (!(pixmap[i] = auto_malloc(512*512)))	return 1;
@@ -100,16 +99,15 @@ public class ddenlovr
 	
 		extra_layers = 0;
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(mmpanic)
-	{
-		if (video_start_ddenlovr() != 0)
+	public static VideoStartHandlerPtr video_start_mmpanic  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_ddenlovr())
 			return 1;
 	
 		extra_layers = 1;
 		return 0;
-	}
+	} };
 	
 	
 	/***************************************************************************
@@ -164,14 +162,14 @@ public class ddenlovr
 		if (!(dynax_clip_ctrl & 4) && y < dynax_clip_y) return;
 		if (!(dynax_clip_ctrl & 8) && y >= dynax_clip_y) return;
 	
-		if ((dynax_dest_layer & 0x0001) != 0) pixmap[0][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0002) != 0) pixmap[1][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0004) != 0) pixmap[2][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0008) != 0) pixmap[3][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0100) != 0) pixmap[4][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0200) != 0) pixmap[5][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0400) != 0) pixmap[6][512*y+x] = pen;
-		if ((dynax_dest_layer & 0x0800) != 0) pixmap[7][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0001) pixmap[0][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0002) pixmap[1][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0004) pixmap[2][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0008) pixmap[3][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0100) pixmap[4][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0200) pixmap[5][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0400) pixmap[6][512*y+x] = pen;
+		if (dynax_dest_layer & 0x0800) pixmap[7][512*y+x] = pen;
 	}
 	
 	
@@ -247,7 +245,7 @@ public class ddenlovr
 					{
 						int length = fetch_word(src_data,src_len,&bit_addr,arg_size);
 						int pen = fetch_word(src_data,src_len,&bit_addr,pen_size);
-						if (dynax_blit_pen_mode != 0) pen = (dynax_blit_pen & 0x0f);
+						if (dynax_blit_pen_mode) pen = (dynax_blit_pen & 0x0f);
 						pen |= dynax_blit_pen & 0xf0;
 						while (length-- >= 0)
 						{
@@ -263,7 +261,7 @@ public class ddenlovr
 						while (length-- >= 0)
 						{
 							int pen = fetch_word(src_data,src_len,&bit_addr,pen_size);
-							if (dynax_blit_pen_mode != 0) pen = (dynax_blit_pen & 0x0f);
+							if (dynax_blit_pen_mode) pen = (dynax_blit_pen & 0x0f);
 							pen |= dynax_blit_pen & 0xf0;
 							do_plot(x,dynax_blit_y,pen);
 							x += xinc;
@@ -290,8 +288,7 @@ public class ddenlovr
 	}
 	
 	
-	public static ReadHandlerPtr rongrong_gfxrom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rongrong_gfxrom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *rom	=	memory_region( REGION_GFX1 );
 		size_t size		=	memory_region_length( REGION_GFX1 );
 		int address	=	dynax_blit_address;
@@ -328,7 +325,7 @@ public class ddenlovr
 			switch(dynax_blit_reg[blitter] & 0x3f)
 			{
 			case 0x00:
-				if (blitter != 0)	dynax_dest_layer = (dynax_dest_layer & 0x00ff) | (data<<8);
+				if (blitter)	dynax_dest_layer = (dynax_dest_layer & 0x00ff) | (data<<8);
 				else			dynax_dest_layer = (dynax_dest_layer & 0xff00) | (data<<0);
 				break;
 	
@@ -339,7 +336,7 @@ public class ddenlovr
 			case 0x03:
 				dynax_blit_flip = data;
 	#ifdef MAME_DEBUG
-	if ((dynax_blit_flip & 0xfc) != 0) usrintf_showmessage("dynax_blit_flip = %02x",dynax_blit_flip);
+	if (dynax_blit_flip & 0xfc) usrintf_showmessage("dynax_blit_flip = %02x",dynax_blit_flip);
 	#endif
 				break;
 	
@@ -461,14 +458,14 @@ public class ddenlovr
 			if (start + length > 512*512)
 				length = 512*512 - start;
 	
-			if ((dynax_dest_layer & 0x0001) != 0) memset(pixmap[0] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0002) != 0) memset(pixmap[1] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0004) != 0) memset(pixmap[2] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0008) != 0) memset(pixmap[3] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0100) != 0) memset(pixmap[4] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0200) != 0) memset(pixmap[5] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0400) != 0) memset(pixmap[6] + start,dynax_blit_pen,length);
-			if ((dynax_dest_layer & 0x0800) != 0) memset(pixmap[7] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0001) memset(pixmap[0] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0002) memset(pixmap[1] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0004) memset(pixmap[2] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0008) memset(pixmap[3] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0100) memset(pixmap[4] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0200) memset(pixmap[5] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0400) memset(pixmap[6] + start,dynax_blit_pen,length);
+			if (dynax_dest_layer & 0x0800) memset(pixmap[7] + start,dynax_blit_pen,length);
 		}
 	}
 					}
@@ -489,14 +486,14 @@ public class ddenlovr
 		usrintf_showmessage("FILL command X %03x Y %03x",dynax_blit_x,dynax_blit_y);
 	#endif
 	
-						if ((dynax_dest_layer & 0x0001) != 0) memset(pixmap[0] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0002) != 0) memset(pixmap[1] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0004) != 0) memset(pixmap[2] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0008) != 0) memset(pixmap[3] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0100) != 0) memset(pixmap[4] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0200) != 0) memset(pixmap[5] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0400) != 0) memset(pixmap[6] + start,dynax_blit_pen,512*512 - start);
-						if ((dynax_dest_layer & 0x0800) != 0) memset(pixmap[7] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0001) memset(pixmap[0] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0002) memset(pixmap[1] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0004) memset(pixmap[2] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0008) memset(pixmap[3] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0100) memset(pixmap[4] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0200) memset(pixmap[5] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0400) memset(pixmap[6] + start,dynax_blit_pen,512*512 - start);
+						if (dynax_dest_layer & 0x0800) memset(pixmap[7] + start,dynax_blit_pen,512*512 - start);
 					}
 					else if (data == 0x13)
 					{
@@ -515,7 +512,7 @@ public class ddenlovr
 	usrintf_showmessage("LINE X");
 	if (dynax_clip_ctrl != 0x0f)
 		usrintf_showmessage("LINE X clipx=%03x clipy=%03x ctrl=%x",dynax_clip_x,dynax_clip_y,dynax_clip_ctrl);
-	if (dynax_blit_flip != 0)
+	if (dynax_blit_flip)
 		usrintf_showmessage("LINE X flip=%x",dynax_blit_flip);
 	#endif
 	
@@ -565,7 +562,7 @@ public class ddenlovr
 	#endif
 					}
 	
-					if (irq_vector != 0)
+					if (irq_vector)
 					{
 						/* quizchq */
 						cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, irq_vector);
@@ -573,7 +570,7 @@ public class ddenlovr
 					else
 					{
 						/* ddenlovr */
-						if (dynax_blitter_irq_enable != 0)
+						if (dynax_blitter_irq_enable)
 						{
 							dynax_blitter_irq_flag = 1;
 							cpu_set_irq_line(0,1,HOLD_LINE);
@@ -591,23 +588,22 @@ public class ddenlovr
 	profiler_mark(PROFILER_END);
 	}
 	
-	public static WriteHandlerPtr rongrong_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rongrong_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blitter_w(0,offset,data,0xf8);
 	} };
 	
 	static WRITE16_HANDLER( ddenlovr_blitter_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			blitter_w(0,offset,data & 0xff,0);
 	}
 	
 	
 	static WRITE16_HANDLER( ddenlovr_blitter_irq_ack_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if ((data & 1) != 0)
+			if (data & 1)
 			{
 				dynax_blitter_irq_enable = 1;
 			}
@@ -620,54 +616,48 @@ public class ddenlovr
 	}
 	
 	
-	public static WriteHandlerPtr dynax_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_bgcolor = data;
 	} };
 	
-	public static WriteHandlerPtr dynax_bgcolor2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_bgcolor2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_bgcolor2 = data;
 	} };
 	
 	static WRITE16_HANDLER( ddenlovr_bgcolor_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			dynax_bgcolor_w(offset,data);
 	}
 	
 	
-	public static WriteHandlerPtr dynax_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_priority = data;
 	} };
 	
-	public static WriteHandlerPtr dynax_priority2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_priority2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_priority2 = data;
 	} };
 	
 	static WRITE16_HANDLER( ddenlovr_priority_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			dynax_priority_w(offset,data);
 	}
 	
 	
-	public static WriteHandlerPtr dynax_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_layer_enable = data;
 	} };
 	
-	public static WriteHandlerPtr dynax_layer_enable2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_layer_enable2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_layer_enable2 = data;
 	} };
 	
 	
 	static WRITE16_HANDLER( ddenlovr_layer_enable_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			dynax_layer_enable_w(offset,data);
 	}
 	
@@ -685,22 +675,21 @@ public class ddenlovr
 	
 		if (((dynax_layer_enable2 << 4) | dynax_layer_enable) & (1 << layer))
 		{
-			for (y = cliprect.min_y;y <= cliprect.max_y;y++)
+			for (y = cliprect->min_y;y <= cliprect->max_y;y++)
 			{
-				for (x = cliprect.min_x;x <= cliprect.max_x;x++)
+				for (x = cliprect->min_x;x <= cliprect->max_x;x++)
 				{
 					int pen = pixmap[layer][512 * ((y + scrolly) & 0x1ff) + ((x + scrollx) & 0x1ff)];
-					if ((pen & 0x0f) != 0)
+					if (pen & 0x0f)
 					{
-						((UINT16 *)bitmap.line[y])[x] = pen | palbase;
+						((UINT16 *)bitmap->line[y])[x] = pen | palbase;
 					}
 				}
 			}
 		}
 	}
 	
-	VIDEO_UPDATE(ddenlovr)
-	{
+	public static VideoUpdateHandlerPtr video_update_ddenlovr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#if 0
 		static int base = 0x24bbed;//0x294a82;//0x27c47a; ;// = 0x279a4b;//0x2a0e7c;//0x2a88ae;//0x24bbed;
 	
@@ -758,7 +747,7 @@ public class ddenlovr
 	//if (!keyboard_pressed(KEYCODE_R))
 			copylayer(framebuffer,Machine.visible_area,order[pri][3]);
 	
-			if (extra_layers != 0)
+			if (extra_layers)
 			{
 	
 			pri = dynax_priority2;
@@ -777,7 +766,7 @@ public class ddenlovr
 			copylayer(framebuffer,Machine.visible_area,order[pri][3]+4);
 			}
 		}
-	}
+	} };
 	
 	
 	
@@ -790,20 +779,19 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_coincounter_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			coin_counter_w(0, data & 1);
 	}
 	static WRITE16_HANDLER( ddenlovr_coincounter_1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			coin_counter_w(1, data & 1);
 	}
 	
 	
 	static data8_t palram[0x200];
 	
-	public static WriteHandlerPtr rongrong_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rongrong_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b,d1,d2,indx;
 	
 		palram[offset] = data;
@@ -826,37 +814,34 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( ddenlovr_palette_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			rongrong_palette_w(offset,data & 0xff);
 	}
 	
 	
-	public static WriteHandlerPtr rongrong_palette_base_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rongrong_palette_base_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_palette_base[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr dynax_palette_base2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_palette_base2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_palette_base[offset+4] = data;
 	} };
 	
 	
 	static WRITE16_HANDLER( ddenlovr_palette_base_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			dynax_palette_base[offset] = data & 0xff;
 	}
 	
 	
-	public static WriteHandlerPtr quizchq_oki_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizchq_oki_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	} };
 	
 	static WRITE16_HANDLER( ddenlovr_oki_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_set_bank_base(0, (data & 7) * 0x40000);
 	}
 	
@@ -865,7 +850,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( quiz365_oki_bank1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			okibank = (okibank & 2) | (data & 1);
 			OKIM6295_set_bank_base(0, okibank * 0x40000);
@@ -874,7 +859,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( quiz365_oki_bank2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			okibank = (okibank & 1) | ((data & 1) << 1);
 			OKIM6295_set_bank_base(0, okibank * 0x40000);
@@ -884,8 +869,7 @@ public class ddenlovr
 	
 	
 	
-	public static ReadHandlerPtr rtc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rtc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		time_t ltime;
 		struct tm *today;
 		time(&ltime);
@@ -893,19 +877,19 @@ public class ddenlovr
 	
 		switch (offset)
 		{
-			case 0x0: return today.tm_sec%10;
-			case 0x1: return today.tm_sec/10;
-			case 0x2: return today.tm_min%10;
-			case 0x3: return today.tm_min/10;
-			case 0x4: return today.tm_hour%10;
-			case 0x5: return today.tm_hour/10;
-			case 0x6: return today.tm_mday%10;
-			case 0x7: return today.tm_mday/10;
-			case 0x8: return (today.tm_mon+1)%10;
-			case 0x9: return (today.tm_mon+1)/10;
-			case 0xa: return today.tm_year%10;
-			case 0xb: return (today.tm_year%100)/10;
-			case 0xc: return today.tm_wday%10;
+			case 0x0: return today->tm_sec%10;
+			case 0x1: return today->tm_sec/10;
+			case 0x2: return today->tm_min%10;
+			case 0x3: return today->tm_min/10;
+			case 0x4: return today->tm_hour%10;
+			case 0x5: return today->tm_hour/10;
+			case 0x6: return today->tm_mday%10;
+			case 0x7: return today->tm_mday/10;
+			case 0x8: return (today->tm_mon+1)%10;
+			case 0x9: return (today->tm_mon+1)/10;
+			case 0xa: return today->tm_year%10;
+			case 0xb: return (today->tm_year%100)/10;
+			case 0xc: return today->tm_wday%10;
 			default: return 0;
 		}
 	} };
@@ -916,8 +900,7 @@ public class ddenlovr
 	}
 	
 	
-	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x78;
 	} };
 	
@@ -930,8 +913,7 @@ public class ddenlovr
 	
 	static data8_t quiz365_select;
 	
-	public static ReadHandlerPtr quiz365_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr quiz365_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (!(quiz365_select & 0x01))	return readinputport(3);
 		if (!(quiz365_select & 0x02))	return readinputport(4);
 		if (!(quiz365_select & 0x04))	return readinputport(5);
@@ -940,16 +922,14 @@ public class ddenlovr
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr quiz365_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quiz365_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		quiz365_select = data;
 	} };
 	
 	
 	static data8_t rongrong_select2;
 	
-	public static ReadHandlerPtr rongrong_input2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rongrong_input2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: rongrong_input2_r offset %d select %x\n",activecpu_get_pc(),offset,rongrong_select2 );
 		/* 0 and 1 are read from offset 1, 2 from offset 0... */
 		switch( rongrong_select2 )
@@ -961,8 +941,7 @@ public class ddenlovr
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr rongrong_select2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rongrong_select2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rongrong_select2 = data;
 	} };
 	
@@ -982,13 +961,13 @@ public class ddenlovr
 	
 	WRITE16_HANDLER( quiz365_select2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			rongrong_select2 = data;
 	}
 	
 	static WRITE16_HANDLER( quiz365_coincounter_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (rongrong_select2 == 0x1c)
 			{
@@ -1114,7 +1093,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( nettoqc_coincounter_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0, data & 0x01);
 			coin_counter_w(1, data & 0x04);
@@ -1124,7 +1103,7 @@ public class ddenlovr
 	
 	static WRITE16_HANDLER( nettoqc_oki_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_set_bank_base(0, (data & 3) * 0x40000);
 	}
 	
@@ -1171,8 +1150,7 @@ public class ddenlovr
 	
 	static data8_t rongrong_select;
 	
-	public static ReadHandlerPtr rongrong_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rongrong_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (!(rongrong_select & 0x01))	return readinputport(3);
 		if (!(rongrong_select & 0x02))	return readinputport(4);
 		if (!(rongrong_select & 0x04))	return 0xff;//rand();
@@ -1181,8 +1159,7 @@ public class ddenlovr
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr rongrong_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rongrong_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
 	//logerror("%04x: rongrong_select_w %02x\n",activecpu_get_pc(),data);
@@ -1307,36 +1284,30 @@ public class ddenlovr
 	***************************************************************************/
 	
 	
-	public static ReadHandlerPtr magic_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr magic_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x01;
 	} };
 	
 	static data8_t mmpanic_select;
-	public static WriteHandlerPtr mmpanic_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mmpanic_select = data;
 	} };
 	
-	public static WriteHandlerPtr mmpanic_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		cpu_setbank(1, &rom[0x10000 + 0x8000 * (data & 0x7)]);
 		/* Bit 4? */
 	} };
 	
-	public static WriteHandlerPtr mmpanic_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(1, PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr mmpanic_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blitter_w(0,offset,data,0xdf);	// RST 18
 	} };
-	public static WriteHandlerPtr mmpanic_blitter2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_blitter2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blitter_w(1,offset,data,0xdf);	// RST 18
 	} };
 	
@@ -1349,21 +1320,18 @@ public class ddenlovr
 	}
 	
 	/* leds 1-8 */
-	public static WriteHandlerPtr mmpanic_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mmpanic_leds = (mmpanic_leds & 0xff00) | data;
 		mmpanic_update_leds();
 	} };
 	/* led 9 */
-	public static WriteHandlerPtr mmpanic_leds2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_leds2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mmpanic_leds = (mmpanic_leds & 0xfeff) | (data ? 0x0100 : 0);
 		mmpanic_update_leds();
 	} };
 	
 	
-	public static WriteHandlerPtr mmpanic_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmpanic_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mmpanic_select == 0x0c)
 		{
 			coin_counter_w(0,(~data) & 0x01);
@@ -1372,7 +1340,7 @@ public class ddenlovr
 		}
 	} };
 	
-	public static ReadHandlerPtr mmpanic_link_r  = new ReadHandlerPtr() { public int handler(int offset)	{ return 0xff; } };
+	public static ReadHandlerPtr mmpanic_link_r  = new ReadHandlerPtr() { public int handler(int offset) return 0xff; }
 	
 	/* Main CPU */
 	
@@ -1481,7 +1449,7 @@ public class ddenlovr
 	
 	
 	
-	static InputPortPtr input_ports_ddenlovr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddenlovr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddenlovr )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -1539,7 +1507,7 @@ public class ddenlovr
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nettoqc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nettoqc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nettoqc )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_BUTTON1  | IPF_PLAYER1 );
@@ -1637,7 +1605,7 @@ public class ddenlovr
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_quiz365 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quiz365 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quiz365 )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -1735,7 +1703,7 @@ public class ddenlovr
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rongrong = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rongrong = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rongrong )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
@@ -1834,7 +1802,7 @@ public class ddenlovr
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quizchq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizchq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizchq )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -1929,7 +1897,7 @@ public class ddenlovr
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mmpanic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mmpanic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mmpanic )
 		PORT_START(); 	// IN0 6a (68 = 1:used? 2:normal 3:goes to 69)
 		PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_LOW, IPT_COIN1, 2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );// tested?
@@ -2055,8 +2023,7 @@ public class ddenlovr
 		{ 80 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_ddenlovr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddenlovr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,24000000 / 2)
@@ -2079,32 +2046,24 @@ public class ddenlovr
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_quiz365 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quiz365 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ddenlovr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(quiz365_readmem,quiz365_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nettoqc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nettoqc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ddenlovr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(nettoqc_readmem,nettoqc_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 									Rong Rong
@@ -2117,8 +2076,7 @@ public class ddenlovr
 	   0xee is vblank
 	   0xfc is from the 6242RTC
 	 */
-	public static InterruptHandlerPtr quizchq_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr quizchq_irq = new InterruptHandlerPtr() {public void handler(){
 		static int count;
 	
 		/* I haven't found a irq ack register, so I need this kludge to
@@ -2133,13 +2091,11 @@ public class ddenlovr
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xee);
 	} };
 	
-	public static InterruptHandlerPtr rtc_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr rtc_irq = new InterruptHandlerPtr() {public void handler(){
 	//	cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xfc);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_quizchq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizchq )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000)	/* ? */
@@ -2164,21 +2120,16 @@ public class ddenlovr
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rongrong = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rongrong )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(quizchq)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(rongrong_readmem,rongrong_writemem)
 		MDRV_CPU_PORTS(rongrong_readport,rongrong_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	***************************************************************************/
@@ -2189,8 +2140,7 @@ public class ddenlovr
 		RST 18 is from the blitter
 		RST 20 is from the 6242RTC
 	 */
-	public static InterruptHandlerPtr mmpanic_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mmpanic_irq = new InterruptHandlerPtr() {public void handler(){
 		static int count;
 	
 		/* I haven't found a irq ack register, so I need this kludge to
@@ -2205,8 +2155,7 @@ public class ddenlovr
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	// RST 08, vblank
 	} };
 	
-	public static MachineHandlerPtr machine_driver_mmpanic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mmpanic )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000)	/* ? */
@@ -2236,9 +2185,7 @@ public class ddenlovr
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2510,8 +2457,7 @@ public class ddenlovr
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_rongrong  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rongrong  = new DriverInitHandlerPtr() { public void handler(){
 		/* Rong Rong seems to have a protection that works this way:
 			- write 01 to port c2
 			- write three times to f705 (a fixed command?)
@@ -2529,13 +2475,13 @@ public class ddenlovr
 	} };
 	
 	
-	public static GameDriver driver_mmpanic	   = new GameDriver("1992"	,"mmpanic"	,"ddenlovr.java"	,rom_mmpanic,null	,machine_driver_mmpanic	,input_ports_mmpanic	,null	,ROT0	,	"Nakanihon + East Technology (Taito license)", "Monkey Mole Panic (USA)",                    GAME_NO_COCKTAIL )
-	public static GameDriver driver_quizchq	   = new GameDriver("1993"	,"quizchq"	,"ddenlovr.java"	,rom_quizchq,null	,machine_driver_quizchq	,input_ports_quizchq	,null	,ROT0	,	"Nakanihon",                                   "Quiz Channel Question (Ver 1.00) (Japan)",   GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_quizchql	   = new GameDriver("1993"	,"quizchql"	,"ddenlovr.java"	,rom_quizchql,driver_quizchq	,machine_driver_quizchq	,input_ports_quizchq	,null	,ROT0	,	"Nakanihon (Laxan license)",                   "Quiz Channel Question (Ver 1.23) (Taiwan?)", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_quiz365	   = new GameDriver("1994"	,"quiz365"	,"ddenlovr.java"	,rom_quiz365,null	,machine_driver_quiz365	,input_ports_quiz365	,null	,ROT0	,	"Nakanihon",                                   "Quiz 365 (Hong Kong & Taiwan)",              GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
-	public static GameDriver driver_rongrong	   = new GameDriver("1994"	,"rongrong"	,"ddenlovr.java"	,rom_rongrong,null	,machine_driver_rongrong	,input_ports_rongrong	,init_rongrong	,ROT0	,	"Nakanihon",                                   "Rong Rong (Germany)",                        GAME_NO_COCKTAIL )
-	public static GameDriver driver_nettoqc	   = new GameDriver("1995"	,"nettoqc"	,"ddenlovr.java"	,rom_nettoqc,null	,machine_driver_nettoqc	,input_ports_nettoqc	,null	,ROT0	,	"Nakanihon",                                   "Nettoh Quiz Champion (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_ddenlovr	   = new GameDriver("1996"	,"ddenlovr"	,"ddenlovr.java"	,rom_ddenlovr,null	,machine_driver_ddenlovr	,input_ports_ddenlovr	,null	,ROT0	,	"Dynax",                                       "Don Den Lover Vol. 1 (Hong Kong)",           GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
+	GAMEX(1992, mmpanic,  0,       mmpanic,  mmpanic,  0,        ROT0, "Nakanihon + East Technology (Taito license)", "Monkey Mole Panic (USA)",                    GAME_NO_COCKTAIL )
+	GAMEX(1993, quizchq,  0,       quizchq,  quizchq,  0,        ROT0, "Nakanihon",                                   "Quiz Channel Question (Ver 1.00) (Japan)",   GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX(1993, quizchql, quizchq, quizchq,  quizchq,  0,        ROT0, "Nakanihon (Laxan license)",                   "Quiz Channel Question (Ver 1.23) (Taiwan?)", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX(1994, quiz365,  0,       quiz365,  quiz365,  0,        ROT0, "Nakanihon",                                   "Quiz 365 (Hong Kong & Taiwan)",              GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	GAMEX(1994, rongrong, 0,       rongrong, rongrong, rongrong, ROT0, "Nakanihon",                                   "Rong Rong (Germany)",                        GAME_NO_COCKTAIL )
+	GAMEX(1995, nettoqc,  0,       nettoqc,  nettoqc,  0,        ROT0, "Nakanihon",                                   "Nettoh Quiz Champion (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
+	GAMEX(1996, ddenlovr, 0,       ddenlovr, ddenlovr, 0,        ROT0, "Dynax",                                       "Don Den Lover Vol. 1 (Hong Kong)",           GAME_NO_COCKTAIL | GAME_IMPERFECT_COLORS )
 	
-	public static GameDriver driver_hanakanz	   = new GameDriver("1996"	,"hanakanz"	,"ddenlovr.java"	,rom_hanakanz,null	,machine_driver_rongrong	,input_ports_rongrong	,null	,ROT0	,	"Dynax",     "Hanakanzashi (Japan)", GAME_NOT_WORKING )
+	GAMEX(1996, hanakanz, 0,       rongrong, rongrong, 0,        ROT0, "Dynax",     "Hanakanzashi (Japan)", GAME_NOT_WORKING )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class vulgus
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_vulgus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_vulgus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -125,8 +124,7 @@ public class vulgus
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_vulgus  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vulgus  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR, 8, 8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE           ,16,16,32,32);
 	
@@ -145,21 +143,18 @@ public class vulgus
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr vulgus_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vulgus_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vulgus_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr vulgus_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vulgus_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vulgus_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset & 0x3ff);
 	} };
 	
 	
-	public static WriteHandlerPtr vulgus_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vulgus_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
@@ -169,8 +164,7 @@ public class vulgus
 	} };
 	
 	
-	public static WriteHandlerPtr vulgus_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vulgus_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (vulgus_palette_bank != (data & 3))
 		{
 			vulgus_palette_bank = data & 3;
@@ -200,7 +194,7 @@ public class vulgus
 			sx = spriteram.read(offs + 3);
 			sy = spriteram.read(offs + 2);
 			dir = 1;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -212,7 +206,7 @@ public class vulgus
 	
 			do
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code + i,
 						col,
 						flip_screen(),flip_screen(),
@@ -220,7 +214,7 @@ public class vulgus
 						cliprect,TRANSPARENCY_PEN,15);
 	
 				/* draw again with wraparound */
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code + i,
 						col,
 						flip_screen(),flip_screen(),
@@ -231,8 +225,7 @@ public class vulgus
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vulgus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vulgus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, vulgus_scroll_low[1] + 256 * vulgus_scroll_high[1]);
 		tilemap_set_scrolly(bg_tilemap, 0, vulgus_scroll_low[0] + 256 * vulgus_scroll_high[0]);
 	

@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,20 +38,19 @@ public class xybots
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 1;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_xybots  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_xybots  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -72,7 +71,7 @@ public class xybots
 	
 		int result = readinputport(1);
 	
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0200;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0200;
 		result ^= h256 ^= 0x0400;
 		return result;
 	}
@@ -119,7 +118,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_xybots = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xybots = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xybots )
 		PORT_START(); 	/* ffe100 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
@@ -197,8 +196,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_xybots = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xybots )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -223,9 +221,7 @@ public class xybots
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo_swapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -397,8 +393,7 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_xybots  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xybots  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x008000, 107);
 		atarijsa_init(1, 2, 1, 0x0100);
@@ -412,9 +407,9 @@ public class xybots
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_xybots	   = new GameDriver("1987"	,"xybots"	,"xybots.java"	,rom_xybots,null	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 2)" )
-	public static GameDriver driver_xybotsg	   = new GameDriver("1987"	,"xybotsg"	,"xybots.java"	,rom_xybotsg,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (German, rev 3)" )
-	public static GameDriver driver_xybotsf	   = new GameDriver("1987"	,"xybotsf"	,"xybots.java"	,rom_xybotsf,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (French, rev 3)" )
-	public static GameDriver driver_xybots1	   = new GameDriver("1987"	,"xybots1"	,"xybots.java"	,rom_xybots1,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 1)" )
-	public static GameDriver driver_xybots0	   = new GameDriver("1987"	,"xybots0"	,"xybots.java"	,rom_xybots0,driver_xybots	,machine_driver_xybots	,input_ports_xybots	,init_xybots	,ROT0	,	"Atari Games", "Xybots (rev 0)" )
+	GAME( 1987, xybots,  0,      xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 2)" )
+	GAME( 1987, xybotsg, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (German, rev 3)" )
+	GAME( 1987, xybotsf, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (French, rev 3)" )
+	GAME( 1987, xybots1, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 1)" )
+	GAME( 1987, xybots0, xybots, xybots, xybots, xybots, ROT0, "Atari Games", "Xybots (rev 0)" )
 }

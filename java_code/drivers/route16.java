@@ -69,7 +69,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -78,8 +78,7 @@ public class route16
 	
 	
 	
-	public static ReadHandlerPtr routex_prot_read  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr routex_prot_read  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x2f) return 0xFB;
 	
 		logerror ("cpu #%d (PC=%08X): unmapped prot read\n", cpu_getactivecpu(), activecpu_get_pc());
@@ -186,7 +185,7 @@ public class route16
 	};
 	
 	
-	static InputPortPtr input_ports_route16 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_route16 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( route16 )
 		PORT_START();       /* DSW 1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -235,7 +234,7 @@ public class route16
 	
 	
 	
-	static InputPortPtr input_ports_stratvox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stratvox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stratvox )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -280,7 +279,7 @@ public class route16
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_speakres = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_speakres = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( speakres )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -324,7 +323,7 @@ public class route16
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacecho = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacecho = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacecho )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -412,8 +411,7 @@ public class route16
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_route16 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( route16 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("cpu1", Z80, 2500000)	/* 10MHz / 4 = 2.5MHz */
@@ -440,23 +438,17 @@ public class route16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_routex = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( routex )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(route16)
 		MDRV_CPU_MODIFY("cpu1")
 		MDRV_CPU_MEMORY(routex_cpu1_readmem,routex_cpu1_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_stratvox = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stratvox )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(route16)
@@ -464,33 +456,25 @@ public class route16
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477, sn76477_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_speakres = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( speakres )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(stratvox)
 		MDRV_CPU_MODIFY("cpu1")
 		MDRV_CPU_MEMORY(altcpu1_readmem,altcpu1_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacecho = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacecho )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(speakres)
 		MDRV_CPU_MODIFY("cpu2")
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,48)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -648,13 +632,11 @@ public class route16
 	  Set hardware dependent flag.
 	
 	***************************************************************************/
-	public static DriverInitHandlerPtr init_route16b  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_route16b  = new DriverInitHandlerPtr() { public void handler(){
 	    route16_hardware = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_route16  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_route16  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		/* Is this actually a bootleg? some of the protection has
 		   been removed */
@@ -669,8 +651,7 @@ public class route16
 		init_route16b();
 	} };
 	
-	public static DriverInitHandlerPtr init_route16a  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_route16a  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *ROM = memory_region(REGION_CPU1);
 		/* TO DO : Replace these patches with simulation of the protection device */
 	
@@ -693,18 +674,17 @@ public class route16
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_stratvox  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stratvox  = new DriverInitHandlerPtr() { public void handler(){
 	    route16_hardware = 0;
 	} };
 	
 	
 	
-	public static GameDriver driver_route16	   = new GameDriver("1981"	,"route16"	,"route16.java"	,rom_route16,null	,machine_driver_route16	,input_ports_route16	,init_route16	,ROT270	,	"Tehkan/Sun (Centuri license)", "Route 16" )
-	public static GameDriver driver_route16a	   = new GameDriver("1981"	,"route16a"	,"route16.java"	,rom_route16a,driver_route16	,machine_driver_route16	,input_ports_route16	,init_route16a	,ROT270	,	"Tehkan/Sun (Centuri license)", "Route 16 (set 2)" )
-	public static GameDriver driver_route16b	   = new GameDriver("1981"	,"route16b"	,"route16.java"	,rom_route16b,driver_route16	,machine_driver_route16	,input_ports_route16	,init_route16b	,ROT270	,	"bootleg", "Route 16 (bootleg)" )
-	public static GameDriver driver_routex	   = new GameDriver("1981"	,"routex"	,"route16.java"	,rom_routex,driver_route16	,machine_driver_routex	,input_ports_route16	,init_route16b	,ROT270	,	"bootleg", "Route X (bootleg)" )
-	public static GameDriver driver_speakres	   = new GameDriver("1980"	,"speakres"	,"route16.java"	,rom_speakres,null	,machine_driver_speakres	,input_ports_speakres	,init_stratvox	,ROT270	,	"Sun Electronics", "Speak & Rescue" )
-	public static GameDriver driver_stratvox	   = new GameDriver("1980"	,"stratvox"	,"route16.java"	,rom_stratvox,driver_speakres	,machine_driver_stratvox	,input_ports_stratvox	,init_stratvox	,ROT270	,	"[Sun Electronics] (Taito license)", "Stratovox" )
-	public static GameDriver driver_spacecho	   = new GameDriver("1980"	,"spacecho"	,"route16.java"	,rom_spacecho,driver_speakres	,machine_driver_spacecho	,input_ports_spacecho	,init_stratvox	,ROT270	,	"bootleg", "Space Echo" )
+	GAME( 1981, route16,  0,        route16,  route16,  route16,  ROT270, "Tehkan/Sun (Centuri license)", "Route 16" )
+	GAME( 1981, route16a, route16,  route16,  route16,  route16a, ROT270, "Tehkan/Sun (Centuri license)", "Route 16 (set 2)" )
+	GAME( 1981, route16b, route16,  route16,  route16,  route16b, ROT270, "bootleg", "Route 16 (bootleg)" )
+	GAME( 1981, routex,   route16,  routex,   route16,  route16b, ROT270, "bootleg", "Route X (bootleg)" )
+	GAME( 1980, speakres, 0,        speakres, speakres, stratvox, ROT270, "Sun Electronics", "Speak & Rescue" )
+	GAME( 1980, stratvox, speakres, stratvox, stratvox, stratvox, ROT270, "[Sun Electronics] (Taito license)", "Stratovox" )
+	GAME( 1980, spacecho, speakres, spacecho, spacecho, stratvox, ROT270, "bootleg", "Space Echo" )
 }

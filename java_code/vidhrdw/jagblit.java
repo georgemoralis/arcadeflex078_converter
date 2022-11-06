@@ -12,7 +12,7 @@
 	#define A2FIXED  -- fixed A2 flag bits for blitter
 	/*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -210,7 +210,7 @@ public class jagblit
 	
 		/* determine actual xadd/yadd for A1 */
 		a1_yadd <<= 16;
-		if ((A1FIXED & 0x00100000) != 0)
+		if (A1FIXED & 0x00100000)
 			a1_yadd = -a1_yadd;
 	
 		a1_phrase_mode = (a1_xadd == 0);
@@ -223,12 +223,12 @@ public class jagblit
 			a1_xadd = 0;
 		else
 			a1_xadd = 1 << 16;
-		if ((A1FIXED & 0x00080000) != 0)
+		if (A1FIXED & 0x00080000)
 			a1_xadd = -a1_xadd;
 	
 		/* determine actual xadd/yadd for A2 */
 		a2_yadd <<= 16;
-		if ((A2FIXED & 0x00100000) != 0)
+		if (A2FIXED & 0x00100000)
 			a2_yadd = -a2_yadd;
 	
 		a2_phrase_mode = (a2_xadd == 0);
@@ -236,28 +236,28 @@ public class jagblit
 			a2_xadd = 0;
 		else
 			a2_xadd = 1 << 16;
-		if ((A2FIXED & 0x00080000) != 0)
+		if (A2FIXED & 0x00080000)
 			a2_xadd = -a2_xadd;
 	
 		/* set up the A2 mask */
-		if ((A2FIXED & 0x00008000) != 0)
+		if (A2FIXED & 0x00008000)
 		{
 			a2_xmask = (blitter_regs[A2_MASK] << 16) | 0xffff;
 			a2_ymask = (blitter_regs[A2_MASK] & 0xffff) | 0xffff;
 		}
 	
 		/* modify outer loop steps based on command */
-		if ((command & 0x00000100) != 0)
+		if (command & 0x00000100)
 		{
 			a1_xstep = blitter_regs[A1_FSTEP] & 0xffff;
 			a1_ystep = blitter_regs[A1_FSTEP] >> 16;
 		}
-		if ((command & 0x00000200) != 0)
+		if (command & 0x00000200)
 		{
 			a1_xstep += blitter_regs[A1_STEP] << 16;
 			a1_ystep += blitter_regs[A1_STEP] & 0xffff0000;
 		}
-		if ((command & 0x00000400) != 0)
+		if (command & 0x00000400)
 		{
 			a2_xstep = blitter_regs[A2_STEP] << 16;
 			a2_ystep = blitter_regs[A2_STEP] & 0xffff0000;
@@ -309,7 +309,7 @@ public class jagblit
 	
 	#if LOG_UNHANDLED_BLITS
 		/* check for unhandled command bits */
-		if ((COMMAND & 0x24003000) != 0)
+		if (COMMAND & 0x24003000)
 			logerror("Blitter unhandled: these command bits: %08X\n", COMMAND & 0x24003000);
 	#endif /* LOG_UNHANDLED_BLITS */
 	
@@ -329,26 +329,26 @@ public class jagblit
 				int inhibit = 0;
 	
 					/* load src data and Z */
-					if ((COMMAND & 0x00000001) != 0)
+					if (COMMAND & 0x00000001)
 					{
 					srcdata = READ_PIXEL(asrc, asrcflags);
-						if ((COMMAND & 0x00000002) != 0)
+						if (COMMAND & 0x00000002)
 						srczdata = READ_ZDATA(asrc, asrcflags);
-						else if ((COMMAND & 0x001c020) != 0)
+						else if (COMMAND & 0x001c020)
 						srczdata = READ_RDATA(B_SRCZ1_H, asrc, asrcflags, asrc_phrase_mode);
 					}
 					else
 					{
 					srcdata = READ_RDATA(B_SRCD_H, asrc, asrcflags, asrc_phrase_mode);
-						if ((COMMAND & 0x001c020) != 0)
+						if (COMMAND & 0x001c020)
 						srczdata = READ_RDATA(B_SRCZ1_H, asrc, asrcflags, asrc_phrase_mode);
 					}
 	
 					/* load dst data and Z */
-					if ((COMMAND & 0x00000008) != 0)
+					if (COMMAND & 0x00000008)
 					{
 					dstdata = READ_PIXEL(adest, adestflags);
-						if ((COMMAND & 0x00000010) != 0)
+						if (COMMAND & 0x00000010)
 						dstzdata = READ_ZDATA(adest, adestflags);
 						else
 						dstzdata = READ_RDATA(B_DSTZ_H, adest, adestflags, adest_phrase_mode);
@@ -356,12 +356,12 @@ public class jagblit
 					else
 					{
 					dstdata = READ_RDATA(B_DSTD_H, adest, adestflags, adest_phrase_mode);
-						if ((COMMAND & 0x00000010) != 0)
+						if (COMMAND & 0x00000010)
 						dstzdata = READ_RDATA(B_DSTZ_H, adest, adestflags, adest_phrase_mode);
 					}
 	
 					/* handle clipping */
-					if ((COMMAND & 0x00000040) != 0)
+					if (COMMAND & 0x00000040)
 					{
 					if (adest_x < 0 || adest_y < 0 ||
 						(adest_x >> 16) >= (blitter_regs[A1_CLIP] & 0x7fff) ||
@@ -370,15 +370,15 @@ public class jagblit
 					}
 	
 					/* apply Z comparator */
-					if ((COMMAND & 0x00040000) != 0)
+					if (COMMAND & 0x00040000)
 						if (srczdata < dstzdata) inhibit = 1;
-					if ((COMMAND & 0x00080000) != 0)
+					if (COMMAND & 0x00080000)
 						if (srczdata == dstzdata) inhibit = 1;
-					if ((COMMAND & 0x00100000) != 0)
+					if (COMMAND & 0x00100000)
 						if (srczdata > dstzdata) inhibit = 1;
 	
 					/* apply data comparator */
-					if ((COMMAND & 0x08000000) != 0)
+					if (COMMAND & 0x08000000)
 					{
 						if (!(COMMAND & 0x02000000))
 						{
@@ -393,12 +393,12 @@ public class jagblit
 					}
 	
 					/* compute the write data and store */
-					if (inhibit == 0)
+					if (!inhibit)
 					{
 						/* handle patterns/additive/LFU */
-						if ((COMMAND & 0x00010000) != 0)
+						if (COMMAND & 0x00010000)
 						writedata = READ_RDATA(B_PATD_H, adest, adestflags, adest_phrase_mode);
-						else if ((COMMAND & 0x00020000) != 0)
+						else if (COMMAND & 0x00020000)
 						{
 							writedata = (srcdata & 0xff) + (dstdata & 0xff);
 							if (!(COMMAND & 0x00004000) && writedata > 0xff)
@@ -410,18 +410,18 @@ public class jagblit
 						}
 						else
 						{
-							if ((COMMAND & 0x00200000) != 0)
+							if (COMMAND & 0x00200000)
 								writedata |= ~srcdata & ~dstdata;
-							if ((COMMAND & 0x00400000) != 0)
+							if (COMMAND & 0x00400000)
 								writedata |= ~srcdata & dstdata;
-							if ((COMMAND & 0x00800000) != 0)
+							if (COMMAND & 0x00800000)
 								writedata |= srcdata & ~dstdata;
-							if ((COMMAND & 0x01000000) != 0)
+							if (COMMAND & 0x01000000)
 								writedata |= srcdata & dstdata;
 						}
 	
 					/* handle source shading */
-					if ((COMMAND & 0x40000000) != 0)
+					if (COMMAND & 0x40000000)
 					{
 						int intensity = srcdata & 0x00ff;
 						intensity += (INT8) (blitter_regs[B_Z3] >> 16);
@@ -439,7 +439,7 @@ public class jagblit
 					{
 						/* write to the destination */
 					WRITE_PIXEL(adest, adestflags, writedata);
-						if ((COMMAND & 0x00000020) != 0)
+						if (COMMAND & 0x00000020)
 						WRITE_ZDATA(adest, adestflags, srczdata);
 					}
 	
@@ -451,7 +451,7 @@ public class jagblit
 			}
 	
 			/* adjust for phrase mode */
-			if (asrc_phrase_mode != 0)
+			if (asrc_phrase_mode)
 			{
 				if (asrc_xadd > 0)
 					asrc_x += 3 << 16;
@@ -459,7 +459,7 @@ public class jagblit
 					asrc_x -= 3 << 16;
 				asrc_x &= ~(3 << 16);
 			}
-			if (adest_phrase_mode != 0)
+			if (adest_phrase_mode)
 			{
 				if (adest_xadd > 0)
 					adest_x += 3 << 16;

@@ -40,7 +40,7 @@ Note 2: Lethal Justice uses a TMS34010FNL-50 instead of the TMS34010FNL-40
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -93,7 +93,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_lethalj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lethalj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lethalj )
 		PORT_START(); 
 		PORT_BIT( 0x0003, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
@@ -155,7 +155,7 @@ public class lethalj
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_eggventr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eggventr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eggventr )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -209,7 +209,7 @@ public class lethalj
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_eggventdx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eggventdx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eggventdx )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -324,9 +324,7 @@ public class lethalj
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( eggventr )
@@ -340,9 +338,7 @@ public class lethalj
 		MDRV_SCREEN_SIZE(512, 239)
 		MDRV_VISIBLE_AREA(0, 511, 0, 238)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -438,8 +434,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_lethalj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lethalj  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	} };
@@ -452,7 +447,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_lethalj	   = new GameDriver("1996"	,"lethalj"	,"lethalj.java"	,rom_lethalj,null	,machine_driver_lethalj	,input_ports_lethalj	,init_lethalj	,ROT0	,	"The Game Room", "Lethal Justice" )
-	public static GameDriver driver_eggventr	   = new GameDriver("1997"	,"eggventr"	,"lethalj.java"	,rom_eggventr,null	,machine_driver_eggventr	,input_ports_eggventr	,init_lethalj	,ROT0	,	"The Game Room", "Egg Venture" )
-	public static GameDriver driver_eggvntdx	   = new GameDriver("1997"	,"eggvntdx"	,"lethalj.java"	,rom_eggvntdx,driver_eggventr	,machine_driver_eggventr	,input_ports_eggventdx	,init_lethalj	,ROT0	,	"The Game Room", "Egg Venture Deluxe" )
+	GAME( 1996, lethalj,  0,        lethalj,  lethalj,  lethalj, ROT0, "The Game Room", "Lethal Justice" )
+	GAME( 1997, eggventr, 0,        eggventr, eggventr, lethalj, ROT0, "The Game Room", "Egg Venture" )
+	GAME( 1997, eggvntdx, eggventr, eggventr, eggventdx, lethalj, ROT0, "The Game Room", "Egg Venture Deluxe" )
 }

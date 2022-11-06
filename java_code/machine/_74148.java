@@ -40,7 +40,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -182,7 +182,7 @@ public class _74148
 		}
 	
 	
-		chips[which].output_cb = (intf ? intf.output_cb : 0);
+		chips[which].output_cb = (intf ? intf->output_cb : 0);
 		chips[which].enable_input = 1;
 		chips[which].input_lines[0] = 1;
 		chips[which].input_lines[1] = 1;

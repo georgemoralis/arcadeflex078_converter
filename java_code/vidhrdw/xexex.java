@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class xexex
 		*color = layer_colorbase[layer] | (*color>>2 & 0x0f);
 	}
 	
-	public static VideoStartHandlerPtr video_start_xexex  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xexex  = new VideoStartHandlerPtr() { public int handler(){
 		int region = REGION_GFX3;
 	
 		if (Machine.color_depth != 32) return 1; // ensure correct bpp to avoid crashing in-game
@@ -86,8 +85,7 @@ public class xexex
 		SWAP(2, 3)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xexex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];
 		int bg_colorbase, new_colorbase, plane, alpha;
@@ -136,7 +134,7 @@ public class xexex
 	
 		K053247_sprites_draw(bitmap, cliprect);
 	
-		if (cur_alpha != 0)
+		if (cur_alpha)
 		{
 			alpha = K054338_set_alpha_level(1);
 	

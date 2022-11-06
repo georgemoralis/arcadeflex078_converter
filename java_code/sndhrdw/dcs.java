@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -288,9 +288,7 @@ public class dcs
 		MDRV_CPU_MEMORY(dcs_readmem,dcs_writemem)
 	
 		MDRV_SOUND_ADD(CUSTOM, dcs_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( dcs_audio_uart )
@@ -298,9 +296,7 @@ public class dcs
 	
 		MDRV_CPU_MODIFY("dcs")
 		MDRV_CPU_MEMORY(dcs_uart_readmem,dcs_uart_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( dcs2_audio )
@@ -310,17 +306,13 @@ public class dcs
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(CUSTOM, dcs2_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( dcs2_audio_2104 )
 		MDRV_IMPORT_FROM(dcs2_audio)
 		MDRV_CPU_REPLACE("dcs2", ADSP2104, 16000000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -332,7 +324,7 @@ public class dcs
 	{
 		data8_t *src = (data8_t *)(memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_SIZE);
 		data32_t *dst = (data32_t *)(memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_PGM_OFFSET);
-		switch (Machine.drv.cpu[dcs_cpunum].cpu_type)
+		switch (Machine->drv->cpu[dcs_cpunum].cpu_type)
 		{
 			case CPU_ADSP2104:
 				adsp2104_load_boot_data(src + 0x2000 * ((dcs.control_regs[SYSCONTROL_REG] >> 6) & 7), dst);
@@ -365,7 +357,7 @@ public class dcs
 		dcs.rombank = 0;
 		dcs.srambank = 0;
 		dcs.drambank = 0;
-		if (dcs_sram_bank0 != 0)
+		if (dcs_sram_bank0)
 		{
 			cpu_setbank(20, memory_region(REGION_CPU1 + dcs_cpunum) + ADSP2100_SIZE + 0x8000);
 			cpu_setbank(21, dcs_sram_bank0);
@@ -460,7 +452,7 @@ public class dcs
 		dcs.fifo_status_r = NULL;
 		
 		/* install the speedup handler */
-		if (polling_offset != 0)
+		if (polling_offset)
 			dcs_polling_base = install_mem_read16_handler(dcs_cpunum, ADSP_DATA_ADDR_RANGE(polling_offset, polling_offset), dcs_polling_r);
 	
 		/* reset the system */
@@ -482,7 +474,7 @@ public class dcs
 	static int dcs_custom_start(const struct MachineSound *msound)
 	{
 		/* allocate a DAC stream */
-		dcs.stream = stream_init("DCS DAC", 100, Machine.sample_rate, 0, dcs_dac_update);
+		dcs.stream = stream_init("DCS DAC", 100, Machine->sample_rate, 0, dcs_dac_update);
 	
 		/* allocate memory for our buffer */
 		dcs.buffer = auto_malloc(DCS_BUFFER_SIZE * sizeof(INT16));
@@ -500,7 +492,7 @@ public class dcs
 		int vols[] = { MIXER(100, MIXER_PAN_RIGHT), MIXER(100, MIXER_PAN_LEFT) };
 	
 		/* allocate a DAC stream */
-		dcs.stream = stream_init_multi(2, names, vols, Machine.sample_rate, 0, dcs2_dac_update);
+		dcs.stream = stream_init_multi(2, names, vols, Machine->sample_rate, 0, dcs2_dac_update);
 	
 		/* allocate memory for our buffer */
 		dcs.buffer = auto_malloc(DCS_BUFFER_SIZE * sizeof(INT16));
@@ -619,7 +611,7 @@ public class dcs
 	void dcs_reset_w(int state)
 	{
 		/* going high halts the CPU */
-		if (state != 0)
+		if (state)
 		{
 			logerror("%08x: DCS reset = %d\n", activecpu_get_pc(), state);
 	
@@ -637,9 +629,9 @@ public class dcs
 	static READ16_HANDLER( latch_status_r )
 	{
 		int result = 0;
-		if (IS_INPUT_FULL() != 0)
+		if (IS_INPUT_FULL())
 			result |= 0x80;
-		if (IS_OUTPUT_EMPTY() != 0)
+		if (IS_OUTPUT_EMPTY())
 			result |= 0x40;
 		if (dcs.fifo_status_r)
 			result |= (*dcs.fifo_status_r)() & 0x38;
@@ -713,7 +705,7 @@ public class dcs
 			}
 	#endif
 	
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("%08X:dcs_data_w(%04X)\n", activecpu_get_pc(), data);
 	
 		cpu_boost_interleave(TIME_IN_USEC(0.5), TIME_IN_USEC(5));
@@ -739,7 +731,7 @@ public class dcs
 	{
 		if (dcs.auto_ack)
 			input_latch_ack_w(0,0,0);
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("%08X:input_latch_r(%04X)\n", activecpu_get_pc(), dcs.input_data);
 		return dcs.input_data;
 	}
@@ -761,7 +753,7 @@ public class dcs
 	
 	static WRITE16_HANDLER( output_latch_w )
 	{
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("%08X:output_latch_w(%04X) (empty=%d)\n", activecpu_get_pc(), data, IS_OUTPUT_EMPTY());
 		timer_set(TIME_NOW, data, latch_delayed_w);
 	}
@@ -787,7 +779,7 @@ public class dcs
 		if (dcs.auto_ack)
 			delayed_ack_w(0);
 	
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("%08X:dcs_data_r(%04X)\n", activecpu_get_pc(), dcs.output_data);
 		return dcs.output_data;
 	}
@@ -800,7 +792,7 @@ public class dcs
 	
 	static void output_control_delayed_w(int data)
 	{
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("output_control = %04X\n", data);
 		dcs.output_control = data;
 		dcs.output_control_cycles = 0;
@@ -809,7 +801,7 @@ public class dcs
 	
 	static WRITE16_HANDLER( output_control_w )
 	{
-		if (LOG_DCS_IO != 0)
+		if (LOG_DCS_IO)
 			logerror("%04X:output_control = %04X\n", activecpu_get_pc(), data);
 		timer_set(TIME_NOW, data, output_control_delayed_w);
 	}
@@ -870,7 +862,7 @@ public class dcs
 				dcs.buffer_in -= DCS_BUFFER_SIZE;
 			}
 	
-			if (LOG_BUFFER_FILLING != 0)
+			if (LOG_BUFFER_FILLING)
 				logerror("DCS dac update: bytes in buffer = %d\n", dcs.buffer_in - (current >> 16));
 	
 			/* update the final values */
@@ -924,7 +916,7 @@ public class dcs
 				dcs.buffer_in -= DCS_BUFFER_SIZE;
 			}
 	
-			if (LOG_BUFFER_FILLING != 0)
+			if (LOG_BUFFER_FILLING)
 				logerror("DCS dac update: bytes in buffer = %d\n", dcs.buffer_in - (current >> 16));
 	
 			/* update the final values */
@@ -968,7 +960,7 @@ public class dcs
 		switch (offset)
 		{
 			case SYSCONTROL_REG:
-				if ((data & 0x0200) != 0)
+				if (data & 0x0200)
 				{
 					/* boot force */
 					cpu_set_reset_line(dcs_cpunum, PULSE_LINE);
@@ -1112,7 +1104,7 @@ public class dcs
 				/* calculate how long until we generate an interrupt */
 	
 				/* frequency in Hz per each bit sent */
-				sample_rate = Machine.drv.cpu[dcs_cpunum].cpu_clock / (2 * (dcs.control_regs[S1_SCLKDIV_REG] + 1));
+				sample_rate = Machine->drv->cpu[dcs_cpunum].cpu_clock / (2 * (dcs.control_regs[S1_SCLKDIV_REG] + 1));
 	
 				/* now put it down to samples, so we know what the channel frequency has to be */
 				sample_rate /= 16;
@@ -1126,7 +1118,7 @@ public class dcs
 					timer_adjust(dcs.reg_timer, TIME_IN_HZ(sample_rate) * (dcs.size / (4 * dcs.incs)), 0, TIME_IN_HZ(sample_rate) * (dcs.size / (4 * dcs.incs)));
 	
 				/* configure the DAC generator */
-				dcs.sample_step = (int)(sample_rate * 65536.0 / (double)Machine.sample_rate);
+				dcs.sample_step = (int)(sample_rate * 65536.0 / (double)Machine->sample_rate);
 				dcs.sample_position = 0;
 				dcs.buffer_in = 0;
 	

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,7 +50,7 @@ public class amidar
 	
 	
 	
-	static InputPortPtr input_ports_amidar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amidar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amidar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably space for button 2 */
@@ -132,7 +132,7 @@ public class amidar
 	INPUT_PORTS_END(); }}; 
 	
 	/* absolutely identical to amidar, the only difference is the BONUS dip switch */
-	static InputPortPtr input_ports_amidaru = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amidaru = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amidaru )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably space for button 2 */
@@ -213,7 +213,7 @@ public class amidar
 		PORT_DIPSETTING(    0x00, "Disable All Coins" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_amidaro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amidaro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amidaro )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably space for button 2 */
@@ -296,7 +296,7 @@ public class amidar
 	
 	/* similar to Amidar, dip switches are different and port 3, which in Amidar */
 	/* selects coins per credit, is not used. */
-	static InputPortPtr input_ports_turtles = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_turtles = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( turtles )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably space for button 2 */
@@ -341,7 +341,7 @@ public class amidar
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as Turtles, but dip switches are different. */
-	static InputPortPtr input_ports_turpin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_turpin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( turpin )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably space for button 2 */
@@ -386,8 +386,7 @@ public class amidar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_amidar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( amidar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -409,9 +408,7 @@ public class amidar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -561,11 +558,11 @@ public class amidar
 	
 	
 	
-	public static GameDriver driver_amidar	   = new GameDriver("1981"	,"amidar"	,"amidar.java"	,rom_amidar,null	,machine_driver_amidar	,input_ports_amidar	,init_amidar	,ROT90	,	"Konami", "Amidar" )
-	public static GameDriver driver_amidaru	   = new GameDriver("1982"	,"amidaru"	,"amidar.java"	,rom_amidaru,driver_amidar	,machine_driver_amidar	,input_ports_amidaru	,init_amidar	,ROT90	,	"Konami (Stern license)", "Amidar (Stern)" )
-	public static GameDriver driver_amidaro	   = new GameDriver("1982"	,"amidaro"	,"amidar.java"	,rom_amidaro,driver_amidar	,machine_driver_amidar	,input_ports_amidaro	,init_amidar	,ROT90	,	"Konami (Olympia license)", "Amidar (Olympia)" )
-	public static GameDriver driver_amigo	   = new GameDriver("1982"	,"amigo"	,"amidar.java"	,rom_amigo,driver_amidar	,machine_driver_amidar	,input_ports_amidaru	,init_amidar	,ROT90	,	"bootleg", "Amigo" )
-	public static GameDriver driver_turtles	   = new GameDriver("1981"	,"turtles"	,"amidar.java"	,rom_turtles,null	,machine_driver_amidar	,input_ports_turtles	,init_scramble_ppi	,ROT90	,	"[Konami] (Stern license)", "Turtles" )
-	public static GameDriver driver_turpin	   = new GameDriver("1981"	,"turpin"	,"amidar.java"	,rom_turpin,driver_turtles	,machine_driver_amidar	,input_ports_turpin	,init_scramble_ppi	,ROT90	,	"[Konami] (Sega license)", "Turpin" )
-	public static GameDriver driver_600	   = new GameDriver("1981"	,"600"	,"amidar.java"	,rom_600,driver_turtles	,machine_driver_amidar	,input_ports_turtles	,init_scramble_ppi	,ROT90	,	"Konami", "600" )
+	GAME( 1981, amidar,  0,       amidar, amidar,  amidar,       ROT90, "Konami", "Amidar" )
+	GAME( 1982, amidaru, amidar,  amidar, amidaru, amidar,       ROT90, "Konami (Stern license)", "Amidar (Stern)" )
+	GAME( 1982, amidaro, amidar,  amidar, amidaro, amidar,       ROT90, "Konami (Olympia license)", "Amidar (Olympia)" )
+	GAME( 1982, amigo,   amidar,  amidar, amidaru, amidar,       ROT90, "bootleg", "Amigo" )
+	GAME( 1981, turtles, 0,       amidar, turtles, scramble_ppi, ROT90, "[Konami] (Stern license)", "Turtles" )
+	GAME( 1981, turpin,  turtles, amidar, turpin,  scramble_ppi, ROT90, "[Konami] (Sega license)", "Turpin" )
+	GAME( 1981, 600,     turtles, amidar, turtles, scramble_ppi, ROT90, "Konami", "600" )
 }

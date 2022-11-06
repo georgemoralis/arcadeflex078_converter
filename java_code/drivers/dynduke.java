@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,8 +35,8 @@ public class dynduke
 	
 	/***************************************************************************/
 	
-	public static ReadHandlerPtr dynduke_shared_r  = new ReadHandlerPtr() { public int handler(int offset) { return dynduke_shared_ram[offset]; } };
-	public static WriteHandlerPtr dynduke_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) { dynduke_shared_ram[offset]=data; } };
+	public static ReadHandlerPtr dynduke_shared_r  = new ReadHandlerPtr() { public int handler(int offset) return dynduke_shared_ram[offset]; }
+	public static WriteHandlerPtr dynduke_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) dynduke_shared_ram[offset]=data; }
 	
 	
 	/******************************************************************************/
@@ -93,7 +93,7 @@ public class dynduke
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_dynduke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dynduke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dynduke )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 	/* IN0 */
@@ -243,18 +243,15 @@ public class dynduke
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	public static InterruptHandlerPtr dynduke_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr dynduke_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_dynduke  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_dynduke  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0); /* Could be a memory location instead */
 	} };
 	
-	public static MachineHandlerPtr machine_driver_dynduke = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dynduke )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,16000000/2) /* NEC V30-8 CPU */
@@ -286,9 +283,7 @@ public class dynduke
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -395,12 +390,11 @@ public class dynduke
 	/***************************************************************************/
 	
 	
-	public static DriverInitHandlerPtr init_dynduke  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dynduke  = new DriverInitHandlerPtr() { public void handler(){
 		seibu_sound_decrypt(REGION_CPU3,0x20000);
 	} };
 	
 	
-	public static GameDriver driver_dynduke	   = new GameDriver("1989"	,"dynduke"	,"dynduke.java"	,rom_dynduke,null	,machine_driver_dynduke	,input_ports_dynduke	,init_dynduke	,ROT0	,	"Seibu Kaihatsu (Fabtek license)", "Dynamite Duke" )
-	public static GameDriver driver_dbldyn	   = new GameDriver("1989"	,"dbldyn"	,"dynduke.java"	,rom_dbldyn,driver_dynduke	,machine_driver_dynduke	,input_ports_dynduke	,init_dynduke	,ROT0	,	"Seibu Kaihatsu (Fabtek license)", "The Double Dynamites" )
+	GAME( 1989, dynduke, 0,       dynduke, dynduke, dynduke, ROT0, "Seibu Kaihatsu (Fabtek license)", "Dynamite Duke" )
+	GAME( 1989, dbldyn,  dynduke, dynduke, dynduke, dynduke, ROT0, "Seibu Kaihatsu (Fabtek license)", "The Double Dynamites" )
 }

@@ -29,7 +29,7 @@ D000      Paddle Position and Interrupt Reset
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -42,8 +42,7 @@ public class circus
 	#if 0
 	static int circus_interrupt;
 	
-	public static ReadHandlerPtr ripcord_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ripcord_IN2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		circus_interrupt ++;
 		logerror("circus_int: %02x\n", circus_interrupt);
 		return readinputport (2);
@@ -86,7 +85,7 @@ public class circus
 	};
 	
 	
-	static InputPortPtr input_ports_circus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_circus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( circus )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -120,7 +119,7 @@ public class circus
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_robotbwl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robotbwl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robotbwl )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -155,7 +154,7 @@ public class circus
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_crash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crash )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -185,7 +184,7 @@ public class circus
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ripcord = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ripcord = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ripcord )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -273,8 +272,7 @@ public class circus
 	  Machine drivers
 	***************************************************************************/
 	#if 0
-	public static InterruptHandlerPtr ripcord_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ripcord_interrupt = new InterruptHandlerPtr() {public void handler(){
 		circus_interrupt = 0;
 	} };
 	#endif
@@ -285,8 +283,7 @@ public class circus
 		{ 255, 255 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_circus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( circus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -310,13 +307,10 @@ public class circus
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, circus_samples_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_robotbwl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robotbwl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -339,12 +333,9 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_crash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,11289000/16) /* 705.562kHz */
@@ -367,12 +358,9 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ripcord = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ripcord )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 705562)        /* 11.289MHz / 16 */
@@ -395,9 +383,7 @@ public class circus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -489,14 +475,13 @@ public class circus
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_circus  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_circus  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(circus_overlay);
 	} };
 	
 	
-	public static GameDriver driver_circus	   = new GameDriver("1977"	,"circus"	,"circus.java"	,rom_circus,null	,machine_driver_circus	,input_ports_circus	,init_circus	,ROT0	,	"Exidy", "Circus" )
-	public static GameDriver driver_robotbwl	   = new GameDriver("1977"	,"robotbwl"	,"circus.java"	,rom_robotbwl,null	,machine_driver_robotbwl	,input_ports_robotbwl	,null	,ROT0	,	"Exidy", "Robot Bowl", GAME_NO_SOUND )
-	public static GameDriver driver_crash	   = new GameDriver("1979"	,"crash"	,"circus.java"	,rom_crash,null	,machine_driver_crash	,input_ports_crash	,null	,ROT0	,	"Exidy", "Crash", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_ripcord	   = new GameDriver("1979"	,"ripcord"	,"circus.java"	,rom_ripcord,null	,machine_driver_ripcord	,input_ports_ripcord	,null	,ROT0	,	"Exidy", "Rip Cord", GAME_IMPERFECT_SOUND )
+	GAME( 1977, circus,   0, circus,   circus,   circus, ROT0, "Exidy", "Circus" )
+	GAMEX( 1977, robotbwl, 0, robotbwl, robotbwl, 0,      ROT0, "Exidy", "Robot Bowl", GAME_NO_SOUND )
+	GAMEX( 1979, crash,    0, crash,    crash,    0,      ROT0, "Exidy", "Crash", GAME_IMPERFECT_SOUND )
+	GAMEX( 1979, ripcord,  0, ripcord,  ripcord,  0,      ROT0, "Exidy", "Rip Cord", GAME_IMPERFECT_SOUND )
 }

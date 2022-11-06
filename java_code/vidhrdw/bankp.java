@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,8 +45,7 @@ public class bankp
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_bankp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bankp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -93,13 +92,11 @@ public class bankp
 		/* the bottom half of the PROM seems to be not used */
 	} };
 	
-	public static WriteHandlerPtr bankp_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankp_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_x = data;
 	} };
 	
-	public static WriteHandlerPtr bankp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -107,8 +104,7 @@ public class bankp
 		}
 	} };
 	
-	public static WriteHandlerPtr bankp_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankp_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -116,17 +112,15 @@ public class bankp
 		}
 	} };
 	
-	public static WriteHandlerPtr bankp_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (bankp_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr bankp_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (bankp_videoram2[offset] != data)
 		{
-			bankp_videoram2.write(offset,data);
+			bankp_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr bankp_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankp_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bankp_colorram2[offset] != data)
 		{
 			bankp_colorram2[offset] = data;
@@ -134,8 +128,7 @@ public class bankp
 		}
 	} };
 	
-	public static WriteHandlerPtr bankp_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankp_out_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-1 are playfield priority */
 		/* TODO: understand how this works */
 		priority = data & 0x03;
@@ -157,7 +150,7 @@ public class bankp
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = bankp_videoram2.read(tile_index)+ 256 * (bankp_colorram2[tile_index] & 0x07);
+		int code = bankp_videoram2[tile_index] + 256 * (bankp_colorram2[tile_index] & 0x07);
 		int color = bankp_colorram2[tile_index] >> 4;
 		int flags = (bankp_colorram2[tile_index] & 0x08) ? TILE_FLIPX : 0;
 	
@@ -173,18 +166,17 @@ public class bankp
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_bankp  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bankp  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap, 0);
@@ -193,12 +185,11 @@ public class bankp
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bankp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* The tilemap has to be shifted to the left in flip screen mode
 			because the visible tilemap data is not centered in video memory */
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			tilemap_set_scrollx(fg_tilemap, 0, -scroll_x - 16);
 			tilemap_set_scrollx(bg_tilemap, 0, -16);

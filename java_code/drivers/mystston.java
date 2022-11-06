@@ -15,7 +15,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,20 +31,18 @@ public class mystston
 	static int soundlatch;
 	
 	
-	public static WriteHandlerPtr mystston_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch = data;
 	} };
 	
-	public static WriteHandlerPtr mystston_soundcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_soundcontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		/* bit 5 goes to 8910 #0 BDIR pin  */
 		if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
-			if ((last & 0x10) != 0)
+			if (last & 0x10)
 				AY8910_control_port_0_w.handler(0,soundlatch);
 			else
 				AY8910_write_port_0_w.handler(0,soundlatch);
@@ -53,7 +51,7 @@ public class mystston
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
-			if ((last & 0x40) != 0)
+			if (last & 0x40)
 				AY8910_control_port_1_w.handler(0,soundlatch);
 			else
 				AY8910_write_port_1_w.handler(0,soundlatch);
@@ -62,15 +60,13 @@ public class mystston
 		last = data;
 	} };
 	
-	public static ReadHandlerPtr port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int port = readinputport(3);
 	
 		return port | VBLK;
 	} };
 	
-	public static WriteHandlerPtr mystston_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_irq_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
@@ -108,7 +104,7 @@ public class mystston
 	};
 	
 	
-	static InputPortPtr input_ports_mystston = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mystston = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mystston )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -208,8 +204,7 @@ public class mystston
 	);
 	
 	
-	public static InterruptHandlerPtr mystston_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mystston_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int scanline = 271 - cpu_getiloops();
 		static int coin;
 	
@@ -240,8 +235,7 @@ public class mystston
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_mystston = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mystston )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12000000/8)	// 1.5 MHz
@@ -264,9 +258,7 @@ public class mystston
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_mystston = new RomLoadPtr(){ public void handler(){ 
@@ -328,6 +320,6 @@ public class mystston
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_mystston	   = new GameDriver("1984"	,"mystston"	,"mystston.java"	,rom_mystston,null	,machine_driver_mystston	,input_ports_mystston	,null	,ROT270	,	"Technos", "Mysterious Stones - Dr. John's Adventure" )
-	public static GameDriver driver_myststno	   = new GameDriver("1984"	,"myststno"	,"mystston.java"	,rom_myststno,driver_mystston	,machine_driver_mystston	,input_ports_mystston	,null	,ROT270	,	"Technos", "Mysterious Stones - Dr. Kick in Adventure" )
+	GAME( 1984, mystston, 0,        mystston, mystston, 0, ROT270, "Technos", "Mysterious Stones - Dr. John's Adventure" )
+	GAME( 1984, myststno, mystston, mystston, mystston, 0, ROT270, "Technos", "Mysterious Stones - Dr. Kick in Adventure" )
 }

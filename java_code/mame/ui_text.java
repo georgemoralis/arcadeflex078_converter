@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -251,7 +251,7 @@ public class ui_text
 	
 		/* allocate the translated text array, and set defaults */
 		trans_text = auto_malloc(sizeof(const char *) * string_count);
-		if (trans_text == 0)
+		if (!trans_text)
 			return 1;
 	
 		/* copy in references to all of the strings */
@@ -265,7 +265,7 @@ public class ui_text
 		memset(&lang, 0, sizeof(lang));
 	
 		/* if no language file, exit */
-		if (langfile == 0)
+		if (!langfile)
 			return 0;
 	
 		while (mame_fgets (curline, sizeof(curline) / sizeof(curline[0]), langfile) != NULL)

@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,17 +50,16 @@ public class starcrus
 	int starcrus_launch1_sound_playing = 0;
 	int starcrus_launch2_sound_playing = 0;
 	
-	public static WriteHandlerPtr starcrus_s1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s1_x = data^0xff; } };
-	public static WriteHandlerPtr starcrus_s1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s1_y = data^0xff; } };
-	public static WriteHandlerPtr starcrus_s2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s2_x = data^0xff; } };
-	public static WriteHandlerPtr starcrus_s2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { s2_y = data^0xff; } };
-	public static WriteHandlerPtr starcrus_p1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p1_x = data^0xff; } };
-	public static WriteHandlerPtr starcrus_p1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p1_y = data^0xff; } };
-	public static WriteHandlerPtr starcrus_p2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_x = data^0xff; } };
-	public static WriteHandlerPtr starcrus_p2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) { p2_y = data^0xff; } };
+	public static WriteHandlerPtr starcrus_s1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) s1_x = data^0xff; }
+	public static WriteHandlerPtr starcrus_s1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) s1_y = data^0xff; }
+	public static WriteHandlerPtr starcrus_s2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) s2_x = data^0xff; }
+	public static WriteHandlerPtr starcrus_s2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) s2_y = data^0xff; }
+	public static WriteHandlerPtr starcrus_p1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) p1_x = data^0xff; }
+	public static WriteHandlerPtr starcrus_p1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) p1_y = data^0xff; }
+	public static WriteHandlerPtr starcrus_p2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) p2_x = data^0xff; }
+	public static WriteHandlerPtr starcrus_p2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) p2_y = data^0xff; }
 	
-	public static VideoStartHandlerPtr video_start_starcrus  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_starcrus  = new VideoStartHandlerPtr() { public int handler(){
 		if ((ship1_vid = auto_bitmap_alloc(16,16)) == 0)
 			return 1;
 	
@@ -76,8 +75,7 @@ public class starcrus
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr starcrus_ship_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starcrus_ship_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    s1_sprite = data&0x1f;
 	    engine1_on = ((data&0x20)>>5)^0x01;
 	
@@ -100,8 +98,7 @@ public class starcrus
 		}
 	} };
 	
-	public static WriteHandlerPtr starcrus_ship_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starcrus_ship_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    s2_sprite = data&0x1f;
 	    set_led_status(2,~data & 0x80); 		/* game over lamp */
 	    coin_counter_w(0, ((data&0x40)>>6)^0x01); 	/* coin counter */
@@ -126,8 +123,7 @@ public class starcrus
 	
 	} };
 	
-	public static WriteHandlerPtr starcrus_proj_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starcrus_proj_parm_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    p1_sprite = data&0x0f;
 	    launch1_on = ((data&0x20)>>5)^0x01;
 	    explode1_on = ((data&0x10)>>4)^0x01;
@@ -149,7 +145,7 @@ public class starcrus
 			}
 		}
 	
-		if (launch1_on != 0)
+		if (launch1_on)
 		{
 			if (starcrus_launch1_sound_playing == 0)
 			{
@@ -163,8 +159,7 @@ public class starcrus
 		}
 	} };
 	
-	public static WriteHandlerPtr starcrus_proj_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starcrus_proj_parm_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    p2_sprite = data&0x0f;
 	    launch2_on = ((data&0x20)>>5)^0x01;
 	    explode2_on = ((data&0x10)>>4)^0x01;
@@ -186,7 +181,7 @@ public class starcrus
 			}
 		}
 	
-		if (launch2_on != 0)
+		if (launch2_on)
 		{
 			if (starcrus_launch2_sound_playing == 0)
 			{
@@ -211,8 +206,8 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship1_vid,Machine.pens[0],&clip);
-	    fillbitmap(ship2_vid,Machine.pens[0],&clip);
+	    fillbitmap(ship1_vid,Machine->pens[0],&clip);
+	    fillbitmap(ship2_vid,Machine->pens[0],&clip);
 	
 		/* origin is with respect to ship1 */
 	
@@ -221,7 +216,7 @@ public class starcrus
 	
 		/* Draw ship 1 */
 	    drawgfx(ship1_vid,
-	            Machine.gfx[8+((s1_sprite&0x04)>>2)],
+	            Machine->gfx[8+((s1_sprite&0x04)>>2)],
 	            (s1_sprite&0x03)^0x03,
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
@@ -232,7 +227,7 @@ public class starcrus
 	
 		/* Draw ship 2 */
 	    drawgfx(ship2_vid,
-	            Machine.gfx[10+((s2_sprite&0x04)>>2)],
+	            Machine->gfx[10+((s2_sprite&0x04)>>2)],
 	            (s2_sprite&0x03)^0x03,
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
@@ -246,10 +241,10 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship1_vid, sx, sy)==Machine.pens[1])
+	        	if (read_pixel(ship1_vid, sx, sy)==Machine->pens[1])
 	           	{
 	        		/* Condition 1 - ship 1 = ship 2 */
-					if (read_pixel(ship2_vid, sx, sy)==Machine.pens[1])
+					if (read_pixel(ship2_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 				}
 	        }
@@ -276,19 +271,19 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
 	
 		/* origin is with respect to proj1 */
 	
 		org_x = p1_x;
 		org_y = p1_y;
 	
-		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
+		if (p1_sprite & 0x08)	/* if p1 is a projectile */
 		{
 			/* Draw score/projectile 1 */
 			drawgfx(proj1_vid,
-					Machine.gfx[(p1_sprite&0x0c)>>2],
+					Machine->gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -298,11 +293,11 @@ public class starcrus
 					0);
 		}
 	
-		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
+		if (p2_sprite & 0x08)	/* if p2 is a projectile */
 		{
 			/* Draw score/projectile 2 */
 			drawgfx(proj2_vid,
-					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -317,10 +312,10 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
+	        	if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
 	           	{
 	        		/* Condition 1 - proj 1 = proj 2 */
-					if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
+					if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 				}
 	        }
@@ -347,9 +342,9 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship1_vid,Machine.pens[0],&clip);
-	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
+	    fillbitmap(ship1_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
 	
 		/* origin is with respect to ship1 */
 	
@@ -358,7 +353,7 @@ public class starcrus
 	
 		/* Draw ship 1 */
 	    drawgfx(ship1_vid,
-	            Machine.gfx[8+((s1_sprite&0x04)>>2)],
+	            Machine->gfx[8+((s1_sprite&0x04)>>2)],
 	            (s1_sprite&0x03)^0x03,
 	            0,
 	            (s1_sprite&0x08)>>3,(s1_sprite&0x10)>>4,
@@ -367,11 +362,11 @@ public class starcrus
 	            TRANSPARENCY_NONE,
 	            0);
 	
-		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
+		if (p1_sprite & 0x08)	/* if p1 is a projectile */
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
-					Machine.gfx[(p1_sprite&0x0c)>>2],
+					Machine->gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -381,11 +376,11 @@ public class starcrus
 					0);
 		}
 	
-		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
+		if (p2_sprite & 0x08)	/* if p2 is a projectile */
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,
-					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -400,13 +395,13 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship1_vid, sx, sy)==Machine.pens[1])
+	        	if (read_pixel(ship1_vid, sx, sy)==Machine->pens[1])
 	           	{
 	        		/* Condition 1 - ship 1 = proj 1 */
-					if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
+					if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 	        		/* Condition 2 - ship 1 = proj 2 */
-	        		if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
+	        		if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 	            }
 	        }
@@ -433,9 +428,9 @@ public class starcrus
 	    clip.min_y=0;
 	    clip.max_y=15;
 	
-	    fillbitmap(ship2_vid,Machine.pens[0],&clip);
-	    fillbitmap(proj1_vid,Machine.pens[0],&clip);
-	    fillbitmap(proj2_vid,Machine.pens[0],&clip);
+	    fillbitmap(ship2_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj1_vid,Machine->pens[0],&clip);
+	    fillbitmap(proj2_vid,Machine->pens[0],&clip);
 	
 		/* origin is with respect to ship2 */
 	
@@ -444,7 +439,7 @@ public class starcrus
 	
 		/* Draw ship 2 */
 	    drawgfx(ship2_vid,
-	            Machine.gfx[10+((s2_sprite&0x04)>>2)],
+	            Machine->gfx[10+((s2_sprite&0x04)>>2)],
 	            (s2_sprite&0x03)^0x03,
 	            0,
 	            (s2_sprite&0x08)>>3,(s2_sprite&0x10)>>4,
@@ -453,11 +448,11 @@ public class starcrus
 	            TRANSPARENCY_NONE,
 	            0);
 	
-		if ((p1_sprite & 0x08) != 0)	/* if p1 is a projectile */
+		if (p1_sprite & 0x08)	/* if p1 is a projectile */
 		{
 			/* Draw projectile 1 */
 			drawgfx(proj1_vid,
-					Machine.gfx[(p1_sprite&0x0c)>>2],
+					Machine->gfx[(p1_sprite&0x0c)>>2],
 					(p1_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -467,11 +462,11 @@ public class starcrus
 					0);
 		}
 	
-		if ((p2_sprite & 0x08) != 0)	/* if p2 is a projectile */
+		if (p2_sprite & 0x08)	/* if p2 is a projectile */
 		{
 			/* Draw projectile 2 */
 			drawgfx(proj2_vid,
-					Machine.gfx[4+((p2_sprite&0x0c)>>2)],
+					Machine->gfx[4+((p2_sprite&0x0c)>>2)],
 					(p2_sprite&0x03)^0x03,
 					0,
 					0,0,
@@ -486,13 +481,13 @@ public class starcrus
 	    {
 	        for (sx=0;sx<16;sx++)
 	        {
-	        	if (read_pixel(ship2_vid, sx, sy)==Machine.pens[1])
+	        	if (read_pixel(ship2_vid, sx, sy)==Machine->pens[1])
 	           	{
 	        		/* Condition 1 - ship 2 = proj 1 */
-					if (read_pixel(proj1_vid, sx, sy)==Machine.pens[1])
+					if (read_pixel(proj1_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 	        		/* Condition 2 - ship 2 = proj 2 */
-	        		if (read_pixel(proj2_vid, sx, sy)==Machine.pens[1])
+	        		if (read_pixel(proj2_vid, sx, sy)==Machine->pens[1])
 	                	return 1;
 	            }
 	        }
@@ -501,8 +496,7 @@ public class starcrus
 	    return 0;
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_starcrus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
 	
 		/* Draw ship 1 */
@@ -554,31 +548,30 @@ public class starcrus
 	    collision_reg = 0x00;
 	
 		/* Check for collisions between ship1 and ship2 */
-	    if (starcrus_collision_check_s1s2() != 0)
+	    if (starcrus_collision_check_s1s2())
 	    {
 	        collision_reg |= 0x08;
 	    }
 		/* Check for collisions between ship1 and projectiles */
-	    if (starcrus_collision_check_s1p1p2() != 0)
+	    if (starcrus_collision_check_s1p1p2())
 	    {
 	        collision_reg |= 0x02;
 	    }
 	    /* Check for collisions between ship1 and projectiles */
-	    if (starcrus_collision_check_s2p1p2() != 0)
+	    if (starcrus_collision_check_s2p1p2())
 	    {
 	        collision_reg |= 0x01;
 	    }
 	    /* Check for collisions between ship1 and projectiles */
 	    /* Note: I don't think this is used by the game */
-	    if (starcrus_collision_check_p1p2() != 0)
+	    if (starcrus_collision_check_p1p2())
 	    {
 	        collision_reg |= 0x04;
 	    }
 	
 	} };
 	
-	public static ReadHandlerPtr starcrus_coll_det_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starcrus_coll_det_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return collision_reg ^ 0xff;
 	} };
 }

@@ -93,7 +93,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -183,7 +183,7 @@ public class bloodbro
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_bloodbro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bloodbro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bloodbro )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -281,7 +281,7 @@ public class bloodbro
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_weststry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_weststry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( weststry )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0001, 0x0001, "Coin Mode" );
 		PORT_DIPSETTING(      0x0001, "Mode 1" );
@@ -375,7 +375,7 @@ public class bloodbro
 		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skysmash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skysmash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skysmash )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -574,8 +574,7 @@ public class bloodbro
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	public static MachineHandlerPtr machine_driver_bloodbro = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bloodbro )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -600,12 +599,9 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_skysmash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skysmash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -630,12 +626,9 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_weststry = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( weststry )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -660,9 +653,7 @@ public class bloodbro
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -767,8 +758,7 @@ public class bloodbro
 	
 	/***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_weststry  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_weststry  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *gfx = memory_region(REGION_GFX3);
 		int i;
 	
@@ -779,7 +769,7 @@ public class bloodbro
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_bloodbro	   = new GameDriver("1990"	,"bloodbro"	,"bloodbro.java"	,rom_bloodbro,null	,machine_driver_bloodbro	,input_ports_bloodbro	,null	,ROT0	,	"Tad", "Blood Bros.", GAME_NO_COCKTAIL )
-	public static GameDriver driver_weststry	   = new GameDriver("1990"	,"weststry"	,"bloodbro.java"	,rom_weststry,driver_bloodbro	,machine_driver_weststry	,input_ports_weststry	,init_weststry	,ROT0	,	"bootleg", "West Story", GAME_NO_COCKTAIL | GAME_NO_SOUND )
-	public static GameDriver driver_skysmash	   = new GameDriver("1990"	,"skysmash"	,"bloodbro.java"	,rom_skysmash,null	,machine_driver_skysmash	,input_ports_skysmash	,null	,ROT270	,	"Nihon System", "Sky Smasher" )
+	GAMEX(1990, bloodbro, 0,        bloodbro, bloodbro, 0,        ROT0,   "Tad", "Blood Bros.", GAME_NO_COCKTAIL )
+	GAMEX(1990, weststry, bloodbro, weststry, weststry, weststry, ROT0,   "bootleg", "West Story", GAME_NO_COCKTAIL | GAME_NO_SOUND )
+	GAME( 1990, skysmash, 0,        skysmash, skysmash, 0,        ROT270, "Nihon System", "Sky Smasher" )
 }

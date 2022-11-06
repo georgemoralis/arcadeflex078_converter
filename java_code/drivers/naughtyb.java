@@ -105,7 +105,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -131,7 +131,7 @@ public class naughtyb
 	
 	//static int popflame_prot_count = 0;
 	
-	public static ReadHandlerPtr popflame_protection_r  = new ReadHandlerPtr() { public int handler(int offset) /* Not used by bootleg/hack */
+	public static ReadHandlerPtr popflame_protection_r  = new ReadHandlerPtr() { public int handler(int offset)* Not used by bootleg/hack */
 	{
 		static int values[4] = { 0x78, 0x68, 0x48, 0x38|0x80 };
 		static int count;
@@ -211,13 +211,12 @@ public class naughtyb
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr naughtyb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr naughtyb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(2) & 1)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	static InputPortPtr input_ports_naughtyb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_naughtyb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( naughtyb )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -315,8 +314,7 @@ public class naughtyb
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_naughtyb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( naughtyb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1500000)	/* 3 MHz ? */
@@ -342,14 +340,11 @@ public class naughtyb
 		/* uses the TMS3615NS for sound */
 		MDRV_SOUND_ADD(TMS36XX, tms3615_interface)
 		MDRV_SOUND_ADD(CUSTOM, naughtyb_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Exactly the same but for the writemem handler */
-	public static MachineHandlerPtr machine_driver_popflame = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( popflame )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 1500000)	/* 3 MHz ? */
@@ -374,9 +369,7 @@ public class naughtyb
 		/* sound hardware */
 		MDRV_SOUND_ADD(TMS36XX, tms3615_interface)
 		MDRV_SOUND_ADD(CUSTOM, popflame_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -532,17 +525,16 @@ public class naughtyb
 	
 	
 	
-	public static DriverInitHandlerPtr init_popflame  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_popflame  = new DriverInitHandlerPtr() { public void handler(){
 		/* install a handler to catch protection checks */
 		install_mem_read_handler(0, 0x9000, 0x9000, popflame_protection_r);
 	} };
 	
 	
-	public static GameDriver driver_naughtyb	   = new GameDriver("1982"	,"naughtyb"	,"naughtyb.java"	,rom_naughtyb,null	,machine_driver_naughtyb	,input_ports_naughtyb	,null	,ROT90	,	"Jaleco", "Naughty Boy", GAME_NO_COCKTAIL )
-	public static GameDriver driver_naughtya	   = new GameDriver("1982"	,"naughtya"	,"naughtyb.java"	,rom_naughtya,driver_naughtyb	,machine_driver_naughtyb	,input_ports_naughtyb	,null	,ROT90	,	"bootleg", "Naughty Boy (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_naughtyc	   = new GameDriver("1982"	,"naughtyc"	,"naughtyb.java"	,rom_naughtyc,driver_naughtyb	,machine_driver_naughtyb	,input_ports_naughtyb	,null	,ROT90	,	"Jaleco (Cinematronics license)", "Naughty Boy (Cinematronics)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_popflame	   = new GameDriver("1982"	,"popflame"	,"naughtyb.java"	,rom_popflame,null	,machine_driver_popflame	,input_ports_naughtyb	,init_popflame	,ROT90	,	"Jaleco", "Pop Flamer (protected)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_popflama	   = new GameDriver("1982"	,"popflama"	,"naughtyb.java"	,rom_popflama,driver_popflame	,machine_driver_popflame	,input_ports_naughtyb	,null	,ROT90	,	"Jaleco", "Pop Flamer (not protected)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_popflamb	   = new GameDriver("1982"	,"popflamb"	,"naughtyb.java"	,rom_popflamb,driver_popflame	,machine_driver_popflame	,input_ports_naughtyb	,null	,ROT90	,	"Jaleco", "Pop Flamer (hack?)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, naughtyb, 0,		 naughtyb, naughtyb, 0,        ROT90, "Jaleco", "Naughty Boy", GAME_NO_COCKTAIL )
+	GAMEX( 1982, naughtya, naughtyb, naughtyb, naughtyb, 0,        ROT90, "bootleg", "Naughty Boy (bootleg)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, naughtyc, naughtyb, naughtyb, naughtyb, 0,        ROT90, "Jaleco (Cinematronics license)", "Naughty Boy (Cinematronics)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, popflame, 0,		 popflame, naughtyb, popflame, ROT90, "Jaleco", "Pop Flamer (protected)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, popflama, popflame, popflame, naughtyb, 0,        ROT90, "Jaleco", "Pop Flamer (not protected)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, popflamb, popflame, popflame, naughtyb, 0,        ROT90, "Jaleco", "Pop Flamer (hack?)", GAME_NO_COCKTAIL )
 }

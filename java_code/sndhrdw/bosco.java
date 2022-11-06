@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -25,7 +25,7 @@ public class bosco
 		mixer_set_name(channel,"Samples");
 	
 		speech = auto_malloc(2*memory_region_length(REGION_SOUND2));
-		if (speech == 0)
+		if (!speech)
 			return 1;
 	
 		/* decode the rom samples */
@@ -49,7 +49,7 @@ public class bosco
 	
 	void bosco_sample_play(int offset, int length)
 	{
-		if (Machine.sample_rate == 0)
+		if (Machine->sample_rate == 0)
 			return;
 	
 		mixer_play_sample(channel,speech + offset,length,4000,0);

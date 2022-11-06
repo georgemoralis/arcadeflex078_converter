@@ -41,7 +41,7 @@ c001      YM2203 #2 write
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,8 +53,7 @@ public class vulgus
 	
 	
 	
-	public static InterruptHandlerPtr vulgus_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vulgus_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0) cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h */
 		else cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h - vblank */
 	} };
@@ -110,7 +109,7 @@ public class vulgus
 	
 	
 	
-	static InputPortPtr input_ports_vulgus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vulgus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vulgus )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -258,8 +257,7 @@ public class vulgus
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_vulgus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vulgus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -288,9 +286,7 @@ public class vulgus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -419,7 +415,7 @@ public class vulgus
 	
 	
 	
-	public static GameDriver driver_vulgus	   = new GameDriver("1984"	,"vulgus"	,"vulgus.java"	,rom_vulgus,null	,machine_driver_vulgus	,input_ports_vulgus	,null	,ROT90	,	"Capcom", "Vulgus (set 1)" )
-	public static GameDriver driver_vulgus2	   = new GameDriver("1984"	,"vulgus2"	,"vulgus.java"	,rom_vulgus2,driver_vulgus	,machine_driver_vulgus	,input_ports_vulgus	,null	,ROT270	,	"Capcom", "Vulgus (set 2)" )
-	public static GameDriver driver_vulgusj	   = new GameDriver("1984"	,"vulgusj"	,"vulgus.java"	,rom_vulgusj,driver_vulgus	,machine_driver_vulgus	,input_ports_vulgus	,null	,ROT270	,	"Capcom", "Vulgus (Japan?)" )
+	GAME( 1984, vulgus,  0,      vulgus, vulgus, 0, ROT90,  "Capcom", "Vulgus (set 1)" )
+	GAME( 1984, vulgus2, vulgus, vulgus, vulgus, 0, ROT270, "Capcom", "Vulgus (set 2)" )
+	GAME( 1984, vulgusj, vulgus, vulgus, vulgus, 0, ROT270, "Capcom", "Vulgus (Japan?)" )
 }

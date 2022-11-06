@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.jaguar;
 
@@ -283,7 +283,7 @@ public class jaguar
 				temp = jaguar.r[i], jaguar.r[i] = jaguar.a[i], jaguar.a[i] = temp;
 	
 			/* swap the bank pointers */
-			if (bank == 0)
+			if (!bank)
 			{
 				jaguar.b0 = jaguar.r;
 				jaguar.b1 = jaguar.a;
@@ -320,16 +320,16 @@ public class jaguar
 	
 		/* bail if nothing is available */
 		bits &= mask;
-		if (bits == 0)
+		if (!bits)
 			return;
 	
 		/* determine which interrupt */
-		if ((bits & 0x01) != 0) which = 0;
-		if ((bits & 0x02) != 0) which = 1;
-		if ((bits & 0x04) != 0) which = 2;
-		if ((bits & 0x08) != 0) which = 3;
-		if ((bits & 0x10) != 0) which = 4;
-		if ((bits & 0x20) != 0) which = 5;
+		if (bits & 0x01) which = 0;
+		if (bits & 0x02) which = 1;
+		if (bits & 0x04) which = 2;
+		if (bits & 0x08) which = 3;
+		if (bits & 0x10) which = 4;
+		if (bits & 0x20) which = 5;
 	
 		/* set the interrupt flag */
 		jaguar.FLAGS |= IFLAG;
@@ -388,7 +388,7 @@ public class jaguar
 	unsigned jaguargpu_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(jaguar_regs *)dst = jaguar;
 	
 		/* return the context size */
@@ -398,7 +398,7 @@ public class jaguar
 	unsigned jaguardsp_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(jaguar_regs *)dst = jaguar;
 	
 		/* return the context size */
@@ -409,7 +409,7 @@ public class jaguar
 	void jaguargpu_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			jaguar = *(jaguar_regs *)src;
 	
 		/* check for IRQs */
@@ -419,7 +419,7 @@ public class jaguar
 	void jaguardsp_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			jaguar = *(jaguar_regs *)src;
 	
 		/* check for IRQs */
@@ -436,11 +436,11 @@ public class jaguar
 		int i, j;
 	
 		/* allocate the mirror table */
-		if (mirror_table == 0)
+		if (!mirror_table)
 			mirror_table = malloc(65536 * sizeof(mirror_table[0]));
 	
 		/* fill in the mirror table */
-		if (mirror_table != 0)
+		if (mirror_table)
 			for (i = 0; i < 65536; i++)
 				mirror_table[i] = ((i >> 15) & 0x0001) | ((i >> 13) & 0x0002) |
 				                  ((i >> 11) & 0x0004) | ((i >> 9)  & 0x0008) |
@@ -452,22 +452,22 @@ public class jaguar
 				                  ((i << 13) & 0x4000) | ((i << 15) & 0x8000);
 	
 		/* allocate the condition table */
-		if (condition_table == 0)
+		if (!condition_table)
 			condition_table = malloc(32 * 8 * sizeof(condition_table[0]));
 	
 		/* fill in the condition table */
-		if (condition_table != 0)
+		if (condition_table)
 			for (i = 0; i < 8; i++)
 				for (j = 0; j < 32; j++)
 				{
 					int result = 1;
-					if ((j & 1) != 0)
-						if ((i & ZFLAG) != 0) result = 0;
-					if ((j & 2) != 0)
+					if (j & 1)
+						if (i & ZFLAG) result = 0;
+					if (j & 2)
 						if (!(i & ZFLAG)) result = 0;
-					if ((j & 4) != 0)
+					if (j & 4)
 						if (i & (CFLAG << (j >> 4))) result = 0;
-					if ((j & 8) != 0)
+					if (j & 8)
 						if (!(i & (CFLAG << (j >> 4)))) result = 0;
 					condition_table[i * 32 + j] = result;
 				}
@@ -498,8 +498,8 @@ public class jaguar
 	{
 		init_tables();
 	
-		if (config != 0)
-			jaguar.cpu_interrupt = config.cpu_int_callback;
+		if (config)
+			jaguar.cpu_interrupt = config->cpu_int_callback;
 	
 		jaguar.b0 = jaguar.r;
 		jaguar.b1 = jaguar.a;
@@ -523,11 +523,11 @@ public class jaguar
 	
 	INLINE void common_exit(void)
 	{
-		if (mirror_table != 0)
+		if (mirror_table)
 			free(mirror_table);
 		mirror_table = NULL;
 	
-		if (condition_table != 0)
+		if (condition_table)
 			free(condition_table);
 		condition_table = NULL;
 	}
@@ -830,58 +830,58 @@ public class jaguar
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &jaguar;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+JAGUAR_PC:  	sprintf(buffer[which], "PC: %08X", r.PC); break;
+			case CPU_INFO_REG+JAGUAR_PC:  	sprintf(buffer[which], "PC: %08X", r->PC); break;
 	
-			case CPU_INFO_REG+JAGUAR_R0:	sprintf(buffer[which], "R0: %08X", r.r[0]); break;
-			case CPU_INFO_REG+JAGUAR_R1:	sprintf(buffer[which], "R1: %08X", r.r[1]); break;
-			case CPU_INFO_REG+JAGUAR_R2:	sprintf(buffer[which], "R2: %08X", r.r[2]); break;
-			case CPU_INFO_REG+JAGUAR_R3:	sprintf(buffer[which], "R3: %08X", r.r[3]); break;
-			case CPU_INFO_REG+JAGUAR_R4:	sprintf(buffer[which], "R4: %08X", r.r[4]); break;
-			case CPU_INFO_REG+JAGUAR_R5:	sprintf(buffer[which], "R5: %08X", r.r[5]); break;
-			case CPU_INFO_REG+JAGUAR_R6:	sprintf(buffer[which], "R6: %08X", r.r[6]); break;
-			case CPU_INFO_REG+JAGUAR_R7:	sprintf(buffer[which], "R7: %08X", r.r[7]); break;
-			case CPU_INFO_REG+JAGUAR_R8:	sprintf(buffer[which], "R8: %08X", r.r[8]); break;
-			case CPU_INFO_REG+JAGUAR_R9:	sprintf(buffer[which], "R9: %08X", r.r[9]); break;
-			case CPU_INFO_REG+JAGUAR_R10:	sprintf(buffer[which], "R10:%08X", r.r[10]); break;
-			case CPU_INFO_REG+JAGUAR_R11:	sprintf(buffer[which], "R11:%08X", r.r[11]); break;
-			case CPU_INFO_REG+JAGUAR_R12:	sprintf(buffer[which], "R12:%08X", r.r[12]); break;
-			case CPU_INFO_REG+JAGUAR_R13:	sprintf(buffer[which], "R13:%08X", r.r[13]); break;
-			case CPU_INFO_REG+JAGUAR_R14:	sprintf(buffer[which], "R14:%08X", r.r[14]); break;
-			case CPU_INFO_REG+JAGUAR_R15:	sprintf(buffer[which], "R15:%08X", r.r[15]); break;
-			case CPU_INFO_REG+JAGUAR_R16:	sprintf(buffer[which], "R16:%08X", r.r[16]); break;
-			case CPU_INFO_REG+JAGUAR_R17:	sprintf(buffer[which], "R17:%08X", r.r[17]); break;
-			case CPU_INFO_REG+JAGUAR_R18:	sprintf(buffer[which], "R18:%08X", r.r[18]); break;
-			case CPU_INFO_REG+JAGUAR_R19:	sprintf(buffer[which], "R19:%08X", r.r[19]); break;
-			case CPU_INFO_REG+JAGUAR_R20:	sprintf(buffer[which], "R20:%08X", r.r[20]); break;
-			case CPU_INFO_REG+JAGUAR_R21:	sprintf(buffer[which], "R21:%08X", r.r[21]); break;
-			case CPU_INFO_REG+JAGUAR_R22:	sprintf(buffer[which], "R22:%08X", r.r[22]); break;
-			case CPU_INFO_REG+JAGUAR_R23:	sprintf(buffer[which], "R23:%08X", r.r[23]); break;
-			case CPU_INFO_REG+JAGUAR_R24:	sprintf(buffer[which], "R24:%08X", r.r[24]); break;
-			case CPU_INFO_REG+JAGUAR_R25:	sprintf(buffer[which], "R25:%08X", r.r[25]); break;
-			case CPU_INFO_REG+JAGUAR_R26:	sprintf(buffer[which], "R26:%08X", r.r[26]); break;
-			case CPU_INFO_REG+JAGUAR_R27:	sprintf(buffer[which], "R27:%08X", r.r[27]); break;
-			case CPU_INFO_REG+JAGUAR_R28:	sprintf(buffer[which], "R28:%08X", r.r[28]); break;
-			case CPU_INFO_REG+JAGUAR_R29:	sprintf(buffer[which], "R29:%08X", r.r[29]); break;
-			case CPU_INFO_REG+JAGUAR_R30:	sprintf(buffer[which], "R30:%08X", r.r[30]); break;
-			case CPU_INFO_REG+JAGUAR_R31:	sprintf(buffer[which], "R31:%08X", r.r[31]); break;
+			case CPU_INFO_REG+JAGUAR_R0:	sprintf(buffer[which], "R0: %08X", r->r[0]); break;
+			case CPU_INFO_REG+JAGUAR_R1:	sprintf(buffer[which], "R1: %08X", r->r[1]); break;
+			case CPU_INFO_REG+JAGUAR_R2:	sprintf(buffer[which], "R2: %08X", r->r[2]); break;
+			case CPU_INFO_REG+JAGUAR_R3:	sprintf(buffer[which], "R3: %08X", r->r[3]); break;
+			case CPU_INFO_REG+JAGUAR_R4:	sprintf(buffer[which], "R4: %08X", r->r[4]); break;
+			case CPU_INFO_REG+JAGUAR_R5:	sprintf(buffer[which], "R5: %08X", r->r[5]); break;
+			case CPU_INFO_REG+JAGUAR_R6:	sprintf(buffer[which], "R6: %08X", r->r[6]); break;
+			case CPU_INFO_REG+JAGUAR_R7:	sprintf(buffer[which], "R7: %08X", r->r[7]); break;
+			case CPU_INFO_REG+JAGUAR_R8:	sprintf(buffer[which], "R8: %08X", r->r[8]); break;
+			case CPU_INFO_REG+JAGUAR_R9:	sprintf(buffer[which], "R9: %08X", r->r[9]); break;
+			case CPU_INFO_REG+JAGUAR_R10:	sprintf(buffer[which], "R10:%08X", r->r[10]); break;
+			case CPU_INFO_REG+JAGUAR_R11:	sprintf(buffer[which], "R11:%08X", r->r[11]); break;
+			case CPU_INFO_REG+JAGUAR_R12:	sprintf(buffer[which], "R12:%08X", r->r[12]); break;
+			case CPU_INFO_REG+JAGUAR_R13:	sprintf(buffer[which], "R13:%08X", r->r[13]); break;
+			case CPU_INFO_REG+JAGUAR_R14:	sprintf(buffer[which], "R14:%08X", r->r[14]); break;
+			case CPU_INFO_REG+JAGUAR_R15:	sprintf(buffer[which], "R15:%08X", r->r[15]); break;
+			case CPU_INFO_REG+JAGUAR_R16:	sprintf(buffer[which], "R16:%08X", r->r[16]); break;
+			case CPU_INFO_REG+JAGUAR_R17:	sprintf(buffer[which], "R17:%08X", r->r[17]); break;
+			case CPU_INFO_REG+JAGUAR_R18:	sprintf(buffer[which], "R18:%08X", r->r[18]); break;
+			case CPU_INFO_REG+JAGUAR_R19:	sprintf(buffer[which], "R19:%08X", r->r[19]); break;
+			case CPU_INFO_REG+JAGUAR_R20:	sprintf(buffer[which], "R20:%08X", r->r[20]); break;
+			case CPU_INFO_REG+JAGUAR_R21:	sprintf(buffer[which], "R21:%08X", r->r[21]); break;
+			case CPU_INFO_REG+JAGUAR_R22:	sprintf(buffer[which], "R22:%08X", r->r[22]); break;
+			case CPU_INFO_REG+JAGUAR_R23:	sprintf(buffer[which], "R23:%08X", r->r[23]); break;
+			case CPU_INFO_REG+JAGUAR_R24:	sprintf(buffer[which], "R24:%08X", r->r[24]); break;
+			case CPU_INFO_REG+JAGUAR_R25:	sprintf(buffer[which], "R25:%08X", r->r[25]); break;
+			case CPU_INFO_REG+JAGUAR_R26:	sprintf(buffer[which], "R26:%08X", r->r[26]); break;
+			case CPU_INFO_REG+JAGUAR_R27:	sprintf(buffer[which], "R27:%08X", r->r[27]); break;
+			case CPU_INFO_REG+JAGUAR_R28:	sprintf(buffer[which], "R28:%08X", r->r[28]); break;
+			case CPU_INFO_REG+JAGUAR_R29:	sprintf(buffer[which], "R29:%08X", r->r[29]); break;
+			case CPU_INFO_REG+JAGUAR_R30:	sprintf(buffer[which], "R30:%08X", r->r[30]); break;
+			case CPU_INFO_REG+JAGUAR_R31:	sprintf(buffer[which], "R31:%08X", r->r[31]); break;
 	
 			case CPU_INFO_REG+JAGUAR_FLAGS:	sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c",
-													r.FLAGS & 0x8000 ? 'D':'.',
-													r.FLAGS & 0x4000 ? 'A':'.',
-													r.FLAGS & 0x0100 ? '4':'.',
-													r.FLAGS & 0x0080 ? '3':'.',
-													r.FLAGS & 0x0040 ? '2':'.',
-													r.FLAGS & 0x0020 ? '1':'.',
-													r.FLAGS & 0x0010 ? '0':'.',
-													r.FLAGS & 0x0008 ? 'I':'.',
-													r.FLAGS & 0x0004 ? 'N':'.',
-													r.FLAGS & 0x0002 ? 'C':'.',
-													r.FLAGS & 0x0001 ? 'Z':'.'); break;
+													r->FLAGS & 0x8000 ? 'D':'.',
+													r->FLAGS & 0x4000 ? 'A':'.',
+													r->FLAGS & 0x0100 ? '4':'.',
+													r->FLAGS & 0x0080 ? '3':'.',
+													r->FLAGS & 0x0040 ? '2':'.',
+													r->FLAGS & 0x0020 ? '1':'.',
+													r->FLAGS & 0x0010 ? '0':'.',
+													r->FLAGS & 0x0008 ? 'I':'.',
+													r->FLAGS & 0x0004 ? 'N':'.',
+													r->FLAGS & 0x0002 ? 'C':'.',
+													r->FLAGS & 0x0001 ? 'Z':'.'); break;
 	
 			case CPU_INFO_FAMILY: return "Jaguar";
 			case CPU_INFO_VERSION: return "1.0";
@@ -949,7 +949,7 @@ public class jaguar
 		int dreg = jaguar.op & 31;
 		UINT32 res = jaguar.r[dreg];
 		CLR_ZNC;
-		if ((res & 0x80000000) != 0)
+		if (res & 0x80000000)
 		{
 			jaguar.r[dreg] = res = -res;
 			jaguar.FLAGS |= CFLAG;
@@ -1065,7 +1065,7 @@ public class jaguar
 		int dreg = jaguar.op & 31;
 		UINT32 r1 = jaguar.r[(jaguar.op >> 5) & 31];
 		UINT32 r2 = jaguar.r[dreg];
-		if (r1 != 0)
+		if (r1)
 		{
 			if (jaguar.ctrl[D_DIVCTRL] & 1)
 			{
@@ -1663,7 +1663,7 @@ public class jaguar
 	
 				/* combine the data properly */
 				jaguar.ctrl[offset] = newval & (ZFLAG | CFLAG | NFLAG | EINT04FLAGS | RPAGEFLAG);
-				if ((newval & IFLAG) != 0)
+				if (newval & IFLAG)
 					jaguar.ctrl[offset] |= oldval & IFLAG;
 	
 				/* clear interrupts */
@@ -1700,19 +1700,19 @@ public class jaguar
 					cpu_set_halt_line(cpunum, (newval & 1) ? CLEAR_LINE : ASSERT_LINE);
 					cpu_yield();
 				}
-				if ((newval & 0x02) != 0)
+				if (newval & 0x02)
 				{
 					if (jaguar.cpu_interrupt)
 						(*jaguar.cpu_interrupt)();
 					jaguar.ctrl[offset] &= ~0x02;
 				}
-				if ((newval & 0x04) != 0)
+				if (newval & 0x04)
 				{
 					jaguar.ctrl[G_CTRL] |= 1 << 6;
 					jaguar.ctrl[offset] &= ~0x04;
 					check_irqs();
 				}
-				if ((newval & 0x18) != 0)
+				if (newval & 0x18)
 				{
 					logerror("GPU single stepping was enabled!\n");
 				}
@@ -1776,7 +1776,7 @@ public class jaguar
 	
 				/* combine the data properly */
 				jaguar.ctrl[offset] = newval & (ZFLAG | CFLAG | NFLAG | EINT04FLAGS | EINT5FLAG | RPAGEFLAG);
-				if ((newval & IFLAG) != 0)
+				if (newval & IFLAG)
 					jaguar.ctrl[offset] |= oldval & IFLAG;
 	
 				/* clear interrupts */
@@ -1814,19 +1814,19 @@ public class jaguar
 					cpu_set_halt_line(cpunum, (newval & 1) ? CLEAR_LINE : ASSERT_LINE);
 					cpu_yield();
 				}
-				if ((newval & 0x02) != 0)
+				if (newval & 0x02)
 				{
 					if (jaguar.cpu_interrupt)
 						(*jaguar.cpu_interrupt)();
 					jaguar.ctrl[offset] &= ~0x02;
 				}
-				if ((newval & 0x04) != 0)
+				if (newval & 0x04)
 				{
 					jaguar.ctrl[D_CTRL] |= 1 << 6;
 					jaguar.ctrl[offset] &= ~0x04;
 					check_irqs();
 				}
-				if ((newval & 0x18) != 0)
+				if (newval & 0x18)
 				{
 					logerror("DSP single stepping was enabled!\n");
 				}

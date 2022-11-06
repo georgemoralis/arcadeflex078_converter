@@ -12,7 +12,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,19 +27,16 @@ public class flstory
 	static UINT8 snd_data;
 	static UINT8 snd_flag;
 	
-	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		snd_flag = 0;
 		return snd_data;
 	} };
 	
-	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return snd_flag | 0xfd;
 	} };
 	
-	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_data = data;
 		snd_flag = 2;
 	} };
@@ -49,26 +46,23 @@ public class flstory
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
@@ -173,8 +167,7 @@ public class flstory
 	
 	static int vol_ctrl[16];
 	
-	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		double db			= 0.0;
@@ -202,8 +195,7 @@ public class flstory
 	static UINT8 snd_ctrl2=0;
 	static UINT8 snd_ctrl3=0;
 	
-	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl0 = data & 0xff;
 	//	usrintf_showmessage("SND0 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 	
@@ -211,15 +203,13 @@ public class flstory
 		mixer_set_volume (3, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group1 from msm5232 */
 	
 	} };
-	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl1 = data & 0xff;
 	//	usrintf_showmessage("SND1 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 		mixer_set_volume (4, vol_ctrl[ (snd_ctrl1>>4) & 15 ]);	/* group2 from msm5232 */
 	} };
 	
-	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		snd_ctrl2 = data & 0xff;
@@ -229,7 +219,7 @@ public class flstory
 			mixer_set_volume (i, vol_ctrl[ (snd_ctrl2>>4) & 15 ]);	/* ym2149f all */
 	} };
 	
-	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* unknown */
+	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)* unknown */
 	{
 		snd_ctrl3 = data & 0xff;
 	//	usrintf_showmessage("SND3 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
@@ -286,7 +276,7 @@ public class flstory
 	   (0xe781) is between 8 and 98 (included).
 	*/
 	
-	static InputPortPtr input_ports_flstory = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flstory = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flstory )
 		PORT_START();       /* D800: DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x00, "30000 100000" );
@@ -390,7 +380,7 @@ public class flstory
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_onna34ro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_onna34ro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( onna34ro )
 		PORT_START();       /* D800: DSW0 */
 		PORT_DIPNAME(0x03, 0x00, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(   0x00, "200000 200000" );
@@ -566,8 +556,7 @@ public class flstory
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_flstory = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( flstory )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10733000/2)		/* ??? */
@@ -603,12 +592,9 @@ public class flstory
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_onna34ro = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( onna34ro )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10733000/2)		/* ??? */
@@ -643,9 +629,7 @@ public class flstory
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -757,8 +741,8 @@ public class flstory
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_flstory	   = new GameDriver("1985"	,"flstory"	,"flstory.java"	,rom_flstory,null	,machine_driver_flstory	,input_ports_flstory	,null	,ROT180	,	"Taito", "The FairyLand Story", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_flstoryj	   = new GameDriver("1985"	,"flstoryj"	,"flstory.java"	,rom_flstoryj,driver_flstory	,machine_driver_flstory	,input_ports_flstory	,null	,ROT180	,	"Taito", "The FairyLand Story (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_onna34ro	   = new GameDriver("1985"	,"onna34ro"	,"flstory.java"	,rom_onna34ro,null	,machine_driver_onna34ro	,input_ports_onna34ro	,null	,ROT0	,	"Taito", "Onna Sansirou - Typhoon Gal (set 1)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_onna34ra	   = new GameDriver("1985"	,"onna34ra"	,"flstory.java"	,rom_onna34ra,driver_onna34ro	,machine_driver_onna34ro	,input_ports_onna34ro	,null	,ROT0	,	"Taito", "Onna Sansirou - Typhoon Gal (set 2)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	GAMEX( 1985, flstory,  0,        flstory,  flstory,  0, ROT180, "Taito", "The FairyLand Story", GAME_IMPERFECT_SOUND )
+	GAMEX( 1985, flstoryj, flstory,  flstory,  flstory,  0, ROT180, "Taito", "The FairyLand Story (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1985, onna34ro, 0,        onna34ro, onna34ro, 0, ROT0,   "Taito", "Onna Sansirou - Typhoon Gal (set 1)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	GAMEX( 1985, onna34ra, onna34ro, onna34ro, onna34ro, 0, ROT0,   "Taito", "Onna Sansirou - Typhoon Gal (set 2)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
 }

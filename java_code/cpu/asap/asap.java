@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.asap;
 
@@ -52,19 +52,19 @@ public class asap
 	#define SET_VFLAG(val)		(asap.vflag = (val) << 31)
 	#define SET_CFLAG(val)		(asap.cflag = (val))
 	
-	#define GET_FLAGS(r)		((r).cflag | \
-								 (((r).vflag >> 30) & PS_VFLAG) | \
-								 (((r).znflag == 0) << 2) | \
-								 (((r).znflag >> 28) & PS_NFLAG) | \
-								 ((r).iflag << 4) | \
-								 ((r).pflag << 5))
+	#define GET_FLAGS(r)		((r)->cflag | \
+								 (((r)->vflag >> 30) & PS_VFLAG) | \
+								 (((r)->znflag == 0) << 2) | \
+								 (((r)->znflag >> 28) & PS_NFLAG) | \
+								 ((r)->iflag << 4) | \
+								 ((r)->pflag << 5))
 	
 	#define SET_FLAGS(r,v)		do { \
-									(r).cflag = (v) & PS_CFLAG; \
-									(r).vflag = ((v) & PS_VFLAG) << 30; \
-									(r).znflag = ((v) & PS_ZFLAG) ? 0 : ((v) & PS_NFLAG) ? -1 : 1; \
-									(r).iflag = ((v) & PS_IFLAG) >> 4; \
-									(r).pflag = ((v) & PS_PFLAG) >> 5; \
+									(r)->cflag = (v) & PS_CFLAG; \
+									(r)->vflag = ((v) & PS_VFLAG) << 30; \
+									(r)->znflag = ((v) & PS_ZFLAG) ? 0 : ((v) & PS_NFLAG) ? -1 : 1; \
+									(r)->iflag = ((v) & PS_IFLAG) >> 4; \
+									(r)->pflag = ((v) & PS_PFLAG) >> 5; \
 								} while (0);
 	
 	
@@ -418,9 +418,9 @@ public class asap
 	unsigned asap_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 		{
-			if (src2val != 0)
+			if (src2val)
 				memcpy(&asap.r[0], &src2val[REGBASE], 32 * sizeof(UINT32));
 			*(asap_regs *)dst = asap;
 		}
@@ -433,10 +433,10 @@ public class asap
 	void asap_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 		{
 			asap = *(asap_regs *)src;
-			if (src2val != 0)
+			if (src2val)
 				memcpy(&src2val[REGBASE], &asap.r[0], 32 * sizeof(UINT32));
 			UPDATEPC();
 	
@@ -454,11 +454,11 @@ public class asap
 	static void init_tables(void)
 	{
 		/* allocate opcode table */
-		if (opcode == 0)
+		if (!opcode)
 			opcode = malloc(32 * 32 * 2 * sizeof(void *));
 	
 		/* fill opcode table */
-		if (opcode != 0)
+		if (opcode)
 		{
 			int op, dst, cond;
 	
@@ -469,7 +469,7 @@ public class asap
 							opcode[(op << 6) + (dst << 1) + cond] = conditiontable[dst & 15];
 						else if (cond && dst == 0)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][3];
-						else if (cond != 0)
+						else if (cond)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][2];
 						else if (dst == 0)
 							opcode[(op << 6) + (dst << 1) + cond] = opcodetable[op][1];
@@ -478,11 +478,11 @@ public class asap
 		}
 	
 		/* allocate src2 table */
-		if (src2val == 0)
+		if (!src2val)
 			src2val = malloc(65536 * sizeof(UINT32));
 	
 		/* fill scr2 table */
-		if (src2val != 0)
+		if (src2val)
 		{
 			int i;
 	
@@ -726,12 +726,12 @@ public class asap
 		static char buffer[16][47+1];
 		static int which = 0;
 		asap_regs *r = context;
-		UINT32 *regbase = r.r;
+		UINT32 *regbase = r->r;
 	
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 		{
 			r = &asap;
 			regbase = &src2val[REGBASE];
@@ -739,7 +739,7 @@ public class asap
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+ASAP_PC:  sprintf(buffer[which], "PC: %08X", r.pc); break;
+			case CPU_INFO_REG+ASAP_PC:  sprintf(buffer[which], "PC: %08X", r->pc); break;
 			case CPU_INFO_REG+ASAP_PS:  sprintf(buffer[which], "PS: %08X", GET_FLAGS(r)); break;
 	
 			case CPU_INFO_REG+ASAP_R0:	sprintf(buffer[which], "R0: %08X", regbase[0]); break;
@@ -1134,7 +1134,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 2);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if ((src1 & 0xc0000000) != 0)
+		if (src1 & 0xc0000000)
 			SET_CFLAG(1);
 		if (((src1 ^ (src1 >> 1)) & 0x20000000) || (src1 ^ (src1 >> 2)) & 0x20000000)
 			SET_VFLAG(1);
@@ -1148,7 +1148,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 2);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if ((src1 & 0xc0000000) != 0)
+		if (src1 & 0xc0000000)
 			SET_CFLAG(1);
 		if (((src1 ^ (src1 >> 1)) & 0x20000000) || (src1 ^ (src1 >> 2)) & 0x20000000)
 			SET_VFLAG(1);
@@ -1168,7 +1168,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 1);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if ((src1 & 0x80000000) != 0)
+		if (src1 & 0x80000000)
 			SET_CFLAG(1);
 		if ((src1 ^ (src1 >> 1)) & 0x40000000)
 			SET_VFLAG(1);
@@ -1182,7 +1182,7 @@ public class asap
 		UINT32 dst = src1 + (src2 << 1);
 	
 		SET_ZNCV_ADD(dst, src1, src2);
-		if ((src1 & 0x80000000) != 0)
+		if (src1 & 0x80000000)
 			SET_CFLAG(1);
 		if ((src1 ^ (src1 >> 1)) & 0x40000000)
 			SET_VFLAG(1);

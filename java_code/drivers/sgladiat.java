@@ -21,7 +21,7 @@ AT08XX03:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -73,28 +73,23 @@ public class sgladiat
 	
 	/************************************************************************/
 	
-	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram[offset];
 	} };
-	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr shared_ram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_ram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram2[offset];
 	} };
-	public static WriteHandlerPtr shared_ram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_ram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram2[offset] = data;
 	} };
 	
 	/************************************************************************/
 	
-	public static WriteHandlerPtr sgladiat_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sgladiat_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snk_sound_busy_bit = 0x20;
 		soundlatch_w.handler( offset, data );
 	
@@ -103,27 +98,23 @@ public class sgladiat
 		cpu_set_nmi_line(2, PULSE_LINE);	// safer because NMI can be lost in rare occations
 	} };
 	
-	public static ReadHandlerPtr sgladiat_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sgladiat_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		snk_sound_busy_bit = 0;
 		return(soundlatch_r(0));
 	} };
 	
-	public static ReadHandlerPtr sgladiat_sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sgladiat_sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
 	} };
 	
 	/************************************************************************/
 	
-	public static ReadHandlerPtr sgladiat_inp0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sgladiat_inp0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(readinputport(0) | snk_sound_busy_bit);
 	} };
 	
-	public static WriteHandlerPtr sglatiat_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sglatiat_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0xa006 */
 		/* x-------	screen is flipped */
 	} };
@@ -212,8 +203,7 @@ public class sgladiat
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_sgladiat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sgladiat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -246,9 +236,7 @@ public class sgladiat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_sgladiat = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )	/* 64k for cpuA code */
@@ -281,7 +269,7 @@ public class sgladiat
 		ROM_LOAD( "82s137.003",  0x800, 0x400, CRC(c0e70308) SHA1(d7dbc500bc9991c2d1b95850f3723a2a224fbfbb) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_sgladiat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sgladiat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sgladiat )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -360,10 +348,9 @@ public class sgladiat
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_sgladiat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sgladiat  = new DriverInitHandlerPtr() { public void handler(){
 		snk_irq_delay = 2000;
 	} };
 	
-	public static GameDriver driver_sgladiat	   = new GameDriver("1984"	,"sgladiat"	,"sgladiat.java"	,rom_sgladiat,null	,machine_driver_sgladiat	,input_ports_sgladiat	,init_sgladiat	,0	,	"SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
+	GAMEX( 1984, sgladiat, 0, sgladiat, sgladiat, sgladiat, 0, "SNK", "Gladiator 1984", GAME_NO_COCKTAIL )
 }

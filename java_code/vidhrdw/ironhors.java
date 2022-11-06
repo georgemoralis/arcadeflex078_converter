@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class ironhors
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_ironhors  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ironhors  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -96,8 +95,7 @@ public class ironhors
 		}
 	} };
 	
-	public static WriteHandlerPtr ironhors_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -105,8 +103,7 @@ public class ironhors
 		}
 	} };
 	
-	public static WriteHandlerPtr ironhors_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -114,8 +111,7 @@ public class ironhors
 		}
 	} };
 	
-	public static WriteHandlerPtr ironhors_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (charbank != (data & 0x03))
 		{
 			charbank = data & 0x03;
@@ -127,8 +123,7 @@ public class ironhors
 		/* other bits unknown */
 	} };
 	
-	public static WriteHandlerPtr ironhors_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palettebank != (data & 0x07))
 		{
 			palettebank = data & 0x07;
@@ -140,11 +135,10 @@ public class ironhors
 	
 		/* bit 6 unknown - set after game over */
 	
-		if ((data & 0x88) != 0) usrintf_showmessage("ironhors_palettebank_w %02x",data);
+		if (data & 0x88) usrintf_showmessage("ironhors_palettebank_w %02x",data);
 	} };
 	
-	public static WriteHandlerPtr ironhors_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (~data & 0x08))
 		{
 			flip_screen_set(~data & 0x08);
@@ -165,12 +159,11 @@ public class ironhors
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_ironhors  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ironhors  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 32);
@@ -198,7 +191,7 @@ public class ironhors
 			int color = ((sr[offs+1] & 0xf0)>>4) + 16 * palettebank;
 		//	int mod = flip_screen() ? -8 : 8;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -209,66 +202,65 @@ public class ironhors
 			switch (sr[offs+4] & 0x0c)
 			{
 				case 0x00:	/* 16x16 */
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code/4,
 							color,
 							flipx,flipy,
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 					break;
 	
 				case 0x04:	/* 16x8 */
 					{
-						if (flip_screen != 0) sy += 8; // this fixes the train wheels' position
+						if (flip_screen()) sy += 8; // this fixes the train wheels' position
 	
-						drawgfx(bitmap,Machine.gfx[2],
+						drawgfx(bitmap,Machine->gfx[2],
 								code & ~1,
 								color,
 								flipx,flipy,
 								flipx?sx+8:sx,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
-						drawgfx(bitmap,Machine.gfx[2],
+								Machine->visible_area,TRANSPARENCY_PEN,0);
+						drawgfx(bitmap,Machine->gfx[2],
 								code | 1,
 								color,
 								flipx,flipy,
 								flipx?sx:sx+8,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 	
 				case 0x08:	/* 8x16 */
 					{
-						drawgfx(bitmap,Machine.gfx[2],
+						drawgfx(bitmap,Machine->gfx[2],
 								code & ~2,
 								color,
 								flipx,flipy,
 								sx,flipy?sy+8:sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
-						drawgfx(bitmap,Machine.gfx[2],
+								Machine->visible_area,TRANSPARENCY_PEN,0);
+						drawgfx(bitmap,Machine->gfx[2],
 								code | 2,
 								color,
 								flipx,flipy,
 								sx,flipy?sy:sy+8,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 	
 				case 0x0c:	/* 8x8 */
 					{
-						drawgfx(bitmap,Machine.gfx[2],
+						drawgfx(bitmap,Machine->gfx[2],
 								code,
 								color,
 								flipx,flipy,
 								sx,sy,
-								Machine.visible_area,TRANSPARENCY_PEN,0);
+								Machine->visible_area,TRANSPARENCY_PEN,0);
 					}
 					break;
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ironhors  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ironhors  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int row;
 	
 		for (row = 0; row < 32; row++)

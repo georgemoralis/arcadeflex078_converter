@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,13 +12,12 @@ public class labyrunr
 	static struct rectangle clip0, clip1;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_labyrunr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_labyrunr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,pal;
 	
 		for (pal = 0;pal < 8;pal++)
 		{
-			if ((pal & 1) != 0)	/* chars, no lookup table */
+			if (pal & 1)	/* chars, no lookup table */
 			{
 				for (i = 0;i < 256;i++)
 					*(colortable++) = 16 * pal + (i & 0x0f);
@@ -68,8 +67,8 @@ public class labyrunr
 	
 	static void get_tile_info1(int tile_index)
 	{
-		int attr = labyrunr_videoram2.read(tile_index);
-		int code = labyrunr_videoram2.read(tile_index + 0x400);
+		int attr = labyrunr_videoram2[tile_index];
+		int code = labyrunr_videoram2[tile_index + 0x400];
 		int bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
 		int bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
 		int bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
@@ -98,8 +97,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_labyrunr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_labyrunr  = new VideoStartHandlerPtr() { public int handler(){
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		layer1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
@@ -124,8 +122,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr labyrunr_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr labyrunr_vram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (labyrunr_videoram1[offset] != data)
 		{
 			labyrunr_videoram1[offset] = data;
@@ -133,11 +130,10 @@ public class labyrunr
 		}
 	} };
 	
-	public static WriteHandlerPtr labyrunr_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (labyrunr_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr labyrunr_vram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (labyrunr_videoram2[offset] != data)
 		{
-			labyrunr_videoram2.write(offset,data);
+			labyrunr_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(layer1,offset & 0x3ff);
 		}
 	} };
@@ -150,8 +146,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_labyrunr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle finalclip0 = clip0, finalclip1 = clip1;
 	
 		sect_rect(&finalclip0, cliprect);

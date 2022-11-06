@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class volfied
 	          INITIALISATION AND CLEAN-UP
 	******************************************************/
 	
-	public static VideoStartHandlerPtr video_start_volfied  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_volfied  = new VideoStartHandlerPtr() { public int handler(){
 		pixel_layer = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 		if (pixel_layer == NULL)
 			return 1;
@@ -125,16 +124,16 @@ public class volfied
 	
 		UINT16* p = video_ram;
 	
-		if ((video_ctrl & 1) != 0)
+		if (video_ctrl & 1)
 		{
 			p += 0x20000;
 		}
 	
-		for (y = 0; y < Machine.drv.screen_height; y++)
+		for (y = 0; y < Machine->drv->screen_height; y++)
 		{
 			if (line_dirty[y])
 			{
-				for (x = 0; x < Machine.drv.screen_width; x++)
+				for (x = 0; x < Machine->drv->screen_width; x++)
 				{
 					int color = (p[x] << 2) & 0x700;
 	
@@ -152,7 +151,7 @@ public class volfied
 						color |= p[x] & 0xf;
 					}
 	
-					plot_pixel(pixel_layer, x, y, Machine.pens[color]);
+					plot_pixel(pixel_layer, x, y, Machine->pens[color]);
 				}
 	
 				line_dirty[y] = 0;
@@ -162,8 +161,7 @@ public class volfied
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_volfied  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_volfied  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap, 0, cliprect);
 	
 		refresh_pixel_layer();

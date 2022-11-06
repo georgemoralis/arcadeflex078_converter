@@ -28,7 +28,7 @@ Take the following observations with a grain of salt (might not be true):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,25 +43,22 @@ public class lkage
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr lkage_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lkage_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr lkage_sh_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lkage_sh_nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr lkage_sh_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lkage_sh_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{ /* probably wrong but commands may go lost otherwise */
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
@@ -110,8 +107,7 @@ public class lkage
 		{ 0xf400, 0xffff, lkage_videoram_w, &videoram }, /* videoram */
 	MEMORY_END
 	
-	public static ReadHandlerPtr port_fetch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr port_fetch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_USER1)[offset];
 	} };
 	
@@ -180,7 +176,7 @@ public class lkage
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_lkage = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lkage = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lkage )
 		PORT_START();       /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x03, "10000" );/* unconfirmed */
@@ -352,8 +348,7 @@ public class lkage
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_lkage = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lkage )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,6000000)
@@ -388,13 +383,10 @@ public class lkage
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lkageb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lkageb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,6000000)
@@ -426,9 +418,7 @@ public class lkage
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -526,8 +516,7 @@ public class lkage
 	
 	/*Note:This probably uses another MCU dump,which is undumped.*/
 	
-	public static ReadHandlerPtr fake_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(mcu_val)
 		{
 			/*These are for the attract mode*/
@@ -542,31 +531,28 @@ public class lkage
 		}
 	} };
 	
-	public static WriteHandlerPtr fake_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fake_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//if(data != 1 && data != 0xa6 && data != 0x34 && data != 0x48)
 		//	usrintf_showmessage("PC = %04x %02x",activecpu_get_pc(),data);
 	
 		mcu_val = data;
 	} };
 	
-	public static ReadHandlerPtr fake_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int res = 3;// cpu data/mcu ready status
 	
 		return res;
 	} };
 	
-	public static DriverInitHandlerPtr init_lkageb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lkageb  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler (0,0xf062,0xf062,fake_mcu_r);
 		install_mem_read_handler (0,0xf087,0xf087,fake_status_r);
 		install_mem_write_handler(0,0xf062,0xf062,fake_mcu_w );
 	} };
 	
 	
-	public static GameDriver driver_lkage	   = new GameDriver("1984"	,"lkage"	,"lkage.java"	,rom_lkage,null	,machine_driver_lkage	,input_ports_lkage	,null	,ROT0	,	"Taito Corporation", "The Legend of Kage" )
-	public static GameDriver driver_lkageb	   = new GameDriver("1984"	,"lkageb"	,"lkage.java"	,rom_lkageb,driver_lkage	,machine_driver_lkageb	,input_ports_lkage	,init_lkageb	,ROT0	,	"bootleg", "The Legend of Kage (bootleg set 1)" )
-	public static GameDriver driver_lkageb2	   = new GameDriver("1984"	,"lkageb2"	,"lkage.java"	,rom_lkageb2,driver_lkage	,machine_driver_lkageb	,input_ports_lkage	,null	,ROT0	,	"bootleg", "The Legend of Kage (bootleg set 2)" )
-	public static GameDriver driver_lkageb3	   = new GameDriver("1984"	,"lkageb3"	,"lkage.java"	,rom_lkageb3,driver_lkage	,machine_driver_lkageb	,input_ports_lkage	,null	,ROT0	,	"bootleg", "The Legend of Kage (bootleg set 3)" )
+	GAME( 1984, lkage,   0,     lkage,  lkage, 0,       ROT0, "Taito Corporation", "The Legend of Kage" )
+	GAME( 1984, lkageb,  lkage, lkageb, lkage, lkageb,  ROT0, "bootleg", "The Legend of Kage (bootleg set 1)" )
+	GAME( 1984, lkageb2, lkage, lkageb, lkage, 0,       ROT0, "bootleg", "The Legend of Kage (bootleg set 2)" )
+	GAME( 1984, lkageb3, lkage, lkageb, lkage, 0,       ROT0, "bootleg", "The Legend of Kage (bootleg set 3)" )
 }

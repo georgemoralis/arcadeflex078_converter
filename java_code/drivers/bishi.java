@@ -12,15 +12,13 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class bishi
 {
 	
-	VIDEO_START(bishi);
-	VIDEO_UPDATE(bishi);
 	
 	/*static int init_eeprom_count;*/
 	static data16_t cur_control;
@@ -35,8 +33,7 @@ public class bishi
 		COMBINE_DATA(&cur_control);
 	}
 	
-	static INTERRUPT_GEN(bishi_interrupt)
-	{
+	public static InterruptHandlerPtr bishi_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:
@@ -47,7 +44,7 @@ public class bishi
 				cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);
 				break;
 		}
-	}
+	} };
 	
 	/* compensate for a bug in the ram/rom test */
 	static READ16_HANDLER( bishi_mirror_r )
@@ -62,7 +59,7 @@ public class bishi
 	
 	static WRITE16_HANDLER( bishi_sound_w )
 	{
-	 	if (offset != 0)
+	 	if (offset)
 			YMZ280B_data_0_w(offset, data>>8);
 	 	else
 			YMZ280B_register_0_w(offset, data>>8);
@@ -110,7 +107,7 @@ public class bishi
 		{ 0xb00000, 0xb03fff, paletteram16_xbgr_word_w, &paletteram16 },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_bishi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bishi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bishi )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -208,13 +205,12 @@ public class bishi
 		PORT_DIPSETTING(    0x00, "7 Kinds");
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineInitHandlerPtr machine_init_bishi  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bishi  = new MachineInitHandlerPtr() { public void handler(){
 	} };
 	
 	static void sound_irq_gen(int state)
 	{
-		if (state != 0)
+		if (state)
 			cpu_set_irq_line(0, MC68000_IRQ_1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, MC68000_IRQ_1, CLEAR_LINE);
@@ -229,8 +225,7 @@ public class bishi
 		{ sound_irq_gen }
 	};
 	
-	public static MachineHandlerPtr machine_driver_bishi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bishi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -255,9 +250,7 @@ public class bishi
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	// ROM definitions
 	
@@ -282,10 +275,9 @@ public class bishi
 		ROM_LOAD( "575jaa.a04", 0x180000, 0x080000, CRC(0120967f) SHA1(14cc2b9269f46859d1de418c8d4c76a6bdb09d16) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_bishi  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bishi  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_INT32("bishi", 0, "control2", (INT32 *)&cur_control, 1);
 	} };
 	
-	public static GameDriver driver_bishi	   = new GameDriver("1996"	,"bishi"	,"bishi.java"	,rom_bishi,null	,machine_driver_bishi	,input_ports_bishi	,init_bishi	,ROT0	,	"Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
+	GAMEX( 1996, bishi,     0,       bishi,     bishi,     bishi,      ROT0, "Konami", "Bishi Bashi Championship Mini Game Senshuken", GAME_IMPERFECT_GRAPHICS)
 }

@@ -1,13 +1,13 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class namcos1
 {
 	
-	#define get_gfx_pointer(gfxelement,c,line) (gfxelement.gfxdata + (c*gfxelement.height+line) * gfxelement.line_modulo)
+	#define get_gfx_pointer(gfxelement,c,line) (gfxelement->gfxdata + (c*gfxelement->height+line) * gfxelement->line_modulo)
 	
 	#define SPRITECOLORS 2048
 	#define TILECOLORS 1536
@@ -96,7 +96,7 @@ public class namcos1
 		int neg_y[] = {0x1e8,0x1e8,0x1e8,0x0e8};
 	
 		flipscreen = flip;
-		if (flip == 0)
+		if(!flip)
 		{
 			for ( i = 0; i < 4; i++ ) {
 				scrolloffsX[i] = pos_x[i];
@@ -113,8 +113,7 @@ public class namcos1
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? TILEMAP_FLIPX|TILEMAP_FLIPY : 0);
 	}
 	
-	public static WriteHandlerPtr namcos1_playfield_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_playfield_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		namcos1_playfield_control[offset] = data;
 	#if 0
 		/* 0-15 : scrolling */
@@ -143,13 +142,11 @@ public class namcos1
 		}
 	} };
 	
-	public static ReadHandlerPtr namcos1_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos1_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return namcos1_videoram[offset];
 	} };
 	
-	public static WriteHandlerPtr namcos1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (namcos1_videoram[offset] != data)
 		{
 			namcos1_videoram[offset] = data;
@@ -169,13 +166,11 @@ public class namcos1
 		}
 	} };
 	
-	public static ReadHandlerPtr namcos1_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos1_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return namcos1_paletteram[offset];
 	} };
 	
-	public static WriteHandlerPtr namcos1_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		namcos1_paletteram[offset] = data;
 		if ((offset&0x1fff) < 0x1800)
 		{
@@ -230,8 +225,7 @@ public class namcos1
 	7    sprite offset y
 	8-15 unknown
 	*/
-	public static WriteHandlerPtr namcos1_displaycontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_displaycontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *disp_reg = &namcos1_controlram[0xff0];
 		int newflip;
 	
@@ -282,8 +276,7 @@ public class namcos1
 	#endif
 	} };
 	
-	public static WriteHandlerPtr namcos1_videocontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_videocontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int olddata = olddata = namcos1_controlram[offset];
 		namcos1_controlram[offset] = data;
 	
@@ -343,7 +336,7 @@ public class namcos1
 			int scrollx = -(namcos1_playfield_control[layer*4+1] + 256*namcos1_playfield_control[layer*4+0]) + scrolloffsX[layer];
 			int scrolly = -(namcos1_playfield_control[layer*4+3] + 256*namcos1_playfield_control[layer*4+2]) + scrolloffsY[layer];
 	
-			if (flipscreen != 0) {
+			if ( flipscreen ) {
 				scrollx = -scrollx;
 				scrolly = -scrolly;
 			}
@@ -365,7 +358,7 @@ public class namcos1
 		int offs, flags;
 		unsigned primask;
 	
-		gfx = Machine.gfx[1];
+		gfx = Machine->gfx[1];
 	
 		/* the last 0x10 bytes are control registers, not a sprite */
 		for (offs=0x7e0; offs>=0; offs-=0x10)
@@ -385,7 +378,7 @@ public class namcos1
 			sx = ((namcos1_spriteram[offs + 6]&1)<<8) + namcos1_spriteram[offs + 7];
 			sx += sprite_fixed_sx;
 	
-			if (flipscreen != 0) sx = 210 - sx - width;
+			if(flipscreen) sx = 210 - sx - width;
 	
 			if( sx > 480  ) sx -= 512;
 			if( sx < -32  ) sx += 512;
@@ -394,7 +387,7 @@ public class namcos1
 			/* sy */
 			sy = sprite_fixed_sy - namcos1_spriteram[offs + 9];
 	
-			if (flipscreen != 0) sy = 222 - sy;
+			if(flipscreen) sy = 222 - sy;
 			else sy = sy - height;
 	
 			if( sy > 224 ) sy -= 256;
@@ -405,14 +398,14 @@ public class namcos1
 			rect.min_y=sy;
 			rect.max_y=sy+(height-1);
 	
-			if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
-			if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
-			if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
-			if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
+			if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
+			if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
+			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
+			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-			if (flipx != 0) sx -= 32-width-left;
+			if (flipx) sx -= 32-width-left;
 			else sx -= left;
-			if (flipy != 0) sy -= 32-height-top;
+			if (flipy) sy -= 32-height-top;
 			else sy -= top;
 	
 			// Doesn't work. Can pdrawgfx handle more than 4 layers?
@@ -434,7 +427,7 @@ public class namcos1
 		int width,height,left,top;
 		int offs, flags;
 	
-		gfx = Machine.gfx[1];
+		gfx = Machine->gfx[1];
 	
 		/* the last 0x10 bytes are control registers, not a sprite */
 		for (offs = 0;offs < 0x800-0x10;offs += 0x10)
@@ -455,7 +448,7 @@ public class namcos1
 			sx = ((namcos1_spriteram[offs + 6]&1)<<8) + namcos1_spriteram[offs + 7];
 			sx += sprite_fixed_sx;
 	
-			if (flipscreen != 0) sx = 210 - sx - width;
+			if(flipscreen) sx = 210 - sx - width;
 	
 			if( sx > 480  ) sx -= 512;
 			if( sx < -32  ) sx += 512;
@@ -464,7 +457,7 @@ public class namcos1
 			/* sy */
 			sy = sprite_fixed_sy - namcos1_spriteram[offs + 9];
 	
-			if (flipscreen != 0) sy = 222 - sy;
+			if(flipscreen) sy = 222 - sy;
 			else sy = sy - height;
 	
 			if( sy > 224 ) sy -= 256;
@@ -475,14 +468,14 @@ public class namcos1
 			rect.min_y=sy;
 			rect.max_y=sy+(height-1);
 	
-			if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
-			if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
-			if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
-			if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
+			if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
+			if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
+			if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
+			if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-			if (flipx != 0) sx -= 32-width-left;
+			if (flipx) sx -= 32-width-left;
 			else sx -= left;
-			if (flipy != 0) sy -= 32-height-top;
+			if (flipy) sy -= 32-height-top;
 			else sy -= top;
 	
 			drawgfx(bitmap,gfx,
@@ -524,7 +517,7 @@ public class namcos1
 			scrollx = -( namcos1_playfield_control[j+1] + (namcos1_playfield_control[j+0]<<8) ) + scrolloffsX[i];
 			scrolly = -( namcos1_playfield_control[j+3] + (namcos1_playfield_control[j+2]<<8) ) + scrolloffsY[i];
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				scrollx = -scrollx;
 				scrolly = -scrolly;
@@ -539,7 +532,7 @@ public class namcos1
 	#endif
 	
 		/* background color */
-		fillbitmap(bitmap, Machine.pens[BACKGROUNDCOLOR], cliprect);
+		fillbitmap(bitmap, Machine->pens[BACKGROUNDCOLOR], cliprect);
 	
 		/* bit 0-2 priority */
 		/* bit 3   disable	*/
@@ -570,8 +563,7 @@ public class namcos1
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_namcos1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namcos1  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		mpMaskData = (UINT8 *)memory_region( REGION_GFX1 );
@@ -673,7 +665,7 @@ public class namcos1
 			}
 		}
 	
-		if ((update_status & USE_SP_BUFFER) != 0)
+		if (update_status & USE_SP_BUFFER)
 		{
 			sp_updatebuffer = namcos1_videoram + 0x8000;
 			sp_backbuffer = namcos1_videoram + 0x8800;
@@ -688,29 +680,26 @@ public class namcos1
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr namcos1_main_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_main_update_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		idle_counter = 0;
 	
-		if ((update_status & MAIN_COMPLETE) != 0) return;
+		if (update_status & MAIN_COMPLETE) return;
 		update_status |= MAIN_COMPLETE;
 	
 		if (update_status & UPDATE_TIED && update_status & USE_SP_BUFFER)
 			memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
 	
-		namcos1_draw_screen(Machine.scrbitmap, Machine.visible_area);
+		namcos1_draw_screen(Machine->scrbitmap, Machine->visible_area);
 	} };
 	
-	public static WriteHandlerPtr namcos1_sub_update_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((update_status & SUB_COMPLETE) != 0) return;
+	public static WriteHandlerPtr namcos1_sub_update_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (update_status & SUB_COMPLETE) return;
 		update_status |= SUB_COMPLETE;
 	
 		memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0); // take a snapshot of current sprite RAM
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_namcos1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		data8_t *temp;
 	
 		if (idle_counter < idle_threshold && !(update_status & UPDATE_OVERRIDE))
@@ -721,7 +710,7 @@ public class namcos1
 		else
 		{
 			// draw screen unconditionally if video goes idle for too long(required unless priority bitmap is used)
-			if ((update_status & USE_SP_BUFFER) != 0) memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0);
+			if (update_status & USE_SP_BUFFER) memcpy(sp_backbuffer, &namcos1_controlram[0x800], 0x7f0);
 			namcos1_draw_screen(bitmap, cliprect);
 		}
 	

@@ -26,7 +26,7 @@ static void setstat(void)
 
 	for (i=0; i<8; i++)     /* 8 bits to test */
 	{
-		if ((a & 1) != 0)  /* If current bit is set */
+		if (a & 1)  /* If current bit is set */
 			I.STATUS ^= ST_OP;  /* we toggle the ST_OP bit */
 
 		a >>= 1;    /* Next bit. */
@@ -198,7 +198,7 @@ INLINE void setst_c_lae(UINT16 to, UINT16 val)
 // - computes a+b
 // - sets L, A, E, Carry and Overflow in st
 //
-// a . r3, b . r4, st . r5
+// a -> r3, b -> r4, st -> r5
 // preserve r6-r12
 
 static INT32 asm setst_add_32_laeco(register INT32 a, register INT32 b, register INT16 st)
@@ -207,8 +207,8 @@ static INT32 asm setst_add_32_laeco(register INT32 a, register INT32 b, register
   mr r6,a           // save operand
 #endif
   addco. r3, b, a   // add, set CR0, and set CA and OV
-  clrlwi st, st, 21 // clear L, A, E, C, O flags (. keep bits 21-31)
-  mcrxr cr1         // move XER (. CA and CO bits) to CR1
+  clrlwi st, st, 21 // clear L, A, E, C, O flags (-> keep bits 21-31)
+  mcrxr cr1         // move XER (-> CA and CO bits) to CR1
 
   beq- null_result  // if EQ is set, jump to null_result.  No jump is more likely than a jump.
   bgt+ positive_result  // if GT is set, jump to positive_result.  A jump is more likely than no jump.
@@ -248,7 +248,7 @@ nocarry:
 // - computes a-b
 // - sets L, A, E, Carry and Overflow in ST
 //
-// a . r3, b . r4, st . r5
+// a -> r3, b -> r4, st -> r5
 // preserve r6-r12
 
 static INT32 asm setst_sub_32_laeco(register INT32 a, register INT32 b, register INT16 st)
@@ -257,8 +257,8 @@ static INT32 asm setst_sub_32_laeco(register INT32 a, register INT32 b, register
   mr r6,a           // save operand
 #endif
   subco. r3, a, b   // sub, set CR0, and set CA and OV
-  clrlwi st, st, 21 // clear L, A, E, C, O flags (. keep bits 21-31)
-  mcrxr cr1         // move XER (. CA and CO bits) to CR1
+  clrlwi st, st, 21 // clear L, A, E, C, O flags (-> keep bits 21-31)
+  mcrxr cr1         // move XER (-> CA and CO bits) to CR1
 
   beq- null_result  // if EQ is set, jump to null_result.  No jump is more likely than a jump.
   bgt+ positive_result  // if GT is set, jump to positive_result.  A jump is more likely than no jump.
@@ -298,7 +298,7 @@ nocarry:
 // Set laeco for add
 //
 static INT16 asm setst_add_laeco(register INT16 a, register INT16 b)
-{ // a . r3, b . r4
+{ // a -> r3, b -> r4
 //  lwz r6, I(RTOC)   // load pointer to I
   _asm_get_global(r6,I)
 
@@ -344,7 +344,7 @@ static INT16 asm setst_sub_laeco(register INT16 a, register INT16 b)
 // Set laecop for add (BYTE)
 //
 static INT8 asm setst_addbyte_laecop(register INT8 a, register INT8 b)
-{ // a . r3, b . r4
+{ // a -> r3, b -> r4
 //  lwz r6, I(RTOC)
   _asm_get_global(r6,I)
 
@@ -369,7 +369,7 @@ static INT8 asm setst_addbyte_laecop(register INT8 a, register INT8 b)
 // Set laecop for subtract (BYTE)
 //
 static INT8 asm setst_subbyte_laecop(register INT8 a, register INT8 b)
-{ // a . r3, b . r4
+{ // a -> r3, b -> r4
 //  lwz r6, I(RTOC)
   _asm_get_global(r6,I)
 
@@ -406,7 +406,7 @@ INLINE INT16 setst_add_laeco(int a, int b)
 
 	res = (a & 0xffff) + (b & 0xffff);
 
-	if ((res & 0x10000) != 0)
+	if (res & 0x10000)
 		I.STATUS |= ST_C;
 
 	if ((res ^ b) & (res ^ a) & 0x8000)
@@ -478,7 +478,7 @@ INLINE INT8 setst_addbyte_laecop(int a, int b)
 
 	res = (a & 0xff) + (b & 0xff);
 
-	if ((res & 0x100) != 0)
+	if (res & 0x100)
 		I.STATUS |= ST_C;
 
 	if ((res ^ b) & (res ^ a) & 0x80)
@@ -576,7 +576,7 @@ INLINE UINT16 setst_sra_laec(INT16 a, UINT16 c)
 	if (c != 0)
 	{
 		a = arithmetic_right_shift(a, c-1);
-		if ((a & 1) != 0)  // The carry bit equals the last bit that is shifted out
+		if (a & 1)  // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 		a = arithmetic_right_shift(a, 1);
 	}
@@ -602,7 +602,7 @@ INLINE UINT16 setst_srl_laec(UINT16 a,UINT16 c)
 	if (c != 0)
 	{
 		a = logical_right_shift(a, c-1);
-		if ((a & 1) != 0)
+		if (a & 1)
 			I.STATUS |= ST_C;
 		a = logical_right_shift(a, 1);
 	}
@@ -628,7 +628,7 @@ INLINE UINT16 setst_src_laec(UINT16 a,UINT16 c)
 	if (c != 0)
 	{
 		a = logical_right_shift(a, c) | (a << (16-c));
-		if ((a & 0x8000) != 0) // The carry bit equals the last bit that is shifted out
+		if (a & 0x8000) // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 	}
 
@@ -659,13 +659,13 @@ INLINE UINT16 setst_sla_laeco(UINT16 a, UINT16 c)
 			mask = 0xFFFF << (16-c-1);
 			ousted_bits = a & mask;
 
-			if (ousted_bits != 0)        // If ousted_bits is neither all 0s
+			if (ousted_bits)        // If ousted_bits is neither all 0s
 				if (ousted_bits ^ mask)   // nor all 1s,
 					I.STATUS |= ST_OV;  // we set overflow
 		}
 
 		a <<= c-1;
-		if ((a & 0x8000) != 0) // The carry bit equals the last bit that is shifted out
+		if (a & 0x8000) // The carry bit equals the last bit that is shifted out
 			I.STATUS |= ST_C;
 
 		a <<= 1;

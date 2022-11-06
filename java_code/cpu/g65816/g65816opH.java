@@ -251,7 +251,7 @@ INLINE void g65816i_set_flag_mx(uint value)
 		FLAG_M = MFLAG_CLEAR;
 	}
 #else
-	if ((value & FLAGPOS_M) != 0)
+	if(value & FLAGPOS_M)
 	{
 		REGISTER_B = REGISTER_A & 0xff00;
 		REGISTER_A = MAKE_UINT_8(REGISTER_A);
@@ -264,7 +264,7 @@ INLINE void g65816i_set_flag_mx(uint value)
 		FLAG_X = XFLAG_CLEAR;
 	}
 #else
-	if ((value & FLAGPOS_X) != 0)
+	if(value & FLAGPOS_X)
 	{
 		REGISTER_X = MAKE_UINT_8(REGISTER_X);
 		REGISTER_Y = MAKE_UINT_8(REGISTER_Y);
@@ -278,13 +278,13 @@ INLINE void g65816i_set_flag_mx(uint value)
 INLINE void g65816i_set_flag_e(uint value)
 {
 #if FLAG_SET_E
-	if (value == 0)
+	if(!value)
 	{
 		FLAG_E = EFLAG_CLEAR;
 		g65816i_set_execution_mode(EXECUTION_MODE_M1X1);
 	}
 #else
-	if (value != 0)
+	if(value)
 	{
 #if !FLAG_SET_M
 		REGISTER_B = REGISTER_A & 0xff00;
@@ -368,7 +368,7 @@ INLINE void g65816i_interrupt_hardware(uint vector)
 	g65816i_set_flag_i(IFLAG_SET);
 	REGISTER_PB = 0;
 	g65816i_jump_16(g65816i_read_16_normal(vector));
-	if (INT_ACK != 0) INT_ACK(0);
+	if(INT_ACK) INT_ACK(0);
 #else
 	CLK(8);
 	g65816i_push_8(REGISTER_PB>>16);
@@ -378,7 +378,7 @@ INLINE void g65816i_interrupt_hardware(uint vector)
 	g65816i_set_flag_i(IFLAG_SET);
 	REGISTER_PB = 0;
 	g65816i_jump_16(g65816i_read_16_normal(vector));
-	if (INT_ACK != 0) INT_ACK(0);
+	if(INT_ACK) INT_ACK(0);
 #endif
 }
 
@@ -639,7 +639,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 			CLK(CLK_OP + CLK_R8 + CLK_##MODE);								\
 			SRC    = OPER_8_##MODE();										\
 			FLAG_C = REGISTER_A + SRC + CFLAG_AS_1();						\
-			if (FLAG_D != 0)														\
+			if(FLAG_D)														\
 			{																\
 				if((FLAG_C & 0xf) > 9)										\
 					FLAG_C+=6;												\
@@ -652,7 +652,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 #define OP_ADC(MODE)														\
 			CLK(CLK_OP + CLK_R16 + CLK_##MODE);								\
 			SRC    = OPER_16_##MODE();										\
-			if (FLAG_D == 0)														\
+			if(!FLAG_D)														\
 			{																\
 				FLAG_C = REGISTER_A + SRC + CFLAG_AS_1();						\
 				FLAG_V = VFLAG_ADD_16(SRC, REGISTER_A, FLAG_C);					\
@@ -732,7 +732,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 #undef OP_BCC
 #define OP_BCC(COND)														\
 			DST = OPER_8_IMM();												\
-			if (COND != 0)														\
+			if(COND)														\
 			{																\
 				CLK(CLK_OP + CLK_RELATIVE_8 + 1);							\
 				g65816i_branch_8(DST);										\
@@ -1082,7 +1082,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 				REGISTER_X = MAKE_UINT_8(REGISTER_X+1);								\
 				REGISTER_Y = MAKE_UINT_8(REGISTER_Y+1);								\
 			}																\
-			if (FLAG_M == 0)														\
+			if(!FLAG_M)														\
 			{																\
 				REGISTER_A = 0xffff;												\
 				BREAKOUT;													\
@@ -1101,7 +1101,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 				REGISTER_X = MAKE_UINT_16(REGISTER_X+1);								\
 				REGISTER_Y = MAKE_UINT_16(REGISTER_Y+1);								\
 			}																\
-			if (FLAG_M == 0)														\
+			if(!FLAG_M)														\
 			{																\
 				REGISTER_A = 0xffff;												\
 				BREAKOUT;													\
@@ -1124,7 +1124,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 				REGISTER_X = MAKE_UINT_8(REGISTER_X-1);								\
 				REGISTER_Y = MAKE_UINT_8(REGISTER_Y-1);								\
 			}																\
-			if (FLAG_M == 0)														\
+			if(!FLAG_M)														\
 			{																\
 				REGISTER_A = 0xffff;												\
 				BREAKOUT;													\
@@ -1143,7 +1143,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 				REGISTER_X = MAKE_UINT_16(REGISTER_X-1);								\
 				REGISTER_Y = MAKE_UINT_16(REGISTER_Y-1);								\
 			}																\
-			if (FLAG_M == 0)														\
+			if(!FLAG_M)														\
 			{																\
 				REGISTER_A = 0xffff;												\
 				BREAKOUT;													\
@@ -1400,7 +1400,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 			CLK(CLK_OP + CLK_R8 + CLK_##MODE);								\
 			SRC = OPER_8_##MODE();											\
 			FLAG_C = ~FLAG_C;												\
-			if (FLAG_D == 0)														\
+			if(!FLAG_D)														\
 			{																\
 				FLAG_C = REGISTER_A - SRC - CFLAG_AS_1();						\
 				FLAG_V = VFLAG_SUB_8(SRC, REGISTER_A, FLAG_C);					\
@@ -1422,7 +1422,7 @@ INLINE uint EA_SIY(void)   {return EA_S() + REGISTER_DB + REGISTER_Y;}
 			CLK(CLK_OP + CLK_R16 + CLK_##MODE);								\
 			SRC = OPER_16_##MODE();											\
 			FLAG_C = ~FLAG_C;												\
-			if (FLAG_D == 0)														\
+			if(!FLAG_D)														\
 			{																\
 				FLAG_C = REGISTER_A - SRC - CFLAG_AS_1();						\
 				FLAG_V = VFLAG_SUB_16(SRC, REGISTER_A, FLAG_C);					\
@@ -2111,9 +2111,9 @@ TABLE_FUNCTION(void, set_line, (int line, int state))
 				case HOLD_LINE:
 					LINE_IRQ = 1;
 			}
-			if (FLAG_I != 0)
+			if(FLAG_I)
 			{
-				if ((CPU_STOPPED & STOP_LEVEL_WAI) != 0)
+				if(CPU_STOPPED & STOP_LEVEL_WAI)
 					CPU_STOPPED &= ~STOP_LEVEL_WAI;
 				return;
 			}
@@ -2125,11 +2125,11 @@ TABLE_FUNCTION(void, set_line, (int line, int state))
 				LINE_NMI = 0;
 				return;
 			}
-			if (LINE_NMI == 0)
+			if(!LINE_NMI)
 			{
 				LINE_NMI = state != PULSE_LINE;
 				CPU_STOPPED &= ~STOP_LEVEL_WAI;
-				if (CPU_STOPPED == 0)
+				if(!CPU_STOPPED)
 					g65816i_interrupt_nmi();
 			}
 			return;
@@ -2208,7 +2208,7 @@ TABLE_FUNCTION(void, set_reg, (int regnum, uint val))
 
 TABLE_FUNCTION(int, execute, (int clocks))
 {
-	if (CPU_STOPPED == 0)
+	if(!CPU_STOPPED)
 	{
 		CLOCKS = clocks;
 		do

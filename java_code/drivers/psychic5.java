@@ -311,7 +311,7 @@ The first sprite data is located at f20b,then f21b and so on.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -326,13 +326,11 @@ public class psychic5
 	static int psychic5_bank_latch = 0x0;
 	
 	
-	public static ReadHandlerPtr psychic5_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psychic5_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return psychic5_bank_latch;
 	} };
 	
-	public static WriteHandlerPtr psychic5_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -344,20 +342,18 @@ public class psychic5
 		}
 	} };
 	
-	public static WriteHandlerPtr psychic5_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr psychic5_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
 	
 		// bit 7 toggles flip screen
-		if ((data & 0x80) != 0)
+		if (data & 0x80)
 		{
 			flip_screen_set(!flip_screen());
 		}
 	} };
 	
-	public static InterruptHandlerPtr psychic5_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr psychic5_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		   cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);		/* RST 10h */
 		else
@@ -382,7 +378,7 @@ public class psychic5
 		new Memory_ReadAddress( 0xf800, 0xffff, MRA_RAM ),
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
-	WRITE_HANDLER(peek_w){usrintf_showmessage("offset %u data %u", offset, data);};
+	public static WriteHandlerPtr peek_w = new WriteHandlerPtr() {public void handler(int offset, int data)srintf_showmessage("offset %u data %u", offset, data);};
 	
 	public static Memory_WriteAddress writemem[]={
 		new Memory_WriteAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -427,7 +423,7 @@ public class psychic5
 	};
 	
 	
-	static InputPortPtr input_ports_psychic5 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psychic5 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psychic5 )
 	    PORT_START(); 
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -561,8 +557,7 @@ public class psychic5
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_psychic5 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( psychic5 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)
@@ -592,9 +587,7 @@ public class psychic5
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -625,5 +618,5 @@ public class psychic5
 	
 	
 	
-	public static GameDriver driver_psychic5	   = new GameDriver("1987"	,"psychic5"	,"psychic5.java"	,rom_psychic5,null	,machine_driver_psychic5	,input_ports_psychic5	,null	,ROT270	,	"Jaleco", "Psychic 5" )
+	GAME( 1987, psychic5, 0, psychic5, psychic5, 0, ROT270, "Jaleco", "Psychic 5" )
 }

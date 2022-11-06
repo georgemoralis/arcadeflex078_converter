@@ -49,7 +49,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -58,8 +58,7 @@ public class sonson
 	
 	
 	
-	public static WriteHandlerPtr sonson_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sonson_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		if (last == 0 && data == 1)
@@ -121,7 +120,7 @@ public class sonson
 	
 	
 	
-	static InputPortPtr input_ports_sonson = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sonson = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sonson )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -251,8 +250,7 @@ public class sonson
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_sonson = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sonson )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,12000000/6)	/* 2 MHz ??? */
@@ -281,9 +279,7 @@ public class sonson
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -355,6 +351,6 @@ public class sonson
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_sonson	   = new GameDriver("1984"	,"sonson"	,"sonson.java"	,rom_sonson,null	,machine_driver_sonson	,input_ports_sonson	,null	,ROT0	,	"Capcom", "Son Son" )
-	public static GameDriver driver_sonsonj	   = new GameDriver("1984"	,"sonsonj"	,"sonson.java"	,rom_sonsonj,driver_sonson	,machine_driver_sonson	,input_ports_sonson	,null	,ROT0	,	"Capcom", "Son Son (Japan)" )
+	GAME( 1984, sonson,  0,      sonson, sonson, 0, ROT0, "Capcom", "Son Son" )
+	GAME( 1984, sonsonj, sonson, sonson, sonson, 0, ROT0, "Capcom", "Son Son (Japan)" )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class bagman
 	static struct tilemap *bg_tilemap;
 	
 	
-	public static WriteHandlerPtr bagman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -30,8 +29,7 @@ public class bagman
 		}
 	} };
 	
-	public static WriteHandlerPtr bagman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -58,8 +56,7 @@ public class bagman
 	  bit 0 -- 1  kohm resistor  -- /
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_bagman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bagman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		const int resistances_rg[3] = { 1000, 470, 220 };
 		const int resistances_b [2] = { 470, 220 };
@@ -95,8 +92,7 @@ public class bagman
 		}
 	} };
 	
-	public static WriteHandlerPtr bagman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -106,19 +102,18 @@ public class bagman
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int gfxbank = (Machine.gfx[2] && (colorram.read(tile_index)& 0x10)) ? 2 : 0;
+		int gfxbank = (Machine->gfx[2] && (colorram.read(tile_index)& 0x10)) ? 2 : 0;
 		int code = videoram.read(tile_index)+ 8 * (colorram.read(tile_index)& 0x20);
 		int color = colorram.read(tile_index)& 0x0f;
 	
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_bagman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bagman  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -137,24 +132,24 @@ public class bagman
 			sy = 240 - spriteram.read(offs + 2);
 			flipx = spriteram.read(offs)& 0x40;
 			flipy = spriteram.read(offs)& 0x80;
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx +1;	/* compensate misplacement */
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
 			if (spriteram.read(offs + 2)&& spriteram.read(offs + 3))
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						(spriteram.read(offs)& 0x3f) + 2 * (spriteram.read(offs + 1)& 0x20),
 						spriteram.read(offs + 1)& 0x1f,
 						flipx,flipy,
 						sx,sy+1,	/* compensate misplacement */
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -165,8 +160,7 @@ public class bagman
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bagman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (*bagman_video_enable == 0)
 			return;
 	

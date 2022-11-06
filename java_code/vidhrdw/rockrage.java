@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -10,8 +10,7 @@ public class rockrage
 	static int layer_colorbase[2];
 	static int rockrage_vreg;
 	
-	public static PaletteInitHandlerPtr palette_init_rockrage  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rockrage  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -52,7 +51,7 @@ public class rockrage
 	}
 	
 	
-	public static WriteHandlerPtr rockrage_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr rockrage_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/* bits 4-7: unused */
 		/* bit 3: bit 4 of bank # (layer 0) */
 		/* bit 2: bit 1 of bank # (layer 0) */
@@ -62,7 +61,7 @@ public class rockrage
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 	
 		rockrage_vreg = data;
-	} };
+	}
 	
 	/***************************************************************************
 	
@@ -70,8 +69,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_rockrage  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rockrage  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0x00;
 		layer_colorbase[1] = 0x10;
 	
@@ -93,8 +91,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rockrage  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K007342_tilemap_update();
 	
 		K007342_tilemap_draw( bitmap,cliprect, 0, TILEMAP_IGNORE_TRANSPARENCY ,0);

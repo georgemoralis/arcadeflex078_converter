@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -136,12 +136,12 @@ public class am53cf96
 					scsi_regs[REG_INTSTATE] = 4;	// command sent OK
 					scsi_regs[REG_STATUS] |= 0x80;	// indicate IRQ
 					xfer_state = 0;
-					intf.irq_callback();
+					intf->irq_callback();
 					break;
 				case 0x42:    	// select with ATN steps
 					scsi_regs[REG_IRQSTATE] = 8;	// indicate success
 					scsi_regs[REG_STATUS] |= 0x80;	// indicate IRQ
-					intf.irq_callback();
+					intf->irq_callback();
 					last_cmd = fifo[1];
 	//				logerror("53cf96: executing SCSI command %x\n", last_cmd);
 					if (last_cmd == 0)
@@ -181,7 +181,7 @@ public class am53cf96
 					scsi_regs[REG_IRQSTATE] = 8;	// indicate success
 					scsi_regs[REG_INTSTATE] = 6;	// command sent OK
 					scsi_regs[REG_STATUS] |= 0x80;	// indicate IRQ
-					intf.irq_callback();
+					intf->irq_callback();
 					break;
 			}
 		}
@@ -203,23 +203,23 @@ public class am53cf96
 		memset(scsi_regs, 0, sizeof(scsi_regs));
 	
 		// try to open the disk
-		if (interface.device == AM53CF96_DEVICE_HDD)
+		if (interface->device == AM53CF96_DEVICE_HDD)
 		{
 			disk = hard_disk_open(get_disk_handle(0));
-			if (disk == 0)
+			if (!disk)
 			{
 				logerror("53cf96: no disk found!\n");
 			}
 			else
 			{
 				hdinfo = hard_disk_get_info(disk);
-				if (hdinfo.sectorbytes != 512)
+				if (hdinfo->sectorbytes != 512)
 				{
-					logerror("53cf96: Error!  invalid sector size %d\n", hdinfo.sectorbytes);
+					logerror("53cf96: Error!  invalid sector size %d\n", hdinfo->sectorbytes);
 				}		
 			}
 		}
-		else if (interface.device == AM53CF96_DEVICE_CDROM)
+		else if (interface->device == AM53CF96_DEVICE_CDROM)
 		{
 			logerror("53cf96: CDROM not yet supported!\n");
 		}

@@ -21,7 +21,7 @@ blocken:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,15 +39,15 @@ public class shangha3
 	/* this looks like a simple protection check */
 	/*
 	write    read
-	78 78 . 0
-	9b 10 . 1
-	9b 20 . 3
-	9b 40 . 7
-	9b 80 . f
-	08    . e
-	10    . c
-	20    . 8
-	40    . 0
+	78 78 -> 0
+	9b 10 -> 1
+	9b 20 -> 3
+	9b 40 -> 7
+	9b 80 -> f
+	08    -> e
+	10    -> c
+	20    -> 8
+	40    -> 0
 	*/
 	static READ16_HANDLER( shangha3_prot_r )
 	{
@@ -75,7 +75,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( shangha3_coinctrl_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_lockout_w(0,~data & 0x0400);
 			coin_lockout_w(1,~data & 0x0400);
@@ -86,7 +86,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( heberpop_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* the sound ROM bank is selected by the main CPU! */
 			OKIM6295_set_bank_base(0,(data & 0x08) ? 0x40000 : 0x00000);
@@ -101,7 +101,7 @@ public class shangha3
 	
 	static WRITE16_HANDLER( heberpop_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);	/* RST 38h */
@@ -216,7 +216,7 @@ public class shangha3
 	
 	
 	
-	static InputPortPtr input_ports_shangha3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shangha3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shangha3 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -295,7 +295,7 @@ public class shangha3
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_heberpop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_heberpop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( heberpop )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -374,7 +374,7 @@ public class shangha3
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blocken = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blocken = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blocken )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -521,8 +521,7 @@ public class shangha3
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_shangha3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shangha3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -545,13 +544,10 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_heberpop = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( heberpop )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -578,13 +574,10 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3438, ym3438_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_blocken = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blocken )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz ??? */
@@ -611,9 +604,7 @@ public class shangha3
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3438, ym3438_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -677,16 +668,14 @@ public class shangha3
 	
 	
 	
-	public static DriverInitHandlerPtr init_shangha3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shangha3  = new DriverInitHandlerPtr() { public void handler(){
 		shangha3_do_shadows = 1;
 	} };
-	public static DriverInitHandlerPtr init_heberpop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_heberpop  = new DriverInitHandlerPtr() { public void handler(){
 		shangha3_do_shadows = 0;
 	} };
 	
-	public static GameDriver driver_shangha3	   = new GameDriver("1993"	,"shangha3"	,"shangha3.java"	,rom_shangha3,null	,machine_driver_shangha3	,input_ports_shangha3	,init_shangha3	,ROT0	,	"Sunsoft", "Shanghai III (Japan)" )
-	public static GameDriver driver_heberpop	   = new GameDriver("1994"	,"heberpop"	,"shangha3.java"	,rom_heberpop,null	,machine_driver_heberpop	,input_ports_heberpop	,init_heberpop	,ROT0	,	"Sunsoft / Atlus", "Hebereke no Popoon (Japan)" )
-	public static GameDriver driver_blocken	   = new GameDriver("1994"	,"blocken"	,"shangha3.java"	,rom_blocken,null	,machine_driver_blocken	,input_ports_blocken	,init_heberpop	,ROT0	,	"KID / Visco", "Blocken (Japan)" )
+	GAME( 1993, shangha3, 0, shangha3, shangha3, shangha3, ROT0, "Sunsoft", "Shanghai III (Japan)" )
+	GAME( 1994, heberpop, 0, heberpop, heberpop, heberpop, ROT0, "Sunsoft / Atlus", "Hebereke no Popoon (Japan)" )
+	GAME( 1994, blocken,  0, blocken,  blocken,  heberpop, ROT0, "KID / Visco", "Blocken (Japan)" )
 }

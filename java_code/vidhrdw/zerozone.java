@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class zerozone
 		SET_TILE_INFO(0,tileno,colour>>12,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_zerozone  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_zerozone  = new VideoStartHandlerPtr() { public int handler(){
 		// i'm not 100% sure it should be opaque, pink title screen looks strange in las vegas girls
 		// but if its transparent other things look incorrect
 		zerozone_tilemap = tilemap_create(get_zerozone_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,      8, 8, 64,32);
@@ -55,8 +54,7 @@ public class zerozone
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_zerozone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zerozone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,zerozone_tilemap,0,0);
 	} };
 }

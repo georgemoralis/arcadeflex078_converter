@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -67,8 +67,7 @@ public class nbmj8688
 	
 	******************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_mbmj8688_8bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_8bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 332 RGB lookup */
@@ -97,8 +96,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_mbmj8688_12bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_12bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 444 RGB lookup */
@@ -119,8 +117,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_mbmj8688_16bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mbmj8688_16bit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 655 RGB lookup */
@@ -142,8 +139,7 @@ public class nbmj8688
 	
 	
 	
-	public static WriteHandlerPtr nbmj8688_color_lookup_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_color_lookup_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_color_lookup[offset] = (data ^ 0xff);
 	} };
 	
@@ -152,8 +148,7 @@ public class nbmj8688
 	
 	******************************************************************************/
 	
-	public static WriteHandlerPtr nbmj8688_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: blitter_src_addr = (blitter_src_addr & 0xff00) | data; break;
@@ -168,8 +163,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static WriteHandlerPtr mjsikaku_gfxflag1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsikaku_gfxflag1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int mjsikaku_flipscreen_old = -1;
 	
 		mjsikaku_gfxflag1 = data;
@@ -187,8 +181,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static WriteHandlerPtr mjsikaku_gfxflag2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsikaku_gfxflag2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxflag2 = data;
 	
 		if (nb1413m3_type == NB1413M3_SEIHAM
@@ -196,18 +189,15 @@ public class nbmj8688
 			mjsikaku_gfxflag2 ^= 0x20;
 	} };
 	
-	public static WriteHandlerPtr mjsikaku_gfxflag3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsikaku_gfxflag3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxflag3 = (data & 0xe0);
 	} };
 	
-	public static WriteHandlerPtr mjsikaku_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsikaku_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_scrolly = data;
 	} };
 	
-	public static WriteHandlerPtr mjsikaku_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsikaku_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxrom = (data & 0x07);
 	
 		if ((mjsikaku_gfxrom << 17) > (memory_region_length(REGION_GFX1) - 1))
@@ -219,8 +209,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static WriteHandlerPtr secolove_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr secolove_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxrom = ((data & 0xc0) >> 4) + (data & 0x03);
 		mjsikaku_gfxflag2_w(0,data);
 	
@@ -233,8 +222,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static WriteHandlerPtr crystal2_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crystal2_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxrom = (data & 0x03);
 		mjsikaku_gfxflag2_w(0,data);
 	
@@ -247,8 +235,7 @@ public class nbmj8688
 		}
 	} };
 	
-	public static WriteHandlerPtr seiha_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr seiha_romsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsikaku_gfxrom = (data & 0x1f);
 		mjsikaku_gfxflag3_w(0,data);
 	
@@ -286,7 +273,7 @@ public class nbmj8688
 	static void update_pixel(int x,int y)
 	{
 		int color = mjsikaku_videoram[(y * 512) + x];
-		plot_pixel(mjsikaku_tmpbitmap, x, y, Machine.pens[color]);
+		plot_pixel(mjsikaku_tmpbitmap, x, y, Machine->pens[color]);
 	}
 	
 	static void writeram_low(int x,int y,int color)
@@ -319,13 +306,13 @@ public class nbmj8688
 	
 		if (gfxtype == GFXTYPE_PURE_12BIT)
 		{
-			if ((mjsikaku_gfxflag2 & 0x20) != 0) return;
+			if (mjsikaku_gfxflag2 & 0x20) return;
 		}
 	
 		startx = blitter_destx + blitter_sizex;
 		starty = blitter_desty + blitter_sizey;
 	
-		if (blitter_direction_x != 0)
+		if (blitter_direction_x)
 		{
 			sizex = blitter_sizex ^ 0xff;
 			skipx = 1;
@@ -336,7 +323,7 @@ public class nbmj8688
 			skipx = -1;
 		}
 	
-		if (blitter_direction_y != 0)
+		if (blitter_direction_y)
 		{
 			sizey = blitter_sizey ^ 0xff;
 			skipy = 1;
@@ -367,7 +354,7 @@ public class nbmj8688
 				dx2 = (2 * x + 1) & 0x1ff;
 				dy = (y + mjsikaku_scrolly) & 0xff;
 	
-				if (mjsikaku_flipscreen != 0)
+				if (mjsikaku_flipscreen)
 				{
 					dx1 ^= 0x1ff;
 					dx2 ^= 0x1ff;
@@ -376,11 +363,11 @@ public class nbmj8688
 	
 				if (gfxtype == GFXTYPE_HYBRID_16BIT)
 				{
-					if ((mjsikaku_gfxflag3 & 0x40) != 0)
+					if (mjsikaku_gfxflag3 & 0x40)
 					{
 						// direct mode
 	
-						if ((mjsikaku_gfxflag3 & 0x80) != 0)
+						if (mjsikaku_gfxflag3 & 0x80)
 						{
 							/* least significant bits */
 							if (color != 0xff)
@@ -405,12 +392,12 @@ public class nbmj8688
 						// lookup table mode
 	
 						// unknown flag (seiha, seiham)
-					//	if ((mjsikaku_gfxflag3 & 0x80) != 0) return;
+					//	if (mjsikaku_gfxflag3 & 0x80) return;
 	
 						// unknown (seiha, seiham, iemoto, ojousan)
 						if (!(mjsikaku_gfxflag2 & 0x20)) return;
 	
-						if (blitter_direction_x != 0)
+						if (blitter_direction_x)
 						{
 							// flip
 							color1 = (color & 0x0f) >> 0;
@@ -447,7 +434,7 @@ public class nbmj8688
 				{
 					/* 12-bit palette with 4-to-12 bit lookup table */
 	
-					if (blitter_direction_x != 0)
+					if (blitter_direction_x)
 					{
 						// flip
 						color1 = (color & 0x0f) >> 0;
@@ -483,7 +470,7 @@ public class nbmj8688
 						   changed as usual.
 						 */
 	
-						if ((mjsikaku_gfxflag2 & 0x10) != 0)
+						if (mjsikaku_gfxflag2 & 0x10)
 						{
 							// 4096 colors low mode (2nd draw upper)
 							color = nbmj8688_color_lookup[((color & 0xf0) >> 4)];
@@ -503,7 +490,7 @@ public class nbmj8688
 					}
 					else
 					{
-						if ((mjsikaku_gfxflag2 & 0x04) != 0)
+						if (mjsikaku_gfxflag2 & 0x04)
 						{
 							// direct mode
 	
@@ -513,7 +500,7 @@ public class nbmj8688
 						{
 							// lookup table mode
 	
-							if (blitter_direction_x != 0)
+							if (blitter_direction_x)
 							{
 								// flip
 								color1 = (color & 0x0f) >> 0;
@@ -573,38 +560,32 @@ public class nbmj8688
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_8bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_8bit  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_8BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_12bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_12bit  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_12BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_pure_12bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_12bit  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_PURE_12BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_16bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_hybrid_16bit  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_HYBRID_16BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 		return common_video_start();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit_LCD  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mbmj8688_pure_16bit_LCD  = new VideoStartHandlerPtr() { public int handler(){
 		mjsikaku_gfxmode = GFXTYPE_PURE_16BIT;
 	
 		if ((HD61830B_ram[0] = auto_malloc(0x10000)) == 0) return 1;
@@ -645,34 +626,28 @@ public class nbmj8688
 		}
 	}
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_0_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_0_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_instr_w(0,offset,data);
 	} };
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_1_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_1_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_instr_w(1,offset,data);
 	} };
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_both_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_both_instr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_instr_w(0,offset,data);
 		nbmj8688_HD61830B_instr_w(1,offset,data);
 	} };
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_data_w(0,offset,data);
 	} };
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_data_w(1,offset,data);
 	} };
 	
-	public static WriteHandlerPtr nbmj8688_HD61830B_both_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nbmj8688_HD61830B_both_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nbmj8688_HD61830B_data_w(0,offset,data);
 		nbmj8688_HD61830B_data_w(1,offset,data);
 	} };
@@ -685,8 +660,7 @@ public class nbmj8688
 	******************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mbmj8688  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
 		if (get_vh_global_attribute_changed() || mjsikaku_screen_refresh)
@@ -701,10 +675,10 @@ public class nbmj8688
 			}
 		}
 	
-		if (mjsikaku_dispflag != 0)
+		if (mjsikaku_dispflag)
 		{
 			int scrolly;
-			if (mjsikaku_flipscreen != 0) scrolly =   mjsikaku_scrolly;
+			if (mjsikaku_flipscreen) scrolly =   mjsikaku_scrolly;
 			else                     scrolly = (-mjsikaku_scrolly) & 0xff;
 	
 			if (cliprect.min_y > 64)	// kludge to compensate for LCD on top of screen
@@ -720,8 +694,7 @@ public class nbmj8688
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mbmj8688_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mbmj8688_LCD  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y, b;
 		struct rectangle clip = *cliprect;
 	
@@ -738,7 +711,7 @@ public class nbmj8688
 				int data = HD61830B_ram[0][y * 60 + x];
 	
 				for (b = 0;b < 8;b++)
-					plot_pixel.handler(bitmap,16 + 480-1-(8*x+b),224+16 + 64*2-1-y,(data & (1<<b)) ? 0x0000 : 0x18ff);
+					plot_pixel(bitmap,16 + 480-1-(8*x+b),224+16 + 64*2-1-y,(data & (1<<b)) ? 0x0000 : 0x18ff);
 			}
 		}
 	
@@ -749,7 +722,7 @@ public class nbmj8688
 				int data = HD61830B_ram[1][y * 60 + x];
 	
 				for (b = 0;b < 8;b++)
-					plot_pixel.handler(bitmap,16 + (8*x+b),16+y,(data & (1<<b)) ? 0x0000 : 0x18ff);
+					plot_pixel(bitmap,16 + (8*x+b),16+y,(data & (1<<b)) ? 0x0000 : 0x18ff);
 			}
 		}
 	} };

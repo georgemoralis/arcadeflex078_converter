@@ -13,7 +13,7 @@ some bits by David Haywood
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,7 +25,7 @@ public class crospang
 	
 	static WRITE16_HANDLER ( crospang_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -107,7 +107,7 @@ public class crospang
 		new IO_WritePort( 0x02, 0x02, OKIM6295_data_0_w ),
 	MEMORY_END
 	
-	static InputPortPtr input_ports_crospang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crospang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crospang )
 		PORT_START(); 	/* DSW */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	 | IPF_4WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_4WAY | IPF_PLAYER1 );
@@ -344,8 +344,8 @@ public class crospang
 			x &= 0x1ff;
 			y &= 0x1ff;
 	
-			if ((x & 0x100) != 0) x-= 0x200;
-			if ((y & 0x100) != 0) y-= 0x200;
+			if (x & 0x100) x-= 0x200;
+			if (y & 0x100) y-= 0x200;
 	
 			x-=44;
 			y+=8;
@@ -358,7 +358,7 @@ public class crospang
 	
 			for (ay=0; ay<dy; ay++)
 			{
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					sprite++,
 					color,(1-fx),fy,0x100-x, (0x100-(y - ay * 16)),
 					cliprect,TRANSPARENCY_PEN,0);
@@ -366,8 +366,7 @@ public class crospang
 		}
 	}
 	
-	VIDEO_START(crospang)
-	{
+	public static VideoStartHandlerPtr video_start_crospang  = new VideoStartHandlerPtr() { public int handler(){
 		bg_layer = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 		fg_layer = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 	
@@ -377,10 +376,9 @@ public class crospang
 		tilemap_set_transparent_pen(fg_layer,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(crospang)
-	{
+	public static VideoUpdateHandlerPtr video_update_crospang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	/*
 		if(keyboard_pressed(KEYCODE_X))
 		{
@@ -422,10 +420,9 @@ public class crospang
 		tilemap_draw(bitmap,cliprect,fg_layer,0,0);
 	
 		draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
-	public static MachineHandlerPtr machine_driver_crospang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crospang )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14318180/2) /* ??? */
 		MDRV_CPU_MEMORY(crospang_readmem,crospang_writemem)
@@ -455,9 +452,7 @@ public class crospang
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_crospang = new RomLoadPtr(){ public void handler(){ 
@@ -482,5 +477,5 @@ public class crospang
 		ROM_LOAD( "rom2.bin", 0x40000, 0x40000, CRC(bc4381e9) SHA1(af0690c253bead3448db5ec8fb258d8284646e89) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_crospang	   = new GameDriver("199?"	,"crospang"	,"crospang.java"	,rom_crospang,null	,machine_driver_crospang	,input_ports_crospang	,null	,ROT0	,	"Oksan?", "Cross Pang", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND)
+	GAMEX( 199?, crospang, 0, crospang, crospang, 0, ROT0, "Oksan?", "Cross Pang", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND)
 }

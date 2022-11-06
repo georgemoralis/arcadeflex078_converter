@@ -22,7 +22,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,27 +37,23 @@ public class jackal
 	
 	
 	
-	public static ReadHandlerPtr rotary_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rotary_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (1 << (readinputport(5) * 8 / 256)) ^ 0xff;
 	} };
 	
-	public static ReadHandlerPtr rotary_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rotary_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (1 << (readinputport(6) * 8 / 256)) ^ 0xff;
 	} };
 	
 	static int irq_enable;
 	
-	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		irq_enable = data & 0x02;
 		flip_screen_set(data & 0x08);
 	} };
 	
-	public static InterruptHandlerPtr jackal_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (irq_enable != 0)
+	public static InterruptHandlerPtr jackal_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (irq_enable)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
@@ -118,7 +114,7 @@ public class jackal
 	
 	
 	
-	static InputPortPtr input_ports_jackal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jackal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jackal )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -213,7 +209,7 @@ public class jackal
 	INPUT_PORTS_END(); }}; 
 	
 	/* identical, plus additional rotary controls */
-	static InputPortPtr input_ports_topgunbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topgunbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topgunbl )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -371,8 +367,7 @@ public class jackal
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_jackal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jackal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)	/* 2 MHz???? */
@@ -403,9 +398,7 @@ public class jackal
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -517,8 +510,8 @@ public class jackal
 	
 	
 	
-	public static GameDriver driver_jackal	   = new GameDriver("1986"	,"jackal"	,"jackal.java"	,rom_jackal,null	,machine_driver_jackal	,input_ports_jackal	,null	,ROT90	,	"Konami", "Jackal (World)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_topgunr	   = new GameDriver("1986"	,"topgunr"	,"jackal.java"	,rom_topgunr,driver_jackal	,machine_driver_jackal	,input_ports_jackal	,null	,ROT90	,	"Konami", "Top Gunner (US)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_jackalj	   = new GameDriver("1986"	,"jackalj"	,"jackal.java"	,rom_jackalj,driver_jackal	,machine_driver_jackal	,input_ports_jackal	,null	,ROT90	,	"Konami", "Tokushu Butai Jackal (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_topgunbl	   = new GameDriver("1986"	,"topgunbl"	,"jackal.java"	,rom_topgunbl,driver_jackal	,machine_driver_jackal	,input_ports_topgunbl	,null	,ROT90	,	"bootleg", "Top Gunner (bootleg)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, jackal,   0,      jackal, jackal,   0, ROT90, "Konami", "Jackal (World)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, topgunr,  jackal, jackal, jackal,   0, ROT90, "Konami", "Top Gunner (US)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, jackalj,  jackal, jackal, jackal,   0, ROT90, "Konami", "Tokushu Butai Jackal (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, topgunbl, jackal, jackal, topgunbl, 0, ROT90, "bootleg", "Top Gunner (bootleg)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
 }

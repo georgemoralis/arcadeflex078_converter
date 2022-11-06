@@ -80,7 +80,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -91,8 +91,7 @@ public class popper
 	
 	static data8_t *popper_sharedram;
 	
-	public static ReadHandlerPtr popper_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr popper_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return popper_sharedram[offset];
 	} };
 	
@@ -123,8 +122,7 @@ public class popper
 	//                      -----x--  free play
 	//                      ------x-  continue
 	//                      -------x  sound
-	public static ReadHandlerPtr popper_input_ports_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr popper_input_ports_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t data=0;
 		switch (offset)
 		{
@@ -141,14 +139,12 @@ public class popper
 		return data;
 	} };
 	
-	public static ReadHandlerPtr popper_soundcpu_nmi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr popper_soundcpu_nmi_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_nmi_line(1,PULSE_LINE);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr popper_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popper_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		popper_sharedram[offset]=data;
 	} };
 	
@@ -208,7 +204,7 @@ public class popper
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_popper = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_popper = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( popper )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -321,8 +317,7 @@ public class popper
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_popper = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( popper )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)
@@ -351,9 +346,7 @@ public class popper
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, popper_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_popper = new RomLoadPtr(){ public void handler(){ 
@@ -378,5 +371,5 @@ public class popper
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_popper	   = new GameDriver("1983"	,"popper"	,"popper.java"	,rom_popper,null	,machine_driver_popper	,input_ports_popper	,null	,ROT90	,	"Omori Electric Co., Ltd.", "Popper", GAME_IMPERFECT_COLORS )
+	GAMEX(1983, popper, 0, popper, popper, 0, ROT90, "Omori Electric Co., Ltd.", "Popper", GAME_IMPERFECT_COLORS )
 }

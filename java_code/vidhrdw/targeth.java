@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,8 @@ public class targeth
 	
 	static void get_tile_info_targeth_screen0(int tile_index)
 	{
-		int data = targeth_videoram.read(tile_index << 1);
-		int data2 = targeth_videoram.read((tile_index << 1) + 1);
+		int data = targeth_videoram[tile_index << 1];
+		int data2 = targeth_videoram[(tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x03))
@@ -55,8 +55,8 @@ public class targeth
 	
 	static void get_tile_info_targeth_screen1(int tile_index)
 	{
-		int data = targeth_videoram.read((0x2000/2) + (tile_index << 1));
-		int data2 = targeth_videoram.read((0x2000/2) + (tile_index << 1) + 1);
+		int data = targeth_videoram[(0x2000/2) + (tile_index << 1)];
+		int data2 = targeth_videoram[(0x2000/2) + (tile_index << 1) + 1];
 		int code = data & 0x3fff;
 	
 		SET_TILE_INFO(0, code, data2 & 0x1f, TILE_FLIPXY((data2 >> 5) & 0x03))
@@ -70,7 +70,7 @@ public class targeth
 	
 	WRITE16_HANDLER( targeth_vram_w )
 	{
-		targeth_videoram.write(data,data);
+		targeth_videoram[offset] = data;
 	
 		tilemap_mark_tile_dirty(pant[(offset & 0x1fff) >> 12], ((offset << 1) & 0x1fff) >> 2);
 	}
@@ -82,8 +82,7 @@ public class targeth
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_targeth  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_targeth  = new VideoStartHandlerPtr() { public int handler(){
 		pant[0] = tilemap_create(get_tile_info_targeth_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pant[1] = tilemap_create(get_tile_info_targeth_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 	
@@ -122,7 +121,7 @@ public class targeth
 	static void targeth_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		for (i = 3; i < (0x1000 - 6)/2; i += 4){
 			int sx = targeth_spriteram[i+2] & 0x03ff;
@@ -137,7 +136,7 @@ public class targeth
 			drawgfx(bitmap,gfx,number,
 					0x20 + color,xflip,yflip,
 					sx - 0x0f,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -147,8 +146,7 @@ public class targeth
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_targeth  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_targeth  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, targeth_vregs[0]);
 		tilemap_set_scrollx(pant[0], 0, targeth_vregs[1] + 0x04);

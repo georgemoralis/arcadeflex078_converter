@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,7 +39,7 @@ public class skyarmy
 	        int code = skyarmy_videoram[tile_index];
 	        int attr = skyarmy_colorram[tile_index];
 	        
-		/* bit 0 <. bit 2 ????? */
+		/* bit 0 <-> bit 2 ????? */
 		switch(attr)
 		{
 			case 1: attr=4; break;
@@ -51,32 +51,27 @@ public class skyarmy
 		SET_TILE_INFO( 0, code, attr, 0)
 	}
 	
-	public static WriteHandlerPtr skyarmy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyarmy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        skyarmy_videoram[offset] = data;
 	        tilemap_mark_tile_dirty(skyarmy_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr skyarmy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyarmy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        skyarmy_colorram[offset] = data;
 	        tilemap_mark_tile_dirty(skyarmy_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr skyarmy_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyarmy_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        skyarmy_scrollram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr skyarmy_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skyarmy_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	        return skyarmy_scrollram[offset];
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_skyarmy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skyarmy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -103,18 +98,16 @@ public class skyarmy
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_skyarmy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_skyarmy  = new VideoStartHandlerPtr() { public int handler(){
 	        skyarmy_tilemap = tilemap_create(get_skyarmy_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	        tilemap_set_scroll_cols(skyarmy_tilemap,32);
-	        if (skyarmy_tilemap == 0)
+	        if(!skyarmy_tilemap)
 			return 1;
 		return 0;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skyarmy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	        int sx, sy, flipx, flipy, offs,pal;
 	        int i;
 		for(i=0;i<0x20;i++)tilemap_set_scrolly( skyarmy_tilemap,i,skyarmy_scrollram[i]);
@@ -149,14 +142,12 @@ public class skyarmy
 	
 	static int skyarmy_nmi=0;
 	
-	public static InterruptHandlerPtr skyarmy_nmi_source = new InterruptHandlerPtr() {public void handler()
-	{
-		 if (skyarmy_nmi != 0) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
+	public static InterruptHandlerPtr skyarmy_nmi_source = new InterruptHandlerPtr() {public void handler(){
+		 if(skyarmy_nmi) cpu_set_irq_line(0,IRQ_LINE_NMI, PULSE_LINE)	;
 	} };
 	
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        skyarmy_nmi=data&1;
 	} };
 	
@@ -190,7 +181,7 @@ public class skyarmy
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_skyarmy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyarmy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyarmy )
 	        PORT_START(); 
 	        PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "2" );
@@ -287,8 +278,7 @@ public class skyarmy
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_skyarmy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skyarmy )
 	        MDRV_CPU_ADD(Z80,4000000)
 		MDRV_CPU_MEMORY(skyarmy_readmem,skyarmy_writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -309,9 +299,7 @@ public class skyarmy
 	        MDRV_VIDEO_UPDATE(skyarmy)
 	        
 	        MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_skyarmy = new RomLoadPtr(){ public void handler(){ 
@@ -333,5 +321,5 @@ public class skyarmy
 	        ROM_LOAD( "a6.bin",  0x0000, 0x0020, CRC(c721220b) SHA1(61b3320fb616c0600d56840cb6438616c7e0c6eb) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_skyarmy	   = new GameDriver("1982"	,"skyarmy"	,"skyarmy.java"	,rom_skyarmy,null	,machine_driver_skyarmy	,input_ports_skyarmy	,null	,ROT90	,	"Shoei", "Sky Army", GAME_WRONG_COLORS )
+	GAMEX( 1982, skyarmy, 0, skyarmy, skyarmy, 0, ROT90, "Shoei", "Sky Army", GAME_WRONG_COLORS )
 }

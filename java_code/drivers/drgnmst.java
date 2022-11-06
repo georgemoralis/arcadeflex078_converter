@@ -10,7 +10,7 @@ unico used for zero point etc.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,15 +37,13 @@ public class drgnmst
 	WRITE16_HANDLER( drgnmst_fg_videoram_w );
 	WRITE16_HANDLER( drgnmst_bg_videoram_w );
 	WRITE16_HANDLER( drgnmst_md_videoram_w );
-	VIDEO_START(drgnmst);
-	VIDEO_UPDATE(drgnmst);
 	
 	
 	
 	
 	static WRITE16_HANDLER( drgnmst_snd_command_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 			drgnmst_snd_command = (data & 0xff);
 			cpu_yield();
 		}
@@ -54,18 +52,16 @@ public class drgnmst
 	static WRITE16_HANDLER( drgnmst_snd_flag_w )
 	{
 		/* Enables the following 68K write operation to latch through to the PIC */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			drgnmst_snd_flag = 1;
 	}
 	
 	
-	public static ReadHandlerPtr pic16c5x_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pic16c5x_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pic16c5x_port0;
 	} };
 	
-	public static ReadHandlerPtr drgnmst_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr drgnmst_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (drgnmst_oki_control & 0x1f)
@@ -80,9 +76,8 @@ public class drgnmst
 		return data;
 	} };
 	
-	public static ReadHandlerPtr drgnmst_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (drgnmst_snd_flag != 0) {
+	public static ReadHandlerPtr drgnmst_snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (drgnmst_snd_flag) {
 			drgnmst_snd_flag = 0;
 			return 0x40;
 		}
@@ -90,8 +85,7 @@ public class drgnmst
 		return 0x00;
 	} };
 	
-	public static WriteHandlerPtr drgnmst_pcm_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr drgnmst_pcm_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This is a 4 bit port.
 			Each pair of bits is used in part of the OKI PCM ROM bank selectors.
 			See the Port 2 write handler below (drgnmst_snd_control_w) for details.
@@ -100,13 +94,11 @@ public class drgnmst
 		pic16c5x_port0 = data;
 	} };
 	
-	public static WriteHandlerPtr drgnmst_oki_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr drgnmst_oki_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drgnmst_oki_command = data;
 	} };
 	
-	public static WriteHandlerPtr drgnmst_snd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr drgnmst_snd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This port controls communications to and from the 68K, both OKI
 			devices, and part of the OKI PCM ROM bank selection.
 	
@@ -137,7 +129,7 @@ public class drgnmst
 		oki_new_bank = ((pic16c5x_port0 & 0xc) >> 2) | ((drgnmst_oki_control & 0x80) >> 5);
 		if (oki_new_bank != drgnmst_oki0_bank) {
 			drgnmst_oki0_bank = oki_new_bank;
-			if (drgnmst_oki0_bank != 0) oki_new_bank--;
+			if (drgnmst_oki0_bank) oki_new_bank--;
 			OKIM6295_set_bank_base(0, (oki_new_bank * 0x40000));
 		}
 		oki_new_bank = ((pic16c5x_port0 & 0x3) >> 0) | ((drgnmst_oki_control & 0x20) >> 3);
@@ -163,8 +155,7 @@ public class drgnmst
 	} };
 	
 	
-	public static ReadHandlerPtr PIC16C5X_T0_clk_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr PIC16C5X_T0_clk_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
@@ -251,7 +242,7 @@ public class drgnmst
 	
 	
 	
-	static InputPortPtr input_ports_drgnmst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drgnmst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drgnmst )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -407,8 +398,7 @@ public class drgnmst
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_drgnmst = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drgnmst )
 		MDRV_CPU_ADD(M68000, 12000000) /* Confirmed */
 		MDRV_CPU_MEMORY(drgnmst_readmem,drgnmst_writemem)
 		MDRV_CPU_VBLANK_INT(irq2_line_hold,1)
@@ -433,9 +423,7 @@ public class drgnmst
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, dual_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_drgnmst = new RomLoadPtr(){ public void handler(){ 
@@ -488,8 +476,7 @@ public class drgnmst
 	}
 	
 	
-	public static DriverInitHandlerPtr init_drgnmst  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_drgnmst  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *drgnmst_PICROM_HEX = memory_region(REGION_USER1);
 		data8_t *drgnmst_PICROM = memory_region(REGION_CPU2);
 		data8_t *drgnmst_PCM = memory_region(REGION_SOUND1);
@@ -564,5 +551,5 @@ public class drgnmst
 	} };
 	
 	
-	public static GameDriver driver_drgnmst	   = new GameDriver("1994"	,"drgnmst"	,"drgnmst.java"	,rom_drgnmst,null	,machine_driver_drgnmst	,input_ports_drgnmst	,init_drgnmst	,ROT0	,	"Unico", "Dragon Master" )
+	GAME( 1994, drgnmst, 0, drgnmst,  drgnmst, drgnmst, ROT0, "Unico", "Dragon Master" )
 }

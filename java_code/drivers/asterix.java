@@ -22,7 +22,7 @@ colour, including the word "Konami"
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,15 +53,14 @@ public class asterix
 	}
 	#endif
 	
-	public static NVRAMHandlerPtr nvram_handler_asterix  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_asterix  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -80,7 +79,7 @@ public class asterix
 		/* bit 10 is service button */
 		res = (EEPROM_read_bit()<<8) | input_port_1_word_r(0,0);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xfbff;
@@ -100,7 +99,7 @@ public class asterix
 	
 	static WRITE16_HANDLER( control2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			cur_control2 = data;
 			/* bit 0 is data */
@@ -116,9 +115,8 @@ public class asterix
 		}
 	}
 	
-	public static InterruptHandlerPtr asterix_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K054157_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr asterix_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K054157_is_IRQ_enabled())
 			cpu_set_irq_line(0, 5, HOLD_LINE); /* ??? All irqs have the same vector, and the
 	                                              mask used is 0 or 7 */
 	} };
@@ -133,8 +131,7 @@ public class asterix
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(5),0,nmi_callback);
 	} };
@@ -249,7 +246,7 @@ public class asterix
 	
 	
 	
-	static InputPortPtr input_ports_asterix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asterix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asterix )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
@@ -297,8 +294,7 @@ public class asterix
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_asterix = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( asterix )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -327,9 +323,7 @@ public class asterix
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_asterix = new RomLoadPtr(){ public void handler(){ 
@@ -399,8 +393,7 @@ public class asterix
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_asterix  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_asterix  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	
@@ -411,7 +404,7 @@ public class asterix
 	} };
 	
 	
-	public static GameDriver driver_asterix	   = new GameDriver("1992"	,"asterix"	,"asterix.java"	,rom_asterix,null	,machine_driver_asterix	,input_ports_asterix	,init_asterix	,ROT0	,	"Konami", "Asterix (World ver. EAD)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_astrxeac	   = new GameDriver("1992"	,"astrxeac"	,"asterix.java"	,rom_astrxeac,driver_asterix	,machine_driver_asterix	,input_ports_asterix	,init_asterix	,ROT0	,	"Konami", "Asterix (World ver. EAC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_astrxeaa	   = new GameDriver("1992"	,"astrxeaa"	,"asterix.java"	,rom_astrxeaa,driver_asterix	,machine_driver_asterix	,input_ports_asterix	,init_asterix	,ROT0	,	"Konami", "Asterix (World ver. EAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1992, asterix,  0,       asterix, asterix, asterix, ROT0, "Konami", "Asterix (World ver. EAD)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1992, astrxeac, asterix, asterix, asterix, asterix, ROT0, "Konami", "Asterix (World ver. EAC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1992, astrxeaa, asterix, asterix, asterix, asterix, ROT0, "Konami", "Asterix (World ver. EAA)", GAME_IMPERFECT_GRAPHICS )
 }

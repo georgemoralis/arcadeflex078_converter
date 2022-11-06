@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,27 +31,23 @@ public class munchmo
 	
 	static int mnchmobl_nmi_enable = 0;
 	
-	public static WriteHandlerPtr mnchmobl_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnchmobl_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mnchmobl_nmi_enable = data;
 	} };
 	
-	public static InterruptHandlerPtr mnchmobl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mnchmobl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int which;
 		which = !which;
-		if (which != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
-		else if (mnchmobl_nmi_enable != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+		if( which ) cpu_set_irq_line(0, 0, HOLD_LINE);
+		else if( mnchmobl_nmi_enable ) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr mnchmobl_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnchmobl_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr sound_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line(1, CLEAR_LINE);
 	} };
 	
@@ -132,7 +128,7 @@ public class munchmo
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	static InputPortPtr input_ports_mnchmobl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mnchmobl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mnchmobl )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -288,8 +284,7 @@ public class munchmo
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_munchmo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( munchmo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3750000) /* ? */
@@ -317,9 +312,7 @@ public class munchmo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_joyfulr = new RomLoadPtr(){ public void handler(){ 
@@ -379,6 +372,6 @@ public class munchmo
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_joyfulr	   = new GameDriver("1983"	,"joyfulr"	,"munchmo.java"	,rom_joyfulr,null	,machine_driver_munchmo	,input_ports_mnchmobl	,null	,ROT270	,	"SNK", "Joyful Road (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_mnchmobl	   = new GameDriver("1983"	,"mnchmobl"	,"munchmo.java"	,rom_mnchmobl,driver_joyfulr	,machine_driver_munchmo	,input_ports_mnchmobl	,null	,ROT270	,	"SNK (Centuri license)", "Munch Mobile (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, joyfulr,  0,       munchmo, mnchmobl, 0, ROT270, "SNK", "Joyful Road (Japan)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, mnchmobl, joyfulr, munchmo, mnchmobl, 0, ROT270, "SNK (Centuri license)", "Munch Mobile (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

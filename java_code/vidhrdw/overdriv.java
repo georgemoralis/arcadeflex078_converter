@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,7 +20,7 @@ public class overdriv
 	static void overdriv_sprite_callback(int *code,int *color,int *priority_mask)
 	{
 		int pri = (*color & 0xffe0) >> 5;	/* ??????? */
-		if (pri != 0) *priority_mask = 0x02;
+		if (pri) *priority_mask = 0x02;
 		else     *priority_mask = 0x00;
 	
 		*color = sprite_colorbase + (*color & 0x001f);
@@ -55,8 +55,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_overdriv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_overdriv  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K051316_vh_start_0(REGION_GFX2,4,TILEMAP_OPAQUE,0,zoom_callback_0))
@@ -83,8 +82,7 @@ public class overdriv
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_overdriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sprite_colorbase  = K053251_get_palette_index(K053251_CI0);
 		road_colorbase[1] = K053251_get_palette_index(K053251_CI1);
 		road_colorbase[0] = K053251_get_palette_index(K053251_CI2);

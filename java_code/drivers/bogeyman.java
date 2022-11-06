@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,13 +26,11 @@ public class bogeyman
 	
 	static int psg_latch;
 	
-	public static WriteHandlerPtr bogeyman_8910_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_8910_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		psg_latch = data;
 	} };
 	
-	public static WriteHandlerPtr bogeyman_8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bogeyman_8910_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		/* bit 0 is flipscreen */
@@ -42,7 +40,7 @@ public class bogeyman
 		if ((last & 0x20) == 0x20 && (data & 0x20) == 0x00)
 		{
 			/* bit 4 goes to the 8910 #0 BC1 pin */
-			if ((last & 0x10) != 0)
+			if (last & 0x10)
 				AY8910_control_port_0_w.handler(0,psg_latch);
 			else
 				AY8910_write_port_0_w.handler(0,psg_latch);
@@ -51,7 +49,7 @@ public class bogeyman
 		if ((last & 0x80) == 0x80 && (data & 0x80) == 0x00)
 		{
 			/* bit 6 goes to the 8910 #1 BC1 pin */
-			if ((last & 0x40) != 0)
+			if (last & 0x40)
 				AY8910_control_port_1_w.handler(0,psg_latch);
 			else
 				AY8910_write_port_1_w.handler(0,psg_latch);
@@ -94,7 +92,7 @@ public class bogeyman
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_bogeyman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bogeyman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bogeyman )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -247,8 +245,7 @@ public class bogeyman
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bogeyman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bogeyman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000) /* 12 MHz clock on board */
@@ -273,9 +270,7 @@ public class bogeyman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -310,5 +305,5 @@ public class bogeyman
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_bogeyman	   = new GameDriver("1985?"	,"bogeyman"	,"bogeyman.java"	,rom_bogeyman,null	,machine_driver_bogeyman	,input_ports_bogeyman	,null	,ROT0	,	"Technos Japan", "Bogey Manor", GAME_IMPERFECT_COLORS )
+	GAMEX( 1985?, bogeyman, 0, bogeyman, bogeyman, 0, ROT0, "Technos Japan", "Bogey Manor", GAME_IMPERFECT_COLORS )
 }

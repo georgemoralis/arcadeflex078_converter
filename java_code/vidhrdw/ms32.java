@@ -14,7 +14,7 @@ priority should be given to
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -76,8 +76,7 @@ public class ms32
 	static data32_t brt[4];
 	static int brt_r,brt_g,brt_b;
 	
-	public static VideoStartHandlerPtr video_start_ms32  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ms32  = new VideoStartHandlerPtr() { public int handler(){
 		ms32_tx_tilemap = tilemap_create(get_ms32_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		ms32_bg_tilemap = tilemap_create(get_ms32_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		ms32_roz_tilemap = tilemap_create(get_ms32_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,128,128);
@@ -228,7 +227,7 @@ public class ms32
 	
 	WRITE32_HANDLER( ms32_gfxctrl_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 		{
 			/* bit 1 = flip screen */
 			flipscreen = data & 0x02;
@@ -289,7 +288,7 @@ public class ms32
 		int tx, ty, sx, sy, flipx, flipy;
 		int xsize, ysize, xzoom, yzoom;
 		int code, attr, color, size, pri, pri_mask, trans;
-		struct GfxElement *gfx = Machine.gfx[0];
+		struct GfxElement *gfx = Machine->gfx[0];
 		struct GfxElement mygfx = *gfx;
 	
 		data32_t		*source	= sprram_top;
@@ -345,7 +344,7 @@ public class ms32
 	
 			trans = TRANSPARENCY_PEN; // there are surely also shadows (see gametngk) but how they're enabled we don't know
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 320 - ((xsize*xzoom)>>16) - sx;
 				sy = 224 - ((ysize*yzoom)>>16) - sy;
@@ -356,7 +355,7 @@ public class ms32
 			/* change GfxElement parameters to draw only the needed part of the 256x256 tile */
 			mygfx.width = xsize;
 			mygfx.height = ysize;
-			mygfx.gfxdata = gfx.gfxdata + tx + ty * gfx.line_modulo;
+			mygfx.gfxdata = gfx->gfxdata + tx + ty * gfx->line_modulo;
 	
 	#if 0
 	if (keyboard_pressed(KEYCODE_A) && (pri & 8)) color = rand();
@@ -396,11 +395,11 @@ public class ms32
 			struct rectangle my_clip;
 			int y,maxy;
 	
-			my_clip.min_x = cliprect.min_x;
-			my_clip.max_x = cliprect.max_x;
+			my_clip.min_x = cliprect->min_x;
+			my_clip.max_x = cliprect->max_x;
 	
-			y = cliprect.min_y;
-			maxy = cliprect.max_y;
+			y = cliprect->min_y;
+			maxy = cliprect->max_y;
 	
 			while (y <= maxy)
 			{
@@ -421,12 +420,12 @@ public class ms32
 				offsy += (ms32_roz_ctrl[0x3c/4] & 1) * 0x400;	// ??? gratia, hayaosi1...
 	
 				/* extend sign */
-				if ((start2x & 0x20000) != 0) start2x |= ~0x3ffff;
-				if ((start2y & 0x20000) != 0) start2y |= ~0x3ffff;
-				if ((startx & 0x20000) != 0) startx |= ~0x3ffff;
-				if ((starty & 0x20000) != 0) starty |= ~0x3ffff;
-				if ((incxx & 0x10000) != 0) incxx |= ~0x1ffff;
-				if ((incxy & 0x10000) != 0) incxy |= ~0x1ffff;
+				if (start2x & 0x20000) start2x |= ~0x3ffff;
+				if (start2y & 0x20000) start2y |= ~0x3ffff;
+				if (startx & 0x20000) startx |= ~0x3ffff;
+				if (starty & 0x20000) starty |= ~0x3ffff;
+				if (incxx & 0x10000) incxx |= ~0x1ffff;
+				if (incxy & 0x10000) incxy |= ~0x1ffff;
 	
 				tilemap_draw_roz(bitmap, &my_clip, ms32_roz_tilemap,
 						(start2x+startx+offsx)<<16, (start2y+starty+offsy)<<16,
@@ -452,12 +451,12 @@ public class ms32
 			offsy += (ms32_roz_ctrl[0x3c/4] & 1) * 0x400;	// ??? gratia, hayaosi1...
 	
 			/* extend sign */
-			if ((startx & 0x20000) != 0) startx |= ~0x3ffff;
-			if ((starty & 0x20000) != 0) starty |= ~0x3ffff;
-			if ((incxx & 0x10000) != 0) incxx |= ~0x1ffff;
-			if ((incxy & 0x10000) != 0) incxy |= ~0x1ffff;
-			if ((incyy & 0x10000) != 0) incyy |= ~0x1ffff;
-			if ((incyx & 0x10000) != 0) incyx |= ~0x1ffff;
+			if (startx & 0x20000) startx |= ~0x3ffff;
+			if (starty & 0x20000) starty |= ~0x3ffff;
+			if (incxx & 0x10000) incxx |= ~0x1ffff;
+			if (incxy & 0x10000) incxy |= ~0x1ffff;
+			if (incyy & 0x10000) incyy |= ~0x1ffff;
+			if (incyx & 0x10000) incyx |= ~0x1ffff;
 	
 			tilemap_draw_roz(bitmap, cliprect, ms32_roz_tilemap,
 					(startx+offsx)<<16, (starty+offsy)<<16,
@@ -469,8 +468,7 @@ public class ms32
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ms32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ms32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx,scrolly;
 	
 		/* TODO: registers 0x04/4 and 0x10/4 are used too; the most interesting case

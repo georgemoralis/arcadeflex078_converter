@@ -60,7 +60,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -183,7 +183,7 @@ public class wwfsstar
 	 2 Sets of Dipswitches
 	*******************************************************************************/
 	
-	static InputPortPtr input_ports_wwfsstar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wwfsstar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wwfsstar )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 );
@@ -312,10 +312,10 @@ public class wwfsstar
 	 file)
 	*******************************************************************************/
 	
-	public static InterruptHandlerPtr wwfsstar_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr wwfsstar_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops() == 0 ){
 			vbl = 1;
-		}
+		} };
 	
 		else if( cpu_getiloops() == 240 ){
 			vbl = 0;
@@ -325,7 +325,7 @@ public class wwfsstar
 		else if( cpu_getiloops() == 250 ){
 			 cpu_set_irq_line(0, 6, HOLD_LINE);
 		}
-	} };
+	}
 	
 	/*******************************************************************************
 	 Sound Stuff..
@@ -360,8 +360,7 @@ public class wwfsstar
 	 Clock Speeds are currently Unknown
 	*******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wwfsstar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wwfsstar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* unknown */
@@ -389,9 +388,7 @@ public class wwfsstar
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************
 	 Rom Loaders / Game Drivers
@@ -461,5 +458,5 @@ public class wwfsstar
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_wwfsstar	   = new GameDriver("1989"	,"wwfsstar"	,"wwfsstar.java"	,rom_wwfsstar,null	,machine_driver_wwfsstar	,input_ports_wwfsstar	,null	,ROT0	,	"Technos Japan", "WWF Superstars (US)" )
+	GAME( 1989, wwfsstar, 0, wwfsstar, wwfsstar,  0, ROT0, "Technos Japan", "WWF Superstars (US)" )
 }

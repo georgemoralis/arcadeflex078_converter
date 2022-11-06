@@ -18,7 +18,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,8 +31,7 @@ public class popeye
 	
 	
 	
-	public static InterruptHandlerPtr popeye_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr popeye_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* NMIs are enabled by the I register?? How can that be? */
 		if (activecpu_get_reg(Z80_I) & 1)	/* skyskipr: 0/1, popeye: 2/3 but also 0/1 */
 			cpu_set_nmi_line(0, PULSE_LINE);
@@ -43,8 +42,7 @@ public class popeye
 	/* by a variable amount. */
 	static int prot0,prot1,prot_shift;
 	
-	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0)
 		{
 			return ((prot1 << prot_shift) | (prot0 >> (8-prot_shift))) & 0xff;
@@ -56,8 +54,7 @@ public class popeye
 		}
 	} };
 	
-	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			/* this is the same as the level number (1-3) */
@@ -169,7 +166,7 @@ public class popeye
 	
 	
 	
-	static InputPortPtr input_ports_skyskipr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyskipr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyskipr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -254,7 +251,7 @@ public class popeye
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_popeye = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_popeye = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( popeye )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -338,7 +335,7 @@ public class popeye
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_popeyef = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_popeyef = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( popeyef )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -458,8 +455,7 @@ public class popeye
 	
 	static int dswbit;
 	
-	public static WriteHandlerPtr popeye_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popeye_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 flips screen */
 		flip_screen_set(data & 1);
 	
@@ -467,8 +463,7 @@ public class popeye
 		dswbit = (data & 0x0e) >> 1;
 	} };
 	
-	public static ReadHandlerPtr popeye_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr popeye_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 	
@@ -491,8 +486,7 @@ public class popeye
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_skyskipr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skyskipr )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 8000000/2)	/* 4 MHz */
 		MDRV_CPU_MEMORY(skyskipr_readmem,skyskipr_writemem)
@@ -516,34 +510,26 @@ public class popeye
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_popeye = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( popeye )
 		MDRV_IMPORT_FROM(skyskipr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(popeye_readmem,popeye_writemem)
 	
 		MDRV_VIDEO_START(popeye)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_popeyebl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( popeyebl )
 		MDRV_IMPORT_FROM(skyskipr)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(popeyebl_readmem,popeyebl_writemem)
 	
 		MDRV_PALETTE_INIT(popeyebl)
 		MDRV_VIDEO_START(popeye)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -683,8 +669,7 @@ public class popeye
 	
 	
 	
-	public static DriverInitHandlerPtr init_skyskipr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skyskipr  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *buffer;
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int len = 0x10000;
@@ -700,8 +685,7 @@ public class popeye
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_popeye  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_popeye  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *buffer;
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int len = 0x10000;
@@ -718,9 +702,9 @@ public class popeye
 	} };
 	
 	
-	public static GameDriver driver_skyskipr	   = new GameDriver("1981"	,"skyskipr"	,"popeye.java"	,rom_skyskipr,null	,machine_driver_skyskipr	,input_ports_skyskipr	,init_skyskipr	,ROT0	,	"Nintendo", "Sky Skipper" )
-	public static GameDriver driver_popeye	   = new GameDriver("1982"	,"popeye"	,"popeye.java"	,rom_popeye,null	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D)" )
-	public static GameDriver driver_popeyeu	   = new GameDriver("1982"	,"popeyeu"	,"popeye.java"	,rom_popeyeu,driver_popeye	,machine_driver_popeye	,input_ports_popeye	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision D not protected)" )
-	public static GameDriver driver_popeyef	   = new GameDriver("1982"	,"popeyef"	,"popeye.java"	,rom_popeyef,driver_popeye	,machine_driver_popeye	,input_ports_popeyef	,init_popeye	,ROT0	,	"Nintendo", "Popeye (revision F)" )
-	public static GameDriver driver_popeyebl	   = new GameDriver("1982"	,"popeyebl"	,"popeye.java"	,rom_popeyebl,driver_popeye	,machine_driver_popeyebl	,input_ports_popeye	,null	,ROT0	,	"bootleg",  "Popeye (bootleg)" )
+	GAME( 1981, skyskipr, 0,      skyskipr, skyskipr, skyskipr, ROT0, "Nintendo", "Sky Skipper" )
+	GAME( 1982, popeye,   0,      popeye,   popeye,   popeye,   ROT0, "Nintendo", "Popeye (revision D)" )
+	GAME( 1982, popeyeu,  popeye, popeye,   popeye,   popeye,   ROT0, "Nintendo", "Popeye (revision D not protected)" )
+	GAME( 1982, popeyef,  popeye, popeye,   popeyef,  popeye,   ROT0, "Nintendo", "Popeye (revision F)" )
+	GAME( 1982, popeyebl, popeye, popeyebl, popeye,   0,        ROT0, "bootleg",  "Popeye (bootleg)" )
 }

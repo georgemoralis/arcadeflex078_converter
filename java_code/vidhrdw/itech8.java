@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -106,8 +106,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_itech8  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_itech8  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
 			return 1;
@@ -125,8 +124,7 @@ public class itech8
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_slikshot  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_slikshot  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_itech8();
 		slikshot = 1;
 		return result;
@@ -140,8 +138,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr itech8_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr itech8_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tlc34076_w(offset/2, data);
 	} };
 	
@@ -162,12 +159,12 @@ public class itech8
 	
 	INLINE void draw_byte_trans4(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (val == 0)
+		if (!val)
 			return;
 	
-		if ((val & 0xf0) != 0)
+		if (val & 0xf0)
 		{
-			if ((val & 0x0f) != 0)
+			if (val & 0x0f)
 			{
 				tms_state.vram[addr] = val & mask;
 				tms_state.latchram[addr] = latch;
@@ -188,7 +185,7 @@ public class itech8
 	
 	INLINE void draw_byte_trans8(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (val != 0) draw_byte(addr, val, mask, latch);
+		if (val) draw_byte(addr, val, mask, latch);
 	}
 	
 	
@@ -210,15 +207,15 @@ public class itech8
 	
 	INLINE void draw_byte_shift_trans4(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (val == 0)
+		if (!val)
 			return;
 	
-		if ((val & 0xf0) != 0)
+		if (val & 0xf0)
 		{
 			tms_state.vram[addr] = (tms_state.vram[addr] & 0xf0) | ((val & mask) >> 4);
 			tms_state.latchram[addr] = (tms_state.latchram[addr] & 0xf0) | (latch >> 4);
 		}
-		if ((val & 0x0f) != 0)
+		if (val & 0x0f)
 		{
 			tms_state.vram[addr + 1] = (tms_state.vram[addr + 1] & 0x0f) | ((val & mask) << 4);
 			tms_state.latchram[addr + 1] = (tms_state.latchram[addr + 1] & 0x0f) | (latch << 4);
@@ -228,7 +225,7 @@ public class itech8
 	
 	INLINE void draw_byte_shift_trans8(offs_t addr, UINT8 val, UINT8 mask, UINT8 latch)
 	{
-		if (val != 0) draw_byte_shift(addr, val, mask, latch);
+		if (val) draw_byte_shift(addr, val, mask, latch);
 	}
 	
 	
@@ -400,7 +397,7 @@ public class itech8
 			for (xleft = width + skip[0] + skip[1]; xleft > 0; )								\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (count == 0)																		\
+				if (!count)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -431,7 +428,7 @@ public class itech8
 			for (xleft = skip[y & 1]; xleft > 0; )												\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (count == 0)																		\
+				if (!count)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -451,7 +448,7 @@ public class itech8
 			for (xleft = width; xleft > 0; )													\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (count == 0)																		\
+				if (!count)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -483,7 +480,7 @@ public class itech8
 			for (xleft = skip[~y & 1]; xleft > 0; )												\
 			{																					\
 				/* load next RLE chunk if needed */												\
-				if (count == 0)																		\
+				if (!count)																		\
 				{																				\
 					count = *src++;																\
 					val = (count & 0x80) ? -1 : *src++;											\
@@ -587,16 +584,16 @@ public class itech8
 	static int perform_blit(void)
 	{
 		/* debugging */
-		if (FULL_LOGGING != 0)
+		if (FULL_LOGGING)
 			logerror("Blit: scan=%d  src=%06x @ (%05x) for %dx%d ... flags=%02x\n",
 					cpu_getscanline(),
 					(*itech8_grom_bank << 16) | (BLITTER_ADDRHI << 8) | BLITTER_ADDRLO,
 					0, BLITTER_WIDTH, BLITTER_HEIGHT, BLITTER_FLAGS);
 	
 		/* draw appropriately */
-		if ((BLITTER_OUTPUT & 0x40) != 0)
+		if (BLITTER_OUTPUT & 0x40)
 		{
-			if ((BLITTER_FLAGS & BLITFLAG_XFLIP) != 0)
+			if (BLITTER_FLAGS & BLITFLAG_XFLIP)
 				(*blit_table4_xflip[BLITTER_FLAGS & 0x1f])();
 			else
 				(*blit_table4[BLITTER_FLAGS & 0x1f])();
@@ -615,7 +612,7 @@ public class itech8
 		blit_in_progress = 0;
 		itech8_update_interrupts(-1, -1, 1);
 	
-		if (FULL_LOGGING != 0) logerror("------------ BLIT DONE (%d) --------------\n", cpu_getscanline());
+		if (FULL_LOGGING) logerror("------------ BLIT DONE (%d) --------------\n", cpu_getscanline());
 	}
 	
 	
@@ -626,12 +623,11 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr itech8_blitter_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr itech8_blitter_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = blitter_data[offset / 2];
 	
 		/* debugging */
-		if (FULL_LOGGING != 0) logerror("%04x:blitter_r(%02x)\n", activecpu_get_previouspc(), offset / 2);
+		if (FULL_LOGGING) logerror("%04x:blitter_r(%02x)\n", activecpu_get_previouspc(), offset / 2);
 	
 		/* low bit seems to be ignored */
 		offset /= 2;
@@ -640,7 +636,7 @@ public class itech8
 		if (offset == 3)
 		{
 			itech8_update_interrupts(-1, -1, 0);
-			if (blit_in_progress != 0)
+			if (blit_in_progress)
 				result |= 0x80;
 			else
 				result &= 0x7f;
@@ -650,8 +646,7 @@ public class itech8
 	} };
 	
 	
-	public static WriteHandlerPtr itech8_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr itech8_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* low bit seems to be ignored */
 		offset /= 2;
 		blitter_data[offset] = data;
@@ -662,16 +657,16 @@ public class itech8
 			int pixels;
 	
 			/* log to the blitter file */
-			if (BLIT_LOGGING != 0)
+			if (BLIT_LOGGING)
 			{
 				static FILE *blitlog;
-				if (blitlog == 0) blitlog = fopen("blitter.log", "w");
-				if (blitlog != 0) fprintf(blitlog, "Blit: XY=%1X%02X%02X SRC=%02X%02X%02X SIZE=%3dx%3d FLAGS=%02x",
+				if (!blitlog) blitlog = fopen("blitter.log", "w");
+				if (blitlog) fprintf(blitlog, "Blit: XY=%1X%02X%02X SRC=%02X%02X%02X SIZE=%3dx%3d FLAGS=%02x",
 							tms34061_r(14*4+2, 0, 0) & 0x0f, tms34061_r(15*4+2, 0, 0), tms34061_r(15*4+0, 0, 0),
 							*itech8_grom_bank, blitter_data[0], blitter_data[1],
 							blitter_data[4], blitter_data[5],
 							blitter_data[2]);
-				if (blitlog != 0) fprintf(blitlog, "   %02X %02X %02X [%02X] %02X %02X %02X [%02X]-%02X %02X %02X %02X [%02X %02X %02X %02X]\n",
+				if (blitlog) fprintf(blitlog, "   %02X %02X %02X [%02X] %02X %02X %02X [%02X]-%02X %02X %02X %02X [%02X %02X %02X %02X]\n",
 							blitter_data[0], blitter_data[1],
 							blitter_data[2], blitter_data[3],
 							blitter_data[4], blitter_data[5],
@@ -687,14 +682,14 @@ public class itech8
 			blit_in_progress = 1;
 	
 			/* set a timer to go off when we're done */
-			if (INSTANT_BLIT != 0)
+			if (INSTANT_BLIT)
 				blitter_done(0);
 			else
 				timer_set((double)pixels * TIME_IN_HZ(12000000), 0, blitter_done);
 		}
 	
 		/* debugging */
-		if (FULL_LOGGING != 0) logerror("%04x:blitter_w(%02x)=%02x\n", activecpu_get_previouspc(), offset, data);
+		if (FULL_LOGGING) logerror("%04x:blitter_w(%02x)=%02x\n", activecpu_get_previouspc(), offset, data);
 	} };
 	
 	
@@ -705,8 +700,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr itech8_tms34061_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr itech8_tms34061_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int func = (offset >> 9) & 7;
 		int col = offset & 0xff;
 	
@@ -720,8 +714,7 @@ public class itech8
 	} };
 	
 	
-	public static ReadHandlerPtr itech8_tms34061_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr itech8_tms34061_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int func = (offset >> 9) & 7;
 		int col = offset & 0xff;
 	
@@ -742,8 +735,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_itech8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_itech8  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int y, ty;
 	
 		/* first get the current display state */
@@ -764,7 +756,7 @@ public class itech8
 		/* two pages are available, at 0x00000 and 0x20000 */
 		/* pages are selected via the display page register */
 		/* width can be up to 512 pixels */
-		if ((BLITTER_OUTPUT & 0x40) != 0)
+		if (BLITTER_OUTPUT & 0x40)
 		{
 			int halfwidth = (Machine.visible_area.max_x + 2) / 2;
 			UINT8 *base = &tms_state.vram[(~*itech8_display_page & 0x80) << 10];
@@ -807,7 +799,7 @@ public class itech8
 		}
 	
 		/* extra rendering for slikshot */
-		if (slikshot != 0)
+		if (slikshot)
 			slikshot_extra_draw(bitmap, cliprect);
 	} };
 }

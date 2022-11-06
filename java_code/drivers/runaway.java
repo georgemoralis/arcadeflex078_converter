@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,14 +40,12 @@ public class runaway
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_runaway  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_runaway  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(16), 16, interrupt_callback);
 	} };
 	
 	
-	public static ReadHandlerPtr runaway_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr runaway_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		if (readinputport(0) & (1 << offset))
@@ -63,20 +61,17 @@ public class runaway
 	} };
 	
 	
-	public static ReadHandlerPtr runaway_pot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr runaway_pot_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(4) << (7 - offset)) & 0x80;
 	} };
 	
 	
-	public static WriteHandlerPtr runaway_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr runaway_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset, ~data & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr runaway_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr runaway_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
@@ -116,7 +111,7 @@ public class runaway
 	};
 	
 	
-	static InputPortPtr input_ports_qwak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qwak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qwak )
 		PORT_START(); 	/* 3000 D7 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_VBLANK );
@@ -168,7 +163,7 @@ public class runaway
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_runaway = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_runaway = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( runaway )
 		PORT_START();  /* 3000 D7 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_VBLANK );
@@ -359,8 +354,7 @@ public class runaway
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_runaway = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( runaway )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 8) /* ? */
@@ -384,13 +378,10 @@ public class runaway
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qwak = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qwak )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(runaway)
@@ -401,9 +392,7 @@ public class runaway
 		MDRV_VIDEO_START(qwak)
 		MDRV_VIDEO_UPDATE(qwak)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_runaway = new RomLoadPtr(){ public void handler(){ 
@@ -438,6 +427,6 @@ public class runaway
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_qwak	   = new GameDriver("1982"	,"qwak"	,"runaway.java"	,rom_qwak,null	,machine_driver_qwak	,input_ports_qwak	,null	,ROT270	,	"Atari", "Qwak (prototype)" )
-	public static GameDriver driver_runaway	   = new GameDriver("1982"	,"runaway"	,"runaway.java"	,rom_runaway,null	,machine_driver_runaway	,input_ports_runaway	,null	,ROT0	,	"Atari", "Runaway (prototype)" )
+	GAME( 1982, qwak,    0, qwak,    qwak,    0, ROT270, "Atari", "Qwak (prototype)" )
+	GAME( 1982, runaway, 0, runaway, runaway, 0, ROT0,   "Atari", "Runaway (prototype)" )
 }

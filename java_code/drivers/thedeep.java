@@ -26,7 +26,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,13 +41,11 @@ public class thedeep
 	
 	static int nmi_enable;
 	
-	public static WriteHandlerPtr thedeep_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enable = data;
 	} };
 	
-	public static WriteHandlerPtr thedeep_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(1, PULSE_LINE);
 	} };
@@ -56,8 +54,7 @@ public class thedeep
 	static int protection_index, protection_irq;
 	static int rombank;
 	
-	public static MachineInitHandlerPtr machine_init_thedeep  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_thedeep  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + 0 * 0x4000);
 		thedeep_scroll[0] = 0;
 		thedeep_scroll[1] = 0;
@@ -69,8 +66,7 @@ public class thedeep
 		rombank = -1;
 	} };
 	
-	public static WriteHandlerPtr thedeep_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		protection_command = data;
 		switch (protection_command)
 		{
@@ -105,10 +101,10 @@ public class thedeep
 				if ( protection_index < 0x19b )
 	// d000-d00c:	hl += a * b
 	// d00d-d029:	input a (e.g. $39) output hl (e.g. h=$03 l=$09).
-	// 				Replace trainling 0's with space ($10). 00 . '  '
+	// 				Replace trainling 0's with space ($10). 00 -> '  '
 	// d02a-d039:	input a (e.g. $39) output hl (e.g. h=$03 l=$09).
-	// 				Replace trainling 0's with space ($10). 00 . ' 0'
-	// d03a-d046:	input a (e.g. $39) output hl (e.g. h=$03 l=$09). 00 . '00'
+	// 				Replace trainling 0's with space ($10). 00 -> ' 0'
+	// d03a-d046:	input a (e.g. $39) output hl (e.g. h=$03 l=$09). 00 -> '00'
 	// d047-d086:	a /= e (e can be 0!)
 	// d087-d0a4:	print ASCII string from HL to IX (sub $30 to every char)
 	// d0a4-d0be:	print any string from HL to IX
@@ -132,19 +128,16 @@ public class thedeep
 		}
 	} };
 	
-	public static ReadHandlerPtr thedeep_e004_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr thedeep_e004_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return protection_irq ? 1 : 0;
 	} };
 	
-	public static ReadHandlerPtr thedeep_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr thedeep_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		protection_irq = 0;
 		return protection_data;
 	} };
 	
-	public static WriteHandlerPtr thedeep_e100_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thedeep_e100_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != 1)
 			logerror("pc %04x: e100 = %02x\n", activecpu_get_pc(),data);
 	} };
@@ -218,7 +211,7 @@ public class thedeep
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_thedeep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thedeep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thedeep )
 		PORT_START(); 	// IN0 - e008
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    );// Up / down shown in service mode
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  );
@@ -352,27 +345,26 @@ public class thedeep
 		{ irqhandler }
 	};
 	
-	public static InterruptHandlerPtr thedeep_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr thedeep_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 		{
 			if (protection_command != 0x59)
 			{
 				int coins = readinputport(4);
-				if ((coins & 1) != 0)	protection_data = 1;
-				else if ((coins & 2) != 0)	protection_data = 2;
-				else if ((coins & 4) != 0)	protection_data = 3;
+				if		(coins & 1)	protection_data = 1;
+				else if	(coins & 2)	protection_data = 2;
+				else if	(coins & 4)	protection_data = 3;
 				else				protection_data = 0;
 	
-				if (protection_data != 0)
+				if (protection_data)
 					protection_irq = 1;
 			}
-			if (protection_irq != 0)
+			if (protection_irq)
 				cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 		else
 		{
-			if (nmi_enable != 0)
+			if (nmi_enable)
 			{
 				cpu_set_nmi_line(0, ASSERT_LINE);
 				cpu_set_nmi_line(0, CLEAR_LINE);
@@ -380,8 +372,7 @@ public class thedeep
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_thedeep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thedeep )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 6MHz */
@@ -412,9 +403,7 @@ public class thedeep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, thedeep_ym2203_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -511,7 +500,7 @@ public class thedeep
 		ROM_LOAD( "fi-3", 0x400, 0x200, CRC(f61a9686) SHA1(24082f60b72268d240ceca6999bdf18872625cd2) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_thedeep	   = new GameDriver("1987"	,"thedeep"	,"thedeep.java"	,rom_thedeep,null	,machine_driver_thedeep	,input_ports_thedeep	,null	,ROT270	,	"Woodplace Inc.", "The Deep (Japan)" )
-	public static GameDriver driver_rundeep	   = new GameDriver("1988"	,"rundeep"	,"thedeep.java"	,rom_rundeep,driver_thedeep	,machine_driver_thedeep	,input_ports_thedeep	,null	,ROT270	,	"Cream",     "Run Deep" )
+	GAME( 1987, thedeep, 0,      thedeep, thedeep, 0, ROT270, "Woodplace Inc.", "The Deep (Japan)" )
+	GAME( 1988, rundeep, thedeep,thedeep, thedeep, 0, ROT270, "Cream",     "Run Deep" )
 	
 }

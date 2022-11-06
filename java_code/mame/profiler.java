@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -57,7 +57,7 @@ public class profiler
 		cycles_t curr_cycles;
 	
 	
-		if (use_profiler == 0)
+		if (!use_profiler)
 		{
 			FILO_length = 0;
 			return;
@@ -146,7 +146,7 @@ public class profiler
 		static int showdelay[PROFILER_TOTAL];
 	
 	
-		if (use_profiler == 0) return;
+		if (!use_profiler) return;
 	
 		profiler_mark(PROFILER_PROFILER);
 	
@@ -179,7 +179,7 @@ public class profiler
 			}
 			if (computed || showdelay[i])
 			{
-				if (computed != 0) showdelay[i] = Machine.drv.frames_per_second;
+				if (computed) showdelay[i] = Machine->drv->frames_per_second;
 				showdelay[i]--;
 	
 				if (i < PROFILER_PROFILER)

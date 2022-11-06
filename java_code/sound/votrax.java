@@ -18,7 +18,7 @@ the variable VotraxBaseFrequency, this is defaulted to 8000
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -73,11 +73,11 @@ public class votrax
 	    if(Phoneme==63)
 	   		mixer_stop_sample(VotraxChannel);
 	
-	    if(VotraxSamples.sample[Phoneme])
+	    if(VotraxSamples->sample[Phoneme])
 		{
 			mixer_set_volume(VotraxChannel,VotraxBaseVolume+(8*Intonation)*100/255);
-			mixer_play_sample(VotraxChannel,VotraxSamples.sample[Phoneme].data,
-					  VotraxSamples.sample[Phoneme].length,
+			mixer_play_sample(VotraxChannel,VotraxSamples->sample[Phoneme]->data,
+					  VotraxSamples->sample[Phoneme]->length,
 					  VotraxBaseFrequency+(256*Intonation),
 					  0);
 		}

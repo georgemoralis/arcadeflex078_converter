@@ -78,7 +78,7 @@ lev 7 : 0x7c : 0000 11d0 - just rte
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -93,7 +93,6 @@ public class shadfrce
 	WRITE16_HANDLER ( shadfrce_bg1scrollx_w );
 	WRITE16_HANDLER ( shadfrce_bg0scrolly_w );
 	WRITE16_HANDLER ( shadfrce_bg1scrolly_w );
-	VIDEO_EOF(shadfrce);
 	WRITE16_HANDLER( shadfrce_fgvideoram_w );
 	WRITE16_HANDLER( shadfrce_bg0videoram_w );
 	WRITE16_HANDLER( shadfrce_bg1videoram_w );
@@ -212,7 +211,7 @@ public class shadfrce
 	
 	static WRITE16_HANDLER ( shadfrce_sound_brt_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(1,data >> 8);
 			cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
@@ -284,8 +283,7 @@ public class shadfrce
 	
 	/* and the sound cpu */
 	
-	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	} };
 	
@@ -328,7 +326,7 @@ public class shadfrce
 	
 	
 	#if USE_SHADFRCE_FAKE_INPUT_PORTS
-	static InputPortPtr input_ports_shadfrce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shadfrce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shadfrce )
 		PORT_START(); 	/* Fake IN0 (player 1 inputs) */
 		SHADFRCE_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 	
@@ -406,7 +404,7 @@ public class shadfrce
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	#else
-	static InputPortPtr input_ports_shadfrce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shadfrce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shadfrce )
 		PORT_START(); 	/* IN0 - $1d0020.w */
 		SHADFRCE_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -560,16 +558,15 @@ public class shadfrce
 		{ 50 }
 	};
 	
-	public static InterruptHandlerPtr shadfrce_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr shadfrce_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops() == 0 )
 			cpu_set_irq_line(0, 3, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE);
-	} };
+	}
 	
 	
-	public static MachineHandlerPtr machine_driver_shadfrce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shadfrce )
 		MDRV_CPU_ADD(M68000, 28000000/2) /* ? Guess */
 		MDRV_CPU_MEMORY(shadfrce_readmem,shadfrce_writemem)
 		MDRV_CPU_VBLANK_INT(shadfrce_interrupt,2)
@@ -597,9 +594,7 @@ public class shadfrce
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Rom Defs. */
 	
@@ -633,5 +628,5 @@ public class shadfrce
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_shadfrce	   = new GameDriver("1993"	,"shadfrce"	,"shadfrce.java"	,rom_shadfrce,null	,machine_driver_shadfrce	,input_ports_shadfrce	,null	,ROT0	,	"Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, shadfrce, 0, shadfrce, shadfrce, 0, ROT0, "Technos Japan", "Shadow Force (US Version 2)", GAME_NO_COCKTAIL )
 }

@@ -166,7 +166,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -186,8 +186,7 @@ public class bbusters
 	/******************************************************************************/
 	
 	#if BBUSTERS_HACK
-	public static MachineInitHandlerPtr machine_init_bbusters  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bbusters  = new MachineInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(11) & 0x03;
 	
@@ -205,8 +204,7 @@ public class bbusters
 	#endif
 	
 	#if MECHATT_HACK
-	public static MachineInitHandlerPtr machine_init_mechatt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mechatt  = new MachineInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 		int data = readinputport(6) & 0x03;
 	
@@ -268,7 +266,7 @@ public class bbusters
 	static READ16_HANDLER( mechatt_gun_r )
 	{
 		int baseport=2,x,y;
-		if (offset != 0) baseport=4; /* Player 2 */
+		if (offset) baseport=4; /* Player 2 */
 	
 		x=readinputport(baseport);
 		y=readinputport(baseport+1);
@@ -380,7 +378,7 @@ public class bbusters
 		new IO_WritePort( 0x01, 0x01, YM2610_data_port_0_A_w ),
 		new IO_WritePort( 0x02, 0x02, YM2610_control_port_0_B_w ),
 		new IO_WritePort( 0x03, 0x03, YM2610_data_port_0_B_w ),
-		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* . Main CPU */
+		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* -> Main CPU */
 	MEMORY_END
 	
 	public static IO_ReadPort sounda_readport[]={
@@ -395,12 +393,12 @@ public class bbusters
 		new IO_WritePort( 0x01, 0x01, YM2608_data_port_0_A_w ),
 		new IO_WritePort( 0x02, 0x02, YM2608_control_port_0_B_w ),
 		new IO_WritePort( 0x03, 0x03, YM2608_data_port_0_B_w ),
-		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* . Main CPU */
+		new IO_WritePort( 0xc0, 0xc1, MWA_NOP ), /* -> Main CPU */
 	MEMORY_END
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_bbusters = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bbusters = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bbusters )
 		PORT_START(); 	/* Player controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );	// "Fire"
@@ -500,7 +498,7 @@ public class bbusters
 	#endif
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mechatt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mechatt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mechatt )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -685,40 +683,35 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_bbusters  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0) {
+	public static NVRAMHandlerPtr nvram_handler_bbusters  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if( read_or_write ) {
 			mame_fwrite (file, eprom_data, 0x80);
 		}
 		else {
-			if (file != 0)
+			if (file)
 				mame_fread (file, eprom_data, 0x80);
 			else
 				memset (eprom_data, 0xff, 0x80);
 		}
 	} };
 	
-	public static InterruptHandlerPtr bbuster = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bbuster = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops()==0)
 			cpu_set_irq_line(0, 6, HOLD_LINE); /* VBL */
 		else
 			cpu_set_irq_line(0, 2, HOLD_LINE); /* at least 6 interrupts per frame to read gun controls */
 	} };
 	
-	static public static VideoEofHandlerPtr video_eof_bbuster  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_bbuster  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
 	} };
 	
-	static public static VideoEofHandlerPtr video_eof_mechatt  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_mechatt  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_bbusters = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bbusters )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -752,12 +745,9 @@ public class bbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mechatt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mechatt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -789,9 +779,7 @@ public class bbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -891,15 +879,13 @@ public class bbusters
 	}
 	#endif
 	
-	public static DriverInitHandlerPtr init_bbusters  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bbusters  = new DriverInitHandlerPtr() { public void handler(){
 		#if BBUSTERS_HACK
 		bbusters_patch_code(0x00234c);
 		#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_mechatt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mechatt  = new DriverInitHandlerPtr() { public void handler(){
 		#if MECHATT_HACK
 		bbusters_patch_code(0x003306);
 		#endif
@@ -908,13 +894,13 @@ public class bbusters
 	/******************************************************************************/
 	
 	#if !MECHATT_HACK
-	public static GameDriver driver_bbusters	   = new GameDriver("1989"	,"bbusters"	,"bbusters.java"	,rom_bbusters,null	,machine_driver_bbusters	,input_ports_bbusters	,init_bbusters	,ROT0	,	"SNK", "Beast Busters (World ?)" )
+	GAME( 1989, bbusters, 0, bbusters, bbusters, bbusters, ROT0,  "SNK", "Beast Busters (World ?)" )
 	#else
-	public static GameDriver driver_bbusters	   = new GameDriver("1989"	,"bbusters"	,"bbusters.java"	,rom_bbusters,null	,machine_driver_bbusters	,input_ports_bbusters	,init_bbusters	,ROT0	,	"SNK", "Beast Busters" )
+	GAME( 1989, bbusters, 0, bbusters, bbusters, bbusters, ROT0,  "SNK", "Beast Busters" )
 	#endif
 	#if !MECHATT_HACK
-	public static GameDriver driver_mechatt	   = new GameDriver("1989"	,"mechatt"	,"bbusters.java"	,rom_mechatt,null	,machine_driver_mechatt	,input_ports_mechatt	,init_mechatt	,ROT0	,	"SNK", "Mechanized Attack (World)" )
+	GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized Attack (World)" )
 	#else
-	public static GameDriver driver_mechatt	   = new GameDriver("1989"	,"mechatt"	,"bbusters.java"	,rom_mechatt,null	,machine_driver_mechatt	,input_ports_mechatt	,init_mechatt	,ROT0	,	"SNK", "Mechanized Attack" )
+	GAME( 1989, mechatt,  0, mechatt,  mechatt,  mechatt,  ROT0,  "SNK", "Mechanized Attack" )
 	#endif
 }

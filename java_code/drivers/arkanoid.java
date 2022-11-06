@@ -47,7 +47,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,8 +80,7 @@ public class arkanoid
 	
 	static int paddle2_prot;
 	
-	public static ReadHandlerPtr paddle2_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr paddle2_prot_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static UINT8 level_table_a[] =
 		{
 			0xf3,0xf7,0xf9,0xfb,0xfd,0xff,0xf5,0xe3, /* 1- 8*/
@@ -124,14 +123,12 @@ public class arkanoid
 		}
 	} };
 	
-	public static WriteHandlerPtr paddle2_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paddle2_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%04x: prot_w %02x\n",activecpu_get_pc(),data);
 		paddle2_prot = data;
 	} };
 	
-	public static ReadHandlerPtr track_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr track_kludge_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int track = readinputport(2);
 	
 		/* temp kludge,needed to get the right side of the screen */
@@ -219,7 +216,7 @@ public class arkanoid
 	};
 	
 	
-	static InputPortPtr input_ports_arkanoid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arkanoid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arkanoid )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -270,7 +267,7 @@ public class arkanoid
 	/* 'Block' uses the these ones as well.	The Tayto bootleg is different			 */
 	/*  in coinage and # of lives.                    								 */
 	
-	static InputPortPtr input_ports_arknoidj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arknoidj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arknoidj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -320,7 +317,7 @@ public class arkanoid
 	
 	/* Is the same as arkanoij, but the Coinage,
 	  Lives and Bonus_Life dips are different */
-	static InputPortPtr input_ports_arkatayt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arkatayt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arkatayt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -404,8 +401,7 @@ public class arkanoid
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_arkanoid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( arkanoid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz ?? */
@@ -434,12 +430,9 @@ public class arkanoid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bootleg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bootleg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz ?? */
@@ -462,9 +455,7 @@ public class arkanoid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -686,24 +677,23 @@ public class arkanoid
 	
 	
 	
-	public static DriverInitHandlerPtr init_paddle2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_paddle2  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler (0, 0xf002, 0xf002, paddle2_prot_r);
 		install_mem_write_handler(0, 0xd018, 0xd018, paddle2_prot_w);
 		install_mem_read_handler (0, 0xd008, 0xd008, track_kludge_r );
 	} };
 	
 	
-	public static GameDriver driver_arkanoid	   = new GameDriver("1986"	,"arkanoid"	,"arkanoid.java"	,rom_arkanoid,null	,machine_driver_arkanoid	,input_ports_arkanoid	,null	,ROT90	,	"Taito Corporation Japan", "Arkanoid (World)" )
-	public static GameDriver driver_arknoidu	   = new GameDriver("1986"	,"arknoidu"	,"arkanoid.java"	,rom_arknoidu,driver_arkanoid	,machine_driver_arkanoid	,input_ports_arkanoid	,null	,ROT90	,	"Taito America Corporation (Romstar license)", "Arkanoid (US)" )
-	public static GameDriver driver_arknoiuo	   = new GameDriver("1986"	,"arknoiuo"	,"arkanoid.java"	,rom_arknoiuo,driver_arkanoid	,machine_driver_arkanoid	,input_ports_arkanoid	,null	,ROT90	,	"Taito America Corporation (Romstar license)", "Arkanoid (US, older)" )
-	public static GameDriver driver_arknoidj	   = new GameDriver("1986"	,"arknoidj"	,"arkanoid.java"	,rom_arknoidj,driver_arkanoid	,machine_driver_arkanoid	,input_ports_arknoidj	,null	,ROT90	,	"Taito Corporation", "Arkanoid (Japan)" )
-	public static GameDriver driver_arkbl2	   = new GameDriver("1986"	,"arkbl2"	,"arkanoid.java"	,rom_arkbl2,driver_arkanoid	,machine_driver_arkanoid	,input_ports_arknoidj	,null	,ROT90	,	"bootleg", "Arkanoid (Japanese bootleg Set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_arkbl3	   = new GameDriver("1986"	,"arkbl3"	,"arkanoid.java"	,rom_arkbl3,driver_arkanoid	,machine_driver_bootleg	,input_ports_arknoidj	,init_paddle2	,ROT90	,	"bootleg", "Arkanoid (Japanese bootleg Set 3)", GAME_NOT_WORKING )
-	public static GameDriver driver_paddle2	   = new GameDriver("1988"	,"paddle2"	,"arkanoid.java"	,rom_paddle2,driver_arkanoid	,machine_driver_bootleg	,input_ports_arknoidj	,init_paddle2	,ROT90	,	"bootleg", "Paddle 2", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_arkatayt	   = new GameDriver("1986"	,"arkatayt"	,"arkanoid.java"	,rom_arkatayt,driver_arkanoid	,machine_driver_bootleg	,input_ports_arkatayt	,null	,ROT90	,	"bootleg", "Arkanoid (Tayto bootleg, Japanese)" )
-	public static GameDriver driver_arkblock	   = new GameDriver("1986"	,"arkblock"	,"arkanoid.java"	,rom_arkblock,driver_arkanoid	,machine_driver_bootleg	,input_ports_arknoidj	,null	,ROT90	,	"bootleg", "Block (bootleg, Japanese)", GAME_NOT_WORKING )
-	public static GameDriver driver_arkbloc2	   = new GameDriver("1986"	,"arkbloc2"	,"arkanoid.java"	,rom_arkbloc2,driver_arkanoid	,machine_driver_bootleg	,input_ports_arknoidj	,null	,ROT90	,	"bootleg", "Block (Game Corporation bootleg)" )
-	public static GameDriver driver_arkangc	   = new GameDriver("1986"	,"arkangc"	,"arkanoid.java"	,rom_arkangc,driver_arkanoid	,machine_driver_bootleg	,input_ports_arknoidj	,null	,ROT90	,	"bootleg", "Arkanoid (Game Corporation bootleg)" )
-	public static GameDriver driver_arkatour	   = new GameDriver("1987"	,"arkatour"	,"arkanoid.java"	,rom_arkatour,driver_arkanoid	,machine_driver_arkanoid	,input_ports_arkanoid	,null	,ROT90	,	"Taito America Corporation (Romstar license)", "Tournament Arkanoid (US)" )
+	GAME( 1986, arkanoid, 0,        arkanoid, arkanoid, 0,       ROT90, "Taito Corporation Japan", "Arkanoid (World)" )
+	GAME( 1986, arknoidu, arkanoid, arkanoid, arkanoid, 0,       ROT90, "Taito America Corporation (Romstar license)", "Arkanoid (US)" )
+	GAME( 1986, arknoiuo, arkanoid, arkanoid, arkanoid, 0,       ROT90, "Taito America Corporation (Romstar license)", "Arkanoid (US, older)" )
+	GAME( 1986, arknoidj, arkanoid, arkanoid, arknoidj, 0,       ROT90, "Taito Corporation", "Arkanoid (Japan)" )
+	GAMEX(1986, arkbl2,   arkanoid, arkanoid, arknoidj, 0,       ROT90, "bootleg", "Arkanoid (Japanese bootleg Set 2)", GAME_NOT_WORKING )
+	GAMEX(1986, arkbl3,   arkanoid, bootleg,  arknoidj, paddle2, ROT90, "bootleg", "Arkanoid (Japanese bootleg Set 3)", GAME_NOT_WORKING )
+	GAMEX(1988, paddle2,  arkanoid, bootleg,  arknoidj, paddle2, ROT90, "bootleg", "Paddle 2", GAME_UNEMULATED_PROTECTION )
+	GAME( 1986, arkatayt, arkanoid, bootleg,  arkatayt, 0,       ROT90, "bootleg", "Arkanoid (Tayto bootleg, Japanese)" )
+	GAMEX(1986, arkblock, arkanoid, bootleg,  arknoidj, 0,       ROT90, "bootleg", "Block (bootleg, Japanese)", GAME_NOT_WORKING )
+	GAME( 1986, arkbloc2, arkanoid, bootleg,  arknoidj, 0,       ROT90, "bootleg", "Block (Game Corporation bootleg)" )
+	GAME( 1986, arkangc,  arkanoid, bootleg,  arknoidj, 0,       ROT90, "bootleg", "Arkanoid (Game Corporation bootleg)" )
+	GAME( 1987, arkatour, arkanoid, arkanoid, arkanoid, 0,       ROT90, "Taito America Corporation (Romstar license)", "Tournament Arkanoid (US)" )
 }

@@ -10,7 +10,7 @@ Video hardware driver by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,39 +24,32 @@ public class raiders5
 	static UINT8 flipscreen;
 	
 	
-	public static WriteHandlerPtr raiders5_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiders5_xscroll = data;
 	} };
-	public static WriteHandlerPtr raiders5_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiders5_yscroll = data;
 	} };
 	
-	public static WriteHandlerPtr raiders5_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data & 0x01;
 	} };
 	
-	public static ReadHandlerPtr raiders5_fgram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiders5_fgram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return raiders5_fgram[offset];
 	} };
-	public static WriteHandlerPtr raiders5_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		raiders5_fgram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr raiders5_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int y = (offset + ((raiders5_yscroll & 0xf8) << 2) ) & 0x3e0;
 		int x = (offset + (raiders5_xscroll >> 3) ) & 0x1f;
 		int offs = x+y+(offset & 0x400);
 	
 		videoram.write(offs,data);
 	} };
-	public static ReadHandlerPtr raiders5_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr raiders5_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int y = (offset + ((raiders5_yscroll & 0xf8) << 2) ) & 0x3e0;
 		int x = (offset + (raiders5_xscroll >> 3) ) & 0x1f;
 		int offs = x+y+(offset & 0x400);
@@ -64,8 +57,7 @@ public class raiders5
 		return videoram.read(offs);
 	} };
 	
-	public static WriteHandlerPtr raiders5_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr raiders5_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		paletteram_BBGGRRII_w(offset,data);
@@ -85,8 +77,7 @@ public class raiders5
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_raiders5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_raiders5  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int chr,col;
 		int x,y,px,py,fx,fy,sx,sy;

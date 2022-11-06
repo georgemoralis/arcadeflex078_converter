@@ -159,7 +159,7 @@ Video sync   6 F   Video sync                 Post   6 F   Post
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -315,7 +315,7 @@ public class halleys
 	
 	
 	#if HALLEYS_DEBUG
-	if (0 != 0) {
+	if (0) {
 		logerror("%04x:[%04x]", activecpu_get_pc(), offset);
 		for (ecx=0; ecx<16; ecx++) logerror(" %02x", param[ecx]);
 		logerror("\n"); }
@@ -338,14 +338,14 @@ public class halleys
 		command = code & COMMAND;
 		if (game_id == GAME_HALLEYS)
 		{
-			if (layer == 0) flags |= PPCD_ON;
+			if (!layer) flags |= PPCD_ON;
 			if (offset >= HALLEYS_SPLIT) flags |= AD_HIGH; else
-			if ((offset & 1) != 0) memcpy(param-0x10, param, 0x10); else group = param[0x15] & GROUP;
+			if (offset & 1) memcpy(param-0x10, param, 0x10); else group = param[0x15] & GROUP;
 	
 			// HACK: force engine flame in group zero to increase collision accuracy
 			if (offset == 0x1a || offset == 0x1b) group = 0;
 		}
-		else if ((offset & 1) != 0) memcpy(param-0x10, param, 0x10);
+		else if (offset & 1) memcpy(param-0x10, param, 0x10);
 	
 	
 		// init draw parameters
@@ -353,7 +353,7 @@ public class halleys
 		x = (int)param[0x9];
 		h = (int)param[0xa];
 		w = (int)param[0xb] + 1;
-		if (h == 0) return;
+		if (!h) return;
 	
 	
 		// translate source addresses
@@ -372,8 +372,8 @@ public class halleys
 	
 	
 		// reject off-screen objects
-		if ((flags & MIRROR_Y) != 0) { flags |= FLIP_Y; y -= (h - 1); }
-		if ((flags & MIRROR_X) != 0) { flags |= FLIP_X; x -= (w - 1); }
+		if (flags & MIRROR_Y) { flags |= FLIP_Y; y -= (h - 1); }
+		if (flags & MIRROR_X) { flags |= FLIP_X; x -= (w - 1); }
 		if (y > VIS_MAXY || (y + h) <= VIS_MINY) return;
 		if (x > VIS_MAXX || (x + w) <= VIS_MINX) return;
 	
@@ -392,7 +392,7 @@ public class halleys
 		eax = 0;
 		if (flags & (S1_REV | S2_REV)) { flags ^= FLIP_Y | FLIP_X; eax -= w * h - 8; }
 	
-		if ((flags & FLIP_Y) != 0)
+		if (flags & FLIP_Y)
 		{
 			eax += w * (h - 1);
 			src_yskip = -src_yskip;
@@ -401,7 +401,7 @@ public class halleys
 		}
 		else src_dy = (flags & FLIP_X) ? w + wclip : w - wclip;
 	
-		if ((flags & FLIP_X) != 0)
+		if (flags & FLIP_X)
 		{
 			eax += w - 1;
 			src_xskip = -src_xskip;
@@ -433,9 +433,9 @@ public class halleys
 		{
 			flags |= SINGLE_PEN;
 			eax = (DWORD)penxlat[color & PENCOLOR];
-			if (eax != 0) pen1 = pen0 + eax;
+			if (eax) pen1 = pen0 + eax;
 		}
-		else if ((color & PENCOLOR) != 0) flags |= RGB_MASK;
+		else if (color & PENCOLOR) flags |= RGB_MASK;
 	
 	
 	//--------------------------------------------------------------------------
@@ -457,7 +457,7 @@ public class halleys
 			ecx = wclip = -wclip;
 			edx = src_dx;
 	
-			if ((flags & PPCD_ON) != 0) goto COLLISION_MODE;
+			if (flags & PPCD_ON) goto COLLISION_MODE;
 	
 			al = ah = (BYTE)pen0;
 	
@@ -469,7 +469,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al;  al = ah;}
+						if (al & 0xf) { dst_ptr[ecx] = (WORD)al;  al = ah;}
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -484,7 +484,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al | SP_2BACK;  al = ah; }
+						if (al & 0xf) { dst_ptr[ecx] = (WORD)al | SP_2BACK;  al = ah; }
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -497,7 +497,7 @@ public class halleys
 			COLLISION_MODE:
 	
 			ax = 0;
-			if (group != 0)
+			if (group)
 			{
 				do {
 					do {
@@ -505,7 +505,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if ((al & 0xf) != 0) { dst_ptr[ecx] = (WORD)al | SP_COLLD; } // set collision flag on group one pixels
+						if (al & 0xf) { dst_ptr[ecx] = (WORD)al | SP_COLLD; } // set collision flag on group one pixels
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -520,7 +520,7 @@ public class halleys
 						src1_ptr += edx;
 						al |= *src2_ptr;
 						src2_ptr += edx;
-						if ((al & 0xf) != 0) { ax |= dst_ptr[ecx]; dst_ptr[ecx] = (WORD)al; } // combine collision flags in ax
+						if (al & 0xf) { ax |= dst_ptr[ecx]; dst_ptr[ecx] = (WORD)al; } // combine collision flags in ax
 					}
 					while (++ecx);
 					ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -559,7 +559,7 @@ public class halleys
 					src1_ptr += src_dx;
 					al |= *src2_ptr;
 					src2_ptr += src_dx;
-					if ((al & 0xf) != 0) { edx = (DWORD)al;  al = ah;  dst_ptr[ecx] = pal_ptr[edx] & ebx; }
+					if (al & 0xf) { edx = (DWORD)al;  al = ah;  dst_ptr[ecx] = pal_ptr[edx] & ebx; }
 				}
 				while (++ecx);
 				ecx = wclip; src1_ptr += src_dy; src2_ptr += src_dy; dst_ptr += SCREEN_WIDTH;
@@ -667,7 +667,7 @@ public class halleys
 	
 	
 		// reject illegal blits and adjust parameters
-		if (command != 0)
+		if (command)
 		{
 			if (h > 8) return;
 			if (y >= 0xf8) { y -= 0xf8; flags |= SY_HIGH; } else
@@ -677,8 +677,8 @@ public class halleys
 	
 	
 		// calculate entry points and loop constants
-		if ((flags & S1_IDLE) != 0) src_dx = 0; else src_dx = 1;
-		if ((flags & S1_REV) != 0) src_dx = -src_dx;
+		if (flags & S1_IDLE) src_dx = 0; else src_dx = 1;
+		if (flags & S1_REV ) src_dx = -src_dx;
 	
 		src_base = gfx1_base + bank;
 	
@@ -715,7 +715,7 @@ public class halleys
 			else
 			{
 				WARP_WIPE_COMMON
-				if (command == 0) { dst_base = render_layer[layer&1]; WARP_WIPE_COMMON }
+				if (!command) { dst_base = render_layer[layer&1]; WARP_WIPE_COMMON }
 			}
 	
 		} else
@@ -751,19 +751,19 @@ public class halleys
 			{
 				edx = (DWORD)*src2_ptr;
 				src2_ptr++;
-				if (edx != 0)
+				if (edx)
 				{
 					ax = (WORD)*(src2_ptr-0x100 -1);
 					ebx = (DWORD)ax;
 					ax |= BG_MONO;
-					if ((edx & 0x01) != 0) {                    dst_base[C2S(x,y,ebx)] = ax; }
-					if ((edx & 0x02) != 0) { ecx = RORB(ebx,1); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x04) != 0) { ecx = RORB(ebx,2); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x08) != 0) { ecx = RORB(ebx,3); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x10) != 0) { ecx = RORB(ebx,4); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x20) != 0) { ecx = RORB(ebx,5); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x40) != 0) { ecx = RORB(ebx,6); dst_base[C2S(x,y,ecx)] = ax; }
-					if ((edx & 0x80) != 0) { ecx = RORB(ebx,7); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x01) {                    dst_base[C2S(x,y,ebx)] = ax; }
+					if (edx & 0x02) { ecx = RORB(ebx,1); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x04) { ecx = RORB(ebx,2); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x08) { ecx = RORB(ebx,3); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x10) { ecx = RORB(ebx,4); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x20) { ecx = RORB(ebx,5); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x40) { ecx = RORB(ebx,6); dst_base[C2S(x,y,ecx)] = ax; }
+					if (edx & 0x80) { ecx = RORB(ebx,7); dst_base[C2S(x,y,ecx)] = ax; }
 				}
 			}
 	
@@ -823,16 +823,16 @@ public class halleys
 				patterns but I don't know if there are supposed to be lookup tables
 				in ROM or hard-wired to the blitter chips.
 			*/
-			if ((y & 1) != 0) x -= 8;
+			if (y & 1) x -= 8;
 			y = tyremap[y] << 3;
 	
-			if ((flags & SY_HIGH) != 0) y += 8;
+			if (flags & SY_HIGH) y += 8;
 			if (y > 0xf8) return;
 	
-			if ((code & PLANE) != 0) return; /* WARNING: UNEMULATED */
+			if (code & PLANE) return; /* WARNING: UNEMULATED */
 	
 	
-			if ((flags & IGNORE_0) != 0) { w=8; h=8; WARP_WIPE_COMMON }
+			if (flags & IGNORE_0) { w=8; h=8; WARP_WIPE_COMMON }
 	
 			src1_ptr = src_base + src1;
 			dst_ptr = render_layer[2] + (y << SCREEN_WIDTH_L2);
@@ -846,14 +846,14 @@ public class halleys
 					ax = (WORD)src1_ptr[edx];
 					al = src1_ptr[edx+0x10000];
 					ax |= BG_RGB;
-					if ((al & 0x01) != 0) *dst_ptr   = ax;
-					if ((al & 0x02) != 0) dst_ptr[1] = ax;
-					if ((al & 0x04) != 0) dst_ptr[2] = ax;
-					if ((al & 0x08) != 0) dst_ptr[3] = ax;
-					if ((al & 0x10) != 0) dst_ptr[4] = ax;
-					if ((al & 0x20) != 0) dst_ptr[5] = ax;
-					if ((al & 0x40) != 0) dst_ptr[6] = ax;
-					if ((al & 0x80) != 0) dst_ptr[7] = ax;
+					if (al & 0x01) *dst_ptr   = ax;
+					if (al & 0x02) dst_ptr[1] = ax;
+					if (al & 0x04) dst_ptr[2] = ax;
+					if (al & 0x08) dst_ptr[3] = ax;
+					if (al & 0x10) dst_ptr[4] = ax;
+					if (al & 0x20) dst_ptr[5] = ax;
+					if (al & 0x40) dst_ptr[6] = ax;
+					if (al & 0x80) dst_ptr[7] = ax;
 					dst_ptr += SCREEN_WIDTH;
 				} while (++edx);
 			}
@@ -865,14 +865,14 @@ public class halleys
 					ax = (WORD)src1_ptr[edx];
 					al = src1_ptr[edx+0x10000];
 					ax |= BG_RGB;
-					if ((al & 0x01) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x02) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x04) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x08) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x10) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x20) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x40) != 0) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
-					if ((al & 0x80) != 0) dst_ptr[ecx] = ax;
+					if (al & 0x01) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x02) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x04) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x08) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x10) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x20) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x40) dst_ptr[ecx] = ax;  ecx++; ecx &= WARPMASK;
+					if (al & 0x80) dst_ptr[ecx] = ax;
 					dst_ptr += SCREEN_WIDTH;
 				} while (++edx);
 				#undef WARPMASK
@@ -886,7 +886,7 @@ public class halleys
 		if (command == HORIZBAR && flags & COLOR_ON && !(layer & 1))
 		{
 			#define WARP_LINE_COMMON { \
-				if ((ecx & 1) != 0) { ecx--; *dst_ptr = (WORD)eax; dst_ptr++; } \
+				if (ecx & 1) { ecx--; *dst_ptr = (WORD)eax; dst_ptr++; } \
 				dst_ptr += ecx; ecx = -ecx; \
 				while (ecx) { *(DWORD*)(dst_ptr+ecx) = eax; ecx += 2; } }
 	
@@ -904,7 +904,7 @@ public class halleys
 			else
 			{
 				// single source mode
-				if ((color & 4) != 0) src1_ptr += GFX_HI;
+				if (color & 4) src1_ptr += GFX_HI;
 				wclip = 32;
 			}
 	
@@ -917,7 +917,7 @@ public class halleys
 				{
 					eax = (DWORD)*src1_ptr;
 					src1_ptr += src_dx;
-					if (eax == 0) continue;
+					if (!eax) continue;
 					eax = eax | (eax<<16) | ((BG_RGB<<16)|BG_RGB);
 					edi = dst_base + ((yclip & YMASK) << SCREEN_WIDTH_L2);
 	
@@ -946,8 +946,7 @@ public class halleys
 	
 	
 	// draws Ben Bero Beh's color backdrop(verification required)
-	public static WriteHandlerPtr bgtile_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bgtile_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int yskip, xskip, ecx;
 		WORD *edi;
 		WORD ax;
@@ -971,16 +970,14 @@ public class halleys
 	} };
 	
 	
-	public static ReadHandlerPtr blitter_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blitter_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (game_id==GAME_HALLEYS && activecpu_get_pc()==0x8017) return(0x55); // HACK: trick SRAM test on startup
 	
 		return(0);
 	} };
 	
 	
-	public static ReadHandlerPtr blitter_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blitter_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i = offset & 0xf;
 	
 		if (i==0 || i==4) return(1);
@@ -995,8 +992,7 @@ public class halleys
 	}
 	
 	
-	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i = offset & 0xf;
 	
 		blitter_ram[offset] = data;
@@ -1008,7 +1004,7 @@ public class halleys
 			if (i==0 || (i==4 && !data))
 			{
 				blitter_busy = 0;
-				if (firq_level != 0) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); // make up delayed FIRQ's
+				if (firq_level) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); // make up delayed FIRQ's
 			}
 			else
 			{
@@ -1019,8 +1015,7 @@ public class halleys
 	} };
 	
 	
-	public static ReadHandlerPtr collision_id_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr collision_id_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/*
 		Collision detection abstract:
 	
@@ -1045,7 +1040,7 @@ public class halleys
 	
 		if (game_id==GAME_HALLEYS && activecpu_get_pc()==0xb114) // HACK: collision detection bypass
 		{
-			if (collision_count != 0) { collision_count--; return(collision_list[collision_count]); }
+			if (collision_count) { collision_count--; return(collision_list[collision_count]); }
 	
 			return(0);
 		}
@@ -1057,8 +1052,7 @@ public class halleys
 	//**************************************************************************
 	// Video Initializations and Updates
 	
-	static public static PaletteInitHandlerPtr palette_init_halleys  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_halleys  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		DWORD d, r, g, b, i, j, count;
 		DWORD *pal_ptr = internal_palette;
 	
@@ -1150,12 +1144,11 @@ public class halleys
 		*b = prom_6330[0x40 + (bit0|bit1|bit2|bit3|bit4)];
 	}
 	
-	public static WriteHandlerPtr halleys_paletteram_IIRRGGBB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr halleys_paletteram_IIRRGGBB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DWORD d, r, g, b, i, j;
 		DWORD *pal_ptr = internal_palette;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 		d = (DWORD)data;
 		j = d | BG_RGB;
 		pal_ptr[offset] = j;
@@ -1179,8 +1172,7 @@ public class halleys
 	} };
 	
 	
-	static public static VideoStartHandlerPtr video_start_halleys  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_halleys  = new VideoStartHandlerPtr() { public int handler(){
 	#define HALLEYS_Y0  0x8e
 	#define HALLEYS_X0  0x9a
 	#define HALLEYS_Y1  0xa2
@@ -1189,7 +1181,7 @@ public class halleys
 		int dst, src, c;
 	
 		// abort if DRIVER_INIT failed
-		if (init_success == 0) return(1);
+		if (!init_success) return(1);
 	
 		// abort on unsupported bit depths
 		if (Machine.scrbitmap.depth != 15 && Machine.scrbitmap.depth != 16) return(1);
@@ -1239,8 +1231,8 @@ public class halleys
 		if ((bch = CLIP_H - sy) < 0) bch = 0;
 	
 		esi = source + CLIP_SKIP + (sy << SCREEN_WIDTH_L2);
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
-		edx = bitmap.rowpixels;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
+		edx = bitmap->rowpixels;
 	
 		// draw top split
 		for (ecx=bch; ecx; ecx--) OPCOPY_COMMON
@@ -1260,14 +1252,14 @@ public class halleys
 	//--------------------------------------------------------------------------
 	
 	#define XCOPY_COMMON \
-		if (ecx != 0) { \
-			if ((ecx & 1) != 0) { ecx--; ax = *esi; esi++; if (ax != 0) *edi = ax; edi++; } \
+		if (ecx) { \
+			if (ecx & 1) { ecx--; ax = *esi; esi++; if (ax) *edi = ax; edi++; } \
 			esi += ecx; edi += ecx; ecx = -ecx; \
 			while (ecx) { \
 				ax = esi[ecx]; \
 				bx = esi[ecx+1]; \
-				if (ax != 0) edi[ecx] = ax; \
-				if (bx != 0) edi[ecx+1] = bx; \
+				if (ax) edi[ecx] = ax; \
+				if (bx) edi[ecx+1] = bx; \
 				ecx += 2; } }
 	
 	//--------------------------------------------------------------------------
@@ -1293,8 +1285,8 @@ public class halleys
 		if ((bch = CLIP_H - sy) < 0) bch = 0;
 	
 		src_base = source + CLIP_SKIP + (sy << SCREEN_WIDTH_L2);
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
-		dst_adv = bitmap.rowpixels - CLIP_W;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
+		dst_adv = bitmap->rowpixels - CLIP_W;
 	
 		// draw top split
 		for (edx=bch; edx; edx--) YCOPY_COMMON
@@ -1315,9 +1307,9 @@ public class halleys
 		int ecx, edx;
 	
 		esi = source + CLIP_SKIP;
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX;
 		ecx = CLIP_H;
-		edx = bitmap.rowpixels;
+		edx = bitmap->rowpixels;
 	
 		do { memcpy(edi, esi, CLIP_W<<1); esi += SCREEN_WIDTH; edi += edx; } while (--ecx);
 	}
@@ -1330,8 +1322,8 @@ public class halleys
 		WORD ax, bx;
 	
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap.rowpixels;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap->rowpixels;
 		ecx = -CLIP_W;
 		edx = CLIP_H;
 	
@@ -1339,14 +1331,14 @@ public class halleys
 			do {
 				ax = esi[ecx];
 				bx = esi[ecx+1];
-				if (ax != 0) edi[ecx  ] = ax; ax = esi[ecx+2];
-				if (bx != 0) edi[ecx+1] = bx; bx = esi[ecx+3];
-				if (ax != 0) edi[ecx+2] = ax; ax = esi[ecx+4];
-				if (bx != 0) edi[ecx+3] = bx; bx = esi[ecx+5];
-				if (ax != 0) edi[ecx+4] = ax; ax = esi[ecx+6];
-				if (bx != 0) edi[ecx+5] = bx; bx = esi[ecx+7];
-				if (ax != 0) edi[ecx+6] = ax;
-				if (bx != 0) edi[ecx+7] = bx;
+				if (ax) edi[ecx  ] = ax; ax = esi[ecx+2];
+				if (bx) edi[ecx+1] = bx; bx = esi[ecx+3];
+				if (ax) edi[ecx+2] = ax; ax = esi[ecx+4];
+				if (bx) edi[ecx+3] = bx; bx = esi[ecx+5];
+				if (ax) edi[ecx+4] = ax; ax = esi[ecx+6];
+				if (bx) edi[ecx+5] = bx; bx = esi[ecx+7];
+				if (ax) edi[ecx+6] = ax;
+				if (bx) edi[ecx+7] = bx;
 			}
 			while (ecx += 8);
 	
@@ -1371,8 +1363,8 @@ public class halleys
 	
 		pal_ptr = internal_palette;
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap.rowpixels;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap->rowpixels;
 		ebx = alpha_table;
 		ecx = -CLIP_W;
 		i = CLIP_H;
@@ -1380,9 +1372,9 @@ public class halleys
 		do {
 			do {
 				eax = (DWORD)esi[ecx];
-				if (eax != 0)
+				if (eax)
 				{
-					if ((eax & SP_ALPHA) != 0)
+					if (eax & SP_ALPHA)
 					{
 						edx = (DWORD)edi[ecx];
 						eax = pal_ptr[eax];
@@ -1412,8 +1404,8 @@ public class halleys
 		WORD ax, bx;
 	
 		esi = source + CLIP_SKIP + CLIP_W;
-		edi = (WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W;
-		dst_pitch = bitmap.rowpixels;
+		edi = (WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W;
+		dst_pitch = bitmap->rowpixels;
 		ecx = -CLIP_W;
 		edx = CLIP_H;
 	
@@ -1461,15 +1453,15 @@ public class halleys
 	
 		pal_ptr = internal_palette;
 		esi = mask | 0xffffff00;
-		edi = (DWORD*)((WORD*)bitmap.line[VIS_MINY] + VIS_MINX + CLIP_W);
-		dst_pitch = bitmap.rowpixels >> 1;
+		edi = (DWORD*)((WORD*)bitmap->line[VIS_MINY] + VIS_MINX + CLIP_W);
+		dst_pitch = bitmap->rowpixels >> 1;
 		ecx = -(CLIP_W>>1);
 		edx = CLIP_H;
 	
 		do {
 			do {
 				eax = edi[ecx];
-				if ((eax & 0x00ff00ff) != 0)
+				if (eax & 0x00ff00ff)
 				{
 					ebx = eax;
 					eax >>= 16;
@@ -1492,11 +1484,10 @@ public class halleys
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_halleys  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, j;
 	
-		if (stars_enabled != 0)
+		if (stars_enabled)
 		{
 			copy_scroll_op(bitmap, render_layer[5], *scrollx0, *scrolly0);
 			copy_scroll_xp(bitmap, render_layer[4], *scrollx1, *scrolly1);
@@ -1516,8 +1507,7 @@ public class halleys
 	} };
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_benberob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_benberob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		if (io_ram[0xa0] & 0x80)
 			copy_scroll_op(bitmap, render_layer[2], *scrollx1, *scrolly1);
 		else
@@ -1533,9 +1523,9 @@ public class halleys
 	
 	#if HALLEYS_DEBUG
 	
-	public static ReadHandlerPtr zero_r  = new ReadHandlerPtr() { public int handler(int offset) { return(0); } };
+	public static ReadHandlerPtr zero_r  = new ReadHandlerPtr() { public int handler(int offset) return(0); }
 	
-	public static ReadHandlerPtr debug_r  = new ReadHandlerPtr() { public int handler(int offset) { return(io_ram[offset]); } };
+	public static ReadHandlerPtr debug_r  = new ReadHandlerPtr() { public int handler(int offset) return(io_ram[offset]); }
 	
 	#endif
 	
@@ -1543,8 +1533,7 @@ public class halleys
 	//**************************************************************************
 	// Interrupt and Hardware Handlers
 	
-	public static InterruptHandlerPtr halleys_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr halleys_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch_delay = 0;
 		BYTE latch_data;
 	
@@ -1564,8 +1553,8 @@ public class halleys
 	
 					Current implementation is quite safe although not 100% foul-proof.
 				*/
-				if (latch_delay != 0) latch_delay--; else
-				if (ffcount != 0)
+				if (latch_delay) latch_delay--; else
+				if (ffcount)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];
@@ -1596,16 +1585,15 @@ public class halleys
 	} };
 	
 	
-	public static InterruptHandlerPtr benberob_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr benberob_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch_delay = 0;
 		BYTE latch_data;
 	
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (latch_delay != 0) latch_delay--; else
-				if (ffcount != 0)
+				if (latch_delay) latch_delay--; else
+				if (ffcount)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];
@@ -1623,35 +1611,31 @@ public class halleys
 			case 2:
 			case 3:
 				// FIRQ must not happen when the blitter is being updated or it'll cause serious screen artifacts
-				if (blitter_busy == 0) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); else firq_level++;
+				if (!blitter_busy) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE); else firq_level++;
 			break;
 		}
 	} };
 	
 	
-	public static ReadHandlerPtr vector_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vector_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(cpu1_base[0xffe0 + (offset^(mVectorType<<4))]);
 	} };
 	
 	
-	public static WriteHandlerPtr firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		io_ram[0x9c] = data;
 	
-		if (firq_level != 0) firq_level--;
+		if (firq_level) firq_level--;
 		cpu_set_irq_line(0, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr sndnmi_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sndnmi_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sndnmi_mask = data & 1;
 	} };
 	
 	
-	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ffcount < MAX_SOUNDS)
 		{
 			ffcount++;
@@ -1661,22 +1645,20 @@ public class halleys
 	} };
 	
 	
-	public static ReadHandlerPtr coin_lockout_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr coin_lockout_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// This is a hack, but it lets you coin up when COIN1 or COIN2 are signaled.
 		// See NMI for the twisted logic that is involved in handling coin input.
 		int inp = readinputport(3);
 		int result = 0x01; // dual coin slots
 	
-		if ((inp & 0x80) != 0) result |= 0x02;
-		if ((inp & 0x40) != 0) result |= 0x04;
+		if (inp & 0x80) result |= 0x02;
+		if (inp & 0x40) result |= 0x04;
 	
 		return(result);
 	} };
 	
 	
-	public static ReadHandlerPtr io_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_mirror_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(readinputport(offset + 3));
 	} };
 	
@@ -1766,7 +1748,7 @@ public class halleys
 		Dip sw 2 is not used and all contacts should be set off.
 	*/
 	
-	static InputPortPtr input_ports_halleys = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_halleys = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( halleys )
 		PORT_START();  // 0xff95
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -1879,7 +1861,7 @@ public class halleys
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_benberob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_benberob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( benberob )
 		PORT_START();  // 0xff95
 		PORT_DIPNAME( 0x01, 0x01, "Unknown(1-1"));
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2005,8 +1987,7 @@ public class halleys
 	//**************************************************************************
 	// Machine Definitions and Initializations
 	
-	public static MachineInitHandlerPtr machine_init_halleys  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_halleys  = new MachineInitHandlerPtr() { public void handler(){
 		mVectorType     = 0;
 		firq_level      = 0;
 		blitter_busy    = 0;
@@ -2018,7 +1999,7 @@ public class halleys
 		memset(io_ram, 0xff, io_ramsize);
 		memset(render_layer[0], 0, SCREEN_BYTESIZE * MAX_LAYERS);
 	
-		fillbitmap(Machine.scrbitmap, bgcolor, Machine.visible_area);
+		fillbitmap(Machine->scrbitmap, bgcolor, Machine->visible_area);
 	} };
 	
 	
@@ -2034,8 +2015,7 @@ public class halleys
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_halleys = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( halleys )
 		MDRV_CPU_ADD_TAG("main", M6809, 19968000/4) // 5Mhz?(19.968MHz XTAL)
 		MDRV_CPU_MEMORY(readmem, writemem)
 		MDRV_CPU_VBLANK_INT(halleys_interrupt, 4)
@@ -2062,20 +2042,15 @@ public class halleys
 	
 		// sound hardware
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_benberob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( benberob )
 		MDRV_IMPORT_FROM(halleys)
 		MDRV_CPU_REPLACE("main", M6809, 1000000) // 19.968MHz/20? (CAUTION: timing critical)
 		MDRV_CPU_VBLANK_INT(benberob_interrupt, 4)
 		MDRV_VIDEO_UPDATE(benberob)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	//**************************************************************************
@@ -2277,8 +2252,7 @@ public class halleys
 	}
 	
 	
-	public static DriverInitHandlerPtr init_benberob  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_benberob  = new DriverInitHandlerPtr() { public void handler(){
 		game_id = GAME_BENBEROB;
 	
 		init_success = init_common();
@@ -2287,8 +2261,7 @@ public class halleys
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_halleys  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_halleys  = new DriverInitHandlerPtr() { public void handler(){
 		game_id = GAME_HALLEYS;
 	
 		init_success = init_common();
@@ -2298,8 +2271,8 @@ public class halleys
 	//**************************************************************************
 	// Game Definitions
 	
-	public static GameDriver driver_benberob	   = new GameDriver("1984"	,"benberob"	,"halleys.java"	,rom_benberob,null	,machine_driver_benberob	,input_ports_benberob	,init_benberob	,ROT0	,	"Taito", "Ben Bero Beh (Japan)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_halleys	   = new GameDriver("1986"	,"halleys"	,"halleys.java"	,rom_halleys,null	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito America Corporation (Coin-It license)", "Halley's Comet (US)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_halleysc	   = new GameDriver("1986"	,"halleysc"	,"halleys.java"	,rom_halleysc,driver_halleys	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito Corporation", "Halley's Comet (Japan set 1)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_halleycj	   = new GameDriver("1986"	,"halleycj"	,"halleys.java"	,rom_halleycj,driver_halleys	,machine_driver_halleys	,input_ports_halleys	,init_halleys	,ROT90	,	"Taito Corporation", "Halley's Comet (Japan set 2)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX( 1984, benberob, 0,       benberob, benberob, benberob, ROT0, "Taito", "Ben Bero Beh (Japan)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	GAMEX( 1986, halleys,  0,       halleys, halleys, halleys,  ROT90, "Taito America Corporation (Coin-It license)", "Halley's Comet (US)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, halleysc, halleys, halleys, halleys, halleys,  ROT90, "Taito Corporation", "Halley's Comet (Japan set 1)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX( 1986, halleycj, halleys, halleys, halleys, halleys,  ROT90, "Taito Corporation", "Halley's Comet (Japan set 2)", GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
 }

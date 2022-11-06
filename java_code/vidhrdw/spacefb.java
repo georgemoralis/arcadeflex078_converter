@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class spacefb
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_spacefb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_spacefb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -63,22 +62,20 @@ public class spacefb
 	
 		for (i = 0;i < 4 * 8;i++)
 		{
-			if ((i & 3) != 0) colortable[i] = i;
+			if (i & 3) colortable[i] = i;
 			else colortable[i] = 0;
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr spacefb_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spacefb_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 	
 		video_control = data;
 	} };
 	
 	
-	public static WriteHandlerPtr spacefb_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spacefb_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("Port #2 = %02d\n",data);
 	} };
 	
@@ -91,8 +88,7 @@ public class spacefb
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_spacefb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spacefb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int spriteno, col_bit2;
 	
@@ -122,13 +118,13 @@ public class spacefb
 	
 			col = (~cnt & 0x03) | col_bit2;
 	
-			if (cnt != 0)
+			if (cnt)
 			{
-				if ((cnt & 0x20) != 0)
+				if (cnt & 0x20)
 				{
 					/* Draw bullets */
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 260 - sx;
 						sy = 252 - sy;
@@ -142,11 +138,11 @@ public class spacefb
 							Machine.visible_area,TRANSPARENCY_PEN,0);
 	
 				}
-				else if ((cnt & 0x40) != 0)
+				else if (cnt & 0x40)
 				{
 					sy -= 5;	/* aligns the spaceship and the bullet */
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						sx = 256 - sx;
 						sy = 248 - sy;

@@ -4,7 +4,7 @@
 #define MAX_2413 	(4)
 
 #ifndef YM2413_VOL
-/* YM2413interface.mixing_level macro */
+/* YM2413interface->mixing_level macro */
 #define YM2413_VOL(MOVol,MOPan,ROVol,ROPan) (MIXER(MOVol,MOPan)|(MIXER(ROVol,ROPan) << 16))
 #endif
 

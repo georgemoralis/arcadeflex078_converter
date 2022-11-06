@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -170,8 +170,7 @@ public class galaxian
 	  The RGB outputs have a 470 ohm pull-down each.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_galaxian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_galaxian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -209,8 +208,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+1,0xef,0xef,0xef);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_scramble  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_scramble  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_init_galaxian(colortable, color_prom);
 	
 	
@@ -218,8 +216,7 @@ public class galaxian
 		palette_set_color(BACKGROUND_COLOR_BASE,0,0,0x56);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_moonwar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_moonwar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_init_scramble(colortable, color_prom);
 	
 	
@@ -227,8 +224,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+0,0xef,0xef,0x97);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_turtles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_turtles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -251,8 +247,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_stratgyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_stratgyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -275,8 +270,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_frogger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_frogger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_init_galaxian(colortable, color_prom);
 	
 	
@@ -284,8 +278,7 @@ public class galaxian
 		palette_set_color(BACKGROUND_COLOR_BASE,0,0,0x47);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_rockclim  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rockclim  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -332,8 +325,7 @@ public class galaxian
 	  The RGB outputs have a 470 ohm pull-down each.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_darkplnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_darkplnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -366,8 +358,7 @@ public class galaxian
 		palette_set_color(BULLETS_COLOR_BASE+1,0x00,0x00,0xef);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_minefld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_minefld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -397,8 +388,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_rescue  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rescue  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -418,8 +408,7 @@ public class galaxian
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_mariner  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mariner  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -458,7 +447,7 @@ public class galaxian
 	{
 		tilemap = tilemap_create(get_tile_info,get_memory_offset,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(tilemap,0);
@@ -489,13 +478,12 @@ public class galaxian
 		spritevisiblearea      = &_spritevisiblearea;
 		spritevisibleareaflipx = &_spritevisibleareaflipx;
 	
-		color_mask = (Machine.gfx[0].color_granularity == 4) ? 7 : 3;
+		color_mask = (Machine->gfx[0]->color_granularity == 4) ? 7 : 3;
 	
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_galaxian_plain  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_galaxian_plain  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_common(tilemap_scan_rows);
 	
 		tilemap_set_scroll_cols(tilemap, 32);
@@ -504,8 +492,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_galaxian  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_galaxian  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_stars = galaxian_draw_stars;
@@ -515,8 +502,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_gmgalax  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gmgalax  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = gmgalax_modify_charcode;
@@ -526,8 +512,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mooncrst  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mooncrst  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = mooncrst_modify_charcode;
@@ -536,8 +521,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mooncrgx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mooncrgx  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = mooncrgx_modify_charcode;
@@ -546,8 +530,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_moonqsr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_moonqsr  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = moonqsr_modify_charcode;
@@ -556,8 +539,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mshuttle  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mshuttle  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = mshuttle_modify_charcode;
@@ -566,8 +548,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_pisces  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pisces  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = pisces_modify_charcode;
@@ -576,8 +557,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_gteikob2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gteikob2  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_pisces();
 	
 		draw_bullets = gteikob2_draw_bullets;
@@ -585,8 +565,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_batman2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_batman2  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		modify_charcode   = batman2_modify_charcode;
@@ -595,8 +574,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_scramble  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_scramble  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_stars = scramble_draw_stars;
@@ -608,8 +586,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sfx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sfx  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_common(tilemap_scan_cols);
 	
 		tilemap_set_scroll_rows(tilemap, 32);
@@ -624,8 +601,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_turtles  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_turtles  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = turtles_draw_background;
@@ -633,8 +609,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_theend  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_theend  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 	
 		draw_bullets = theend_draw_bullets;
@@ -642,8 +617,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_darkplnt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_darkplnt  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_bullets = darkplnt_draw_bullets;
@@ -651,8 +625,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_rescue  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rescue  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		draw_stars = rescue_draw_stars;
@@ -662,8 +635,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_minefld  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_minefld  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		draw_stars = rescue_draw_stars;
@@ -673,8 +645,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_stratgyx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stratgyx  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = stratgyx_draw_background;
@@ -682,8 +653,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ckongs  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ckongs  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		modify_spritecode = mshuttle_modify_spritecode;
@@ -691,8 +661,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_calipso  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_calipso  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_bullets = scramble_draw_bullets;
@@ -704,8 +673,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mariner  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mariner  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_stars = mariner_draw_stars;
@@ -719,8 +687,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_froggers  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_froggers  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		draw_background = frogger_draw_background;
@@ -728,8 +695,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_frogger  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_frogger  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_froggers();
 	
 		modify_color = frogger_modify_color;
@@ -738,8 +704,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_froggrmc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_froggrmc  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_froggers();
 	
 		modify_color = frogger_modify_color;
@@ -747,8 +712,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_jumpbug  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jumpbug  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		draw_stars = jumpbug_draw_stars;
@@ -759,8 +723,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mimonkey  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mimonkey  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		modify_charcode   = mimonkey_modify_charcode;
@@ -769,8 +732,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_dkongjrm  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dkongjrm  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian_plain();
 	
 		modify_charcode   = pisces_modify_charcode;
@@ -781,8 +743,7 @@ public class galaxian
 		return ret;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_newsin7  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_newsin7  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_scramble();
 	
 		spritevisiblearea      = &_spritevisibleareaflipx;
@@ -802,8 +763,7 @@ public class galaxian
 		if (gfxbank[2])	*code|=0x40;
 	}
 	
-	public static VideoStartHandlerPtr video_start_rockclim  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rockclim  = new VideoStartHandlerPtr() { public int handler(){
 		int ret = video_start_galaxian();
 		rockclim_tilemap = tilemap_create(rockclim_get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 		draw_background = rockclim_draw_background;
@@ -825,11 +785,10 @@ public class galaxian
 		SET_TILE_INFO(0,code,color,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_drivfrcg  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_drivfrcg  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(drivfrcg_get_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(tilemap,0);
@@ -867,8 +826,7 @@ public class galaxian
 	} };
 	
 	
-	public static WriteHandlerPtr galaxian_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (galaxian_videoram[offset] != data)
 		{
 			galaxian_videoram[offset] = data;
@@ -876,17 +834,15 @@ public class galaxian
 		}
 	} };
 	
-	public static ReadHandlerPtr galaxian_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr galaxian_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return galaxian_videoram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr galaxian_attributesram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_attributesram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (galaxian_attributesram[offset] != data)
 		{
-			if ((offset & 0x01) != 0)
+			if (offset & 0x01)
 			{
 				/* color change */
 				int i;
@@ -896,7 +852,7 @@ public class galaxian
 			}
 			else
 			{
-				if (modify_ypos != 0)
+				if (modify_ypos)
 				{
 					modify_ypos(&data);
 				}
@@ -909,8 +865,7 @@ public class galaxian
 	} };
 	
 	
-	public static WriteHandlerPtr galaxian_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_x != (data & 0x01))
 		{
 			flip_screen_x = data & 0x01;
@@ -919,8 +874,7 @@ public class galaxian
 		}
 	} };
 	
-	public static WriteHandlerPtr galaxian_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_y != (data & 0x01))
 		{
 			flip_screen_y = data & 0x01;
@@ -930,65 +884,55 @@ public class galaxian
 	} };
 	
 	
-	public static WriteHandlerPtr gteikob2_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gteikob2_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		galaxian_flip_screen_x_w(offset, ~data);
 	} };
 	
-	public static WriteHandlerPtr gteikob2_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gteikob2_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		galaxian_flip_screen_y_w(offset, ~data);
 	} };
 	
 	
-	public static WriteHandlerPtr hotshock_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hotshock_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		galaxian_flip_screen_x_w(offset, data);
 		galaxian_flip_screen_y_w(offset, data);
 	} };
 	
 	
-	public static WriteHandlerPtr scramble_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scramble_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_enable = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr scramble_background_red_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scramble_background_red_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_red = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr scramble_background_green_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scramble_background_green_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_green = data & 0x01;
 	} };
 	
-	public static WriteHandlerPtr scramble_background_blue_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr scramble_background_blue_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		background_blue = data & 0x01;
 	} };
 	
 	
-	public static WriteHandlerPtr galaxian_stars_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_stars_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		galaxian_stars_on = data & 0x01;
 	
-		if (galaxian_stars_on == 0)
+		if (!galaxian_stars_on)
 		{
 			stars_scrollpos = 0;
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr darkplnt_bullet_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darkplnt_bullet_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darkplnt_bullet_color = data & 0x01;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr galaxian_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxbank[offset] != data)
 		{
 			gfxbank[offset] = data;
@@ -997,8 +941,7 @@ public class galaxian
 		}
 	} };
 	
-	public static WriteHandlerPtr rockclim_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockclim_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rockclim_videoram[offset] != data)
 		{
 			rockclim_videoram[offset] = data;
@@ -1009,8 +952,7 @@ public class galaxian
 	static int rockclim_v=0;
 	static int rockclim_h=0;
 	
-	public static WriteHandlerPtr rockclim_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockclim_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	
 		switch(offset&3)
@@ -1024,8 +966,7 @@ public class galaxian
 	} };
 	
 	
-	public static ReadHandlerPtr rockclim_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rockclim_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rockclim_videoram[offset];
 	} };
 	
@@ -1214,8 +1155,8 @@ public class galaxian
 		{
 			x--;
 	
-			if (x >= Machine.visible_area.min_x &&
-				x <= Machine.visible_area.max_x)
+			if (x >= Machine->visible_area.min_x &&
+				x <= Machine->visible_area.max_x)
 			{
 				int color;
 	
@@ -1223,7 +1164,7 @@ public class galaxian
 				/* yellow missile, white shells (this is the terminology on the schematics) */
 				color = ((offs == 7*4) ? BULLETS_COLOR_BASE : BULLETS_COLOR_BASE + 1);
 	
-				plot_pixel(bitmap, x, y, Machine.pens[color]);
+				plot_pixel(bitmap, x, y, Machine->pens[color]);
 			}
 		}
 	}
@@ -1235,28 +1176,28 @@ public class galaxian
 	
 	static void scramble_draw_bullets(struct mame_bitmap *bitmap, int offs, int x, int y)
 	{
-		if (flip_screen_x != 0)  x++;
+		if (flip_screen_x)  x++;
 	
 		x = x - 6;
 	
-		if (x >= Machine.visible_area.min_x &&
-			x <= Machine.visible_area.max_x)
+		if (x >= Machine->visible_area.min_x &&
+			x <= Machine->visible_area.max_x)
 		{
 			/* yellow bullets */
-			plot_pixel(bitmap, x, y, Machine.pens[BULLETS_COLOR_BASE]);
+			plot_pixel(bitmap, x, y, Machine->pens[BULLETS_COLOR_BASE]);
 		}
 	}
 	
 	static void darkplnt_draw_bullets(struct mame_bitmap *bitmap, int offs, int x, int y)
 	{
-		if (flip_screen_x != 0)  x++;
+		if (flip_screen_x)  x++;
 	
 		x = x - 6;
 	
-		if (x >= Machine.visible_area.min_x &&
-			x <= Machine.visible_area.max_x)
+		if (x >= Machine->visible_area.min_x &&
+			x <= Machine->visible_area.max_x)
 		{
-			plot_pixel(bitmap, x, y, Machine.pens[32 + darkplnt_bullet_color]);
+			plot_pixel(bitmap, x, y, Machine->pens[32 + darkplnt_bullet_color]);
 		}
 	}
 	
@@ -1270,10 +1211,10 @@ public class galaxian
 		{
 			x--;
 	
-			if (x >= Machine.visible_area.min_x &&
-				x <= Machine.visible_area.max_x)
+			if (x >= Machine->visible_area.min_x &&
+				x <= Machine->visible_area.max_x)
 			{
-				plot_pixel(bitmap, x, y, Machine.pens[BULLETS_COLOR_BASE]);
+				plot_pixel(bitmap, x, y, Machine->pens[BULLETS_COLOR_BASE]);
 			}
 		}
 	}
@@ -1284,18 +1225,18 @@ public class galaxian
 	static void galaxian_draw_background(struct mame_bitmap *bitmap)
 	{
 		/* plain black background */
-		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+		fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 	}
 	
 	static void scramble_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable != 0)
+		if (background_enable)
 		{
-			fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE],Machine.visible_area);
+			fillbitmap(bitmap,Machine->pens[BACKGROUND_COLOR_BASE],Machine->visible_area);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+			fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 		}
 	}
 	
@@ -1303,21 +1244,21 @@ public class galaxian
 	{
 		int color = (background_blue << 2) | (background_green << 1) | background_red;
 	
-		fillbitmap(bitmap,Machine.pens[BACKGROUND_COLOR_BASE + color],Machine.visible_area);
+		fillbitmap(bitmap,Machine->pens[BACKGROUND_COLOR_BASE + color],Machine->visible_area);
 	}
 	
 	static void frogger_draw_background(struct mame_bitmap *bitmap)
 	{
 		/* color split point verified on real machine */
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
-			plot_box(bitmap,   0, 0, 128, 256, Machine.pens[0]);
-			plot_box(bitmap, 128, 0, 128, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap,   0, 0, 128, 256, Machine->pens[0]);
+			plot_box(bitmap, 128, 0, 128, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			plot_box(bitmap,   0, 0, 128, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
-			plot_box(bitmap, 128, 0, 128, 256, Machine.pens[0]);
+			plot_box(bitmap,   0, 0, 128, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 128, 0, 128, 256, Machine->pens[0]);
 		}
 	}
 	
@@ -1347,7 +1288,7 @@ public class galaxian
 			if ((~prom[x] & 0x02) && background_green) color |= 0x02;
 			if ((~prom[x] & 0x01) && background_blue)  color |= 0x04;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 8 * (31 - x);
 			}
@@ -1356,57 +1297,57 @@ public class galaxian
 				sx = 8 * x;
 			}
 	
-			plot_box(bitmap, sx, 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
+			plot_box(bitmap, sx, 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
 		}
 	}
 	
 	static void minefld_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable != 0)
+		if (background_enable)
 		{
 			int x;
 	
 	
 			for (x = 0; x < 128; x++)
 			{
-				plot_box(bitmap, x,       0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x]);
+				plot_box(bitmap, x,       0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x]);
 			}
 	
 			for (x = 0; x < 120; x++)
 			{
-				plot_box(bitmap, x + 128, 0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x + 128]);
+				plot_box(bitmap, x + 128, 0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x + 128]);
 			}
 	
-			plot_box(bitmap, 248, 0, 16, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 248, 0, 16, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+			fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 		}
 	}
 	
 	static void rescue_draw_background(struct mame_bitmap *bitmap)
 	{
-		if (background_enable != 0)
+		if (background_enable)
 		{
 			int x;
 	
 	
 			for (x = 0; x < 128; x++)
 			{
-				plot_box(bitmap, x,       0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x]);
+				plot_box(bitmap, x,       0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x]);
 			}
 	
 			for (x = 0; x < 120; x++)
 			{
-				plot_box(bitmap, x + 128, 0, 1, 256, Machine.pens[BACKGROUND_COLOR_BASE + x + 8]);
+				plot_box(bitmap, x + 128, 0, 1, 256, Machine->pens[BACKGROUND_COLOR_BASE + x + 8]);
 			}
 	
-			plot_box(bitmap, 248, 0, 16, 256, Machine.pens[BACKGROUND_COLOR_BASE]);
+			plot_box(bitmap, 248, 0, 16, 256, Machine->pens[BACKGROUND_COLOR_BASE]);
 		}
 		else
 		{
-			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+			fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 		}
 	}
 	
@@ -1422,7 +1363,7 @@ public class galaxian
 	
 		prom = memory_region(REGION_USER1);
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			for (x = 0; x < 32; x++)
 			{
@@ -1434,7 +1375,7 @@ public class galaxian
 				else
 					color = prom[0x20 + x - 1];
 	
-				plot_box(bitmap, 8 * (31 - x), 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
+				plot_box(bitmap, 8 * (31 - x), 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
 			}
 		}
 		else
@@ -1449,7 +1390,7 @@ public class galaxian
 				else
 					color = prom[x + 1];
 	
-				plot_box(bitmap, 8 * x, 0, 8, 256, Machine.pens[BACKGROUND_COLOR_BASE + color]);
+				plot_box(bitmap, 8 * x, 0, 8, 256, Machine->pens[BACKGROUND_COLOR_BASE + color]);
 			}
 		}
 	}
@@ -1510,7 +1451,7 @@ public class galaxian
 	
 	
 					color = (~(generator >> 8)) & 0x3f;
-					if (color != 0)
+					if (color)
 					{
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
@@ -1531,23 +1472,23 @@ public class galaxian
 	
 	static void plot_star(struct mame_bitmap *bitmap, int x, int y, int color)
 	{
-		if (y < Machine.visible_area.min_y ||
-			y > Machine.visible_area.max_y ||
-			x < Machine.visible_area.min_x ||
-			x > Machine.visible_area.max_x)
+		if (y < Machine->visible_area.min_y ||
+			y > Machine->visible_area.max_y ||
+			x < Machine->visible_area.min_x ||
+			x > Machine->visible_area.max_x)
 			return;
 	
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			x = 255 - x;
 		}
-		if (flip_screen_y != 0)
+		if (flip_screen_y)
 		{
 			y = 255 - y;
 		}
 	
-		plot_pixel(bitmap, x, y, Machine.pens[STARS_COLOR_BASE + color]);
+		plot_pixel(bitmap, x, y, Machine->pens[STARS_COLOR_BASE + color]);
 	}
 	
 	static void noop_draw_stars(struct mame_bitmap *bitmap)
@@ -1559,7 +1500,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (timer_adjusted == 0)
+		if (!timer_adjusted)
 		{
 			start_stars_scroll_timer();
 			timer_adjusted = 1;
@@ -1586,7 +1527,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (timer_adjusted == 0)
+		if (!timer_adjusted)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			timer_adjusted = 1;
@@ -1632,7 +1573,7 @@ public class galaxian
 	
 		/* same as Scramble, but only top (left) half of screen */
 	
-		if (timer_adjusted == 0)
+		if (!timer_adjusted)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			timer_adjusted = 1;
@@ -1677,7 +1618,7 @@ public class galaxian
 		UINT8 *prom;
 	
 	
-		if (timer_adjusted == 0)
+		if (!timer_adjusted)
 		{
 			start_stars_scroll_timer();
 			timer_adjusted = 1;
@@ -1711,7 +1652,7 @@ public class galaxian
 		int offs;
 	
 	
-		if (timer_adjusted == 0)
+		if (!timer_adjusted)
 		{
 			start_stars_blink_timer(100000, 10000, 0.00001);
 			start_stars_scroll_timer();
@@ -1775,7 +1716,7 @@ public class galaxian
 	
 	static void stars_scroll_callback(int param)
 	{
-		if (galaxian_stars_on != 0)
+		if (galaxian_stars_on)
 		{
 			stars_scrollpos++;
 		}
@@ -1783,7 +1724,7 @@ public class galaxian
 	
 	static void start_stars_scroll_timer()
 	{
-		timer_adjust(stars_scroll_timer, TIME_IN_HZ(Machine.drv.frames_per_second), 0, TIME_IN_HZ(Machine.drv.frames_per_second));
+		timer_adjust(stars_scroll_timer, TIME_IN_HZ(Machine->drv->frames_per_second), 0, TIME_IN_HZ(Machine->drv->frames_per_second));
 	}
 	
 	
@@ -1802,12 +1743,12 @@ public class galaxian
 		UINT16 code = galaxian_videoram[tile_index];
 		UINT8 color = galaxian_attributesram[(x << 1) | 1] & color_mask;
 	
-		if (modify_charcode != 0)
+		if (modify_charcode)
 		{
 			modify_charcode(&code, x);
 		}
 	
-		if (modify_color != 0)
+		if (modify_color)
 		{
 			modify_color(&color);
 		}
@@ -1833,11 +1774,11 @@ public class galaxian
 			sy = 255 - galaxian_bulletsram[offs + 1];
 			sx = 255 - galaxian_bulletsram[offs + 3];
 	
-			if (sy < Machine.visible_area.min_y ||
-				sy > Machine.visible_area.max_y)
+			if (sy < Machine->visible_area.min_y ||
+				sy > Machine->visible_area.max_y)
 				continue;
 	
-			if (flip_screen_y != 0)  sy = 255 - sy;
+			if (flip_screen_y)  sy = 255 - sy;
 	
 			draw_bullets(bitmap, offs, sx, sy);
 		}
@@ -1862,28 +1803,28 @@ public class galaxian
 			code = spriteram.read(offs + 1)& 0x3f;
 			color = spriteram.read(offs + 2)& color_mask;
 	
-			if (modify_spritecode != 0)
+			if (modify_spritecode)
 			{
 				modify_spritecode(spriteram, &code, &flipx, &flipy, offs);
 			}
 	
-			if (modify_color != 0)
+			if (modify_color)
 			{
 				modify_color(&color);
 			}
 	
-			if (modify_ypos != 0)
+			if (modify_ypos)
 			{
 				modify_ypos(&sy);
 			}
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 			}
@@ -1901,7 +1842,7 @@ public class galaxian
 			if (offs < 3*4)  sy++;
 	
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,color,
 					flipx,flipy,
 					sx,sy,
@@ -1910,12 +1851,11 @@ public class galaxian
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galaxian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_background(bitmap);
 	
 	
-		if (galaxian_stars_on != 0)
+		if (galaxian_stars_on)
 		{
 			draw_stars(bitmap);
 		}
@@ -1924,7 +1864,7 @@ public class galaxian
 		tilemap_draw(bitmap, 0, tilemap, 0, 0);
 	
 	
-		if (draw_bullets != 0)
+		if (draw_bullets)
 		{
 			draw_bullets_common(bitmap);
 		}
@@ -1932,7 +1872,7 @@ public class galaxian
 	
 		draw_sprites(bitmap, galaxian_spriteram, galaxian_spriteram_size);
 	
-		if (spriteram2_present != 0)
+		if (spriteram2_present)
 		{
 			draw_sprites(bitmap, galaxian_spriteram2, galaxian_spriteram2_size);
 		}

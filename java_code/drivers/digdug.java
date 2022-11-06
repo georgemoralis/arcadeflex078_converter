@@ -113,7 +113,7 @@ CPU #3 NMI (@120Hz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -191,7 +191,7 @@ public class digdug
 	
 	
 	/* input from the outside world */
-	static InputPortPtr input_ports_digdug = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_digdug = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( digdug )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x07, 0x01, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "3C_1C") );
@@ -327,8 +327,7 @@ public class digdug
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_digdug = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( digdug )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3125000)	/* 3.125 MHz */
@@ -363,9 +362,7 @@ public class digdug
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -570,9 +567,9 @@ public class digdug
 	
 	
 	
-	public static GameDriver driver_digdug	   = new GameDriver("1982"	,"digdug"	,"digdug.java"	,rom_digdug,null	,machine_driver_digdug	,input_ports_digdug	,null	,ROT90	,	"Namco", "Dig Dug (set 1)" )
-	public static GameDriver driver_digdugb	   = new GameDriver("1982"	,"digdugb"	,"digdug.java"	,rom_digdugb,driver_digdug	,machine_driver_digdug	,input_ports_digdug	,null	,ROT90	,	"Namco", "Dig Dug (set 2)" )
-	public static GameDriver driver_digdugat	   = new GameDriver("1982"	,"digdugat"	,"digdug.java"	,rom_digdugat,driver_digdug	,machine_driver_digdug	,input_ports_digdug	,null	,ROT90	,	"[Namco] (Atari license)", "Dig Dug (Atari, rev 2)" )
-	public static GameDriver driver_digduga1	   = new GameDriver("1982"	,"digduga1"	,"digdug.java"	,rom_digduga1,driver_digdug	,machine_driver_digdug	,input_ports_digdug	,null	,ROT90	,	"[Namco] (Atari license)", "Dig Dug (Atari, rev 1)" )
-	public static GameDriver driver_dzigzag	   = new GameDriver("1982"	,"dzigzag"	,"digdug.java"	,rom_dzigzag,driver_digdug	,machine_driver_digdug	,input_ports_digdug	,null	,ROT90	,	"bootleg", "Zig Zag (Dig Dug hardware)" )
+	GAME( 1982, digdug,   0,      digdug, digdug, 0, ROT90, "Namco", "Dig Dug (set 1)" )
+	GAME( 1982, digdugb,  digdug, digdug, digdug, 0, ROT90, "Namco", "Dig Dug (set 2)" )
+	GAME( 1982, digdugat, digdug, digdug, digdug, 0, ROT90, "[Namco] (Atari license)", "Dig Dug (Atari, rev 2)" )
+	GAME( 1982, digduga1, digdug, digdug, digdug, 0, ROT90, "[Namco] (Atari license)", "Dig Dug (Atari, rev 1)" )
+	GAME( 1982, dzigzag,  digdug, digdug, digdug, 0, ROT90, "bootleg", "Zig Zag (Dig Dug hardware)" )
 }

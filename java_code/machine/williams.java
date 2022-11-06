@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -318,8 +318,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_williams  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_williams  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset the PIAs */
 		pia_reset();
 	
@@ -341,8 +340,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* VRAM/ROM banking from bit 0 */
 		vram_bank = data & 0x01;
 	
@@ -353,7 +351,7 @@ public class williams
 		sinistar_clip = (data & 0x04) ? 0x7400 : 0xffff;
 	
 		/* set the bank */
-		if (vram_bank != 0)
+		if (vram_bank)
 		{
 			cpu_setbank(1, williams_bank_base);
 		}
@@ -377,14 +375,12 @@ public class williams
 		pia_2_cb1_w(0, (param == 0xff) ? 0 : 1);
 	}
 	
-	public static WriteHandlerPtr williams_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* the high two bits are set externally, and should be 1 */
 		timer_set(TIME_NOW, data | 0xc0, williams_deferred_snd_cmd_w);
 	} };
 	
-	public static WriteHandlerPtr playball_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr playball_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, williams_deferred_snd_cmd_w);
 	} };
 	
@@ -396,20 +392,17 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port_select = data;
 	} };
 	
 	
-	public static ReadHandlerPtr williams_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr williams_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(port_select ? 3 : 0);
 	} };
 	
 	
-	public static ReadHandlerPtr williams_input_port_1_4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr williams_input_port_1_4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(port_select ? 4 : 1);
 	} };
 	
@@ -439,8 +432,7 @@ public class williams
 	 *
 	 */
 	
-	public static ReadHandlerPtr williams_49way_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr williams_49way_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int joy_x, joy_y;
 		int bits_x, bits_y;
 	
@@ -454,9 +446,8 @@ public class williams
 	} };
 	
 	
-	public static ReadHandlerPtr williams_input_port_49way_0_5_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (port_select != 0)
+	public static ReadHandlerPtr williams_input_port_49way_0_5_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (port_select)
 			return williams_49way_port_0_r(0);
 		else
 			return readinputport(5);
@@ -513,8 +504,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_williams2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_williams2  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset the PIAs */
 		pia_reset();
 	
@@ -536,8 +526,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams2_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const UINT32 bank[8] = { 0, 0x10000, 0x20000, 0x10000, 0, 0x30000, 0x40000, 0x30000 };
 	
 		/* select bank index (only lower 3 bits used by IC56) */
@@ -585,8 +574,7 @@ public class williams
 	}
 	
 	
-	public static WriteHandlerPtr williams2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, williams2_deferred_snd_cmd_w);
 	} };
 	
@@ -598,8 +586,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams2_7segment_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_7segment_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int n;
 		char dot;
 	
@@ -639,8 +626,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_defender  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_defender  = new MachineInitHandlerPtr() { public void handler(){
 		/* standard init */
 		machine_init_williams();
 	
@@ -651,8 +637,7 @@ public class williams
 	
 	
 	
-	public static WriteHandlerPtr defender_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr defender_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT32 bank_offset = defender_bank_list[data & 7];
 	
 		/* set bank address */
@@ -674,8 +659,7 @@ public class williams
 	} };
 	
 	
-	public static ReadHandlerPtr defender_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr defender_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int keys, altkeys;
 	
 		/* read the standard keys and the cheat keys */
@@ -683,14 +667,14 @@ public class williams
 		altkeys = readinputport(3);
 	
 		/* modify the standard keys with the cheat keys */
-		if (altkeys != 0)
+		if (altkeys)
 		{
 			keys |= altkeys;
 			if (memory_region(REGION_CPU1)[0xa0bb] == 0xfd)
 			{
-				if ((keys & 0x02) != 0)
+				if (keys & 0x02)
 					keys = (keys & 0xfd) | 0x40;
-				else if ((keys & 0x40) != 0)
+				else if (keys & 0x40)
 					keys = (keys & 0xbf) | 0x02;
 			}
 		}
@@ -699,8 +683,7 @@ public class williams
 	} };
 	
 	
-	public static ReadHandlerPtr defender_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr defender_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* PIAs */
 		if (offset >= 0x0c00 && offset < 0x0c04)
 			return pia_1_r(offset & 3);
@@ -716,8 +699,7 @@ public class williams
 	} };
 	
 	
-	public static WriteHandlerPtr defender_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr defender_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write the data through */
 		defender_bank_base[offset] = data;
 	
@@ -744,8 +726,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr mayday_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mayday_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Mayday does some kind of protection check that is not currently understood  */
 		/* However, the results of that protection check are stored at $a190 and $a191 */
 		/* These are compared against $a193 and $a194, respectively. Thus, to prevent  */
@@ -762,8 +743,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr stargate_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stargate_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int keys, altkeys;
 	
 		/* read the standard keys and the cheat keys */
@@ -771,14 +751,14 @@ public class williams
 		altkeys = input_port_3_r.handler(0);
 	
 		/* modify the standard keys with the cheat keys */
-		if (altkeys != 0)
+		if (altkeys)
 		{
 			keys |= altkeys;
 			if (memory_region(REGION_CPU1)[0x9c92] == 0xfd)
 			{
-				if ((keys & 0x02) != 0)
+				if (keys & 0x02)
 					keys = (keys & 0xfd) | 0x40;
-				else if ((keys & 0x40) != 0)
+				else if (keys & 0x40)
 					keys = (keys & 0xbf) | 0x02;
 			}
 		}
@@ -801,14 +781,13 @@ public class williams
 	};
 	
 	
-	public static WriteHandlerPtr blaster_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blaster_vram_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		vram_bank = data;
 	
 		/* non-zero banks map to RAM and the currently-selected bank */
-		if (vram_bank != 0)
+		if (vram_bank)
 		{
 			cpu_setbank(1, &RAM[blaster_bank_offset[blaster_bank]]);
 			cpu_setbank(2, williams_bank_base + 0x4000);
@@ -823,14 +802,13 @@ public class williams
 	} };
 	
 	
-	public static WriteHandlerPtr blaster_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blaster_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		blaster_bank = data & 15;
 	
 		/* only need to change anything if we're not pointing to VRAM */
-		if (vram_bank != 0)
+		if (vram_bank)
 		{
 			cpu_setbank(1, &RAM[blaster_bank_offset[blaster_bank]]);
 		}
@@ -844,8 +822,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr lottofun_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lottofun_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* merge in the ticket dispenser status */
 		return input_port_0_r.handler(offset) | ticket_dispenser_r(offset);
 	} };
@@ -858,8 +835,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr tshoot_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tshoot_input_port_0_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* merge in the gun inputs with the standard data */
 		int data = williams_input_port_0_3_r(offset);
 		int gun = (data & 0x3f) ^ ((data & 0x3f) >> 1);
@@ -867,15 +843,13 @@ public class williams
 	} };
 	
 	
-	public static WriteHandlerPtr tshoot_maxvol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tshoot_maxvol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* something to do with the sound volume */
 		logerror("tshoot maxvol = %d (pc:%x)\n", data, activecpu_get_pc());
 	} };
 	
 	
-	public static WriteHandlerPtr tshoot_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tshoot_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* set the grenade lamp */
 		set_led_status(0,data & 0x04);
 	
@@ -884,13 +858,13 @@ public class williams
 	
 	#if 0
 		/* gun coil */
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			printf("[gun coil] ");
 		else
 			printf("           ");
 	
 		/* feather coil */
-		if ((data & 0x20) != 0)
+		if (data & 0x20)
 			printf("[feather coil] ");
 		else
 			printf("               ");
@@ -907,8 +881,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_joust2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_joust2  = new MachineInitHandlerPtr() { public void handler(){
 		/* standard init */
 		machine_init_williams2();
 	
@@ -924,15 +897,13 @@ public class williams
 	}
 	
 	
-	public static WriteHandlerPtr joust2_pia_3_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr joust2_pia_3_cb1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		joust2_current_sound_data = (joust2_current_sound_data & ~0x100) | ((data << 8) & 0x100);
 		pia_3_cb1_w(offset, data);
 	} };
 	
 	
-	public static WriteHandlerPtr joust2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr joust2_snd_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		joust2_current_sound_data = (joust2_current_sound_data & ~0xff) | (data & 0xff);
 		williams_cvsd_data_w(joust2_current_sound_data);
 		timer_set(TIME_NOW, joust2_current_sound_data, joust2_deferred_snd_cmd_w);

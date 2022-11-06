@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -48,27 +48,27 @@ public class _5220intf
 	
 	int tms5220_sh_start(const struct MachineSound *msound)
 	{
-	    intf = msound.sound_interface;
+	    intf = msound->sound_interface;
 	
 	    /* reset the 5220 */
 	    tms5220_reset();
-	    tms5220_set_irq(intf.irq);
+	    tms5220_set_irq(intf->irq);
 	
 	    /* set the initial frequency */
 	    stream = -1;
-	    tms5220_set_frequency(intf.baseclock);
+	    tms5220_set_frequency(intf->baseclock);
 	    source_pos = 0;
 	    last_sample = curr_sample = 0;
 	
 		/* initialize a stream */
-		stream = stream_init("TMS5220", intf.mixing_level, Machine.sample_rate, 0, tms5220_update);
+		stream = stream_init("TMS5220", intf->mixing_level, Machine->sample_rate, 0, tms5220_update);
 		if (stream == -1)
 			return 1;
 	
 		/* init the speech ROM handlers */
-		tms5220_set_read(intf.read);
-		tms5220_set_load_address(intf.load_address);
-		tms5220_set_read_and_branch(intf.read_and_branch);
+		tms5220_set_read(intf->read);
+		tms5220_set_load_address(intf->load_address);
+		tms5220_set_read_and_branch(intf->read_and_branch);
 	
 	    /* request a sound channel */
 	    return 0;
@@ -106,8 +106,7 @@ public class _5220intf
 	
 	***********************************************************************************************/
 	
-	public static WriteHandlerPtr tms5220_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms5220_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* bring up to date first */
 	    stream_update(stream, 0);
 	    tms5220_data_write(data);
@@ -121,8 +120,7 @@ public class _5220intf
 	
 	***********************************************************************************************/
 	
-	public static ReadHandlerPtr tms5220_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tms5220_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    /* bring up to date first */
 	    stream_update(stream, -1);
 	    return tms5220_status_read();
@@ -158,7 +156,7 @@ public class _5220intf
 		/* bring up to date first */
 		stream_update(stream, -1);
 		cycles = tms5220_cycles_to_ready();
-		return cycles * 80.0 / intf.baseclock;
+		return cycles * 80.0 / intf->baseclock;
 	}
 	
 	
@@ -259,12 +257,12 @@ public class _5220intf
 	void tms5220_set_frequency(int frequency)
 	{
 		/* skip if output frequency is zero */
-		if (!Machine.sample_rate)
+		if (!Machine->sample_rate)
 			return;
 	
 		/* update the stream and compute a new step size */
 		if (stream != -1)
 			stream_update(stream, 0);
-		source_step = (UINT32)((double)(frequency / 80) * (double)FRAC_ONE / (double)Machine.sample_rate);
+		source_step = (UINT32)((double)(frequency / 80) * (double)FRAC_ONE / (double)Machine->sample_rate);
 	}
 }

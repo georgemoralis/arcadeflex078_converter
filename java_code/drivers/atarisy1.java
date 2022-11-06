@@ -118,7 +118,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -160,15 +160,15 @@ public class atarisy1
 		/* all interrupts go through an LS148, which gives priority to the highest */
 		if (joystick_int && joystick_int_enable)
 			newstate = 2;
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 3;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 6;
 	
 		/* set the new state of the IRQ lines */
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -177,8 +177,7 @@ public class atarisy1
 	
 	static void delayed_joystick_int(int param);
 	
-	public static MachineInitHandlerPtr machine_init_atarisy1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarisy1  = new MachineInitHandlerPtr() { public void handler(){
 		/* initialize the system */
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
@@ -307,7 +306,7 @@ public class atarisy1
 	static READ16_HANDLER( port4_r )
 	{
 		int temp = readinputport(4);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0080;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0080;
 		return temp;
 	}
 	
@@ -319,12 +318,11 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int temp = readinputport(5);
 	
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x08;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x10;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x08;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x10;
 		if (!(readinputport(4) & 0x0040)) temp ^= 0x80;
 	
 		return temp;
@@ -374,8 +372,7 @@ public class atarisy1
 	 *	        D5 = 	??? (out)
 	 */
 	
-	public static ReadHandlerPtr m6522_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6522_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0x00:	/* DRB */
@@ -397,8 +394,7 @@ public class atarisy1
 	} };
 	
 	
-	public static WriteHandlerPtr m6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6522_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int old;
 	
 		switch (offset)
@@ -443,8 +439,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset, ~data & 1);
 	} };
 	
@@ -478,9 +473,9 @@ public class atarisy1
 		 *	ROM, so it doesn't matter which version we're actually executing.
 		 */
 	
-		if ((address & 0x80000) != 0)
+		if (address & 0x80000)
 			atarigen_slapstic_r(0,0);
-		else if ((prevpc & 0x80000) != 0)
+		else if (prevpc & 0x80000)
 			atarigen_slapstic_r((prevpc >> 1) & 0x3fff,0);
 	
 		return address;
@@ -573,7 +568,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_marble = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_marble = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( marble )
 		PORT_START();   /* F20000 */
 	    PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X | IPF_REVERSE | IPF_PLAYER1, 30, 30, 0, 0 );
 	
@@ -608,7 +603,7 @@ public class atarisy1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_peterpak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_peterpak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( peterpak )
 		PORT_START(); 	/* F40000 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
@@ -648,7 +643,7 @@ public class atarisy1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_indytemp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_indytemp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( indytemp )
 		PORT_START(); 	/* F40000 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP );
@@ -688,7 +683,7 @@ public class atarisy1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_roadrunn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roadrunn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roadrunn )
 		PORT_START(); 	/* F40000 */
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Y | IPF_PLAYER1, 100, 10, 0x10, 0xf0 );
 	
@@ -724,7 +719,7 @@ public class atarisy1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_roadblst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roadblst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roadblst )
 		PORT_START(); 	/* F20000 */
 		PORT_ANALOG( 0xff, 0x40, IPT_DIAL | IPF_REVERSE, 25, 10, 0x00, 0x7f );
 	
@@ -824,8 +819,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarisy1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarisy1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_14MHz/2)
@@ -856,9 +850,7 @@ public class atarisy1
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2152,8 +2144,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_marble  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_marble  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 103);
 	
@@ -2162,8 +2153,7 @@ public class atarisy1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_peterpak  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_peterpak  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 107);
 	
@@ -2172,8 +2162,7 @@ public class atarisy1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_indytemp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_indytemp  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 105);
 	
@@ -2185,8 +2174,7 @@ public class atarisy1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_roadrunn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_roadrunn  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 108);
 	
@@ -2195,8 +2183,7 @@ public class atarisy1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_roadb109  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_roadb109  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 109);
 	
@@ -2205,8 +2192,7 @@ public class atarisy1
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_roadb110  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_roadb110  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarigen_slapstic_init(0, 0x080000, 110);
 	
@@ -2222,31 +2208,31 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_marble	   = new GameDriver("1984"	,"marble"	,"atarisy1.java"	,rom_marble,null	,machine_driver_atarisy1	,input_ports_marble	,init_marble	,ROT0	,	"Atari Games", "Marble Madness (set 1)" )
-	public static GameDriver driver_marble2	   = new GameDriver("1984"	,"marble2"	,"atarisy1.java"	,rom_marble2,driver_marble	,machine_driver_atarisy1	,input_ports_marble	,init_marble	,ROT0	,	"Atari Games", "Marble Madness (set 2)" )
-	public static GameDriver driver_marble3	   = new GameDriver("1984"	,"marble3"	,"atarisy1.java"	,rom_marble3,driver_marble	,machine_driver_atarisy1	,input_ports_marble	,init_marble	,ROT0	,	"Atari Games", "Marble Madness (set 3)" )
-	public static GameDriver driver_marble4	   = new GameDriver("1984"	,"marble4"	,"atarisy1.java"	,rom_marble4,driver_marble	,machine_driver_atarisy1	,input_ports_marble	,init_marble	,ROT0	,	"Atari Games", "Marble Madness (set 4)" )
+	GAME( 1984, marble,   0,        atarisy1, marble,   marble,   ROT0, "Atari Games", "Marble Madness (set 1)" )
+	GAME( 1984, marble2,  marble,   atarisy1, marble,   marble,   ROT0, "Atari Games", "Marble Madness (set 2)" )
+	GAME( 1984, marble3,  marble,   atarisy1, marble,   marble,   ROT0, "Atari Games", "Marble Madness (set 3)" )
+	GAME( 1984, marble4,  marble,   atarisy1, marble,   marble,   ROT0, "Atari Games", "Marble Madness (set 4)" )
 	
-	public static GameDriver driver_peterpak	   = new GameDriver("1984"	,"peterpak"	,"atarisy1.java"	,rom_peterpak,null	,machine_driver_atarisy1	,input_ports_peterpak	,init_peterpak	,ROT0	,	"Atari Games", "Peter Pack-Rat" )
+	GAME( 1984, peterpak, 0,        atarisy1, peterpak, peterpak, ROT0, "Atari Games", "Peter Pack-Rat" )
 	
-	public static GameDriver driver_indytemp	   = new GameDriver("1985"	,"indytemp"	,"atarisy1.java"	,rom_indytemp,null	,machine_driver_atarisy1	,input_ports_indytemp	,init_indytemp	,ROT0	,	"Atari Games", "Indiana Jones and the Temple of Doom (set 1)" )
-	public static GameDriver driver_indytem2	   = new GameDriver("1985"	,"indytem2"	,"atarisy1.java"	,rom_indytem2,driver_indytemp	,machine_driver_atarisy1	,input_ports_indytemp	,init_indytemp	,ROT0	,	"Atari Games", "Indiana Jones and the Temple of Doom (set 2)" )
-	public static GameDriver driver_indytem3	   = new GameDriver("1985"	,"indytem3"	,"atarisy1.java"	,rom_indytem3,driver_indytemp	,machine_driver_atarisy1	,input_ports_indytemp	,init_indytemp	,ROT0	,	"Atari Games", "Indiana Jones and the Temple of Doom (set 3)" )
-	public static GameDriver driver_indytem4	   = new GameDriver("1985"	,"indytem4"	,"atarisy1.java"	,rom_indytem4,driver_indytemp	,machine_driver_atarisy1	,input_ports_indytemp	,init_indytemp	,ROT0	,	"Atari Games", "Indiana Jones and the Temple of Doom (set 4)" )
-	public static GameDriver driver_indytemd	   = new GameDriver("1985"	,"indytemd"	,"atarisy1.java"	,rom_indytemd,driver_indytemp	,machine_driver_atarisy1	,input_ports_indytemp	,init_indytemp	,ROT0	,	"Atari Games", "Indiana Jones and the Temple of Doom (German)" )
+	GAME( 1985, indytemp, 0,        atarisy1, indytemp, indytemp, ROT0, "Atari Games", "Indiana Jones and the Temple of Doom (set 1)" )
+	GAME( 1985, indytem2, indytemp, atarisy1, indytemp, indytemp, ROT0, "Atari Games", "Indiana Jones and the Temple of Doom (set 2)" )
+	GAME( 1985, indytem3, indytemp, atarisy1, indytemp, indytemp, ROT0, "Atari Games", "Indiana Jones and the Temple of Doom (set 3)" )
+	GAME( 1985, indytem4, indytemp, atarisy1, indytemp, indytemp, ROT0, "Atari Games", "Indiana Jones and the Temple of Doom (set 4)" )
+	GAME( 1985, indytemd, indytemp, atarisy1, indytemp, indytemp, ROT0, "Atari Games", "Indiana Jones and the Temple of Doom (German)" )
 	
-	public static GameDriver driver_roadrunn	   = new GameDriver("1985"	,"roadrunn"	,"atarisy1.java"	,rom_roadrunn,null	,machine_driver_atarisy1	,input_ports_roadrunn	,init_roadrunn	,ROT0	,	"Atari Games", "Road Runner (rev 2)" )
-	public static GameDriver driver_roadrun2	   = new GameDriver("1985"	,"roadrun2"	,"atarisy1.java"	,rom_roadrun2,driver_roadrunn	,machine_driver_atarisy1	,input_ports_roadrunn	,init_roadrunn	,ROT0	,	"Atari Games", "Road Runner (rev 1+)" )
-	public static GameDriver driver_roadrun1	   = new GameDriver("1985"	,"roadrun1"	,"atarisy1.java"	,rom_roadrun1,driver_roadrunn	,machine_driver_atarisy1	,input_ports_roadrunn	,init_roadrunn	,ROT0	,	"Atari Games", "Road Runner (rev 1)" )
+	GAME( 1985, roadrunn, 0,        atarisy1, roadrunn, roadrunn, ROT0, "Atari Games", "Road Runner (rev 2)" )
+	GAME( 1985, roadrun2, roadrunn, atarisy1, roadrunn, roadrunn, ROT0, "Atari Games", "Road Runner (rev 1+)" )
+	GAME( 1985, roadrun1, roadrunn, atarisy1, roadrunn, roadrunn, ROT0, "Atari Games", "Road Runner (rev 1)" )
 	
-	public static GameDriver driver_roadblst	   = new GameDriver("1987"	,"roadblst"	,"atarisy1.java"	,rom_roadblst,null	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb110	,ROT0	,	"Atari Games", "Road Blasters (upright, rev 4)" )
-	public static GameDriver driver_roadblsg	   = new GameDriver("1987"	,"roadblsg"	,"atarisy1.java"	,rom_roadblsg,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (upright, German, rev 3)" )
-	public static GameDriver driver_roadbls3	   = new GameDriver("1987"	,"roadbls3"	,"atarisy1.java"	,rom_roadbls3,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (upright, rev 3)" )
-	public static GameDriver driver_roadblg2	   = new GameDriver("1987"	,"roadblg2"	,"atarisy1.java"	,rom_roadblg2,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb110	,ROT0	,	"Atari Games", "Road Blasters (upright, German, rev 2)" )
-	public static GameDriver driver_roadbls2	   = new GameDriver("1987"	,"roadbls2"	,"atarisy1.java"	,rom_roadbls2,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb110	,ROT0	,	"Atari Games", "Road Blasters (upright, rev 2)" )
-	public static GameDriver driver_roadblg1	   = new GameDriver("1987"	,"roadblg1"	,"atarisy1.java"	,rom_roadblg1,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (upright, German, rev 1)" )
-	public static GameDriver driver_roadbls1	   = new GameDriver("1987"	,"roadbls1"	,"atarisy1.java"	,rom_roadbls1,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (upright, rev 1)" )
-	public static GameDriver driver_roadblsc	   = new GameDriver("1987"	,"roadblsc"	,"atarisy1.java"	,rom_roadblsc,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb110	,ROT0	,	"Atari Games", "Road Blasters (cockpit, rev 2)" )
-	public static GameDriver driver_roadblcg	   = new GameDriver("1987"	,"roadblcg"	,"atarisy1.java"	,rom_roadblcg,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (cockpit, German, rev 1)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_roadblc1	   = new GameDriver("1987"	,"roadblc1"	,"atarisy1.java"	,rom_roadblc1,driver_roadblst	,machine_driver_atarisy1	,input_ports_roadblst	,init_roadb109	,ROT0	,	"Atari Games", "Road Blasters (cockpit, rev 1)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1987, roadblst, 0,        atarisy1, roadblst, roadb110, ROT0, "Atari Games", "Road Blasters (upright, rev 4)" )
+	GAME( 1987, roadblsg, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (upright, German, rev 3)" )
+	GAME( 1987, roadbls3, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (upright, rev 3)" )
+	GAME( 1987, roadblg2, roadblst, atarisy1, roadblst, roadb110, ROT0, "Atari Games", "Road Blasters (upright, German, rev 2)" )
+	GAME( 1987, roadbls2, roadblst, atarisy1, roadblst, roadb110, ROT0, "Atari Games", "Road Blasters (upright, rev 2)" )
+	GAME( 1987, roadblg1, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (upright, German, rev 1)" )
+	GAME( 1987, roadbls1, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (upright, rev 1)" )
+	GAME( 1987, roadblsc, roadblst, atarisy1, roadblst, roadb110, ROT0, "Atari Games", "Road Blasters (cockpit, rev 2)" )
+	GAMEX(1987, roadblcg, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (cockpit, German, rev 1)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, roadblc1, roadblst, atarisy1, roadblst, roadb109, ROT0, "Atari Games", "Road Blasters (cockpit, rev 1)", GAME_IMPERFECT_GRAPHICS )
 }

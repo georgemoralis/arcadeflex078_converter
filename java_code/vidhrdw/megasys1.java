@@ -55,7 +55,7 @@ Tile format:	fedc------------	Palette
 Offset:		00						Scroll X
 			02						Scroll Y
 			04 fedc ba98 765- ----	? (unused?)
-			   ---- ---- ---4 ----	0<.16x16 Tiles	1<.8x8 Tiles
+			   ---- ---- ---4 ----	0<->16x16 Tiles	1<->8x8 Tiles
 			   ---- ---- ---- 32--	? (used, by p47!)
 			   ---- ---- ---- --10	N: Layer H pages = 16 / (2^N)
 
@@ -68,7 +68,7 @@ Offset:		00						Scroll X
 	---- ba9- ---- ---- 	? (unused?)
 	---- ---8 ---- ---- 	Portrait F/F (?FullFill?)
 	---- ---- 765- ---- 	? (unused?)
-	---- ---- ---4 ---- 	Reset Sound CPU (1.0 Transition)
+	---- ---- ---4 ---- 	Reset Sound CPU (1->0 Transition)
 	---- ---- ---- 321- 	? (unused?)
 	---- ---- ---- ---0		Flip Screen
 
@@ -193,7 +193,7 @@ actual code sent to the hardware.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -252,8 +252,7 @@ public class megasys1
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_megasys1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_megasys1  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		spriteram16 = &megasys1_ram[0x8000/2];
@@ -464,7 +463,7 @@ public class megasys1
 			case 0x100/2   :	megasys1_sprite_flag = new_data;		break;
 	
 			case 0x300/2   :	megasys1_screen_flag = new_data;
-								if ((new_data & 0x10) != 0)
+								if (new_data & 0x10)
 									cpu_set_reset_line(1,ASSERT_LINE);
 								else
 									cpu_set_reset_line(1,CLEAR_LINE);
@@ -515,7 +514,7 @@ public class megasys1
 			case 0x2208/2   :	megasys1_active_layers = new_data;	break;
 	
 			case 0x2308/2   :	megasys1_screen_flag = new_data;
-								if ((new_data & 0x10) != 0)
+								if (new_data & 0x10)
 									cpu_set_reset_line(1,ASSERT_LINE);
 								else
 									cpu_set_reset_line(1,CLEAR_LINE);
@@ -619,7 +618,7 @@ public class megasys1
 					flipx = attr & 0x40;
 					flipy = attr & 0x80;
 	
-					if ((megasys1_screen_flag & 1) != 0)
+					if (megasys1_screen_flag & 1)
 					{
 						flipx = NOT(flipx);		flipy = NOT(flipy);
 						sx = 240-sx;		sy = 240-sy;
@@ -629,7 +628,7 @@ public class megasys1
 					code  = spritedata[0x0E/2] + objectdata[0x06/2];
 					color = (attr & color_mask);
 	
-					pdrawgfx(bitmap,Machine.gfx[3],
+					pdrawgfx(bitmap,Machine->gfx[3],
 							(code & 0xfff ) + ((megasys1_sprite_bank & 1) << 12),
 							color,
 							flipx, flipy,
@@ -663,13 +662,13 @@ public class megasys1
 				flipx = attr & 0x40;
 				flipy = attr & 0x80;
 	
-				if ((megasys1_screen_flag & 1) != 0)
+				if (megasys1_screen_flag & 1)
 				{
 					flipx = NOT(flipx);		flipy = NOT(flipy);
 					sx = 240-sx;		sy = 240-sy;
 				}
 	
-				pdrawgfx(bitmap,Machine.gfx[2],
+				pdrawgfx(bitmap,Machine->gfx[2],
 						code,
 						color,
 						flipx, flipy,
@@ -784,8 +783,7 @@ public class megasys1
 		pens.
 	*/
 	
-	public static PaletteInitHandlerPtr palette_init_megasys1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_megasys1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int pri_code, offset, i, order;
 	
 		/* First check if we have an hand-crafted priority scheme
@@ -831,9 +829,9 @@ public class megasys1
 						int opacity	=	i & enable_mask;	// only consider active layers
 						int layer	=	color_prom.read(pri_code * 0x20 + offset + opacity * 2);
 	
-						if (opacity != 0)
+						if (opacity)
 						{
-							if ((opacity & top_mask) != 0)
+							if (opacity & top_mask)
 							{
 								if (layer != top )	result |= 1; 	// error: opaque pens aren't always opaque!
 							}
@@ -851,7 +849,7 @@ public class megasys1
 					layers_order[offset] = ( (layers_order[offset] << 4) | top ) & 0xfffff;
 					enable_mask &= ~top_mask;
 	
-					if ((result & 1) != 0)
+					if (result & 1)
 					{
 						logerror("WARNING, pri $%X split %d - layer %d's opaque pens not totally opaque\n",pri_code,offset,top);
 	
@@ -952,12 +950,11 @@ public class megasys1
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_megasys1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,flag,pri,primask;
 		int active_layers;
 	
-		if (hardware_type_z != 0)
+		if (hardware_type_z)
 		{
 			/* no layer 2 and fixed layers order? */
 			active_layers = 0x000b;
@@ -1029,7 +1026,7 @@ public class megasys1
 						fillbitmap(bitmap,Machine.pens[0],cliprect);
 					}
 	
-					if ((megasys1_sprite_flag & 0x100) != 0)	/* sprites are split */
+					if (megasys1_sprite_flag & 0x100)	/* sprites are split */
 					{
 						/* following tilemaps will obscure this sprites layer */
 						primask |= 1 << (layer-3);
@@ -1042,7 +1039,7 @@ public class megasys1
 			}
 		}
 	
-		if ((active_layers & 0x08) != 0)
+		if (active_layers & 0x08)
 			draw_sprites(bitmap,cliprect);
 	} };
 }

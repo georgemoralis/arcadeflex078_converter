@@ -42,7 +42,7 @@ Note:	if MAME_DEBUG is defined, pressing:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -126,8 +126,7 @@ public class kaneko16
 	KANEKO16_LAYER(2)
 	KANEKO16_LAYER(3)
 	
-	public static VideoStartHandlerPtr video_start_kaneko16_sprites  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kaneko16_sprites  = new VideoStartHandlerPtr() { public int handler(){
 		/* 0x400 sprites max */
 		spritelist.first_sprite = (struct tempsprite *)auto_malloc(0x400 * sizeof(spritelist.first_sprite[0]));
 	
@@ -137,8 +136,7 @@ public class kaneko16
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_kaneko16_1xVIEW2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kaneko16_1xVIEW2  = new VideoStartHandlerPtr() { public int handler(){
 		if (	video_start_kaneko16_sprites()	)
 			return 1;
 	
@@ -187,8 +185,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_kaneko16_2xVIEW2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kaneko16_2xVIEW2  = new VideoStartHandlerPtr() { public int handler(){
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
 	
@@ -232,8 +229,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sandscrp_1xVIEW2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sandscrp_1xVIEW2  = new VideoStartHandlerPtr() { public int handler(){
 		if (	video_start_kaneko16_1xVIEW2()	)
 			return 1;
 	
@@ -245,8 +241,7 @@ public class kaneko16
 	
 	/* Berlwall has an additional hi-color background */
 	
-	public static PaletteInitHandlerPtr palette_init_berlwall  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_berlwall  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* first 2048 colors are dynamic */
@@ -268,8 +263,7 @@ public class kaneko16
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_berlwall  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_berlwall  = new VideoStartHandlerPtr() { public int handler(){
 		int sx, x,y;
 		unsigned char *RAM	=	memory_region(REGION_GFX3);
 	
@@ -309,7 +303,7 @@ public class kaneko16
 				if ((r & 0x10) && (b & 0x10))
 					g = (g - 1) & 0x1f;		/* decrease with wraparound */
 	
-				plot_pixel.handler( kaneko16_bg15_bitmap,
+				plot_pixel( kaneko16_bg15_bitmap,
 							sx * 256 + x, y,
 							Machine.pens[2048 + ((g << 10) | (r << 5) | b)] );
 		  }
@@ -400,38 +394,38 @@ public class kaneko16
 		if (offs >= (spriteram_size/2))	return -1;
 	
 		attr			=		spriteram16[offs + 0];
-		s.code			=		spriteram16[offs + 1];
-		s.x			=		spriteram16[offs + 2];
-		s.y			=		spriteram16[offs + 3];
+		s->code			=		spriteram16[offs + 1];
+		s->x			=		spriteram16[offs + 2];
+		s->y			=		spriteram16[offs + 3];
 	
 		if (kaneko16_sprite_type == 1)
 		{
-		s.color		=		(attr & 0x003f);
-		s.priority		=		(attr & 0x00c0) >> 6;
-		s.flipy		=		(attr & 0x0100);
-		s.flipx		=		(attr & 0x0200);
-		s.code			+=		(s.y & 1) << 16;	// bloodwar
+		s->color		=		(attr & 0x003f);
+		s->priority		=		(attr & 0x00c0) >> 6;
+		s->flipy		=		(attr & 0x0100);
+		s->flipx		=		(attr & 0x0200);
+		s->code			+=		(s->y & 1) << 16;	// bloodwar
 		}
 		else
 		{
-		s.flipy		=		(attr & 0x0001);
-		s.flipx		=		(attr & 0x0002);
-		s.color		=		(attr & 0x00fc) >> 2;
-		s.priority		=		(attr & 0x0300) >> 8;
+		s->flipy		=		(attr & 0x0001);
+		s->flipx		=		(attr & 0x0002);
+		s->color		=		(attr & 0x00fc) >> 2;
+		s->priority		=		(attr & 0x0300) >> 8;
 		}
 		xoffs			=		(attr & 0x1800) >> 11;
-		s.yoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 1];
-		s.xoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 0];
+		s->yoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 1];
+		s->xoffs		=		kaneko16_sprites_regs[0x10/2 + xoffs*2 + 0];
 	
-	if (kaneko16_sprite_flipy != 0)
+	if (kaneko16_sprite_flipy)
 	{
-		s.yoffs		-=		kaneko16_sprites_regs[0x2/2];
-		s.yoffs		-=		Machine.visible_area.min_y<<6;
+		s->yoffs		-=		kaneko16_sprites_regs[0x2/2];
+		s->yoffs		-=		Machine->visible_area.min_y<<6;
 	}
 	else
 	{
-		s.yoffs		-=		kaneko16_sprites_regs[0x2/2];
-		s.yoffs		+=		Machine.visible_area.min_y<<6;
+		s->yoffs		-=		kaneko16_sprites_regs[0x2/2];
+		s->yoffs		+=		Machine->visible_area.min_y<<6;
 	}
 	
 		return 					( (attr & 0x2000) ? USE_LATCHED_XY    : 0 ) |
@@ -449,23 +443,23 @@ public class kaneko16
 		if (offs >= (spriteram_size/2))	return -1;
 	
 		attr			=		(spriteram16[offs + 0x6/2] & 0xff);
-		s.x			=		(spriteram16[offs + 0x8/2] & 0xff);
-		s.y			=		(spriteram16[offs + 0xa/2] & 0xff);
-		s.code			=		(spriteram16[offs + 0xc/2] & 0xff) +
+		s->x			=		(spriteram16[offs + 0x8/2] & 0xff);
+		s->y			=		(spriteram16[offs + 0xa/2] & 0xff);
+		s->code			=		(spriteram16[offs + 0xc/2] & 0xff) +
 								(spriteram16[offs + 0xe/2] & 0xff) * 256;
 	
-		s.flipy		=		s.code & 0x4000;
-		s.flipx		=		s.code & 0x8000;
+		s->flipy		=		s->code & 0x4000;
+		s->flipx		=		s->code & 0x8000;
 	
-		s.priority		=		3;	// ?
-		s.xoffs		=		0;	// ?
-		s.yoffs		=		0;	// ?
+		s->priority		=		3;	// ?
+		s->xoffs		=		0;	// ?
+		s->yoffs		=		0;	// ?
 	
-		s.x			|=		(attr & 0x01) ? 0xff00 : 0;
-		s.y			|=		(attr & 0x02) ? 0xff00 : 0;
-		s.x			<<=		6;
-		s.y			<<=		6;
-		s.color		=		(attr & 0xf0) >> 4;
+		s->x			|=		(attr & 0x01) ? 0xff00 : 0;
+		s->y			|=		(attr & 0x02) ? 0xff00 : 0;
+		s->x			<<=		6;
+		s->y			<<=		6;
+		s->color		=		(attr & 0xf0) >> 4;
 	
 		return					(attr & 0x04) ? USE_LATCHED_XY : 0;
 	}
@@ -483,7 +477,7 @@ public class kaneko16
 		   in a temp buffer, then draw the buffer's contents from last
 		   to first. */
 	
-		int max	=	(Machine.drv.screen_width > 0x100) ? (0x200<<6) : (0x100<<6);
+		int max	=	(Machine->drv->screen_width > 0x100) ? (0x200<<6) : (0x100<<6);
 	
 		int i = 0;
 		struct tempsprite *s = spritelist.first_sprite;
@@ -515,52 +509,52 @@ public class kaneko16
 			if (flags == -1)	// End of Sprites
 				break;
 	
-			if ((flags & USE_LATCHED_CODE) != 0)
-				s.code = ++code;	// Use the latched code + 1 ..
+			if (flags & USE_LATCHED_CODE)
+				s->code = ++code;	// Use the latched code + 1 ..
 			else
-				code = s.code;		// .. or latch this value
+				code = s->code;		// .. or latch this value
 	
-			if ((flags & USE_LATCHED_COLOR) != 0)
+			if (flags & USE_LATCHED_COLOR)
 			{
-				s.color		=	color;
-				s.priority		=	priority;
-				s.xoffs		=	xoffs;
-				s.yoffs		=	yoffs;
-				s.flipx		=	flipx;
-				s.flipy		=	flipy;
+				s->color		=	color;
+				s->priority		=	priority;
+				s->xoffs		=	xoffs;
+				s->yoffs		=	yoffs;
+				s->flipx		=	flipx;
+				s->flipy		=	flipy;
 			}
 			else
 			{
-				color		=	s.color;
-				priority	=	s.priority;
-				xoffs		=	s.xoffs;
-				yoffs		=	s.yoffs;
-				flipx		=	s.flipx;
-				flipy		=	s.flipy;
+				color		=	s->color;
+				priority	=	s->priority;
+				xoffs		=	s->xoffs;
+				yoffs		=	s->yoffs;
+				flipx		=	s->flipx;
+				flipy		=	s->flipy;
 			}
 	
-			if ((flags & USE_LATCHED_XY) != 0)
+			if (flags & USE_LATCHED_XY)
 			{
-				s.x += x;
-				s.y += y;
+				s->x += x;
+				s->y += y;
 			}
 			// Always latch the latest result
-			x	=	s.x;
-			y	=	s.y;
+			x	=	s->x;
+			y	=	s->y;
 	
 			/* We can now buffer this sprite */
 	
-			s.x	=	s.xoffs + s.x;
-			s.y	=	s.yoffs + s.y;
+			s->x	=	s->xoffs + s->x;
+			s->y	=	s->yoffs + s->y;
 	
-			s.x	+=	kaneko16_sprite_xoffs;
-			s.y	+=	kaneko16_sprite_yoffs;
+			s->x	+=	kaneko16_sprite_xoffs;
+			s->y	+=	kaneko16_sprite_yoffs;
 	
-			if (kaneko16_sprite_flipx != 0)	{ s.x = max - s.x - (16<<6);	s.flipx = !s.flipx;	}
-			if (kaneko16_sprite_flipy != 0)	{ s.y = max - s.y - (16<<6);	s.flipy = !s.flipy;	}
+			if (kaneko16_sprite_flipx)	{ s->x = max - s->x - (16<<6);	s->flipx = !s->flipx;	}
+			if (kaneko16_sprite_flipy)	{ s->y = max - s->y - (16<<6);	s->flipy = !s->flipy;	}
 	
-			s.x		=		( (s.x & 0x7fc0) - (s.x & 0x8000) ) / 0x40;
-			s.y		=		( (s.y & 0x7fc0) - (s.y & 0x8000) ) / 0x40;
+			s->x		=		( (s->x & 0x7fc0) - (s->x & 0x8000) ) / 0x40;
+			s->y		=		( (s->y & 0x7fc0) - (s->y & 0x8000) ) / 0x40;
 	
 			i++;
 			s++;
@@ -572,18 +566,18 @@ public class kaneko16
 	
 		for (s--; s >= spritelist.first_sprite; s--)
 		{
-			int curr_pri = s.priority;
+			int curr_pri = s->priority;
 	
 			UINT32 primask = kaneko16_priority.sprite[curr_pri];
 	
 			/* You can choose which sprite priorities get displayed (for debug) */
 			if ( ((1 << curr_pri) & pri) == 0 )	continue;
 	
-			pdrawgfx(	bitmap,Machine.gfx[0],
-						s.code,
-						s.color,
-						s.flipx, s.flipy,
-						s.x, s.y,
+			pdrawgfx(	bitmap,Machine->gfx[0],
+						s->code,
+						s->color,
+						s->flipx, s->flipy,
+						s->x, s->y,
 						cliprect,TRANSPARENCY_PEN,0,
 						primask );
 	#ifdef MAME_DEBUG
@@ -591,11 +585,11 @@ public class kaneko16
 	if (keyboard_pressed(KEYCODE_Z))
 	{	/* Display some info on each sprite */
 		struct DisplayText dt[2];	char buf[10];
-		sprintf(buf, "%X",s.priority);
+		sprintf(buf, "%X",s->priority);
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
-		dt[0].x = s.x;		dt[0].y = s.y;
+		dt[0].x = s->x;		dt[0].y = s->y;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine.scrbitmap,dt);		}
+		displaytext(Machine->scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -685,7 +679,7 @@ public class kaneko16
 		switch (offset)
 		{
 			case 0:
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					kaneko16_sprite_flipx = new_data & 2;
 					kaneko16_sprite_flipy = new_data & 1;
@@ -794,8 +788,7 @@ public class kaneko16
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_kaneko16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kaneko16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_flip_0, layers_flip_1 = 0;
 		int layers_ctrl = -1;
 		int i,flag;
@@ -804,7 +797,7 @@ public class kaneko16
 		data16_t layer1_scrollx, layer1_scrolly;
 	
 		layers_flip_0 = kaneko16_layers_0_regs[ 4 ];
-		if (kaneko16_tmap_2 != 0)
+		if (kaneko16_tmap_2)
 		{
 		layers_flip_1 = kaneko16_layers_1_regs[ 4 ];
 		}
@@ -812,7 +805,7 @@ public class kaneko16
 		/* Enable layers */
 		tilemap_set_enable(kaneko16_tmap_0, ~layers_flip_0 & 0x1000);
 		tilemap_set_enable(kaneko16_tmap_1, ~layers_flip_0 & 0x0010);
-		if (kaneko16_tmap_2 != 0)
+		if (kaneko16_tmap_2)
 		{
 		tilemap_set_enable(kaneko16_tmap_2, ~layers_flip_1 & 0x1000);
 		tilemap_set_enable(kaneko16_tmap_3, ~layers_flip_1 & 0x0010);
@@ -823,7 +816,7 @@ public class kaneko16
 									 		((layers_flip_0 & 0x0200) ? TILEMAP_FLIPX : 0) );
 		tilemap_set_flip(kaneko16_tmap_1,	((layers_flip_0 & 0x0100) ? TILEMAP_FLIPY : 0) |
 									 		((layers_flip_0 & 0x0200) ? TILEMAP_FLIPX : 0) );
-		if (kaneko16_tmap_2 != 0)
+		if (kaneko16_tmap_2)
 		{
 		tilemap_set_flip(kaneko16_tmap_2,	((layers_flip_1 & 0x0100) ? TILEMAP_FLIPY : 0) |
 									 		((layers_flip_1 & 0x0200) ? TILEMAP_FLIPX : 0) );
@@ -849,7 +842,7 @@ public class kaneko16
 			tilemap_set_scrollx(kaneko16_tmap_1,i,(layer1_scrollx + scroll) >> 6 );
 		}
 	
-		if (kaneko16_tmap_2 != 0)
+		if (kaneko16_tmap_2)
 		{
 		layer0_scrollx		=	kaneko16_layers_1_regs[ 2 ];
 		layer0_scrolly		=	kaneko16_layers_1_regs[ 3 ] >> 6;
@@ -909,14 +902,14 @@ public class kaneko16
 	
 		/* Draw the high colour bg layer first, if any */
 	
-		if (kaneko16_bg15_bitmap != 0)
+		if (kaneko16_bg15_bitmap)
 		{
 			int select	=	kaneko16_bg15_select[ 0 ];
 	//		int reg		=	kaneko16_bg15_reg[ 0 ];
 			int flip	=	select & 0x20;
 			int sx, sy;
 	
-			if (flip != 0)	select ^= 0x1f;
+			if (flip)	select ^= 0x1f;
 	
 			sx		=	(select & 0x1f) * 256;
 			sy		=	0;
@@ -938,7 +931,7 @@ public class kaneko16
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (kaneko16_tmap_2 != 0)
+		if (kaneko16_tmap_2)
 		{
 		/*
 			The only working game using a 2nd VIEW2 chip is mgcrystl, where

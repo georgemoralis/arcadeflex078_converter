@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -36,8 +36,7 @@ public class ajax
 		(*)	The Coin Counters are handled by the Konami Custom 051550
 	*/
 	
-	public static WriteHandlerPtr ajax_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ajax_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress = 0;
 	
@@ -80,8 +79,7 @@ public class ajax
 			LS393		C20			Dual -ve edge trigger 4-bit Binary Ripple Counter with Resets
 	*/
 	
-	public static WriteHandlerPtr ajax_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ajax_lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1,data & 0x02);	/* super weapon lamp */
 		set_led_status(2,data & 0x04);	/* power up lamps */
 		set_led_status(5,data & 0x04);	/* power up lamps */
@@ -109,8 +107,7 @@ public class ajax
 		0x01c0	(r) MIO2			Enables DIPSW #3 reading
 	*/
 	
-	public static ReadHandlerPtr ajax_ls138_f10_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ajax_ls138_f10_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch ((offset & 0x01c0) >> 6){
@@ -121,7 +118,7 @@ public class ajax
 				data = readinputport(5);
 				break;
 			case 0x06:	/* 1P inputs + DIPSW #1 & #2 */
-				if ((offset & 0x02) != 0)
+				if (offset & 0x02)
 					data = readinputport(offset & 0x01);
 				else
 					data = readinputport(3 + (offset & 0x01));
@@ -137,14 +134,13 @@ public class ajax
 		return data;
 	} };
 	
-	public static WriteHandlerPtr ajax_ls138_f10_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ajax_ls138_f10_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch ((offset & 0x01c0) >> 6){
 			case 0x00:	/* NSFIRQ + AFR */
-				if (offset != 0)
+				if (offset)
 					watchdog_reset_w(0, data);
 				else{
-					if (firq_enable != 0)	/* Cause interrupt on slave CPU */
+					if (firq_enable)	/* Cause interrupt on slave CPU */
 						cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
 				}
 				break;
@@ -167,13 +163,11 @@ public class ajax
 	} };
 	
 	/* Shared RAM between the 052001 and the 6809 (6264SL at I8) */
-	public static ReadHandlerPtr ajax_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ajax_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ajax_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr ajax_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ajax_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ajax_sharedram[offset] = data;
 	} };
 	
@@ -192,8 +186,7 @@ public class ajax
 		0	SRB0	/
 	*/
 	
-	public static WriteHandlerPtr ajax_bankswitch_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ajax_bankswitch_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 		int bankaddress;
 	
@@ -212,14 +205,12 @@ public class ajax
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_ajax  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ajax  = new MachineInitHandlerPtr() { public void handler(){
 		firq_enable = 1;
 	} };
 	
-	public static InterruptHandlerPtr ajax_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K051960_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr ajax_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K051960_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 }

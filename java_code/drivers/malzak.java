@@ -15,17 +15,17 @@
 	0x1700 - 0x17ff | Work RAM - contains hiscore table, coin count
 	0x1800 - 0x1fff | SAA 5050 video RAM
 
-  TODO - I/O ports (0x00 for sprite.background collisions)
+  TODO - I/O ports (0x00 for sprite->background collisions)
          sound (2x SN76477)
 		 playfield graphics may be banked, tiles above 0x1f are incorrect
-		 sprite.sprite collision aren't quite perfect
+		 sprite->sprite collision aren't quite perfect
 		   (you can often fly through flying missiles)
 
 */
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,49 +39,40 @@ public class malzak
 	
 	// in vidhrdw/malzak.c
 	
-	public static ReadHandlerPtr malzak_s2636_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr malzak_s2636_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return s2636_1_ram[offset];
 	} };
 	
-	public static ReadHandlerPtr malzak_s2636_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr malzak_s2636_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return s2636_2_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr malzak_s2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr malzak_s2636_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		s2636_w(s2636_1_ram,offset,data,s2636_1_dirty);
 	} };
 	
-	public static WriteHandlerPtr malzak_s2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr malzak_s2636_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		s2636_w(s2636_2_ram,offset,data,s2636_2_dirty);
 	} };
 	
 	
-	public static ReadHandlerPtr saa5050_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr saa5050_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return saa5050_vidram[offset];
 	} };
 	
-	public static WriteHandlerPtr saa5050_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr saa5050_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		saa5050_vidram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr fake_VRLE_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_VRLE_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (s2636_1_ram[0xcb] & 0x3f) + (cpu_getvblank()*0x40);
 	} };
 	
-	public static ReadHandlerPtr ram_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ram_mirror_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_readmem16(0x1000+offset);
 	} };
 	
-	public static WriteHandlerPtr ram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_writemem16(0x1000+offset,data);
 	} };
 	
@@ -129,33 +120,28 @@ public class malzak
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr s2650_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr s2650_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		usrintf_showmessage("S2650 data port read");
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr port40_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr port40_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	usrintf_showmessage("S2650 [0x%04x]: port 0x40 write: 0x%02x",cpunum_get_pc_byte(0),data);
-	//	if ((data & 0x01) != 0)
+	//	if(data & 0x01)
 	//		irqenable = 1;
 	//	else
 	//		irqenable = 0;
 	} };
 	
-	public static WriteHandlerPtr port60_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr port60_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		temp_x = data;
 	} };
 	
-	public static WriteHandlerPtr portc0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr portc0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		temp_y = data;
 	} };
 	
-	public static ReadHandlerPtr collision_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr collision_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// High 4 bits seem to refer to the row affected.
 		static int counter;
 	
@@ -182,7 +168,7 @@ public class malzak
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_malzak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_malzak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( malzak )
 	
 		/* Malzak has a stick (not sure if it's 4-way or 8-way),
 		   and only one button (firing and bomb dropping on the same button) */
@@ -335,24 +321,21 @@ public class malzak
 	
 	static int val = -1;
 	
-	public static InterruptHandlerPtr malzak_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr malzak_interrupt = new InterruptHandlerPtr() {public void handler(){
 	//	if(irqenable != 0)
 	//		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0x0300);
 	} };
 	
-	static public static PaletteInitHandlerPtr palette_init_malzak  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_malzak  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_colors(0, saa5050_palette, sizeof(saa5050_palette) / 3);
 		memcpy(colortable, saa5050_colortable, sizeof (saa5050_colortable));
 	} };
 	
 	
-	MACHINE_INIT(malzak)
-	{
+	public static MachineInitHandlerPtr machine_init_malzak  = new MachineInitHandlerPtr() { public void handler(){
 		val++;
 		printf("val = %X\n",val);
-	}
+	} };
 	
 	static struct SN76477interface sn76477_intf =
 	{  /* probably not correct */
@@ -377,8 +360,7 @@ public class malzak
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_malzak = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( malzak )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 3800000/4/3)
@@ -406,9 +388,7 @@ public class malzak
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477,sn76477_intf);
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_malzak = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x8000, REGION_CPU1, 0 )
@@ -429,5 +409,5 @@ public class malzak
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_malzak	   = new GameDriver("19??"	,"malzak"	,"malzak.java"	,rom_malzak,null	,machine_driver_malzak	,input_ports_malzak	,null	,ROT0	,	"Kitronix", "Malzak", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 19??, malzak,   0,       malzak, malzak, 0,        ROT0, "Kitronix", "Malzak", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

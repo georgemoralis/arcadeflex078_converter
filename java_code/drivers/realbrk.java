@@ -38,7 +38,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -51,12 +51,12 @@ public class realbrk
 	static READ16_HANDLER( realbrk_dsw_r )
 	{
 		data16_t sel = ~realbrk_dsw_select[0];
-		if ((sel & 0x01) != 0)	return	(readinputport(2) & 0x00ff) << 8;		// DSW1 low bits
-		if ((sel & 0x02) != 0)	return	(readinputport(3) & 0x00ff) << 8;		// DSW2 low bits
-		if ((sel & 0x04) != 0)	return	(readinputport(4) & 0x00ff) << 8;		// DSW3 low bits
-		if ((sel & 0x08) != 0)	return	(readinputport(5) & 0x00ff) << 8;		// DSW4 low bits
+		if (sel & 0x01)	return	(readinputport(2) & 0x00ff) << 8;		// DSW1 low bits
+		if (sel & 0x02)	return	(readinputport(3) & 0x00ff) << 8;		// DSW2 low bits
+		if (sel & 0x04)	return	(readinputport(4) & 0x00ff) << 8;		// DSW3 low bits
+		if (sel & 0x08)	return	(readinputport(5) & 0x00ff) << 8;		// DSW4 low bits
 	
-		if ((sel & 0x10) != 0)	return	((readinputport(2) & 0x0300) << 0) |	// DSWs high 2 bits
+		if (sel & 0x10)	return	((readinputport(2) & 0x0300) << 0) |	// DSWs high 2 bits
 								((readinputport(3) & 0x0300) << 2) |
 								((readinputport(4) & 0x0300) << 4) |
 								((readinputport(5) & 0x0300) << 6) ;
@@ -120,7 +120,7 @@ public class realbrk
 							Billiard Academy Real Break
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_realbrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_realbrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( realbrk )
 		PORT_START(); 	// IN0 - $c00000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER2 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER2 );
@@ -286,8 +286,7 @@ public class realbrk
 		{ YM2413_VOL(50,MIXER_PAN_CENTER,50,MIXER_PAN_CENTER) }
 	};
 	
-	public static InterruptHandlerPtr realbrk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr realbrk_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -297,8 +296,7 @@ public class realbrk
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_realbrk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( realbrk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,32000000 / 2)			/* !! TMP68301 !! */
@@ -324,9 +322,7 @@ public class realbrk
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B,	realbrk_ymz280b_intf)
 		MDRV_SOUND_ADD(YM2413,	realbrk_ym2413_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -408,6 +404,6 @@ public class realbrk
 		ROM_LOAD( "52303.2e", 0x000000, 0x400000, CRC(d3005b1e) SHA1(3afd10cdbc3aa7605083a9fcf3c4b8276937c2c4) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_realbrk	   = new GameDriver("1998"	,"realbrk"	,"realbrk.java"	,rom_realbrk,null	,machine_driver_realbrk	,input_ports_realbrk	,null	,ROT0	,	"Nakanihon", "Billiard Academy Real Break (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, realbrk, 0, realbrk, realbrk, 0, ROT0, "Nakanihon", "Billiard Academy Real Break (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
 }

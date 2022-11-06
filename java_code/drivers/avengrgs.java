@@ -58,14 +58,13 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class avengrgs
 {
 	
-	VIDEO_STOP(avengrgs);
 	
 	static data32_t *avengrgs_ram;
 	
@@ -91,7 +90,7 @@ public class avengrgs
 	{
 		if (mem_mask==0xffff00ff) {
 			data8_t ebyte=(data>>8)&0xff;
-			if ((ebyte & 0x80) != 0) {
+			if (ebyte&0x80) {
 				EEPROM_set_clock_line((ebyte & 0x2) ? ASSERT_LINE : CLEAR_LINE);
 				EEPROM_write_bit(ebyte & 0x1);
 				EEPROM_set_cs_line((ebyte & 0x4) ? CLEAR_LINE : ASSERT_LINE);
@@ -132,7 +131,7 @@ public class avengrgs
 	static WRITE32_HANDLER( avengrs_sound_w )
 	{
 		if (mem_mask==0x00ffffff) {
-			if (offset != 0)
+			if (offset)
 				YMZ280B_data_0_w(0,data>>24);
 			else
 				YMZ280B_register_0_w(0,data>>24);
@@ -180,7 +179,7 @@ public class avengrgs
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_avengrgs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_avengrgs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( avengrgs )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -268,13 +267,11 @@ public class avengrgs
 		{ sound_irq_gen }
 	};
 	
-	static INTERRUPT_GEN(avengrgs_interrupt)
-	{
+	public static InterruptHandlerPtr avengrgs_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 1, HOLD_LINE);
-	}
+	} };
 	
-	public static MachineHandlerPtr machine_driver_avengrgs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( avengrgs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(SH2,42000000/2) /* 42 MHz clock */
@@ -300,9 +297,7 @@ public class avengrgs
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -349,12 +344,11 @@ public class avengrgs
 		return a;
 	}
 	
-	public static DriverInitHandlerPtr init_avengrgs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_avengrgs  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x01089a0, 0x01089a3, avengrgs_speedup_r );
 	} };
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_avengrgs	   = new GameDriver("1995"	,"avengrgs"	,"avengrgs.java"	,rom_avengrgs,null	,machine_driver_avengrgs	,input_ports_avengrgs	,init_avengrgs	,ROT0	,	"Data East Corporation", "Avengers In Galactic Storm (Japan)", GAME_NOT_WORKING )
+	GAMEX( 1995, avengrgs, 0, avengrgs, avengrgs, avengrgs, ROT0, "Data East Corporation", "Avengers In Galactic Storm (Japan)", GAME_NOT_WORKING )
 }

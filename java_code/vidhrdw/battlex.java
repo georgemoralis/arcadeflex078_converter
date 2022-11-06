@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class battlex
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_battlex  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_battlex  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,col;
 	
 		for (col = 0;col < 8;col++)
@@ -27,7 +26,7 @@ public class battlex
 	
 	#if 0
 				/* from Tim's shots, bit 3 seems to have no effect (see e.g. Laser Ship on title screen) */
-				if ((i & 8) != 0)
+				if (i & 8)
 				{
 					r /= 2;
 					g /= 2;
@@ -40,8 +39,7 @@ public class battlex
 		}
 	} };
 	
-	public static WriteHandlerPtr battlex_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlex_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int g = ((data & 1) >> 0) * 0xff;
 		int b = ((data & 2) >> 1) * 0xff;
 		int r = ((data & 4) >> 2) * 0xff;
@@ -49,18 +47,15 @@ public class battlex
 		palette_set_color(16*8 + offset,r,g,b);
 	} };
 	
-	public static WriteHandlerPtr battlex_scroll_x_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlex_scroll_x_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		battlex_scroll_lsb = data;
 	} };
 	
-	public static WriteHandlerPtr battlex_scroll_x_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlex_scroll_x_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		battlex_scroll_msb = data;
 	} };
 	
-	public static WriteHandlerPtr battlex_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlex_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -68,8 +63,7 @@ public class battlex
 		}
 	} };
 	
-	public static WriteHandlerPtr battlex_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlex_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 4 is used, but for what? */
 	
 		/* bit 7 is flip screen */
@@ -89,12 +83,11 @@ public class battlex
 		SET_TILE_INFO(0,tile,color,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_battlex  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battlex  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -102,7 +95,7 @@ public class battlex
 	
 	static void battlex_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		UINT8 *source = spriteram;
 		UINT8 *finish = spriteram + 0x200;
 	
@@ -115,7 +108,7 @@ public class battlex
 			int flipy = source[1] & 0x80;
 			int flipx = source[1] & 0x40;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -130,10 +123,9 @@ public class battlex
 	
 	}
 	
-	VIDEO_UPDATE(battlex)
-	{
+	public static VideoUpdateHandlerPtr video_update_battlex  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, battlex_scroll_lsb | (battlex_scroll_msb << 8));
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		battlex_drawsprites(bitmap, Machine.visible_area);
-	}
+	} };
 }

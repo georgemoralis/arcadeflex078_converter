@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -49,8 +49,7 @@ public class xevious
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_xevious  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_xevious  = new MachineInitHandlerPtr() { public void handler(){
 		rom2a = memory_region(REGION_GFX4);
 		rom2b = memory_region(REGION_GFX4)+0x1000;
 		rom2c = memory_region(REGION_GFX4)+0x3000;
@@ -61,20 +60,18 @@ public class xevious
 	} };
 	
 	/* emulation for schematic 9B */
-	public static WriteHandlerPtr xevious_bs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_bs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xevious_bs[offset & 0x01] = data;
 	} };
 	
-	public static ReadHandlerPtr xevious_bb_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xevious_bb_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int adr_2b,adr_2c;
 		int dat1,dat2;
 	
 	
 		/* get BS to 12 bit data from 2A,2B */
 		adr_2b = ((xevious_bs[1]&0x7e)<<6)|((xevious_bs[0]&0xfe)>>1);
-		if ((adr_2b & 1) != 0){
+		if( adr_2b & 1 ){
 			/* high bits select */
 			dat1 = ((rom2a[adr_2b>>1]&0xf0)<<4)|rom2b[adr_2b];
 		}else{
@@ -82,13 +79,13 @@ public class xevious
 		    dat1 = ((rom2a[adr_2b>>1]&0x0f)<<8)|rom2b[adr_2b];
 		}
 		adr_2c = (dat1 & 0x1ff)<<2;
-		if ((offset & 0x01) != 0)
+		if( offset & 0x01 )
 			adr_2c += (1<<11);	/* signal 4H to A11 */
 		if( (xevious_bs[0]&1) ^ ((dat1>>10)&1) )
 			adr_2c |= 1;
 		if( (xevious_bs[1]&1) ^ ((dat1>>9)&1) )
 			adr_2c |= 2;
-		if ((offset & 0x01) != 0){
+		if( offset & 0x01 ){
 			/* return BB1 */
 			dat2 = rom2c[adr_2c];
 		}else{
@@ -103,20 +100,17 @@ public class xevious
 		return dat2;
 	} };
 	
-	public static ReadHandlerPtr xevious_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xevious_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return xevious_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr xevious_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xevious_sharedram[offset] = data;
 	} };
 	
 	
 	
-	public static ReadHandlerPtr xevious_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xevious_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bit0,bit1;
 	
 		bit0 = (input_port_0_r.handler(0) >> offset) & 1;
@@ -138,8 +132,7 @@ public class xevious
 	static unsigned char customio[16];
 	
 	
-	public static WriteHandlerPtr xevious_customio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_customio_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		customio[offset] = data;
 	
 	logerror("%04x: custom IO offset %02x data %02x\n",activecpu_get_pc(),offset,data);
@@ -229,8 +222,7 @@ public class xevious
 	} };
 	
 	
-	public static ReadHandlerPtr xevious_customio_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xevious_customio_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (customio_command != 0x71)
 			logerror("%04x: custom IO read offset %02x\n",activecpu_get_pc(),offset);
 	
@@ -239,7 +231,7 @@ public class xevious
 			case 0x01:	/* read input */
 				if (offset == 0)
 				{
-					if (mode != 0)	/* switch mode */
+					if (mode)	/* switch mode */
 					{
 						/* bit 7 is the service switch */
 						return readinputport(4);
@@ -348,8 +340,7 @@ public class xevious
 	} };
 	
 	
-	public static ReadHandlerPtr xevious_customio_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xevious_customio_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return customio_command;
 	} };
 	
@@ -359,8 +350,7 @@ public class xevious
 	}
 	
 	
-	public static WriteHandlerPtr xevious_customio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_customio_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != 0x10 && data != 0x71)
 			logerror("%04x: custom IO command %02x\n",activecpu_get_pc(),data);
 	
@@ -378,9 +368,8 @@ public class xevious
 	
 	
 	
-	public static WriteHandlerPtr xevious_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr xevious_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 		{
 			cpu_set_reset_line(1,CLEAR_LINE);
 			cpu_set_reset_line(2,CLEAR_LINE);
@@ -394,46 +383,40 @@ public class xevious
 	
 	
 	
-	public static WriteHandlerPtr xevious_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_interrupt_enable_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_1 = (data&1);
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr xevious_interrupt_1 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_1 != 0)
+	public static InterruptHandlerPtr xevious_interrupt_1 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr xevious_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_interrupt_enable_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_2 = data & 1;
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr xevious_interrupt_2 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_2 != 0)
+	public static InterruptHandlerPtr xevious_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_2)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr xevious_interrupt_enable_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_interrupt_enable_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_3 = !(data & 1);
 	} };
 	
 	
 	
-	public static InterruptHandlerPtr xevious_interrupt_3 = new InterruptHandlerPtr() {public void handler()
-	{
-		if (interrupt_enable_3 != 0)
+	public static InterruptHandlerPtr xevious_interrupt_3 = new InterruptHandlerPtr() {public void handler(){
+		if (interrupt_enable_3)
 			cpu_set_irq_line(2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
@@ -455,8 +438,7 @@ public class xevious
 	void battles_nmi_generate(int param);
 	
 	
-	public static MachineInitHandlerPtr machine_init_battles  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_battles  = new MachineInitHandlerPtr() { public void handler(){
 		rom2a = memory_region(REGION_GFX4);
 		rom2b = memory_region(REGION_GFX4)+0x1000;
 		rom2c = memory_region(REGION_GFX4)+0x3000;
@@ -477,7 +459,7 @@ public class xevious
 	
 		battles_customio_prev_command = battles_customio_command;
 	
-		if ((battles_customio_command & 0x10) != 0){
+		if( battles_customio_command & 0x10 ){
 			if( battles_customio_command_count == 0 ){
 				cpu_set_irq_line(3, IRQ_LINE_NMI, PULSE_LINE);
 			}else{
@@ -492,26 +474,22 @@ public class xevious
 	}
 	
 	
-	public static ReadHandlerPtr battles_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return battles_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr battles_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		battles_sharedram[offset] = data;
 	} };
 	
 	
 	
-	public static ReadHandlerPtr battles_customio0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_customio0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("CPU0 %04x: custom I/O Read = %02x\n",activecpu_get_pc(),battles_customio_command);
 		return battles_customio_command;
 	} };
 	
-	public static ReadHandlerPtr battles_customio3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_customio3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int	return_data;
 	
 		if( activecpu_get_pc() == 0xAE ){
@@ -530,8 +508,7 @@ public class xevious
 	} };
 	
 	
-	public static WriteHandlerPtr battles_customio0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_customio0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU0 %04x: custom I/O Write = %02x\n",activecpu_get_pc(),data);
 	
 		battles_customio_command = data;
@@ -547,8 +524,7 @@ public class xevious
 	
 	} };
 	
-	public static WriteHandlerPtr battles_customio3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_customio3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU3 %04x: custom I/O Write = %02x\n",activecpu_get_pc(),data);
 	
 		battles_customio_command = data;
@@ -556,36 +532,31 @@ public class xevious
 	
 	
 	
-	public static ReadHandlerPtr battles_customio_data0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_customio_data0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("CPU0 %04x: custom I/O parameter %02x Read = %02x\n",activecpu_get_pc(),offset,battles_customio_data);
 	
 		return battles_customio_data;
 	} };
 	
-	public static ReadHandlerPtr battles_customio_data3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_customio_data3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("CPU3 %04x: custom I/O parameter %02x Read = %02x\n",activecpu_get_pc(),offset,battles_customio_data);
 		return battles_customio_data;
 	} };
 	
 	
-	public static WriteHandlerPtr battles_customio_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_customio_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU0 %04x: custom I/O parameter %02x Write = %02x\n",activecpu_get_pc(),offset,data);
 		battles_customio_data = data;
 		customio[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr battles_customio_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_customio_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU3 %04x: custom I/O parameter %02x Write = %02x\n",activecpu_get_pc(),offset,data);
 		battles_customio_data = data;
 	} };
 	
 	
-	public static WriteHandlerPtr battles_CPU4_4000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_CPU4_4000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU3 %04x: 40%02x Write = %02x\n",activecpu_get_pc(),offset,data);
 	
 		set_led_status(0,data & 0x02);	// Start 1
@@ -594,8 +565,7 @@ public class xevious
 	} };
 	
 	
-	public static WriteHandlerPtr battles_noise_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battles_noise_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("CPU3 %04x: 50%02x Write = %02x\n",activecpu_get_pc(),offset,data);
 		if( (battles_sound_played == 0) && (data == 0xFF) ){
 			if( customio[0] == 0x40 ){
@@ -609,15 +579,13 @@ public class xevious
 	} };
 	
 	
-	public static ReadHandlerPtr battles_input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battles_input_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("battles_input_port_r %04x: Read offset %02x\n",activecpu_get_pc(),offset);
 		return 0xff;
 	} };
 	
 	
-	public static InterruptHandlerPtr battles_interrupt_4 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr battles_interrupt_4 = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(3, 0, HOLD_LINE);
 	} };
 	

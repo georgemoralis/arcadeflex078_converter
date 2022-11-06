@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class gaplus
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_gaplus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gaplus  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -82,11 +81,11 @@ public class gaplus
 		Starfield information
 		There's 3 sets of stars planes at different speeds.
 	
-		a000 --. (bit 0 = 1) enable starfield.
+		a000 ---> (bit 0 = 1) enable starfield.
 		  		  (bit 0 = 0) disable starfield.
-		a001 --. starfield plane 0 control
-		a002 --. starfield plane 1 control
-		a003 --. starfield plane 2 control
+		a001 ---> starfield plane 0 control
+		a002 ---> starfield plane 1 control
+		a003 ---> starfield plane 2 control
 	***************************************************************************/
 	
 	#define MAX_STARS			250
@@ -112,8 +111,8 @@ public class gaplus
 		int set = 0;
 		int width, height;
 	
-		width = Machine.drv.screen_width;
-		height = Machine.drv.screen_height;
+		width = Machine->drv->screen_width;
+		height = Machine->drv->screen_height;
 	
 		total_stars = 0;
 	
@@ -137,7 +136,7 @@ public class gaplus
 					if ( color && total_stars < MAX_STARS ) {
 						stars[total_stars].x = x;
 						stars[total_stars].y = y;
-						stars[total_stars].col = Machine.pens[color];
+						stars[total_stars].col = Machine->pens[color];
 						stars[total_stars].set = set++;
 	
 						if ( set == 3 )
@@ -154,8 +153,8 @@ public class gaplus
 		int i;
 		int width, height;
 	
-		width = Machine.drv.screen_width;
-		height = Machine.drv.screen_height;
+		width = Machine->drv->screen_width;
+		height = Machine->drv->screen_height;
 	
 		/* check if we're running */
 		if ( ( gaplus_starfield_control[0] & 1 ) == 0 )
@@ -229,8 +228,8 @@ public class gaplus
 		int i;
 		int width, height;
 	
-		width = Machine.drv.screen_width;
-		height = Machine.drv.screen_height;
+		width = Machine->drv->screen_width;
+		height = Machine->drv->screen_height;
 	
 		/* check if we're running */
 		if ( ( gaplus_starfield_control[0] & 1 ) == 0 )
@@ -251,12 +250,12 @@ public class gaplus
 		}
 	}
 	
-	public static WriteHandlerPtr gaplus_starfield_control_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr gaplus_starfield_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		gaplus_starfield_control[offset] = data;
-	} };
+	}
 	
 	
-	public static VideoStartHandlerPtr video_start_gaplus  = new VideoStartHandlerPtr() { public int handler() {
+	public static VideoStartHandlerPtr video_start_gaplus  = new VideoStartHandlerPtr() { public int handler()
 	
 		/* set up spriteram area */
 		spriteram_size[0] = 0x80;
@@ -267,7 +266,7 @@ public class gaplus
 		starfield_init();
 	
 		return video_start_generic.handler();
-	} };
+	}
 	
 	/***************************************************************************
 	
@@ -278,7 +277,7 @@ public class gaplus
 	static void gaplus_draw_sprites(struct mame_bitmap *bitmap){
 		int offs;
 	
-		for (offs = 0; offs < spriteram_size; offs += 2){
+		for (offs = 0; offs < spriteram_size[0]; offs += 2){
 	        if ((spriteram_3.read(offs+1)& 2) == 0){
 				int number = spriteram.read(offs)+4*(spriteram_3.read(offs)& 0x40);
 				int color = spriteram.read(offs+1)& 0x3f;
@@ -290,7 +289,7 @@ public class gaplus
 	
 				if (number >= 128*3) continue;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -337,11 +336,10 @@ public class gaplus
 					}
 				}
 			}
-		}
+		} };
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gaplus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gaplus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		fillbitmap( bitmap, Machine.pens[0], Machine.visible_area );
@@ -385,7 +383,7 @@ public class gaplus
 				sy = my + 2;
 			}
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 27 - sx;
 				sy = 35 - sy;

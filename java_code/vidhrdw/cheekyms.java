@@ -10,7 +10,7 @@ Functions to emulate the video hardware of the machine.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class cheekyms
 	static int char_palette = 0;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_cheekyms  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cheekyms  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,j,bit,r,g,b;
 	
 		for (i = 0; i < 3; i++)
@@ -71,14 +70,12 @@ public class cheekyms
 	} };
 	
 	
-	public static WriteHandlerPtr cheekyms_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cheekyms_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sprites[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr cheekyms_port_40_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cheekyms_port_40_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_dac = -1;
 	
 		/* The lower bits probably trigger sound samples */
@@ -92,8 +89,7 @@ public class cheekyms
 	} };
 	
 	
-	public static WriteHandlerPtr cheekyms_port_80_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cheekyms_port_80_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int new_man_scroll;
 	
 		/* Bits 0-1 Sound enables, not sure which bit is which */
@@ -125,12 +121,11 @@ public class cheekyms
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_cheekyms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cheekyms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer, 1, videoram_size[0]);
 		}
@@ -153,9 +148,9 @@ public class cheekyms
 	
 			code = (~v1 << 1) & 0x1f;
 	
-			if ((v1 & 0x80) != 0)
+			if (v1 & 0x80)
 			{
-				if (flip_screen == 0)
+				if (!flip_screen())
 				{
 					code++;
 				}
@@ -193,7 +188,7 @@ public class cheekyms
 			sx = offs % 32;
 			sy = offs / 32;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				man_area = ((sy >=  5) && (sy <= 25) && (sx >=  8) && (sx <= 12));
 			}
@@ -207,7 +202,7 @@ public class cheekyms
 			{
 				dirtybuffer[offs] = 0;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

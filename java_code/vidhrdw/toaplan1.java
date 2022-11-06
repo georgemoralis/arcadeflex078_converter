@@ -101,11 +101,11 @@ Abnormalities:
  ***** Notes on the horizontal game scroll Y probs (Eg, Zero Wing) *****
 
  Scrolls    PF1-X  PF1-Y    PF2-X  PF2-Y    PF3-X  PF3-Y    PF4-X  PF4-Y
- -----.    #4180  #f880    #1240  #f880    #4380  #f880    #e380  #f880
- -flip.    #1500  #7f00    #e8c0  #7f00    #1300  #7f00    #bb00  #7f00
+ ------>    #4180  #f880    #1240  #f880    #4380  #f880    #e380  #f880
+ -flip->    #1500  #7f00    #e8c0  #7f00    #1300  #7f00    #bb00  #7f00
 
- -----.    #4100  #f880    #1200  #7880    #4300  #f880    #e380  #f880
- -flip.    #1500  #7f00    #e8c0  #8580??  #1300  #7f00    #bb00  #7f00
+ ------>    #4100  #f880    #1200  #7880    #4300  #f880    #e380  #f880
+ -flip->    #1500  #7f00    #e8c0  #8580??  #1300  #7f00    #bb00  #7f00
 									  |
 									  |
 									f880 = 1111 1000 1000 = 1f1 scroll
@@ -126,7 +126,7 @@ Abnormalities:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -359,11 +359,10 @@ public class toaplan1
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_rallybik  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (toaplan1_create_tilemaps() != 0)  return 1;
-		if (toaplan1_paletteram_alloc() != 0) return 1;
-		if (toaplan1_vram_alloc() != 0)       return 1;
+	public static VideoStartHandlerPtr video_start_rallybik  = new VideoStartHandlerPtr() { public int handler(){
+		if (toaplan1_create_tilemaps())  return 1;
+		if (toaplan1_paletteram_alloc()) return 1;
+		if (toaplan1_vram_alloc())       return 1;
 	
 		scrollx_offs1 = 0x0d + 6;
 		scrollx_offs2 = 0x0d + 4;
@@ -404,12 +403,11 @@ public class toaplan1
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_toaplan1  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (toaplan1_create_tilemaps() != 0)  return 1;
-		if (toaplan1_paletteram_alloc() != 0) return 1;
-		if (toaplan1_vram_alloc() != 0)       return 1;
-		if (toaplan1_spritevram_alloc() != 0) return 1;
+	public static VideoStartHandlerPtr video_start_toaplan1  = new VideoStartHandlerPtr() { public int handler(){
+		if (toaplan1_create_tilemaps())  return 1;
+		if (toaplan1_paletteram_alloc()) return 1;
+		if (toaplan1_vram_alloc())       return 1;
+		if (toaplan1_spritevram_alloc()) return 1;
 	
 		scrollx_offs1 = 0x1ef + 6;
 		scrollx_offs2 = 0x1ef + 4;
@@ -491,7 +489,7 @@ public class toaplan1
 			logerror("Setting BCU controller flipscreen port to %04x\n",data);
 			bcu_flipscreen = data & 0x01;		/* 0x0001 = flip, 0x0000 = no flip */
 			tilemap_set_flip(ALL_TILEMAPS, (data ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0));
-			if (bcu_flipscreen != 0)
+			if (bcu_flipscreen)
 			{
 				scrollx_offs1 = 0x080 - 6;
 				scrollx_offs2 = 0x080 - 4;
@@ -518,14 +516,14 @@ public class toaplan1
 			logerror("Setting BCU controller flipscreen port to %04x\n",data);
 			bcu_flipscreen = data & 0x01;		/* 0x0001 = flip, 0x0000 = no flip */
 			tilemap_set_flip(ALL_TILEMAPS, (data ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0));
-			if (bcu_flipscreen != 0)
+			if (bcu_flipscreen)
 			{
 				scrollx_offs1 = 0x011 - 6;
 				scrollx_offs2 = 0x011 - 4;
 				scrollx_offs3 = 0x011 - 2;
 				scrollx_offs4 = 0x011 - 0;
 				scrolly_offs  = 0xff;
-				if ((Machine.orientation & ORIENTATION_MASK) == ROT0)
+				if ((Machine->orientation & ORIENTATION_MASK) == ROT0)
 				{
 					scrolly_offs = 0x10f;
 				}
@@ -544,7 +542,7 @@ public class toaplan1
 	
 	WRITE16_HANDLER( toaplan1_fcu_flipscreen_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			logerror("Setting FCU controller flipscreen port to %04x\n",data);
 			fcu_flipscreen = data & 0x8000;	/* 0x8000 = flip, 0x0000 = no flip */
@@ -565,24 +563,24 @@ public class toaplan1
 	/* tile palette */
 	READ16_HANDLER( toaplan1_colorram1_r )
 	{
-		return toaplan1_colorram1.read(offset);
+		return toaplan1_colorram1[offset];
 	}
 	
 	WRITE16_HANDLER( toaplan1_colorram1_w )
 	{
-		COMBINE_DATA(&toaplan1_colorram1.read(offset));
+		COMBINE_DATA(&toaplan1_colorram1[offset]);
 		paletteram16_xBBBBBGGGGGRRRRR_word_w(offset, data, mem_mask);
 	}
 	
 	/* sprite palette */
 	READ16_HANDLER( toaplan1_colorram2_r )
 	{
-		return toaplan1_colorram2.read(offset);
+		return toaplan1_colorram2[offset];
 	}
 	
 	WRITE16_HANDLER( toaplan1_colorram2_w )
 	{
-		COMBINE_DATA(&toaplan1_colorram2.read(offset));
+		COMBINE_DATA(&toaplan1_colorram2[offset]);
 		paletteram16_xBBBBBGGGGGRRRRR_word_w(offset+(toaplan1_colorram1_size/2), data, mem_mask);
 	}
 	
@@ -814,13 +812,13 @@ public class toaplan1
 		{
 			offs_t sprite_voffs;
 			while (keyboard_pressed(KEYCODE_M)) ;
-			if (toaplan1_spritesizeram16 != 0)			/* FCU controller */
+			if (toaplan1_spritesizeram16)			/* FCU controller */
 			{
 				int schar,sattr,sxpos,sypos,bschar,bsattr,bsxpos,bsypos;
 				data16_t *size  = (data16_t *)(toaplan1_spritesizeram16);
 				data16_t *bsize = (data16_t *)(toaplan1_buffered_spritesizeram16);
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( sprite_voffs = 0; sprite_voffs < (spriteram_size/2); sprite_voffs += 4 )
 				{
 					bschar = buffered_spriteram16[sprite_voffs];
@@ -840,7 +838,7 @@ public class toaplan1
 			{
 				int schar,sattr,sxpos,sypos,bschar,bsattr,bsxpos,bsypos;
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( sprite_voffs = 0; sprite_voffs < (spriteram_size/2); sprite_voffs += 4 )
 				{
 					bschar = buffered_spriteram16[sprite_voffs];
@@ -864,10 +862,10 @@ public class toaplan1
 			data16_t *bsize = (data16_t *)(toaplan1_buffered_spritesizeram16);
 			offs_t offs;
 			while (keyboard_pressed(KEYCODE_SLASH)) ;
-			if (toaplan1_spritesizeram16 != 0)			/* FCU controller */
+			if (toaplan1_spritesizeram16)			/* FCU controller */
 			{
 				logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-				logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+				logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 				for ( offs = 0; offs < (TOAPLAN1_SPRITESIZERAM_SIZE/2); offs +=4 )
 				{
 					logerror("SizeOffs:%04x   now:%04x %04x %04x %04x    next: %04x %04x %04x %04x\n", offs,
@@ -885,7 +883,7 @@ public class toaplan1
 			int tchar[5], tattr[5];
 			while (keyboard_pressed(KEYCODE_N)) ;	/* BCU controller */
 			logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-			logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+			logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN1_TILEVRAM_SIZE/2); tile_voffs += 2 )
 			{
 				tchar[1] = pf1_tilevram16[tile_voffs + 1];
@@ -914,10 +912,10 @@ public class toaplan1
 			displog += 1;
 			displog &= 1;
 		}
-		if (displog != 0)
+		if (displog)
 		{
 			logerror("Scrolls    PF1-X  PF1-Y     PF2-X  PF2-Y     PF3-X  PF3-Y     PF4-X  PF4-Y\n");
-			logerror("-----.    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
+			logerror("------>    #%04x  #%04x     #%04x  #%04x     #%04x  #%04x     #%04x  #%04x\n",pf1_scrollx,pf1_scrolly,pf2_scrollx,pf2_scrolly,pf3_scrollx,pf3_scrolly,pf4_scrollx,pf4_scrolly);
 		}
 		if ( keyboard_pressed(KEYCODE_B) )
 		{
@@ -1079,10 +1077,10 @@ public class toaplan1
 				if (sy_base >= 0x180) sy_base -= 0x200;
 	
 				/****** flip the sprite layer ******/
-				if (fcu_flipscreen != 0)
+				if (fcu_flipscreen)
 				{
 					sx_base += 8;
-					if ((Machine.orientation & ORIENTATION_MASK) == ROT0)
+					if ((Machine->orientation & ORIENTATION_MASK) == ROT0)
 					{
 						sy_base -= 24;
 					}
@@ -1096,15 +1094,15 @@ public class toaplan1
 	
 				for (dim_y = 0; dim_y < sprite_sizey; dim_y += 8)
 				{
-					if (fcu_flipscreen != 0) sy = sy_base - dim_y;
+					if (fcu_flipscreen) sy = sy_base - dim_y;
 					else                sy = sy_base + dim_y;
 	
 					for (dim_x = 0; dim_x < sprite_sizex; dim_x += 8)
 					{
-						if (fcu_flipscreen != 0) sx = sx_base - dim_x;
+						if (fcu_flipscreen) sx = sx_base - dim_x;
 						else                sx = sx_base + dim_x;
 	
-						drawgfx(bitmap,Machine.gfx[1],
+						drawgfx(bitmap,Machine->gfx[1],
 								sprite,
 								color,
 								fcu_flipscreen,fcu_flipscreen,
@@ -1138,9 +1136,9 @@ public class toaplan1
 					color  = attrib & 0x3f;
 					sx = (buffered_spriteram16[offs + 2] >> 7) & 0x1ff;
 					flipx = attrib & 0x100;
-					if (flipx != 0) sx -= 15;
+					if (flipx) sx -= 15;
 					flipy = attrib & 0x200;
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 						sprite,
 						color,
 						flipx,flipy,
@@ -1156,8 +1154,7 @@ public class toaplan1
 		Draw the game screen in the given mame_bitmap.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rallybik  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 	#ifdef MAME_DEBUG
@@ -1182,8 +1179,7 @@ public class toaplan1
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toaplan1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority = 0;
 	
 	#ifdef MAME_DEBUG
@@ -1209,13 +1205,11 @@ public class toaplan1
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_zerowing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_zerowing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_toaplan1(bitmap,cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_demonwld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_demonwld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority = 0;
 	
 	#ifdef MAME_DEBUG
@@ -1247,19 +1241,16 @@ public class toaplan1
 		assume it happens automatically every frame, at the end of vblank
 	****************************************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_rallybik  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_rallybik  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0, 0, 0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_toaplan1  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_toaplan1  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_samesame  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_samesame  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0, 0, 0);
 		memcpy(toaplan1_buffered_spritesizeram16, toaplan1_spritesizeram16, TOAPLAN1_SPRITESIZERAM_SIZE);
 		cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);	/* Frame done */

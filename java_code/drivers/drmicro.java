@@ -10,7 +10,7 @@ Quite similar to Appoooh
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,14 +27,12 @@ public class drmicro
 	
 	static int drmicro_nmi_enable;
 	
-	public static InterruptHandlerPtr drmicro_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (drmicro_nmi_enable != 0)
+	public static InterruptHandlerPtr drmicro_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (drmicro_nmi_enable)
 			 cpu_set_nmi_line(0, PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{	// bit2,3 unknown
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){	// bit2,3 unknown
 		drmicro_nmi_enable = data & 1;
 		drmicro_flip_w(data & 2);
 	} };
@@ -63,8 +61,7 @@ public class drmicro
 			MSM5205_reset_w(0, 1);
 	}
 	
-	public static WriteHandlerPtr pcm_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcm_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pcm_adr = ((data & 0x3f) << 9);
 		pcm_w(0);
 	} };
@@ -89,26 +86,30 @@ public class drmicro
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static PORT_READ_START ( readport )
-		{ 0x00, 0x00, input_port_0_r },
-		{ 0x01, 0x01, input_port_1_r },
-		{ 0x03, 0x03, input_port_2_r },
-		{ 0x04, 0x04, input_port_3_r },
-		{ 0x05, 0x05, IORP_NOP }, // unused?
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_ReadPort( 0x00, 0x00, input_port_0_r ),
+		new IO_ReadPort( 0x01, 0x01, input_port_1_r ),
+		new IO_ReadPort( 0x03, 0x03, input_port_2_r ),
+		new IO_ReadPort( 0x04, 0x04, input_port_3_r ),
+		new IO_ReadPort( 0x05, 0x05, IORP_NOP ), // unused?
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START ( writeport )
-		{ 0x00, 0x00, SN76496_0_w },
-		{ 0x01, 0x01, SN76496_1_w },
-		{ 0x02, 0x02, SN76496_2_w },
-		{ 0x03, 0x03, pcm_set_w },
-		{ 0x04, 0x04, nmi_enable_w },
-		{ 0x05, 0x05, IOWP_NOP }, // watchdog?
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+		new IO_WritePort( 0x00, 0x00, SN76496_0_w ),
+		new IO_WritePort( 0x01, 0x01, SN76496_1_w ),
+		new IO_WritePort( 0x02, 0x02, SN76496_2_w ),
+		new IO_WritePort( 0x03, 0x03, pcm_set_w ),
+		new IO_WritePort( 0x04, 0x04, nmi_enable_w ),
+		new IO_WritePort( 0x05, 0x05, IOWP_NOP ), // watchdog?
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_drmicro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drmicro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drmicro )
 		PORT_START();  // 1P (0)
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_SERVICE1 );
@@ -238,8 +239,7 @@ public class drmicro
 	
 	/****************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_drmicro = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drmicro )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,MCLK/6)	/* 3.072MHz? */
@@ -266,9 +266,7 @@ public class drmicro
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -300,5 +298,5 @@ public class drmicro
 		ROM_LOAD( "dm-60.6e", 0x0120,  0x0100, CRC(540a3953) SHA1(bc65388a1019dadf8c71705e234763f5c735e282) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_drmicro	   = new GameDriver("1983"	,"drmicro"	,"drmicro.java"	,rom_drmicro,null	,machine_driver_drmicro	,input_ports_drmicro	,null	,ROT270	,	"Sanritsu", "Dr. Micro" )
+	GAME( 1983, drmicro, 0, drmicro, drmicro, 0, ROT270, "Sanritsu", "Dr. Micro" )
 }

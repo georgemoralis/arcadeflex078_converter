@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_skullxbo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_skullxbo  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -89,7 +88,7 @@ public class skullxbo
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 16,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -98,7 +97,7 @@ public class skullxbo
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -147,7 +146,7 @@ public class skullxbo
 			force_partial_update(scanline);
 	
 		/* adjust the effective scroll for the current scanline */
-		if (scanline > Machine.visible_area.max_y)
+		if (scanline > Machine->visible_area.max_y)
 			scanline = 0;
 		effscroll = (newscroll >> 7) - scanline;
 	
@@ -245,8 +244,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_skullxbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skullxbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;

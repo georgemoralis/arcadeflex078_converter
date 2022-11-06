@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -21,8 +21,7 @@ public class atarifb
 	static int sign_x_4, sign_y_4;
 	
 	
-	public static WriteHandlerPtr atarifb_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		CTRLD = data;
 	
 		discrete_sound_w(0,  data & 0x01);		// Whistle
@@ -30,7 +29,7 @@ public class atarifb
 		discrete_sound_w(3, (data & 0x10) ? 0 : 1);	// Attract
 		discrete_sound_w(4,  data & 0x04);		// Noise Enable / Kicker
 	
-		if (GAME_IS_SOCCER != 0)
+		if (GAME_IS_SOCCER)
 		{
 			/* bit 0 = whistle */
 			/* bit 1 = hit */
@@ -43,12 +42,12 @@ public class atarifb
 			set_led_status(1,data & 0x80);
 		}
 	
-		if (GAME_IS_FOOTBALL4 != 0)
+		if (GAME_IS_FOOTBALL4)
 			coin_counter_w (1, data & 0x80);
 		
-		if (GAME_IS_BASEBALL != 0)
+		if (GAME_IS_BASEBALL)
 		{
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 			{
 				/* Invert video */
 				palette_set_color(2,0x00,0x00,0x00); /* black  */
@@ -64,13 +63,12 @@ public class atarifb
 	} };
 	
 	
-	public static WriteHandlerPtr atarifb_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(1, data & 0x0f);	// Crowd
 	
 		coin_counter_w (0, data & 0x10);
 	
-		if (GAME_IS_SOCCER != 0)
+		if (GAME_IS_SOCCER)
 		{
 			coin_counter_w (1, data & 0x20);
 			coin_counter_w (2, data & 0x40);
@@ -84,8 +82,7 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr atarifb_out3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr atarifb_out3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int loop = cpu_getiloops();
 	
 		switch (loop)
@@ -115,8 +112,7 @@ public class atarifb
 	} };
 	
 	
-	public static ReadHandlerPtr atarifb_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarifb_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((CTRLD & 0x20)==0x00)
 		{
 			int val;
@@ -153,8 +149,7 @@ public class atarifb
 	} };
 	
 	
-	public static ReadHandlerPtr atarifb_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarifb_in2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((CTRLD & 0x20)==0x00)
 		{
 			return input_port_1_r.handler(offset);
@@ -183,8 +178,7 @@ public class atarifb
 		}
 	} };
 	
-	public static ReadHandlerPtr atarifb4_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarifb4_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* LD1 and LD2 low, return sign bits */
 		if ((CTRLD & 0x60)==0x00)
 		{
@@ -251,8 +245,7 @@ public class atarifb
 	} };
 	
 	
-	public static ReadHandlerPtr atarifb4_in2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atarifb4_in2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((CTRLD & 0x40)==0x00)
 		{
 			return input_port_2_r.handler(offset);

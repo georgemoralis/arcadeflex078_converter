@@ -42,7 +42,7 @@ conversion kit which could be applied to a bootleg double dragon :-p?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -59,8 +59,7 @@ public class ddragon
 	static int VBLK;
 	/* end of private globals */
 	
-	public static MachineInitHandlerPtr machine_init_ddragon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ddragon  = new MachineInitHandlerPtr() { public void handler(){
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = M6809_IRQ_LINE;
 		ym_irq = M6809_FIRQ_LINE;
@@ -70,8 +69,7 @@ public class ddragon
 		snd_cpu = 2;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_toffy  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_toffy  = new MachineInitHandlerPtr() { public void handler(){
 		sound_irq = M6809_IRQ_LINE;
 		ym_irq = M6809_FIRQ_LINE;
 		technos_video_hw = 0;
@@ -80,8 +78,7 @@ public class ddragon
 		snd_cpu = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_ddragonb  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ddragonb  = new MachineInitHandlerPtr() { public void handler(){
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = M6809_IRQ_LINE;
 		ym_irq = M6809_FIRQ_LINE;
@@ -91,8 +88,7 @@ public class ddragon
 		snd_cpu = 2;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_ddragon2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ddragon2  = new MachineInitHandlerPtr() { public void handler(){
 		sprite_irq = IRQ_LINE_NMI;
 		sound_irq = IRQ_LINE_NMI;
 		ym_irq = 0;
@@ -103,8 +99,7 @@ public class ddragon
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr ddragon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		const data8_t *RAM = memory_region(REGION_CPU1);
 	
 		ddragon_scrolly_hi = ( ( data & 0x02 ) << 7 );
@@ -114,7 +109,7 @@ public class ddragon
 	
 		/* bit 3 unknown */
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			dd_sub_cpu_busy = 0x00;
 		else if (dd_sub_cpu_busy == 0x00)
 			cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
@@ -122,8 +117,7 @@ public class ddragon
 		cpu_setbank( 1,&RAM[ 0x10000 + ( 0x4000 * ( ( data & 0xe0) >> 5 ) ) ] );
 	} };
 	
-	public static WriteHandlerPtr toffy_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toffy_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		ddragon_scrolly_hi = ( ( data & 0x02 ) << 7 );
@@ -141,8 +135,7 @@ public class ddragon
 	
 	static int darktowr_bank=0;
 	
-	public static WriteHandlerPtr darktowr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darktowr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddragon_scrolly_hi = ( ( data & 0x02 ) << 7 );
 		ddragon_scrollx_hi = ( ( data & 0x01 ) << 8 );
 	
@@ -150,7 +143,7 @@ public class ddragon
 	
 		/* bit 3 unknown */
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			dd_sub_cpu_busy = 0x00;
 		else if (dd_sub_cpu_busy == 0x00)
 			cpu_set_irq_line( 1, sprite_irq, (sprite_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
@@ -160,8 +153,7 @@ public class ddragon
 	//	logerror("Bank %05x %02x %02x\n",activecpu_get_pc(),darktowr_bank,data);
 	} };
 	
-	public static ReadHandlerPtr darktowr_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr darktowr_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const data8_t *RAM = memory_region(REGION_CPU1);
 	
 		/* MCU is mapped into main cpu memory as a bank */
@@ -178,8 +170,7 @@ public class ddragon
 		return RAM[offset + 0x10000 + (0x4000*darktowr_bank)];
 	} };
 	
-	public static WriteHandlerPtr darktowr_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darktowr_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (darktowr_bank==4) {
 			logerror("BankWrite %05x %08x %08x\n",activecpu_get_pc(),offset,data);
 	
@@ -188,7 +179,7 @@ public class ddragon
 	
 				darktowr_mcu_ports[1]=bitSwappedData;
 	
-				logerror("MCU PORT 1 . %04x (from %04x)\n",bitSwappedData,data);
+				logerror("MCU PORT 1 -> %04x (from %04x)\n",bitSwappedData,data);
 				return;
 			}
 			return;
@@ -197,21 +188,18 @@ public class ddragon
 		logerror("ROM write! %04x %02x\n",offset,data);
 	} };
 	
-	public static ReadHandlerPtr darktowr_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr darktowr_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return darktowr_mcu_ports[offset];
 	} };
 	
-	public static WriteHandlerPtr darktowr_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darktowr_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("McuWrite %05x %08x %08x\n",activecpu_get_pc(),offset,data);
 		darktowr_mcu_ports[offset]=data;
 	} };
 	
 	/**************************************************************************/
 	
-	public static WriteHandlerPtr ddragon_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_interrupt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0: /* 380b - NMI ack */
 			cpu_set_nmi_line(0,CLEAR_LINE);
@@ -232,50 +220,43 @@ public class ddragon
 		};
 	} };
 	
-	public static ReadHandlerPtr ddragon_hd63701_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ddragon_hd63701_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("%04x: read %d\n",activecpu_get_pc(),offset);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr ddragon_hd63701_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_hd63701_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* I don't know why port 0x17 is used..  Doesn't seem to be a standard MCU port */
 		if (offset==0x17) {
 			/* This is a guess, but makes sense.. The mcu definitely interrupts the main cpu.
 			I don't know what bit is the assert and what is the clear though (in comparison
 			it's quite obvious from the Double Dragon 2 code, below). */
-			if ((data & 3) != 0) {
+			if (data&3) {
 				cpu_set_irq_line(0,M6809_IRQ_LINE,ASSERT_LINE);
 				cpu_set_irq_line(1,sprite_irq, CLEAR_LINE );
 			}
 		}
 	} };
 	
-	public static WriteHandlerPtr ddragon2_sub_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon2_sub_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,sprite_irq, CLEAR_LINE );
 	} };
 	
-	public static WriteHandlerPtr ddragon2_sub_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon2_sub_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,M6809_IRQ_LINE,ASSERT_LINE);
 	} };
 	
-	public static ReadHandlerPtr port4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr port4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int port = readinputport( 4 );
 	
 		return port | dd_sub_cpu_busy | VBLK;
 	} };
 	
-	public static ReadHandlerPtr ddragon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ddragon_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ddragon_spriteram[offset];
 	} };
 	
-	public static WriteHandlerPtr ddragon_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddragon_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ( cpu_getactivecpu() == 1 && offset == 0 )
 			dd_sub_cpu_busy = 0x10;
 	
@@ -284,14 +265,12 @@ public class ddragon
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( snd_cpu, sound_irq, (sound_irq == IRQ_LINE_NMI) ? PULSE_LINE : HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr dd_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dd_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int chip = offset & 1;
 	
 		switch (offset/2)
@@ -339,8 +318,7 @@ public class ddragon
 		}
 	}
 	
-	public static ReadHandlerPtr dd_adpcm_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dd_adpcm_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return adpcm_idle[0] + (adpcm_idle[1] << 1);
 	} };
 	
@@ -644,7 +622,7 @@ public class ddragon
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 );
 	
 	
-	static InputPortPtr input_ports_darktowr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darktowr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darktowr )
 		COMMON_INPUT_PORTS
 	
 		COMMON_INPUT_DIP2
@@ -678,7 +656,7 @@ public class ddragon
 		COMMON_PORT4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ddragon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddragon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddragon )
 		COMMON_INPUT_PORTS
 	
 		COMMON_INPUT_DIP1
@@ -709,7 +687,7 @@ public class ddragon
 		COMMON_PORT4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ddragon2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddragon2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddragon2 )
 		COMMON_INPUT_PORTS
 	
 		COMMON_INPUT_DIP1
@@ -740,7 +718,7 @@ public class ddragon
 		COMMON_PORT4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ddungeon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddungeon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddungeon )
 		COMMON_INPUT_PORTS
 	
 		COMMON_INPUT_DIP2
@@ -766,7 +744,7 @@ public class ddragon
 		COMMON_PORT4
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_toffy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toffy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toffy )
 		COMMON_INPUT_PORTS
 	
 		PORT_START(); 
@@ -902,8 +880,7 @@ public class ddragon
 		{ 15 }
 	};
 	
-	public static InterruptHandlerPtr ddragon_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ddragon_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int scanline=271 - cpu_getiloops();
 	
 		/* VBLK is lowered on scanline 0 */
@@ -922,8 +899,7 @@ public class ddragon
 			cpu_set_irq_line(0,M6809_FIRQ_LINE,ASSERT_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_ddragon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddragon )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -939,7 +915,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon)
 	
@@ -956,12 +932,9 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_darktowr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darktowr )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -980,7 +953,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon)
 	
@@ -997,12 +970,9 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ddragonb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddragonb )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -1018,7 +988,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragonb)
 	
@@ -1035,12 +1005,9 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ddragon2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddragon2 )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(HD6309, 3579545)	/* 3.579545 MHz */
@@ -1056,7 +1023,7 @@ public class ddragon
 	
 		MDRV_FRAMES_PER_SECOND(((12000000.0 / 256.0) / 3.0) / 272.0)
 		MDRV_VBLANK_DURATION(0)
-		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<.main cpu's */
+		MDRV_INTERLEAVE(100) /* heavy interleaving to sync up sprite<->main cpu's */
 	
 		MDRV_MACHINE_INIT(ddragon2)
 	
@@ -1073,12 +1040,9 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_toffy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toffy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,3579545) // 12 MHz / 2 or 3.579545 ?
@@ -1107,9 +1071,7 @@ public class ddragon
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1522,8 +1484,7 @@ public class ddragon
 	
 	*/
 	
-	public static DriverInitHandlerPtr init_toffy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_toffy  = new DriverInitHandlerPtr() { public void handler(){
 		/* the program rom has a simple bitswap encryption */
 		data8_t *rom=memory_region(REGION_CPU1);
 		int i;
@@ -1556,19 +1517,19 @@ public class ddragon
 	
 	} };
 	
-	public static GameDriver driver_ddragon	   = new GameDriver("1987"	,"ddragon"	,"ddragon.java"	,rom_ddragon,null	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"Technos", "Double Dragon (Japan)" )
-	public static GameDriver driver_ddragonw	   = new GameDriver("1987"	,"ddragonw"	,"ddragon.java"	,rom_ddragonw,driver_ddragon	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"[Technos] (Taito license)", "Double Dragon (World)" )
-	public static GameDriver driver_ddragonu	   = new GameDriver("1987"	,"ddragonu"	,"ddragon.java"	,rom_ddragonu,driver_ddragon	,machine_driver_ddragon	,input_ports_ddragon	,null	,ROT0	,	"[Technos] (Taito America license)", "Double Dragon (US)" )
-	public static GameDriver driver_ddragonb	   = new GameDriver("1987"	,"ddragonb"	,"ddragon.java"	,rom_ddragonb,driver_ddragon	,machine_driver_ddragonb	,input_ports_ddragon	,null	,ROT0	,	"bootleg", "Double Dragon (bootleg)" )
-	public static GameDriver driver_ddragon2	   = new GameDriver("1988"	,"ddragon2"	,"ddragon.java"	,rom_ddragon2,null	,machine_driver_ddragon2	,input_ports_ddragon2	,null	,ROT0	,	"Technos", "Double Dragon II - The Revenge (World)" )
-	public static GameDriver driver_ddragn2u	   = new GameDriver("1988"	,"ddragn2u"	,"ddragon.java"	,rom_ddragn2u,driver_ddragon2	,machine_driver_ddragon2	,input_ports_ddragon2	,null	,ROT0	,	"Technos", "Double Dragon II - The Revenge (US)" )
+	GAME( 1987, ddragon,  0,        ddragon,  ddragon,  0, ROT0, "Technos", "Double Dragon (Japan)" )
+	GAME( 1987, ddragonw, ddragon,  ddragon,  ddragon,  0, ROT0, "[Technos] (Taito license)", "Double Dragon (World)" )
+	GAME( 1987, ddragonu, ddragon,  ddragon,  ddragon,  0, ROT0, "[Technos] (Taito America license)", "Double Dragon (US)" )
+	GAME( 1987, ddragonb, ddragon,  ddragonb, ddragon,  0, ROT0, "bootleg", "Double Dragon (bootleg)" )
+	GAME( 1988, ddragon2, 0,        ddragon2, ddragon2, 0, ROT0, "Technos", "Double Dragon II - The Revenge (World)" )
+	GAME( 1988, ddragn2u, ddragon2, ddragon2, ddragon2, 0, ROT0, "Technos", "Double Dragon II - The Revenge (US)" )
 	
 	/* these were conversions of double dragon */
-	public static GameDriver driver_ddungeon	   = new GameDriver("1992"	,"ddungeon"	,"ddragon.java"	,rom_ddungeon,null	,machine_driver_darktowr	,input_ports_ddungeon	,null	,ROT0	,	"East Coast Coin Company (Melbourne)", "Dangerous Dungeons" )
-	public static GameDriver driver_darktowr	   = new GameDriver("1992"	,"darktowr"	,"ddragon.java"	,rom_darktowr,null	,machine_driver_darktowr	,input_ports_darktowr	,null	,ROT0	,	"Game Room", "Dark Tower" )
-	public static GameDriver driver_tstrike	   = new GameDriver("19??"	,"tstrike"	,"ddragon.java"	,rom_tstrike,null	,machine_driver_darktowr	,input_ports_darktowr	,null	,ROT0	,	"Game Room", "Thunder Strike", GAME_NOT_WORKING )
+	GAME( 1992, ddungeon,  0,        darktowr,  ddungeon,  0, ROT0, "East Coast Coin Company (Melbourne)", "Dangerous Dungeons" )
+	GAME( 1992, darktowr,  0,        darktowr,  darktowr,  0, ROT0, "Game Room", "Dark Tower" )
+	GAMEX( 19??, tstrike,   0,        darktowr,  darktowr,  0, ROT0, "Game Room", "Thunder Strike", GAME_NOT_WORKING )
 	
 	/* these run on their own board, but are basically the same game. Toffy even has 'dangerous dungeons' text in it */
-	public static GameDriver driver_toffy	   = new GameDriver("1993"	,"toffy"	,"ddragon.java"	,rom_toffy,null	,machine_driver_toffy	,input_ports_toffy	,init_toffy	,ROT0	,	"Midas",                 "Toffy" )
-	public static GameDriver driver_stoffy	   = new GameDriver("1994"	,"stoffy"	,"ddragon.java"	,rom_stoffy,null	,machine_driver_toffy	,input_ports_toffy	,init_toffy	,ROT0	,	"Midas (Unico license)", "Super Toffy" )
+	GAME( 1993, toffy,  0, toffy, toffy, toffy, ROT0, "Midas",                 "Toffy" )
+	GAME( 1994, stoffy, 0, toffy, toffy, toffy, ROT0, "Midas (Unico license)", "Super Toffy" )
 }

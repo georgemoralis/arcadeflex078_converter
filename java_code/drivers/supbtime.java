@@ -24,7 +24,7 @@ down hardware (it doesn't write any good sound data btw, mostly zeros).
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -126,8 +126,7 @@ public class supbtime
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -166,7 +165,7 @@ public class supbtime
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_supbtime = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_supbtime = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( supbtime )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -248,7 +247,7 @@ public class supbtime
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chinatwn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chinatwn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chinatwn )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -400,8 +399,7 @@ public class supbtime
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_supbtime = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( supbtime )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -428,13 +426,10 @@ public class supbtime
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_chinatwn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chinatwn )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -461,9 +456,7 @@ public class supbtime
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -526,7 +519,7 @@ public class supbtime
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_supbtime	   = new GameDriver("1990"	,"supbtime"	,"supbtime.java"	,rom_supbtime,null	,machine_driver_supbtime	,input_ports_supbtime	,null	,ROT0	,	"Data East Corporation", "Super Burger Time (World)" )
-	public static GameDriver driver_supbtimj	   = new GameDriver("1990"	,"supbtimj"	,"supbtime.java"	,rom_supbtimj,driver_supbtime	,machine_driver_supbtime	,input_ports_supbtime	,null	,ROT0	,	"Data East Corporation", "Super Burger Time (Japan)" )
-	public static GameDriver driver_chinatwn	   = new GameDriver("1991"	,"chinatwn"	,"supbtime.java"	,rom_chinatwn,null	,machine_driver_chinatwn	,input_ports_chinatwn	,null	,ROT0	,	"Data East Corporation", "China Town (Japan)" )
+	GAME( 1990, supbtime, 0,        supbtime, supbtime, 0, ROT0, "Data East Corporation", "Super Burger Time (World)" )
+	GAME( 1990, supbtimj, supbtime, supbtime, supbtime, 0, ROT0, "Data East Corporation", "Super Burger Time (Japan)" )
+	GAME( 1991, chinatwn, 0,        chinatwn, chinatwn, 0, ROT0, "Data East Corporation", "China Town (Japan)" )
 }

@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.mips;
 
@@ -20,7 +20,7 @@ public class mipsdasm
 		static char s_hex[ 20 ];
 	
 		value &= 0xffff;
-		if ((value & 0x8000) != 0)
+		if( value & 0x8000 )
 		{
 			sprintf( s_hex, "-$%x", ( 0 - value ) & 0x7fff );
 		}

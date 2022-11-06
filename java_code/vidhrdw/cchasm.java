@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -82,7 +82,7 @@ public class cchasm
 	            currentx = xcenter - (data << 16);
 	            break;
 	        case LENGTH:
-	            if (move != 0)
+	            if (move)
 	            {
 	                vector_add_point (currentx, currenty, 0, 0);
 	                move = 0;
@@ -93,7 +93,7 @@ public class cchasm
 	
 	            total_length += abs(data);
 	
-	            if (color != 0)
+	            if (color)
 	                vector_add_point (currentx, currenty, color, 0xff);
 	            else
 	                move = 1;
@@ -111,7 +111,7 @@ public class cchasm
 	
 	WRITE16_HANDLER( cchasm_refresh_control_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			switch (data >> 8)
 			{
@@ -125,8 +125,7 @@ public class cchasm
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_cchasm  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cchasm  = new VideoStartHandlerPtr() { public int handler(){
 		int xmin, xmax, ymin, ymax;
 	
 		xmin=Machine.visible_area.min_x;

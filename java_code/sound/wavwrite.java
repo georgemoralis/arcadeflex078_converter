@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -30,68 +30,68 @@ public class wavwrite
 	
 		/* allocate memory for the wav struct */
 		wav = malloc(sizeof(struct wav_data));
-		if (wav == 0)
+		if (!wav)
 			return NULL;
 	
 		/* create the file */
-		wav.file = fopen(filename, "wb");
-		if (!wav.file)
+		wav->file = fopen(filename, "wb");
+		if (!wav->file)
 		{
 			free(wav);
 			return NULL;
 		}
 	
 		/* write the 'RIFF' header */
-		fwrite("RIFF", 1, 4, wav.file);
+		fwrite("RIFF", 1, 4, wav->file);
 	
 		/* write the total size */
 		temp32 = 0;
-		wav.total_offs = ftell(wav.file);
-		fwrite(&temp32, 1, 4, wav.file);
+		wav->total_offs = ftell(wav->file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		/* write the 'WAVE' type */
-		fwrite("WAVE", 1, 4, wav.file);
+		fwrite("WAVE", 1, 4, wav->file);
 	
 		/* write the 'fmt ' tag */
-		fwrite("fmt ", 1, 4, wav.file);
+		fwrite("fmt ", 1, 4, wav->file);
 	
 		/* write the format length */
 		temp32 = intel_long(16);
-		fwrite(&temp32, 1, 4, wav.file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		/* write the format (PCM) */
 		temp16 = intel_short(1);
-		fwrite(&temp16, 1, 2, wav.file);
+		fwrite(&temp16, 1, 2, wav->file);
 	
 		/* write the channels */
 		temp16 = intel_short(channels);
-		fwrite(&temp16, 1, 2, wav.file);
+		fwrite(&temp16, 1, 2, wav->file);
 	
 		/* write the sample rate */
 		temp32 = intel_long(sample_rate);
-		fwrite(&temp32, 1, 4, wav.file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		/* write the bytes/second */
 		bps = sample_rate * 2 * channels;
 		temp32 = intel_long(bps);
-		fwrite(&temp32, 1, 4, wav.file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		/* write the block align */
 		align = 2 * channels;
 		temp16 = intel_short(align);
-		fwrite(&temp16, 1, 2, wav.file);
+		fwrite(&temp16, 1, 2, wav->file);
 	
 		/* write the bits/sample */
 		temp16 = intel_short(16);
-		fwrite(&temp16, 1, 2, wav.file);
+		fwrite(&temp16, 1, 2, wav->file);
 	
 		/* write the 'data' tag */
-		fwrite("data", 1, 4, wav.file);
+		fwrite("data", 1, 4, wav->file);
 	
 		/* write the data length */
 		temp32 = 0;
-		wav.data_offs = ftell(wav.file);
-		fwrite(&temp32, 1, 4, wav.file);
+		wav->data_offs = ftell(wav->file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		return wav;
 	}
@@ -100,22 +100,22 @@ public class wavwrite
 	void wav_close(void *wavptr)
 	{
 		struct wav_data *wav = wavptr;
-		UINT32 total = ftell(wav.file);
+		UINT32 total = ftell(wav->file);
 		UINT32 temp32;
 	
 		/* update the total file size */
-		fseek(wav.file, wav.total_offs, SEEK_SET);
-		temp32 = total - (wav.total_offs + 4);
+		fseek(wav->file, wav->total_offs, SEEK_SET);
+		temp32 = total - (wav->total_offs + 4);
 		temp32 = intel_long(temp32);
-		fwrite(&temp32, 1, 4, wav.file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
 		/* update the data size */
-		fseek(wav.file, wav.data_offs, SEEK_SET);
-		temp32 = total - (wav.data_offs + 4);
+		fseek(wav->file, wav->data_offs, SEEK_SET);
+		temp32 = total - (wav->data_offs + 4);
 		temp32 = intel_long(temp32);
-		fwrite(&temp32, 1, 4, wav.file);
+		fwrite(&temp32, 1, 4, wav->file);
 	
-		fclose(wav.file);
+		fclose(wav->file);
 	}
 	
 	
@@ -124,8 +124,8 @@ public class wavwrite
 		struct wav_data *wav = wavptr;
 	
 		/* just write and flush the data */
-		fwrite(data, 2, samples, wav.file);
-		fflush(wav.file);
+		fwrite(data, 2, samples, wav->file);
+		fflush(wav->file);
 	}
 	
 	
@@ -137,7 +137,7 @@ public class wavwrite
 	
 		/* allocate temp memory */
 		temp = malloc(samples * sizeof(temp[0]));
-		if (temp == 0)
+		if (!temp)
 			return;
 	
 		/* clamp */
@@ -148,8 +148,8 @@ public class wavwrite
 		}
 	
 		/* write and flush */
-		fwrite(temp, 2, samples, wav.file);
-		fflush(wav.file);
+		fwrite(temp, 2, samples, wav->file);
+		fflush(wav->file);
 	
 		/* free memory */
 		free(temp);
@@ -164,7 +164,7 @@ public class wavwrite
 	
 		/* allocate temp memory */
 		temp = malloc(samples * 2 * sizeof(temp[0]));
-		if (temp == 0)
+		if (!temp)
 			return;
 	
 		/* interleave */
@@ -172,8 +172,8 @@ public class wavwrite
 			temp[i] = (i & 1) ? right[i / 2] : left[i / 2];
 	
 		/* write and flush */
-		fwrite(temp, 4, samples, wav.file);
-		fflush(wav.file);
+		fwrite(temp, 4, samples, wav->file);
+		fflush(wav->file);
 	
 		/* free memory */
 		free(temp);
@@ -188,7 +188,7 @@ public class wavwrite
 	
 		/* allocate temp memory */
 		temp = malloc(samples * 2 * sizeof(temp[0]));
-		if (temp == 0)
+		if (!temp)
 			return;
 	
 		/* interleave */
@@ -200,8 +200,8 @@ public class wavwrite
 		}
 	
 		/* write and flush */
-		fwrite(temp, 4, samples, wav.file);
-		fflush(wav.file);
+		fwrite(temp, 4, samples, wav->file);
+		fflush(wav->file);
 	
 		/* free memory */
 		free(temp);

@@ -145,7 +145,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -187,7 +187,7 @@ public class missile
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_missile = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_missile = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( missile )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL );
@@ -269,7 +269,7 @@ public class missile
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_suprmatk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprmatk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprmatk )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL );
@@ -384,8 +384,7 @@ public class missile
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_missile = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( missile )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1000000)		/* 1 MHz ???? */
@@ -408,9 +407,7 @@ public class missile
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -463,7 +460,7 @@ public class missile
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_missile	   = new GameDriver("1980"	,"missile"	,"missile.java"	,rom_missile,null	,machine_driver_missile	,input_ports_missile	,null	,ROT0	,	"Atari", "Missile Command (set 1)" )
-	public static GameDriver driver_missile2	   = new GameDriver("1980"	,"missile2"	,"missile.java"	,rom_missile2,driver_missile	,machine_driver_missile	,input_ports_missile	,null	,ROT0	,	"Atari", "Missile Command (set 2)" )
-	public static GameDriver driver_suprmatk	   = new GameDriver("1981"	,"suprmatk"	,"missile.java"	,rom_suprmatk,driver_missile	,machine_driver_missile	,input_ports_suprmatk	,null	,ROT0	,	"Atari + Gencomp", "Super Missile Attack" )
+	GAME( 1980, missile,  0,       missile, missile,  0, ROT0, "Atari", "Missile Command (set 1)" )
+	GAME( 1980, missile2, missile, missile, missile,  0, ROT0, "Atari", "Missile Command (set 2)" )
+	GAME( 1981, suprmatk, missile, missile, suprmatk, 0, ROT0, "Atari + Gencomp", "Super Missile Attack" )
 }

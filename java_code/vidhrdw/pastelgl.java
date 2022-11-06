@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,7 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_pastelgl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pastelgl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -120,7 +119,7 @@ public class pastelgl
 		pastelgl_flipy = (data & 0x02) ? 1 : 0;
 		pastelgl_flipscreen = (data & 0x04) ? 0 : 1;
 		pastelgl_dispflag = (data & 0x08) ? 0 : 1;		// unused ?
-	//	if ((data & 0xf0) != 0) usrintf_showmessage("Unknown GFXFLAG!! (%02X)", (data & 0xf0));
+	//	if (data & 0xf0) usrintf_showmessage("Unknown GFXFLAG!! (%02X)", (data & 0xf0));
 	
 		if (nb1413m3_type == NB1413M3_PASTELGL)
 		{
@@ -158,14 +157,14 @@ public class pastelgl
 		int x, y;
 		unsigned char color1, color2;
 	
-		for (y = 0; y < Machine.drv.screen_height; y++)
+		for (y = 0; y < Machine->drv->screen_height; y++)
 		{
-			for (x = 0; x < Machine.drv.screen_width; x++)
+			for (x = 0; x < Machine->drv->screen_width; x++)
 			{
-				color1 = pastelgl_videoram.read((y * Machine->drv->screen_width) + x);
-				color2 = pastelgl_videoram.read(((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff));
-				pastelgl_videoram.write(color2,color2);
-				pastelgl_videoram.write(color1,color1);
+				color1 = pastelgl_videoram[(y * Machine->drv->screen_width) + x];
+				color2 = pastelgl_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff)];
+				pastelgl_videoram[(y * Machine->drv->screen_width) + x] = color2;
+				pastelgl_videoram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0xff)] = color1;
 			}
 		}
 	}
@@ -186,7 +185,7 @@ public class pastelgl
 		unsigned char color;
 		unsigned char drawcolor;
 	
-		if (pastelgl_flipx != 0)
+		if (pastelgl_flipx)
 		{
 			pastelgl_drawx -= (pastelgl_sizex << 1);
 			startx = pastelgl_sizex;
@@ -201,7 +200,7 @@ public class pastelgl
 			skipx = 1;
 		}
 	
-		if (pastelgl_flipy != 0)
+		if (pastelgl_flipy)
 		{
 			pastelgl_drawy -= (pastelgl_sizey << 1);
 			starty = pastelgl_sizey;
@@ -234,7 +233,7 @@ public class pastelgl
 	
 				color = GFX[gfxaddr];
 	
-				if (pastelgl_flipscreen != 0)
+				if (pastelgl_flipscreen)
 				{
 					dx = (((pastelgl_drawx + x) ^ 0xff) & 0xff);
 					dy = (((pastelgl_drawy + y) ^ 0xff) & 0xff);
@@ -245,7 +244,7 @@ public class pastelgl
 					dy = ((pastelgl_drawy + y) & 0xff);
 				}
 	
-				if (readflag == 0)
+				if (!readflag)
 				{
 					// 1st, 3rd, 5th, ... read
 					color = (color & 0x0f);
@@ -263,7 +262,7 @@ public class pastelgl
 	
 				if (pastelgl_paltbl[color] & 0xf0)
 				{
-					if (color == 0) tflag = 0;
+					if (!color) tflag = 0;
 					drawcolor = ((pastelgl_palbank * 0x10) + color);
 				}
 				else
@@ -271,10 +270,10 @@ public class pastelgl
 					drawcolor = ((pastelgl_palbank * 0x10) + pastelgl_paltbl[color]);
 				}
 	
-				if (tflag != 0)
+				if (tflag)
 				{
-					pastelgl_videoram.write(drawcolor,drawcolor);
-					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine.pens[drawcolor]);
+					pastelgl_videoram[(dy * Machine->drv->screen_width) + dx] = drawcolor;
+					plot_pixel(pastelgl_tmpbitmap, dx, dy, Machine->pens[drawcolor]);
 				}
 	
 				nb1413m3_busyctr++;
@@ -288,8 +287,7 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	public static VideoStartHandlerPtr video_start_pastelgl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pastelgl  = new VideoStartHandlerPtr() { public int handler(){
 		if ((pastelgl_tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((pastelgl_videoram = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((pastelgl_paltbl = auto_malloc(0x10 * sizeof(char))) == 0) return 1;
@@ -301,8 +299,7 @@ public class pastelgl
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pastelgl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		unsigned char color;
 	
@@ -314,13 +311,13 @@ public class pastelgl
 			{
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
-					color = pastelgl_videoram.read((y * Machine->drv->screen_width) + x);
-					plot_pixel.handler(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
+					color = pastelgl_videoram[(y * Machine.drv.screen_width) + x];
+					plot_pixel(pastelgl_tmpbitmap, x, y, Machine.pens[color]);
 				}
 			}
 		}
 	
-		if (pastelgl_dispflag != 0)
+		if (pastelgl_dispflag)
 		{
 			copybitmap(bitmap, pastelgl_tmpbitmap, 0, 0, 0, 0, Machine.visible_area, TRANSPARENCY_NONE, 0);
 		}

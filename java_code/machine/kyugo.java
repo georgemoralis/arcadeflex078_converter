@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -23,16 +23,14 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_kyugo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_kyugo  = new MachineInitHandlerPtr() { public void handler(){
 		// must start with interrupts and sub CPU disabled
 		cpu_interrupt_enable(0, 0);
 		kyugo_sub_cpu_control_w(0, 0);
 	} };
 	
 	
-	public static WriteHandlerPtr kyugo_sub_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_sub_cpu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
@@ -43,14 +41,12 @@ public class kyugo
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr kyugo_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kyugo_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		kyugo_sharedram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr kyugo_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kyugo_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return kyugo_sharedram[offset];
 	} };
 }

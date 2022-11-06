@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -65,8 +65,7 @@ public class sf1
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_sf1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sf1  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,     16,16,2048,16);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,2048,16);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,  64,32);
@@ -120,7 +119,7 @@ public class sf1
 	/* b5 = active background plane */
 	/* b6 = active middle plane */
 	/* b7 = active sprites */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			sf1_active = data & 0xff;
 			flip_screen_set(data & 0x04);
@@ -158,11 +157,11 @@ public class sf1
 			int flipx = attr & 0x0100;
 			int flipy = attr & 0x0200;
 	
-			if ((attr & 0x400) != 0)	/* large sprite */
+			if (attr & 0x400)	/* large sprite */
 			{
 				int c1,c2,c3,c4,t;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 480 - sx;
 					sy = 224 - sy;
@@ -175,40 +174,40 @@ public class sf1
 				c3 = c+16;
 				c4 = c+17;
 	
-				if (flipx != 0)
+				if (flipx)
 				{
 					t = c1; c1 = c2; c2 = t;
 					t = c3; c3 = c4; c4 = t;
 				}
-				if (flipy != 0)
+				if (flipy)
 				{
 					t = c1; c1 = c3; c3 = t;
 					t = c2; c2 = c4; c4 = t;
 				}
 	
 				drawgfx(bitmap,
-						Machine.gfx[2],
+						Machine->gfx[2],
 						sf1_invert(c1),
 						color,
 						flipx,flipy,
 						sx,sy,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine.gfx[2],
+						Machine->gfx[2],
 						sf1_invert(c2),
 						color,
 						flipx,flipy,
 						sx+16,sy,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine.gfx[2],
+						Machine->gfx[2],
 						sf1_invert(c3),
 						color,
 						flipx,flipy,
 						sx,sy+16,
 						cliprect, TRANSPARENCY_PEN, 15);
 				drawgfx(bitmap,
-						Machine.gfx[2],
+						Machine->gfx[2],
 						sf1_invert(c4),
 						color,
 						flipx,flipy,
@@ -217,7 +216,7 @@ public class sf1
 			}
 			else
 			{
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 496 - sx;
 					sy = 240 - sy;
@@ -226,7 +225,7 @@ public class sf1
 				}
 	
 				drawgfx(bitmap,
-						Machine.gfx[2],
+						Machine->gfx[2],
 						sf1_invert(c),
 						color,
 						flipx,flipy,
@@ -237,16 +236,15 @@ public class sf1
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sf1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if ((sf1_active & 0x20) != 0)
+	public static VideoUpdateHandlerPtr video_update_sf1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (sf1_active & 0x20)
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		else
 			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
-		if ((sf1_active & 0x80) != 0)
+		if (sf1_active & 0x80)
 			draw_sprites(bitmap,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);

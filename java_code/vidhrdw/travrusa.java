@@ -13,7 +13,7 @@ J Clegg
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,8 +50,7 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_travrusa  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_travrusa  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -118,8 +117,7 @@ public class travrusa
 			COLOR(1,i) = (color_prom.read(i)& 0x0f) + 128;
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_shtrider  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_shtrider  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -196,10 +194,10 @@ public class travrusa
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = travrusa_videoram.read(2*tile_index+1);
+		unsigned char attr = travrusa_videoram[2*tile_index+1];
 		SET_TILE_INFO(
 				0,
-				travrusa_videoram.read(2*tile_index)+ ((attr & 0xc0) << 2),
+				travrusa_videoram[2*tile_index] + ((attr & 0xc0) << 2),
 				attr & 0x0f,
 				TILE_FLIPXY((attr & 0x30) >> 4))
 		if ((attr & 0x0f) == 0x0f) tile_info.flags |= TILE_SPLIT(1);	/* tunnels */
@@ -213,11 +211,10 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_travrusa  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_travrusa  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transmask(bg_tilemap,0,0xff,0x00); /* split type 0 is totally transparent in front half */
@@ -236,11 +233,10 @@ public class travrusa
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr travrusa_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (travrusa_videoram.read(offset)!= data)
+	public static WriteHandlerPtr travrusa_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (travrusa_videoram[offset] != data)
 		{
-			travrusa_videoram.write(data,data);
+			travrusa_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 		}
 	} };
@@ -257,21 +253,18 @@ public class travrusa
 		tilemap_set_scrollx(bg_tilemap,3,0);
 	}
 	
-	public static WriteHandlerPtr travrusa_scroll_x_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr travrusa_scroll_x_low_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollx[0] = data;
 		set_scroll();
 	} };
 	
-	public static WriteHandlerPtr travrusa_scroll_x_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr travrusa_scroll_x_high_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollx[1] = data;
 		set_scroll();
 	} };
 	
 	
-	public static WriteHandlerPtr travrusa_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr travrusa_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
 	
@@ -303,7 +296,7 @@ public class travrusa
 			8*8, 32*8-1
 		};
 		struct rectangle clip = *cliprect;
-		if (flip_screen != 0)
+		if (flip_screen())
 			sect_rect(&clip, &spritevisibleareaflip);
 		else
 			sect_rect(&clip, spritevisiblearea);
@@ -318,7 +311,7 @@ public class travrusa
 			int flipx = attr & 0x40;
 			int flipy = attr & 0x80;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -326,7 +319,7 @@ public class travrusa
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					attr & 0x0f,
 					flipx,flipy,
@@ -336,8 +329,7 @@ public class travrusa
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_travrusa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_travrusa  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);

@@ -72,7 +72,7 @@ Recordbr: loads of unmapped IOC reads and writes.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -203,8 +203,7 @@ public class taito_h
 		cpu_setbank(1, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 3;
 		reset_sound_region();
 	} };
@@ -342,7 +341,7 @@ public class taito_h
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_syvalion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_syvalion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( syvalion )
 		PORT_START();   /* DSW1 (0) */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -404,7 +403,7 @@ public class taito_h
 		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_Y | IPF_PLAYER2 | IPF_CENTER | IPF_REVERSE, 30, 30, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_recordbr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_recordbr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( recordbr )
 		PORT_START();   /* DSW1 (0) */
 		PORT_DIPNAME( 0x00, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -467,7 +466,7 @@ public class taito_h
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dleague = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dleague = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dleague )
 		PORT_START();   /* DSW1 (0) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -589,8 +588,7 @@ public class taito_h
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_syvalion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( syvalion )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000 / 2)		/* 12 MHz */
@@ -616,13 +614,10 @@ public class taito_h
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, syvalion_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_recordbr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( recordbr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000 / 2)		/* 12 MHz */
@@ -648,13 +643,10 @@ public class taito_h
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, syvalion_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dleague = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dleague )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000 / 2)		/* 12 MHz */
@@ -680,9 +672,7 @@ public class taito_h
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, dleague_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -788,15 +778,14 @@ public class taito_h
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_taitoh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_taitoh  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
 	
 	/*  ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT     MONITOR  COMPANY  FULLNAME */
-	public static GameDriver driver_syvalion	   = new GameDriver("1988"	,"syvalion"	,"taito_h.java"	,rom_syvalion,null	,machine_driver_syvalion	,input_ports_syvalion	,init_taitoh	,ROT0	,	"Taito Corporation", "Syvalion (Japan)" )
-	public static GameDriver driver_recordbr	   = new GameDriver("1988"	,"recordbr"	,"taito_h.java"	,rom_recordbr,null	,machine_driver_recordbr	,input_ports_recordbr	,init_taitoh	,ROT0	,	"Taito Corporation Japan", "Recordbreaker (World)" )
-	public static GameDriver driver_dleague	   = new GameDriver("1990"	,"dleague"	,"taito_h.java"	,rom_dleague,null	,machine_driver_dleague	,input_ports_dleague	,init_taitoh	,ROT0	,	"Taito Corporation", "Dynamite League (Japan)" )
+	GAME( 1988, syvalion, 0,        syvalion, syvalion, taitoh,  ROT0,    "Taito Corporation", "Syvalion (Japan)" )
+	GAME( 1988, recordbr, 0,        recordbr, recordbr, taitoh,  ROT0,    "Taito Corporation Japan", "Recordbreaker (World)" )
+	GAME( 1990, dleague,  0,        dleague,  dleague,  taitoh,  ROT0,    "Taito Corporation", "Dynamite League (Japan)" )
 }

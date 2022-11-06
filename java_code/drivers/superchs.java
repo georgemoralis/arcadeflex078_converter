@@ -35,7 +35,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -71,14 +71,14 @@ public class superchs
 	static WRITE16_HANDLER( shared_ram_w )
 	{
 		if ((offset&1)==0) {
-			if (ACCESSING_MSB != 0)
+			if (ACCESSING_MSB)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0x00ffffff)|((data&0xff00)<<16);
-			if (ACCESSING_LSB != 0)
+			if (ACCESSING_LSB)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xff00ffff)|((data&0x00ff)<<16);
 		} else {
-			if (ACCESSING_MSB != 0)
+			if (ACCESSING_MSB)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xffff00ff)|((data&0xff00)<< 0);
-			if (ACCESSING_LSB != 0)
+			if (ACCESSING_LSB)
 				shared_ram[offset/2]=(shared_ram[offset/2]&0xffffff00)|((data&0x00ff)<< 0);
 		}
 	}
@@ -94,13 +94,13 @@ public class superchs
 		is there an irq enable in the top nibble?
 		*/
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			cpu_set_reset_line(2,(data &0x200) ? CLEAR_LINE : ASSERT_LINE);
-			if ((data & 0x8000) != 0) cpu_set_irq_line(0,3,HOLD_LINE); /* Guess */
+			if (data&0x8000) cpu_set_irq_line(0,3,HOLD_LINE); /* Guess */
 		}
 	
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 		{
 			/* Lamp control bits of some sort in the lsb */
 		}
@@ -151,12 +151,12 @@ public class superchs
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32 != 0)	/* $300000 is watchdog */
+				if (ACCESSING_MSB32)	/* $300000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32 != 0)
+				if (ACCESSING_LSB32)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -171,7 +171,7 @@ public class superchs
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32 != 0)
+				if (ACCESSING_MSB32)
 				{
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
@@ -196,8 +196,8 @@ public class superchs
 		{
 			int delta;
 			int goal = 0x80;
-			if ((fake & 0x04) != 0) goal = 0xff;		/* pressing left */
-			if ((fake & 0x08) != 0) goal = 0x0;		/* pressing right */
+			if (fake &0x04) goal = 0xff;		/* pressing left */
+			if (fake &0x08) goal = 0x0;		/* pressing right */
 	
 			if (steer!=goal)
 			{
@@ -305,7 +305,7 @@ public class superchs
 	
 	/***********************************************************/
 	
-	static InputPortPtr input_ports_superchs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superchs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superchs )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW,  IPT_UNKNOWN );
@@ -402,8 +402,7 @@ public class superchs
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_superchs  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_superchs  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1,&RAM[0x80000]);
@@ -448,23 +447,21 @@ public class superchs
 		0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xff,0xff
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_superchs  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_superchs  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&superchs_eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the wheel setup values */
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_superchs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( superchs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)	/* 16 MHz */
@@ -499,9 +496,7 @@ public class superchs
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -556,12 +551,11 @@ public class superchs
 		return superchs_ram[2]&0xffff;
 	}
 	
-	public static DriverInitHandlerPtr init_superchs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_superchs  = new DriverInitHandlerPtr() { public void handler(){
 		/* Speedup handlers */
 		install_mem_read32_handler(0, 0x100000, 0x100003, main_cycle_r);
 		install_mem_read16_handler(2, 0x80000a, 0x80000b, sub_cycle_r);
 	} };
 	
-	public static GameDriver driver_superchs	   = new GameDriver("1992"	,"superchs"	,"superchs.java"	,rom_superchs,null	,machine_driver_superchs	,input_ports_superchs	,init_superchs	,ROT0	,	"Taito America Corporation", "Super Chase - Criminal Termination (US)" )
+	GAME( 1992, superchs, 0, superchs, superchs, superchs, ROT0, "Taito America Corporation", "Super Chase - Criminal Termination (US)" )
 }

@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -170,14 +170,14 @@ public class sp0250
 	
 	int sp0250_sh_start( const struct MachineSound *msound )
 	{
-		struct sp0250_interface *intf = msound.sound_interface;
+		struct sp0250_interface *intf = msound->sound_interface;
 		memset(&sp0250, 0, sizeof(sp0250));
 		sp0250.RNG = 1;
-		sp0250.drq = intf.drq_callback;
+		sp0250.drq = intf->drq_callback;
 		sp0250.drq(ASSERT_LINE);
 		timer_pulse(TIME_IN_HZ(MAIN_CLOCK), 0, sp0250_timer_tick);
 	
-		sp0250.stream = stream_init("SP0250", intf.volume, MAIN_CLOCK, 0, sp0250_update);
+		sp0250.stream = stream_init("SP0250", intf->volume, MAIN_CLOCK, 0, sp0250_update);
 	
 		return 0;
 	}
@@ -187,8 +187,7 @@ public class sp0250
 	}
 	
 	
-	public static WriteHandlerPtr sp0250_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sp0250_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(sp0250.fifo_pos != 15) {
 			sp0250.fifo[sp0250.fifo_pos++] = data;
 			if(sp0250.fifo_pos == 15)

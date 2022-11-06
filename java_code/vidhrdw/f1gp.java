@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -45,7 +45,7 @@ public class f1gp
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = f1gp_fgvideoram.read(tile_index);
+		int code = f1gp_fgvideoram[tile_index];
 	
 		SET_TILE_INFO(0,code & 0x7fff,0,(code & 0x8000)?TILE_FLIPY:0)
 	}
@@ -57,8 +57,7 @@ public class f1gp
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_f1gp  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_f1gp  = new VideoStartHandlerPtr() { public int handler(){
 		roz_tilemap = tilemap_create(f1gp_get_roz_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,      tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 	
@@ -79,8 +78,7 @@ public class f1gp
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_f1gp2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_f1gp2  = new VideoStartHandlerPtr() { public int handler(){
 		roz_tilemap = tilemap_create(f1gp2_get_roz_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		fg_tilemap =  tilemap_create(get_fg_tile_info,       tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 	
@@ -143,9 +141,9 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp_fgvideoram_w )
 	{
-		int oldword = f1gp_fgvideoram.read(offset);
-		COMBINE_DATA(&f1gp_fgvideoram.read(offset));
-		if (oldword != f1gp_fgvideoram.read(offset))
+		int oldword = f1gp_fgvideoram[offset];
+		COMBINE_DATA(&f1gp_fgvideoram[offset]);
+		if (oldword != f1gp_fgvideoram[offset])
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 	}
 	
@@ -161,7 +159,7 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp_gfxctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			flipscreen = data & 0x20;
 			gfxctrl = data & 0xdf;
@@ -170,7 +168,7 @@ public class f1gp
 	
 	WRITE16_HANDLER( f1gp2_gfxctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			flipscreen = data & 0x20;
 	
@@ -180,7 +178,7 @@ public class f1gp
 			gfxctrl = data & 0xdf;
 		}
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			if (f1gp2_roz_bank != (data >> 8))
 			{
@@ -233,14 +231,14 @@ public class f1gp
 			{
 				int sx,sy;
 	
-				if (flipy != 0) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
+				if (flipy) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
+					if (flipx) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x + 16) & 0x1ff) - 16;
 	
 					if (chip == 0)
@@ -248,7 +246,7 @@ public class f1gp
 					else
 						code = f1gp_spr2cgram[map_start % (f1gp_spr2cgram_size/2)];
 	
-					pdrawgfxzoom(bitmap,Machine.gfx[1 + chip],
+					pdrawgfxzoom(bitmap,Machine->gfx[1 + chip],
 							code,
 							color,
 							flipx,flipy,
@@ -269,8 +267,7 @@ public class f1gp
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_f1gp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static GfxLayout tilelayout = new GfxLayout
 		(
 			16,16,
@@ -290,7 +287,7 @@ public class f1gp
 		);
 	
 	
-		if (dirtygfx != 0)
+		if (dirtygfx)
 		{
 			int i;
 	
@@ -301,7 +298,7 @@ public class f1gp
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine.gfx[3],i,(UINT8 *)zoomdata,&tilelayout);
+					decodechar(Machine->gfx[3],i,(UINT8 *)zoomdata,&tilelayout);
 				}
 			}
 	
@@ -369,21 +366,21 @@ public class f1gp
 			{
 				int sx,sy;
 	
-				if (flipy != 0) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
+				if (flipy) sy = ((oy + zoomy * (ysize - y)/2 + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y / 2 + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
+					if (flipx) sx = ((ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 	
 					code = f1gp2_sprcgram[map_start & 0x3fff];
 					map_start++;
 	
-					if (flipscreen != 0)
-						drawgfxzoom(bitmap,Machine.gfx[1],
+					if (flipscreen)
+						drawgfxzoom(bitmap,Machine->gfx[1],
 								code,
 								color,
 								NOT(flipx),NOT(flipy),
@@ -391,7 +388,7 @@ public class f1gp
 								cliprect,TRANSPARENCY_PEN,15,
 								zoomx << 11,zoomy << 11);
 					else
-						drawgfxzoom(bitmap,Machine.gfx[1],
+						drawgfxzoom(bitmap,Machine->gfx[1],
 								code,
 								color,
 								flipx,flipy,
@@ -404,9 +401,8 @@ public class f1gp
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if ((gfxctrl & 4) != 0)	/* blank screen */
+	public static VideoUpdateHandlerPtr video_update_f1gp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (gfxctrl & 4)	/* blank screen */
 		{
 			fillbitmap(bitmap, get_black_pen(), cliprect);
 		}

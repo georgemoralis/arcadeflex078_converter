@@ -8,7 +8,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -17,21 +17,18 @@ public class findout
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_findout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_findout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	} };
 	
 	
 	static data8_t drawctrl[3];
 	
-	public static WriteHandlerPtr findout_drawctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr findout_drawctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		drawctrl[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr findout_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr findout_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sx,sy;
 		int fg,bg,mask,bits;
 	
@@ -46,25 +43,23 @@ public class findout
 	//if (mask != bits)
 	//	usrintf_showmessage("color %02x bits %02x mask %02x\n",fg,bits,mask);
 	
-		if ((mask & 0x80) != 0) plot_pixel.handler(tmpbitmap,sx+0,sy,(bits & 0x80) ? fg : bg);
-		if ((mask & 0x40) != 0) plot_pixel.handler(tmpbitmap,sx+1,sy,(bits & 0x40) ? fg : bg);
-		if ((mask & 0x20) != 0) plot_pixel.handler(tmpbitmap,sx+2,sy,(bits & 0x20) ? fg : bg);
-		if ((mask & 0x10) != 0) plot_pixel.handler(tmpbitmap,sx+3,sy,(bits & 0x10) ? fg : bg);
-		if ((mask & 0x08) != 0) plot_pixel.handler(tmpbitmap,sx+4,sy,(bits & 0x08) ? fg : bg);
-		if ((mask & 0x04) != 0) plot_pixel.handler(tmpbitmap,sx+5,sy,(bits & 0x04) ? fg : bg);
-		if ((mask & 0x02) != 0) plot_pixel.handler(tmpbitmap,sx+6,sy,(bits & 0x02) ? fg : bg);
-		if ((mask & 0x01) != 0) plot_pixel.handler(tmpbitmap,sx+7,sy,(bits & 0x01) ? fg : bg);
+		if (mask & 0x80) plot_pixel(tmpbitmap,sx+0,sy,(bits & 0x80) ? fg : bg);
+		if (mask & 0x40) plot_pixel(tmpbitmap,sx+1,sy,(bits & 0x40) ? fg : bg);
+		if (mask & 0x20) plot_pixel(tmpbitmap,sx+2,sy,(bits & 0x20) ? fg : bg);
+		if (mask & 0x10) plot_pixel(tmpbitmap,sx+3,sy,(bits & 0x10) ? fg : bg);
+		if (mask & 0x08) plot_pixel(tmpbitmap,sx+4,sy,(bits & 0x08) ? fg : bg);
+		if (mask & 0x04) plot_pixel(tmpbitmap,sx+5,sy,(bits & 0x04) ? fg : bg);
+		if (mask & 0x02) plot_pixel(tmpbitmap,sx+6,sy,(bits & 0x02) ? fg : bg);
+		if (mask & 0x01) plot_pixel(tmpbitmap,sx+7,sy,(bits & 0x01) ? fg : bg);
 	} };
 	
 	
-	public static ReadHandlerPtr portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 4;
 	//	return (rand()&2);
 	} };
 	
-	public static WriteHandlerPtr lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lamps_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x01);
 		set_led_status(1,data & 0x02);
 		set_led_status(2,data & 0x04);
@@ -72,8 +67,7 @@ public class findout
 		set_led_status(4,data & 0x10);
 	} };
 	
-	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 3 used but unknown */
 	
 		/* bit 6 enables NMI */
@@ -97,14 +91,12 @@ public class findout
 		{ sound_w,        NULL },			/* Port C write */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_findout  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_findout  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
 	
-	public static ReadHandlerPtr catchall  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr catchall  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc = activecpu_get_pc();
 	
 		if (pc != 0x3c74 && pc != 0x0364 && pc != 0x036d)	/* weed out spurious blit reads */
@@ -113,28 +105,22 @@ public class findout
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr banksel_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x8000);
 	} };
-	public static WriteHandlerPtr banksel_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x10000);
 	} };
-	public static WriteHandlerPtr banksel_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x18000);
 	} };
-	public static WriteHandlerPtr banksel_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x20000);
 	} };
-	public static WriteHandlerPtr banksel_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x28000);
 	} };
-	public static WriteHandlerPtr banksel_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr banksel_5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU1) + 0x30000);
 	} };
 	
@@ -142,13 +128,11 @@ public class findout
 	/* This signature is used to validate the question ROMs. Simple protection check? */
 	static int signature_answer,signature_pos;
 	
-	public static ReadHandlerPtr signature_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr signature_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return signature_answer;
 	} };
 	
-	public static WriteHandlerPtr signature_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr signature_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == 0) signature_pos = 0;
 		else
 		{
@@ -198,7 +182,7 @@ public class findout
 	
 	
 	
-	static InputPortPtr input_ports_findout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_findout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( findout )
 		PORT_START(); 
 		PORT_DIPNAME( 0x07, 0x01, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "7C_1C") );
@@ -256,8 +240,7 @@ public class findout
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_findout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( findout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,4000000)	/* 4 MHz ?????? (affects sound pitch) */
@@ -281,9 +264,7 @@ public class findout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -309,5 +290,5 @@ public class findout
 	
 	
 	
-	public static GameDriver driver_findout	   = new GameDriver("1987"	,"findout"	,"findout.java"	,rom_findout,null	,machine_driver_findout	,input_ports_findout	,null	,ROT0	,	"Elettronolo", "Find Out", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1987, findout, 0, findout, findout, 0, ROT0, "Elettronolo", "Find Out", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
 }

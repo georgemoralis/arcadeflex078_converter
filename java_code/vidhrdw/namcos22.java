@@ -43,7 +43,7 @@
  */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -86,7 +86,7 @@ public class namcos22
 			return -1; /* HACK */
 		}
 		result = (mpPolyH[addr]<<16)|(mpPolyM[addr]<<8)|mpPolyL[addr];
-		if ((result & 0x00800000) != 0)
+		if( result&0x00800000 )
 		{
 			result |= 0xff000000; /* sign extend */
 		}
@@ -158,35 +158,35 @@ public class namcos22
 	{
 		struct rectangle myclip;
 		if (!scalex || !scaley) return;
-		if (clip != 0)
+		if(clip)
 		{
-			myclip.min_x = clip.min_x;
-			myclip.max_x = clip.max_x;
-			myclip.min_y = clip.min_y;
-			myclip.max_y = clip.max_y;
+			myclip.min_x = clip->min_x;
+			myclip.max_x = clip->max_x;
+			myclip.min_y = clip->min_y;
+			myclip.max_y = clip->max_y;
 	
 			if (myclip.min_x < 0) myclip.min_x = 0;
-			if (myclip.max_x >= dest_bmp.width) myclip.max_x = dest_bmp.width-1;
+			if (myclip.max_x >= dest_bmp->width) myclip.max_x = dest_bmp->width-1;
 			if (myclip.min_y < 0) myclip.min_y = 0;
-			if (myclip.max_y >= dest_bmp.height) myclip.max_y = dest_bmp.height-1;
+			if (myclip.max_y >= dest_bmp->height) myclip.max_y = dest_bmp->height-1;
 	
 			clip=&myclip;
 		}
-		if( gfx && gfx.colortable )
+		if( gfx && gfx->colortable )
 		{
-			const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)];
-			UINT8 *source_base = gfx.gfxdata + (code % gfx.total_elements) * gfx.char_modulo;
-			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
-			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
+			const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)];
+			UINT8 *source_base = gfx->gfxdata + (code % gfx->total_elements) * gfx->char_modulo;
+			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
+			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
 			if (sprite_screen_width && sprite_screen_height)
 			{
-				int dx = (gfx.width<<16)/sprite_screen_width;
-				int dy = (gfx.height<<16)/sprite_screen_height;
+				int dx = (gfx->width<<16)/sprite_screen_width;
+				int dy = (gfx->height<<16)/sprite_screen_height;
 				int ex = sx+sprite_screen_width;
 				int ey = sy+sprite_screen_height;
 				int x_index_base;
 				int y_index;
-				if (flipx != 0)
+				if( flipx )
 				{
 					x_index_base = (sprite_screen_width-1)*dx;
 					dx = -dx;
@@ -195,7 +195,7 @@ public class namcos22
 				{
 					x_index_base = 0;
 				}
-				if (flipy != 0)
+				if( flipy )
 				{
 					y_index = (sprite_screen_height-1)*dy;
 					dy = -dy;
@@ -204,28 +204,28 @@ public class namcos22
 				{
 					y_index = 0;
 				}
-				if (clip != 0)
+				if( clip )
 				{
-					if( sx < clip.min_x)
+					if( sx < clip->min_x)
 					{ /* clip left */
-						int pixels = clip.min_x-sx;
+						int pixels = clip->min_x-sx;
 						sx += pixels;
 						x_index_base += pixels*dx;
 					}
-					if( sy < clip.min_y )
+					if( sy < clip->min_y )
 					{ /* clip top */
-						int pixels = clip.min_y-sy;
+						int pixels = clip->min_y-sy;
 						sy += pixels;
 						y_index += pixels*dy;
 					}
-					if( ex > clip.max_x+1 )
+					if( ex > clip->max_x+1 )
 					{ /* clip right */
-						int pixels = ex-clip.max_x-1;
+						int pixels = ex-clip->max_x-1;
 						ex -= pixels;
 					}
-					if( ey > clip.max_y+1 )
+					if( ey > clip->max_y+1 )
 					{ /* clip bottom */
-						int pixels = ey-clip.max_y-1;
+						int pixels = ey-clip->max_y-1;
 						ey -= pixels;
 					}
 				}
@@ -235,8 +235,8 @@ public class namcos22
 					for( y=sy; y<ey; y++ )
 					{
 						INT32 *pZBuf = namco_zbuffer + NAMCOS22_SCREEN_WIDTH*y;
-						UINT8 *source = source_base + (y_index>>16) * gfx.line_modulo;
-						UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+						UINT8 *source = source_base + (y_index>>16) * gfx->line_modulo;
+						UINT32 *dest = (UINT32 *)dest_bmp->line[y];
 						int x, x_index = x_index_base;
 						for( x=sx; x<ex; x++ )
 						{
@@ -352,7 +352,7 @@ public class namcos22
 			flipy = attrs&0x8;
 			numrows = attrs&0x7;
 			if( numrows==0 ) numrows = 8;
-			if (flipy != 0)
+			if( flipy )
 			{
 				ypos += sizey*(numrows-1);
 				sizey = -sizey;
@@ -363,7 +363,7 @@ public class namcos22
 			flipx = attrs&0x8;
 			numcols = attrs&0x7;
 			if( numcols==0 ) numcols = 8;
-			if (flipx != 0)
+			if( flipx )
 			{
 				xpos += sizex*(numcols-1);
 				sizex = -sizex;
@@ -376,7 +376,7 @@ public class namcos22
 			{
 				for( col=0; col<numcols; col++ )
 				{
-					mydrawgfxzoom( bitmap, Machine.gfx[0],
+					mydrawgfxzoom( bitmap, Machine->gfx[0],
 						tile,
 						color,
 						flipx, flipy,
@@ -417,7 +417,7 @@ public class namcos22
 					int g = nthbyte(paletteram32,which+0x08000);
 					int b = nthbyte(paletteram32,which+0x10000);
 	
-					if (fade != 0)
+					if( fade )
 					{ /**
 					   * if flags&0x01 is set, fader affects polygon layer
 					   * flags&0x02 and flags&0x04 are used to fade text/sprite layer
@@ -471,7 +471,7 @@ public class namcos22
 		unsigned i;
 		data32_t data;
 	
-		if (cgsomethingisdirty != 0)
+		if( cgsomethingisdirty )
 		{
 			for( i=0; i<64*64; i+=2 )
 			{
@@ -489,7 +489,7 @@ public class namcos22
 			{
 				if( cgdirty[i] )
 				{
-					decodechar( Machine.gfx[NAMCOS22_ALPHA_GFX],i,(UINT8 *)namcos22_cgram,&cg_layout );
+					decodechar( Machine->gfx[NAMCOS22_ALPHA_GFX],i,(UINT8 *)namcos22_cgram,&cg_layout );
 					cgdirty[i] = 0;
 				}
 			}
@@ -683,21 +683,21 @@ public class namcos22
 			double lx = pSource[5+i*6+2];
 			double ly = pSource[5+i*6+3];
 			double lz = pSource[5+i*6+4];
-			pVerTex.x = lx;
-			pVerTex.y = ly;
-			pVerTex.z = lz;
-			pVerTex.u = pSource[5+i*6+0];
-			pVerTex.v = pSource[5+i*6+1]+(tpage<<12);
-			pVerTex.i = pSource[5+i*6+5];
-			if( i==0 || pVerTex.z > zmax ) zmax = pVerTex.z;
-			if( i==0 || pVerTex.z < zmin ) zmin = pVerTex.z;
+			pVerTex->x = lx;
+			pVerTex->y = ly;
+			pVerTex->z = lz;
+			pVerTex->u = pSource[5+i*6+0];
+			pVerTex->v = pSource[5+i*6+1]+(tpage<<12);
+			pVerTex->i = pSource[5+i*6+5];
+			if( i==0 || pVerTex->z > zmax ) zmax = pVerTex->z;
+			if( i==0 || pVerTex->z < zmin ) zmin = pVerTex->z;
 			/**
 			 * polygons expressed in this fashion don't use perspective projection
 			 * (x,y) are already in screen window coordinates.
 			 * for now, as a quick workaround, we assign an arbitrary z coordinate to all
 			 * four vertexes, big enough to avoid near-plane clipping.
 			 */
-			pVerTex.z = 1000;
+			pVerTex->z = 1000;
 		}
 		zrep = (zmin+zmax)/2.0;
 		zcode = pSource[0]+(INT32)zrep;
@@ -739,14 +739,14 @@ public class namcos22
 			double lx = kScale * GetPolyData(  8+i*3+addr );
 			double ly = kScale * GetPolyData(  9+i*3+addr );
 			double lz = kScale * GetPolyData( 10+i*3+addr );
-			pVerTex.x = m[0][0]*lx + m[1][0]*ly + m[2][0]*lz + m[3][0];
-			pVerTex.y = m[0][1]*lx + m[1][1]*ly + m[2][1]*lz + m[3][1];
-			pVerTex.z = m[0][2]*lx + m[1][2]*ly + m[2][2]*lz + m[3][2];
-			pVerTex.u = GetPolyData( 0+2*i+addr )&0x0fff;
-			pVerTex.v = GetPolyData( 1+2*i+addr )&0xffff;
-			pVerTex.i = (GetPolyData(i+addr)>>16)&0xff;
-			if( i==0 || pVerTex.z > zmax ) zmax = pVerTex.z;
-			if( i==0 || pVerTex.z < zmin ) zmin = pVerTex.z;
+			pVerTex->x = m[0][0]*lx + m[1][0]*ly + m[2][0]*lz + m[3][0];
+			pVerTex->y = m[0][1]*lx + m[1][1]*ly + m[2][1]*lz + m[3][1];
+			pVerTex->z = m[0][2]*lx + m[1][2]*ly + m[2][2]*lz + m[3][2];
+			pVerTex->u = GetPolyData( 0+2*i+addr )&0x0fff;
+			pVerTex->v = GetPolyData( 1+2*i+addr )&0xffff;
+			pVerTex->i = (GetPolyData(i+addr)>>16)&0xff;
+			if( i==0 || pVerTex->z > zmax ) zmax = pVerTex->z;
+			if( i==0 || pVerTex->z < zmin ) zmin = pVerTex->z;
 		}
 	
 		/**
@@ -775,7 +775,7 @@ public class namcos22
 			INT32 dw = (zcode&0x1c0000)>>18; /* window (master)priority bias */
 			INT32 dz = (zcode&0x03ffff); /* bias for representative z coordinate */
 	
-			if ((dw & 4) != 0)
+			if( dw&4 )
 			{
 				dw |= ~0x7; /* sign extend */
 			}
@@ -783,7 +783,7 @@ public class namcos22
 			if( dw<0 ) dw = 0; else if( dw>7 ) dw = 7; /* cap it at min/max */
 			dw <<= 21;
 	
-			if ((dz & 0x020000) != 0)
+			if( dz&0x020000 )
 			{
 				dz |= ~0x03ffff; /* sign extend */
 			}
@@ -896,7 +896,7 @@ public class namcos22
 				break;
 			}
 	
-			if (mbDumpScene != 0)
+			if( mbDumpScene )
 			{
 				int q;
 				logerror( "  %06x", size );
@@ -1048,11 +1048,11 @@ public class namcos22
 	
 		bShowOnly = keyboard_pressed(KEYCODE_B);
 	
-		if (bShowOnly != 0)
+		if( bShowOnly )
 		{
-			drawgfx( bitmap, Machine.uifont, "0123456789abcdef"[(iShowOnly>>4)&0xf],
+			drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[(iShowOnly>>4)&0xf],
 				0,0,0,0,0,NULL,TRANSPARENCY_NONE,0 );
-			drawgfx( bitmap, Machine.uifont, "0123456789abcdef"[(iShowOnly>>0)&0xf],
+			drawgfx( bitmap, Machine->uifont, "0123456789abcdef"[(iShowOnly>>0)&0xf],
 				0,0,0,12,0,NULL,TRANSPARENCY_NONE,0 );
 		}
 		if( keyboard_pressed( KEYCODE_M ) )
@@ -1093,7 +1093,7 @@ public class namcos22
 	
 		mode = 0x8000;
 	
-		if (mbDumpScene != 0)
+		if( mbDumpScene )
 		{
 			for( i=0; i<8*32; i++ )
 			{
@@ -1108,7 +1108,7 @@ public class namcos22
 		pDebug = pSource;
 		for(;;)
 		{
-			if (mbDumpScene != 0)
+			if( mbDumpScene )
 			{
 				logerror( "\n" );
 				while( pDebug<pSource )
@@ -1136,7 +1136,7 @@ public class namcos22
 				}
 				if( iObject == iShowOnly || !bShowOnly )
 				{
-					if (mbDumpScene != 0)
+					if( mbDumpScene )
 					{
 						logerror( "\n#%03x: ", iObject );
 						while( pDebug<pSource )
@@ -1181,7 +1181,7 @@ public class namcos22
 					i = *pSource++; i &= (MAX_CAMERA-1);
 					assert( i<0x80 );
 					pSource = LoadMatrix( pSource,mpMatrix[i].M );
-					if (pSource == 0) return;
+					if( !pSource ) return;
 					break;
 	
 				case 0x8009: /* matrix composition */
@@ -1212,7 +1212,7 @@ public class namcos22
 					matrix3d_Multiply( M, mWindowTransform.M );
 					if( iObject == iShowOnly || !bShowOnly )
 					{
-						if (mbDumpScene != 0)
+						if( mbDumpScene )
 						{
 							logerror( "\n#%03x: ", iObject );
 							while( pDebug<pSource )
@@ -1267,7 +1267,7 @@ public class namcos22
 					break;
 	
 				case 0xffff:
-					if (mbDumpScene != 0)
+					if( mbDumpScene )
 					{
 						int namcos22_i;
 						logerror( "[eof %08x]\n", code );
@@ -1404,10 +1404,9 @@ public class namcos22
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_namcos22s  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namcos22s  = new VideoStartHandlerPtr() { public int handler(){
 		mpMatrix = auto_malloc(sizeof(struct Matrix)*MAX_CAMERA);
-		if (mpMatrix != 0)
+		if( mpMatrix )
 		{
 			if( namcos3d_Init(
 				NAMCOS22_SCREEN_WIDTH,
@@ -1417,20 +1416,20 @@ public class namcos22
 			) == 0 )
 			{
 				struct GfxElement *pGfx = decodegfx( (UINT8 *)namcos22_cgram,&cg_layout );
-				if (pGfx != 0)
+				if( pGfx )
 				{
 					Machine.gfx[NAMCOS22_ALPHA_GFX] = pGfx;
 					pGfx.colortable = Machine.remapped_colortable;
 					pGfx.total_colors = NAMCOS22_PALETTE_SIZE/16;
 					tilemap = tilemap_create( TextTilemapGetInfo,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64 );
-					if (tilemap != 0)
+					if( tilemap )
 					{
 						tilemap_set_transparent_pen( tilemap, 0xf );
 						dirtypal = auto_malloc(NAMCOS22_PALETTE_SIZE/4);
-						if (dirtypal != 0)
+						if( dirtypal )
 						{
 							cgdirty = auto_malloc( 0x400 );
-							if (cgdirty != 0)
+							if( cgdirty )
 							{
 								int i;
 								mPtRomSize = memory_region_length(REGION_GFX4)/3;
@@ -1452,8 +1451,7 @@ public class namcos22
 		return -1; /* error */
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos22s  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		mbSuperSystem22 = 1;
 		UpdatePaletteS();
 		fillbitmap( bitmap, get_black_pen(), cliprect );
@@ -1463,8 +1461,7 @@ public class namcos22
 		DrawTextLayer( bitmap, cliprect );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_namcos22  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos22  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		mbSuperSystem22 = 0;
 		UpdatePalette();
 		fillbitmap( bitmap, get_black_pen(), cliprect );

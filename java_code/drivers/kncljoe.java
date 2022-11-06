@@ -24,7 +24,7 @@ Updates:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,7 +65,7 @@ public class kncljoe
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_kncljoe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kncljoe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kncljoe )
 		PORT_START(); 	/* IN 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -180,8 +180,7 @@ public class kncljoe
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_kncljoe = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kncljoe )
 	
 		/* basic machine hardware */
 	//	MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz */
@@ -206,9 +205,7 @@ public class kncljoe
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -310,7 +307,7 @@ public class kncljoe
 	
 	
 	
-	public static GameDriver driver_kncljoe	   = new GameDriver("1985"	,"kncljoe"	,"kncljoe.java"	,rom_kncljoe,null	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 1)" )
-	public static GameDriver driver_kncljoea	   = new GameDriver("1985"	,"kncljoea"	,"kncljoe.java"	,rom_kncljoea,driver_kncljoe	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 2)" )
-	public static GameDriver driver_bcrusher	   = new GameDriver("1985"	,"bcrusher"	,"kncljoe.java"	,rom_bcrusher,driver_kncljoe	,machine_driver_kncljoe	,input_ports_kncljoe	,null	,ROT0	,	"bootleg",                          "Bone Crusher" )
+	GAME( 1985, kncljoe,  0,       kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 1)" )
+	GAME( 1985, kncljoea, kncljoe, kncljoe, kncljoe, 0, ROT0, "[Seibu Kaihatsu] (Taito license)", "Knuckle Joe (set 2)" )
+	GAME( 1985, bcrusher, kncljoe, kncljoe, kncljoe, 0, ROT0, "bootleg",                          "Bone Crusher" )
 }

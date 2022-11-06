@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class timeplt
 	  bit 0 -- not connected
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_timeplt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_timeplt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -103,11 +102,11 @@ public class timeplt
 	
 	static void get_tile_info(int tile_index)
 	{
-		unsigned char attr = timeplt_colorram.read(tile_index);
+		unsigned char attr = timeplt_colorram[tile_index];
 		tile_info.priority = (attr & 0x10) >> 4;
 		SET_TILE_INFO(
 				0,
-				timeplt_videoram.read(tile_index)+ ((attr & 0x20) << 3),
+				timeplt_videoram[tile_index] + ((attr & 0x20) << 3),
 				attr & 0x1f,
 				TILE_FLIPYX((attr & 0xc0) >> 6))
 	}
@@ -120,8 +119,7 @@ public class timeplt
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_timeplt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_timeplt  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
 		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
@@ -141,32 +139,28 @@ public class timeplt
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr timeplt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (timeplt_videoram.read(offset)!= data)
+	public static WriteHandlerPtr timeplt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (timeplt_videoram[offset] != data)
 		{
-			timeplt_videoram.write(data,data);
+			timeplt_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr timeplt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (timeplt_colorram.read(offset)!= data)
+	public static WriteHandlerPtr timeplt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (timeplt_colorram[offset] != data)
 		{
-			timeplt_colorram.write(data,data);
+			timeplt_colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr timeplt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timeplt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 1);
 	} };
 	
 	/* Return the current video scan line */
-	public static ReadHandlerPtr timeplt_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr timeplt_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return scanline;
 	} };
 	
@@ -180,7 +174,7 @@ public class timeplt
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		struct rectangle clip = *cliprect;
 		int offs;
 		int line;
@@ -188,7 +182,7 @@ public class timeplt
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= cliprect.min_y && line <= cliprect.max_y)
+			if (line >= cliprect->min_y && line <= cliprect->max_y)
 			{
 				unsigned char *sr,*sr2;
 	
@@ -222,16 +216,14 @@ public class timeplt
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_timeplt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_timeplt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,1,0);
 	} };
 	
 	
-	public static InterruptHandlerPtr timeplt_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr timeplt_interrupt = new InterruptHandlerPtr() {public void handler(){
 		scanline = 255 - cpu_getiloops();
 	
 		memcpy(sprite_mux_buffer + scanline * spriteram_size,spriteram,spriteram_size);

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class sidearms
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static WriteHandlerPtr sidearms_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -35,8 +34,7 @@ public class sidearms
 		}
 	} };
 	
-	public static WriteHandlerPtr sidearms_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -44,8 +42,7 @@ public class sidearms
 		}
 	} };
 	
-	public static WriteHandlerPtr sidearms_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0, data & 0x01);
 		coin_counter_w(1, data & 0x02);
@@ -63,7 +60,7 @@ public class sidearms
 		}
 	
 		/* bit 4 resets the sound CPU */
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 		{
 			cpuint_reset_cpu(1);
 		}
@@ -88,14 +85,12 @@ public class sidearms
 		}
 	} };
 	
-	public static WriteHandlerPtr sidearms_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		objon = data & 0x01;
 		bgon = data & 0x02;
 	} };
 	
-	public static WriteHandlerPtr sidearms_star_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_star_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int last_state = hcount_191;
 	
 		hcount_191++;
@@ -106,8 +101,7 @@ public class sidearms
 			hflop_74a_n ^= 1;
 	} };
 	
-	public static WriteHandlerPtr sidearms_star_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidearms_star_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vcount_191++;
 		vcount_191 &= 0xff;
 	} };
@@ -166,23 +160,22 @@ public class sidearms
 	
 	INLINE UINT32 sidearms_tilemap_scan( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		int offset = ((row << 7) + col) << 1;
 	
 		/* swap bits 1-7 and 8-10 of the address to compensate for the funny layout of the ROM data */
 		return ((offset & 0xf801) | ((offset & 0x0700) >> 7) | ((offset & 0x00fe) << 3)) & 0x7fff;
 	}
 	
-	public static VideoStartHandlerPtr video_start_sidearms  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sidearms  = new VideoStartHandlerPtr() { public int handler(){
 		tilerom = memory_region(REGION_GFX4);
 	
-		if (sidearms_gameid == 0)
+		if (!sidearms_gameid)
 		{
 			bg_tilemap = tilemap_create(get_sidearms_bg_tile_info, sidearms_tilemap_scan,
 				TILEMAP_TRANSPARENT, 32, 32, 128, 128);
 	
-			if (bg_tilemap == 0) return 1;
+			if ( !bg_tilemap ) return 1;
 	
 			tilemap_set_transparent_pen(bg_tilemap, 15);
 		}
@@ -195,13 +188,13 @@ public class sidearms
 		
 			
 	
-			if (bg_tilemap == 0) return 1;
+			if ( !bg_tilemap ) return 1;
 		}
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 	
-		if (fg_tilemap == 0) return 1;
+		if ( !fg_tilemap ) return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 3);
 	
@@ -215,8 +208,8 @@ public class sidearms
 	
 	void sidearms_draw_sprites_region( struct mame_bitmap *bitmap, int start_offset, int end_offset )
 	{
-		const struct GfxElement *gfx = Machine.gfx[2];
-		struct rectangle *cliprect = Machine.visible_area;
+		const struct GfxElement *gfx = Machine->gfx[2];
+		struct rectangle *cliprect = Machine->visible_area;
 		int offs, attr, color, code, x, y, flipx, flipy;
 	
 		flipy = flipx = flipon;
@@ -231,7 +224,7 @@ public class sidearms
 			code = buffered_spriteram[offs] + ((attr << 3) & 0x700);
 			x = buffered_spriteram[offs + 3] + ((attr << 4) & 0x100);
 	
-			if (flipon != 0)
+			if (flipon)
 			{
 				x = (62 * 8) - x;
 				y = (30 * 8) - y;
@@ -255,8 +248,8 @@ public class sidearms
 		int pixadv, lineadv;
 	
 		// clear starfield background
-		lineptr = (UINT16 *)bitmap.line[16] + 64;
-		lineadv = bitmap.rowpixels;
+		lineptr = (UINT16 *)bitmap->line[16] + 64;
+		lineadv = bitmap->rowpixels;
 	
 		for (i=224; i; i--) { memset(lineptr, 0, 768); lineptr += lineadv; }
 	
@@ -273,15 +266,15 @@ public class sidearms
 		sf_rom = memory_region(REGION_USER1);
 	
 	#if 0 // old loop (for reference; easier to read)
-		if (flipon == 0)
+		if (!flipon)
 		{
-			lineptr = (UINT16 *)bitmap.line[0];
+			lineptr = (UINT16 *)bitmap->line[0];
 			pixadv  = 1;
 			lineadv = lineadv - 512;
 		}
 		else
 		{
-			lineptr = (UINT16 *)bitmap.line[255] + 512 - 1;
+			lineptr = (UINT16 *)bitmap->line[255] + 512 - 1;
 			pixadv  = -1;
 			lineadv = -lineadv + 512;
 		}
@@ -316,15 +309,15 @@ public class sidearms
 			lineptr += lineadv;
 		}
 	#else // optimized loop
-		if (flipon == 0)
+		if (!flipon)
 		{
-			lineptr = (UINT16 *)bitmap.line[16] + 64;
+			lineptr = (UINT16 *)bitmap->line[16] + 64;
 			pixadv  = 1;
 			lineadv = lineadv - 384;
 		}
 		else
 		{
-			lineptr = (UINT16 *)bitmap.line[239] + 512 - 64 - 1;
+			lineptr = (UINT16 *)bitmap->line[239] + 512 - 64 - 1;
 			pixadv  = -1;
 			lineadv = -lineadv + 384;
 		}
@@ -382,25 +375,23 @@ public class sidearms
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sidearms  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sidearms_draw_starfield(bitmap);
 	
 		tilemap_set_scrollx(bg_tilemap, 0, sidearms_bg_scrollx[0] + (sidearms_bg_scrollx[1] << 8 & 0xf00));
 		tilemap_set_scrolly(bg_tilemap, 0, sidearms_bg_scrolly[0] + (sidearms_bg_scrolly[1] << 8 & 0xf00));
 	
-		if (bgon != 0)
+		if (bgon)
 			tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	
-		if (objon != 0)
+		if (objon)
 			sidearms_draw_sprites(bitmap);
 	
-		if (charon != 0)
+		if (charon)
 			tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_sidearms  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_sidearms  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0, 0);
 	} };
 }

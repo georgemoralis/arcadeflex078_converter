@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -96,8 +96,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -108,8 +107,7 @@ public class darkseal
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -147,7 +145,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_darkseal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darkseal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darkseal )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -310,8 +308,7 @@ public class darkseal
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_darkseal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darkseal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000) /* Custom chip 59 */
@@ -339,9 +336,7 @@ public class darkseal
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -505,8 +500,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_darkseal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_darkseal  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -517,9 +511,9 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_darkseal	   = new GameDriver("1990"	,"darkseal"	,"darkseal.java"	,rom_darkseal,null	,machine_driver_darkseal	,input_ports_darkseal	,init_darkseal	,ROT0	,	"Data East Corporation", "Dark Seal (World revision 3)" )
-	public static GameDriver driver_darksea1	   = new GameDriver("1990"	,"darksea1"	,"darkseal.java"	,rom_darksea1,driver_darkseal	,machine_driver_darkseal	,input_ports_darkseal	,init_darkseal	,ROT0	,	"Data East Corporation", "Dark Seal (World revision 1)" )
-	public static GameDriver driver_darkseaj	   = new GameDriver("1990"	,"darkseaj"	,"darkseal.java"	,rom_darkseaj,driver_darkseal	,machine_driver_darkseal	,input_ports_darkseal	,init_darkseal	,ROT0	,	"Data East Corporation", "Dark Seal (Japan)" )
-	public static GameDriver driver_gatedoom	   = new GameDriver("1990"	,"gatedoom"	,"darkseal.java"	,rom_gatedoom,driver_darkseal	,machine_driver_darkseal	,input_ports_darkseal	,init_darkseal	,ROT0	,	"Data East Corporation", "Gate of Doom (US revision 4)" )
-	public static GameDriver driver_gatedom1	   = new GameDriver("1990"	,"gatedom1"	,"darkseal.java"	,rom_gatedom1,driver_darkseal	,machine_driver_darkseal	,input_ports_darkseal	,init_darkseal	,ROT0	,	"Data East Corporation", "Gate of Doom (US revision 1)" )
+	GAME( 1990, darkseal, 0,        darkseal, darkseal, darkseal, ROT0, "Data East Corporation", "Dark Seal (World revision 3)" )
+	GAME( 1990, darksea1, darkseal, darkseal, darkseal, darkseal, ROT0, "Data East Corporation", "Dark Seal (World revision 1)" )
+	GAME( 1990, darkseaj, darkseal, darkseal, darkseal, darkseal, ROT0, "Data East Corporation", "Dark Seal (Japan)" )
+	GAME( 1990, gatedoom, darkseal, darkseal, darkseal, darkseal, ROT0, "Data East Corporation", "Gate of Doom (US revision 4)" )
+	GAME( 1990, gatedom1, darkseal, darkseal, darkseal, darkseal, ROT0, "Data East Corporation", "Gate of Doom (US revision 1)" )
 }

@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.v60;
 
@@ -33,14 +33,14 @@ public class v60d
 	
 	static void out_AM_RegisterIndirect(int reg, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			*out++ = '@';
 		sprintf(out, "[%s]", v60_reg_names[reg]);
 	}
 	
 	static void out_AM_RegisterIndirectIndexed(int rn, int rx, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@[%s]", v60_reg_names[rx], v60_reg_names[rn]);
 		else
 			sprintf(out, "[%s](%s)", v60_reg_names[rn], v60_reg_names[rx]);
@@ -49,14 +49,14 @@ public class v60d
 	
 	static void out_AM_Autoincrement(int reg, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			*out++ = '@';
 		sprintf(out, "[%s+]", v60_reg_names[reg]);
 	}
 	
 	static void out_AM_Autodecrement(int reg, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			*out++ = '@';
 		sprintf(out, "[-%s]", v60_reg_names[reg]);
 	}
@@ -71,7 +71,7 @@ public class v60d
 	
 	static void out_AM_DisplacementIndexed(int rn, int rx, int disp, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@%s%X[%s]", v60_reg_names[rx], disp >= 0 ? "" : "-", disp >= 0 ? disp : -disp,v60_reg_names[rn]);
 		else
 			sprintf(out, "%s%X[%s](%s)", disp >= 0 ? "" : "-", disp >= 0 ? disp : -disp,v60_reg_names[rn], v60_reg_names[rx]);
@@ -84,7 +84,7 @@ public class v60d
 	
 	static void out_AM_PCDisplacementIndexed(unsigned pc, int disp, int rx, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@%X[PC]", v60_reg_names[rx], pc+disp);
 		else
 			sprintf(out, "%X[PC](%s)", pc+disp, v60_reg_names[rx]);
@@ -100,7 +100,7 @@ public class v60d
 	
 	static void out_AM_DisplacementIndirectIndexed(int rn, int rx, int disp, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@[%s%X[%s]]", v60_reg_names[rx], disp >= 0 ? "" : "-", disp >= 0 ? disp : -disp,v60_reg_names[rn]);
 		else
 			sprintf(out, "[%s%X[%s]](%s)", disp >= 0 ? "" : "-", disp >= 0 ? disp : -disp,v60_reg_names[rn], v60_reg_names[rx]);
@@ -113,7 +113,7 @@ public class v60d
 	
 	static void out_AM_PCDisplacementIndirectIndexed(unsigned pc, int disp, int rx, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@[%X[PC]]", v60_reg_names[rx], pc+disp);
 		else
 			sprintf(out, "[%X[PC]](%s)", pc+disp, v60_reg_names[rx]);
@@ -138,14 +138,14 @@ public class v60d
 	
 	static void out_AM_DirectAddress(unsigned addr, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			*out++ = '@';
 		sprintf(out, "%X", addr);
 	}
 	
 	static void out_AM_DirectAddressIndexed(unsigned addr, int rx, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@%X", v60_reg_names[rx], addr);
 		else
 			sprintf(out, "%X(%s)", addr, v60_reg_names[rx]);
@@ -153,14 +153,14 @@ public class v60d
 	
 	static void out_AM_DirectAddressDeferred(unsigned addr, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			*out++ = '@';
 		sprintf(out, "[%X]", addr);
 	}
 	
 	static void out_AM_DirectAddressDeferredIndexed(unsigned addr, int rx, int opsize, char *out)
 	{
-		if ((opsize & 0x80) != 0)
+		if(opsize & 0x80)
 			sprintf(out, "%s@[%X]", v60_reg_names[rx], addr);
 		else
 			sprintf(out, "[%X](%s)", addr, v60_reg_names[rx]);
@@ -179,7 +179,7 @@ public class v60d
 	static int decode_AM(unsigned ipc, unsigned pc, int m, int opsize, char *out)
 	{
 		unsigned char mod = readop(pc);
-		if (m != 0) {
+		if(m) {
 			switch(mod>>5) {
 			case 0: // Double displacement (8 bit)
 				out_AM_DoubleDisplacement(mod&0x1F, read8(pc+1), read8(pc+2), opsize, out);
@@ -417,7 +417,7 @@ public class v60d
 	{
 		unsigned char code = readop(pc);
 		sprintf(out, "%s ", opnm);
-		if ((code & 0x20) != 0) {
+		if(code & 0x20) {
 			int ret = decode_AM(ipc, pc+1, code & 0x40, opsize1, out + strlen(out)) + 2;
 			strcat(out, ", ");
 			out_AM_Register(code & 0x1f, out + strlen(out));
@@ -489,7 +489,7 @@ public class v60d
 		strcat(out, ", ");
 	
 		code2 = readop(pc+1+ret);
-		if ((code2 & 0x80) != 0)
+		if(code2 & 0x80)
 			out_AM_Register(code2 & 0x1f, out + strlen(out));
 		else
 			out_AM_Immediate(code2, 1, out + strlen(out));
@@ -499,7 +499,7 @@ public class v60d
 		strcat(out, ", ");
 	
 		code2 = readop(pc+2+ret);
-		if ((code2 & 0x80) != 0)
+		if(code2 & 0x80)
 			out_AM_Register(code2 & 0x1f, out + strlen(out));
 		else
 			out_AM_Immediate(code2, 1, out + strlen(out));
@@ -518,7 +518,7 @@ public class v60d
 		strcat(out, ", ");
 	
 		code2 = readop(pc+1+ret);
-		if ((code2 & 0x80) != 0)
+		if(code2 & 0x80)
 			out_AM_Register(code2 & 0x1f, out + strlen(out));
 		else
 			out_AM_Immediate(code2, 1, out + strlen(out));
@@ -543,7 +543,7 @@ public class v60d
 		strcat(out, ", ");
 	
 		code2 = readop(pc+1+ret);
-		if ((code2 & 0x80) != 0)
+		if(code2 & 0x80)
 			out_AM_Register(code2 & 0x1f, out + strlen(out));
 		else
 			out_AM_Immediate(code2, 1, out + strlen(out));

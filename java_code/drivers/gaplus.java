@@ -10,7 +10,7 @@ MAME driver by:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -135,7 +135,7 @@ public class gaplus
 	
 	/* The dipswitches and player inputs are not memory mapped, they are handled by an I/O chip. */
 	
-	static InputPortPtr input_ports_gaplus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gaplus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gaplus )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -203,7 +203,7 @@ public class gaplus
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gapluso = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gapluso = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gapluso )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -275,7 +275,7 @@ public class gaplus
 		PORT_BITX( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL, 0, IP_KEY_PREVIOUS, IP_JOY_PREVIOUS );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galaga3a = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaga3a = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaga3a )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -343,7 +343,7 @@ public class gaplus
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galaga3m = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaga3m = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaga3m )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -507,8 +507,7 @@ public class gaplus
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gaplus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gaplus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -543,12 +542,9 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gapluso = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gapluso )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,	1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -583,12 +579,9 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gaplusa = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gaplusa )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1536000)	/* 24.576 MHz / 16 = 1.536 MHz */
@@ -624,9 +617,7 @@ public class gaplus
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -848,10 +839,10 @@ public class gaplus
 	
 	
 	/*          rom       parent    machine   inp      init                                    */
-	public static GameDriver driver_gaplus	   = new GameDriver("1984"	,"gaplus"	,"gaplus.java"	,rom_gaplus,null	,machine_driver_gaplus	,input_ports_gaplus	,null	,ROT90	,	"Namco", "Gaplus (rev. D)" )
-	public static GameDriver driver_gapluso	   = new GameDriver("1984"	,"gapluso"	,"gaplus.java"	,rom_gapluso,driver_gaplus	,machine_driver_gapluso	,input_ports_gapluso	,null	,ROT90	,	"Namco", "Gaplus (rev. B)" )
-	public static GameDriver driver_gaplusa	   = new GameDriver("1984"	,"gaplusa"	,"gaplus.java"	,rom_gaplusa,driver_gaplus	,machine_driver_gaplusa	,input_ports_gapluso	,null	,ROT90	,	"Namco", "Gaplus (alternate hardware)" )
-	public static GameDriver driver_galaga3	   = new GameDriver("1984"	,"galaga3"	,"gaplus.java"	,rom_galaga3,driver_gaplus	,machine_driver_gaplus	,input_ports_gaplus	,null	,ROT90	,	"Namco", "Galaga 3 (rev. C)" )
-	public static GameDriver driver_galaga3a	   = new GameDriver("1984"	,"galaga3a"	,"gaplus.java"	,rom_galaga3a,driver_gaplus	,machine_driver_gaplus	,input_ports_galaga3a	,null	,ROT90	,	"Namco", "Galaga 3 (alternate set)" )
-	public static GameDriver driver_galaga3m	   = new GameDriver("1984"	,"galaga3m"	,"gaplus.java"	,rom_galaga3m,driver_gaplus	,machine_driver_gaplus	,input_ports_galaga3m	,null	,ROT90	,	"[Namco] (Midway license)", "Galaga 3 (Midway)" )
+	GAME( 1984, gaplus,   0,        gaplus,   gaplus,   0, ROT90, "Namco", "Gaplus (rev. D)" )
+	GAME( 1984, gapluso,  gaplus,   gapluso,  gapluso,  0, ROT90, "Namco", "Gaplus (rev. B)" )
+	GAME( 1984, gaplusa,  gaplus,   gaplusa,  gapluso,  0, ROT90, "Namco", "Gaplus (alternate hardware)" )
+	GAME( 1984, galaga3,  gaplus,   gaplus,   gaplus,   0, ROT90, "Namco", "Galaga 3 (rev. C)" )
+	GAME( 1984, galaga3a, gaplus,   gaplus,   galaga3a, 0, ROT90, "Namco", "Galaga 3 (alternate set)" )
+	GAME( 1984, galaga3m, gaplus,   gaplus,   galaga3m, 0, ROT90, "[Namco] (Midway license)", "Galaga 3 (Midway)" )
 }

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -20,13 +20,11 @@ public class _8080bw
 	static int shift_data1,shift_data2,shift_amount;
 	
 	
-	public static WriteHandlerPtr c8080bw_shift_amount_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c8080bw_shift_amount_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shift_amount = data;
 	} };
 	
-	public static WriteHandlerPtr c8080bw_shift_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c8080bw_shift_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shift_data2 = shift_data1;
 		shift_data1 = data;
 	} };
@@ -35,26 +33,22 @@ public class _8080bw
 	#define SHIFT  (((((shift_data1 << 8) | shift_data2) << (shift_amount & 0x07)) >> 8) & 0xff)
 	
 	
-	public static ReadHandlerPtr c8080bw_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr c8080bw_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return SHIFT;
 	} };
 	
-	public static ReadHandlerPtr c8080bw_shift_data_rev_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr c8080bw_shift_data_rev_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int	ret = SHIFT;
 	
 		return BITSWAP8(ret,0,1,2,3,4,5,6,7);
 	} };
 	
-	public static ReadHandlerPtr c8080bw_shift_data_comp_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr c8080bw_shift_data_comp_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return SHIFT ^ 0xff;
 	} };
 	
 	
-	public static InterruptHandlerPtr c8080bw_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr c8080bw_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int vector = cpu_getvblank() ? 0xcf : 0xd7;  /* RST 08h/10h */
 	
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
@@ -65,8 +59,7 @@ public class _8080bw
 		Extra / Different functions for Boot Hill                (MJC 300198)
 	****************************************************************************/
 	
-	public static ReadHandlerPtr boothill_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boothill_shift_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (shift_amount < 0x10)
 			return c8080bw_shift_data_r(0);
 	    else
@@ -80,13 +73,11 @@ public class _8080bw
 		0x00, 0x40, 0x60, 0x70, 0x30, 0x10, 0x50, 0x50
 	};
 	
-	public static ReadHandlerPtr boothill_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boothill_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_0_r.handler(0) & 0x8f) | boothill_controller_table[input_port_3_r.handler(0) >> 5];
 	} };
 	
-	public static ReadHandlerPtr boothill_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr boothill_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_1_r.handler(0) & 0x8f) | boothill_controller_table[input_port_4_r.handler(0) >> 5];
 	} };
 	
@@ -96,13 +87,11 @@ public class _8080bw
 		0x10, 0x50, 0x70, 0x30, 0x20, 0x60, 0x40, 0x00
 	};
 	
-	public static ReadHandlerPtr gunfight_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunfight_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_0_r.handler(0) & 0x8f) | (gunfight_controller_table[input_port_3_r.handler(0) >> 5]);
 	} };
 	
-	public static ReadHandlerPtr gunfight_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunfight_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_1_r.handler(0) & 0x8f) | (gunfight_controller_table[input_port_4_r.handler(0) >> 5]);
 	} };
 	
@@ -127,32 +116,27 @@ public class _8080bw
 	    36 , 37 , 39 , 38 , 34 , 35 , 33 , 32
 	};
 	
-	public static ReadHandlerPtr spcenctr_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spcenctr_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_0_r.handler(0) & 0xc0) | (graybit6_controller_table[input_port_0_r.handler(0) & 0x3f] ^ 0x3f);
 	} };
 	
-	public static ReadHandlerPtr spcenctr_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spcenctr_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_1_r.handler(0) & 0xc0) | (graybit6_controller_table[input_port_1_r.handler(0) & 0x3f] ^ 0x3f);
 	} };
 	
 	
-	public static ReadHandlerPtr seawolf_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr seawolf_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (input_port_0_r.handler(0) & 0xe0) | graybit6_controller_table[input_port_0_r.handler(0) & 0x1f];
 	} };
 	
 	
 	static int desertgu_controller_select;
 	
-	public static ReadHandlerPtr desertgu_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr desertgu_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(desertgu_controller_select ? 0 : 2);
 	} };
 	
-	public static WriteHandlerPtr desertgu_controller_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr desertgu_controller_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		desertgu_controller_select = data & 0x08;
 	} };
 }

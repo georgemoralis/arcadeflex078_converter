@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class toki
 	}
 	
 	/* At EOF clear the previous frames scroll registers */
-	public static VideoEofHandlerPtr video_eof_toki  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_toki  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		toki_background_xscroll[0]=((toki_scrollram16[0x16] &0x7f) << 1)
@@ -75,8 +74,7 @@ public class toki
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_tokib  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_tokib  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 	} };
 	
@@ -96,7 +94,7 @@ public class toki
 	
 	static void get_back_tile_info(int tile_index)
 	{
-		int tile = toki_background1_videoram16.read(tile_index);
+		int tile = toki_background1_videoram16[tile_index];
 		int color=(tile>>12)&0xf;
 	
 		tile&=0xfff;
@@ -110,7 +108,7 @@ public class toki
 	
 	static void get_fore_tile_info(int tile_index)
 	{
-		int tile = toki_background2_videoram16.read(tile_index);
+		int tile = toki_background2_videoram16[tile_index];
 		int color=(tile>>12)&0xf;
 	
 		tile&=0xfff;
@@ -129,8 +127,7 @@ public class toki
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_toki  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_toki  = new VideoStartHandlerPtr() { public int handler(){
 		text_layer       = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -158,17 +155,17 @@ public class toki
 	
 	WRITE16_HANDLER( toki_background1_videoram16_w )
 	{
-		int oldword = toki_background1_videoram16.read(offset);
-		COMBINE_DATA(&toki_background1_videoram16.read(offset));
-		if (oldword != toki_background1_videoram16.read(offset))
+		int oldword = toki_background1_videoram16[offset];
+		COMBINE_DATA(&toki_background1_videoram16[offset]);
+		if (oldword != toki_background1_videoram16[offset])
 			tilemap_mark_tile_dirty(background_layer,offset);
 	}
 	
 	WRITE16_HANDLER( toki_background2_videoram16_w )
 	{
-		int oldword = toki_background2_videoram16.read(offset);
-		COMBINE_DATA(&toki_background2_videoram16.read(offset));
-		if (oldword != toki_background2_videoram16.read(offset))
+		int oldword = toki_background2_videoram16[offset];
+		COMBINE_DATA(&toki_background2_videoram16[offset]);
+		if (oldword != toki_background2_videoram16[offset])
 			tilemap_mark_tile_dirty(foreground_layer,offset);
 	}
 	
@@ -247,14 +244,14 @@ public class toki
 				flipy   = 0;
 				tile    = (sprite_word[1] & 0xfff) + ((sprite_word[2] & 0x8000) >> 3);
 	
-				if (flip_screen != 0) {
+				if (flip_screen()) {
 					x=240-x;
 					y=240-y;
-					if (flipx != 0) flipx=0; else flipx=1;
+					if (flipx) flipx=0; else flipx=1;
 					flipy=1;
 				}
 	
-				drawgfx (bitmap,Machine.gfx[1],
+				drawgfx (bitmap,Machine->gfx[1],
 						tile,
 						color,
 						flipx,flipy,
@@ -293,7 +290,7 @@ public class toki
 				tile    = sprite_word[1] & 0x1fff;
 				color   = sprite_word[2] >> 12;
 	
-				drawgfx (bitmap,Machine.gfx[1],
+				drawgfx (bitmap,Machine->gfx[1],
 						tile,
 						color,
 						flipx,0,
@@ -309,8 +306,7 @@ public class toki
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,background_y_scroll,foreground_y_scroll,latch1,latch2;
 	
 		background_y_scroll=((toki_scrollram16[0x0d]&0x10)<<4)+((toki_scrollram16[0x0e]&0x7f)<<1)+((toki_scrollram16[0x0e]&0x80)>>7);
@@ -343,8 +339,7 @@ public class toki
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tokib  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tokib  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scroll_rows(foreground_layer,1);
 		tilemap_set_scroll_rows(background_layer,1);
 		tilemap_set_scrolly( background_layer, 0, toki_scrollram16[0]+1 );

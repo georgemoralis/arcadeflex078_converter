@@ -28,7 +28,7 @@ Head Panic
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -72,7 +72,7 @@ public class esd16
 	
 	WRITE16_HANDLER( esd16_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,ASSERT_LINE);		// Generate an IRQ
@@ -133,7 +133,7 @@ public class esd16
 	
 	static READ16_HANDLER( esd_eeprom_r )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			return ((EEPROM_read_bit() & 0x01) << 15);
 		}
@@ -144,7 +144,7 @@ public class esd16
 	
 	static WRITE16_HANDLER( esd_eeprom_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			// data line
 			EEPROM_write_bit((data & 0x0400) >> 6);
@@ -201,8 +201,7 @@ public class esd16
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr esd16_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr esd16_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank = data & 0xf;
 		if (data != bank)	logerror("CPU #1 - PC %04X: unknown bank bits: %02X\n",activecpu_get_pc(),data);
 		if (bank >= 3)	bank += 1;
@@ -225,8 +224,7 @@ public class esd16
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr esd16_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr esd16_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Clear IRQ only after reading the command, or some get lost */
 		cpu_set_irq_line(1,0,CLEAR_LINE);
 		return soundlatch_r(0);
@@ -260,7 +258,7 @@ public class esd16
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_multchmp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_multchmp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( multchmp )
 		PORT_START(); 	// IN0 - $600002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -339,7 +337,7 @@ public class esd16
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hedpanic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hedpanic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hedpanic )
 		PORT_START(); 	// IN0 - $600002.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -483,8 +481,7 @@ public class esd16
 		{ 80 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_multchmp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( multchmp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000, 16000000)
@@ -513,12 +510,9 @@ public class esd16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, esd16_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, esd16_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hedpanic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hedpanic )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(multchmp)
@@ -533,9 +527,7 @@ public class esd16
 		MDRV_GFXDECODE(hedpanic_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(hedpanic)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -681,6 +673,6 @@ public class esd16
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_multchmp	   = new GameDriver("1998"	,"multchmp"	,"esd16.java"	,rom_multchmp,null	,machine_driver_multchmp	,input_ports_multchmp	,null	,ROT0	,	"ESD", "Multi Champ (Korea)" )
-	public static GameDriver driver_hedpanic	   = new GameDriver("2000"	,"hedpanic"	,"esd16.java"	,rom_hedpanic,null	,machine_driver_hedpanic	,input_ports_hedpanic	,null	,ROT0	,	"ESD / Fuuki", "Head Panic (Korea?)" )
+	GAME( 1998, multchmp, 0, multchmp, multchmp, 0, ROT0, "ESD", "Multi Champ (Korea)" )
+	GAME( 2000, hedpanic, 0, hedpanic, hedpanic, 0, ROT0, "ESD / Fuuki", "Head Panic (Korea?)" )
 }

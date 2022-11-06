@@ -80,7 +80,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -106,59 +106,49 @@ public class nbmj8991
 	void pstadium_paltblnum_w(int data);
 	
 	
-	public static WriteHandlerPtr pstadium_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pstadium_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		if (!(data & 0x80)) soundlatch_clear_w(0, 0);
 		cpu_setbank(1, &RAM[0x08000 + (0x8000 * (data & 0x03))]);
 	} };
 	
-	public static WriteHandlerPtr pstadium_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pstadium_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0, data);
 	} };
 	
-	public static ReadHandlerPtr pstadium_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pstadium_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data;
 	
 		data = soundlatch_r(0);
 		return data;
 	} };
 	
-	public static DriverInitHandlerPtr init_pstadium  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pstadium  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_PSTADIUM;
 	} };
 	
-	public static DriverInitHandlerPtr init_triplew1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_triplew1  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_TRIPLEW1;
 	} };
 	
-	public static DriverInitHandlerPtr init_triplew2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_triplew2  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_TRIPLEW2;
 	} };
 	
-	public static DriverInitHandlerPtr init_ntopstar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ntopstar  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_NTOPSTAR;
 	} };
 	
-	public static DriverInitHandlerPtr init_mjlstory  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjlstory  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_MJLSTORY;
 	} };
 	
-	public static DriverInitHandlerPtr init_vanilla  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vanilla  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_VANILLA;
 	} };
 	
-	public static DriverInitHandlerPtr init_finalbny  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_finalbny  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -167,71 +157,61 @@ public class nbmj8991
 		nb1413m3_type = NB1413M3_FINALBNY;
 	} };
 	
-	public static DriverInitHandlerPtr init_qmhayaku  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_qmhayaku  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_QMHAYAKU;
 	} };
 	
-	public static DriverInitHandlerPtr init_galkoku  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_galkoku  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_GALKOKU;
 	} };
 	
-	public static DriverInitHandlerPtr init_hyouban  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyouban  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_HYOUBAN;
 	} };
 	
-	public static DriverInitHandlerPtr init_galkaika  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_galkaika  = new DriverInitHandlerPtr() { public void handler(){
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 . IM1
+		// Patch to IM2 -> IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_GALKAIKA;
 	} };
 	
-	public static DriverInitHandlerPtr init_tokyogal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tokyogal  = new DriverInitHandlerPtr() { public void handler(){
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 . IM1
+		// Patch to IM2 -> IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKYOGAL;
 	} };
 	
-	public static DriverInitHandlerPtr init_tokimbsj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tokimbsj  = new DriverInitHandlerPtr() { public void handler(){
 	#if 1
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
-		// Patch to IM2 . IM1
+		// Patch to IM2 -> IM1
 		ROM[0x0002] = 0x56;
 	#endif
 		nb1413m3_type = NB1413M3_TOKIMBSJ;
 	} };
 	
-	public static DriverInitHandlerPtr init_mcontest  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mcontest  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_MCONTEST;
 	} };
 	
-	public static DriverInitHandlerPtr init_uchuuai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_uchuuai  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_UCHUUAI;
 	} };
 	
-	public static DriverInitHandlerPtr init_av2mj1bb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_av2mj1bb  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_AV2MJ1BB;
 	} };
 	
-	public static DriverInitHandlerPtr init_av2mj2rg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_av2mj2rg  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_AV2MJ2RG;
 	} };
 	
@@ -399,8 +379,7 @@ public class nbmj8991
 	};
 	
 	
-	public static ReadHandlerPtr io_pstadium_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_pstadium_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		switch (offset & 0xff00)
@@ -421,8 +400,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_pstadium_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_pstadium_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		switch (offset & 0xff00)
@@ -456,8 +434,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_av2mj1bb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_av2mj1bb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		switch (offset & 0xff00)
@@ -491,8 +468,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr io_galkoku_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_galkoku_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if (offset < 0x8000) return nb1413m3_sndrom_r(offset);
@@ -515,8 +491,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_galkoku_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_galkoku_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		switch (offset & 0xff00)
@@ -557,8 +532,7 @@ public class nbmj8991
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr io_hyouban_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_hyouban_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if (offset < 0x8000) return nb1413m3_sndrom_r(offset);
@@ -582,8 +556,7 @@ public class nbmj8991
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_hyouban_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_hyouban_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		switch (offset & 0xff00)
@@ -664,7 +637,7 @@ public class nbmj8991
 	};
 	
 	
-	static InputPortPtr input_ports_pstadium = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pstadium = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pstadium )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -733,7 +706,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_triplew1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_triplew1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( triplew1 )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -802,7 +775,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ntopstar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ntopstar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ntopstar )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -871,7 +844,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjlstory = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjlstory = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjlstory )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -940,7 +913,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vanilla = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vanilla = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vanilla )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -1009,7 +982,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_finalbny = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalbny = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalbny )
 	
 		// I don't have manual for this game.
 	
@@ -1080,7 +1053,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qmhayaku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qmhayaku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qmhayaku )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -1149,7 +1122,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galkoku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galkoku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galkoku )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1219,7 +1192,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hyouban = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyouban = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyouban )
 	
 		// I don't have manual for this game.
 	
@@ -1292,7 +1265,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galkaika = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galkaika = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galkaika )
 	
 		// I don't have manual for this game.
 	
@@ -1365,7 +1338,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tokyogal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tokyogal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tokyogal )
 	
 		// I don't have manual for this game.
 	
@@ -1438,7 +1411,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tokimbsj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tokimbsj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tokimbsj )
 	
 		// I don't have manual for this game.
 	
@@ -1511,7 +1484,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mcontest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mcontest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mcontest )
 	
 		// I don't have manual for this game.
 	
@@ -1584,7 +1557,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_uchuuai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_uchuuai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( uchuuai )
 	
 		// I don't have manual for this game.
 	
@@ -1657,7 +1630,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_av2mj1bb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_av2mj1bb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( av2mj1bb )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x07, "1 (Easy"));
@@ -1725,7 +1698,7 @@ public class nbmj8991
 		NBMJCTRL_PORT5	/* (7) PORT 1-5 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_av2mj2rg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_av2mj2rg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( av2mj2rg )
 	
 		// I don't have manual for this game.
 	
@@ -1835,8 +1808,7 @@ public class nbmj8991
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_nbmjdrv1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nbmjdrv1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 6000000/2)		/* 3.00 MHz */
@@ -1866,13 +1838,10 @@ public class nbmj8991
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, pstadium_ym3812_interface)
 		MDRV_SOUND_ADD(DAC, pstadium_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nbmjdrv2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nbmjdrv2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 25000000/6.25)		/* 4.00 MHz ? */
@@ -1897,125 +1866,92 @@ public class nbmj8991
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("3812", YM3812, galkoku_ym3812_interface)
 		MDRV_SOUND_ADD_TAG("dac",  DAC, galkoku_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nbmjdrv3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nbmjdrv3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("3812", AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	// ---------------------------------------------------------------------
 	
-	public static MachineHandlerPtr machine_driver_pstadium = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pstadium )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_triplew1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triplew1 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_triplew1,writemem_triplew1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_triplew2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triplew2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_triplew2,writemem_triplew2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ntopstar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ntopstar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjlstory = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjlstory )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_mjlstory,writemem_mjlstory)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vanilla = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vanilla )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_finalbny = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( finalbny )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_NVRAM_HANDLER(nb1413m3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qmhayaku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qmhayaku )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_galkoku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galkoku )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hyouban = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyouban )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv3)
@@ -2023,37 +1959,28 @@ public class nbmj8991
 		MDRV_CPU_PORTS(readport_hyouban,writeport_hyouban)
 	
 		MDRV_NVRAM_HANDLER(nb1413m3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_galkaika = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galkaika )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_galkaika,writemem_galkaika)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tokyogal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tokyogal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_tokyogal,writemem_tokyogal)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tokimbsj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tokimbsj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
@@ -2061,55 +1988,41 @@ public class nbmj8991
 		MDRV_CPU_MEMORY(readmem_galkaika,writemem_galkaika)
 	
 		MDRV_NVRAM_HANDLER(nb1413m3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mcontest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcontest )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_uchuuai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( uchuuai )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_av2mj1bb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( av2mj1bb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_av2mj1bb,writemem_av2mj1bb)
 		MDRV_CPU_PORTS(readport_pstadium,writeport_av2mj1bb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_av2mj2rg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( av2mj2rg )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nbmjdrv1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem_av2mj2rg,writemem_av2mj2rg)
 		MDRV_CPU_PORTS(readport_pstadium,writeport_av2mj1bb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2573,21 +2486,21 @@ public class nbmj8991
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_pstadium	   = new GameDriver("1990"	,"pstadium"	,"nbmj8991.java"	,rom_pstadium,null	,machine_driver_pstadium	,input_ports_pstadium	,init_pstadium	,ROT180	,	"Nichibutsu", "Mahjong Panic Stadium (Japan)" )
-	public static GameDriver driver_triplew1	   = new GameDriver("1989"	,"triplew1"	,"nbmj8991.java"	,rom_triplew1,null	,machine_driver_triplew1	,input_ports_triplew1	,init_triplew1	,ROT180	,	"Nichibutsu", "Mahjong Triple Wars (Japan)" )
-	public static GameDriver driver_triplew2	   = new GameDriver("1990"	,"triplew2"	,"nbmj8991.java"	,rom_triplew2,null	,machine_driver_triplew2	,input_ports_triplew1	,init_triplew2	,ROT180	,	"Nichibutsu", "Mahjong Triple Wars 2 (Japan)" )
-	public static GameDriver driver_ntopstar	   = new GameDriver("1990"	,"ntopstar"	,"nbmj8991.java"	,rom_ntopstar,null	,machine_driver_ntopstar	,input_ports_ntopstar	,init_ntopstar	,ROT180	,	"Nichibutsu", "Mahjong Nerae! Top Star (Japan)" )
-	public static GameDriver driver_mjlstory	   = new GameDriver("1991"	,"mjlstory"	,"nbmj8991.java"	,rom_mjlstory,null	,machine_driver_mjlstory	,input_ports_mjlstory	,init_mjlstory	,ROT180	,	"Nichibutsu", "Mahjong Jikken Love Story (Japan)" )
-	public static GameDriver driver_vanilla	   = new GameDriver("1991"	,"vanilla"	,"nbmj8991.java"	,rom_vanilla,null	,machine_driver_vanilla	,input_ports_vanilla	,init_vanilla	,ROT180	,	"Nichibutsu", "Mahjong Vanilla Syndrome (Japan)" )
-	public static GameDriver driver_finalbny	   = new GameDriver("1991"	,"finalbny"	,"nbmj8991.java"	,rom_finalbny,driver_vanilla	,machine_driver_finalbny	,input_ports_finalbny	,init_finalbny	,ROT180	,	"Nichibutsu", "Mahjong Final Bunny [BET] (Japan)" )
-	public static GameDriver driver_qmhayaku	   = new GameDriver("1991"	,"qmhayaku"	,"nbmj8991.java"	,rom_qmhayaku,null	,machine_driver_qmhayaku	,input_ports_qmhayaku	,init_qmhayaku	,ROT180	,	"Nichibutsu", "Quiz-Mahjong Hayaku Yatteyo! (Japan)" )
-	public static GameDriver driver_galkoku	   = new GameDriver("1989"	,"galkoku"	,"nbmj8991.java"	,rom_galkoku,null	,machine_driver_galkoku	,input_ports_galkoku	,init_galkoku	,ROT180	,	"Nichibutsu/T.R.TEC", "Mahjong Gal no Kokuhaku (Japan)" )
-	public static GameDriver driver_hyouban	   = new GameDriver("1989"	,"hyouban"	,"nbmj8991.java"	,rom_hyouban,driver_galkoku	,machine_driver_hyouban	,input_ports_hyouban	,init_hyouban	,ROT180	,	"Nichibutsu/T.R.TEC", "Mahjong Hyouban Musume [BET] (Japan)" )
-	public static GameDriver driver_galkaika	   = new GameDriver("1989"	,"galkaika"	,"nbmj8991.java"	,rom_galkaika,null	,machine_driver_galkaika	,input_ports_galkaika	,init_galkaika	,ROT180	,	"Nichibutsu/T.R.TEC", "Mahjong Gal no Kaika (Japan)" )
-	public static GameDriver driver_tokyogal	   = new GameDriver("1989"	,"tokyogal"	,"nbmj8991.java"	,rom_tokyogal,null	,machine_driver_tokyogal	,input_ports_tokyogal	,init_tokyogal	,ROT180	,	"Nichibutsu", "Tokyo Gal Zukan (Japan)" )
-	public static GameDriver driver_tokimbsj	   = new GameDriver("1989"	,"tokimbsj"	,"nbmj8991.java"	,rom_tokimbsj,driver_tokyogal	,machine_driver_tokimbsj	,input_ports_tokimbsj	,init_tokimbsj	,ROT180	,	"Nichibutsu", "Tokimeki Bishoujo [BET] (Japan)" )
-	public static GameDriver driver_mcontest	   = new GameDriver("1989"	,"mcontest"	,"nbmj8991.java"	,rom_mcontest,null	,machine_driver_mcontest	,input_ports_mcontest	,init_mcontest	,ROT180	,	"Nichibutsu", "Miss Mahjong Contest (Japan)" )
-	public static GameDriver driver_uchuuai	   = new GameDriver("1989"	,"uchuuai"	,"nbmj8991.java"	,rom_uchuuai,null	,machine_driver_uchuuai	,input_ports_uchuuai	,init_uchuuai	,ROT180	,	"Nichibutsu", "Mahjong Uchuu yori Ai wo komete (Japan)" )
-	public static GameDriver driver_av2mj1bb	   = new GameDriver("1991"	,"av2mj1bb"	,"nbmj8991.java"	,rom_av2mj1bb,null	,machine_driver_av2mj1bb	,input_ports_av2mj1bb	,init_av2mj1bb	,ROT0	,	"MIKI SYOUJI/AV JAPAN", "AV2Mahjong No.1 Bay Bridge no Seijo (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_av2mj2rg	   = new GameDriver("1991"	,"av2mj2rg"	,"nbmj8991.java"	,rom_av2mj2rg,null	,machine_driver_av2mj2rg	,input_ports_av2mj2rg	,init_av2mj2rg	,ROT0	,	"MIKI SYOUJI/AV JAPAN", "AV2Mahjong No.2 Rouge no Kaori (Japan)", GAME_NOT_WORKING )
+	GAME( 1990, pstadium, 0,        pstadium, pstadium, pstadium, ROT180, "Nichibutsu", "Mahjong Panic Stadium (Japan)" )
+	GAME( 1989, triplew1, 0,        triplew1, triplew1, triplew1, ROT180, "Nichibutsu", "Mahjong Triple Wars (Japan)" )
+	GAME( 1990, triplew2, 0,        triplew2, triplew1, triplew2, ROT180, "Nichibutsu", "Mahjong Triple Wars 2 (Japan)" )
+	GAME( 1990, ntopstar, 0,        ntopstar, ntopstar, ntopstar, ROT180, "Nichibutsu", "Mahjong Nerae! Top Star (Japan)" )
+	GAME( 1991, mjlstory, 0,        mjlstory, mjlstory, mjlstory, ROT180, "Nichibutsu", "Mahjong Jikken Love Story (Japan)" )
+	GAME( 1991, vanilla,  0,        vanilla,  vanilla,  vanilla,  ROT180, "Nichibutsu", "Mahjong Vanilla Syndrome (Japan)" )
+	GAME( 1991, finalbny,  vanilla, finalbny, finalbny, finalbny, ROT180, "Nichibutsu", "Mahjong Final Bunny [BET] (Japan)" )
+	GAME( 1991, qmhayaku, 0,        qmhayaku, qmhayaku, qmhayaku, ROT180, "Nichibutsu", "Quiz-Mahjong Hayaku Yatteyo! (Japan)" )
+	GAME( 1989, galkoku,  0,        galkoku,  galkoku,  galkoku,  ROT180, "Nichibutsu/T.R.TEC", "Mahjong Gal no Kokuhaku (Japan)" )
+	GAME( 1989, hyouban,  galkoku,  hyouban,  hyouban,  hyouban,  ROT180, "Nichibutsu/T.R.TEC", "Mahjong Hyouban Musume [BET] (Japan)" )
+	GAME( 1989, galkaika, 0,        galkaika, galkaika, galkaika, ROT180, "Nichibutsu/T.R.TEC", "Mahjong Gal no Kaika (Japan)" )
+	GAME( 1989, tokyogal, 0,        tokyogal, tokyogal, tokyogal, ROT180, "Nichibutsu", "Tokyo Gal Zukan (Japan)" )
+	GAME( 1989, tokimbsj, tokyogal, tokimbsj, tokimbsj, tokimbsj, ROT180, "Nichibutsu", "Tokimeki Bishoujo [BET] (Japan)" )
+	GAME( 1989, mcontest, 0,        mcontest, mcontest, mcontest, ROT180, "Nichibutsu", "Miss Mahjong Contest (Japan)" )
+	GAME( 1989, uchuuai,  0,        uchuuai,  uchuuai,  uchuuai,  ROT180, "Nichibutsu", "Mahjong Uchuu yori Ai wo komete (Japan)" )
+	GAMEX(1991, av2mj1bb, 0,        av2mj1bb, av2mj1bb, av2mj1bb, ROT0,   "MIKI SYOUJI/AV JAPAN", "AV2Mahjong No.1 Bay Bridge no Seijo (Japan)", GAME_NOT_WORKING )
+	GAMEX(1991, av2mj2rg, 0,        av2mj2rg, av2mj2rg, av2mj2rg, ROT0,   "MIKI SYOUJI/AV JAPAN", "AV2Mahjong No.2 Rouge no Kaori (Japan)", GAME_NOT_WORKING )
 }

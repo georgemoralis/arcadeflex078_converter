@@ -64,7 +64,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -147,13 +147,12 @@ public class groundfx
 		"0100110000",	/* lock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_groundfx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_groundfx  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&groundfx_eeprom_interface);
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -191,12 +190,12 @@ public class groundfx
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32 != 0)	/* $500000 is watchdog */
+				if (ACCESSING_MSB32)	/* $500000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32 != 0)
+				if (ACCESSING_LSB32)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -209,7 +208,7 @@ public class groundfx
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32 != 0)
+				if (ACCESSING_MSB32)
 				{
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
@@ -235,13 +234,13 @@ public class groundfx
 	
 	static WRITE32_HANDLER( rotate_control_w )	/* only a guess that it's rotation */
 	{
-			if (ACCESSING_LSW32 != 0)
+			if (ACCESSING_LSW32)
 			{
 				groundfx_rotate_ctrl[port_sel] = data;
 				return;
 			}
 	
-			if (ACCESSING_MSW32 != 0)
+			if (ACCESSING_MSW32)
 			{
 				port_sel = (data &0x70000) >> 16;
 			}
@@ -331,7 +330,7 @@ public class groundfx
 				 INPUT PORTS (dips in eprom)
 	***********************************************************/
 	
-	static InputPortPtr input_ports_groundfx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_groundfx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( groundfx )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0xffff, IP_ACTIVE_LOW,  IPT_UNUSED );
 	
@@ -427,8 +426,7 @@ public class groundfx
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_groundfx  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_groundfx  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1,&RAM[0x80000]);
@@ -450,14 +448,12 @@ public class groundfx
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) },		/* master volume */
 	};
 	
-	public static InterruptHandlerPtr groundfx_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr groundfx_interrupt = new InterruptHandlerPtr() {public void handler(){
 		frame_counter^=1;
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_groundfx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( groundfx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)	/* 16 MHz */
@@ -487,9 +483,7 @@ public class groundfx
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 						DRIVERS
@@ -546,8 +540,7 @@ public class groundfx
 	}
 	
 	
-	public static DriverInitHandlerPtr init_groundfx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_groundfx  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned int offset,i;
 		UINT8 *gfx = memory_region(REGION_GFX3);
 		int size=memory_region_length(REGION_GFX3);
@@ -578,5 +571,5 @@ public class groundfx
 	} };
 	
 	
-	public static GameDriver driver_groundfx	   = new GameDriver("1992"	,"groundfx"	,"groundfx.java"	,rom_groundfx,null	,machine_driver_groundfx	,input_ports_groundfx	,init_groundfx	,ROT0	,	"Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )
+	GAME( 1992, groundfx, 0, groundfx, groundfx, groundfx, ROT0, "Taito Corporation", "Ground Effects / Super Ground Effects (Japan)" )
 }

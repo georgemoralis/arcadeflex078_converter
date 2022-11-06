@@ -43,7 +43,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -58,24 +58,20 @@ public class blueprnt
 	
 	static int dipsw;
 	
-	public static WriteHandlerPtr dipsw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dipsw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dipsw = data;
 	} };
 	
-	public static ReadHandlerPtr blueprnt_sh_dipsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blueprnt_sh_dipsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dipsw;
 	} };
 	
-	public static WriteHandlerPtr blueprnt_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blueprnt_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr blueprnt_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blueprnt_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int lastval;
 	
 		if (lastval == data) return;
@@ -142,7 +138,7 @@ public class blueprnt
 	
 	
 	
-	static InputPortPtr input_ports_blueprnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blueprnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blueprnt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -213,7 +209,7 @@ public class blueprnt
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_saturn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_saturn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( saturn )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -333,8 +329,7 @@ public class blueprnt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_blueprnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blueprnt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/4)	/* 2.5 MHz (2H) */
@@ -362,9 +357,7 @@ public class blueprnt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -443,7 +436,7 @@ public class blueprnt
 	
 	
 	
-	public static GameDriver driver_blueprnt	   = new GameDriver("1982"	,"blueprnt"	,"blueprnt.java"	,rom_blueprnt,null	,machine_driver_blueprnt	,input_ports_blueprnt	,null	,ROT270	,	"[Zilec Electronics] Bally Midway", "Blue Print (Midway)" )
-	public static GameDriver driver_blueprnj	   = new GameDriver("1982"	,"blueprnj"	,"blueprnt.java"	,rom_blueprnj,driver_blueprnt	,machine_driver_blueprnt	,input_ports_blueprnt	,null	,ROT270	,	"[Zilec Electronics] Jaleco", "Blue Print (Jaleco)" )
-	public static GameDriver driver_saturn	   = new GameDriver("1983"	,"saturn"	,"blueprnt.java"	,rom_saturn,null	,machine_driver_blueprnt	,input_ports_saturn	,null	,ROT270	,	"[Zilec Electronics] Jaleco", "Saturn" )
+	GAME( 1982, blueprnt, 0,        blueprnt, blueprnt, 0, ROT270, "[Zilec Electronics] Bally Midway", "Blue Print (Midway)" )
+	GAME( 1982, blueprnj, blueprnt, blueprnt, blueprnt, 0, ROT270, "[Zilec Electronics] Jaleco", "Blue Print (Jaleco)" )
+	GAME( 1983, saturn,   0,        blueprnt, saturn,   0, ROT270, "[Zilec Electronics] Jaleco", "Saturn" )
 }

@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class battlane
 	/* CPU interrupt control register */
 	int battlane_cpu_control;
 	
-	public static WriteHandlerPtr battlane_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		battlane_cpu_control = data;
 	
 		/*
@@ -88,14 +87,12 @@ public class battlane
 	
 	/* Both CPUs share the same memory */
 	
-	public static WriteHandlerPtr battlane_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlane_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		RAM[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr battlane_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr battlane_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		return RAM[offset];
 	} };
@@ -134,8 +131,7 @@ public class battlane
 	};
 	
 	
-	public static InterruptHandlerPtr battlane_cpu1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr battlane_cpu1_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* See note in battlane_cpu_command_w */
 	
 		if (~battlane_cpu_control & 0x08)
@@ -146,7 +142,7 @@ public class battlane
 	} };
 	
 	
-	static InputPortPtr input_ports_battlane = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlane = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlane )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -287,8 +283,7 @@ public class battlane
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_battlane = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battlane )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz ? */
@@ -314,9 +309,7 @@ public class battlane
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -398,7 +391,7 @@ public class battlane
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_battlane	   = new GameDriver("1986"	,"battlane"	,"battlane.java"	,rom_battlane,null	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 1)" )
-	public static GameDriver driver_battlan2	   = new GameDriver("1986"	,"battlan2"	,"battlane.java"	,rom_battlan2,driver_battlane	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 2)" )
-	public static GameDriver driver_battlan3	   = new GameDriver("1986"	,"battlan3"	,"battlane.java"	,rom_battlan3,driver_battlane	,machine_driver_battlane	,input_ports_battlane	,null	,ROT90	,	"Technos (Taito license)", "Battle Lane! Vol. 5 (set 3)" )
+	GAME( 1986, battlane, 0,        battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 1)" )
+	GAME( 1986, battlan2, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 2)" )
+	GAME( 1986, battlan3, battlane, battlane, battlane, 0, ROT90, "Technos (Taito license)", "Battle Lane! Vol. 5 (set 3)" )
 }

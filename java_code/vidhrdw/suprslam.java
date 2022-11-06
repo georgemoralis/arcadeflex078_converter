@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,7 +40,7 @@ public class suprslam
 		*/
 	
 	
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data16_t *source = suprslam_spriteram;
 		data16_t *source2 = suprslam_spriteram;
 		data16_t *finish = source + 0x2000/2;
@@ -78,7 +78,7 @@ public class suprslam
 				if (ypos > 0xff) ypos -=0x200;
 	
 				for (ycnt = 0; ycnt < high+1; ycnt ++) {
-					if (flipx == 0) {
+					if (NOT(flipx)) {
 						for (xcnt = 0; xcnt < wide+1; xcnt ++)	{
 							int tileno = suprslam_sp_videoram[word_offset+loopno];
 							drawgfxzoom(bitmap, gfx, tileno, col, 0, 0,xpos + xcnt * xzoom/2, ypos + ycnt * yzoom/2, cliprect, TRANSPARENCY_PEN, 15,xzoom << 11, yzoom << 11);
@@ -147,8 +147,7 @@ public class suprslam
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_suprslam  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_suprslam  = new VideoStartHandlerPtr() { public int handler(){
 		suprslam_bg_tilemap = tilemap_create(get_suprslam_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,64);
 		suprslam_screen_tilemap = tilemap_create(get_suprslam_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 	
@@ -163,8 +162,7 @@ public class suprslam
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_suprslam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_suprslam  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,get_black_pen(),cliprect);
 	
 		K053936_0_zoom_draw(bitmap,cliprect,suprslam_bg_tilemap,0,0);

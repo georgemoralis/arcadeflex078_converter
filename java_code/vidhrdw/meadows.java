@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,10 +40,9 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_meadows  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_meadows  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,30);
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 		return 0;
 	} };
@@ -56,8 +55,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr meadows_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr meadows_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
@@ -70,8 +68,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr meadows_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr meadows_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (spriteram.read(offset)!= data)
 			force_partial_update(cpu_getscanline());
 		spriteram.write(offset,data);
@@ -98,7 +95,7 @@ public class meadows
 			int bank = i;							/* that fixes it for now :-/ */
 			int flip = spriteram.read(i+8)>> 5;			/* bit #5 flip vertical flag */
 	
-			drawgfx(bitmap, Machine.gfx[bank + 1], code, 0, flip, 0, x, y, clip, TRANSPARENCY_PEN, 0);
+			drawgfx(bitmap, Machine->gfx[bank + 1], code, 0, flip, 0, x, y, clip, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -110,8 +107,7 @@ public class meadows
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_meadows  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_meadows  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the background */
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 	

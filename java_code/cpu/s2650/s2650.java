@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.s2650;
 
@@ -112,7 +112,7 @@ public class s2650
 				vector = (*S.irq_callback)(0) & 0xff;				\
 				/* build effective address within first 8K page */	\
 				S.ea = S2650_relative[vector] & PMSK;				\
-				if ((vector & 0x80) != 0)		/* indirect bit set ? */	\
+				if (vector & 0x80)		/* indirect bit set ? */	\
 				{													\
 					int addr = S.ea;								\
 					s2650_ICount -= 2;								\
@@ -218,7 +218,7 @@ public class s2650
 		UINT8 hr = ARG();	/* get 'holding register' */            \
 		/* build effective address within current 8K page */		\
 		S.ea = page + ((S.iar + S2650_relative[hr]) & PMSK);		\
-		if ((hr & 0x80) != 0) { /* indirect bit set ? */					\
+		if (hr & 0x80) { /* indirect bit set ? */					\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -237,7 +237,7 @@ public class s2650
 		UINT8 hr = ARG();	/* get 'holding register' */            \
 		/* build effective address from 0 */						\
 		S.ea = (S2650_relative[hr] & PMSK);							\
-		if ((hr & 0x80) != 0) { /* indirect bit set ? */					\
+		if (hr & 0x80) { /* indirect bit set ? */					\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -259,7 +259,7 @@ public class s2650
 		/* build effective address within current 8K page */		\
 		S.ea = S.page + (((hr << 8) + dr) & PMSK);					\
 		/* indirect addressing ? */ 								\
-		if ((hr & 0x80) != 0) {											\
+		if (hr & 0x80) {											\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -301,7 +301,7 @@ public class s2650
 		/* build address in 32K address space */					\
 		S.ea = ((hr << 8) + dr) & AMSK; 							\
 		/* indirect addressing ? */ 								\
-		if ((hr & 0x80) != 0) {											\
+		if (hr & 0x80) {											\
 			int addr = S.ea;										\
 			s2650_ICount -= 2;										\
 			/* build indirect 32K address */						\
@@ -336,7 +336,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BRR(cond) 											\
 	{																\
-		if (cond != 0)													\
+		if (cond)													\
 		{															\
 			REL_EA( S.page );										\
 			S.page = S.ea & PAGE;									\
@@ -363,7 +363,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BRA(cond) 											\
 	{																\
-		if (cond != 0)													\
+		if( cond )													\
 		{															\
 			BRA_EA();												\
 			S.page = S.ea & PAGE;									\
@@ -391,7 +391,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BSR(cond) 											\
 	{																\
-		if (cond != 0)													\
+		if( cond )													\
 		{															\
 			REL_EA(S.page); 										\
 			S.psu  = (S.psu & ~SP) | ((S.psu + 1) & SP);			\
@@ -422,7 +422,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_BSA(cond) 											\
 	{																\
-		if (cond != 0)													\
+		if( cond )													\
 		{															\
 			BRA_EA();												\
 			S.psu = (S.psu & ~SP) | ((S.psu + 1) & SP); 			\
@@ -454,7 +454,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_RET(cond) 											\
 	{																\
-		if (cond != 0)													\
+		if( cond )													\
 		{															\
 			S.ea = S.ras[S.psu & SP];								\
 			S.psu = (S.psu & ~SP) | ((S.psu - 1) & SP); 			\
@@ -472,7 +472,7 @@ public class s2650
 	 ***************************************************************/
 	#define M_RETE(cond)											\
 	{																\
-		if (cond != 0)													\
+		if( cond )													\
 		{															\
 			S.ea = S.ras[S.psu & SP];								\
 			S.psu = (S.psu & ~SP) | ((S.psu - 1) & SP); 			\
@@ -542,7 +542,7 @@ public class s2650
 		/* add source; carry only if WC is set */					\
 		UINT16 res = dest + source + ((S.psl >> 3) & S.psl & C);	\
 		S.psl &= ~(C | OVF | IDC);									\
-		if ((res & 0x100) != 0) S.psl |= C; 							    \
+		if(res & 0x100) S.psl |= C; 							    \
 	    dest = res & 0xff;                                          \
 		if( (dest & 15) < (before & 15) ) S.psl |= IDC; 			\
 		SET_CC_OVF_ADD(dest,before,source);							\
@@ -769,14 +769,14 @@ public class s2650
 	
 	unsigned s2650_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(s2650_Regs*)dst = S;
 		return sizeof(s2650_Regs);
 	}
 	
 	void s2650_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			S = *(s2650_Regs*)src;
 			S.page = S.page & PAGE;
@@ -871,7 +871,7 @@ public class s2650
 	
 	void s2650_set_flag(int state)
 	{
-	    if (state != 0)
+	    if (state)
 	        S.psu |= FO;
 	    else
 	        S.psu &= ~FO;
@@ -884,7 +884,7 @@ public class s2650
 	
 	void s2650_set_sense(int state)
 	{
-	    if (state != 0)
+	    if (state)
 	        S.psu |= SI;
 	    else
 	        S.psu &= ~SI;
@@ -1482,42 +1482,42 @@ public class s2650
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
 	
-	    if (context == 0)
+	    if( !context )
 			r = &S;
 	
 	    switch( regnum )
 		{
 			case CPU_INFO_FLAGS:
-			case CPU_INFO_REG+S2650_PC: sprintf(buffer[which], "PC:%04X", r.page + r.iar); break;
-			case CPU_INFO_REG+S2650_PS: sprintf(buffer[which], "PS:%02X%02X", r.psu, r.psl); break;
-			case CPU_INFO_REG+S2650_R0: sprintf(buffer[which], "R0:%02X", r.reg[0]); break;
-			case CPU_INFO_REG+S2650_R1: sprintf(buffer[which], "R1:%02X", r.reg[1]); break;
-			case CPU_INFO_REG+S2650_R2: sprintf(buffer[which], "R2:%02X", r.reg[2]); break;
-			case CPU_INFO_REG+S2650_R3: sprintf(buffer[which], "R3:%02X", r.reg[3]); break;
-			case CPU_INFO_REG+S2650_R1A: sprintf(buffer[which], "R1'%02X", r.reg[4]); break;
-			case CPU_INFO_REG+S2650_R2A: sprintf(buffer[which], "R2'%02X", r.reg[5]); break;
-			case CPU_INFO_REG+S2650_R3A: sprintf(buffer[which], "R3'%02X", r.reg[6]); break;
-			case CPU_INFO_REG+S2650_HALT: sprintf(buffer[which], "HALT:%X", r.halt); break;
-			case CPU_INFO_REG+S2650_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state); break;
-			case CPU_INFO_REG+S2650_SI: sprintf(buffer[which], "SI:%X", (r.psu & SI) ? 1 : 0); break;
-			case CPU_INFO_REG+S2650_FO: sprintf(buffer[which], "FO:%X", (r.psu & FO) ? 1 : 0); break;
+			case CPU_INFO_REG+S2650_PC: sprintf(buffer[which], "PC:%04X", r->page + r->iar); break;
+			case CPU_INFO_REG+S2650_PS: sprintf(buffer[which], "PS:%02X%02X", r->psu, r->psl); break;
+			case CPU_INFO_REG+S2650_R0: sprintf(buffer[which], "R0:%02X", r->reg[0]); break;
+			case CPU_INFO_REG+S2650_R1: sprintf(buffer[which], "R1:%02X", r->reg[1]); break;
+			case CPU_INFO_REG+S2650_R2: sprintf(buffer[which], "R2:%02X", r->reg[2]); break;
+			case CPU_INFO_REG+S2650_R3: sprintf(buffer[which], "R3:%02X", r->reg[3]); break;
+			case CPU_INFO_REG+S2650_R1A: sprintf(buffer[which], "R1'%02X", r->reg[4]); break;
+			case CPU_INFO_REG+S2650_R2A: sprintf(buffer[which], "R2'%02X", r->reg[5]); break;
+			case CPU_INFO_REG+S2650_R3A: sprintf(buffer[which], "R3'%02X", r->reg[6]); break;
+			case CPU_INFO_REG+S2650_HALT: sprintf(buffer[which], "HALT:%X", r->halt); break;
+			case CPU_INFO_REG+S2650_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state); break;
+			case CPU_INFO_REG+S2650_SI: sprintf(buffer[which], "SI:%X", (r->psu & SI) ? 1 : 0); break;
+			case CPU_INFO_REG+S2650_FO: sprintf(buffer[which], "FO:%X", (r->psu & FO) ? 1 : 0); break;
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c",
-					r.psu & 0x80 ? 'S':'.',
-					r.psu & 0x40 ? 'O':'.',
-					r.psu & 0x20 ? 'I':'.',
-					r.psu & 0x10 ? '?':'.',
-					r.psu & 0x08 ? '?':'.',
-					r.psu & 0x04 ? 's':'.',
-					r.psu & 0x02 ? 's':'.',
-					r.psu & 0x01 ? 's':'.',
-	                r.psl & 0x80 ? 'M':'.',
-					r.psl & 0x40 ? 'P':'.',
-					r.psl & 0x20 ? 'H':'.',
-					r.psl & 0x10 ? 'R':'.',
-					r.psl & 0x08 ? 'W':'.',
-					r.psl & 0x04 ? 'V':'.',
-					r.psl & 0x02 ? '2':'.',
-					r.psl & 0x01 ? 'C':'.');
+					r->psu & 0x80 ? 'S':'.',
+					r->psu & 0x40 ? 'O':'.',
+					r->psu & 0x20 ? 'I':'.',
+					r->psu & 0x10 ? '?':'.',
+					r->psu & 0x08 ? '?':'.',
+					r->psu & 0x04 ? 's':'.',
+					r->psu & 0x02 ? 's':'.',
+					r->psu & 0x01 ? 's':'.',
+	                r->psl & 0x80 ? 'M':'.',
+					r->psl & 0x40 ? 'P':'.',
+					r->psl & 0x20 ? 'H':'.',
+					r->psl & 0x10 ? 'R':'.',
+					r->psl & 0x08 ? 'W':'.',
+					r->psl & 0x04 ? 'V':'.',
+					r->psl & 0x02 ? '2':'.',
+					r->psl & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "S2650";
 			case CPU_INFO_FAMILY: return "Signetics 2650";

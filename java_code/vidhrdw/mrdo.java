@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -53,8 +53,7 @@ public class mrdo
 	  200 ohm pulldown on all three components
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mrdo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mrdo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -72,11 +71,11 @@ public class mrdo
 		{
 			float par = 0;
 	
-			if ((i & 1) != 0) par += 1.0/R1;
-			if ((i & 2) != 0) par += 1.0/R2;
-			if ((i & 4) != 0) par += 1.0/R3;
-			if ((i & 8) != 0) par += 1.0/R4;
-			if (par != 0)
+			if (i & 1) par += 1.0/R1;
+			if (i & 2) par += 1.0/R2;
+			if (i & 4) par += 1.0/R3;
+			if (i & 8) par += 1.0/R4;
+			if (par)
 			{
 				par = 1/par;
 				pot[i] = pull/(pull+par) - potadjust;
@@ -158,8 +157,7 @@ public class mrdo
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mrdo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mrdo  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -180,8 +178,7 @@ public class mrdo
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr mrdo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrdo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mrdo_bgvideoram[offset] != data)
 		{
 			mrdo_bgvideoram[offset] = data;
@@ -189,8 +186,7 @@ public class mrdo
 		}
 	} };
 	
-	public static WriteHandlerPtr mrdo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrdo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mrdo_fgvideoram[offset] != data)
 		{
 			mrdo_fgvideoram[offset] = data;
@@ -199,22 +195,19 @@ public class mrdo
 	} };
 	
 	
-	public static WriteHandlerPtr mrdo_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrdo_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap,0,data);
 	} };
 	
-	public static WriteHandlerPtr mrdo_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrdo_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* This is NOT affected by flipscreen (so stop it happening) */
 	
-		if (flipscreen != 0) tilemap_set_scrolly(bg_tilemap,0,((256-data) & 0xff));
+		if (flipscreen) tilemap_set_scrolly(bg_tilemap,0,((256-data) & 0xff));
 		else tilemap_set_scrolly(bg_tilemap,0,data);
 	} };
 	
 	
-	public static WriteHandlerPtr mrdo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrdo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 1-3 control the playfield priority, but they are not used by */
 		/* Mr. Do! so we don't emulate them */
 	
@@ -239,7 +232,7 @@ public class mrdo
 		{
 			if (spriteram.read(offs + 1)!= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						spriteram.read(offs),spriteram.read(offs + 2)& 0x0f,
 						spriteram.read(offs + 2)& 0x10,spriteram.read(offs + 2)& 0x20,
 						spriteram.read(offs + 3),256 - spriteram.read(offs + 1),
@@ -248,8 +241,7 @@ public class mrdo
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mrdo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mrdo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);

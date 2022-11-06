@@ -12,7 +12,7 @@
 /* Include the internal copy of the libexpat library */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.xml2info;
 
@@ -234,34 +234,34 @@ public class xml2info
 	
 	void process_error(struct state_t* state, const char* tag, const char* msg)
 	{
-		fprintf(stderr, "%d:%s:%s\n", XML_GetCurrentLineNumber(state.parser), tag, msg);
-		state.error = 1;
+		fprintf(stderr, "%d:%s:%s\n", XML_GetCurrentLineNumber(state->parser), tag, msg);
+		state->error = 1;
 	}
 	
 	void process_game(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_open) {
 			unsigned i;
-			if (attributes == 0) {
-				process_error(state, state.level[1].tag, "missing runnable attrib");
+			if (!attributes) {
+				process_error(state, state->level[1].tag, "missing runnable attrib");
 				return;
 			}
 			for(i=0;attributes[i];i+=2)
 				if (strcmp(attributes[i],"runnable")==0)
 					break;
 			if (!attributes[i]) {
-				process_error(state, state.level[1].tag, "missing runnable attrib");
+				process_error(state, state->level[1].tag, "missing runnable attrib");
 				return;
 			}
 			if (strcmp(attributes[i+1],"no")==0)
-				fprintf(state.os, "%s" L1B, "resource");
+				fprintf(state->os, "%s" L1B, "resource");
 			else
-				fprintf(state.os, "%s" L1B, state.level[1].tag);
-			state.level[1].flag = 0;
+				fprintf(state->os, "%s" L1B, state->level[1].tag);
+			state->level[1].flag = 0;
 		} else if (t == token_close) {
-			fprintf(state.os, L1E);
-			if (!state.level[1].flag) {
-				process_error(state, state.level[1].tag, "missing name attrib");
+			fprintf(state->os, L1E);
+			if (!state->level[1].flag) {
+				process_error(state, state->level[1].tag, "missing name attrib");
 				return;
 			}
 		}
@@ -270,33 +270,33 @@ public class xml2info
 	void process_string2(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L1P "%s ", state.level[2].tag);
-			print_string(state.os, s, len);
-			fprintf(state.os, L1N);
+			fprintf(state->os, L1P "%s ", state->level[2].tag);
+			print_string(state->os, s, len);
+			fprintf(state->os, L1N);
 		}
 	}
 	
 	void process_item2(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L1P "%s ", state.level[2].tag);
+			fprintf(state->os, L1P "%s ", state->level[2].tag);
 			if (len == 0) {
-				process_error(state, state.level[2].tag, "empty token");
+				process_error(state, state->level[2].tag, "empty token");
 				return;
 			}
-			print_item(state.os, s, len);
-			fprintf(state.os, L1N);
+			print_item(state->os, s, len);
+			fprintf(state->os, L1N);
 		}
 	}
 	
 	void process_gamename(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			if (container_add(&state.game_map, &state.game_mac, &state.game_max, s, len) != 0) {
-				process_error(state, state.level[2].tag, "low memory");
+			if (container_add(&state->game_map, &state->game_mac, &state->game_max, s, len) != 0) {
+				process_error(state, state->level[2].tag, "low memory");
 				return;
 			}
-			state.level[1].flag = 1;
+			state->level[1].flag = 1;
 			process_item2(state, t, s, len, attributes);
 		}
 	}
@@ -304,8 +304,8 @@ public class xml2info
 	void process_reference(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			if (container_add(&state.reference_map, &state.reference_mac, &state.reference_max, s, len) != 0) {
-				process_error(state, state.level[2].tag, "low memory");
+			if (container_add(&state->reference_map, &state->reference_mac, &state->reference_max, s, len) != 0) {
+				process_error(state, state->level[2].tag, "low memory");
 				return;
 			}
 			process_item2(state, t, s, len, attributes);
@@ -315,31 +315,31 @@ public class xml2info
 	void process_set2(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_open) {
-			fprintf(state.os, L1P "%s" L2B, state.level[2].tag);
+			fprintf(state->os, L1P "%s" L2B, state->level[2].tag);
 		} else if (t == token_close) {
-			fprintf(state.os, L2E L1N);
+			fprintf(state->os, L2E L1N);
 		}
 	}
 	
 	void process_string3(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L2P "%s ", state.level[3].tag);
-			print_string(state.os, s, len);
-			fprintf(state.os, "%s", L2N);
+			fprintf(state->os, L2P "%s ", state->level[3].tag);
+			print_string(state->os, s, len);
+			fprintf(state->os, "%s", L2N);
 		}
 	}
 	
 	void process_item3(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L2P "%s ", state.level[3].tag);
+			fprintf(state->os, L2P "%s ", state->level[3].tag);
 			if (len == 0) {
-				process_error(state, state.level[3].tag, "empty token");
+				process_error(state, state->level[3].tag, "empty token");
 				return;
 			}
-			print_item(state.os, s, len);
-			fprintf(state.os, "%s", L2N);
+			print_item(state->os, s, len);
+			fprintf(state->os, "%s", L2N);
 		}
 	}
 	
@@ -349,7 +349,7 @@ public class xml2info
 			unsigned i;
 			for(i=0;i<len;++i) {
 				if (!isdigit(s[i])) {
-					process_error(state, state.level[3].tag, "integer number expected");
+					process_error(state, state->level[3].tag, "integer number expected");
 					return;
 				}
 			}
@@ -363,7 +363,7 @@ public class xml2info
 			unsigned i;
 			for(i=0;i<len;++i) {
 				if (!isxdigit(s[i])) {
-					process_error(state, state.level[3].tag, "hex number expected");
+					process_error(state, state->level[3].tag, "hex number expected");
 					return;
 				}
 			}
@@ -377,7 +377,7 @@ public class xml2info
 			unsigned i;
 			for(i=0;i<len;++i) {
 				if (!isdigit(s[i]) && s[i] != '.') {
-					process_error(state, state.level[3].tag, "float number expected");
+					process_error(state, state->level[3].tag, "float number expected");
 					return;
 				}
 			}
@@ -385,67 +385,67 @@ public class xml2info
 		}
 	}
 	
-	/* Convert gamelist:game:sample:name . game:sample */
+	/* Convert gamelist:game:sample:name -> game:sample */
 	void process_samplename(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L1P "%s ", state.level[2].tag);
+			fprintf(state->os, L1P "%s ", state->level[2].tag);
 			if (len == 0) {
-				process_error(state, state.level[2].tag, "empty token");
+				process_error(state, state->level[2].tag, "empty token");
 				return;
 			}
-			print_item(state.os, s, len);
-			fprintf(state.os, L1N);
+			print_item(state->os, s, len);
+			fprintf(state->os, L1N);
 		}
 	}
 	
-	/* Convert gamelist:game:rom:offset . game:rom:offs */
+	/* Convert gamelist:game:rom:offset -> game:rom:offs */
 	void process_romoffset(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			state.level[3].tag = "offs";
+			state->level[3].tag = "offs";
 			process_item3(state, t, s, len, attributes);
 		}
 	}
 	
-	/* Convert gamelist:game:rom:status=baddump|nodump|good . game:rom:flags=baddump|nodump */
+	/* Convert gamelist:game:rom:status=baddump|nodump|good -> game:rom:flags=baddump|nodump */
 	void process_romstatus(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
 			if (strncmp("baddump", s, len) == 0) {
-				fprintf(state.os, L2P "flags baddump" L2N);
+				fprintf(state->os, L2P "flags baddump" L2N);
 			} else if (strncmp("nodump", s, len) == 0) {
-				fprintf(state.os, L2P "flags nodump" L2N);
+				fprintf(state->os, L2P "flags nodump" L2N);
 			}
 		}
 	}
 	
-	/* Convert gamelist:game:rom:dispose=yes . game:rom:flags=dispose */
+	/* Convert gamelist:game:rom:dispose=yes -> game:rom:flags=dispose */
 	void process_romdispose(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
 			if (strncmp("yes", s, len) == 0) {
-				fprintf(state.os, L2P "flags dispose" L2N);
+				fprintf(state->os, L2P "flags dispose" L2N);
 			}
 		}
 	}
 	
-	/* Convert gamelist:game:rom:soundonly=yes . game:rom:flags=soundonly */
+	/* Convert gamelist:game:rom:soundonly=yes -> game:rom:flags=soundonly */
 	void process_romsoundonly(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
 			if (strncmp("yes", s, len) == 0) {
-				fprintf(state.os, L2P "flags soundonly" L2N);
+				fprintf(state->os, L2P "flags soundonly" L2N);
 			}
 		}
 	}
 	
-	/* Convert gamelist:game:chip:audio=yes . game:rom:flags=audio */
+	/* Convert gamelist:game:chip:audio=yes -> game:rom:flags=audio */
 	void process_chipsoundonly(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
 			if (strncmp("yes", s, len) == 0) {
-				fprintf(state.os, L2P "flags audio" L2N);
+				fprintf(state->os, L2P "flags audio" L2N);
 			}
 		}
 	}
@@ -455,7 +455,7 @@ public class xml2info
 	{
 		if (t == token_data) {
 			if (strncmp("yes", s, len) == 0) {
-				fprintf(state.os, L2P "tilt yes" L2N);
+				fprintf(state->os, L2P "tilt yes" L2N);
 			}
 		}
 	}
@@ -465,34 +465,34 @@ public class xml2info
 	{
 		if (t == token_data) {
 			if (strncmp("yes", s, len) == 0) {
-				fprintf(state.os, L2P "service yes" L2N);
+				fprintf(state->os, L2P "service yes" L2N);
 			}
 		}
 	}
 	
-	/* Convert gamelist:game:video:refresh . game:video:freq */
+	/* Convert gamelist:game:video:refresh -> game:video:freq */
 	void process_videorefresh(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			state.level[3].tag = "freq";
+			state->level[3].tag = "freq";
 			process_float3(state, t, s, len, attributes);
 		}
 	}
 	
-	/* Convert gamelist:game:video:width . game:video:x */
+	/* Convert gamelist:game:video:width -> game:video:x */
 	void process_videowidth(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			state.level[3].tag = "x";
+			state->level[3].tag = "x";
 			process_num3(state, t, s, len, attributes);
 		}
 	}
 	
-	/* Convert gamelist:game:video:height . game:video:y */
+	/* Convert gamelist:game:video:height -> game:video:y */
 	void process_videoheight(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			state.level[3].tag = "y";
+			state->level[3].tag = "y";
 			process_num3(state, t, s, len, attributes);
 		}
 	}
@@ -502,34 +502,34 @@ public class xml2info
 	{
 		if (t == token_open) {
 			unsigned i;
-			if (attributes == 0) {
-				process_error(state, state.level[2].tag, "missing default attrib");
+			if (!attributes) {
+				process_error(state, state->level[2].tag, "missing default attrib");
 				return;
 			}
 			for(i=0;attributes[i];i+=2)
 				if (strcmp(attributes[i], "default")==0)
 					break;
 			if (!attributes[i]) {
-				process_error(state, state.level[2].tag, "missing default attrib");
+				process_error(state, state->level[2].tag, "missing default attrib");
 				return;
 			}
-			state.dip_default = strcmp(attributes[i+1],"yes")==0;
+			state->dip_default = strcmp(attributes[i+1],"yes")==0;
 		} else if (t == token_close) {
-			state.dip_default = 0;
+			state->dip_default = 0;
 		}
 	}
 	
-	/* Convert gamelist:game:dipswitch:dipvalue:name . game:dipswitch:entry */
+	/* Convert gamelist:game:dipswitch:dipvalue:name -> game:dipswitch:entry */
 	void process_dipswitchdipvaluename(struct state_t* state, enum token_t t, const char* s, unsigned len, const char** attributes)
 	{
 		if (t == token_data) {
-			fprintf(state.os, L2P "entry ");
-			print_string(state.os, s, len);
-			fprintf(state.os, "%s", L2N);
-			if (state.dip_default) {
-				fprintf(state.os, L2P "default ");
-				print_string(state.os, s, len);
-				fprintf(state.os, "%s", L2N);
+			fprintf(state->os, L2P "entry ");
+			print_string(state->os, s, len);
+			fprintf(state->os, "%s", L2N);
+			if (state->dip_default) {
+				fprintf(state->os, L2P "default ");
+				print_string(state->os, s, len);
+				fprintf(state->os, "%s", L2N);
 			}
 		}
 	}
@@ -637,17 +637,17 @@ public class xml2info
 	{
 		struct state_t* state = (struct state_t*)data;
 	
-		if (state.depth < DEPTH_MAX) {
-			if (state.error == 0) {
-				if (state.level[state.depth].process) {
-					state.level[state.depth].process(state, token_data, state.level[state.depth].data, state.level[state.depth].len, 0);
-					state.level[state.depth].process(state, token_close, 0, 0, 0);
+		if (state->depth < DEPTH_MAX) {
+			if (state->error == 0) {
+				if (state->level[state->depth].process) {
+					state->level[state->depth].process(state, token_data, state->level[state->depth].data, state->level[state->depth].len, 0);
+					state->level[state->depth].process(state, token_close, 0, 0, 0);
 				}
 			}
-			free(state.level[state.depth].data);
+			free(state->level[state->depth].data);
 		}
 	
-		--state.depth;
+		--state->depth;
 	}
 	
 	/**
@@ -657,17 +657,17 @@ public class xml2info
 	{
 		struct state_t* state = (struct state_t*)data;
 	
-		if (state.depth < DEPTH_MAX) {
-			if (state.error == 0) {
+		if (state->depth < DEPTH_MAX) {
+			if (state->error == 0) {
 				/* accumulate the data */
-				unsigned new_len = state.level[state.depth].len + len;
-				state.level[state.depth].data = realloc(state.level[state.depth].data, new_len);
-				if (!state.level[state.depth].data) {
-					process_error(state, state.level[state.depth].tag, "low memory");
+				unsigned new_len = state->level[state->depth].len + len;
+				state->level[state->depth].data = realloc(state->level[state->depth].data, new_len);
+				if (!state->level[state->depth].data) {
+					process_error(state, state->level[state->depth].tag, "low memory");
 					return;
 				}
-				memcpy(state.level[state.depth].data + state.level[state.depth].len, s, len);
-				state.level[state.depth].len += len;
+				memcpy(state->level[state->depth].data + state->level[state->depth].len, s, len);
+				state->level[state->depth].len += len;
 			}
 		}
 	}
@@ -681,20 +681,20 @@ public class xml2info
 		struct conversion_t* c;
 		unsigned i;
 	
-		++state.depth;
+		++state->depth;
 	
-		if (state.depth < DEPTH_MAX) {
-			state.level[state.depth].tag = name;
-			state.level[state.depth].data = 0;
-			state.level[state.depth].len = 0;
+		if (state->depth < DEPTH_MAX) {
+			state->level[state->depth].tag = name;
+			state->level[state->depth].data = 0;
+			state->level[state->depth].len = 0;
 	
-			if (state.error == 0) {
-				c = identify(state.depth, state.level);
-				if (c != 0) {
-					state.level[state.depth].process = c.process;
-					state.level[state.depth].process(state, token_open, 0, 0, attributes);
+			if (state->error == 0) {
+				c = identify(state->depth, state->level);
+				if (c) {
+					state->level[state->depth].process = c->process;
+					state->level[state->depth].process(state, token_open, 0, 0, attributes);
 				} else {
-					state.level[state.depth].process = 0;
+					state->level[state->depth].process = 0;
 				}
 	
 				for(i=0;attributes[i];i+=2) {
@@ -704,7 +704,7 @@ public class xml2info
 					end_handler(data, attributes[i]);
 				}
 			} else {
-				state.level[state.depth].process = 0;
+				state->level[state->depth].process = 0;
 			}
 		}
 	}
@@ -717,21 +717,21 @@ public class xml2info
 		unsigned i;
 	
 		/* sort the container */
-		qsort(state.game_map, state.game_mac, sizeof(char*), container_compare);
+		qsort(state->game_map, state->game_mac, sizeof(char*), container_compare);
 	
 		/* check for duplicate */
-		for(i=1;i<state.game_mac;++i) {
-			if (strcmp(state.game_map[i-1], state.game_map[i]) == 0) {
-				fprintf(stderr, "::duplicate game %s\n", state.game_map[i]);
+		for(i=1;i<state->game_mac;++i) {
+			if (strcmp(state->game_map[i-1], state->game_map[i]) == 0) {
+				fprintf(stderr, "::duplicate game %s\n", state->game_map[i]);
 				return -1;
 			}
 		}
 	
 		/* check the presence of any reference */
-		for(i=0;i<state.reference_mac;++i) {
-			void* p = bsearch(&state.reference_map[i], state.game_map, state.game_mac, sizeof(char*), container_compare);
-			if (p == 0) {
-				fprintf(stderr, "::reference to a missing game %s\n", state.reference_map[i]);
+		for(i=0;i<state->reference_mac;++i) {
+			void* p = bsearch(&state->reference_map[i], state->game_map, state->game_mac, sizeof(char*), container_compare);
+			if (!p) {
+				fprintf(stderr, "::reference to a missing game %s\n", state->reference_map[i]);
 				return -1;
 			}
 		}
@@ -780,7 +780,7 @@ public class xml2info
 				break;
 			}
 	
-			if (done != 0)
+			if (done)
 				break;
 		}
 	

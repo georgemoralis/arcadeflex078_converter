@@ -22,7 +22,7 @@ MAIN BOARD:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,20 +34,17 @@ public class matmania
 	
 	
 	
-	public static WriteHandlerPtr matmania_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr matmania_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr matmania_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr matmania_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(0,data);
 	} };
 	
 	
-	public static WriteHandlerPtr maniach_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
 	} };
@@ -184,7 +181,7 @@ public class matmania
 	
 	
 	
-	static InputPortPtr input_ports_matmania = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_matmania = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( matmania )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -351,8 +348,7 @@ public class matmania
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_matmania = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( matmania )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ???? */
@@ -383,9 +379,7 @@ public class matmania
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -404,8 +398,7 @@ public class matmania
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_maniach = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( maniach )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1500000)	/* 1.5 MHz ???? */
@@ -438,9 +431,7 @@ public class matmania
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -658,8 +649,8 @@ public class matmania
 	
 	
 	
-	public static GameDriver driver_matmania	   = new GameDriver("1985"	,"matmania"	,"matmania.java"	,rom_matmania,null	,machine_driver_matmania	,input_ports_matmania	,null	,ROT270	,	"Technos (Taito America license)", "Mat Mania" )
-	public static GameDriver driver_excthour	   = new GameDriver("1985"	,"excthour"	,"matmania.java"	,rom_excthour,driver_matmania	,machine_driver_matmania	,input_ports_matmania	,null	,ROT270	,	"Technos (Taito license)", "Exciting Hour" )
-	public static GameDriver driver_maniach	   = new GameDriver("1986"	,"maniach"	,"matmania.java"	,rom_maniach,null	,machine_driver_maniach	,input_ports_matmania	,null	,ROT270	,	"Technos (Taito America license)", "Mania Challenge (set 1)" )
-	public static GameDriver driver_maniach2	   = new GameDriver("1986"	,"maniach2"	,"matmania.java"	,rom_maniach2,driver_maniach	,machine_driver_maniach	,input_ports_matmania	,null	,ROT270	,	"Technos (Taito America license)", "Mania Challenge (set 2)" )	/* earlier version? */
+	GAME( 1985, matmania, 0,        matmania, matmania, 0, ROT270, "Technos (Taito America license)", "Mat Mania" )
+	GAME( 1985, excthour, matmania, matmania, matmania, 0, ROT270, "Technos (Taito license)", "Exciting Hour" )
+	GAME( 1986, maniach,  0,        maniach,  matmania, 0, ROT270, "Technos (Taito America license)", "Mania Challenge (set 1)" )
+	GAME( 1986, maniach2, maniach,  maniach,  matmania, 0, ROT270, "Technos (Taito America license)", "Mania Challenge (set 2)" )	/* earlier version? */
 }

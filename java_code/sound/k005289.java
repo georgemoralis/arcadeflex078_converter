@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -70,7 +70,7 @@ public class k005289
 	
 		/* allocate memory */
 		mixer_table = malloc(256 * voices * sizeof(INT16));
-		if (mixer_table == 0)
+		if (!mixer_table)
 			return 1;
 	
 		/* find the middle of the table */
@@ -155,15 +155,15 @@ public class k005289
 	{
 		const char *snd_name = "K005289";
 		k005289_sound_channel *voice=channel_list;
-		const struct k005289_interface *intf = msound.sound_interface;
+		const struct k005289_interface *intf = msound->sound_interface;
 	
 		/* get stream channels */
-		stream = stream_init(snd_name, intf.volume, Machine.sample_rate, 0, K005289_update);
-		mclock = intf.master_clock;
-		rate = Machine.sample_rate;
+		stream = stream_init(snd_name, intf->volume, Machine->sample_rate, 0, K005289_update);
+		mclock = intf->master_clock;
+		rate = Machine->sample_rate;
 	
 		/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
-		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine.sample_rate)) == 0)
+		if ((mixer_buffer = malloc(2 * sizeof(short) * Machine->sample_rate)) == 0)
 			return 1;
 	
 		/* build the mixer table */
@@ -173,7 +173,7 @@ public class k005289
 			return 1;
 		}
 	
-		sound_prom = memory_region(intf.region);
+		sound_prom = memory_region(intf->region);
 	
 		/* reset all the voices */
 		voice[0].frequency = 0;
@@ -211,38 +211,32 @@ public class k005289
 		voice[1].wave = &sound_prom[32 * k005289_B_waveform + 0x100];
 	}
 	
-	public static WriteHandlerPtr k005289_control_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_control_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_A_volume=data&0xf;
 		k005289_A_waveform=data>>5;
 		k005289_recompute();
 	} };
 	
-	public static WriteHandlerPtr k005289_control_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_control_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_B_volume=data&0xf;
 		k005289_B_waveform=data>>5;
 		k005289_recompute();
 	} };
 	
-	public static WriteHandlerPtr k005289_pitch_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_pitch_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_A_latch = 0x1000 - offset;
 	} };
 	
-	public static WriteHandlerPtr k005289_pitch_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_pitch_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_B_latch = 0x1000 - offset;
 	} };
 	
-	public static WriteHandlerPtr k005289_keylatch_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_keylatch_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_A_frequency = k005289_A_latch;
 		k005289_recompute();
 	} };
 	
-	public static WriteHandlerPtr k005289_keylatch_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k005289_keylatch_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		k005289_B_frequency = k005289_B_latch;
 		k005289_recompute();
 	} };

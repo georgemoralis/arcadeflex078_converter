@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -51,10 +51,9 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_beathead  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_beathead  = new VideoStartHandlerPtr() { public int handler(){
 		hsyncram = auto_malloc(0x800);
-		if (hsyncram == 0)
+		if (!hsyncram)
 			return 1;
 		return 0;
 	} };
@@ -180,7 +179,7 @@ public class beathead
 		if (offset == 0)
 		{
 			COMBINE_DATA(&hsyncram_offset);
-			if ((hsyncram_offset & 0x800) != 0)
+			if (hsyncram_offset & 0x800)
 				hsyncram_start = hsyncram_offset & 0x7ff;
 		}
 	
@@ -220,8 +219,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_beathead  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
 		/* generate the final screen */

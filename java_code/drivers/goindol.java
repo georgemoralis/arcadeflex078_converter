@@ -19,7 +19,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -29,8 +29,7 @@ public class goindol
 	
 	
 	
-	public static WriteHandlerPtr goindol_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr goindol_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
@@ -48,8 +47,7 @@ public class goindol
 	
 	
 	
-	public static ReadHandlerPtr prot_f422_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr prot_f422_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int toggle;
 	
 		/* bit 7 = vblank? */
@@ -61,28 +59,24 @@ public class goindol
 	
 	static UINT8 *ram;
 	
-	public static WriteHandlerPtr prot_fc44_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prot_fc44_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: prot_fc44_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0419] = 0x5b;
 		ram[0x041a] = 0x3f;
 		ram[0x041b] = 0x6d;
 	} };
 	
-	public static WriteHandlerPtr prot_fd99_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prot_fd99_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: prot_fd99_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0421] = 0x3f;
 	} };
 	
-	public static WriteHandlerPtr prot_fc66_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prot_fc66_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: prot_fc66_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0423] = 0x06;
 	} };
 	
-	public static WriteHandlerPtr prot_fcb0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prot_fcb0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: prot_fcb0_w(%02x)\n",activecpu_get_pc(),data);
 		ram[0x0425] = 0x06;
 	} };
@@ -145,7 +139,7 @@ public class goindol
 	};
 	
 	
-	static InputPortPtr input_ports_goindol = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_goindol = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( goindol )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -219,7 +213,7 @@ public class goindol
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_homo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_homo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( homo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -326,8 +320,7 @@ public class goindol
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_goindol = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( goindol )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)        /* 6 MHz (?) */
@@ -355,9 +348,7 @@ public class goindol
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -469,8 +460,7 @@ public class goindol
 	
 	
 	
-	public static DriverInitHandlerPtr init_goindol  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_goindol  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
 	
@@ -486,9 +476,9 @@ public class goindol
 	//	rom[0x172c] = 0x18;	// c423 == 06
 	//	rom[0x1779] = 0x00;	// c419 == 5b 3f 6d
 	//	rom[0x177a] = 0x00;	//
-		rom[0x063f] = 0x18;	//.fc55
+		rom[0x063f] = 0x18;	//->fc55
 		rom[0x0b30] = 0x00;	// verify code at 0601-064b
-		rom[0x1bdf] = 0x18;	//.fc49
+		rom[0x1bdf] = 0x18;	//->fc49
 	
 		rom[0x04a7] = 0xc9;
 		rom[0x0831] = 0xc9;
@@ -500,8 +490,8 @@ public class goindol
 	
 	
 	
-	public static GameDriver driver_goindol	   = new GameDriver("1987"	,"goindol"	,"goindol.java"	,rom_goindol,null	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (World)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_goindolu	   = new GameDriver("1987"	,"goindolu"	,"goindol.java"	,rom_goindolu,driver_goindol	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (US)",    GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_goindolj	   = new GameDriver("1987"	,"goindolj"	,"goindol.java"	,rom_goindolj,driver_goindol	,machine_driver_goindol	,input_ports_goindol	,init_goindol	,ROT90	,	"Sun a Electronics", "Goindol (Japan)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_homo	   = new GameDriver("1987"	,"homo"	,"goindol.java"	,rom_homo,driver_goindol	,machine_driver_goindol	,input_ports_homo	,null	,ROT90	,	"bootleg", "Homo" )
+	GAMEX(1987, goindol,  0,       goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (World)", GAME_UNEMULATED_PROTECTION )
+	GAMEX(1987, goindolu, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (US)",    GAME_UNEMULATED_PROTECTION )
+	GAMEX(1987, goindolj, goindol, goindol, goindol, goindol, ROT90, "Sun a Electronics", "Goindol (Japan)", GAME_UNEMULATED_PROTECTION )
+	GAME( 1987, homo,     goindol, goindol, homo,    0,       ROT90, "bootleg", "Homo" )
 }

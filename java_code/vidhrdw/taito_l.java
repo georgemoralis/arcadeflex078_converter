@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -77,8 +77,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_taitol  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitol  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		bg18_tilemap = tilemap_create(get_bg18_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -113,8 +112,7 @@ public class taito_l
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr horshoes_bankg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr horshoes_bankg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (horshoes_gfxbank != data)
 		{
 			horshoes_gfxbank = data;
@@ -124,8 +122,7 @@ public class taito_l
 		}
 	} };
 	
-	public static WriteHandlerPtr taitol_bankc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitol_bankc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bankc[offset] != data)
 		{
 			bankc[offset] = data;
@@ -136,14 +133,12 @@ public class taito_l
 		}
 	} };
 	
-	public static ReadHandlerPtr taitol_bankc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitol_bankc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bankc[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr taitol_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitol_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Control Write %02x (%04x)\n", data, activecpu_get_pc());
 	
 		cur_ctrl = data;
@@ -162,65 +157,64 @@ public class taito_l
 		/* bit 5 display enable - handled in vh_screenrefresh() */
 	} };
 	
-	public static ReadHandlerPtr taitol_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitol_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("Control Read %02x (%04x)\n", cur_ctrl, activecpu_get_pc());
 		return cur_ctrl;
 	} };
 	
 	void taitol_chardef14_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32,     taitol_rambanks,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32,     taitol_rambanks,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef15_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+128, taitol_rambanks,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+128, taitol_rambanks,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef16_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+256, taitol_rambanks,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+256, taitol_rambanks,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef17_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+384, taitol_rambanks,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+384, taitol_rambanks,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef1c_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+512, taitol_rambanks + 0x4000,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+512, taitol_rambanks + 0x4000,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef1d_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+640, taitol_rambanks + 0x4000,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+640, taitol_rambanks + 0x4000,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef1e_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+768, taitol_rambanks + 0x4000,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+768, taitol_rambanks + 0x4000,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
 	void taitol_chardef1f_m(int offset)
 	{
-		decodechar(Machine.gfx[2], offset/32+896, taitol_rambanks + 0x4000,
-				   Machine.drv.gfxdecodeinfo[2].gfxlayout);
+		decodechar(Machine->gfx[2], offset/32+896, taitol_rambanks + 0x4000,
+				   Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(ch1a_tilemap);
 	}
 	
@@ -295,7 +289,7 @@ public class taito_l
 			flipx = buffered_spriteram[offs + 3] & 0x01;
 			flipy = buffered_spriteram[offs + 3] & 0x02;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 304 - sx;
 				sy = 240 - sy;
@@ -303,7 +297,7 @@ public class taito_l
 				flipy = NOT(flipy);
 			}
 	
-			pdrawgfx(bitmap,Machine.gfx[1],
+			pdrawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -314,33 +308,32 @@ public class taito_l
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitol  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int dx,dy;
 	
 	
 		dx = taitol_rambanks[0x73f4]|(taitol_rambanks[0x73f5]<<8);
-		if (flipscreen != 0)
+		if (flipscreen)
 			dx = ((dx & 0xfffc) | ((dx - 3) & 0x0003)) ^ 0xf;
 		dy = taitol_rambanks[0x73f6];
 		tilemap_set_scrollx(bg18_tilemap,0,-dx);
 		tilemap_set_scrolly(bg18_tilemap,0,-dy);
 	
 		dx = taitol_rambanks[0x73fc]|(taitol_rambanks[0x73fd]<<8);
-		if (flipscreen != 0)
+		if (flipscreen)
 			dx = ((dx & 0xfffc) | ((dx - 3) & 0x0003)) ^ 0xf;
 		dy = taitol_rambanks[0x73fe];
 		tilemap_set_scrollx(bg19_tilemap,0,-dx);
 		tilemap_set_scrolly(bg19_tilemap,0,-dy);
 	
 	
-		if ((cur_ctrl & 0x20) != 0)	/* display enable */
+		if (cur_ctrl & 0x20)	/* display enable */
 		{
 			fillbitmap(priority_bitmap,0,cliprect);
 	
 			tilemap_draw(bitmap,cliprect,bg19_tilemap,0,0);
 	
-			if ((cur_ctrl & 0x08) != 0)	/* sprites always over BG1 */
+			if (cur_ctrl & 0x08)	/* sprites always over BG1 */
 				tilemap_draw(bitmap,cliprect,bg18_tilemap,0,0);
 			else					/* split priority */
 				tilemap_draw(bitmap,cliprect,bg18_tilemap,0,1);
@@ -354,8 +347,7 @@ public class taito_l
 	
 	
 	
-	public static VideoEofHandlerPtr video_eof_taitol  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitol  = new VideoEofHandlerPtr() { public void handler(){
 		unsigned char *spriteram = taitol_rambanks + 0x7000;
 	
 		memcpy(buffered_spriteram,spriteram,SPRITERAM_SIZE);

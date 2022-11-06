@@ -25,7 +25,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -173,29 +173,29 @@ public class niyanpai
 	}
 	
 	/* CPU interface */
-	public static ReadHandlerPtr tmpz84c011_0_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(0) & ~pio_dir[0]) | (pio_latch[0] & pio_dir[0]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(1) & ~pio_dir[1]) | (pio_latch[1] & pio_dir[1]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(2) & ~pio_dir[2]) | (pio_latch[2] & pio_dir[2]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(3) & ~pio_dir[3]) | (pio_latch[3] & pio_dir[3]); } };
-	public static ReadHandlerPtr tmpz84c011_0_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return (tmpz84c011_pio_r(4) & ~pio_dir[4]) | (pio_latch[4] & pio_dir[4]); } };
+	public static ReadHandlerPtr tmpz84c011_0_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(0) & ~pio_dir[0]) | (pio_latch[0] & pio_dir[0]); }
+	public static ReadHandlerPtr tmpz84c011_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(1) & ~pio_dir[1]) | (pio_latch[1] & pio_dir[1]); }
+	public static ReadHandlerPtr tmpz84c011_0_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(2) & ~pio_dir[2]) | (pio_latch[2] & pio_dir[2]); }
+	public static ReadHandlerPtr tmpz84c011_0_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(3) & ~pio_dir[3]) | (pio_latch[3] & pio_dir[3]); }
+	public static ReadHandlerPtr tmpz84c011_0_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return (tmpz84c011_pio_r(4) & ~pio_dir[4]) | (pio_latch[4] & pio_dir[4]); }
 	
-	public static WriteHandlerPtr tmpz84c011_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[0] = data; tmpz84c011_pio_w(0, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[1] = data; tmpz84c011_pio_w(1, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[2] = data; tmpz84c011_pio_w(2, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[3] = data; tmpz84c011_pio_w(3, data); } };
-	public static WriteHandlerPtr tmpz84c011_0_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_latch[4] = data; tmpz84c011_pio_w(4, data); } };
+	public static WriteHandlerPtr tmpz84c011_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[0] = data; tmpz84c011_pio_w(0, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[1] = data; tmpz84c011_pio_w(1, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[2] = data; tmpz84c011_pio_w(2, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[3] = data; tmpz84c011_pio_w(3, data); }
+	public static WriteHandlerPtr tmpz84c011_0_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_latch[4] = data; tmpz84c011_pio_w(4, data); }
 	
-	public static ReadHandlerPtr tmpz84c011_0_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[0]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[1]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[2]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[3]; } };
-	public static ReadHandlerPtr tmpz84c011_0_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) { return pio_dir[4]; } };
+	public static ReadHandlerPtr tmpz84c011_0_dir_pa_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[0]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pb_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[1]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pc_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[2]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pd_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[3]; }
+	public static ReadHandlerPtr tmpz84c011_0_dir_pe_r  = new ReadHandlerPtr() { public int handler(int offset) return pio_dir[4]; }
 	
-	public static WriteHandlerPtr tmpz84c011_0_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[0] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[1] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[2] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[3] = data; } };
-	public static WriteHandlerPtr tmpz84c011_0_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) { pio_dir[4] = data; } };
+	public static WriteHandlerPtr tmpz84c011_0_dir_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[0] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[1] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pc_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[2] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[3] = data; }
+	public static WriteHandlerPtr tmpz84c011_0_dir_pe_w = new WriteHandlerPtr() {public void handler(int offset, int data) pio_dir[4] = data; }
 	
 	
 	static void ctc0_interrupt(int state)
@@ -206,10 +206,10 @@ public class niyanpai
 	static z80ctc_interface ctc_intf =
 	{
 		1,			/* 1 chip */
-		{ 1 },			/* clock */
+		{ 1 } };,			/* clock */
 		{ 0 },			/* timer disables */
 		{ ctc0_interrupt },	/* interrupt handler */
-		{ z80ctc_0_trg3_w },	/* ZC/TO0 callback ctc1.zc0 . ctc1.trg3 */
+		{ z80ctc_0_trg3_w },	/* ZC/TO0 callback ctc1.zc0 -> ctc1.trg3 */
 		{ 0 },			/* ZC/TO1 callback */
 		{ 0 },			/* ZC/TO2 callback */
 	};
@@ -226,12 +226,11 @@ public class niyanpai
 		}
 	
 		// initialize the CTC
-		ctc_intf.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_niyanpai  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_niyanpai  = new MachineInitHandlerPtr() { public void handler(){
 		//
 	} };
 	
@@ -240,14 +239,14 @@ public class niyanpai
 		unsigned char *MAINROM = memory_region(REGION_CPU1);
 		unsigned char *SNDROM = memory_region(REGION_CPU2);
 	
-		// main program patch (USR0 . IRQ LEVEL1)
+		// main program patch (USR0 -> IRQ LEVEL1)
 		MAINROM[(25 * 4) + 0] = MAINROM[(64 * 4) + 0];
 		MAINROM[(25 * 4) + 1] = MAINROM[(64 * 4) + 1];
 		MAINROM[(25 * 4) + 2] = MAINROM[(64 * 4) + 2];
 		MAINROM[(25 * 4) + 3] = MAINROM[(64 * 4) + 3];
 	
 		// sound program patch
-		SNDROM[0x0213] = 0x00;			// DI . NOP
+		SNDROM[0x0213] = 0x00;			// DI -> NOP
 	
 		// initialize TMPZ84C011 PIO and CTC
 		tmpz84c011_init();
@@ -257,7 +256,7 @@ public class niyanpai
 	}
 	
 	
-	public static DriverInitHandlerPtr init_niyanpai  = new DriverInitHandlerPtr() { public void handler() { initialize_driver(); } };
+	public static DriverInitHandlerPtr init_niyanpai  = new DriverInitHandlerPtr() { public void handler() initialize_driver(); }
 	
 	
 	static READ16_HANDLER( niyanpai_dipsw_r )
@@ -426,7 +425,7 @@ public class niyanpai
 	};
 	
 	
-	static InputPortPtr input_ports_niyanpai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_niyanpai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( niyanpai )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1" );
@@ -493,8 +492,7 @@ public class niyanpai
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static InterruptHandlerPtr niyanpai_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr niyanpai_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 1, HOLD_LINE);
 	} };
 	
@@ -519,8 +517,7 @@ public class niyanpai
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_niyanpai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( niyanpai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12288000/2)		/* TMP68301, 6.144 MHz */
@@ -551,9 +548,7 @@ public class niyanpai
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_niyanpai = new RomLoadPtr(){ public void handler(){ 
@@ -576,5 +571,5 @@ public class niyanpai
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_niyanpai	   = new GameDriver("1996"	,"niyanpai"	,"niyanpai.java"	,rom_niyanpai,null	,machine_driver_niyanpai	,input_ports_niyanpai	,init_niyanpai	,ROT0	,	"Nichibutsu", "Niyanpai (Japan)" )
+	GAME( 1996, niyanpai, 0, niyanpai, niyanpai, niyanpai, ROT0, "Nichibutsu", "Niyanpai (Japan)" )
 }

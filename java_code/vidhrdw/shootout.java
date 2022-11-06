@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,8 +15,7 @@ public class shootout
 	static struct tilemap *background, *foreground;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_shootout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_shootout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -68,32 +67,32 @@ public class shootout
 				0)
 	}
 	
-	public static WriteHandlerPtr shootout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr shootout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if( videoram.read(offset)!=data ){
 			videoram.write(offset,data);
 			tilemap_mark_tile_dirty( background, offset&0x3ff );
-		}
-	} };
-	public static WriteHandlerPtr shootout_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		} };
+	}
+	public static WriteHandlerPtr shootout_textram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if( shootout_textram[offset]!=data ){
 			shootout_textram[offset] = data;
 			tilemap_mark_tile_dirty( foreground, offset&0x3ff );
-		}
-	} };
+		} };
+	}
 	
-	public static VideoStartHandlerPtr video_start_shootout  = new VideoStartHandlerPtr() { public int handler(){
+	public static VideoStartHandlerPtr video_start_shootout  = new VideoStartHandlerPtr() { public int handler()
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		if( background && foreground ){
 			tilemap_set_transparent_pen( foreground, 0 );
 			return 0;
-		}
+		} };
 		return 1; /* error */
-	} };
+	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bank_bits ){
 		static int bFlicker;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		const UINT8 *source = spriteram+127*4;
 		int count;
 	
@@ -110,7 +109,7 @@ public class shootout
 				------x-	flicker
 				-------x	enable
 			*/
-			if ((attributes & 0x01) != 0){ /* visible */
+			if ( attributes & 0x01 ){ /* visible */
 				if( bFlicker || (attributes&0x02)==0 ){
 					int priority_mask = (attributes&0x08)?0x2:0;
 					int sx = (240 - source[2])&0xff;
@@ -120,18 +119,18 @@ public class shootout
 					int flipx = (attributes & 0x04);
 					int flipy = 0;
 	
-					if (flip_screen != 0) {
+					if (flip_screen()) {
 						flipx = NOT(flipx);
 						flipy = NOT(flipy);
 					}
 	
-					if ((attributes & 0x10) != 0){ /* double height */
+					if( attributes & 0x10 ){ /* double height */
 						number = number&(~1);
 						sy -= 16;
 	
 						vx = sx;
 						vy = sy;
-						if (flip_screen != 0) {
+						if (flip_screen()) {
 							vx = 240 - vx;
 							vy = 240 - vy;
 						}
@@ -150,7 +149,7 @@ public class shootout
 	
 					vx = sx;
 					vy = sy;
-					if (flip_screen != 0) {
+					if (flip_screen()) {
 						vx = 240 - vx;
 						vy = 240 - vy;
 					}
@@ -168,8 +167,7 @@ public class shootout
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shootout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,background,0,0);
@@ -177,8 +175,7 @@ public class shootout
 		draw_sprites(bitmap,cliprect,3/*bank bits */);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_shootouj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shootouj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,background,0,0);

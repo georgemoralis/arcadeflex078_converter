@@ -215,7 +215,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -246,8 +246,7 @@ public class bwidow
 	
 	*/
 	
-	public static ReadHandlerPtr spacduel_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spacduel_IN3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		int res1;
 		int res2;
@@ -259,30 +258,30 @@ public class bwidow
 		switch (offset & 0x07)
 		{
 			case 0:
-				if ((res1 & IN_SHIELD) != 0) res |= 0x80;
-				if ((res1 & IN_FIRE) != 0) res |= 0x40;
+				if (res1 & IN_SHIELD) res |= 0x80;
+				if (res1 & IN_FIRE) res |= 0x40;
 				break;
 			case 1: /* Player 2 */
-				if ((res2 & IN_SHIELD) != 0) res |= 0x80;
-				if ((res2 & IN_FIRE) != 0) res |= 0x40;
+				if (res2 & IN_SHIELD) res |= 0x80;
+				if (res2 & IN_FIRE) res |= 0x40;
 				break;
 			case 2:
-				if ((res1 & IN_LEFT) != 0) res |= 0x80;
-				if ((res1 & IN_RIGHT) != 0) res |= 0x40;
+				if (res1 & IN_LEFT) res |= 0x80;
+				if (res1 & IN_RIGHT) res |= 0x40;
 				break;
 			case 3: /* Player 2 */
-				if ((res2 & IN_LEFT) != 0) res |= 0x80;
-				if ((res2 & IN_RIGHT) != 0) res |= 0x40;
+				if (res2 & IN_LEFT) res |= 0x80;
+				if (res2 & IN_RIGHT) res |= 0x40;
 				break;
 			case 4:
-				if ((res1 & IN_THRUST) != 0) res |= 0x80;
-				if ((res1 & IN_P1) != 0) res |= 0x40;
+				if (res1 & IN_THRUST) res |= 0x80;
+				if (res1 & IN_P1) res |= 0x40;
 				break;
 			case 5:  /* Player 2 */
-				if ((res2 & IN_THRUST) != 0) res |= 0x80;
+				if (res2 & IN_THRUST) res |= 0x80;
 				break;
 			case 6:
-				if ((res1 & IN_P2) != 0) res |= 0x80;
+				if (res1 & IN_P2) res |= 0x80;
 				break;
 			case 7:
 				res = (0x00 /* upright */ | (0 & 0x40));
@@ -300,8 +299,7 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr bwidow_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bwidow_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			0x10 = p1 led
 			0x20 = p2 led
@@ -405,7 +403,7 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_bwidow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bwidow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bwidow )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );// To fit "Coin B" Dip Switch
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );// To fit "Coin A" Dip Switch
@@ -484,7 +482,7 @@ public class bwidow
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gravitar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gravitar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gravitar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );// To fit "Coin B" Dip Switch
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );// To fit "Coin A" Dip Switch
@@ -558,7 +556,7 @@ public class bwidow
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_lunarbat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lunarbat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lunarbat )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );// To be similar with other games
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );// To be similar with other games
@@ -592,7 +590,7 @@ public class bwidow
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spacduel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacduel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacduel )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );// To fit "Coin B" Dip Switch
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN1 );// To fit "Coin A" Dip Switch
@@ -705,8 +703,7 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_bwidow = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bwidow )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)	/* 1.5 MHz */
@@ -728,26 +725,20 @@ public class bwidow
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gravitar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gravitar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bwidow)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 420, 0, 400)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lunarbat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lunarbat )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gravitar)
@@ -758,13 +749,10 @@ public class bwidow
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 500, 0, 440)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacduel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacduel )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gravitar)
@@ -775,9 +763,7 @@ public class bwidow
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 540, 0, 400)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -919,11 +905,11 @@ public class bwidow
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_spacduel	   = new GameDriver("1980"	,"spacduel"	,"bwidow.java"	,rom_spacduel,null	,machine_driver_spacduel	,input_ports_spacduel	,null	,ROT0	,	"Atari", "Space Duel" )
-	public static GameDriver driver_bwidow	   = new GameDriver("1982"	,"bwidow"	,"bwidow.java"	,rom_bwidow,null	,machine_driver_bwidow	,input_ports_bwidow	,null	,ROT0	,	"Atari", "Black Widow" )
-	public static GameDriver driver_gravitar	   = new GameDriver("1982"	,"gravitar"	,"bwidow.java"	,rom_gravitar,null	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (version 3)" )
-	public static GameDriver driver_gravitr2	   = new GameDriver("1982"	,"gravitr2"	,"bwidow.java"	,rom_gravitr2,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (version 2)" )
-	public static GameDriver driver_gravp	   = new GameDriver("1982"	,"gravp"	,"bwidow.java"	,rom_gravp,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Gravitar (prototype)" )
-	public static GameDriver driver_lunarbat	   = new GameDriver("1982"	,"lunarbat"	,"bwidow.java"	,rom_lunarbat,driver_gravitar	,machine_driver_gravitar	,input_ports_gravitar	,null	,ROT0	,	"Atari", "Lunar Battle (prototype, later)" )
-	public static GameDriver driver_lunarba1	   = new GameDriver("1982"	,"lunarba1"	,"bwidow.java"	,rom_lunarba1,driver_gravitar	,machine_driver_lunarbat	,input_ports_lunarbat	,null	,ROT0	,	"Atari", "Lunar Battle (prototype, earlier)" )
+	GAME( 1980, spacduel, 0,        spacduel, spacduel, 0, ROT0, "Atari", "Space Duel" )
+	GAME( 1982, bwidow,   0,        bwidow,   bwidow,   0, ROT0, "Atari", "Black Widow" )
+	GAME( 1982, gravitar, 0,        gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (version 3)" )
+	GAME( 1982, gravitr2, gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (version 2)" )
+	GAME( 1982, gravp,    gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Gravitar (prototype)" )
+	GAME( 1982, lunarbat, gravitar, gravitar, gravitar, 0, ROT0, "Atari", "Lunar Battle (prototype, later)" )
+	GAME( 1982, lunarba1, gravitar, lunarbat, lunarbat, 0, ROT0, "Atari", "Lunar Battle (prototype, earlier)" )
 }

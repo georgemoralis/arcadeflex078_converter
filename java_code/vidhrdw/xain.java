@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,7 +28,7 @@ public class xain
 	
 	static UINT32 back_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
@@ -69,8 +69,7 @@ public class xain
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_xain  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xain  = new VideoStartHandlerPtr() { public int handler(){
 		bgram0_tilemap = tilemap_create(get_bgram0_tile_info,back_scan,    TILEMAP_OPAQUE,     16,16,32,32);
 		bgram1_tilemap = tilemap_create(get_bgram1_tile_info,back_scan,    TILEMAP_TRANSPARENT,16,16,32,32);
 		char_tilemap = tilemap_create(get_char_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -92,8 +91,7 @@ public class xain
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr xain_bgram0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_bgram0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xain_bgram0[offset] != data)
 		{
 			xain_bgram0[offset] = data;
@@ -101,8 +99,7 @@ public class xain
 		}
 	} };
 	
-	public static WriteHandlerPtr xain_bgram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_bgram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xain_bgram1[offset] != data)
 		{
 			xain_bgram1[offset] = data;
@@ -110,8 +107,7 @@ public class xain
 		}
 	} };
 	
-	public static WriteHandlerPtr xain_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xain_charram[offset] != data)
 		{
 			xain_charram[offset] = data;
@@ -119,32 +115,28 @@ public class xain
 		}
 	} };
 	
-	public static WriteHandlerPtr xain_scrollxP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_scrollxP0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char xain_scrollxP0[2];
 	
 		xain_scrollxP0[offset] = data;
 		tilemap_set_scrollx(bgram0_tilemap, 0, xain_scrollxP0[0]|(xain_scrollxP0[1]<<8));
 	} };
 	
-	public static WriteHandlerPtr xain_scrollyP0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_scrollyP0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char xain_scrollyP0[2];
 	
 		xain_scrollyP0[offset] = data;
 		tilemap_set_scrolly(bgram0_tilemap, 0, xain_scrollyP0[0]|(xain_scrollyP0[1]<<8));
 	} };
 	
-	public static WriteHandlerPtr xain_scrollxP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_scrollxP1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char xain_scrollxP1[2];
 	
 		xain_scrollxP1[offset] = data;
 		tilemap_set_scrollx(bgram1_tilemap, 0, xain_scrollxP1[0]|(xain_scrollxP1[1]<<8));
 	} };
 	
-	public static WriteHandlerPtr xain_scrollyP1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_scrollyP1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char xain_scrollyP1[2];
 	
 		xain_scrollyP1[offset] = data;
@@ -152,8 +144,7 @@ public class xain
 	} };
 	
 	
-	public static WriteHandlerPtr xain_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 1);
 	} };
 	
@@ -180,22 +171,22 @@ public class xain
 			sy = 240 - spriteram.read(offs);
 			if (sy <= -7) sy += 256;
 			flipx = attr & 0x40;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 239 - sx;
 				sy = 240 - sy;
 				flipx = NOT(flipx);
 			}
 	
-			if ((attr & 0x80) != 0)	/* double height */
+			if (attr & 0x80)	/* double height */
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						numtile,
 						color,
 						flipx,flip_screen(),
 						sx-1,flip_screen()?sy+16:sy-16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						numtile+1,
 						color,
 						flipx,flip_screen(),
@@ -204,7 +195,7 @@ public class xain
 			}
 			else
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						numtile,
 						color,
 						flipx,flip_screen(),
@@ -214,8 +205,7 @@ public class xain
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_xain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bgram0_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,bgram1_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);

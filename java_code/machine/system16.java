@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -22,7 +22,7 @@ public class system16
 		data16_t *mem = (data16_t *)memory_region(REGION_CPU1+cpu);
 		int old_word = mem[aligned_offset/2];
 	
-		if ((offset & 1) != 0)
+		if( offset&1 )
 			data = (old_word&0xff00)|data;
 		else
 			data = (old_word&0x00ff)|(data<<8);
@@ -58,7 +58,7 @@ public class system16
 	void (*sys16_custom_irq)(void);
 	
 	
-	public static MachineInitHandlerPtr machine_init_sys16_onetime  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_sys16_onetime  = new MachineInitHandlerPtr() { public void handler()
 		sys16_wwfix = sys16_alienfix = 0;
 		sys16_bg1_trans=0;
 		sys16_rowscroll_scroll=0;
@@ -76,7 +76,7 @@ public class system16
 	#ifdef SPACEHARRIER_OFFSETS
 		spaceharrier_patternoffsets=0;
 	#endif
-	} };
+	}
 	
 	static GfxLayout charlayout = new GfxLayout
 	(
@@ -98,7 +98,7 @@ public class system16
 	{
 		unsigned char *temp = malloc( bank_size );
 		bank_size/=4;
-		if (temp != 0){
+		if( temp ){
 			unsigned char *base = memory_region(REGION_GFX2);
 			unsigned char *p1 = temp;
 			unsigned char *p2 = temp+bank_size;

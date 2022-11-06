@@ -23,7 +23,7 @@ Special thanks to:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -308,7 +308,7 @@ public class aburner
 	}
 	#endif
 	
-	static InputPortPtr input_ports_aburner = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aburner = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aburner )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 );/* unknown */
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -355,7 +355,7 @@ public class aburner
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Z | IPF_CENTER, 100, 79, 0x00, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aburner2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aburner2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aburner2 )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 );/* unknown */
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -438,7 +438,7 @@ public class aburner
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_Z | IPF_CENTER, 100, 79, 0x00, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thndrbld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thndrbld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thndrbld )
 		PORT_START();  /* player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 );/* unknown */
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -534,7 +534,7 @@ public class aburner
 	
 	static int sys16_analog_select;
 	static WRITE16_HANDLER( aburner_analog_select_w ){
-		if (ACCESSING_LSB != 0) sys16_analog_select = data&0xff;
+		if( ACCESSING_LSB ) sys16_analog_select = data&0xff;
 	}
 	
 	static READ16_HANDLER( aburner_analog_r ){
@@ -825,7 +825,7 @@ public class aburner
 	
 	/***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_aburner  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_aburner  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode = 2;
 		sys16_spritesystem = sys16_sprite_aburner;
 		sys16_sprxoffset = -0xc0;
@@ -835,15 +835,15 @@ public class aburner
 		sys16_textlayer_lo_max=0;
 		sys16_textlayer_hi_min=0;
 		sys16_textlayer_hi_max=0xff;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_thndrbdj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_thndrbdj  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		sys16_bg1_trans = 1;
 		sys16_interleave_sprite_data( 0x200000 );
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_aburner  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_aburner  = new DriverInitHandlerPtr() { public void handler()
 		/* reset hack for AfterBurner */
 		sys16_patch_code(0xe76c,0x4a);
 		sys16_patch_code(0xe76d,0x79);
@@ -855,9 +855,9 @@ public class aburner
 		machine_init_sys16_onetime();
 		sys16_bg1_trans = 1;
 		sys16_interleave_sprite_data( 0x200000 );
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_aburner2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_aburner2  = new DriverInitHandlerPtr() { public void handler()
 		/* reset hack for AfterBurner2 */
 		sys16_patch_code(0x1483c,0x4a);
 		sys16_patch_code(0x1483d,0x79);
@@ -869,17 +869,16 @@ public class aburner
 		machine_init_sys16_onetime();
 		sys16_bg1_trans = 1;
 		sys16_interleave_sprite_data( 0x200000 );
-	} };
+	}
 	
-	public static InterruptHandlerPtr aburner_interrupt = new InterruptHandlerPtr() {public void handler(){
+	public static InterruptHandlerPtr aburner_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops()!=0 )
 			irq2_line_hold(); /* (?) updates sound and inputs */
 		else
 			irq4_line_hold(); /* vblank */
-	} };
+	}
 	
-	public static MachineHandlerPtr machine_driver_aburner = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aburner )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -915,14 +914,12 @@ public class aburner
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, sys16_ym2151_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k_512)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_aburner	   = new GameDriver("1987"	,"aburner"	,"aburner.java"	,rom_aburner,driver_aburner2	,machine_driver_aburner	,input_ports_aburner	,init_aburner	,ROT0	,	"Sega", "After Burner (Japan)" )
-	public static GameDriver driver_aburner2	   = new GameDriver("1987"	,"aburner2"	,"aburner.java"	,rom_aburner2,null	,machine_driver_aburner	,input_ports_aburner2	,init_aburner2	,ROT0	,	"Sega", "After Burner II" )
-	public static GameDriver driver_loffire	   = new GameDriver("19??"	,"loffire"	,"aburner.java"	,rom_loffire,null	,machine_driver_aburner	,input_ports_aburner	,init_aburner	,ROT0	,	"Sega", "Line of Fire", GAME_NOT_WORKING )
-	public static GameDriver driver_thndrbld	   = new GameDriver("19??"	,"thndrbld"	,"aburner.java"	,rom_thndrbld,null	,machine_driver_aburner	,input_ports_thndrbld	,init_aburner	,ROT0	,	"Sega", "Thunder Blade", GAME_NOT_WORKING )
-	public static GameDriver driver_thndrbdj	   = new GameDriver("19??"	,"thndrbdj"	,"aburner.java"	,rom_thndrbdj,driver_thndrbld	,machine_driver_aburner	,input_ports_thndrbld	,init_thndrbdj	,ROT0	,	"Sega", "Thunder Blade (Japan)", GAME_NOT_WORKING )
+	GAME( 1987, aburner,  aburner2, aburner,  aburner,  aburner,  ROT0, "Sega", "After Burner (Japan)" )
+	GAME( 1987, aburner2, 0,        aburner,  aburner2, aburner2, ROT0, "Sega", "After Burner II" )
+	GAMEX(19??, loffire,  0,        aburner,  aburner,  aburner,  ROT0, "Sega", "Line of Fire", GAME_NOT_WORKING )
+	GAMEX(19??, thndrbld, 0,        aburner,  thndrbld, aburner,  ROT0, "Sega", "Thunder Blade", GAME_NOT_WORKING )
+	GAMEX(19??, thndrbdj, thndrbld, aburner,  thndrbld, thndrbdj, ROT0, "Sega", "Thunder Blade (Japan)", GAME_NOT_WORKING )
 }

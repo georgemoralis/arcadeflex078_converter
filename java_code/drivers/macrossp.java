@@ -39,7 +39,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -229,9 +229,6 @@ public class macrossp
 	WRITE32_HANDLER( macrossp_scrb_videoram_w );
 	WRITE32_HANDLER( macrossp_scrc_videoram_w );
 	WRITE32_HANDLER( macrossp_text_videoram_w );
-	VIDEO_START(macrossp);
-	VIDEO_UPDATE(macrossp);
-	VIDEO_EOF(macrossp);
 	
 	/*** VARIOUS READ / WRITE HANDLERS *******************************************/
 	
@@ -271,14 +268,14 @@ public class macrossp
 	
 		toggle ^= 1;
 	
-		if (Machine.sample_rate == 0) return (rand()&2) | toggle;
+		if (Machine->sample_rate == 0) return (rand()&2) | toggle;
 	
 		return (sndpending << 1) | toggle;
 	}
 	
 	static WRITE32_HANDLER( macrossp_soundcmd_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			//logerror("%08x write soundcmd %08x (%08x)\n",activecpu_get_pc(),data,mem_mask);
 			soundlatch_word_w(0,data >> 16,0);
@@ -372,7 +369,7 @@ public class macrossp
 	
 	/*** INPUT PORTS *************************************************************/
 	
-	static InputPortPtr input_ports_macrossp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_macrossp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( macrossp )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -540,7 +537,7 @@ public class macrossp
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_quizmoon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizmoon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizmoon )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -768,8 +765,7 @@ public class macrossp
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_macrossp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( macrossp )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 50000000/2)	/* 25 MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -797,18 +793,13 @@ public class macrossp
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5506, es5506_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_quizmoon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizmoon )
 		MDRV_IMPORT_FROM(macrossp)
 	
 		MDRV_VISIBLE_AREA(0, 24*16-1, 0*8, 14*16-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -920,8 +911,7 @@ public class macrossp
 		if (activecpu_get_pc()==0x001810A) cpu_spinuntil_int();
 	}
 	
-	public static DriverInitHandlerPtr init_macrossp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_macrossp  = new DriverInitHandlerPtr() { public void handler(){
 		/* Expand top half of sound ROM into second banked sound area */
 		const data8_t* src=memory_region(REGION_SOUND1);
 		data8_t* dst=memory_region(REGION_SOUND2);
@@ -931,8 +921,7 @@ public class macrossp
 		install_mem_write32_handler(0, 0xf10158, 0xf1015b, macrossp_speedup_w );
 	} };
 	
-	public static DriverInitHandlerPtr init_quizmoon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_quizmoon  = new DriverInitHandlerPtr() { public void handler(){
 		/* Expand top half of sound ROM into second banked sound area */
 		const data8_t* src=memory_region(REGION_SOUND1);
 		data8_t* dst=memory_region(REGION_SOUND2);
@@ -944,6 +933,6 @@ public class macrossp
 		memcpy(dst,src+0x400000,0x400000);
 	} };
 	
-	public static GameDriver driver_macrossp	   = new GameDriver("1996"	,"macrossp"	,"macrossp.java"	,rom_macrossp,null	,machine_driver_macrossp	,input_ports_macrossp	,init_macrossp	,ROT270	,	"Banpresto", "Macross Plus", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_quizmoon	   = new GameDriver("1997"	,"quizmoon"	,"macrossp.java"	,rom_quizmoon,null	,machine_driver_quizmoon	,input_ports_quizmoon	,init_quizmoon	,ROT0	,	"Banpresto", "Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1996, macrossp, 0, macrossp, macrossp, macrossp, ROT270, "Banpresto", "Macross Plus", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, quizmoon, 0, quizmoon, quizmoon, quizmoon, ROT0,   "Banpresto", "Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un", GAME_IMPERFECT_GRAPHICS )
 }

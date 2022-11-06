@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -124,7 +124,7 @@ public class cchasm
 	
 		*/
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xff;
 	
@@ -152,17 +152,17 @@ public class cchasm
 				}
 	
 				else if (m6840_cr_select==2) {
-					if ((data & 0x1) != 0)
+					if (data&0x1)
 						logerror("MC6840: Divide by 8 prescaler selected\n");
 				}
 	
 				/* Following bits apply to both registers */
-				if ((data & 0x2) != 0)
+				if (data&0x2)
 					logerror("MC6840: Internal clock selected on CR %d\n",m6840_cr_select);
 				else
 					logerror("MC6840: External clock selected on CR %d\n",m6840_cr_select);
 	
-				if ((data & 0x4) != 0)
+				if (data&0x4)
 					logerror("MC6840: Dual 8 bit count mode selected on CR %d\n",m6840_cr_select);
 				else
 					logerror("MC6840: 16 bit count mode selected on CR %d\n",m6840_cr_select);
@@ -171,7 +171,7 @@ public class cchasm
 				break;
 			case 0x1:
 				m6840_cr[1] = data;
-				if ((data & 0x1) != 0)
+				if (data&0x1)
 				{
 					m6840_cr_select=0;
 					logerror("MC6840: Control register 1 selected\n");
@@ -181,10 +181,10 @@ public class cchasm
 					logerror("MC6840: Control register 3 selected\n");
 				}
 	
-				if ((data & 0x80) != 0)
+				if (data&0x80)
 					logerror("MC6840: Cr2 Timer output enabled\n");
 	
-				if ((data & 0x40) != 0)
+				if (data&0x40)
 					logerror("MC6840: Cr2 interrupt output enabled\n");
 	
 				logerror(" Write %02x to control register 2\n",data);

@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -141,17 +141,17 @@ public class qsound
 	{
 		int i;
 	
-		if (Machine.sample_rate == 0) return 0;
+		if (Machine->sample_rate == 0) return 0;
 	
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
-		qsound_sample_rom = (QSOUND_SRC_SAMPLE *)memory_region(intf.region);
+		qsound_sample_rom = (QSOUND_SRC_SAMPLE *)memory_region(intf->region);
 	
 		memset(qsound_channel, 0, sizeof(qsound_channel));
 	
 	#if QSOUND_DRIVER1
-		qsound_frq_ratio = ((float)intf.clock / (float)QSOUND_CLOCKDIV) /
-							(float) Machine.sample_rate;
+		qsound_frq_ratio = ((float)intf->clock / (float)QSOUND_CLOCKDIV) /
+							(float) Machine->sample_rate;
 		qsound_frq_ratio *= 16.0;
 	
 		/* Create pan table */
@@ -178,13 +178,13 @@ public class qsound
 			name[1] = buf[1];
 			sprintf( buf[0], "%s L", sound_name(msound) );
 			sprintf( buf[1], "%s R", sound_name(msound) );
-			vol[0]=MIXER(intf.mixing_level[0], MIXER_PAN_LEFT);
-			vol[1]=MIXER(intf.mixing_level[1], MIXER_PAN_RIGHT);
+			vol[0]=MIXER(intf->mixing_level[0], MIXER_PAN_LEFT);
+			vol[1]=MIXER(intf->mixing_level[1], MIXER_PAN_RIGHT);
 			qsound_stream = stream_init_multi(
 				CHANNELS,
 				name,
 				vol,
-				Machine.sample_rate,
+				Machine->sample_rate,
 				0,
 				qsound_update );
 		}
@@ -203,36 +203,32 @@ public class qsound
 	
 	void qsound_sh_stop (void)
 	{
-		if (Machine.sample_rate == 0) return;
+		if (Machine->sample_rate == 0) return;
 	#if LOG_WAVE
-		if (fpRawDataR != 0)
+		if (fpRawDataR)
 		{
 			fclose(fpRawDataR);
 		}
-		if (fpRawDataL != 0)
+		if (fpRawDataL)
 		{
 			fclose(fpRawDataL);
 		}
 	#endif
 	}
 	
-	public static WriteHandlerPtr qsound_data_h_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qsound_data_h_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qsound_data=(qsound_data&0xff)|(data<<8);
 	} };
 	
-	public static WriteHandlerPtr qsound_data_l_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qsound_data_l_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qsound_data=(qsound_data&0xff00)|data;
 	} };
 	
-	public static WriteHandlerPtr qsound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qsound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		qsound_set_command(data, qsound_data);
 	} };
 	
-	public static ReadHandlerPtr qsound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qsound_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Port ready bit (0x80 if ready) */
 		return 0x80;
 	} };
@@ -275,7 +271,7 @@ public class qsound
 				qsound_channel[ch].bank=(value&0x7f)<<16;
 				qsound_channel[ch].bank /= LENGTH_DIV;
 	#ifdef MAME_DEBUG
-				if ((value & 0x8000) == 0)
+				if (!value & 0x8000)
 					usrintf_showmessage("Register3=%04x",value);
 	#endif
 	
@@ -291,10 +287,10 @@ public class qsound
 				qsound_channel[ch].pitch/=LENGTH_DIV;
 	#else
 				qsound_channel[ch].factor=((float) (value*(6/LENGTH_DIV)) /
-										  (float) Machine.sample_rate)*256.0;
+										  (float) Machine->sample_rate)*256.0;
 	
 	#endif
-				if (value == 0)
+				if (!value)
 				{
 					/* Key off */
 					qsound_channel[ch].key=0;
@@ -387,7 +383,7 @@ public class qsound
 		QSOUND_SRC_SAMPLE * pST;
 		QSOUND_SAMPLE  *datap[2];
 	
-		if (Machine.sample_rate == 0) return;
+		if (Machine->sample_rate == 0) return;
 	
 		datap[0] = buffer[0];
 		datap[1] = buffer[1];
@@ -396,40 +392,40 @@ public class qsound
 	
 		for (i=0; i<QSOUND_CHANNELS; i++)
 		{
-			if (pC.key)
+			if (pC->key)
 			{
 				QSOUND_SAMPLE *pOutL=datap[0];
 				QSOUND_SAMPLE *pOutR=datap[1];
-				pST=qsound_sample_rom+pC.bank;
-				rvol=(pC.rvol*pC.vol)>>(8*LENGTH_DIV);
-				lvol=(pC.lvol*pC.vol)>>(8*LENGTH_DIV);
+				pST=qsound_sample_rom+pC->bank;
+				rvol=(pC->rvol*pC->vol)>>(8*LENGTH_DIV);
+				lvol=(pC->lvol*pC->vol)>>(8*LENGTH_DIV);
 	
 				for (j=length-1; j>=0; j--)
 				{
-					count=(pC.offset)>>16;
-					pC.offset &= 0xffff;
-					if (count != 0)
+					count=(pC->offset)>>16;
+					pC->offset &= 0xffff;
+					if (count)
 					{
-						pC.address += count;
-						if (pC.address >= pC.end)
+						pC->address += count;
+						if (pC->address >= pC->end)
 						{
-							if (!pC.loop)
+							if (!pC->loop)
 							{
 								/* Reached the end of a non-looped sample */
-								pC.key=0;
+								pC->key=0;
 								break;
 							}
 							/* Reached the end, restart the loop */
-							pC.address = (pC.end - pC.loop) & 0xffff;
+							pC->address = (pC->end - pC->loop) & 0xffff;
 						}
-						pC.lastdt=pST[pC.address];
+						pC->lastdt=pST[pC->address];
 					}
 	
-					(*pOutL) += ((pC.lastdt * lvol) >> 6);
-					(*pOutR) += ((pC.lastdt * rvol) >> 6);
+					(*pOutL) += ((pC->lastdt * lvol) >> 6);
+					(*pOutR) += ((pC->lastdt * rvol) >> 6);
 					pOutL++;
 					pOutR++;
-					pC.offset += pC.pitch;
+					pC->offset += pC->pitch;
 				}
 			}
 			pC++;
@@ -454,17 +450,17 @@ public class qsound
 	{
 		int factl,factr;
 		struct QSOUND_CHANNEL *pC=&qsound_channel[channel];
-		int vol=pC.vol>>5;
-		int pan=((pC.pan&0xFF)-0x10)<<3;
-		pC.mixl=vol;
-		pC.mixr=vol;
+		int vol=pC->vol>>5;
+		int pan=((pC->pan&0xFF)-0x10)<<3;
+		pC->mixl=vol;
+		pC->mixr=vol;
 		factr=pan;
 		factl=255-factr;
-		pC.mixl=(pC.mixl * factl)>>8;
-		pC.mixr=(pC.mixr * factr)>>8;
+		pC->mixl=(pC->mixl * factl)>>8;
+		pC->mixr=(pC->mixr * factr)>>8;
 	#if QSOUND_8BIT_SAMPLES
-		pC.mixl<<=8;
-		pC.mixr<<=8;
+		pC->mixl<<=8;
+		pC->mixr<<=8;
 	#endif
 	}
 	
@@ -481,27 +477,27 @@ public class qsound
 		{
 			  bufL=(QSOUND_SAMPLE *) buffer[0];
 			  bufR=(QSOUND_SAMPLE *) buffer[1];
-			  if(pC.key)
+			  if(pC->key)
 			  {
 					for(i=0;i<length;++i)
 					{
-							   int pos=pC.cursor>>8;
-							   if(pos!=pC.lpos)	/*next sample*/
+							   int pos=pC->cursor>>8;
+							   if(pos!=pC->lpos)	/*next sample*/
 							   {
-									sample=pC.buffer[pos];
-									pC.lastsaml=(sample*pC.mixl)>>8;
-									pC.lastsamr=(sample*pC.mixr)>>8;
-									pC.lpos=pos;
+									sample=pC->buffer[pos];
+									pC->lastsaml=(sample*pC->mixl)>>8;
+									pC->lastsamr=(sample*pC->mixr)>>8;
+									pC->lpos=pos;
 							   }
-							   (*bufL++)+=pC.lastsaml;
-							   (*bufR++)+=pC.lastsamr;
-							   pC.cursor+=pC.factor;
-							   if(pC.loop && (pC.cursor>>8) > pC.end)
+							   (*bufL++)+=pC->lastsaml;
+							   (*bufR++)+=pC->lastsamr;
+							   pC->cursor+=pC->factor;
+							   if(pC->loop && (pC->cursor>>8) > pC->end)
 							   {
-									 pC.cursor=(pC.end-pC.loop)<<8;
+									 pC->cursor=(pC->end-pC->loop)<<8;
 							   }
-							   else if((pC.cursor>>8) > pC.end)
-									   pC.key=0;
+							   else if((pC->cursor>>8) > pC->end)
+									   pC->key=0;
 					 }
 			  }
 			  pC++;

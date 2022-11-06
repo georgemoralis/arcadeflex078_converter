@@ -48,7 +48,7 @@ can take. Should the game reset????
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,7 +80,7 @@ public class btime
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
 	
-		/* the encryption is a simple bit rotation: 76543210 . 65342710, but */
+		/* the encryption is a simple bit rotation: 76543210 -> 65342710, but */
 		/* with a catch: it is only applied if the previous instruction did a */
 		/* memory write. Also, only opcodes at addresses with this bit pattern: */
 		/* xxxx xxx1 xxxx x1xx are encrypted. */
@@ -97,14 +97,13 @@ public class btime
 		/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
 		if ((A & 0x0104) == 0x0104)
 		{
-			/* 76543210 . 65342710 bit rotation */
+			/* 76543210 -> 65342710 bit rotation */
 			rom[A + diff] = (rom[A] & 0x13) | ((rom[A] & 0x80) >> 5) | ((rom[A] & 0x64) << 1)
 				   | ((rom[A] & 0x08) << 2);
 		}
 	}
 	
-	public static WriteHandlerPtr lnc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lnc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
@@ -125,8 +124,7 @@ public class btime
 		rom[offset+diff] = swap_bits_5_6(data);
 	} };
 	
-	public static WriteHandlerPtr mmonkey_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mmonkey_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
@@ -146,8 +144,7 @@ public class btime
 		rom[offset+diff] = swap_bits_5_6(data);
 	} };
 	
-	public static WriteHandlerPtr btime_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr btime_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if      (offset <= 0x07ff)                     RAM[offset] = data;
@@ -164,8 +161,7 @@ public class btime
 		btime_decrypt();
 	} };
 	
-	public static WriteHandlerPtr zoar_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zoar_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if      (offset <= 0x07ff) 					   RAM[offset] = data;
@@ -184,8 +180,7 @@ public class btime
 	
 	} };
 	
-	public static WriteHandlerPtr disco_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr disco_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if      (offset <= 0x04ff)                     RAM[offset] = data;
@@ -482,7 +477,7 @@ public class btime
 		int port;
 	
 		port = readinputport(2) & 0xc0;
-		if (active_high != 0) port ^= 0xc0;
+		if (active_high) port ^= 0xc0;
 	
 		if (port != 0xc0)    /* Coin */
 		{
@@ -495,29 +490,25 @@ public class btime
 		else coin = 0;
 	}
 	
-	public static InterruptHandlerPtr btime_irq_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr btime_irq_interrupt = new InterruptHandlerPtr() {public void handler(){
 		btime_interrupt(0, 1);
 	} };
 	
-	public static InterruptHandlerPtr zoar_irq_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr zoar_irq_interrupt = new InterruptHandlerPtr() {public void handler(){
 		btime_interrupt(0, 0);
 	} };
 	
-	public static InterruptHandlerPtr btime_nmi_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr btime_nmi_interrupt = new InterruptHandlerPtr() {public void handler(){
 		btime_interrupt(IRQ_LINE_NMI, 0);
 	} };
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
 	
-	static InputPortPtr input_ports_btime = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_btime = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( btime )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -594,7 +585,7 @@ public class btime
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cookrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cookrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cookrace )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH,IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -672,7 +663,7 @@ public class btime
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zoar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zoar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zoar )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -748,7 +739,7 @@ public class btime
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lnc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lnc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lnc )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -818,7 +809,7 @@ public class btime
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wtennis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wtennis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wtennis )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -889,7 +880,7 @@ public class btime
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mmonkey = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mmonkey = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mmonkey )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -957,7 +948,7 @@ public class btime
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bnj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bnj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bnj )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1035,7 +1026,7 @@ public class btime
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_disco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_disco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( disco )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1113,7 +1104,7 @@ public class btime
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sdtennis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sdtennis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sdtennis )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1322,8 +1313,7 @@ public class btime
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_btime = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( btime )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)
@@ -1351,13 +1341,10 @@ public class btime
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cookrace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cookrace )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(btime)
@@ -1373,13 +1360,10 @@ public class btime
 		MDRV_PALETTE_LENGTH(16)
 	
 		MDRV_VIDEO_UPDATE(cookrace)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lnc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lnc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(btime)
@@ -1398,13 +1382,10 @@ public class btime
 	
 		MDRV_PALETTE_INIT(lnc)
 		MDRV_VIDEO_UPDATE(lnc)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wtennis = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wtennis )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(lnc)
@@ -1413,25 +1394,19 @@ public class btime
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(eggs)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mmonkey = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mmonkey )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(wtennis)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(mmonkey_readmem,mmonkey_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bnj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bnj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(btime)
@@ -1445,13 +1420,10 @@ public class btime
 	
 		MDRV_VIDEO_START(bnj)
 		MDRV_VIDEO_UPDATE(bnj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_zoar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zoar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(btime)
@@ -1464,13 +1436,10 @@ public class btime
 		MDRV_PALETTE_LENGTH(64)
 	
 		MDRV_VIDEO_UPDATE(zoar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_disco = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( disco )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(btime)
@@ -1485,9 +1454,7 @@ public class btime
 		MDRV_PALETTE_LENGTH(32)
 	
 		MDRV_VIDEO_UPDATE(disco)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1839,8 +1806,7 @@ public class btime
 			rom[A+diff] = swap_bits_5_6(rom[A]);
 	}
 	
-	public static ReadHandlerPtr wtennis_reset_hack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wtennis_reset_hack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* Otherwise the game goes into test mode and there is no way out that I
@@ -1852,8 +1818,7 @@ public class btime
 		return RAM[0xc15f];
 	} };
 	
-	public static DriverInitHandlerPtr init_btime  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_btime  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
@@ -1865,8 +1830,7 @@ public class btime
 		memcpy(rom+diff,rom,0x10000);
 	} };
 	
-	public static DriverInitHandlerPtr init_zoar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zoar  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
 	
@@ -1879,36 +1843,33 @@ public class btime
 	    init_btime();
 	} };
 	
-	public static DriverInitHandlerPtr init_lnc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lnc  = new DriverInitHandlerPtr() { public void handler(){
 		decrypt_C10707_cpu(0, REGION_CPU1);
 	} };
 	
-	public static DriverInitHandlerPtr init_wtennis  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wtennis  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xc15f, 0xc15f, wtennis_reset_hack_r);
 		init_lnc();
 	} };
 	
-	public static DriverInitHandlerPtr init_sdtennis  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sdtennis  = new DriverInitHandlerPtr() { public void handler(){
 		decrypt_C10707_cpu(0, REGION_CPU1);
 		decrypt_C10707_cpu(1, REGION_CPU2);
 	} };
 	
 	
-	public static GameDriver driver_btime	   = new GameDriver("1982"	,"btime"	,"btime.java"	,rom_btime,null	,machine_driver_btime	,input_ports_btime	,init_btime	,ROT270	,	"Data East Corporation", "Burger Time (Data East set 1)" )
-	public static GameDriver driver_btime2	   = new GameDriver("1982"	,"btime2"	,"btime.java"	,rom_btime2,driver_btime	,machine_driver_btime	,input_ports_btime	,init_btime	,ROT270	,	"Data East Corporation", "Burger Time (Data East set 2)" )
-	public static GameDriver driver_btimem	   = new GameDriver("1982"	,"btimem"	,"btime.java"	,rom_btimem,driver_btime	,machine_driver_btime	,input_ports_btime	,init_btime	,ROT270	,	"Data East (Bally Midway license)", "Burger Time (Midway)" )
-	public static GameDriver driver_cookrace	   = new GameDriver("1982"	,"cookrace"	,"btime.java"	,rom_cookrace,driver_btime	,machine_driver_cookrace	,input_ports_cookrace	,init_lnc	,ROT270	,	"bootleg", "Cook Race" )
-	public static GameDriver driver_lnc	   = new GameDriver("1981"	,"lnc"	,"btime.java"	,rom_lnc,null	,machine_driver_lnc	,input_ports_lnc	,init_lnc	,ROT270	,	"Data East Corporation", "Lock'n'Chase" )
-	public static GameDriver driver_wtennis	   = new GameDriver("1982"	,"wtennis"	,"btime.java"	,rom_wtennis,null	,machine_driver_wtennis	,input_ports_wtennis	,init_wtennis	,ROT270	,	"bootleg", "World Tennis" )
-	public static GameDriver driver_mmonkey	   = new GameDriver("1982"	,"mmonkey"	,"btime.java"	,rom_mmonkey,null	,machine_driver_mmonkey	,input_ports_mmonkey	,init_lnc	,ROT270	,	"Technos + Roller Tron", "Minky Monkey" )
-	public static GameDriver driver_brubber	   = new GameDriver("1982"	,"brubber"	,"btime.java"	,rom_brubber,null	,machine_driver_bnj	,input_ports_bnj	,init_lnc	,ROT270	,	"Data East", "Burnin' Rubber" )
-	public static GameDriver driver_bnj	   = new GameDriver("1982"	,"bnj"	,"btime.java"	,rom_bnj,driver_brubber	,machine_driver_bnj	,input_ports_bnj	,init_lnc	,ROT270	,	"Data East USA (Bally Midway license)", "Bump 'n' Jump" )
-	public static GameDriver driver_caractn	   = new GameDriver("1982"	,"caractn"	,"btime.java"	,rom_caractn,driver_brubber	,machine_driver_bnj	,input_ports_bnj	,init_lnc	,ROT270	,	"bootleg", "Car Action" )
-	public static GameDriver driver_zoar	   = new GameDriver("1982"	,"zoar"	,"btime.java"	,rom_zoar,null	,machine_driver_zoar	,input_ports_zoar	,init_zoar	,ROT270	,	"Data East USA", "Zoar" )
-	public static GameDriver driver_disco	   = new GameDriver("1982"	,"disco"	,"btime.java"	,rom_disco,null	,machine_driver_disco	,input_ports_disco	,init_btime	,ROT270	,	"Data East", "Disco No.1" )
-	public static GameDriver driver_discof	   = new GameDriver("1982"	,"discof"	,"btime.java"	,rom_discof,driver_disco	,machine_driver_disco	,input_ports_disco	,init_btime	,ROT270	,	"Data East", "Disco No.1 (Rev.F)" )
-	public static GameDriver driver_sdtennis	   = new GameDriver("1983"	,"sdtennis"	,"btime.java"	,rom_sdtennis,null	,machine_driver_bnj	,input_ports_sdtennis	,init_sdtennis	,ROT270	,	"Data East Corporation", "Super Doubles Tennis" )
+	GAME( 1982, btime,    0,       btime,    btime,    btime,   ROT270, "Data East Corporation", "Burger Time (Data East set 1)" )
+	GAME( 1982, btime2,   btime,   btime,    btime,    btime,   ROT270, "Data East Corporation", "Burger Time (Data East set 2)" )
+	GAME( 1982, btimem,   btime,   btime,    btime,    btime,   ROT270, "Data East (Bally Midway license)", "Burger Time (Midway)" )
+	GAME( 1982, cookrace, btime,   cookrace, cookrace, lnc,     ROT270, "bootleg", "Cook Race" )
+	GAME( 1981, lnc,      0,       lnc,      lnc,      lnc,     ROT270, "Data East Corporation", "Lock'n'Chase" )
+	GAME( 1982, wtennis,  0,       wtennis,  wtennis,  wtennis, ROT270, "bootleg", "World Tennis" )
+	GAME( 1982, mmonkey,  0,       mmonkey,  mmonkey,  lnc,     ROT270, "Technos + Roller Tron", "Minky Monkey" )
+	GAME( 1982, brubber,  0,       bnj,      bnj,      lnc,     ROT270, "Data East", "Burnin' Rubber" )
+	GAME( 1982, bnj,      brubber, bnj,      bnj,      lnc,     ROT270, "Data East USA (Bally Midway license)", "Bump 'n' Jump" )
+	GAME( 1982, caractn,  brubber, bnj,      bnj,      lnc,     ROT270, "bootleg", "Car Action" )
+	GAME( 1982, zoar,     0,       zoar,     zoar,     zoar,    ROT270, "Data East USA", "Zoar" )
+	GAME( 1982, disco,    0,       disco,    disco,    btime,   ROT270, "Data East", "Disco No.1" )
+	GAME( 1982, discof,   disco,   disco,    disco,    btime,   ROT270, "Data East", "Disco No.1 (Rev.F)" )
+	GAME( 1983, sdtennis, 0,       bnj,      sdtennis, sdtennis,ROT270, "Data East Corporation", "Super Doubles Tennis" )
 }

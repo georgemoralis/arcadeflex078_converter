@@ -10,7 +10,7 @@ Ikki (c) 1985 Sun Electronics
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,18 +23,15 @@ public class ikki
 	/****************************************************************************/
 	
 	
-	public static WriteHandlerPtr ikki_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ikki_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ikki_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr ikki_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ikki_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ikki_sharedram[offset];
 	} };
 	
-	public static ReadHandlerPtr ikki_e000_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ikki_e000_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/* bit1: interrupt type?, bit0: CPU2 busack? */
 	
 		if (cpu_getiloops() == 0)
@@ -98,7 +95,7 @@ public class ikki
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_ikki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ikki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ikki )
 		PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -230,8 +227,7 @@ public class ikki
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ikki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ikki )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2) /* 4.000MHz */
@@ -259,9 +255,7 @@ public class ikki
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -298,5 +292,5 @@ public class ikki
 		ROM_LOAD( "prom17_2", 0x0100,  0x0100, CRC(f3c55174) SHA1(936c5432c4fccfcb2601c1e08b98d5509202fe5b) ) /* unknown */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ikki	   = new GameDriver("1985"	,"ikki"	,"ikki.java"	,rom_ikki,null	,machine_driver_ikki	,input_ports_ikki	,null	,ROT0	,	"Sun Electronics", "Ikki (Japan)" )
+	GAME( 1985, ikki, 0, ikki, ikki, 0, ROT0, "Sun Electronics", "Ikki (Japan)" )
 }

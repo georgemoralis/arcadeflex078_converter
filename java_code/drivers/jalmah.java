@@ -40,7 +40,7 @@ lev 7 : 0x7c : 0000 0938 -
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -67,23 +67,20 @@ public class jalmah
 		return res;
 	}
 	
-	static MACHINE_INIT (daireika)
-	{
+	public static MachineInitHandlerPtr machine_init_daireika  = new MachineInitHandlerPtr() { public void handler(){
 		respcount = 0;
-	}
+	} };
 	
-	VIDEO_START(jalmah)
-	{
+	public static VideoStartHandlerPtr video_start_jalmah  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
 	
-	VIDEO_UPDATE(jalmah)
-	{
+	public static VideoUpdateHandlerPtr video_update_jalmah  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
-	}
+	} };
 	
-	static InputPortPtr input_ports_jalmah = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jalmah = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jalmah )
 	INPUT_PORTS_END(); }}; 
 	
 	static MEMORY_READ16_START( readmem )
@@ -130,8 +127,7 @@ public class jalmah
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_jalmah = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jalmah )
 		MDRV_CPU_ADD(M68000, 8000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 	//	MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -151,9 +147,7 @@ public class jalmah
 		MDRV_VIDEO_START(jalmah)
 		MDRV_VIDEO_UPDATE(jalmah)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -294,8 +288,8 @@ public class jalmah
 	
 	
 	
-	public static GameDriver driver_daireika	   = new GameDriver("1989"	,"daireika"	,"jalmah.java"	,rom_daireika,null	,machine_driver_jalmah	,input_ports_jalmah	,null	,ROT0	,	"Jaleco / NMK", "Mahjong Daireikai", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_mjzoomin	   = new GameDriver("1990"	,"mjzoomin"	,"jalmah.java"	,rom_mjzoomin,null	,machine_driver_jalmah	,input_ports_jalmah	,null	,ROT0	,	"Jaleco",       "Mahjong Channel Zoom In", GAME_NO_SOUND | GAME_NOT_WORKING  )
-	public static GameDriver driver_kakumei	   = new GameDriver("1990"	,"kakumei"	,"jalmah.java"	,rom_kakumei,null	,machine_driver_jalmah	,input_ports_jalmah	,null	,ROT0	,	"Jaleco",       "Mahjong Kakumei", GAME_NO_SOUND | GAME_NOT_WORKING  )
-	public static GameDriver driver_kakumei2	   = new GameDriver("1992"	,"kakumei2"	,"jalmah.java"	,rom_kakumei2,null	,machine_driver_jalmah	,input_ports_jalmah	,null	,ROT0	,	"Jaleco",       "Mahjong Kakumei 2 - Princess League", GAME_NO_SOUND | GAME_NOT_WORKING  )
+	GAMEX( 1989, daireika, 0, jalmah, jalmah, 0, ROT0, "Jaleco / NMK", "Mahjong Daireikai", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1990, mjzoomin, 0, jalmah, jalmah, 0, ROT0, "Jaleco",       "Mahjong Channel Zoom In", GAME_NO_SOUND | GAME_NOT_WORKING  )
+	GAMEX( 1990, kakumei,  0, jalmah, jalmah, 0, ROT0, "Jaleco",       "Mahjong Kakumei", GAME_NO_SOUND | GAME_NOT_WORKING  )
+	GAMEX( 1992, kakumei2, 0, jalmah, jalmah, 0, ROT0, "Jaleco",       "Mahjong Kakumei 2 - Princess League", GAME_NO_SOUND | GAME_NOT_WORKING  )
 }

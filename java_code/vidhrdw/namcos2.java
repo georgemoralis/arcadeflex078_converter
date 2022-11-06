@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -459,14 +459,14 @@ public class namcos2
 	
 				if(scalex && scaley)
 				{
-					gfx = *Machine.gfx[spr_region];
+					gfx = *Machine->gfx[spr_region];
 	
 					if( (offset0&0x0200)==0 )
 					{
 						gfx.width = 16;
 						gfx.height = 16;
-						if ((offset2 & 0x0001) != 0) gfx.gfxdata += 16;
-						if ((offset2 & 0x0002) != 0) gfx.gfxdata += 16*gfx.line_modulo;
+						if( offset2&0x0001 ) gfx.gfxdata += 16;
+						if( offset2&0x0002 ) gfx.gfxdata += 16*gfx.line_modulo;
 					}
 	
 					drawgfxzoom(bitmap,&gfx,
@@ -495,7 +495,7 @@ public class namcos2
 		 *	--x------------- bank
 		 *	----xxxxxxxxxxxx tile
 		 *
-		 * word#3				2.3 by N
+		 * word#3				2->3 by N
 		 *	xxxxxx---------- xsize
 		 *	------xxxxxxxxxx screenx
 		 *
@@ -524,7 +524,7 @@ public class namcos2
 			int sizex=(xpos>>10)&0x3f;
 			int sprn=(tile>>2)&0x7ff;
 	
-			if ((tile & 0x2000) != 0) sprn&=0x3ff; else sprn|=0x400;
+			if( tile&0x2000 ) sprn&=0x3ff; else sprn|=0x400;
 			if((sizey-1) && sizex && ((attrs>>1)&7)==pri )
 			{
 				int bSmallSprite =
@@ -548,7 +548,7 @@ public class namcos2
 				}
 	
 				// little zoom fix...
-				if (bSmallSprite == 0) {
+				if( !bSmallSprite ) {
 					if( sizex < 0x20 ) {
 						sx -= (0x20-sizex)/0x8;
 					}
@@ -563,12 +563,12 @@ public class namcos2
 				rect.min_y=sy;
 				rect.max_y=sy+(sizey-1);
 	
-				if (cliprect.min_x > rect.min_x) rect.min_x = cliprect.min_x;
-				if (cliprect.max_x < rect.max_x) rect.max_x = cliprect.max_x;
-				if (cliprect.min_y > rect.min_y) rect.min_y = cliprect.min_y;
-				if (cliprect.max_y < rect.max_y) rect.max_y = cliprect.max_y;
+				if (cliprect->min_x > rect.min_x) rect.min_x = cliprect->min_x;
+				if (cliprect->max_x < rect.max_x) rect.max_x = cliprect->max_x;
+				if (cliprect->min_y > rect.min_y) rect.min_y = cliprect->min_y;
+				if (cliprect->max_y < rect.max_y) rect.max_y = cliprect->max_y;
 	
-				if (bSmallSprite != 0)
+				if( bSmallSprite )
 				{
 					sizex = 16;
 					sizey = 16;
@@ -588,7 +588,7 @@ public class namcos2
 					rect.max_y += (tile&2)?16:0;
 				}
 				drawgfxzoom(
-					bitmap,Machine.gfx[0],
+					bitmap,Machine->gfx[0],
 					sprn, color,
 					flipx,flipy,
 					sx,sy,
@@ -632,23 +632,22 @@ public class namcos2
 			return;
 		}
 	
-		beamx = readinputport(2+x1port)*bitmap.width/256;
-		beamy = readinputport(2+y1port)*bitmap.height/256;
+		beamx = readinputport(2+x1port)*bitmap->width/256;
+		beamy = readinputport(2+y1port)*bitmap->height/256;
 		draw_crosshair( bitmap, beamx, beamy, cliprect );
 	
-		beamx = readinputport(2+x2port)*bitmap.width/256;
-		beamy = readinputport(2+y2port)*bitmap.height/256;
+		beamx = readinputport(2+x2port)*bitmap->width/256;
+		beamy = readinputport(2+y2port)*bitmap->height/256;
 		draw_crosshair( bitmap, beamx, beamy, cliprect );
 	}
 	
 	/**************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_namcos2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namcos2  = new VideoStartHandlerPtr() { public int handler(){
 		if( CreateTilemaps()==0 )
 		{
 			tilemap_roz = tilemap_create(get_tile_info_roz,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,256,256);
-			if (tilemap_roz != 0)
+			if( tilemap_roz )
 			{
 				tilemap_set_transparent_pen(tilemap_roz,0xff);
 				DrawSpriteInit();
@@ -658,8 +657,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos2_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		UpdatePalette();
@@ -683,8 +681,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_finallap  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_finallap  = new VideoStartHandlerPtr() { public int handler(){
 		if( CreateTilemaps()==0 )
 		{
 			DrawSpriteInit();
@@ -694,8 +691,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_finallap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		UpdatePalette();
@@ -712,8 +708,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_luckywld  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_luckywld  = new VideoStartHandlerPtr() { public int handler(){
 		if( CreateTilemaps()==0 )
 		{
 			namco_obj_init( 0, 0x0, NULL );
@@ -730,8 +725,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_luckywld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		UpdatePalette();
@@ -753,8 +747,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_sgunner  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sgunner  = new VideoStartHandlerPtr() { public int handler(){
 		if( CreateTilemaps()==0 )
 		{
 			namco_obj_init( 0, 0x0, NULL );
@@ -763,8 +756,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sgunner  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		UpdatePalette();
@@ -781,8 +773,7 @@ public class namcos2
 	
 	/**************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_metlhawk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_metlhawk  = new VideoStartHandlerPtr() { public int handler(){
 		if( CreateTilemaps()==0 )
 		{
 			namco_roz_init( 1, REGION_GFX5 );
@@ -791,8 +782,7 @@ public class namcos2
 		return -1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_metlhawk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		UpdatePalette();

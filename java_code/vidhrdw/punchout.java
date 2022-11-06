@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -110,8 +110,7 @@ public class punchout
 	/* these depend on jumpers on the board and change from game to game */
 	static int gfx0inv,gfx1inv,gfx2inv,gfx3inv;
 	
-	public static PaletteInitHandlerPtr palette_init_punchout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_punchout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -143,8 +142,7 @@ public class punchout
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_armwrest  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_armwrest  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -185,8 +183,7 @@ public class punchout
 		memset(memory_region(REGION_GFX3) + 0x2c000,0xff,0x4000);
 	}
 	
-	public static DriverInitHandlerPtr init_punchout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_punchout  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_fix();
 	
 		gfx0inv = 0x03;
@@ -195,8 +192,7 @@ public class punchout
 		gfx3inv = 0xfc;
 	} };
 	
-	public static DriverInitHandlerPtr init_spnchout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spnchout  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_fix();
 	
 		gfx0inv = 0x00;
@@ -205,8 +201,7 @@ public class punchout
 		gfx3inv = 0xff;
 	} };
 	
-	public static DriverInitHandlerPtr init_spnchotj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spnchotj  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_fix();
 	
 		gfx0inv = 0xfc;
@@ -215,8 +210,7 @@ public class punchout
 		gfx3inv = 0xff;
 	} };
 	
-	public static DriverInitHandlerPtr init_armwrest  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_armwrest  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_fix();
 	
 		/* also, ROM 2k is enabled only when its top half is accessed. The other half must */
@@ -232,8 +226,7 @@ public class punchout
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_punchout  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_punchout  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset(dirtybuffer,1,videoram_size[0]);
@@ -262,8 +255,7 @@ public class punchout
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_armwrest  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_armwrest  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset(dirtybuffer,1,videoram_size[0]);
@@ -294,18 +286,16 @@ public class punchout
 	
 	
 	
-	public static WriteHandlerPtr punchout_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (punchout_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr punchout_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (punchout_videoram2[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
 	
-			punchout_videoram2.write(data,data);
+			punchout_videoram2[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr punchout_bigsprite1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_bigsprite1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (punchout_bigsprite1ram[offset] != data)
 		{
 			bs1dirtybuffer[offset] = 1;
@@ -314,8 +304,7 @@ public class punchout
 		}
 	} };
 	
-	public static WriteHandlerPtr punchout_bigsprite2ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_bigsprite2ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (punchout_bigsprite2ram[offset] != data)
 		{
 			bs2dirtybuffer[offset] = 1;
@@ -326,8 +315,7 @@ public class punchout
 	
 	
 	
-	public static WriteHandlerPtr punchout_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr punchout_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		*punchout_palettebank = data;
 	
 		if (top_palette_bank != ((data >> 1) & 0x01))
@@ -353,8 +341,7 @@ public class punchout
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_punchout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_punchout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -396,9 +383,9 @@ public class punchout
 				sy = offs/2 / 64;
 	
 				drawgfx(tmpbitmap,Machine.gfx[1],
-						punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03),
-						((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * bottom_palette_bank,
-						punchout_videoram2.read(offs + 1)& 0x80,0,
+						punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
+						((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
+						punchout_videoram2[offs + 1] & 0x80,0,
 						8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 						&backgroundvisiblearea,TRANSPARENCY_NONE,0);
 			}
@@ -469,7 +456,7 @@ public class punchout
 			int zoom;
 	
 			zoom = punchout_bigsprite1[0] + 256 * (punchout_bigsprite1[1] & 0x0f);
-			if (zoom != 0)
+			if (zoom)
 			{
 				int sx,sy;
 				UINT32 startx,starty;
@@ -532,8 +519,7 @@ public class punchout
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_armwrest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_armwrest  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -557,9 +543,9 @@ public class punchout
 					/* top screen */
 					sy -= 32;
 					drawgfx(tmpbitmap,Machine.gfx[0],
-							punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03) +
-									8 * (punchout_videoram2.read(offs + 1)& 0x80),
-							((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * top_palette_bank,
+							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03) +
+									8 * (punchout_videoram2[offs + 1] & 0x80),
+							((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * top_palette_bank,
 							0,0,
 							8*sx,8*sy - 16,
 							&topvisiblearea,TRANSPARENCY_NONE,0);
@@ -567,9 +553,9 @@ public class punchout
 				else
 					/* bottom screen background */
 					drawgfx(tmpbitmap,Machine.gfx[0],
-							punchout_videoram2.read(offs)+ 256 * (punchout_videoram2.read(offs + 1)& 0x03),
-							128 + ((punchout_videoram2.read(offs + 1)& 0x7c) >> 2) + 64 * bottom_palette_bank,
-							punchout_videoram2.read(offs + 1)& 0x80,0,
+							punchout_videoram2[offs] + 256 * (punchout_videoram2[offs + 1] & 0x03),
+							128 + ((punchout_videoram2[offs + 1] & 0x7c) >> 2) + 64 * bottom_palette_bank,
+							punchout_videoram2[offs + 1] & 0x80,0,
 							8*sx,8*sy + 8*TOP_MONITOR_ROWS - 16,
 							&backgroundvisiblearea,TRANSPARENCY_NONE,0);
 			}
@@ -636,7 +622,7 @@ public class punchout
 			int zoom;
 	
 			zoom = punchout_bigsprite1[0] + 256 * (punchout_bigsprite1[1] & 0x0f);
-			if (zoom != 0)
+			if (zoom)
 			{
 				int sx,sy;
 				UINT32 startx,starty;

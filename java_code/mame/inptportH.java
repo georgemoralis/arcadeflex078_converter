@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -174,7 +174,7 @@ public class inptportH
 	#define IPF_REVERSE    0x00400000	/* By default, analog inputs like IPT_TRACKBALL increase */
 										/* when going right/up. This flag inverts them. */
 	
-	#define IPF_CENTER     0x00800000	/* always preload in.default, autocentering the STICK/TRACKBALL */
+	#define IPF_CENTER     0x00800000	/* always preload in->default, autocentering the STICK/TRACKBALL */
 	
 	#define IPF_CUSTOM_UPDATE 0x01000000 /* normally, analog ports are updated when they are accessed. */
 										/* When this flag is set, they are never updated automatically, */
@@ -188,16 +188,16 @@ public class inptportH
 	#define IPF_SENSITIVITY(percent)	((percent & 0xff) << 8)
 	#define IPF_DELTA(val)				((val & 0xff) << 16)
 	
-	#define IP_GET_PLAYER(port) (((port).type >> 16) & 7)
-	#define IP_GET_IMPULSE(port) (((port).type >> 8) & 0xff)
-	#define IP_GET_SENSITIVITY(port) ((((port)+1).type >> 8) & 0xff)
-	#define IP_SET_SENSITIVITY(port,val) ((port)+1).type = ((port+1).type & 0xffff00ff)|((val&0xff)<<8)
-	#define IP_GET_DELTA(port) ((((port)+1).type >> 16) & 0xff)
-	#define IP_SET_DELTA(port,val) ((port)+1).type = ((port+1).type & 0xff00ffff)|((val&0xff)<<16)
-	#define IP_GET_MIN(port) (((port)+1).mask)
-	#define IP_GET_MAX(port) (((port)+1).default_value)
-	#define IP_GET_CODE_OR1(port) ((port).mask)
-	#define IP_GET_CODE_OR2(port) ((port).default_value)
+	#define IP_GET_PLAYER(port) (((port)->type >> 16) & 7)
+	#define IP_GET_IMPULSE(port) (((port)->type >> 8) & 0xff)
+	#define IP_GET_SENSITIVITY(port) ((((port)+1)->type >> 8) & 0xff)
+	#define IP_SET_SENSITIVITY(port,val) ((port)+1)->type = ((port+1)->type & 0xffff00ff)|((val&0xff)<<8)
+	#define IP_GET_DELTA(port) ((((port)+1)->type >> 16) & 0xff)
+	#define IP_SET_DELTA(port,val) ((port)+1)->type = ((port+1)->type & 0xff00ffff)|((val&0xff)<<16)
+	#define IP_GET_MIN(port) (((port)+1)->mask)
+	#define IP_GET_MAX(port) (((port)+1)->default_value)
+	#define IP_GET_CODE_OR1(port) ((port)->mask)
+	#define IP_GET_CODE_OR2(port) ((port)->default_value)
 	
 	#define IP_NAME_DEFAULT ((const char *)-1)
 	
@@ -210,7 +210,7 @@ public class inptportH
 	#define IP_JOY_NONE CODE_NONE
 	
 	/* start of table */
-	#define static InputPortPtr input_ports_name = new InputPortPtr(){ public void handler() {  \
+	#define static InputPortPtr input_ports_name = new InputPortPtr(){ public void handler() { INPUT_PORTS_START(name) \
 		static const struct InputPortTiny input_ports_##name[] = {
 	
 	/* end of table */
@@ -378,7 +378,7 @@ public class inptportH
 		STR_TOTAL
 	};
 	
-	static final int IKT_STD = 0, IKT_IPT = 1, IKT_IPT_EXT = 2, IKT_OSD_KEY = 3, IKT_OSD_JOY = 4;
+	enum { IKT_STD, IKT_IPT, IKT_IPT_EXT, IKT_OSD_KEY, IKT_OSD_JOY };
 	
 	#define DEF_STR(str_num) (ipdn_defaultstrings[STR_##str_num])
 	

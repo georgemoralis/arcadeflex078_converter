@@ -50,7 +50,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -75,8 +75,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr zwackery_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zwackery_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = readinputport(2);
 		int wheel = readinputport(5);
 	
@@ -185,17 +184,17 @@ public class mcr68
 		/*      A E      = middle right/down                    */
 		/*      9 B D F  = full right/down                      */
 	
-		if ((joystick & 0x0001) != 0) result |= 0x0040;
-		else if ((joystick & 0x0002) != 0) result |= 0x0090;
+		if (joystick & 0x0001) result |= 0x0040;
+		else if (joystick & 0x0002) result |= 0x0090;
 	
-		if ((joystick & 0x0004) != 0) result |= 0x0004;
-		else if ((joystick & 0x0008) != 0) result |= 0x0009;
+		if (joystick & 0x0004) result |= 0x0004;
+		else if (joystick & 0x0008) result |= 0x0009;
 	
-		if ((joystick & 0x0010) != 0) result |= 0x4000;
-		else if ((joystick & 0x0020) != 0) result |= 0x9000;
+		if (joystick & 0x0010) result |= 0x4000;
+		else if (joystick & 0x0020) result |= 0x9000;
 	
-		if ((joystick & 0x0040) != 0) result |= 0x0400;
-		else if ((joystick & 0x0080) != 0) result |= 0x0900;
+		if (joystick & 0x0040) result |= 0x0400;
+		else if (joystick & 0x0080) result |= 0x0900;
 	
 		return result;
 	}
@@ -220,7 +219,7 @@ public class mcr68
 	static WRITE16_HANDLER( pigskin_protection_w )
 	{
 		/* ignore upper-byte only */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* track the last 5 bytes */
 			protection_data[0] = protection_data[1];
@@ -261,11 +260,11 @@ public class mcr68
 	
 		/* see archrivl_port_1_r for 49-way joystick description */
 	
-		if ((joystick & 0x0001) != 0) result |= 0x4000;
-		else if ((joystick & 0x0002) != 0) result |= 0x9000;
+		if (joystick & 0x0001) result |= 0x4000;
+		else if (joystick & 0x0002) result |= 0x9000;
 	
-		if ((joystick & 0x0004) != 0) result |= 0x0400;
-		else if ((joystick & 0x0008) != 0) result |= 0x0900;
+		if (joystick & 0x0004) result |= 0x0400;
+		else if (joystick & 0x0008) result |= 0x0900;
 	
 		return result;
 	}
@@ -278,11 +277,11 @@ public class mcr68
 	
 		/* see archrivl_port_1_r for 49-way joystick description */
 	
-		if ((joystick & 0x0010) != 0) result |= 0x4000;
-		else if ((joystick & 0x0020) != 0) result |= 0x9000;
+		if (joystick & 0x0010) result |= 0x4000;
+		else if (joystick & 0x0020) result |= 0x9000;
 	
-		if ((joystick & 0x0040) != 0) result |= 0x0400;
-		else if ((joystick & 0x0080) != 0) result |= 0x0900;
+		if (joystick & 0x0040) result |= 0x0400;
+		else if (joystick & 0x0080) result |= 0x0900;
 	
 		return result;
 	}
@@ -446,7 +445,7 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_zwackery = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zwackery = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zwackery )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -503,7 +502,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_xenophob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xenophob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xenophob )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -562,7 +561,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spyhunt2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spyhunt2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spyhunt2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -630,7 +629,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_blasted = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blasted = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blasted )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -683,7 +682,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_archrivl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_archrivl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( archrivl )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -741,7 +740,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pigskin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pigskin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pigskin )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -805,7 +804,7 @@ public class mcr68
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_trisport = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_trisport = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( trisport )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -929,8 +928,7 @@ public class mcr68
 	
 	=================================================================*/
 	
-	public static MachineHandlerPtr machine_driver_zwackery = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zwackery )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 7652400)
@@ -954,13 +952,10 @@ public class mcr68
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mcr68 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcr68 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 7723800)
@@ -982,46 +977,34 @@ public class mcr68
 		MDRV_VIDEO_UPDATE(mcr68)
 	
 		/* sound hardware -- determined by specific machine */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_xenophob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xenophob )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(sounds_good)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spyhunt2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spyhunt2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(turbo_chip_squeak_plus_sounds_good)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_archrivl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( archrivl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
 		MDRV_IMPORT_FROM(williams_cvsd_sound)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pigskin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pigskin )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
@@ -1029,13 +1012,10 @@ public class mcr68
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(pigskin_readmem,pigskin_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_trisport = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trisport )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr68)
@@ -1045,9 +1025,7 @@ public class mcr68
 		MDRV_CPU_MEMORY(trisport_readmem,trisport_writemem)
 	
 		MDRV_NVRAM_HANDLER(generic_0fill)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1307,39 +1285,36 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_zwackery  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zwackery  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_CHIP_SQUEAK_DELUXE);
 	
 		/* Zwackery doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_xenophob  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xenophob  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 	
 		mcr68_sprite_clip = 0;
 		mcr68_sprite_xoffset = 0;
 	
 		/* Xenophobe doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		/* install control port handler */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, xenophobe_control_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_spyhunt2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spyhunt2  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK | MCR_SOUNDS_GOOD);
 	
 		mcr68_sprite_clip = 0;
 		mcr68_sprite_xoffset = -6;
 	
 		/* Spy Hunter 2 doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		/* analog port handling is a bit tricky */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, spyhunt2_control_w);
@@ -1348,8 +1323,7 @@ public class mcr68
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blasted  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blasted  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 	
 		mcr68_sprite_clip = 0;
@@ -1358,7 +1332,7 @@ public class mcr68
 		/* Blasted checks the timing of VBLANK relative to the 493 interrupt */
 		/* VBLANK is required to come within 220-256 E clocks (i.e., 2200-2560 CPU clocks) */
 		/* after the 493; we also allow 16 E clocks for latency  */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		/* handle control writes */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, blasted_control_w);
@@ -1369,15 +1343,14 @@ public class mcr68
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_archrivl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_archrivl  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
 		mcr68_sprite_clip = 16;
 		mcr68_sprite_xoffset = 0;
 	
 		/* Arch Rivals doesn't care too much about this value; currently taken from Blasted */
-		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = (256.0 + 16.0) / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		/* handle control writes */
 		install_mem_write16_handler(0, 0x0c0000, 0x0cffff, archrivl_control_w);
@@ -1399,12 +1372,11 @@ public class mcr68
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_pigskin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pigskin  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
 		/* Pigskin doesn't care too much about this value; currently taken from Tri-Sports */
-		mcr68_timing_factor = 115.0 / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = 115.0 / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		mcr68_sprite_clip = 16;
 		mcr68_sprite_xoffset = 0;
@@ -1416,14 +1388,13 @@ public class mcr68
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_trisport  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trisport  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_WILLIAMS_SOUND);
 	
 		/* Tri-Sports checks the timing of VBLANK relative to the 493 interrupt */
 		/* VBLANK is required to come within 87-119 E clocks (i.e., 870-1190 CPU clocks) */
 		/* after the 493 */
-		mcr68_timing_factor = 115.0 / (double)(Machine.drv.cpu[0].cpu_clock / 10);
+		mcr68_timing_factor = 115.0 / (double)(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		mcr68_sprite_clip = 0;
 		mcr68_sprite_xoffset = 0;
@@ -1443,13 +1414,13 @@ public class mcr68
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_zwackery	   = new GameDriver("1984"	,"zwackery"	,"mcr68.java"	,rom_zwackery,null	,machine_driver_zwackery	,input_ports_zwackery	,init_zwackery	,ROT0	,	"Bally Midway", "Zwackery" )
-	public static GameDriver driver_xenophob	   = new GameDriver("1987"	,"xenophob"	,"mcr68.java"	,rom_xenophob,null	,machine_driver_xenophob	,input_ports_xenophob	,init_xenophob	,ROT0	,	"Bally Midway", "Xenophobe" )
-	public static GameDriver driver_spyhunt2	   = new GameDriver("1987"	,"spyhunt2"	,"mcr68.java"	,rom_spyhunt2,null	,machine_driver_spyhunt2	,input_ports_spyhunt2	,init_spyhunt2	,ROT0	,	"Bally Midway", "Spy Hunter 2 (rev 2)" )
-	public static GameDriver driver_spyhnt2a	   = new GameDriver("1987"	,"spyhnt2a"	,"mcr68.java"	,rom_spyhnt2a,driver_spyhunt2	,machine_driver_spyhunt2	,input_ports_spyhunt2	,init_spyhunt2	,ROT0	,	"Bally Midway", "Spy Hunter 2 (rev 1)" )
-	public static GameDriver driver_blasted	   = new GameDriver("1988"	,"blasted"	,"mcr68.java"	,rom_blasted,null	,machine_driver_xenophob	,input_ports_blasted	,init_blasted	,ROT0	,	"Bally Midway", "Blasted" )
-	public static GameDriver driver_archrivl	   = new GameDriver("1989"	,"archrivl"	,"mcr68.java"	,rom_archrivl,null	,machine_driver_archrivl	,input_ports_archrivl	,init_archrivl	,ROT0	,	"Bally Midway", "Arch Rivals (rev 4.0)" )
-	public static GameDriver driver_archriv2	   = new GameDriver("1989"	,"archriv2"	,"mcr68.java"	,rom_archriv2,driver_archrivl	,machine_driver_archrivl	,input_ports_archrivl	,init_archrivl	,ROT0	,	"Bally Midway", "Arch Rivals (rev 2.0)" )
-	public static GameDriver driver_trisport	   = new GameDriver("1989"	,"trisport"	,"mcr68.java"	,rom_trisport,null	,machine_driver_trisport	,input_ports_trisport	,init_trisport	,ROT270	,	"Bally Midway", "Tri-Sports" )
-	public static GameDriver driver_pigskin	   = new GameDriver("1990"	,"pigskin"	,"mcr68.java"	,rom_pigskin,null	,machine_driver_pigskin	,input_ports_pigskin	,init_pigskin	,ROT0	,	"Midway", "Pigskin 621AD" )
+	GAME( 1984, zwackery, 0,        zwackery, zwackery, zwackery, ROT0,   "Bally Midway", "Zwackery" )
+	GAME( 1987, xenophob, 0,        xenophob, xenophob, xenophob, ROT0,   "Bally Midway", "Xenophobe" )
+	GAME( 1987, spyhunt2, 0,        spyhunt2, spyhunt2, spyhunt2, ROT0,   "Bally Midway", "Spy Hunter 2 (rev 2)" )
+	GAME( 1987, spyhnt2a, spyhunt2, spyhunt2, spyhunt2, spyhunt2, ROT0,   "Bally Midway", "Spy Hunter 2 (rev 1)" )
+	GAME( 1988, blasted,  0,        xenophob, blasted,  blasted,  ROT0,   "Bally Midway", "Blasted" )
+	GAME( 1989, archrivl, 0,        archrivl, archrivl, archrivl, ROT0,   "Bally Midway", "Arch Rivals (rev 4.0)" )
+	GAME( 1989, archriv2, archrivl, archrivl, archrivl, archrivl, ROT0,   "Bally Midway", "Arch Rivals (rev 2.0)" )
+	GAME( 1989, trisport, 0,        trisport, trisport, trisport, ROT270, "Bally Midway", "Tri-Sports" )
+	GAME( 1990, pigskin,  0,        pigskin,  pigskin,  pigskin,  ROT0,   "Midway", "Pigskin 621AD" )
 }

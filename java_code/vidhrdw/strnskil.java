@@ -10,7 +10,7 @@ Video hardware driver by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class strnskil
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_strnskil  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_strnskil  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -50,8 +49,7 @@ public class strnskil
 	
 	} };
 	
-	public static WriteHandlerPtr strnskil_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strnskil_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -59,13 +57,11 @@ public class strnskil
 		}
 	} };
 	
-	public static WriteHandlerPtr strnskil_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strnskil_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		strnskil_xscroll[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr strnskil_scrl_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strnskil_scrl_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		strnskil_scrl_ctrl = data >> 5;
 	
 		if (flip_screen() != (data & 0x08))
@@ -84,12 +80,11 @@ public class strnskil
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_strnskil  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_strnskil  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 32);
@@ -112,7 +107,7 @@ public class strnskil
 			int sy = spriteram.read(offs);
 			int px, py;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				px = 240 - sx + 0; /* +2 or +0 ? */
 				py = sy;
@@ -128,17 +123,16 @@ public class strnskil
 			if (sx > 248)
 				sx = sx - 256;
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				px, py,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_strnskil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_strnskil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int row;
 	
 		for (row = 0; row < 32; row++)

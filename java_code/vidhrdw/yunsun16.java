@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -108,8 +108,7 @@ public class yunsun16
 	
 	static int sprites_scrolldx, sprites_scrolldy;
 	
-	public static VideoStartHandlerPtr video_start_yunsun16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_yunsun16  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0,yunsun16_tilemap_scan_pages,
 									TILEMAP_TRANSPARENT,
 									16,16,
@@ -160,8 +159,8 @@ public class yunsun16
 	{
 		int offs;
 	
-		int max_x		=	Machine.visible_area.max_x+1;
-		int max_y		=	Machine.visible_area.max_y+1;
+		int max_x		=	Machine->visible_area.max_x+1;
+		int max_y		=	Machine->visible_area.max_y+1;
 	
 		int pri			=	*yunsun16_priority & 7;
 		int pri_mask;
@@ -187,13 +186,13 @@ public class yunsun16
 			x	+=	sprites_scrolldx;
 			y	+=	sprites_scrolldy;
 	
-			if (flip_screen != 0)	// not used?
+			if (flip_screen())	// not used?
 			{
 				flipx = NOT(flipx);		x = max_x - x - 16;
 				flipy = NOT(flipy);		y = max_y - y - 16;
 			}
 	
-			pdrawgfx(	bitmap,Machine.gfx[1],
+			pdrawgfx(	bitmap,Machine->gfx[1],
 						code,
 						attr & 0x1f,
 						flipx, flipy,
@@ -213,8 +212,7 @@ public class yunsun16
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_yunsun16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yunsun16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(tilemap_0, 0, yunsun16_scroll_0[ 0 ]);
 		tilemap_set_scrolly(tilemap_0, 0, yunsun16_scroll_0[ 1 ]);
 	

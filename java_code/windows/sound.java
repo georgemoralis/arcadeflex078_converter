@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -163,10 +163,10 @@ public class sound
 	#endif
 	
 		// skip if sound disabled
-		if (Machine.sample_rate != 0)
+		if (Machine->sample_rate != 0)
 		{
 			// attempt to initialize directsound
-			if (dsound_init() != 0)
+			if (dsound_init())
 				return 1;
 	
 			// set the startup volume
@@ -174,7 +174,7 @@ public class sound
 		}
 	
 		// determine the number of samples per frame
-		samples_per_frame = (double)Machine.sample_rate / (double)Machine.drv.frames_per_second;
+		samples_per_frame = (double)Machine->sample_rate / (double)Machine->drv->frames_per_second;
 	
 		// compute how many samples to generate the first frame
 		samples_left_over = samples_per_frame;
@@ -194,7 +194,7 @@ public class sound
 	void osd_stop_audio_stream(void)
 	{
 		// if nothing to do, don't do it
-		if (Machine.sample_rate == 0)
+		if (Machine->sample_rate == 0)
 			return;
 	
 		// kill the buffers and dsound
@@ -206,7 +206,7 @@ public class sound
 			fprintf(stderr, "Sound buffer: overflows=%d underflows=%d\n", buffer_overflows, buffer_underflows);
 	
 	#if LOG_SOUND
-		if (sound_log != 0)
+		if (sound_log)
 			fprintf(sound_log, "Sound buffer: overflows=%d underflows=%d\n", buffer_overflows, buffer_underflows);
 		fclose(sound_log);
 	#endif
@@ -225,7 +225,7 @@ public class sound
 		static int consecutive_highs = 0;
 	
 		// if we're not throttled don't bother
-		if (throttle == 0)
+		if (!throttle)
 		{
 			consecutive_lows = 0;
 			consecutive_mids = 0;
@@ -342,7 +342,7 @@ public class sound
 	int osd_update_audio_stream(INT16 *buffer)
 	{
 		// if nothing to do, don't do it
-		if (Machine.sample_rate != 0 && stream_buffer)
+		if (Machine->sample_rate != 0 && stream_buffer)
 		{
 			int original_bytes = bytes_in_stream_buffer();
 			int input_bytes = samples_this_frame * stream_format.nBlockAlign;
@@ -432,9 +432,9 @@ public class sound
 	
 	void osd_sound_enable(int enable_it)
 	{
-		if (stream_buffer != 0)
+		if (stream_buffer)
 		{
-			if (enable_it != 0)
+			if (enable_it)
 				IDirectSoundBuffer_SetVolume(stream_buffer, attenuation * 100);
 			else
 				IDirectSoundBuffer_SetVolume(stream_buffer, DSBVOLUME_MIN);
@@ -481,15 +481,15 @@ public class sound
 		// make a format description for what we want
 		stream_format.wBitsPerSample	= 16;
 		stream_format.wFormatTag		= WAVE_FORMAT_PCM;
-		stream_format.nChannels			= (Machine.drv.sound_attributes & SOUND_SUPPORTS_STEREO) ? 2 : 1;
-		stream_format.nSamplesPerSec	= Machine.sample_rate;
+		stream_format.nChannels			= (Machine->drv->sound_attributes & SOUND_SUPPORTS_STEREO) ? 2 : 1;
+		stream_format.nSamplesPerSec	= Machine->sample_rate;
 		stream_format.nBlockAlign		= stream_format.wBitsPerSample * stream_format.nChannels / 8;
 		stream_format.nAvgBytesPerSec	= stream_format.nSamplesPerSec * stream_format.nBlockAlign;
 	
 		// compute the buffer sizes
 		stream_buffer_size = ((UINT64)MAX_BUFFER_SIZE * (UINT64)stream_format.nSamplesPerSec) / 44100;
 		stream_buffer_size = (stream_buffer_size * stream_format.nBlockAlign) / 4;
-		stream_buffer_size = (stream_buffer_size * 30) / Machine.drv.frames_per_second;
+		stream_buffer_size = (stream_buffer_size * 30) / Machine->drv->frames_per_second;
 		stream_buffer_size = (stream_buffer_size / 1024) * 1024;
 	
 		// compute the upper/lower thresholds
@@ -502,7 +502,7 @@ public class sound
 	#endif
 	
 		// create the buffers
-		if (dsound_create_buffers() != 0)
+		if (dsound_create_buffers())
 			goto cant_create_buffers;
 	
 		// start playing
@@ -537,7 +537,7 @@ public class sound
 	static void dsound_kill(void)
 	{
 		// release the object
-		if (dsound != 0)
+		if (dsound)
 			IDirectSound_Release(dsound);
 		dsound = NULL;
 	}
@@ -583,7 +583,7 @@ public class sound
 			fprintf(stderr, "Error getting primary format: %08x\n", (UINT32)result);
 			goto cant_get_primary_format;
 		}
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "Primary buffer: %d Hz, %d bits, %d channels\n",
 					(int)primary_format.nSamplesPerSec, (int)primary_format.wBitsPerSample, (int)primary_format.nChannels);
 	
@@ -638,11 +638,11 @@ public class sound
 	static void dsound_destroy_buffers(void)
 	{
 		// stop any playback
-		if (stream_buffer != 0)
+		if (stream_buffer)
 			IDirectSoundBuffer_Stop(stream_buffer);
 	
 		// release the buffer
-		if (stream_buffer != 0)
+		if (stream_buffer)
 			IDirectSoundBuffer_Release(stream_buffer);
 		stream_buffer = NULL;
 	}

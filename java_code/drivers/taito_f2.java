@@ -259,7 +259,7 @@ Sound
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -283,7 +283,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( growl_coin_word_w )	/* what about coins 3&4 ?? */
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_lockout_w(0, ~data & 0x01);
 			coin_lockout_w(1, ~data & 0x02);
@@ -294,7 +294,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( taitof2_4p_coin_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_lockout_w(0, ~data & 0x01);
 			coin_lockout_w(1, ~data & 0x02);
@@ -309,7 +309,7 @@ public class taito_f2
 	
 	static WRITE16_HANDLER( ninjak_coin_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			coin_lockout_w(0, ~data & 0x0100);
 			coin_lockout_w(1, ~data & 0x0200);
@@ -614,7 +614,7 @@ public class taito_f2
 	
 		yesnoj_dsw = 1 - yesnoj_dsw;   /* game reads same word twice to get DSW A then B so we toggle */
 	
-		if (yesnoj_dsw != 0)
+		if (yesnoj_dsw)
 		{
 			return input_port_2_word_r(0,mem_mask);
 		}
@@ -651,7 +651,7 @@ public class taito_f2
 	          ----------------------	-----------------------------------------------
 	finalb    8000 0300    0000 0000	Needs partial buffering like dondokod to avoid glitches
 	dondokod  8000 0000/8  0000 0000	IRQ6 just sets a flag. IRQ5 waits for that flag,
-	                                	toggles ctrl register 0000<.0008, and copies bytes
+	                                	toggles ctrl register 0000<->0008, and copies bytes
 										0 and 8 *ONLY* of sprite data (code, color, flip,
 										ctrl). The other bytes of sprite data (coordinates
 										and zoom) are updated by the main program.
@@ -773,8 +773,7 @@ public class taito_f2
 		cpu_set_irq_line(0,6,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr taitof2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr taitof2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(500,0),0, taitof2_interrupt6);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
@@ -789,8 +788,7 @@ public class taito_f2
 		cpu_setbank( 2, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	
@@ -818,8 +816,7 @@ public class taito_f2
 	static int driveout_sound_latch = 0;
 	
 	
-	public static ReadHandlerPtr driveout_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr driveout_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1,0,CLEAR_LINE);
 	//	logerror("sound IRQ OFF (sound command=%02x)\n",driveout_sound_latch);
 		return driveout_sound_latch;
@@ -832,20 +829,19 @@ public class taito_f2
 		OKIM6295_set_bank_base(0, oki_bank*0x40000);
 	}
 	
-	static WRITE_HANDLER (oki_bank_w)
-	{
+	public static WriteHandlerPtr oki_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data&4) && (oki_bank!=(data&3)) )
 		{
 			oki_bank = (data&3);
 		}
 		reset_driveout_sound_region();
-	}
+	} };
 	
 	static WRITE16_HANDLER ( driveout_sound_command_w )
 	{
 		static int nibble = 0;
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			data >>= 8;
 			if (offset==0)
@@ -1799,7 +1795,7 @@ public class taito_f2
 	/* The other bits vary from one game to another, so they are not included here */
 	
 	
-	static InputPortPtr input_ports_finalb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalb )
 		PORT_START();  /* DSW A */
 		/* Not sure how to handle alternate controls */
 		PORT_DIPNAME( 0x01, 0x01, "Alternate Controls" );
@@ -1853,7 +1849,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );/* 2P ducking? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_finalbj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalbj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalbj )
 		PORT_START();  /* DSW A */
 		/* Not sure how to handle alternate controls */
 		PORT_DIPNAME( 0x01, 0x01, "Alternate Controls" );
@@ -1907,7 +1903,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );/* 2P ducking? */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dondokod = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dondokod = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dondokod )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1958,7 +1954,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dondokdu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dondokdu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dondokdu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2009,7 +2005,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dondokdj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dondokdj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dondokdj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2060,7 +2056,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_megab = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_megab = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megab )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2111,7 +2107,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_megabj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_megabj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megabj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2162,7 +2158,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thundfox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thundfox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thundfox )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 2 in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2214,7 +2210,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thndfoxu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thndfoxu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thndfoxu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 2 in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2266,7 +2262,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thndfoxj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thndfoxj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thndfoxj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 2 in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2318,7 +2314,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cameltry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cameltry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cameltry )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2385,7 +2381,7 @@ public class taito_f2
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER2, 100, 20, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cameltrj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cameltrj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cameltrj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2452,7 +2448,7 @@ public class taito_f2
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER2, 100, 20, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qtorimon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qtorimon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qtorimon )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") ); // all 5 in manual
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -2514,7 +2510,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_liquidk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_liquidk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( liquidk )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2565,7 +2561,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_liquidku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_liquidku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( liquidku )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2616,7 +2612,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mizubaku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mizubaku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mizubaku )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2667,7 +2663,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ssi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssi )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2718,7 +2714,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_majest12 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_majest12 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( majest12 )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -2769,7 +2765,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_growl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_growl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( growl )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
@@ -2849,7 +2845,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_growlu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_growlu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( growlu )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
@@ -2929,7 +2925,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_runark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_runark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( runark )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
@@ -3009,7 +3005,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pulirula = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pulirula = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pulirula )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3060,7 +3056,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pulirulj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pulirulj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pulirulj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3111,7 +3107,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qzquest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qzquest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qzquest )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -3174,7 +3170,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qzchikyu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qzchikyu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qzchikyu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -3237,7 +3233,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_footchmp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_footchmp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( footchmp )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3301,7 +3297,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hthero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hthero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hthero )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3378,7 +3374,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ninjak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjak )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3442,7 +3438,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ninjakj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjakj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjakj )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3506,7 +3502,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_driftout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_driftout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( driftout )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  // all 5 in Service Mode
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3562,7 +3558,7 @@ public class taito_f2
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER2, 50, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunfront = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunfront = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunfront )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3613,7 +3609,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunfronj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunfronj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunfronj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3664,7 +3660,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_metalb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metalb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metalb )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3715,7 +3711,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_metalbj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metalbj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metalbj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3766,7 +3762,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_deadconx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_deadconx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( deadconx )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3831,7 +3827,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_deadconj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_deadconj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( deadconj )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -3910,7 +3906,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dinorex = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dinorex = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dinorex )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  //are "unused" verified from manual?
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -3962,7 +3958,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dinorexj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dinorexj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dinorexj )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );  //are "unused" verified from manual?
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4014,7 +4010,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_solfigtr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_solfigtr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( solfigtr )
 		/* IN0 */
 		TAITO_F2_PLAYERS_INPUT( IPF_PLAYER1 )
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
@@ -4067,7 +4063,7 @@ public class taito_f2
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_koshien = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_koshien = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( koshien )
 		PORT_START();  /* DSW A, one lets you control fielders ? */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4129,7 +4125,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quizhq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizhq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizhq )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -4190,7 +4186,7 @@ public class taito_f2
 		PORT_DIPSETTING(    0x80, "Dual" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qjinsei = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qjinsei = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qjinsei )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4253,7 +4249,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qcrayon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qcrayon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qcrayon )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4315,7 +4311,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qcrayon2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qcrayon2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qcrayon2 )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4378,7 +4374,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_yuyugogo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yuyugogo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yuyugogo )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -4441,7 +4437,7 @@ public class taito_f2
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjnquest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjnquest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjnquest )
 		PORT_START();       /* IN0 */
 		PORT_BITX(0x01, IP_ACTIVE_LOW, 0, "P1 A", KEYCODE_A, IP_JOY_NONE );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, 0, "P1 E", KEYCODE_E, IP_JOY_NONE );
@@ -4522,7 +4518,7 @@ public class taito_f2
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_yesnoj = new InputPortPtr(){ public void handler() {    // apparently no test mode, though text in rom suggests printer test
+	static InputPortPtr input_ports_yesnoj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yesnoj )   // apparently no test mode, though text in rom suggests printer test
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -4726,8 +4722,7 @@ public class taito_f2
 	};
 	
 	
-	public static WriteHandlerPtr camltrua_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr camltrua_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// Implement //
 	} };
 	
@@ -4757,15 +4752,13 @@ public class taito_f2
 	                      MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_qcrayon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_qcrayon  = new MachineInitHandlerPtr() { public void handler(){
 		/* point to the extra ROM */
 		cpu_setbank(1,memory_region(REGION_USER1));
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_taito_f2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( taito_f2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 24000000/2)	/* 12 MHz */
@@ -4792,13 +4785,10 @@ public class taito_f2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_finalb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( finalb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4809,13 +4799,10 @@ public class taito_f2
 		MDRV_GFXDECODE(finalb_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_finalb)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dondokod = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dondokod )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4827,13 +4814,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_dondokod)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_megab = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( megab )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4843,13 +4827,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_megab)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_thundfox = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thundfox )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4861,13 +4842,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_thundfox)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed_thundfox)
 		MDRV_VIDEO_UPDATE(thundfox)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cameltry = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cameltry )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4878,13 +4856,10 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_dondokod)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qtorimon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qtorimon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4894,13 +4869,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_liquidk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( liquidk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4911,13 +4883,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_megab)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_quizhq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizhq )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4927,13 +4896,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ssi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssi )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4944,13 +4910,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_ssi)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
 		MDRV_VIDEO_UPDATE(ssi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gunfront = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunfront )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4960,13 +4923,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_gunfront)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_growl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( growl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4976,13 +4936,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_growl)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mjnquest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjnquest )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -4991,13 +4948,10 @@ public class taito_f2
 	
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_mjnquest)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_footchmp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( footchmp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5009,13 +4963,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_footchmp)
 		MDRV_VIDEO_EOF(taitof2_full_buffer_delayed)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hthero = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hthero )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5027,13 +4978,10 @@ public class taito_f2
 		MDRV_VIDEO_START(taitof2_hthero)
 		MDRV_VIDEO_EOF(taitof2_full_buffer_delayed)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_koshien = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( koshien )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5043,13 +4991,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_koshien)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_yuyugogo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yuyugogo )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5062,13 +5007,10 @@ public class taito_f2
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_yuyugogo)
 		MDRV_VIDEO_UPDATE(yesnoj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ninjak = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjak )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5078,13 +5020,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_ninjak)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_solfigtr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( solfigtr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5094,13 +5033,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_solfigtr)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qzquest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qzquest )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5109,13 +5045,10 @@ public class taito_f2
 	
 		/* video hardware */
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pulirula = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pulirula )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5126,13 +5059,10 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_pulirula)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_metalb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metalb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5144,13 +5074,10 @@ public class taito_f2
 		MDRV_PALETTE_LENGTH(8192)
 		MDRV_VIDEO_START(taitof2_metalb)
 		MDRV_VIDEO_UPDATE(metalb)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qzchikyu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qzchikyu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5160,13 +5087,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_qzchikyu)
 		MDRV_VIDEO_EOF(taitof2_partial_buffer_delayed_qzchikyu)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_yesnoj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yesnoj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5177,13 +5101,10 @@ public class taito_f2
 		MDRV_GFXDECODE(yuyugogo_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_yesnoj)
 		MDRV_VIDEO_UPDATE(yesnoj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_deadconx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deadconx )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5194,13 +5115,10 @@ public class taito_f2
 		MDRV_GFXDECODE(deadconx_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_deadconx)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_deadconj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deadconj )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5211,13 +5129,10 @@ public class taito_f2
 		MDRV_GFXDECODE(deadconx_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_deadconj)
 		MDRV_VIDEO_UPDATE(deadconx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dinorex = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dinorex )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5227,13 +5142,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_dinorex)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qjinsei = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qjinsei )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5243,13 +5155,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qcrayon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qcrayon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5261,13 +5170,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qcrayon2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qcrayon2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5279,13 +5185,10 @@ public class taito_f2
 		/* video hardware */
 		MDRV_VIDEO_START(taitof2_quiz)
 		MDRV_VIDEO_UPDATE(taitof2_pri)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_driftout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( driftout )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(taito_f2)
@@ -5296,13 +5199,10 @@ public class taito_f2
 		MDRV_GFXDECODE(pivot_gfxdecodeinfo)
 		MDRV_VIDEO_START(taitof2_driftout)
 		MDRV_VIDEO_UPDATE(taitof2_pri_roz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_camltrua = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( camltrua )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -5329,13 +5229,10 @@ public class taito_f2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_driveout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( driveout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -5363,9 +5260,7 @@ public class taito_f2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)   /* does it ? */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6690,14 +6585,12 @@ public class taito_f2
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_f2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_f2  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("taitof2", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static DriverInitHandlerPtr init_finalb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_finalb  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char data;
 		unsigned int offset;
@@ -6725,8 +6618,7 @@ public class taito_f2
 		init_f2();
 	} };
 	
-	public static DriverInitHandlerPtr init_mjnquest  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjnquest  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		UINT8 *gfx = memory_region(REGION_GFX2);
 	
@@ -6744,15 +6636,13 @@ public class taito_f2
 		init_f2();
 	} };
 	
-	public static DriverInitHandlerPtr init_yesnoj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_yesnoj  = new DriverInitHandlerPtr() { public void handler(){
 		yesnoj_dsw = 0;
 		state_save_register_int("yesnoj_dsw", 0, "control", &yesnoj_dsw);
 		init_f2();
 	} };
 	
-	public static DriverInitHandlerPtr init_driveout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_driveout  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("driveout_sound1", 0, "sound", &driveout_sound_latch);
 		state_save_register_int("driveout_sound2", 0, "sound region", &oki_bank);
 		state_save_register_func_postload(reset_driveout_sound_region);
@@ -6760,56 +6650,56 @@ public class taito_f2
 	} };
 	
 	
-	public static GameDriver driver_finalb	   = new GameDriver("1988"	,"finalb"	,"taito_f2.java"	,rom_finalb,null	,machine_driver_finalb	,input_ports_finalb	,init_finalb	,ROT0	,	"Taito Corporation Japan", "Final Blow (World)" )
-	public static GameDriver driver_finalbj	   = new GameDriver("1988"	,"finalbj"	,"taito_f2.java"	,rom_finalbj,driver_finalb	,machine_driver_finalb	,input_ports_finalbj	,init_finalb	,ROT0	,	"Taito Corporation", "Final Blow (Japan)" )
-	public static GameDriver driver_dondokod	   = new GameDriver("1989"	,"dondokod"	,"taito_f2.java"	,rom_dondokod,null	,machine_driver_dondokod	,input_ports_dondokod	,init_f2	,ROT0	,	"Taito Corporation Japan", "Don Doko Don (World)" )
-	public static GameDriver driver_dondokdu	   = new GameDriver("1989"	,"dondokdu"	,"taito_f2.java"	,rom_dondokdu,driver_dondokod	,machine_driver_dondokod	,input_ports_dondokdu	,init_f2	,ROT0	,	"Taito America Corporation", "Don Doko Don (US)" )
-	public static GameDriver driver_dondokdj	   = new GameDriver("1989"	,"dondokdj"	,"taito_f2.java"	,rom_dondokdj,driver_dondokod	,machine_driver_dondokod	,input_ports_dondokdj	,init_f2	,ROT0	,	"Taito Corporation", "Don Doko Don (Japan)" )
-	public static GameDriver driver_megab	   = new GameDriver("1989"	,"megab"	,"taito_f2.java"	,rom_megab,null	,machine_driver_megab	,input_ports_megab	,init_f2	,ROT0	,	"Taito Corporation Japan", "Mega Blast (World)" )
-	public static GameDriver driver_megabj	   = new GameDriver("1989"	,"megabj"	,"taito_f2.java"	,rom_megabj,driver_megab	,machine_driver_megab	,input_ports_megabj	,init_f2	,ROT0	,	"Taito Corporation", "Mega Blast (Japan)" )
-	public static GameDriver driver_thundfox	   = new GameDriver("1990"	,"thundfox"	,"taito_f2.java"	,rom_thundfox,null	,machine_driver_thundfox	,input_ports_thundfox	,init_f2	,ROT0	,	"Taito Corporation Japan", "Thunder Fox (World)" )
-	public static GameDriver driver_thndfoxu	   = new GameDriver("1990"	,"thndfoxu"	,"taito_f2.java"	,rom_thndfoxu,driver_thundfox	,machine_driver_thundfox	,input_ports_thndfoxu	,init_f2	,ROT0	,	"Taito America Corporation", "Thunder Fox (US)" )
-	public static GameDriver driver_thndfoxj	   = new GameDriver("1990"	,"thndfoxj"	,"taito_f2.java"	,rom_thndfoxj,driver_thundfox	,machine_driver_thundfox	,input_ports_thndfoxj	,init_f2	,ROT0	,	"Taito Corporation", "Thunder Fox (Japan)" )
-	public static GameDriver driver_cameltry	   = new GameDriver("1989"	,"cameltry"	,"taito_f2.java"	,rom_cameltry,null	,machine_driver_cameltry	,input_ports_cameltry	,init_f2	,ROT0	,	"Taito America Corporation", "Cameltry (US)" )
-	public static GameDriver driver_camltrua	   = new GameDriver("1989"	,"camltrua"	,"taito_f2.java"	,rom_camltrua,driver_cameltry	,machine_driver_camltrua	,input_ports_cameltry	,init_f2	,ROT0	,	"Taito America Corporation", "Cameltry (US, alt sound)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_cameltrj	   = new GameDriver("1989"	,"cameltrj"	,"taito_f2.java"	,rom_cameltrj,driver_cameltry	,machine_driver_cameltry	,input_ports_cameltrj	,init_f2	,ROT0	,	"Taito Corporation", "Cameltry (Japan)" )
-	public static GameDriver driver_qtorimon	   = new GameDriver("1990"	,"qtorimon"	,"taito_f2.java"	,rom_qtorimon,null	,machine_driver_qtorimon	,input_ports_qtorimon	,init_f2	,ROT0	,	"Taito Corporation", "Quiz Torimonochou (Japan)" )
-	public static GameDriver driver_liquidk	   = new GameDriver("1990"	,"liquidk"	,"taito_f2.java"	,rom_liquidk,null	,machine_driver_liquidk	,input_ports_liquidk	,init_f2	,ROT0	,	"Taito Corporation Japan", "Liquid Kids (World)" )
-	public static GameDriver driver_liquidku	   = new GameDriver("1990"	,"liquidku"	,"taito_f2.java"	,rom_liquidku,driver_liquidk	,machine_driver_liquidk	,input_ports_liquidku	,init_f2	,ROT0	,	"Taito America Corporation", "Liquid Kids (US)" )
-	public static GameDriver driver_mizubaku	   = new GameDriver("1990"	,"mizubaku"	,"taito_f2.java"	,rom_mizubaku,driver_liquidk	,machine_driver_liquidk	,input_ports_mizubaku	,init_f2	,ROT0	,	"Taito Corporation", "Mizubaku Daibouken (Japan)" )
-	public static GameDriver driver_quizhq	   = new GameDriver("1990"	,"quizhq"	,"taito_f2.java"	,rom_quizhq,null	,machine_driver_quizhq	,input_ports_quizhq	,init_f2	,ROT0	,	"Taito Corporation", "Quiz H.Q. (Japan)" )
-	public static GameDriver driver_ssi	   = new GameDriver("1990"	,"ssi"	,"taito_f2.java"	,rom_ssi,null	,machine_driver_ssi	,input_ports_ssi	,init_f2	,ROT270	,	"Taito Corporation Japan", "Super Space Invaders '91 (World)" )
-	public static GameDriver driver_majest12	   = new GameDriver("1990"	,"majest12"	,"taito_f2.java"	,rom_majest12,driver_ssi	,machine_driver_ssi	,input_ports_majest12	,init_f2	,ROT270	,	"Taito Corporation", "Majestic Twelve - The Space Invaders Part IV (Japan)" )
-	public static GameDriver driver_gunfront	   = new GameDriver("1990"	,"gunfront"	,"taito_f2.java"	,rom_gunfront,null	,machine_driver_gunfront	,input_ports_gunfront	,init_f2	,ROT270	,	"Taito Corporation Japan", "Gun & Frontier (World)" )
-	public static GameDriver driver_gunfronj	   = new GameDriver("1990"	,"gunfronj"	,"taito_f2.java"	,rom_gunfronj,driver_gunfront	,machine_driver_gunfront	,input_ports_gunfronj	,init_f2	,ROT270	,	"Taito Corporation", "Gun Frontier (Japan)" )
-	public static GameDriver driver_growl	   = new GameDriver("1990"	,"growl"	,"taito_f2.java"	,rom_growl,null	,machine_driver_growl	,input_ports_growl	,init_f2	,ROT0	,	"Taito Corporation Japan", "Growl (World)" )
-	public static GameDriver driver_growlu	   = new GameDriver("1990"	,"growlu"	,"taito_f2.java"	,rom_growlu,driver_growl	,machine_driver_growl	,input_ports_growlu	,init_f2	,ROT0	,	"Taito America Corporation", "Growl (US)" )
-	public static GameDriver driver_runark	   = new GameDriver("1990"	,"runark"	,"taito_f2.java"	,rom_runark,driver_growl	,machine_driver_growl	,input_ports_runark	,init_f2	,ROT0	,	"Taito Corporation", "Runark (Japan)" )
-	public static GameDriver driver_mjnquest	   = new GameDriver("1990"	,"mjnquest"	,"taito_f2.java"	,rom_mjnquest,null	,machine_driver_mjnquest	,input_ports_mjnquest	,init_mjnquest	,ROT0	,	"Taito Corporation", "Mahjong Quest (Japan)" )
-	public static GameDriver driver_mjnquesb	   = new GameDriver("1990"	,"mjnquesb"	,"taito_f2.java"	,rom_mjnquesb,driver_mjnquest	,machine_driver_mjnquest	,input_ports_mjnquest	,init_mjnquest	,ROT0	,	"Taito Corporation", "Mahjong Quest (No Nudity)" )
-	public static GameDriver driver_footchmp	   = new GameDriver("1990"	,"footchmp"	,"taito_f2.java"	,rom_footchmp,null	,machine_driver_footchmp	,input_ports_footchmp	,init_f2	,ROT0	,	"Taito Corporation Japan", "Football Champ (World)" )
-	public static GameDriver driver_hthero	   = new GameDriver("1990"	,"hthero"	,"taito_f2.java"	,rom_hthero,driver_footchmp	,machine_driver_hthero	,input_ports_hthero	,init_f2	,ROT0	,	"Taito Corporation", "Hat Trick Hero (Japan)" )
-	public static GameDriver driver_euroch92	   = new GameDriver("1992"	,"euroch92"	,"taito_f2.java"	,rom_euroch92,driver_footchmp	,machine_driver_footchmp	,input_ports_footchmp	,init_f2	,ROT0	,	"Taito Corporation Japan", "Euro Champ '92 (World)" )
-	public static GameDriver driver_koshien	   = new GameDriver("1990"	,"koshien"	,"taito_f2.java"	,rom_koshien,null	,machine_driver_koshien	,input_ports_koshien	,init_f2	,ROT0	,	"Taito Corporation", "Ah Eikou no Koshien (Japan)" )
-	public static GameDriver driver_yuyugogo	   = new GameDriver("1990"	,"yuyugogo"	,"taito_f2.java"	,rom_yuyugogo,null	,machine_driver_yuyugogo	,input_ports_yuyugogo	,init_f2	,ROT0	,	"Taito Corporation", "Yuuyu no Quiz de GO!GO! (Japan)" )
-	public static GameDriver driver_ninjak	   = new GameDriver("1990"	,"ninjak"	,"taito_f2.java"	,rom_ninjak,null	,machine_driver_ninjak	,input_ports_ninjak	,init_f2	,ROT0	,	"Taito Corporation Japan", "The Ninja Kids (World)" )
-	public static GameDriver driver_ninjakj	   = new GameDriver("1990"	,"ninjakj"	,"taito_f2.java"	,rom_ninjakj,driver_ninjak	,machine_driver_ninjak	,input_ports_ninjakj	,init_f2	,ROT0	,	"Taito Corporation", "The Ninja Kids (Japan)" )
-	public static GameDriver driver_solfigtr	   = new GameDriver("1991"	,"solfigtr"	,"taito_f2.java"	,rom_solfigtr,null	,machine_driver_solfigtr	,input_ports_solfigtr	,init_f2	,ROT0	,	"Taito Corporation Japan", "Solitary Fighter (World)" )
-	public static GameDriver driver_qzquest	   = new GameDriver("1991"	,"qzquest"	,"taito_f2.java"	,rom_qzquest,null	,machine_driver_qzquest	,input_ports_	,init_qzquest	,f2	,	ROT0,   "Taito Corporation", "Quiz Quest - Hime to Yuusha no Monogatari (Japan)" )
-	public static GameDriver driver_pulirula	   = new GameDriver("1991"	,"pulirula"	,"taito_f2.java"	,rom_pulirula,null	,machine_driver_pulirula	,input_ports_pulirula	,init_f2	,ROT0	,	"Taito Corporation Japan", "PuLiRuLa (World)" )
-	public static GameDriver driver_pulirulj	   = new GameDriver("1991"	,"pulirulj"	,"taito_f2.java"	,rom_pulirulj,driver_pulirula	,machine_driver_pulirula	,input_ports_pulirulj	,init_f2	,ROT0	,	"Taito Corporation", "PuLiRuLa (Japan)" )
-	public static GameDriver driver_metalb	   = new GameDriver("1991"	,"metalb"	,"taito_f2.java"	,rom_metalb,null	,machine_driver_metalb	,input_ports_metalb	,init_f2	,ROT0	,	"Taito Corporation Japan", "Metal Black (World)" )
-	public static GameDriver driver_metalbj	   = new GameDriver("1991"	,"metalbj"	,"taito_f2.java"	,rom_metalbj,driver_metalb	,machine_driver_metalb	,input_ports_metalbj	,init_f2	,ROT0	,	"Taito Corporation", "Metal Black (Japan)" )
-	public static GameDriver driver_qzchikyu	   = new GameDriver("1991"	,"qzchikyu"	,"taito_f2.java"	,rom_qzchikyu,null	,machine_driver_qzchikyu	,input_ports_qzchikyu	,init_f2	,ROT0	,	"Taito Corporation", "Quiz Chikyu Bouei Gun (Japan)" )
-	public static GameDriver driver_yesnoj	   = new GameDriver("1992"	,"yesnoj"	,"taito_f2.java"	,rom_yesnoj,null	,machine_driver_yesnoj	,input_ports_yesnoj	,init_yesnoj	,ROT0	,	"Taito Corporation", "Yes/No Sinri Tokimeki Chart" )
-	public static GameDriver driver_deadconx	   = new GameDriver("1992"	,"deadconx"	,"taito_f2.java"	,rom_deadconx,null	,machine_driver_deadconx	,input_ports_deadconx	,init_f2	,ROT0	,	"Taito Corporation Japan", "Dead Connection (World)" )
-	public static GameDriver driver_deadconj	   = new GameDriver("1992"	,"deadconj"	,"taito_f2.java"	,rom_deadconj,driver_deadconx	,machine_driver_deadconj	,input_ports_deadconj	,init_f2	,ROT0	,	"Taito Corporation", "Dead Connection (Japan)" )
-	public static GameDriver driver_dinorex	   = new GameDriver("1992"	,"dinorex"	,"taito_f2.java"	,rom_dinorex,null	,machine_driver_dinorex	,input_ports_dinorex	,init_f2	,ROT0	,	"Taito Corporation Japan", "Dino Rex (World)" )
-	public static GameDriver driver_dinorexj	   = new GameDriver("1992"	,"dinorexj"	,"taito_f2.java"	,rom_dinorexj,driver_dinorex	,machine_driver_dinorex	,input_ports_dinorexj	,init_f2	,ROT0	,	"Taito Corporation", "Dino Rex (Japan)" )
-	public static GameDriver driver_dinorexu	   = new GameDriver("1992"	,"dinorexu"	,"taito_f2.java"	,rom_dinorexu,driver_dinorex	,machine_driver_dinorex	,input_ports_dinorex	,init_f2	,ROT0	,	"Taito America Corporation", "Dino Rex (US)" )
-	public static GameDriver driver_qjinsei	   = new GameDriver("1992"	,"qjinsei"	,"taito_f2.java"	,rom_qjinsei,null	,machine_driver_qjinsei	,input_ports_qjinsei	,init_f2	,ROT0	,	"Taito Corporation", "Quiz Jinsei Gekijoh (Japan)" )
-	public static GameDriver driver_qcrayon	   = new GameDriver("1993"	,"qcrayon"	,"taito_f2.java"	,rom_qcrayon,null	,machine_driver_qcrayon	,input_ports_qcrayon	,init_f2	,ROT0	,	"Taito Corporation", "Quiz Crayon Shinchan (Japan)" )
-	public static GameDriver driver_qcrayon2	   = new GameDriver("1993"	,"qcrayon2"	,"taito_f2.java"	,rom_qcrayon2,null	,machine_driver_qcrayon2	,input_ports_qcrayon2	,init_f2	,ROT0	,	"Taito Corporation", "Crayon Shinchan Orato Asobo (Japan)" )
-	public static GameDriver driver_driftout	   = new GameDriver("1991"	,"driftout"	,"taito_f2.java"	,rom_driftout,null	,machine_driver_driftout	,input_ports_driftout	,init_f2	,ROT270	,	"Visco", "Drift Out (Japan)" )
-	public static GameDriver driver_driveout	   = new GameDriver("1991"	,"driveout"	,"taito_f2.java"	,rom_driveout,driver_driftout	,machine_driver_driveout	,input_ports_driftout	,init_driveout	,ROT270	,	"bootleg", "Drive Out" )
+	GAME( 1988, finalb,   0,        finalb,   finalb,   finalb,   ROT0,   "Taito Corporation Japan", "Final Blow (World)" )
+	GAME( 1988, finalbj,  finalb,   finalb,   finalbj,  finalb,   ROT0,   "Taito Corporation", "Final Blow (Japan)" )
+	GAME( 1989, dondokod, 0,        dondokod, dondokod, f2,       ROT0,   "Taito Corporation Japan", "Don Doko Don (World)" )
+	GAME( 1989, dondokdu, dondokod, dondokod, dondokdu, f2,       ROT0,   "Taito America Corporation", "Don Doko Don (US)" )
+	GAME( 1989, dondokdj, dondokod, dondokod, dondokdj, f2,       ROT0,   "Taito Corporation", "Don Doko Don (Japan)" )
+	GAME( 1989, megab,    0,        megab,    megab,    f2,       ROT0,   "Taito Corporation Japan", "Mega Blast (World)" )
+	GAME( 1989, megabj,   megab,    megab,    megabj,   f2,       ROT0,   "Taito Corporation", "Mega Blast (Japan)" )
+	GAME( 1990, thundfox, 0,        thundfox, thundfox, f2,       ROT0,   "Taito Corporation Japan", "Thunder Fox (World)" )
+	GAME( 1990, thndfoxu, thundfox, thundfox, thndfoxu, f2,       ROT0,   "Taito America Corporation", "Thunder Fox (US)" )
+	GAME( 1990, thndfoxj, thundfox, thundfox, thndfoxj, f2,       ROT0,   "Taito Corporation", "Thunder Fox (Japan)" )
+	GAME( 1989, cameltry, 0,        cameltry, cameltry, f2,       ROT0,   "Taito America Corporation", "Cameltry (US)" )
+	GAMEX(1989, camltrua, cameltry, camltrua, cameltry, f2,       ROT0,   "Taito America Corporation", "Cameltry (US, alt sound)", GAME_IMPERFECT_SOUND )
+	GAME( 1989, cameltrj, cameltry, cameltry, cameltrj, f2,       ROT0,   "Taito Corporation", "Cameltry (Japan)" )
+	GAME( 1990, qtorimon, 0,        qtorimon, qtorimon, f2,       ROT0,   "Taito Corporation", "Quiz Torimonochou (Japan)" )
+	GAME( 1990, liquidk,  0,        liquidk,  liquidk,  f2,       ROT0,   "Taito Corporation Japan", "Liquid Kids (World)" )
+	GAME( 1990, liquidku, liquidk,  liquidk,  liquidku, f2,       ROT0,   "Taito America Corporation", "Liquid Kids (US)" )
+	GAME( 1990, mizubaku, liquidk,  liquidk,  mizubaku, f2,       ROT0,   "Taito Corporation", "Mizubaku Daibouken (Japan)" )
+	GAME( 1990, quizhq,   0,        quizhq,   quizhq,   f2,       ROT0,   "Taito Corporation", "Quiz H.Q. (Japan)" )
+	GAME( 1990, ssi,      0,        ssi,      ssi,      f2,       ROT270, "Taito Corporation Japan", "Super Space Invaders '91 (World)" )
+	GAME( 1990, majest12, ssi,      ssi,      majest12, f2,       ROT270, "Taito Corporation", "Majestic Twelve - The Space Invaders Part IV (Japan)" )
+	GAME( 1990, gunfront, 0,        gunfront, gunfront, f2,       ROT270, "Taito Corporation Japan", "Gun & Frontier (World)" )
+	GAME( 1990, gunfronj, gunfront, gunfront, gunfronj, f2,       ROT270, "Taito Corporation", "Gun Frontier (Japan)" )
+	GAME( 1990, growl,    0,        growl,    growl,    f2,       ROT0,   "Taito Corporation Japan", "Growl (World)" )
+	GAME( 1990, growlu,   growl,    growl,    growlu,   f2,       ROT0,   "Taito America Corporation", "Growl (US)" )
+	GAME( 1990, runark,   growl,    growl,    runark,   f2,       ROT0,   "Taito Corporation", "Runark (Japan)" )
+	GAME( 1990, mjnquest, 0,        mjnquest, mjnquest, mjnquest, ROT0,   "Taito Corporation", "Mahjong Quest (Japan)" )
+	GAME( 1990, mjnquesb, mjnquest, mjnquest, mjnquest, mjnquest, ROT0,   "Taito Corporation", "Mahjong Quest (No Nudity)" )
+	GAME( 1990, footchmp, 0,        footchmp, footchmp, f2,       ROT0,   "Taito Corporation Japan", "Football Champ (World)" )
+	GAME( 1990, hthero,   footchmp, hthero,   hthero,   f2,       ROT0,   "Taito Corporation", "Hat Trick Hero (Japan)" )
+	GAME( 1992, euroch92, footchmp, footchmp, footchmp, f2,       ROT0,   "Taito Corporation Japan", "Euro Champ '92 (World)" )
+	GAME( 1990, koshien,  0,        koshien,  koshien,  f2,       ROT0,   "Taito Corporation", "Ah Eikou no Koshien (Japan)" )
+	GAME( 1990, yuyugogo, 0,        yuyugogo, yuyugogo, f2,       ROT0,   "Taito Corporation", "Yuuyu no Quiz de GO!GO! (Japan)" )
+	GAME( 1990, ninjak,   0,        ninjak,   ninjak,   f2,       ROT0,   "Taito Corporation Japan", "The Ninja Kids (World)" )
+	GAME( 1990, ninjakj,  ninjak,   ninjak,   ninjakj,  f2,       ROT0,   "Taito Corporation", "The Ninja Kids (Japan)" )
+	GAME( 1991, solfigtr, 0,        solfigtr, solfigtr, f2,       ROT0,   "Taito Corporation Japan", "Solitary Fighter (World)" )
+	GAME( 1991, qzquest,  0,        qzquest , qzquest,  f2,       ROT0,   "Taito Corporation", "Quiz Quest - Hime to Yuusha no Monogatari (Japan)" )
+	GAME( 1991, pulirula, 0,        pulirula, pulirula, f2,       ROT0,   "Taito Corporation Japan", "PuLiRuLa (World)" )
+	GAME( 1991, pulirulj, pulirula, pulirula, pulirulj, f2,       ROT0,   "Taito Corporation", "PuLiRuLa (Japan)" )
+	GAME( 1991, metalb,   0,        metalb,   metalb,   f2,       ROT0,   "Taito Corporation Japan", "Metal Black (World)" )
+	GAME( 1991, metalbj,  metalb,   metalb,   metalbj,  f2,       ROT0,   "Taito Corporation", "Metal Black (Japan)" )
+	GAME( 1991, qzchikyu, 0,        qzchikyu, qzchikyu, f2,       ROT0,   "Taito Corporation", "Quiz Chikyu Bouei Gun (Japan)" )
+	GAME( 1992, yesnoj,   0,        yesnoj,   yesnoj,   yesnoj,   ROT0,   "Taito Corporation", "Yes/No Sinri Tokimeki Chart" )
+	GAME( 1992, deadconx, 0,        deadconx, deadconx, f2,       ROT0,   "Taito Corporation Japan", "Dead Connection (World)" )
+	GAME( 1992, deadconj, deadconx, deadconj, deadconj, f2,       ROT0,   "Taito Corporation", "Dead Connection (Japan)" )
+	GAME( 1992, dinorex,  0,        dinorex,  dinorex,  f2,       ROT0,   "Taito Corporation Japan", "Dino Rex (World)" )
+	GAME( 1992, dinorexj, dinorex,  dinorex,  dinorexj, f2,       ROT0,   "Taito Corporation", "Dino Rex (Japan)" )
+	GAME( 1992, dinorexu, dinorex,  dinorex,  dinorex,  f2,       ROT0,   "Taito America Corporation", "Dino Rex (US)" )
+	GAME( 1992, qjinsei,  0,        qjinsei,  qjinsei,  f2,       ROT0,   "Taito Corporation", "Quiz Jinsei Gekijoh (Japan)" )
+	GAME( 1993, qcrayon,  0,        qcrayon,  qcrayon,  f2,       ROT0,   "Taito Corporation", "Quiz Crayon Shinchan (Japan)" )
+	GAME( 1993, qcrayon2, 0,        qcrayon2, qcrayon2, f2,       ROT0,   "Taito Corporation", "Crayon Shinchan Orato Asobo (Japan)" )
+	GAME( 1991, driftout, 0,        driftout, driftout, f2,       ROT270, "Visco", "Drift Out (Japan)" )
+	GAME( 1991, driveout, driftout, driveout, driftout, driveout, ROT270, "bootleg", "Drive Out" )
 }

@@ -126,7 +126,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -140,8 +140,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fax_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fax_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1, &RAM[0x10000 + (0x2000 * (data & 0x1F))]);
@@ -328,7 +327,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_sidetrac = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sidetrac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sidetrac )
 		PORT_START();               /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "2");
@@ -382,7 +381,7 @@ public class exidy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_targ = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_targ = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( targ )
 		PORT_START();               /* DSW0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );/* upright/cocktail switch? */
 		PORT_DIPNAME( 0x02, 0x00, "P Coinage" );
@@ -431,7 +430,7 @@ public class exidy
 	
 	
 	/* identical to Targ, the only difference is the additional Language dip switch */
-	static InputPortPtr input_ports_spectar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spectar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spectar )
 		PORT_START();               /* DSW0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );/* upright/cocktail switch? */
 		PORT_DIPNAME( 0x02, 0x00, "P Coinage" );
@@ -483,7 +482,7 @@ public class exidy
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rallys = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rallys = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rallys )
 		PORT_START();               /* DSW0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN2 );/* upright/cocktail switch? */
 		PORT_DIPNAME( 0x02, 0x00, "P Coinage" );
@@ -534,7 +533,7 @@ public class exidy
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mtrap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mtrap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mtrap )
 		PORT_START();       /* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_DIPNAME( 0x06, 0x06, DEF_STR( "Bonus_Life") );
@@ -601,7 +600,7 @@ public class exidy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_venture = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_venture = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( venture )
 		PORT_START();       /* DSW0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Bonus_Life") );
@@ -655,7 +654,7 @@ public class exidy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pepper2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pepper2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pepper2 )
 		PORT_START();               /* DSW */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_DIPNAME( 0x06, 0x06, DEF_STR( "Bonus_Life") );
@@ -710,7 +709,7 @@ public class exidy
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_fax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fax )
 		PORT_START();               /* DSW */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
 		PORT_DIPNAME( 0x06, 0x06, "Bonus Time" );
@@ -776,7 +775,7 @@ public class exidy
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_phantoma = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phantoma = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phantoma )
 		PORT_START();               /* DSW */
 		/* Mode 1*/
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Coinage") );
@@ -952,8 +951,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_targ = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( targ )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 11289000/16)
@@ -980,25 +978,19 @@ public class exidy
 		MDRV_SOUND_ADD_TAG("custom", CUSTOM,  targ_custom_interface)
 		MDRV_SOUND_ADD_TAG("sample", SAMPLES, targ_samples_interface)
 		MDRV_SOUND_ADD_TAG("dac",    DAC,     targ_DAC_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rallys = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rallys )
 	
 		MDRV_IMPORT_FROM(targ)
 	
 		/* basic machine hardware */
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(main_readmem,rallys_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_venture = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( venture )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(targ)
@@ -1013,13 +1005,10 @@ public class exidy
 		MDRV_SOUND_REPLACE("custom", CUSTOM, exidy_custom_interface)
 		MDRV_SOUND_REMOVE("sample")
 		MDRV_SOUND_REMOVE("dac")
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mtrap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mtrap )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(venture)
@@ -1033,13 +1022,10 @@ public class exidy
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(HC55516, cvsd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pepper2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pepper2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(venture)
@@ -1047,33 +1033,25 @@ public class exidy
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_2bpp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fax = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fax )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pepper2)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(fax_readmem,fax_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_phantoma = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( phantoma )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rallys)
 	
 		MDRV_GFXDECODE(gfxdecodeinfo_2bpp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -1430,8 +1408,7 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_sidetrac  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sidetrac  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= sidetrac_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x00;
@@ -1445,8 +1422,7 @@ public class exidy
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_targ  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_targ  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= targ_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x00;
@@ -1460,8 +1436,7 @@ public class exidy
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_spectar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spectar  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= spectar_palette;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x00;
@@ -1475,24 +1450,21 @@ public class exidy
 		install_mem_write_handler(0, 0x5200, 0x5201, targ_sh_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_mtrap  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mtrap  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x14;
 		exidy_collision_invert	= 0x00;
 	} };
 	
-	public static DriverInitHandlerPtr init_venture  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_venture  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_1bpp_colortable;
 		exidy_collision_mask 	= 0x04;
 		exidy_collision_invert	= 0x04;
 	} };
 	
-	public static DriverInitHandlerPtr init_pepper2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pepper2  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_2bpp_colortable;
 		exidy_collision_mask 	= 0x14;
@@ -1503,8 +1475,7 @@ public class exidy
 		exidy_characterram = install_mem_write_handler(0, 0x6000, 0x6fff, exidy_characterram_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_fax  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fax  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= NULL;
 		exidy_colortable 		= exidy_2bpp_colortable;
 		exidy_collision_mask 	= 0x04;
@@ -1514,8 +1485,7 @@ public class exidy
 		fax_bank_select_w(0,0);
 	} };
 	
-	public static DriverInitHandlerPtr init_phantoma  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_phantoma  = new DriverInitHandlerPtr() { public void handler(){
 		exidy_palette 			= spectar_palette;
 		exidy_colortable 		= exidy_2bpp_colortable;
 		exidy_collision_mask 	= 0x00;
@@ -1535,20 +1505,20 @@ public class exidy
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_sidetrac	   = new GameDriver("1979"	,"sidetrac"	,"exidy.java"	,rom_sidetrac,null	,machine_driver_targ	,input_ports_sidetrac	,init_sidetrac	,ROT0	,	"Exidy", "Side Track" )
-	public static GameDriver driver_targ	   = new GameDriver("1980"	,"targ"	,"exidy.java"	,rom_targ,null	,machine_driver_targ	,input_ports_targ	,init_targ	,ROT0	,	"Exidy", "Targ" )
-	public static GameDriver driver_targc	   = new GameDriver("1980"	,"targc"	,"exidy.java"	,rom_targc,driver_targ	,machine_driver_targ	,input_ports_targ	,init_targ	,ROT0	,	"Exidy", "Targ (cocktail?)" )
-	public static GameDriver driver_spectar	   = new GameDriver("1980"	,"spectar"	,"exidy.java"	,rom_spectar,null	,machine_driver_targ	,input_ports_spectar	,init_spectar	,ROT0	,	"Exidy", "Spectar (revision 3)" )
-	public static GameDriver driver_spectar1	   = new GameDriver("1980"	,"spectar1"	,"exidy.java"	,rom_spectar1,driver_spectar	,machine_driver_targ	,input_ports_spectar	,init_spectar	,ROT0	,	"Exidy", "Spectar (revision 1?)" )
-	public static GameDriver driver_rallys	   = new GameDriver("1980"	,"rallys"	,"exidy.java"	,rom_rallys,driver_spectar	,machine_driver_rallys	,input_ports_rallys	,init_spectar	,ROT0	,	"Novar", "Rallys (bootleg?)" )
-	public static GameDriver driver_phantoma	   = new GameDriver("1980"	,"phantoma"	,"exidy.java"	,rom_phantoma,driver_spectar	,machine_driver_phantoma	,input_ports_phantoma	,init_phantoma	,ROT0	,	"Jeutel","Phantomas" )
-	public static GameDriver driver_mtrap	   = new GameDriver("1981"	,"mtrap"	,"exidy.java"	,rom_mtrap,null	,machine_driver_mtrap	,input_ports_mtrap	,init_mtrap	,ROT0	,	"Exidy", "Mouse Trap (version 5)" )
-	public static GameDriver driver_mtrap3	   = new GameDriver("1981"	,"mtrap3"	,"exidy.java"	,rom_mtrap3,driver_mtrap	,machine_driver_mtrap	,input_ports_mtrap	,init_mtrap	,ROT0	,	"Exidy", "Mouse Trap (version 3)" )
-	public static GameDriver driver_mtrap4	   = new GameDriver("1981"	,"mtrap4"	,"exidy.java"	,rom_mtrap4,driver_mtrap	,machine_driver_mtrap	,input_ports_mtrap	,init_mtrap	,ROT0	,	"Exidy", "Mouse Trap (version 4)" )
-	public static GameDriver driver_venture	   = new GameDriver("1981"	,"venture"	,"exidy.java"	,rom_venture,null	,machine_driver_venture	,input_ports_venture	,init_venture	,ROT0	,	"Exidy", "Venture (version 5 set 1)" )
-	public static GameDriver driver_venture2	   = new GameDriver("1981"	,"venture2"	,"exidy.java"	,rom_venture2,driver_venture	,machine_driver_venture	,input_ports_venture	,init_venture	,ROT0	,	"Exidy", "Venture (version 5 set 2)" )
-	public static GameDriver driver_venture4	   = new GameDriver("1981"	,"venture4"	,"exidy.java"	,rom_venture4,driver_venture	,machine_driver_venture	,input_ports_venture	,init_venture	,ROT0	,	"Exidy", "Venture (version 4)" )
-	public static GameDriver driver_pepper2	   = new GameDriver("1982"	,"pepper2"	,"exidy.java"	,rom_pepper2,null	,machine_driver_pepper2	,input_ports_pepper2	,init_pepper2	,ROT0	,	"Exidy", "Pepper II" )
-	public static GameDriver driver_hardhat	   = new GameDriver("1982"	,"hardhat"	,"exidy.java"	,rom_hardhat,null	,machine_driver_pepper2	,input_ports_pepper2	,init_pepper2	,ROT0	,	"Exidy", "Hard Hat" )
-	public static GameDriver driver_fax	   = new GameDriver("1983"	,"fax"	,"exidy.java"	,rom_fax,null	,machine_driver_fax	,input_ports_fax	,init_fax	,ROT0	,	"Exidy", "Fax" )
+	GAME( 1979, sidetrac, 0,       targ,    sidetrac, sidetrac, ROT0, "Exidy", "Side Track" )
+	GAME( 1980, targ,     0,       targ,    targ,     targ,     ROT0, "Exidy", "Targ" )
+	GAME( 1980, targc,    targ,    targ,    targ,     targ,     ROT0, "Exidy", "Targ (cocktail?)" )
+	GAME( 1980, spectar,  0,       targ,    spectar,  spectar,  ROT0, "Exidy", "Spectar (revision 3)" )
+	GAME( 1980, spectar1, spectar, targ,    spectar,  spectar,  ROT0, "Exidy", "Spectar (revision 1?)" )
+	GAME( 1980, rallys,   spectar, rallys,  rallys,   spectar,  ROT0, "Novar", "Rallys (bootleg?)" )
+	GAME( 1980, phantoma, spectar, phantoma,phantoma, phantoma, ROT0, "Jeutel","Phantomas" )
+	GAME( 1981, mtrap,    0,       mtrap,   mtrap,    mtrap,    ROT0, "Exidy", "Mouse Trap (version 5)" )
+	GAME( 1981, mtrap3,   mtrap,   mtrap,   mtrap,    mtrap,    ROT0, "Exidy", "Mouse Trap (version 3)" )
+	GAME( 1981, mtrap4,   mtrap,   mtrap,   mtrap,    mtrap,    ROT0, "Exidy", "Mouse Trap (version 4)" )
+	GAME( 1981, venture,  0,       venture, venture,  venture,  ROT0, "Exidy", "Venture (version 5 set 1)" )
+	GAME( 1981, venture2, venture, venture, venture,  venture,  ROT0, "Exidy", "Venture (version 5 set 2)" )
+	GAME( 1981, venture4, venture, venture, venture,  venture,  ROT0, "Exidy", "Venture (version 4)" )
+	GAME( 1982, pepper2,  0,       pepper2, pepper2,  pepper2,  ROT0, "Exidy", "Pepper II" )
+	GAME( 1982, hardhat,  0,       pepper2, pepper2,  pepper2,  ROT0, "Exidy", "Hard Hat" )
+	GAME( 1983, fax,      0,       fax,     fax,      fax,      ROT0, "Exidy", "Fax" )
 }

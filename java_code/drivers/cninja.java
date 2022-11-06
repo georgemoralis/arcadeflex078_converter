@@ -35,7 +35,7 @@ Caveman Ninja Issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -386,7 +386,7 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	static InputPortPtr input_ports_edrandy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_edrandy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( edrandy )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -460,7 +460,7 @@ public class cninja
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cninja = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cninja = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cninja )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -534,7 +534,7 @@ public class cninja
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cninjau = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cninjau = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cninjau )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -608,7 +608,7 @@ public class cninja
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_robocop2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_robocop2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( robocop2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -682,7 +682,7 @@ public class cninja
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mutantf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mutantf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mutantf )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -838,8 +838,7 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_cninja  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cninja  = new MachineInitHandlerPtr() { public void handler(){
 		raster_irq_timer = timer_alloc(interrupt_gen);
 		cninja_scanline=0;
 		cninja_irq_mask=0;
@@ -866,8 +865,7 @@ public class cninja
 		cpu_set_irq_line(1,0,state);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* the second OKIM6295 ROM is bank switched */
 		OKIM6295_set_bank_base(1, (data & 1) * 0x40000);
 	} };
@@ -899,8 +897,7 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_cninja = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cninja )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -930,12 +927,9 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_stoneage = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stoneage )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -964,12 +958,9 @@ public class cninja
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface2)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_edrandy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( edrandy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -999,12 +990,9 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_robocop2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( robocop2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -1035,12 +1023,9 @@ public class cninja
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mutantf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mutantf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -1068,9 +1053,7 @@ public class cninja
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
@@ -1734,19 +1717,16 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	public static DriverInitHandlerPtr init_cninja  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cninja  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write16_handler(0, 0x1bc0a8, 0x1bc0a9, cninja_sound_w);
 		cninja_patch();
 	} };
 	
-	public static DriverInitHandlerPtr init_stoneage  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stoneage  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write16_handler(0, 0x1bc0a8, 0x1bc0a9, stoneage_sound_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_mutantf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mutantf  = new DriverInitHandlerPtr() { public void handler(){
 		const data8_t *src = memory_region(REGION_GFX2);
 		data8_t *dst = memory_region(REGION_GFX1);
 	
@@ -1761,18 +1741,18 @@ public class cninja
 	
 	/**********************************************************************************/
 	
-	public static GameDriver driver_edrandy	   = new GameDriver("1990"	,"edrandy"	,"cninja.java"	,rom_edrandy,null	,machine_driver_edrandy	,input_ports_edrandy	,null	,ROT0	,	"Data East Corporation", "The Cliffhanger - Edward Randy (World revision 2)" )
-	public static GameDriver driver_edrandy1	   = new GameDriver("1990"	,"edrandy1"	,"cninja.java"	,rom_edrandy1,driver_edrandy	,machine_driver_edrandy	,input_ports_edrandy	,null	,ROT0	,	"Data East Corporation", "The Cliffhanger - Edward Randy (World revision 1)" )
-	public static GameDriver driver_edrandyj	   = new GameDriver("1990"	,"edrandyj"	,"cninja.java"	,rom_edrandyj,driver_edrandy	,machine_driver_edrandy	,input_ports_edrandy	,null	,ROT0	,	"Data East Corporation", "The Cliffhanger - Edward Randy (Japan)" )
-	public static GameDriver driver_cninja	   = new GameDriver("1991"	,"cninja"	,"cninja.java"	,rom_cninja,null	,machine_driver_cninja	,input_ports_cninja	,init_cninja	,ROT0	,	"Data East Corporation", "Caveman Ninja (World revision 3)" )
-	public static GameDriver driver_cninja0	   = new GameDriver("1991"	,"cninja0"	,"cninja.java"	,rom_cninja0,driver_cninja	,machine_driver_cninja	,input_ports_cninja	,init_cninja	,ROT0	,	"Data East Corporation", "Caveman Ninja (World revision 0)" )
-	public static GameDriver driver_cninjau	   = new GameDriver("1991"	,"cninjau"	,"cninja.java"	,rom_cninjau,driver_cninja	,machine_driver_cninja	,input_ports_cninjau	,init_cninja	,ROT0	,	"Data East Corporation", "Caveman Ninja (US)" )
-	public static GameDriver driver_joemac	   = new GameDriver("1991"	,"joemac"	,"cninja.java"	,rom_joemac,driver_cninja	,machine_driver_cninja	,input_ports_cninja	,init_cninja	,ROT0	,	"Data East Corporation", "Tatakae Genshizin Joe & Mac (Japan)" )
-	public static GameDriver driver_stoneage	   = new GameDriver("1991"	,"stoneage"	,"cninja.java"	,rom_stoneage,driver_cninja	,machine_driver_stoneage	,input_ports_cninja	,init_stoneage	,ROT0	,	"bootleg", "Stoneage" )
-	public static GameDriver driver_robocop2	   = new GameDriver("1991"	,"robocop2"	,"cninja.java"	,rom_robocop2,null	,machine_driver_robocop2	,input_ports_robocop2	,null	,ROT0	,	"Data East Corporation", "Robocop 2 (World)" )
-	public static GameDriver driver_robocp2u	   = new GameDriver("1991"	,"robocp2u"	,"cninja.java"	,rom_robocp2u,driver_robocop2	,machine_driver_robocop2	,input_ports_robocop2	,null	,ROT0	,	"Data East Corporation", "Robocop 2 (US)" )
-	public static GameDriver driver_robocp2j	   = new GameDriver("1991"	,"robocp2j"	,"cninja.java"	,rom_robocp2j,driver_robocop2	,machine_driver_robocop2	,input_ports_robocop2	,null	,ROT0	,	"Data East Corporation", "Robocop 2 (Japan)" )
-	public static GameDriver driver_mutantf	   = new GameDriver("1992"	,"mutantf"	,"cninja.java"	,rom_mutantf,null	,machine_driver_mutantf	,input_ports_mutantf	,init_mutantf	,ROT0	,	"Data East Corporation", "Mutant Fighter (World Rev 4, EM-5)" )
-	public static GameDriver driver_mutantfa	   = new GameDriver("1992"	,"mutantfa"	,"cninja.java"	,rom_mutantfa,driver_mutantf	,machine_driver_mutantf	,input_ports_mutantf	,init_mutantf	,ROT0	,	"Data East Corporation", "Mutant Fighter (World Rev 3, EM-4)" )
-	public static GameDriver driver_deathbrd	   = new GameDriver("1992"	,"deathbrd"	,"cninja.java"	,rom_deathbrd,driver_mutantf	,machine_driver_mutantf	,input_ports_mutantf	,init_mutantf	,ROT0	,	"Data East Corporation", "Death Brade (Japan Rev 2, JM-3)" )
+	GAME( 1990, edrandy,  0,       edrandy,  edrandy, 0,        ROT0, "Data East Corporation", "The Cliffhanger - Edward Randy (World revision 2)" )
+	GAME( 1990, edrandy1, edrandy, edrandy,  edrandy, 0,        ROT0, "Data East Corporation", "The Cliffhanger - Edward Randy (World revision 1)" )
+	GAME( 1990, edrandyj, edrandy, edrandy,  edrandy, 0,        ROT0, "Data East Corporation", "The Cliffhanger - Edward Randy (Japan)" )
+	GAME( 1991, cninja,   0,       cninja,   cninja,  cninja,   ROT0, "Data East Corporation", "Caveman Ninja (World revision 3)" )
+	GAME( 1991, cninja0,  cninja,  cninja,   cninja,  cninja,   ROT0, "Data East Corporation", "Caveman Ninja (World revision 0)" )
+	GAME( 1991, cninjau,  cninja,  cninja,   cninjau, cninja,   ROT0, "Data East Corporation", "Caveman Ninja (US)" )
+	GAME( 1991, joemac,   cninja,  cninja,   cninja,  cninja,   ROT0, "Data East Corporation", "Tatakae Genshizin Joe & Mac (Japan)" )
+	GAME( 1991, stoneage, cninja,  stoneage, cninja,  stoneage, ROT0, "bootleg", "Stoneage" )
+	GAME( 1991, robocop2, 0,       robocop2, robocop2,0,        ROT0, "Data East Corporation", "Robocop 2 (World)" )
+	GAME( 1991, robocp2u, robocop2,robocop2, robocop2,0,        ROT0, "Data East Corporation", "Robocop 2 (US)" )
+	GAME( 1991, robocp2j, robocop2,robocop2, robocop2,0,        ROT0, "Data East Corporation", "Robocop 2 (Japan)" )
+	GAME( 1992, mutantf,  0,       mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Mutant Fighter (World Rev 4, EM-5)" )
+	GAME( 1992, mutantfa, mutantf, mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Mutant Fighter (World Rev 3, EM-4)" )
+	GAME( 1992, deathbrd, mutantf, mutantf,  mutantf, mutantf,  ROT0, "Data East Corporation", "Death Brade (Japan Rev 2, JM-3)" )
 }

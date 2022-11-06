@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_exterm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_exterm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 555 RGB lookup */
@@ -57,22 +56,22 @@ public class exterm
 	
 	void exterm_to_shiftreg_master(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(shiftreg, &exterm_master_videoram.read(TOWORD(address)), 256 * sizeof(UINT16));
+		memcpy(shiftreg, &exterm_master_videoram[TOWORD(address)], 256 * sizeof(UINT16));
 	}
 	
 	void exterm_from_shiftreg_master(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(&exterm_master_videoram.read(TOWORD(address)), shiftreg, 256 * sizeof(UINT16));
+		memcpy(&exterm_master_videoram[TOWORD(address)], shiftreg, 256 * sizeof(UINT16));
 	}
 	
 	void exterm_to_shiftreg_slave(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(shiftreg, &exterm_slave_videoram.read(TOWORD(address)), 256 * 2 * sizeof(UINT8));
+		memcpy(shiftreg, &exterm_slave_videoram[TOWORD(address)], 256 * 2 * sizeof(UINT8));
 	}
 	
 	void exterm_from_shiftreg_slave(unsigned int address, UINT16* shiftreg)
 	{
-		memcpy(&exterm_slave_videoram.read(TOWORD(address)), shiftreg, 256 * 2 * sizeof(UINT8));
+		memcpy(&exterm_slave_videoram[TOWORD(address)], shiftreg, 256 * 2 * sizeof(UINT8));
 	}
 	
 	
@@ -83,8 +82,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_exterm  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_exterm  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
 	} };
 	
@@ -96,8 +94,7 @@ public class exterm
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_exterm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
 		/* if the display is blanked, fill with black */
@@ -110,7 +107,7 @@ public class exterm
 		/* 16-bit case */
 		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
-			data16_t *bgsrc = &exterm_master_videoram.read(256 * y);
+			data16_t *bgsrc = &exterm_master_videoram[256 * y];
 			UINT16 scanline[256];
 	
 			/* on the top/bottom of the screen, it's all background */
@@ -124,14 +121,14 @@ public class exterm
 			/* elsewhere, we have to blend foreground and background */
 			else
 			{
-				data16_t *fgsrc = (tms34010_get_DPYSTRT(1) & 0x800) ? &exterm_slave_videoram.read(y*128): &exterm_slave_videoram.read((256+y)*128);
+				data16_t *fgsrc = (tms34010_get_DPYSTRT(1) & 0x800) ? &exterm_slave_videoram[y*128] : &exterm_slave_videoram[(256+y)*128];
 	
 				for (x = 0; x < 256; x += 2)
 				{
 					UINT16 fgdata = *fgsrc++;
 					UINT16 bgdata;
 	
-					if ((fgdata & 0x00ff) != 0)
+					if (fgdata & 0x00ff)
 						scanline[x] = fgdata & 0x00ff;
 					else
 					{
@@ -139,7 +136,7 @@ public class exterm
 						scanline[x] = (bgdata & 0x8000) ? (bgdata & 0xfff) : (bgdata + 0x1000);
 					}
 	
-					if ((fgdata & 0xff00) != 0)
+					if (fgdata & 0xff00)
 						scanline[x+1] = fgdata >> 8;
 					else
 					{

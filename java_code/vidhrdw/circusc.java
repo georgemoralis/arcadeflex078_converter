@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class circusc
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_circusc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_circusc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -112,11 +111,10 @@ public class circusc
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_circusc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_circusc  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap,32);
@@ -132,8 +130,7 @@ public class circusc
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr circusc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (circusc_videoram[offset] != data)
 		{
 			circusc_videoram[offset] = data;
@@ -141,8 +138,7 @@ public class circusc
 		}
 	} };
 	
-	public static WriteHandlerPtr circusc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (circusc_colorram[offset] != data)
 		{
 			circusc_colorram[offset] = data;
@@ -150,8 +146,7 @@ public class circusc
 		}
 	} };
 	
-	public static WriteHandlerPtr circusc_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 1);
 	} };
 	
@@ -182,7 +177,7 @@ public class circusc
 			sy = sr[offs + 3];
 			flipx = sr[offs + 1] & 0x40;
 			flipy = sr[offs + 1] & 0x80;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -191,7 +186,7 @@ public class circusc
 			}
 	
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sr[offs + 0] + 8 * (sr[offs + 1] & 0x20),
 					sr[offs + 1] & 0x0f,
 					flipx,flipy,
@@ -201,8 +196,7 @@ public class circusc
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_circusc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_circusc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		for (i = 0;i < 10;i++)

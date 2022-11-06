@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -11,8 +11,7 @@ public class shisen
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr sichuan2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sichuan2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -20,13 +19,12 @@ public class shisen
 		}
 	} };
 	
-	public static WriteHandlerPtr sichuan2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sichuan2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		int bank;
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
-		if ((data & 0xc0) != 0) logerror("bank switch %02x\n",data);
+		if (data & 0xc0) logerror("bank switch %02x\n",data);
 	
 		/* bits 0-2 select ROM bank */
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;
@@ -44,17 +42,16 @@ public class shisen
 		/* bits 6-7 unknown */
 	} };
 	
-	public static WriteHandlerPtr sichuan2_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sichuan2_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		offset &= 0xff;
 	
-		r = paletteram[offset + 0x000] & 0x1f;
-		g = paletteram[offset + 0x100] & 0x1f;
-		b = paletteram[offset + 0x200] & 0x1f;
+		r = paletteram.read(offset + 0x000)& 0x1f;
+		g = paletteram.read(offset + 0x100)& 0x1f;
+		b = paletteram.read(offset + 0x200)& 0x1f;
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
 		b = (b << 3) | (b >> 2);
@@ -71,19 +68,17 @@ public class shisen
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_sichuan2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sichuan2  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_sichuan2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sichuan2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	} };
 }

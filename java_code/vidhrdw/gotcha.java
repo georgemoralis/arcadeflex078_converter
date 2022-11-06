@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class gotcha
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gotcha  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gotcha  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(fg_get_tile_info,gotcha_tilemap_scan,TILEMAP_TRANSPARENT,16,16,64,32);
 		bg_tilemap = tilemap_create(bg_get_tile_info,gotcha_tilemap_scan,TILEMAP_OPAQUE,     16,16,64,32);
 	
@@ -79,13 +78,13 @@ public class gotcha
 	
 	WRITE16_HANDLER( gotcha_gfxbank_select_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			banksel = (data & 0x0300) >> 8;
 	}
 	
 	WRITE16_HANDLER( gotcha_gfxbank_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			if (gfxbank[banksel] != ((data & 0x0f00) >> 8))
 			{
@@ -130,7 +129,7 @@ public class gotcha
 	
 			for (y = 0;y < height;y++)
 			{
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code + (flipy ? height-1 - y : y),
 						color,
 						flipx,flipy,
@@ -141,8 +140,7 @@ public class gotcha
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gotcha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gotcha  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	

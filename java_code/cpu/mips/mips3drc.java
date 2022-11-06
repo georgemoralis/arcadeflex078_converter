@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.mips;
 
@@ -316,7 +316,7 @@ public class mips3drc
 	unsigned mips3_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(mips3_regs *)dst = mips3;
 	
 		/* return the context size */
@@ -327,7 +327,7 @@ public class mips3drc
 	void mips3_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			mips3 = *(mips3_regs *)src;
 	}
 	
@@ -376,8 +376,8 @@ public class mips3drc
 		struct mips3_config *config = param;
 	
 		/* allocate memory */
-		mips3.icache = malloc(config.icache);
-		mips3.dcache = malloc(config.dcache);
+		mips3.icache = malloc(config->icache);
+		mips3.dcache = malloc(config->dcache);
 		if (!mips3.icache || !mips3.dcache)
 		{
 			fprintf(stderr, "error: couldn't allocate cache for mips3!\n");
@@ -392,8 +392,8 @@ public class mips3drc
 			mips3.memory = le_memory;
 	
 		/* initialize the rest of the config */
-		mips3.icache_size = config.icache;
-		mips3.dcache_size = config.dcache;
+		mips3.icache_size = config->icache;
+		mips3.dcache_size = config->dcache;
 	
 		/* initialize the state */
 		mips3.pc = 0xbfc00000;
@@ -474,7 +474,7 @@ public class mips3drc
 		mips3.dcache = NULL;
 	
 	#ifdef MAME_DEBUG
-		if (symfile != 0) fclose(symfile);
+		if (symfile) fclose(symfile);
 	#endif
 		drc_exit(mips3.drc);
 	}
@@ -491,25 +491,25 @@ public class mips3drc
 	
 	static void mips3drc_reset(struct drccore *drc)
 	{
-		mips3.generate_interrupt_exception = drc.cache_top;
+		mips3.generate_interrupt_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_INTERRUPT);
 		
-		mips3.generate_cop_exception = drc.cache_top;
+		mips3.generate_cop_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_BADCOP);
 			
-		mips3.generate_overflow_exception = drc.cache_top;
+		mips3.generate_overflow_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_OVERFLOW);
 			
-		mips3.generate_invalidop_exception = drc.cache_top;
+		mips3.generate_invalidop_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_INVALIDOP);
 			
-		mips3.generate_syscall_exception = drc.cache_top;
+		mips3.generate_syscall_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_SYSCALL);
 			
-		mips3.generate_break_exception = drc.cache_top;
+		mips3.generate_break_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_BREAK);
 			
-		mips3.generate_trap_exception = drc.cache_top;
+		mips3.generate_trap_exception = drc->cache_top;
 		append_generate_exception(drc, EXCEPTION_TRAP);
 	}
 	
@@ -580,7 +580,7 @@ public class mips3drc
 		
 	//	printf("recompile_callback @ PC=%08X\n", mips3.pc);
 	/*
-		if (ram_read_table == 0)
+		if (!ram_read_table)
 		{
 			ram_read_table = malloc(65536 * sizeof(void *));
 			ram_write_table = malloc(65536 * sizeof(void *));
@@ -615,7 +615,7 @@ public class mips3drc
 			/* compile one instruction */
 			result = compile_one(drc, pc);
 			pc += (INT8)(result >> 24);
-			if ((result & RECOMPILE_END_OF_STRING) != 0)
+			if (result & RECOMPILE_END_OF_STRING)
 				break;
 		}
 		
@@ -630,7 +630,7 @@ public class mips3drc
 	{
 		FILE *temp;
 		temp = fopen("code.bin", "wb");
-		fwrite(drc.cache_base, 1, drc.cache_top - drc.cache_base, temp);
+		fwrite(drc->cache_base, 1, drc->cache_top - drc->cache_base, temp);
 		fclose(temp);
 	}
 	#endif
@@ -675,10 +675,10 @@ public class mips3drc
 	#ifdef MAME_DEBUG
 	{
 		char temp[256];
-		if (symfile == 0) symfile = fopen("code.sym", "w");
+		if (!symfile) symfile = fopen("code.sym", "w");
 		mips3_dasm(temp, pc);
-		fprintf(symfile, "%08X   --------------------------------------------\n", drc.cache_top - drc.cache_base);
-		fprintf(symfile, "%08X   %08X: %s\n", drc.cache_top - drc.cache_base, pc, temp);
+		fprintf(symfile, "%08X   --------------------------------------------\n", drc->cache_top - drc->cache_base);
+		fprintf(symfile, "%08X   %08X: %s\n", drc->cache_top - drc->cache_base, pc, temp);
 	}
 	#endif
 		
@@ -716,9 +716,9 @@ public class mips3drc
 		drc_append_standard_epilogue(drc, cycles, pcdelta, 1);
 	
 		/* check interrupts */
-		if ((result & RECOMPILE_CHECK_INTERRUPTS) != 0)
+		if (result & RECOMPILE_CHECK_INTERRUPTS)
 			append_check_interrupts(drc, 0);
-		if ((result & RECOMPILE_ADD_DISPATCH) != 0)
+		if (result & RECOMPILE_ADD_DISPATCH)
 			drc_append_dispatcher(drc);
 		
 		return (result & 0xffff) | ((UINT8)cycles << 16) | ((UINT8)pcdelta << 24);
@@ -742,7 +742,7 @@ public class mips3drc
 		_mov_m32abs_r32(&mips3.cpr[0][COP0_EPC], REG_EDI);					// mov	[mips3.cpr[0][COP0_EPC]],edi
 		_mov_r32_m32abs(REG_EAX, &mips3.cpr[0][COP0_Cause]);				// mov	eax,[mips3.cpr[0][COP0_Cause]]
 		_and_r32_imm(REG_EAX, ~0x800000ff);									// and	eax,~0x800000ff
-		if (exception != 0)
+		if (exception)
 			_or_r32_imm(REG_EAX, exception << 2);							// or	eax,exception << 2
 		_cmp_m32abs_imm(&mips3.nextpc, ~0);									// cmp	[mips3.nextpc],~0
 		_jcc_short_link(COND_E, &link1);									// je	skip
@@ -785,17 +785,17 @@ public class mips3drc
 		_mov_r32_m32abs(REG_EAX, &mips3.cpr[0][COP0_Cause]);				// mov	eax,[mips3.cpr[0][COP0_Cause]]
 		_and_r32_m32abs(REG_EAX, &mips3.cpr[0][COP0_Status]);				// and	eax,[mips3.cpr[0][COP0_Status]]
 		_and_r32_imm(REG_EAX, 0xff00);										// and	eax,0xff00
-		if (inline_generate == 0)
+		if (!inline_generate)
 			_jcc_short_link(COND_Z, &link1);								// jz	skip
 		else
 			_jcc_near_link(COND_Z, &link1);									// jz	skip
 		_test_m32abs_imm(&mips3.cpr[0][COP0_Status], SR_IE);				// test	[mips3.cpr[0][COP0_Status],SR_IE
-		if (inline_generate == 0)
+		if (!inline_generate)
 			_jcc_short_link(COND_Z, &link2);								// jz	skip
 		else
 			_jcc_near_link(COND_Z, &link2);									// jz	skip
 		_test_m32abs_imm(&mips3.cpr[0][COP0_Status], SR_EXL | SR_ERL);		// test	[mips3.cpr[0][COP0_Status],SR_EXL | SR_ERL
-		if (inline_generate == 0)
+		if (!inline_generate)
 			_jcc(COND_Z, mips3.generate_interrupt_exception);				// jz	generate_interrupt_exception
 		else
 		{
@@ -818,7 +818,7 @@ public class mips3drc
 		_mov_r32_imm(REG_EDI, newpc);
 		drc_append_standard_epilogue(drc, cycles, 0, 1);
 	
-		if (code != 0)
+		if (code)
 			_jmp(code);
 		else
 			drc_append_tentative_fixed_dispatcher(drc, newpc);
@@ -832,7 +832,7 @@ public class mips3drc
 	
 	#define _zero_m64abs(addr) 							\
 	do { 												\
-		if (USE_SSE != 0) 									\
+		if (USE_SSE) 									\
 		{												\
 			_pxor_r128_r128(REG_XMM0, REG_XMM0);		\
 			_movsd_m64abs_r128(addr, REG_XMM0);			\
@@ -843,7 +843,7 @@ public class mips3drc
 	
 	#define _mov_m64abs_m64abs(dst, src)				\
 	do { 												\
-		if (USE_SSE != 0) 									\
+		if (USE_SSE) 									\
 		{												\
 			_movsd_r128_m64abs(REG_XMM0, src);			\
 			_movsd_m64abs_r128(dst, REG_XMM0);			\
@@ -885,7 +885,7 @@ public class mips3drc
 	
 	static int recompile_delay_slot(struct drccore *drc, UINT32 pc)
 	{
-		UINT8 *saved_top = drc.cache_top;
+		UINT8 *saved_top = drc->cache_top;
 		UINT32 result;
 	
 		/* recompile the instruction as-is */
@@ -894,9 +894,9 @@ public class mips3drc
 		in_delay_slot = 0;
 	
 		/* if the instruction can cause an exception, recompile setting nextpc */
-		if ((result & RECOMPILE_MAY_CAUSE_EXCEPTION) != 0)
+		if (result & RECOMPILE_MAY_CAUSE_EXCEPTION)
 		{
-			drc.cache_top = saved_top;
+			drc->cache_top = saved_top;
 			_mov_m32abs_imm(&mips3.nextpc, 0);									// bogus nextpc for exceptions
 			result = recompile_instruction(drc, pc);							// <next instruction>
 			_mov_m32abs_imm(&mips3.nextpc, ~0);									// reset nextpc
@@ -921,7 +921,7 @@ public class mips3drc
 		void *memory;
 		
 		/* if the next instruction is a load or store, see if we can consolidate */
-		if (in_delay_slot == 0)
+		if (!in_delay_slot)
 			switch (nextop >> 26)
 			{
 				case 0x08:	/* addi */
@@ -946,7 +946,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -966,7 +966,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -983,7 +983,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1003,7 +1003,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1023,7 +1023,7 @@ public class mips3drc
 						memory = memory_get_read_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1040,7 +1040,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1057,7 +1057,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1072,7 +1072,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1087,7 +1087,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1102,7 +1102,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1117,7 +1117,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_read_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway if we're not reading to the same register */
@@ -1136,7 +1136,7 @@ public class mips3drc
 						memory = memory_get_write_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1159,7 +1159,7 @@ public class mips3drc
 						memory = memory_get_write_ptr(cpu_getactivecpu(), BYTE4_XOR_BE(address + nextsimm));
 					else
 						memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1179,7 +1179,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1199,7 +1199,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1214,7 +1214,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1229,7 +1229,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1244,7 +1244,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1259,7 +1259,7 @@ public class mips3drc
 	
 					/* see if this points to a RAM-like area */
 					memory = memory_get_write_ptr(cpu_getactivecpu(), address + nextsimm);
-					if (memory == 0)
+					if (!memory)
 						break;
 					
 					/* do the LUI anyway */
@@ -1289,7 +1289,7 @@ public class mips3drc
 		struct linkdata link1, link2;
 		_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 		_mov_r32_m32abs(REG_EAX, &mips3.r[rsreg]);								// mov	eax,[rsreg]
-		if (simmval != 0)
+		if (simmval)
 			_add_r32_imm(REG_EAX, simmval);										// add	eax,simmval
 		_mov_m32abs_r32(&scratchspace[0], REG_EAX);								// mov	[scratchspace[0]],eax
 		_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -1330,7 +1330,7 @@ public class mips3drc
 		struct linkdata link1;
 		_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 		_mov_r32_m32abs(REG_EAX, &mips3.r[rsreg]);								// mov	eax,[rsreg]
-		if (simmval != 0)
+		if (simmval)
 			_add_r32_imm(REG_EAX, simmval);										// add	eax,simmval
 		_mov_m32abs_r32(&scratchspace[0], REG_EAX);								// mov	[scratchspace[0]],eax
 		_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -1834,7 +1834,7 @@ public class mips3drc
 				}
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~7);												// and	eax,~7
@@ -1891,7 +1891,7 @@ public class mips3drc
 				}
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~7);												// and	eax,~7
@@ -1994,7 +1994,7 @@ public class mips3drc
 				}
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -2098,7 +2098,7 @@ public class mips3drc
 				}
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -2197,7 +2197,7 @@ public class mips3drc
 	}*/
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -2287,7 +2287,7 @@ public class mips3drc
 	}*/
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~7);												// and	eax,~7
@@ -2356,7 +2356,7 @@ public class mips3drc
 	}*/
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~7);												// and	eax,~7
@@ -2425,7 +2425,7 @@ public class mips3drc
 	}*/
 				_mov_m32abs_r32(&mips3_icount, REG_EBP);								// mov	[mips3_icount],ebp
 				_mov_r32_m32abs(REG_EAX, &mips3.r[RSREG]);								// mov	eax,[rsreg]
-				if (SIMMVAL != 0)
+				if (SIMMVAL)
 					_add_r32_imm(REG_EAX, SIMMVAL);										// add	eax,SIMMVAL
 				_push_r32(REG_EAX);														// push	eax
 				_and_r32_imm(REG_EAX, ~3);												// and	eax,~3
@@ -3317,7 +3317,7 @@ public class mips3drc
 				{
 					if (RSREG != 0 && RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RSREG]);				// movsd xmm0,[rsreg]
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3342,7 +3342,7 @@ public class mips3drc
 				{
 					if (RSREG != 0 && RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RSREG]);				// movsd xmm0,[rsreg]
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3371,7 +3371,7 @@ public class mips3drc
 				{
 					if (RSREG != 0 && RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RSREG]);				// movsd xmm0,[rsreg]
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3496,7 +3496,7 @@ public class mips3drc
 				{
 					if (RSREG != 0 && RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RSREG]);				// movsd xmm0,[rsreg]
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3536,7 +3536,7 @@ public class mips3drc
 						_mov_m64abs_m64abs(&mips3.r[RDREG], &mips3.r[RSREG]);			// mov	[rdreg],[rsreg]
 					else if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_pxor_r128_r128(REG_XMM0, REG_XMM0);						// pxor	xmm0,xmm0
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3562,7 +3562,7 @@ public class mips3drc
 				{
 					if (RSREG != 0 && RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RSREG]);				// movsd xmm0,[rsreg]
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3581,7 +3581,7 @@ public class mips3drc
 						_mov_m64abs_m64abs(&mips3.r[RDREG], &mips3.r[RSREG]);			// mov	[rdreg],[rsreg]
 					else if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_pxor_r128_r128(REG_XMM0, REG_XMM0);						// pxor	xmm0,xmm0
 							_movsd_r128_m64abs(REG_XMM1, &mips3.r[RTREG]);				// movsd xmm1,[rtreg]
@@ -3685,10 +3685,10 @@ public class mips3drc
 				{
 					if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RTREG]);				// movsd xmm0,[rtreg]
-							if (SHIFT != 0)
+							if (SHIFT)
 								_psllq_r128_imm(REG_XMM0, SHIFT);						// psllq xmm0,SHIFT
 							_movsd_m64abs_r128(&mips3.r[RDREG], REG_XMM0);				// movsd [rdreg],xmm0
 						}
@@ -3713,10 +3713,10 @@ public class mips3drc
 				{
 					if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RTREG]);				// movsd xmm0,[rtreg]
-							if (SHIFT != 0)
+							if (SHIFT)
 								_psrlq_r128_imm(REG_XMM0, SHIFT);						// psrlq xmm0,SHIFT
 							_movsd_m64abs_r128(&mips3.r[RDREG], REG_XMM0);				// movsd [rdreg],xmm0
 						}
@@ -3759,7 +3759,7 @@ public class mips3drc
 				{
 					if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RTREG]);				// movsd xmm0,[rtreg]
 							_psllq_r128_imm(REG_XMM0, SHIFT+32);						// psllq xmm0,SHIFT+32
@@ -3784,7 +3784,7 @@ public class mips3drc
 				{
 					if (RTREG != 0)
 					{
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							_movsd_r128_m64abs(REG_XMM0, &mips3.r[RTREG]);				// movsd xmm0,[rtreg]
 							_psrlq_r128_imm(REG_XMM0, SHIFT+32);						// psrlq xmm0,SHIFT+32
@@ -4464,7 +4464,7 @@ public class mips3drc
 					case 0x00:
 						if (IS_SINGLE(op))	/* ADD.S */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movss xmm0,[fsreg]
 								_addss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// addss xmm0,[ftreg]
@@ -4480,7 +4480,7 @@ public class mips3drc
 						}
 						else				/* ADD.D */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movsd xmm0,[fsreg]
 								_addsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// addsd xmm0,[ftreg]
@@ -4499,7 +4499,7 @@ public class mips3drc
 					case 0x01:
 						if (IS_SINGLE(op))	/* SUB.S */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movss xmm0,[fsreg]
 								_subss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// subss xmm0,[ftreg]
@@ -4515,7 +4515,7 @@ public class mips3drc
 						}
 						else				/* SUB.D */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movsd xmm0,[fsreg]
 								_subsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// subsd xmm0,[ftreg]
@@ -4534,7 +4534,7 @@ public class mips3drc
 					case 0x02:
 						if (IS_SINGLE(op))	/* MUL.S */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movss xmm0,[fsreg]
 								_mulss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// mulss xmm0,[ftreg]
@@ -4550,7 +4550,7 @@ public class mips3drc
 						}
 						else				/* MUL.D */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movsd xmm0,[fsreg]
 								_mulsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// mulsd xmm0,[ftreg]
@@ -4569,7 +4569,7 @@ public class mips3drc
 					case 0x03:
 						if (IS_SINGLE(op))	/* DIV.S */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movss xmm0,[fsreg]
 								_divss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// divss xmm0,[ftreg]
@@ -4585,7 +4585,7 @@ public class mips3drc
 						}
 						else				/* DIV.D */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);			// movsd xmm0,[fsreg]
 								_divsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);			// divsd xmm0,[ftreg]
@@ -4604,7 +4604,7 @@ public class mips3drc
 					case 0x04:
 						if (IS_SINGLE(op))	/* SQRT.S */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_sqrtss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);		// sqrtss xmm0,[fsreg]
 								_movss_m32abs_r128(&mips3.cpr[1][FDREG], REG_XMM0);			// movss [fdreg],xmm0
@@ -4618,7 +4618,7 @@ public class mips3drc
 						}
 						else				/* SQRT.D */
 						{
-							if (USE_SSE != 0)
+							if (USE_SSE)
 							{
 								_sqrtsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);		// sqrtsd xmm0,[fsreg]
 								_movsd_m64abs_r128(&mips3.cpr[1][FDREG], REG_XMM0);			// movsd [fdreg],xmm0
@@ -4906,7 +4906,7 @@ public class mips3drc
 	
 					case 0x32:
 					case 0x3a:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.EQ.S */
 							{
@@ -4941,7 +4941,7 @@ public class mips3drc
 	
 					case 0x33:
 					case 0x3b:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.UEQ.S */
 							{
@@ -4976,7 +4976,7 @@ public class mips3drc
 	
 					case 0x34:
 					case 0x3c:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.OLT.S */
 							{
@@ -5011,7 +5011,7 @@ public class mips3drc
 	
 					case 0x35:
 					case 0x3d:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.ULT.S */
 							{
@@ -5046,7 +5046,7 @@ public class mips3drc
 	
 					case 0x36:
 					case 0x3e:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.OLE.S */
 							{
@@ -5081,7 +5081,7 @@ public class mips3drc
 	
 					case 0x37:
 					case 0x3f:
-						if (USE_SSE != 0)
+						if (USE_SSE)
 						{
 							if (IS_SINGLE(op))	/* C.ULE.S */
 							{
@@ -5198,7 +5198,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x20:		/* MADD.S */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movss xmm0,[fsreg]
 					_mulss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulss xmm0,[ftreg]
@@ -5217,7 +5217,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x21:		/* MADD.D */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movsd xmm0,[fsreg]
 					_mulsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulsd xmm0,[ftreg]
@@ -5236,7 +5236,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 	
 			case 0x28:		/* MSUB.S */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movss xmm0,[fsreg]
 					_mulss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulss xmm0,[ftreg]
@@ -5255,7 +5255,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x29:		/* MSUB.D */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movsd xmm0,[fsreg]
 					_mulsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulsd xmm0,[ftreg]
@@ -5274,7 +5274,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x30:		/* NMADD.S */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_pxor_r128_r128(REG_XMM1, REG_XMM1);									// pxor	xmm1,xmm1
 					_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movss xmm0,[fsreg]
@@ -5296,7 +5296,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x31:		/* NMADD.D */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_pxor_r128_r128(REG_XMM1, REG_XMM1);									// pxor	xmm1,xmm1
 					_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movsd xmm0,[fsreg]
@@ -5318,7 +5318,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 				
 			case 0x38:		/* NMSUB.S */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movss xmm0,[fsreg]
 					_mulss_r128_m32abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulss xmm0,[ftreg]
@@ -5338,7 +5338,7 @@ public class mips3drc
 				return RECOMPILE_SUCCESSFUL_CP(1,4);
 	
 			case 0x39:		/* NMSUB.D */
-				if (USE_SSE != 0)
+				if (USE_SSE)
 				{
 					_movsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FSREG]);						// movsd xmm0,[fsreg]
 					_mulsd_r128_m64abs(REG_XMM0, &mips3.cpr[1][FTREG]);						// mulsd xmm0,[ftreg]
@@ -5696,55 +5696,55 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
-			case CPU_INFO_REG+MIPS3_PC:  	sprintf(buffer[which], "PC: %08X", r.pc); break;
-			case CPU_INFO_REG+MIPS3_SR:  	sprintf(buffer[which], "SR: %08X", (UINT32)r.cpr[0][COP0_Status]); break;
-			case CPU_INFO_REG+MIPS3_EPC:  	sprintf(buffer[which], "EPC:%08X", (UINT32)r.cpr[0][COP0_EPC]); break;
-			case CPU_INFO_REG+MIPS3_CAUSE: 	sprintf(buffer[which], "Cause:%08X", (UINT32)r.cpr[0][COP0_Cause]); break;
+			case CPU_INFO_REG+MIPS3_PC:  	sprintf(buffer[which], "PC: %08X", r->pc); break;
+			case CPU_INFO_REG+MIPS3_SR:  	sprintf(buffer[which], "SR: %08X", (UINT32)r->cpr[0][COP0_Status]); break;
+			case CPU_INFO_REG+MIPS3_EPC:  	sprintf(buffer[which], "EPC:%08X", (UINT32)r->cpr[0][COP0_EPC]); break;
+			case CPU_INFO_REG+MIPS3_CAUSE: 	sprintf(buffer[which], "Cause:%08X", (UINT32)r->cpr[0][COP0_Cause]); break;
 			case CPU_INFO_REG+MIPS3_COUNT: 	sprintf(buffer[which], "Count:%08X", (UINT32)((activecpu_gettotalcycles64() - mips3.count_zero_time) / 2)); break;
-			case CPU_INFO_REG+MIPS3_COMPARE:sprintf(buffer[which], "Compare:%08X", (UINT32)r.cpr[0][COP0_Compare]); break;
+			case CPU_INFO_REG+MIPS3_COMPARE:sprintf(buffer[which], "Compare:%08X", (UINT32)r->cpr[0][COP0_Compare]); break;
 	
-			case CPU_INFO_REG+MIPS3_R0:		sprintf(buffer[which], "R0: %08X%08X", (UINT32)(r.r[0] >> 32), (UINT32)r.r[0]); break;
-			case CPU_INFO_REG+MIPS3_R1:		sprintf(buffer[which], "R1: %08X%08X", (UINT32)(r.r[1] >> 32), (UINT32)r.r[1]); break;
-			case CPU_INFO_REG+MIPS3_R2:		sprintf(buffer[which], "R2: %08X%08X", (UINT32)(r.r[2] >> 32), (UINT32)r.r[2]); break;
-			case CPU_INFO_REG+MIPS3_R3:		sprintf(buffer[which], "R3: %08X%08X", (UINT32)(r.r[3] >> 32), (UINT32)r.r[3]); break;
-			case CPU_INFO_REG+MIPS3_R4:		sprintf(buffer[which], "R4: %08X%08X", (UINT32)(r.r[4] >> 32), (UINT32)r.r[4]); break;
-			case CPU_INFO_REG+MIPS3_R5:		sprintf(buffer[which], "R5: %08X%08X", (UINT32)(r.r[5] >> 32), (UINT32)r.r[5]); break;
-			case CPU_INFO_REG+MIPS3_R6:		sprintf(buffer[which], "R6: %08X%08X", (UINT32)(r.r[6] >> 32), (UINT32)r.r[6]); break;
-			case CPU_INFO_REG+MIPS3_R7:		sprintf(buffer[which], "R7: %08X%08X", (UINT32)(r.r[7] >> 32), (UINT32)r.r[7]); break;
-			case CPU_INFO_REG+MIPS3_R8:		sprintf(buffer[which], "R8: %08X%08X", (UINT32)(r.r[8] >> 32), (UINT32)r.r[8]); break;
-			case CPU_INFO_REG+MIPS3_R9:		sprintf(buffer[which], "R9: %08X%08X", (UINT32)(r.r[9] >> 32), (UINT32)r.r[9]); break;
-			case CPU_INFO_REG+MIPS3_R10:	sprintf(buffer[which], "R10:%08X%08X", (UINT32)(r.r[10] >> 32), (UINT32)r.r[10]); break;
-			case CPU_INFO_REG+MIPS3_R11:	sprintf(buffer[which], "R11:%08X%08X", (UINT32)(r.r[11] >> 32), (UINT32)r.r[11]); break;
-			case CPU_INFO_REG+MIPS3_R12:	sprintf(buffer[which], "R12:%08X%08X", (UINT32)(r.r[12] >> 32), (UINT32)r.r[12]); break;
-			case CPU_INFO_REG+MIPS3_R13:	sprintf(buffer[which], "R13:%08X%08X", (UINT32)(r.r[13] >> 32), (UINT32)r.r[13]); break;
-			case CPU_INFO_REG+MIPS3_R14:	sprintf(buffer[which], "R14:%08X%08X", (UINT32)(r.r[14] >> 32), (UINT32)r.r[14]); break;
-			case CPU_INFO_REG+MIPS3_R15:	sprintf(buffer[which], "R15:%08X%08X", (UINT32)(r.r[15] >> 32), (UINT32)r.r[15]); break;
-			case CPU_INFO_REG+MIPS3_R16:	sprintf(buffer[which], "R16:%08X%08X", (UINT32)(r.r[16] >> 32), (UINT32)r.r[16]); break;
-			case CPU_INFO_REG+MIPS3_R17:	sprintf(buffer[which], "R17:%08X%08X", (UINT32)(r.r[17] >> 32), (UINT32)r.r[17]); break;
-			case CPU_INFO_REG+MIPS3_R18:	sprintf(buffer[which], "R18:%08X%08X", (UINT32)(r.r[18] >> 32), (UINT32)r.r[18]); break;
-			case CPU_INFO_REG+MIPS3_R19:	sprintf(buffer[which], "R19:%08X%08X", (UINT32)(r.r[19] >> 32), (UINT32)r.r[19]); break;
-			case CPU_INFO_REG+MIPS3_R20:	sprintf(buffer[which], "R20:%08X%08X", (UINT32)(r.r[20] >> 32), (UINT32)r.r[20]); break;
-			case CPU_INFO_REG+MIPS3_R21:	sprintf(buffer[which], "R21:%08X%08X", (UINT32)(r.r[21] >> 32), (UINT32)r.r[21]); break;
-			case CPU_INFO_REG+MIPS3_R22:	sprintf(buffer[which], "R22:%08X%08X", (UINT32)(r.r[22] >> 32), (UINT32)r.r[22]); break;
-			case CPU_INFO_REG+MIPS3_R23:	sprintf(buffer[which], "R23:%08X%08X", (UINT32)(r.r[23] >> 32), (UINT32)r.r[23]); break;
-			case CPU_INFO_REG+MIPS3_R24:	sprintf(buffer[which], "R24:%08X%08X", (UINT32)(r.r[24] >> 32), (UINT32)r.r[24]); break;
-			case CPU_INFO_REG+MIPS3_R25:	sprintf(buffer[which], "R25:%08X%08X", (UINT32)(r.r[25] >> 32), (UINT32)r.r[25]); break;
-			case CPU_INFO_REG+MIPS3_R26:	sprintf(buffer[which], "R26:%08X%08X", (UINT32)(r.r[26] >> 32), (UINT32)r.r[26]); break;
-			case CPU_INFO_REG+MIPS3_R27:	sprintf(buffer[which], "R27:%08X%08X", (UINT32)(r.r[27] >> 32), (UINT32)r.r[27]); break;
-			case CPU_INFO_REG+MIPS3_R28:	sprintf(buffer[which], "R28:%08X%08X", (UINT32)(r.r[28] >> 32), (UINT32)r.r[28]); break;
-			case CPU_INFO_REG+MIPS3_R29:	sprintf(buffer[which], "R29:%08X%08X", (UINT32)(r.r[29] >> 32), (UINT32)r.r[29]); break;
-			case CPU_INFO_REG+MIPS3_R30:	sprintf(buffer[which], "R30:%08X%08X", (UINT32)(r.r[30] >> 32), (UINT32)r.r[30]); break;
-			case CPU_INFO_REG+MIPS3_R31:	sprintf(buffer[which], "R31:%08X%08X", (UINT32)(r.r[31] >> 32), (UINT32)r.r[31]); break;
-			case CPU_INFO_REG+MIPS3_HI:		sprintf(buffer[which], "HI: %08X%08X", (UINT32)(r.hi >> 32), (UINT32)r.hi); break;
-			case CPU_INFO_REG+MIPS3_LO:		sprintf(buffer[which], "LO: %08X%08X", (UINT32)(r.lo >> 32), (UINT32)r.lo); break;
+			case CPU_INFO_REG+MIPS3_R0:		sprintf(buffer[which], "R0: %08X%08X", (UINT32)(r->r[0] >> 32), (UINT32)r->r[0]); break;
+			case CPU_INFO_REG+MIPS3_R1:		sprintf(buffer[which], "R1: %08X%08X", (UINT32)(r->r[1] >> 32), (UINT32)r->r[1]); break;
+			case CPU_INFO_REG+MIPS3_R2:		sprintf(buffer[which], "R2: %08X%08X", (UINT32)(r->r[2] >> 32), (UINT32)r->r[2]); break;
+			case CPU_INFO_REG+MIPS3_R3:		sprintf(buffer[which], "R3: %08X%08X", (UINT32)(r->r[3] >> 32), (UINT32)r->r[3]); break;
+			case CPU_INFO_REG+MIPS3_R4:		sprintf(buffer[which], "R4: %08X%08X", (UINT32)(r->r[4] >> 32), (UINT32)r->r[4]); break;
+			case CPU_INFO_REG+MIPS3_R5:		sprintf(buffer[which], "R5: %08X%08X", (UINT32)(r->r[5] >> 32), (UINT32)r->r[5]); break;
+			case CPU_INFO_REG+MIPS3_R6:		sprintf(buffer[which], "R6: %08X%08X", (UINT32)(r->r[6] >> 32), (UINT32)r->r[6]); break;
+			case CPU_INFO_REG+MIPS3_R7:		sprintf(buffer[which], "R7: %08X%08X", (UINT32)(r->r[7] >> 32), (UINT32)r->r[7]); break;
+			case CPU_INFO_REG+MIPS3_R8:		sprintf(buffer[which], "R8: %08X%08X", (UINT32)(r->r[8] >> 32), (UINT32)r->r[8]); break;
+			case CPU_INFO_REG+MIPS3_R9:		sprintf(buffer[which], "R9: %08X%08X", (UINT32)(r->r[9] >> 32), (UINT32)r->r[9]); break;
+			case CPU_INFO_REG+MIPS3_R10:	sprintf(buffer[which], "R10:%08X%08X", (UINT32)(r->r[10] >> 32), (UINT32)r->r[10]); break;
+			case CPU_INFO_REG+MIPS3_R11:	sprintf(buffer[which], "R11:%08X%08X", (UINT32)(r->r[11] >> 32), (UINT32)r->r[11]); break;
+			case CPU_INFO_REG+MIPS3_R12:	sprintf(buffer[which], "R12:%08X%08X", (UINT32)(r->r[12] >> 32), (UINT32)r->r[12]); break;
+			case CPU_INFO_REG+MIPS3_R13:	sprintf(buffer[which], "R13:%08X%08X", (UINT32)(r->r[13] >> 32), (UINT32)r->r[13]); break;
+			case CPU_INFO_REG+MIPS3_R14:	sprintf(buffer[which], "R14:%08X%08X", (UINT32)(r->r[14] >> 32), (UINT32)r->r[14]); break;
+			case CPU_INFO_REG+MIPS3_R15:	sprintf(buffer[which], "R15:%08X%08X", (UINT32)(r->r[15] >> 32), (UINT32)r->r[15]); break;
+			case CPU_INFO_REG+MIPS3_R16:	sprintf(buffer[which], "R16:%08X%08X", (UINT32)(r->r[16] >> 32), (UINT32)r->r[16]); break;
+			case CPU_INFO_REG+MIPS3_R17:	sprintf(buffer[which], "R17:%08X%08X", (UINT32)(r->r[17] >> 32), (UINT32)r->r[17]); break;
+			case CPU_INFO_REG+MIPS3_R18:	sprintf(buffer[which], "R18:%08X%08X", (UINT32)(r->r[18] >> 32), (UINT32)r->r[18]); break;
+			case CPU_INFO_REG+MIPS3_R19:	sprintf(buffer[which], "R19:%08X%08X", (UINT32)(r->r[19] >> 32), (UINT32)r->r[19]); break;
+			case CPU_INFO_REG+MIPS3_R20:	sprintf(buffer[which], "R20:%08X%08X", (UINT32)(r->r[20] >> 32), (UINT32)r->r[20]); break;
+			case CPU_INFO_REG+MIPS3_R21:	sprintf(buffer[which], "R21:%08X%08X", (UINT32)(r->r[21] >> 32), (UINT32)r->r[21]); break;
+			case CPU_INFO_REG+MIPS3_R22:	sprintf(buffer[which], "R22:%08X%08X", (UINT32)(r->r[22] >> 32), (UINT32)r->r[22]); break;
+			case CPU_INFO_REG+MIPS3_R23:	sprintf(buffer[which], "R23:%08X%08X", (UINT32)(r->r[23] >> 32), (UINT32)r->r[23]); break;
+			case CPU_INFO_REG+MIPS3_R24:	sprintf(buffer[which], "R24:%08X%08X", (UINT32)(r->r[24] >> 32), (UINT32)r->r[24]); break;
+			case CPU_INFO_REG+MIPS3_R25:	sprintf(buffer[which], "R25:%08X%08X", (UINT32)(r->r[25] >> 32), (UINT32)r->r[25]); break;
+			case CPU_INFO_REG+MIPS3_R26:	sprintf(buffer[which], "R26:%08X%08X", (UINT32)(r->r[26] >> 32), (UINT32)r->r[26]); break;
+			case CPU_INFO_REG+MIPS3_R27:	sprintf(buffer[which], "R27:%08X%08X", (UINT32)(r->r[27] >> 32), (UINT32)r->r[27]); break;
+			case CPU_INFO_REG+MIPS3_R28:	sprintf(buffer[which], "R28:%08X%08X", (UINT32)(r->r[28] >> 32), (UINT32)r->r[28]); break;
+			case CPU_INFO_REG+MIPS3_R29:	sprintf(buffer[which], "R29:%08X%08X", (UINT32)(r->r[29] >> 32), (UINT32)r->r[29]); break;
+			case CPU_INFO_REG+MIPS3_R30:	sprintf(buffer[which], "R30:%08X%08X", (UINT32)(r->r[30] >> 32), (UINT32)r->r[30]); break;
+			case CPU_INFO_REG+MIPS3_R31:	sprintf(buffer[which], "R31:%08X%08X", (UINT32)(r->r[31] >> 32), (UINT32)r->r[31]); break;
+			case CPU_INFO_REG+MIPS3_HI:		sprintf(buffer[which], "HI: %08X%08X", (UINT32)(r->hi >> 32), (UINT32)r->hi); break;
+			case CPU_INFO_REG+MIPS3_LO:		sprintf(buffer[which], "LO: %08X%08X", (UINT32)(r->lo >> 32), (UINT32)r->lo); break;
 	
 			case CPU_INFO_NAME: return "MIPS III";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS III (big-endian)" : "MIPS III (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS III (big-endian)" : "MIPS III (little-endian)";
 			case CPU_INFO_VERSION: return "1.0";
 			case CPU_INFO_FILE: return __FILE__;
 			case CPU_INFO_CREDITS: return "Copyright (C) Aaron Giles 2000-2002";
@@ -5765,13 +5765,13 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
 			case CPU_INFO_NAME: return "R4600";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R4600 (big-endian)" : "MIPS R4600 (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R4600 (big-endian)" : "MIPS R4600 (little-endian)";
 			default: return mips3_info(context, regnum);
 	    }
 		return buffer[which];
@@ -5787,13 +5787,13 @@ public class mips3drc
 		which = (which + 1) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &mips3;
 	
 	    switch( regnum )
 		{
 			case CPU_INFO_NAME: return "R5000";
-			case CPU_INFO_FAMILY: return r.bigendian ? "MIPS R5000 (big-endian)" : "MIPS R5000 (little-endian)";
+			case CPU_INFO_FAMILY: return r->bigendian ? "MIPS R5000 (big-endian)" : "MIPS R5000 (little-endian)";
 			default: return mips3_info(context, regnum);
 	    }
 		return buffer[which];

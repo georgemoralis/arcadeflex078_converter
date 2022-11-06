@@ -9,7 +9,7 @@ Additional tweaking by Jarek Burczynski
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,8 @@ public class magmax
 	
 	static void bhpl_8_nd(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b.line[y])[x]);
-		while(w-.0)
+		UINT8* lineadr = &(((UINT8*)b->line[y])[x]);
+		while(w-->0)
 		{
 			*lineadr++ = (UINT8)(*pens);
 			pens++;
@@ -39,8 +39,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fx(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b.line[y])[b.width-1-x]);
-		while(w-.0)
+		UINT8* lineadr = &(((UINT8*)b->line[y])[b->width-1-x]);
+		while(w-->0)
 		{
 			*lineadr-- = (UINT8)(*pens);
 			pens++;
@@ -48,8 +48,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b.line[b.height-1-y])[x]);
-		while(w-.0)
+		UINT8* lineadr = &(((UINT8*)b->line[b->height-1-y])[x]);
+		while(w-->0)
 		{
 			*lineadr++ = (UINT8)(*pens);
 			pens++;
@@ -57,8 +57,8 @@ public class magmax
 	}
 	static void bhpl_8_nd_fxy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT8* lineadr = &(((UINT8*)b.line[b.height-1-y])[b.width-1-x]);
-		while(w-.0)
+		UINT8* lineadr = &(((UINT8*)b->line[b->height-1-y])[b->width-1-x]);
+		while(w-->0)
 		{
 			*lineadr-- = (UINT8)(*pens);
 			pens++;
@@ -66,45 +66,45 @@ public class magmax
 	}
 	static void bhpl_8_nd_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		while(w-.0)
+		while(w-->0)
 		{
-			((UINT8 *)b.line[x++])[y] = (UINT8)(*pens);
+			((UINT8 *)b->line[x++])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fx_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		y = b.width-1-y;
-		while(w-.0)
+		y = b->width-1-y;
+		while(w-->0)
 		{
-			((UINT8 *)b.line[x++])[y] = (UINT8)(*pens);
+			((UINT8 *)b->line[x++])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b.height-1-x;
-		while(w-.0)
+		x = b->height-1-x;
+		while(w-->0)
 		{
-			((UINT8 *)b.line[x--])[y] = (UINT8)(*pens);
+			((UINT8 *)b->line[x--])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_8_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b.height-1-x;
-		y = b.width-1-y;
-		while(w-.0)
+		x = b->height-1-x;
+		y = b->width-1-y;
+		while(w-->0)
 		{
-			((UINT8 *)b.line[x--])[y] = (UINT8)(*pens);
+			((UINT8 *)b->line[x--])[y] = (UINT8)(*pens);
 			pens++;
 		}
 	}
 	
 	static void bhpl_16_nd(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b.line[y])[x]);
-		while(w-.0)
+		UINT16* lineadr = &(((UINT16*)b->line[y])[x]);
+		while(w-->0)
 		{
 			*lineadr++ = (UINT16)(*pens);
 			pens++;
@@ -112,8 +112,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fx(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b.line[y])[b.width-1-x]);
-		while(w-.0)
+		UINT16* lineadr = &(((UINT16*)b->line[y])[b->width-1-x]);
+		while(w-->0)
 		{
 			*lineadr-- = (UINT16)(*pens);
 			pens++;
@@ -121,8 +121,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b.line[b.height-1-y])[x]);
-		while(w-.0)
+		UINT16* lineadr = &(((UINT16*)b->line[b->height-1-y])[x]);
+		while(w-->0)
 		{
 			*lineadr++ = (UINT16)(*pens);
 			pens++;
@@ -130,8 +130,8 @@ public class magmax
 	}
 	static void bhpl_16_nd_fxy(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		UINT16* lineadr = &(((UINT16*)b.line[b.height-1-y])[b.width-1-x]);
-		while(w-.0)
+		UINT16* lineadr = &(((UINT16*)b->line[b->height-1-y])[b->width-1-x]);
+		while(w-->0)
 		{
 			*lineadr-- = (UINT16)(*pens);
 			pens++;
@@ -139,37 +139,37 @@ public class magmax
 	}
 	static void bhpl_16_nd_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		while(w-.0)
+		while(w-->0)
 		{
-			((UINT16*)b.line[x++])[y] = (UINT16)(*pens);
+			((UINT16*)b->line[x++])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fx_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		y = b.width-1-y;
-		while(w-.0)
+		y = b->width-1-y;
+		while(w-->0)
 		{
-			((UINT16*)b.line[x++])[y] = (UINT16)(*pens);
+			((UINT16*)b->line[x++])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b.height-1-x;
-		while(w-.0)
+		x = b->height-1-x;
+		while(w-->0)
 		{
-			((UINT16*)b.line[x--])[y] = (UINT16)(*pens);
+			((UINT16*)b->line[x--])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
 	static void bhpl_16_nd_fxy_s(struct mame_bitmap *b,int x,int y,int w, UINT32* pens)
 	{
-		x = b.height-1-x;
-		y = b.width-1-y;
-		while(w-.0)
+		x = b->height-1-x;
+		y = b->width-1-y;
+		while(w-->0)
 		{
-			((UINT16*)b.line[x--])[y] = (UINT16)(*pens);
+			((UINT16*)b->line[x--])[y] = (UINT16)(*pens);
 			pens++;
 		}
 	}
@@ -184,13 +184,13 @@ public class magmax
 	
 	static void set_custom_blit(void)
 	{
-		if (Machine.color_depth == 8)
+		if (Machine->color_depth == 8)
 		{
-			blit_horiz_pixel_line = bhpls_8_nd[Machine.orientation];
+			blit_horiz_pixel_line = bhpls_8_nd[Machine->orientation];
 		}
 		else
 		{
-			blit_horiz_pixel_line = bhpls_16_nd[Machine.orientation];
+			blit_horiz_pixel_line = bhpls_16_nd[Machine->orientation];
 		}
 	}
 	
@@ -207,8 +207,7 @@ public class magmax
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_magmax  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_magmax  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn, offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -252,8 +251,7 @@ public class magmax
 	
 	} };
 	
-	public static VideoStartHandlerPtr video_start_magmax  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_magmax  = new VideoStartHandlerPtr() { public int handler(){
 		int i,v;
 		unsigned char * prom14D = memory_region(REGION_USER2);
 	
@@ -277,8 +275,7 @@ public class magmax
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_magmax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_magmax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		/* bit 2 flip screen */
@@ -288,7 +285,7 @@ public class magmax
 		}
 	
 		/* copy the background graphics */
-		if ((magmax_vreg & 0x40) != 0)		/* background disable */
+		if (magmax_vreg & 0x40)		/* background disable */
 		{
 			fillbitmap(bitmap, Machine.pens[0], Machine.visible_area);
 		}
@@ -311,7 +308,7 @@ public class magmax
 	
 				pen_t *pens = Machine.pens[2*16 + (map_v_scr_100>>1)];
 	
-				if (map_v_scr_100 == 0)
+				if (!map_v_scr_100)
 				{
 					/* we are drawing surface */
 					for (h = 0; h < 0x80; h++)
@@ -345,7 +342,7 @@ public class magmax
 						/* not possible on the surface*/
 						//if ((map_v_scr_100) && ((graph_data & 0x0c)==0x0c))
 						//{
-						//	plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
+						//	plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						//}
 					}
 					for (h = 0x80; h < 0x100; h++)
@@ -379,7 +376,7 @@ public class magmax
 						/* not possible on the surface*/
 						//if ((map_v_scr_100) && ((graph_data & 0x0c)==0x0c))
 						//{
-						//	plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
+						//	plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						//}
 					}
 				}
@@ -416,7 +413,7 @@ public class magmax
 						/*priority: background over sprites*/
 						if (/*(map_v_scr_100) &&*/ ((graph_data & 0x0c)==0x0c))
 						{
-							plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
+							plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						}
 					}
 					for (h = 0x80; h < 0x100; h++)
@@ -449,12 +446,12 @@ public class magmax
 						/*priority: background over sprites*/
 						if (/*(map_v_scr_100) &&*/ ((graph_data & 0x0c)==0x0c))
 						{
-							plot_pixel.handler(tmpbitmap,h,v,pens[graph_color + graph_data] );
+							plot_pixel(tmpbitmap,h,v,pens[graph_color + graph_data] );
 						}
 					}
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					int i;
 					UINT32 pens_line_tab_flipped[256];
@@ -473,7 +470,7 @@ public class magmax
 			int sx, sy;
 	
 			sy = spriteram16[offs] & 0xff;
-			if (sy != 0)
+			if (sy)
 			{
 				int code = spriteram16[offs + 1] & 0xff;
 				int attr = spriteram16[offs + 2] & 0xff;
@@ -484,7 +481,7 @@ public class magmax
 				sx = (spriteram16[offs + 3] & 0xff) - 0x80 + 0x100 * (attr & 0x01);
 				sy = 239 - sy;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 255-16 - sx;
 					sy = 239 - sy;
@@ -492,7 +489,7 @@ public class magmax
 					flipy = NOT(flipy);
 				}
 	
-				if ((code & 0x80) != 0)	/* sprite bankswitch */
+				if (code & 0x80)	/* sprite bankswitch */
 				{
 					code += (magmax_vreg & 0x30) * 0x8;
 				}
@@ -518,12 +515,12 @@ public class magmax
 			int code;
 	
 			code = videoram16[offs /*+ page*/] & 0xff;
-			if (code != 0)
+			if (code)
 			{
 				int sx = (offs % 32);
 				int sy = (offs / 32);
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

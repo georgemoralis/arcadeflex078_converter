@@ -26,7 +26,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,7 +43,7 @@ public class m90
 	{
 		data8_t *rom = memory_region(REGION_USER1);
 	
-		if (rom == 0)
+		if (!rom)
 			usrintf_showmessage("bankswitch with no banked ROM!");
 		else
 			cpu_setbank(1,rom + bankaddress);
@@ -51,19 +51,17 @@ public class m90
 	
 	/***************************************************************************/
 	
-	public static WriteHandlerPtr m90_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m90_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0)
 		{
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
 	
-			if ((data & 0xfe) != 0) logerror("Coin counter %02x\n",data);
+			if (data&0xfe) logerror("Coin counter %02x\n",data);
 		}
 	} };
 	
-	public static WriteHandlerPtr quizf1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizf1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			bankaddress = 0x10000 * (data & 0x0f);
@@ -194,7 +192,7 @@ public class m90
 	/*****************************************************************************/
 	
 	
-	static InputPortPtr input_ports_hasamu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hasamu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hasamu )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_COINS
@@ -242,7 +240,7 @@ public class m90
 	//	IREM_COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dynablst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dynablst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dynablst )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_COINS
@@ -290,7 +288,7 @@ public class m90
 		IREM_JOYSTICK_3_4(4)
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bombrman = new InputPortPtr(){ public void handler() {  /* Does not appear to support 4 players or cocktail mode */
+	static InputPortPtr input_ports_bombrman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bombrman ) /* Does not appear to support 4 players or cocktail mode */
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_COINS
@@ -336,7 +334,7 @@ public class m90
 	//	IREM_COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bbmanw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bbmanw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bbmanw )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_COINS
@@ -384,7 +382,7 @@ public class m90
 		IREM_JOYSTICK_3_4(4)
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_quizf1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizf1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizf1 )
 		PORT_START(); 
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -447,7 +445,7 @@ public class m90
 	//	IREM_COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_m97 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_m97 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( m97 )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_COINS
@@ -544,15 +542,13 @@ public class m90
 		{ 60 }
 	};
 	
-	public static InterruptHandlerPtr m90_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr m90_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x60/4);
 	} };
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_m90 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( m90 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -584,23 +580,17 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_quizf1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizf1 )
 	
 		MDRV_IMPORT_FROM( m90 )
 		MDRV_VISIBLE_AREA(6*8, 54*8-1, 17*8-8, 47*8-1+8)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bombrman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bombrman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -631,13 +621,10 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bbmanw = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bbmanw )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 8 MHz ??????? */
@@ -668,13 +655,10 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bootleg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bootleg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz */
@@ -705,9 +689,7 @@ public class m90
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -926,33 +908,28 @@ public class m90
 	
 	
 	
-	public static DriverInitHandlerPtr init_hasamu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hasamu  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,gunforce_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_bombrman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bombrman  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,bomberman_decryption_table);
 	} };
 	
 	/* Bomberman World executes encrypted code from RAM! */
-	static WRITE_HANDLER (bbmanw_ram_write)
-	{
+	public static WriteHandlerPtr bbmanw_ram_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		RAM[0x0a0c00+offset]=data;
 		RAM[0x1a0c00+offset]=dynablaster_decryption_table[data];
-	}
+	} };
 	
-	public static DriverInitHandlerPtr init_bbmanw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bbmanw  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,dynablaster_decryption_table);
 	
 		install_mem_write_handler(0, 0xa0c00, 0xa0cff, bbmanw_ram_write);
 	} };
 	
-	public static DriverInitHandlerPtr init_quizf1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_quizf1  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,lethalth_decryption_table);
 	
 		bankaddress = 0;
@@ -962,27 +939,25 @@ public class m90
 		state_save_register_func_postload(set_m90_bank);
 	} };
 	
-	public static DriverInitHandlerPtr init_riskchal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_riskchal  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,gussun_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_shisen2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shisen2  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,shisen2_decryption_table);
 	} };
 	
 	
 	
-	public static GameDriver driver_hasamu	   = new GameDriver("1991"	,"hasamu"	,"m90.java"	,rom_hasamu,null	,machine_driver_m90	,input_ports_hasamu	,init_hasamu	,ROT0	,	"Irem", "Hasamu (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bbmanw	   = new GameDriver("1991"	,"bbmanw"	,"m90.java"	,rom_bbmanw,null	,machine_driver_bbmanw	,input_ports_bbmanw	,init_bbmanw	,ROT0	,	"Irem", "Bomber Man World (World)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_bbmanwj	   = new GameDriver("1991"	,"bbmanwj"	,"m90.java"	,rom_bbmanwj,driver_bbmanw	,machine_driver_bombrman	,input_ports_bbmanw	,init_bbmanw	,ROT0	,	"Irem", "Bomber Man World (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dynablst	   = new GameDriver("1992"	,"dynablst"	,"m90.java"	,rom_dynablst,null	,machine_driver_bombrman	,input_ports_dynablst	,init_bombrman	,ROT0	,	"Irem (licensed from Hudson Soft)", "Dynablaster (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bombrman	   = new GameDriver("1992"	,"bombrman"	,"m90.java"	,rom_bombrman,driver_dynablst	,machine_driver_bombrman	,input_ports_bombrman	,init_bombrman	,ROT0	,	"Irem (licensed from Hudson Soft)", "Bomberman (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dynablsb	   = new GameDriver("1992"	,"dynablsb"	,"m90.java"	,rom_dynablsb,driver_dynablst	,machine_driver_bootleg	,input_ports_bombrman	,null	,ROT0	,	"bootleg", "Dynablaster (bootleg)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_atompunk	   = new GameDriver("1992"	,"atompunk"	,"m90.java"	,rom_atompunk,driver_bbmanw	,machine_driver_bbmanw	,input_ports_bbmanw	,init_bbmanw	,ROT0	,	"Irem America", "New Atomic Punk - Global Quest (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_quizf1	   = new GameDriver("1992"	,"quizf1"	,"m90.java"	,rom_quizf1,null	,machine_driver_quizf1	,input_ports_quizf1	,init_quizf1	,ROT0	,	"Irem", "Quiz F-1 1,2finish", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_riskchal	   = new GameDriver("1993"	,"riskchal"	,"m90.java"	,rom_riskchal,null	,machine_driver_m90	,input_ports_m97	,init_riskchal	,ROT0	,	"Irem", "Risky Challenge", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_gussun	   = new GameDriver("1993"	,"gussun"	,"m90.java"	,rom_gussun,driver_riskchal	,machine_driver_m90	,input_ports_m97	,init_riskchal	,ROT0	,	"Irem", "Gussun Oyoyo (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_shisen2	   = new GameDriver("1993"	,"shisen2"	,"m90.java"	,rom_shisen2,null	,machine_driver_m90	,input_ports_m97	,init_shisen2	,ROT0	,	"Tamtex", "Shisensho II", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1991, hasamu,   0,        m90,      hasamu,   hasamu,   ROT0, "Irem", "Hasamu (Japan)", GAME_NO_COCKTAIL )
+	GAMEX(1991, bbmanw,   0,        bbmanw,   bbmanw,   bbmanw,   ROT0, "Irem", "Bomber Man World (World)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX(1991, bbmanwj,  bbmanw,   bombrman, bbmanw,   bbmanw,   ROT0, "Irem", "Bomber Man World (Japan)", GAME_NO_COCKTAIL )
+	GAMEX(1992, dynablst, 0,        bombrman, dynablst, bombrman, ROT0, "Irem (licensed from Hudson Soft)", "Dynablaster (World)", GAME_NO_COCKTAIL )
+	GAMEX(1992, bombrman, dynablst, bombrman, bombrman, bombrman, ROT0, "Irem (licensed from Hudson Soft)", "Bomberman (Japan)", GAME_NO_COCKTAIL )
+	GAMEX(1992, dynablsb, dynablst, bootleg,  bombrman, 0,        ROT0, "bootleg", "Dynablaster (bootleg)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1992, atompunk, bbmanw,   bbmanw,   bbmanw,   bbmanw,   ROT0, "Irem America", "New Atomic Punk - Global Quest (US)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX(1992, quizf1,   0,        quizf1,   quizf1,   quizf1,   ROT0, "Irem", "Quiz F-1 1,2finish", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL )
+	GAMEX(1993, riskchal, 0,        m90,      m97,      riskchal, ROT0, "Irem", "Risky Challenge", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1993, gussun,   riskchal, m90,      m97,      riskchal, ROT0, "Irem", "Gussun Oyoyo (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1993, shisen2,  0,        m90,      m97,      shisen2,  ROT0, "Tamtex", "Shisensho II", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 }

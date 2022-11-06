@@ -43,7 +43,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -92,8 +92,7 @@ public class cave
 	}
 	
 	/* Called once/frame to generate the VBLANK interrupt */
-	public static InterruptHandlerPtr cave_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cave_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_USEC(17376-time_vblank_irq), 0, cave_vblank_start);
 		timer_set(TIME_IN_USEC(17376-time_vblank_irq + 2000), 0, cave_vblank_end);
 	} };
@@ -108,15 +107,15 @@ public class cave
 	
 	/*	Level 1 irq routines:
 	
-		Game		|first read	| bit==0.routine +	|
+		Game		|first read	| bit==0->routine +	|
 					|offset:	| read this offset	|
 	
-		ddonpach	4,0			0 . vblank + 4		1 . rte	2 . like 0		read sound
-		dfeveron	0			0 . vblank + 4		1 . + 6	-				read sound
-		uopoko		0			0 . vblank + 4		1 . + 6	-				read sound
-		esprade		0			0 . vblank + 4		1 . rte	2 must be 0		read sound
-		guwange		0			0 . vblank + 6,4	1 . + 6,4	2 must be 0		read sound
-		mazinger	0			0 . vblank + 4		rest . scroll + 6
+		ddonpach	4,0			0 -> vblank + 4		1 -> rte	2 -> like 0		read sound
+		dfeveron	0			0 -> vblank + 4		1 -> + 6	-				read sound
+		uopoko		0			0 -> vblank + 4		1 -> + 6	-				read sound
+		esprade		0			0 -> vblank + 4		1 -> rte	2 must be 0		read sound
+		guwange		0			0 -> vblank + 6,4	1 -> + 6,4	2 must be 0		read sound
+		mazinger	0			0 -> vblank + 4		rest -> scroll + 6
 	*/
 	
 	
@@ -126,8 +125,8 @@ public class cave
 	{
 		int result = 0x0003;
 	
-		if (vblank_irq != 0)		result ^= 0x01;
-		if (unknown_irq != 0)	result ^= 0x02;
+		if (vblank_irq)		result ^= 0x01;
+		if (unknown_irq)	result ^= 0x02;
 	
 		if (offset == 4/2)	vblank_irq = 0;
 		if (offset == 6/2)	unknown_irq = 0;
@@ -135,7 +134,7 @@ public class cave
 		update_irq_state();
 	
 	/*
-		sailormn and agallet wait for bit 2 of $b80001 to go 1 . 0.
+		sailormn and agallet wait for bit 2 of $b80001 to go 1 -> 0.
 		It must happen once per frame as agallet uses this to show
 		the copyright notice screen for ~8.5s
 	*/
@@ -167,8 +166,7 @@ public class cave
 	
 	//static data8_t sound_flag1, sound_flag2;
 	
-	public static ReadHandlerPtr soundflags_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundflags_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// bit 2 is low: can read command (lo)
 		// bit 3 is low: can read command (hi)
 	//	return	(sound_flag1 ? 0 : 4) |
@@ -197,15 +195,13 @@ public class cave
 	}
 	
 	/* Sound CPU: read the low 8 bits of the 16 bit sound latch */
-	public static ReadHandlerPtr soundlatch_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundlatch_lo_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	sound_flag1 = 0;
 		return soundlatch_word_r(offset,0) & 0xff;
 	} };
 	
 	/* Sound CPU: read the high 8 bits of the 16 bit sound latch */
-	public static ReadHandlerPtr soundlatch_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundlatch_hi_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	sound_flag2 = 0;
 		return soundlatch_word_r(offset,0) >> 8;
 	} };
@@ -227,8 +223,7 @@ public class cave
 	
 	
 	/* Sound CPU: write latch for the main CPU (acknowledge) */
-	public static WriteHandlerPtr soundlatch_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundlatch_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundbuf.data[soundbuf.len] = data;
 		if (soundbuf.len<32)
 			soundbuf.len++;
@@ -241,9 +236,9 @@ public class cave
 	/* Handles writes to the YMZ280B */
 	static WRITE16_HANDLER( cave_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if (offset != 0)	YMZ280B_data_0_w     (offset, data & 0xff);
+			if (offset)	YMZ280B_data_0_w     (offset, data & 0xff);
 			else		YMZ280B_register_0_w (offset, data & 0xff);
 		}
 	}
@@ -293,7 +288,7 @@ public class cave
 		if (data & ~0xfe00)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_MSB != 0)  // even address
+		if ( ACCESSING_MSB )  // even address
 		{
 			coin_lockout_w(1,~data & 0x8000);
 			coin_lockout_w(0,~data & 0x4000);
@@ -319,7 +314,7 @@ public class cave
 	
 	WRITE16_HANDLER( hotdogst_eeprom_msb_w )
 	{
-		if (ACCESSING_MSB != 0)  // even address
+		if ( ACCESSING_MSB )  // even address
 		{
 			// latch the bit
 			EEPROM_write_bit(data & 0x0800);
@@ -337,7 +332,7 @@ public class cave
 		if (data & ~0x00ef)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_LSB != 0)  // odd address
+		if ( ACCESSING_LSB )  // odd address
 		{
 			coin_lockout_w(1,~data & 0x0008);
 			coin_lockout_w(0,~data & 0x0004);
@@ -358,7 +353,7 @@ public class cave
 	/*	- No eeprom or lockouts */
 	WRITE16_HANDLER( gaia_coin_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)  // odd address
+		if ( ACCESSING_LSB )  // odd address
 		{
 			coin_counter_w(1, data & 0x0002);
 			coin_counter_w(0, data & 0x0001);
@@ -372,7 +367,7 @@ public class cave
 		if (data & ~0xff00)
 			logerror("CPU #0 PC: %06X - Unknown EEPROM bit written %04X\n",activecpu_get_pc(),data);
 	
-		if (ACCESSING_MSB != 0)  // even address
+		if ( ACCESSING_MSB )  // even address
 		{
 			coin_counter_w(1, data & 0x2000);
 			coin_counter_w(0, data & 0x1000);
@@ -391,18 +386,17 @@ public class cave
 		}
 	}
 	
-	public static NVRAMHandlerPtr nvram_handler_cave  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_cave  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C46);
 	
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 			else
 			{
-				if (cave_default_eeprom != 0)	/* Set the EEPROM to Factory Defaults */
+				if (cave_default_eeprom)	/* Set the EEPROM to Factory Defaults */
 					EEPROM_set_data(cave_default_eeprom,cave_default_eeprom_length);
 			}
 		}
@@ -530,9 +524,9 @@ public class cave
 	
 	static WRITE16_HANDLER( nmk_oki6295_bankswitch_w )
 	{
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* The OKI6295 ROM space is divided in four banks, each one indepentently
 			   controlled. The sample table at the beginning of the addressing space is
@@ -1054,8 +1048,7 @@ public class cave
 									Hotdog Storm
 	***************************************************************************/
 	
-	public static WriteHandlerPtr hotdogst_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hotdogst_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU2);
 		int bank = data & 0x0f;
 		if ( data & ~0x0f )	logerror("CPU #1 - PC %04X: Bank %02X\n",activecpu_get_pc(),data);
@@ -1063,12 +1056,11 @@ public class cave
 		cpu_setbank(2, &RAM[ 0x4000 * bank ]);
 	} };
 	
-	public static WriteHandlerPtr hotdogst_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hotdogst_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0x3;
 		int bank2 = (data >> 4) & 0x3;
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1114,8 +1106,7 @@ public class cave
 									Mazinger Z
 	***************************************************************************/
 	
-	public static WriteHandlerPtr mazinger_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mazinger_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU2);
 		int bank = data & 0x07;
 		if ( data & ~0x07 )	logerror("CPU #1 - PC %04X: Bank %02X\n",activecpu_get_pc(),data);
@@ -1164,8 +1155,7 @@ public class cave
 									Metamoqester
 	***************************************************************************/
 	
-	public static WriteHandlerPtr metmqstr_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metmqstr_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU2);
 		int bank = data & 0xf;
 		if ( bank != data )	logerror("CPU #1 - PC %04X: Bank %02X\n",activecpu_get_pc(),data);
@@ -1173,22 +1163,20 @@ public class cave
 		cpu_setbank(1, &ROM[ 0x4000 * bank ]);
 	} };
 	
-	public static WriteHandlerPtr metmqstr_okibank0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metmqstr_okibank0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0x7;
 		int bank2 = (data >> 4) & 0x7;
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 		memcpy(ROM + 0x20000 * 0, ROM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(ROM + 0x20000 * 1, ROM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
 	
-	public static WriteHandlerPtr metmqstr_okibank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr metmqstr_okibank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_SOUND2);
 		int bank1 = (data >> 0) & 0x7;
 		int bank2 = (data >> 4) & 0x7;
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 		memcpy(ROM + 0x20000 * 0, ROM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(ROM + 0x20000 * 1, ROM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1236,8 +1224,7 @@ public class cave
 	***************************************************************************/
 	
 	// TODO : FIX SAMPLES TABLE BEING OVERWRITTEN IN DONPACHI
-	public static WriteHandlerPtr pwrinst2_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pwrinst2_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* The OKI6295 ROM space is divided in four banks, each one indepentently
 		   controlled. The sample table at the beginning of the addressing space is
 		   divided in four pages as well, banked together with the sample data. */
@@ -1253,7 +1240,7 @@ public class cave
 	
 		int bankaddr		=	data * BANKSIZE;
 	
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 	
 		if (bankaddr >= size)
 		{
@@ -1272,8 +1259,7 @@ public class cave
 		memcpy(rom,rom + 0x40000 + bankaddr,TABLESIZE);
 	} };
 	
-	public static WriteHandlerPtr pwrinst2_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pwrinst2_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *ROM = memory_region(REGION_CPU2);
 		int bank = data & 0x07;
 		if ( data & ~0x07 )	logerror("CPU #1 - PC %04X: Bank %02X\n",activecpu_get_pc(),data);
@@ -1327,17 +1313,14 @@ public class cave
 	***************************************************************************/
 	
 	static data8_t *mirror_ram;
-	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mirror_ram[offset];
 	} };
-	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mirror_ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr sailormn_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailormn_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU2);
 		int bank = data & 0x1f;
 		if ( data & ~0x1f )	logerror("CPU #1 - PC %04X: Bank %02X\n",activecpu_get_pc(),data);
@@ -1345,22 +1328,20 @@ public class cave
 		cpu_setbank(1, &RAM[ 0x4000 * bank ]);
 	} };
 	
-	public static WriteHandlerPtr sailormn_okibank0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailormn_okibank0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_SOUND1);
 		int bank1 = (data >> 0) & 0xf;
 		int bank2 = (data >> 4) & 0xf;
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
 	
-	public static WriteHandlerPtr sailormn_okibank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailormn_okibank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_SOUND2);
 		int bank1 = (data >> 0) & 0xf;
 		int bank2 = (data >> 4) & 0xf;
-		if (Machine.sample_rate == 0)	return;
+		if (Machine->sample_rate == 0)	return;
 		memcpy(RAM + 0x20000 * 0, RAM + 0x40000 + 0x20000 * bank1, 0x20000);
 		memcpy(RAM + 0x20000 * 1, RAM + 0x40000 + 0x20000 * bank2, 0x20000);
 	} };
@@ -1419,12 +1400,12 @@ public class cave
 	
 	/*
 		dfeveron config menu:
-		101624.w . 8,a6	preferences
-		101626.w . c,a6	(1:coin<<4|credit) <<8 | (2:coin<<4|credit)
+		101624.w -> 8,a6	preferences
+		101626.w -> c,a6	(1:coin<<4|credit) <<8 | (2:coin<<4|credit)
 	*/
 	
 	/* Most games use this */
-	static InputPortPtr input_ports_cave = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cave = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cave )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_PLAYER1 );
@@ -1465,7 +1446,7 @@ public class cave
 	INPUT_PORTS_END(); }}; 
 	
 	/* Gaia Crusaders, no EEPROM. Has DIPS */
-	static InputPortPtr input_ports_gaia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gaia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gaia )
 		PORT_START(); 	// IN0 - Player 1 + 2
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_PLAYER1 );
@@ -1552,7 +1533,7 @@ public class cave
 	INPUT_PORTS_END(); }}; 
 	
 	/* Mazinger Z (has region stored in Eeprom) */
-	static InputPortPtr input_ports_mazinger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mazinger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mazinger )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_PLAYER1 );
@@ -1598,7 +1579,7 @@ public class cave
 	INPUT_PORTS_END(); }}; 
 	
 	/* Sailor Moon / Air Gallet (has region stored in Eeprom) */
-	static InputPortPtr input_ports_sailormn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sailormn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sailormn )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_PLAYER1 );
@@ -1648,7 +1629,7 @@ public class cave
 	INPUT_PORTS_END(); }}; 
 	
 	/* Different layout */
-	static InputPortPtr input_ports_guwange = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_guwange = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( guwange )
 		PORT_START(); 	// IN0 - Player 1 & 2
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_START1  );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	 | IPF_PLAYER1 );
@@ -1689,7 +1670,7 @@ public class cave
 	INPUT_PORTS_END(); }}; 
 	
 	/* "normal" layout but with 4 buttons */
-	static InputPortPtr input_ports_metmqstr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metmqstr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metmqstr )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN	 | IPF_PLAYER1 );
@@ -1957,8 +1938,7 @@ public class cave
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_cave  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cave  = new MachineInitHandlerPtr() { public void handler(){
 		soundbuf.len = 0;
 	
 		/* modify the eeprom on a reset with the desired region for the games that have the
@@ -1968,8 +1948,7 @@ public class cave
 	} };
 	
 	/* start with the watchdog armed */
-	public static MachineInitHandlerPtr machine_init_cave_watchdog  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cave_watchdog  = new MachineInitHandlerPtr() { public void handler(){
 		machine_init_cave();
 		watchdog_reset16_w(0,0,0);
 	} };
@@ -2047,8 +2026,7 @@ public class cave
 									Dangun Feveron
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_dfeveron = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dfeveron )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2076,17 +2054,14 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Dodonpachi
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_ddonpach = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddonpach )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2114,17 +2089,14 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 										Donpachi
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_donpachi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( donpachi )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2152,17 +2124,14 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz_16kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Esprade
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_esprade = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( esprade )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2188,17 +2157,14 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 										Gaia Crusaders
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_gaia = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gaia )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2223,17 +2189,14 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 										Guwange
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_guwange = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( guwange )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2259,16 +2222,13 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 									Hotdog Storm
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_hotdogst = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hotdogst )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2302,17 +2262,14 @@ public class cave
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_intf_4MHz)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Mazinger Z
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_mazinger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mazinger )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2346,17 +2303,14 @@ public class cave
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_intf_4MHz)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_8kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Metamoqester
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_metmqstr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metmqstr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000 / 2)
@@ -2390,9 +2344,7 @@ public class cave
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_intf_4MHz)	// 32/8 ?
 		MDRV_SOUND_ADD(OKIM6295, metmqstr_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2424,8 +2376,7 @@ public class cave
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_pwrinst2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pwrinst2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2459,17 +2410,14 @@ public class cave
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_intf_pwrinst2)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_pwrinst2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 							Sailor Moon / Air Gallet
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_sailormn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sailormn )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2504,17 +2452,14 @@ public class cave
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_intf_4MHz)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf_16kHz_16kHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Uo Poko
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_uopoko = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( uopoko )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -2539,9 +2484,7 @@ public class cave
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMZ280B, ymz280b_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2552,7 +2495,7 @@ public class cave
 	
 	***************************************************************************/
 	
-	/* 4 bits . 8 bits. Even and odd pixels are swapped */
+	/* 4 bits -> 8 bits. Even and odd pixels are swapped */
 	static void unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -2570,7 +2513,7 @@ public class cave
 	}
 	
 	
-	/* 4 bits . 8 bits. Even and odd pixels and even and odd words, are swapped */
+	/* 4 bits -> 8 bits. Even and odd pixels and even and odd words, are swapped */
 	static void ddonpach_unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -2595,7 +2538,7 @@ public class cave
 	}
 	
 	
-	/* 2 pages of 4 bits . 8 bits */
+	/* 2 pages of 4 bits -> 8 bits */
 	static void esprade_unpack_sprites(void)
 	{
 		const int region		=	REGION_GFX1;	// sprites
@@ -3580,8 +3523,7 @@ public class cave
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_agallet  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_agallet  = new DriverInitHandlerPtr() { public void handler(){
 		sailormn_unpack_tiles( REGION_GFX4 );
 	
 		cave_default_eeprom = cave_default_eeprom_type7;
@@ -3597,8 +3539,7 @@ public class cave
 		install_mem_read16_handler(0, 0xb80000, 0xb80001, agallet_irq_cause_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_dfeveron  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dfeveron  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type1;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type1);
 		cave_region_byte = -1;
@@ -3609,8 +3550,7 @@ public class cave
 		time_vblank_irq = 100;
 	} };
 	
-	public static DriverInitHandlerPtr init_ddonpach  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ddonpach  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type2;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type2);
 		cave_region_byte = -1;
@@ -3621,8 +3561,7 @@ public class cave
 		time_vblank_irq = 90;
 	} };
 	
-	public static DriverInitHandlerPtr init_esprade  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_esprade  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type2;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type2);
 		cave_region_byte = -1;
@@ -3635,13 +3574,12 @@ public class cave
 	#if 0		//ROM PATCH
 		{
 			UINT16 *rom = (UINT16 *)memory_region(REGION_CPU1);
-			rom[0x118A/2] = 0x4e71;			//palette fix	118A: 5548				SUBQ.W	#2,A0		-. NOP
+			rom[0x118A/2] = 0x4e71;			//palette fix	118A: 5548				SUBQ.W	#2,A0		--> NOP
 		}
 	#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_gaia  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gaia  = new DriverInitHandlerPtr() { public void handler(){
 		/* No EEPROM */
 	
 		unpack_sprites();
@@ -3650,8 +3588,7 @@ public class cave
 		time_vblank_irq = 2000;	/**/
 	} };
 	
-	public static DriverInitHandlerPtr init_guwange  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_guwange  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type1;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type1);
 		cave_region_byte = -1;
@@ -3662,8 +3599,7 @@ public class cave
 		time_vblank_irq = 2000;	/**/
 	} };
 	
-	public static DriverInitHandlerPtr init_hotdogst  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hotdogst  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type4;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type4);
 		cave_region_byte = -1;
@@ -3674,8 +3610,7 @@ public class cave
 		time_vblank_irq = 2000;	/**/
 	} };
 	
-	public static DriverInitHandlerPtr init_mazinger  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mazinger  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
 		int len = memory_region_length(REGION_GFX1);
@@ -3704,8 +3639,7 @@ public class cave
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_metmqstr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_metmqstr  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = 0;
 		cave_default_eeprom_length = 0;
 		cave_region_byte = -1;
@@ -3717,8 +3651,7 @@ public class cave
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_pwrinst2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pwrinst2  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
 		int len = memory_region_length(REGION_GFX1);
@@ -3749,13 +3682,12 @@ public class cave
 	#if 1		//ROM PATCH
 		{
 			UINT16 *rom = (UINT16 *)memory_region(REGION_CPU1);
-			rom[0xD46C/2] = 0xD482;			// kurara dash fix  0xd400 . 0xd482
+			rom[0xD46C/2] = 0xD482;			// kurara dash fix  0xd400 -> 0xd482
 		}
 	#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_sailormn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sailormn  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_GFX1);
 		int len = memory_region_length(REGION_GFX1);
@@ -3782,8 +3714,7 @@ public class cave
 		time_vblank_irq = 2000;
 	} };
 	
-	public static DriverInitHandlerPtr init_uopoko  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_uopoko  = new DriverInitHandlerPtr() { public void handler(){
 		cave_default_eeprom = cave_default_eeprom_type3;
 		cave_default_eeprom_length = sizeof(cave_default_eeprom_type4);
 		cave_region_byte = -1;
@@ -3803,24 +3734,24 @@ public class cave
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_pwrinst2	   = new GameDriver("1994"	,"pwrinst2"	,"cave.java"	,rom_pwrinst2,null	,machine_driver_pwrinst2	,input_ports_metmqstr	,init_pwrinst2	,ROT0	,	"Atlus/Cave",                           "Power Instinct 2 (USA)" )
-	public static GameDriver driver_mazinger	   = new GameDriver("1994"	,"mazinger"	,"cave.java"	,rom_mazinger,null	,machine_driver_mazinger	,input_ports_mazinger	,init_mazinger	,ROT90	,	"Banpresto/Dynamic Pl. Toei Animation", "Mazinger Z"                 ) // region in eeprom
-	public static GameDriver driver_donpachi	   = new GameDriver("1995"	,"donpachi"	,"cave.java"	,rom_donpachi,null	,machine_driver_donpachi	,input_ports_cave	,init_ddonpach	,ROT270	,	"Atlus/Cave",                           "DonPachi (US)"              )
-	public static GameDriver driver_donpachj	   = new GameDriver("1995"	,"donpachj"	,"cave.java"	,rom_donpachj,driver_donpachi	,machine_driver_donpachi	,input_ports_cave	,init_ddonpach	,ROT270	,	"Atlus/Cave",                           "DonPachi (Japan)"           )
-	public static GameDriver driver_donpachk	   = new GameDriver("1995"	,"donpachk"	,"cave.java"	,rom_donpachk,driver_donpachi	,machine_driver_donpachi	,input_ports_cave	,init_ddonpach	,ROT270	,	"Atlus/Cave",                           "DonPachi (Korea)"           )
-	public static GameDriver driver_metmqstr	   = new GameDriver("1995"	,"metmqstr"	,"cave.java"	,rom_metmqstr,null	,machine_driver_metmqstr	,input_ports_metmqstr	,init_metmqstr	,ROT0	,	"Banpresto/Pandorabox",                 "Metamoqester"               )
-	public static GameDriver driver_nmaster	   = new GameDriver("1995"	,"nmaster"	,"cave.java"	,rom_nmaster,driver_metmqstr	,machine_driver_metmqstr	,input_ports_metmqstr	,init_metmqstr	,ROT0	,	"Banpresto/Pandorabox",                 "Oni - The Ninja Master (Japan)"               )
-	public static GameDriver driver_sailormn	   = new GameDriver("1995"	,"sailormn"	,"cave.java"	,rom_sailormn,null	,machine_driver_sailormn	,input_ports_sailormn	,init_sailormn	,ROT0	,	"Banpresto",                            "Pretty Soldier Sailor Moon (95/03/22B)" ) // region in eeprom
-	public static GameDriver driver_sailormo	   = new GameDriver("1995"	,"sailormo"	,"cave.java"	,rom_sailormo,driver_sailormn	,machine_driver_sailormn	,input_ports_sailormn	,init_sailormn	,ROT0	,	"Banpresto",                            "Pretty Soldier Sailor Moon (95/03/22)" ) // region in eeprom
-	public static GameDriver driver_agallet	   = new GameDriver("1996"	,"agallet"	,"cave.java"	,rom_agallet,null	,machine_driver_sailormn	,input_ports_sailormn	,init_agallet	,ROT270	,	"Banpresto / Gazelle",                  "Air Gallet"        ) // board was taiwan, region in eeprom
-	public static GameDriver driver_hotdogst	   = new GameDriver("1996"	,"hotdogst"	,"cave.java"	,rom_hotdogst,null	,machine_driver_hotdogst	,input_ports_cave	,init_hotdogst	,ROT90	,	"Marble",                               "Hotdog Storm"               )
-	public static GameDriver driver_ddonpach	   = new GameDriver("1997"	,"ddonpach"	,"cave.java"	,rom_ddonpach,null	,machine_driver_ddonpach	,input_ports_cave	,init_ddonpach	,ROT270	,	"Atlus/Cave",                           "DoDonPachi (International)" )
-	public static GameDriver driver_ddonpchj	   = new GameDriver("1997"	,"ddonpchj"	,"cave.java"	,rom_ddonpchj,driver_ddonpach	,machine_driver_ddonpach	,input_ports_cave	,init_ddonpach	,ROT270	,	"Atlus/Cave",                           "DoDonPachi (Japan)"         )
-	public static GameDriver driver_dfeveron	   = new GameDriver("1998"	,"dfeveron"	,"cave.java"	,rom_dfeveron,null	,machine_driver_dfeveron	,input_ports_cave	,init_dfeveron	,ROT270	,	"Cave (Nihon System license)",          "Dangun Feveron (Japan)"     )
-	public static GameDriver driver_esprade	   = new GameDriver("1998"	,"esprade"	,"cave.java"	,rom_esprade,null	,machine_driver_esprade	,input_ports_cave	,init_esprade	,ROT270	,	"Atlus/Cave",                           "ESP Ra.De. (International Ver 1998 4/22)" )
-	public static GameDriver driver_espradej	   = new GameDriver("1998"	,"espradej"	,"cave.java"	,rom_espradej,driver_esprade	,machine_driver_esprade	,input_ports_cave	,init_esprade	,ROT270	,	"Atlus/Cave",                           "ESP Ra.De. (Japan Ver 1998 4/21)" )
-	public static GameDriver driver_espradeo	   = new GameDriver("1998"	,"espradeo"	,"cave.java"	,rom_espradeo,driver_esprade	,machine_driver_esprade	,input_ports_cave	,init_esprade	,ROT270	,	"Atlus/Cave",                           "ESP Ra.De. (Japan Ver 1998 4/14)" )
-	public static GameDriver driver_uopoko	   = new GameDriver("1998"	,"uopoko"	,"cave.java"	,rom_uopoko,null	,machine_driver_uopoko	,input_ports_cave	,init_uopoko	,ROT0	,	"Cave (Jaleco license)",                "Uo Poko (Japan)"            )
-	public static GameDriver driver_guwange	   = new GameDriver("1999"	,"guwange"	,"cave.java"	,rom_guwange,null	,machine_driver_guwange	,input_ports_guwange	,init_guwange	,ROT270	,	"Atlus/Cave",                           "Guwange (Japan)"            )
-	public static GameDriver driver_gaia	   = new GameDriver("1999"	,"gaia"	,"cave.java"	,rom_gaia,null	,machine_driver_gaia	,input_ports_gaia	,init_gaia	,ROT0	,	"Noise Factory",                        "Gaia Crusaders", GAME_IMPERFECT_SOUND ) // cuts out occasionally
+	GAME( 1994, pwrinst2, 0,        pwrinst2, metmqstr, pwrinst2, ROT0,   "Atlus/Cave",                           "Power Instinct 2 (USA)" )
+	GAME( 1994, mazinger, 0,        mazinger, mazinger, mazinger, ROT90,  "Banpresto/Dynamic Pl. Toei Animation", "Mazinger Z"                 ) // region in eeprom
+	GAME( 1995, donpachi, 0,        donpachi, cave,     ddonpach, ROT270, "Atlus/Cave",                           "DonPachi (US)"              )
+	GAME( 1995, donpachj, donpachi, donpachi, cave,     ddonpach, ROT270, "Atlus/Cave",                           "DonPachi (Japan)"           )
+	GAME( 1995, donpachk, donpachi, donpachi, cave,     ddonpach, ROT270, "Atlus/Cave",                           "DonPachi (Korea)"           )
+	GAME( 1995, metmqstr, 0,        metmqstr, metmqstr, metmqstr, ROT0,   "Banpresto/Pandorabox",                 "Metamoqester"               )
+	GAME( 1995, nmaster,  metmqstr, metmqstr, metmqstr, metmqstr, ROT0,   "Banpresto/Pandorabox",                 "Oni - The Ninja Master (Japan)"               )
+	GAME( 1995, sailormn, 0,        sailormn, sailormn, sailormn, ROT0,   "Banpresto",                            "Pretty Soldier Sailor Moon (95/03/22B)" ) // region in eeprom
+	GAME( 1995, sailormo, sailormn, sailormn, sailormn, sailormn, ROT0,   "Banpresto",                            "Pretty Soldier Sailor Moon (95/03/22)" ) // region in eeprom
+	GAME( 1996, agallet,  0,        sailormn, sailormn, agallet,  ROT270, "Banpresto / Gazelle",                  "Air Gallet"        ) // board was taiwan, region in eeprom
+	GAME( 1996, hotdogst, 0,        hotdogst, cave,     hotdogst, ROT90,  "Marble",                               "Hotdog Storm"               )
+	GAME( 1997, ddonpach, 0,        ddonpach, cave,     ddonpach, ROT270, "Atlus/Cave",                           "DoDonPachi (International)" )
+	GAME( 1997, ddonpchj, ddonpach, ddonpach, cave,     ddonpach, ROT270, "Atlus/Cave",                           "DoDonPachi (Japan)"         )
+	GAME( 1998, dfeveron, 0,        dfeveron, cave,     dfeveron, ROT270, "Cave (Nihon System license)",          "Dangun Feveron (Japan)"     )
+	GAME( 1998, esprade,  0,        esprade,  cave,     esprade,  ROT270, "Atlus/Cave",                           "ESP Ra.De. (International Ver 1998 4/22)" )
+	GAME( 1998, espradej, esprade,  esprade,  cave,     esprade,  ROT270, "Atlus/Cave",                           "ESP Ra.De. (Japan Ver 1998 4/21)" )
+	GAME( 1998, espradeo, esprade,  esprade,  cave,     esprade,  ROT270, "Atlus/Cave",                           "ESP Ra.De. (Japan Ver 1998 4/14)" )
+	GAME( 1998, uopoko,   0,        uopoko,   cave,     uopoko,   ROT0,   "Cave (Jaleco license)",                "Uo Poko (Japan)"            )
+	GAME( 1999, guwange,  0,        guwange,  guwange,  guwange,  ROT270, "Atlus/Cave",                           "Guwange (Japan)"            )
+	GAMEX(1999, gaia,     0,        gaia,     gaia,     gaia,     ROT0,   "Noise Factory",                        "Gaia Crusaders", GAME_IMPERFECT_SOUND ) // cuts out occasionally
 }

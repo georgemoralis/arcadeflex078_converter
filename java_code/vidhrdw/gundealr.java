@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,7 +42,7 @@ public class gundealr
 	
 	static UINT32 gundealr_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x0f) + ((col & 0x3f) << 4) + ((row & 0x10) << 6);
 	}
 	
@@ -64,8 +64,7 @@ public class gundealr
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gundealr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gundealr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,      8, 8,32,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,gundealr_scan,    TILEMAP_TRANSPARENT,16,16,64,32);
 	
@@ -85,8 +84,7 @@ public class gundealr
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr gundealr_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gundealr_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gundealr_bg_videoram[offset] != data)
 		{
 			gundealr_bg_videoram[offset] = data;
@@ -94,8 +92,7 @@ public class gundealr
 		}
 	} };
 	
-	public static WriteHandlerPtr gundealr_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gundealr_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gundealr_fg_videoram[offset] != data)
 		{
 			gundealr_fg_videoram[offset] = data;
@@ -103,18 +100,17 @@ public class gundealr
 		}
 	} };
 	
-	public static WriteHandlerPtr gundealr_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gundealr_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b,val;
 	
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
-		val = paletteram[offset & ~1];
+		val = paletteram.read(offset & ~1);
 		r = (val >> 4) & 0x0f;
 		g = (val >> 0) & 0x0f;
 	
-		val = paletteram[offset | 1];
+		val = paletteram.read(offset | 1);
 		b = (val >> 4) & 0x0f;
 		/* TODO: the bottom 4 bits are used as well, but I'm not sure about the meaning */
 	
@@ -125,8 +121,7 @@ public class gundealr
 		palette_set_color(offset / 2,r,g,b);
 	} };
 	
-	public static WriteHandlerPtr gundealr_fg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gundealr_fg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[4];
 	
 		scroll[offset] = data;
@@ -134,8 +129,7 @@ public class gundealr
 		tilemap_set_scrolly(fg_tilemap,0,scroll[3] | ((scroll[2] & 0x03) << 8));
 	} };
 	
-	public static WriteHandlerPtr yamyam_fg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yamyam_fg_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[4];
 	
 		scroll[offset] = data;
@@ -143,8 +137,7 @@ public class gundealr
 		tilemap_set_scrolly(fg_tilemap,0,scroll[2] | ((scroll[3] & 0x03) << 8));
 	} };
 	
-	public static WriteHandlerPtr gundealr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gundealr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	} };
@@ -157,8 +150,7 @@ public class gundealr
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gundealr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gundealr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };

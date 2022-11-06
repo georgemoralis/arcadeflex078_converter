@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -33,8 +33,8 @@ public class taitosnd
 	
 	typedef struct TC0140SYT
 	{
-		unsigned char slavedata[4];	/* Data on master.slave port (4 nibbles) */
-		unsigned char masterdata[4];/* Data on slave.master port (4 nibbles) */
+		unsigned char slavedata[4];	/* Data on master->slave port (4 nibbles) */
+		unsigned char masterdata[4];/* Data on slave->master port (4 nibbles) */
 		unsigned char mainmode;		/* Access mode on master cpu side */
 		unsigned char submode;		/* Access mode on slave cpu side */
 		unsigned char status;		/* Status data */
@@ -54,8 +54,7 @@ public class taitosnd
 		}
 	}
 	
-	public static WriteHandlerPtr taitosound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosound_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 0x0f;
 	
 		tc0140syt.mainmode = data;
@@ -66,8 +65,7 @@ public class taitosnd
 		}
 	} };
 	
-	public static WriteHandlerPtr taitosound_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosound_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		data &= 0x0f;	/*this is important, otherwise ballbros won't work*/
 	
@@ -102,7 +100,7 @@ public class taitosnd
 				//logerror("taitosnd: Master issued control value %02x (PC = %08x) \n",data, activecpu_get_pc() );
 	//#endif
 				/* this does a hi-lo transition to reset the sound cpu */
-				if (data != 0)
+				if (data)
 					cpu_set_reset_line(1,ASSERT_LINE);
 				else
 				{
@@ -117,8 +115,7 @@ public class taitosnd
 	
 	} };
 	
-	public static ReadHandlerPtr taitosound_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosound_comm_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( tc0140syt.mainmode )
 		{
 			case 0x00:		// mode #0
@@ -156,8 +153,7 @@ public class taitosnd
 	
 	//SLAVE SIDE
 	
-	public static WriteHandlerPtr taitosound_slave_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosound_slave_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 0x0f;
 		tc0140syt.submode = data;
 		//logerror("taitosnd: Slave cpu mode [%02x]\n", data);
@@ -165,8 +161,7 @@ public class taitosnd
 			logerror("tc0140syt error : Slave cpu unknown mode[%02x]\n", data);
 	} };
 	
-	public static WriteHandlerPtr taitosound_slave_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosound_slave_comm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 0x0f;
 	
 		switch ( tc0140syt.submode )
@@ -216,8 +211,7 @@ public class taitosnd
 	
 	} };
 	
-	public static ReadHandlerPtr taitosound_slave_comm_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosound_slave_comm_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char res = 0;
 	
 		switch ( tc0140syt.submode )
@@ -269,12 +263,12 @@ public class taitosnd
 	
 	WRITE16_HANDLER( taitosound_port16_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			taitosound_port_w(0,data & 0xff);
 	}
 	WRITE16_HANDLER( taitosound_comm16_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			taitosound_comm_w(0,data & 0xff);
 	}
 	READ16_HANDLER( taitosound_comm16_lsb_r )
@@ -285,12 +279,12 @@ public class taitosnd
 	
 	WRITE16_HANDLER( taitosound_port16_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			taitosound_port_w(0,data >> 8);
 	}
 	WRITE16_HANDLER( taitosound_comm16_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			taitosound_comm_w(0,data >> 8);
 	}
 	READ16_HANDLER( taitosound_comm16_msb_r )

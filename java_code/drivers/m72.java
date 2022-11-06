@@ -71,7 +71,7 @@ kengo       0x18   --------------
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -125,59 +125,50 @@ public class m72
 		return addr;
 	}
 	
-	static INTERRUPT_GEN(fake_nmi)
-	{
+	public static InterruptHandlerPtr fake_nmi = new InterruptHandlerPtr() {public void handler(){
 		int sample = m72_sample_r(0);
-		if (sample != 0)
+		if (sample)
 			m72_sample_w(0,sample);
-	}
+	} };
 	
 	
-	public static WriteHandlerPtr bchopper_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bchopper_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[6] = { 0x0000, 0x0010, 0x2510, 0x6510, 0x8510, 0x9310 };
 		if (data < 6) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr nspirit_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nspirit_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[9] = { 0x0000, 0x0020, 0x2020, 0, 0x5720, 0, 0x7b60, 0x9b60, 0xc360 };
 		if (data < 9) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr imgfight_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr imgfight_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[7] = { 0x0000, 0x0020, 0x44e0, 0x98a0, 0xc820, 0xf7a0, 0x108c0 };
 		if (data < 7) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr loht_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr loht_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[7] = { 0x0000, 0x0020, 0, 0x2c40, 0x4320, 0x7120, 0xb200 };
 		if (data < 7) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr xmultipl_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xmultipl_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[3] = { 0x0000, 0x0020, 0x1a40 };
 		if (data < 3) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr dbreed_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dbreed_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[9] = { 0x00000, 0x00020, 0x02c40, 0x08160, 0x0c8c0, 0x0ffe0, 0x13000, 0x15820, 0x15f40 };
 		if (data < 9) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr airduel_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr airduel_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[16] = { 0x00000, 0x00020, 0x03ec0, 0x05640, 0x06dc0, 0x083a0, 0x0c000, 0x0eb60,
 					  0x112e0, 0x13dc0, 0x16520, 0x16d60, 0x18ae0, 0x1a5a0, 0x1bf00, 0x1c340 };
 		if (data < 16) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr dkgenm72_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dkgenm72_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[28] = { 0x00000, 0x00020, 0x01800, 0x02da0, 0x03be0, 0x05ae0, 0x06100, 0x06de0,
 				      0x07260, 0x07a60, 0x08720, 0x0a5c0, 0x0c3c0, 0x0c7a0, 0x0e140, 0x0fb00,
 					  0x10fa0, 0x10fc0, 0x10fe0, 0x11f40, 0x12b20, 0x130a0, 0x13c60, 0x14740,
@@ -186,8 +177,7 @@ public class m72
 		if (data < 28) m72_set_sample_start(a[data]);
 	} };
 	
-	public static WriteHandlerPtr gallop_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gallop_sample_trigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a[31] = { 0x00000, 0x00020, 0x00040, 0x01360, 0x02580, 0x04f20, 0x06240, 0x076e0,
 				      0x08660, 0x092a0, 0x09ba0, 0x0a560, 0x0cee0, 0x0de20, 0x0e620, 0x0f1c0,
 					  0x10200, 0x10220, 0x10240, 0x11380, 0x12760, 0x12780, 0x127a0, 0x13c40,
@@ -381,16 +371,14 @@ public class m72
 	
 	unsigned char *protection_code,*protection_crc;
 	
-	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0xffb)
 			memcpy(protection_ram,protection_code,CODE_LEN);
 	
 		return protection_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		protection_ram[offset] = data ^ 0xff;;
 	
 		if (offset == 0x0fff && data == 0)
@@ -406,43 +394,37 @@ public class m72
 		protection_ram = &memory_region(REGION_CPU1)[0xb0000];
 	}
 	
-	public static DriverInitHandlerPtr init_bchopper  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bchopper  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(bchopper_code,bchopper_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,bchopper_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_mrheli  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mrheli  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(bchopper_code,mrheli_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,bchopper_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_nspirit  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nspirit  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(nspirit_code,nspirit_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,nspirit_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_nspiritj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nspiritj  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(nspirit_code,nspiritj_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,nspirit_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_imgfight  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_imgfight  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(imgfight_code,imgfight_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,imgfight_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_loht  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_loht  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(loht_code,loht_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,loht_sample_trigger_w);
@@ -451,36 +433,31 @@ public class m72
 		memset(m72_videoram2,0,0x4000);
 	} };
 	
-	public static DriverInitHandlerPtr init_xmultipl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xmultipl  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(xmultipl_code,xmultipl_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,xmultipl_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_dbreed  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dbreed  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(dbreed_code,dbreed_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,dbreed_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_airduel  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_airduel  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(airduel_code,airduel_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,airduel_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_dkgenm72  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dkgenm72  = new DriverInitHandlerPtr() { public void handler(){
 		install_protection_handler(dkgenm72_code,dkgenm72_crc);
 	
 		install_port_write_handler(0,0xc0,0xc0,dkgenm72_sample_trigger_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_gallop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gallop  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_write_handler(0,0xc0,0xc0,gallop_sample_trigger_w);
 	} };
 	
@@ -490,19 +467,16 @@ public class m72
 	static unsigned char *soundram;
 	
 	
-	public static ReadHandlerPtr soundram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr soundram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return soundram[offset];
 	} };
 	
-	public static WriteHandlerPtr soundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr poundfor_trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr poundfor_trackball_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int prev[4],diff[4];
 	
 		if (offset == 0)
@@ -924,7 +898,7 @@ public class m72
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_6C") );
 	
 	
-	static InputPortPtr input_ports_rtype = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rtype = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rtype )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -996,7 +970,7 @@ public class m72
 	INPUT_PORTS_END(); }}; 
 	
 	/* identical but Demo Sounds is inverted */
-	static InputPortPtr input_ports_rtypep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rtypep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rtypep )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1067,7 +1041,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bchopper = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bchopper = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bchopper )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1138,7 +1112,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nspirit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nspirit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nspirit )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1208,7 +1182,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_imgfight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_imgfight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( imgfight )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1276,7 +1250,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_loht = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_loht = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( loht )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1344,7 +1318,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_xmultipl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xmultipl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xmultipl )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1412,7 +1386,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dbreed = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dbreed = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dbreed )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1480,7 +1454,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rtype2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rtype2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rtype2 )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1546,7 +1520,7 @@ public class m72
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hharry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hharry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hharry )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1629,7 +1603,7 @@ public class m72
 	    // COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_poundfor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_poundfor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( poundfor )
 		PORT_START(); 
 		PORT_BIT( 0x1f, IP_ACTIVE_HIGH, IPT_SPECIAL );/* high bits of trackball X */
 		PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -1724,7 +1698,7 @@ public class m72
 		PORT_ANALOG( 0xffff, 0x0000, IPT_TRACKBALL_Y | IPF_PLAYER2, 50, 30, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_airduel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_airduel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( airduel )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1800,7 +1774,7 @@ public class m72
 	    // COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gallop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gallop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gallop )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -1881,7 +1855,7 @@ public class m72
 	    // COIN_MODE_2
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kengo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kengo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kengo )
 		PORT_START(); 
 		JOYSTICK_1
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON4 );
@@ -2034,8 +2008,7 @@ public class m72
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rtype = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rtype )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2067,13 +2040,10 @@ public class m72
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_m72 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( m72 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2107,13 +2077,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dkgenm72 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dkgenm72 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2147,13 +2114,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_xmultipl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xmultipl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2187,13 +2151,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dbreed = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dbreed )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2226,13 +2187,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rtype2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rtype2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2266,12 +2224,9 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_majtitle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( majtitle )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2305,12 +2260,9 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hharry = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hharry )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2344,13 +2296,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hharryu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hharryu )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2384,13 +2333,10 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_poundfor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( poundfor )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2423,12 +2369,9 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_kengo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kengo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,32000000/4)	/* 16 MHz external freq (8MHz internal) */
@@ -2462,9 +2405,7 @@ public class m72
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -3266,35 +3207,34 @@ public class m72
 	
 	
 	
-	public static DriverInitHandlerPtr init_kengo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kengo  = new DriverInitHandlerPtr() { public void handler(){
 		irem_cpu_decrypt(0,gunforce_decryption_table);
 	} };
 	
 	
 	
-	public static GameDriver driver_rtype	   = new GameDriver("1987"	,"rtype"	,"m72.java"	,rom_rtype,null	,machine_driver_rtype	,input_ports_rtype	,null	,ROT0	,	"Irem", "R-Type (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_rtypepj	   = new GameDriver("1987"	,"rtypepj"	,"m72.java"	,rom_rtypepj,driver_rtype	,machine_driver_rtype	,input_ports_rtypep	,null	,ROT0	,	"Irem", "R-Type (Japan prototype)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_rtypeu	   = new GameDriver("1987"	,"rtypeu"	,"m72.java"	,rom_rtypeu,driver_rtype	,machine_driver_rtype	,input_ports_rtype	,null	,ROT0	,	"Irem (Nintendo of America license)", "R-Type (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bchopper	   = new GameDriver("1987"	,"bchopper"	,"m72.java"	,rom_bchopper,null	,machine_driver_m72	,input_ports_bchopper	,init_bchopper	,ROT0	,	"Irem", "Battle Chopper", GAME_NO_COCKTAIL )
-	public static GameDriver driver_mrheli	   = new GameDriver("1987"	,"mrheli"	,"m72.java"	,rom_mrheli,driver_bchopper	,machine_driver_m72	,input_ports_bchopper	,init_mrheli	,ROT0	,	"Irem", "Mr. HELI no Dai-Bouken", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nspirit	   = new GameDriver("1988"	,"nspirit"	,"m72.java"	,rom_nspirit,null	,machine_driver_m72	,input_ports_nspirit	,init_nspirit	,ROT0	,	"Irem", "Ninja Spirit", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nspiritj	   = new GameDriver("1988"	,"nspiritj"	,"m72.java"	,rom_nspiritj,driver_nspirit	,machine_driver_m72	,input_ports_nspirit	,init_nspiritj	,ROT0	,	"Irem", "Saigo no Nindou (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_imgfight	   = new GameDriver("1988"	,"imgfight"	,"m72.java"	,rom_imgfight,null	,machine_driver_m72	,input_ports_imgfight	,init_imgfight	,ROT270	,	"Irem", "Image Fight (Japan)" )
-	public static GameDriver driver_loht	   = new GameDriver("1989"	,"loht"	,"m72.java"	,rom_loht,null	,machine_driver_m72	,input_ports_loht	,init_loht	,ROT0	,	"Irem", "Legend of Hero Tonma", GAME_NO_COCKTAIL )
-	public static GameDriver driver_xmultipl	   = new GameDriver("1989"	,"xmultipl"	,"m72.java"	,rom_xmultipl,null	,machine_driver_xmultipl	,input_ports_xmultipl	,init_xmultipl	,ROT0	,	"Irem", "X Multiply (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dbreed	   = new GameDriver("1989"	,"dbreed"	,"m72.java"	,rom_dbreed,null	,machine_driver_dbreed	,input_ports_dbreed	,init_dbreed	,ROT0	,	"Irem", "Dragon Breed", GAME_NO_COCKTAIL )
-	public static GameDriver driver_rtype2	   = new GameDriver("1989"	,"rtype2"	,"m72.java"	,rom_rtype2,null	,machine_driver_rtype2	,input_ports_rtype2	,null	,ROT0	,	"Irem", "R-Type II", GAME_NO_COCKTAIL )
-	public static GameDriver driver_rtype2j	   = new GameDriver("1989"	,"rtype2j"	,"m72.java"	,rom_rtype2j,driver_rtype2	,machine_driver_rtype2	,input_ports_rtype2	,null	,ROT0	,	"Irem", "R-Type II (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_majtitle	   = new GameDriver("1990"	,"majtitle"	,"m72.java"	,rom_majtitle,null	,machine_driver_majtitle	,input_ports_rtype2	,null	,ROT0	,	"Irem", "Major Title (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_hharry	   = new GameDriver("1990"	,"hharry"	,"m72.java"	,rom_hharry,null	,machine_driver_hharry	,input_ports_hharry	,null	,ROT0	,	"Irem", "Hammerin' Harry (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_hharryu	   = new GameDriver("1990"	,"hharryu"	,"m72.java"	,rom_hharryu,driver_hharry	,machine_driver_hharryu	,input_ports_hharry	,null	,ROT0	,	"Irem America", "Hammerin' Harry (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dkgensan	   = new GameDriver("1990"	,"dkgensan"	,"m72.java"	,rom_dkgensan,driver_hharry	,machine_driver_hharryu	,input_ports_hharry	,null	,ROT0	,	"Irem", "Daiku no Gensan (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dkgenm72	   = new GameDriver("1990"	,"dkgenm72"	,"m72.java"	,rom_dkgenm72,driver_hharry	,machine_driver_dkgenm72	,input_ports_hharry	,init_dkgenm72	,ROT0	,	"Irem", "Daiku no Gensan (Japan, M72)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_poundfor	   = new GameDriver("1990"	,"poundfor"	,"m72.java"	,rom_poundfor,null	,machine_driver_poundfor	,input_ports_poundfor	,null	,ROT270	,	"Irem", "Pound for Pound (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_poundfou	   = new GameDriver("1990"	,"poundfou"	,"m72.java"	,rom_poundfou,driver_poundfor	,machine_driver_poundfor	,input_ports_poundfor	,null	,ROT270	,	"Irem America", "Pound for Pound (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_airduel	   = new GameDriver("1990"	,"airduel"	,"m72.java"	,rom_airduel,null	,machine_driver_m72	,input_ports_airduel	,init_airduel	,ROT270	,	"Irem", "Air Duel (Japan)" )
-	public static GameDriver driver_cosmccop	   = new GameDriver("1991"	,"cosmccop"	,"m72.java"	,rom_cosmccop,null	,machine_driver_kengo	,input_ports_gallop	,null	,ROT0	,	"Irem", "Cosmic Cop (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_gallop	   = new GameDriver("1991"	,"gallop"	,"m72.java"	,rom_gallop,driver_cosmccop	,machine_driver_m72	,input_ports_gallop	,init_gallop	,ROT0	,	"Irem", "Gallop - Armed police Unit (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_kengo	   = new GameDriver("1991"	,"kengo"	,"m72.java"	,rom_kengo,null	,machine_driver_kengo	,input_ports_kengo	,init_kengo	,ROT0	,	"Irem", "Ken-Go", GAME_NO_COCKTAIL )
+	GAMEX( 1987, rtype,    0,        rtype,    rtype,    0,        ROT0,   "Irem", "R-Type (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, rtypepj,  rtype,    rtype,    rtypep,   0,        ROT0,   "Irem", "R-Type (Japan prototype)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, rtypeu,   rtype,    rtype,    rtype,    0,        ROT0,   "Irem (Nintendo of America license)", "R-Type (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1987, bchopper, 0,        m72,      bchopper, bchopper, ROT0,   "Irem", "Battle Chopper", GAME_NO_COCKTAIL )
+	GAMEX( 1987, mrheli,   bchopper, m72,      bchopper, mrheli,   ROT0,   "Irem", "Mr. HELI no Dai-Bouken", GAME_NO_COCKTAIL )
+	GAMEX( 1988, nspirit,  0,        m72,      nspirit,  nspirit,  ROT0,   "Irem", "Ninja Spirit", GAME_NO_COCKTAIL )
+	GAMEX( 1988, nspiritj, nspirit,  m72,      nspirit,  nspiritj, ROT0,   "Irem", "Saigo no Nindou (Japan)", GAME_NO_COCKTAIL )
+	GAME( 1988, imgfight, 0,        m72,      imgfight, imgfight, ROT270, "Irem", "Image Fight (Japan)" )
+	GAMEX( 1989, loht,     0,        m72,      loht,     loht,     ROT0,   "Irem", "Legend of Hero Tonma", GAME_NO_COCKTAIL )
+	GAMEX( 1989, xmultipl, 0,        xmultipl, xmultipl, xmultipl, ROT0,   "Irem", "X Multiply (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1989, dbreed,   0,        dbreed,   dbreed,   dbreed,   ROT0,   "Irem", "Dragon Breed", GAME_NO_COCKTAIL )
+	GAMEX( 1989, rtype2,   0,        rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II", GAME_NO_COCKTAIL )
+	GAMEX( 1989, rtype2j,  rtype2,   rtype2,   rtype2,   0,        ROT0,   "Irem", "R-Type II (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, majtitle, 0,        majtitle, rtype2,   0,        ROT0,   "Irem", "Major Title (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, hharry,   0,        hharry,   hharry,   0,        ROT0,   "Irem", "Hammerin' Harry (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, hharryu,  hharry,   hharryu,  hharry,   0,        ROT0,   "Irem America", "Hammerin' Harry (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, dkgensan, hharry,   hharryu,  hharry,   0,        ROT0,   "Irem", "Daiku no Gensan (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, dkgenm72, hharry,   dkgenm72, hharry,   dkgenm72, ROT0,   "Irem", "Daiku no Gensan (Japan, M72)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, poundfor, 0,        poundfor, poundfor, 0,        ROT270, "Irem", "Pound for Pound (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1990, poundfou, poundfor, poundfor, poundfor, 0,        ROT270, "Irem America", "Pound for Pound (US)", GAME_NO_COCKTAIL )
+	GAME( 1990, airduel,  0,        m72,      airduel,  airduel,  ROT270, "Irem", "Air Duel (Japan)" )
+	GAMEX( 1991, cosmccop, 0,        kengo,    gallop,   0,        ROT0,   "Irem", "Cosmic Cop (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, gallop,   cosmccop, m72,      gallop,   gallop,   ROT0,   "Irem", "Gallop - Armed police Unit (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1991, kengo,    0,        kengo,    kengo,    kengo,    ROT0,   "Irem", "Ken-Go", GAME_NO_COCKTAIL )
 }

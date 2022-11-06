@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -25,26 +25,22 @@ public class superpac
 	static int crednum[] = { 1, 2, 3, 6, 7, 1, 3, 1 };
 	static int credden[] = { 1, 1, 1, 1, 1, 2, 2, 3 };
 	
-	public static MachineInitHandlerPtr machine_init_superpac  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_superpac  = new MachineInitHandlerPtr() { public void handler(){
 		/* Reset all flags */
 		coin1 = coin2 = start1 = start2 = credits = 0;
 	} };
 	
 	
-	public static ReadHandlerPtr superpac_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr superpac_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return superpac_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr superpac_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superpac_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		superpac_sharedram[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr superpac_reset_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superpac_reset_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1,PULSE_LINE);
 	} };
 	
@@ -52,27 +48,27 @@ public class superpac
 	void superpac_update_credits (void)
 	{
 		int val = readinputport (3) & 0x0f, temp;
-		if ((val & 1) != 0)
+		if (val & 1)
 		{
-			if (coin1 == 0) credits++, coin1++;
+			if (!coin1) credits++, coin1++;
 		}
 		else coin1 = 0;
 	
-		if ((val & 2) != 0)
+		if (val & 2)
 		{
-			if (coin2 == 0) credits++, coin2++;
+			if (!coin2) credits++, coin2++;
 		}
 		else coin2 = 0;
 	
 		temp = readinputport (1) & 7;
 		val = readinputport (3) >> 4;
-		if ((val & 1) != 0)
+		if (val & 1)
 		{
 			if (!start1 && credits >= credden[temp]) credits -= credden[temp], start1++;
 		}
 		else start1 = 0;
 	
-		if ((val & 2) != 0)
+		if (val & 2)
 		{
 			if (!start2 && credits >= 2 * credden[temp]) credits -= 2 * credden[temp], start2++;
 		}
@@ -80,8 +76,7 @@ public class superpac
 	}
 	
 	
-	public static ReadHandlerPtr superpac_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr superpac_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val, temp;
 	
 		/* default return value */
@@ -172,8 +167,7 @@ public class superpac
 	} };
 	
 	
-	public static ReadHandlerPtr superpac_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr superpac_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val;
 	
 		/* default return value */
@@ -262,14 +256,12 @@ public class superpac
 	} };
 	
 	
-	public static WriteHandlerPtr superpac_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superpac_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_w(0, offset);
 	} };
 	
 	
-	public static WriteHandlerPtr superpac_cpu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superpac_cpu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
 	} };
 }

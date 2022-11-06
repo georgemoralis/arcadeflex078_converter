@@ -28,7 +28,7 @@ HgKairak: 86010000 1f201918 a0000000 Large Screen
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -63,7 +63,7 @@ public class psikyo4
 	
 		**- End Sprite Format -*/
 	
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		data32_t *source = spriteram32;
 		data16_t *list = (data16_t *)spriteram32 + 0x2c00/2 + 0x04/2; /* 0x2c00/0x2c02 what are these for, pointers? one for each screen */
 		data16_t listlen=(0xc00/2 - 0x04/2), listcntr=0;
@@ -98,30 +98,30 @@ public class psikyo4
 				tnum = (source[sprnum+1] & 0x0007ffff) >> 00;
 	
 				colr = (source[sprnum+1] & 0x3f000000) >> 24;
-	   			if (scr != 0) colr += 0x40; /* Use second copy of palette which is dimmed appropriately */
+	   			if(scr) colr += 0x40; /* Use second copy of palette which is dimmed appropriately */
 	
 				flipx = (source[sprnum+1] & 0x40000000);
 				flipy = (source[sprnum+1] & 0x80000000); /* Guess */
 	
-				if ((ypos & 0x200) != 0) ypos -= 0x400;
-				if ((xpos & 0x200) != 0) xpos -= 0x400;
+				if(ypos & 0x200) ypos -= 0x400;
+				if(xpos & 0x200) xpos -= 0x400;
 	
 				if((!scr && flipscreen1) || (scr && flipscreen2))
 				{
-					ypos = Machine.visible_area.max_y+1 - ypos - high*16; /* Screen Height depends on game */
+					ypos = Machine->visible_area.max_y+1 - ypos - high*16; /* Screen Height depends on game */
 					xpos = 40*8 - xpos - wide*16;
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 				}
 	
 	#if DUAL_SCREEN /* if we are displaying both screens simultaneously */
-				if (scr != 0) xpos += 40*8;
+				if(scr) xpos += 40*8;
 	#endif
 	
-				if (flipx != 0)	{ xstart = wide-1;  xend = -1;    xinc = -1; }
+				if (flipx)	{ xstart = wide-1;  xend = -1;    xinc = -1; }
 				else		{ xstart = 0;       xend = wide;  xinc = +1; }
 	
-				if (flipy != 0)	{ ystart = high-1;  yend = -1;     yinc = -1; }
+				if (flipy)	{ ystart = high-1;  yend = -1;     yinc = -1; }
 				else		{ ystart = 0;       yend = high;   yinc = +1; }
 	
 				for (j = ystart; j != yend; j += yinc) {
@@ -133,12 +133,11 @@ public class psikyo4
 			}
 			/* end drawing */
 			listcntr++;
-			if ((listdat & 0x4000) != 0) break;
+			if (listdat & 0x4000) break;
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_psikyo4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_psikyo4  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#if DUAL_SCREEN
 		{
 			struct rectangle clip;
@@ -183,8 +182,7 @@ public class psikyo4
 	#endif
 	} };
 	
-	public static VideoStartHandlerPtr video_start_psikyo4  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_psikyo4  = new VideoStartHandlerPtr() { public int handler(){
 		Machine.gfx[0].color_granularity=32; /* 256 colour sprites with palette selectable on 32 colour boundaries */
 		screen = 0;
 		return 0;

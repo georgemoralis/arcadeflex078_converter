@@ -34,13 +34,13 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 		The game only uses this scheme:
 
-		Back . Front:	Layer 0, Sprites, Layer 1
+		Back -> Front:	Layer 0, Sprites, Layer 1
 
 ***************************************************************************/
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -73,8 +73,7 @@ public class afega
 	
 	/* This game uses 8 bit tiles, so it ignores the color codes and just
 	   uses the same 256 colors for every tile */
-	public static PaletteInitHandlerPtr palette_init_grdnstrm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_grdnstrm  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int color, pen;
 		for( color = 0; color < 16; color++ )
 			for( pen = 0; pen < 256; pen++ )
@@ -150,8 +149,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_afega  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_afega  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0, afega_tilemap_scan_pages,
 									TILEMAP_OPAQUE,
 									16,16,
@@ -209,8 +207,8 @@ public class afega
 	{
 		int offs;
 	
-		int max_x		=	Machine.drv.screen_width;
-		int max_y		=	Machine.drv.screen_height;
+		int max_x		=	Machine->drv->screen_width;
+		int max_y		=	Machine->drv->screen_height;
 	
 		for ( offs = 0; offs < spriteram_size/2; offs += 16/2 )
 		{
@@ -236,20 +234,20 @@ public class afega
 			sx = (sx & 0xff) - (sx & 0x100);
 			sy = (sy & 0xff) - (sy & 0x100);
 	
-			if (flip_screen_x != 0)	{	flipx = NOT(flipx);		sx = max_x - sx - xnum * 16;	}
-			if (flip_screen_y != 0)	{	flipy = NOT(flipy);		sy = max_y - sy - ynum * 16;	}
+			if (flip_screen_x)	{	flipx = NOT(flipx);		sx = max_x - sx - xnum * 16;	}
+			if (flip_screen_y)	{	flipy = NOT(flipy);		sy = max_y - sy - ynum * 16;	}
 	
-			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
 			{
 				for (x = xstart; x != xend; x += xinc)
 				{
-					drawgfx( bitmap,Machine.gfx[0],
+					drawgfx( bitmap,Machine->gfx[0],
 									code++,
 									color,
 									flipx, flipy,
@@ -267,7 +265,7 @@ public class afega
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 		dt[0].x = sy;		dt[0].y = sx;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine.scrbitmap,dt);		}
+		displaytext(Machine->scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -283,8 +281,7 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_afega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		/* Horizintal and vertical screen flip are hardwired to 2 dip switches */
@@ -306,17 +303,16 @@ public class afega
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 		else					fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-		if ((layers_ctrl & 2) != 0) 	afega_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
 	
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
 	} };
 	
 	/* Same as 'afega', but no screen flip support */
-	public static VideoUpdateHandlerPtr video_update_bubl2000  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bubl2000  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 	/* I really would like somebody to see the schematics of 'bubl2000' for confirmation */
@@ -341,12 +337,12 @@ public class afega
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 		else					fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-		if ((layers_ctrl & 2) != 0) 	afega_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 2) 	afega_draw_sprites(bitmap,cliprect);
 	
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
 	} };
 	
 }

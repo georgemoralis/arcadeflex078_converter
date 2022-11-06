@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -78,8 +78,7 @@ public class timeplt
 		0x00, 0x10, 0x20, 0x30, 0x40, 0x90, 0xa0, 0xb0, 0xa0, 0xd0
 	};
 	
-	public static ReadHandlerPtr timeplt_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr timeplt_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* need to protect from totalcycles overflow */
 		static int last_totalcycles = 0;
 	
@@ -101,13 +100,12 @@ public class timeplt
 	{
 		int C = 0;
 	
-		if ((data & 1) != 0) C += 220000;	/* 220000pF = 0.220uF */
-		if ((data & 2) != 0) C +=  47000;	/*  47000pF = 0.047uF */
+		if (data & 1) C += 220000;	/* 220000pF = 0.220uF */
+		if (data & 2) C +=  47000;	/*  47000pF = 0.047uF */
 		set_RC_filter(3*chip + channel,1000,5100,0,C);
 	}
 	
-	public static WriteHandlerPtr timeplt_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timeplt_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		filter_w(0, 0, (offset >>  6) & 3);
 		filter_w(0, 1, (offset >>  8) & 3);
 		filter_w(0, 2, (offset >> 10) & 3);
@@ -117,8 +115,7 @@ public class timeplt
 	} };
 	
 	
-	public static WriteHandlerPtr timeplt_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timeplt_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		if (last == 0 && data)

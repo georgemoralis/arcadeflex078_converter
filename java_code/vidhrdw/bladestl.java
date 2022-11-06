@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -9,8 +9,7 @@ public class bladestl
 	
 	static int layer_colorbase[2];
 	
-	public static PaletteInitHandlerPtr palette_init_bladestl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bladestl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -52,8 +51,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bladestl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bladestl  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 1;
 	
@@ -72,8 +70,7 @@ public class bladestl
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bladestl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K007342_tilemap_update();
 	
 		K007342_tilemap_draw( bitmap, cliprect, 1, TILEMAP_IGNORE_TRANSPARENCY ,0);

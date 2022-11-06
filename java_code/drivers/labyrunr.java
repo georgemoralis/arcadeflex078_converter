@@ -10,7 +10,7 @@ Driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,8 +21,7 @@ public class labyrunr
 	
 	/* from vidhrdw/labyrunr.c */
 	
-	public static InterruptHandlerPtr labyrunr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr labyrunr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			if (K007121_ctrlram[0][0x07] & 0x02)
@@ -35,12 +34,11 @@ public class labyrunr
 		}
 	} };
 	
-	public static WriteHandlerPtr labyrunr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr labyrunr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-	if ((data & 0xe0) != 0) usrintf_showmessage("bankswitch %02x",data);
+	if (data & 0xe0) usrintf_showmessage("bankswitch %02x",data);
 	
 		/* bits 0-2 = bank number */
 		bankaddress = 0x10000 + (data & 0x07) * 0x4000;
@@ -97,7 +95,7 @@ public class labyrunr
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_labyrunr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_labyrunr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( labyrunr )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -239,8 +237,7 @@ public class labyrunr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_labyrunr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( labyrunr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* 24MHz/8? */
@@ -264,9 +261,7 @@ public class labyrunr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -324,7 +319,7 @@ public class labyrunr
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_tricktrp	   = new GameDriver("1987"	,"tricktrp"	,"labyrunr.java"	,rom_tricktrp,null	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Trick Trap (World?)" )
-	public static GameDriver driver_labyrunr	   = new GameDriver("1987"	,"labyrunr"	,"labyrunr.java"	,rom_labyrunr,driver_tricktrp	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Labyrinth Runner (Japan)" )
-	public static GameDriver driver_labyrunk	   = new GameDriver("1987"	,"labyrunk"	,"labyrunr.java"	,rom_labyrunk,driver_tricktrp	,machine_driver_labyrunr	,input_ports_labyrunr	,null	,ROT90	,	"Konami", "Labyrinth Runner (World Ver. K)" )
+	GAME( 1987, tricktrp, 0,        labyrunr, labyrunr, 0, ROT90, "Konami", "Trick Trap (World?)" )
+	GAME( 1987, labyrunr, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (Japan)" )
+	GAME( 1987, labyrunk, tricktrp, labyrunr, labyrunr, 0, ROT90, "Konami", "Labyrinth Runner (World Ver. K)" )
 }

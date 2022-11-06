@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -19,8 +19,7 @@ public class segar
 	
 	
 	
-	public static WriteHandlerPtr segar_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int pc,op,page,off;
 		unsigned int bad;
 	

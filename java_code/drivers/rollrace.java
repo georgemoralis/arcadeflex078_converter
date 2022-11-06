@@ -8,7 +8,7 @@ Issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -17,17 +17,13 @@ public class rollrace
 	
 	
 	
-	public static WriteHandlerPtr rollrace_backgroundpage_w = new WriteHandlerPtr() {public void handler(int offset, int data);
-	public static WriteHandlerPtr rollrace_backgroundcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
 	
-	public static ReadHandlerPtr ra_fake_d800_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ra_fake_d800_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x51;
 	} };
 	
-	public static WriteHandlerPtr ra_fake_d800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ra_fake_d800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*	logerror("d900: %02X\n",data);*/
 	} };
 	
@@ -88,7 +84,7 @@ public class rollrace
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_rollrace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rollrace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rollrace )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT| IPF_8WAY );
@@ -243,8 +239,7 @@ public class rollrace
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_rollrace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rollrace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)			/* ?? */
@@ -273,20 +268,15 @@ public class rollrace
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ra_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_rollace2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rollace2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(rollrace)
 	
 		MDRV_VISIBLE_AREA(0,255-24,16, 255-16)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -437,7 +427,7 @@ public class rollrace
 		ROM_LOAD( "8.6f", 0x0000, 0x1000, CRC(6ec3c545) SHA1(1a2477b9e1563734195b0743f5dbbb005e06022e) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_fightrol	   = new GameDriver("1983"	,"fightrol"	,"rollrace.java"	,rom_fightrol,null	,machine_driver_rollrace	,input_ports_rollrace	,null	,ROT270	,	"[Kaneko] (Taito license)", "Fighting Roller", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_rollace	   = new GameDriver("1983"	,"rollace"	,"rollrace.java"	,rom_rollace,driver_fightrol	,machine_driver_rollrace	,input_ports_rollrace	,null	,ROT270	,	"[Kaneko] (Williams license)", "Roller Aces (set 1)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_rollace2	   = new GameDriver("1983"	,"rollace2"	,"rollrace.java"	,rom_rollace2,driver_fightrol	,machine_driver_rollace2	,input_ports_rollrace	,null	,ROT90	,	"[Kaneko] (Williams license)", "Roller Aces (set 2)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	GAMEX( 1983, fightrol, 0,        rollrace, rollrace, 0, ROT270, "[Kaneko] (Taito license)", "Fighting Roller", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	GAMEX( 1983, rollace,  fightrol, rollrace, rollrace, 0, ROT270, "[Kaneko] (Williams license)", "Roller Aces (set 1)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
+	GAMEX( 1983, rollace2, fightrol, rollace2, rollrace, 0, ROT90,  "[Kaneko] (Williams license)", "Roller Aces (set 2)", GAME_IMPERFECT_SOUND|GAME_IMPERFECT_COLORS )
 }

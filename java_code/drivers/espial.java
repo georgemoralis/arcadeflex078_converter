@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -14,22 +14,19 @@ public class espial
 {
 	
 	
-	public static MachineInitHandlerPtr machine_init_espial  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_espial  = new MachineInitHandlerPtr() { public void handler(){
 		/* we must start with NMI interrupts disabled */
 		//interrupt_enable = 0;
 		cpu_interrupt_enable(0,0);
 	} };
 	
 	
-	public static WriteHandlerPtr zodiac_master_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zodiac_master_interrupt_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_w(offset,~data & 1);
 	} };
 	
 	
-	public static InterruptHandlerPtr zodiac_master_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr zodiac_master_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			nmi_line_pulse();
 		else
@@ -37,8 +34,7 @@ public class espial
 	} };
 	
 	
-	public static WriteHandlerPtr zodiac_master_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zodiac_master_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset, data);
 		cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
@@ -143,7 +139,7 @@ public class espial
 	};
 	
 	
-	static InputPortPtr input_ports_espial = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_espial = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( espial )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, "Number of Buttons" );
 		PORT_DIPSETTING(    0x01, "1" );
@@ -205,7 +201,7 @@ public class espial
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_netwars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_netwars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( netwars )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );	/* probably unused */
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -316,8 +312,7 @@ public class espial
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_espial = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( espial )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3072000)	/* 3.072 MHz */
@@ -347,12 +342,9 @@ public class espial
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_netwars = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( netwars )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(espial)
@@ -364,9 +356,7 @@ public class espial
 		MDRV_SCREEN_SIZE(32*8, 64*8)
 	
 		MDRV_VIDEO_START(netwars)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -448,7 +438,7 @@ public class espial
 	
 	
 	
-	public static GameDriver driver_espial	   = new GameDriver("1983"	,"espial"	,"espial.java"	,rom_espial,null	,machine_driver_espial	,input_ports_espial	,null	,ROT0	,	"[Orca] Thunderbolt", "Espial (US?)" )
-	public static GameDriver driver_espiale	   = new GameDriver("1983"	,"espiale"	,"espial.java"	,rom_espiale,driver_espial	,machine_driver_espial	,input_ports_espial	,null	,ROT0	,	"[Orca] Thunderbolt", "Espial (Europe)" )
-	public static GameDriver driver_netwars	   = new GameDriver("1983"	,"netwars"	,"espial.java"	,rom_netwars,null	,machine_driver_netwars	,input_ports_netwars	,null	,ROT90	,	"Orca (Esco Trading Co license)", "Net Wars" )
+	GAME( 1983, espial,  0,      espial,  espial,  0, ROT0,  "[Orca] Thunderbolt", "Espial (US?)" )
+	GAME( 1983, espiale, espial, espial,  espial,  0, ROT0,  "[Orca] Thunderbolt", "Espial (Europe)" )
+	GAME( 1983, netwars, 0,      netwars, netwars, 0, ROT90, "Orca (Esco Trading Co license)", "Net Wars" )
 }

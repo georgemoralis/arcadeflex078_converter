@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -243,13 +243,13 @@ public class cpuexec
 		int cpunum;
 		
 		/* initialize the interfaces first */
-		if (cpuintrf_init() != 0)
+		if (cpuintrf_init())
 			return 1;
 	
 		/* loop over all our CPUs */
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
 		{
-			int cputype = Machine.drv.cpu[cpunum].cpu_type;
+			int cputype = Machine->drv->cpu[cpunum].cpu_type;
 	
 			/* if this is a dummy, stop looking */
 			if (cputype == CPU_DUMMY)
@@ -261,10 +261,10 @@ public class cpuexec
 			/* initialize the cpuinfo struct */
 			memset(&cpu[cpunum], 0, sizeof(cpu[cpunum]));
 			cpu[cpunum].suspend = SUSPEND_REASON_RESET;
-			cpu[cpunum].clockscale = cputype_get_interface(cputype).overclock;
+			cpu[cpunum].clockscale = cputype_get_interface(cputype)->overclock;
 	
 			/* compute the cycle times */
-			sec_to_cycles[cpunum] = cpu[cpunum].clockscale * Machine.drv.cpu[cpunum].cpu_clock;
+			sec_to_cycles[cpunum] = cpu[cpunum].clockscale * Machine->drv->cpu[cpunum].cpu_clock;
 			cycles_to_sec[cpunum] = 1.0 / sec_to_cycles[cpunum];
 	
 			/* initialize this CPU */
@@ -280,7 +280,7 @@ public class cpuexec
 		state_save_register_INT32("cpu", 0, "watchdog count", &watchdog_counter, 1);
 	
 		/* reset the IRQ lines and save those */
-		if (cpuint_init() != 0)
+		if (cpuint_init())
 			return 1;
 	
 		return 0;
@@ -303,7 +303,7 @@ public class cpuexec
 		begin_resource_tracking();
 	
 		/* read hi scores information from hiscore.dat */
-		hs_open(Machine.gamedrv.name);
+		hs_open(Machine->gamedrv->name);
 		hs_init();
 	
 		/* initialize the various timers (suspends all CPUs at startup) */
@@ -317,7 +317,7 @@ public class cpuexec
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
 			/* enable all CPUs (except for audio CPUs if the sound is off) */
-			if (!(Machine.drv.cpu[cpunum].cpu_flags & CPU_AUDIO_CPU) || Machine.sample_rate != 0)
+			if (!(Machine->drv->cpu[cpunum].cpu_flags & CPU_AUDIO_CPU) || Machine->sample_rate != 0)
 				cpunum_resume(cpunum, SUSPEND_ANY_REASON);
 			else
 				cpunum_suspend(cpunum, SUSPEND_REASON_DISABLE, 1);
@@ -334,12 +334,12 @@ public class cpuexec
 	
 		/* do this AFTER the above so machine_init() can use cpu_halt() to hold the */
 		/* execution of some CPUs, or disable interrupts */
-		if (Machine.drv.machine_init)
-			(*Machine.drv.machine_init)();
+		if (Machine->drv->machine_init)
+			(*Machine->drv->machine_init)();
 	
 		/* now reset each CPU */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
-			cpunum_reset(cpunum, Machine.drv.cpu[cpunum].reset_param, cpu_irq_callbacks[cpunum]);
+			cpunum_reset(cpunum, Machine->drv->cpu[cpunum].reset_param, cpu_irq_callbacks[cpunum]);
 	
 		/* reset the globals */
 		cpu_vblankreset();
@@ -361,8 +361,8 @@ public class cpuexec
 		hs_close();
 	
 		/* stop the machine */
-		if (Machine.drv.machine_stop)
-			(*Machine.drv.machine_stop)();
+		if (Machine->drv->machine_stop)
+			(*Machine->drv->machine_stop)();
 	
 		end_resource_tracking();
 	}
@@ -379,7 +379,7 @@ public class cpuexec
 	{
 	#ifdef MAME_DEBUG
 		/* initialize the debugger */
-		if (mame_debug != 0)
+		if (mame_debug)
 			mame_debug_init();
 	#endif
 	
@@ -412,7 +412,7 @@ public class cpuexec
 	
 	#ifdef MAME_DEBUG
 		/* shut down the debugger */
-		if (mame_debug != 0)
+		if (mame_debug)
 			mame_debug_exit();
 	#endif
 	}
@@ -468,9 +468,9 @@ public class cpuexec
 		int cpunum;
 	
 		/* open the file */
-		file = mame_fopen(Machine.gamedrv.name, loadsave_schedule_name, FILETYPE_STATE, 1);
+		file = mame_fopen(Machine->gamedrv->name, loadsave_schedule_name, FILETYPE_STATE, 1);
 	
-		if (file != 0)
+		if (file)
 		{
 			/* write the save state */
 			state_save_save_begin(file);
@@ -521,10 +521,10 @@ public class cpuexec
 		int cpunum;
 	
 		/* open the file */
-		file = mame_fopen(Machine.gamedrv.name, loadsave_schedule_name, FILETYPE_STATE, 0);
+		file = mame_fopen(Machine->gamedrv->name, loadsave_schedule_name, FILETYPE_STATE, 0);
 	
 		/* if successful, load it */
-		if (file != 0)
+		if (file)
 		{
 			/* start loading */
 			if (!state_save_load_begin(file))
@@ -595,7 +595,7 @@ public class cpuexec
 		cpu_loadsave_reset();
 	
 		loadsave_schedule_name = malloc(strlen(name) + 1);
-		if (loadsave_schedule_name != 0)
+		if (loadsave_schedule_name)
 		{
 			strcpy(loadsave_schedule_name, name);
 			loadsave_schedule = type;
@@ -613,7 +613,7 @@ public class cpuexec
 	void cpu_loadsave_schedule(int type, char id)
 	{
 		char name[256];
-		sprintf(name, "%s-%c", Machine.gamedrv.name, id);
+		sprintf(name, "%s-%c", Machine->gamedrv->name, id);
 		cpu_loadsave_schedule_file(type, name);
 	}
 	
@@ -628,7 +628,7 @@ public class cpuexec
 	void cpu_loadsave_reset(void)
 	{
 		loadsave_schedule = LOADSAVE_NONE;
-		if (loadsave_schedule_name != 0)
+		if (loadsave_schedule_name)
 		{
 			free(loadsave_schedule_name);
 			loadsave_schedule_name = NULL;
@@ -665,18 +665,16 @@ public class cpuexec
 	{
 		if (watchdog_counter == -1)
 			logerror("watchdog armed\n");
-		watchdog_counter = 3 * Machine.drv.frames_per_second;
+		watchdog_counter = 3 * Machine->drv->frames_per_second;
 	}
 	
 	
-	public static WriteHandlerPtr watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr watchdog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		watchdog_reset();
 	} };
 	
 	
-	public static ReadHandlerPtr watchdog_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr watchdog_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		watchdog_reset();
 		return 0xff;
 	} };
@@ -735,7 +733,7 @@ public class cpuexec
 		/* if we're clearing the line that was previously asserted, or if we're just */
 		/* pulsing the line, reset the CPU */
 		if ((state == CLEAR_LINE && (cpu[cpunum].suspend & SUSPEND_REASON_RESET)) || state == PULSE_LINE)
-			cpunum_reset(cpunum, Machine.drv.cpu[cpunum].reset_param, cpu_irq_callbacks[cpunum]);
+			cpunum_reset(cpunum, Machine->drv->cpu[cpunum].reset_param, cpu_irq_callbacks[cpunum]);
 	
 		/* if we're clearing the line, make sure the CPU is not halted */
 		cpunum_resume(cpunum, SUSPEND_REASON_RESET);
@@ -799,16 +797,16 @@ public class cpuexec
 		LOG(("cpu_timeslice: target = %.9f\n", target));
 		
 		/* process any pending suspends */
-		for (cpunum = 0; Machine.drv.cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
+		for (cpunum = 0; Machine->drv->cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
 		{
 			if (cpu[cpunum].suspend != cpu[cpunum].nextsuspend)
-				LOG(("-. updated CPU%d suspend from %X to %X\n", cpunum, cpu[cpunum].suspend, cpu[cpunum].nextsuspend));
+				LOG(("--> updated CPU%d suspend from %X to %X\n", cpunum, cpu[cpunum].suspend, cpu[cpunum].nextsuspend));
 			cpu[cpunum].suspend = cpu[cpunum].nextsuspend;
 			cpu[cpunum].eatcycles = cpu[cpunum].nexteatcycles;
 		}
 	
 		/* loop over CPUs */
-		for (cpunum = 0; Machine.drv.cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
+		for (cpunum = 0; Machine->drv->cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
 		{
 			/* only process if we're not suspended */
 			if (!cpu[cpunum].suspend)
@@ -842,7 +840,7 @@ public class cpuexec
 		}
 		
 		/* update the local times of all CPUs */
-		for (cpunum = 0; Machine.drv.cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
+		for (cpunum = 0; Machine->drv->cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
 		{
 			/* if we're suspended and counting, process */
 			if (cpu[cpunum].suspend && cpu[cpunum].eatcycles && cpu[cpunum].localtime < target)
@@ -858,7 +856,7 @@ public class cpuexec
 			
 			/* update the suspend state */
 			if (cpu[cpunum].suspend != cpu[cpunum].nextsuspend)
-				LOG(("-. updated CPU%d suspend from %X to %X\n", cpunum, cpu[cpunum].suspend, cpu[cpunum].nextsuspend));
+				LOG(("--> updated CPU%d suspend from %X to %X\n", cpunum, cpu[cpunum].suspend, cpu[cpunum].nextsuspend));
 			cpu[cpunum].suspend = cpu[cpunum].nextsuspend;
 			cpu[cpunum].eatcycles = cpu[cpunum].nexteatcycles;
 	
@@ -1011,7 +1009,7 @@ public class cpuexec
 		VERIFY_CPUNUM_VOID(cpunum_set_clockscale);
 	
 		cpu[cpunum].clockscale = clockscale;
-		sec_to_cycles[cpunum] = cpu[cpunum].clockscale * Machine.drv.cpu[cpunum].cpu_clock;
+		sec_to_cycles[cpunum] = cpu[cpunum].clockscale * Machine->drv->cpu[cpunum].cpu_clock;
 		cycles_to_sec[cpunum] = 1.0 / sec_to_cycles[cpunum];
 	
 		/* re-compute the perfect interleave factor */
@@ -1200,7 +1198,7 @@ public class cpuexec
 	void cpu_init_refresh_timer(void)
 	{
 		/* allocate an infinite timer to track elapsed time since the last refresh */
-		refresh_period = TIME_IN_HZ(Machine.drv.frames_per_second);
+		refresh_period = TIME_IN_HZ(Machine->drv->frames_per_second);
 		refresh_period_inv = 1.0 / refresh_period;
 		refresh_timer = timer_alloc(NULL);
 	
@@ -1218,11 +1216,11 @@ public class cpuexec
 	
 	void cpu_compute_scanline_timing(void)
 	{
-		if (Machine.drv.vblank_duration)
-			scanline_period = (refresh_period - TIME_IN_USEC(Machine.drv.vblank_duration)) /
-					(double)(Machine.drv.default_visible_area.max_y - Machine.drv.default_visible_area.min_y + 1);
+		if (Machine->drv->vblank_duration)
+			scanline_period = (refresh_period - TIME_IN_USEC(Machine->drv->vblank_duration)) /
+					(double)(Machine->drv->default_visible_area.max_y - Machine->drv->default_visible_area.min_y + 1);
 		else
-			scanline_period = refresh_period / (double)Machine.drv.screen_height;
+			scanline_period = refresh_period / (double)Machine->drv->screen_height;
 		scanline_period_inv = 1.0 / scanline_period;
 	}
 	
@@ -1265,14 +1263,14 @@ public class cpuexec
 	
 		/* if we're already past the computed time, count it for the next frame */
 		if (abstime >= scantime)
-			scantime += TIME_IN_HZ(Machine.drv.frames_per_second);
+			scantime += TIME_IN_HZ(Machine->drv->frames_per_second);
 	
 		/* compute how long from now until that time */
 		result = scantime - abstime;
 	
 		/* if it's small, just count a whole frame */
 		if (result < TIME_IN_NSEC(1))
-			result += TIME_IN_HZ(Machine.drv.frames_per_second);
+			result += TIME_IN_HZ(Machine->drv->frames_per_second);
 		return result;
 	}
 	
@@ -1304,7 +1302,7 @@ public class cpuexec
 		double elapsed_time = timer_timeelapsed(refresh_timer);
 		int scanline = (int)(elapsed_time * scanline_period_inv);
 		double time_since_scanline = elapsed_time - (double)scanline * scanline_period;
-		return (int)(time_since_scanline * scanline_period_inv * (double)Machine.drv.screen_width);
+		return (int)(time_since_scanline * scanline_period_inv * (double)Machine->drv->screen_width);
 	}
 	
 	
@@ -1358,7 +1356,7 @@ public class cpuexec
 		for (cpunum = 0; cpunum < MAX_CPU; cpunum++)
 		{
 			/* if this is a dummy, stop looking */
-			if (Machine.drv.cpu[cpunum].cpu_type == CPU_DUMMY)
+			if (Machine->drv->cpu[cpunum].cpu_type == CPU_DUMMY)
 				break;
 	
 			/* see if this is a matching trigger */
@@ -1555,7 +1553,7 @@ public class cpuexec
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
 			if (!(cpu[cpunum].suspend & SUSPEND_REASON_DISABLE))
-				cpu[cpunum].iloops = Machine.drv.cpu[cpunum].vblank_interrupts_per_frame - 1;
+				cpu[cpunum].iloops = Machine->drv->cpu[cpunum].vblank_interrupts_per_frame - 1;
 			else
 				cpu[cpunum].iloops = -1;
 		}
@@ -1606,10 +1604,10 @@ public class cpuexec
 					if (param != -1)
 					{
 						/* if the CPU has a VBLANK handler, call it */
-						if (Machine.drv.cpu[cpunum].vblank_interrupt && cpu_getstatus(cpunum))
+						if (Machine->drv->cpu[cpunum].vblank_interrupt && cpu_getstatus(cpunum))
 						{
 							cpuintrf_push_context(cpunum);
-							(*Machine.drv.cpu[cpunum].vblank_interrupt)();
+							(*Machine->drv->cpu[cpunum].vblank_interrupt)();
 							cpuintrf_pop_context();
 						}
 	
@@ -1632,11 +1630,11 @@ public class cpuexec
 		if (!--vblank_countdown)
 		{
 			/* do we update the screen now? */
-			if (!(Machine.drv.video_attributes & VIDEO_UPDATE_AFTER_VBLANK))
+			if (!(Machine->drv->video_attributes & VIDEO_UPDATE_AFTER_VBLANK))
 				time_to_quit = updatescreen();
 	
 			/* Set the timer to update the screen */
-			timer_set(TIME_IN_USEC(Machine.drv.vblank_duration), 0, cpu_updatecallback);
+			timer_set(TIME_IN_USEC(Machine->drv->vblank_duration), 0, cpu_updatecallback);
 	
 			/* reset the globals */
 			cpu_vblankreset();
@@ -1657,7 +1655,7 @@ public class cpuexec
 	static void cpu_updatecallback(int param)
 	{
 		/* update the screen if we didn't before */
-		if (Machine.drv.video_attributes & VIDEO_UPDATE_AFTER_VBLANK)
+		if (Machine->drv->video_attributes & VIDEO_UPDATE_AFTER_VBLANK)
 			time_to_quit = updatescreen();
 		vblank = 0;
 	
@@ -1694,10 +1692,10 @@ public class cpuexec
 	static void cpu_timedintcallback(int param)
 	{
 		/* bail if there is no routine */
-		if (Machine.drv.cpu[param].timed_interrupt && cpu_getstatus(param))
+		if (Machine->drv->cpu[param].timed_interrupt && cpu_getstatus(param))
 		{
 			cpuintrf_push_context(param);
-			(*Machine.drv.cpu[param].timed_interrupt)();
+			(*Machine->drv->cpu[param].timed_interrupt)();
 			cpuintrf_pop_context();
 		}
 	}
@@ -1715,9 +1713,9 @@ public class cpuexec
 	
 		Rates can be specified as follows:
 	
-			rate <= 0		. 0
-			rate < 50000	. 'rate' cycles per frame
-			rate >= 50000	. 'rate' nanoseconds
+			rate <= 0		-> 0
+			rate < 50000	-> 'rate' cycles per frame
+			rate >= 50000	-> 'rate' nanoseconds
 	
 	--------------------------------------------------------------*/
 	
@@ -1780,7 +1778,7 @@ public class cpuexec
 	
 		/* start with a huge time factor and find the 2nd smallest cycle time */
 		perfect_interleave = 1.0;
-		for (cpunum = 1; Machine.drv.cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
+		for (cpunum = 1; Machine->drv->cpu[cpunum].cpu_type != CPU_DUMMY; cpunum++)
 		{
 			/* find the 2nd smallest cycle interval */
 			if (cycles_to_sec[cpunum] < smallest)
@@ -1813,10 +1811,10 @@ public class cpuexec
 		int cpunum, max, ipf;
 	
 		/* allocate a dummy timer at the minimum frequency to break things up */
-		ipf = Machine.drv.cpu_slices_per_frame;
+		ipf = Machine->drv->cpu_slices_per_frame;
 		if (ipf <= 0)
 			ipf = 1;
-		timeslice_period = TIME_IN_HZ(Machine.drv.frames_per_second * ipf);
+		timeslice_period = TIME_IN_HZ(Machine->drv->frames_per_second * ipf);
 		timeslice_timer = timer_alloc(cpu_timeslicecallback);
 		timer_adjust(timeslice_timer, timeslice_period, 0, timeslice_period);
 		
@@ -1834,7 +1832,7 @@ public class cpuexec
 		max = 1;
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			ipf = Machine.drv.cpu[cpunum].vblank_interrupts_per_frame;
+			ipf = Machine->drv->cpu[cpunum].vblank_interrupts_per_frame;
 			if (ipf > max)
 				max = ipf;
 		}
@@ -1845,7 +1843,7 @@ public class cpuexec
 		{
 			for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 			{
-				ipf = Machine.drv.cpu[cpunum].vblank_interrupts_per_frame;
+				ipf = Machine->drv->cpu[cpunum].vblank_interrupts_per_frame;
 				if (ipf > 0 && (vblank_multiplier % ipf) != 0)
 					break;
 			}
@@ -1857,7 +1855,7 @@ public class cpuexec
 		/* initialize the countdown timers and intervals */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			ipf = Machine.drv.cpu[cpunum].vblank_interrupts_per_frame;
+			ipf = Machine->drv->cpu[cpunum].vblank_interrupts_per_frame;
 			if (ipf > 0)
 				cpu[cpunum].vblankint_countdown = cpu[cpunum].vblankint_multiplier = vblank_multiplier / ipf;
 			else
@@ -1865,7 +1863,7 @@ public class cpuexec
 		}
 	
 		/* allocate a vblank timer at the frame rate * the LCD number of interrupts per frame */
-		vblank_period = TIME_IN_HZ(Machine.drv.frames_per_second * vblank_multiplier);
+		vblank_period = TIME_IN_HZ(Machine->drv->frames_per_second * vblank_multiplier);
 		vblank_timer = timer_alloc(cpu_vblankcallback);
 		vblank_countdown = vblank_multiplier;
 	
@@ -1877,17 +1875,17 @@ public class cpuexec
 		/* start the CPU interrupt timers */
 		for (cpunum = 0; cpunum < cpu_gettotalcpu(); cpunum++)
 		{
-			ipf = Machine.drv.cpu[cpunum].vblank_interrupts_per_frame;
+			ipf = Machine->drv->cpu[cpunum].vblank_interrupts_per_frame;
 	
 			/* compute the average number of cycles per interrupt */
 			if (ipf <= 0)
 				ipf = 1;
-			cpu[cpunum].vblankint_period = TIME_IN_HZ(Machine.drv.frames_per_second * ipf);
+			cpu[cpunum].vblankint_period = TIME_IN_HZ(Machine->drv->frames_per_second * ipf);
 			cpu[cpunum].vblankint_timer = timer_alloc(NULL);
 	
 			/* see if we need to allocate a CPU timer */
-			ipf = Machine.drv.cpu[cpunum].timed_interrupts_per_second;
-			if (ipf != 0)
+			ipf = Machine->drv->cpu[cpunum].timed_interrupts_per_second;
+			if (ipf)
 			{
 				cpu[cpunum].timedint_period = cpu_computerate(ipf);
 				cpu[cpunum].timedint_timer = timer_alloc(cpu_timedintcallback);
@@ -1898,7 +1896,7 @@ public class cpuexec
 		/* note that since we start the first frame on the refresh, we can't pulse starting
 		   immediately; instead, we back up one VBLANK period, and inch forward until we hit
 		   positive time. That time will be the time of the first VBLANK timer callback */
-		first_time = -TIME_IN_USEC(Machine.drv.vblank_duration) + vblank_period;
+		first_time = -TIME_IN_USEC(Machine->drv->vblank_duration) + vblank_period;
 		while (first_time < 0)
 		{
 			cpu_vblankcallback(-1);

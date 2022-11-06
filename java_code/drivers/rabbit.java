@@ -55,7 +55,7 @@ Custom:	Imagetek 15000 (2ch video & 2ch sound)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -83,23 +83,20 @@ public class rabbit
 		{ 0xff0000, 0xffffff, MWA32_RAM },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_rabbit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rabbit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rabbit )
 	INPUT_PORTS_END(); }}; 
 	
 	
-	VIDEO_START(rabbit)
-	{
+	public static VideoStartHandlerPtr video_start_rabbit  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(rabbit)
-	{
+	public static VideoUpdateHandlerPtr video_update_rabbit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
-	}
+	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_rabbit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rabbit )
 		MDRV_CPU_ADD(M68020, 24000000 )
 		MDRV_CPU_MEMORY(rabbit_readmem,rabbit_writemem)
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -123,9 +120,7 @@ public class rabbit
 	
 		MDRV_VIDEO_START(rabbit)
 		MDRV_VIDEO_UPDATE(rabbit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_rabbit = new RomLoadPtr(){ public void handler(){ 
@@ -187,6 +182,6 @@ public class rabbit
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_rabbit	   = new GameDriver("1997"	,"rabbit"	,"rabbit.java"	,rom_rabbit,null	,machine_driver_rabbit	,input_ports_rabbit	,null	,ROT0	,	"Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_tmmjprd	   = new GameDriver("1997"	,"tmmjprd"	,"rabbit.java"	,rom_tmmjprd,null	,machine_driver_rabbit	,input_ports_rabbit	,null	,ROT0	,	"Media / Sonnet", "Tokimeki Mahjong Paradise - Dear My Love", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1997, rabbit, 0, rabbit, rabbit, 0, ROT0, "Electronic Arts", "Rabbit", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1997, tmmjprd, 0, rabbit, rabbit, 0, ROT0, "Media / Sonnet", "Tokimeki Mahjong Paradise - Dear My Love", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -112,7 +112,7 @@ public class berzerk
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW,  IPT_UNUSED );
 	
 	
-	static InputPortPtr input_ports_berzerk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_berzerk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( berzerk )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -187,7 +187,7 @@ public class berzerk
 		PORT_BITX(0x80, IP_ACTIVE_HIGH, 0, "Stats", KEYCODE_F1, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_frenzy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_frenzy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( frenzy )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -322,8 +322,7 @@ public class berzerk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_berzerk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( berzerk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 2500000)        /* 2.5 MHz */
@@ -350,12 +349,9 @@ public class berzerk
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, berzerk_samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, berzerk_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_frenzy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( frenzy )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(berzerk)
@@ -364,9 +360,7 @@ public class berzerk
 	
 		MDRV_MACHINE_INIT(NULL)
 		MDRV_NVRAM_HANDLER(NULL)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -408,7 +402,7 @@ public class berzerk
 	
 	
 	
-	public static GameDriver driver_berzerk	   = new GameDriver("1980"	,"berzerk"	,"berzerk.java"	,rom_berzerk,null	,machine_driver_berzerk	,input_ports_berzerk	,null	,ROT0	,	"Stern", "Berzerk (set 1)" )
-	public static GameDriver driver_berzerk1	   = new GameDriver("1980"	,"berzerk1"	,"berzerk.java"	,rom_berzerk1,driver_berzerk	,machine_driver_berzerk	,input_ports_berzerk	,null	,ROT0	,	"Stern", "Berzerk (set 2)" )
-	public static GameDriver driver_frenzy	   = new GameDriver("1982"	,"frenzy"	,"berzerk.java"	,rom_frenzy,null	,machine_driver_frenzy	,input_ports_frenzy	,null	,ROT0	,	"Stern", "Frenzy" )
+	GAME( 1980, berzerk,  0,       berzerk, berzerk, 0, ROT0, "Stern", "Berzerk (set 1)" )
+	GAME( 1980, berzerk1, berzerk, berzerk, berzerk, 0, ROT0, "Stern", "Berzerk (set 2)" )
+	GAME( 1982, frenzy,   0,       frenzy,  frenzy,  0, ROT0, "Stern", "Frenzy" )
 }

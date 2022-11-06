@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -81,8 +81,7 @@ public class gaiden
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gaiden  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gaiden  = new VideoStartHandlerPtr() { public int handler(){
 		/* set up tile layers */
 		background = tilemap_create(get_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 64, 32);
 		foreground = tilemap_create(get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 64, 32);
@@ -98,8 +97,7 @@ public class gaiden
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_raiga  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_raiga  = new VideoStartHandlerPtr() { public int handler(){
 		/* set up tile layers */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
 		tile_bitmap_fg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
@@ -121,7 +119,7 @@ public class gaiden
 		/* set up sprites */
 		sprite_bitmap = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
 	
-		if (sprite_bitmap == 0)
+		if (!sprite_bitmap)
 			return 1;
 	
 		return 0;
@@ -187,7 +185,7 @@ public class gaiden
 	
 	WRITE16_HANDLER( gaiden_flip_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			flip_screen_set(data & 1);
 	}
 	
@@ -240,34 +238,34 @@ public class gaiden
 		ox = sx;
 		oy = sy;
 	
-		ex = sx + src1.width - 1;
+		ex = sx + src1->width - 1;
 		if (sx < 0) sx = 0;
-		if (sx < clip.min_x) sx = clip.min_x;
-		if (ex >= dest.width) ex = dest.width - 1;
-		if (ex > clip.max_x) ex = clip.max_x;
+		if (sx < clip->min_x) sx = clip->min_x;
+		if (ex >= dest->width) ex = dest->width - 1;
+		if (ex > clip->max_x) ex = clip->max_x;
 		if (sx > ex) return;
 	
-		ey = sy + src1.height - 1;
+		ey = sy + src1->height - 1;
 		if (sy < 0) sy = 0;
-		if (sy < clip.min_y) sy = clip.min_y;
-		if (ey >= dest.height) ey = dest.height - 1;
-		if (ey > clip.max_y) ey = clip.max_y;
+		if (sy < clip->min_y) sy = clip->min_y;
+		if (ey >= dest->height) ey = dest->height - 1;
+		if (ey > clip->max_y) ey = clip->max_y;
 		if (sy > ey) return;
 	
 		{
-			pen_t *paldata = Machine.pens;
+			pen_t *paldata = Machine->pens;
 			UINT32 *end;
 	
-			UINT16 *sd1 = ((UINT16 *)src1.line[0]);								/* source data   */
-			UINT16 *sd2 = ((UINT16 *)src2.line[0]);
-			UINT16 *sd3 = ((UINT16 *)src3.line[0]);
+			UINT16 *sd1 = ((UINT16 *)src1->line[0]);								/* source data   */
+			UINT16 *sd2 = ((UINT16 *)src2->line[0]);
+			UINT16 *sd3 = ((UINT16 *)src3->line[0]);
 	
 			int sw = ex-sx+1;														/* source width  */
 			int sh = ey-sy+1;														/* source height */
-			int sm = ((UINT16 *)src1.line[1]) - ((UINT16 *)src1.line[0]);			/* source modulo */
+			int sm = ((UINT16 *)src1->line[1]) - ((UINT16 *)src1->line[0]);			/* source modulo */
 	
-			UINT32 *dd = ((UINT32 *)dest.line[sy]) + sx;							/* dest data     */
-			int dm = ((UINT32 *)dest.line[1]) - ((UINT32 *)dest.line[0]);			/* dest modulo   */
+			UINT32 *dd = ((UINT32 *)dest->line[sy]) + sx;							/* dest data     */
+			int dm = ((UINT32 *)dest->line[1]) - ((UINT32 *)dest->line[0]);			/* dest modulo   */
 	
 			sd1 += (sx-ox);
 			sd1 += sm * (sy-oy);
@@ -369,7 +367,7 @@ public class gaiden
 			{42,43,46,47,58,59,62,63}
 		};
 	
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		struct mame_bitmap *bitmap = bitmap_bg;
 		const UINT16 *source = (NUM_SPRITES - 1) * 8 + spriteram16;
 		const UINT8 blend_support = (bitmap_fg && bitmap_sp);
@@ -382,7 +380,7 @@ public class gaiden
 			UINT32 priority_mask;
 			int col,row;
 	
-			if ((attributes & 0x04) != 0)
+			if (attributes & 0x04)
 			{
 				UINT32 priority = (attributes >> 6) & 3;
 				UINT32 flipx = (attributes & 1);
@@ -409,7 +407,7 @@ public class gaiden
 				if (ypos >= 256)
 					ypos -= 512;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -457,7 +455,7 @@ public class gaiden
 				}
 				else
 				{
-					if (blend_support != 0)
+					if (blend_support)
 						bitmap = (priority >= 2) ? bitmap_bg : bitmap_fg;
 	
 					for (row = 0; row < sizey; row++)
@@ -483,8 +481,7 @@ public class gaiden
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gaiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gaiden  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,                    0, cliprect);
 		fillbitmap(bitmap,          Machine.pens[0x200], cliprect);
 	
@@ -495,8 +492,7 @@ public class gaiden
 		draw_sprites(bitmap, NULL, NULL, cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_raiga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_raiga  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,    0, cliprect);
 	
 		fillbitmap(tile_bitmap_bg, 0x200, cliprect);

@@ -53,7 +53,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -133,8 +133,7 @@ public class sshangha
 	
 	/******************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_sshangha  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sshangha  = new MachineInitHandlerPtr() { public void handler(){
 		/* Such thing is needed as there is no code to turn the screen
 		   to normal orientation when the game is reset.
 		   I'm using the value that forces the screen to be in normal
@@ -205,7 +204,7 @@ public class sshangha
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_sshangha = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sshangha = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sshangha )
 		PORT_START(); 	/* Player 1 controls (0xfec047.b) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -364,8 +363,7 @@ public class sshangha
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_sshangha = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sshangha )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 28000000/2)
@@ -394,9 +392,7 @@ public class sshangha
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -441,8 +437,7 @@ public class sshangha
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_sshangha  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sshangha  = new DriverInitHandlerPtr() { public void handler(){
 	#if SSHANGHA_HACK
 		/* This is a hack to allow you to use the extra features
 	         of the first "Unused" Dip Switch (see notes above). */
@@ -458,6 +453,6 @@ public class sshangha
 	} };
 	
 	
-	public static GameDriver driver_sshangha	   = new GameDriver("1992"	,"sshangha"	,"sshangha.java"	,rom_sshangha,null	,machine_driver_sshangha	,input_ports_sshangha	,init_sshangha	,ROT0	,	"Hot-B.",   "Super Shanghai Dragon's Eye (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND )
-	public static GameDriver driver_sshanghb	   = new GameDriver("1992"	,"sshanghb"	,"sshangha.java"	,rom_sshanghb,driver_sshangha	,machine_driver_sshangha	,input_ports_sshangha	,init_sshangha	,ROT0	,	"bootleg", "Super Shanghai Dragon's Eye (World, bootleg)", GAME_NO_SOUND )
+	GAMEX( 1992, sshangha, 0,        sshangha, sshangha, sshangha, ROT0, "Hot-B.",   "Super Shanghai Dragon's Eye (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND )
+	GAMEX( 1992, sshanghb, sshangha, sshangha, sshangha, sshangha, ROT0, "bootleg", "Super Shanghai Dragon's Eye (World, bootleg)", GAME_NO_SOUND )
 }

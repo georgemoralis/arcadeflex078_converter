@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -114,8 +114,7 @@ public class atarigt
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_atarigt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_atarigt  = new VideoStartHandlerPtr() { public int handler(){
 			static const struct atarirle_desc modesc =
 		{
 			REGION_GFX3,/* region where the GFX data lives */
@@ -145,7 +144,7 @@ public class atarigt
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, atarigt_playfield_scan, TILEMAP_OPAQUE, 8,8, 128,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -154,7 +153,7 @@ public class atarigt
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 	
 		/* allocate temp bitmaps */
@@ -200,28 +199,28 @@ public class atarigt
 	
 		/* update the raw data */
 		address = (address & 0x7ffff) / 2;
-		olddata = atarigt_colorram.read(address);
-		COMBINE_DATA(&atarigt_colorram.read(address));
+		olddata = atarigt_colorram[address];
+		COMBINE_DATA(&atarigt_colorram[address]);
 	
 		/* update the TRAM checksum */
 		if (address >= 0x10000 && address < 0x14000)
-			tram_checksum += atarigt_colorram.read(address)- olddata;
+			tram_checksum += atarigt_colorram[address] - olddata;
 	
 		/* update expanded MRAM */
 		else if (address >= 0x20000 && address < 0x28000)
 		{
-			expanded_mram[0 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)>> 8) << rshift;
-			expanded_mram[1 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)& 0xff) << gshift;
+			expanded_mram[0 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] >> 8) << rshift;
+			expanded_mram[1 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] & 0xff) << gshift;
 		}
 		else if (address >= 0x30000 && address < 0x38000)
-			expanded_mram[2 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram.read(address)& 0xff) << bshift;
+			expanded_mram[2 * MRAM_ENTRIES + (address & 0x7fff)] = (atarigt_colorram[address] & 0xff) << bshift;
 	}
 	
 	
 	data16_t atarigt_colorram_r(offs_t address)
 	{
 		address &= 0x7ffff;
-		return atarigt_colorram.read(address / 2);
+		return atarigt_colorram[address / 2];
 	}
 	
 	
@@ -246,7 +245,7 @@ public class atarigt
 		{
 			data32_t word = *base++;
 	
-			if ((word & 0x80000000) != 0)
+			if (word & 0x80000000)
 			{
 				int newscroll = (word >> 21) & 0x3ff;
 				int newbank = (word >> 16) & 0x1f;
@@ -264,7 +263,7 @@ public class atarigt
 				}
 			}
 	
-			if ((word & 0x00008000) != 0)
+			if (word & 0x00008000)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 15;
@@ -427,9 +426,9 @@ public class atarigt
 			
 		And even beyond that:
 			
-			LATCH & 0x04 . LCRD2
-			LATCH & 0x02 . LCRD1
-			LATCH & 0x01 . LCRD0
+			LATCH & 0x04 -> LCRD2
+			LATCH & 0x02 -> LCRD1
+			LATCH & 0x01 -> LCRD0
 	
 			GAL @ 22E, takes as input:
 				LCRD0-2
@@ -568,8 +567,7 @@ public class atarigt
 	*/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atarigt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct mame_bitmap *mo_bitmap = atarirle_get_vram(0, 0);
 		struct mame_bitmap *tm_bitmap = atarirle_get_vram(0, 1);
 		int color_latch;
@@ -582,9 +580,9 @@ public class atarigt
 		tilemap_draw(an_bitmap, cliprect, atarigen_alpha_tilemap, 0, 0);
 	
 		/* cache pointers */
-		color_latch = atarigt_colorram.read(0x30000/2);
-		cram = (UINT16 *)&atarigt_colorram.read(0x00000/2)+ 0x2000 * ((color_latch >> 3) & 1);
-		tram = (UINT16 *)&atarigt_colorram.read(0x20000/2)+ 0x1000 * ((color_latch >> 4) & 3);
+		color_latch = atarigt_colorram[0x30000/2];
+		cram = (UINT16 *)&atarigt_colorram[0x00000/2] + 0x2000 * ((color_latch >> 3) & 1);
+		tram = (UINT16 *)&atarigt_colorram[0x20000/2] + 0x1000 * ((color_latch >> 4) & 3);
 		mram = expanded_mram + 0x2000 * ((color_latch >> 6) & 3);
 	
 		/* now do the nasty blend */
@@ -597,7 +595,7 @@ public class atarigt
 			UINT32 *dst = (UINT32 *)bitmap.base + y * bitmap.rowpixels;
 	
 			/* Primal Rage: no TRAM, slightly different priorities */
-			if (atarigt_is_primrage != 0)
+			if (atarigt_is_primrage)
 			{
 				for (x = cliprect.min_x; x <= cliprect.max_x; x++)
 				{
@@ -622,7 +620,7 @@ public class atarigt
 					rgb |= mram[2 * MRAM_ENTRIES + ((cra >>  0) & 0x01f)];
 	
 					/* final override */
-					if ((color_latch & 7) != 0)
+					if (color_latch & 7)
 						if (!(pf[x] & 0x3f) || !(pf[x] & 0x2000))
 							rgb = (0xff << rshift) | (0xff << gshift) | (0xff << bshift);
 							
@@ -669,9 +667,9 @@ public class atarigt
 						no_cra = 1;
 					if (!(!(cra & 0x8000) && (!(pf[x] & 0x1000) || !(pf[x] & 0x3f))))
 						no_tra = 1;
-					if (no_cra != 0)
+					if (no_cra)
 						cra = 0;
-					if (no_tra != 0)
+					if (no_tra)
 						tra = 0;
 					
 					/* compute the result */
@@ -680,7 +678,7 @@ public class atarigt
 					rgb |= mram[2 * MRAM_ENTRIES + mra + ((cra >>  0) & 0x01f) + ((tra << 5) & 0x3e0)];
 	
 					/* final override */
-					if ((color_latch & 7) != 0)
+					if (color_latch & 7)
 						if (!(pf[x] & 0x3f) || !(pf[x] & 0x2000))
 							rgb = (0xff << rshift) | (0xff << gshift) | (0xff << bshift);
 							

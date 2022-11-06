@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -64,8 +64,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starwars_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_out_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		switch (offset)
@@ -87,7 +86,7 @@ public class starwars
 				break;
 	
 			case 4:		/* bank switch */
-				if ((data & 0x80) != 0)
+				if (data & 0x80)
 				{
 					cpu_setbank(1, &RAM[0x10000]);
 					cpu_setbank(2, &RAM[0x1c000]);
@@ -121,8 +120,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starwars_input_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_input_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int x = readinputport(1);
 	
 		/* Kludge to enable Starwars Mathbox Self-test                  */
@@ -131,7 +129,7 @@ public class starwars
 			x |= 0x80;
 	
 		/* set the AVG done flag */
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			x |= 0x40;
 		else
 			x &= ~0x40;
@@ -147,8 +145,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starwars_adc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starwars_adc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* pitch */
 		if (control_num == kPitch)
 			return readinputport(4);
@@ -163,8 +160,7 @@ public class starwars
 	} };
 	
 	
-	public static WriteHandlerPtr starwars_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starwars_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		control_num = offset;
 	} };
 	
@@ -269,41 +265,41 @@ public class starwars
 			 */
 	
 			/* 0x01 - LAC */
-			if ((IP15_8 & LAC) != 0)
+			if (IP15_8 & LAC)
 				ACC = RAMWORD;
 	
 			/* 0x02 - READ_ACC */
-			if ((IP15_8 & READ_ACC) != 0)
+			if (IP15_8 & READ_ACC)
 			{
 				RAM[MA_byte+1] = (ACC & 0x00ff);
 				RAM[MA_byte  ] = (ACC & 0xff00) >> 8;
 			}
 	
 			/* 0x04 - M_HALT */
-			if ((IP15_8 & M_HALT) != 0)
+			if (IP15_8 & M_HALT)
 				M_STOP = 0;
 	
 			/* 0x08 - INC_BIC */
-			if ((IP15_8 & INC_BIC) != 0)
+			if (IP15_8 & INC_BIC)
 				BIC = (BIC + 1) & 0x1ff; /* Restrict to 9 bits */
 	
 			/* 0x10 - CLEAR_ACC */
-			if ((IP15_8 & CLEAR_ACC) != 0)
+			if (IP15_8 & CLEAR_ACC)
 				ACC = 0;
 	
 			/* 0x20 - LDC */
-			if ((IP15_8 & LDC) != 0)
+			if (IP15_8 & LDC)
 			{
 				C = RAMWORD;
 				ACC=ACC+(  ( (long)((A-B)*C) )>>14  );
 			}
 	
 			/* 0x40 - LDB */
-			if ((IP15_8 & LDB) != 0)
+			if (IP15_8 & LDB)
 				B = RAMWORD;
 	
 			/* 0x80 - LDA */
-			if ((IP15_8 & LDA) != 0)
+			if (IP15_8 & LDA)
 				A = RAMWORD;
 	
 			/*
@@ -327,8 +323,7 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr swmathbx_prng_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr swmathbx_prng_r  = new ReadHandlerPtr() { public int handler(int offset){
 		PRN = (int)((PRN + 0x2364) ^ 2); /* This is a total bodge for now, but it works!*/
 		return PRN;
 	} };
@@ -341,20 +336,17 @@ public class starwars
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr swmathbx_reh_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr swmathbx_reh_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (div_result & 0xff00) >> 8;
 	} };
 	
 	
-	public static ReadHandlerPtr swmathbx_rel_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr swmathbx_rel_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return div_result & 0x00ff;
 	} };
 	
 	
-	public static WriteHandlerPtr swmathbx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr swmathbx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 0xff;	/* ASG 971002 -- make sure we only get bytes here */
 		switch (offset)
 		{

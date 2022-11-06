@@ -186,7 +186,7 @@ CPU68 PCB:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -215,19 +215,17 @@ public class namcos21
 	
 	static WRITE16_HANDLER( namcos2_68k_dualportram_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if( ACCESSING_LSB )
 		{
 			mpDualPortRAM[offset] = data & 0xff;
 		}
 	}
 	
-	public static ReadHandlerPtr namcos2_dualportram_byte_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_dualportram_byte_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mpDualPortRAM[offset];
 	} };
 	
-	public static WriteHandlerPtr namcos2_dualportram_byte_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_dualportram_byte_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mpDualPortRAM[offset] = data;
 	} };
 	
@@ -492,8 +490,7 @@ public class namcos21
 		50
 	};
 	
-	public static MachineHandlerPtr machine_driver_s21base = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( s21base )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12288000) /* Master */
@@ -531,33 +528,25 @@ public class namcos21
 		MDRV_VIDEO_START(namcos21)
 		MDRV_VIDEO_UPDATE(namcos21_default)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_poly_c140_typeA = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( poly_c140_typeA )
 		MDRV_IMPORT_FROM(s21base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface_typeA)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_poly_c140_typeB = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( poly_c140_typeB )
 		MDRV_IMPORT_FROM(s21base)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface_typeB)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_aircombu = new RomLoadPtr(){ public void handler(){ 
@@ -854,13 +843,11 @@ public class namcos21
 		mpDataROM = (data16_t *)memory_region( REGION_USER1 );
 	} /* namcos21_init */
 	
-	public static DriverInitHandlerPtr init_winrun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_winrun  = new DriverInitHandlerPtr() { public void handler(){
 		namcos21_init( NAMCOS21_WINRUN91 );
 	} };
 	
-	public static DriverInitHandlerPtr init_aircombt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aircombt  = new DriverInitHandlerPtr() { public void handler(){
 	#if 0
 		/* replace first four tests of aircombj with special "hidden" tests */
 		data16_t *pMem = (data16_t *)memory_region( REGION_CPU1 );
@@ -873,19 +860,16 @@ public class namcos21
 		namcos21_init( NAMCOS21_AIRCOMBAT );
 	} };
 	
-	public static DriverInitHandlerPtr init_starblad  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starblad  = new DriverInitHandlerPtr() { public void handler(){
 		namcos21_init( NAMCOS21_STARBLADE );
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_cybsled  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cybsled  = new DriverInitHandlerPtr() { public void handler(){
 		namcos21_init( NAMCOS21_CYBERSLED );
 	} };
 	
-	public static DriverInitHandlerPtr init_solvalou  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_solvalou  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *pMem = (data16_t *)memory_region( REGION_CPU1 );
 	
 		/* patch out DSP memtest/clear */
@@ -905,7 +889,7 @@ public class namcos21
 	/*															 */
 	/*************************************************************/
 	
-	static InputPortPtr input_ports_default = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_default = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( default )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
@@ -981,7 +965,7 @@ public class namcos21
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_aircombt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aircombt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aircombt )
 		PORT_START(); 		/* IN#0: 63B05Z0 - PORT B */
 		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
@@ -1063,14 +1047,14 @@ public class namcos21
 	
 	
 	/*    YEAR, NAME,     PARENT,   MACHINE,          INPUT,        INIT,     MONITOR,    COMPANY, FULLNAME,	    	FLAGS */
-	public static GameDriver driver_aircombj	   = new GameDriver("1992"	,"aircombj"	,"namcos21.java"	,rom_aircombj,null	,machine_driver_poly_c140_typeB	,input_ports_aircombt	,init_aircombt	,ROT0	,	"Namco", "Air Combat (Japan)",	GAME_NOT_WORKING ) /* mostly working */
-	public static GameDriver driver_aircombu	   = new GameDriver("1992"	,"aircombu"	,"namcos21.java"	,rom_aircombu,driver_aircombj	,machine_driver_poly_c140_typeB	,input_ports_aircombt	,init_aircombt	,ROT0	,	"Namco", "Air Combat (US)",	GAME_NOT_WORKING ) /* mostly working */
-	public static GameDriver driver_cybsled	   = new GameDriver("1993"	,"cybsled"	,"namcos21.java"	,rom_cybsled,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_cybsled	,ROT0	,	"Namco", "Cyber Sled",		GAME_NOT_WORKING ) /* mostly working */
+	GAMEX( 1992, aircombj, 0,	    poly_c140_typeB,  aircombt, 	aircombt, ROT0,		  "Namco", "Air Combat (Japan)",	GAME_NOT_WORKING ) /* mostly working */
+	GAMEX( 1992, aircombu, aircombj,poly_c140_typeB,  aircombt, 	aircombt, ROT0, 	  "Namco", "Air Combat (US)",	GAME_NOT_WORKING ) /* mostly working */
+	GAMEX( 1993, cybsled,  0,       poly_c140_typeA,  default,      cybsled,  ROT0,       "Namco", "Cyber Sled",		GAME_NOT_WORKING ) /* mostly working */
 	/* 199?, Driver's Eyes */
 	/* 1992, ShimDrive */
-	public static GameDriver driver_solvalou	   = new GameDriver("1991"	,"solvalou"	,"namcos21.java"	,rom_solvalou,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_solvalou	,ROT0	,	"Namco", "Solvalou (Japan)",	GAME_IMPERFECT_GRAPHICS ) /* working and playable */
-	public static GameDriver driver_starblad	   = new GameDriver("1991"	,"starblad"	,"namcos21.java"	,rom_starblad,null	,machine_driver_poly_c140_typeA	,input_ports_default	,init_starblad	,ROT0	,	"Namco", "Starblade",			GAME_IMPERFECT_GRAPHICS ) /* working and playable */
+	GAMEX( 1991, solvalou, 0, 	    poly_c140_typeA,  default,	    solvalou, ROT0, 	  "Namco", "Solvalou (Japan)",	GAME_IMPERFECT_GRAPHICS ) /* working and playable */
+	GAMEX( 1991, starblad, 0, 	    poly_c140_typeA,  default,  	starblad, ROT0, 	  "Namco", "Starblade",			GAME_IMPERFECT_GRAPHICS ) /* working and playable */
 	/* 1988, Winning Run */
 	/* 1989, Winning Run Suzuka Grand Prix */
-	public static GameDriver driver_winrun91	   = new GameDriver("1991"	,"winrun91"	,"namcos21.java"	,rom_winrun91,null	,machine_driver_poly_c140_typeB	,input_ports_default	,init_winrun	,ROT0	,	"Namco", "Winning Run 91", 	GAME_NOT_WORKING ) /* not working */
+	GAMEX( 1991, winrun91, 0, 	    poly_c140_typeB,  default,	    winrun,	  ROT0, 	  "Namco", "Winning Run 91", 	GAME_NOT_WORKING ) /* not working */
 }

@@ -9,7 +9,7 @@ Preliminary driver by:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,30 +26,26 @@ public class aliens
 	static unsigned char *ram;
 	
 	
-	public static InterruptHandlerPtr aliens_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K051960_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr aliens_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K051960_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (palette_selected != 0)
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (palette_selected)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (palette_selected != 0)
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (palette_selected)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr aliens_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aliens_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-1 = coin counters */
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
@@ -70,14 +66,12 @@ public class aliens
 	#endif
 	} };
 	
-	public static WriteHandlerPtr aliens_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aliens_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
 	} };
 	
-	public static WriteHandlerPtr aliens_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aliens_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* b1: bank for chanel A */
 		/* b0: bank for chanel B */
 	
@@ -142,7 +136,7 @@ public class aliens
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_aliens = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aliens = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aliens )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -271,8 +265,7 @@ public class aliens
 		{ aliens_snd_bankswitch_w }
 	};
 	
-	public static MachineHandlerPtr machine_driver_aliens = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aliens )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* ? */
@@ -300,9 +293,7 @@ public class aliens
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -452,14 +443,13 @@ public class aliens
 		int offs = 0x18000;
 	
 	
-		if ((lines & 0x10) != 0) offs -= 0x8000;
+		if (lines & 0x10) offs -= 0x8000;
 	
 		offs += (lines & 0x0f)*0x2000;
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_aliens  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_aliens  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = aliens_banking;
@@ -470,16 +460,15 @@ public class aliens
 	
 	
 	
-	public static DriverInitHandlerPtr init_aliens  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aliens  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_aliens	   = new GameDriver("1990"	,"aliens"	,"aliens.java"	,rom_aliens,null	,machine_driver_aliens	,input_ports_aliens	,init_aliens	,ROT0	,	"Konami", "Aliens (World set 1)" )
-	public static GameDriver driver_aliens2	   = new GameDriver("1990"	,"aliens2"	,"aliens.java"	,rom_aliens2,driver_aliens	,machine_driver_aliens	,input_ports_aliens	,init_aliens	,ROT0	,	"Konami", "Aliens (World set 2)" )
-	public static GameDriver driver_aliensu	   = new GameDriver("1990"	,"aliensu"	,"aliens.java"	,rom_aliensu,driver_aliens	,machine_driver_aliens	,input_ports_aliens	,init_aliens	,ROT0	,	"Konami", "Aliens (US)" )
-	public static GameDriver driver_aliensj	   = new GameDriver("1990"	,"aliensj"	,"aliens.java"	,rom_aliensj,driver_aliens	,machine_driver_aliens	,input_ports_aliens	,init_aliens	,ROT0	,	"Konami", "Aliens (Japan)" )
+	GAME( 1990, aliens,  0,      aliens, aliens, aliens, ROT0, "Konami", "Aliens (World set 1)" )
+	GAME( 1990, aliens2, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (World set 2)" )
+	GAME( 1990, aliensu, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (US)" )
+	GAME( 1990, aliensj, aliens, aliens, aliens, aliens, ROT0, "Konami", "Aliens (Japan)" )
 }

@@ -28,7 +28,7 @@ to do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -151,7 +151,7 @@ public class ym2413
 			{	signed int pom = outchan; \
 				fputc((unsigned short)pom&0xff,sample[0]); \
 				fputc(((unsigned short)pom>>8)&0xff,sample[0]); \
-				pom = chip.instvol_r[j]>>4; \
+				pom = chip->instvol_r[j]>>4; \
 				fputc((unsigned short)pom&0xff,sample[0]); \
 				fputc(((unsigned short)pom>>8)&0xff,sample[0]); \
 			}
@@ -256,7 +256,7 @@ public class ym2413
 		OPLL_UPDATEHANDLER UpdateHandler; /* stream update handler		*/
 		int UpdateParam;				/* stream update parameter		*/
 	
-		UINT32	fn_tab[1024];			/* fnumber.increment counter	*/
+		UINT32	fn_tab[1024];			/* fnumber->increment counter	*/
 	
 		UINT8 address;					/* address register				*/
 		UINT8 status;					/* status flag					*/
@@ -634,14 +634,14 @@ public class ym2413
 	INLINE void advance_lfo(YM2413 *chip)
 	{
 		/* LFO */
-		chip.lfo_am_cnt += chip.lfo_am_inc;
-		if (chip.lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
-			chip.lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
+		chip->lfo_am_cnt += chip->lfo_am_inc;
+		if (chip->lfo_am_cnt >= (LFO_AM_TAB_ELEMENTS<<LFO_SH) )	/* lfo_am_table is 210 elements long */
+			chip->lfo_am_cnt -= (LFO_AM_TAB_ELEMENTS<<LFO_SH);
 	
-		LFO_AM = lfo_am_table[ chip.lfo_am_cnt >> LFO_SH ] >> 1;
+		LFO_AM = lfo_am_table[ chip->lfo_am_cnt >> LFO_SH ] >> 1;
 	
-		chip.lfo_pm_cnt += chip.lfo_pm_inc;
-		LFO_PM = (chip.lfo_pm_cnt>>LFO_SH) & 7;
+		chip->lfo_pm_cnt += chip->lfo_pm_inc;
+		LFO_PM = (chip->lfo_pm_cnt>>LFO_SH) & 7;
 	}
 	
 	/* advance to next sample */
@@ -654,21 +654,21 @@ public class ym2413
 	//profiler_mark(PROFILER_USER3);
 	
 		/* Envelope Generator */
-		chip.eg_timer += chip.eg_timer_add;
+		chip->eg_timer += chip->eg_timer_add;
 	
-		while (chip.eg_timer >= chip.eg_timer_overflow)
+		while (chip->eg_timer >= chip->eg_timer_overflow)
 		{
-			chip.eg_timer -= chip.eg_timer_overflow;
+			chip->eg_timer -= chip->eg_timer_overflow;
 	
-			chip.eg_cnt++;
+			chip->eg_cnt++;
 	
 			for (i=0; i<9*2; i++)
 			{
-				CH  = &chip.P_CH[i/2];
+				CH  = &chip->P_CH[i/2];
 	
-				op  = &CH.SLOT[i&1];
+				op  = &CH->SLOT[i&1];
 	
-				switch(op.state)
+				switch(op->state)
 				{
 	
 				case EG_DMP:		/* dump phase */
@@ -676,42 +676,42 @@ public class ym2413
 				/*when CARRIER envelope gets down to zero level,
 				**  phases in BOTH opearators are reset (at the same time ?)
 				*/
-					if ( !(chip.eg_cnt & ((1<<op.eg_sh_dp)-1) ) )
+					if ( !(chip->eg_cnt & ((1<<op->eg_sh_dp)-1) ) )
 					{
-						op.volume += eg_inc[op.eg_sel_dp + ((chip.eg_cnt>>op.eg_sh_dp)&7)];
+						op->volume += eg_inc[op->eg_sel_dp + ((chip->eg_cnt>>op->eg_sh_dp)&7)];
 	
-						if ( op.volume >= MAX_ATT_INDEX )
+						if ( op->volume >= MAX_ATT_INDEX )
 						{
-							op.volume = MAX_ATT_INDEX;
-							op.state = EG_ATT;
+							op->volume = MAX_ATT_INDEX;
+							op->state = EG_ATT;
 							/* restart Phase Generator  */
-							op.phase = 0;
+							op->phase = 0;
 						}
 					}
 				break;
 	
 				case EG_ATT:		/* attack phase */
-					if ( !(chip.eg_cnt & ((1<<op.eg_sh_ar)-1) ) )
+					if ( !(chip->eg_cnt & ((1<<op->eg_sh_ar)-1) ) )
 					{
-						op.volume += (~op.volume *
-		                        		           (eg_inc[op.eg_sel_ar + ((chip.eg_cnt>>op.eg_sh_ar)&7)])
+						op->volume += (~op->volume *
+		                        		           (eg_inc[op->eg_sel_ar + ((chip->eg_cnt>>op->eg_sh_ar)&7)])
 	        			                          ) >>2;
 	
-						if (op.volume <= MIN_ATT_INDEX)
+						if (op->volume <= MIN_ATT_INDEX)
 						{
-							op.volume = MIN_ATT_INDEX;
-							op.state = EG_DEC;
+							op->volume = MIN_ATT_INDEX;
+							op->state = EG_DEC;
 						}
 					}
 				break;
 	
 				case EG_DEC:	/* decay phase */
-					if ( !(chip.eg_cnt & ((1<<op.eg_sh_dr)-1) ) )
+					if ( !(chip->eg_cnt & ((1<<op->eg_sh_dr)-1) ) )
 					{
-						op.volume += eg_inc[op.eg_sel_dr + ((chip.eg_cnt>>op.eg_sh_dr)&7)];
+						op->volume += eg_inc[op->eg_sel_dr + ((chip->eg_cnt>>op->eg_sh_dr)&7)];
 	
-						if ( op.volume >= op.sl )
-							op.state = EG_SUS;
+						if ( op->volume >= op->sl )
+							op->state = EG_SUS;
 					}
 				break;
 	
@@ -720,19 +720,19 @@ public class ym2413
 					one can change percusive/non-percussive modes on the fly and
 					the chip will remain in sustain phase - verified on real YM3812 */
 	
-					if(op.eg_type)		/* non-percussive mode (sustained tone) */
+					if(op->eg_type)		/* non-percussive mode (sustained tone) */
 					{
 										/* do nothing */
 					}
 					else				/* percussive mode */
 					{
 						/* during sustain phase chip adds Release Rate (in percussive mode) */
-						if ( !(chip.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
+						if ( !(chip->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
 						{
-							op.volume += eg_inc[op.eg_sel_rr + ((chip.eg_cnt>>op.eg_sh_rr)&7)];
+							op->volume += eg_inc[op->eg_sel_rr + ((chip->eg_cnt>>op->eg_sh_rr)&7)];
 	
-							if ( op.volume >= MAX_ATT_INDEX )
-								op.volume = MAX_ATT_INDEX;
+							if ( op->volume >= MAX_ATT_INDEX )
+								op->volume = MAX_ATT_INDEX;
 						}
 						/* else do nothing in sustain phase */
 					}
@@ -756,46 +756,46 @@ public class ym2413
 					7: 14(r),  15(a)
 					8: 16(r),  17(a)
 				*/
-					if ( (i&1) || ((chip.rhythm&0x20) && (i>=12)) )/* exclude modulators */
+					if ( (i&1) || ((chip->rhythm&0x20) && (i>=12)) )/* exclude modulators */
 					{
-						if(op.eg_type)		/* non-percussive mode (sustained tone) */
+						if(op->eg_type)		/* non-percussive mode (sustained tone) */
 						/*this is correct: use RR when SUS = OFF*/
 						/*and use RS when SUS = ON*/
 						{
-							if (CH.sus)
+							if (CH->sus)
 							{
-								if ( !(chip.eg_cnt & ((1<<op.eg_sh_rs)-1) ) )
+								if ( !(chip->eg_cnt & ((1<<op->eg_sh_rs)-1) ) )
 								{
-									op.volume += eg_inc[op.eg_sel_rs + ((chip.eg_cnt>>op.eg_sh_rs)&7)];
-									if ( op.volume >= MAX_ATT_INDEX )
+									op->volume += eg_inc[op->eg_sel_rs + ((chip->eg_cnt>>op->eg_sh_rs)&7)];
+									if ( op->volume >= MAX_ATT_INDEX )
 									{
-										op.volume = MAX_ATT_INDEX;
-										op.state = EG_OFF;
+										op->volume = MAX_ATT_INDEX;
+										op->state = EG_OFF;
 									}
 								}
 							}
 							else
 							{
-								if ( !(chip.eg_cnt & ((1<<op.eg_sh_rr)-1) ) )
+								if ( !(chip->eg_cnt & ((1<<op->eg_sh_rr)-1) ) )
 								{
-									op.volume += eg_inc[op.eg_sel_rr + ((chip.eg_cnt>>op.eg_sh_rr)&7)];
-									if ( op.volume >= MAX_ATT_INDEX )
+									op->volume += eg_inc[op->eg_sel_rr + ((chip->eg_cnt>>op->eg_sh_rr)&7)];
+									if ( op->volume >= MAX_ATT_INDEX )
 									{
-										op.volume = MAX_ATT_INDEX;
-										op.state = EG_OFF;
+										op->volume = MAX_ATT_INDEX;
+										op->state = EG_OFF;
 									}
 								}
 							}
 						}
 						else				/* percussive mode */
 						{
-							if ( !(chip.eg_cnt & ((1<<op.eg_sh_rs)-1) ) )
+							if ( !(chip->eg_cnt & ((1<<op->eg_sh_rs)-1) ) )
 							{
-								op.volume += eg_inc[op.eg_sel_rs + ((chip.eg_cnt>>op.eg_sh_rs)&7)];
-								if ( op.volume >= MAX_ATT_INDEX )
+								op->volume += eg_inc[op->eg_sel_rs + ((chip->eg_cnt>>op->eg_sh_rs)&7)];
+								if ( op->volume >= MAX_ATT_INDEX )
 								{
-									op.volume = MAX_ATT_INDEX;
-									op.state = EG_OFF;
+									op->volume = MAX_ATT_INDEX;
+									op->state = EG_OFF;
 								}
 							}
 						}
@@ -814,32 +814,32 @@ public class ym2413
 	
 		for (i=0; i<9*2; i++)
 		{
-			CH  = &chip.P_CH[i/2];
-			op  = &CH.SLOT[i&1];
+			CH  = &chip->P_CH[i/2];
+			op  = &CH->SLOT[i&1];
 	
 			/* Phase Generator */
-			if(op.vib)
+			if(op->vib)
 			{
 				UINT8 block;
 	
-				unsigned int fnum_lfo   = 8*((CH.block_fnum&0x01c0) >> 6);
-				unsigned int block_fnum = CH.block_fnum * 2;
+				unsigned int fnum_lfo   = 8*((CH->block_fnum&0x01c0) >> 6);
+				unsigned int block_fnum = CH->block_fnum * 2;
 				signed int lfo_fn_table_index_offset = lfo_pm_table[LFO_PM + fnum_lfo ];
 	
-				if (lfo_fn_table_index_offset != 0)	/* LFO phase modulation active */
+				if (lfo_fn_table_index_offset)	/* LFO phase modulation active */
 				{
 					block_fnum += lfo_fn_table_index_offset;
 					block = (block_fnum&0x1c00) >> 10;
-					op.phase += (chip.fn_tab[block_fnum&0x03ff] >> (7-block)) * op.mul;
+					op->phase += (chip->fn_tab[block_fnum&0x03ff] >> (7-block)) * op->mul;
 				}
 				else	/* LFO phase modulation  = zero */
 				{
-					op.phase += op.freq;
+					op->phase += op->freq;
 				}
 			}
 			else	/* LFO phase modulation disabled for this operator */
 			{
-				op.phase += op.freq;
+				op->phase += op->freq;
 			}
 		}
 	
@@ -854,15 +854,15 @@ public class ym2413
 		*	Simply use bit 22 as the noise output.
 		*/
 	
-		chip.noise_p += chip.noise_f;
-		i = chip.noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
-		chip.noise_p &= FREQ_MASK;
+		chip->noise_p += chip->noise_f;
+		i = chip->noise_p >> FREQ_SH;		/* number of events (shifts of the shift register) */
+		chip->noise_p &= FREQ_MASK;
 		while (i)
 		{
 			/*
 			UINT32 j;
-			j = ( (chip.noise_rng) ^ (chip.noise_rng>>14) ^ (chip.noise_rng>>15) ^ (chip.noise_rng>>22) ) & 1;
-			chip.noise_rng = (j<<22) | (chip.noise_rng>>1);
+			j = ( (chip->noise_rng) ^ (chip->noise_rng>>14) ^ (chip->noise_rng>>15) ^ (chip->noise_rng>>22) ) & 1;
+			chip->noise_rng = (j<<22) | (chip->noise_rng>>1);
 			*/
 	
 			/*
@@ -873,8 +873,8 @@ public class ym2413
 				what is real state of the noise_rng after the reset.
 			*/
 	
-			if (chip.noise_rng & 1) chip.noise_rng ^= 0x800302;
-			chip.noise_rng >>= 1;
+			if (chip->noise_rng & 1) chip->noise_rng ^= 0x800302;
+			chip->noise_rng >>= 1;
 	
 			i--;
 		}
@@ -912,7 +912,7 @@ public class ym2413
 	}
 	
 	
-	#define volume_calc(OP) ((OP).TLL + ((UINT32)(OP).volume) + (LFO_AM & (OP).AMmask))
+	#define volume_calc(OP) ((OP)->TLL + ((UINT32)(OP)->volume) + (LFO_AM & (OP)->AMmask))
 	
 	/* calculate output */
 	INLINE void chan_calc( OPLL_CH *CH )
@@ -924,20 +924,20 @@ public class ym2413
 	
 	
 		/* SLOT 1 */
-		SLOT = &CH.SLOT[SLOT1];
+		SLOT = &CH->SLOT[SLOT1];
 		env  = volume_calc(SLOT);
-		out  = SLOT.op1_out[0] + SLOT.op1_out[1];
+		out  = SLOT->op1_out[0] + SLOT->op1_out[1];
 	
-		SLOT.op1_out[0] = SLOT.op1_out[1];
-		phase_modulation = SLOT.op1_out[0];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
+		phase_modulation = SLOT->op1_out[0];
 	
-		SLOT.op1_out[1] = 0;
+		SLOT->op1_out[1] = 0;
 	
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.fb_shift)
+			if (!SLOT->fb_shift)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.phase, env, (out<<SLOT.fb_shift), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->phase, env, (out<<SLOT->fb_shift), SLOT->wavetable );
 		}
 	
 		/* SLOT 2 */
@@ -948,10 +948,10 @@ public class ym2413
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
 		{
-			signed int outp = op_calc(SLOT.phase, env, phase_modulation, SLOT.wavetable);
+			signed int outp = op_calc(SLOT->phase, env, phase_modulation, SLOT->wavetable);
 			output[0] += outp;
 			outchan = outp;
-			//output[0] += op_calc(SLOT.phase, env, phase_modulation, SLOT.wavetable);
+			//output[0] += op_calc(SLOT->phase, env, phase_modulation, SLOT->wavetable);
 		}
 	}
 	
@@ -1002,8 +1002,8 @@ public class ym2413
 	
 		/* Bass Drum (verified on real YM3812):
 		  - depends on the channel 6 'connect' register:
-		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1.op2.out)
-		      when connect = 1 _only_ operator 2 is present on output (op2.out), operator 1 is ignored
+		      when connect = 0 it works the same as in normal (non-rhythm) mode (op1->op2->out)
+		      when connect = 1 _only_ operator 2 is present on output (op2->out), operator 1 is ignored
 		  - output sample always is multiplied by 2
 		*/
 	
@@ -1012,37 +1012,37 @@ public class ym2413
 		SLOT = &CH[6].SLOT[SLOT1];
 		env = volume_calc(SLOT);
 	
-		out = SLOT.op1_out[0] + SLOT.op1_out[1];
-		SLOT.op1_out[0] = SLOT.op1_out[1];
+		out = SLOT->op1_out[0] + SLOT->op1_out[1];
+		SLOT->op1_out[0] = SLOT->op1_out[1];
 	
-		phase_modulation = SLOT.op1_out[0];
+		phase_modulation = SLOT->op1_out[0];
 	
-		SLOT.op1_out[1] = 0;
+		SLOT->op1_out[1] = 0;
 		if( env < ENV_QUIET )
 		{
-			if (!SLOT.fb_shift)
+			if (!SLOT->fb_shift)
 				out = 0;
-			SLOT.op1_out[1] = op_calc1(SLOT.phase, env, (out<<SLOT.fb_shift), SLOT.wavetable );
+			SLOT->op1_out[1] = op_calc1(SLOT->phase, env, (out<<SLOT->fb_shift), SLOT->wavetable );
 		}
 	
 		/* SLOT 2 */
 		SLOT++;
 		env = volume_calc(SLOT);
 		if( env < ENV_QUIET )
-			output[1] += op_calc(SLOT.phase, env, phase_modulation, SLOT.wavetable) * 2;
+			output[1] += op_calc(SLOT->phase, env, phase_modulation, SLOT->wavetable) * 2;
 	
 	
 		/* Phase generation is based on: */
-		// HH  (13) channel 7.slot 1 combined with channel 8.slot 2 (same combination as TOP CYMBAL but different output phases)
-		// SD  (16) channel 7.slot 1
-		// TOM (14) channel 8.slot 1
-		// TOP (17) channel 7.slot 1 combined with channel 8.slot 2 (same combination as HIGH HAT but different output phases)
+		// HH  (13) channel 7->slot 1 combined with channel 8->slot 2 (same combination as TOP CYMBAL but different output phases)
+		// SD  (16) channel 7->slot 1
+		// TOM (14) channel 8->slot 1
+		// TOP (17) channel 7->slot 1 combined with channel 8->slot 2 (same combination as HIGH HAT but different output phases)
 	
 		/* Envelope generation based on: */
-		// HH  channel 7.slot1
-		// SD  channel 7.slot2
-		// TOM channel 8.slot1
-		// TOP channel 8.slot2
+		// HH  channel 7->slot1
+		// SD  channel 7->slot2
+		// TOM channel 8->slot1
+		// TOP channel 8->slot2
 	
 	
 		/* The following formulas can be well optimized.
@@ -1060,9 +1060,9 @@ public class ym2413
 			*/
 	
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.phase>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.phase>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.phase>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->phase>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->phase>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->phase>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1071,33 +1071,33 @@ public class ym2413
 			UINT32 phase = res1 ? (0x200|(0xd0>>2)) : 0xd0;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.phase>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.phase>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->phase>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->phase>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e | bit5e);
 	
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | (0xd0>>2); */
-			if (res2 != 0)
+			if (res2)
 				phase = (0x200|(0xd0>>2));
 	
 	
 			/* when phase & 0x200 is set and noise=1 then phase = 0x200|0xd0 */
 			/* when phase & 0x200 is set and noise=0 then phase = 0x200|(0xd0>>2), ie no change */
-			if ((phase & 0x200) != 0)
+			if (phase&0x200)
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0x200|0xd0;
 			}
 			else
 			/* when phase & 0x200 is clear and noise=1 then phase = 0xd0>>2 */
 			/* when phase & 0x200 is clear and noise=0 then phase = 0xd0, ie no change */
 			{
-				if (noise != 0)
+				if (noise)
 					phase = 0xd0>>2;
 			}
 	
-			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1.wavetable) * 2;
+			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_1->wavetable) * 2;
 		}
 	
 		/* Snare Drum (verified on real YM3812) */
@@ -1105,7 +1105,7 @@ public class ym2413
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit8 = ((SLOT7_1.phase>>FREQ_SH)>>8)&1;
+			unsigned char bit8 = ((SLOT7_1->phase>>FREQ_SH)>>8)&1;
 	
 			/* when bit8 = 0 phase = 0x100; */
 			/* when bit8 = 1 phase = 0x200; */
@@ -1115,25 +1115,25 @@ public class ym2413
 			/* when noisebit = 0 pass the phase from calculation above */
 			/* when noisebit = 1 phase ^= 0x100; */
 			/* in other words: phase ^= (noisebit<<8); */
-			if (noise != 0)
+			if (noise)
 				phase ^= 0x100;
 	
-			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2.wavetable) * 2;
+			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT7_2->wavetable) * 2;
 		}
 	
 		/* Tom Tom (verified on real YM3812) */
 		env = volume_calc(SLOT8_1);
 		if( env < ENV_QUIET )
-			output[1] += op_calc(SLOT8_1.phase, env, 0, SLOT8_1.wavetable) * 2;
+			output[1] += op_calc(SLOT8_1->phase, env, 0, SLOT8_1->wavetable) * 2;
 	
 		/* Top Cymbal (verified on real YM2413) */
 		env = volume_calc(SLOT8_2);
 		if( env < ENV_QUIET )
 		{
 			/* base frequency derived from operator 1 in channel 7 */
-			unsigned char bit7 = ((SLOT7_1.phase>>FREQ_SH)>>7)&1;
-			unsigned char bit3 = ((SLOT7_1.phase>>FREQ_SH)>>3)&1;
-			unsigned char bit2 = ((SLOT7_1.phase>>FREQ_SH)>>2)&1;
+			unsigned char bit7 = ((SLOT7_1->phase>>FREQ_SH)>>7)&1;
+			unsigned char bit3 = ((SLOT7_1->phase>>FREQ_SH)>>3)&1;
+			unsigned char bit2 = ((SLOT7_1->phase>>FREQ_SH)>>2)&1;
 	
 			unsigned char res1 = (bit2 ^ bit7) | bit3;
 	
@@ -1142,16 +1142,16 @@ public class ym2413
 			UINT32 phase = res1 ? 0x300 : 0x100;
 	
 			/* enable gate based on frequency of operator 2 in channel 8 */
-			unsigned char bit5e= ((SLOT8_2.phase>>FREQ_SH)>>5)&1;
-			unsigned char bit3e= ((SLOT8_2.phase>>FREQ_SH)>>3)&1;
+			unsigned char bit5e= ((SLOT8_2->phase>>FREQ_SH)>>5)&1;
+			unsigned char bit3e= ((SLOT8_2->phase>>FREQ_SH)>>3)&1;
 	
 			unsigned char res2 = (bit3e | bit5e);
 			/* when res2 = 0 pass the phase from calculation above (res1); */
 			/* when res2 = 1 phase = 0x200 | 0x100; */
-			if (res2 != 0)
+			if (res2)
 				phase = 0x300;
 	
-			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2.wavetable) * 2;
+			output[1] += op_calc(phase<<FREQ_SH, env, 0, SLOT8_2->wavetable) * 2;
 		}
 	
 	}
@@ -1175,7 +1175,7 @@ public class ym2413
 	
 			n = (int)m;		/* 16 bits here */
 			n >>= 4;		/* 12 bits here */
-			if ((n & 1) != 0)		/* round to nearest */
+			if (n&1)		/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1213,7 +1213,7 @@ public class ym2413
 			o = o / (ENV_STEP/4);
 	
 			n = (int)(2.0*o);
-			if ((n & 1) != 0)						/* round to nearest */
+			if (n&1)						/* round to nearest */
 				n = (n>>1)+1;
 			else
 				n = n>>1;
@@ -1262,24 +1262,24 @@ public class ym2413
 		int i;
 	
 		/* frequency base */
-		chip.freqbase  = (chip.rate) ? ((double)chip.clock / 72.0) / chip.rate  : 0;
+		chip->freqbase  = (chip->rate) ? ((double)chip->clock / 72.0) / chip->rate  : 0;
 	#if 0
-		chip.rate = (double)chip.clock / 72.0;
-		chip.freqbase  = 1.0;
-		logerror("freqbase=%f\n", chip.freqbase);
+		chip->rate = (double)chip->clock / 72.0;
+		chip->freqbase  = 1.0;
+		logerror("freqbase=%f\n", chip->freqbase);
 	#endif
 	
 	
 	
-		/* make fnumber . increment counter table */
+		/* make fnumber -> increment counter table */
 		for( i = 0 ; i < 1024; i++ )
 		{
 			/* OPLL (YM2413) phase increment counter = 18bit */
 	
-			chip.fn_tab[i] = (UINT32)( (double)i * 64 * chip.freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
+			chip->fn_tab[i] = (UINT32)( (double)i * 64 * chip->freqbase * (1<<(FREQ_SH-10)) ); /* -10 because chip works with 10.10 fixed point, while we use 16.16 */
 	#if 0
 			logerror("ym2413.c: fn_tab[%4i] = %08x (dec=%8i)\n",
-					 i, chip.fn_tab[i]>>6, chip.fn_tab[i]>>6 );
+					 i, chip->fn_tab[i]>>6, chip->fn_tab[i]>>6 );
 	#endif
 		}
 	
@@ -1303,45 +1303,45 @@ public class ym2413
 	
 		/* Amplitude modulation: 27 output levels (triangle waveform); 1 level takes one of: 192, 256 or 448 samples */
 		/* One entry from LFO_AM_TABLE lasts for 64 samples */
-		chip.lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * chip.freqbase;
+		chip->lfo_am_inc = (1.0 / 64.0 ) * (1<<LFO_SH) * chip->freqbase;
 	
 		/* Vibrato: 8 output levels (triangle waveform); 1 level takes 1024 samples */
-		chip.lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * chip.freqbase;
+		chip->lfo_pm_inc = (1.0 / 1024.0) * (1<<LFO_SH) * chip->freqbase;
 	
-		/*logerror ("chip.lfo_am_inc = %8x ; chip.lfo_pm_inc = %8x\n", chip.lfo_am_inc, chip.lfo_pm_inc);*/
+		/*logerror ("chip->lfo_am_inc = %8x ; chip->lfo_pm_inc = %8x\n", chip->lfo_am_inc, chip->lfo_pm_inc);*/
 	
 		/* Noise generator: a step takes 1 sample */
-		chip.noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * chip.freqbase;
-		/*logerror("YM2413init noise_f=%8x\n", chip.noise_f);*/
+		chip->noise_f = (1.0 / 1.0) * (1<<FREQ_SH) * chip->freqbase;
+		/*logerror("YM2413init noise_f=%8x\n", chip->noise_f);*/
 	
-		chip.eg_timer_add  = (1<<EG_SH)  * chip.freqbase;
-		chip.eg_timer_overflow = ( 1 ) * (1<<EG_SH);
-		/*logerror("YM2413init eg_timer_add=%8x eg_timer_overflow=%8x\n", chip.eg_timer_add, chip.eg_timer_overflow);*/
+		chip->eg_timer_add  = (1<<EG_SH)  * chip->freqbase;
+		chip->eg_timer_overflow = ( 1 ) * (1<<EG_SH);
+		/*logerror("YM2413init eg_timer_add=%8x eg_timer_overflow=%8x\n", chip->eg_timer_add, chip->eg_timer_overflow);*/
 	
 	}
 	
 	INLINE void KEY_ON(OPLL_SLOT *SLOT, UINT32 key_set)
 	{
-		if( !SLOT.key )
+		if( !SLOT->key )
 		{
 			/* do NOT restart Phase Generator (verified on real YM2413)*/
-			/* phase . Dump */
-			SLOT.state = EG_DMP;
+			/* phase -> Dump */
+			SLOT->state = EG_DMP;
 		}
-		SLOT.key |= key_set;
+		SLOT->key |= key_set;
 	}
 	
 	INLINE void KEY_OFF(OPLL_SLOT *SLOT, UINT32 key_clr)
 	{
-		if( SLOT.key )
+		if( SLOT->key )
 		{
-			SLOT.key &= key_clr;
+			SLOT->key &= key_clr;
 	
-			if( !SLOT.key )
+			if( !SLOT->key )
 			{
-				/* phase . Release */
-				if (SLOT.state>EG_REL)
-					SLOT.state = EG_REL;
+				/* phase -> Release */
+				if (SLOT->state>EG_REL)
+					SLOT->state = EG_REL;
 			}
 		}
 	}
@@ -1354,55 +1354,55 @@ public class ym2413
 		UINT32 SLOT_dp;
 	
 		/* (frequency) phase increment counter */
-		SLOT.freq = CH.fc * SLOT.mul;
-		ksr = CH.kcode >> SLOT.KSR;
+		SLOT->freq = CH->fc * SLOT->mul;
+		ksr = CH->kcode >> SLOT->KSR;
 	
-		if( SLOT.ksr != ksr )
+		if( SLOT->ksr != ksr )
 		{
-			SLOT.ksr = ksr;
+			SLOT->ksr = ksr;
 	
 			/* calculate envelope generator rates */
-			if ((SLOT.ar + SLOT.ksr) < 16+62)
+			if ((SLOT->ar + SLOT->ksr) < 16+62)
 			{
-				SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-				SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+				SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+				SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 			}
 			else
 			{
-				SLOT.eg_sh_ar  = 0;
-				SLOT.eg_sel_ar = 13*RATE_STEPS;
+				SLOT->eg_sh_ar  = 0;
+				SLOT->eg_sel_ar = 13*RATE_STEPS;
 			}
-			SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-			SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
-			SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-			SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+			SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+			SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
+			SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+			SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 	
 		}
 	
-		if (CH.sus)
+		if (CH->sus)
 			SLOT_rs  = 16 + (5<<2);
 		else
 			SLOT_rs  = 16 + (7<<2);
 	
-		SLOT.eg_sh_rs  = eg_rate_shift [SLOT_rs + SLOT.ksr ];
-		SLOT.eg_sel_rs = eg_rate_select[SLOT_rs + SLOT.ksr ];
+		SLOT->eg_sh_rs  = eg_rate_shift [SLOT_rs + SLOT->ksr ];
+		SLOT->eg_sel_rs = eg_rate_select[SLOT_rs + SLOT->ksr ];
 	
 		SLOT_dp  = 16 + (13<<2);
-		SLOT.eg_sh_dp  = eg_rate_shift [SLOT_dp + SLOT.ksr ];
-		SLOT.eg_sel_dp = eg_rate_select[SLOT_dp + SLOT.ksr ];
+		SLOT->eg_sh_dp  = eg_rate_shift [SLOT_dp + SLOT->ksr ];
+		SLOT->eg_sel_dp = eg_rate_select[SLOT_dp + SLOT->ksr ];
 	}
 	
 	/* set multi,am,vib,EG-TYP,KSR,mul */
 	INLINE void set_mul(YM2413 *chip,int slot,int v)
 	{
-		OPLL_CH   *CH   = &chip.P_CH[slot/2];
-		OPLL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPLL_CH   *CH   = &chip->P_CH[slot/2];
+		OPLL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.mul     = mul_tab[v&0x0f];
-		SLOT.KSR     = (v&0x10) ? 0 : 2;
-		SLOT.eg_type = (v&0x20);
-		SLOT.vib     = (v&0x40);
-		SLOT.AMmask  = (v&0x80) ? ~0 : 0;
+		SLOT->mul     = mul_tab[v&0x0f];
+		SLOT->KSR     = (v&0x10) ? 0 : 2;
+		SLOT->eg_type = (v&0x20);
+		SLOT->vib     = (v&0x40);
+		SLOT->AMmask  = (v&0x80) ? ~0 : 0;
 		CALC_FCSLOT(CH,SLOT);
 	}
 	
@@ -1410,72 +1410,72 @@ public class ym2413
 	INLINE void set_ksl_tl(YM2413 *chip,int chan,int v)
 	{
 		int ksl;
-		OPLL_CH   *CH   = &chip.P_CH[chan];
+		OPLL_CH   *CH   = &chip->P_CH[chan];
 	/* modulator */
-		OPLL_SLOT *SLOT = &CH.SLOT[SLOT1];
+		OPLL_SLOT *SLOT = &CH->SLOT[SLOT1];
 	
 		ksl = v>>6; /* 0 / 1.5 / 3.0 / 6.0 dB/OCT */
 	
-		SLOT.ksl = ksl ? 3-ksl : 31;
-		SLOT.TL  = (v&0x3f)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
-		SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+		SLOT->ksl = ksl ? 3-ksl : 31;
+		SLOT->TL  = (v&0x3f)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
+		SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 	}
 	
 	/* set ksl , waveforms, feedback */
 	INLINE void set_ksl_wave_fb(YM2413 *chip,int chan,int v)
 	{
 		int ksl;
-		OPLL_CH   *CH   = &chip.P_CH[chan];
+		OPLL_CH   *CH   = &chip->P_CH[chan];
 	/* modulator */
-		OPLL_SLOT *SLOT = &CH.SLOT[SLOT1];
-		SLOT.wavetable = ((v&0x08)>>3)*SIN_LEN;
-		SLOT.fb_shift  = (v&7) ? (v&7) + 8 : 0;
+		OPLL_SLOT *SLOT = &CH->SLOT[SLOT1];
+		SLOT->wavetable = ((v&0x08)>>3)*SIN_LEN;
+		SLOT->fb_shift  = (v&7) ? (v&7) + 8 : 0;
 	
 	/*carrier*/
-		SLOT = &CH.SLOT[SLOT2];
+		SLOT = &CH->SLOT[SLOT2];
 		ksl = v>>6; /* 0 / 1.5 / 3.0 / 6.0 dB/OCT */
 	
-		SLOT.ksl = ksl ? 3-ksl : 31;
-		SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+		SLOT->ksl = ksl ? 3-ksl : 31;
+		SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 	
-		SLOT.wavetable = ((v&0x10)>>4)*SIN_LEN;
+		SLOT->wavetable = ((v&0x10)>>4)*SIN_LEN;
 	}
 	
 	/* set attack rate & decay rate  */
 	INLINE void set_ar_dr(YM2413 *chip,int slot,int v)
 	{
-		OPLL_CH   *CH   = &chip.P_CH[slot/2];
-		OPLL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPLL_CH   *CH   = &chip->P_CH[slot/2];
+		OPLL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
+		SLOT->ar = (v>>4)  ? 16 + ((v>>4)  <<2) : 0;
 	
-		if ((SLOT.ar + SLOT.ksr) < 16+62)
+		if ((SLOT->ar + SLOT->ksr) < 16+62)
 		{
-			SLOT.eg_sh_ar  = eg_rate_shift [SLOT.ar + SLOT.ksr ];
-			SLOT.eg_sel_ar = eg_rate_select[SLOT.ar + SLOT.ksr ];
+			SLOT->eg_sh_ar  = eg_rate_shift [SLOT->ar + SLOT->ksr ];
+			SLOT->eg_sel_ar = eg_rate_select[SLOT->ar + SLOT->ksr ];
 		}
 		else
 		{
-			SLOT.eg_sh_ar  = 0;
-			SLOT.eg_sel_ar = 13*RATE_STEPS;
+			SLOT->eg_sh_ar  = 0;
+			SLOT->eg_sel_ar = 13*RATE_STEPS;
 		}
 	
-		SLOT.dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_dr  = eg_rate_shift [SLOT.dr + SLOT.ksr ];
-		SLOT.eg_sel_dr = eg_rate_select[SLOT.dr + SLOT.ksr ];
+		SLOT->dr    = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_dr  = eg_rate_shift [SLOT->dr + SLOT->ksr ];
+		SLOT->eg_sel_dr = eg_rate_select[SLOT->dr + SLOT->ksr ];
 	}
 	
 	/* set sustain level & release rate */
 	INLINE void set_sl_rr(YM2413 *chip,int slot,int v)
 	{
-		OPLL_CH   *CH   = &chip.P_CH[slot/2];
-		OPLL_SLOT *SLOT = &CH.SLOT[slot&1];
+		OPLL_CH   *CH   = &chip->P_CH[slot/2];
+		OPLL_SLOT *SLOT = &CH->SLOT[slot&1];
 	
-		SLOT.sl  = sl_tab[ v>>4 ];
+		SLOT->sl  = sl_tab[ v>>4 ];
 	
-		SLOT.rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
-		SLOT.eg_sh_rr  = eg_rate_shift [SLOT.rr + SLOT.ksr ];
-		SLOT.eg_sel_rr = eg_rate_select[SLOT.rr + SLOT.ksr ];
+		SLOT->rr  = (v&0x0f)? 16 + ((v&0x0f)<<2) : 0;
+		SLOT->eg_sh_rr  = eg_rate_shift [SLOT->rr + SLOT->ksr ];
+		SLOT->eg_sel_rr = eg_rate_select[SLOT->rr + SLOT->ksr ];
 	}
 	
 	static void load_instrument(YM2413 *chip, UINT32 chan, UINT32 slot, UINT8* inst )
@@ -1491,12 +1491,12 @@ public class ym2413
 	}
 	static void update_instrument_zero(YM2413 *chip, UINT8 r )
 	{
-		UINT8* inst = &chip.inst_tab[0][0]; /* point to user instrument */
+		UINT8* inst = &chip->inst_tab[0][0]; /* point to user instrument */
 		UINT32 chan;
 		UINT32 chan_max;
 	
 		chan_max = 9;
-		if (chip.rhythm & 0x20)
+		if (chip->rhythm & 0x20)
 			chan_max=6;
 	
 		switch(r)
@@ -1504,7 +1504,7 @@ public class ym2413
 		case 0:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_mul			(chip, chan*2, inst[0]);
 				}
@@ -1513,7 +1513,7 @@ public class ym2413
 		case 1:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_mul			(chip, chan*2+1,inst[1]);
 				}
@@ -1522,7 +1522,7 @@ public class ym2413
 		case 2:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_ksl_tl		(chip, chan,   inst[2]);
 				}
@@ -1531,7 +1531,7 @@ public class ym2413
 		case 3:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_ksl_wave_fb	(chip, chan,   inst[3]);
 				}
@@ -1540,7 +1540,7 @@ public class ym2413
 		case 4:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_ar_dr		(chip, chan*2, inst[4]);
 				}
@@ -1549,7 +1549,7 @@ public class ym2413
 		case 5:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_ar_dr		(chip, chan*2+1,inst[5]);
 				}
@@ -1558,7 +1558,7 @@ public class ym2413
 		case 6:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_sl_rr		(chip, chan*2, inst[6]);
 				}
@@ -1567,7 +1567,7 @@ public class ym2413
 		case 7:
 			for (chan=0; chan<chan_max; chan++)
 			{
-				if ((chip.instvol_r[chan]&0xf0)==0)
+				if ((chip->instvol_r[chan]&0xf0)==0)
 				{
 					set_sl_rr		(chip, chan*2+1,inst[7]);
 				}
@@ -1613,114 +1613,114 @@ public class ym2413
 			case 0x05:	/* Attack, Decay (carrier) */
 			case 0x06:	/* Sustain, Release (modulator) */
 			case 0x07:	/* Sustain, Release (carrier) */
-				chip.inst_tab[0][r & 0x07] = v;
+				chip->inst_tab[0][r & 0x07] = v;
 				update_instrument_zero(chip,r&7);
 			break;
 	
 			case 0x0e:	/* x, x, r,bd,sd,tom,tc,hh */
 			{
-				if ((v & 0x20) != 0)
+				if(v&0x20)
 				{
-					if ((chip.rhythm&0x20)==0)
+					if ((chip->rhythm&0x20)==0)
 					/*rhythm off to on*/
 					{
 						logerror("YM2413: Rhythm mode enable\n");
 	
 		/* Load instrument settings for channel seven(chan=6 since we're zero based). (Bass drum) */
 						chan = 6;
-						inst = &chip.inst_tab[16][0];
+						inst = &chip->inst_tab[16][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 	
 		/* Load instrument settings for channel eight. (High hat and snare drum) */
 						chan = 7;
-						inst = &chip.inst_tab[17][0];
+						inst = &chip->inst_tab[17][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 	
-						CH   = &chip.P_CH[chan];
-						SLOT = &CH.SLOT[SLOT1]; /* modulator envelope is HH */
-						SLOT.TL  = ((chip.instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
-						SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+						CH   = &chip->P_CH[chan];
+						SLOT = &CH->SLOT[SLOT1]; /* modulator envelope is HH */
+						SLOT->TL  = ((chip->instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
+						SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 	
 		/* Load instrument settings for channel nine. (Tom-tom and top cymbal) */
 						chan = 8;
-						inst = &chip.inst_tab[18][0];
+						inst = &chip->inst_tab[18][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 	
-						CH   = &chip.P_CH[chan];
-						SLOT = &CH.SLOT[SLOT1]; /* modulator envelope is TOM */
-						SLOT.TL  = ((chip.instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
-						SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+						CH   = &chip->P_CH[chan];
+						SLOT = &CH->SLOT[SLOT1]; /* modulator envelope is TOM */
+						SLOT->TL  = ((chip->instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
+						SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 					}
 					/* BD key on/off */
-					if ((v & 0x10) != 0)
+					if(v&0x10)
 					{
-						KEY_ON (&chip.P_CH[6].SLOT[SLOT1], 2);
-						KEY_ON (&chip.P_CH[6].SLOT[SLOT2], 2);
+						KEY_ON (&chip->P_CH[6].SLOT[SLOT1], 2);
+						KEY_ON (&chip->P_CH[6].SLOT[SLOT2], 2);
 					}
 					else
 					{
-						KEY_OFF(&chip.P_CH[6].SLOT[SLOT1],~2);
-						KEY_OFF(&chip.P_CH[6].SLOT[SLOT2],~2);
+						KEY_OFF(&chip->P_CH[6].SLOT[SLOT1],~2);
+						KEY_OFF(&chip->P_CH[6].SLOT[SLOT2],~2);
 					}
 					/* HH key on/off */
-					if ((v & 0x01) != 0) KEY_ON (&chip.P_CH[7].SLOT[SLOT1], 2);
-					else       KEY_OFF(&chip.P_CH[7].SLOT[SLOT1],~2);
+					if(v&0x01) KEY_ON (&chip->P_CH[7].SLOT[SLOT1], 2);
+					else       KEY_OFF(&chip->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key on/off */
-					if ((v & 0x08) != 0) KEY_ON (&chip.P_CH[7].SLOT[SLOT2], 2);
-					else       KEY_OFF(&chip.P_CH[7].SLOT[SLOT2],~2);
+					if(v&0x08) KEY_ON (&chip->P_CH[7].SLOT[SLOT2], 2);
+					else       KEY_OFF(&chip->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key on/off */
-					if ((v & 0x04) != 0) KEY_ON (&chip.P_CH[8].SLOT[SLOT1], 2);
-					else       KEY_OFF(&chip.P_CH[8].SLOT[SLOT1],~2);
+					if(v&0x04) KEY_ON (&chip->P_CH[8].SLOT[SLOT1], 2);
+					else       KEY_OFF(&chip->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY key on/off */
-					if ((v & 0x02) != 0) KEY_ON (&chip.P_CH[8].SLOT[SLOT2], 2);
-					else       KEY_OFF(&chip.P_CH[8].SLOT[SLOT2],~2);
+					if(v&0x02) KEY_ON (&chip->P_CH[8].SLOT[SLOT2], 2);
+					else       KEY_OFF(&chip->P_CH[8].SLOT[SLOT2],~2);
 				}
 				else
 				{
-					if ((chip.rhythm&0x20)==1)
+					if ((chip->rhythm&0x20)==1)
 					/*rhythm on to off*/
 					{
 						logerror("YM2413: Rhythm mode disable\n");
 		/* Load instrument settings for channel seven(chan=6 since we're zero based).*/
 						chan = 6;
-						inst = &chip.inst_tab[chip.instvol_r[chan]>>4][0];
+						inst = &chip->inst_tab[chip->instvol_r[chan]>>4][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 	
 		/* Load instrument settings for channel eight.*/
 						chan = 7;
-						inst = &chip.inst_tab[chip.instvol_r[chan]>>4][0];
+						inst = &chip->inst_tab[chip->instvol_r[chan]>>4][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 	
 		/* Load instrument settings for channel nine.*/
 						chan = 8;
-						inst = &chip.inst_tab[chip.instvol_r[chan]>>4][0];
+						inst = &chip->inst_tab[chip->instvol_r[chan]>>4][0];
 						slot = chan*2;
 	
 						load_instrument(chip, chan, slot, inst);
 					}
 					/* BD key off */
-					KEY_OFF(&chip.P_CH[6].SLOT[SLOT1],~2);
-					KEY_OFF(&chip.P_CH[6].SLOT[SLOT2],~2);
+					KEY_OFF(&chip->P_CH[6].SLOT[SLOT1],~2);
+					KEY_OFF(&chip->P_CH[6].SLOT[SLOT2],~2);
 					/* HH key off */
-					KEY_OFF(&chip.P_CH[7].SLOT[SLOT1],~2);
+					KEY_OFF(&chip->P_CH[7].SLOT[SLOT1],~2);
 					/* SD key off */
-					KEY_OFF(&chip.P_CH[7].SLOT[SLOT2],~2);
+					KEY_OFF(&chip->P_CH[7].SLOT[SLOT2],~2);
 					/* TOM key off */
-					KEY_OFF(&chip.P_CH[8].SLOT[SLOT1],~2);
+					KEY_OFF(&chip->P_CH[8].SLOT[SLOT1],~2);
 					/* TOP-CY off */
-					KEY_OFF(&chip.P_CH[8].SLOT[SLOT2],~2);
+					KEY_OFF(&chip->P_CH[8].SLOT[SLOT2],~2);
 				}
-				chip.rhythm  = v&0x3f;
+				chip->rhythm  = v&0x3f;
 			}
 			break;
 			}
@@ -1737,56 +1737,56 @@ public class ym2413
 			if (chan >= 9)
 				chan -= 9;	/* verified on real YM2413 */
 	
-			CH = &chip.P_CH[chan];
+			CH = &chip->P_CH[chan];
 	
-			if ((r & 0x10) != 0)
+			if(r&0x10)
 			{	/* 10-18: FNUM 0-7 */
-				block_fnum  = (CH.block_fnum&0x0f00) | v;
+				block_fnum  = (CH->block_fnum&0x0f00) | v;
 			}
 			else
 			{	/* 20-28: suson, keyon, block, FNUM 8 */
-				block_fnum = ((v&0x0f)<<8) | (CH.block_fnum&0xff);
+				block_fnum = ((v&0x0f)<<8) | (CH->block_fnum&0xff);
 	
-				if ((v & 0x10) != 0)
+				if(v&0x10)
 				{
-					KEY_ON (&CH.SLOT[SLOT1], 1);
-					KEY_ON (&CH.SLOT[SLOT2], 1);
+					KEY_ON (&CH->SLOT[SLOT1], 1);
+					KEY_ON (&CH->SLOT[SLOT2], 1);
 				}
 				else
 				{
-					KEY_OFF(&CH.SLOT[SLOT1],~1);
-					KEY_OFF(&CH.SLOT[SLOT2],~1);
+					KEY_OFF(&CH->SLOT[SLOT1],~1);
+					KEY_OFF(&CH->SLOT[SLOT2],~1);
 				}
 	
 	
-				if (CH.sus!=(v&0x20))
+				if (CH->sus!=(v&0x20))
 					logerror("chan=%i sus=%2x\n",chan,v&0x20);
 	
-				CH.sus = v & 0x20;
+				CH->sus = v & 0x20;
 			}
 			/* update */
-			if(CH.block_fnum != block_fnum)
+			if(CH->block_fnum != block_fnum)
 			{
 				UINT8 block;
 	
-				CH.block_fnum = block_fnum;
+				CH->block_fnum = block_fnum;
 	
-				/* BLK 2,1,0 bits . bits 3,2,1 of kcode, FNUM MSB . kcode LSB */
-				CH.kcode    = (block_fnum&0x0f00)>>8;
+				/* BLK 2,1,0 bits -> bits 3,2,1 of kcode, FNUM MSB -> kcode LSB */
+				CH->kcode    = (block_fnum&0x0f00)>>8;
 	
-				CH.ksl_base = ksl_tab[block_fnum>>5];
+				CH->ksl_base = ksl_tab[block_fnum>>5];
 	
 				block_fnum   = block_fnum * 2;
 				block        = (block_fnum&0x1c00) >> 10;
-				CH.fc       = chip.fn_tab[block_fnum&0x03ff] >> (7-block);
+				CH->fc       = chip->fn_tab[block_fnum&0x03ff] >> (7-block);
 	
 				/* refresh Total Level in both SLOTs of this channel */
-				CH.SLOT[SLOT1].TLL = CH.SLOT[SLOT1].TL + (CH.ksl_base>>CH.SLOT[SLOT1].ksl);
-				CH.SLOT[SLOT2].TLL = CH.SLOT[SLOT2].TL + (CH.ksl_base>>CH.SLOT[SLOT2].ksl);
+				CH->SLOT[SLOT1].TLL = CH->SLOT[SLOT1].TL + (CH->ksl_base>>CH->SLOT[SLOT1].ksl);
+				CH->SLOT[SLOT2].TLL = CH->SLOT[SLOT2].TL + (CH->ksl_base>>CH->SLOT[SLOT2].ksl);
 	
 				/* refresh frequency counter in both SLOTs of this channel */
-				CALC_FCSLOT(CH,&CH.SLOT[SLOT1]);
-				CALC_FCSLOT(CH,&CH.SLOT[SLOT2]);
+				CALC_FCSLOT(CH,&CH->SLOT[SLOT1]);
+				CALC_FCSLOT(CH,&CH->SLOT[SLOT2]);
 			}
 		}
 		break;
@@ -1800,25 +1800,25 @@ public class ym2413
 			if (chan >= 9)
 				chan -= 9;	/* verified on real YM2413 */
 	
-			old_instvol = chip.instvol_r[chan];
-			chip.instvol_r[chan] = v;	/* store for later use */
+			old_instvol = chip->instvol_r[chan];
+			chip->instvol_r[chan] = v;	/* store for later use */
 	
-			CH   = &chip.P_CH[chan];
-			SLOT = &CH.SLOT[SLOT2]; /* carrier */
-			SLOT.TL  = ((v&0x0f)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
-			SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+			CH   = &chip->P_CH[chan];
+			SLOT = &CH->SLOT[SLOT2]; /* carrier */
+			SLOT->TL  = ((v&0x0f)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
+			SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 	
 	
 			/*check wether we are in rhythm mode and handle instrument/volume register accordingly*/
-			if ((chan>=6) && (chip.rhythm&0x20))
+			if ((chan>=6) && (chip->rhythm&0x20))
 			{
 				/* we're in rhythm mode*/
 	
 				if (chan>=7) /* only for channel 7 and 8 (channel 6 is handled in usual way)*/
 				{
-					SLOT = &CH.SLOT[SLOT1]; /* modulator envelope is HH(chan=7) or TOM(chan=8) */
-					SLOT.TL  = ((chip.instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
-					SLOT.TLL = SLOT.TL + (CH.ksl_base>>SLOT.ksl);
+					SLOT = &CH->SLOT[SLOT1]; /* modulator envelope is HH(chan=7) or TOM(chan=8) */
+					SLOT->TL  = ((chip->instvol_r[chan]>>4)<<2)<<(ENV_BITS-2-7); /* 7 bits TL (bit 6 = always 0) */
+					SLOT->TLL = SLOT->TL + (CH->ksl_base>>SLOT->ksl);
 				}
 			}
 			else
@@ -1826,7 +1826,7 @@ public class ym2413
 				if ( (old_instvol&0xf0) == (v&0xf0) )
 					return;
 	
-				inst = &chip.inst_tab[chip.instvol_r[chan]>>4][0];
+				inst = &chip->inst_tab[chip->instvol_r[chan]>>4][0];
 				slot = chan*2;
 	
 				load_instrument(chip, chan, slot, inst);
@@ -1848,7 +1848,7 @@ public class ym2413
 	#ifdef LOG_CYM_FILE
 	static void cymfile_callback (int n)
 	{
-		if (cymfile != 0)
+		if (cymfile)
 		{
 			fputc( (unsigned char)8, cymfile );
 		}
@@ -1873,7 +1873,7 @@ public class ym2413
 	
 	#ifdef LOG_CYM_FILE
 		cymfile = fopen("2413_.cym","wb");
-		if (cymfile != 0)
+		if (cymfile)
 			timer_pulse ( TIME_IN_HZ(110), 0, cymfile_callback); /*110 Hz pulse timer*/
 		else
 			logerror("Could not create file 2413_.cym\n");
@@ -1884,8 +1884,8 @@ public class ym2413
 	
 	static void OPLL_UnLockTable(void)
 	{
-		if (num_lock != 0) num_lock--;
-		if (num_lock != 0) return;
+		if(num_lock) num_lock--;
+		if(num_lock) return;
 	
 		/* last time */
 	
@@ -1904,10 +1904,10 @@ public class ym2413
 		int c,s;
 		int i;
 	
-		chip.eg_timer = 0;
-		chip.eg_cnt   = 0;
+		chip->eg_timer = 0;
+		chip->eg_cnt   = 0;
 	
-		chip.noise_rng = 1;	/* noise shift register */
+		chip->noise_rng = 1;	/* noise shift register */
 	
 	
 		/* setup instruments table */
@@ -1915,7 +1915,7 @@ public class ym2413
 		{
 			for (c=0; c<8; c++)
 			{
-				chip.inst_tab[i][c] = table[i][c];
+				chip->inst_tab[i][c] = table[i][c];
 			}
 		}
 	
@@ -1927,13 +1927,13 @@ public class ym2413
 		/* reset operator parameters */
 		for( c = 0 ; c < 9 ; c++ )
 		{
-			OPLL_CH *CH = &chip.P_CH[c];
+			OPLL_CH *CH = &chip->P_CH[c];
 			for(s = 0 ; s < 2 ; s++ )
 			{
 				/* wave table */
-				CH.SLOT[s].wavetable = 0;
-				CH.SLOT[s].state     = EG_OFF;
-				CH.SLOT[s].volume    = MAX_ATT_INDEX;
+				CH->SLOT[s].wavetable = 0;
+				CH->SLOT[s].state     = EG_OFF;
+				CH->SLOT[s].volume    = MAX_ATT_INDEX;
 			}
 		}
 	}
@@ -1963,8 +1963,8 @@ public class ym2413
 	
 		chip  = (YM2413 *)ptr;
 	
-		chip.clock = clock;
-		chip.rate  = rate;
+		chip->clock = clock;
+		chip->rate  = rate;
 	
 		/* init global tables */
 		OPLL_initalize(chip);
@@ -1985,8 +1985,8 @@ public class ym2413
 	
 	static void OPLLSetUpdateHandler(YM2413 *chip,OPLL_UPDATEHANDLER UpdateHandler,int param)
 	{
-		chip.UpdateHandler = UpdateHandler;
-		chip.UpdateParam = param;
+		chip->UpdateHandler = UpdateHandler;
+		chip->UpdateParam = param;
 	}
 	
 	/* YM3812 I/O interface */
@@ -1994,12 +1994,12 @@ public class ym2413
 	{
 		if( !(a&1) )
 		{	/* address port */
-			chip.address = v & 0xff;
+			chip->address = v & 0xff;
 		}
 		else
 		{	/* data port */
-			if(chip.UpdateHandler) chip.UpdateHandler(chip.UpdateParam,0);
-			OPLLWriteReg(chip,chip.address,v);
+			if(chip->UpdateHandler) chip->UpdateHandler(chip->UpdateParam,0);
+			OPLLWriteReg(chip,chip->address,v);
 		}
 	}
 	
@@ -2008,7 +2008,7 @@ public class ym2413
 		if( !(a&1) )
 		{
 			/* status port */
-			return chip.status;
+			return chip->status;
 		}
 		return 0xff;
 	}
@@ -2027,7 +2027,7 @@ public class ym2413
 	{
 		int i;
 	
-		if (YM2413NumChips != 0)
+		if (YM2413NumChips)
 			return -1;	/* duplicate init. */
 	
 		YM2413NumChips = num;
@@ -2091,7 +2091,7 @@ public class ym2413
 	void YM2413UpdateOne(int which, INT16 **buffers, int length)
 	{
 		YM2413		*chip  = OPLL_YM2413[which];
-		UINT8		rhythm = chip.rhythm&0x20;
+		UINT8		rhythm = chip->rhythm&0x20;
 		SAMP		*bufMO = buffers[0];
 		SAMP		*bufRO = buffers[1];
 	
@@ -2100,10 +2100,10 @@ public class ym2413
 		if( (void *)chip != cur_chip ){
 			cur_chip = (void *)chip;
 			/* rhythm slots */
-			SLOT7_1 = &chip.P_CH[7].SLOT[SLOT1];
-			SLOT7_2 = &chip.P_CH[7].SLOT[SLOT2];
-			SLOT8_1 = &chip.P_CH[8].SLOT[SLOT1];
-			SLOT8_2 = &chip.P_CH[8].SLOT[SLOT2];
+			SLOT7_1 = &chip->P_CH[7].SLOT[SLOT1];
+			SLOT7_2 = &chip->P_CH[7].SLOT[SLOT2];
+			SLOT8_1 = &chip->P_CH[8].SLOT[SLOT1];
+			SLOT8_2 = &chip->P_CH[8].SLOT[SLOT2];
 		}
 	
 	
@@ -2117,23 +2117,23 @@ public class ym2413
 			advance_lfo(chip);
 	
 			/* FM part */
-			chan_calc(&chip.P_CH[0]);
+			chan_calc(&chip->P_CH[0]);
 	//SAVE_SEPARATE_CHANNEL(0);
-			chan_calc(&chip.P_CH[1]);
-			chan_calc(&chip.P_CH[2]);
-			chan_calc(&chip.P_CH[3]);
-			chan_calc(&chip.P_CH[4]);
-			chan_calc(&chip.P_CH[5]);
+			chan_calc(&chip->P_CH[1]);
+			chan_calc(&chip->P_CH[2]);
+			chan_calc(&chip->P_CH[3]);
+			chan_calc(&chip->P_CH[4]);
+			chan_calc(&chip->P_CH[5]);
 	
-			if (rhythm == 0)
+			if(!rhythm)
 			{
-				chan_calc(&chip.P_CH[6]);
-				chan_calc(&chip.P_CH[7]);
-				chan_calc(&chip.P_CH[8]);
+				chan_calc(&chip->P_CH[6]);
+				chan_calc(&chip->P_CH[7]);
+				chan_calc(&chip->P_CH[8]);
 			}
 			else		/* Rhythm part */
 			{
-				rhythm_calc(&chip.P_CH[0], (chip.noise_rng>>0)&1 );
+				rhythm_calc(&chip->P_CH[0], (chip->noise_rng>>0)&1 );
 			}
 	
 			mo = output[0];

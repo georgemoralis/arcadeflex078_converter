@@ -35,7 +35,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,8 +61,7 @@ public class nitedrvr
 		0x01, 0x00,
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_nitedrvr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_nitedrvr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		palette_set_color(2,0x55,0x55,0x55); /* DK GREY - for MAME text only */
@@ -71,8 +70,7 @@ public class nitedrvr
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_nitedrvr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_nitedrvr  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(TIME_IN_SEC(0.693 * (180000 + (2 * 330)) * 1e-6), 0, nitedrvr_crash_toggle);
 	} };
 	
@@ -129,7 +127,7 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_nitedrvr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nitedrvr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nitedrvr )
 		PORT_START(); 		/* fake port, gets mapped to Night Driver ports */
 		PORT_DIPNAME( 0x30, 0x10, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(	0x30, DEF_STR( "2C_1C") );
@@ -361,8 +359,7 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_nitedrvr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nitedrvr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,1000000)	   /* 1 MHz ???? */
@@ -388,9 +385,7 @@ public class nitedrvr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, nitedrvr_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -421,5 +416,5 @@ public class nitedrvr
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_nitedrvr	   = new GameDriver("1976"	,"nitedrvr"	,"nitedrvr.java"	,rom_nitedrvr,null	,machine_driver_nitedrvr	,input_ports_nitedrvr	,null	,ROT0	,	"Atari", "Night Driver", GAME_IMPERFECT_SOUND )
+	GAMEX( 1976, nitedrvr, 0, nitedrvr, nitedrvr, 0, ROT0, "Atari", "Night Driver", GAME_IMPERFECT_SOUND )
 }

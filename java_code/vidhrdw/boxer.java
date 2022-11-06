@@ -6,7 +6,7 @@ Atari Boxer (prototype) video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,7 +42,7 @@ public class boxer
 					
 					code = p[32 * l + 4 * i + j];
 	
-					drawgfx(bitmap, Machine.gfx[n],
+					drawgfx(bitmap, Machine->gfx[n],
 						code,
 						0,
 						code & 0x80, 0,
@@ -53,7 +53,7 @@ public class boxer
 	
 					code = p[32 * r + 4 * i - j + 3];
 	
-					drawgfx(bitmap, Machine.gfx[n],
+					drawgfx(bitmap, Machine->gfx[n],
 						code,
 						0,
 						!(code & 0x80), 0,
@@ -67,8 +67,7 @@ public class boxer
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_boxer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_boxer  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		int j;
 	

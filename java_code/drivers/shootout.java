@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,8 +52,7 @@ public class shootout
 	
 	/*******************************************************************************/
 	
-	public static WriteHandlerPtr shootout_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shootout_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		UINT8 *RAM;
 	
@@ -63,19 +62,16 @@ public class shootout
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
 	} };
 	
-	public static WriteHandlerPtr shootout_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shootout_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr shootout_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shootout_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data);
 	} };
 	
@@ -162,7 +158,7 @@ public class shootout
 	
 	/*******************************************************************************/
 	
-	static InputPortPtr input_ports_shootout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shootout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shootout )
 		PORT_START(); 	/* DSW1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x00, DEF_STR( "2C_1C") );
@@ -299,8 +295,7 @@ public class shootout
 		{ shootout_snd2_irq },
 	};
 	
-	public static InterruptHandlerPtr shootout_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr shootout_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int coin = 0;
 	
 		if ( readinputport( 2 ) & 0xc0 ) {
@@ -312,8 +307,7 @@ public class shootout
 			coin = 0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_shootout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shootout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000)	/* 2 MHz? */
@@ -340,13 +334,10 @@ public class shootout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_shootouj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shootouj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000)	/* 2 MHz? */
@@ -369,9 +360,7 @@ public class shootout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_shootout = new RomLoadPtr(){ public void handler(){ 
@@ -458,8 +447,7 @@ public class shootout
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_shootout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shootout  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 		int A;
@@ -471,7 +459,7 @@ public class shootout
 	} };
 	
 	
-	public static GameDriver driver_shootout	   = new GameDriver("1985"	,"shootout"	,"shootout.java"	,rom_shootout,null	,machine_driver_shootout	,input_ports_shootout	,init_shootout	,ROT0	,	"Data East USA", "Shoot Out (US)")
-	public static GameDriver driver_shootouj	   = new GameDriver("1985"	,"shootouj"	,"shootout.java"	,rom_shootouj,driver_shootout	,machine_driver_shootouj	,input_ports_shootout	,null	,ROT0	,	"Data East USA", "Shoot Out (Japan)" )
-	public static GameDriver driver_shootoub	   = new GameDriver("1985"	,"shootoub"	,"shootout.java"	,rom_shootoub,driver_shootout	,machine_driver_shootouj	,input_ports_shootout	,init_shootout	,ROT0	,	"bootleg", "Shoot Out (Korean Bootleg)" )
+	GAME( 1985, shootout, 0,		shootout, shootout, shootout, ROT0, "Data East USA", "Shoot Out (US)")
+	GAME( 1985, shootouj, shootout, shootouj, shootout, 0,		  ROT0, "Data East USA", "Shoot Out (Japan)" )
+	GAME( 1985, shootoub, shootout, shootouj, shootout, shootout, ROT0, "bootleg", "Shoot Out (Korean Bootleg)" )
 }

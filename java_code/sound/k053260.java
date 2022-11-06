@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -48,8 +48,8 @@ public class k053260
 	
 	static void InitDeltaTable( int chip ) {
 		int		i;
-		double	base = ( double )Machine.sample_rate;
-		double	max = (double)( intf.clock[chip] ); /* Hz */
+		double	base = ( double )Machine->sample_rate;
+		double	max = (double)( intf->clock[chip] ); /* Hz */
 		unsigned long val;
 	
 		for( i = 0; i < 0x1000; i++ ) {
@@ -111,16 +111,16 @@ public class k053260
 	
 		/* precache some values */
 		for ( i = 0; i < 4; i++ ) {
-			rom[i]= &ic.rom[ic.channels[i].start + ( ic.channels[i].bank << 16 )];
-			delta[i] = ic.delta_table[ic.channels[i].rate];
-			lvol[i] = ic.channels[i].volume * ic.channels[i].pan;
-			rvol[i] = ic.channels[i].volume * ( 8 - ic.channels[i].pan );
-			end[i] = ic.channels[i].size;
-			pos[i] = ic.channels[i].pos;
-			play[i] = ic.channels[i].play;
-			loop[i] = ic.channels[i].loop;
-			ppcm[i] = ic.channels[i].ppcm;
-			ppcm_data[i] = ic.channels[i].ppcm_data;
+			rom[i]= &ic->rom[ic->channels[i].start + ( ic->channels[i].bank << 16 )];
+			delta[i] = ic->delta_table[ic->channels[i].rate];
+			lvol[i] = ic->channels[i].volume * ic->channels[i].pan;
+			rvol[i] = ic->channels[i].volume * ( 8 - ic->channels[i].pan );
+			end[i] = ic->channels[i].size;
+			pos[i] = ic->channels[i].pos;
+			play[i] = ic->channels[i].play;
+			loop[i] = ic->channels[i].loop;
+			ppcm[i] = ic->channels[i].ppcm;
+			ppcm_data[i] = ic->channels[i].ppcm_data;
 			if ( ppcm[i] )
 				delta[i] /= 2;
 		}
@@ -173,7 +173,7 @@ public class k053260
 							pos[i] += delta[i];
 						}
 	
-						if ( ic.mode & 2 ) {
+						if ( ic->mode & 2 ) {
 							dataL += ( d * lvol[i] ) >> 2;
 							dataR += ( d * rvol[i] ) >> 2;
 						}
@@ -186,9 +186,9 @@ public class k053260
 	
 		/* update the regs now */
 		for ( i = 0; i < 4; i++ ) {
-			ic.channels[i].pos = pos[i];
-			ic.channels[i].play = play[i];
-			ic.channels[i].ppcm_data = ppcm_data[i];
+			ic->channels[i].pos = pos[i];
+			ic->channels[i].play = play[i];
+			ic->channels[i].ppcm_data = ppcm_data[i];
 		}
 	}
 	
@@ -198,31 +198,31 @@ public class k053260
 		int i, ics;
 	
 		/* Initialize our chip structure */
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
-		if ( intf.num > MAX_053260 )
+		if ( intf->num > MAX_053260 )
 			return -1;
 	
-		K053260_chip = ( struct K053260_chip_def * )malloc( sizeof( struct K053260_chip_def ) * intf.num );
+		K053260_chip = ( struct K053260_chip_def * )malloc( sizeof( struct K053260_chip_def ) * intf->num );
 	
 		if ( K053260_chip == 0 )
 			return -1;
 	
-		for( ics = 0; ics < intf.num; ics++ ) {
+		for( ics = 0; ics < intf->num; ics++ ) {
 			struct K053260_chip_def *ic = &K053260_chip[ics];
 	
-			ic.mode = 0;
-			ic.rom = memory_region(intf.region[ics]);
-			ic.rom_size = memory_region_length(intf.region[ics]) - 1;
+			ic->mode = 0;
+			ic->rom = memory_region(intf->region[ics]);
+			ic->rom_size = memory_region_length(intf->region[ics]) - 1;
 	
 			K053260_reset( ics );
 	
 			for ( i = 0; i < 0x30; i++ )
-				ic.regs[i] = 0;
+				ic->regs[i] = 0;
 	
-			ic.delta_table = ( unsigned long * )malloc( 0x1000 * sizeof( unsigned long ) );
+			ic->delta_table = ( unsigned long * )malloc( 0x1000 * sizeof( unsigned long ) );
 	
-			if ( ic.delta_table == 0 )
+			if ( ic->delta_table == 0 )
 				return -1;
 	
 			for ( i = 0; i < 2; i++ ) {
@@ -230,13 +230,13 @@ public class k053260
 				sprintf(ch_names[i],"%s #%d Ch %d",sound_name(msound),ics,i);
 			}
 	
-			ic.channel = stream_init_multi( 2, names, intf.mixing_level[ics], Machine.sample_rate, ics, K053260_update );
+			ic->channel = stream_init_multi( 2, names, intf->mixing_level[ics], Machine->sample_rate, ics, K053260_update );
 	
 			InitDeltaTable( ics );
 	
 			/* setup SH1 timer if necessary */
-			if ( intf.irq[ics] )
-				timer_pulse( TIME_IN_HZ( ( intf.clock[ics] / 32 ) ), 0, intf.irq[ics] );
+			if ( intf->irq[ics] )
+				timer_pulse( TIME_IN_HZ( ( intf->clock[ics] / 32 ) ), 0, intf->irq[ics] );
 		}
 	
 	    return 0;
@@ -245,14 +245,14 @@ public class k053260
 	void K053260_sh_stop( void ) {
 		int ics;
 	
-		if (K053260_chip != 0) {
-			for( ics = 0; ics < intf.num; ics++ ) {
+		if ( K053260_chip ) {
+			for( ics = 0; ics < intf->num; ics++ ) {
 				struct K053260_chip_def *ic = &K053260_chip[ics];
 	
-				if ( ic.delta_table )
-					free( ic.delta_table );
+				if ( ic->delta_table )
+					free( ic->delta_table );
 	
-				ic.delta_table = 0;
+				ic->delta_table = 0;
 			}
 	
 			free( K053260_chip );
@@ -264,24 +264,24 @@ public class k053260
 	INLINE void check_bounds( int chip, int channel ) {
 		struct K053260_chip_def *ic = &K053260_chip[chip];
 	
-		int channel_start = ( ic.channels[channel].bank << 16 ) + ic.channels[channel].start;
-		int channel_end = channel_start + ic.channels[channel].size - 1;
+		int channel_start = ( ic->channels[channel].bank << 16 ) + ic->channels[channel].start;
+		int channel_end = channel_start + ic->channels[channel].size - 1;
 	
-		if ( channel_start > ic.rom_size ) {
+		if ( channel_start > ic->rom_size ) {
 			logerror("K53260: Attempting to start playing past the end of the rom ( start = %06x, end = %06x ).\n", channel_start, channel_end );
 	
-			ic.channels[channel].play = 0;
+			ic->channels[channel].play = 0;
 	
 			return;
 		}
 	
-		if ( channel_end > ic.rom_size ) {
+		if ( channel_end > ic->rom_size ) {
 			logerror("K53260: Attempting to play past the end of the rom ( start = %06x, end = %06x ).\n", channel_start, channel_end );
 	
-			ic.channels[channel].size = ic.rom_size - channel_start;
+			ic->channels[channel].size = ic->rom_size - channel_start;
 		}
 	#if LOG
-		logerror("K053260: Sample Start = %06x, Sample End = %06x, Sample rate = %04lx, PPCM = %s\n", channel_start, channel_end, ic.channels[channel].rate, ic.channels[channel].ppcm ? "yes" : "no" );
+		logerror("K053260: Sample Start = %06x, Sample End = %06x, Sample rate = %04lx, PPCM = %s\n", channel_start, channel_end, ic->channels[channel].rate, ic->channels[channel].ppcm ? "yes" : "no" );
 	#endif
 	}
 	
@@ -298,31 +298,31 @@ public class k053260
 			return;
 		}
 	
-		if ( Machine.sample_rate != 0 )
-			stream_update( ic.channel, 0 );
+		if ( Machine->sample_rate != 0 )
+			stream_update( ic->channel, 0 );
 	
 		/* before we update the regs, we need to check for a latched reg */
 		if ( r == 0x28 ) {
-			t = ic.regs[r] ^ v;
+			t = ic->regs[r] ^ v;
 	
 			for ( i = 0; i < 4; i++ ) {
 				if ( t & ( 1 << i ) ) {
 					if ( v & ( 1 << i ) ) {
-						ic.channels[i].play = 1;
-						ic.channels[i].pos = 0;
-						ic.channels[i].ppcm_data = 0;
+						ic->channels[i].play = 1;
+						ic->channels[i].pos = 0;
+						ic->channels[i].ppcm_data = 0;
 						check_bounds( chip, i );
 					} else
-						ic.channels[i].play = 0;
+						ic->channels[i].play = 0;
 				}
 			}
 	
-			ic.regs[r] = v;
+			ic->regs[r] = v;
 			return;
 		}
 	
 		/* update regs */
-		ic.regs[r] = v;
+		ic->regs[r] = v;
 	
 		/* communication registers */
 		if ( r < 8 )
@@ -334,41 +334,41 @@ public class k053260
 	
 			switch ( ( r - 8 ) & 0x07 ) {
 				case 0: /* sample rate low */
-					ic.channels[channel].rate &= 0x0f00;
-					ic.channels[channel].rate |= v;
+					ic->channels[channel].rate &= 0x0f00;
+					ic->channels[channel].rate |= v;
 				break;
 	
 				case 1: /* sample rate high */
-					ic.channels[channel].rate &= 0x00ff;
-					ic.channels[channel].rate |= ( v & 0x0f ) << 8;
+					ic->channels[channel].rate &= 0x00ff;
+					ic->channels[channel].rate |= ( v & 0x0f ) << 8;
 				break;
 	
 				case 2: /* size low */
-					ic.channels[channel].size &= 0xff00;
-					ic.channels[channel].size |= v;
+					ic->channels[channel].size &= 0xff00;
+					ic->channels[channel].size |= v;
 				break;
 	
 				case 3: /* size high */
-					ic.channels[channel].size &= 0x00ff;
-					ic.channels[channel].size |= v << 8;
+					ic->channels[channel].size &= 0x00ff;
+					ic->channels[channel].size |= v << 8;
 				break;
 	
 				case 4: /* start low */
-					ic.channels[channel].start &= 0xff00;
-					ic.channels[channel].start |= v;
+					ic->channels[channel].start &= 0xff00;
+					ic->channels[channel].start |= v;
 				break;
 	
 				case 5: /* start high */
-					ic.channels[channel].start &= 0x00ff;
-					ic.channels[channel].start |= v << 8;
+					ic->channels[channel].start &= 0x00ff;
+					ic->channels[channel].start |= v << 8;
 				break;
 	
 				case 6: /* bank */
-					ic.channels[channel].bank = v & 0xff;
+					ic->channels[channel].bank = v & 0xff;
 				break;
 	
 				case 7: /* volume is 7 bits. Convert to 8 bits now. */
-					ic.channels[channel].volume = ( ( v & 0x7f ) << 1 ) | ( v & 1 );
+					ic->channels[channel].volume = ( ( v & 0x7f ) << 1 ) | ( v & 1 );
 				break;
 			}
 	
@@ -378,24 +378,24 @@ public class k053260
 		switch( r ) {
 			case 0x2a: /* loop, ppcm */
 				for ( i = 0; i < 4; i++ )
-					ic.channels[i].loop = ( v & ( 1 << i ) ) != 0;
+					ic->channels[i].loop = ( v & ( 1 << i ) ) != 0;
 	
 				for ( i = 4; i < 8; i++ )
-					ic.channels[i-4].ppcm = ( v & ( 1 << i ) ) != 0;
+					ic->channels[i-4].ppcm = ( v & ( 1 << i ) ) != 0;
 			break;
 	
 			case 0x2c: /* pan */
-				ic.channels[0].pan = v & 7;
-				ic.channels[1].pan = ( v >> 3 ) & 7;
+				ic->channels[0].pan = v & 7;
+				ic->channels[1].pan = ( v >> 3 ) & 7;
 			break;
 	
 			case 0x2d: /* more pan */
-				ic.channels[2].pan = v & 7;
-				ic.channels[3].pan = ( v >> 3 ) & 7;
+				ic->channels[2].pan = v & 7;
+				ic->channels[3].pan = ( v >> 3 ) & 7;
 			break;
 	
 			case 0x2f: /* control */
-				ic.mode = v & 7;
+				ic->mode = v & 7;
 				/* bit 0 = read ROM */
 				/* bit 1 = enable sound output */
 				/* bit 2 = unknown */
@@ -413,58 +413,54 @@ public class k053260
 					int i, status = 0;
 	
 					for ( i = 0; i < 4; i++ )
-						status |= ic.channels[i].play << i;
+						status |= ic->channels[i].play << i;
 	
 					return status;
 				}
 			break;
 	
 			case 0x2e: /* read rom */
-				if ( ic.mode & 1 ) {
-					unsigned int offs = ic.channels[0].start + ( ic.channels[0].pos >> BASE_SHIFT ) + ( ic.channels[0].bank << 16 );
+				if ( ic->mode & 1 ) {
+					unsigned int offs = ic->channels[0].start + ( ic->channels[0].pos >> BASE_SHIFT ) + ( ic->channels[0].bank << 16 );
 	
-					ic.channels[0].pos += ( 1 << 16 );
+					ic->channels[0].pos += ( 1 << 16 );
 	
-					if ( offs > ic.rom_size ) {
-						logerror("%06x: K53260: Attempting to read past rom size in rom Read Mode (offs = %06x, size = %06x).\n",activecpu_get_pc(),offs,ic.rom_size );
+					if ( offs > ic->rom_size ) {
+						logerror("%06x: K53260: Attempting to read past rom size in rom Read Mode (offs = %06x, size = %06x).\n",activecpu_get_pc(),offs,ic->rom_size );
 	
 						return 0;
 					}
 	
-					return ic.rom[offs];
+					return ic->rom[offs];
 				}
 			break;
 		}
 	
-		return ic.regs[offset];
+		return ic->regs[offset];
 	}
 	
 	/**************************************************************************************************/
 	/* Accesors */
 	
-	public static ReadHandlerPtr K053260_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K053260_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K053260_read( 0, offset );
 	} };
 	
-	public static WriteHandlerPtr K053260_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053260_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K053260_write( 0, offset, data );
 	} };
 	
-	public static ReadHandlerPtr K053260_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K053260_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K053260_read( 1, offset );
 	} };
 	
-	public static WriteHandlerPtr K053260_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053260_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K053260_write( 1, offset, data );
 	} };
 	
 	WRITE16_HANDLER( K053260_0_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053260_0_w (offset, data & 0xff);
 	}
 	
@@ -475,7 +471,7 @@ public class k053260
 	
 	WRITE16_HANDLER( K053260_1_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053260_1_w (offset, data & 0xff);
 	}
 	

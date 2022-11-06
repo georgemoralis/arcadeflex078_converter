@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,14 +38,14 @@ public class skullxbo
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 1;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 2;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -73,8 +73,7 @@ public class skullxbo
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_skullxbo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_skullxbo  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(alpha_row_update, 8);
@@ -92,8 +91,8 @@ public class skullxbo
 	static READ16_HANDLER( special_port1_r )
 	{
 		int temp = readinputport(1);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0040;
-		if (atarigen_get_hblank() != 0) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0040;
+		if (atarigen_get_hblank()) temp ^= 0x0010;
 		return temp;
 	}
 	
@@ -165,7 +164,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_skullxbo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skullxbo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skullxbo )
 		PORT_START();       /* ff5800 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -256,8 +255,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_skullxbo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skullxbo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -282,9 +280,7 @@ public class skullxbo
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -621,8 +617,7 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_skullxbo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skullxbo  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 2, 1, 0x0080);
 		memset(memory_region(REGION_GFX1) + 0x170000, 0, 0x20000);
@@ -636,9 +631,9 @@ public class skullxbo
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_skullxbo	   = new GameDriver("1989"	,"skullxbo"	,"skullxbo.java"	,rom_skullxbo,null	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 5)" )
-	public static GameDriver driver_skullxb4	   = new GameDriver("1989"	,"skullxb4"	,"skullxbo.java"	,rom_skullxb4,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 4)" )
-	public static GameDriver driver_skullxb3	   = new GameDriver("1989"	,"skullxb3"	,"skullxbo.java"	,rom_skullxb3,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 3)" )
-	public static GameDriver driver_skullxb2	   = new GameDriver("1989"	,"skullxb2"	,"skullxbo.java"	,rom_skullxb2,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 2)" )
-	public static GameDriver driver_skullxb1	   = new GameDriver("1989"	,"skullxb1"	,"skullxbo.java"	,rom_skullxb1,driver_skullxbo	,machine_driver_skullxbo	,input_ports_skullxbo	,init_skullxbo	,ROT0	,	"Atari Games", "Skull & Crossbones (rev 1)" )
+	GAME( 1989, skullxbo, 0,        skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 5)" )
+	GAME( 1989, skullxb4, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 4)" )
+	GAME( 1989, skullxb3, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 3)" )
+	GAME( 1989, skullxb2, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 2)" )
+	GAME( 1989, skullxb1, skullxbo, skullxbo, skullxbo, skullxbo, ROT0, "Atari Games", "Skull & Crossbones (rev 1)" )
 }

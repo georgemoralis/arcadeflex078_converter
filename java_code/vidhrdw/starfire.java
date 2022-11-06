@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,16 +31,15 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_starfire  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_starfire  = new VideoStartHandlerPtr() { public int handler(){
 		/* make a temporary bitmap */
 		tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
-		if (tmpbitmap == 0)
+		if (!tmpbitmap)
 			return 1;
 	
 		/* make a dirty array */
 		scanline_dirty = auto_malloc(256);
-		if (scanline_dirty == 0)
+		if (!scanline_dirty)
 			return 1;
 	
 		/* reset videoram */
@@ -59,13 +58,11 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starfire_vidctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfire_vidctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    starfire_vidctrl = data;
 	} };
 	
-	public static WriteHandlerPtr starfire_vidctrl1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfire_vidctrl1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    starfire_vidctrl1 = data;
 	} };
 	
@@ -77,8 +74,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starfire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfire_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* handle writes to the pseudo-color RAM */
 		if ((offset & 0xe0) == 0)
 		{
@@ -88,8 +84,8 @@ public class starfire
 			int g = (data >> 5) & 0x07;
 	
 			/* set RAM regardless */
-			starfire_colorram.write(data,data);
-			starfire_colorram.write(data,data);
+			starfire_colorram[offset & ~0x100] = data;
+			starfire_colorram[offset |  0x100] = data;
 	
 			/* don't modify the palette unless the TRANS bit is set */
 			starfire_color = data & 0x1f;
@@ -107,15 +103,14 @@ public class starfire
 		else
 		{
 			/* set RAM based on CDRM */
-			starfire_colorram.write((starfire_vidctrl1 & 0x80) ? starfire_color : (data & 0x1f),(starfire_vidctrl1 & 0x80) ? starfire_color : (data & 0x1f));
+			starfire_colorram[offset] = (starfire_vidctrl1 & 0x80) ? starfire_color : (data & 0x1f);
 			scanline_dirty[offset & 0xff] = 1;
 			starfire_color = data & 0x1f;
 		}
 	} };
 	
-	public static ReadHandlerPtr starfire_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return starfire_colorram.read(offset);
+	public static ReadHandlerPtr starfire_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return starfire_colorram[offset];
 	} };
 	
 	
@@ -126,8 +121,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starfire_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfire_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sh, lr, dm, ds, mask, d0, dalu;
 		int offset1 = offset & 0x1fff;
 		int offset2 = (offset + 0x100) & 0x1fff;
@@ -137,7 +131,7 @@ public class starfire
 			return;
 	
 		/* selector 6A */
-		if ((offset & 0x2000) != 0)
+		if (offset & 0x2000)
 		{
 			sh = (starfire_vidctrl >> 1) & 0x07;
 			lr = starfire_vidctrl & 0x01;
@@ -150,7 +144,7 @@ public class starfire
 	
 		/* mirror bits 5B/5C/5D/5E */
 		dm = data;
-		if (lr != 0)
+		if (lr)
 			dm = ((dm & 0x01) << 7) | ((dm & 0x02) << 5) | ((dm & 0x04) << 3) | ((dm & 0x08) << 1) |
 			     ((dm & 0x10) >> 1) | ((dm & 0x20) >> 3) | ((dm & 0x40) >> 5) | ((dm & 0x80) >> 7);
 	
@@ -161,14 +155,14 @@ public class starfire
 		/* ROLL */
 		if ((offset & 0x1f00) == 0x1f00)
 		{
-			if ((starfire_vidctrl1 & 0x10) != 0)
+			if (starfire_vidctrl1 & 0x10)
 				mask &= 0x00ff;
 			else
 				mask &= 0xff00;
 		}
 	
 		/* ALU 8B/8D */
-		d0 = (starfire_videoram.read(offset1)<< 8) | starfire_videoram.read(offset2);
+		d0 = (starfire_videoram[offset1] << 8) | starfire_videoram[offset2];
 		dalu = d0 & ~mask;
 		d0 &= mask;
 		ds &= mask;
@@ -193,28 +187,27 @@ public class starfire
 		}
 	
 		/* final output */
-		starfire_videoram.write(dalu >> 8,dalu >> 8);
-		starfire_videoram.write(dalu,dalu);
+		starfire_videoram[offset1] = dalu >> 8;
+		starfire_videoram[offset2] = dalu;
 		scanline_dirty[offset1 & 0xff] = 1;
 	
 		/* color output */
 		if (!(offset & 0x2000) && !(starfire_vidctrl1 & 0x80))
 		{
-			if ((mask & 0xff00) != 0)
-				starfire_colorram.write(starfire_color,starfire_color);
-			if ((mask & 0x00ff) != 0)
-				starfire_colorram.write(starfire_color,starfire_color);
+			if (mask & 0xff00)
+				starfire_colorram[offset1] = starfire_color;
+			if (mask & 0x00ff)
+				starfire_colorram[offset2] = starfire_color;
 		}
 	} };
 	
-	public static ReadHandlerPtr starfire_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starfire_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int sh, mask, d0;
 		int offset1 = offset & 0x1fff;
 		int offset2 = (offset + 0x100) & 0x1fff;
 	
 		/* selector 6A */
-		if ((offset & 0x2000) != 0)
+		if (offset & 0x2000)
 			sh = (starfire_vidctrl >> 1) & 0x07;
 		else
 			sh = (starfire_vidctrl >> 5) & 0x07;
@@ -225,14 +218,14 @@ public class starfire
 		/* ROLL */
 		if ((offset & 0x1f00) == 0x1f00)
 		{
-			if ((starfire_vidctrl1 & 0x10) != 0)
+			if (starfire_vidctrl1 & 0x10)
 				mask &= 0x00ff;
 			else
 				mask &= 0xff00;
 		}
 	
 		/* munge the results */
-		d0 = (starfire_videoram.read(offset1)& (mask >> 8)) | (starfire_videoram.read(offset2)& mask);
+		d0 = (starfire_videoram[offset1] & (mask >> 8)) | (starfire_videoram[offset2] & mask);
 		d0 = (d0 << sh) | (d0 >> (8 - sh));
 		return d0 & 0xff;
 	} };
@@ -247,8 +240,8 @@ public class starfire
 	
 	void starfire_video_update(int scanline, int count)
 	{
-		UINT8 *pix = &starfire_videoram.read(scanline);
-		UINT8 *col = &starfire_colorram.read(scanline);
+		UINT8 *pix = &starfire_videoram[scanline];
+		UINT8 *col = &starfire_colorram[scanline];
 		int x, y;
 	
 		/* update any dirty scanlines in this range */
@@ -287,8 +280,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_starfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_starfire  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* copy the bitmap, remapping the colors */
 		copybitmap_remap(bitmap, tmpbitmap, 0, 0, 0, 0, Machine.visible_area, TRANSPARENCY_NONE, 0);
 	} };

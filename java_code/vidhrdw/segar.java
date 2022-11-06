@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,8 +61,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_segar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_segar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		static unsigned char color_scale[] = {0x00, 0x40, 0x80, 0xC0 };
 		int i;
 	
@@ -95,15 +94,13 @@ public class segar
 	mark the character as modified.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr segar_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.dirtychar[offset / 8] = 1;
 	
 		segar_characterram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr segar_characterram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_characterram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.dirtychar[offset / 8] = 1;
 	
 		segar_characterram2[offset] = data;
@@ -118,8 +115,7 @@ public class segar
 	D4-D7 = unused?
 	***************************************************************************/
 	
-	public static WriteHandlerPtr segar_video_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_video_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("VPort = %02X\n",data);
 	
 		if ((data & 0x01) != sv.flip)
@@ -128,12 +124,12 @@ public class segar
 			sv.refresh=1;
 		}
 	
-		if ((data & 0x02) != 0)
+		if (data & 0x02)
 			sv.color_write_enable=1;
 		else
 			sv.color_write_enable=0;
 	
-		if ((data & 0x04) != 0)
+		if (data & 0x04)
 			sv.char_refresh=1;
 	} };
 	
@@ -141,8 +137,7 @@ public class segar
 	If a color changes, refresh the entire screen because it's possible that the
 	color change affected the transparency (switched either to or from black)
 	***************************************************************************/
-	public static WriteHandlerPtr segar_colortable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_colortable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char red[] = {0x00, 0x24, 0x49, 0x6D, 0x92, 0xB6, 0xDB, 0xFF };
 		static unsigned char grn[] = {0x00, 0x24, 0x49, 0x6D, 0x92, 0xB6, 0xDB, 0xFF };
 		static unsigned char blu[] = {0x00, 0x55, 0xAA, 0xFF };
@@ -158,9 +153,9 @@ public class segar
 			palette_set_color(offset+1,r,g,b);
 	
 			if (data == 0)
-				Machine.gfx[0].colortable[offset] = Machine.pens[0];
+				Machine->gfx[0]->colortable[offset] = Machine->pens[0];
 			else
-				Machine.gfx[0].colortable[offset] = Machine.pens[offset+1];
+				Machine->gfx[0]->colortable[offset] = Machine->pens[offset+1];
 	
 			// refresh the screen if the color switched to or from black
 			if (sv.colorRAM[offset] != data)
@@ -180,8 +175,7 @@ public class segar
 		}
 	} };
 	
-	public static WriteHandlerPtr segar_bcolortable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr segar_bcolortable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char red[] = {0x00, 0x24, 0x49, 0x6D, 0x92, 0xB6, 0xDB, 0xFF };
 		static unsigned char grn[] = {0x00, 0x24, 0x49, 0x6D, 0x92, 0xB6, 0xDB, 0xFF };
 		static unsigned char blu[] = {0x00, 0x55, 0xAA, 0xFF };
@@ -211,8 +205,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_segar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_segar  = new VideoStartHandlerPtr() { public int handler(){
 		if (video_start_generic.handler()!=0)
 			return 1;
 	
@@ -257,15 +250,15 @@ public class segar
 				/* decode modified characters */
 				if (sv.dirtychar[charcode] == 1)
 				{
-					decodechar(Machine.gfx[0],charcode,segar_characterram,
-							Machine.drv.gfxdecodeinfo[0].gfxlayout);
+					decodechar(Machine->gfx[0],charcode,segar_characterram,
+							Machine->drv->gfxdecodeinfo[0].gfxlayout);
 					sv.dirtychar[charcode] = 2;
 				}
 	
-				drawgfx(tmpbitmap,Machine.gfx[0],
+				drawgfx(tmpbitmap,Machine->gfx[0],
 						charcode,charcode>>4,
 						sv.flip,sv.flip,sx,sy,
-						Machine.visible_area,sprite_transparency,0);
+						Machine->visible_area,sprite_transparency,0);
 	
 				dirtybuffer[offs] = 0;
 	
@@ -277,7 +270,7 @@ public class segar
 				sv.dirtychar[offs]=0;
 	
 		/* copy the character mapped graphics */
-		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,copy_transparency,Machine.pens[0]);
+		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine->visible_area,copy_transparency,Machine->pens[0]);
 	
 		sv.char_refresh=0;
 		sv.refresh=0;
@@ -288,9 +281,8 @@ public class segar
 	"Standard" refresh for games without special background boards.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_segar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
 	
 		segar_common_screenrefresh(bitmap, TRANSPARENCY_NONE, TRANSPARENCY_NONE);
@@ -311,9 +303,8 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_spaceod  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_segar() != 0)
+	public static VideoStartHandlerPtr video_start_spaceod  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_segar())
 			return 1;
 	
 		if ((sv.horizbackbitmap = auto_bitmap_alloc(4*Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
@@ -332,8 +323,7 @@ public class segar
 	If the background changed, refresh the screen.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr spaceod_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceod_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int temp_scene, temp_charset;
 	
 		temp_scene   = (data & 0xC0) >> 6;
@@ -368,8 +358,7 @@ public class segar
 	sent to this port also seems to indicate the speed, but the value itself
 	is never checked.
 	***************************************************************************/
-	public static WriteHandlerPtr spaceod_backshift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceod_backshift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.backshift= (sv.backshift + 1) % 0x400;
 		sv.background_enable=1;
 		sv.fill_background=0;
@@ -381,8 +370,7 @@ public class segar
 	can line up the background's Black Hole with knowing when to spin the ship
 	is to force the background to restart every time you die.
 	***************************************************************************/
-	public static WriteHandlerPtr spaceod_backshift_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceod_backshift_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.backshift=0;
 		sv.background_enable=1;
 		sv.fill_background=0;
@@ -391,16 +379,14 @@ public class segar
 	/***************************************************************************
 	Space Odyssey also lets you fill the background with a specific color.
 	***************************************************************************/
-	public static WriteHandlerPtr spaceod_backfill_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceod_backfill_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.backfill=data + 0x40 + 1;
 		sv.fill_background=1;
 	} };
 	
 	/***************************************************************************
 	***************************************************************************/
-	public static WriteHandlerPtr spaceod_nobackfill_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spaceod_nobackfill_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sv.backfill=0;
 		sv.fill_background=0;
 	} };
@@ -410,8 +396,7 @@ public class segar
 	Special refresh for Space Odyssey, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spaceod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int charcode;
 		int sprite_transparency;
@@ -419,7 +404,7 @@ public class segar
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
 	
 		// scenes 0,1 are horiz.  scenes 2,3 are vert.
@@ -437,7 +422,7 @@ public class segar
 				int sx,sy;
 	
 				/* Use Vertical Back Scene */
-				if (vert_scene != 0)
+				if (vert_scene)
 				{
 					sx = 8 * (offs % 32);
 					sy = 8 * (offs / 32);
@@ -464,7 +449,7 @@ public class segar
 	
 				charcode = back_charmap[(sv.back_scene*0x1000) + offs];
 	
-				if (vert_scene != 0)
+				if (vert_scene)
 				{
 					drawgfx(sv.vertbackbitmap,Machine.gfx[1 + sv.back_charset],
 						  charcode,0,
@@ -485,7 +470,7 @@ public class segar
 		{
 			int scrollx,scrolly;
 	
-			if (vert_scene != 0)
+			if (vert_scene)
 			{
 				if (sv.bflip)
 					scrolly = sv.backshift;
@@ -523,9 +508,8 @@ public class segar
 	 ---------------------------------------------------------------------------
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_monsterb  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_segar() != 0)
+	public static VideoStartHandlerPtr video_start_monsterb  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_segar())
 			return 1;
 	
 		sv.has_bcolorRAM = 1;
@@ -538,8 +522,7 @@ public class segar
 	background ROMs.  If the background changed, refresh the screen.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr monsterb_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr monsterb_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int temp_scene, temp_charset;
 	
 		temp_scene   = 0x400 * ((data & 0x70) >> 4);
@@ -573,15 +556,14 @@ public class segar
 	Special refresh for Monster Bash, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_monsterb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int charcode;
 		int sprite_transparency;
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
 	
 		sprite_transparency=TRANSPARENCY_NONE;
@@ -635,8 +617,7 @@ public class segar
 	This port seems to control the background colors for Pig Newton.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr pignewt_back_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pignewt_back_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			sv.bcolor_offset = data;
@@ -656,8 +637,7 @@ public class segar
 	If the background changed, refresh the screen.
 	***************************************************************************/
 	
-	public static WriteHandlerPtr pignewt_back_ports_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pignewt_back_ports_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int tempscene;
 	
 		logerror("Port %02X:%02X\n",offset + 0xb8,data);
@@ -714,8 +694,7 @@ public class segar
 	Controls the background image
 	***************************************************************************/
 	
-	public static WriteHandlerPtr sindbadm_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sindbadm_back_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int tempscene;
 	
 		/* Bit D7 turns the background off and on? */
@@ -748,8 +727,7 @@ public class segar
 	Special refresh for Sinbad Mystery, this code refreshes the static background.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_sindbadm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sindbadm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int charcode;
 		int sprite_transparency;
@@ -758,7 +736,7 @@ public class segar
 	
 		unsigned char *back_charmap = memory_region(REGION_USER1);
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			sv.refresh = 1;
 	
 		sprite_transparency=TRANSPARENCY_NONE;

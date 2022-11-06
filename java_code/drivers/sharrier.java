@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,7 +27,7 @@ public class sharrier
 	{
 		/* preprocess road data, expanding it into a form more easily rendered */
 		UINT8 *buf = malloc( source_size );
-		if (buf != 0){
+		if( buf ){
 			UINT8 *buf0 = buf; /* remember so we can free and not leak memory */
 			UINT8 *gr = memory_region(REGION_GFX3); /* road gfx data */
 			UINT8 *grr = NULL;
@@ -122,23 +122,23 @@ public class sharrier
 		page[2] = data&0xf;
 	}
 	
-	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (sys16_custom_irq != 0) sys16_custom_irq();
+	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler()
+		if(sys16_custom_irq) sys16_custom_irq();
 		cpu_set_irq_line(cpu_getactivecpu(), 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
-	} };
+	}
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
-		}
+		} };
 	}
 	
 	static data16_t coinctrl;
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -159,7 +159,7 @@ public class sharrier
 	#if 0
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -178,10 +178,10 @@ public class sharrier
 	
 	static READ16_HANDLER( ho_io_highscoreentry_r ){
 		int mode= sys16_extraram4[0x3000/2];
-		if ((mode & 4) != 0){	// brake
+		if( mode&4 ){	// brake
 			if(ho_io_y_r(0,0) & 0x00ff) return 0xffff;
 		}
-		else if ((mode & 8) != 0){ // button
+		else if( mode&8 ){ // button
 			if(ho_io_y_r(0,0) & 0xff00) return 0xffff;
 		}
 		return 0;
@@ -288,7 +288,7 @@ public class sharrier
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_hangon  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_hangon  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_hangon;
 		sys16_sprxoffset = -0xc0;
@@ -319,17 +319,16 @@ public class sharrier
 		sys16_gr_colorflip[1][1]=0x04 / 2;
 		sys16_gr_colorflip[1][2]=0x02 / 2;
 		sys16_gr_colorflip[1][3]=0x02 / 2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_hangon  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_hangon  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		generate_gr_screen(512,1024,8,0,4,0x8000);
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_hangon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hangon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -366,9 +365,7 @@ public class sharrier
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, sys16_ym2203_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_32k)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -481,7 +478,7 @@ public class sharrier
 		sys16_extraram[0x492/2] = sh_io_joy_r(0,0);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_harrier  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_harrier  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_sharrier;
 		sys16_sprxoffset = -0xc0;
@@ -521,10 +518,9 @@ public class sharrier
 		sys16_gr_colorflip[1][3]=0x00 / 2;
 	
 		sys16_sh_shadowpal=0;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sharrier  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sharrier  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_MaxShadowColors=NumOfShadowColors / 2;
 		sys16_interleave_sprite_data( 0x100000 );
@@ -532,8 +528,7 @@ public class sharrier
 	} };
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_sharrier = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sharrier )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -570,9 +565,7 @@ public class sharrier
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, sys16_ym2203_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_32k)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -754,7 +747,7 @@ public class sharrier
 		sys16_bg_page[2] = data&0xf;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_enduror  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_enduror  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_sharrier;
 		sys16_sprxoffset = -0xc0;
@@ -785,7 +778,7 @@ public class sharrier
 		sys16_gr_colorflip[1][3]=0x00 / 2;
 	
 		sys16_sh_shadowpal=0xff;
-	} };
+	}
 	
 	static void enduror_sprite_decode( void ){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
@@ -840,8 +833,7 @@ public class sharrier
 		rom[(0x186a + diff)/2] = 0x0000;
 	}
 	
-	public static DriverInitHandlerPtr init_enduror  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_enduror  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_MaxShadowColors=NumOfShadowColors / 2;
 	//	sys16_MaxShadowColors=0;
@@ -849,8 +841,7 @@ public class sharrier
 		enduror_sprite_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_endurobl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_endurobl  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_MaxShadowColors=NumOfShadowColors / 2;
 	//	sys16_MaxShadowColors=0;
@@ -859,8 +850,7 @@ public class sharrier
 		endurora_opcode_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_endurob2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_endurob2  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_MaxShadowColors=NumOfShadowColors / 2;
 	//	sys16_MaxShadowColors=0;
@@ -871,8 +861,7 @@ public class sharrier
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_enduror = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( enduror )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -909,13 +898,10 @@ public class sharrier
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, sys16_ym2203_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_32k)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_endurob2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( endurob2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -951,9 +937,7 @@ public class sharrier
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, sys16_3xym2203_interface)
 		MDRV_SOUND_ADD(SEGAPCM, sys16_segapcm_interface_15k)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*****************************************************************************/
 	
@@ -1265,7 +1249,7 @@ public class sharrier
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_hangon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hangon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hangon )
 		PORT_START(); 	/* Steering */
 			PORT_ANALOG( 0xff, 0x7f, IPT_AD_STICK_X | IPF_REVERSE | IPF_CENTER , 100, 3, 0x48, 0xb7 );
 		PORT_START(); 	/* Accel / Decel */
@@ -1293,7 +1277,7 @@ public class sharrier
 			PORT_ANALOG( 0xff, 0x1, IPT_AD_STICK_Z | IPF_CENTER | IPF_REVERSE, 100, 16, 0, 0xa2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_enduror = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_enduror = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( enduror )
 		PORT_START(); 	/* handle right left */
 			PORT_ANALOG( 0xff, 0x7f, IPT_AD_STICK_X | IPF_REVERSE | IPF_CENTER, 100, 4, 0x0, 0xff );
 		PORT_START(); 	/* Fake Buttons */
@@ -1336,7 +1320,7 @@ public class sharrier
 		//PORT_ANALOG( 0xff, 0x0, IPT_AD_STICK_Y | IPF_CENTER , 100, 8, 0x0, 0xff );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sharrier = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sharrier = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sharrier )
 		SYS16_JOY1
 		SYS16_JOY2
 		PORT_START(); 
@@ -1380,9 +1364,9 @@ public class sharrier
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_hangon	   = new GameDriver("1985"	,"hangon"	,"sharrier.java"	,rom_hangon,null	,machine_driver_hangon	,input_ports_hangon	,init_hangon	,ROT0	,	"Sega",    "Hang-On" )
-	public static GameDriver driver_sharrier	   = new GameDriver("1985"	,"sharrier"	,"sharrier.java"	,rom_sharrier,null	,machine_driver_sharrier	,input_ports_sharrier	,init_sharrier	,ROT0	,	"Sega",    "Space Harrier" )
-	public static GameDriver driver_enduror	   = new GameDriver("1986"	,"enduror"	,"sharrier.java"	,rom_enduror,null	,machine_driver_enduror	,input_ports_enduror	,init_enduror	,ROT0	,	"Sega",    "Enduro Racer", GAME_NOT_WORKING )
-	public static GameDriver driver_endurobl	   = new GameDriver("1986"	,"endurobl"	,"sharrier.java"	,rom_endurobl,driver_enduror	,machine_driver_enduror	,input_ports_enduror	,init_endurobl	,ROT0	,	"bootleg", "Enduro Racer (bootleg set 1)" )
-	public static GameDriver driver_endurob2	   = new GameDriver("1986"	,"endurob2"	,"sharrier.java"	,rom_endurob2,driver_enduror	,machine_driver_endurob2	,input_ports_enduror	,init_endurob2	,ROT0	,	"bootleg", "Enduro Racer (bootleg set 2)" )
+	GAME( 1985, hangon,   0,        hangon,   hangon,   hangon,   ROT0, "Sega",    "Hang-On" )
+	GAME( 1985, sharrier, 0,        sharrier, sharrier, sharrier, ROT0, "Sega",    "Space Harrier" )
+	GAMEX(1986, enduror,  0,        enduror,  enduror,  enduror,  ROT0, "Sega",    "Enduro Racer", GAME_NOT_WORKING )
+	GAME( 1986, endurobl, enduror,  enduror,  enduror,  endurobl, ROT0, "bootleg", "Enduro Racer (bootleg set 1)" )
+	GAME( 1986, endurob2, enduror,  endurob2, enduror,  endurob2, ROT0, "bootleg", "Enduro Racer (bootleg set 2)" )
 }

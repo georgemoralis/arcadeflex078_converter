@@ -218,7 +218,7 @@ Custom: GX61A01
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -232,14 +232,12 @@ public class homedata
 	
 	static int vblank;
 	
-	public static InterruptHandlerPtr homedata_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr homedata_irq = new InterruptHandlerPtr() {public void handler(){
 		vblank = 1;
 		cpu_set_irq_line(0,M6809_FIRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr upd7807_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr upd7807_irq = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1,UPD7810_INTF1,HOLD_LINE);
 	} };
 	
@@ -254,8 +252,7 @@ public class homedata
 	
 	static int keyb;
 	
-	public static ReadHandlerPtr mrokumei_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mrokumei_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 0x3f,i;
 	
 		/* offset 0 is player 1, offset 1 player 2 (not supported) */
@@ -279,7 +276,7 @@ public class homedata
 			 */
 			res |= homedata_visible_page << 7;
 	
-			if (vblank != 0) res |= 0x40;
+			if (vblank) res |= 0x40;
 	
 			vblank = 0;
 		}
@@ -287,8 +284,7 @@ public class homedata
 		return res;
 	} };
 	
-	public static WriteHandlerPtr mrokumei_keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		keyb = data;
 	} };
 	
@@ -296,24 +292,21 @@ public class homedata
 	
 	static int sndbank;
 	
-	public static ReadHandlerPtr mrokumei_sound_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((sndbank & 4) != 0)
+	public static ReadHandlerPtr mrokumei_sound_io_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (sndbank & 4)
 			return(soundlatch_r(0));
 		else
 			return memory_region(REGION_CPU2)[0x10000 + offset + (sndbank & 1) * 0x10000];
 	} };
 	
-	public static WriteHandlerPtr mrokumei_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 = ROM bank
 		   bit 2 = ROM or soundlatch
 		 */
 		sndbank = data;
 	} };
 	
-	public static WriteHandlerPtr mrokumei_sound_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_sound_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0xff)
 		{
 			case 0x40:
@@ -325,8 +318,7 @@ public class homedata
 		}
 	} };
 	
-	public static WriteHandlerPtr mrokumei_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,0,HOLD_LINE);
 	} };
@@ -342,18 +334,15 @@ public class homedata
 	
 	static int upd7807_porta,upd7807_portc;
 	
-	public static ReadHandlerPtr reikaids_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr reikaids_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return upd7807_porta;
 	} };
 	
-	public static WriteHandlerPtr reikaids_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		upd7807_porta = data;
 	} };
 	
-	public static WriteHandlerPtr reikaids_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* port C layout:
 		   7 coin counter
 		   6 to main CPU (data)
@@ -371,7 +360,7 @@ public class homedata
 	
 		coin_counter_w(0,~data & 0x80);
 	
-		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* write clock 1.0 */
+		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* write clock 1->0 */
 		{
 			if (BIT(data,3))
 				YM2203_write_port_0_w(0,upd7807_porta);
@@ -379,7 +368,7 @@ public class homedata
 				YM2203_control_port_0_w(0,upd7807_porta);
 		}
 	
-		if (BIT(upd7807_portc,4) && !BIT(data,4))	/* read clock 1.0 */
+		if (BIT(upd7807_portc,4) && !BIT(data,4))	/* read clock 1->0 */
 		{
 			if (BIT(data,3))
 				upd7807_porta = YM2203_read_port_0_r(0);
@@ -390,20 +379,18 @@ public class homedata
 		upd7807_portc = data;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_reikaids_upd7807  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_reikaids_upd7807  = new MachineInitHandlerPtr() { public void handler(){
 		/* on reset, ports are set as input (high impedance), therefore 0xff output */
 		reikaids_which=homedata_priority;
 		reikaids_upd7807_portc_w(0,0xff);
 	} };
 	
-	public static ReadHandlerPtr reikaids_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr reikaids_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = readinputport(2);	// bit 4 = coin, bit 5 = service
 	
 		res |= BIT(upd7807_portc,2) * 0x01;		// bit 0 = upd7807 status
 		res |= BIT(upd7807_portc,6) * 0x02;		// bit 1 = upd7807 data
-		if (vblank != 0) res |= 0x04;				// bit 2 = vblank
+		if (vblank) res |= 0x04;				// bit 2 = vblank
 		res |= homedata_visible_page * 0x08;	// bit 3 = visible page
 	
 		vblank = 0;
@@ -415,14 +402,12 @@ public class homedata
 	
 	static int snd_command;
 	
-	public static ReadHandlerPtr reikaids_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr reikaids_snd_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: sndmcd_r (%02x)\n",activecpu_get_pc(),snd_command);
 		return snd_command;
 	} };
 	
-	public static WriteHandlerPtr reikaids_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_command = data;
 	//logerror("%04x: coprocessor_command_w %02x\n",activecpu_get_pc(),data);
 	} };
@@ -439,20 +424,17 @@ public class homedata
 	
 	static int to_cpu,from_cpu;
 	
-	public static WriteHandlerPtr pteacher_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_snd_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: snd_command_w %02x\n",activecpu_get_pc(),data);
 		from_cpu = data;
 	} };
 	
-	public static ReadHandlerPtr pteacher_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pteacher_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: pteacher_snd_r %02x\n",activecpu_get_pc(),to_cpu);
 		return to_cpu;
 	} };
 	
-	public static ReadHandlerPtr pteacher_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pteacher_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit 6: !vblank
 		 * bit 7: visible page
 		 * other bits seem unused
@@ -460,26 +442,25 @@ public class homedata
 	
 		int res = (homedata_visible_page ^ 1) << 7;
 	
-		if (vblank == 0) res |= 0x40;
+		if (!vblank) res |= 0x40;
 	
 		vblank = 0;
 	
 		return res;
 	} };
 	
-	public static ReadHandlerPtr pteacher_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pteacher_keyboard_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int dips = readinputport(0);
 	
 	//	logerror("%04x: keyboard_r with port A = %02x\n",activecpu_get_pc(),upd7807_porta);
 	
-		if ((upd7807_porta & 0x80) != 0)
+		if (upd7807_porta & 0x80)
 		{
 			/* player 1 + dip switches */
 			int row = (upd7807_porta & 0x07);
 			return readinputport(2 + row) | (((dips >> row) & 1) << 5);	// 0-5
 		}
-		if ((upd7807_porta & 0x08) != 0)
+		if (upd7807_porta & 0x08)
 		{
 			/* player 2 (not supported) + dip switches */
 			int row = ((upd7807_porta >> 4) & 0x07);
@@ -489,8 +470,7 @@ public class homedata
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr pteacher_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pteacher_upd7807_porta_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (!BIT(upd7807_portc,6))
 			upd7807_porta = from_cpu;
 		else
@@ -499,19 +479,16 @@ public class homedata
 		return upd7807_porta;
 	} };
 	
-	public static WriteHandlerPtr pteacher_snd_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_snd_answer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		to_cpu = data;
 	//logerror("%04x: to_cpu = %02x\n",activecpu_get_pc(),to_cpu);
 	} };
 	
-	public static WriteHandlerPtr pteacher_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_upd7807_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		upd7807_porta = data;
 	} };
 	
-	public static WriteHandlerPtr pteacher_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_upd7807_portc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* port C layout:
 		   7 coin counter
 		   6 enable message from main CPU on port A
@@ -529,14 +506,13 @@ public class homedata
 	
 		coin_counter_w(0,~data & 0x80);
 	
-		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* clock 1.0 */
+		if (BIT(upd7807_portc,5) && !BIT(data,5))	/* clock 1->0 */
 			SN76496_0_w(0,upd7807_porta);
 	
 		upd7807_portc = data;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_pteacher_upd7807  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pteacher_upd7807  = new MachineInitHandlerPtr() { public void handler(){
 		/* on reset, ports are set as input (high impedance), therefore 0xff output */
 		pteacher_upd7807_portc_w(0,0xff);
 	} };
@@ -545,8 +521,7 @@ public class homedata
 	/********************************************************************************/
 	
 	
-	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1);
 		int len = memory_region_length(REGION_CPU1) - 0x10000+0x4000;
 		int offs = (data * 0x4000) & (len-1);
@@ -754,7 +729,7 @@ public class homedata
 	/**************************************************************************/
 	
 	
-	static InputPortPtr input_ports_mjhokite = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjhokite = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjhokite )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -859,7 +834,7 @@ public class homedata
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_reikaids = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_reikaids = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( reikaids )
 		PORT_START(); 	// IN0  - 0x7801
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
@@ -940,7 +915,7 @@ public class homedata
 		PORT_DIPSETTING(    0x60, DEF_STR( "1C_5C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_battlcry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlcry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlcry )
 		PORT_START(); 	// IN0  - 0x7801
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_PLAYER1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_PLAYER1 );
@@ -1069,7 +1044,7 @@ public class homedata
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 	
-	static InputPortPtr input_ports_pteacher = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pteacher = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pteacher )
 		PORT_START(); 	/* dip switches (handled by pteacher_keyboard_r) */
 		PORT_DIPNAME( 0x0001, 0x0000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1115,7 +1090,7 @@ public class homedata
 		MJ_KEYBOARD
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jogakuen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jogakuen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jogakuen )
 		PORT_START(); 	/* dip switches (handled by pteacher_keyboard_r) */
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1161,7 +1136,7 @@ public class homedata
 		MJ_KEYBOARD
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mjikaga = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjikaga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjikaga )
 		PORT_START(); 	/* dip switches (handled by pteacher_keyboard_r) */
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1303,8 +1278,7 @@ public class homedata
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_mrokumei = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrokumei )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 16000000/4)	/* 4MHz ? */
@@ -1335,9 +1309,7 @@ public class homedata
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)	// SN76489 actually
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/**************************************************************************/
@@ -1370,8 +1342,7 @@ public class homedata
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_reikaids = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( reikaids )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 16000000/4)	/* 4MHz ? */
@@ -1406,15 +1377,12 @@ public class homedata
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(DAC, reikaids_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/**************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_pteacher = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pteacher )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 16000000/4)	/* 4MHz ? */
@@ -1450,22 +1418,16 @@ public class homedata
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)	// SN76489 actually
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mjkinjas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjkinjas )
 	
 		MDRV_IMPORT_FROM(pteacher)
 	
 		MDRV_CPU_REPLACE("sound", UPD7807, 11000000)	/* 11MHz ? */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_lemnangl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lemnangl )
 	
 		MDRV_IMPORT_FROM(pteacher)
 	
@@ -1473,9 +1435,7 @@ public class homedata
 		MDRV_GFXDECODE(lemnangl_gfxdecodeinfo)
 	
 		MDRV_VIDEO_START(lemnangl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1876,8 +1836,7 @@ public class homedata
 	
 	
 	
-	public static DriverInitHandlerPtr init_jogakuen  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jogakuen  = new DriverInitHandlerPtr() { public void handler(){
 		/* it seems that Mahjong Jogakuen runs on the same board as the others,
 		   but with just these two addresses swapped. Instead of creating a new
 		   MachineDriver, I just fix them here. */
@@ -1885,40 +1844,37 @@ public class homedata
 		install_mem_write_handler(0, 0x8005, 0x8005, pteacher_gfx_bank_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_mjikaga  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjikaga  = new DriverInitHandlerPtr() { public void handler(){
 		/* Mahjong Ikagadesuka is different as well. */
 		install_mem_read_handler(0, 0x7802, 0x7802, pteacher_snd_r);
 		install_mem_write_handler(1, 0x0123, 0x0123, pteacher_snd_answer_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_reikaids  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_reikaids  = new DriverInitHandlerPtr() { public void handler(){
 		homedata_priority=0;
 	} };
 	
-	public static DriverInitHandlerPtr init_battlcry  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_battlcry  = new DriverInitHandlerPtr() { public void handler(){
 		homedata_priority=1; /* priority and initial value for bank write */
 	} };
 	
-	public static GameDriver driver_hourouki	   = new GameDriver("1987"	,"hourouki"	,"homedata.java"	,rom_hourouki,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Part 1 - Seisyun Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mhgaiden	   = new GameDriver("1987"	,"mhgaiden"	,"homedata.java"	,rom_mhgaiden,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Gaiden (Japan)" )
-	public static GameDriver driver_mjhokite	   = new GameDriver("1988"	,"mjhokite"	,"homedata.java"	,rom_mjhokite,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Hourouki Okite (Japan)" )
-	public static GameDriver driver_mjclinic	   = new GameDriver("1988"	,"mjclinic"	,"homedata.java"	,rom_mjclinic,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Clinic (Japan)" )
-	public static GameDriver driver_mrokumei	   = new GameDriver("1988"	,"mrokumei"	,"homedata.java"	,rom_mrokumei,null	,machine_driver_mrokumei	,input_ports_mjhokite	,null	,ROT0	,	"Home Data", "Mahjong Rokumeikan (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, hourouki, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Part 1 - Seisyun Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1987, mhgaiden, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Gaiden (Japan)" )
+	GAME( 1988, mjhokite, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Hourouki Okite (Japan)" )
+	GAME( 1988, mjclinic, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Clinic (Japan)" )
+	GAMEX(1988, mrokumei, 0, mrokumei, mjhokite, 0,          ROT0, "Home Data", "Mahjong Rokumeikan (Japan)", GAME_IMPERFECT_GRAPHICS )
 	
-	public static GameDriver driver_reikaids	   = new GameDriver("1988"	,"reikaids"	,"homedata.java"	,rom_reikaids,null	,machine_driver_reikaids	,input_ports_reikaids	,init_reikaids	,ROT0	,	"Home Data", "Reikai Doushi (Japan)" )
-	public static GameDriver driver_battlcry	   = new GameDriver("1991"	,"battlcry"	,"homedata.java"	,rom_battlcry,null	,machine_driver_reikaids	,input_ports_battlcry	,init_battlcry	,ROT0	,	"Home Data", "Battlecry", GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_mjkojink	   = new GameDriver("1989"	,"mjkojink"	,"homedata.java"	,rom_mjkojink,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Kojinkyouju (Private Teacher) (Japan)" )
-	public static GameDriver driver_vitaminc	   = new GameDriver("1989"	,"vitaminc"	,"homedata.java"	,rom_vitaminc,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Vitamin C (Japan)" )
-	public static GameDriver driver_mjyougo	   = new GameDriver("1989"	,"mjyougo"	,"homedata.java"	,rom_mjyougo,null	,machine_driver_pteacher	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong-yougo no Kisotairyoku (Japan)" )
-	public static GameDriver driver_mjkinjas	   = new GameDriver("1991"	,"mjkinjas"	,"homedata.java"	,rom_mjkinjas,null	,machine_driver_mjkinjas	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Kinjirareta Asobi (Japan)" )
-	public static GameDriver driver_jogakuen	   = new GameDriver("1992?"	,"jogakuen"	,"homedata.java"	,rom_jogakuen,null	,machine_driver_pteacher	,input_ports_jogakuen	,init_jogakuen	,ROT0	,	"Windom",    "Mahjong Jogakuen (Japan)" )
+	GAME( 1988, reikaids, 0, reikaids, reikaids, reikaids,   ROT0, "Home Data", "Reikai Doushi (Japan)" )
+	GAMEX(1991, battlcry, 0, reikaids, battlcry, battlcry,   ROT0, "Home Data", "Battlecry", GAME_IMPERFECT_GRAPHICS  )
+	GAME( 1989, mjkojink, 0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong Kojinkyouju (Private Teacher) (Japan)" )
+	GAME( 1989, vitaminc, 0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong Vitamin C (Japan)" )
+	GAME( 1989, mjyougo,  0, pteacher, pteacher, 0,          ROT0, "Home Data", "Mahjong-yougo no Kisotairyoku (Japan)" )
+	GAME( 1991, mjkinjas, 0, mjkinjas, pteacher, 0,          ROT0, "Home Data", "Mahjong Kinjirareta Asobi (Japan)" )
+	GAME( 1992?,jogakuen, 0, pteacher, jogakuen, jogakuen,   ROT0, "Windom",    "Mahjong Jogakuen (Japan)" )
 	
-	public static GameDriver driver_lemnangl	   = new GameDriver("1990"	,"lemnangl"	,"homedata.java"	,rom_lemnangl,null	,machine_driver_lemnangl	,input_ports_pteacher	,null	,ROT0	,	"Home Data", "Mahjong Lemon Angel (Japan)" )
+	GAME( 1990, lemnangl, 0, lemnangl, pteacher, 0,          ROT0, "Home Data", "Mahjong Lemon Angel (Japan)" )
 	
-	public static GameDriver driver_mjikaga	   = new GameDriver("1991?"	,"mjikaga"	,"homedata.java"	,rom_mjikaga,null	,machine_driver_lemnangl	,input_ports_mjikaga	,init_mjikaga	,ROT0	,	"Mitchell",  "Mahjong Ikaga Desu ka (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX(1991?,mjikaga,  0, lemnangl, mjikaga,  mjikaga,    ROT0, "Mitchell",  "Mahjong Ikaga Desu ka (Japan)", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 	
 	

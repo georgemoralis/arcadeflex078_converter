@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,8 +22,7 @@ public class mrjong
 	  Convert the color PROMs. (from vidhrdw/penco.c)
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mrjong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mrjong  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn, offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + (offs)])
@@ -67,8 +66,7 @@ public class mrjong
 	  Display control parameter.
 	
 	***************************************************************************/
-	public static WriteHandlerPtr mrjong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrjong_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -76,8 +74,7 @@ public class mrjong
 		}
 	} };
 	
-	public static WriteHandlerPtr mrjong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrjong_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -85,8 +82,7 @@ public class mrjong
 		}
 	} };
 	
-	public static WriteHandlerPtr mrjong_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrjong_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -103,12 +99,11 @@ public class mrjong
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mrjong  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mrjong  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -132,7 +127,7 @@ public class mrjong
 	
 			sx = 224 - spriteram.read(offs + 2);
 			sy = spriteram.read(offs + 0);
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 208 - sx;
 				sy = 240 - sy;
@@ -140,17 +135,16 @@ public class mrjong
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 					sprt,
 					color,
 					flipx, flipy,
 					sx, sy,
-					Machine.visible_area, TRANSPARENCY_PEN, 0);
+					Machine->visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mrjong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mrjong  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		mrjong_draw_sprites(bitmap);
 	} };

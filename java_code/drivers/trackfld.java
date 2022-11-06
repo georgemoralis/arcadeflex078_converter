@@ -19,7 +19,7 @@ MAIN BOARD:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,8 +36,7 @@ public class trackfld
 	
 	
 	/* handle fake button for speed cheat */
-	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr konami_IN1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		static int cheat = 0;
 		static int bits[] = { 0xee, 0xff, 0xbb, 0xaa };
@@ -60,28 +59,27 @@ public class trackfld
 	static size_t nvram_size;
 	static int we_flipped_the_switch;
 	
-	public static NVRAMHandlerPtr nvram_handler_trackfld  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_trackfld  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			mame_fwrite(file,nvram,nvram_size);
 	
-			if (we_flipped_the_switch != 0)
+			if (we_flipped_the_switch)
 			{
 				struct InputPort *in;
 	
 	
 				/* find the dip switch which resets the high score table, and set it */
 				/* back to off. */
-				in = Machine.input_ports;
+				in = Machine->input_ports;
 	
-				while (in.type != IPT_END)
+				while (in->type != IPT_END)
 				{
-					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
-							strcmp(in.name,"World Records") == 0)
+					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
+							strcmp(in->name,"World Records") == 0)
 					{
-						if (in.default_value == 0)
-							in.default_value = in.mask;
+						if (in->default_value == 0)
+							in->default_value = in->mask;
 						break;
 					}
 	
@@ -93,7 +91,7 @@ public class trackfld
 		}
 		else
 		{
-			if (file != 0)
+			if (file)
 			{
 				mame_fread(file,nvram,nvram_size);
 				we_flipped_the_switch = 0;
@@ -104,16 +102,16 @@ public class trackfld
 	
 	
 				/* find the dip switch which resets the high score table, and set it on */
-				in = Machine.input_ports;
+				in = Machine->input_ports;
 	
-				while (in.type != IPT_END)
+				while (in->type != IPT_END)
 				{
-					if (in.name != NULL && in.name != IP_NAME_DEFAULT &&
-							strcmp(in.name,"World Records") == 0)
+					if (in->name != NULL && in->name != IP_NAME_DEFAULT &&
+							strcmp(in->name,"World Records") == 0)
 					{
-						if (in.default_value == in.mask)
+						if (in->default_value == in->mask)
 						{
-							in.default_value = 0;
+							in->default_value = 0;
 							we_flipped_the_switch = 1;
 						}
 						break;
@@ -125,19 +123,17 @@ public class trackfld
 		}
 	} };
 	
-	public static NVRAMHandlerPtr nvram_handler_mastkin  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_mastkin  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file,nvram,nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file,nvram,nvram_size);
 		}
 	} };
 	
-	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data & 1);
 	} };
 	
@@ -271,7 +267,7 @@ public class trackfld
 	
 	
 	
-	static InputPortPtr input_ports_trackfld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_trackfld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( trackfld )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -368,7 +364,7 @@ public class trackfld
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mastkin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mastkin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mastkin )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -491,8 +487,7 @@ public class trackfld
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_trackfld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trackfld )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 2048000)        /* 1.400 MHz ??? */
@@ -524,14 +519,11 @@ public class trackfld
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(VLM5030, trackfld_vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* same as the original, but uses ADPCM instead of VLM5030 */
 	/* also different memory handlers do handle that */
-	public static MachineHandlerPtr machine_driver_hyprolyb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyprolyb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)        /* 1.400 MHz ??? */
@@ -563,13 +555,10 @@ public class trackfld
 		MDRV_SOUND_ADD(DAC, konami_dac_interface)
 		MDRV_SOUND_ADD(SN76496, konami_sn76496_interface)
 		MDRV_SOUND_ADD(ADPCM, hyprolyb_adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mastkin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mastkin )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(trackfld)
@@ -577,9 +566,7 @@ public class trackfld
 		MDRV_CPU_MEMORY(mastkin_readmem,mastkin_writemem)
 	
 		MDRV_NVRAM_HANDLER(mastkin)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -780,13 +767,11 @@ public class trackfld
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_trackfld  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trackfld  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_mastkin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mastkin  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *prom = memory_region(REGION_PROMS);
 		int i;
 	
@@ -807,10 +792,10 @@ public class trackfld
 	} };
 	
 	
-	public static GameDriver driver_trackfld	   = new GameDriver("1983"	,"trackfld"	,"trackfld.java"	,rom_trackfld,null	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami", "Track & Field" )
-	public static GameDriver driver_trackflc	   = new GameDriver("1983"	,"trackflc"	,"trackfld.java"	,rom_trackflc,driver_trackfld	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami (Centuri license)", "Track & Field (Centuri)" )
-	public static GameDriver driver_hyprolym	   = new GameDriver("1983"	,"hyprolym"	,"trackfld.java"	,rom_hyprolym,driver_trackfld	,machine_driver_trackfld	,input_ports_trackfld	,init_trackfld	,ROT0	,	"Konami", "Hyper Olympic" )
-	public static GameDriver driver_hyprolyb	   = new GameDriver("1983"	,"hyprolyb"	,"trackfld.java"	,rom_hyprolyb,driver_trackfld	,machine_driver_hyprolyb	,input_ports_trackfld	,init_trackfld	,ROT0	,	"bootleg", "Hyper Olympic (bootleg)" )
-	public static GameDriver driver_whizquiz	   = new GameDriver("1985"	,"whizquiz"	,"trackfld.java"	,rom_whizquiz,null	,machine_driver_trackfld	,input_ports_trackfld	,init_mastkin	,ROT0	,	"Zilec-Zenitone", "Whiz Quiz", GAME_NOT_WORKING )
-	public static GameDriver driver_mastkin	   = new GameDriver("1988"	,"mastkin"	,"trackfld.java"	,rom_mastkin,null	,machine_driver_mastkin	,input_ports_mastkin	,init_mastkin	,ROT0	,	"Du Tech", "The Masters of Kin", GAME_WRONG_COLORS )
+	GAME( 1983, trackfld, 0,        trackfld, trackfld, trackfld, ROT0, "Konami", "Track & Field" )
+	GAME( 1983, trackflc, trackfld, trackfld, trackfld, trackfld, ROT0, "Konami (Centuri license)", "Track & Field (Centuri)" )
+	GAME( 1983, hyprolym, trackfld, trackfld, trackfld, trackfld, ROT0, "Konami", "Hyper Olympic" )
+	GAME( 1983, hyprolyb, trackfld, hyprolyb, trackfld, trackfld, ROT0, "bootleg", "Hyper Olympic (bootleg)" )
+	GAMEX(1985, whizquiz, 0,        trackfld, trackfld, mastkin,  ROT0, "Zilec-Zenitone", "Whiz Quiz", GAME_NOT_WORKING )
+	GAMEX(1988, mastkin,  0,        mastkin,  mastkin,  mastkin,  ROT0, "Du Tech", "The Masters of Kin", GAME_WRONG_COLORS )
 }

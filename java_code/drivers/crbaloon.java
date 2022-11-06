@@ -51,7 +51,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -64,8 +64,7 @@ public class crbaloon
 	
 	int val06,val08,val0a;
 	
-	public static MachineInitHandlerPtr machine_init_crbaloon  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_crbaloon  = new MachineInitHandlerPtr() { public void handler(){
 		/* MIXER A = 0, MIXER C = 1 */
 		SN76477_mixer_a_w(0, 0);
 		SN76477_mixer_c_w(0, 1);
@@ -76,17 +75,16 @@ public class crbaloon
 	    SN76477_enable_w(0, 0);
 	} };
 	
-	public static WriteHandlerPtr crbaloon_06_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_06_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		val06 = data;
 	
 		interrupt_enable_w(offset,data & 1);
 	
 		/* SOUND STOP high? */
-	    if ((data & 0x02) != 0)
+	    if( data & 0x02 )
 		{
 	
-			if ((data & 0x08) != 0)
+			if( data & 0x08 )
 			{
 				/* enable is connected to EXPLOSION */
 				SN76477_enable_w(0, 1);
@@ -95,7 +93,7 @@ public class crbaloon
 			{
 				SN76477_enable_w(0, 0);
 			}
-			if ((data & 0x10) != 0)
+			if( data & 0x10 )
 			{
 				/* BREATH changes slf_res to 10k (middle of two 10k resistors) */
 				SN76477_set_slf_res(0, RES_K(10));
@@ -107,7 +105,7 @@ public class crbaloon
 				SN76477_set_slf_res(0, RES_K(20));
 			}
 	
-			if ((data & 0x20) != 0)
+			if( data & 0x20 )
 			{
 				/* APPEAR is connected to MIXER B */
 				SN76477_mixer_b_w(0, 1);
@@ -122,20 +120,17 @@ public class crbaloon
 		}
 	} };
 	
-	public static WriteHandlerPtr crbaloon_08_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_08_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		val08 = data;
 	
 		crbaloon_flipscreen_w(offset,data & 1);
 	} };
 	
-	public static WriteHandlerPtr crbaloon_0a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_0a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		val0a = data;
 	} };
 	
-	public static ReadHandlerPtr crbaloon_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr crbaloon_IN2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		
 		if (crbaloon_collision != 0)
 		{
@@ -143,7 +138,7 @@ public class crbaloon
 	    }
 	
 		/* the following is needed for the game to boot up */
-		if ((val06 & 0x80) != 0)
+		if (val06 & 0x80)
 		{
 	logerror("PC %04x: %02x high\n",activecpu_get_pc(),offset);
 			return (input_port_2_r.handler(0) & 0xf0) | 0x07;
@@ -155,14 +150,13 @@ public class crbaloon
 		}
 	} };
 	
-	public static ReadHandlerPtr crbaloon_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((val08 & 0x02) != 0)
+	public static ReadHandlerPtr crbaloon_IN3_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (val08 & 0x02)
 			/* enable coin & start input? Wild guess!!! */
 			return input_port_3_r.handler(0);
 	
 		/* the following is needed for the game to boot up */
-		if ((val0a & 0x01) != 0)
+		if (val0a & 0x01)
 		{
 	logerror("PC %04x: 03 high\n",activecpu_get_pc());
 			return (input_port_3_r.handler(0) & 0x0f) | 0x00;
@@ -175,8 +169,7 @@ public class crbaloon
 	} };
 	
 	
-	public static ReadHandlerPtr crbaloon_IN_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr crbaloon_IN_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset & 0x03)
 		{
 			case 0:
@@ -232,7 +225,7 @@ public class crbaloon
 	
 	
 	
-	static InputPortPtr input_ports_crbaloon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crbaloon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crbaloon )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, "Test?" );
 		PORT_DIPSETTING(    0x01, "I/O Check?" );
@@ -358,8 +351,7 @@ public class crbaloon
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_crbaloon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crbaloon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ????? */
@@ -386,9 +378,7 @@ public class crbaloon
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477, sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -432,6 +422,6 @@ public class crbaloon
 	
 	
 	
-	public static GameDriver driver_crbaloon	   = new GameDriver("1980"	,"crbaloon"	,"crbaloon.java"	,rom_crbaloon,null	,machine_driver_crbaloon	,input_ports_crbaloon	,null	,ROT90	,	"Taito Corporation", "Crazy Balloon (set 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_crbalon2	   = new GameDriver("1980"	,"crbalon2"	,"crbaloon.java"	,rom_crbalon2,driver_crbaloon	,machine_driver_crbaloon	,input_ports_crbaloon	,null	,ROT90	,	"Taito Corporation", "Crazy Balloon (set 2)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, crbaloon, 0,		crbaloon, crbaloon, 0, ROT90, "Taito Corporation", "Crazy Balloon (set 1)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1980, crbalon2, crbaloon, crbaloon, crbaloon, 0, ROT90, "Taito Corporation", "Crazy Balloon (set 2)", GAME_IMPERFECT_SOUND )
 }

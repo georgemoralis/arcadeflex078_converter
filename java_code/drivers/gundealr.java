@@ -48,7 +48,7 @@ Runs in interrupt mode 0, the interrupt vectors are 0xcf (RST 08h) and
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,11 +61,10 @@ public class gundealr
 	
 	static int input_ports_hack;
 	
-	public static InterruptHandlerPtr yamyam_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr yamyam_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
-			if (input_ports_hack != 0)
+			if (input_ports_hack)
 			{
 				unsigned char *RAM = memory_region(REGION_CPU1);
 				RAM[0xe004] = readinputport(4);	/* COIN */
@@ -78,8 +77,7 @@ public class gundealr
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h sound (hand tuned) */
 	} };
 	
-	public static WriteHandlerPtr yamyam_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yamyam_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	 	int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -87,8 +85,7 @@ public class gundealr
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr yamyam_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yamyam_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	logerror("e000 = %02x\n",RAM[0xe000]);
@@ -194,7 +191,7 @@ public class gundealr
 	
 	
 	
-	static InputPortPtr input_ports_gundealr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gundealr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gundealr )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -276,7 +273,7 @@ public class gundealr
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gundealt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gundealt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gundealt )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -358,7 +355,7 @@ public class gundealr
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_yamyam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yamyam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yamyam )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -486,8 +483,7 @@ public class gundealr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gundealr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gundealr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* 8 MHz ??? */
@@ -510,9 +506,7 @@ public class gundealr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -585,22 +579,20 @@ public class gundealr
 	
 	
 	
-	public static DriverInitHandlerPtr init_gundealr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gundealr  = new DriverInitHandlerPtr() { public void handler(){
 		input_ports_hack = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_yamyam  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_yamyam  = new DriverInitHandlerPtr() { public void handler(){
 		input_ports_hack = 1;
 		install_mem_write_handler(0, 0xe000, 0xe000, yamyam_protection_w);
 	} };
 	
 	
 	
-	public static GameDriver driver_gundealr	   = new GameDriver("1990"	,"gundealr"	,"gundealr.java"	,rom_gundealr,null	,machine_driver_gundealr	,input_ports_gundealr	,init_gundealr	,ROT270	,	"Dooyong", "Gun Dealer (set 1)" )
-	public static GameDriver driver_gundeala	   = new GameDriver("19??"	,"gundeala"	,"gundealr.java"	,rom_gundeala,driver_gundealr	,machine_driver_gundealr	,input_ports_gundealr	,init_gundealr	,ROT270	,	"Dooyong", "Gun Dealer (set 2)" )
-	public static GameDriver driver_gundealt	   = new GameDriver("1990"	,"gundealt"	,"gundealr.java"	,rom_gundealt,driver_gundealr	,machine_driver_gundealr	,input_ports_gundealt	,init_gundealr	,ROT270	,	"Tecmo", "Gun Dealer (Tecmo)" )
-	public static GameDriver driver_yamyam	   = new GameDriver("1990"	,"yamyam"	,"gundealr.java"	,rom_yamyam,null	,machine_driver_gundealr	,input_ports_yamyam	,init_yamyam	,ROT0	,	"Dooyong", "Yam! Yam!?" )
-	public static GameDriver driver_wiseguy	   = new GameDriver("1990"	,"wiseguy"	,"gundealr.java"	,rom_wiseguy,driver_yamyam	,machine_driver_gundealr	,input_ports_yamyam	,init_yamyam	,ROT0	,	"Dooyong", "Wise Guy" )
+	GAME( 1990, gundealr, 0,        gundealr, gundealr, gundealr, ROT270, "Dooyong", "Gun Dealer (set 1)" )
+	GAME( 19??, gundeala, gundealr, gundealr, gundealr, gundealr, ROT270, "Dooyong", "Gun Dealer (set 2)" )
+	GAME( 1990, gundealt, gundealr, gundealr, gundealt, gundealr, ROT270, "Tecmo", "Gun Dealer (Tecmo)" )
+	GAME( 1990, yamyam,   0,        gundealr, yamyam,   yamyam,   ROT0,   "Dooyong", "Yam! Yam!?" )
+	GAME( 1990, wiseguy,  yamyam,   gundealr, yamyam,   yamyam,   ROT0,   "Dooyong", "Wise Guy" )
 }

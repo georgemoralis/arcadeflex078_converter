@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -126,7 +126,7 @@ public class wrally
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
@@ -147,8 +147,7 @@ public class wrally
 	
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_wrally  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wrally  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* recreate encryption tables on start up */

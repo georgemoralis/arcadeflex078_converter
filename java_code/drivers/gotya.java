@@ -29,7 +29,7 @@ TODO: Emulated sound
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -70,7 +70,7 @@ public class gotya
 	};
 	
 	
-	static InputPortPtr input_ports_gotya = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gotya = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gotya )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -192,8 +192,7 @@ public class gotya
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_gotya = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gotya )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz ??? */
@@ -217,9 +216,7 @@ public class gotya
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -283,6 +280,6 @@ public class gotya
 		ROM_LOAD( "gb-07.bin",	0x3000, 0x1000, CRC(92a9f8bf) SHA1(9231cd86f24f1e6a585c3a919add50c1f8e42a4c) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_thehand	   = new GameDriver("1981"	,"thehand"	,"gotya.java"	,rom_thehand,null	,machine_driver_gotya	,input_ports_gotya	,null	,ROT270	,	"T.I.C."     , "The Hand" )
-	public static GameDriver driver_gotya	   = new GameDriver("1981"	,"gotya"	,"gotya.java"	,rom_gotya,driver_thehand	,machine_driver_gotya	,input_ports_gotya	,null	,ROT270	,	"Game-A-Tron", "Got-Ya (12/24/1981, prototype?)" )
+	GAME( 1981, thehand, 0,       gotya, gotya, 0, ROT270, "T.I.C."     , "The Hand" )
+	GAME( 1981, gotya,   thehand, gotya, gotya, 0, ROT270, "Game-A-Tron", "Got-Ya (12/24/1981, prototype?)" )
 }

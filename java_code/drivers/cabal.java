@@ -42,7 +42,7 @@ COLORRAM (Colors)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,8 +56,7 @@ public class cabal
 	
 	static int cabal_sound_command1, cabal_sound_command2;
 	
-	public static MachineInitHandlerPtr machine_init_cabalbl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cabalbl  = new MachineInitHandlerPtr() { public void handler(){
 		cabal_sound_command1 = cabal_sound_command2 = 0xff;
 	} };
 	
@@ -72,7 +71,7 @@ public class cabal
 			int start, len;
 	
 			which = which&0x7f;
-			if (which != 0){
+			if( which ){
 				which = which*2+0x100;
 				start = RAM[offset+which] + 256*RAM[offset+which+1];
 				len = (RAM[offset+start]*256 + RAM[offset+start+1])*2;
@@ -199,8 +198,7 @@ public class cabal
 	
 	/*********************************************************************/
 	
-	public static ReadHandlerPtr cabalbl_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cabalbl_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(offset){
 			case 0x06: return input_port_3_r.handler(0);
 			case 0x08: return cabal_sound_command2;
@@ -209,8 +207,7 @@ public class cabal
 		}
 	} };
 	
-	public static WriteHandlerPtr cabalbl_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cabalbl_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( offset ){
 			case 0x00: cabalbl_play_adpcm( 0, data ); break;
 			case 0x02: cabalbl_play_adpcm( 1, data ); break;
@@ -289,7 +286,7 @@ public class cabal
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_cabal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cabal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cabal )
 		PORT_START(); 
 	/* Coin Mode 1, todo Mode 2 */
 		PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( "Coinage") );
@@ -383,7 +380,7 @@ public class cabal
 		PORT_ANALOG( 0x0fff, 0x0000, IPT_TRACKBALL_Y | IPF_PLAYER2, 100, 30, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cabalbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cabalbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cabalbl )
 		PORT_START(); 
 	/* Coin Mode 1, todo Mode 2 */
 		PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( "Coinage") );
@@ -549,8 +546,7 @@ public class cabal
 	
 	SEIBU_SOUND_SYSTEM_ADPCM_HARDWARE
 	
-	public static MachineHandlerPtr machine_driver_cabal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cabal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* 12 MHz */
@@ -580,12 +576,9 @@ public class cabal
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		SEIBU_SOUND_SYSTEM_ADPCM_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cabalbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cabalbl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* 12 MHz */
@@ -616,9 +609,7 @@ public class cabal
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, cabalbl_ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -726,14 +717,13 @@ public class cabal
 	
 	
 	
-	public static DriverInitHandlerPtr init_cabal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cabal  = new DriverInitHandlerPtr() { public void handler(){
 		seibu_sound_decrypt(REGION_CPU2,0x2000);
 		seibu_adpcm_decrypt(REGION_SOUND1);
 	} };
 	
 	
-	public static GameDriver driver_cabal	   = new GameDriver("1988"	,"cabal"	,"cabal.java"	,rom_cabal,null	,machine_driver_cabal	,input_ports_cabal	,init_cabal	,ROT0	,	"Tad (Fabtek license)", "Cabal (US set 1)" )
-	public static GameDriver driver_cabal2	   = new GameDriver("1988"	,"cabal2"	,"cabal.java"	,rom_cabal2,driver_cabal	,machine_driver_cabal	,input_ports_cabal	,init_cabal	,ROT0	,	"Tad (Fabtek license)", "Cabal (US set 2)" )
-	public static GameDriver driver_cabalbl	   = new GameDriver("1988"	,"cabalbl"	,"cabal.java"	,rom_cabalbl,driver_cabal	,machine_driver_cabalbl	,input_ports_cabalbl	,null	,ROT0	,	"bootleg", "Cabal (bootleg)", GAME_IMPERFECT_SOUND )
+	GAME( 1988, cabal,   0,     cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 1)" )
+	GAME( 1988, cabal2,  cabal, cabal,   cabal,   cabal, ROT0, "Tad (Fabtek license)", "Cabal (US set 2)" )
+	GAMEX( 1988, cabalbl, cabal, cabalbl, cabalbl, 0,     ROT0, "bootleg", "Cabal (bootleg)", GAME_IMPERFECT_SOUND )
 }

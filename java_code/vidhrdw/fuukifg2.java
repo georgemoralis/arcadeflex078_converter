@@ -26,7 +26,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -90,8 +90,7 @@ public class fuukifg2
 	***************************************************************************/
 	
 	/* Not used atm, seems to be fine without clearing pens? */
-	public static PaletteInitHandlerPtr palette_init_fuuki16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_fuuki16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int pen;
 	
 		/* The game does not initialise the palette at startup. It should
@@ -100,8 +99,7 @@ public class fuukifg2
 			palette_set_color(pen,0,0,0);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_fuuki16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fuuki16  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT, 16, 16, 64,32);
 	
@@ -159,8 +157,8 @@ public class fuukifg2
 	{
 		int offs;
 	
-		int max_x		=	Machine.visible_area.max_x+1;
-		int max_y		=	Machine.visible_area.max_y+1;
+		int max_x		=	Machine->visible_area.max_x+1;
+		int max_y		=	Machine->visible_area.max_y+1;
 	
 		/* Draw them backwards, for pdrawgfx */
 		for ( offs = (spriteram_size-8)/2; offs >=0; offs -= 8/2 )
@@ -174,7 +172,7 @@ public class fuukifg2
 			int attr		=		spriteram16[offs + 2];
 			int code		=		spriteram16[offs + 3];
 	
-			if ((sx & 0x400) != 0)		continue;
+			if (sx & 0x400)		continue;
 	
 			flipx		=		sx & 0x0800;
 			flipy		=		sy & 0x0800;
@@ -197,14 +195,14 @@ public class fuukifg2
 			sx = (sx & 0x1ff) - (sx & 0x200);
 			sy = (sy & 0x1ff) - (sy & 0x200);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{	flipx = NOT(flipx);		sx = max_x - sx - xnum * 16;
 				flipy = NOT(flipy);		sy = max_y - sy - ynum * 16;	}
 	
-			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -212,7 +210,7 @@ public class fuukifg2
 				for (x = xstart; x != xend; x += xinc)
 				{
 					if (xzoom == (16*8) && yzoom == (16*8))
-						pdrawgfx(		bitmap,Machine.gfx[0],
+						pdrawgfx(		bitmap,Machine->gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -220,7 +218,7 @@ public class fuukifg2
 										cliprect,TRANSPARENCY_PEN,15,
 										pri_mask	);
 					else
-						pdrawgfxzoom(	bitmap,Machine.gfx[0],
+						pdrawgfxzoom(	bitmap,Machine->gfx[0],
 										code++,
 										attr & 0x3f,
 										flipx, flipy,
@@ -240,7 +238,7 @@ public class fuukifg2
 		dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 		dt[0].x = sx;		dt[0].y = sy;
 		dt[1].text = 0;	/* terminate array */
-		displaytext(Machine.scrbitmap,dt);		}
+		displaytext(Machine->scrbitmap,dt);		}
 	#endif
 	#endif
 		}
@@ -287,7 +285,7 @@ public class fuukifg2
 	
 		switch( i )
 		{
-			case 2:	if (buffer != 0)	tilemap_draw(bitmap,cliprect,tilemap_3,flag,pri);
+			case 2:	if (buffer)	tilemap_draw(bitmap,cliprect,tilemap_3,flag,pri);
 					else		tilemap_draw(bitmap,cliprect,tilemap_2,flag,pri);
 					return;
 			case 1:	tilemap_draw(bitmap,cliprect,tilemap_1,flag,pri);
@@ -297,8 +295,7 @@ public class fuukifg2
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fuuki16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		data16_t layer0_scrollx, layer0_scrolly;
 		data16_t layer1_scrollx, layer1_scrolly;
 		data16_t layer2_scrollx, layer2_scrolly;

@@ -136,7 +136,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -241,12 +241,12 @@ public class segac2
 		int level = 0;
 	
 		/* determine which interrupt is active */
-		if (ym3438_int != 0) level = 2;
-		if (scanline_int != 0) level = 4;
-		if (vblank_int != 0) level = 6;
+		if (ym3438_int) level = 2;
+		if (scanline_int) level = 4;
+		if (vblank_int) level = 6;
 	
 		/* either set or clear the appropriate lines */
-		if (level != 0)
+		if (level)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -295,8 +295,7 @@ public class segac2
 	
 	
 	/* interrupt callback to generate the VBLANK interrupt */
-	public static InterruptHandlerPtr vblank_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vblank_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* generate the interrupt */
 		vblank_int = 1;
 		update_interrupts();
@@ -324,8 +323,7 @@ public class segac2
 	
 	******************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_segac2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_segac2  = new MachineInitHandlerPtr() { public void handler(){
 		/* set the first scanline 0 timer to go off */
 		timer_set(cpu_getscanlinetime(0) + cpu_getscanlineperiod() * (320. / 342.), 0, vdp_reload_counter);
 	
@@ -340,8 +338,7 @@ public class segac2
 		swizzle_table_index = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_genesis  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_genesis  = new MachineInitHandlerPtr() { public void handler(){
 	    /* the following ensures that the Z80 begins without running away from 0 */
 		/* 0x76 is just a forced 'halt' as soon as the CPU is initially run */
 	    genesis_z80_ram[0] = 0x76;
@@ -361,8 +358,7 @@ public class segac2
 	
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_megaplay  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_megaplay  = new MachineInitHandlerPtr() { public void handler(){
 	//	unsigned char* ram = memory_region(REGION_CPU3);
 	
 		machine_init_genesis();
@@ -403,7 +399,7 @@ public class segac2
 	static WRITE16_HANDLER( ym3438_w )
 	{
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			static UINT8 last_port;
 	
@@ -429,11 +425,11 @@ public class segac2
 		switch (offset)
 		{
 			case 0:
-				if (ACCESSING_MSB != 0)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_A_w		(0,	(data >> 0) & 0xff);
 				break;
 			case 1:
-				if (ACCESSING_MSB != 0)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_B_w		(0,	(data >> 0) & 0xff);
 				break;
 		}
@@ -445,11 +441,11 @@ public class segac2
 	static WRITE16_HANDLER( upd7759_w )
 	{
 		/* make sure we have a UPD chip */
-		if (sound_banks == 0)
+		if (!sound_banks)
 			return;
 	
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			UPD7759_reset_w(0, 0);
 			UPD7759_reset_w(0, 1);
@@ -464,7 +460,7 @@ public class segac2
 	static WRITE16_HANDLER( sn76489_w )
 	{
 		/* only works if we're accessing the low byte */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			SN76496_0_w(0, data & 0xff);
 	}
 	
@@ -564,7 +560,7 @@ public class segac2
 	static WRITE16_HANDLER( ribbit_palette_w )
 	{
 		int newoffs = (offset & 0x60f) | (swizzle_table[swizzle_table_index][(offset >> 4) & 0x1f] << 4);
-		if (LOG_PALETTE != 0)
+		if (LOG_PALETTE)
 			if (offset % 16 == 0) logerror("%06X:palette_w @ %03X(%03X) = %04X [swizzle_table=%d]\n", activecpu_get_previouspc(), newoffs, offset, data, swizzle_table_index);
 		palette_w(newoffs, data, mem_mask);
 	}
@@ -616,7 +612,7 @@ public class segac2
 		{
 			case 0x00:	return 0xff00 | readinputport(1);
 			case 0x01:	return 0xff00 | readinputport(2);
-			case 0x02:	if (sound_banks != 0)
+			case 0x02:	if (sound_banks)
 							return 0xff00 | (UPD7759_0_busy_r(0) << 6) | 0xbf; /* must return high bit on */
 						else
 							return 0xffff;
@@ -639,7 +635,7 @@ public class segac2
 		int newbank;
 	
 		/* only LSB matters */
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 			return;
 	
 		/* track what was written */
@@ -679,11 +675,11 @@ public class segac2
 			case 0x0f:
 				/* ???? */
 				if (data != 0x88)
-					if (LOG_IOCHIP != 0) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
+					if (LOG_IOCHIP) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
 				break;
 	
 			default:
-				if (LOG_IOCHIP != 0) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
+				if (LOG_IOCHIP) logerror("%06x:I/O write @ %02x = %02x\n", activecpu_get_previouspc(), offset, data & 0xff);
 				break;
 		}
 	}
@@ -703,7 +699,7 @@ public class segac2
 	static WRITE16_HANDLER( control_w )
 	{
 		/* skip if not LSB */
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 			return;
 		data &= 0xff;
 	
@@ -711,7 +707,7 @@ public class segac2
 		segac2_enable_display(~data & 1);
 	
 		/* log anything suspicious */
-		if (LOG_IOCHIP != 0)
+		if (LOG_IOCHIP)
 			if (data != 6 && data != 7) logerror("%06x:control_w suspicious value = %02X (%d)\n", activecpu_get_previouspc(), data, cpu_getscanline());
 	}
 	
@@ -733,7 +729,7 @@ public class segac2
 	/* protection chip reads */
 	static READ16_HANDLER( prot_r )
 	{
-		if (LOG_PROTECTION != 0) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
+		if (LOG_PROTECTION) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
 		return prot_read_buf | 0xf0;
 	}
 	
@@ -746,7 +742,7 @@ public class segac2
 		int table_index;
 	
 		/* only works for the LSB */
-		if (ACCESSING_LSB == 0)
+		if (!ACCESSING_LSB)
 			return;
 	
 		/* keep track of the last few writes */
@@ -756,9 +752,9 @@ public class segac2
 		table_index = (prot_write_buf & 0xf0) | prot_read_buf;
 	
 		/* determine the value to return, should a read occur */
-		if (prot_table != 0)
+		if (prot_table)
 			prot_read_buf = (prot_table[table_index >> 3] << (4 * (table_index & 7))) >> 28;
-		if (LOG_PROTECTION != 0) logerror("%06X:protection w=%02X, new result=%02X\n", activecpu_get_previouspc(), data & 0x0f, prot_read_buf);
+		if (LOG_PROTECTION) logerror("%06X:protection w=%02X, new result=%02X\n", activecpu_get_previouspc(), data & 0x0f, prot_read_buf);
 	
 		/* if the palette changed, force an update */
 		if (new_sp_palbase != segac2_sp_palbase || new_bg_palbase != segac2_bg_palbase)
@@ -766,7 +762,7 @@ public class segac2
 			force_partial_update((cpu_getscanline()) + 1 + scanbase);
 			segac2_sp_palbase = new_sp_palbase;
 			segac2_bg_palbase = new_bg_palbase;
-			if (LOG_PALETTE != 0) logerror("Set palbank: %d/%d (scan=%d)\n", segac2_bg_palbase, segac2_sp_palbase, cpu_getscanline());
+			if (LOG_PALETTE) logerror("Set palbank: %d/%d (scan=%d)\n", segac2_bg_palbase, segac2_sp_palbase, cpu_getscanline());
 		}
 	}
 	
@@ -778,9 +774,9 @@ public class segac2
 		/* encoded in a way that tells us the return values directly; this */
 		/* function just feeds it what it wants */
 		int table_index = (prot_write_buf & 0xf0) | ((prot_write_buf >> 8) & 0x0f);
-		if (prot_table != 0)
+		if (prot_table)
 			prot_read_buf = (prot_table[table_index >> 3] << (4 * (table_index & 7))) >> 28;
-		if (LOG_PROTECTION != 0) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
+		if (LOG_PROTECTION) logerror("%06X:protection r=%02X\n", activecpu_get_previouspc(), prot_table ? prot_read_buf : 0xff);
 		return prot_read_buf | 0xf0;
 	}
 	
@@ -813,7 +809,7 @@ public class segac2
 	static WRITE16_HANDLER( counter_timer_w )
 	{
 		/* only LSB matters */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/*int value = data & 1;*/
 			switch (data & 0x1e)
@@ -866,9 +862,9 @@ public class segac2
 	{
 		int i;
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, main_ram, 0x10000);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, main_ram, 0x10000);
 		else
 			for (i = 0; i < 0x10000/2; i++)
@@ -1068,11 +1064,11 @@ public class segac2
 			switch (offset & 3)
 			{
 			case 0:
-				if (ACCESSING_MSB != 0)	 return YM2612_status_port_0_A_r(0) << 8;
+				if (ACCESSING_MSB)	 return YM2612_status_port_0_A_r(0) << 8;
 				else 				 return YM2612_read_port_0_r(0);
 				break;
 			case 2:
-				if (ACCESSING_MSB != 0)	return YM2612_status_port_0_B_r(0) << 8;
+				if (ACCESSING_MSB)	return YM2612_status_port_0_B_r(0) << 8;
 				else 				return 0;
 				break;
 			}
@@ -1110,8 +1106,8 @@ public class segac2
 		{
 			offset &=0x1fff;
 	
-		if (ACCESSING_LSB != 0) genesis_z80_ram[offset+1] = data & 0xff;
-		if (ACCESSING_MSB != 0) genesis_z80_ram[offset] = (data >> 8) & 0xff;
+		if (ACCESSING_LSB) genesis_z80_ram[offset+1] = data & 0xff;
+		if (ACCESSING_MSB) genesis_z80_ram[offset] = (data >> 8) & 0xff;
 		}
 	
 		/* YM2610 */
@@ -1120,11 +1116,11 @@ public class segac2
 			switch (offset & 3)
 			{
 			case 0:
-				if (ACCESSING_MSB != 0)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB)	YM2612_control_port_0_A_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_A_w		(0,	(data >> 0) & 0xff);
 				break;
 			case 2:
-				if (ACCESSING_MSB != 0)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
+				if (ACCESSING_MSB)	YM2612_control_port_0_B_w	(0,	(data >> 8) & 0xff);
 				else 				YM2612_data_port_0_B_w		(0,	(data >> 0) & 0xff);
 				break;
 			}
@@ -1149,8 +1145,8 @@ public class segac2
 	
 			if ( (offset >= 0x10) && (offset <=0x17) )
 			{
-				if (ACCESSING_LSB != 0) SN76496_0_w(0, data & 0xff);
-				if (ACCESSING_MSB != 0) SN76496_0_w(0, (data >>8) & 0xff);
+				if (ACCESSING_LSB) SN76496_0_w(0, data & 0xff);
+				if (ACCESSING_MSB) SN76496_0_w(0, (data >>8) & 0xff);
 			}
 	
 		}
@@ -1220,7 +1216,7 @@ public class segac2
 	
 				return_value = (genesis_io_ram[offset] & 0x80) | return_value;
 	//			logerror ("reading joypad 1 , type %02x %02x\n",genesis_io_ram[offset] & 0x80, return_value &0x7f);
-				if ((bios_ctrl_inputs & 0x04) != 0) return_value = 0xff;
+				if(bios_ctrl_inputs & 0x04) return_value = 0xff;
 				break;
 	
 			case 2: /* port B data (joypad 1) */
@@ -1239,7 +1235,7 @@ public class segac2
 				}
 				return_value = (genesis_io_ram[offset] & 0x80) | return_value;
 	//			logerror ("reading joypad 2 , type %02x %02x\n",genesis_io_ram[offset] & 0x80, return_value &0x7f);
-				if ((bios_ctrl_inputs & 0x04) != 0) return_value = 0xff;
+				if(bios_ctrl_inputs & 0x04) return_value = 0xff;
 				break;
 	
 			default:
@@ -1388,10 +1384,10 @@ public class segac2
 	
 	
 	
-	static public static WriteHandlerPtr genesis_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* note value will be meaningless unless all bits are correctly set in */
+	public static WriteHandlerPtr genesis_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)* note value will be meaningless unless all bits are correctly set in */
 	{
 		if (offset !=0 ) return;
-	//	if (z80running == 0) logerror("undead Z80 latch write!\n");
+	//	if (!z80running) logerror("undead Z80 latch write!\n");
 		if (z80_latch_bitcount == 0) z80_68000_latch = 0;
 	
 		z80_68000_latch = z80_68000_latch | ((( ((unsigned char)data) & 0x01) << (15+z80_latch_bitcount)));
@@ -1404,8 +1400,7 @@ public class segac2
 		}
 	} };
 	
-	static public static ReadHandlerPtr genesis_z80_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr genesis_z80_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset += 0x4000;
 	
 		/* YM2610 */
@@ -1441,8 +1436,7 @@ public class segac2
 		return 0x00;
 	} };
 	
-	static public static WriteHandlerPtr genesis_z80_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr genesis_z80_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset += 0x4000;
 	
 		/* YM2610 */
@@ -1480,11 +1474,10 @@ public class segac2
 		}
 	} };
 	
-	static public static ReadHandlerPtr genesis_z80_bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr genesis_z80_bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int address = (z80_68000_latch) + (offset & 0x7fff);
 	
-		if (z80running == 0) logerror("undead Z80.68000 read!\n");
+		if (!z80running) logerror("undead Z80->68000 read!\n");
 	
 		if (z80_latch_bitcount != 0) logerror("reading whilst latch being set!\n");
 	
@@ -1500,11 +1493,11 @@ public class segac2
 	
 	static WRITE16_HANDLER ( genesis_z80_ram_w )
 	{
-		if (z80running != 0) logerror("Z80 written whilst running!\n");
-		logerror("68000.z80 sound write, %x to %x\n", data, offset);
+		if (z80running) logerror("Z80 written whilst running!\n");
+		logerror("68000->z80 sound write, %x to %x\n", data, offset);
 	
-		if (ACCESSING_LSB != 0) genesis_z80_ram[(offset<<1)+1] = data & 0xff;
-		if (ACCESSING_MSB != 0) genesis_z80_ram[offset<<1] = (data >> 8) & 0xff;
+		if (ACCESSING_LSB) genesis_z80_ram[(offset<<1)+1] = data & 0xff;
+		if (ACCESSING_MSB) genesis_z80_ram[offset<<1] = (data >> 8) & 0xff;
 	}
 	
 	static MEMORY_READ_START(genesis_z80_readmem)
@@ -1523,8 +1516,7 @@ public class segac2
 	
 	/* MEGATECH specific */
 	
-	public static ReadHandlerPtr megatech_instr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megatech_instr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char* instr = memory_region(REGION_USER1);
 		unsigned char* ram = memory_region(REGION_CPU3);
 	
@@ -1540,8 +1532,7 @@ public class segac2
 	unsigned char bios_6403;
 	unsigned char bios_6404;
 	
-	public static ReadHandlerPtr bios_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bios_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(offset == 0)
 			return 0;
 		if(offset == 2)
@@ -1550,8 +1541,7 @@ public class segac2
 		return bios_ctrl[offset];
 	} };
 	
-	public static WriteHandlerPtr bios_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bios_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(offset == 1)
 		{
 			bios_ctrl_inputs = data & 0x04;  // Genesis/SMS input ports disable bit
@@ -1559,33 +1549,28 @@ public class segac2
 		bios_ctrl[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr megaplay_bios_banksel_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megaplay_bios_banksel_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bios_bank;
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_bank = data;
 		bios_mode = MP_ROM;
 		logerror("BIOS: ROM bank %i selected [0x%02x]\n",bios_bank >> 6, data);
 	} };
 	
-	public static ReadHandlerPtr megaplay_bios_gamesel_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megaplay_bios_gamesel_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bios_6403;
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_gamesel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_gamesel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_6403 = data;
 		logerror("BIOS: 0x6403 write: 0x%02x\n",data);
 		bios_mode = data & 0x10;
 	} };
 	
 	
-	public static ReadHandlerPtr bank_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bank_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char* bank = memory_region(REGION_CPU3);
 	//	unsigned char* instr = memory_region(REGION_USER1);
 		unsigned char* game = memory_region(REGION_CPU1);
@@ -1607,7 +1592,7 @@ public class segac2
 		else
 		{
 			if(game_banksel == 0x60 || game_banksel == 0x61)  /* read game info ROM */
-				if ((bios_width & 0x08) != 0)
+				if(bios_width & 0x08)
 					return game[((game_banksel)*0x8000 + offset)/2];
 				else
 					return game[((game_banksel)*0x8000 + offset)];
@@ -1616,8 +1601,7 @@ public class segac2
 		}
 	} };
 	
-	static public static WriteHandlerPtr bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(game_banksel == 0x142) // Genesis I/O
 			genesis_io_w((offset/2) & 0x1f, data, 0xffff);
 		else
@@ -1625,48 +1609,40 @@ public class segac2
 	} };
 	
 	
-	public static ReadHandlerPtr megaplay_bios_6402_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megaplay_bios_6402_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bios_6402;// & 0xfe;
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_6402_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_6402_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_6402 = data;
 		logerror("BIOS: 0x6402 write: 0x%02x\n",data);
 	} };
 	
-	public static ReadHandlerPtr megaplay_bios_6404_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megaplay_bios_6404_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("BIOS: 0x6404 read: returned 0x%02x\n",bios_6404 | (bios_6403 & 0x10) >> 4);
 		return bios_6404 | (bios_6403 & 0x10) >> 4;
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_6404_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_6404_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_6404 = data;
 		logerror("BIOS: 0x6404 write: 0x%02x\n",data);
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_width_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_width_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_width = data;
 	//	usrintf_showmessage("Width write: %02x",data);
 	} };
 	
-	public static ReadHandlerPtr megaplay_bios_6600_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr megaplay_bios_6600_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return bios_6600;// & 0xfe;
 	} };
 	
-	public static WriteHandlerPtr megaplay_bios_6600_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_bios_6600_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_6600 = data;
 		logerror("BIOS: 0x6600 write: 0x%02x\n",data);
 	} };
 	
-	public static WriteHandlerPtr megaplay_game_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megaplay_game_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(readpos == 1)
 			game_banksel = 0;
 		game_banksel |= (1 << (readpos-1)) * (data & 0x01);
@@ -1757,8 +1733,7 @@ public class segac2
 	void segae_vdp_ctrl_w ( UINT8 chip, UINT8 data );
 	void segae_vdp_data_w ( UINT8 chip, UINT8 data );
 	
-	static READ_HANDLER (megatech_bios_port_be_bf_r)
-	{
+	public static ReadHandlerPtr megatech_bios_port_be_bf_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 temp = 0;
 	
 		switch (offset)
@@ -1769,9 +1744,8 @@ public class segac2
 				temp = segae_vdp_ctrl_r(0); break ;
 		}
 		return temp;
-	}
-	static WRITE_HANDLER (megatech_bios_port_be_bf_w)
-	{
+	} };
+	public static WriteHandlerPtr megatech_bios_port_be_bf_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: /* port 0xbe, VDP 1 DATA Write */
@@ -1779,33 +1753,29 @@ public class segac2
 			case 1: /* port 0xbf, VDP 1 CTRL Write */
 				segae_vdp_ctrl_w(0, data); break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER (megatech_bios_port_ctrl_w)
-	{
+	public static WriteHandlerPtr megatech_bios_port_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bios_port_ctrl = data;
-	}
+	} };
 	
-	static READ_HANDLER (megatech_bios_port_dc_r)
-	{
+	public static ReadHandlerPtr megatech_bios_port_dc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(bios_port_ctrl == 0x55)
 			return readinputport(12);
 		else
 			return readinputport(9);
-	}
+	} };
 	
-	static READ_HANDLER (megatech_bios_port_dd_r)
-	{
+	public static ReadHandlerPtr megatech_bios_port_dd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(bios_port_ctrl == 0x55)
 			return readinputport(12);
 		else
 			return readinputport(8);
-	}
+	} };
 	
-	static WRITE_HANDLER (megatech_bios_port_7f_w)
-	{
+	public static WriteHandlerPtr megatech_bios_port_7f_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	usrintf_showmessage("CPU #3: I/O port 0x7F write, data %02x",data);
-	}
+	} };
 	
 	
 	public static IO_ReadPort megatech_bios_readport[]={
@@ -1843,8 +1813,7 @@ public class segac2
 	static UINT8 hintcount;			/* line interrupt counter, decreased each scanline */
 	
 	// Interrupt handler - from drivers/segasyse.c
-	INTERRUPT_GEN (megatech_irq)
-	{
+	public static InterruptHandlerPtr megatech_irq = new InterruptHandlerPtr() {public void handler(){
 		int sline;
 		sline = 261 - cpu_getiloops();
 	
@@ -1881,7 +1850,7 @@ public class segac2
 			}
 		}
 	
-	}
+	} };
 	
 	
 	/******************************************************************************
@@ -1958,7 +1927,7 @@ public class segac2
 		PORT_DIPSETTING(    0x00, "1 Coin/1 Credit (Freeplay if Coin A also"));
 	
 	
-	static InputPortPtr input_ports_columns = new InputPortPtr(){ public void handler() {  /* Columns Input Ports */
+	static InputPortPtr input_ports_columns = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( columns ) /* Columns Input Ports */
 	    PORT_START(); 
 	    COINS
 	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2011,7 +1980,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_columns2 = new InputPortPtr(){ public void handler() {  /* Columns 2 Input Ports */
+	static InputPortPtr input_ports_columns2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( columns2 ) /* Columns 2 Input Ports */
 	    PORT_START(); 
 	    COINS
 	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2061,7 +2030,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_borench = new InputPortPtr(){ public void handler() {  /* Borench Input Ports */
+	static InputPortPtr input_ports_borench = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( borench ) /* Borench Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2110,7 +2079,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tfrceac = new InputPortPtr(){ public void handler() {  /* ThunderForce AC Input Ports */
+	static InputPortPtr input_ports_tfrceac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tfrceac ) /* ThunderForce AC Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2159,7 +2128,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ribbit = new InputPortPtr(){ public void handler() {  /* Ribbit! Input Ports */
+	static InputPortPtr input_ports_ribbit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ribbit ) /* Ribbit! Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2203,7 +2172,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_puyopuyo = new InputPortPtr(){ public void handler() {  /* PuyoPuyo Input Ports */
+	static InputPortPtr input_ports_puyopuyo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puyopuyo ) /* PuyoPuyo Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2254,7 +2223,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stkclmns = new InputPortPtr(){ public void handler() {  /* Stack Columns Input Ports */
+	static InputPortPtr input_ports_stkclmns = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stkclmns ) /* Stack Columns Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2308,7 +2277,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_potopoto = new InputPortPtr(){ public void handler() {  /* PotoPoto Input Ports */
+	static InputPortPtr input_ports_potopoto = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( potopoto ) /* PotoPoto Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2359,7 +2328,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_zunkyou = new InputPortPtr(){ public void handler() {  /* ZunkYou Input Ports */
+	static InputPortPtr input_ports_zunkyou = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zunkyou ) /* ZunkYou Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2410,7 +2379,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ichidant = new InputPortPtr(){ public void handler() {  /*  Ichidant-R and Tant-R Input Ports */
+	static InputPortPtr input_ports_ichidant = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ichidant ) /*  Ichidant-R and Tant-R Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2461,7 +2430,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bloxeedc = new InputPortPtr(){ public void handler() {  /*  Bloxeed Input Ports */
+	static InputPortPtr input_ports_bloxeedc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bloxeedc ) /*  Bloxeed Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2513,7 +2482,7 @@ public class segac2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_puyopuy2 = new InputPortPtr(){ public void handler() {  /*  Puyo Puyo 2 Input Ports */
+	static InputPortPtr input_ports_puyopuy2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puyopuy2 ) /*  Puyo Puyo 2 Input Ports */
 		PORT_START(); 		/* Coins, Start, Service etc, Same for All */
 	    COINS
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2562,7 +2531,7 @@ public class segac2
 	    PORT_DIPSETTING(    0x80, "2" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_puckpkmn = new InputPortPtr(){ public void handler() {  /* Puckman Pockimon Input Ports */
+	static InputPortPtr input_ports_puckpkmn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puckpkmn ) /* Puckman Pockimon Input Ports */
 		PORT_START(); 	/* Player 2 Controls ($700011.b) */
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -2635,7 +2604,7 @@ public class segac2
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pclub = new InputPortPtr(){ public void handler() {  /* Print Club Input Ports */
+	static InputPortPtr input_ports_pclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pclub ) /* Print Club Input Ports */
 		PORT_START(); 		 /* Coins */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2750,12 +2719,12 @@ public class segac2
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNUSED );\
 	
 	
-	static InputPortPtr input_ports_genesis = new InputPortPtr(){ public void handler() {  /* Genesis Input Ports */
+	static InputPortPtr input_ports_genesis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( genesis ) /* Genesis Input Ports */
 	GENESIS_PORTS
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_megatech = new InputPortPtr(){ public void handler() {  /* Genesis Input Ports */
+	static InputPortPtr input_ports_megatech = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megatech ) /* Genesis Input Ports */
 		PORT_START(); 
 	
 	
@@ -3100,8 +3069,7 @@ public class segac2
 	
 	******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_segac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( segac )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000, MASTER_CLOCK/7) 		/* yes, there is a divide-by-7 circuit */
@@ -3126,26 +3094,20 @@ public class segac2
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2612, ym3438_intf)
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_segac2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( segac2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( segac )
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(UPD7759, upd7759_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_puckpkmn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( puckpkmn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( segac )
@@ -3158,12 +3120,9 @@ public class segac2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, puckpkmn_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_genesis = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( genesis )
 		/*basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 53693100 / 7)
 		MDRV_CPU_MEMORY(genesis_readmem, genesis_writemem)
@@ -3193,13 +3152,10 @@ public class segac2
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2612, gen_ym3438_intf )
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_megatech = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( megatech )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( genesis )
@@ -3217,12 +3173,9 @@ public class segac2
 		MDRV_CPU_MEMORY(megatech_bios_readmem, megatech_bios_writemem)
 		MDRV_CPU_PORTS(megatech_bios_readport,megatech_bios_writeport)
 		MDRV_CPU_VBLANK_INT(megatech_irq, 262)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_megaplay = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( megaplay )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( genesis )
@@ -3241,9 +3194,7 @@ public class segac2
 		MDRV_CPU_MEMORY(megaplay_bios_readmem, megaplay_bios_writemem)
 		MDRV_CPU_PORTS(megaplay_bios_readport,megaplay_bios_writeport)
 		MDRV_CPU_VBLANK_INT(megatech_irq, 262)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************
 		Rom Definitions
@@ -4070,20 +4021,17 @@ public class segac2
 		state_save_register_UINT16 ("C2 Protection", 0, "Read Buffer", &prot_read_buf, 1);
 	}
 	
-	public static DriverInitHandlerPtr init_segac2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_segac2  = new DriverInitHandlerPtr() { public void handler(){
 		bloxeed_sound = 0;
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_bloxeedc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bloxeedc  = new DriverInitHandlerPtr() { public void handler(){
 		init_saves();
 		bloxeed_sound = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_columns  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_columns  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 columns_table[256/8] =
 		{
 			0x20a41397, 0x64e057d3, 0x20a41397, 0x64e057d3,
@@ -4100,8 +4048,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_columns2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_columns2  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 columns2_table[256/8] =
 		{
 			0x0015110c, 0x0015110c, 0x889d9984, 0xcedb9b86,
@@ -4118,8 +4065,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_borench  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_borench  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 borench_table[256/8] =
 		{
 			0x12fe56ba, 0x56ba56ba, 0x00aa44ee, 0xcceeccee,
@@ -4136,8 +4082,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_tfrceac  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tfrceac  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 tfrceac_table[256/8] =
 		{
 			0x3a3a6f6f, 0x38386d6d, 0x3a3a6f6f, 0x28287d7d,
@@ -4154,14 +4099,12 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_tfrceacb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tfrceacb  = new DriverInitHandlerPtr() { public void handler(){
 		/* disable the palette bank switching from the protection chip */
 		install_mem_write16_handler(0, 0x800000, 0x800001, MWA16_NOP);
 	} };
 	
-	public static DriverInitHandlerPtr init_ribbit  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ribbit  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 ribbit_table[256/8] =
 		{
 			0xffeeddcc, 0xffeeddcc, 0xfeeffeef, 0xfeeffeef,
@@ -4186,8 +4129,7 @@ public class segac2
 		ribbit_palette_select = install_mem_read16_handler(0, 0x2000, 0x27ff, ribbit_palette_select_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_tantr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tantr  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 tantr_table[256/8] =
 		{
 			0x91ddd19d, 0x91ddd19d, 0xd4dc949c, 0xf6feb6be,
@@ -4204,8 +4146,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_ichidant  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ichidant  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 ichidant_table[256/8] =
 		{
 			0x55116622, 0x55116622, 0x55117733, 0x55117733,
@@ -4222,8 +4163,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_ichidnte  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ichidnte  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 ichidnte_table[256/8] =
 		{
 			0x4c4c4c4c, 0x08080808, 0x5d5d4c4c, 0x19190808,
@@ -4241,8 +4181,7 @@ public class segac2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_potopoto  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_potopoto  = new DriverInitHandlerPtr() { public void handler(){
 		/* note: this is not the real table; Poto Poto only tests one  */
 		/* very specific case, so we don't have enough data to provide */
 		/* the correct table in its entirety */
@@ -4262,8 +4201,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_puyopuyo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_puyopuyo  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 puyopuyo_table[256/8] =
 		{
 			0x33aa55cc, 0x33aa55cc, 0xba22fe66, 0xba22fe66,
@@ -4280,8 +4218,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_puyopuy2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_puyopuy2  = new DriverInitHandlerPtr() { public void handler(){
 		/* note: this is not the real table; Puyo Puyo 2 doesn't  */
 		/* store the original table; instead it loops through all */
 		/* combinations 0-255 and expects the following results;  */
@@ -4304,8 +4241,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_stkclmns  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stkclmns  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 stkclmns_table[256/8] =
 		{
 			0xcc88cc88, 0xcc88cc88, 0xcc99cc99, 0xcc99cc99,
@@ -4331,8 +4267,7 @@ public class segac2
 		init_saves();
 	} };
 	
-	public static DriverInitHandlerPtr init_zunkyou  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zunkyou  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 zunkyou_table[256/8] =
 		{
 			0xa0a06c6c, 0x82820a0a, 0xecec2020, 0xecec6464,
@@ -4363,8 +4298,7 @@ public class segac2
 		cam_data = data;
 	}
 	
-	public static DriverInitHandlerPtr init_pclub  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pclub  = new DriverInitHandlerPtr() { public void handler(){
 		static const UINT32 printc1_table[256/8] =
 		{
 			0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff,
@@ -4387,8 +4321,7 @@ public class segac2
 	
 	/* Genie's Hardware (contains no real sega parts) */
 	
-	public static DriverInitHandlerPtr init_puckpkmn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_puckpkmn  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *rom	=	memory_region(REGION_CPU1);
 		size_t len		=	memory_region_length(REGION_CPU1);
 		int i;
@@ -4420,83 +4353,83 @@ public class segac2
 	******************************************************************************/
 	
 	/* System C Games */
-	public static GameDriver driver_bloxeedc	   = new GameDriver("1989"	,"bloxeedc"	,"segac2.java"	,rom_bloxeedc,driver_bloxeed	,machine_driver_segac	,input_ports_bloxeedc	,init_bloxeedc	,ROT0	,	"Sega / Elorg",           "Bloxeed (C System)" )
-	public static GameDriver driver_columns	   = new GameDriver("1990"	,"columns"	,"segac2.java"	,rom_columns,null	,machine_driver_segac	,input_ports_columns	,init_columns	,ROT0	,	"Sega",                   "Columns (US)" )
-	public static GameDriver driver_columnsj	   = new GameDriver("1990"	,"columnsj"	,"segac2.java"	,rom_columnsj,driver_columns	,machine_driver_segac	,input_ports_columns	,init_columns	,ROT0	,	"Sega",                   "Columns (Japan)" )
-	public static GameDriver driver_columns2	   = new GameDriver("1990"	,"columns2"	,"segac2.java"	,rom_columns2,null	,machine_driver_segac	,input_ports_columns2	,init_columns2	,ROT0	,	"Sega",                   "Columns II - The Voyage Through Time (Japan)" )
+	GAME ( 1989, bloxeedc, bloxeed,  segac,    bloxeedc, bloxeedc, ROT0, "Sega / Elorg",           "Bloxeed (C System)" )
+	GAME ( 1990, columns,  0,        segac,    columns,  columns,  ROT0, "Sega",                   "Columns (US)" )
+	GAME ( 1990, columnsj, columns,  segac,    columns,  columns,  ROT0, "Sega",                   "Columns (Japan)" )
+	GAME ( 1990, columns2, 0,        segac,    columns2, columns2, ROT0, "Sega",                   "Columns II - The Voyage Through Time (Japan)" )
 	
 	/* System C-2 Games */
-	public static GameDriver driver_borench	   = new GameDriver("1990"	,"borench"	,"segac2.java"	,rom_borench,null	,machine_driver_segac2	,input_ports_borench	,init_borench	,ROT0	,	"Sega",                   "Borench" )
-	public static GameDriver driver_tfrceac	   = new GameDriver("1990"	,"tfrceac"	,"segac2.java"	,rom_tfrceac,null	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceac	,ROT0	,	"Sega / Technosoft",      "ThunderForce AC" )
-	public static GameDriver driver_tfrceacj	   = new GameDriver("1990"	,"tfrceacj"	,"segac2.java"	,rom_tfrceacj,driver_tfrceac	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceac	,ROT0	,	"Sega / Technosoft",      "ThunderForce AC (Japan)" )
-	public static GameDriver driver_tfrceacb	   = new GameDriver("1990"	,"tfrceacb"	,"segac2.java"	,rom_tfrceacb,driver_tfrceac	,machine_driver_segac2	,input_ports_tfrceac	,init_tfrceacb	,ROT0	,	"bootleg",                "ThunderForce AC (bootleg)" )
-	public static GameDriver driver_ribbit	   = new GameDriver("1991"	,"ribbit"	,"segac2.java"	,rom_ribbit,null	,machine_driver_segac2	,input_ports_ribbit	,init_ribbit	,ROT0	,	"Sega",                   "Ribbit!" )
-	public static GameDriver driver_tantr	   = new GameDriver("1992"	,"tantr"	,"segac2.java"	,rom_tantr,null	,machine_driver_segac2	,input_ports_ichidant	,init_tantr	,ROT0	,	"Sega",                   "Tant-R (Puzzle & Action) (Japan)" )
-	public static GameDriver driver_tantrbl	   = new GameDriver("1992"	,"tantrbl"	,"segac2.java"	,rom_tantrbl,driver_tantr	,machine_driver_segac2	,input_ports_ichidant	,init_segac2	,ROT0	,	"bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 1)" )
-	public static GameDriver driver_tantrbl2	   = new GameDriver("1994"	,"tantrbl2"	,"segac2.java"	,rom_tantrbl2,driver_tantr	,machine_driver_segac	,input_ports_ichidant	,init_tantr	,ROT0	,	"bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 2)" )
-	public static GameDriver driver_puyopuyo	   = new GameDriver("1992"	,"puyopuyo"	,"segac2.java"	,rom_puyopuyo,null	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"Sega / Compile",         "Puyo Puyo (Japan)" )
-	public static GameDriver driver_puyopuya	   = new GameDriver("1992"	,"puyopuya"	,"segac2.java"	,rom_puyopuya,driver_puyopuyo	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"Sega / Compile",         "Puyo Puyo (Japan) (Rev A)" )
-	public static GameDriver driver_puyopuyb	   = new GameDriver("1992"	,"puyopuyb"	,"segac2.java"	,rom_puyopuyb,driver_puyopuyo	,machine_driver_segac2	,input_ports_puyopuyo	,init_puyopuyo	,ROT0	,	"bootleg",                "Puyo Puyo (English) (bootleg)" )
-	public static GameDriver driver_ichidant	   = new GameDriver("1994"	,"ichidant"	,"segac2.java"	,rom_ichidant,null	,machine_driver_segac2	,input_ports_ichidant	,init_ichidant	,ROT0	,	"Sega",                   "Ichidant-R (Puzzle & Action 2) (Japan)" )
-	public static GameDriver driver_ichidnte	   = new GameDriver("1994"	,"ichidnte"	,"segac2.java"	,rom_ichidnte,driver_ichidant	,machine_driver_segac2	,input_ports_ichidant	,init_ichidnte	,ROT0	,	"Sega",                   "Ichidant-R (Puzzle & Action 2) (English)" )
-	public static GameDriver driver_ichidntb	   = new GameDriver("1994"	,"ichidntb"	,"segac2.java"	,rom_ichidntb,driver_ichidant	,machine_driver_segac	,input_ports_ichidant	,init_segac2	,ROT0	,	"bootleg",                "Ichidant-R (Puzzle & Action 2) (Japan) (bootleg)" )
-	public static GameDriver driver_stkclmns	   = new GameDriver("1994"	,"stkclmns"	,"segac2.java"	,rom_stkclmns,null	,machine_driver_segac2	,input_ports_stkclmns	,init_stkclmns	,ROT0	,	"Sega",                   "Stack Columns (Japan)" )
-	public static GameDriver driver_puyopuy2	   = new GameDriver("1994"	,"puyopuy2"	,"segac2.java"	,rom_puyopuy2,null	,machine_driver_segac2	,input_ports_puyopuy2	,init_puyopuy2	,ROT0	,	"Compile (Sega license)", "Puyo Puyo 2 (Japan)" )
-	public static GameDriver driver_potopoto	   = new GameDriver("1994"	,"potopoto"	,"segac2.java"	,rom_potopoto,null	,machine_driver_segac2	,input_ports_potopoto	,init_potopoto	,ROT0	,	"Sega",                   "Poto Poto (Japan)" )
-	public static GameDriver driver_zunkyou	   = new GameDriver("1994"	,"zunkyou"	,"segac2.java"	,rom_zunkyou,null	,machine_driver_segac2	,input_ports_zunkyou	,init_zunkyou	,ROT0	,	"Sega",                   "Zunzunkyou No Yabou (Japan)" )
+	GAME ( 1990, borench,  0,        segac2,   borench,  borench,  ROT0, "Sega",                   "Borench" )
+	GAME ( 1990, tfrceac,  0,        segac2,   tfrceac,  tfrceac,  ROT0, "Sega / Technosoft",      "ThunderForce AC" )
+	GAME ( 1990, tfrceacj, tfrceac,  segac2,   tfrceac,  tfrceac,  ROT0, "Sega / Technosoft",      "ThunderForce AC (Japan)" )
+	GAME ( 1990, tfrceacb, tfrceac,  segac2,   tfrceac,  tfrceacb, ROT0, "bootleg",                "ThunderForce AC (bootleg)" )
+	GAME ( 1991, ribbit,   0,        segac2,   ribbit,   ribbit,   ROT0, "Sega",                   "Ribbit!" )
+	GAME ( 1992, tantr,    0,        segac2,   ichidant, tantr,    ROT0, "Sega",                   "Tant-R (Puzzle & Action) (Japan)" )
+	GAME ( 1992, tantrbl,  tantr,    segac2,   ichidant, segac2,   ROT0, "bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 1)" )
+	GAME ( 1994, tantrbl2, tantr,    segac,    ichidant, tantr,    ROT0, "bootleg",                "Tant-R (Puzzle & Action) (Japan) (bootleg set 2)" )
+	GAME ( 1992, puyopuyo, 0,        segac2,   puyopuyo, puyopuyo, ROT0, "Sega / Compile",         "Puyo Puyo (Japan)" )
+	GAME ( 1992, puyopuya, puyopuyo, segac2,   puyopuyo, puyopuyo, ROT0, "Sega / Compile",         "Puyo Puyo (Japan) (Rev A)" )
+	GAME ( 1992, puyopuyb, puyopuyo, segac2,   puyopuyo, puyopuyo, ROT0, "bootleg",                "Puyo Puyo (English) (bootleg)" )
+	GAME ( 1994, ichidant, 0,        segac2,   ichidant, ichidant, ROT0, "Sega",                   "Ichidant-R (Puzzle & Action 2) (Japan)" )
+	GAME ( 1994, ichidnte, ichidant, segac2,   ichidant, ichidnte, ROT0, "Sega",                   "Ichidant-R (Puzzle & Action 2) (English)" )
+	GAME ( 1994, ichidntb, ichidant, segac,    ichidant, segac2,   ROT0, "bootleg",                "Ichidant-R (Puzzle & Action 2) (Japan) (bootleg)" )
+	GAME ( 1994, stkclmns, 0,        segac2,   stkclmns, stkclmns, ROT0, "Sega",                   "Stack Columns (Japan)" )
+	GAME ( 1994, puyopuy2, 0,        segac2,   puyopuy2, puyopuy2, ROT0, "Compile (Sega license)", "Puyo Puyo 2 (Japan)" )
+	GAME ( 1994, potopoto, 0,        segac2,   potopoto, potopoto, ROT0, "Sega",                   "Poto Poto (Japan)" )
+	GAME ( 1994, zunkyou,  0,        segac2,   zunkyou,  zunkyou,  ROT0, "Sega",                   "Zunzunkyou No Yabou (Japan)" )
 	
 	/* Genie Hardware (uses Genesis VDP) also has 'Sun Mixing Co' put into tile ram */
-	public static GameDriver driver_puckpkmn	   = new GameDriver("2000"	,"puckpkmn"	,"segac2.java"	,rom_puckpkmn,null	,machine_driver_puckpkmn	,input_ports_puckpkmn	,init_puckpkmn	,ROT0	,	"Genie",                  "Puckman Pockimon" )
+	GAME ( 2000, puckpkmn, 0,        puckpkmn, puckpkmn, puckpkmn, ROT0, "Genie",                  "Puckman Pockimon" )
 	
 	/* Atlus Print Club 'Games' (C-2 Hardware, might not be possible to support them because they use camera + printer, really just put here for reference) */
-	public static GameDriver driver_pclubj	   = new GameDriver("1995"	,"pclubj"	,"segac2.java"	,rom_pclubj,null	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.1)", GAME_NOT_WORKING )
-	public static GameDriver driver_pclubjv2	   = new GameDriver("1995"	,"pclubjv2"	,"segac2.java"	,rom_pclubjv2,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.2)", GAME_NOT_WORKING )
-	public static GameDriver driver_pclubjv4	   = new GameDriver("1996"	,"pclubjv4"	,"segac2.java"	,rom_pclubjv4,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.4)", GAME_NOT_WORKING )
-	public static GameDriver driver_pclubjv5	   = new GameDriver("1996"	,"pclubjv5"	,"segac2.java"	,rom_pclubjv5,driver_pclubj	,machine_driver_segac2	,input_ports_pclub	,init_pclub	,ROT0	,	"Atlus",                   "Print Club (Japan Vol.5)", GAME_NOT_WORKING )
+	GAMEX( 1995, pclubj,   0,        segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.1)", GAME_NOT_WORKING )
+	GAMEX( 1995, pclubjv2, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.2)", GAME_NOT_WORKING )
+	GAMEX( 1996, pclubjv4, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.4)", GAME_NOT_WORKING )
+	GAMEX( 1996, pclubjv5, pclubj,   segac2, pclub,    pclub,    ROT0, "Atlus",                   "Print Club (Japan Vol.5)", GAME_NOT_WORKING )
 	
 	
 	/* nn */ /* nn is part of the instruction rom name, should there be a game for each number? */
-	/* -- */ public static GameDriver driver_megatech	   = new GameDriver("1989"	,"megatech"	,"segac2.java"	,rom_megatech,null	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Bios", NOT_A_DRIVER )
-	/* 01 */ public static GameDriver driver_mt_beast	   = new GameDriver("1989"	,"mt_beast"	,"segac2.java"	,rom_mt_beast,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Altered Beast", GAME_NOT_WORKING )
-	/* 02 */ public static GameDriver driver_mt_shar2	   = new GameDriver("1989"	,"mt_shar2"	,"segac2.java"	,rom_mt_shar2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Space Harrier 2.", GAME_NOT_WORKING )
-	/* 03 */ public static GameDriver driver_mt_stbld	   = new GameDriver("1989"	,"mt_stbld"	,"segac2.java"	,rom_mt_stbld,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Super Thunder Blade", GAME_NOT_WORKING )
-	/* 04 */ public static GameDriver driver_mt_ggolf	   = new GameDriver("1989"	,"mt_ggolf"	,"segac2.java"	,rom_mt_ggolf,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Great Golf", GAME_NOT_WORKING ) /* sms! also bad */
-	/* 05 */ public static GameDriver driver_mt_gsocr	   = new GameDriver("1989"	,"mt_gsocr"	,"segac2.java"	,rom_mt_gsocr,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Great Soccer", GAME_NOT_WORKING ) /* sms! also bad */
+	/* -- */ GAMEX( 1989, megatech, 0,        megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Bios", NOT_A_DRIVER )
+	/* 01 */ GAMEX( 1989, mt_beast, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Altered Beast", GAME_NOT_WORKING )
+	/* 02 */ GAMEX( 1989, mt_shar2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Space Harrier 2.", GAME_NOT_WORKING )
+	/* 03 */ GAMEX( 1989, mt_stbld, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Super Thunder Blade", GAME_NOT_WORKING )
+	/* 04 */ GAMEX( 1989, mt_ggolf, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Great Golf", GAME_NOT_WORKING ) /* sms! also bad */
+	/* 05 */ GAMEX( 1989, mt_gsocr, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Great Soccer", GAME_NOT_WORKING ) /* sms! also bad */
 	/* 06 */ // unknown
 	/* 07 */ // unknown
-	/* 08 */ public static GameDriver driver_mt_shnbi	   = new GameDriver("1989"	,"mt_shnbi"	,"segac2.java"	,rom_mt_shnbi,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Shinobi", GAME_NOT_WORKING) /* sms */
+	/* 08 */ GAMEX( 1989, mt_shnbi, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Shinobi", GAME_NOT_WORKING) /* sms */
 	/* 09 */ // unknown
-	/* 10 */ public static GameDriver driver_mt_aftrb	   = new GameDriver("1989"	,"mt_aftrb"	,"segac2.java"	,rom_mt_aftrb,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Afterburner", GAME_NOT_WORKING) /* sms */
-	/* 11 */ public static GameDriver driver_mt_tfor2	   = new GameDriver("1989"	,"mt_tfor2"	,"segac2.java"	,rom_mt_tfor2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Thunder Force 2", GAME_NOT_WORKING )
+	/* 10 */ GAMEX( 1989, mt_aftrb, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Afterburner", GAME_NOT_WORKING) /* sms */
+	/* 11 */ GAMEX( 1989, mt_tfor2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Thunder Force 2", GAME_NOT_WORKING )
 	/* 12 */ // unknown
-	/* 13 */ public static GameDriver driver_mt_astro	   = new GameDriver("1989"	,"mt_astro"	,"segac2.java"	,rom_mt_astro,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Astro Warrior", GAME_NOT_WORKING ) /* sms! */
+	/* 13 */ GAMEX( 1989, mt_astro, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Astro Warrior", GAME_NOT_WORKING ) /* sms! */
 	/* 14 */ // unknown
 	/* 15 */ // unknown
 	/* 16 */ // unknown
 	/* 17 */ // unknown
 	/* 18 */ // unknown
 	/* 19 */ // unknown
-	/* 20 */ public static GameDriver driver_mt_lastb	   = new GameDriver("1989"	,"mt_lastb"	,"segac2.java"	,rom_mt_lastb,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Last Battle.", GAME_NOT_WORKING )
-	/* 21 */ public static GameDriver driver_mt_wcsoc	   = new GameDriver("1989"	,"mt_wcsoc"	,"segac2.java"	,rom_mt_wcsoc,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: World Cup Soccer", GAME_NOT_WORKING )
-	/* 22 */ public static GameDriver driver_mt_tetri	   = new GameDriver("1989"	,"mt_tetri"	,"segac2.java"	,rom_mt_tetri,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Tetris", GAME_NOT_WORKING ) /* bad dump */
-	/* 23 */ public static GameDriver driver_mt_gng	   = new GameDriver("1989"	,"mt_gng"	,"segac2.java"	,rom_mt_gng,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Capcom / Sega",         "MegaTech: Ghouls and Ghosts", GAME_NOT_WORKING ) /* bad dump */
+	/* 20 */ GAMEX( 1989, mt_lastb, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Last Battle.", GAME_NOT_WORKING )
+	/* 21 */ GAMEX( 1989, mt_wcsoc, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: World Cup Soccer", GAME_NOT_WORKING )
+	/* 22 */ GAMEX( 1989, mt_tetri, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Tetris", GAME_NOT_WORKING ) /* bad dump */
+	/* 23 */ GAMEX( 1989, mt_gng,   megatech, megatech, megatech, segac2, ROT0, "Capcom / Sega",         "MegaTech: Ghouls and Ghosts", GAME_NOT_WORKING ) /* bad dump */
 	/* 24 */ // unknown
-	/* 25 */ public static GameDriver driver_mt_gaxe	   = new GameDriver("1989"	,"mt_gaxe"	,"segac2.java"	,rom_mt_gaxe,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Golden Axe", GAME_NOT_WORKING )
+	/* 25 */ GAMEX( 1989, mt_gaxe,  megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Golden Axe", GAME_NOT_WORKING )
 	/* 26 */ // unknown
-	/* 27 */ public static GameDriver driver_mt_mystd	   = new GameDriver("1989"	,"mt_mystd"	,"segac2.java"	,rom_mt_mystd,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Mystic Defender", GAME_NOT_WORKING )
-	/* 28 */ public static GameDriver driver_mt_revsh	   = new GameDriver("1989"	,"mt_revsh"	,"segac2.java"	,rom_mt_revsh,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: The Revenge Of Shinobi", GAME_NOT_WORKING )
-	/* 29 */ public static GameDriver driver_mt_parlg	   = new GameDriver("1989"	,"mt_parlg"	,"segac2.java"	,rom_mt_parlg,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Parlour Games", GAME_NOT_WORKING ) /* sms! */
+	/* 27 */ GAMEX( 1989, mt_mystd, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Mystic Defender", GAME_NOT_WORKING )
+	/* 28 */ GAMEX( 1989, mt_revsh, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: The Revenge Of Shinobi", GAME_NOT_WORKING )
+	/* 29 */ GAMEX( 1989, mt_parlg, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Parlour Games", GAME_NOT_WORKING ) /* sms! */
 	/* 30 */ // unknown
-	/* 31 */ public static GameDriver driver_mt_tgolf	   = new GameDriver("1989"	,"mt_tgolf"	,"segac2.java"	,rom_mt_tgolf,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Arnold Palmer Tournament Golf", GAME_NOT_WORKING )
+	/* 31 */ GAMEX( 1989, mt_tgolf, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Arnold Palmer Tournament Golf", GAME_NOT_WORKING )
 	/* 32 */ // unknown
 	/* 33 */ // unknown
 	/* 34 */ // unknown
-	/* 35 */ public static GameDriver driver_mt_tlbba	   = new GameDriver("1989"	,"mt_tlbba"	,"segac2.java"	,rom_mt_tlbba,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Tommy Lasorda Baseball", GAME_NOT_WORKING )
+	/* 35 */ GAMEX( 1989, mt_tlbba, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Tommy Lasorda Baseball", GAME_NOT_WORKING )
 	/* 36 */ // unknown
 	/* 37 */ // unknown
-	/* 38 */ public static GameDriver driver_mt_eswat	   = new GameDriver("1989"	,"mt_eswat"	,"segac2.java"	,rom_mt_eswat,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: E-Swat", GAME_NOT_WORKING )
-	/* 39 */ public static GameDriver driver_mt_smgp	   = new GameDriver("1990"	,"mt_smgp"	,"segac2.java"	,rom_mt_smgp,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Super Monaco Grand Prix", GAME_NOT_WORKING )
-	/* 40 */ public static GameDriver driver_mt_mwalk	   = new GameDriver("1989"	,"mt_mwalk"	,"segac2.java"	,rom_mt_mwalk,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Moonwalker", GAME_NOT_WORKING )
+	/* 38 */ GAMEX( 1989, mt_eswat, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: E-Swat", GAME_NOT_WORKING )
+	/* 39 */ GAMEX( 1990, mt_smgp,  megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Super Monaco Grand Prix", GAME_NOT_WORKING )
+	/* 40 */ GAMEX( 1989, mt_mwalk, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Moonwalker", GAME_NOT_WORKING )
 	/* 41 */ // unknown
 	/* 42 */ // unknown
 	/* 43 */ // unknown
@@ -4505,25 +4438,24 @@ public class segac2
 	/* 46 */ // unknown
 	/* 47 */ // unknown
 	/* 48 */ // unknown
-	/* 49 */ public static GameDriver driver_mt_bbros	   = new GameDriver("1989"	,"mt_bbros"	,"segac2.java"	,rom_mt_bbros,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Bonanza Bros.", GAME_NOT_WORKING )
+	/* 49 */ GAMEX( 1989, mt_bbros, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Bonanza Bros.", GAME_NOT_WORKING )
 	/* 50 */ // unknown
 	/* 51 */ // unknown
-	/* 52 */ public static GameDriver driver_mt_sonic	   = new GameDriver("1989"	,"mt_sonic"	,"segac2.java"	,rom_mt_sonic,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Sonic the Hedgehog", GAME_NOT_WORKING )
-	/* 53 */ public static GameDriver driver_mt_fshrk	   = new GameDriver("1989"	,"mt_fshrk"	,"segac2.java"	,rom_mt_fshrk,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Fire Shark", GAME_NOT_WORKING )
+	/* 52 */ GAMEX( 1989, mt_sonic, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Sonic the Hedgehog", GAME_NOT_WORKING )
+	/* 53 */ GAMEX( 1989, mt_fshrk, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Fire Shark", GAME_NOT_WORKING )
 	/* 54 */ // unknown
 	/* 55 */ // unknown
 	/* 56 */ // unknown
-	/* 57 */ public static GameDriver driver_mt_gaxe2	   = new GameDriver("1989"	,"mt_gaxe2"	,"segac2.java"	,rom_mt_gaxe2,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Golden Axe 2", GAME_NOT_WORKING )
+	/* 57 */ GAMEX( 1989, mt_gaxe2, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Golden Axe 2", GAME_NOT_WORKING )
 	/* 58 */ // unknown
 	/* 59 */ // unknown
-	/* 60 */ public static GameDriver driver_mt_kcham	   = new GameDriver("1989"	,"mt_kcham"	,"segac2.java"	,rom_mt_kcham,driver_megatech	,machine_driver_megatech	,input_ports_megatech	,init_segac2	,ROT0	,	"Sega",                  "MegaTech: Kid Chameleon", GAME_NOT_WORKING )
+	/* 60 */ GAMEX( 1989, mt_kcham, megatech, megatech, megatech, segac2, ROT0, "Sega",                  "MegaTech: Kid Chameleon", GAME_NOT_WORKING )
 	/* more? */
 	
 	/* Mega Play - needs kludge to boot, 68k side of things not working yet, communication not complete. */
 	
-	static public static ReadHandlerPtr megaplay_kludge_r  = new ReadHandlerPtr() { public int handler(int offset) { return 0xff; } };
-	static DRIVER_INIT (megaplay)
-	{
+	public static ReadHandlerPtr megaplay_kludge_r  = new ReadHandlerPtr() { public int handler(int offset) return 0xff; }
+	public static DriverInitHandlerPtr init_megaplay  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *src = memory_region(REGION_CPU3);
 	
 		memcpy(src+0x10000,src+0x8000,0x18000);
@@ -4532,7 +4464,7 @@ public class segac2
 	
 		init_segac2();
 	
-	}
+	} };
 	
 	GAMEBX( 1993, megaplay, 0,        megaplay, megaplay, megaplay, megaplay, ROT0, "Sega",                  "MegaPlay: Bios", NOT_A_DRIVER )
 	GAMEBX( 1993, mp_sonic, megaplay, megaplay, megaplay, mp_sonic, megaplay, ROT0, "Sega",                  "MegaPlay: Sonic The Hedgehog", GAME_NOT_WORKING  )

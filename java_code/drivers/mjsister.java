@@ -8,7 +8,7 @@ Mahjong Sisters (c) 1986 Toa Plan
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,13 +41,11 @@ public class mjsister
 			dac_busy = 0;
 	}
 	
-	public static WriteHandlerPtr mjsister_dac_adr_s_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_dac_adr_s_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dac_adr_s = data;
 	} };
 	
-	public static WriteHandlerPtr mjsister_dac_adr_e_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_dac_adr_e_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dac_adr_e = data;
 		dac_adr = dac_adr_s << 8;
 	
@@ -57,13 +55,11 @@ public class mjsister
 		dac_busy = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_mjsister  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mjsister  = new MachineInitHandlerPtr() { public void handler(){
 		dac_busy = 0;
 	} };
 	
-	public static WriteHandlerPtr mjsister_banksel1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_banksel1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 		int tmp = colorbank;
 	
@@ -98,8 +94,7 @@ public class mjsister
 		cpu_setbank(1,&BANKROM[rombank0*0x10000+rombank1*0x8000]+0x10000);
 	} };
 	
-	public static WriteHandlerPtr mjsister_banksel2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_banksel2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *BANKROM = memory_region(REGION_CPU1);
 	
 		switch (data)
@@ -117,18 +112,15 @@ public class mjsister
 		cpu_setbank(1,&BANKROM[rombank0*0x10000+rombank1*0x8000]+0x10000);
 	} };
 	
-	public static WriteHandlerPtr mjsister_input_sel1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_input_sel1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsister_input_sel1 = data;
 	} };
 	
-	public static WriteHandlerPtr mjsister_input_sel2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjsister_input_sel2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mjsister_input_sel2 = data;
 	} };
 	
-	public static ReadHandlerPtr mjsister_keys_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mjsister_keys_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int p,i,ret = 0;
 	
 		p = mjsister_input_sel1 & 0x3f;
@@ -185,7 +177,7 @@ public class mjsister
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_mjsister = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjsister = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjsister )
 	
 		PORT_START(); 	/* DSW1 (0) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
@@ -316,8 +308,7 @@ public class mjsister
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_mjsister = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjsister )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MCLK/2) /* 6.000 MHz */
@@ -343,9 +334,7 @@ public class mjsister
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -370,5 +359,5 @@ public class mjsister
 		ROM_LOAD( "ms08.bpr", 0x0300,  0x0100, CRC(da2b3b38) SHA1(4de99c17b227653bc1b904f1309f447f5a0ab516) ) // ?
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mjsister	   = new GameDriver("1986"	,"mjsister"	,"mjsister.java"	,rom_mjsister,null	,machine_driver_mjsister	,input_ports_mjsister	,null	,ROT0	,	"Toaplan", "Mahjong Sisters (Japan)" )
+	GAME( 1986, mjsister, 0, mjsister, mjsister, 0, ROT0, "Toaplan", "Mahjong Sisters (Japan)" )
 }

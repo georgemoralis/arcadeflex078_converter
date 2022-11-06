@@ -127,7 +127,7 @@ cpu #0 (PC=00001A1A): unmapped memory word write to 00090030 = 00F7 & 00FF
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -139,7 +139,7 @@ public class spbactn
 	
 	static WRITE16_HANDLER( soundcommand_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -222,7 +222,7 @@ public class spbactn
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_spbactn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spbactn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spbactn )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -371,8 +371,7 @@ public class spbactn
 		{ 50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_spbactn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spbactn )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(spbactn_readmem,spbactn_writemem)
@@ -398,9 +397,7 @@ public class spbactn
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_spbactn = new RomLoadPtr(){ public void handler(){ 
 		/* Board 9002-A (CPU Board) */
@@ -454,6 +451,6 @@ public class spbactn
 		ROM_LOAD( "b-u111",  0x40000, 0x40000, CRC(1cc1379a) SHA1(44fdab8cb5ab1488688f1ac52f005454e835efee) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_spbactn	   = new GameDriver("1991"	,"spbactn"	,"spbactn.java"	,rom_spbactn,null	,machine_driver_spbactn	,input_ports_spbactn	,null	,ROT90	,	"Tecmo", "Super Pinball Action (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_spbactnj	   = new GameDriver("1991"	,"spbactnj"	,"spbactn.java"	,rom_spbactnj,driver_spbactn	,machine_driver_spbactn	,input_ports_spbactn	,null	,ROT90	,	"Tecmo", "Super Pinball Action (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1991, spbactn, 0,        spbactn, spbactn, 0, ROT90, "Tecmo", "Super Pinball Action (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1991, spbactnj, spbactn, spbactn, spbactn, 0, ROT90, "Tecmo", "Super Pinball Action (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

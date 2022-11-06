@@ -32,7 +32,7 @@ Notes:  Support is complete with the exception of the square wave generator
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,8 +48,7 @@ public class blockade
 	static int coin_latch;  /* Active Low */
 	static int just_been_reset;
 	
-	public static DriverInitHandlerPtr init_blockade  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blockade  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -66,8 +65,7 @@ public class blockade
 		just_been_reset = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_comotion  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_comotion  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -109,8 +107,7 @@ public class blockade
 	/* Need to check for a coin on the interrupt, */
 	/* This will reset the cpu                    */
 	
-	public static InterruptHandlerPtr blockade_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr blockade_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_suspendcpu(0, 0, SUSPEND_ANY_REASON);
 	
 		if ((input_port_0_r(0) & 0x80) == 0)
@@ -120,22 +117,20 @@ public class blockade
 		}
 	} };
 	
-	public static ReadHandlerPtr blockade_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blockade_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    /* coin latch is bit 7 */
 	
 	    int temp = (input_port_0_r.handler(0)&0x7f);
 	    return (coin_latch<<7) | (temp);
 	} };
 	
-	public static WriteHandlerPtr blockade_coin_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if ((data & 0x80) != 0)
+	public static WriteHandlerPtr blockade_coin_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (data & 0x80)
 	    {
 	    #ifdef BLOCKADE_LOG
 	        printf("Reset Coin Latch\n");
 	    #endif
-	        if (just_been_reset != 0)
+	        if (just_been_reset)
 	        {
 	            just_been_reset = 0;
 	            coin_latch = 0;
@@ -144,7 +139,7 @@ public class blockade
 	            coin_latch = 1;
 	    }
 	
-	    if ((data & 0x20) != 0)
+	    if (data & 0x20)
 	    {
 	    #ifdef BLOCKADE_LOG
 	        printf("Pin 19 High\n");
@@ -160,16 +155,14 @@ public class blockade
 	    return;
 	} };
 	
-	public static WriteHandlerPtr blockade_sound_freq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blockade_sound_freq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef BLOCKADE_LOG
 	    printf("Sound Freq Write: %d\n",data);
 	#endif
 	    return;
 	} };
 	
-	public static WriteHandlerPtr blockade_env_on_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blockade_env_on_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef BLOCKADE_LOG
 	    printf("Boom Start\n");
 	#endif
@@ -177,8 +170,7 @@ public class blockade
 	    return;
 	} };
 	
-	public static WriteHandlerPtr blockade_env_off_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blockade_env_off_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef BLOCKADE_LOG
 	    printf("Boom End\n");
 	#endif
@@ -225,7 +217,7 @@ public class blockade
 	/* different harnesses which plugged in here, and */
 	/* some pins were unused.                         */
 	
-	static InputPortPtr input_ports_blockade = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockade = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockade )
 	    PORT_START();   /* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -267,7 +259,7 @@ public class blockade
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_comotion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_comotion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( comotion )
 	    PORT_START();   /* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -309,7 +301,7 @@ public class blockade
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blasto = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blasto = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blasto )
 	    PORT_START();   /* IN0 */
 	    PORT_DIPNAME(    0x03, 0x03, DEF_STR( "Coinage") );
 	    PORT_DIPSETTING( 0x00, DEF_STR( "4C_1C") );
@@ -354,7 +346,7 @@ public class blockade
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_VBLANK );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hustle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hustle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hustle )
 	    PORT_START();   /* IN0 */
 	    PORT_DIPNAME(    0x03, 0x03, DEF_STR( "Coinage") );
 	    PORT_DIPSETTING( 0x00, DEF_STR( "4C_1C") );
@@ -435,19 +427,16 @@ public class blockade
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_green  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_green  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0x00,0xff,0x00); /* GREEN */     /* overlay (Blockade) */
 	} };
 	
-	static public static PaletteInitHandlerPtr palette_init_yellow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_yellow  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0x20); /* YELLOW */     /* overlay (Hustle) */
 	} };
-	static public static PaletteInitHandlerPtr palette_init_bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bw  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */     /* Comotion/Blasto */
 	} };
@@ -470,8 +459,7 @@ public class blockade
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_blockade = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blockade )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 2079000)
@@ -496,35 +484,24 @@ public class blockade
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_comotion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( comotion )
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_PALETTE_INIT(bw)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_blasto = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blasto )
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_GFXDECODE(blasto_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(bw)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hustle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hustle )
 		MDRV_IMPORT_FROM(blockade)
 		MDRV_GFXDECODE(blasto_gfxdecodeinfo)
 		MDRV_PALETTE_INIT(yellow)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -608,9 +585,9 @@ public class blockade
 	    ROM_LOAD( "mineswee.uls", 0x0200, 0x0200, CRC(3a4f66e1) SHA1(bd7f6c51d568a79fb06414b2a6ef245d0d983c3e) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_blockade	   = new GameDriver("1976"	,"blockade"	,"blockade.java"	,rom_blockade,null	,machine_driver_blockade	,input_ports_blockade	,init_blockade	,ROT0	,	"Gremlin", "Blockade", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_comotion	   = new GameDriver("1976"	,"comotion"	,"blockade.java"	,rom_comotion,null	,machine_driver_comotion	,input_ports_comotion	,init_comotion	,ROT0	,	"Gremlin", "Comotion", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_blasto	   = new GameDriver("1978"	,"blasto"	,"blockade.java"	,rom_blasto,null	,machine_driver_blasto	,input_ports_blasto	,init_comotion	,ROT0	,	"Gremlin", "Blasto", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_hustle	   = new GameDriver("1977"	,"hustle"	,"blockade.java"	,rom_hustle,null	,machine_driver_hustle	,input_ports_hustle	,init_comotion	,ROT0	,	"Gremlin", "Hustle", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_mineswpr	   = new GameDriver("1977"	,"mineswpr"	,"blockade.java"	,rom_mineswpr,null	,machine_driver_blasto	,input_ports_blockade	,init_blockade	,ROT0	,	"Amutech", "Minesweeper", GAME_IMPERFECT_SOUND )
+	GAMEX( 1976, blockade, 0, blockade, blockade, blockade, ROT0, "Gremlin", "Blockade", GAME_IMPERFECT_SOUND )
+	GAMEX( 1976, comotion, 0, comotion, comotion, comotion, ROT0, "Gremlin", "Comotion", GAME_IMPERFECT_SOUND )
+	GAMEX( 1978, blasto,   0, blasto,   blasto,   comotion, ROT0, "Gremlin", "Blasto", GAME_IMPERFECT_SOUND )
+	GAMEX( 1977, hustle,   0, hustle,   hustle,   comotion, ROT0, "Gremlin", "Hustle", GAME_IMPERFECT_SOUND )
+	GAMEX( 1977, mineswpr, 0, blasto,   blockade, blockade, ROT0, "Amutech", "Minesweeper", GAME_IMPERFECT_SOUND )
 }

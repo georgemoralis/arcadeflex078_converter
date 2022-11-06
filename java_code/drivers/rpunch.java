@@ -106,7 +106,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -149,8 +149,7 @@ public class rpunch
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_rpunch  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_rpunch  = new MachineInitHandlerPtr() { public void handler(){
 		memcpy(memory_region(REGION_SOUND1), memory_region(REGION_SOUND1) + 0x20000, 0x20000);
 	} };
 	
@@ -185,13 +184,12 @@ public class rpunch
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			timer_set(TIME_NOW, data & 0xff, sound_command_w_callback);
 	}
 	
 	
-	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sound_busy = 0;
 		cpu_set_irq_line(1, 0, (ym2151_irq | sound_busy) ? ASSERT_LINE : CLEAR_LINE);
 		return sound_data;
@@ -211,8 +209,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr upd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr upd_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 1) != upd_rom_bank)
 		{
 			upd_rom_bank = data & 1;
@@ -222,8 +219,7 @@ public class rpunch
 	} };
 	
 	
-	public static WriteHandlerPtr upd_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr upd_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_port_w(0, data);
 		UPD7759_start_w(0, 0);
 		UPD7759_start_w(0, 1);
@@ -304,7 +300,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_rpunch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rpunch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rpunch )
 		PORT_START(); 	/* c0018 lower 8 bits */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -387,7 +383,7 @@ public class rpunch
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rabiolep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rabiolep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rabiolep )
 		PORT_START(); 	/* c0018 lower 8 bits */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -471,7 +467,7 @@ public class rpunch
 	
 	
 	
-	static InputPortPtr input_ports_svolley = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_svolley = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( svolley )
 		PORT_START(); 	/* c0018 lower 8 bits */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -625,8 +621,7 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_rpunch = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rpunch )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, MASTER_CLOCK/2)
@@ -653,9 +648,7 @@ public class rpunch
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -865,14 +858,12 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_rabiolep  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rabiolep  = new DriverInitHandlerPtr() { public void handler(){
 		rpunch_sprite_palette = 0x300;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_svolley  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_svolley  = new DriverInitHandlerPtr() { public void handler(){
 		/* the main differences between Super Volleyball and Rabbit Punch are */
 		/* the lack of direct-mapped bitmap and a different palette base for sprites */
 		rpunch_sprite_palette = 0x080;
@@ -887,9 +878,9 @@ public class rpunch
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_rabiolep	   = new GameDriver("1987"	,"rabiolep"	,"rpunch.java"	,rom_rabiolep,null	,machine_driver_rpunch	,input_ports_rabiolep	,init_rabiolep	,ROT0	,	"V-System Co.", "Rabio Lepus (Japan)" )
-	public static GameDriver driver_rpunch	   = new GameDriver("1987"	,"rpunch"	,"rpunch.java"	,rom_rpunch,driver_rabiolep	,machine_driver_rpunch	,input_ports_rpunch	,init_rabiolep	,ROT0	,	"V-System Co. (Bally/Midway/Sente license)", "Rabbit Punch (US)" )
-	public static GameDriver driver_svolley	   = new GameDriver("1989"	,"svolley"	,"rpunch.java"	,rom_svolley,null	,machine_driver_rpunch	,input_ports_svolley	,init_svolley	,ROT0	,	"V-System Co.", "Super Volleyball (Japan)" )
-	public static GameDriver driver_svolleyk	   = new GameDriver("1989"	,"svolleyk"	,"rpunch.java"	,rom_svolleyk,driver_svolley	,machine_driver_rpunch	,input_ports_svolley	,init_svolley	,ROT0	,	"V-System Co.", "Super Volleyball (Korea)" )
-	public static GameDriver driver_svolleyu	   = new GameDriver("1989"	,"svolleyu"	,"rpunch.java"	,rom_svolleyu,driver_svolley	,machine_driver_rpunch	,input_ports_svolley	,init_svolley	,ROT0	,	"V-System Co. (Data East license)", "Super Volleyball (US)" )
+	GAME( 1987, rabiolep, 0,        rpunch,   rabiolep, rabiolep, ROT0, "V-System Co.", "Rabio Lepus (Japan)" )
+	GAME( 1987, rpunch,   rabiolep, rpunch,   rpunch,   rabiolep, ROT0, "V-System Co. (Bally/Midway/Sente license)", "Rabbit Punch (US)" )
+	GAME( 1989, svolley,  0,        rpunch,   svolley,  svolley,  ROT0, "V-System Co.", "Super Volleyball (Japan)" )
+	GAME( 1989, svolleyk, svolley,  rpunch,   svolley,  svolley,  ROT0, "V-System Co.", "Super Volleyball (Korea)" )
+	GAME( 1989, svolleyu, svolley,  rpunch,   svolley,  svolley,  ROT0, "V-System Co. (Data East license)", "Super Volleyball (US)" )
 }

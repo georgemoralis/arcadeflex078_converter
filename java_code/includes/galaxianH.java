@@ -37,30 +37,10 @@ MACHINE_DRIVER_EXTERN(galaxian_base);
 /* defined in machine/scramble.c */
 
 
-READ_HANDLER(scobra_type2_ppi8255_0_r);
-READ_HANDLER(scobra_type2_ppi8255_1_r);
-WRITE_HANDLER(scobra_type2_ppi8255_0_w);
-WRITE_HANDLER(scobra_type2_ppi8255_1_w);
 
-READ_HANDLER(hustler_ppi8255_0_r);
-READ_HANDLER(hustler_ppi8255_1_r);
-WRITE_HANDLER(hustler_ppi8255_0_w);
-WRITE_HANDLER(hustler_ppi8255_1_w);
 
-READ_HANDLER(amidar_ppi8255_0_r);
-READ_HANDLER(amidar_ppi8255_1_r);
-WRITE_HANDLER(amidar_ppi8255_0_w);
-WRITE_HANDLER(amidar_ppi8255_1_w);
 
-READ_HANDLER(frogger_ppi8255_0_r);
-READ_HANDLER(frogger_ppi8255_1_r);
-WRITE_HANDLER(frogger_ppi8255_0_w);
-WRITE_HANDLER(frogger_ppi8255_1_w);
 
-READ_HANDLER(mars_ppi8255_0_r);
-READ_HANDLER(mars_ppi8255_1_r);
-WRITE_HANDLER(mars_ppi8255_0_w);
-WRITE_HANDLER(mars_ppi8255_1_w);
 
 
 #define galaxian_coin_counter_0_w galaxian_coin_counter_w

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class espial
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_espial  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_espial  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -104,11 +103,10 @@ public class espial
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_espial  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_espial  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		tilemap_set_scroll_cols(tilemap, 32);
@@ -116,12 +114,11 @@ public class espial
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_netwars  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_netwars  = new VideoStartHandlerPtr() { public int handler(){
 		/* Net Wars has a tile map that's twice as big as Espial's */
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,64);
 	
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		tilemap_set_scroll_cols(tilemap, 32);
@@ -137,8 +134,7 @@ public class espial
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr espial_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr espial_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (espial_videoram[offset] != data)
 		{
 			espial_videoram[offset] = data;
@@ -147,8 +143,7 @@ public class espial
 	} };
 	
 	
-	public static WriteHandlerPtr espial_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr espial_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (espial_colorram[offset] != data)
 		{
 			espial_colorram[offset] = data;
@@ -157,8 +152,7 @@ public class espial
 	} };
 	
 	
-	public static WriteHandlerPtr espial_attributeram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr espial_attributeram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (espial_attributeram[offset] != data)
 		{
 			espial_attributeram[offset] = data;
@@ -167,15 +161,13 @@ public class espial
 	} };
 	
 	
-	public static WriteHandlerPtr espial_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr espial_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		espial_scrollram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data);
 	} };
 	
 	
-	public static WriteHandlerPtr espial_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr espial_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data;
 	
 		tilemap_set_flip(0, flipscreen ? TILEMAP_FLIPX | TILEMAP_FLIPY : 0);
@@ -200,14 +192,14 @@ public class espial
 			int sx,sy,code,color,flipx,flipy;
 	
 	
-			sx = espial_spriteram_1.read(offs + 16);
-			sy = espial_spriteram_2.read(offs);
-			code = espial_spriteram_1.read(offs)>> 1;
-			color = espial_spriteram_2.read(offs + 16);
-			flipx = espial_spriteram_3.read(offs)& 0x04;
-			flipy = espial_spriteram_3.read(offs)& 0x08;
+			sx = espial_spriteram_1[offs + 16];
+			sy = espial_spriteram_2[offs];
+			code = espial_spriteram_1[offs] >> 1;
+			color = espial_spriteram_2[offs + 16];
+			flipx = espial_spriteram_3[offs] & 0x04;
+			flipy = espial_spriteram_3[offs] & 0x08;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -217,16 +209,16 @@ public class espial
 				sy = 240 - sy;
 			}
 	
-			if (espial_spriteram_1.read(offs)& 1)	/* double height */
+			if (espial_spriteram_1[offs] & 1)	/* double height */
 			{
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code,color,
 							flipx,flipy,
 							sx,sy + 16,
 							cliprect,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code + 1,
 							color,
 							flipx,flipy,
@@ -235,12 +227,12 @@ public class espial
 				}
 				else
 				{
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code,color,
 							flipx,flipy,
 							sx,sy - 16,
 							cliprect,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code + 1,color,
 							flipx,flipy,
 							sx,sy,
@@ -249,7 +241,7 @@ public class espial
 			}
 			else
 			{
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,color,
 						flipx,flipy,
 						sx,sy,
@@ -259,8 +251,7 @@ public class espial
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_espial  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_espial  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 	
 		draw_sprites(bitmap, cliprect);

@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,8 @@ public class aquarium
 				y = ((spriteram16[offs+2]) &0xff) + (((spriteram16[offs+3]) &0xff) << 8);
 	
 				/* Treat coords as signed */
-				if ((x & 0x8000) != 0)  x -= 0x10000;
-				if ((y & 0x8000) != 0)  y -= 0x10000;
+				if (x & 0x8000)  x -= 0x10000;
+				if (y & 0x8000)  y -= 0x10000;
 	
 				col  =   ((spriteram16[offs+7]) &0x0f);
 				chain =   (spriteram16[offs+4]) &0x07;
@@ -60,7 +60,7 @@ public class aquarium
 	
 				for (chain_pos = chain;chain_pos >= 0;chain_pos--)
 				{
-					pdrawgfx(bitmap, Machine.gfx[0],
+					pdrawgfx(bitmap, Machine->gfx[0],
 							code,
 							col,
 							flipx, flipy,
@@ -72,19 +72,19 @@ public class aquarium
 	
 					if ((spriteram16[offs+4]) &0x08)	/* Y chain */
 					{
-						if (flipy != 0)	cury -= 16;
+						if (flipy)	cury -= 16;
 						else cury += 16;
 					}
 					else	/* X chain */
 					{
-						if (flipx != 0)	curx -= 16;
+						if (flipx)	curx -= 16;
 						else curx += 16;
 					}
 				}
 			}
 		}
 	#if 0
-		if (rotate != 0)
+		if (rotate)
 		{
 			char buf[80];
 			sprintf(buf,"sprite rotate offs %04x ?",rotate);
@@ -99,16 +99,16 @@ public class aquarium
 	{
 		int tileno,colour;
 	
-		tileno = (aquarium_txt_videoram.read(tile_index)& 0x0fff);
-		colour = (aquarium_txt_videoram.read(tile_index)& 0xf000) >> 12;
+		tileno = (aquarium_txt_videoram[tile_index] & 0x0fff);
+		colour = (aquarium_txt_videoram[tile_index] & 0xf000) >> 12;
 		SET_TILE_INFO(2,tileno,colour,0)
 	}
 	
 	WRITE16_HANDLER( aquarium_txt_videoram_w )
 	{
-		if (aquarium_txt_videoram.read(offset)!= data)
+		if (aquarium_txt_videoram[offset] != data)
 		{
-			aquarium_txt_videoram.write(data,data);
+			aquarium_txt_videoram[offset] = data;
 			tilemap_mark_tile_dirty(aquarium_txt_tilemap,offset);
 		}
 	}
@@ -155,25 +155,23 @@ public class aquarium
 		}
 	}
 	
-	VIDEO_START(aquarium)
-	{
+	public static VideoStartHandlerPtr video_start_aquarium  = new VideoStartHandlerPtr() { public int handler(){
 		aquarium_txt_tilemap = tilemap_create(get_aquarium_txt_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
-		if (aquarium_txt_tilemap == 0) return 1;
+		if (!aquarium_txt_tilemap) return 1;
 		tilemap_set_transparent_pen(aquarium_txt_tilemap,0);
 	
 		aquarium_bak_tilemap = tilemap_create(get_aquarium_bak_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
-		if (aquarium_bak_tilemap == 0) return 1;
+		if (!aquarium_bak_tilemap) return 1;
 		tilemap_set_transparent_pen(aquarium_bak_tilemap,0);
 	
 		aquarium_mid_tilemap = tilemap_create(get_aquarium_mid_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,32,32);
-		if (aquarium_mid_tilemap == 0) return 1;
+		if (!aquarium_mid_tilemap) return 1;
 		tilemap_set_transparent_pen(aquarium_mid_tilemap,0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(aquarium)
-	{
+	public static VideoUpdateHandlerPtr video_update_aquarium  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		fillbitmap(priority_bitmap,0,cliprect);
 	
@@ -188,5 +186,5 @@ public class aquarium
 		tilemap_draw(bitmap,cliprect,aquarium_mid_tilemap,0,4);
 		tilemap_draw(bitmap,cliprect,aquarium_txt_tilemap,0,1);
 		aquarium_draw_sprites(bitmap,cliprect,16);
-	}
+	} };
 }

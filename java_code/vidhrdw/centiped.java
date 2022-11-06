@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -55,10 +55,9 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_centiped  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_centiped  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(centiped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		centiped_flipscreen = 0;
@@ -66,10 +65,9 @@ public class centiped
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_warlords  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_warlords  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(warlords_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		/* we overload centiped_flipscreen here to track the cocktail/upright state */
@@ -78,10 +76,9 @@ public class centiped
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_milliped  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_milliped  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(milliped_get_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 32,32);
-		if (tilemap == 0)
+		if (!tilemap)
 			return 1;
 	
 		centiped_flipscreen = 0;
@@ -96,8 +93,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr centiped_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr centiped_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap, offset);
 	} };
@@ -110,8 +106,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr centiped_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr centiped_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		centiped_flipscreen = data >> 7;
 	} };
 	
@@ -139,11 +134,10 @@ public class centiped
 	
 	***************************************************************************/
 	
-	#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
-	#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
+	#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
+	#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
-	public static PaletteInitHandlerPtr palette_init_centiped  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_centiped  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* characters use colors 0-3 */
@@ -166,11 +160,10 @@ public class centiped
 	} };
 	
 	
-	public static WriteHandlerPtr centiped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr centiped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		r = 0xff * ((~data >> 0) & 1);
 		g = 0xff * ((~data >> 1) & 1);
@@ -180,8 +173,8 @@ public class centiped
 		{
 			/* when blue component is not 0, decrease it. When blue component is 0, */
 			/* decrease green component. */
-			if (b != 0) b = 0xc0;
-			else if (g != 0) g = 0xc0;
+			if (b) b = 0xc0;
+			else if (g) g = 0xc0;
 		}
 	
 		if (offset >= 4 && offset < 8)
@@ -204,8 +197,7 @@ public class centiped
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_warlords  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_warlords  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, j;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -252,8 +244,7 @@ public class centiped
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_milliped  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_milliped  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* characters use colors 0-15 */
@@ -277,12 +268,11 @@ public class centiped
 	} };
 	
 	
-	public static WriteHandlerPtr milliped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr milliped_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit0,bit1,bit2;
 		int r,g,b;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		/* red component */
 		bit0 = (~data >> 5) & 0x01;
@@ -313,8 +303,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_centiped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_centiped  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle spriteclip = *cliprect;
 		int offs;
 	
@@ -322,7 +311,7 @@ public class centiped
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
 		/* apply the sprite clip */
-		if (centiped_flipscreen != 0)
+		if (centiped_flipscreen)
 			spriteclip.min_x += 8;
 		else
 			spriteclip.max_x -= 8;
@@ -342,8 +331,7 @@ public class centiped
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_warlords  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_warlords  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int upright_mode = input_port_0_r(0) & 0x80;
 		int offs;
 	
@@ -374,7 +362,7 @@ public class centiped
 			int color = ((y & 0x80) >> 6) | ((x & 0x80) >> 7) | (upright_mode >> 5);
 	
 			/* in upright mode, sprites are flipped */
-			if (upright_mode != 0)
+			if (upright_mode)
 			{
 				x = 248 - x;
 				flipx = NOT(flipx);

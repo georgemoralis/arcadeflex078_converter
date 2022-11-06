@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -66,8 +66,7 @@ public class gradius3
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_gradius3  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gradius3  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 		static GfxLayout spritelayout = new GfxLayout
 		(
@@ -95,7 +94,7 @@ public class gradius3
 		/* re-decode the sprites because the ROMs are connected to the custom IC differently
 		   from how they are connected to the CPU. */
 		for (i = 0;i < TOTAL_SPRITES;i++)
-			decodechar(Machine.gfx[1],i,memory_region(REGION_GFX2),&spritelayout);
+			decodechar(Machine->gfx[1],i,memory_region(REGION_GFX2),&spritelayout);
 	
 		if (!(dirtychar = auto_malloc(TOTAL_CHARS)))
 			return 1;
@@ -144,8 +143,7 @@ public class gradius3
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gradius3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gradius3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static GfxLayout charlayout = new GfxLayout
 		(
 			8,8,
@@ -165,7 +163,7 @@ public class gradius3
 		K052109_w(0x1d80,0x10);
 		K052109_w(0x1f00,0x32);
 	
-		if (dirtygfx != 0)
+		if (dirtygfx)
 		{
 			int i;
 	
@@ -176,7 +174,7 @@ public class gradius3
 				if (dirtychar[i])
 				{
 					dirtychar[i] = 0;
-					decodechar(Machine.gfx[0],i,(UINT8 *)gradius3_gfxram,&charlayout);
+					decodechar(Machine->gfx[0],i,(UINT8 *)gradius3_gfxram,&charlayout);
 				}
 			}
 	

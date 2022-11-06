@@ -146,7 +146,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -301,7 +301,7 @@ public class turbo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_turbo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_turbo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( turbo )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );			/* ACCEL B */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );			/* ACCEL A */
@@ -370,7 +370,7 @@ public class turbo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_subroc3d = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_subroc3d = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( subroc3d )
 		PORT_START(); 
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
@@ -439,7 +439,7 @@ public class turbo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_buckrog = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_buckrog = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( buckrog )
 		PORT_START(); 
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON3 );// Accel Hi
@@ -590,8 +590,7 @@ public class turbo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_turbo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( turbo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -615,13 +614,10 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, turbo_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_subroc3d = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( subroc3d )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -644,13 +640,10 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, subroc3d_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_buckrog = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( buckrog )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)
@@ -678,9 +671,7 @@ public class turbo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, buckrog_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -980,14 +971,12 @@ public class turbo
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_decode_turbo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_decode_turbo  = new DriverInitHandlerPtr() { public void handler(){
 		turbo_rom_decode();
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_decode_buckrog  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_decode_buckrog  = new DriverInitHandlerPtr() { public void handler(){
 		buckrog_decode();
 	} };
 	
@@ -999,10 +988,10 @@ public class turbo
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_turbo	   = new GameDriver("1981"	,"turbo"	,"turbo.java"	,rom_turbo,null	,machine_driver_turbo	,input_ports_turbo	,null	,ROT270	,	"Sega", "Turbo", GAME_NO_COCKTAIL )
-	public static GameDriver driver_turboa	   = new GameDriver("1981"	,"turboa"	,"turbo.java"	,rom_turboa,driver_turbo	,machine_driver_turbo	,input_ports_turbo	,init_decode_turbo	,ROT270	,	"Sega", "Turbo (encrypted set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_turbob	   = new GameDriver("1981"	,"turbob"	,"turbo.java"	,rom_turbob,driver_turbo	,machine_driver_turbo	,input_ports_turbo	,init_decode_turbo	,ROT270	,	"Sega", "Turbo (encrypted set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_subroc3d	   = new GameDriver("1982"	,"subroc3d"	,"turbo.java"	,rom_subroc3d,null	,machine_driver_subroc3d	,input_ports_subroc3d	,null	,ORIENTATION_FLIP_X	,	"Sega", "Subroc-3D" )
-	public static GameDriver driver_buckrog	   = new GameDriver("1982"	,"buckrog"	,"turbo.java"	,rom_buckrog,null	,machine_driver_buckrog	,input_ports_buckrog	,init_decode_buckrog	,ROT0	,	"Sega", "Buck Rogers: Planet of Zoom" )
-	public static GameDriver driver_buckrogn	   = new GameDriver("1982"	,"buckrogn"	,"turbo.java"	,rom_buckrogn,driver_buckrog	,machine_driver_buckrog	,input_ports_buckrog	,null	,ROT0	,	"Sega", "Buck Rogers: Planet of Zoom (not encrypted)" )
+	GAMEX( 1981, turbo,    0,       turbo,    turbo,    0,              ROT270,             "Sega", "Turbo", GAME_NO_COCKTAIL )
+	GAMEX( 1981, turboa,   turbo,   turbo,    turbo,    decode_turbo,   ROT270,             "Sega", "Turbo (encrypted set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1981, turbob,   turbo,   turbo,    turbo,    decode_turbo,   ROT270,             "Sega", "Turbo (encrypted set 2)", GAME_NO_COCKTAIL )
+	GAME ( 1982, subroc3d, 0,       subroc3d, subroc3d, 0,              ORIENTATION_FLIP_X, "Sega", "Subroc-3D" )
+	GAME ( 1982, buckrog,  0,       buckrog,  buckrog,  decode_buckrog, ROT0,               "Sega", "Buck Rogers: Planet of Zoom" )
+	GAME ( 1982, buckrogn, buckrog, buckrog,  buckrog,  0,              ROT0,               "Sega", "Buck Rogers: Planet of Zoom (not encrypted)" )
 }

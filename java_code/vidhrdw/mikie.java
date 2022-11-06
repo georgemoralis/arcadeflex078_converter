@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class mikie
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mikie  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mikie  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -96,8 +95,7 @@ public class mikie
 		}
 	} };
 	
-	public static WriteHandlerPtr mikie_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -105,8 +103,7 @@ public class mikie
 		}
 	} };
 	
-	public static WriteHandlerPtr mikie_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -114,8 +111,7 @@ public class mikie
 		}
 	} };
 	
-	public static WriteHandlerPtr mikie_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palettebank != (data & 0x07))
 		{
 			palettebank = data & 0x07;
@@ -123,8 +119,7 @@ public class mikie
 		}
 	} };
 	
-	public static WriteHandlerPtr mikie_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -141,12 +136,11 @@ public class mikie
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mikie  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mikie  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -166,23 +160,22 @@ public class mikie
 			int flipx = ~spriteram.read(offs)& 0x10;
 			int flipy = spriteram.read(offs)& 0x20;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 242 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[gfxbank],
+			drawgfx(bitmap, Machine->gfx[gfxbank],
 				code, color,
 				flipx,flipy,
 				sx,sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mikie  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mikie  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		mikie_draw_sprites(bitmap);
 	} };

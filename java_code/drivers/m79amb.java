@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,13 +37,11 @@ public class m79amb
 	    20 , 21 , 23 , 22 , 18 , 19 , 17 , 16
 	};
 	
-	public static ReadHandlerPtr gray5bit_controller0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gray5bit_controller0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_2_r.handler(0) & 0xe0) | (~ControllerTable[input_port_2_r.handler(0) & 0x1f] & 0x1f);
 	} };
 	
-	public static ReadHandlerPtr gray5bit_controller1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gray5bit_controller1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return (input_port_3_r.handler(0) & 0xe0) | (~ControllerTable[input_port_3_r.handler(0) & 0x1f] & 0x1f);
 	} };
 	
@@ -60,8 +58,7 @@ public class m79amb
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	public static Memory_WriteAddress writemem[]={
@@ -79,7 +76,7 @@ public class m79amb
 	};
 	
 	
-	static InputPortPtr input_ports_m79amb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_m79amb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( m79amb )
 		PORT_START();       /* 8000 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* dip switch */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -115,8 +112,7 @@ public class m79amb
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_m79amb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_m79amb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		palette_set_color(2,0xff,0x20,0x20); /* RED */
@@ -126,13 +122,11 @@ public class m79amb
 		palette_set_color(6,0xff,0x20,0xff); /* PURPLE */
 	} };
 	
-	public static InterruptHandlerPtr M79_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr M79_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);  /* RST 08h */
 	} };
 	
-	public static DriverInitHandlerPtr init_m79amb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_m79amb  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -141,8 +135,7 @@ public class m79amb
 			rom[i] = ~rom[i];
 	} };
 	
-	public static MachineHandlerPtr machine_driver_m79amb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( m79amb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 1996800)
@@ -163,9 +156,7 @@ public class m79amb
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -191,5 +182,5 @@ public class m79amb
 	
 	
 	
-	public static GameDriver driver_m79amb	   = new GameDriver("1977"	,"m79amb"	,"m79amb.java"	,rom_m79amb,null	,machine_driver_m79amb	,input_ports_m79amb	,init_m79amb	,ROT0	,	"RamTek", "M79 Ambush", GAME_NO_SOUND )
+	GAMEX( 1977, m79amb, 0, m79amb, m79amb, m79amb, ROT0, "RamTek", "M79 Ambush", GAME_NO_SOUND )
 }

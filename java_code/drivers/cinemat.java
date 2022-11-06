@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -244,7 +244,7 @@ public class cinemat
 	#define SW1ON  0
 	
 	
-	static InputPortPtr input_ports_spacewar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacewar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacewar )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW2|SW1, SW2ON |SW1ON,  "Time" );
@@ -286,7 +286,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_barrier = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_barrier = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( barrier )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW1, SW1ON,  DEF_STR( "Lives") );
@@ -338,7 +338,7 @@ public class cinemat
 	
 	
 	/* TODO: 4way or 8way stick? */
-	static InputPortPtr input_ports_starhawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starhawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starhawk )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 2 );
 		PORT_DIPNAME( SW7,	   SW7OFF,		  DEF_STR( "Unknown") );
@@ -380,7 +380,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_starcas = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starcas = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starcas )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7,     SW7ON );
@@ -427,7 +427,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tailg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tailg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tailg )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW6|SW2|SW1, SW6OFF|SW2OFF|SW1OFF, "Shield Points" );
@@ -478,7 +478,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ripoff = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ripoff = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ripoff )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7,	   SW7OFF );
@@ -525,7 +525,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_speedfrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_speedfrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( speedfrk )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW7,     SW7OFF,        DEF_STR( "Unknown") );
@@ -580,7 +580,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sundance = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sundance = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sundance )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW5,	   SW5OFF,		 DEF_STR( "Unknown") );
@@ -652,7 +652,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_warrior = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warrior = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warrior )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW7, SW7OFF, DEF_STR( "Unknown") );
@@ -701,7 +701,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_armora = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_armora = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( armora )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7,     SW7ON );
@@ -745,7 +745,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_solarq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_solarq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( solarq )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7,	   SW7ON );
@@ -794,7 +794,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_demon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_demon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( demon )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_DIPNAME( SW7,     SW7OFF,        DEF_STR( "Free_Play") );
@@ -843,7 +843,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wotw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wotw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wotw )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7, SW7OFF );
@@ -892,7 +892,7 @@ public class cinemat
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_boxingb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boxingb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boxingb )
 		PORT_START();  /* switches */
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_SERVICE( SW7,	   SW7OFF );
@@ -951,8 +951,7 @@ public class cinemat
 	
 	/* Note: the CPU speed is somewhat arbitrary as the cycle timings in
 	   the core are incomplete. */
-	public static MachineHandlerPtr machine_driver_cinemat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cinemat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(CCPU, 5000000)
@@ -974,13 +973,10 @@ public class cinemat
 		MDRV_VIDEO_UPDATE(vector)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacewar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacewar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -990,39 +986,30 @@ public class cinemat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, spacewar_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_starcas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starcas )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, starcas_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ripoff = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ripoff )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, ripoff_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_warrior = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( warrior )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1032,13 +1019,10 @@ public class cinemat
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, warrior_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_armora = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( armora )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1047,26 +1031,20 @@ public class cinemat
 		MDRV_VISIBLE_AREA(0, 1024, 0, 772)
 	        /* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, armora_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_solarq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( solarq )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, solarq_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_demon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( demon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
@@ -1074,33 +1052,25 @@ public class cinemat
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 1024, 0, 800)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sundance = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sundance )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, sundance_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cincolor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cincolor )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(cinemat)
 	
 		/* video hardware */
 		MDRV_PALETTE_INIT(cinemat_color)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1294,52 +1264,45 @@ public class cinemat
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_spacewar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spacewar  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(0, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = spacewar_sound_w;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_barrier  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_barrier  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_starhawk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starhawk  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_4K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_starcas  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starcas  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = starcas_sound_w;
 		artwork_set_overlay(starcas_overlay);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tailg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tailg  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(0, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 		artwork_set_overlay(tailg_overlay);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_ripoff  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ripoff  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = ripoff_sound_w;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_speedfrk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_speedfrk  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(0, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = 0;
 	
@@ -1347,8 +1310,7 @@ public class cinemat
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sundance  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sundance  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_16LEV);
 		cinemat_sound_handler = sundance_sound_w;
 		artwork_set_overlay(sundance_overlay);
@@ -1357,37 +1319,32 @@ public class cinemat
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_warrior  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_warrior  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = warrior_sound_w;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_armora  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_armora  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = armora_sound_w;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_armorar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_armorar  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_8K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = armora_sound_w;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_solarq  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_solarq  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_BILEV);
 		cinemat_sound_handler = solarq_sound_w;
 		artwork_set_overlay(solarq_overlay);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_demon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_demon  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_BILEV);
@@ -1404,15 +1361,13 @@ public class cinemat
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_wotw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wotw  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_16K, CCPU_MONITOR_WOWCOL);
 		cinemat_sound_handler = 0;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_boxingb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_boxingb  = new DriverInitHandlerPtr() { public void handler(){
 		ccpu_Config(1, CCPU_MEMSIZE_32K, CCPU_MONITOR_WOWCOL);
 		cinemat_sound_handler = 0;
 	
@@ -1427,24 +1382,24 @@ public class cinemat
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_spacewar	   = new GameDriver("1978"	,"spacewar"	,"cinemat.java"	,rom_spacewar,null	,machine_driver_spacewar	,input_ports_spacewar	,init_spacewar	,ROT0	,	"Cinematronics", "Space Wars" )
-	public static GameDriver driver_barrier	   = new GameDriver("1979"	,"barrier"	,"cinemat.java"	,rom_barrier,null	,machine_driver_cinemat	,input_ports_barrier	,init_barrier	,ROT270	,	"Vectorbeam", "Barrier", GAME_NO_SOUND )
-	public static GameDriver driver_starhawk	   = new GameDriver("1981"	,"starhawk"	,"cinemat.java"	,rom_starhawk,null	,machine_driver_cinemat	,input_ports_starhawk	,init_starhawk	,ROT0	,	"Cinematronics", "Star Hawk", GAME_NO_SOUND )
-	public static GameDriver driver_starcas	   = new GameDriver("1980"	,"starcas"	,"cinemat.java"	,rom_starcas,null	,machine_driver_starcas	,input_ports_starcas	,init_starcas	,ROT0	,	"Cinematronics", "Star Castle (version 3)" )
-	public static GameDriver driver_starcas1	   = new GameDriver("1980"	,"starcas1"	,"cinemat.java"	,rom_starcas1,driver_starcas	,machine_driver_starcas	,input_ports_starcas	,init_starcas	,ROT0	,	"Cinematronics", "Star Castle (older)" )
-	public static GameDriver driver_starcasp	   = new GameDriver("1980"	,"starcasp"	,"cinemat.java"	,rom_starcasp,driver_starcas	,machine_driver_starcas	,input_ports_starcas	,init_starcas	,ROT0	,	"Cinematronics", "Star Castle (prototype)" )
-	public static GameDriver driver_starcase	   = new GameDriver("1980"	,"starcase"	,"cinemat.java"	,rom_starcase,driver_starcas	,machine_driver_starcas	,input_ports_starcas	,init_starcas	,ROT0	,	"Cinematronics (Mottoeis license)", "Star Castle (Mottoeis)" )
-	public static GameDriver driver_stellcas	   = new GameDriver("1980"	,"stellcas"	,"cinemat.java"	,rom_stellcas,driver_starcas	,machine_driver_starcas	,input_ports_starcas	,init_starcas	,ROT0	,	"bootleg", "Stellar Castle (Elettronolo)" )
-	public static GameDriver driver_tailg	   = new GameDriver("1979"	,"tailg"	,"cinemat.java"	,rom_tailg,null	,machine_driver_cinemat	,input_ports_tailg	,init_tailg	,ROT0	,	"Cinematronics", "Tailgunner", GAME_NO_SOUND )
-	public static GameDriver driver_ripoff	   = new GameDriver("1979"	,"ripoff"	,"cinemat.java"	,rom_ripoff,null	,machine_driver_ripoff	,input_ports_ripoff	,init_ripoff	,ROT0	,	"Cinematronics", "Rip Off" )
-	public static GameDriver driver_speedfrk	   = new GameDriver("1979"	,"speedfrk"	,"cinemat.java"	,rom_speedfrk,null	,machine_driver_cinemat	,input_ports_speedfrk	,init_speedfrk	,ROT0	,	"Vectorbeam", "Speed Freak", GAME_NO_SOUND )
-	public static GameDriver driver_sundance	   = new GameDriver("1979"	,"sundance"	,"cinemat.java"	,rom_sundance,null	,machine_driver_sundance	,input_ports_sundance	,init_sundance	,ROT270	,	"Cinematronics", "Sundance" )
-	public static GameDriver driver_warrior	   = new GameDriver("1978"	,"warrior"	,"cinemat.java"	,rom_warrior,null	,machine_driver_warrior	,input_ports_warrior	,init_warrior	,ROT0	,	"Vectorbeam", "Warrior" )
-	public static GameDriver driver_armora	   = new GameDriver("1980"	,"armora"	,"cinemat.java"	,rom_armora,null	,machine_driver_armora	,input_ports_armora	,init_armora	,ROT0	,	"Cinematronics", "Armor Attack")
-	public static GameDriver driver_armorap	   = new GameDriver("1980"	,"armorap"	,"cinemat.java"	,rom_armorap,driver_armora	,machine_driver_armora	,input_ports_armora	,init_armora	,ROT0	,	"Cinematronics", "Armor Attack (prototype)")
-	public static GameDriver driver_armorar	   = new GameDriver("1980"	,"armorar"	,"cinemat.java"	,rom_armorar,driver_armora	,machine_driver_armora	,input_ports_armora	,init_armorar	,ROT0	,	"Cinematronics (Rock-ola license)", "Armor Attack (Rock-ola)" )
-	public static GameDriver driver_solarq	   = new GameDriver("1981"	,"solarq"	,"cinemat.java"	,rom_solarq,null	,machine_driver_solarq	,input_ports_solarq	,init_solarq	,ORIENTATION_FLIP_X	,	"Cinematronics", "Solar Quest" )
-	public static GameDriver driver_demon	   = new GameDriver("1982"	,"demon"	,"cinemat.java"	,rom_demon,null	,machine_driver_demon	,input_ports_demon	,init_demon	,ROT0	,	"Rock-ola", "Demon" )
-	public static GameDriver driver_wotw	   = new GameDriver("1981"	,"wotw"	,"cinemat.java"	,rom_wotw,null	,machine_driver_cincolor	,input_ports_wotw	,init_wotw	,ROT0	,	"Cinematronics", "War of the Worlds", GAME_IMPERFECT_COLORS | GAME_NO_SOUND )
-	public static GameDriver driver_boxingb	   = new GameDriver("1981"	,"boxingb"	,"cinemat.java"	,rom_boxingb,null	,machine_driver_cincolor	,input_ports_boxingb	,init_boxingb	,ROT0	,	"Cinematronics", "Boxing Bugs", GAME_IMPERFECT_COLORS | GAME_NO_SOUND )
+	GAME( 1978, spacewar, 0,       spacewar, spacewar, spacewar, ROT0,   "Cinematronics", "Space Wars" )
+	GAMEX(1979, barrier,  0,       cinemat,  barrier,  barrier,  ROT270, "Vectorbeam", "Barrier", GAME_NO_SOUND )
+	GAMEX(1981, starhawk, 0,       cinemat,  starhawk, starhawk, ROT0,   "Cinematronics", "Star Hawk", GAME_NO_SOUND )
+	GAME( 1980, starcas,  0,       starcas,  starcas,  starcas,  ROT0,   "Cinematronics", "Star Castle (version 3)" )
+	GAME( 1980, starcas1, starcas, starcas,  starcas,  starcas,  ROT0,   "Cinematronics", "Star Castle (older)" )
+	GAME( 1980, starcasp, starcas, starcas,  starcas,  starcas,  ROT0,   "Cinematronics", "Star Castle (prototype)" )
+	GAME( 1980, starcase, starcas, starcas,  starcas,  starcas,  ROT0,   "Cinematronics (Mottoeis license)", "Star Castle (Mottoeis)" )
+	GAME( 1980, stellcas, starcas, starcas,  starcas,  starcas,  ROT0,   "bootleg", "Stellar Castle (Elettronolo)" )
+	GAMEX(1979, tailg,    0,       cinemat,  tailg,    tailg,    ROT0,   "Cinematronics", "Tailgunner", GAME_NO_SOUND )
+	GAME( 1979, ripoff,   0,       ripoff,   ripoff,   ripoff,   ROT0,   "Cinematronics", "Rip Off" )
+	GAMEX(1979, speedfrk, 0,       cinemat,  speedfrk, speedfrk, ROT0,   "Vectorbeam", "Speed Freak", GAME_NO_SOUND )
+	GAME(1979, sundance, 0,       sundance,  sundance, sundance, ROT270, "Cinematronics", "Sundance" )
+	GAME( 1978, warrior,  0,       warrior,  warrior,  warrior,  ROT0,   "Vectorbeam", "Warrior" )
+	GAME(1980, armora,   0,       armora,   armora,   armora,   ROT0,   "Cinematronics", "Armor Attack")
+	GAME(1980, armorap,  armora,  armora,   armora,   armora,   ROT0,   "Cinematronics", "Armor Attack (prototype)")
+	GAME(1980, armorar,  armora,  armora,   armora,   armorar,  ROT0,  "Cinematronics (Rock-ola license)", "Armor Attack (Rock-ola)" )
+	GAME( 1981, solarq,   0,       solarq,   solarq,   solarq,   ORIENTATION_FLIP_X, "Cinematronics", "Solar Quest" )
+	GAME( 1982, demon,    0,       demon,    demon,    demon,    ROT0,   "Rock-ola", "Demon" )
+	GAMEX(1981, wotw,     0,       cincolor, wotw,     wotw,     ROT0,   "Cinematronics", "War of the Worlds", GAME_IMPERFECT_COLORS | GAME_NO_SOUND )
+	GAMEX(1981, boxingb,  0,       cincolor, boxingb,  boxingb,  ROT0,   "Cinematronics", "Boxing Bugs", GAME_IMPERFECT_COLORS | GAME_NO_SOUND )
 }

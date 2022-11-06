@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -53,8 +53,7 @@ public class polepos
 	/* Interrupt handling																 */
 	/*************************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_polepos  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_polepos  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset all the interrupt states */
 		z80_irq_enabled = z8002_1_nvi_enabled = z8002_2_nvi_enabled = 0;
 	
@@ -89,8 +88,7 @@ public class polepos
 		timer_set(cpu_getscanlinetime(scanline), scanline, z80_interrupt);
 	}
 	
-	public static WriteHandlerPtr polepos_z80_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_z80_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		z80_irq_enabled = data & 1;
 		if ((data & 1) == 0) cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
@@ -110,21 +108,18 @@ public class polepos
 		LOG(("Z8K#%d cpu%d_nvi_enable_w $%02x\n", cpu_getactivecpu(), which, data));
 	}
 	
-	public static InterruptHandlerPtr polepos_z8002_1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (z8002_1_nvi_enabled != 0)
+	public static InterruptHandlerPtr polepos_z8002_1_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (z8002_1_nvi_enabled)
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 	} };
 	
-	public static InterruptHandlerPtr polepos_z8002_2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (z8002_2_nvi_enabled != 0)
+	public static InterruptHandlerPtr polepos_z8002_2_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (z8002_2_nvi_enabled)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr polepos_z8002_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr polepos_z8002_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1)
 			cpu_set_reset_line(offset + 1, CLEAR_LINE);
 		else
 			cpu_set_reset_line(offset + 1, ASSERT_LINE);
@@ -135,13 +130,11 @@ public class polepos
 	/* I/O and ADC handling 															 */
 	/*************************************************************************************/
 	
-	public static WriteHandlerPtr polepos_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_adc_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		adc_input = data;
 	} };
 	
-	public static ReadHandlerPtr polepos_adc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_adc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = 0;
 	
 		switch (adc_input)
@@ -162,8 +155,7 @@ public class polepos
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr polepos_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = 0xff;
 	
 		if (cpu_getscanline() >= 128)
@@ -207,8 +199,7 @@ public class polepos
 	/* 4 bit cpu emulation																 */
 	/*************************************************************************************/
 	
-	public static WriteHandlerPtr polepos_mcu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_mcu_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		polepos_mcu.enabled = data & 1;
 	
 		if (polepos_mcu.enabled == 0)
@@ -223,16 +214,14 @@ public class polepos
 		cpu_set_nmi_line(0, PULSE_LINE);
 	}
 	
-	public static ReadHandlerPtr polepos_mcu_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_mcu_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (polepos_mcu.enabled)
 			return polepos_mcu.status;
 	
 		return 0x00;
 	} };
 	
-	public static WriteHandlerPtr polepos_mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_mcu_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LOG(("polepos_mcu_control_w: %d, $%02x\n", offset, data));
 	
 		if (polepos_mcu.enabled)
@@ -254,8 +243,7 @@ public class polepos
 		}
 	} };
 	
-	public static ReadHandlerPtr polepos_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polepos_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (polepos_mcu.enabled)
 		{
 			LOG(("MCU read: PC = %04x, transfer mode = %02x, offset = %02x\n", activecpu_get_pc(), polepos_mcu.transfer_id & 0xff, offset ));
@@ -354,8 +342,7 @@ public class polepos
 		return 0xff; /* pull up */
 	} };
 	
-	public static WriteHandlerPtr polepos_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (polepos_mcu.enabled)
 		{
 			LOG(("MCU write: PC = %04x, transfer mode = %02x, offset = %02x, data = %02x\n", activecpu_get_pc(), polepos_mcu.transfer_id & 0xff, offset, data ));
@@ -437,8 +424,7 @@ public class polepos
 		}
 	} };
 	
-	public static WriteHandlerPtr polepos_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_start = 0;
 	
 		data &= 1;

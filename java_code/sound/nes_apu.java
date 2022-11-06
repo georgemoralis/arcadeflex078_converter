@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -100,27 +100,27 @@ public class nes_apu
 	  /* Only enqueue if it isn't full */
 	  if (apu_queuenotfull(chip))
 	  {
-	    cur.head++;
-	    cur.head&=QUEUE_MAX;
-	    entry=&cur.queue[cur.head];
-	    entry.pos=sound_scalebufferpos(samps_per_sync);
-	    entry.reg=reg;
-	    entry.val=val;
+	    cur->head++;
+	    cur->head&=QUEUE_MAX;
+	    entry=&cur->queue[cur->head];
+	    entry->pos=sound_scalebufferpos(samps_per_sync);
+	    entry->reg=reg;
+	    entry->val=val;
 	  }
 	}
 	
 	/* EXTRACT AN ENTRY FROM THE QUEUE */
 	INLINE queue_t * apu_dequeue(int chip)
 	{
-	  queue_t *p=&cur.queue[(cur.tail)];
+	  queue_t *p=&cur->queue[(cur->tail)];
 	
 	  SETAPU(chip);
 	
 	  /* Only increment if it isn't empty */
 	  if (apu_queuenotempty(chip))
 	  {
-	    cur.tail++;
-	    cur.tail&=QUEUE_MAX;
+	    cur->tail++;
+	    cur->tail&=QUEUE_MAX;
 	  }
 	  return p;
 	}
@@ -191,63 +191,63 @@ public class nes_apu
 	   ** reg3: 0-2=high freq, 7-4=vbl length counter
 	   */
 	
-	   if (FALSE == chan.enabled)
+	   if (FALSE == chan->enabled)
 	      return 0;
 	
 	   /* enveloping */
-	   env_delay = sync_times1[chan.regs[0] & 0x0F];
+	   env_delay = sync_times1[chan->regs[0] & 0x0F];
 	
 	   /* decay is at a rate of (env_regs + 1) / 240 secs */
-	   chan.env_phase -= 4;
-	   while (chan.env_phase < 0)
+	   chan->env_phase -= 4;
+	   while (chan->env_phase < 0)
 	   {
-	      chan.env_phase += env_delay;
-	      if (chan.regs[0] & 0x20)
-	         chan.env_vol = (chan.env_vol + 1) & 15;
-	      else if (chan.env_vol < 15)
-	         chan.env_vol++;
+	      chan->env_phase += env_delay;
+	      if (chan->regs[0] & 0x20)
+	         chan->env_vol = (chan->env_vol + 1) & 15;
+	      else if (chan->env_vol < 15)
+	         chan->env_vol++;
 	   }
 	
 	   /* vbl length counter */
-	   if (chan.vbl_length > 0 && 0 == (chan.regs [0] & 0x20))
-	      chan.vbl_length--;
+	   if (chan->vbl_length > 0 && 0 == (chan->regs [0] & 0x20))
+	      chan->vbl_length--;
 	
-	   if (0 == chan.vbl_length)
+	   if (0 == chan->vbl_length)
 	      return 0;
 	
 	   /* freqsweeps */
-	   if ((chan.regs[1] & 0x80) && (chan.regs[1] & 7))
+	   if ((chan->regs[1] & 0x80) && (chan->regs[1] & 7))
 	   {
-	      sweep_delay = sync_times1[(chan.regs[1] >> 4) & 7];
-	      chan.sweep_phase -= 2;
-	      while (chan.sweep_phase < 0)
+	      sweep_delay = sync_times1[(chan->regs[1] >> 4) & 7];
+	      chan->sweep_phase -= 2;
+	      while (chan->sweep_phase < 0)
 	      {
-	         chan.sweep_phase += sweep_delay;
-	         if (chan.regs[1] & 8)
-	            chan.freq -= chan.freq >> (chan.regs[1] & 7);
+	         chan->sweep_phase += sweep_delay;
+	         if (chan->regs[1] & 8)
+	            chan->freq -= chan->freq >> (chan->regs[1] & 7);
 	         else
-	            chan.freq += chan.freq >> (chan.regs[1] & 7);
+	            chan->freq += chan->freq >> (chan->regs[1] & 7);
 	      }
 	   }
 	
-	   if ((0 == (chan.regs[1] & 8) && (chan.freq >> 16) > freq_limit[chan.regs[1] & 7])
-	       || (chan.freq >> 16) < 4)
+	   if ((0 == (chan->regs[1] & 8) && (chan->freq >> 16) > freq_limit[chan->regs[1] & 7])
+	       || (chan->freq >> 16) < 4)
 	      return 0;
 	
-	   chan.phaseacc -= (float) apu_incsize; /* # of cycles per sample */
+	   chan->phaseacc -= (float) apu_incsize; /* # of cycles per sample */
 	
-	   while (chan.phaseacc < 0)
+	   while (chan->phaseacc < 0)
 	   {
-	      chan.phaseacc += (chan.freq >> 16);
-	      chan.adder = (chan.adder + 1) & 0x0F;
+	      chan->phaseacc += (chan->freq >> 16);
+	      chan->adder = (chan->adder + 1) & 0x0F;
 	   }
 	
-	   if (chan.regs[0] & 0x10) /* fixed volume */
-	      output = chan.regs[0] & 0x0F;
+	   if (chan->regs[0] & 0x10) /* fixed volume */
+	      output = chan->regs[0] & 0x0F;
 	   else
-	      output = 0x0F - chan.env_vol;
+	      output = 0x0F - chan->env_vol;
 	
-	   if (chan.adder < (duty_lut[chan.regs[0] >> 6]))
+	   if (chan->adder < (duty_lut[chan->regs[0] >> 6]))
 	      output = -output;
 	
 	   return (int8) output;
@@ -263,52 +263,52 @@ public class nes_apu
 	   ** reg3: 7-3=length counter, 2-0=high 3 bits of frequency
 	   */
 	
-	   if (FALSE == chan.enabled)
+	   if (FALSE == chan->enabled)
 	      return 0;
 	
-	   if (FALSE == chan.counter_started && 0 == (chan.regs[0] & 0x80))
+	   if (FALSE == chan->counter_started && 0 == (chan->regs[0] & 0x80))
 	   {
-	      if (chan.write_latency)
-	         chan.write_latency--;
-	      if (0 == chan.write_latency)
-	         chan.counter_started = TRUE;
+	      if (chan->write_latency)
+	         chan->write_latency--;
+	      if (0 == chan->write_latency)
+	         chan->counter_started = TRUE;
 	   }
 	
-	   if (chan.counter_started)
+	   if (chan->counter_started)
 	   {
-	      if (chan.linear_length > 0)
-	         chan.linear_length--;
-	      if (chan.vbl_length && 0 == (chan.regs[0] & 0x80))
-	            chan.vbl_length--;
+	      if (chan->linear_length > 0)
+	         chan->linear_length--;
+	      if (chan->vbl_length && 0 == (chan->regs[0] & 0x80))
+	            chan->vbl_length--;
 	
-	      if (0 == chan.vbl_length)
+	      if (0 == chan->vbl_length)
 	         return 0;
 	   }
 	
-	   if (0 == chan.linear_length)
+	   if (0 == chan->linear_length)
 	      return 0;
 	
-	   freq = (((chan.regs[3] & 7) << 8) + chan.regs[2]) + 1;
+	   freq = (((chan->regs[3] & 7) << 8) + chan->regs[2]) + 1;
 	
 	   if (freq < 4) /* inaudible */
 	      return 0;
 	
-	   chan.phaseacc -= (float) apu_incsize; /* # of cycles per sample */
-	   while (chan.phaseacc < 0)
+	   chan->phaseacc -= (float) apu_incsize; /* # of cycles per sample */
+	   while (chan->phaseacc < 0)
 	   {
-	      chan.phaseacc += freq;
-	      chan.adder = (chan.adder + 1) & 0x1F;
+	      chan->phaseacc += freq;
+	      chan->adder = (chan->adder + 1) & 0x1F;
 	
-	      output = (chan.adder & 7) << 1;
-	      if (chan.adder & 8)
+	      output = (chan->adder & 7) << 1;
+	      if (chan->adder & 8)
 	         output = 0x10 - output;
-	      if (chan.adder & 0x10)
+	      if (chan->adder & 0x10)
 	         output = -output;
 	
-	      chan.output_vol = output;
+	      chan->output_vol = output;
 	   }
 	
-	   return (int8) chan.output_vol;
+	   return (int8) chan->output_vol;
 	}
 	
 	/* OUTPUT NOISE WAVE SAMPLE (VALUES FROM -16 to +15) */
@@ -323,56 +323,56 @@ public class nes_apu
 	   ** reg3: 7-4=vbl length counter
 	   */
 	
-	   if (FALSE == chan.enabled)
+	   if (FALSE == chan->enabled)
 	      return 0;
 	
 	   /* enveloping */
-	   env_delay = sync_times1[chan.regs[0] & 0x0F];
+	   env_delay = sync_times1[chan->regs[0] & 0x0F];
 	
 	   /* decay is at a rate of (env_regs + 1) / 240 secs */
-	   chan.env_phase -= 4;
-	   while (chan.env_phase < 0)
+	   chan->env_phase -= 4;
+	   while (chan->env_phase < 0)
 	   {
-	      chan.env_phase += env_delay;
-	      if (chan.regs[0] & 0x20)
-	         chan.env_vol = (chan.env_vol + 1) & 15;
-	      else if (chan.env_vol < 15)
-	         chan.env_vol++;
+	      chan->env_phase += env_delay;
+	      if (chan->regs[0] & 0x20)
+	         chan->env_vol = (chan->env_vol + 1) & 15;
+	      else if (chan->env_vol < 15)
+	         chan->env_vol++;
 	   }
 	
 	   /* length counter */
-	   if (0 == (chan.regs[0] & 0x20))
+	   if (0 == (chan->regs[0] & 0x20))
 	   {
-	      if (chan.vbl_length > 0)
-	         chan.vbl_length--;
+	      if (chan->vbl_length > 0)
+	         chan->vbl_length--;
 	   }
 	
-	   if (0 == chan.vbl_length)
+	   if (0 == chan->vbl_length)
 	      return 0;
 	
-	   freq = noise_freq[chan.regs[2] & 0x0F];
-	   chan.phaseacc -= (float) apu_incsize; /* # of cycles per sample */
-	   while (chan.phaseacc < 0)
+	   freq = noise_freq[chan->regs[2] & 0x0F];
+	   chan->phaseacc -= (float) apu_incsize; /* # of cycles per sample */
+	   while (chan->phaseacc < 0)
 	   {
-	      chan.phaseacc += freq;
+	      chan->phaseacc += freq;
 	
-	      chan.cur_pos++;
-	      if (NOISE_SHORT == chan.cur_pos && (chan.regs[2] & 0x80))
-	         chan.cur_pos = 0;
-	      else if (NOISE_LONG == chan.cur_pos)
-	         chan.cur_pos = 0;
+	      chan->cur_pos++;
+	      if (NOISE_SHORT == chan->cur_pos && (chan->regs[2] & 0x80))
+	         chan->cur_pos = 0;
+	      else if (NOISE_LONG == chan->cur_pos)
+	         chan->cur_pos = 0;
 	   }
 	
-	   if (chan.regs[0] & 0x10) /* fixed volume */
-	      outvol = chan.regs[0] & 0x0F;
+	   if (chan->regs[0] & 0x10) /* fixed volume */
+	      outvol = chan->regs[0] & 0x0F;
 	   else
-	      outvol = 0x0F - chan.env_vol;
+	      outvol = 0x0F - chan->env_vol;
 	
-	   output = noise_lut[chan.cur_pos];
+	   output = noise_lut[chan->cur_pos];
 	   if (output > outvol)
 	      output = outvol;
 	
-	   if (noise_lut[chan.cur_pos] & 0x80) /* make it negative */
+	   if (noise_lut[chan->cur_pos] & 0x80) /* make it negative */
 	      output = -output;
 	
 	   return (int8) output;
@@ -381,10 +381,10 @@ public class nes_apu
 	/* RESET DPCM PARAMETERS */
 	INLINE void apu_dpcmreset(dpcm_t *chan)
 	{
-	   chan.address = 0xC000 + (uint16) (chan.regs[2] << 6);
-	   chan.length = (uint16) (chan.regs[3] << 4) + 1;
-	   chan.bits_left = chan.length << 3;
-	   chan.irq_occurred = FALSE;
+	   chan->address = 0xC000 + (uint16) (chan->regs[2] << 6);
+	   chan->length = (uint16) (chan->regs[3] << 4) + 1;
+	   chan->bits_left = chan->length << 3;
+	   chan->irq_occurred = FALSE;
 	}
 	
 	/* OUTPUT DPCM WAVE SAMPLE (VALUES FROM -64 to +63) */
@@ -399,54 +399,54 @@ public class nes_apu
 	   ** reg3: length, (value * 16) + 1
 	   */
 	
-	   if (chan.enabled)
+	   if (chan->enabled)
 	   {
-	      freq = dpcm_clocks[chan.regs[0] & 0x0F];
-	      chan.phaseacc -= (float) apu_incsize; /* # of cycles per sample */
+	      freq = dpcm_clocks[chan->regs[0] & 0x0F];
+	      chan->phaseacc -= (float) apu_incsize; /* # of cycles per sample */
 	
-	      while (chan.phaseacc < 0)
+	      while (chan->phaseacc < 0)
 	      {
-	         chan.phaseacc += freq;
+	         chan->phaseacc += freq;
 	
-	         if (0 == chan.length)
+	         if (0 == chan->length)
 	         {
-	            if (chan.regs[0] & 0x40)
+	            if (chan->regs[0] & 0x40)
 	               apu_dpcmreset(chan);
 	            else
 	            {
-	               if (chan.regs[0] & 0x80) /* IRQ Generator */
+	               if (chan->regs[0] & 0x80) /* IRQ Generator */
 	               {
-	                  chan.irq_occurred = TRUE;
+	                  chan->irq_occurred = TRUE;
 	                  n2a03_irq();
 	               }
 	               break;
 	            }
 	         }
 	
-	         chan.bits_left--;
-	         bit_pos = 7 - (chan.bits_left & 7);
+	         chan->bits_left--;
+	         bit_pos = 7 - (chan->bits_left & 7);
 	         if (7 == bit_pos)
 	         {
-	            chan.cur_byte = chan.cpu_mem[chan.address];
-	            chan.address++;
-	            chan.length--;
+	            chan->cur_byte = chan->cpu_mem[chan->address];
+	            chan->address++;
+	            chan->length--;
 	         }
 	
-	         if (chan.cur_byte & (1 << bit_pos))
-	//            chan.regs[1]++;
-	            chan.vol++;
+	         if (chan->cur_byte & (1 << bit_pos))
+	//            chan->regs[1]++;
+	            chan->vol++;
 	         else
-	//            chan.regs[1]--;
-	            chan.vol--;
+	//            chan->regs[1]--;
+	            chan->vol--;
 	      }
 	   }
 	
-	   if (chan.vol > 63)
-	      chan.vol = 63;
-	   else if (chan.vol < -64)
-	      chan.vol = -64;
+	   if (chan->vol > 63)
+	      chan->vol = 63;
+	   else if (chan->vol < -64)
+	      chan->vol = -64;
 	
-	   return (int8) (chan.vol >> 1);
+	   return (int8) (chan->vol >> 1);
 	}
 	
 	/* WRITE REGISTER VALUE */
@@ -460,57 +460,57 @@ public class nes_apu
 	   /* squares */
 	   case APU_WRA0:
 	   case APU_WRB0:
-	      cur.squ[chan].regs[0] = value;
+	      cur->squ[chan].regs[0] = value;
 	      break;
 	
 	   case APU_WRA1:
 	   case APU_WRB1:
-	      cur.squ[chan].regs[1] = value;
+	      cur->squ[chan].regs[1] = value;
 	      break;
 	
 	   case APU_WRA2:
 	   case APU_WRB2:
-	      cur.squ[chan].regs[2] = value;
-	      if (cur.squ[chan].enabled)
-	         cur.squ[chan].freq = ((((cur.squ[chan].regs[3] & 7) << 8) + value) + 1) << 16;
+	      cur->squ[chan].regs[2] = value;
+	      if (cur->squ[chan].enabled)
+	         cur->squ[chan].freq = ((((cur->squ[chan].regs[3] & 7) << 8) + value) + 1) << 16;
 	      break;
 	
 	   case APU_WRA3:
 	   case APU_WRB3:
-	      cur.squ[chan].regs[3] = value;
+	      cur->squ[chan].regs[3] = value;
 	
-	      if (cur.squ[chan].enabled)
+	      if (cur->squ[chan].enabled)
 	      {
-	         cur.squ[chan].vbl_length = vbl_times[value >> 3];
-	         cur.squ[chan].env_vol = 0;
-	         cur.squ[chan].freq = ((((value & 7) << 8) + cur.squ[chan].regs[2]) + 1) << 16;
+	         cur->squ[chan].vbl_length = vbl_times[value >> 3];
+	         cur->squ[chan].env_vol = 0;
+	         cur->squ[chan].freq = ((((value & 7) << 8) + cur->squ[chan].regs[2]) + 1) << 16;
 	      }
 	
 	      break;
 	
 	   /* triangle */
 	   case APU_WRC0:
-	      cur.tri.regs[0] = value;
+	      cur->tri.regs[0] = value;
 	
-	      if (cur.tri.enabled)
+	      if (cur->tri.enabled)
 	      {                                          /* ??? */
-	         if (FALSE == cur.tri.counter_started)
-	            cur.tri.linear_length = sync_times2[value & 0x7F];
+	         if (FALSE == cur->tri.counter_started)
+	            cur->tri.linear_length = sync_times2[value & 0x7F];
 	      }
 	
 	      break;
 	
 	   case 0x4009:
 	      /* unused */
-	      cur.tri.regs[1] = value;
+	      cur->tri.regs[1] = value;
 	      break;
 	
 	   case APU_WRC2:
-	      cur.tri.regs[2] = value;
+	      cur->tri.regs[2] = value;
 	      break;
 	
 	   case APU_WRC3:
-	      cur.tri.regs[3] = value;
+	      cur->tri.regs[3] = value;
 	
 	      /* this is somewhat of a hack.  there is some latency on the Real
 	      ** Thing between when trireg0 is written to and when the linear
@@ -527,113 +527,113 @@ public class nes_apu
 	      ** dereferences and load up the other triregs
 	      */
 	
-	      cur.tri.write_latency = 3;
+	      cur->tri.write_latency = 3;
 	
-	      if (cur.tri.enabled)
+	      if (cur->tri.enabled)
 	      {
-	         cur.tri.counter_started = FALSE;
-	         cur.tri.vbl_length = vbl_times[value >> 3];
-	         cur.tri.linear_length = sync_times2[cur.tri.regs[0] & 0x7F];
+	         cur->tri.counter_started = FALSE;
+	         cur->tri.vbl_length = vbl_times[value >> 3];
+	         cur->tri.linear_length = sync_times2[cur->tri.regs[0] & 0x7F];
 	      }
 	
 	      break;
 	
 	   /* noise */
 	   case APU_WRD0:
-	      cur.noi.regs[0] = value;
+	      cur->noi.regs[0] = value;
 	      break;
 	
 	   case 0x400D:
 	      /* unused */
-	      cur.noi.regs[1] = value;
+	      cur->noi.regs[1] = value;
 	      break;
 	
 	   case APU_WRD2:
-	      cur.noi.regs[2] = value;
+	      cur->noi.regs[2] = value;
 	      break;
 	
 	   case APU_WRD3:
-	      cur.noi.regs[3] = value;
+	      cur->noi.regs[3] = value;
 	
-	      if (cur.noi.enabled)
+	      if (cur->noi.enabled)
 	      {
-	         cur.noi.vbl_length = vbl_times[value >> 3];
-	         cur.noi.env_vol = 0; /* reset envelope */
+	         cur->noi.vbl_length = vbl_times[value >> 3];
+	         cur->noi.env_vol = 0; /* reset envelope */
 	      }
 	      break;
 	
 	   /* DMC */
 	   case APU_WRE0:
-	      cur.dpcm.regs[0] = value;
+	      cur->dpcm.regs[0] = value;
 	      if (0 == (value & 0x80))
-	         cur.dpcm.irq_occurred = FALSE;
+	         cur->dpcm.irq_occurred = FALSE;
 	      break;
 	
 	   case APU_WRE1: /* 7-bit DAC */
-	      //cur.dpcm.regs[1] = value - 0x40;
-	      cur.dpcm.regs[1] = value & 0x7F;
-	      cur.dpcm.vol = (cur.dpcm.regs[1]-64);
+	      //cur->dpcm.regs[1] = value - 0x40;
+	      cur->dpcm.regs[1] = value & 0x7F;
+	      cur->dpcm.vol = (cur->dpcm.regs[1]-64);
 	      break;
 	
 	   case APU_WRE2:
-	      cur.dpcm.regs[2] = value;
-	      //apu_dpcmreset(cur.dpcm);
+	      cur->dpcm.regs[2] = value;
+	      //apu_dpcmreset(cur->dpcm);
 	      break;
 	
 	   case APU_WRE3:
-	      cur.dpcm.regs[3] = value;
-	      //apu_dpcmreset(cur.dpcm);
+	      cur->dpcm.regs[3] = value;
+	      //apu_dpcmreset(cur->dpcm);
 	      break;
 	
 	   case APU_SMASK:
-	      if ((value & 0x01) != 0)
-	         cur.squ[0].enabled = TRUE;
+	      if (value & 0x01)
+	         cur->squ[0].enabled = TRUE;
 	      else
 	      {
-	         cur.squ[0].enabled = FALSE;
-	         cur.squ[0].vbl_length = 0;
+	         cur->squ[0].enabled = FALSE;
+	         cur->squ[0].vbl_length = 0;
 	      }
 	
-	      if ((value & 0x02) != 0)
-	         cur.squ[1].enabled = TRUE;
+	      if (value & 0x02)
+	         cur->squ[1].enabled = TRUE;
 	      else
 	      {
-	         cur.squ[1].enabled = FALSE;
-	         cur.squ[1].vbl_length = 0;
+	         cur->squ[1].enabled = FALSE;
+	         cur->squ[1].vbl_length = 0;
 	      }
 	
-	      if ((value & 0x04) != 0)
-	         cur.tri.enabled = TRUE;
+	      if (value & 0x04)
+	         cur->tri.enabled = TRUE;
 	      else
 	      {
-	         cur.tri.enabled = FALSE;
-	         cur.tri.vbl_length = 0;
-	         cur.tri.linear_length = 0;
-	         cur.tri.counter_started = FALSE;
-	         cur.tri.write_latency = 0;
+	         cur->tri.enabled = FALSE;
+	         cur->tri.vbl_length = 0;
+	         cur->tri.linear_length = 0;
+	         cur->tri.counter_started = FALSE;
+	         cur->tri.write_latency = 0;
 	      }
 	
-	      if ((value & 0x08) != 0)
-	         cur.noi.enabled = TRUE;
+	      if (value & 0x08)
+	         cur->noi.enabled = TRUE;
 	      else
 	      {
-	         cur.noi.enabled = FALSE;
-	         cur.noi.vbl_length = 0;
+	         cur->noi.enabled = FALSE;
+	         cur->noi.vbl_length = 0;
 	      }
 	
-	      if ((value & 0x10) != 0)
+	      if (value & 0x10)
 	      {
 	         /* only reset dpcm values if DMA is finished */
-	         if (FALSE == cur.dpcm.enabled)
+	         if (FALSE == cur->dpcm.enabled)
 	         {
-	            cur.dpcm.enabled = TRUE;
-	            apu_dpcmreset(&cur.dpcm);
+	            cur->dpcm.enabled = TRUE;
+	            apu_dpcmreset(&cur->dpcm);
 	         }
 	      }
 	      else
-	         cur.dpcm.enabled = FALSE;
+	         cur->dpcm.enabled = FALSE;
 	
-	      cur.dpcm.irq_occurred = FALSE;
+	      cur->dpcm.irq_occurred = FALSE;
 	
 	      break;
 	   default:
@@ -659,30 +659,30 @@ public class nes_apu
 	#endif
 	
 	   SETAPU(chip);
-	   buffer16  = cur.buffer;
+	   buffer16  = cur->buffer;
 	
 	#ifndef USE_QUEUE
 	   /* Recall last position updated and restore pointers */
-	   elapsed = cur.buf_pos;
+	   elapsed = cur->buf_pos;
 	   buffer16 += elapsed;
 	#endif
 	
 	   while (elapsed<endp)
 	   {
 	#ifdef USE_QUEUE
-	      while (apu_queuenotempty(chip) && (cur.queue[cur.head].pos==elapsed))
+	      while (apu_queuenotempty(chip) && (cur->queue[cur->head].pos==elapsed))
 	      {
 	         q = apu_dequeue(chip);
-	         apu_regwrite(chip,q.reg,q.val);
+	         apu_regwrite(chip,q->reg,q->val);
 	      }
 	#endif
 	      elapsed++;
 	
-	      accum = apu_square(&cur.squ[0]);
-	      accum += apu_square(&cur.squ[1]);
-	      accum += apu_triangle(&cur.tri);
-	      accum += apu_noise(&cur.noi);
-	      accum += apu_dpcm(&cur.dpcm);
+	      accum = apu_square(&cur->squ[0]);
+	      accum += apu_square(&cur->squ[1]);
+	      accum += apu_triangle(&cur->tri);
+	      accum += apu_noise(&cur->noi);
+	      accum += apu_dpcm(&cur->dpcm);
 	
 	      /* 8-bit clamps */
 	      if (accum > 127)
@@ -693,7 +693,7 @@ public class nes_apu
 	      *(buffer16++)=accum<<8;
 	   }
 	#ifndef USE_QUEUE
-	   cur.buf_pos = endp;
+	   cur->buf_pos = endp;
 	#endif
 	}
 	
@@ -718,22 +718,22 @@ public class nes_apu
 	/* EXTERNAL INTERFACE FUNCTIONS */
 	
 	/* REGISTER READ/WRITE FUNCTIONS */
-	public static ReadHandlerPtr NESPSG_0_r  = new ReadHandlerPtr() { public int handler(int offset) {return apu_read(0,offset);} };
-	public static ReadHandlerPtr NESPSG_1_r  = new ReadHandlerPtr() { public int handler(int offset) {return apu_read(1,offset);} };
-	public static WriteHandlerPtr NESPSG_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) {apu_write(0,offset,data);} };
-	public static WriteHandlerPtr NESPSG_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) {apu_write(1,offset,data);} };
+	public static ReadHandlerPtr NESPSG_0_r  = new ReadHandlerPtr() { public int handler(int offset)return apu_read(0,offset);}
+	public static ReadHandlerPtr NESPSG_1_r  = new ReadHandlerPtr() { public int handler(int offset)return apu_read(1,offset);}
+	public static WriteHandlerPtr NESPSG_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)apu_write(0,offset,data);}
+	public static WriteHandlerPtr NESPSG_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)apu_write(1,offset,data);}
 	
 	/* INITIALIZE APU SYSTEM */
 	int NESPSG_sh_start(const struct MachineSound *msound)
 	{
-	  struct NESinterface *intf = msound.sound_interface;
+	  struct NESinterface *intf = msound->sound_interface;
 	  int i;
 	
 	  /* Initialize global variables */
-	  samps_per_sync = Machine.sample_rate / Machine.drv.frames_per_second;
+	  samps_per_sync = Machine->sample_rate / Machine->drv->frames_per_second;
 	  buffer_size = samps_per_sync;
-	  real_rate = samps_per_sync * Machine.drv.frames_per_second;
-	  chip_max = intf.num;
+	  real_rate = samps_per_sync * Machine->drv->frames_per_second;
+	  chip_max = intf->num;
 	  apu_incsize = (float) (N2A03_DEFAULTCLOCK / (float) real_rate);
 	
 	  /* Use initializer calls */
@@ -752,19 +752,19 @@ public class nes_apu
 	     memset(cur,0,sizeof(apu_t));
 	
 	     /* Check for buffer allocation failure and bail out if necessary */
-	     if ((cur.buffer = malloc(buffer_size))==NULL)
+	     if ((cur->buffer = malloc(buffer_size))==NULL)
 	     {
 	       while (--i >= 0) free(APU[i].buffer);
 	       return 1;
 	     }
 	
 	#ifdef USE_QUEUE
-	     cur.head=0;cur.tail=QUEUE_MAX;
+	     cur->head=0;cur->tail=QUEUE_MAX;
 	#endif
-	     (cur.dpcm).cpu_mem=memory_region(intf.region[i]);
-	  }
+	     (cur->dpcm).cpu_mem=memory_region(intf->region[i]);
+	  } };
 	
-	  channel = mixer_allocate_channels(chip_max,intf.volume);
+	  channel = mixer_allocate_channels(chip_max,intf->volume);
 	  for (i = 0;i < chip_max;i++)
 	  {
 	    char name[40];

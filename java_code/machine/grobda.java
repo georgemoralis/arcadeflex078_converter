@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -21,45 +21,41 @@ public class grobda
 	static int int_enable_1, int_enable_2;
 	static int credits, coincounter1, coincounter2;
 	
-	public static MachineInitHandlerPtr machine_init_grobda  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_grobda  = new MachineInitHandlerPtr() { public void handler(){
 	    int_enable_1 = int_enable_2 = 1;
 	    credits = coincounter1 = coincounter2 = 0;
 		cpu_set_halt_line(1, CLEAR_LINE);
 	} };
 	
 	/* memory handlers */
-	public static ReadHandlerPtr grobda_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr grobda_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return grobda_snd_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr grobda_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grobda_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    grobda_snd_sharedram[offset] = data;
 	} };
 	
 	/* irq control functions */
-	public static WriteHandlerPtr grobda_interrupt_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr grobda_interrupt_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	    int_enable_1 = offset;
-	} };
+	}
 	
-	public static WriteHandlerPtr grobda_interrupt_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr grobda_interrupt_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	    int_enable_2 = offset;
-	} };
+	}
 	
-	public static InterruptHandlerPtr grobda_interrupt_1 = new InterruptHandlerPtr() {public void handler() {
-		if (int_enable_1 != 0)
+	public static InterruptHandlerPtr grobda_interrupt_1 = new InterruptHandlerPtr() {public void handler()
+		if (int_enable_1)
 			cpu_set_irq_line(0, 0, HOLD_LINE);
-	} };
+	}
 	
-	public static InterruptHandlerPtr grobda_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
-	    if (int_enable_2 != 0)
+	public static InterruptHandlerPtr grobda_interrupt_2 = new InterruptHandlerPtr() {public void handler()
+	    if (int_enable_2)
 	        cpu_set_irq_line(1, 0, HOLD_LINE);
-	} };
+	}
 	
-	public static WriteHandlerPtr grobda_cpu2_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grobda_cpu2_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, offset ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
@@ -69,21 +65,18 @@ public class grobda
 	*																					*
 	************************************************************************************/
 	
-	public static WriteHandlerPtr grobda_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grobda_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    grobda_customio_1[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr grobda_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grobda_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    grobda_customio_2[offset] = data;
 	} };
 	
 	static int credmoned [] = { 1, 1, 1, 1, 2, 2, 3, 4 };
 	static int monedcred [] = { 3, 4, 2, 1, 1, 3, 1, 1 };
 	
-	public static ReadHandlerPtr grobda_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr grobda_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode, val, temp1, temp2;
 	
 	    mode = grobda_customio_1[8];
@@ -209,8 +202,7 @@ public class grobda
 	    return grobda_customio_1[offset];
 	} };
 	
-	public static ReadHandlerPtr grobda_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr grobda_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int val, mode;
 	
 	    mode = grobda_customio_2[8];

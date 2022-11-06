@@ -68,7 +68,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -169,7 +169,7 @@ public class geebee
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_geebee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_geebee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( geebee )
 		PORT_START(); 		/* IN0 SW0 */
 		PORT_BIT	( 0x01, IP_ACTIVE_LOW, IPT_COIN1   );
 		PORT_BIT	( 0x02, IP_ACTIVE_LOW, IPT_COIN2   );
@@ -227,7 +227,7 @@ public class geebee
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_navalone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_navalone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( navalone )
 		PORT_START(); 		/* IN0 SW0 */
 		PORT_BIT	( 0x01, IP_ACTIVE_LOW, IPT_COIN1   );
 		PORT_BIT	( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -275,7 +275,7 @@ public class geebee
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kaitei = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kaitei = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kaitei )
 		PORT_START(); 		/* IN0 SW0 */
 		PORT_BIT	( 0x01, IP_ACTIVE_LOW,	IPT_COIN1 );
 		PORT_BIT	( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -330,7 +330,7 @@ public class geebee
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kaitein = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kaitein = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kaitein )
 		PORT_START(); 		/* IN0 SW0 */
 		PORT_BIT	( 0x01, IP_ACTIVE_LOW,	IPT_COIN1 );
 		PORT_BIT	( 0x02, IP_ACTIVE_LOW,	IPT_COIN2 );
@@ -380,7 +380,7 @@ public class geebee
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sos )
 	    PORT_START();       /* IN0 SW0 */
 	    PORT_BIT    ( 0x01, IP_ACTIVE_LOW, IPT_COIN1   );
 	    PORT_BIT    ( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -466,8 +466,7 @@ public class geebee
 		geebee_sh_update
 	};
 	
-	public static MachineHandlerPtr machine_driver_geebee = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( geebee )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -492,13 +491,10 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_navalone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( navalone )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -523,13 +519,10 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kaitei = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kaitei )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -554,13 +547,10 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080,18432000/9) 		/* 18.432 MHz / 9 */
@@ -585,9 +575,7 @@ public class geebee
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -638,17 +626,16 @@ public class geebee
 	
 	
 	
-	public static DriverInitHandlerPtr init_geebee  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_geebee  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(geebee_overlay);
 	} };
 	
 	
-	public static GameDriver driver_geebee	   = new GameDriver("1978"	,"geebee"	,"geebee.java"	,rom_geebee,null	,machine_driver_geebee	,input_ports_geebee	,init_geebee	,ROT90	,	"Namco", "Gee Bee" )
-	public static GameDriver driver_geebeeg	   = new GameDriver("1978"	,"geebeeg"	,"geebee.java"	,rom_geebeeg,driver_geebee	,machine_driver_geebee	,input_ports_geebee	,init_geebee	,ROT90	,	"[Namco] (Gremlin license)", "Gee Bee (Gremlin)" )
-	public static GameDriver driver_navalone	   = new GameDriver("1980"	,"navalone"	,"geebee.java"	,rom_navalone,null	,machine_driver_navalone	,input_ports_navalone	,null	,ROT90	,	"Namco", "Navalone", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_kaitei	   = new GameDriver("1980"	,"kaitei"	,"geebee.java"	,rom_kaitei,null	,machine_driver_kaitei	,input_ports_kaitei	,null	,ROT90	,	"K.K. Tokki", "Kaitei Takara Sagashi" )
-	public static GameDriver driver_kaitein	   = new GameDriver("1980"	,"kaitein"	,"geebee.java"	,rom_kaitein,driver_kaitei	,machine_driver_kaitei	,input_ports_kaitein	,null	,ROT90	,	"Namco", "Kaitei Takara Sagashi (Namco)" )
-	public static GameDriver driver_sos	   = new GameDriver("1980"	,"sos"	,"geebee.java"	,rom_sos,null	,machine_driver_sos	,input_ports_sos	,null	,ROT90	,	"Namco", "SOS", GAME_IMPERFECT_SOUND )
+	GAME ( 1978, geebee,   0,        geebee,   geebee,   geebee, ROT90, "Namco", "Gee Bee" )
+	GAME ( 1978, geebeeg,  geebee,	 geebee,   geebee,   geebee, ROT90, "[Namco] (Gremlin license)", "Gee Bee (Gremlin)" )
+	GAMEX( 1980, navalone, 0,        navalone, navalone, 0,      ROT90, "Namco", "Navalone", GAME_IMPERFECT_SOUND )
+	GAME ( 1980, kaitei,   0,        kaitei,   kaitei,   0,      ROT90, "K.K. Tokki", "Kaitei Takara Sagashi" )
+	GAME ( 1980, kaitein,  kaitei,	 kaitei,   kaitein,  0,      ROT90, "Namco", "Kaitei Takara Sagashi (Namco)" )
+	GAMEX( 1980, sos,	   0,        sos,      sos,      0,      ROT90, "Namco", "SOS", GAME_IMPERFECT_SOUND )
 	
 }

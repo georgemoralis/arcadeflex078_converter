@@ -9,7 +9,7 @@ Nintendo VS UniSystem and DualSystem - (c) 1984 Nintendo of America
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -115,10 +115,9 @@ public class vsnes
 	 *	Input Ports
 	 *
 	 *************************************/
-	public static WriteHandlerPtr vsnes_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsnes_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Toggling bit 0 high then low resets both controllers */
-		if ((data & 1) != 0)
+		if ( data & 1 )
 		{
 			/* load up the latches */
 			input_latch[0] = readinputport( 0 );
@@ -126,8 +125,7 @@ public class vsnes
 		}
 	} };
 	
-	public static ReadHandlerPtr gun_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gun_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = ( input_latch[0] ) & 1;
 	
 		/* shift */
@@ -151,8 +149,7 @@ public class vsnes
 	} };
 	
 	
-	public static ReadHandlerPtr vsnes_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsnes_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 		int ret = ( input_latch[0] ) & 1;
 	
@@ -167,8 +164,7 @@ public class vsnes
 	} };
 	
 	
-	public static ReadHandlerPtr vsnes_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsnes_in1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = ( input_latch[1] ) & 1;
 	
 		ret |= readinputport( 3 ) & ~3;			/* merge the rest of the dipswitches */
@@ -179,10 +175,9 @@ public class vsnes
 		return ret;
 	} };
 	
-	public static WriteHandlerPtr vsnes_in0_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsnes_in0_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Toggling bit 0 high then low resets both controllers */
-		if ((data & 1) != 0)
+		if ( data & 1 )
 		{
 			/* load up the latches */
 			input_latch[2] = readinputport( 4 );
@@ -190,8 +185,7 @@ public class vsnes
 		}
 	} };
 	
-	public static ReadHandlerPtr vsnes_in0_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsnes_in0_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = ( input_latch[2] ) & 1;
 	
 		/* shift */
@@ -202,8 +196,7 @@ public class vsnes
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr vsnes_in1_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsnes_in1_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = ( input_latch[3] ) & 1;
 	
 		ret |= readinputport( 7 ) & ~3;			/* merge the rest of the dipswitches */
@@ -221,8 +214,7 @@ public class vsnes
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_vsnes  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vsnes  = new MachineInitHandlerPtr() { public void handler(){
 		input_latch[0] = input_latch[1] = 0;
 		input_latch[2] = input_latch[3] = 0;
 	
@@ -230,7 +222,7 @@ public class vsnes
 		ppu2c03b_reset( 0, 1 );
 	
 		/* if we need to remap, install the callback */
-		if (remapped_colortable != 0)
+		if ( remapped_colortable )
 			ppu2c03b_set_vidaccess_callback( 0, remap_colors );
 	} };
 	
@@ -239,8 +231,7 @@ public class vsnes
 	 *	Init machine
 	 *
 	 *************************************/
-	public static MachineInitHandlerPtr machine_init_vsdual  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vsdual  = new MachineInitHandlerPtr() { public void handler(){
 		input_latch[0] = input_latch[1] = 0;
 		input_latch[2] = input_latch[3] = 0;
 	
@@ -249,7 +240,7 @@ public class vsnes
 		ppu2c03b_reset( 1,1 );
 	
 		/* if we need to remap, install the callback */
-		if (remapped_colortable != 0)
+		if ( remapped_colortable )
 		{
 			ppu2c03b_set_vidaccess_callback( 0, remap_colors );
 			ppu2c03b_set_vidaccess_callback( 1, remap_colors );
@@ -261,8 +252,7 @@ public class vsnes
 	 *	Common init for all games
 	 *
 	 *************************************/
-	public static DriverInitHandlerPtr init_vsnes  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsnes  = new DriverInitHandlerPtr() { public void handler(){
 		/* set the controller to default */
 		vsnes_gun_controller = 0;
 	
@@ -276,8 +266,7 @@ public class vsnes
 	 *
 	 **********************************************************************************/
 	
-	public static WriteHandlerPtr vsnormal_vrom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsnormal_vrom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* switch vrom */
 		ppu2c03b_set_videorom_bank( 0, 0, 8, ( data & 4 ) ? 1 : 0, 512 );
 	
@@ -289,14 +278,12 @@ public class vsnes
 	
 	/* Most games switch VROM Banks in controller 0 write */
 	/* they dont do any other trickery */
-	public static DriverInitHandlerPtr init_vsnormal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsnormal  = new DriverInitHandlerPtr() { public void handler(){
 		/* vrom switching is enabled with bit 2 of $4016 */
 		install_mem_write_handler( 0, 0x4016, 0x4016, vsnormal_vrom_banking );
 	} };
 	
-	public static WriteHandlerPtr ppuRC2C05_protection = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ppuRC2C05_protection = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* This PPU has registers mapped at $2000 and $2001 inverted */
 		/* and no remapped color */
 	
@@ -313,8 +300,7 @@ public class vsnes
 	
 	/* Super Mario Bros. Extra ram at $6000 (NV?) and remapped colors */
 	
-	public static DriverInitHandlerPtr init_suprmrio  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_suprmrio  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_vsnes();
 	
@@ -335,30 +321,29 @@ public class vsnes
 	
 	/* Gun Games - VROM Banking in controller 0 write */
 	
-	public static WriteHandlerPtr gun_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gun_in0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int zapstore;
 	
-		if (vsnes_do_vrom_bank != 0)
+		if (vsnes_do_vrom_bank)
 		{
 			/* switch vrom */
 			ppu2c03b_set_videorom_bank( 0, 0, 8, ( data & 4 ) ? 1 : 0, 512 );
 		}
 	
 		/* here we do things a little different */
-		if ((data & 1) != 0)
+		if ( data & 1 )
 		{
 	
 			/* load up the latches */
 			input_latch[0] = readinputport( 0 );
 	
 			/* do the gun thing */
-			if (vsnes_gun_controller != 0)
+			if ( vsnes_gun_controller )
 			{
 				int x = readinputport( 4 );
 				int y = readinputport( 5 );
 				UINT32 pix, color_base;
-				pen_t *pens = Machine.pens;
+				pen_t *pens = Machine->pens;
 	
 				/* get the pixel at the gun position */
 				pix = ppu2c03b_get_pixel( 0, x, y );
@@ -387,8 +372,7 @@ public class vsnes
 	
 	} };
 	
-	public static DriverInitHandlerPtr init_duckhunt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_duckhunt  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler ( 0, 0x4016, 0x4016, gun_in0_r);
 		/* vrom switching is enabled with bit 2 of $4016 */
 		install_mem_write_handler( 0, 0x4016, 0x4016, gun_in0_w );
@@ -405,8 +389,7 @@ public class vsnes
 	
 	/* The Goonies, VS Gradius: ROMs bankings at $8000-$ffff */
 	
-	public static WriteHandlerPtr goonies_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr goonies_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int reg = ( offset >> 12 ) & 0x07;
 		int bankoffset = ( data & 7 ) * 0x2000 + 0x10000;
 	
@@ -434,8 +417,7 @@ public class vsnes
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_goonies  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_goonies  = new DriverInitHandlerPtr() { public void handler(){
 		/* We do manual banking, in case the code falls through */
 		/* Copy the initial banks */
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x18000], 0x8000 );
@@ -450,8 +432,7 @@ public class vsnes
 		remapped_colortable = rp2c04003_colortable;
 	} };
 	
-	public static DriverInitHandlerPtr init_vsgradus  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsgradus  = new DriverInitHandlerPtr() { public void handler(){
 		/* We do manual banking, in case the code falls through */
 		/* Copy the initial banks */
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x18000], 0x8000 );
@@ -466,8 +447,7 @@ public class vsnes
 		remapped_colortable = rp2c04001_colortable;
 	} };
 	
-	public static DriverInitHandlerPtr init_vspinbal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vspinbal  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_vsnes();
 	
@@ -479,8 +459,7 @@ public class vsnes
 	
 	} };
 	
-	public static DriverInitHandlerPtr init_hogalley  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hogalley  = new DriverInitHandlerPtr() { public void handler(){
 	
 		install_mem_read_handler ( 0, 0x4016, 0x4016, gun_in0_r);
 		/* vrom switching is enabled with bit 2 of $4016 */
@@ -501,14 +480,12 @@ public class vsnes
 	
 	/* Vs. Gumshoe */
 	
-	public static ReadHandlerPtr vsgshoe_security_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsgshoe_security_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* low part must be 0x1c */
 		return ppu2c03b_0_r( 2 ) | 0x1c;
 	} };
 	
-	public static DriverInitHandlerPtr init_vsgshoe  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsgshoe  = new DriverInitHandlerPtr() { public void handler(){
 	
 		//Game
 		memcpy (&memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x10000], 0x2000);
@@ -540,15 +517,14 @@ public class vsnes
 	static int drmario_shiftreg;
 	static int drmario_shiftcount;
 	
-	public static WriteHandlerPtr drmario_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr drmario_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* basically, a MMC1 mapper from the nes */
 		static int size16k, switchlow, vrom4k;
 	
 		int reg = ( offset >> 13 );
 	
 		/* reset mapper */
-		if ((data & 0x80) != 0)
+		if ( data & 0x80 )
 		{
 			drmario_shiftreg = drmario_shiftcount = 0;
 	
@@ -615,7 +591,7 @@ public class vsnes
 				break;
 	
 				case 2: /* video rom banking - bank 1 - 4k only */
-					if (vrom4k != 0)
+					if ( vrom4k )
 						ppu2c03b_set_videorom_bank( 0, 4, 4, drmario_shiftreg, 256 );
 				break;
 	
@@ -623,7 +599,7 @@ public class vsnes
 					{
 						int bank = ( drmario_shiftreg & 0x03 ) * 0x4000;
 	
-						if (size16k == 0)
+						if ( !size16k )
 						{
 							/* switch 32k */
 							memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x010000+bank], 0x8000 );
@@ -631,7 +607,7 @@ public class vsnes
 						else
 						{
 							/* switch 16k */
-							if (switchlow != 0)
+							if ( switchlow )
 							{
 								/* low */
 								memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x010000+bank], 0x4000 );
@@ -650,8 +626,7 @@ public class vsnes
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_drmario  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_drmario  = new DriverInitHandlerPtr() { public void handler(){
 		/* We do manual banking, in case the code falls through */
 		/* Copy the initial banks */
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x10000], 0x4000 );
@@ -674,8 +649,7 @@ public class vsnes
 	
 	/* Excite Bike */
 	
-	public static DriverInitHandlerPtr init_excitebk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_excitebk  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_vsnes();
 	
@@ -688,8 +662,7 @@ public class vsnes
 		remapped_colortable = rp2c04003_colortable;
 	} };
 	
-	public static DriverInitHandlerPtr init_excitbkj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_excitbkj  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_vsnes();
 	
@@ -706,8 +679,7 @@ public class vsnes
 	
 	/* Mach Rider */
 	
-	public static DriverInitHandlerPtr init_machridr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_machridr  = new DriverInitHandlerPtr() { public void handler(){
 	
 		/* common init */
 		init_vsnes();
@@ -725,8 +697,7 @@ public class vsnes
 	
 	/* VS Slalom */
 	
-	public static DriverInitHandlerPtr init_vsslalom  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsslalom  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_vsnes();
 	
@@ -740,15 +711,13 @@ public class vsnes
 	
 	/* Castelvania: ROMs bankings at $8000-$ffff */
 	
-	public static WriteHandlerPtr castlevania_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr castlevania_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int rombank = 0x10000 + ( data & 7 ) * 0x4000;
 	
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[rombank], 0x4000 );
 	} };
 	
-	public static DriverInitHandlerPtr init_cstlevna  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cstlevna  = new DriverInitHandlerPtr() { public void handler(){
 		/* when starting the game, the 1st 16k and the last 16k are loaded into the 2 banks */
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x28000], 0x8000 );
 	
@@ -768,14 +737,12 @@ public class vsnes
 	
 	/* VS Top Gun: ROMs bankings at $8000-$ffff, plus some protection */
 	
-	public static ReadHandlerPtr topgun_security_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr topgun_security_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* low part must be 0x1b */
 		return ppu2c03b_0_r( 2 ) | 0x1b;
 	} };
 	
-	public static DriverInitHandlerPtr init_topgun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_topgun  = new DriverInitHandlerPtr() { public void handler(){
 		/* when starting the game, the 1st 16k and the last 16k are loaded into the 2 banks */
 		memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x28000], 0x8000 );
 	
@@ -802,7 +769,7 @@ public class vsnes
 		MMC3_prg0 &= MMC3_prg_mask;
 		MMC3_prg1 &= MMC3_prg_mask;
 	
-		if ((MMC3_cmd & 0x40) != 0)
+		if (MMC3_cmd & 0x40)
 		{
 			memcpy( &memory_region( REGION_CPU1 )[0x8000], &memory_region( REGION_CPU1 )[(MMC3_prg_chunks-1) * 0x4000 + 0x10000], 0x2000 );
 			memcpy( &memory_region( REGION_CPU1 )[0xc000], &memory_region( REGION_CPU1 )[0x2000 * (MMC3_prg0) + 0x10000], 0x2000 );
@@ -846,8 +813,7 @@ public class vsnes
 		}
 	}
 	
-	public static WriteHandlerPtr mapper4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mapper4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 last_bank = 0xff;
 	
 		switch (offset & 0x7001)
@@ -897,11 +863,11 @@ public class vsnes
 				break;
 			}
 			case 0x2000: /* $a000 */
-				if ((data & 0x40) != 0)
+				if (data & 0x40)
 					ppu2c03b_set_mirroring(0, PPU_MIRROR_HIGH);
 				else
 				{
-					if ((data & 0x01) != 0)
+					if (data & 0x01)
 						ppu2c03b_set_mirroring(0, PPU_MIRROR_HORZ);
 					else
 						ppu2c03b_set_mirroring(0, PPU_MIRROR_VERT);
@@ -945,8 +911,7 @@ public class vsnes
 	
 	/* Common init for MMC3 games */
 	
-	public static DriverInitHandlerPtr init_MMC3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_MMC3  = new DriverInitHandlerPtr() { public void handler(){
 		IRQ_enable = IRQ_count = IRQ_count_latch = 0;
 		MMC3_prg0 = 0xfe;
 		MMC3_prg1 = 0xff;
@@ -974,8 +939,7 @@ public class vsnes
 	
 	/* Vs. RBI Baseball */
 	
-	public static ReadHandlerPtr rbi_hack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rbi_hack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Supplied by Ben Parnell <xodnizel@home.com> of FCE Ultra fame */
 	
 		static int VSindex;
@@ -1005,8 +969,7 @@ public class vsnes
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_rbibb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rbibb  = new DriverInitHandlerPtr() { public void handler(){
 		init_MMC3();
 	
 		/* RBI Base ball hack */
@@ -1019,30 +982,26 @@ public class vsnes
 	
 	static int supxevs_prot_index = 0;
 	
-	public static ReadHandlerPtr supxevs_read_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr supxevs_read_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x05;
 	} };
 	
-	public static ReadHandlerPtr supxevs_read_prot_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (supxevs_prot_index != 0)
+	public static ReadHandlerPtr supxevs_read_prot_2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if( supxevs_prot_index )
 			return 0;
 		else
 			return 0x01;
 	} };
 	
-	public static ReadHandlerPtr supxevs_read_prot_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (supxevs_prot_index != 0)
+	public static ReadHandlerPtr supxevs_read_prot_3_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if( supxevs_prot_index )
 			return 0xd1;
 		else
 			return 0x89;
 	} };
 	
-	public static ReadHandlerPtr supxevs_read_prot_4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (supxevs_prot_index != 0)
+	public static ReadHandlerPtr supxevs_read_prot_4_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if( supxevs_prot_index )
 		{
 			supxevs_prot_index = 0;
 			return 0x3e;
@@ -1055,8 +1014,7 @@ public class vsnes
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_supxevs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_supxevs  = new DriverInitHandlerPtr() { public void handler(){
 		init_MMC3();
 	
 		/* Vs. Super Xevious Protection */
@@ -1070,8 +1028,7 @@ public class vsnes
 	
 	/* Vs. TKO Boxing */
 	
-	public static ReadHandlerPtr tko_security_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tko_security_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int security_counter;
 		static UINT8 security_data[] = {
 			0xff, 0xbf, 0xb7, 0x97, 0x97, 0x17, 0x57, 0x4f,
@@ -1090,8 +1047,7 @@ public class vsnes
 	
 	} };
 	
-	public static DriverInitHandlerPtr init_tkoboxng  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tkoboxng  = new DriverInitHandlerPtr() { public void handler(){
 		init_MMC3();
 	
 		/* security device at $5e00-$5e01 */
@@ -1105,8 +1061,7 @@ public class vsnes
 	
 	/* Vs. Freedom Force */
 	
-	public static DriverInitHandlerPtr init_vsfdf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsfdf  = new DriverInitHandlerPtr() { public void handler(){
 		init_MMC3();
 	
 		install_mem_read_handler ( 0, 0x4016, 0x4016, gun_in0_r );
@@ -1121,7 +1076,7 @@ public class vsnes
 	/**********************************************************************************/
 	/* Platoon rom banking */
 	
-	public static WriteHandlerPtr mapper68_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mapper68_rom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		switch (offset & 0x7000)
 		{
@@ -1146,12 +1101,11 @@ public class vsnes
 			memcpy( &memory_region( REGION_CPU1 )[0x08000], &memory_region( REGION_CPU1 )[0x10000 +data*0x4000], 0x4000 );
 			break;
 	
-		}
+		} };
 	
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_platoon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_platoon  = new DriverInitHandlerPtr() { public void handler(){
 	
 		/* when starting a mapper 68 game  the first 16K ROM bank in the cart is loaded into $8000
 		the LAST 16K ROM bank is loaded into $C000. The last 16K of ROM cannot be swapped. */
@@ -1171,21 +1125,18 @@ public class vsnes
 	/* Vs. Raid on Bungeling Bay (Japan) */
 	
 	static int ret;
-	static public static WriteHandlerPtr set_bnglngby_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr set_bnglngby_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ret = data;
 		cpu_set_irq_line( 0, 0, ( data & 2 ) ? ASSERT_LINE : CLEAR_LINE );
 		/* other values ??? */
 		/* 0, 4, 84 */
 	} };
 	
-	static public static ReadHandlerPtr set_bnglngby_irq_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr set_bnglngby_irq_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ret;
 	} };
 	
-	public static DriverInitHandlerPtr init_bnglngby  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bnglngby  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler( 0, 0x0231, 0x0231, set_bnglngby_irq_r );
 		install_mem_write_handler( 0, 0x0231, 0x0231, set_bnglngby_irq_w );
 	
@@ -1207,14 +1158,12 @@ public class vsnes
 	/**********************************************************************************/
 	/* Vs. Ninja Jajamaru Kun */
 	
-	public static ReadHandlerPtr jajamaru_security_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jajamaru_security_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* low part must be 0x40 */
 		return ppu2c03b_0_r( 2 ) | 0x40;
 	} };
 	
-	public static DriverInitHandlerPtr init_jajamaru  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jajamaru  = new DriverInitHandlerPtr() { public void handler(){
 		//It executes an illegal opcode: 0x04 at 0x9e67 and 0x9e1c
 		//At 0x9e5d and 0x9e12 there is a conditional jump to it
 		//Maybe it should be a DOP (double NOP)
@@ -1234,14 +1183,12 @@ public class vsnes
 	
 	/* Vs. Mighty Bomb Jack */
 	
-	public static ReadHandlerPtr mightybj_security_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mightybj_security_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* low part must be 0x3d */
 		return ppu2c03b_0_r( 2 ) | 0x3d;
 	} };
 	
-	public static DriverInitHandlerPtr init_mightybj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mightybj  = new DriverInitHandlerPtr() { public void handler(){
 		/* Protection */
 		install_mem_read_handler( 0, 0x2002, 0x2002, mightybj_security_r );
 		install_mem_write_handler( 0, 0x2000, 0x2001, ppuRC2C05_protection );
@@ -1253,8 +1200,7 @@ public class vsnes
 	/**********************************************************************************/
 	/* VS Tennis */
 	
-	public static WriteHandlerPtr vstennis_vrom_banking = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vstennis_vrom_banking = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int other_cpu = cpu_getactivecpu() ^ 1;
 	
 		/* switch vrom */
@@ -1270,8 +1216,7 @@ public class vsnes
 			vsnes_in0_1_w( offset, data );
 	} };
 	
-	public static DriverInitHandlerPtr init_vstennis  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vstennis  = new DriverInitHandlerPtr() { public void handler(){
 		/* vrom switching is enabled with bit 2 of $4016 */
 		install_mem_write_handler( 0, 0x4016, 0x4016, vstennis_vrom_banking );
 		install_mem_write_handler( 1, 0x4016, 0x4016, vstennis_vrom_banking );
@@ -1287,8 +1232,7 @@ public class vsnes
 	/**********************************************************************/
 	/* Wrecking Crew Init*/
 	
-	public static DriverInitHandlerPtr init_wrecking  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wrecking  = new DriverInitHandlerPtr() { public void handler(){
 		/* only differance between this and vstennis is the colors */
 	
 		init_vstennis();
@@ -1298,8 +1242,7 @@ public class vsnes
 	/**********************************************************************/
 	/* VS Balloon Fight */
 	
-	public static DriverInitHandlerPtr init_balonfgt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_balonfgt  = new DriverInitHandlerPtr() { public void handler(){
 		/* only differance between this and vstennis is the colors */
 	
 		init_vstennis();
@@ -1311,8 +1254,7 @@ public class vsnes
 	/**********************************************************************/
 	/* VS Baseball */
 	
-	public static DriverInitHandlerPtr init_vsbball  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vsbball  = new DriverInitHandlerPtr() { public void handler(){
 		/* only differance between this and vstennis is the colors */
 	
 		init_vstennis();
@@ -1325,8 +1267,7 @@ public class vsnes
 	/**********************************************************************/
 	/* Dual Ice Climber Jpn */
 	
-	public static DriverInitHandlerPtr init_iceclmrj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_iceclmrj  = new DriverInitHandlerPtr() { public void handler(){
 		/* only differance between this and vstennis is the colors */
 	
 		init_vstennis();
@@ -1337,8 +1278,7 @@ public class vsnes
 	
 	/**********************************************************************/
 	/* Battle City */
-	public static DriverInitHandlerPtr init_btlecity  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_btlecity  = new DriverInitHandlerPtr() { public void handler(){
 		init_vsnes();
 		init_vsnormal();
 		remapped_colortable = rp2c04003_colortable;
@@ -1346,8 +1286,7 @@ public class vsnes
 	
 	/***********************************************************************/
 	/* Tetris */
-	public static DriverInitHandlerPtr init_vstetris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vstetris  = new DriverInitHandlerPtr() { public void handler(){
 		/* extra ram at $6000 is enabled with bit 1 of $4016 */
 		install_mem_read_handler( 0, 0x6000, 0x7fff, MRA_RAM );
 		install_mem_write_handler( 0, 0x6000, 0x7fff, MWA_RAM );

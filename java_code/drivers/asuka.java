@@ -104,7 +104,7 @@ the prog rom. Doesn't seem to cause problems though.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -131,8 +131,7 @@ public class asuka
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr cadash_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cadash_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(500,0),0, cadash_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);  /* interrupt vector 4 */
 	} };
@@ -142,8 +141,7 @@ public class asuka
 				SOUND
 	************************************************/
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 1, memory_region(REGION_CPU2) + ((data-1) & 0x03) * 0x4000 + 0x10000 );
 	} };
 	
@@ -414,7 +412,7 @@ public class asuka
 		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
 	
-	static InputPortPtr input_ports_bonzeadv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bonzeadv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bonzeadv )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -486,7 +484,7 @@ public class asuka
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jigkmgri = new InputPortPtr(){ public void handler() {  /* coinage DIPs differ from bonzeadv */
+	static InputPortPtr input_ports_jigkmgri = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jigkmgri ) /* coinage DIPs differ from bonzeadv */
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -549,7 +547,7 @@ public class asuka
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_asuka = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asuka = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asuka )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -598,7 +596,7 @@ public class asuka
 		ASUKA_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mofflott = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mofflott = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mofflott )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -641,7 +639,7 @@ public class asuka
 		ASUKA_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cadash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cadash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cadash )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	// Manual says leave it off
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -689,7 +687,7 @@ public class asuka
 		CADASH_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cadashj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cadashj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cadashj )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	// Manual says leave it off
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -731,7 +729,7 @@ public class asuka
 		CADASH_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cadashu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cadashu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cadashu )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );	// Manual says leave it off
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -773,7 +771,7 @@ public class asuka
 		CADASH_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_galmedes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galmedes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galmedes )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -816,7 +814,7 @@ public class asuka
 		ASUKA_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_earthjkr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_earthjkr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( earthjkr )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -860,7 +858,7 @@ public class asuka
 		ASUKA_SYSTEM_INPUT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_eto = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eto = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eto )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -991,14 +989,12 @@ public class asuka
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_asuka  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_asuka  = new VideoEofHandlerPtr() { public void handler(){
 		PC090OJ_eof_callback();
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_bonzeadv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bonzeadv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)    /* checked on PCB */
@@ -1025,12 +1021,9 @@ public class asuka
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_asuka = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( asuka )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz ??? */
@@ -1058,12 +1051,9 @@ public class asuka
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cadash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cadash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -1091,12 +1081,9 @@ public class asuka
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_galmedes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galmedes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz ??? */
@@ -1124,12 +1111,9 @@ public class asuka
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_eto = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( eto )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz ??? */
@@ -1157,9 +1141,7 @@ public class asuka
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1475,17 +1457,17 @@ public class asuka
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_bonzeadv	   = new GameDriver("1988"	,"bonzeadv"	,"asuka.java"	,rom_bonzeadv,null	,machine_driver_bonzeadv	,input_ports_bonzeadv	,null	,ROT0	,	"Taito Corporation Japan", "Bonze Adventure (World)" )
-	public static GameDriver driver_bonzeadu	   = new GameDriver("1988"	,"bonzeadu"	,"asuka.java"	,rom_bonzeadu,driver_bonzeadv	,machine_driver_bonzeadv	,input_ports_jigkmgri	,null	,ROT0	,	"Taito America Corporation", "Bonze Adventure (US)" )
-	public static GameDriver driver_jigkmgri	   = new GameDriver("1988"	,"jigkmgri"	,"asuka.java"	,rom_jigkmgri,driver_bonzeadv	,machine_driver_bonzeadv	,input_ports_jigkmgri	,null	,ROT0	,	"Taito Corporation", "Jigoku Meguri (Japan)" )
-	public static GameDriver driver_asuka	   = new GameDriver("1988"	,"asuka"	,"asuka.java"	,rom_asuka,null	,machine_driver_asuka	,input_ports_asuka	,null	,ROT270	,	"Taito Corporation", "Asuka & Asuka (Japan)" )
-	public static GameDriver driver_mofflott	   = new GameDriver("1989"	,"mofflott"	,"asuka.java"	,rom_mofflott,null	,machine_driver_galmedes	,input_ports_mofflott	,null	,ROT270	,	"Taito Corporation", "Maze of Flott (Japan)" )
-	public static GameDriver driver_cadash	   = new GameDriver("1989"	,"cadash"	,"asuka.java"	,rom_cadash,null	,machine_driver_cadash	,input_ports_cadash	,null	,ROT0	,	"Taito Corporation Japan", "Cadash (World)" )
-	public static GameDriver driver_cadashj	   = new GameDriver("1989"	,"cadashj"	,"asuka.java"	,rom_cadashj,driver_cadash	,machine_driver_cadash	,input_ports_cadashj	,null	,ROT0	,	"Taito Corporation", "Cadash (Japan)" )
-	public static GameDriver driver_cadashu	   = new GameDriver("1989"	,"cadashu"	,"asuka.java"	,rom_cadashu,driver_cadash	,machine_driver_cadash	,input_ports_cadashu	,null	,ROT0	,	"Taito America Corporation", "Cadash (US)" )
-	public static GameDriver driver_cadashi	   = new GameDriver("1989"	,"cadashi"	,"asuka.java"	,rom_cadashi,driver_cadash	,machine_driver_cadash	,input_ports_cadash	,null	,ROT0	,	"Taito Corporation Japan", "Cadash (Italy)" )
-	public static GameDriver driver_cadashf	   = new GameDriver("1989"	,"cadashf"	,"asuka.java"	,rom_cadashf,driver_cadash	,machine_driver_cadash	,input_ports_cadash	,null	,ROT0	,	"Taito Corporation Japan", "Cadash (France)" )
-	public static GameDriver driver_galmedes	   = new GameDriver("1992"	,"galmedes"	,"asuka.java"	,rom_galmedes,null	,machine_driver_galmedes	,input_ports_galmedes	,null	,ROT270	,	"Visco", "Galmedes (Japan)" )
-	public static GameDriver driver_earthjkr	   = new GameDriver("1993"	,"earthjkr"	,"asuka.java"	,rom_earthjkr,null	,machine_driver_galmedes	,input_ports_earthjkr	,null	,ROT270	,	"Visco", "U.N. Defense Force: Earth Joker (Japan)" )
-	public static GameDriver driver_eto	   = new GameDriver("1994"	,"eto"	,"asuka.java"	,rom_eto,null	,machine_driver_eto	,input_ports_eto	,null	,ROT0	,	"Visco", "Kokontouzai Eto Monogatari (Japan)" )
+	GAME( 1988, bonzeadv, 0,        bonzeadv, bonzeadv, 0, ROT0,   "Taito Corporation Japan", "Bonze Adventure (World)" )
+	GAME( 1988, bonzeadu, bonzeadv, bonzeadv, jigkmgri, 0, ROT0,   "Taito America Corporation", "Bonze Adventure (US)" )
+	GAME( 1988, jigkmgri, bonzeadv, bonzeadv, jigkmgri, 0, ROT0,   "Taito Corporation", "Jigoku Meguri (Japan)" )
+	GAME( 1988, asuka,    0,        asuka,    asuka,    0, ROT270, "Taito Corporation", "Asuka & Asuka (Japan)" )
+	GAME( 1989, mofflott, 0,        galmedes, mofflott, 0, ROT270, "Taito Corporation", "Maze of Flott (Japan)" )
+	GAME( 1989, cadash,   0,        cadash,   cadash,   0, ROT0,   "Taito Corporation Japan", "Cadash (World)" )
+	GAME( 1989, cadashj,  cadash,   cadash,   cadashj,  0, ROT0,   "Taito Corporation", "Cadash (Japan)" )
+	GAME( 1989, cadashu,  cadash,   cadash,   cadashu,  0, ROT0,   "Taito America Corporation", "Cadash (US)" )
+	GAME( 1989, cadashi,  cadash,   cadash,   cadash,   0, ROT0,   "Taito Corporation Japan", "Cadash (Italy)" )
+	GAME( 1989, cadashf,  cadash,   cadash,   cadash,   0, ROT0,   "Taito Corporation Japan", "Cadash (France)" )
+	GAME( 1992, galmedes, 0,        galmedes, galmedes, 0, ROT270, "Visco", "Galmedes (Japan)" )
+	GAME( 1993, earthjkr, 0,        galmedes, earthjkr, 0, ROT270, "Visco", "U.N. Defense Force: Earth Joker (Japan)" )
+	GAME( 1994, eto,      0,        eto,      eto,      0, ROT0,   "Visco", "Kokontouzai Eto Monogatari (Japan)" )
 }

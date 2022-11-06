@@ -97,7 +97,7 @@ CRU lines:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -111,8 +111,7 @@ public class supertnk
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_supertnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_supertnk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, r, g, b;
 	
 		for (i = 0;i < 0x20;i++)
@@ -128,8 +127,7 @@ public class supertnk
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_supertnk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_supertnk  = new VideoStartHandlerPtr() { public int handler(){
 		supertnk_videoram = auto_malloc(0x6000);	/* allocate physical video RAM */
 	
 		if (supertnk_videoram  == NULL)
@@ -144,20 +142,17 @@ public class supertnk
 	
 	
 	
-	public static WriteHandlerPtr supertnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supertnk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x, y, i, col, col0, col1, col2;
 	
 		if (supertnk_video_bitplane > 2)
 		{
-			supertnk_videoram.write(
-		supertnk_videoram[0x2000 + offset] =
-		supertnk_videoram[0x4000 + offset] = 0,
-		supertnk_videoram[0x2000 + offset] =
-		supertnk_videoram[0x4000 + offset] = 0);
+			supertnk_videoram[0x0000 + offset] =
+			supertnk_videoram[0x2000 + offset] =
+			supertnk_videoram[0x4000 + offset] = 0;
 		}
 		else
-			supertnk_videoram.write(data,data);
+			supertnk_videoram[0x2000 * supertnk_video_bitplane + offset] = data;
 	
 	
 		x = (offset % 32) * 8 ;
@@ -165,42 +160,38 @@ public class supertnk
 	
 		for (i=0; i<8; i++)
 		{
-			col0 = (supertnk_videoram.read(0x0000 + offset)>> (7-i)) & 0x01;
-			col1 = (supertnk_videoram.read(0x2000 + offset)>> (7-i)) & 0x01;
-			col2 = (supertnk_videoram.read(0x4000 + offset)>> (7-i)) & 0x01;
+			col0 = (supertnk_videoram[0x0000 + offset] >> (7-i)) & 0x01;
+			col1 = (supertnk_videoram[0x2000 + offset] >> (7-i)) & 0x01;
+			col2 = (supertnk_videoram[0x4000 + offset] >> (7-i)) & 0x01;
 			col = ( (col0 << 2) | (col1 << 1) | (col2 << 0) );
 	
-			plot_pixel.handler(tmpbitmap, x+i, y, Machine.pens[col]);
+			plot_pixel(tmpbitmap, x+i, y, Machine->pens[col]);
 		}
 	} };
 	
 	
 	
-	public static ReadHandlerPtr supertnk_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr supertnk_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (supertnk_video_bitplane < 3)
-			return supertnk_videoram.read(0x2000 * supertnk_video_bitplane + offset);
+			return supertnk_videoram[0x2000 * supertnk_video_bitplane + offset];
 		else
 			return 0;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_supertnk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr supertnk_intack = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supertnk_intack = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr supertnk_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supertnk_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		UINT8 *ROM = memory_region(REGION_CPU1);
 		switch (offset)
@@ -220,8 +211,7 @@ public class supertnk
 	
 	
 	
-	public static WriteHandlerPtr supertnk_set_video_bitplane = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supertnk_set_video_bitplane = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:
@@ -237,8 +227,7 @@ public class supertnk
 	
 	
 	
-	public static InterruptHandlerPtr supertnk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr supertnk_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* On a TMS9980, a 6 on the interrupt bus means a level 4 interrupt */
 		cpu_set_irq_line_and_vector(0, 0, ASSERT_LINE, 6);
 	} };
@@ -296,8 +285,7 @@ public class supertnk
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_supertnk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( supertnk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS9980, 2598750) /* ? to which frequency is the 20.79 Mhz crystal mapped down? */
@@ -321,13 +309,11 @@ public class supertnk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
-	static InputPortPtr input_ports_supertnk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_supertnk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( supertnk )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
@@ -424,7 +410,7 @@ public class supertnk
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_supertnk  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_supertnk  = new DriverInitHandlerPtr() { public void handler()
 		/* decode the TMS9980 ROMs */
 		UINT8 *pMem = memory_region( REGION_CPU1 );
 		UINT8 raw, code;
@@ -433,24 +419,24 @@ public class supertnk
 		{
 			raw = pMem[i];
 			code = 0;
-			if ((raw & 0x01) != 0) code |= 0x80;
-			if ((raw & 0x02) != 0) code |= 0x40;
-			if ((raw & 0x04) != 0) code |= 0x20;
-			if ((raw & 0x08) != 0) code |= 0x10;
-			if ((raw & 0x10) != 0) code |= 0x08;
-			if ((raw & 0x20) != 0) code |= 0x04;
-			if ((raw & 0x40) != 0) code |= 0x02;
-			if ((raw & 0x80) != 0) code |= 0x01;
+			if( raw&0x01 ) code |= 0x80;
+			if( raw&0x02 ) code |= 0x40;
+			if( raw&0x04 ) code |= 0x20;
+			if( raw&0x08 ) code |= 0x10;
+			if( raw&0x10 ) code |= 0x08;
+			if( raw&0x20 ) code |= 0x04;
+			if( raw&0x40 ) code |= 0x02;
+			if( raw&0x80 ) code |= 0x01;
 			pMem[i] = code;
-		};
+		} };;
 	
 		supertnk_rom_bank = 0;
 		supertnk_video_bitplane = 0;
-	} };
+	}
 	
 	
 	
 	/*          rom       parent     machine   inp       init */
-	public static GameDriver driver_supertnk	   = new GameDriver("1981"	,"supertnk"	,"supertnk.java"	,rom_supertnk,null	,machine_driver_supertnk	,input_ports_supertnk	,init_supertnk	,ROT90	,	"Video Games GmbH", "Super Tank" )
+	GAME( 1981, supertnk,  0,        supertnk, supertnk, supertnk, ROT90, "Video Games GmbH", "Super Tank" )
 	
 }

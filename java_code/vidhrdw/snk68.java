@@ -14,7 +14,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -84,11 +84,10 @@ public class snk68
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_pow  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pow  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_pow_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0)
+		if (!fix_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fix_tilemap,0);
@@ -96,11 +95,10 @@ public class snk68
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_searchar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_searchar  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_sar_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0)
+		if (!fix_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fix_tilemap,0);
@@ -108,11 +106,10 @@ public class snk68
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ikari3  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ikari3  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_ikari3_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0)
+		if (!fix_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fix_tilemap,0);
@@ -128,7 +125,7 @@ public class snk68
 	
 	WRITE16_HANDLER( pow_flipscreen16_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 		    flip_screen_set(data & 0x08);
 		    sprite_flip=data&0x4;
@@ -185,7 +182,7 @@ public class snk68
 			my=0x200 - my;
 			my-=0x200;
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -193,18 +190,18 @@ public class snk68
 			for (i=0; i<0x80; i+=4) {
 				color=spriteram16[(offs+i+(0x1000*j)+0x1000)>>1]&0x7f;
 	
-				if (color != 0) {
+				if (color) {
 					tile=spriteram16[(offs+2+i+(0x1000*j)+0x1000)>>1];
 					fy=tile&0x8000;
 					fx=tile&0x4000;
 					tile&=0x3fff;
 	
-					if (flip_screen != 0) {
-						if (fx != 0) fx=0; else fx=1;
-						if (fy != 0) fy=0; else fy=1;
+					if (flip_screen()) {
+						if (fx) fx=0; else fx=1;
+						if (fy) fy=0; else fy=1;
 					}
 	
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
 						fx,fy,
@@ -212,7 +209,7 @@ public class snk68
 						cliprect,TRANSPARENCY_PEN,0);
 				}
 	
-				if (flip_screen != 0) {
+				if (flip_screen()) {
 					my-=16;
 					if (my < -0x100) my+=0x200;
 				}
@@ -225,8 +222,7 @@ public class snk68
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_pow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pow  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[2047],cliprect);
 	
 		/* This appears to be correct priority */
@@ -261,16 +257,16 @@ public class snk68
 			my=0x200 - my;
 			my-=0x200;
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				mx=240-mx;
 				my=240-my;
 			}
 	
 			for (i=0; i<0x80; i+=4) {
 				color=spriteram16[(offs+i+z)>>1]&0x7f;
-				if (color != 0) {
+				if (color) {
 					tile=spriteram16[(offs+2+i+z)>>1];
-					if (sprite_flip != 0) {
+					if (sprite_flip) {
 						fx=0;
 						fy=tile&0x8000;
 					} else {
@@ -278,22 +274,22 @@ public class snk68
 						fx=tile&0x8000;
 					}
 	
-					if (flip_screen != 0) {
-						if (fx != 0) fx=0; else fx=1;
-						if (fy != 0) fy=0; else fy=1;
+					if (flip_screen()) {
+						if (fx) fx=0; else fx=1;
+						if (fy) fy=0; else fy=1;
 					}
 	
 					tile&=0x7fff;
 					if (tile>0x5fff) break;
 	
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
 						fx,fy,
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 				}
-				if (flip_screen != 0) {
+				if (flip_screen()) {
 					my-=16;
 					if (my < -0x100) my+=0x200;
 				}
@@ -306,8 +302,7 @@ public class snk68
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_searchar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_searchar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[2047],cliprect);
 	
 		/* This appears to be correct priority */

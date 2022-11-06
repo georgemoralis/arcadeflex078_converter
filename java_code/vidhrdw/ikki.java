@@ -10,7 +10,7 @@ Video hardware driver by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class ikki
 	
 	static UINT8 ikki_flipscreen, ikki_scroll[2];
 	
-	public static PaletteInitHandlerPtr palette_init_ikki  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ikki  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i<256; i++)
@@ -60,18 +59,15 @@ public class ikki
 	
 	} };
 	
-	public static WriteHandlerPtr ikki_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ikki_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ikki_scroll[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr ikki_scrn_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ikki_scrn_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ikki_flipscreen = (data >> 2) & 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ikki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ikki  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		int offs,chr,col,px,py,f,bank,d;
 		data8_t *VIDEOATTR = memory_region( REGION_USER1 );

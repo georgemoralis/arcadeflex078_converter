@@ -148,7 +148,7 @@ VBlank duration: 1/VSYNC * (16/256) = 1017.6 us
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -163,8 +163,7 @@ public class gottlieb
 	
 	static UINT8 *audiobuffer_region;
 	
-	public static MachineInitHandlerPtr machine_init_gottlieb  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gottlieb  = new MachineInitHandlerPtr() { public void handler(){
 		UINT8 *ram = memory_region(REGION_CPU1);
 		cpu_setbank(1, &ram[0x8000]);
 		cpu_setbank(2, &ram[0x0000]);
@@ -174,18 +173,15 @@ public class gottlieb
 	
 	static int track[2];
 	
-	public static ReadHandlerPtr gottlieb_track_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gottlieb_track_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_2_r.handler(offset) - track[0];
 	} };
 	
-	public static ReadHandlerPtr gottlieb_track_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gottlieb_track_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_3_r.handler(offset) - track[1];
 	} };
 	
-	public static WriteHandlerPtr gottlieb_track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_track_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset the trackball counters */
 		track[0] = input_port_2_r(offset);
 		track[1] = input_port_3_r(offset);
@@ -193,8 +189,7 @@ public class gottlieb
 	
 	static int joympx;
 	
-	public static ReadHandlerPtr stooges_IN4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stooges_IN4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int joy;
 	
 		switch (joympx)
@@ -214,16 +209,14 @@ public class gottlieb
 		return joy | (readinputport(4) & 0xf0);
 	} };
 	
-	public static WriteHandlerPtr reactor_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reactor_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x20);
 		set_led_status(1,data & 0x40);
 		set_led_status(2,data & 0x80);
 		gottlieb_video_outputs_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr stooges_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stooges_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		joympx = (data >> 5) & 0x03;
 		gottlieb_video_outputs_w(offset,data);
 	} };
@@ -255,8 +248,7 @@ public class gottlieb
 	 * This gives a total of 1+3+3+19*53=1014 bytes, the 10 last bytes are ignored
 	 */
 	
-	public static ReadHandlerPtr gottlieb_laserdisc_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gottlieb_laserdisc_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int tmp;
 		switch (offset)
 		{
@@ -280,9 +272,9 @@ public class gottlieb
 					/* bit 7 missing audio clock */
 					return ((current_frame / 10000) & 0x7) | (audioready << 3) | 0x10 | (discready << 5);
 				} else {	/* read audio buffer */
-					if (skipfirstbyte != 0) audioptr++;
+					if (skipfirstbyte) audioptr++;
 					skipfirstbyte = 0;
-					if (audiobuffer_region != 0) {
+					if (audiobuffer_region) {
 						logerror("audio bufread: %02x\n",audiobuffer_region[audioptr]);
 						return audiobuffer_region[audioptr++];
 					} else {
@@ -296,14 +288,12 @@ public class gottlieb
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr gottlieb_laserdisc_mpx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_laserdisc_mpx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lasermpx = data & 1;
 		if (lasermpx==0) skipfirstbyte=1;	/* first byte of the 1K buffer (0x67) is not returned... */
 	} };
 	
-	public static WriteHandlerPtr gottlieb_laserdisc_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_laserdisc_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int loop;
 		int cmd;
 	
@@ -325,7 +315,7 @@ public class gottlieb
 				((data & 0x02) << 2) |
 				((data & 0x01) << 4);
 	
-	logerror("laserdisc command %02x . %02x\n",data,cmd);
+	logerror("laserdisc command %02x -> %02x\n",data,cmd);
 		if (lastcmd == 0x0b && (cmd & 0x10))	/* seek frame # */
 		{
 			current_frame = current_frame * 10 + (cmd & 0x0f);
@@ -360,15 +350,14 @@ public class gottlieb
 		}
 	} };
 	
-	public static InterruptHandlerPtr gottlieb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gottlieb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (access_time > 0) {
 			access_time--;
 			if (access_time == 0)
 				discready = 1;
-		} else if (laserdisc_playing != 0) {
+		} else if (laserdisc_playing) {
 			odd_field ^= 1;
-			if (odd_field != 0)		/* the manual says the video frame number is only present in the odd field) */
+			if (odd_field)		/* the manual says the video frame number is only present in the odd field) */
 			{
 				current_frame++;
 	logerror("current frame : %d\n",current_frame);
@@ -622,7 +611,7 @@ public class gottlieb
 	
 	
 	
-	static InputPortPtr input_ports_reactor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_reactor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( reactor )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x01, 0x01, "Sound with Logos" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -669,7 +658,7 @@ public class gottlieb
 		PORT_BIT ( 0xc0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mplanets = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mplanets = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mplanets )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -718,7 +707,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qbert = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qbert = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qbert )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -774,7 +763,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_4WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qbertqub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qbertqub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qbertqub )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x08, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
@@ -833,7 +822,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_krull = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_krull = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( krull )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -885,7 +874,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_LEFT   | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mach3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mach3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mach3 )
 		PORT_START();       /* DSW0 */
 		/* TODO: values are different for 5 lives */
 		PORT_DIPNAME( 0x09, 0x08, DEF_STR( "Coinage") );
@@ -938,7 +927,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_usvsthem = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_usvsthem = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( usvsthem )
 		PORT_START();       /* DSW0 */
 		/* TODO: values are different for 5 lives */
 		PORT_DIPNAME( 0x09, 0x00, DEF_STR( "Coinage") );
@@ -992,7 +981,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_3stooges = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_3stooges = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 3stooges )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME (0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "Off") );
@@ -1057,7 +1046,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_curvebal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_curvebal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( curvebal )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x08, 0x00, "2 Players Game" );
 		PORT_DIPSETTING(    0x08, "1 Credit" );
@@ -1120,7 +1109,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_screwloo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_screwloo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( screwloo )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -1173,7 +1162,7 @@ public class gottlieb
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_insector = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_insector = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( insector )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x00, "25000" );
@@ -1413,8 +1402,7 @@ public class gottlieb
 	********************************************************************/
 	
 	/* games using the revision 1 sound board */
-	public static MachineHandlerPtr machine_driver_gottlieb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gottlieb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", I86, 5000000)	/* 5 MHz */
@@ -1443,13 +1431,10 @@ public class gottlieb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac1_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_reactor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( reactor )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
@@ -1461,40 +1446,31 @@ public class gottlieb
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
 		MDRV_SOUND_ADD(SAMPLES, reactor_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_qbert = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qbert )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
 	
 		/* video hardware */
 		MDRV_SOUND_ADD(SAMPLES, qbert_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_krull = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( krull )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb)
 	
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* games using the revision 2 sound board */
-	public static MachineHandlerPtr machine_driver_gottlieb2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gottlieb2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", I86, 5000000)	/* 5 MHz */
@@ -1528,35 +1504,26 @@ public class gottlieb
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac2_interface)
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mach3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mach3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb2)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gottlieb_readmem,usvsthem_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_usvsthem = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( usvsthem )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mach3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_stooges = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stooges )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(gottlieb2)
@@ -1565,9 +1532,7 @@ public class gottlieb
 	
 		/* video hardware */
 		MDRV_GFXDECODE(charRAM_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1968,26 +1933,25 @@ public class gottlieb
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_gottlieb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gottlieb  = new DriverInitHandlerPtr() { public void handler(){
 		gottlieb_sound_init();
 	} };
 	
 	
-	public static GameDriver driver_reactor	   = new GameDriver("1982"	,"reactor"	,"gottlieb.java"	,rom_reactor,null	,machine_driver_reactor	,input_ports_reactor	,null	,ROT0	,	"Gottlieb", "Reactor" )
-	public static GameDriver driver_qbert	   = new GameDriver("1982"	,"qbert"	,"gottlieb.java"	,rom_qbert,null	,machine_driver_qbert	,input_ports_qbert	,null	,ROT270	,	"Gottlieb", "Q*bert (US)" )
-	public static GameDriver driver_qbertjp	   = new GameDriver("1982"	,"qbertjp"	,"gottlieb.java"	,rom_qbertjp,driver_qbert	,machine_driver_qbert	,input_ports_qbert	,null	,ROT270	,	"Gottlieb (Konami license)", "Q*bert (Japan)" )
-	public static GameDriver driver_myqbert	   = new GameDriver("1982"	,"myqbert"	,"gottlieb.java"	,rom_myqbert,driver_qbert	,machine_driver_qbert	,input_ports_qbert	,null	,ROT270	,	"Gottlieb", "Mello Yello Q*bert" )
-	public static GameDriver driver_qberttst	   = new GameDriver("1982"	,"qberttst"	,"gottlieb.java"	,rom_qberttst,driver_qbert	,machine_driver_qbert	,input_ports_qbert	,null	,ROT270	,	"Gottlieb", "Q*bert (early test version)" )
-	public static GameDriver driver_insector	   = new GameDriver("1982"	,"insector"	,"gottlieb.java"	,rom_insector,null	,machine_driver_gottlieb	,input_ports_insector	,null	,ROT0	,	"Gottlieb", "Insector (prototype)" )
-	public static GameDriver driver_mplanets	   = new GameDriver("1983"	,"mplanets"	,"gottlieb.java"	,rom_mplanets,null	,machine_driver_gottlieb	,input_ports_mplanets	,null	,ROT270	,	"Gottlieb", "Mad Planets" )
-	public static GameDriver driver_mplanuk	   = new GameDriver("1983"	,"mplanuk"	,"gottlieb.java"	,rom_mplanuk,driver_mplanets	,machine_driver_gottlieb	,input_ports_mplanets	,null	,ROT270	,	"Gottlieb (Taitel license)", "Mad Planets (UK)" )
-	public static GameDriver driver_krull	   = new GameDriver("1983"	,"krull"	,"gottlieb.java"	,rom_krull,null	,machine_driver_krull	,input_ports_krull	,null	,ROT270	,	"Gottlieb", "Krull" )
-	public static GameDriver driver_sqbert	   = new GameDriver("1983"	,"sqbert"	,"gottlieb.java"	,rom_sqbert,null	,machine_driver_qbert	,input_ports_qbert	,null	,ROT270	,	"Mylstar", "Faster, Harder, More Challenging Q*bert (prototype)" )
-	public static GameDriver driver_mach3	   = new GameDriver("1983"	,"mach3"	,"gottlieb.java"	,rom_mach3,null	,machine_driver_mach3	,input_ports_mach3	,init_gottlieb	,ROT0	,	"Mylstar", "M.A.C.H. 3", GAME_NOT_WORKING )
-	public static GameDriver driver_qbertqub	   = new GameDriver("1983"	,"qbertqub"	,"gottlieb.java"	,rom_qbertqub,null	,machine_driver_qbert	,input_ports_qbertqub	,null	,ROT270	,	"Mylstar", "Q*bert's Qubes" )
-	public static GameDriver driver_screwloo	   = new GameDriver("1983"	,"screwloo"	,"gottlieb.java"	,rom_screwloo,null	,machine_driver_gottlieb2	,input_ports_screwloo	,init_gottlieb	,ROT0	,	"Mylstar", "Screw Loose (prototype)" )
-	public static GameDriver driver_curvebal	   = new GameDriver("1984"	,"curvebal"	,"gottlieb.java"	,rom_curvebal,null	,machine_driver_gottlieb	,input_ports_curvebal	,null	,ROT270	,	"Mylstar", "Curve Ball" )
-	public static GameDriver driver_usvsthem	   = new GameDriver("1984"	,"usvsthem"	,"gottlieb.java"	,rom_usvsthem,null	,machine_driver_usvsthem	,input_ports_usvsthem	,init_gottlieb	,ROT0	,	"Mylstar", "Us vs. Them", GAME_NOT_WORKING )
-	public static GameDriver driver_3stooges	   = new GameDriver("1984"	,"3stooges"	,"gottlieb.java"	,rom_3stooges,null	,machine_driver_stooges	,input_ports_3stooges	,init_gottlieb	,ROT0	,	"Mylstar", "The Three Stooges In Brides Is Brides", GAME_IMPERFECT_SOUND )
+	GAME( 1982, reactor,  0,     reactor,  reactor,  0,        ROT0,   "Gottlieb", "Reactor" )
+	GAME( 1982, qbert,    0,     qbert,    qbert,    0,        ROT270, "Gottlieb", "Q*bert (US)" )
+	GAME( 1982, qbertjp,  qbert, qbert,    qbert,    0,        ROT270, "Gottlieb (Konami license)", "Q*bert (Japan)" )
+	GAME( 1982, myqbert,  qbert, qbert,    qbert,    0,        ROT270, "Gottlieb", "Mello Yello Q*bert" )
+	GAME( 1982, qberttst, qbert, qbert,    qbert,    0,        ROT270, "Gottlieb", "Q*bert (early test version)" )
+	GAME( 1982, insector, 0,     gottlieb, insector, 0,        ROT0,   "Gottlieb", "Insector (prototype)" )
+	GAME( 1983, mplanets, 0,     gottlieb, mplanets, 0,        ROT270, "Gottlieb", "Mad Planets" )
+	GAME( 1983, mplanuk,  mplanets, gottlieb, mplanets, 0,        ROT270, "Gottlieb (Taitel license)", "Mad Planets (UK)" )
+	GAME( 1983, krull,    0,     krull,    krull,    0,        ROT270, "Gottlieb", "Krull" )
+	GAME( 1983, sqbert,   0,     qbert,    qbert,    0,        ROT270, "Mylstar", "Faster, Harder, More Challenging Q*bert (prototype)" )
+	GAMEX(1983, mach3,    0,     mach3,    mach3,    gottlieb, ROT0,   "Mylstar", "M.A.C.H. 3", GAME_NOT_WORKING )
+	GAME( 1983, qbertqub, 0,     qbert,    qbertqub, 0,        ROT270, "Mylstar", "Q*bert's Qubes" )
+	GAME( 1983, screwloo, 0,     gottlieb2,screwloo, gottlieb, ROT0,   "Mylstar", "Screw Loose (prototype)" )
+	GAME( 1984, curvebal, 0,     gottlieb, curvebal, 0,        ROT270, "Mylstar", "Curve Ball" )
+	GAMEX(1984, usvsthem, 0,     usvsthem, usvsthem, gottlieb, ROT0,   "Mylstar", "Us vs. Them", GAME_NOT_WORKING )
+	GAMEX(1984, 3stooges, 0,     stooges,  3stooges, gottlieb, ROT0,   "Mylstar", "The Three Stooges In Brides Is Brides", GAME_IMPERFECT_SOUND )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_xorworld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -108,11 +107,10 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_xorworld  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xorworld  = new VideoStartHandlerPtr() { public int handler(){
 		screen = tilemap_create(get_tile_info_xorworld_screen,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (screen == 0)
+		if (!screen)
 			return 1;
 	
 		return 0;
@@ -134,7 +132,7 @@ public class xorworld
 	static void xorworld_draw_sprites(struct mame_bitmap *bitmap)
 	{
 		int i;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 	
 		for (i = 0; i < 0x40; i += 2){		
 			int sx = xorworld_spriteram[i] & 0x00ff;
@@ -145,7 +143,7 @@ public class xorworld
 			drawgfx(bitmap,gfx,number,
 							color,0,0,
 							sx,sy,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -155,8 +153,7 @@ public class xorworld
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{	
+	public static VideoUpdateHandlerPtr video_update_xorworld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){	
 		tilemap_draw(bitmap, cliprect, screen, 0, 0);
 	
 		xorworld_draw_sprites(bitmap);

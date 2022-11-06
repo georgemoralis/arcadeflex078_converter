@@ -4,7 +4,7 @@
 ****************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -43,15 +43,15 @@ public class polepos
 	
 	
 		/* if we're not enabled, just fill with 0 */
-		if (!sample_enable || Machine.sample_rate == 0)
+		if (!sample_enable || Machine->sample_rate == 0)
 		{
 			memset(buffer, 0, length * sizeof(INT16));
 			return;
 		}
 	
 		/* determine the effective clock rate */
-		clock = (Machine.drv.cpu[0].cpu_clock / 64) * ((sample_msb + 1) * 64 + sample_lsb + 1) / (16*64);
-		step = (clock << 12) / Machine.sample_rate;
+		clock = (Machine->drv->cpu[0].cpu_clock / 64) * ((sample_msb + 1) * 64 + sample_lsb + 1) / (16*64);
+		step = (clock << 12) / Machine->sample_rate;
 	
 		/* determine the volume */
 		slot = (sample_msb >> 3) & 7;
@@ -79,7 +79,7 @@ public class polepos
 		mixer_set_name(channel,"Speech");
 	
 		speech = auto_malloc(16*SAMPLE_SIZE);
-		if (speech == 0)
+		if (!speech)
 			return 1;
 	
 		/* decode the rom samples, interpolating to make it sound a little better */
@@ -130,7 +130,7 @@ public class polepos
 			sample_offsets[4] = 0x6000;		/* How is this triggered? */
 		}
 	
-		sound_stream = stream_init("Engine Sound", 50, Machine.sample_rate, 0, engine_sound_update);
+		sound_stream = stream_init("Engine Sound", 50, Machine->sample_rate, 0, engine_sound_update);
 		current_position = 0;
 		sample_msb = sample_lsb = 0;
 		sample_enable = 0;
@@ -154,8 +154,7 @@ public class polepos
 	/************************************/
 	/* Write LSB of engine sound		*/
 	/************************************/
-	public static WriteHandlerPtr polepos_engine_sound_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_engine_sound_lsb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(sound_stream, 0);
 		sample_lsb = data & 62;
 	    sample_enable = data & 1;
@@ -164,8 +163,7 @@ public class polepos
 	/************************************/
 	/* Write MSB of engine sound		*/
 	/************************************/
-	public static WriteHandlerPtr polepos_engine_sound_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polepos_engine_sound_msb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(sound_stream, 0);
 		sample_msb = data & 63;
 	} };
@@ -178,7 +176,7 @@ public class polepos
 		int start = sample_offsets[sample];
 		int len = sample_offsets[sample + 1] - start;
 	
-		if (Machine.sample_rate == 0)
+		if (Machine->sample_rate == 0)
 			return;
 	
 		mixer_play_sample(channel, speech + start * 16, len * 16, 4000*8, 0);

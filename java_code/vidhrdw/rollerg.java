@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,8 +52,7 @@ public class rollerg
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_rollerg  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rollerg  = new VideoStartHandlerPtr() { public int handler(){
 		bg_colorbase = 16;
 		sprite_colorbase = 16;
 		zoom_colorbase = 0;
@@ -75,8 +74,7 @@ public class rollerg
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rollerg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rollerg  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine.pens[16 * bg_colorbase],cliprect);
 		K051316_zoom_draw_0(bitmap,cliprect,0,1);

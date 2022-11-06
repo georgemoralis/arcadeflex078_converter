@@ -179,7 +179,7 @@ Sound board: uses the same board as Pooyan.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -191,8 +191,7 @@ public class tutankhm
 	
 	
 	
-	public static WriteHandlerPtr tutankhm_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tutankhm_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -201,18 +200,15 @@ public class tutankhm
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr tutankhm_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tutankhm_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset ^ 1, data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data);
 	} };
 	
@@ -251,7 +247,7 @@ public class tutankhm
 	};
 	
 	
-	static InputPortPtr input_ports_tutankhm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tutankhm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tutankhm )
 		PORT_START();       /* DSW2 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x03, "3" );
@@ -346,8 +342,7 @@ public class tutankhm
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tutankhm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tutankhm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)			/* 1.5 MHz ??? */
@@ -372,9 +367,7 @@ public class tutankhm
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_tutankhm = new RomLoadPtr(){ public void handler(){ 
@@ -428,6 +421,6 @@ public class tutankhm
 	
 	
 	
-	public static GameDriver driver_tutankhm	   = new GameDriver("1982"	,"tutankhm"	,"tutankhm.java"	,rom_tutankhm,null	,machine_driver_tutankhm	,input_ports_tutankhm	,null	,ROT90	,	"Konami", "Tutankham" )
-	public static GameDriver driver_tutankst	   = new GameDriver("1982"	,"tutankst"	,"tutankhm.java"	,rom_tutankst,driver_tutankhm	,machine_driver_tutankhm	,input_ports_tutankhm	,null	,ROT90	,	"[Konami] (Stern license)", "Tutankham (Stern)" )
+	GAME( 1982, tutankhm, 0,        tutankhm, tutankhm, 0, ROT90, "Konami", "Tutankham" )
+	GAME( 1982, tutankst, tutankhm, tutankhm, tutankhm, 0, ROT90, "[Konami] (Stern license)", "Tutankham (Stern)" )
 }

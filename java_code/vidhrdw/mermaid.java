@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,13 +37,11 @@ public class mermaid
 	};
 	
 	
-	public static WriteHandlerPtr mermaid_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mermaid_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr mermaid_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mermaid_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data & 0x01);
 	} };
 	
@@ -55,8 +53,7 @@ public class mermaid
 	  I'm not sure about the resistor value, I'm using the Galaxian ones.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mermaid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mermaid  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
@@ -106,8 +103,7 @@ public class mermaid
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_mermaid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mermaid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -123,10 +119,10 @@ public class mermaid
 	
 			code = mermaid_background_videoram[offs];
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 				sx = 248 - sx;
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 				sy = 248 - sy;
 	
 			drawgfx(tmpbitmap,Machine.gfx[2],
@@ -173,13 +169,13 @@ public class mermaid
 			flipx = mermaid_foreground_colorram[offs] & 0x40;
 			flipy = mermaid_foreground_colorram[offs] & 0x80;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 31 - sx;
 				flipx = NOT(flipx);
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 248 - sy;
 				flipy = NOT(flipy);
@@ -227,12 +223,12 @@ public class mermaid
 	
 			code = (spriteram.read(offs + 0)& 0x3f) | (bank << 6);
 	
-			if (flip_screen_x != 0) {
+			if (flip_screen_x) {
 				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y != 0) {
+			if (flip_screen_y) {
 				flipy = NOT(flipy);
 				sy = spriteram.read(offs + 1);
 			}

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.s2650;
 
@@ -50,8 +50,8 @@ public class _2650dasm
 		static char buff[8+1];
 		char * s = NULL;
 	
-	    if (find_symbol != 0) s = (*find_symbol)(addr);
-		if (s != 0) return s;
+	    if (find_symbol) s = (*find_symbol)(addr);
+		if (s) return s;
 	
 	    sprintf(buff, "$%04x", addr);
 		return buff;
@@ -85,17 +85,17 @@ public class _2650dasm
 				case 0x80: p += sprintf(p, "m+"); break;
 				case 0xc0: p += sprintf(p, "cc+"); break;
 			}
-			if ((v & 0x20) != 0)	/* inter digit carry */
+			if (v & 0x20)	/* inter digit carry */
 				p += sprintf(p, "idc+");
-			if ((v & 0x10) != 0)	/* register select */
+			if (v & 0x10)	/* register select */
 				p += sprintf(p, "rs+");
-			if ((v & 0x08) != 0)	/* with carry */
+			if (v & 0x08)	/* with carry */
 				p += sprintf(p, "wc+");
-			if ((v & 0x04) != 0)	/* overflow */
+			if (v & 0x04)	/* overflow */
 				p += sprintf(p, "ovf+");
-			if ((v & 0x02) != 0)	/* 2's complement comparisons */
+			if (v & 0x02)	/* 2's complement comparisons */
 				p += sprintf(p, "com+");
-			if ((v & 0x01) != 0)	/* carry */
+			if (v & 0x01)	/* carry */
 				p += sprintf(p, "c+");
 			if (p > buff)
 				*--p = '\0';
@@ -116,21 +116,21 @@ public class _2650dasm
 	
 	    } else {
 	
-	        if ((v & 0x80) != 0)   /* sign */
+	        if (v & 0x80)   /* sign */
 				p += sprintf(p, "m+");
-			if ((v & 0x40) != 0)
+			if (v & 0x40)
 				p += sprintf(p, "p+");
-			if ((v & 0x20) != 0)	/* interrupt inhibit */
+			if (v & 0x20)	/* interrupt inhibit */
 				p += sprintf(p, "ii+");
-			if ((v & 0x10) != 0)	/* unused bit 4 */
+			if (v & 0x10)	/* unused bit 4 */
 				p += sprintf(p, "4+");
-			if ((v & 0x08) != 0)	/* unused bit 3 */
+			if (v & 0x08)	/* unused bit 3 */
 				p += sprintf(p, "3+");
-			if ((v & 0x04) != 0)	/* stack pointer bit 2 */
+			if (v & 0x04)	/* stack pointer bit 2 */
 				p += sprintf(p, "sp2+");
-			if ((v & 0x02) != 0)	/* stack pointer bit 1 */
+			if (v & 0x02)	/* stack pointer bit 1 */
 				p += sprintf(p, "sp1+");
-			if ((v & 0x01) != 0)	/* stack pointer bit 0 */
+			if (v & 0x01)	/* stack pointer bit 0 */
 				p += sprintf(p, "sp0+");
 			if (p > buff)
 				*--p = '\0';
@@ -170,7 +170,7 @@ public class _2650dasm
 		int a = (pc & 0x6000) + ((h & 0x1f) << 8) + l;
 	
 	#if HJB
-		if (load != 0) {
+		if (load) {
 			switch (h >> 5) {
 				case 0: sprintf(buff, "r%d,(%s)",       r, SYM(a)); break;
 				case 1: sprintf(buff, "r0,(%s,r%d++)",  SYM(a), r); break;
@@ -215,7 +215,7 @@ public class _2650dasm
 		int h = cpu_readop_arg(pc);
 		int l = cpu_readop_arg((pc&0x6000)+((pc+1)&0x1fff));
 		int a = ((h & 0x7f) << 8) + l;
-		if ((h & 0x80) != 0)
+		if (h & 0x80)
 			sprintf(buff, "*%s", SYM(a));
 		else
 			sprintf(buff, "%s", SYM(a));

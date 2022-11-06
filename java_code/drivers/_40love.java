@@ -113,7 +113,7 @@ The following are board layouts, and component locations.
  Q       81416                 Ribbon    =          |
  =       81416                 cable     =          ===  Wiring harness
  =       81416                 to sound  S          ===  connector
- |       81416                 board -. =          ===
+ |       81416                 board --> =          ===
  | 8MHz                                  =          |
  +--------------------------------------------------+
 
@@ -187,7 +187,7 @@ M4300048A
 2x m5m5517
 4x am93422 (2101)
 
-A17-15.18 6353 1024x4 prom
+A17-15->18 6353 1024x4 prom
 
 M4300049A (relabeled J1100004A/K1100010A)
 
@@ -218,7 +218,7 @@ Notes - Has jumper setting for 122HZ or 61HZ)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -236,25 +236,22 @@ public class _40love
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 			pending_nmi = 0;
@@ -264,32 +261,27 @@ public class _40love
 	
 	
 	#if 0
-	public static WriteHandlerPtr fortyl_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fortyl_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	#endif
 	
 	
-	public static ReadHandlerPtr fortyl_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fortyl_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return buggychl_mcu_r(offset);
 	} };
 	
-	public static ReadHandlerPtr fortyl_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fortyl_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return buggychl_mcu_status_r(offset);
 	} };
 	
-	public static WriteHandlerPtr fortyl_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fortyl_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buggychl_mcu_w(offset,data);
 	} };
 	
 	static int banknum = -1;
 	
-	public static WriteHandlerPtr bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		if ((data!=0x02) && (data!=0xfd))
 		{
@@ -305,15 +297,13 @@ public class _40love
 	static UINT8 pix1;
 	static UINT8 pix2[2];
 	
-	public static WriteHandlerPtr pix1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pix1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	if ( data > 7 )
 	//		logerror("pix1 = %2x\n",data);
 	
 		pix1 = data;
 	} };
-	public static WriteHandlerPtr pix2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pix2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	if ( (data!=0x00) && (data!=0xff) )
 	//		logerror("pix2 = %2x\n",data);
 	
@@ -322,14 +312,12 @@ public class _40love
 	} };
 	
 	#if 0
-	public static ReadHandlerPtr pix1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pix1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pix1;
 	} };
 	#endif
 	
-	public static ReadHandlerPtr pix2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pix2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		int d1 = pix1 & 7;
 	
@@ -410,8 +398,7 @@ public class _40love
 	};
 	
 	
-	public static WriteHandlerPtr undoukai_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr undoukai_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		UINT16 ram_adr = RAM[0xa1b5]*0x100 + RAM[0xa1b4];
 	
@@ -569,16 +556,14 @@ public class _40love
 		}
 	} };
 	
-	public static ReadHandlerPtr undoukai_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr undoukai_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 	//	logerror("mcu_r %02x\n",from_mcu);
 	
 		return from_mcu;
 	} };
 	
-	public static ReadHandlerPtr undoukai_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr undoukai_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 3;
 	
 		return res;
@@ -586,8 +571,7 @@ public class _40love
 	
 	/***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_undoukai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_undoukai  = new DriverInitHandlerPtr() { public void handler(){
 		from_mcu = 0xff;
 		mcu_cmd = -1;
 	
@@ -597,8 +581,7 @@ public class _40love
 		fortyl_pix_color[3] = 0x1ec;
 	} };
 	
-	public static DriverInitHandlerPtr init_40love  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_40love  = new DriverInitHandlerPtr() { public void handler(){
 		#if 0
 			/* character ROM hack
 				to show a white line on the opponent side */
@@ -622,19 +605,16 @@ public class _40love
 	static UINT8 snd_data;
 	static UINT8 snd_flag;
 	
-	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		snd_flag = 0;
 		return snd_data;
 	} };
 	
-	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snd_flag_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return snd_flag | 0xfd;
 	} };
 	
-	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_data = data;
 		snd_flag = 2;
 	} };
@@ -778,8 +758,7 @@ public class _40love
 	
 	static int vol_ctrl[16];
 	
-	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		double db			= 0.0;
@@ -807,8 +786,7 @@ public class _40love
 	static UINT8 snd_ctrl2=0;
 	static UINT8 snd_ctrl3=0;
 	
-	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl0 = data & 0xff;
 	//	usrintf_showmessage("SND0 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 	
@@ -816,15 +794,13 @@ public class _40love
 		mixer_set_volume (3, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group1 from msm5232 */
 	
 	} };
-	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl1 = data & 0xff;
 	//	usrintf_showmessage("SND1 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
 		mixer_set_volume (4, vol_ctrl[ (snd_ctrl1>>4) & 15 ]);	/* group2 from msm5232 */
 	} };
 	
-	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		snd_ctrl2 = data & 0xff;
@@ -834,7 +810,7 @@ public class _40love
 			mixer_set_volume (i, vol_ctrl[ (snd_ctrl2>>4) & 15 ]);	/* ym2149f all */
 	} };
 	
-	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data) /* unknown */
+	public static WriteHandlerPtr sound_control_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)* unknown */
 	{
 		snd_ctrl3 = data & 0xff;
 	//	usrintf_showmessage("SND3 0=%02x 1=%02x 2=%02x 3=%02x", snd_ctrl0, snd_ctrl1, snd_ctrl2, snd_ctrl3);
@@ -882,7 +858,7 @@ public class _40love
 	};
 	
 	
-	static InputPortPtr input_ports_40love = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_40love = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 40love )
 		PORT_START();  /* DSW1 */
 		PORT_DIPNAME( 0x01, 0x00, "DSW1 Unknown 0" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -999,7 +975,7 @@ public class _40love
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_undoukai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_undoukai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( undoukai )
 		PORT_START();  /* DSW1 */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x00, "4 (Hard"));
@@ -1176,8 +1152,7 @@ public class _40love
 	
 	/*******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_40love = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 40love )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2) /* OK */
@@ -1212,12 +1187,9 @@ public class _40love
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_undoukai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( undoukai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)
@@ -1251,9 +1223,7 @@ public class _40love
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************/
 	
@@ -1371,7 +1341,7 @@ public class _40love
 		ROM_LOAD( "a17-18.23v", 0x0c00, 0x0400, CRC(3023a1da) SHA1(08ce4c6e99d04b358d66f0588852311d07183619) )	/* ??? */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_40love	   = new GameDriver("1984"	,"40love"	,"_40love.java"	,rom_40love,null	,machine_driver_40love	,input_ports_40love	,init_40love	,ROT0	,	"Taito Corporation", "Forty-Love", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_fieldday	   = new GameDriver("1984"	,"fieldday"	,"_40love.java"	,rom_fieldday,null	,machine_driver_undoukai	,input_ports_undoukai	,init_undoukai	,ROT0	,	"Taito Corporation", "Field Day" )
-	public static GameDriver driver_undoukai	   = new GameDriver("1984"	,"undoukai"	,"_40love.java"	,rom_undoukai,driver_fieldday	,machine_driver_undoukai	,input_ports_undoukai	,init_undoukai	,ROT0	,	"Taito Corporation", "The Undoukai (Japan)" )
+	GAMEX( 1984, 40love,   0,        40love,   40love,   40love,   ROT0, "Taito Corporation", "Forty-Love", GAME_IMPERFECT_GRAPHICS )
+	GAME ( 1984, fieldday, 0,        undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "Field Day" )
+	GAME ( 1984, undoukai, fieldday, undoukai, undoukai, undoukai, ROT0, "Taito Corporation", "The Undoukai (Japan)" )
 }

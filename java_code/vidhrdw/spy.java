@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,8 +52,7 @@ public class spy
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_spy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spy  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 48;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 16;
@@ -74,13 +73,12 @@ public class spy
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_spy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap, 0, cliprect);
 	
-		if (spy_video_enable == 0)
+		if (!spy_video_enable)
 		{
 			fillbitmap(bitmap,Machine.pens[16 * layer_colorbase[0]],cliprect);
 			return;

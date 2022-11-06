@@ -127,7 +127,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -139,19 +139,16 @@ public class cclimber
 	
 	
 	
-	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_cclimber  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cclimber  = new MachineInitHandlerPtr() { public void handler(){
 		/* Disable interrupts, River Patrol / Silver Land needs this */
 		cpu_interrupt_enable(0,0);
 	} };
@@ -270,7 +267,7 @@ public class cclimber
 	
 	
 	
-	static InputPortPtr input_ports_cclimber = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cclimber = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cclimber )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_UP     | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_DOWN   | IPF_8WAY );
@@ -326,7 +323,7 @@ public class cclimber
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'cclimber' but correct "Bonus Life" Dip Switch */
-	static InputPortPtr input_ports_cclimbrj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cclimbrj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cclimbrj )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_UP     | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICKLEFT_DOWN   | IPF_8WAY );
@@ -383,7 +380,7 @@ public class cclimber
 	
 	
 	/* copy of ckong with few changes */
-	static InputPortPtr input_ports_cannonb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cannonb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cannonb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x07, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -436,7 +433,7 @@ public class cclimber
 	
 	/* several differences with cclimber: note that IN2 bits are ACTIVE_LOW, while in */
 	/* cclimber they are ACTIVE_HIGH. */
-	static InputPortPtr input_ports_ckong = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ckong = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ckong )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x07, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -485,7 +482,7 @@ public class cclimber
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rpatrolb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rpatrolb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rpatrolb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
 		PORT_BIT( 0x3e, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -577,8 +574,7 @@ public class cclimber
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_cclimber = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cclimber )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -605,14 +601,11 @@ public class cclimber
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* copy of cclimber except for readmem and writemem */
-	public static MachineHandlerPtr machine_driver_cannonb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cannonb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -639,9 +632,7 @@ public class cclimber
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, cclimber_ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, cclimber_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1051,8 +1042,7 @@ public class cclimber
 		ROM_LOAD( "canballs.5p",  0x1000, 0x1000, CRC(9003ffbd) SHA1(fd016056aabc23957643f37230f03842294f795e) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_cannonb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cannonb  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -1084,8 +1074,7 @@ public class cclimber
 	
 	
 	
-	public static WriteHandlerPtr swimmer_sh_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr swimmer_sh_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
@@ -1162,7 +1151,7 @@ public class cclimber
 	
 	
 	
-	static InputPortPtr input_ports_swimmer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_swimmer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( swimmer )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
@@ -1224,7 +1213,7 @@ public class cclimber
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'swimmer' but different "Difficulty" Dip Switch */
-	static InputPortPtr input_ports_swimmerb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_swimmerb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( swimmerb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
@@ -1284,7 +1273,7 @@ public class cclimber
 		PORT_BIT( 0xfc, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_guzzler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_guzzler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( guzzler )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_COCKTAIL );
@@ -1382,8 +1371,7 @@ public class cclimber
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_swimmer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( swimmer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz */
@@ -1413,9 +1401,7 @@ public class cclimber
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, swimmer_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1576,8 +1562,7 @@ public class cclimber
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_cclimber  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cclimber  = new DriverInitHandlerPtr() { public void handler(){
 		static const unsigned char convtable[8][16] =
 		{
 			/* -1 marks spots which are unused and therefore unknown */
@@ -1594,8 +1579,7 @@ public class cclimber
 		cclimber_decode(convtable);
 	} };
 	
-	public static DriverInitHandlerPtr init_cclimbrj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cclimbrj  = new DriverInitHandlerPtr() { public void handler(){
 		static const unsigned char convtable[8][16] =
 		{
 			{ 0x41,0x54,0x51,0x14,0x05,0x10,0x01,0x55,0x44,0x11,0x00,0x50,0x15,0x40,0x04,0x45 },
@@ -1613,22 +1597,22 @@ public class cclimber
 	
 	
 	
-	public static GameDriver driver_cclimber	   = new GameDriver("1980"	,"cclimber"	,"cclimber.java"	,rom_cclimber,null	,machine_driver_cclimber	,input_ports_cclimber	,init_cclimber	,ROT0	,	"Nichibutsu", "Crazy Climber (US)" )
-	public static GameDriver driver_cclimbrj	   = new GameDriver("1980"	,"cclimbrj"	,"cclimber.java"	,rom_cclimbrj,driver_cclimber	,machine_driver_cclimber	,input_ports_cclimbrj	,init_cclimbrj	,ROT0	,	"Nichibutsu", "Crazy Climber (Japan)" )
-	public static GameDriver driver_ccboot	   = new GameDriver("1980"	,"ccboot"	,"cclimber.java"	,rom_ccboot,driver_cclimber	,machine_driver_cclimber	,input_ports_cclimber	,init_cclimbrj	,ROT0	,	"bootleg", "Crazy Climber (bootleg set 1)" )
-	public static GameDriver driver_ccboot2	   = new GameDriver("1980"	,"ccboot2"	,"cclimber.java"	,rom_ccboot2,driver_cclimber	,machine_driver_cclimber	,input_ports_cclimber	,init_cclimbrj	,ROT0	,	"bootleg", "Crazy Climber (bootleg set 2)" )
-	public static GameDriver driver_ckong	   = new GameDriver("1981"	,"ckong"	,"cclimber.java"	,rom_ckong,null	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"Falcon", "Crazy Kong (set 1)" )
-	public static GameDriver driver_ckonga	   = new GameDriver("1981"	,"ckonga"	,"cclimber.java"	,rom_ckonga,driver_ckong	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"Falcon", "Crazy Kong (set 2)" )
-	public static GameDriver driver_ckongjeu	   = new GameDriver("1981"	,"ckongjeu"	,"cclimber.java"	,rom_ckongjeu,driver_ckong	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"bootleg", "Crazy Kong (Jeutel bootleg)" )
-	public static GameDriver driver_ckongo	   = new GameDriver("1981"	,"ckongo"	,"cclimber.java"	,rom_ckongo,driver_ckong	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"bootleg", "Crazy Kong (Orca bootleg)" )
-	public static GameDriver driver_ckongalc	   = new GameDriver("1981"	,"ckongalc"	,"cclimber.java"	,rom_ckongalc,driver_ckong	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"bootleg", "Crazy Kong (Alca bootleg)" )
-	public static GameDriver driver_monkeyd	   = new GameDriver("1981"	,"monkeyd"	,"cclimber.java"	,rom_monkeyd,driver_ckong	,machine_driver_cclimber	,input_ports_ckong	,null	,ROT270	,	"bootleg", "Monkey Donkey" )
-	public static GameDriver driver_rpatrolb	   = new GameDriver("1982?"	,"rpatrolb"	,"cclimber.java"	,rom_rpatrolb,null	,machine_driver_cclimber	,input_ports_rpatrolb	,null	,ROT0	,	"bootleg", "River Patrol (bootleg)" )
-	public static GameDriver driver_silvland	   = new GameDriver("1982?"	,"silvland"	,"cclimber.java"	,rom_silvland,driver_rpatrolb	,machine_driver_cclimber	,input_ports_rpatrolb	,null	,ROT0	,	"Falcon", "Silver Land" )
-	public static GameDriver driver_cannonb	   = new GameDriver("1985"	,"cannonb"	,"cclimber.java"	,rom_cannonb,null	,machine_driver_cannonb	,input_ports_cannonb	,init_cannonb	,ROT90	,	"Soft", "Cannon Ball (Crazy Climber hardware)" , GAME_IMPERFECT_GRAPHICS )
+	GAME( 1980, cclimber, 0,        cclimber, cclimber, cclimber, ROT0,   "Nichibutsu", "Crazy Climber (US)" )
+	GAME( 1980, cclimbrj, cclimber, cclimber, cclimbrj, cclimbrj, ROT0,   "Nichibutsu", "Crazy Climber (Japan)" )
+	GAME( 1980, ccboot,   cclimber, cclimber, cclimber, cclimbrj, ROT0,   "bootleg", "Crazy Climber (bootleg set 1)" )
+	GAME( 1980, ccboot2,  cclimber, cclimber, cclimber, cclimbrj, ROT0,   "bootleg", "Crazy Climber (bootleg set 2)" )
+	GAME( 1981, ckong,    0,        cclimber, ckong,    0,        ROT270, "Falcon", "Crazy Kong (set 1)" )
+	GAME( 1981, ckonga,   ckong,    cclimber, ckong,    0,        ROT270, "Falcon", "Crazy Kong (set 2)" )
+	GAME( 1981, ckongjeu, ckong,    cclimber, ckong,    0,        ROT270, "bootleg", "Crazy Kong (Jeutel bootleg)" )
+	GAME( 1981, ckongo,   ckong,    cclimber, ckong,    0,        ROT270, "bootleg", "Crazy Kong (Orca bootleg)" )
+	GAME( 1981, ckongalc, ckong,    cclimber, ckong,    0,        ROT270, "bootleg", "Crazy Kong (Alca bootleg)" )
+	GAME( 1981, monkeyd,  ckong,    cclimber, ckong,    0,        ROT270, "bootleg", "Monkey Donkey" )
+	GAME( 1982?,rpatrolb, 0,        cclimber, rpatrolb, 0,        ROT0,   "bootleg", "River Patrol (bootleg)" )
+	GAME( 1982?,silvland, rpatrolb, cclimber, rpatrolb, 0,        ROT0,   "Falcon", "Silver Land" )
+	GAMEX( 1985, cannonb,  0,        cannonb,  cannonb,  cannonb,  ROT90,  "Soft", "Cannon Ball (Crazy Climber hardware)" , GAME_IMPERFECT_GRAPHICS )
 	
-	public static GameDriver driver_swimmer	   = new GameDriver("1982"	,"swimmer"	,"cclimber.java"	,rom_swimmer,null	,machine_driver_swimmer	,input_ports_swimmer	,null	,ROT0	,	"Tehkan", "Swimmer (set 1)" )
-	public static GameDriver driver_swimmera	   = new GameDriver("1982"	,"swimmera"	,"cclimber.java"	,rom_swimmera,driver_swimmer	,machine_driver_swimmer	,input_ports_swimmer	,null	,ROT0	,	"Tehkan", "Swimmer (set 2)" )
-	public static GameDriver driver_swimmerb	   = new GameDriver("1982"	,"swimmerb"	,"cclimber.java"	,rom_swimmerb,driver_swimmer	,machine_driver_swimmer	,input_ports_swimmerb	,null	,ROT0	,	"Tehkan", "Swimmer (set 3)" )
-	public static GameDriver driver_guzzler	   = new GameDriver("1983"	,"guzzler"	,"cclimber.java"	,rom_guzzler,null	,machine_driver_swimmer	,input_ports_guzzler	,null	,ROT90	,	"Tehkan", "Guzzler" )
+	GAME( 1982, swimmer,  0,        swimmer,  swimmer,  0,        ROT0,   "Tehkan", "Swimmer (set 1)" )
+	GAME( 1982, swimmera, swimmer,  swimmer,  swimmer,  0,        ROT0,   "Tehkan", "Swimmer (set 2)" )
+	GAME( 1982, swimmerb, swimmer,  swimmer,  swimmerb, 0,        ROT0,   "Tehkan", "Swimmer (set 3)" )
+	GAME( 1983, guzzler,  0,        swimmer,  guzzler,  0,        ROT90,  "Tehkan", "Guzzler" )
 }

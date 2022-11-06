@@ -47,7 +47,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -68,7 +68,7 @@ public class konamigq
 	
 	static WRITE32_HANDLER( soundr3k_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if( ACCESSING_MSW32 )
 		{
 			sndto000[ ( offset << 1 ) + 1 ] = data >> 16;
 			if( offset == 3 )
@@ -76,7 +76,7 @@ public class konamigq
 				cpu_set_irq_line( 1, 1, HOLD_LINE );
 			}
 		}
-		if (ACCESSING_LSW32 != 0)
+		if( ACCESSING_LSW32 )
 		{
 			sndto000[ offset << 1 ] = data;
 		}
@@ -155,16 +155,15 @@ public class konamigq
 	
 	/* EEPROM */
 	
-	public static NVRAMHandlerPtr nvram_handler_konamigq_93C46  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_konamigq_93C46  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if( read_or_write )
 		{
 			EEPROM_save( file );
 		}
 		else
 		{
 			EEPROM_init( &eeprom_interface_93C46 );
-			if (file != 0)
+			if( file )
 			{
 				EEPROM_load( file );
 			}
@@ -206,7 +205,7 @@ public class konamigq
 	
 	static WRITE32_HANDLER( pcmram_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if( ACCESSING_LSB32 )
 		{
 			m_p_n_pcmram[ offset << 1 ] = data;
 		}
@@ -223,8 +222,7 @@ public class konamigq
 	
 	/* Video */
 	
-	static public static VideoUpdateHandlerPtr video_update_konamigq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_konamigq  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_psx( bitmap, cliprect );
 	
 		draw_crosshair( bitmap, GUNX( 5 ), GUNY( 6 ), cliprect );
@@ -305,11 +303,11 @@ public class konamigq
 		data16_t data;
 	
 		data = 0;
-		if (ACCESSING_LSB16 != 0)
+		if( ACCESSING_LSB16 )
 		{
 			data |= K054539_1_r( offset );
 		}
-		if (ACCESSING_MSB16 != 0)
+		if( ACCESSING_MSB16 )
 		{
 			data |= K054539_0_r( offset ) << 8;
 		}
@@ -318,11 +316,11 @@ public class konamigq
 	
 	static WRITE16_HANDLER( dual539_w )
 	{
-		if (ACCESSING_LSB16 != 0)
+		if( ACCESSING_LSB16 )
 		{
 			K054539_1_w( offset, data );
 		}
-		if (ACCESSING_MSB16 != 0)
+		if( ACCESSING_MSB16 )
 		{
 			K054539_0_w( offset, data >> 8 );
 		}
@@ -413,8 +411,7 @@ public class konamigq
 		&scsi_irq,		/* command completion IRQ */
 	};
 	
-	public static DriverInitHandlerPtr init_konamigq  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_konamigq  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank( 1, memory_region( REGION_USER1 ) );
 		cpu_setbank( 2, memory_region( REGION_USER2 ) );
 		cpu_setbank( 3, memory_region( REGION_CPU1 ) );
@@ -438,14 +435,12 @@ public class konamigq
 		state_save_register_UINT8( "konamigq", 0, "sector buffer", sector_buffer, 512);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_konamigq  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_konamigq  = new MachineInitHandlerPtr() { public void handler(){
 		psx_machine_init();
 		tms57002_init();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_konamigq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( konamigq )
 		/* basic machine hardware */
 		MDRV_CPU_ADD( PSXCPU, 33868800 / 2 ) /* 33MHz ?? */
 		MDRV_CPU_MEMORY( konamigq_readmem, konamigq_writemem )
@@ -481,11 +476,9 @@ public class konamigq
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES( SOUND_SUPPORTS_STEREO )
 		MDRV_SOUND_ADD( K054539, k054539_interface )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_konamigq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_konamigq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( konamigq )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -595,5 +588,5 @@ public class konamigq
 		DISK_IMAGE( "420uaa04", 0, MD5(179464886f58a2e14b284e3813227a86) SHA1(18fe867c44982bacf0d3ff8453487cd06425a6b7) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_cryptklr	   = new GameDriver("1995"	,"cryptklr"	,"konamigq.java"	,rom_cryptklr,null	,machine_driver_konamigq	,input_ports_konamigq	,init_konamigq	,ROT0	,	"Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1995, cryptklr, 0, konamigq, konamigq, konamigq, ROT0, "Konami", "Crypt Killer (ver. UAA)", GAME_IMPERFECT_GRAPHICS )
 }

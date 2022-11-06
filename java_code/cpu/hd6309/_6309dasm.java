@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.hd6309;
 
@@ -706,7 +706,7 @@ public class _6309dasm
 	
 		pc += p;
 	
-		if( opcode != 0x1f &&	// reg <. reg instructions
+		if( opcode != 0x1f &&	// reg <-> reg instructions
 			opcode != 0x1e &&
 			opcode != 0x31 &&
 			opcode != 0x30 &&
@@ -938,53 +938,53 @@ public class _6309dasm
 			}
 			else
 			if( opcode == 0x1f || opcode == 0x1e || ( page == 1 && (opcode == 0x31 || opcode == 0x30 || opcode == 0x34 || opcode == 0x37 || opcode == 0x35 || opcode == 0x33 || opcode == 0x1e || opcode == 0x32 ) ) )
-			{	/* TFR/EXG + new 2nd page reg<.reg instructions*/
+			{	/* TFR/EXG + new 2nd page reg<->reg instructions*/
 				buffer += sprintf (buffer, "%s,%s", teregs[ (operandarray[0] >> 4) & 0xf], teregs[operandarray[0] & 0xf]);
 			}
 			else
 			if( opcode == 0x34 || opcode == 0x36 )
 			{	/* PUSH */
 				pb2 = operandarray[0];
-				if ((pb2 & 0x80) != 0)
+				if( pb2 & 0x80 )
 				{
 					buffer += sprintf (buffer, "PC");
 				}
-				if ((pb2 & 0x40) != 0)
+				if( pb2 & 0x40 )
 				{
-					if ((pb2 & 0x80) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x80 ) buffer += sprintf (buffer, ",");
 					if( opcode == 0x34 || opcode == 0x35 )
 					   buffer += sprintf (buffer, "U");
 					else
 					   buffer += sprintf (buffer, "S");
 				}
-				if ((pb2 & 0x20) != 0)
+				if( pb2 & 0x20 )
 				{
-					if ((pb2 & 0xc0) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xc0 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "Y");
 				}
-				if ((pb2 & 0x10) != 0)
+				if( pb2 & 0x10 )
 				{
-					if ((pb2 & 0xe0) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xe0 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "X");
 				}
-				if ((pb2 & 0x08) != 0)
+				if( pb2 & 0x08 )
 				{
-					if ((pb2 & 0xf0) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xf0 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "DP");
 				}
-				if ((pb2 & 0x04) != 0)
+				if( pb2 & 0x04 )
 				{
-					if ((pb2 & 0xf8) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xf8 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "B");
 				}
-				if ((pb2 & 0x02) != 0)
+				if( pb2 & 0x02 )
 				{
-					if ((pb2 & 0xfc) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xfc ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "A");
 				}
-				if ((pb2 & 0x01) != 0)
+				if( pb2 & 0x01 )
 				{
-					if ((pb2 & 0xfe) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0xfe ) buffer += sprintf (buffer, ",");
 					strcat (buffer, "CC");
 				}
 			}
@@ -992,46 +992,46 @@ public class _6309dasm
 			if( opcode == 0x35 || opcode == 0x37 )
 			{	/* PULL */
 				pb2 = operandarray[0];
-				if ((pb2 & 0x01) != 0)
+				if( pb2 & 0x01 )
 				{
 					buffer += sprintf (buffer, "CC");
 				}
-				if ((pb2 & 0x02) != 0)
+				if( pb2 & 0x02 )
 				{
-					if ((pb2 & 0x01) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x01 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "A");
 				}
-				if ((pb2 & 0x04) != 0)
+				if( pb2 & 0x04 )
 				{
-					if ((pb2 & 0x03) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x03 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "B");
 				}
-				if ((pb2 & 0x08) != 0)
+				if( pb2 & 0x08 )
 				{
-					if ((pb2 & 0x07) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x07 ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "DP");
 				}
-				if ((pb2 & 0x10) != 0)
+				if( pb2 & 0x10 )
 				{
-					if ((pb2 & 0x0f) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x0f ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "X");
 				}
-				if ((pb2 & 0x20) != 0)
+				if( pb2 & 0x20 )
 				{
-					if ((pb2 & 0x1f) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x1f ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "Y");
 				}
-				if ((pb2 & 0x40) != 0)
+				if( pb2 & 0x40 )
 				{
-					if ((pb2 & 0x3f) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x3f ) buffer += sprintf (buffer, ",");
 					if( opcode == 0x34 || opcode == 0x35 )
 						buffer += sprintf (buffer, "U");
 					else
 						buffer += sprintf (buffer, "S");
 				}
-				if ((pb2 & 0x80) != 0)
+				if( pb2 & 0x80 )
 				{
-					if ((pb2 & 0x7f) != 0) buffer += sprintf (buffer, ",");
+					if( pb2 & 0x7f ) buffer += sprintf (buffer, ",");
 					buffer += sprintf (buffer, "PC");
 					buffer += sprintf (buffer, " ; (PUL? PC=RTS)");
 				}

@@ -103,7 +103,7 @@ from Dragon Gun.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -147,7 +147,7 @@ public class deco32
 			Bit 6:	Lightgun IRQ (on Lock N Load only)
 			Bit 7:
 			*/
-			if (cpu_getvblank() != 0)
+			if (cpu_getvblank())
 				return 0xffffff80 | 0x1 | 0x10; /* Assume VBL takes priority over possible raster/lightgun irq */
 	
 			return 0xffffff80 | cpu_getvblank() | (cpu_getiloops() ? 0x40 : 0x20);
@@ -225,7 +225,7 @@ public class deco32
 	
 	static WRITE32_HANDLER( fghthist_eeprom_w )
 	{
-		if (ACCESSING_LSB32 != 0) {
+		if (ACCESSING_LSB32) {
 			EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_write_bit(data & 0x10);
 			EEPROM_set_cs_line((data & 0x40) ? CLEAR_LINE : ASSERT_LINE);
@@ -244,7 +244,7 @@ public class deco32
 	{
 	//logerror("%08x:Read gun %d\n",activecpu_get_pc(),offset);
 	//return ((rand()%0xffff)<<16) | rand()%0xffff;
-		if (offset != 0) /* Mirror of player 1 and player 2 fire buttons */
+		if (offset) /* Mirror of player 1 and player 2 fire buttons */
 			return readinputport(5) | ((rand()%0xff)<<16);
 		return readinputport(4) | readinputport(6) | (readinputport(6)<<16) | (readinputport(6)<<24); //((rand()%0xff)<<16);
 	}
@@ -254,7 +254,7 @@ public class deco32
 	//	logerror("%08x:Read prot %08x (%08x)\n",activecpu_get_pc(),offset<<1,mem_mask);
 	
 		static int strobe=0;
-		if (strobe == 0) strobe=8;
+		if (!strobe) strobe=8;
 		else strobe=0;
 	
 	//definitely vblank in locked load
@@ -296,7 +296,7 @@ public class deco32
 	
 	static WRITE32_HANDLER( dragngun_eeprom_w )
 	{
-		if (ACCESSING_LSB32 != 0) {
+		if (ACCESSING_LSB32) {
 			EEPROM_set_clock_line((data & 0x2) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_write_bit(data & 0x1);
 			EEPROM_set_cs_line((data & 0x4) ? CLEAR_LINE : ASSERT_LINE);
@@ -376,7 +376,7 @@ public class deco32
 	
 			*/
 			if ((data&0x40)==0) {
-				if (bufPtr != 0) {
+				if (bufPtr) {
 					int i;
 					logerror("Eprom reset (bit count %d): ",readBitCount);
 					for (i=0; i<bufPtr; i++)
@@ -468,7 +468,7 @@ public class deco32
 		deco32_pri_w(0,data&0x3,0); /* Bit 0 - layer priority toggle, Bit 1 - BG2/3 Joint mode (8bpp) */
 	
 		/* Sound board reset control */
-		if ((data & 0x80) != 0)
+		if (data&0x80)
 			cpu_set_reset_line(1, CLEAR_LINE);
 		else
 			cpu_set_reset_line(1, ASSERT_LINE);
@@ -889,21 +889,18 @@ public class deco32
 	
 	static int bsmt_latch;
 	
-	static WRITE_HANDLER(deco32_bsmt0_w)
-	{
+	public static WriteHandlerPtr deco32_bsmt0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bsmt_latch = data;
-	}
+	} };
 	
-	static WRITE_HANDLER(deco32_bsmt1_w)
-	{
+	public static WriteHandlerPtr deco32_bsmt1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		BSMT2000_data_0_w(offset^ 0xff, ((bsmt_latch<<8)|data), 0);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE); /* BSMT is ready */
-	}
+	} };
 	
-	static READ_HANDLER(deco32_bsmt_status_r)
-	{
+	public static ReadHandlerPtr deco32_bsmt_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x80;
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -994,7 +991,7 @@ public class deco32
 	
 	*/
 	
-	static InputPortPtr input_ports_captaven = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_captaven = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( captaven )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -1101,7 +1098,7 @@ public class deco32
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fghthist = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fghthist = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fghthist )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -1139,7 +1136,7 @@ public class deco32
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dragngun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dragngun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dragngun )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1226,7 +1223,7 @@ public class deco32
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 20, 25, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lockload = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lockload = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lockload )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1322,7 +1319,7 @@ public class deco32
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER1, 20, 25, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tattass = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tattass = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tattass )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -1501,8 +1498,7 @@ public class deco32
 		cpu_set_irq_line(1,1,state); /* IRQ 2 */
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, ((data >> 0)& 1) * 0x40000);
 		OKIM6295_set_bank_base(1, ((data >> 1)& 1) * 0x40000);
 	} };
@@ -1573,38 +1569,33 @@ public class deco32
 		8,				// data bits	8
 	};
 	
-	static NVRAM_HANDLER(tattass)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_tattass  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			int len;
 			EEPROM_init(&eeprom_interface_tattass);
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 			else memcpy(EEPROM_get_data_pointer(&len),tattass_default_eprom,0x160);
 		}
-	}
+	} };
 	
 	/**********************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_deco32  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_deco32  = new MachineInitHandlerPtr() { public void handler(){
 		raster_irq_timer = timer_alloc(interrupt_gen);
 	} };
 	
-	public static InterruptHandlerPtr deco32_vbl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr deco32_vbl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, ARM_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr tattass_snd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tattass_snd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_captaven = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( captaven )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/3)
@@ -1634,12 +1625,9 @@ public class deco32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fghthist = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fghthist )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/3)
@@ -1668,12 +1656,9 @@ public class deco32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fghthsta = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fghthsta )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/3)
@@ -1702,12 +1687,9 @@ public class deco32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dragngun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dragngun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/2)
@@ -1738,12 +1720,9 @@ public class deco32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_3_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_lockload = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lockload )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/2)
@@ -1774,12 +1753,9 @@ public class deco32
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_3_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tattass = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tattass )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ARM, 28000000/2) /* Unconfirmed */
@@ -1808,9 +1784,7 @@ public class deco32
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(BSMT2000, bsmt2000_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
@@ -2592,8 +2566,7 @@ public class deco32
 	
 	/**********************************************************************************/
 	
-	public static DriverInitHandlerPtr init_captaven  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_captaven  = new DriverInitHandlerPtr() { public void handler(){
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
 	
@@ -2601,8 +2574,7 @@ public class deco32
 		install_mem_read32_handler(0, 0x12748c, 0x12748f, captaven_skip);
 	} };
 	
-	public static DriverInitHandlerPtr init_dragngun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dragngun  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *ROM = (UINT32 *)memory_region(REGION_CPU1);
 		const data8_t *SRC_RAM = memory_region(REGION_GFX1);
 		data8_t *DST_RAM = memory_region(REGION_GFX2);
@@ -2620,14 +2592,12 @@ public class deco32
 		install_mem_read32_handler(0, 0x11f15c, 0x11f15f, dragngun_skip);
 	} };
 	
-	public static DriverInitHandlerPtr init_fghthist  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fghthist  = new DriverInitHandlerPtr() { public void handler(){
 		deco56_decrypt(REGION_GFX1);
 		deco74_decrypt(REGION_GFX2);
 	} };
 	
-	public static DriverInitHandlerPtr init_lockload  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lockload  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *RAM = memory_region(REGION_CPU1);
 	//	data32_t *ROM = (UINT32 *)memory_region(REGION_CPU1);
 	
@@ -2644,8 +2614,7 @@ public class deco32
 	//	ROM[0x3fe40c/4]=0xe1a00000;//  NOP test switch lock
 	} };
 	
-	public static DriverInitHandlerPtr init_tattass  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tattass  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *RAM = memory_region(REGION_GFX1);
 		data8_t *tmp = (data8_t *)malloc(0x80000);
 	
@@ -2667,8 +2636,7 @@ public class deco32
 		install_mem_read32_handler(0, 0x100000, 0x100003, tattass_skip);
 	} };
 	
-	public static DriverInitHandlerPtr init_nslasher  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nslasher  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *RAM = memory_region(REGION_GFX1);
 		data8_t *tmp = (data8_t *)malloc(0x80000);
 	
@@ -2693,18 +2661,18 @@ public class deco32
 	
 	/**********************************************************************************/
 	
-	public static GameDriver driver_captaven	   = new GameDriver("1991"	,"captaven"	,"deco32.java"	,rom_captaven,null	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (Asia Rev 1.9)" )
-	public static GameDriver driver_captavna	   = new GameDriver("1991"	,"captavna"	,"deco32.java"	,rom_captavna,driver_captaven	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (Asia Rev 1.0)" )
-	public static GameDriver driver_captavne	   = new GameDriver("1991"	,"captavne"	,"deco32.java"	,rom_captavne,driver_captaven	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (UK Rev 1.4)" )
-	public static GameDriver driver_captavnu	   = new GameDriver("1991"	,"captavnu"	,"deco32.java"	,rom_captavnu,driver_captaven	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (US Rev 1.9)" )
-	public static GameDriver driver_captavuu	   = new GameDriver("1991"	,"captavuu"	,"deco32.java"	,rom_captavuu,driver_captaven	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (US Rev 1.6)" )
-	public static GameDriver driver_captavnj	   = new GameDriver("1991"	,"captavnj"	,"deco32.java"	,rom_captavnj,driver_captaven	,machine_driver_captaven	,input_ports_captaven	,init_captaven	,ROT0	,	"Data East Corporation", "Captain America and The Avengers (Japan Rev 0.2)" )
-	public static GameDriver driver_dragngun	   = new GameDriver("1993"	,"dragngun"	,"deco32.java"	,rom_dragngun,null	,machine_driver_dragngun	,input_ports_dragngun	,init_dragngun	,ROT0	,	"Data East Corporation", "Dragon Gun (US)", GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_fghthist	   = new GameDriver("1993"	,"fghthist"	,"deco32.java"	,rom_fghthist,null	,machine_driver_fghthist	,input_ports_fghthist	,init_fghthist	,ROT0	,	"Data East Corporation", "Fighter's History (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_fghthstw	   = new GameDriver("1993"	,"fghthstw"	,"deco32.java"	,rom_fghthstw,driver_fghthist	,machine_driver_fghthist	,input_ports_fghthist	,init_fghthist	,ROT0	,	"Data East Corporation", "Fighter's History (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_fghthsta	   = new GameDriver("1993"	,"fghthsta"	,"deco32.java"	,rom_fghthsta,driver_fghthist	,machine_driver_fghthsta	,input_ports_fghthist	,init_fghthist	,ROT0	,	"Data East Corporation", "Fighter's History (US Alternate Hardware)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
-	public static GameDriver driver_lockload	   = new GameDriver("1994"	,"lockload"	,"deco32.java"	,rom_lockload,null	,machine_driver_lockload	,input_ports_lockload	,init_lockload	,ROT0	,	"Data East Corporation", "Locked 'n Loaded (US)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
-	public static GameDriver driver_tattass	   = new GameDriver("1994"	,"tattass"	,"deco32.java"	,rom_tattass,null	,machine_driver_tattass	,input_ports_tattass	,init_tattass	,ROT0	,	"Data East Pinball",     "Tattoo Assassins (US Prototype)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_tattassa	   = new GameDriver("1994"	,"tattassa"	,"deco32.java"	,rom_tattassa,driver_tattass	,machine_driver_tattass	,input_ports_tattass	,init_tattass	,ROT0	,	"Data East Pinball",     "Tattoo Assassins (Asia Prototype)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_nslasher	   = new GameDriver("1994"	,"nslasher"	,"deco32.java"	,rom_nslasher,null	,machine_driver_tattass	,input_ports_tattass	,init_nslasher	,ROT0	,	"Data East Corporation", "Night Slashers", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)
+	GAME( 1991, captaven, 0,        captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (Asia Rev 1.9)" )
+	GAME( 1991, captavna, captaven, captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (Asia Rev 1.0)" )
+	GAME( 1991, captavne, captaven, captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (UK Rev 1.4)" )
+	GAME( 1991, captavnu, captaven, captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (US Rev 1.9)" )
+	GAME( 1991, captavuu, captaven, captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (US Rev 1.6)" )
+	GAME( 1991, captavnj, captaven, captaven, captaven, captaven, ROT0, "Data East Corporation", "Captain America and The Avengers (Japan Rev 0.2)" )
+	GAMEX(1993, dragngun, 0,        dragngun, dragngun, dragngun, ROT0, "Data East Corporation", "Dragon Gun (US)", GAME_IMPERFECT_GRAPHICS  )
+	GAMEX(1993, fghthist, 0,        fghthist, fghthist, fghthist, ROT0, "Data East Corporation", "Fighter's History (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(1993, fghthstw, fghthist, fghthist, fghthist, fghthist, ROT0, "Data East Corporation", "Fighter's History (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(1993, fghthsta, fghthist, fghthsta, fghthist, fghthist, ROT0, "Data East Corporation", "Fighter's History (US Alternate Hardware)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
+	GAMEX(1994, lockload, 0,        lockload, lockload, lockload, ROT0, "Data East Corporation", "Locked 'n Loaded (US)", GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	GAMEX(1994, tattass,  0,        tattass,  tattass,  tattass,  ROT0, "Data East Pinball",     "Tattoo Assassins (US Prototype)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, tattassa, tattass,  tattass,  tattass,  tattass,  ROT0, "Data East Pinball",     "Tattoo Assassins (Asia Prototype)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1994, nslasher, 0,        tattass,  tattass,  nslasher, ROT0, "Data East Corporation", "Night Slashers", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION)
 }

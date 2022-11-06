@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -208,10 +208,9 @@ public class mcr
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_mcr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mcr  = new MachineInitHandlerPtr() { public void handler(){
 		/* initialize the CTC */
-		ctc_intf.baseclock[0] = Machine.drv.cpu[0].cpu_clock;
+		ctc_intf.baseclock[0] = Machine->drv->cpu[0].cpu_clock;
 		z80ctc_init(&ctc_intf);
 	
 		/* reset cocktail flip */
@@ -248,7 +247,7 @@ public class mcr
 		}
 	
 		/* initialize the clock */
-		m6840_internal_counter_period = TIME_IN_HZ(Machine.drv.cpu[0].cpu_clock / 10);
+		m6840_internal_counter_period = TIME_IN_HZ(Machine->drv->cpu[0].cpu_clock / 10);
 	
 		/* reset cocktail flip */
 		mcr_cocktail_flip = 0;
@@ -259,8 +258,7 @@ public class mcr
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_mcr68  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mcr68  = new MachineInitHandlerPtr() { public void handler(){
 		/* for the most part all MCR/68k games are the same */
 		mcr68_common_init();
 		v493_callback = mcr68_493_callback;
@@ -271,8 +269,7 @@ public class mcr
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_zwackery  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zwackery  = new MachineInitHandlerPtr() { public void handler(){
 		/* for the most part all MCR/68k games are the same */
 		mcr68_common_init();
 		v493_callback = zwackery_493_callback;
@@ -296,8 +293,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr mcr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mcr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* CTC line 2 is connected to VBLANK, which is once every 1/2 frame */
 		/* for the 30Hz interlaced display */
 		z80ctc_0_trg2_w(0, 1);
@@ -313,8 +309,7 @@ public class mcr
 	} };
 	
 	
-	public static InterruptHandlerPtr mcr68_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mcr68_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* update the 6840 VBLANK clock */
 		if (!m6840_state[0].timer_active)
 			subtract_from_counter(0, 1);
@@ -340,13 +335,13 @@ public class mcr
 		int newstate = 0;
 	
 		/* all interrupts go through an LS148, which gives priority to the highest */
-		if (v493_irq_state != 0)
+		if (v493_irq_state)
 			newstate = v493_irq_vector;
-		if (m6840_irq_state != 0)
+		if (m6840_irq_state)
 			newstate = m6840_irq_vector;
 	
 		/* set the new state of the IRQ lines */
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -376,8 +371,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mcr_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcr_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			Bit layout is as follows:
 				D7 = n/c
@@ -397,8 +391,7 @@ public class mcr
 	} };
 	
 	
-	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcrmono_control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			Bit layout is as follows:
 				D7 = n/c
@@ -416,8 +409,7 @@ public class mcr
 	} };
 	
 	
-	public static WriteHandlerPtr mcr_scroll_value_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcr_scroll_value_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:
@@ -446,8 +438,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr zwackery_pia_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zwackery_pia_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7 is the watchdog */
 		if (!(data & 0x80)) watchdog_reset_w(offset, data);
 	
@@ -457,14 +448,12 @@ public class mcr
 	} };
 	
 	
-	public static WriteHandlerPtr zwackery_pia_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zwackery_pia_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		zwackery_sound_data = (data >> 4) & 0x0f;
 	} };
 	
 	
-	public static WriteHandlerPtr zwackery_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zwackery_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		csdeluxe_data_w(offset, (data << 4) | zwackery_sound_data);
 	} };
 	
@@ -655,8 +644,7 @@ public class mcr
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mcr68_6840_w_common = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcr68_6840_w_common = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		/* offsets 0 and 1 are control registers */
@@ -671,7 +659,7 @@ public class mcr
 			if (counter == 0 && (diffs & 0x01))
 			{
 				/* holding reset down */
-				if ((data & 0x01) != 0)
+				if (data & 0x01)
 				{
 					for (i = 0; i < 3; i++)
 					{
@@ -692,7 +680,7 @@ public class mcr
 			}
 	
 			/* changing the clock source? (needed for Zwackery) */
-			if ((diffs & 0x02) != 0)
+			if (diffs & 0x02)
 				reload_count(counter);
 	
 			LOG(("%06X:Counter %d control = %02X\n", activecpu_get_previouspc(), counter, data));
@@ -763,14 +751,14 @@ public class mcr
 	
 	WRITE16_HANDLER( mcr68_6840_upper_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			mcr68_6840_w_common(offset, (data >> 8) & 0xff);
 	}
 	
 	
 	WRITE16_HANDLER( mcr68_6840_lower_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			mcr68_6840_w_common(offset, data & 0xff);
 	}
 	

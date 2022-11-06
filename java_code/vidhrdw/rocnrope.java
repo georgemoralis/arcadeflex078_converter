@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class rocnrope
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_rocnrope  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rocnrope  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -77,8 +76,7 @@ public class rocnrope
 			COLOR(0,i) = *(color_prom++) & 0x0f;
 	} };
 	
-	public static WriteHandlerPtr rocnrope_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rocnrope_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -86,8 +84,7 @@ public class rocnrope
 		}
 	} };
 	
-	public static WriteHandlerPtr rocnrope_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rocnrope_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -95,8 +92,7 @@ public class rocnrope
 		}
 	} };
 	
-	public static WriteHandlerPtr rocnrope_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rocnrope_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
@@ -114,12 +110,11 @@ public class rocnrope
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_rocnrope  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rocnrope  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 		
 		return 0;
@@ -131,17 +126,16 @@ public class rocnrope
 	
 		for (offs = spriteram_size - 2;offs >= 0;offs -= 2)
 		{
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					spriteram.read(offs + 1),
 					spriteram_2.read(offs)& 0x0f,
 					spriteram_2.read(offs)& 0x40,~spriteram_2.read(offs)& 0x80,
 					240-spriteram.read(offs),spriteram_2.read(offs + 1),
-					Machine.visible_area,TRANSPARENCY_COLOR,0);
+					Machine->visible_area,TRANSPARENCY_COLOR,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_rocnrope  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rocnrope  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		rocnrope_draw_sprites(bitmap);
 	} };

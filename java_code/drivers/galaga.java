@@ -72,7 +72,7 @@ CPU #3 NMI (@120Hz)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -86,8 +86,7 @@ public class galaga
 	
 	
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -157,7 +156,7 @@ public class galaga
 	
 	
 	
-	static InputPortPtr input_ports_galaga = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaga )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "4C_1C") );
@@ -241,7 +240,7 @@ public class galaga
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as galaga, dip switches are slightly different */
-	static InputPortPtr input_ports_galaganm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaganm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaganm )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x04, DEF_STR( "4C_1C") );
@@ -385,8 +384,7 @@ public class galaga
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_galaga = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galaga )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3125000)        /* 3.125 MHz */
@@ -422,9 +420,7 @@ public class galaga
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -734,17 +730,16 @@ public class galaga
 		ROM_LOAD( "1d.bin",       0x0000, 0x0100, CRC(86d92b24) SHA1(6bef9102b97c83025a2cf84e89d95f2d44c3d2ed) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT (gatsbee)
-	{
+	public static DriverInitHandlerPtr init_gatsbee  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x1000, 0x1000, gatsbee_bank_w);
-	}
+	} };
 	
-	public static GameDriver driver_galaga	   = new GameDriver("1981"	,"galaga"	,"galaga.java"	,rom_galaga,null	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"Namco", "Galaga (Namco)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galagamw	   = new GameDriver("1981"	,"galagamw"	,"galaga.java"	,rom_galagamw,driver_galaga	,machine_driver_galaga	,input_ports_galaga	,null	,ROT90	,	"[Namco] (Midway license)", "Galaga (Midway)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galagads	   = new GameDriver("1981"	,"galagads"	,"galaga.java"	,rom_galagads,driver_galaga	,machine_driver_galaga	,input_ports_galaga	,null	,ROT90	,	"hack", "Galaga (fast shoot)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gallag	   = new GameDriver("1982"	,"gallag"	,"galaga.java"	,rom_gallag,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"bootleg", "Gallag", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galagab2	   = new GameDriver("1981"	,"galagab2"	,"galaga.java"	,rom_galagab2,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"bootleg", "Galaga (bootleg)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_galaga84	   = new GameDriver("1984"	,"galaga84"	,"galaga.java"	,rom_galaga84,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"hack", "Galaga '84", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_nebulbee	   = new GameDriver("1984"	,"nebulbee"	,"galaga.java"	,rom_nebulbee,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,null	,ROT90	,	"hack", "Nebulous Bee", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gatsbee	   = new GameDriver("1984"	,"gatsbee"	,"galaga.java"	,rom_gatsbee,driver_galaga	,machine_driver_galaga	,input_ports_galaganm	,init_gatsbee	,ROT90	,	"Uchida", "Gatsbee", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, galaga,   0,      galaga, galaganm, 0, ROT90, "Namco", "Galaga (Namco)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, galagamw, galaga, galaga, galaga,   0, ROT90, "[Namco] (Midway license)", "Galaga (Midway)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, galagads, galaga, galaga, galaga,   0, ROT90, "hack", "Galaga (fast shoot)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1982, gallag,   galaga, galaga, galaganm, 0, ROT90, "bootleg", "Gallag", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, galagab2, galaga, galaga, galaganm, 0, ROT90, "bootleg", "Galaga (bootleg)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, galaga84, galaga, galaga, galaganm, 0, ROT90, "hack", "Galaga '84", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, nebulbee, galaga, galaga, galaganm, 0, ROT90, "hack", "Nebulous Bee", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, gatsbee,  galaga, galaga, galaganm, gatsbee, ROT90, "Uchida", "Gatsbee", GAME_IMPERFECT_GRAPHICS )
 }

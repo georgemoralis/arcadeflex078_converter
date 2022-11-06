@@ -13,7 +13,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -84,7 +84,7 @@ public class holeland
 	
 	
 	
-	static InputPortPtr input_ports_holeland = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_holeland = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( holeland )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -153,7 +153,7 @@ public class holeland
 		PORT_DIPSETTING(    0x80, "Play" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crzrally = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crzrally = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crzrally )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -304,8 +304,7 @@ public class holeland
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_holeland = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( holeland )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz ? */
@@ -329,13 +328,10 @@ public class holeland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_crzrally = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crzrally )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz ? */
@@ -359,9 +355,7 @@ public class holeland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -418,6 +412,6 @@ public class holeland
 	
 	
 	
-	public static GameDriver driver_holeland	   = new GameDriver("1984"	,"holeland"	,"holeland.java"	,rom_holeland,null	,machine_driver_holeland	,input_ports_holeland	,null	,ROT0	,	"Tecfri", "Hole Land", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_crzrally	   = new GameDriver("1985"	,"crzrally"	,"holeland.java"	,rom_crzrally,null	,machine_driver_crzrally	,input_ports_crzrally	,null	,ROT270	,	"Tecfri", "Crazy Rally", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1984, holeland, 0, holeland, holeland, 0, ROT0,   "Tecfri", "Hole Land", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1985, crzrally, 0, crzrally, crzrally, 0, ROT270, "Tecfri", "Crazy Rally", GAME_IMPERFECT_GRAPHICS )
 }

@@ -6,15 +6,14 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class subs
 {
 	
-	public static WriteHandlerPtr subs_invert1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_invert1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 0x01) == 1)
 		{
 			palette_set_color(0, 0x00, 0x00, 0x00);
@@ -27,8 +26,7 @@ public class subs
 		}
 	} };
 	
-	public static WriteHandlerPtr subs_invert2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr subs_invert2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 0x01) == 1)
 		{
 			palette_set_color(2, 0x00, 0x00, 0x00);
@@ -50,8 +48,7 @@ public class subs
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_subs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_subs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int updateall = get_vh_global_attribute_changed();
 		int offs;
 	

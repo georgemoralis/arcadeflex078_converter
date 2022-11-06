@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class gotya
 	  I'm using Pac Man resistor values
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_gotya  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gotya  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -73,8 +72,7 @@ public class gotya
 		}
 	} };
 	
-	public static WriteHandlerPtr gotya_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gotya_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -82,8 +80,7 @@ public class gotya
 		}
 	} };
 	
-	public static WriteHandlerPtr gotya_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gotya_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -91,8 +88,7 @@ public class gotya
 		}
 	} };
 	
-	public static WriteHandlerPtr gotya_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gotya_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 - scroll bit 8
 		   bit 1 - flip screen
 		   bit 2 - sound disable ??? */
@@ -114,12 +110,11 @@ public class gotya
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_gotya  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gotya  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -129,7 +124,7 @@ public class gotya
 	{
 		int row;
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			sx = 35 - sx;
 		}
@@ -138,7 +133,7 @@ public class gotya
 		{
 			int sy;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = row;
 			}
@@ -147,12 +142,12 @@ public class gotya
 				sy = 31 - row;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
-				gotya_videoram2.read(row * 32 + col),
-				gotya_videoram2.read(row * 32 + col + 0x10)& 0x0f,
+			drawgfx(bitmap,Machine->gfx[0],
+				gotya_videoram2[row * 32 + col],
+				gotya_videoram2[row * 32 + col + 0x10] & 0x0f,
 				flip_screen_x, flip_screen_y,
 				8 * sx, 8 * sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_NONE, 0);
 		}
 	}
@@ -168,16 +163,16 @@ public class gotya
 			int sx = 256 - spriteram.read(offs + 0x10)+ (spriteram.read(offs + 0x01)& 0x01) * 256;
 			int sy = spriteram.read(offs + 0x00);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 				code, color,
 				flip_screen_x, flip_screen_y,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
@@ -192,8 +187,7 @@ public class gotya
 		gotya_draw_status_row(bitmap, 34, 15);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gotya  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, -(*gotya_scroll + (scroll_bit_8 * 256)) - 2 * 8);
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		gotya_draw_sprites(bitmap);

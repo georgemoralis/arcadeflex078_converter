@@ -8,7 +8,7 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -18,14 +18,12 @@ public class rockrage
 	
 	/* from vidhrdw */
 	
-	public static InterruptHandlerPtr rockrage_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K007342_is_INT_enabled() != 0)
+	public static InterruptHandlerPtr rockrage_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K007342_is_INT_enabled())
 	        cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr rockrage_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockrage_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -40,21 +38,20 @@ public class rockrage
 		/* other bits unknown */
 	} };
 	
-	public static WriteHandlerPtr rockrage_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockrage_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset, data);
 		cpu_set_irq_line(1,M6809_IRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr rockrage_VLM5030_busy_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr rockrage_VLM5030_busy_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return ( VLM5030_BSY() ? 1 : 0 );
-	} };
+	}
 	
-	public static WriteHandlerPtr rockrage_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr rockrage_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/* bit2 = data bus enable */
 		VLM5030_RST( ( data >> 1 ) & 0x01 );
 		VLM5030_ST(  ( data >> 0 ) & 0x01 );
-	} };
+	}
 	
 	public static Memory_ReadAddress rockrage_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -117,7 +114,7 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_rockrage = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rockrage = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rockrage )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -267,8 +264,7 @@ public class rockrage
 		0
 	};
 	
-	public static MachineHandlerPtr machine_driver_rockrage = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rockrage )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* 24MHz/8 (?) */
@@ -297,9 +293,7 @@ public class rockrage
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(VLM5030, vlm5030_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -364,6 +358,6 @@ public class rockrage
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_rockrage	   = new GameDriver("1986"	,"rockrage"	,"rockrage.java"	,rom_rockrage,null	,machine_driver_rockrage	,input_ports_rockrage	,null	,ROT0	,	"Konami", "Rock 'n Rage (World?)" )
-	public static GameDriver driver_rockragj	   = new GameDriver("1986"	,"rockragj"	,"rockrage.java"	,rom_rockragj,driver_rockrage	,machine_driver_rockrage	,input_ports_rockrage	,null	,ROT0	,	"Konami", "Koi no Hotrock (Japan)" )
+	GAME( 1986, rockrage, 0,        rockrage, rockrage, 0, ROT0, "Konami", "Rock 'n Rage (World?)" )
+	GAME( 1986, rockragj, rockrage, rockrage, rockrage, 0, ROT0, "Konami", "Koi no Hotrock (Japan)" )
 }

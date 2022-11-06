@@ -26,7 +26,7 @@ AT08XX03:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -116,28 +116,24 @@ public class marvins
 		sound_cpu_busy = 0;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_cpu_busy = snk_sound_busy_bit;
 		soundlatch_w.handler(0, data);
 		cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		sound_cpu_busy = 0;
 		return(soundlatch_r(0));
 	} };
 	
-	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_nmi_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_nmi_line(2, CLEAR_LINE);
 		return 0;
 	} };
 	
 	/* this input port has one of its bits mapped to sound CPU status */
-	public static ReadHandlerPtr marvins_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marvins_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(input_port_0_r.handler(0) | sound_cpu_busy);
 	} };
 	
@@ -282,7 +278,7 @@ public class marvins
 	};
 	
 	
-	static InputPortPtr input_ports_marvins = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_marvins = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( marvins )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -363,7 +359,7 @@ public class marvins
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_vangrd2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vangrd2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vangrd2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -445,7 +441,7 @@ public class marvins
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_madcrash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_madcrash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( madcrash )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -575,8 +571,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_marvins = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( marvins )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3360000)	/* 3.36 MHz */
@@ -610,13 +605,10 @@ public class marvins
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(NAMCO, snkwave_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vangrd2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vangrd2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3360000)	/* 3.36 MHz */
@@ -650,13 +642,10 @@ public class marvins
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(NAMCO, snkwave_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_madcrash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( madcrash )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( vangrd2 )
@@ -671,9 +660,7 @@ public class marvins
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(16, 16+256-1, 0, 0+216-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -795,14 +782,12 @@ public class marvins
 	
 	/*******************************************************************************************/
 	
-	public static DriverInitHandlerPtr init_marvins  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_marvins  = new DriverInitHandlerPtr() { public void handler(){
 		init_sound( 0x40 );
 		snk_gamegroup = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_madcrash  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_madcrash  = new DriverInitHandlerPtr() { public void handler(){
 	/*
 		The following lines patch out the ROM test (which fails - probably
 		because of bit rot, so the rest of the test mode (what little there
@@ -816,14 +801,13 @@ public class marvins
 		snk_irq_delay = 1700;
 	} };
 	
-	public static DriverInitHandlerPtr init_vangrd2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vangrd2  = new DriverInitHandlerPtr() { public void handler(){
 		init_sound( 0x20 );
 		snk_gamegroup = 2;
 	} };
 	
 	
-	public static GameDriver driver_marvins	   = new GameDriver("1983"	,"marvins"	,"marvins.java"	,rom_marvins,null	,machine_driver_marvins	,input_ports_marvins	,init_marvins	,ROT270	,	"SNK", "Marvin's Maze", GAME_NO_COCKTAIL )
-	public static GameDriver driver_madcrash	   = new GameDriver("1984"	,"madcrash"	,"marvins.java"	,rom_madcrash,null	,machine_driver_madcrash	,input_ports_madcrash	,init_madcrash	,ROT0	,	"SNK", "Mad Crasher", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_vangrd2	   = new GameDriver("1984"	,"vangrd2"	,"marvins.java"	,rom_vangrd2,null	,machine_driver_vangrd2	,input_ports_vangrd2	,init_vangrd2	,ROT270	,	"SNK", "Vanguard II", GAME_NO_COCKTAIL )
+	GAMEX(1983, marvins,  0, marvins,  marvins,  marvins,  ROT270, "SNK", "Marvin's Maze", GAME_NO_COCKTAIL )
+	GAMEX(1984, madcrash, 0, madcrash, madcrash, madcrash, ROT0,   "SNK", "Mad Crasher", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1984, vangrd2,  0, vangrd2,  vangrd2,  vangrd2,  ROT270, "SNK", "Vanguard II", GAME_NO_COCKTAIL )
 }

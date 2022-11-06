@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class dynax
 	
 	
 	/* 0 B01234 G01234 R01234 */
-	public static PaletteInitHandlerPtr palette_init_sprtmtch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sprtmtch  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -95,20 +94,17 @@ public class dynax
 	
 	
 	
-	public static WriteHandlerPtr dynax_extra_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_extra_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		extra_scroll_x = data;
 	} };
 	
-	public static WriteHandlerPtr dynax_extra_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_extra_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		extra_scroll_y = data;
 	} };
 	
 	
 	/* Destination Pen */
-	public static WriteHandlerPtr dynax_blit_pen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_pen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_blit_pen = data;
 	#if VERBOSE
 		logerror("P=%02X ",data);
@@ -116,8 +112,7 @@ public class dynax
 	} };
 	
 	/* Background Color */
-	public static WriteHandlerPtr dynax_blit_backpen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_backpen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_blit_backpen = data;
 	#if VERBOSE
 		logerror("B=%02X ",data);
@@ -125,8 +120,7 @@ public class dynax
 	} };
 	
 	/* Layers 0&1 Palettes (Low Bits) */
-	public static WriteHandlerPtr dynax_blit_palette01_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_palette01_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (layer_layout == LAYOUT_HNORIDUR)
 			dynax_blit_palettes = (dynax_blit_palettes & 0x00ff) | ((data&0x0f)<<12) | ((data&0xf0)<<4);
 		else
@@ -137,8 +131,7 @@ public class dynax
 	} };
 	
 	/* Layer 2 Palette (Low Bits) */
-	public static WriteHandlerPtr dynax_blit_palette2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_palette2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (layer_layout == LAYOUT_HNORIDUR)
 			dynax_blit_palettes = (dynax_blit_palettes & 0xff00) | ((data&0x0f)<<4) | ((data&0xf0)>>4);
 		else
@@ -149,8 +142,7 @@ public class dynax
 	} };
 	
 	/* Layers Palettes (High Bits) */
-	public static WriteHandlerPtr dynax_blit_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_blit_palbank = data;
 	#if VERBOSE
 		logerror("PB=%02X ",data);
@@ -158,8 +150,7 @@ public class dynax
 	} };
 	
 	/* Destination Layers */
-	public static WriteHandlerPtr dynax_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_blit_dest = data;
 		if (layer_layout == LAYOUT_HNORIDUR)
 			dynax_blit_dest = BITSWAP8(dynax_blit_dest ^ 0x0f, 7,6,5,4, 0,1,2,3);
@@ -170,8 +161,7 @@ public class dynax
 	} };
 	
 	/* Which half of the layers to write two (interleaved games only) */
-	public static WriteHandlerPtr hanamai_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanamai_layer_half_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hanamai_layer_half = data & 1;
 	#if VERBOSE
 		logerror("H=%02X ",data);
@@ -179,16 +169,14 @@ public class dynax
 	} };
 	
 	/* Write to both halves of the layers (interleaved games only) */
-	public static WriteHandlerPtr hnoridur_layer_half2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hnoridur_layer_half2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hnoridur_layer_half2 = (~data) & 1;
 	#if VERBOSE
 		logerror("H2=%02X ",data);
 	#endif
 	} };
 	
-	public static WriteHandlerPtr mjdialq2_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjdialq2_blit_dest_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int mask = (2 >> offset);	/* 1 or 2 */
 	
 		dynax_blit_dest &= ~mask;
@@ -196,8 +184,7 @@ public class dynax
 	} };
 	
 	/* Layers Enable */
-	public static WriteHandlerPtr dynax_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynax_layer_enable = data;
 	
 	#if VERBOSE
@@ -205,8 +192,7 @@ public class dynax
 	#endif
 	} };
 	
-	public static WriteHandlerPtr mjdialq2_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjdialq2_layer_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int mask = (2 >> offset);	/* 1 or 2 */
 	
 		dynax_layer_enable &= ~mask;
@@ -214,8 +200,7 @@ public class dynax
 	} };
 	
 	
-	public static WriteHandlerPtr dynax_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data & 1;
 		if (data & ~1)
 			logerror("CPU#0 PC %06X: Warning, flip screen <- %02X\n", activecpu_get_pc(), data);
@@ -263,16 +248,16 @@ public class dynax
 					// mjdialq2 title screen so there's something we are missing.
 	
 		/* "Flip Screen" just means complement the coordinates to 255 */
-		if (flipscreen != 0)	{	x ^= 0xff;	y ^= 0xff;	}
+		if (flipscreen)	{	x ^= 0xff;	y ^= 0xff;	}
 	
 		/* Rotate: rotation = SWAPXY + FLIPY */
-		if ((flags & 0x08) != 0)	{ int t = x; x = y; y = t;	}
+		if (flags & 0x08)	{ int t = x; x = y; y = t;	}
 	
 		/* Ignore the pens specified in ROM, draw everything with the
 		   supplied one instead */
-		if ((flags & 0x02) != 0)	{ pen = (dynax_blit_pen >> 4) & 0xf;	}
+		if (flags & 0x02)	{ pen = (dynax_blit_pen >> 4) & 0xf;	}
 	
-		if ((dynax_blit_dest & 0x10) != 0)	pen |= dynax_blit_pen<<1;	// e.g. yarunara
+		if (dynax_blit_dest & 0x10)	pen |= dynax_blit_pen<<1;	// e.g. yarunara
 	
 		if (	(x >= 0) && (x <= 0xff) &&
 				(y >= 0) && (y <= 0xff)	)
@@ -280,36 +265,36 @@ public class dynax
 			switch (layer_layout)
 			{
 				case LAYOUT_HANAMAI:
-					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[2][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x08) != 0)	dynax_pixmap[3][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x01)	dynax_pixmap[0][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x02)	dynax_pixmap[1][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x04)	dynax_pixmap[2][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x08)	dynax_pixmap[3][hanamai_layer_half][256*y+x] = pen;
 					break;
 	
 				case LAYOUT_HNORIDUR:
-					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[2][hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x08) != 0)	dynax_pixmap[3][hanamai_layer_half][256*y+x] = pen;
-					if (hnoridur_layer_half2 == 0) break;
-					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][1-hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][1-hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[2][1-hanamai_layer_half][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x08) != 0)	dynax_pixmap[3][1-hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x01)	dynax_pixmap[0][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x02)	dynax_pixmap[1][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x04)	dynax_pixmap[2][hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x08)	dynax_pixmap[3][hanamai_layer_half][256*y+x] = pen;
+					if (!hnoridur_layer_half2) break;
+					if (dynax_blit_dest & 0x01)	dynax_pixmap[0][1-hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x02)	dynax_pixmap[1][1-hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x04)	dynax_pixmap[2][1-hanamai_layer_half][256*y+x] = pen;
+					if (dynax_blit_dest & 0x08)	dynax_pixmap[3][1-hanamai_layer_half][256*y+x] = pen;
 					break;
 	
 				case LAYOUT_DRGPUNCH:
-					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][0][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[0][1][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x04) != 0)	dynax_pixmap[1][0][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x08) != 0)	dynax_pixmap[1][1][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x10) != 0)	dynax_pixmap[2][0][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x20) != 0)	dynax_pixmap[2][1][256*y+x] = pen;
+					if (dynax_blit_dest & 0x01)	dynax_pixmap[0][0][256*y+x] = pen;
+					if (dynax_blit_dest & 0x02)	dynax_pixmap[0][1][256*y+x] = pen;
+					if (dynax_blit_dest & 0x04)	dynax_pixmap[1][0][256*y+x] = pen;
+					if (dynax_blit_dest & 0x08)	dynax_pixmap[1][1][256*y+x] = pen;
+					if (dynax_blit_dest & 0x10)	dynax_pixmap[2][0][256*y+x] = pen;
+					if (dynax_blit_dest & 0x20)	dynax_pixmap[2][1][256*y+x] = pen;
 					break;
 	
 				case LAYOUT_MJDIALQ2:
-					if ((dynax_blit_dest & 0x01) != 0)	dynax_pixmap[0][0][256*y+x] = pen;
-					if ((dynax_blit_dest & 0x02) != 0)	dynax_pixmap[1][0][256*y+x] = pen;
+					if (dynax_blit_dest & 0x01)	dynax_pixmap[0][0][256*y+x] = pen;
+					if (dynax_blit_dest & 0x02)	dynax_pixmap[1][0][256*y+x] = pen;
 					break;
 			}
 		}
@@ -327,15 +312,15 @@ public class dynax
 	
 		int sx;
 	
-	if ((flags & 0xf4) != 0) usrintf_showmessage("flags %02x",flags);
-		if ((flags & 1) != 0)
+	if (flags & 0xf4) usrintf_showmessage("flags %02x",flags);
+		if ( flags & 1 )
 		{
 			int start,len;
 			pen = (dynax_blit_pen >> 4) & 0xf;
 	
 			/* Clear the buffer(s) starting from the given scanline and exit */
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 				start = 0;
 			else
 				start = dest;
@@ -345,40 +330,40 @@ public class dynax
 			switch (layer_layout)
 			{
 				case LAYOUT_HANAMAI:
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][0][start],pen,len);
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][1][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][0][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][1][start],pen,len);
-					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][0][start],pen,len);
-					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][1][start],pen,len);
-					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[3][0][start],pen,len);
-					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[3][1][start],pen,len);
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][0][start],pen,len);
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][1][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[1][0][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[1][1][start],pen,len);
+					if (dynax_blit_dest & 0x04)	memset(&dynax_pixmap[2][0][start],pen,len);
+					if (dynax_blit_dest & 0x04)	memset(&dynax_pixmap[2][1][start],pen,len);
+					if (dynax_blit_dest & 0x08)	memset(&dynax_pixmap[3][0][start],pen,len);
+					if (dynax_blit_dest & 0x08)	memset(&dynax_pixmap[3][1][start],pen,len);
 					break;
 	
 				case LAYOUT_HNORIDUR:
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[3][hanamai_layer_half][start],pen,len);
-					if (hnoridur_layer_half2 == 0) break;
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][1-hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][1-hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[2][1-hanamai_layer_half][start],pen,len);
-					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[3][1-hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[1][hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x04)	memset(&dynax_pixmap[2][hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x08)	memset(&dynax_pixmap[3][hanamai_layer_half][start],pen,len);
+					if (!hnoridur_layer_half2) break;
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][1-hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[1][1-hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x04)	memset(&dynax_pixmap[2][1-hanamai_layer_half][start],pen,len);
+					if (dynax_blit_dest & 0x08)	memset(&dynax_pixmap[3][1-hanamai_layer_half][start],pen,len);
 					break;
 	
 				case LAYOUT_DRGPUNCH:
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][0][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[0][1][start],pen,len);
-					if ((dynax_blit_dest & 0x04) != 0)	memset(&dynax_pixmap[1][0][start],pen,len);
-					if ((dynax_blit_dest & 0x08) != 0)	memset(&dynax_pixmap[1][1][start],pen,len);
-					if ((dynax_blit_dest & 0x10) != 0)	memset(&dynax_pixmap[2][0][start],pen,len);
-					if ((dynax_blit_dest & 0x20) != 0)	memset(&dynax_pixmap[2][1][start],pen,len);
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][0][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[0][1][start],pen,len);
+					if (dynax_blit_dest & 0x04)	memset(&dynax_pixmap[1][0][start],pen,len);
+					if (dynax_blit_dest & 0x08)	memset(&dynax_pixmap[1][1][start],pen,len);
+					if (dynax_blit_dest & 0x10)	memset(&dynax_pixmap[2][0][start],pen,len);
+					if (dynax_blit_dest & 0x20)	memset(&dynax_pixmap[2][1][start],pen,len);
 					break;
 	
 				case LAYOUT_MJDIALQ2:
-					if ((dynax_blit_dest & 0x01) != 0)	memset(&dynax_pixmap[0][0][start],pen,len);
-					if ((dynax_blit_dest & 0x02) != 0)	memset(&dynax_pixmap[1][0][start],pen,len);
+					if (dynax_blit_dest & 0x01)	memset(&dynax_pixmap[0][0][start],pen,len);
+					if (dynax_blit_dest & 0x02)	memset(&dynax_pixmap[1][0][start],pen,len);
 					break;
 			}
 	
@@ -402,7 +387,7 @@ public class dynax
 			{
 			case 0xf:	// Increment Y
 				/* Rotate: rotation = SWAPXY + FLIPY */
-				if ((flags & 0x08) != 0)
+				if (flags & 0x08)
 					y--;
 				else
 					y++;
@@ -470,7 +455,7 @@ public class dynax
 						(i			&	 0x3fffff) ;
 	
 		/* Generate an IRQ */
-		if (trigger_irq != 0)
+		if (trigger_irq)
 		{
 			dynax_blitter_irq = 1;
 			sprtmtch_update_irq();
@@ -480,11 +465,10 @@ public class dynax
 	
 	
 	
-	public static WriteHandlerPtr dynax_blit_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blit_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x blit_scroll_w data = %02x addr = %06x\n",activecpu_get_pc(),data,blit_src);
 		// 0x800000 also used!
-		if ((blit_src & 0x800000) != 0)
+		if (blit_src & 0x800000)
 		{
 			dynax_blit_scroll_high = data;	// ?
 	#if VERBOSE
@@ -493,7 +477,7 @@ public class dynax
 		}
 		else
 		{
-			if ((blit_src & 0x400000) != 0)
+			if (blit_src & 0x400000)
 			{
 				dynax_blit_scroll_y = data;
 	#if VERBOSE
@@ -511,8 +495,7 @@ public class dynax
 	} };
 	
 	
-	public static WriteHandlerPtr dynax_blitter_rev2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynax_blitter_rev2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: dynax_blitter_start(data); break;
@@ -549,8 +532,7 @@ public class dynax
 		trigger_irq = 1;
 	}
 	
-	public static VideoStartHandlerPtr video_start_hanamai  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hanamai  = new VideoStartHandlerPtr() { public int handler(){
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
@@ -566,8 +548,7 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_hnoridur  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hnoridur  = new VideoStartHandlerPtr() { public int handler(){
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
@@ -585,15 +566,13 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mcnpshnt  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (video_start_hnoridur() != 0)	return 1;
+	public static VideoStartHandlerPtr video_start_mcnpshnt  = new VideoStartHandlerPtr() { public int handler(){
+		if (video_start_hnoridur())	return 1;
 		priority_table = priority_mcnpshnt;
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sprtmtch  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sprtmtch  = new VideoStartHandlerPtr() { public int handler(){
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[0][1] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
@@ -607,8 +586,7 @@ public class dynax
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mjdialq2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mjdialq2  = new VideoStartHandlerPtr() { public int handler(){
 		if (!(dynax_pixmap[0][0] = auto_malloc(256*256)))	return 1;
 		if (!(dynax_pixmap[1][0] = auto_malloc(256*256)))	return 1;
 	
@@ -666,16 +644,16 @@ public class dynax
 			for (dy = 0; dy < 256; dy++)
 			{
 				UINT16 *dst;
-				UINT16 *dstbase = (UINT16 *)bitmap.base + ((dy - scrolly) & 0xff) * bitmap.rowpixels;
+				UINT16 *dstbase = (UINT16 *)bitmap->base + ((dy - scrolly) & 0xff) * bitmap->rowpixels;
 	
 				length = scrollx;
 				dst = dstbase + 2*(256 - length);
 				while (length--)
 				{
 					pen = *(src1++);
-					if (pen != 0) *dst     = palbase + pen;
+					if (pen) *dst     = palbase + pen;
 					pen = *(src2++);
-					if (pen != 0) *(dst+1) = palbase + pen;
+					if (pen) *(dst+1) = palbase + pen;
 					dst += 2;
 				}
 	
@@ -684,9 +662,9 @@ public class dynax
 				while (length--)
 				{
 					pen = *(src1++);
-					if (pen != 0) *dst     = palbase + pen;
+					if (pen) *dst     = palbase + pen;
 					pen = *(src2++);
-					if (pen != 0) *(dst+1) = palbase + pen;
+					if (pen) *(dst+1) = palbase + pen;
 					dst += 2;
 				}
 			}
@@ -722,14 +700,14 @@ public class dynax
 			for (dy = 0; dy < 256; dy++)
 			{
 				UINT16 *dst;
-				UINT16 *dstbase = (UINT16 *)bitmap.base + ((dy - scrolly) & 0xff) * bitmap.rowpixels;
+				UINT16 *dstbase = (UINT16 *)bitmap->base + ((dy - scrolly) & 0xff) * bitmap->rowpixels;
 	
 				length = scrollx;
 				dst = dstbase + 256 - length;
 				while (length--)
 				{
 					pen = *(src++);
-					if (pen != 0) *dst = palbase + pen;
+					if (pen) *dst = palbase + pen;
 					dst++;
 				}
 	
@@ -738,7 +716,7 @@ public class dynax
 				while (length--)
 				{
 					pen = *(src++);
-					if (pen != 0) *dst = palbase + pen;
+					if (pen) *dst = palbase + pen;
 					dst++;
 				}
 			}
@@ -757,7 +735,7 @@ public class dynax
 	
 	static int toggle;
 	if (keyboard_pressed_memory(KEYCODE_T))	toggle = 1-toggle;
-	if (toggle != 0)	{
+	if (toggle)	{
 		data8_t *RAM	=	memory_region( REGION_GFX1 );
 		size_t size		=	memory_region_length( REGION_GFX1 );
 		static int i = 0, c = 0;
@@ -774,13 +752,13 @@ public class dynax
 		dynax_blit_palbank  = (c >>  4) & 1;
 		dynax_blit_dest = 1;
 	
-		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+		fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 		memset(dynax_pixmap[0][0],0,sizeof(UINT8)*0x100*0x100);
 		memset(dynax_pixmap[0][1],0,sizeof(UINT8)*0x100*0x100);
 		hanamai_layer_half = 0;
-		sprtmtch_drawgfx(i, Machine.visible_area.min_x + Machine.visible_area.min_y*256, 0);
+		sprtmtch_drawgfx(i, Machine->visible_area.min_x + Machine->visible_area.min_y*256, 0);
 		hanamai_layer_half = 1;
-		sprtmtch_drawgfx(i, Machine.visible_area.min_x + Machine.visible_area.min_y*256, 0);
+		sprtmtch_drawgfx(i, Machine->visible_area.min_x + Machine->visible_area.min_y*256, 0);
 		hanamai_copylayer(bitmap, cliprect, 0);
 		usrintf_showmessage("%06X C%02X",i,c);
 	}
@@ -790,8 +768,7 @@ public class dynax
 	
 	static int hanamai_priority;
 	
-	public static WriteHandlerPtr hanamai_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanamai_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		hanamai_priority = data;
 	} };
 	
@@ -813,8 +790,7 @@ public class dynax
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hanamai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = ~dynax_layer_enable;
 		int lay[4];
 	
@@ -853,8 +829,7 @@ public class dynax
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hnoridur  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = ~BITSWAP8(hanamai_priority, 7,6,5,4, 0,1,2,3);
 		int lay[4];
 	
@@ -888,8 +863,7 @@ public class dynax
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sprtmtch  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = ~dynax_layer_enable;
 	
 		layers_ctrl &= debug_mask();
@@ -899,14 +873,13 @@ public class dynax
 			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
 			cliprect);
 	
-		if ((layers_ctrl & 1) != 0)	hanamai_copylayer( bitmap, cliprect, 0 );
-		if ((layers_ctrl & 2) != 0)	hanamai_copylayer( bitmap, cliprect, 1 );
-		if ((layers_ctrl & 4) != 0)	hanamai_copylayer( bitmap, cliprect, 2 );
+		if (layers_ctrl & 1)	hanamai_copylayer( bitmap, cliprect, 0 );
+		if (layers_ctrl & 2)	hanamai_copylayer( bitmap, cliprect, 1 );
+		if (layers_ctrl & 4)	hanamai_copylayer( bitmap, cliprect, 2 );
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mjdialq2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = ~dynax_layer_enable;
 	
 		layers_ctrl &= debug_mask();
@@ -916,7 +889,7 @@ public class dynax
 			Machine.pens[(dynax_blit_backpen & 0xff) + (dynax_blit_palbank & 1) * 256],
 			cliprect);
 	
-		if ((layers_ctrl & 1) != 0)	mjdialq2_copylayer( bitmap, cliprect, 0 );
-		if ((layers_ctrl & 2) != 0)	mjdialq2_copylayer( bitmap, cliprect, 1 );
+		if (layers_ctrl & 1)	mjdialq2_copylayer( bitmap, cliprect, 0 );
+		if (layers_ctrl & 2)	mjdialq2_copylayer( bitmap, cliprect, 1 );
 	} };
 }

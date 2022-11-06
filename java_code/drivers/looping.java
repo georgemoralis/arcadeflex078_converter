@@ -60,7 +60,7 @@ L056-6    9A          "      "      VLI-8-4 7A         "
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,8 +69,7 @@ public class looping
 	
 	static struct tilemap *tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_looping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_looping  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0;i < 0x20;i++)
 		{
@@ -107,23 +106,20 @@ public class looping
 				0)
 	}
 	
-	public static WriteHandlerPtr looping_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(~data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr looping_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(~data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr looping_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i,offs;
 		if( colorram.read(offset)!=data )
 		{
 			colorram.write(offset,data);
-			if ((offset & 1) != 0)
+			if( offset&1 )
 			{
 				/* odd bytes are column color attribute */
 				offs = (offset/2);
@@ -142,10 +138,9 @@ public class looping
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_looping  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_looping  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
-		if (tilemap != 0)
+		if( tilemap )
 		{
 			tilemap_set_scroll_cols( tilemap, 0x20 );
 			return 0;
@@ -153,8 +148,7 @@ public class looping
 		return -1;
 	} };
 	
-	public static WriteHandlerPtr looping_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
@@ -179,13 +173,13 @@ public class looping
 			code  = source[1] & 0x3f;
 			color = source[2];
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 			}
@@ -194,25 +188,23 @@ public class looping
 				sy = 240 - sy;
 			}
 	
-			drawgfx( bitmap, Machine.gfx[1],
+			drawgfx( bitmap, Machine->gfx[1],
 					code, color,
 					flipx, flipy,
 					sx, sy,
-					Machine.visible_area,
+					Machine->visible_area,
 					TRANSPARENCY_PEN, 0 );
 	
 			source += 4;
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_looping  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw( bitmap,cliprect,tilemap,0,0 );
 		draw_sprites( bitmap,cliprect );
 	} };
 	
-	public static WriteHandlerPtr looping_intack = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_intack = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data==0)
 		{
 			cpu_irq_line_vector_w(0, 0, 4);
@@ -220,23 +212,20 @@ public class looping
 		}
 	} };
 	
-	public static InterruptHandlerPtr looping_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr looping_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_irq_line_vector_w(0, 0, 4);
 		cpu_set_irq_line(0, 0, ASSERT_LINE);
 	} };
 	
 	/****** sound *******/
 	
-	public static WriteHandlerPtr looping_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset, data);
 		cpu_irq_line_vector_w(1, 0, 4);
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr looping_souint_clr = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_souint_clr = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data==0)
 		{
 			cpu_irq_line_vector_w(1, 0, 4);
@@ -250,8 +239,7 @@ public class looping
 		cpu_set_irq_line(1, 0, state);
 	}
 	
-	public static WriteHandlerPtr looping_sound_sw = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr looping_sound_sw = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this can be improved by adding the missing
 		   signals for decay etc. (see schematics) */
 		static int r[8];
@@ -372,8 +360,7 @@ public class looping
 		{ 30 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_looping = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( looping )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS9995, 3000000) /* ? */
@@ -404,13 +391,11 @@ public class looping
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
-	static InputPortPtr input_ports_looping = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_looping = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( looping )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -455,7 +440,7 @@ public class looping
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'looping' but additional "Infinite Lives" Dip Switch */
-	static InputPortPtr input_ports_skybump = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skybump = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skybump )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -570,7 +555,7 @@ public class looping
 		ROM_LOAD( "vid.clr",		0x0000, 0x0020, CRC(6a0c7d87) SHA1(140335d85c67c75b65689d4e76d29863c209cf32) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_looping  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_looping  = new DriverInitHandlerPtr() { public void handler()
 		/* unscramble the TMS9995 ROMs */
 		UINT8 *pMem = memory_region( REGION_CPU1 );
 		UINT8 raw,code;
@@ -579,21 +564,21 @@ public class looping
 		{
 			raw = pMem[i];
 			code = 0;
-			if ((raw & 0x01) != 0) code |= 0x80;
-			if ((raw & 0x02) != 0) code |= 0x40;
-			if ((raw & 0x04) != 0) code |= 0x20;
-			if ((raw & 0x08) != 0) code |= 0x10;
-			if ((raw & 0x10) != 0) code |= 0x08;
-			if ((raw & 0x20) != 0) code |= 0x04;
-			if ((raw & 0x40) != 0) code |= 0x02;
-			if ((raw & 0x80) != 0) code |= 0x01;
+			if( raw&0x01 ) code |= 0x80;
+			if( raw&0x02 ) code |= 0x40;
+			if( raw&0x04 ) code |= 0x20;
+			if( raw&0x08 ) code |= 0x10;
+			if( raw&0x10 ) code |= 0x08;
+			if( raw&0x20 ) code |= 0x04;
+			if( raw&0x40 ) code |= 0x02;
+			if( raw&0x80 ) code |= 0x01;
 			pMem[i] = code;
-		}
-	} };
+		} };
+	}
 	
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_looping	   = new GameDriver("1982"	,"looping"	,"looping.java"	,rom_looping,null	,machine_driver_looping	,input_ports_looping	,init_looping	,ROT90	,	"Venture Line", "Looping (set 1)" )
-	public static GameDriver driver_loopinga	   = new GameDriver("1982"	,"loopinga"	,"looping.java"	,rom_loopinga,driver_looping	,machine_driver_looping	,input_ports_looping	,init_looping	,ROT90	,	"Venture Line", "Looping (set 2)" )
-	public static GameDriver driver_skybump	   = new GameDriver("1982"	,"skybump"	,"looping.java"	,rom_skybump,null	,machine_driver_looping	,input_ports_skybump	,init_looping	,ROT90	,	"Venture Line", "Sky Bumper" )
+	GAME( 1982, looping,  0,        looping, looping, looping, ROT90, "Venture Line", "Looping (set 1)" )
+	GAME( 1982, loopinga, looping,  looping, looping, looping, ROT90, "Venture Line", "Looping (set 2)" )
+	GAME( 1982, skybump,  0,        looping, skybump, looping, ROT90, "Venture Line", "Sky Bumper" )
 	
 }

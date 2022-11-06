@@ -27,7 +27,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,8 +54,7 @@ public class mitchell
 	
 	
 	
-	public static WriteHandlerPtr pang_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pang_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -85,23 +84,22 @@ public class mitchell
 	static size_t nvram_size;
 	static int init_eeprom_count;
 	
-	public static NVRAMHandlerPtr nvram_handler_mitchell  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_mitchell  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			EEPROM_save(file);					/* EEPROM */
-			if (nvram_size != 0)	/* Super Pang, Block Block */
+			if (nvram_size)	/* Super Pang, Block Block */
 				mame_fwrite(file,nvram,nvram_size);	/* NVRAM */
 		}
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);					/* EEPROM */
-				if (nvram_size != 0)	/* Super Pang, Block Block */
+				if (nvram_size)	/* Super Pang, Block Block */
 					mame_fread(file,nvram,nvram_size);	/* NVRAM */
 			}
 			else
@@ -109,8 +107,7 @@ public class mitchell
 		}
 	} };
 	
-	public static ReadHandlerPtr pang_port5_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pang_port5_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bit;
 		
 		bit = EEPROM_read_bit() << 7;
@@ -122,24 +119,21 @@ public class mitchell
 		/* otherwise music doesn't work. */
 		if (cpu_getiloops() & 1) bit |= 0x01;
 		else bit |= 0x08;
-	if (Machine.gamedrv == &driver_mgakuen2)	/* hack... music doesn't work otherwise */
+	if (Machine->gamedrv == &driver_mgakuen2)	/* hack... music doesn't work otherwise */
 		bit ^= 0x08;
 	
 		return (input_port_0_r.handler(0) & 0x76) | bit;
 	} };
 	
-	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_cs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_set_cs_line(data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_set_clock_line(data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr eeprom_serial_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		EEPROM_write_bit(data);
 	} };
 	
@@ -153,16 +147,15 @@ public class mitchell
 	
 	static int dial[2],dial_selected;
 	
-	public static ReadHandlerPtr block_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr block_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int dir[2];
 	
-		if (dial_selected != 0)
+		if (dial_selected)
 		{
 			int delta;
 	
 			delta = (readinputport(4 + offset) - dial[offset]) & 0xff;
-			if ((delta & 0x80) != 0)
+			if (delta & 0x80)
 			{
 				delta = (-delta) & 0xff;
 				if (dir[offset])
@@ -195,8 +188,7 @@ public class mitchell
 		}
 	} };
 	
-	public static WriteHandlerPtr block_dial_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr block_dial_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == 0x08)
 		{
 			/* reset the dial counters */
@@ -212,8 +204,7 @@ public class mitchell
 	
 	static int keymatrix;
 	
-	public static ReadHandlerPtr mahjong_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mahjong_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i;
 	
 		for (i = 0;i < 5;i++)
@@ -222,16 +213,14 @@ public class mitchell
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr mahjong_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mahjong_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		keymatrix = data;
 	} };
 	
 	
 	static int input_type;
 	
-	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (input_type)
 		{
 			case 0:
@@ -239,11 +228,11 @@ public class mitchell
 				return readinputport(1 + offset);
 				break;
 			case 1:	/* Mahjong games */
-				if (offset != 0) return mahjong_input_r(offset-1);
+				if (offset) return mahjong_input_r(offset-1);
 				else return readinputport(1);
 				break;
 			case 2:	/* Block Block - dial control */
-				if (offset != 0) return block_input_r(offset-1);
+				if (offset) return block_input_r(offset-1);
 				else return readinputport(1);
 				break;
 			case 3:	/* Super Pang - simulate START 1 press to initialize EEPROM */
@@ -257,8 +246,7 @@ public class mitchell
 		}
 	} };
 	
-	public static WriteHandlerPtr input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr input_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (input_type)
 		{
 			case 0:
@@ -354,7 +342,7 @@ public class mitchell
 	
 	
 	
-	static InputPortPtr input_ports_mgakuen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mgakuen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mgakuen )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -522,7 +510,7 @@ public class mitchell
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_marukin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_marukin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( marukin )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -642,7 +630,7 @@ public class mitchell
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pkladies = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pkladies = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pkladies )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -764,7 +752,7 @@ public class mitchell
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pang )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -804,7 +792,7 @@ public class mitchell
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qtono1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qtono1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qtono1 )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -844,7 +832,7 @@ public class mitchell
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_block = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_block = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( block )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -886,7 +874,7 @@ public class mitchell
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER2, 50, 20, 0, 0);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blockj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockj )
 		PORT_START();       /* DSW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* USED - handled in port5_r */
 		PORT_BITX(0x02, 0x02, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
@@ -1003,8 +991,7 @@ public class mitchell
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mgakuen = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mgakuen )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* ??? */
@@ -1028,13 +1015,10 @@ public class mitchell
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pang )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* Super Pang says 8MHZ ORIGINAL BOARD */
@@ -1060,13 +1044,10 @@ public class mitchell
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_marukin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( marukin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 8000000)	/* Super Pang says 8MHZ ORIGINAL BOARD */
@@ -1092,9 +1073,7 @@ public class mitchell
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1574,87 +1553,73 @@ public class mitchell
 	
 	
 	
-	public static DriverInitHandlerPtr init_dokaben  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dokaben  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		mgakuen2_decode();
 	} };
-	public static DriverInitHandlerPtr init_pang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pang  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		pang_decode();
 	} };
-	public static DriverInitHandlerPtr init_pangb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pangb  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		bootleg_decode();
 	} };
-	public static DriverInitHandlerPtr init_cworld  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cworld  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		cworld_decode();
 	} };
-	public static DriverInitHandlerPtr init_hatena  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hatena  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		hatena_decode();
 	} };
-	public static DriverInitHandlerPtr init_spang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spang  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 3;
 		nvram_size = 0x80;
 		nvram = &memory_region(REGION_CPU1)[0xe000];	/* NVRAM */
 		spang_decode();
 	} };
-	public static DriverInitHandlerPtr init_sbbros  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sbbros  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 3;
 		nvram_size = 0x80;
 		nvram = &memory_region(REGION_CPU1)[0xe000];	/* NVRAM */
 		sbbros_decode();
 	} };
-	public static DriverInitHandlerPtr init_qtono1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_qtono1  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		qtono1_decode();
 	} };
-	public static DriverInitHandlerPtr init_qsangoku  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_qsangoku  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 0;
 		nvram_size = 0;
 		qsangoku_decode();
 	} };
-	public static DriverInitHandlerPtr init_mgakuen  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mgakuen  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 1;
 	} };
-	public static DriverInitHandlerPtr init_mgakuen2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mgakuen2  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 1;
 		nvram_size = 0;
 		mgakuen2_decode();
 	} };
-	public static DriverInitHandlerPtr init_marukin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_marukin  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 1;
 		nvram_size = 0;
 		marukin_decode();
 	} };
-	public static DriverInitHandlerPtr init_block  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_block  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 2;
 		nvram_size = 0x80;
 		nvram = &memory_region(REGION_CPU1)[0xff80];	/* NVRAM */
 		block_decode();
 	} };
-	public static DriverInitHandlerPtr init_blockbl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blockbl  = new DriverInitHandlerPtr() { public void handler(){
 		input_type = 2;
 		nvram_size = 0x80;
 		nvram = &memory_region(REGION_CPU1)[0xff80];	/* NVRAM */
@@ -1663,25 +1628,25 @@ public class mitchell
 	
 	
 	
-	public static GameDriver driver_mgakuen	   = new GameDriver("1988"	,"mgakuen"	,"mitchell.java"	,rom_mgakuen,null	,machine_driver_mgakuen	,input_ports_mgakuen	,init_mgakuen	,ROT0	,	"Yuga", "Mahjong Gakuen" )
-	public static GameDriver driver_7toitsu	   = new GameDriver("1988"	,"7toitsu"	,"mitchell.java"	,rom_7toitsu,driver_mgakuen	,machine_driver_mgakuen	,input_ports_mgakuen	,init_mgakuen	,ROT0	,	"Yuga", "Chi-Toitsu" )
-	public static GameDriver driver_mgakuen2	   = new GameDriver("1989"	,"mgakuen2"	,"mitchell.java"	,rom_mgakuen2,null	,machine_driver_marukin	,input_ports_marukin	,init_mgakuen2	,ROT0	,	"Face", "Mahjong Gakuen 2 Gakuen-chou no Fukushuu" )
-	public static GameDriver driver_pkladies	   = new GameDriver("1989"	,"pkladies"	,"mitchell.java"	,rom_pkladies,null	,machine_driver_marukin	,input_ports_pkladies	,init_mgakuen2	,ROT0	,	"Mitchell", "Poker Ladies" )
-	public static GameDriver driver_pkladiel	   = new GameDriver("1989"	,"pkladiel"	,"mitchell.java"	,rom_pkladiel,driver_pkladies	,machine_driver_marukin	,input_ports_pkladies	,init_mgakuen2	,ROT0	,	"Leprechaun", "Poker Ladies (Leprechaun)" )
-	public static GameDriver driver_dokaben	   = new GameDriver("1989"	,"dokaben"	,"mitchell.java"	,rom_dokaben,null	,machine_driver_pang	,input_ports_pang	,init_dokaben	,ROT0	,	"Capcom", "Dokaben (Japan)" )
-	public static GameDriver driver_pang	   = new GameDriver("1989"	,"pang"	,"mitchell.java"	,rom_pang,null	,machine_driver_pang	,input_ports_pang	,init_pang	,ROT0	,	"Mitchell", "Pang (World)" )
-	public static GameDriver driver_pangb	   = new GameDriver("1989"	,"pangb"	,"mitchell.java"	,rom_pangb,driver_pang	,machine_driver_pang	,input_ports_pang	,init_pangb	,ROT0	,	"bootleg", "Pang (bootleg)" )
-	public static GameDriver driver_bbros	   = new GameDriver("1989"	,"bbros"	,"mitchell.java"	,rom_bbros,driver_pang	,machine_driver_pang	,input_ports_pang	,init_pang	,ROT0	,	"Capcom", "Buster Bros. (US)" )
-	public static GameDriver driver_pompingw	   = new GameDriver("1989"	,"pompingw"	,"mitchell.java"	,rom_pompingw,driver_pang	,machine_driver_pang	,input_ports_pang	,init_pang	,ROT0	,	"Mitchell", "Pomping World (Japan)" )
-	public static GameDriver driver_cworld	   = new GameDriver("1989"	,"cworld"	,"mitchell.java"	,rom_cworld,null	,machine_driver_pang	,input_ports_qtono1	,init_cworld	,ROT0	,	"Capcom", "Capcom World (Japan)" )
-	public static GameDriver driver_hatena	   = new GameDriver("1990"	,"hatena"	,"mitchell.java"	,rom_hatena,null	,machine_driver_pang	,input_ports_qtono1	,init_hatena	,ROT0	,	"Capcom", "Adventure Quiz 2 Hatena Hatena no Dai-Bouken (Japan)" )
-	public static GameDriver driver_spang	   = new GameDriver("1990"	,"spang"	,"mitchell.java"	,rom_spang,null	,machine_driver_pang	,input_ports_pang	,init_spang	,ROT0	,	"Mitchell", "Super Pang (World)" )
-	public static GameDriver driver_sbbros	   = new GameDriver("1990"	,"sbbros"	,"mitchell.java"	,rom_sbbros,driver_spang	,machine_driver_pang	,input_ports_pang	,init_sbbros	,ROT0	,	"Mitchell + Capcom", "Super Buster Bros. (US)" )
-	public static GameDriver driver_marukin	   = new GameDriver("1990"	,"marukin"	,"mitchell.java"	,rom_marukin,null	,machine_driver_marukin	,input_ports_marukin	,init_marukin	,ROT0	,	"Yuga", "Super Marukin-Ban" )
-	public static GameDriver driver_qtono1	   = new GameDriver("1991"	,"qtono1"	,"mitchell.java"	,rom_qtono1,null	,machine_driver_pang	,input_ports_qtono1	,init_qtono1	,ROT0	,	"Capcom", "Quiz Tonosama no Yabou (Japan)" )
-	public static GameDriver driver_qsangoku	   = new GameDriver("1991"	,"qsangoku"	,"mitchell.java"	,rom_qsangoku,null	,machine_driver_pang	,input_ports_qtono1	,init_qsangoku	,ROT0	,	"Capcom", "Quiz Sangokushi (Japan)" )
-	public static GameDriver driver_block	   = new GameDriver("1991"	,"block"	,"mitchell.java"	,rom_block,null	,machine_driver_pang	,input_ports_blockj	,init_block	,ROT270	,	"Capcom", "Block Block (World 911106 Joystick)" )
-	public static GameDriver driver_blocka	   = new GameDriver("1991"	,"blocka"	,"mitchell.java"	,rom_blocka,driver_block	,machine_driver_pang	,input_ports_block	,init_block	,ROT270	,	"Capcom", "Block Block (World 910910)" )
-	public static GameDriver driver_blockj	   = new GameDriver("1991"	,"blockj"	,"mitchell.java"	,rom_blockj,driver_block	,machine_driver_pang	,input_ports_block	,init_block	,ROT270	,	"Capcom", "Block Block (Japan 910910)" )
-	public static GameDriver driver_blockbl	   = new GameDriver("1991"	,"blockbl"	,"mitchell.java"	,rom_blockbl,driver_block	,machine_driver_pang	,input_ports_block	,init_blockbl	,ROT270	,	"bootleg", "Block Block (bootleg)" )
+	GAME( 1988, mgakuen,  0,        mgakuen, mgakuen,  mgakuen,  ROT0,   "Yuga", "Mahjong Gakuen" )
+	GAME( 1988, 7toitsu,  mgakuen,  mgakuen, mgakuen,  mgakuen,  ROT0,   "Yuga", "Chi-Toitsu" )
+	GAME( 1989, mgakuen2, 0,        marukin, marukin,  mgakuen2, ROT0,   "Face", "Mahjong Gakuen 2 Gakuen-chou no Fukushuu" )
+	GAME( 1989, pkladies, 0,        marukin, pkladies, mgakuen2, ROT0,   "Mitchell", "Poker Ladies" )
+	GAME( 1989, pkladiel, pkladies, marukin, pkladies, mgakuen2, ROT0,   "Leprechaun", "Poker Ladies (Leprechaun)" )
+	GAME( 1989, dokaben,  0,        pang,    pang,     dokaben,  ROT0,   "Capcom", "Dokaben (Japan)" )
+	GAME( 1989, pang,     0,        pang,    pang,     pang,     ROT0,   "Mitchell", "Pang (World)" )
+	GAME( 1989, pangb,    pang,     pang,    pang,     pangb,    ROT0,   "bootleg", "Pang (bootleg)" )
+	GAME( 1989, bbros,    pang,     pang,    pang,     pang,     ROT0,   "Capcom", "Buster Bros. (US)" )
+	GAME( 1989, pompingw, pang,     pang,    pang,     pang,     ROT0,   "Mitchell", "Pomping World (Japan)" )
+	GAME( 1989, cworld,   0,        pang,    qtono1,   cworld,   ROT0,   "Capcom", "Capcom World (Japan)" )
+	GAME( 1990, hatena,   0,        pang,    qtono1,   hatena,   ROT0,   "Capcom", "Adventure Quiz 2 Hatena Hatena no Dai-Bouken (Japan)" )
+	GAME( 1990, spang,    0,        pang,    pang,     spang,    ROT0,   "Mitchell", "Super Pang (World)" )
+	GAME( 1990, sbbros,   spang,    pang,    pang,     sbbros,   ROT0,   "Mitchell + Capcom", "Super Buster Bros. (US)" )
+	GAME( 1990, marukin,  0,        marukin, marukin,  marukin,  ROT0,   "Yuga", "Super Marukin-Ban" )
+	GAME( 1991, qtono1,   0,        pang,    qtono1,   qtono1,   ROT0,   "Capcom", "Quiz Tonosama no Yabou (Japan)" )
+	GAME( 1991, qsangoku, 0,        pang,    qtono1,   qsangoku, ROT0,   "Capcom", "Quiz Sangokushi (Japan)" )
+	GAME( 1991, block,    0,        pang,    blockj,   block,    ROT270, "Capcom", "Block Block (World 911106 Joystick)" )
+	GAME( 1991, blocka,   block,    pang,    block,    block,    ROT270, "Capcom", "Block Block (World 910910)" )
+	GAME( 1991, blockj,   block,    pang,    block,    block,    ROT270, "Capcom", "Block Block (Japan 910910)" )
+	GAME( 1991, blockbl,  block,    pang,    block,    blockbl,  ROT270, "bootleg", "Block Block (bootleg)" )
 }

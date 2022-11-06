@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -97,7 +97,7 @@ public class cchasm
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_cchasm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cchasm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cchasm )
 		PORT_START();  /* DSW */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x01, "3" );
@@ -192,8 +192,7 @@ public class cchasm
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_cchasm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cchasm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,8000000)	/* 8 MHz (from schematics) */
@@ -218,9 +217,7 @@ public class cchasm
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -285,6 +282,6 @@ public class cchasm
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_cchasm	   = new GameDriver("1983"	,"cchasm"	,"cchasm.java"	,rom_cchasm,null	,machine_driver_cchasm	,input_ports_cchasm	,null	,ROT270	,	"Cinematronics / GCE", "Cosmic Chasm (set 1)" )
-	public static GameDriver driver_cchasm1	   = new GameDriver("1983"	,"cchasm1"	,"cchasm.java"	,rom_cchasm1,driver_cchasm	,machine_driver_cchasm	,input_ports_cchasm	,null	,ROT270	,	"Cinematronics / GCE", "Cosmic Chasm (set 2)" )
+	GAME( 1983, cchasm,  0,      cchasm, cchasm, 0, ROT270, "Cinematronics / GCE", "Cosmic Chasm (set 1)" )
+	GAME( 1983, cchasm1, cchasm, cchasm, cchasm, 0, ROT270, "Cinematronics / GCE", "Cosmic Chasm (set 2)" )
 }

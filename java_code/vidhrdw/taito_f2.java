@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -99,7 +99,7 @@ public class taito_f2
 		if (chips < 0)	/* we have an erroneous TC0100SCN configuration */
 			return 1;
 	
-		if (has_TC0480SCP() != 0)	/* it's a tc0480scp game */
+		if (has_TC0480SCP())	/* it's a tc0480scp game */
 		{
 			if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,f2_hide_pixels,f2_tilemap_xoffs,
 			   f2_tilemap_yoffs,f2_text_xoffs,0,-1,0,f2_tilemap_col_base))
@@ -112,19 +112,19 @@ public class taito_f2
 				return 1;
 		}
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
-		if (has_TC0280GRD() != 0)
+		if (has_TC0280GRD())
 			if (TC0280GRD_vh_start(TC0280GRD_GFX_NUM))
 				return 1;
 	
-		if (has_TC0430GRW() != 0)
+		if (has_TC0430GRW())
 			if (TC0430GRW_vh_start(TC0430GRW_GFX_NUM))
 				return 1;
 	
-		if (has_TC0360PRI() != 0)
+		if (has_TC0360PRI())
 			TC0360PRI_vh_start();	/* Purely for save-state purposes */
 	
 		for (i = 0; i < 8; i ++)
@@ -155,76 +155,64 @@ public class taito_f2
 	/*    ( spritetype, hide, hideflip, xoffs, yoffs, flipx, flipy, textflipx, textflipy) */
 	/**************************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_taitof2_default  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_default  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_megab  = new VideoStartHandlerPtr() { public int handler()   /* Megab, Liquidk */
+	public static VideoStartHandlerPtr video_start_taitof2_megab  = new VideoStartHandlerPtr() { public int handler() /* Megab, Liquidk */
 	{
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_quiz  = new VideoStartHandlerPtr() { public int handler()   /* Quiz Crayons, Quiz Jinsei */
+	public static VideoStartHandlerPtr video_start_taitof2_quiz  = new VideoStartHandlerPtr() { public int handler() /* Quiz Crayons, Quiz Jinsei */
 	{
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_finalb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_finalb  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,1,1,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_ssi  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_ssi  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_growl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_growl  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_ninjak  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_ninjak  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,0,0,0,0,0,0,1,2));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_qzchikyu  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_qzchikyu  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,0,4,0,0,-4,0,-11,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_solfigtr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_solfigtr  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,-3,0,0,6,0,6,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_koshien  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_koshien  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,1,-1,0,0,2,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_gunfront  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_gunfront  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_thundfox  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_thundfox  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,-3,0,0,5,0,4,1));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_mjnquest  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_mjnquest  = new VideoStartHandlerPtr() { public int handler(){
 		int failed = (taitof2_core_vh_start(0,0,0,0,0,0,0,0,0));	/* non-zero = failure */
-		if (failed == 0)  TC0100SCN_set_bg_tilemask(0x7fff);
+		if (!failed)  TC0100SCN_set_bg_tilemask(0x7fff);
 	
 		return failed;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_footchmp  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_footchmp  = new VideoStartHandlerPtr() { public int handler(){
 		int failed;
 		f2_tilemap_xoffs = 0x1d;
 		f2_tilemap_yoffs = 0x08;
@@ -236,8 +224,7 @@ public class taito_f2
 		return failed;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_hthero  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_hthero  = new VideoStartHandlerPtr() { public int handler(){
 		int failed;
 		f2_tilemap_xoffs = 0x33;
 		f2_tilemap_yoffs = - 0x04;
@@ -249,8 +236,7 @@ public class taito_f2
 		return failed;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_deadconx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_deadconx  = new VideoStartHandlerPtr() { public int handler(){
 		f2_tilemap_xoffs = 0x1e;
 		f2_tilemap_yoffs = 0x08;
 		f2_text_xoffs = -1;
@@ -258,8 +244,7 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_deadconj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_deadconj  = new VideoStartHandlerPtr() { public int handler(){
 		f2_tilemap_xoffs = 0x34;
 		f2_tilemap_yoffs = - 0x05;
 		f2_text_xoffs = -1;
@@ -267,8 +252,7 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_metalb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_metalb  = new VideoStartHandlerPtr() { public int handler(){
 		f2_tilemap_xoffs = 0x32;
 		f2_tilemap_yoffs = - 0x04;
 		f2_text_xoffs = 1;	/* not the usual -1 */
@@ -276,37 +260,32 @@ public class taito_f2
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_yuyugogo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_yuyugogo  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(1,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_yesnoj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_yesnoj  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_dinorex  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_dinorex  = new VideoStartHandlerPtr() { public int handler(){
 		return (taitof2_core_vh_start(3,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_dondokod  = new VideoStartHandlerPtr() { public int handler()	/* dondokod, cameltry */
+	public static VideoStartHandlerPtr video_start_taitof2_dondokod  = new VideoStartHandlerPtr() { public int handler()* dondokod, cameltry */
 	{
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 0;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_pulirula  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_pulirula  = new VideoStartHandlerPtr() { public int handler(){
 		f2_pivot_xdisp = -10;	/* alignment seems correct (see level 2, falling */
 		f2_pivot_ydisp = 16;	/* block of ice after armour man) */
 		return (taitof2_core_vh_start(2,3,3,0,0,0,0,0,0));
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitof2_driftout  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitof2_driftout  = new VideoStartHandlerPtr() { public int handler(){
 		f2_pivot_xdisp = -16;
 		f2_pivot_ydisp = 16;
 		return (taitof2_core_vh_start(0,3,3,0,0,0,0,0,0));
@@ -476,7 +455,7 @@ public class taito_f2
 		color = 0;
 	
 		f2_x_offset = f2_hide_pixels;   /* Get rid of 0-3 unwanted pixels on edge of screen. */
-		if (sprites_flipscreen != 0) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
+		if (sprites_flipscreen) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
 	
 		/* safety check to avoid getting stuck in bank 2 for games using only one bank */
 		if (area == 0x8000 &&
@@ -497,7 +476,7 @@ public class taito_f2
 	
 				/* Get rid of 0-3 unwanted pixels on edge of screen. */
 				f2_x_offset = f2_hide_pixels;
-				if (sprites_flipscreen != 0) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
+				if (sprites_flipscreen) f2_x_offset = -f2_flip_hide_pixels;		// was -f2_x_offset
 	
 				if (f2_game == FOOTCHMP)
 					area = 0x8000 * (spriteram_buffered[(offs+6)/2] & 0x0001);
@@ -526,7 +505,7 @@ public class taito_f2
 				if (scroll1y >= 0x800) scroll1y -= 0x1000;   /* signed value */
 			}
 	
-			if (disabled != 0)
+			if (disabled)
 				continue;
 	
 			spritedata = spriteram_buffered[(offs+8)/2];
@@ -547,7 +526,7 @@ public class taito_f2
 					big_sprite = 1;   /* we have started a new big sprite */
 				}
 			}
-			else if (big_sprite != 0)
+			else if (big_sprite)
 			{
 				last_continuation_tile = 1;   /* don't clear big_sprite until last tile done */
 			}
@@ -569,12 +548,12 @@ public class taito_f2
 	// journey in MjnQuest). You will see they are 1 pixel too far to the right.
 	// Where is this extra pixel offset coming from??
 	
-				if ((x & 0x8000) != 0)   /* absolute (koshien) */
+				if (x & 0x8000)   /* absolute (koshien) */
 				{
 					scrollx = - f2_x_offset - 0x60;
 					scrolly = 0;
 				}
-				else if ((x & 0x4000) != 0)   /* ignore extra scroll */
+				else if (x & 0x4000)   /* ignore extra scroll */
 				{
 					scrollx = master_scrollx - f2_x_offset - 0x60;
 					scrolly = master_scrolly;
@@ -609,7 +588,7 @@ public class taito_f2
 				}
 			}
 	
-			if (big_sprite != 0)
+			if (big_sprite)
 			{
 				zoomx = zoomxlatch;
 				zoomy = zoomylatch;
@@ -643,7 +622,7 @@ public class taito_f2
 				zy = (0x100 - zoomy) / 16;
 			}
 	
-			if (last_continuation_tile != 0)
+			if (last_continuation_tile)
 			{
 				big_sprite=0;
 				last_continuation_tile=0;
@@ -693,7 +672,7 @@ public class taito_f2
 			cury = (y + scrolly) & 0xfff;
 			if (cury >= 0x800)	cury -= 0x1000;   /* treat it as signed */
 	
-			if (sprites_flipscreen != 0)
+			if (sprites_flipscreen)
 			{
 				/* -zx/y is there to fix zoomed sprite coords in screenflip.
 				   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -706,32 +685,32 @@ public class taito_f2
 			}
 	
 			{
-				sprite_ptr.code = code;
-				sprite_ptr.color = color;
-				if (Machine.gfx[0].color_granularity == 64)	/* Final Blow is 6-bit deep */
-					sprite_ptr.color /= 4;
-				sprite_ptr.flipx = flipx;
-				sprite_ptr.flipy = flipy;
-				sprite_ptr.x = curx;
-				sprite_ptr.y = cury;
-				sprite_ptr.zoomx = zx << 12;
-				sprite_ptr.zoomy = zy << 12;
+				sprite_ptr->code = code;
+				sprite_ptr->color = color;
+				if (Machine->gfx[0]->color_granularity == 64)	/* Final Blow is 6-bit deep */
+					sprite_ptr->color /= 4;
+				sprite_ptr->flipx = flipx;
+				sprite_ptr->flipy = flipy;
+				sprite_ptr->x = curx;
+				sprite_ptr->y = cury;
+				sprite_ptr->zoomx = zx << 12;
+				sprite_ptr->zoomy = zy << 12;
 	
-				if (primasks != 0)
+				if (primasks)
 				{
-					sprite_ptr.primask = primasks[(color & 0xc0) >> 6];
+					sprite_ptr->primask = primasks[(color & 0xc0) >> 6];
 	
 					sprite_ptr++;
 				}
 				else
 				{
-					drawgfxzoom(bitmap,Machine.gfx[0],
-							sprite_ptr.code,
-							sprite_ptr.color,
-							sprite_ptr.flipx,sprite_ptr.flipy,
-							sprite_ptr.x,sprite_ptr.y,
+					drawgfxzoom(bitmap,Machine->gfx[0],
+							sprite_ptr->code,
+							sprite_ptr->color,
+							sprite_ptr->flipx,sprite_ptr->flipy,
+							sprite_ptr->x,sprite_ptr->y,
 							cliprect,TRANSPARENCY_PEN,0,
-							sprite_ptr.zoomx,sprite_ptr.zoomy);
+							sprite_ptr->zoomx,sprite_ptr->zoomy);
 				}
 			}
 		}
@@ -742,14 +721,14 @@ public class taito_f2
 		{
 			sprite_ptr--;
 	
-			pdrawgfxzoom(bitmap,Machine.gfx[0],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			pdrawgfxzoom(bitmap,Machine->gfx[0],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					cliprect,TRANSPARENCY_PEN,0,
-					sprite_ptr.zoomx,sprite_ptr.zoomy,
-					sprite_ptr.primask);
+					sprite_ptr->zoomx,sprite_ptr->zoomy,
+					sprite_ptr->primask);
 		}
 	}
 	
@@ -778,7 +757,7 @@ public class taito_f2
 	
 	static void taitof2_handle_sprite_buffering(void)
 	{
-		if (prepare_sprites != 0)	/* no buffering */
+		if (prepare_sprites)	/* no buffering */
 		{
 			memcpy(spriteram_buffered,spriteram16,spriteram_size);
 			prepare_sprites = 0;
@@ -829,15 +808,13 @@ public class taito_f2
 		}
 	}
 	
-	public static VideoEofHandlerPtr video_eof_taitof2_no_buffer  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitof2_no_buffer  = new VideoEofHandlerPtr() { public void handler(){
 		taitof2_update_sprites_active_area();
 	
 		prepare_sprites = 1;
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_taitof2_full_buffer_delayed  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitof2_full_buffer_delayed  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		taitof2_update_sprites_active_area();
@@ -849,8 +826,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		taitof2_update_sprites_active_area();
@@ -862,8 +838,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed_thundfox  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed_thundfox  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 	
 		taitof2_update_sprites_active_area();
@@ -879,8 +854,7 @@ public class taito_f2
 		memcpy(spriteram_delayed,spriteram16,spriteram_size[0]);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed_qzchikyu  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitof2_partial_buffer_delayed_qzchikyu  = new VideoEofHandlerPtr() { public void handler(){
 		/* spriteram.read(2)and [3] are 1 frame behind...
 		   probably thundfox_eof_callback would work fine */
 	
@@ -904,8 +878,7 @@ public class taito_f2
 	
 	
 	/* SSI */
-	public static VideoUpdateHandlerPtr video_update_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ssi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		taitof2_handle_sprite_buffering();
 	
 		/* SSI only uses sprites, the tilemap registers are not even initialized.
@@ -916,8 +889,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yesnoj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		taitof2_handle_sprite_buffering();
 	
 		TC0100SCN_tilemap_update();
@@ -931,8 +903,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taitof2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitof2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		taitof2_handle_sprite_buffering();
 	
 		TC0100SCN_tilemap_update();
@@ -946,8 +917,7 @@ public class taito_f2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taitof2_pri  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitof2_pri  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int tilepri[3];
 		int spritepri[4];
 		int layer[3];
@@ -1004,16 +974,15 @@ public class taito_f2
 	
 	static void draw_roz_layer(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
-		if (has_TC0280GRD() != 0)
+		if (has_TC0280GRD())
 			TC0280GRD_zoom_draw(bitmap,cliprect,f2_pivot_xdisp,f2_pivot_ydisp,8);
 	
-		if (has_TC0430GRW() != 0)
+		if (has_TC0430GRW())
 			TC0430GRW_zoom_draw(bitmap,cliprect,f2_pivot_xdisp,f2_pivot_ydisp,8);
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_taitof2_pri_roz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitof2_pri_roz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int tilepri[3];
 		int spritepri[4];
 		int rozpri;
@@ -1025,10 +994,10 @@ public class taito_f2
 	
 		taitof2_handle_sprite_buffering();
 	
-		if (has_TC0280GRD() != 0)
+		if (has_TC0280GRD())
 			TC0280GRD_tilemap_update(roz_base_color);
 	
-		if (has_TC0430GRW() != 0)
+		if (has_TC0430GRW())
 			TC0430GRW_tilemap_update(roz_base_color);
 	
 		TC0100SCN_tilemap_update();
@@ -1086,8 +1055,7 @@ public class taito_f2
 	
 	
 	/* Thunderfox */
-	public static VideoUpdateHandlerPtr video_update_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_thundfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int tilepri[2][3];
 		int spritepri[4];
 		int layer[2][3];
@@ -1215,8 +1183,7 @@ public class taito_f2
 	
 	********************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_metalb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[5];
 		UINT8 tilepri[5];
 		UINT8 spritepri[4];
@@ -1281,8 +1248,7 @@ public class taito_f2
 	
 	
 	/* Deadconx, Footchmp */
-	public static VideoUpdateHandlerPtr video_update_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_deadconx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[5];
 		UINT8 tilepri[5];
 		UINT8 spritepri[4];

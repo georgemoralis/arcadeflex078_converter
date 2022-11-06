@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,8 +52,7 @@ public class xmen
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_xmen  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xmen  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,xmen_tile_callback))
@@ -88,8 +87,7 @@ public class xmen
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xmen  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[3];
 	
 	

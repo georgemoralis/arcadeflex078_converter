@@ -175,7 +175,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -190,11 +190,10 @@ public class tempest
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr tempest_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tempest_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = readinputport(0);
 	
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			res |= 0x40;
 	
 		/* Emulate the 3kHz source on bit 7 (divide 1.5MHz by 512) */
@@ -205,14 +204,12 @@ public class tempest
 	} };
 	
 	
-	public static ReadHandlerPtr input_port_1_bit_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_port_1_bit_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) & (1 << offset)) ? 0 : 228;
 	} };
 	
 	
-	public static ReadHandlerPtr input_port_2_bit_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_port_2_bit_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(2) & (1 << offset)) ? 0 : 228;
 	} };
 	
@@ -224,16 +221,14 @@ public class tempest
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr tempest_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tempest_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, ~data & 0x02);
 		set_led_status(1, ~data & 0x01);
 		/* FLIP is bit 0x04 */
 	} };
 	
 	
-	public static WriteHandlerPtr tempest_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tempest_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, (data & 0x01));
 		coin_counter_w(1, (data & 0x02));
 		coin_counter_w(2, (data & 0x04));
@@ -297,7 +292,7 @@ public class tempest
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_tempest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tempest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tempest )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -425,8 +420,7 @@ public class tempest
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_tempest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tempest )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000/8)			/* 1.512 MHz */
@@ -448,9 +442,7 @@ public class tempest
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -571,9 +563,9 @@ public class tempest
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_tempest	   = new GameDriver("1980"	,"tempest"	,"tempest.java"	,rom_tempest,null	,machine_driver_tempest	,input_ports_tempest	,null	,ROT270	,	"Atari", "Tempest (rev 3)" )
-	public static GameDriver driver_tempest1	   = new GameDriver("1980"	,"tempest1"	,"tempest.java"	,rom_tempest1,driver_tempest	,machine_driver_tempest	,input_ports_tempest	,null	,ROT270	,	"Atari", "Tempest (rev 1)" )
-	public static GameDriver driver_tempest2	   = new GameDriver("1980"	,"tempest2"	,"tempest.java"	,rom_tempest2,driver_tempest	,machine_driver_tempest	,input_ports_tempest	,null	,ROT270	,	"Atari", "Tempest (rev 2)" )
-	public static GameDriver driver_tempest3	   = new GameDriver("1980"	,"tempest3"	,"tempest.java"	,rom_tempest3,driver_tempest	,machine_driver_tempest	,input_ports_tempest	,null	,ROT270	,	"Atari", "Tempest (rev ?)" )
-	public static GameDriver driver_temptube	   = new GameDriver("1980"	,"temptube"	,"tempest.java"	,rom_temptube,driver_tempest	,machine_driver_tempest	,input_ports_tempest	,null	,ROT270	,	"hack", "Tempest Tubes" )
+	GAME( 1980, tempest,  0,       tempest, tempest, 0, ROT270, "Atari", "Tempest (rev 3)" )
+	GAME( 1980, tempest1, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (rev 1)" )
+	GAME( 1980, tempest2, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (rev 2)" )
+	GAME( 1980, tempest3, tempest, tempest, tempest, 0, ROT270, "Atari", "Tempest (rev ?)" )
+	GAME( 1980, temptube, tempest, tempest, tempest, 0, ROT270, "hack", "Tempest Tubes" )
 }

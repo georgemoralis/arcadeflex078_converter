@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,21 +18,19 @@ public class portrait
 	data8_t *portrait_bgvideoram, *portrait_fgvideoram, *portrait_spriteram;
 	static struct tilemap *foreground, *background;
 	
-	public static WriteHandlerPtr portrait_bgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (portrait_bgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr portrait_bgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (portrait_bgvideoram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(background,offset/2);
-			portrait_bgvideoram.write(data,data);
+			portrait_bgvideoram[offset] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr portrait_fgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (portrait_fgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr portrait_fgvideo_write = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (portrait_fgvideoram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(foreground,offset/2);
-			portrait_fgvideoram.write(data,data);
+			portrait_fgvideoram[offset] = data;
 		}
 	} };
 	
@@ -43,7 +41,7 @@ public class portrait
 		int flags = 0;
 		int color   = 0;
 	
-		if ((attr & 0x20) != 0) flags |= TILE_FLIPY;
+		if( attr & 0x20 ) flags |= TILE_FLIPY;
 	
 		attr &= 0x07;
 		if(attr == 1) tilenum+=0x200; // 001
@@ -63,8 +61,7 @@ public class portrait
 		get_tile_info( portrait_fgvideoram, tile_index );
 	}
 	
-	public static VideoStartHandlerPtr video_start_portrait  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_portrait  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create( get_bg_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32 );
 		foreground = tilemap_create( get_fg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 32, 32 );
 		if( background && foreground )
@@ -76,8 +73,7 @@ public class portrait
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_portrait  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	} };
 	
 	static void draw_sprites( struct mame_bitmap *bitmap )
@@ -97,8 +93,8 @@ public class portrait
 			int tilenum = source[3];
 			int color = 0;
 			int flip = attr&0x20;
-			if ((attr & 0x04) != 0) sx |= 0x100;
-			if ((attr & 0x08) != 0) sy |= 0x100;
+			if( attr&0x04 ) sx |= 0x100;
+			if( attr&0x08 ) sy |= 0x100;
 	
 			sx += (source-portrait_spriteram)-8;
 			sx &= 0x1ff;
@@ -106,7 +102,7 @@ public class portrait
 			sy = (512-64)-sy;
 			//sy += portrait_scrollx_hi;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 				tilenum,color,
 				0,flip,
 				sx,sy,
@@ -116,8 +112,7 @@ public class portrait
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_portrait  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly( background, 0, portrait_scrollx_hi );
 		tilemap_set_scrolly( foreground, 0, portrait_scrollx_hi );
 	

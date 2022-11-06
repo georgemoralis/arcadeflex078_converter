@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,8 +17,7 @@ public class munchmo
 	static int mnchmobl_palette_bank;
 	static int flipscreen;
 	
-	public static PaletteInitHandlerPtr palette_init_mnchmobl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mnchmobl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -44,8 +43,7 @@ public class munchmo
 		}
 	} };
 	
-	public static WriteHandlerPtr mnchmobl_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnchmobl_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( mnchmobl_palette_bank!=(data&0x3) )
 		{
 			memset( dirtybuffer, 1, 0x100 );
@@ -53,8 +51,7 @@ public class munchmo
 		}
 	} };
 	
-	public static WriteHandlerPtr mnchmobl_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnchmobl_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( flipscreen!=data )
 		{
 			memset( dirtybuffer, 1, 0x100 );
@@ -63,17 +60,16 @@ public class munchmo
 	} };
 	
 	
-	public static ReadHandlerPtr mnchmobl_sprite_xpos_r  = new ReadHandlerPtr() { public int handler(int offset){ return mnchmobl_sprite_xpos[offset]; } };
-	public static WriteHandlerPtr mnchmobl_sprite_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){ mnchmobl_sprite_xpos[offset] = data; } };
+	public static ReadHandlerPtr mnchmobl_sprite_xpos_r  = new ReadHandlerPtr() { public int handler(int offset)return mnchmobl_sprite_xpos[offset]; }
+	public static WriteHandlerPtr mnchmobl_sprite_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)mnchmobl_sprite_xpos[offset] = data; }
 	
-	public static ReadHandlerPtr mnchmobl_sprite_attr_r  = new ReadHandlerPtr() { public int handler(int offset){ return mnchmobl_sprite_attr[offset]; } };
-	public static WriteHandlerPtr mnchmobl_sprite_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data){ mnchmobl_sprite_attr[offset] = data; } };
+	public static ReadHandlerPtr mnchmobl_sprite_attr_r  = new ReadHandlerPtr() { public int handler(int offset)return mnchmobl_sprite_attr[offset]; }
+	public static WriteHandlerPtr mnchmobl_sprite_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)mnchmobl_sprite_attr[offset] = data; }
 	
-	public static ReadHandlerPtr mnchmobl_sprite_tile_r  = new ReadHandlerPtr() { public int handler(int offset){ return mnchmobl_sprite_tile[offset]; } };
-	public static WriteHandlerPtr mnchmobl_sprite_tile_w = new WriteHandlerPtr() {public void handler(int offset, int data){ mnchmobl_sprite_tile[offset] = data; } };
+	public static ReadHandlerPtr mnchmobl_sprite_tile_r  = new ReadHandlerPtr() { public int handler(int offset)return mnchmobl_sprite_tile[offset]; }
+	public static WriteHandlerPtr mnchmobl_sprite_tile_w = new WriteHandlerPtr() {public void handler(int offset, int data)mnchmobl_sprite_tile[offset] = data; }
 	
-	public static VideoStartHandlerPtr video_start_mnchmobl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mnchmobl  = new VideoStartHandlerPtr() { public int handler(){
 		dirtybuffer = auto_malloc(0x100);
 		tmpbitmap = auto_bitmap_alloc(512,512);
 		if( dirtybuffer && tmpbitmap )
@@ -84,13 +80,11 @@ public class munchmo
 		return 1;
 	} };
 	
-	public static ReadHandlerPtr mnchmobl_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mnchmobl_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr mnchmobl_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnchmobl_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = offset&0xff; /* mirror the two banks? */
 		if( videoram.read(offset)!=data )
 		{
@@ -101,8 +95,8 @@ public class munchmo
 	
 	static void draw_status( struct mame_bitmap *bitmap )
 	{
-		struct rectangle clip = Machine.visible_area;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		struct rectangle clip = Machine->visible_area;
+		const struct GfxElement *gfx = Machine->gfx[0];
 		int row;
 	
 		for( row=0; row<4; row++ )
@@ -134,7 +128,7 @@ public class munchmo
 		the tiles in ROM B2.2B
 	*/
 		unsigned char *tile_data = memory_region(REGION_GFX2);
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		int offs;
 	
 		for( offs=0; offs<0x100; offs++ )
@@ -167,18 +161,18 @@ public class munchmo
 	
 			copyscrollbitmap(bitmap,tmpbitmap,
 				1,&scrollx,1,&scrolly,
-				Machine.visible_area,TRANSPARENCY_NONE,0);
+				Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap )
 	{
-		const struct rectangle *clip = Machine.visible_area;
+		const struct rectangle *clip = Machine->visible_area;
 		int scroll = mnchmobl_vreg[6];
 		int flags = mnchmobl_vreg[7];					/*   XB?????? */
 		int xadjust = - 128-16 - ((flags&0x80)?1:0);
 		int bank = (flags&0x40)?1:0;
-		const struct GfxElement *gfx = Machine.gfx[2+bank];
+		const struct GfxElement *gfx = Machine->gfx[2+bank];
 		int color_base = mnchmobl_palette_bank*4+3;
 		int i;
 		for( i=0; i<0x200; i++ )
@@ -202,8 +196,7 @@ public class munchmo
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mnchmobl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mnchmobl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_background( bitmap );
 		draw_sprites( bitmap );
 		draw_status( bitmap );

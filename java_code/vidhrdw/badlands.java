@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_badlands  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_badlands  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			1,					/* index to which gfx system */
@@ -88,7 +87,7 @@ public class badlands
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,32);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -108,7 +107,7 @@ public class badlands
 	
 	WRITE16_HANDLER( badlands_pf_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			if (playfield_tile_bank != (data & 1))
 			{
 				force_partial_update(cpu_getscanline());
@@ -125,8 +124,7 @@ public class badlands
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_badlands  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_badlands  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;

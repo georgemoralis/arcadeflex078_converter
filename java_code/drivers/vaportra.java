@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -100,8 +100,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -112,8 +111,7 @@ public class vaportra
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -151,7 +149,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_vaportra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vaportra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vaportra )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -328,8 +326,7 @@ public class vaportra
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_vaportra = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vaportra )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000) /* Custom chip 59 */
@@ -357,9 +354,7 @@ public class vaportra
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -449,8 +444,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_vaportra  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vaportra  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -460,7 +454,7 @@ public class vaportra
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_vaportra	   = new GameDriver("1989"	,"vaportra"	,"vaportra.java"	,rom_vaportra,null	,machine_driver_vaportra	,input_ports_vaportra	,init_vaportra	,ROT270	,	"Data East Corporation", "Vapor Trail - Hyper Offence Formation (World revision 1)" )
-	public static GameDriver driver_vaportru	   = new GameDriver("1989"	,"vaportru"	,"vaportra.java"	,rom_vaportru,driver_vaportra	,machine_driver_vaportra	,input_ports_vaportra	,init_vaportra	,ROT270	,	"Data East USA", "Vapor Trail - Hyper Offence Formation (US)" )
-	public static GameDriver driver_kuhga	   = new GameDriver("1989"	,"kuhga"	,"vaportra.java"	,rom_kuhga,driver_vaportra	,machine_driver_vaportra	,input_ports_vaportra	,init_vaportra	,ROT270	,	"Data East Corporation", "Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)" )
+	GAME( 1989, vaportra, 0,        vaportra, vaportra, vaportra, ROT270, "Data East Corporation", "Vapor Trail - Hyper Offence Formation (World revision 1)" )
+	GAME( 1989, vaportru, vaportra, vaportra, vaportra, vaportra, ROT270, "Data East USA", "Vapor Trail - Hyper Offence Formation (US)" )
+	GAME( 1989, kuhga,    vaportra, vaportra, vaportra, vaportra, ROT270, "Data East Corporation", "Kuhga - Operation Code 'Vapor Trail' (Japan revision 3)" )
 }

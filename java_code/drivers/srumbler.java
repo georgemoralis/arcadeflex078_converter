@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,8 +22,7 @@ public class srumbler
 	
 	
 	
-	public static WriteHandlerPtr srumbler_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srumbler_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 		  banking is controlled by two PROMs. 0000-4fff is mapped to the same
 		  address (RAM and I/O) for all banks, so we don't handle it here.
@@ -46,14 +45,12 @@ public class srumbler
 		}
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_srumbler  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_srumbler  = new MachineInitHandlerPtr() { public void handler(){
 		/* initialize banked ROM pointers */
 		srumbler_bankswitch_w(0,0);
 	} };
 	
-	public static InterruptHandlerPtr srumbler_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr srumbler_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops()==0)
 		{
 			cpu_set_irq_line(0,0,HOLD_LINE);
@@ -134,7 +131,7 @@ public class srumbler
 	};
 	
 	
-	static InputPortPtr input_ports_srumbler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_srumbler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( srumbler )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -275,8 +272,7 @@ public class srumbler
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_srumbler = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( srumbler )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)        /* 1.5 MHz (?) */
@@ -306,9 +302,7 @@ public class srumbler
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -458,7 +452,7 @@ public class srumbler
 	
 	
 	
-	public static GameDriver driver_srumbler	   = new GameDriver("1986"	,"srumbler"	,"srumbler.java"	,rom_srumbler,null	,machine_driver_srumbler	,input_ports_srumbler	,null	,ROT270	,	"Capcom", "The Speed Rumbler (set 1)" )
-	public static GameDriver driver_srumblr2	   = new GameDriver("1986"	,"srumblr2"	,"srumbler.java"	,rom_srumblr2,driver_srumbler	,machine_driver_srumbler	,input_ports_srumbler	,null	,ROT270	,	"Capcom", "The Speed Rumbler (set 2)" )
-	public static GameDriver driver_rushcrsh	   = new GameDriver("1986"	,"rushcrsh"	,"srumbler.java"	,rom_rushcrsh,driver_srumbler	,machine_driver_srumbler	,input_ports_srumbler	,null	,ROT270	,	"Capcom", "Rush & Crash (Japan)" )
+	GAME( 1986, srumbler, 0,        srumbler, srumbler, 0, ROT270, "Capcom", "The Speed Rumbler (set 1)" )
+	GAME( 1986, srumblr2, srumbler, srumbler, srumbler, 0, ROT270, "Capcom", "The Speed Rumbler (set 2)" )
+	GAME( 1986, rushcrsh, srumbler, srumbler, srumbler, 0, ROT270, "Capcom", "Rush & Crash (Japan)" )
 }

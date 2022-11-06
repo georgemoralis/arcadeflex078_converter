@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,8 +39,7 @@ public class superpac
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_superpac  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_superpac  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, j;
 	
 		for (i = 0; i < 32; i++)
@@ -81,25 +80,23 @@ public class superpac
 	} };
 	
 	
-	public static WriteHandlerPtr superpac_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superpac_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
 	
 	
-	READ_HANDLER(superpac_flipscreen_r)
-	{
+	public static ReadHandlerPtr superpac_flipscreen_r  = new ReadHandlerPtr() { public int handler(int offset){
 		flip_screen_set(1);
 	
 		return flip_screen();	/* return value not used */
-	}
+	} };
 	
 	
 	
 	static void draw_sprites(struct mame_bitmap *bitmap, struct rectangle *clip, int drawmode)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		int offs;
 	
 		for (offs = 0; offs < spriteram_size; offs += 2)
@@ -115,7 +112,7 @@ public class superpac
 				int flipy = spriteram_3.read(offs)& 2;
 				int pens;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -131,7 +128,7 @@ public class superpac
 	
 					case 4:		/* 2x horizontal */
 						sprite &= ~1;
-						if (flipx == 0)
+						if (NOT(flipx))
 						{
 							drawgfx(bitmap, gfx, sprite + 0, color, flipx, flipy, x + 0,  y, clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 1, color, flipx, flipy, x + 16, y, clip, drawmode, pens);
@@ -145,7 +142,7 @@ public class superpac
 	
 					case 8:		/* 2x vertical */
 						sprite &= ~2;
-						if (flipy == 0)
+						if (NOT(flipy))
 						{
 							drawgfx(bitmap, gfx, sprite + 2, color, flipx, flipy, x, y - 0,  clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 0, color, flipx, flipy, x, y - 16, clip, drawmode, pens);
@@ -173,7 +170,7 @@ public class superpac
 							drawgfx(bitmap, gfx, sprite + 3, color, flipx, flipy, x + 0,  y - 16, clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 2, color, flipx, flipy, x + 16, y - 16, clip, drawmode, pens);
 						}
-						else if (flipy != 0)
+						else if (flipy)
 						{
 							drawgfx(bitmap, gfx, sprite + 0, color, flipx, flipy, x + 0,  y - 0,  clip, drawmode, pens);
 							drawgfx(bitmap, gfx, sprite + 1, color, flipx, flipy, x + 16, y - 0,  clip, drawmode, pens);
@@ -202,11 +199,10 @@ public class superpac
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_superpac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_superpac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(dirtybuffer, 1, videoram_size[0]);
 	
 		/* for every character in the Video RAM, check if it has been modified */
@@ -243,7 +239,7 @@ public class superpac
 					sy = my - 2;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -285,7 +281,7 @@ public class superpac
 					sy = my - 2;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

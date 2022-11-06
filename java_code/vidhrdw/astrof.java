@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class astrof
 	
 	
 	/* Just save the colorprom pointer */
-	public static PaletteInitHandlerPtr palette_init_astrof  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_astrof  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		prom = color_prom;
 	} };
 	
@@ -56,7 +55,7 @@ public class astrof
 	
 		col_index = (palette_bank ? 16 : 0);
 	
-		for (i = 0;i < Machine.drv.total_colors; i++)
+		for (i = 0;i < Machine->drv->total_colors; i++)
 		{
 			int bit0,bit1,r,g,b;
 	
@@ -84,11 +83,10 @@ public class astrof
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_astrof  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_astrof  = new VideoStartHandlerPtr() { public int handler(){
 		if ((colorram = auto_malloc(videoram_size[0])) == 0)
 			return 1;
-		if (video_start_generic() != 0)
+		if (video_start_generic.handler())
 			return 1;
 	
 		do_modify_palette = 0;
@@ -112,13 +110,13 @@ public class astrof
 		videoram.write(offset,data);
 		colorram.write(offset,color);
 	
-		fore = Machine.pens[color | 1];
-		back = Machine.pens[color    ];
+		fore = Machine->pens[color | 1];
+		back = Machine->pens[color    ];
 	
 		x = (offset >> 8) << 3;
 		y = 255 - (offset & 0xff);
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			x = 255 - x;
 			y = 255 - y;
@@ -134,21 +132,18 @@ public class astrof
 		}
 	}
 	
-	public static WriteHandlerPtr astrof_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astrof_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// Astro Fighter's palette is set in astrof_video_control2_w, D0 is unused
-		common_videoram_w.handler(offset, data, *astrof_color & 0x0e);
+		common_videoram_w(offset, data, *astrof_color & 0x0e);
 	} };
 	
-	public static WriteHandlerPtr tomahawk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tomahawk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// Tomahawk's palette is set per byte
-		common_videoram_w.handler(offset, data, (*astrof_color & 0x0e) | ((*astrof_color & 0x01) << 4));
+		common_videoram_w(offset, data, (*astrof_color & 0x0e) | ((*astrof_color & 0x01) << 4));
 	} };
 	
 	
-	public static WriteHandlerPtr astrof_video_control1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astrof_video_control1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// Video control register 1
 		//
 		// Bit 0     = Flip screen
@@ -174,8 +169,7 @@ public class astrof
 	// 			   in the color PROM
 	// Bit 4-7   = Not hooked up
 	
-	public static WriteHandlerPtr astrof_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astrof_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palette_bank != (data & 0x04))
 		{
 			palette_bank = (data & 0x04);
@@ -191,8 +185,7 @@ public class astrof
 		/* Defer changing the colors to avoid flicker */
 	} };
 	
-	public static WriteHandlerPtr tomahawk_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tomahawk_video_control2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palette_bank == -1)
 		{
 			palette_bank = 0;
@@ -209,8 +202,7 @@ public class astrof
 	} };
 	
 	
-	public static ReadHandlerPtr tomahawk_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tomahawk_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* flip the byte */
 	
 		int res = ((*tomahawk_protection & 0x01) << 7) |
@@ -231,23 +223,22 @@ public class astrof
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (do_modify_palette != 0)
+	public static VideoUpdateHandlerPtr video_update_astrof  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (do_modify_palette)
 		{
 			modify_palette();
 	
 			do_modify_palette = 0;
 		}
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	
 			/* redraw bitmap */
 			for (offs = 0; offs < videoram_size[0]; offs++)
 			{
-				common_videoram_w.handler(offs, videoram.read(offs), colorram.read(offs));
+				common_videoram_w(offs, videoram.read(offs), colorram.read(offs));
 			}
 		}
 		

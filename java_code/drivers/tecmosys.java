@@ -94,7 +94,7 @@ ae500w07.ad1 - M6295 Samples (23c4001)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -178,7 +178,7 @@ public class tecmosys
 	
 	static READ16_HANDLER(reg_b80000_r)
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			// Bit 7: 0 = ready to write
 			// Bit 6: 0 = ready to read
@@ -252,7 +252,7 @@ public class tecmosys
 		{ 0xe80000, 0xe80001, reg_e80000_w },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_deroon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_deroon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( deroon )
 	INPUT_PORTS_END(); }}; 
 	
 	/*
@@ -278,8 +278,7 @@ public class tecmosys
 	
 	
 	
-	public static WriteHandlerPtr deroon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deroon_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank( 1, memory_region(REGION_CPU2) + ((data-2) & 0x0f) * 0x4000 + 0x10000 );
 	} };
 	
@@ -330,16 +329,14 @@ public class tecmosys
 	
 	
 	
-	VIDEO_START(deroon)
-	{
+	public static VideoStartHandlerPtr video_start_deroon  = new VideoStartHandlerPtr() { public int handler(){
 	return 0;
-	}
+	} };
 	
 	
 	static int command_data=0;
 	
-	VIDEO_UPDATE(deroon)
-	{
+	public static VideoUpdateHandlerPtr video_update_deroon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	/* nothing  - just simulate sound commands writes here ... to test OPL3 emulator */
 	
 		int j,trueorientation;
@@ -376,7 +373,7 @@ public class tecmosys
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 			usrintf_showmessage("command write=%2x",command_data);
 		}
-	}
+	} };
 	
 	/*
 	>>> Richard wrote:
@@ -446,8 +443,7 @@ public class tecmosys
 		{ 0 }	/* irq */
 	};
 	
-	public static MachineHandlerPtr machine_driver_deroon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( deroon )
 		MDRV_CPU_ADD(M68000, 16000000/8) /* the /8 divider is here only for OPL3 testing */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		//MDRV_CPU_VBLANK_INT(irq1_line_hold,1)
@@ -475,9 +471,7 @@ public class tecmosys
 		MDRV_SOUND_ADD(YMF262,   ymf262_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 		MDRV_SOUND_ADD(YMZ280B,  ymz280b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_deroon = new RomLoadPtr(){ public void handler(){ 
@@ -538,8 +532,7 @@ public class tecmosys
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_deroon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_deroon  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU1);
 	
 		memcpy(protram, ROM+0xC46/2, 0x10);
@@ -551,7 +544,7 @@ public class tecmosys
 	//	ROM[0x44A/2] = 0x4E71;
 	} };
 	
-	public static GameDriver driver_deroon	   = new GameDriver("1996"	,"deroon"	,"tecmosys.java"	,rom_deroon,null	,machine_driver_deroon	,input_ports_deroon	,init_deroon	,ROT0	,	"Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_tkdensho	   = new GameDriver("1996"	,"tkdensho"	,"tecmosys.java"	,rom_tkdensho,null	,machine_driver_deroon	,input_ports_deroon	,null	,ROT0	,	"Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1996, deroon,      0, deroon, deroon, deroon,     ROT0, "Tecmo", "Deroon DeroDero", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1996, tkdensho,    0, deroon, deroon, 0,          ROT0, "Tecmo", "Touki Denshou -Angel Eyes-", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 }

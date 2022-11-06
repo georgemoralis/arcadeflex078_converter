@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -181,7 +181,7 @@ public class cyberbal
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -190,7 +190,7 @@ public class cyberbal
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -199,7 +199,7 @@ public class cyberbal
 		{
 			/* initialize the playfield */
 			atarigen_playfield2_tilemap = tilemap_create(get_playfield2_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 16,8, 64,64);
-			if (atarigen_playfield2_tilemap == 0)
+			if (!atarigen_playfield2_tilemap)
 				return 1;
 			tilemap_set_scrollx(atarigen_playfield2_tilemap, 0, -SCREEN2_SCROLL_OFFSET);
 	
@@ -209,7 +209,7 @@ public class cyberbal
 	
 			/* initialize the alphanumerics */
 			atarigen_alpha2_tilemap = tilemap_create(get_alpha2_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16,8, 64,32);
-			if (atarigen_alpha2_tilemap == 0)
+			if (!atarigen_alpha2_tilemap)
 				return 1;
 			tilemap_set_scrollx(atarigen_alpha2_tilemap, 0, -SCREEN2_SCROLL_OFFSET);
 			tilemap_set_transparent_pen(atarigen_alpha2_tilemap, 0);
@@ -224,10 +224,9 @@ public class cyberbal
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_cyberbal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cyberbal  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_cyberbal_common(2);
-		if (result == 0)
+		if (!result)
 		{
 			/* adjust the sprite positions */
 			atarimo_set_xscroll(0, 4);
@@ -237,10 +236,9 @@ public class cyberbal
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_cyberb2p  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cyberb2p  = new VideoStartHandlerPtr() { public int handler(){
 		int result = video_start_cyberbal_common(1);
-		if (result == 0)
+		if (!result)
 		{
 			/* adjust the sprite positions */
 			atarimo_set_xscroll(0, 5);
@@ -401,23 +399,23 @@ public class cyberbal
 	
 		/* draw the MOs -- note some kludging to get this to work correctly for 2 screens */
 		mooffset = screen ? SCREEN2_SCROLL_OFFSET : 0;
-		cliprect.min_x -= mooffset;
-		cliprect.max_x -= mooffset;
-		temp = Machine.visible_area.max_x;
+		cliprect->min_x -= mooffset;
+		cliprect->max_x -= mooffset;
+		temp = Machine->visible_area.max_x;
 		if (temp > SCREEN_WIDTH)
-			Machine.visible_area.max_x /= 2;
+			Machine->visible_area.max_x /= 2;
 		mobitmap = atarimo_render(screen, cliprect, &rectlist);
-		cliprect.min_x += mooffset;
-		cliprect.max_x += mooffset;
-		Machine.visible_area.max_x = temp;
+		cliprect->min_x += mooffset;
+		cliprect->max_x += mooffset;
+		Machine->visible_area.max_x = temp;
 	
 		/* draw and merge the MO */
 		for (r = 0; r < rectlist.numrects; r++, rectlist.rect++)
-			for (y = rectlist.rect.min_y; y <= rectlist.rect.max_y; y++)
+			for (y = rectlist.rect->min_y; y <= rectlist.rect->max_y; y++)
 			{
-				UINT16 *mo = (UINT16 *)mobitmap.base + mobitmap.rowpixels * y;
-				UINT16 *pf = (UINT16 *)bitmap.base + bitmap.rowpixels * y + mooffset;
-				for (x = rectlist.rect.min_x; x <= rectlist.rect.max_x; x++)
+				UINT16 *mo = (UINT16 *)mobitmap->base + mobitmap->rowpixels * y;
+				UINT16 *pf = (UINT16 *)bitmap->base + bitmap->rowpixels * y + mooffset;
+				for (x = rectlist.rect->min_x; x <= rectlist.rect->max_x; x++)
 					if (mo[x])
 					{
 						/* not verified: logic is all controlled in a PAL
@@ -434,8 +432,7 @@ public class cyberbal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cyberbal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#if (CYBERBALL_DUAL_MODE)
 		struct rectangle rect;
 		

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_dogfgt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dogfgt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* first 16 colors are RAM */
@@ -85,8 +84,7 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_dogfgt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dogfgt  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 	
 		bitmapram = auto_malloc(BITMAPRAM_SIZE);
@@ -106,13 +104,11 @@ public class dogfgt
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr dogfgt_plane_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_plane_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bm_plane = data;
 	} };
 	
-	public static ReadHandlerPtr dogfgt_bitmapram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dogfgt_bitmapram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (bm_plane > 2)
 		{
 			usrintf_showmessage("bitmapram_r offs %04x plane %d\n",offset,bm_plane);
@@ -122,8 +118,7 @@ public class dogfgt
 		return bitmapram[offset + BITMAPRAM_SIZE/3 * bm_plane];
 	} };
 	
-	public static WriteHandlerPtr internal_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr internal_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y,subx;
 	
 	
@@ -139,15 +134,14 @@ public class dogfgt
 	
 			for (i = 0;i < 3;i++)
 				color |= ((bitmapram[offset + BITMAPRAM_SIZE/3 * i] >> subx) & 1) << i;
-			if (flip_screen != 0)
-				plot_pixel.handler(pixbitmap,(x+subx)^0xff,y^0xff,PIXMAP_COLOR_BASE + 8*pixcolor + color);
+			if (flip_screen())
+				plot_pixel(pixbitmap,(x+subx)^0xff,y^0xff,PIXMAP_COLOR_BASE + 8*pixcolor + color);
 			else
-				plot_pixel.handler(pixbitmap,x+subx,y,PIXMAP_COLOR_BASE + 8*pixcolor + color);
+				plot_pixel(pixbitmap,x+subx,y,PIXMAP_COLOR_BASE + 8*pixcolor + color);
 		}
 	} };
 	
-	public static WriteHandlerPtr dogfgt_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bm_plane > 2)
 		{
 			usrintf_showmessage("bitmapram_w offs %04x plane %d\n",offset,bm_plane);
@@ -157,14 +151,12 @@ public class dogfgt
 		internal_bitmapram_w(offset + BITMAPRAM_SIZE/3 * bm_plane,data);
 	} };
 	
-	public static WriteHandlerPtr dogfgt_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dogfgt_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr dogfgt_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int scroll[4];
 	
 		scroll[offset] = data;
@@ -173,8 +165,7 @@ public class dogfgt
 		tilemap_set_scrolly(bg_tilemap,0,scroll[2] + 256 * scroll[3]);
 	} };
 	
-	public static WriteHandlerPtr dogfgt_1800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dogfgt_1800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are probably text color (not verified because PROM is missing) */
 		pixcolor = ((data & 0x01) << 1) | ((data & 0x02) >> 1);
 	
@@ -210,7 +201,7 @@ public class dogfgt
 				sy = (240 - spriteram.read(offs+2)) & 0xff;
 				flipx = spriteram.read(offs)& 0x04;
 				flipy = spriteram.read(offs)& 0x02;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -218,7 +209,7 @@ public class dogfgt
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						spriteram.read(offs+1)+ ((spriteram.read(offs)& 0x30) << 4),
 						(spriteram.read(offs)& 0x08) >> 3,
 						flipx,flipy,
@@ -229,8 +220,7 @@ public class dogfgt
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dogfgt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int lastflip,lastpixcolor;
 		int offs;
 	

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -17,8 +17,7 @@ public class avalnche
 	  avalnche_input_r
 	***************************************************************************/
 	
-	public static ReadHandlerPtr avalnche_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr avalnche_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset & 0x03)
 		{
 			case 0x00:	 return input_port_0_r.handler(offset);
@@ -33,8 +32,7 @@ public class avalnche
 	  avalnche_output_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr avalnche_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avalnche_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x07)
 		{
 			case 0x00:		/* 1 CREDIT LAMP */
@@ -44,7 +42,7 @@ public class avalnche
 				discrete_sound_w(4, (~data) & 0x01);
 				break;
 			case 0x02:		/* VIDEO INVERT */
-				if ((data & 0x01) != 0)
+				if (data & 0x01)
 				{
 					palette_set_color(0,0,0,0);
 					palette_set_color(1,255,255,255);
@@ -77,13 +75,11 @@ public class avalnche
 	  avalnche_noise_amplitude_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr avalnche_noise_amplitude_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avalnche_noise_amplitude_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(3, data & 0x3f);
 	} };
 	
-	public static InterruptHandlerPtr avalnche_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr avalnche_interrupt = new InterruptHandlerPtr() {public void handler(){
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 }

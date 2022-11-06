@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -92,18 +92,18 @@ public class dac
 	int DAC_sh_start(const struct MachineSound *msound)
 	{
 		int i;
-		const struct DACinterface *intf = msound.sound_interface;
+		const struct DACinterface *intf = msound->sound_interface;
 	
 	
 		DAC_build_voltable();
 	
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 		{
 			char name[40];
 	
 	
 			sprintf(name,"DAC #%d",i);
-			channel[i] = stream_init(name,intf.mixing_level[i],Machine.sample_rate,
+			channel[i] = stream_init(name,intf->mixing_level[i],Machine->sample_rate,
 					i,DAC_update);
 	
 			if (channel[i] == -1)
@@ -116,23 +116,19 @@ public class dac
 	}
 	
 	
-	public static WriteHandlerPtr DAC_0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr DAC_0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr DAC_1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr DAC_1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(1,data);
 	} };
 	
-	public static WriteHandlerPtr DAC_0_signed_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr DAC_0_signed_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr DAC_1_signed_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr DAC_1_signed_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(1,data);
 	} };
 }

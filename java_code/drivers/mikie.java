@@ -18,7 +18,7 @@ MAIN BOARD:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,8 +27,7 @@ public class mikie
 	
 	
 	
-	public static ReadHandlerPtr mikie_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mikie_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int clock;
 	
 	#define TIMER_RATE 512
@@ -38,8 +37,7 @@ public class mikie
 		return clock;
 	} };
 	
-	public static WriteHandlerPtr mikie_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -52,8 +50,7 @@ public class mikie
 		last = data;
 	} };
 	
-	public static WriteHandlerPtr mikie_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mikie_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -116,7 +113,7 @@ public class mikie
 	
 	
 	
-	static InputPortPtr input_ports_mikie = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mikie = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mikie )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -262,8 +259,7 @@ public class mikie
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mikie = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mikie )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz */
@@ -291,9 +287,7 @@ public class mikie
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -384,7 +378,7 @@ public class mikie
 	
 	
 	
-	public static GameDriver driver_mikie	   = new GameDriver("1984"	,"mikie"	,"mikie.java"	,rom_mikie,null	,machine_driver_mikie	,input_ports_mikie	,null	,ROT270	,	"Konami", "Mikie" )
-	public static GameDriver driver_mikiej	   = new GameDriver("1984"	,"mikiej"	,"mikie.java"	,rom_mikiej,driver_mikie	,machine_driver_mikie	,input_ports_mikie	,null	,ROT270	,	"Konami", "Shinnyuushain Tooru-kun" )
-	public static GameDriver driver_mikiehs	   = new GameDriver("1984"	,"mikiehs"	,"mikie.java"	,rom_mikiehs,driver_mikie	,machine_driver_mikie	,input_ports_mikie	,null	,ROT270	,	"Konami", "Mikie (High School Graffiti)" )
+	GAME( 1984, mikie,   0,     mikie, mikie, 0, ROT270, "Konami", "Mikie" )
+	GAME( 1984, mikiej,  mikie, mikie, mikie, 0, ROT270, "Konami", "Shinnyuushain Tooru-kun" )
+	GAME( 1984, mikiehs, mikie, mikie, mikie, 0, ROT270, "Konami", "Mikie (High School Graffiti)" )
 }

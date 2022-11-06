@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,12 +26,11 @@ public class ninjaw
 	
 	/**********************************************************/
 	
-	static public static VideoStartHandlerPtr video_start_ninjaw_core  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_ninjaw_core  = new VideoStartHandlerPtr() { public int handler(){
 		int chips;
 	
 		spritelist = auto_malloc(0x1000 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		chips = number_of_TC0100SCN();
@@ -42,16 +41,16 @@ public class ninjaw
 		if (TC0100SCN_vh_start(chips,TC0100SCN_GFX_NUM,taito_hide_pixels,0,0,0,0,0,0))
 			return 1;
 	
-		if (has_TC0110PCR() != 0)
-			if (TC0110PCR_vh_start() != 0)
+		if (has_TC0110PCR())
+			if (TC0110PCR_vh_start())
 				return 1;
 	
-		if (has_second_TC0110PCR() != 0)
-			if (TC0110PCR_1_vh_start() != 0)
+		if (has_second_TC0110PCR())
+			if (TC0110PCR_1_vh_start())
 				return 1;
 	
-		if (has_third_TC0110PCR() != 0)
-			if (TC0110PCR_2_vh_start() != 0)
+		if (has_third_TC0110PCR())
+			if (TC0110PCR_2_vh_start())
 				return 1;
 	
 		/* Ensure palette from correct TC0110PCR used for each screen */
@@ -60,8 +59,7 @@ public class ninjaw
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ninjaw  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ninjaw  = new VideoStartHandlerPtr() { public int handler(){
 		taito_hide_pixels = 22;
 		return video_start_ninjaw_core();
 	} };
@@ -89,7 +87,7 @@ public class ninjaw
 			data = spriteram16[offs+2];
 			tilenum = data & 0x7fff;
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			data = spriteram16[offs+0];
 	//		x = (data - 8) & 0x3ff;
@@ -111,7 +109,7 @@ public class ninjaw
 	//		if (invis && (priority==1)) continue;
 	
 	#ifdef MAME_DEBUG
-			if ((data & 0x80f0) != 0)   unknown |= (data &0x80f0);
+			if (data & 0x80f0)   unknown |= (data &0x80f0);
 	#endif
 	
 			y += y_offs;
@@ -124,23 +122,23 @@ public class ninjaw
 			cury = y;
 			code = tilenum;
 	
-			sprite_ptr.code = code;
-			sprite_ptr.color = color;
-			sprite_ptr.flipx = flipx;
-			sprite_ptr.flipy = flipy;
-			sprite_ptr.x = curx;
-			sprite_ptr.y = cury;
+			sprite_ptr->code = code;
+			sprite_ptr->color = color;
+			sprite_ptr->flipx = flipx;
+			sprite_ptr->flipy = flipy;
+			sprite_ptr->x = curx;
+			sprite_ptr->y = cury;
 	
-			drawgfx(bitmap,Machine.gfx[0],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			drawgfx(bitmap,Machine->gfx[0],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
 	
 	#ifdef MAME_DEBUG
-		if (unknown != 0)
+		if (unknown)
 			usrintf_showmessage("unknown sprite bits: %04x",unknown);
 	#endif
 	}
@@ -150,8 +148,7 @@ public class ninjaw
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ninjaw  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[3], nodraw;
 	
 		TC0100SCN_tilemap_update();
@@ -167,7 +164,7 @@ public class ninjaw
 		nodraw |= TC0100SCN_tilemap_draw(bitmap,cliprect,2,layer[0],TILEMAP_IGNORE_TRANSPARENCY,0);	/* right */
 	
 		/* Ensure screen blanked even when bottom layers not drawn due to disable bit */
-		if (nodraw != 0) fillbitmap(bitmap, get_black_pen(), cliprect);
+		if (nodraw) fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Sprites can be under/over the layer below text layer */
 		ninjaw_draw_sprites(bitmap,cliprect,1,8); // draw sprites with priority 1 which are under the mid layer

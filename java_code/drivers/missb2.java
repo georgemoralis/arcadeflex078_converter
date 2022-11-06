@@ -9,7 +9,7 @@ redesigned (8bpp!) graphics and different sound hardware... Crazy
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,8 +23,7 @@ public class missb2
 	/* machine/bublbobl.c */
 	
 	
-	public static VideoUpdateHandlerPtr video_update_missb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_missb2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy,xc,yc;
 		int gfx_num,gfx_attr,gfx_offs;
@@ -38,7 +37,7 @@ public class missb2
 		/* This clears & redraws the entire screen each pass */
 		fillbitmap(bitmap,Machine.pens[255],Machine.visible_area);
 	
-		if (bublbobl_video_enable == 0) return;
+		if (!bublbobl_video_enable) return;
 	
 		/* background map register */
 		//usrintf_showmessage("%02x",(*bg_vram) & 0x1f);
@@ -80,7 +79,7 @@ public class missb2
 				if (!(prom_line[yc/2] & 0x04))	/* next column */
 				{
 					sx = bublbobl_objectram[offs + 2];
-					if ((gfx_attr & 0x40) != 0) sx -= 256;
+					if (gfx_attr & 0x40) sx -= 256;
 				}
 	
 				for (xc = 0;xc < 2;xc++)
@@ -96,7 +95,7 @@ public class missb2
 					x = sx + xc * 8;
 					y = (sy + yc * 8) & 0xff;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						x = 248 - x;
 						y = 248 - y;
@@ -133,14 +132,12 @@ public class missb2
 		palette_set_color(color+256,r,g,b);
 	}
 	
-	public static WriteHandlerPtr bg_paletteram_RRRRGGGGBBBBxxxx_swap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bg_paletteram_RRRRGGGGBBBBxxxx_swap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_paletteram[offset] = data;
 		bg_changecolor_RRRRGGGGBBBBxxxx(offset / 2,bg_paletteram[offset | 1] | (bg_paletteram[offset & ~1] << 8));
 	} };
 	
-	public static WriteHandlerPtr bg_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bg_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -192,8 +189,7 @@ public class missb2
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	//public static ReadHandlerPtr missb_random  = new ReadHandlerPtr() { public int handler(int offset)
-	//{
+	//public static ReadHandlerPtr missb_random  = new ReadHandlerPtr() { public int handler(int offset)//{
 	//	return rand();
 	//} };
 	
@@ -255,7 +251,7 @@ public class missb2
 	
 	
 	
-	static InputPortPtr input_ports_missb2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_missb2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( missb2 )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, "Language" );
 		PORT_DIPSETTING(    0x00, "English" );
@@ -428,8 +424,7 @@ public class missb2
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_missb2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( missb2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_XTAL/4)	/* 6 MHz */
@@ -462,9 +457,7 @@ public class missb2
 		MDRV_SOUND_ADD(YM2203, ym2203_interface) // ?
 		MDRV_SOUND_ADD(YM3526, ym3526_interface) // ?
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -500,8 +493,7 @@ public class missb2
 		ROM_LOAD( "a71-25.bin",  0x0000, 0x0100, CRC(2d0f8545) SHA1(089c31e2f614145ef2743164f7b52ae35bc06808) )	/* video timing - taken from bublbobl */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_missb2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_missb2  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
 		/* in Bubble Bobble, bank 0 has code falling from 7fff to 8000, */
@@ -510,5 +502,5 @@ public class missb2
 	
 	} };
 	
-	public static GameDriver driver_missb2	   = new GameDriver("1996"	,"missb2"	,"missb2.java"	,rom_missb2,driver_bublbobl	,machine_driver_missb2	,input_ports_missb2	,init_missb2	,ROT0	,	"Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1996, missb2, bublbobl, missb2, missb2, missb2, ROT0,  "Alpha Co", "Miss Bubble 2", GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

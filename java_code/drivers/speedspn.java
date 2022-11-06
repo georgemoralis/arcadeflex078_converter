@@ -22,7 +22,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,20 +61,14 @@ public class speedspn
 	
 	/* in vidhrdw */
 	
-	VIDEO_START(speedspn);
-	VIDEO_UPDATE(speedspn);
-	WRITE_HANDLER(speedspn_banked_vidram_change);
-	WRITE_HANDLER(speedspn_global_display_w);
 	
-	static READ_HANDLER(speedspn_irq_ack_r)
-	{
+	public static ReadHandlerPtr speedspn_irq_ack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// I think this simply acknowledges the IRQ #0, it's read within the handler and the
 		//  value is discarded
 		return 0;
-	}
+	} };
 	
-	static WRITE_HANDLER(speedspn_banked_rom_change)
-	{
+	public static WriteHandlerPtr speedspn_banked_rom_change = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* is this weird banking some form of protection? */
 	
 		unsigned char *rom = memory_region(REGION_CPU1);
@@ -98,15 +92,14 @@ public class speedspn
 		}
 	
 		cpu_setbank(1,&rom[addr + 0x8000]);
-	}
+	} };
 	
 	/*** SOUND RELATED ***********************************************************/
 	
-	static WRITE_HANDLER(speedspn_sound_w)
-	{
-		soundlatch_w(1,data);
+	public static WriteHandlerPtr speedspn_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		soundlatch_w.handler(1,data);
 		cpu_set_irq_line(1,0,HOLD_LINE);
-	}
+	} };
 	
 	/*** MEMORY MAPS *************************************************************/
 	
@@ -180,7 +173,7 @@ public class speedspn
 	
 	/*** INPUT PORT **************************************************************/
 	
-	static InputPortPtr input_ports_speedspn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_speedspn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( speedspn )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -316,8 +309,7 @@ public class speedspn
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_speedspn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( speedspn )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,6000000)		 /* 6 MHz */
@@ -344,9 +336,7 @@ public class speedspn
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*** ROM LOADING *************************************************************/
 	
@@ -375,5 +365,5 @@ public class speedspn
 	
 	/*** GAME DRIVERS ************************************************************/
 	
-	public static GameDriver driver_speedspn	   = new GameDriver("1994"	,"speedspn"	,"speedspn.java"	,rom_speedspn,null	,machine_driver_speedspn	,input_ports_speedspn	,null	,ROT180	,	"TCH", "Speed Spin", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1994, speedspn, 0, speedspn, speedspn, 0, ROT180, "TCH", "Speed Spin", GAME_IMPERFECT_GRAPHICS )
 }

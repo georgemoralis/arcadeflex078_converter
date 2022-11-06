@@ -151,7 +151,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -524,14 +524,14 @@ public class cischeat
 	*/
 	WRITE16_HANDLER( scudhamm_leds_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 	 		set_led_status(0, data & 0x0100);	// 3 buttons
 			set_led_status(1, data & 0x0200);
 			set_led_status(2, data & 0x0400);
 		}
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 	//		set_led_status(3, data & 0x0010);	// if we had more leds..
 	//		set_led_status(4, data & 0x0020);
@@ -550,7 +550,7 @@ public class cischeat
 	
 	WRITE16_HANDLER( scudhamm_oki_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data >> 0) & 0x3) );
 			OKIM6295_set_bank_base(1, 0x40000 * ((data >> 4) & 0x3) );
@@ -719,7 +719,7 @@ public class cischeat
 	
 	WRITE16_HANDLER( bigrun_soundbank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data >> 0) & 1) );
 			OKIM6295_set_bank_base(1, 0x40000 * ((data >> 4) & 1) );
@@ -753,11 +753,11 @@ public class cischeat
 	
 	WRITE16_HANDLER( cischeat_soundbank_0_w )
 	{
-		if (ACCESSING_LSB != 0)	OKIM6295_set_bank_base(0, 0x40000 * (data & 1) );
+		if (ACCESSING_LSB)	OKIM6295_set_bank_base(0, 0x40000 * (data & 1) );
 	}
 	WRITE16_HANDLER( cischeat_soundbank_1_w )
 	{
-		if (ACCESSING_LSB != 0)	OKIM6295_set_bank_base(1, 0x40000 * (data & 1) );
+		if (ACCESSING_LSB)	OKIM6295_set_bank_base(1, 0x40000 * (data & 1) );
 	}
 	
 	static MEMORY_READ16_START( cischeat_sound_readmem )
@@ -882,7 +882,7 @@ public class cischeat
 	//					[1] Coins		[2] Controls	[3] Unknown
 	//					[4]	DSW 1 & 2	[5] DSW 3		[6] Driving Wheel
 	
-	static InputPortPtr input_ports_bigrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigrun )
 		PORT_START(); 	// IN0 - Fake input port - Buttons status
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );\
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON3 );\
@@ -1005,7 +1005,7 @@ public class cischeat
 	//					[1] Coins		[2] Controls	[3] Unknown
 	//					[4]	DSW 1 & 2	[5] DSW 3		[6] Driving Wheel
 	
-	static InputPortPtr input_ports_cischeat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cischeat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cischeat )
 		PORT_START(); 	// IN0 - Fake input port - Buttons status
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON3 );\
 		PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_BUTTON4 );\
@@ -1048,7 +1048,7 @@ public class cischeat
 		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	// IN4 - DSW 1 & 2 - $80006.w . !f000a.w(hi byte) !f0008.w(low byte)
+		PORT_START(); 	// IN4 - DSW 1 & 2 - $80006.w -> !f000a.w(hi byte) !f0008.w(low byte)
 		COINAGE_6BITS_2
 		PORT_DIPNAME( 0x0040, 0x0040, DEF_STR( "Unknown") );	// unused?
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
@@ -1057,17 +1057,17 @@ public class cischeat
 		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		// DSW 2
-		PORT_DIPNAME( 0x0300, 0x0300, "Unit ID"			);	// . !f0020 (ID of this unit, when linked)
+		PORT_DIPNAME( 0x0300, 0x0300, "Unit ID"			);	// -> !f0020 (ID of this unit, when linked)
 		PORT_DIPSETTING(      0x0300, "0 (Red Car")); )
 		PORT_DIPSETTING(      0x0200, "1 (Blue Car"));
 		PORT_DIPSETTING(      0x0100, "2 (Yellow Car"));
 		PORT_DIPSETTING(      0x0000, "3 (Green Car"));
-		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// . !f0026
+		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// -> !f0026
 		PORT_DIPSETTING(      0x0000, "Easy"    );
 		PORT_DIPSETTING(      0x0c00, "Normal"  );
 		PORT_DIPSETTING(      0x0800, "Hard"    );
 		PORT_DIPSETTING(      0x0400, "Hardest" );
-		PORT_BITX(    0x1000, 0x1000, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Infinite Time", IP_KEY_NONE, IP_JOY_NONE );// . !f0028
+		PORT_BITX(    0x1000, 0x1000, IPT_DIPSWITCH_NAME | IPF_CHEAT, "Infinite Time", IP_KEY_NONE, IP_JOY_NONE );// -> !f0028
 		PORT_DIPSETTING(      0x1000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Demo_Sounds") );
@@ -1076,13 +1076,13 @@ public class cischeat
 		PORT_DIPNAME( 0x4000, 0x4000, "Country" );
 		PORT_DIPSETTING(      0x4000, "Japan" );
 		PORT_DIPSETTING(      0x0000, "USA"   );
-		PORT_DIPNAME( 0x8000, 0x8000, "Allow Continue" );	// . !f00c0
+		PORT_DIPNAME( 0x8000, 0x8000, "Allow Continue" );	// -> !f00c0
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 	
 		PORT_START(); 	// IN5 - DSW 3 (4 bits, Cabinet Linking) - $82200.w
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
-		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2"));// . f0020 (like DSW2 !!)
+		PORT_DIPNAME( 0x06, 0x06, "Unit ID (2"));// -> f0020 (like DSW2 !!)
 		PORT_DIPSETTING(    0x06, "Use other"      );
 		PORT_DIPSETTING(    0x00, "0 (Red Car")); )
 		PORT_DIPSETTING(    0x02, "1 (Blue Car"));
@@ -1107,7 +1107,7 @@ public class cischeat
 	//					[4]	DSW 3			[5] Driving Wheel
 	//					[6]	Coinage JP&USA	[7] Coinage UK&FR
 	
-	static InputPortPtr input_ports_f1gpstar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1gpstar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1gpstar )
 		PORT_START(); 	// IN0 - Fake input port - Buttons status
 	    PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );\
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_BUTTON3 );\
@@ -1120,7 +1120,7 @@ public class cischeat
 		England		English,  Mph , "steering shock", "(c)1992"
 		France		French,   Km/h, "steering shock", "(c)1992"	*/
 	
-		PORT_START(); 	// IN1 - DSW 1 & 2 - $80000.w	. !f9012
+		PORT_START(); 	// IN1 - DSW 1 & 2 - $80000.w	-> !f9012
 		// DSW 1 ( Coinage - it changes with Country: we use IN6 & IN7 )
 		PORT_DIPNAME( 0x0040, 0x0040, "Free Play (UK FR"));
 		PORT_DIPSETTING(      0x0040, DEF_STR( "Off") );
@@ -1129,12 +1129,12 @@ public class cischeat
 		PORT_DIPSETTING(      0x0080, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") ); )
 		// DSW 2
-		PORT_DIPNAME( 0x0300, 0x0100, "Country"  );// . !f901e
+		PORT_DIPNAME( 0x0300, 0x0100, "Country"  );// -> !f901e
 		PORT_DIPSETTING(      0x0300, "Japan"   );
 		PORT_DIPSETTING(      0x0200, "USA"     );
 		PORT_DIPSETTING(      0x0100, "UK"      );
 		PORT_DIPSETTING(      0x0000, "France"  );
-		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// . !f9026
+		PORT_DIPNAME( 0x0c00, 0x0c00, DEF_STR( "Difficulty") );	// -> !f9026
 		PORT_DIPSETTING(      0x0000, "Easy"      );// 58 <- Initial Time (seconds, Germany)
 		PORT_DIPSETTING(      0x0c00, "Normal"    );// 51
 		PORT_DIPSETTING(      0x0800, "Hard"      );// 48
@@ -1145,21 +1145,21 @@ public class cischeat
 		PORT_DIPNAME( 0x2000, 0x2000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x2000, DEF_STR( "On") ); )
-		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR"));	// . f0020
+		PORT_DIPNAME( 0x4000, 0x4000, "Choose Race (US UK FR"));	// -> f0020
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x4000, DEF_STR( "On") ); )
 		PORT_DIPNAME( 0x8000, 0x8000, "Vibrations" );
 		PORT_DIPSETTING(      0x8000, "Torque" );
 		PORT_DIPSETTING(      0x0000, "Shake"  );
 	
-		PORT_START(); 	// IN2 - Controls - $80004.w . !f9016
+		PORT_START(); 	// IN2 - Controls - $80004.w -> !f9016
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
 		PORT_BIT(  0x0004, IP_ACTIVE_LOW, IPT_SERVICE1 );
-		PORT_BITX( 0x0008, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) // . f0100 (called "Test")
+		PORT_BITX( 0x0008, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) // -> f0100 (called "Test")
 		PORT_BIT(  0x0010, IP_ACTIVE_LOW, IPT_START1   );
-	//	PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_BUTTON4  );// Shift . !f900e - We handle it with 2 buttons
-		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_BUTTON2  );// Brake . !f9010
+	//	PORT_BIT(  0x0020, IP_ACTIVE_LOW, IPT_BUTTON4  );// Shift -> !f900e - We handle it with 2 buttons
+		PORT_BIT(  0x0040, IP_ACTIVE_LOW, IPT_BUTTON2  );// Brake -> !f9010
 		PORT_BIT(  0x0080, IP_ACTIVE_LOW, IPT_START2   );// "Race Together"
 	
 		PORT_START(); 	// IN3 - ? Read at boot only - $80006.w
@@ -1186,11 +1186,11 @@ public class cischeat
 		ON-OFF					Blue-White Car
 		ON- ON					Blue Car, "equipped with communication link"	*/
 	
-		PORT_START(); 	// IN4 - DSW 3 (4 bits, Cabinet Linking) - $8000c.w . !f9014
+		PORT_START(); 	// IN4 - DSW 3 (4 bits, Cabinet Linking) - $8000c.w -> !f9014
 		PORT_DIPNAME( 0x01, 0x01, "This Unit Is" );
 		PORT_DIPSETTING(    0x01, "Slave" );
 		PORT_DIPSETTING(    0x00, "Master" );
-		PORT_DIPNAME( 0x06, 0x06, "Unit ID" );		// . !f901c
+		PORT_DIPNAME( 0x06, 0x06, "Unit ID" );		// -> !f901c
 		PORT_DIPSETTING(    0x06, "0 (Red-White Car"));
 		PORT_DIPSETTING(    0x04, "1 (Red Car"));
 		PORT_DIPSETTING(    0x02, "2 (Blue-White Car"));
@@ -1201,8 +1201,8 @@ public class cischeat
 		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-					// 		 Accelerator   - $80010.b .  !f9004.w
-		PORT_START(); 	// IN5 - Driving Wheel - $80011.b .  !f9008.w
+					// 		 Accelerator   - $80010.b ->  !f9004.w
+		PORT_START(); 	// IN5 - Driving Wheel - $80011.b ->  !f9008.w
 		PORT_ANALOG( 0xff, 0x80, IPT_AD_STICK_X | IPF_CENTER, 30, 30, 0, 0xff);
 	
 		PORT_START(); 	// IN6 - Coinage Japan & USA (it changes with Country)
@@ -1250,7 +1250,7 @@ public class cischeat
 									Scud Hammer
 	**************************************************************************/
 	
-	static InputPortPtr input_ports_scudhamm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scudhamm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scudhamm )
 		PORT_START(); 	// IN0 - Buttons
 		PORT_BIT_IMPULSE( 0x0001, IP_ACTIVE_LOW, IPT_COIN1, 1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN  );// GAME OVER if pressed on the selection screen
@@ -1456,8 +1456,7 @@ public class cischeat
 	
 	/* CPU # 1 */
 	#define CISCHEAT_INTERRUPT_NUM	3
-	public static InterruptHandlerPtr cischeat_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cischeat_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops()==0)
 			cpu_set_irq_line(0, 4, HOLD_LINE); /* Once */
 		else
@@ -1497,8 +1496,7 @@ public class cischeat
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_bigrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigrun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("cpu1", M68000, 10000000)
@@ -1536,13 +1534,10 @@ public class cischeat
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_intf)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cischeat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cischeat )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bigrun)
@@ -1565,13 +1560,10 @@ public class cischeat
 	
 		MDRV_VIDEO_START(cischeat)
 		MDRV_VIDEO_UPDATE(cischeat)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_f1gpstar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f1gpstar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bigrun)
@@ -1593,13 +1585,10 @@ public class cischeat
 	
 		MDRV_VIDEO_START(f1gpstar)
 		MDRV_VIDEO_UPDATE(f1gpstar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_f1gpstr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f1gpstr2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(f1gpstar)
@@ -1612,9 +1601,7 @@ public class cischeat
 	
 		MDRV_CPU_ADD_TAG("cpu5", M68000, 10000000)
 		MDRV_CPU_MEMORY(f1gpstr2_io_readmem,f1gpstr2_io_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/**************************************************************************
@@ -1636,8 +1623,7 @@ public class cischeat
 		4]	 		== 3
 	*/
 	#define INTERRUPT_NUM_SCUDHAMM		30
-	public static InterruptHandlerPtr interrupt_scudhamm = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_scudhamm = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:		cpu_set_irq_line(0, 3, PULSE_LINE);	// update palette, layers etc. Not the sprites.
@@ -1647,8 +1633,7 @@ public class cischeat
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_scudhamm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scudhamm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -1671,9 +1656,7 @@ public class cischeat
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, scudhamm_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1848,8 +1831,7 @@ public class cischeat
 		ROM_LOAD( "br8951b.23",  0x000000, 0x010000, CRC(b9474fec) SHA1(f1f0eab014e8f52572484b83f56189e0ff6f2b0d) )	// 000xxxxxxxxxxxxx
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_bigrun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bigrun  = new DriverInitHandlerPtr() { public void handler(){
 		/* Split ROMs */
 		rom_1 = (data16_t *) memory_region(REGION_USER1);
 	
@@ -1970,8 +1952,7 @@ public class cischeat
 		ROM_LOAD( "ch9072.03",  0x000000, 0x040000, CRC(7e79151a) SHA1(5a305cff8600446be426641ce112208b379094b9) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_cischeat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cischeat  = new DriverInitHandlerPtr() { public void handler(){
 		/* Split ROMs */
 		rom_1 = (data16_t *) (memory_region(REGION_USER1) + 0x00000);
 		rom_2 = (data16_t *) (memory_region(REGION_CPU2)  + 0x40000);
@@ -2197,8 +2178,7 @@ public class cischeat
 		ROM_LOAD( "pr90015b",  0x000000, 0x000100, CRC(be240dac) SHA1(6203b73c1a5e09e525380a78b555c3818929d5eb) )	// FIXED BITS (000xxxxx000xxxx1)
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_f1gpstar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_f1gpstar  = new DriverInitHandlerPtr() { public void handler(){
 		/* Split ROMs */
 		rom_1 = (data16_t *) memory_region(REGION_USER1);
 	
@@ -2500,10 +2480,10 @@ public class cischeat
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_bigrun	   = new GameDriver("1989"	,"bigrun"	,"cischeat.java"	,rom_bigrun,null	,machine_driver_bigrun	,input_ports_bigrun	,init_bigrun	,ROT0	,	"Jaleco", "Big Run (11th Rallye version)", GAME_IMPERFECT_GRAPHICS )	// there's a 13th Rallye version (1991)
-	public static GameDriver driver_cischeat	   = new GameDriver("1990"	,"cischeat"	,"cischeat.java"	,rom_cischeat,null	,machine_driver_cischeat	,input_ports_cischeat	,init_cischeat	,ROT0	,	"Jaleco", "Cisco Heat",                    GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_f1gpstar	   = new GameDriver("1991"	,"f1gpstar"	,"cischeat.java"	,rom_f1gpstar,null	,machine_driver_f1gpstar	,input_ports_f1gpstar	,init_f1gpstar	,ROT0	,	"Jaleco", "Grand Prix Star",               GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_f1gpstr2	   = new GameDriver("1993"	,"f1gpstr2"	,"cischeat.java"	,rom_f1gpstr2,null	,machine_driver_f1gpstr2	,input_ports_f1gpstar	,init_f1gpstar	,ROT0	,	"Jaleco", "F-1 Grand Prix Star II",        GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
-	public static GameDriver driver_scudhamm	   = new GameDriver("1994"	,"scudhamm"	,"cischeat.java"	,rom_scudhamm,null	,machine_driver_scudhamm	,input_ports_scudhamm	,null	,ROT270	,	"Jaleco", "Scud Hammer",                   GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1989, bigrun,   0, bigrun,   bigrun,   bigrun,   ROT0,   "Jaleco", "Big Run (11th Rallye version)", GAME_IMPERFECT_GRAPHICS )	// there's a 13th Rallye version (1991)
+	GAMEX( 1990, cischeat, 0, cischeat, cischeat, cischeat, ROT0,   "Jaleco", "Cisco Heat",                    GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1991, f1gpstar, 0, f1gpstar, f1gpstar, f1gpstar, ROT0,   "Jaleco", "Grand Prix Star",               GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, f1gpstr2, 0, f1gpstr2, f1gpstar, f1gpstar, ROT0,   "Jaleco", "F-1 Grand Prix Star II",        GAME_IMPERFECT_GRAPHICS | GAME_NOT_WORKING )
+	GAMEX( 1994, scudhamm, 0, scudhamm, scudhamm, 0,        ROT270, "Jaleco", "Scud Hammer",                   GAME_IMPERFECT_GRAPHICS )
 	
 }

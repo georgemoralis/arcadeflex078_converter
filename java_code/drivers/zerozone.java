@@ -28,7 +28,7 @@ TODO:
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,7 +61,7 @@ public class zerozone
 	
 	WRITE16_HANDLER( zerozone_sound_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(offset,data >> 8);
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
@@ -106,7 +106,7 @@ public class zerozone
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_zerozone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zerozone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zerozone )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -216,8 +216,7 @@ public class zerozone
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_zerozone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zerozone )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -244,9 +243,7 @@ public class zerozone
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -290,6 +287,6 @@ public class zerozone
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_zerozone	   = new GameDriver("1993"	,"zerozone"	,"zerozone.java"	,rom_zerozone,null	,machine_driver_zerozone	,input_ports_zerozone	,null	,ROT0	,	"Comad", "Zero Zone" )
-	public static GameDriver driver_lvgirl94	   = new GameDriver("1994"	,"lvgirl94"	,"zerozone.java"	,rom_lvgirl94,null	,machine_driver_zerozone	,input_ports_zerozone	,null	,ROT0	,	"Comad", "Las Vegas Girl (Girl '94)" )
+	GAME( 1993, zerozone, 0, zerozone, zerozone, 0, ROT0, "Comad", "Zero Zone" )
+	GAME( 1994, lvgirl94, 0, zerozone, zerozone, 0, ROT0, "Comad", "Las Vegas Girl (Girl '94)" )
 }

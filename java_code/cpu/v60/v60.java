@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.v60;
 
@@ -297,7 +297,7 @@ public class v60
 	{
 		int cpu = cpu_getactivecpu();
 		static int opt_init = 0;
-		if (opt_init == 0) {
+		if(!opt_init) {
 			InitTables();	// set up opcode tables
 	#ifdef MAME_DEBUG
 			v60_dasm_init();
@@ -451,14 +451,14 @@ public class v60
 	
 	unsigned v60_get_context(void *dst)
 	{
-		if (dst != 0)
+		if(dst)
 			*(struct v60info *)dst = v60;
 		return sizeof(struct v60info);
 	}
 	
 	void v60_set_context(void *src)
 	{
-		if (src != 0)
+		if(src)
 		{
 			v60 = *(struct v60info *)src;
 			ChangePC(PC);
@@ -561,7 +561,7 @@ public class v60
 	
 		if(regnum > CPU_INFO_REG && regnum < CPU_INFO_REG + V60_REGMAX) {
 			int reg = regnum - CPU_INFO_REG - 1;
-			sprintf(buffer[which], "%s:%08X", v60_reg_names[reg], reg == V60_TCB ? r.tcb : r.reg[reg]);
+			sprintf(buffer[which], "%s:%08X", v60_reg_names[reg], reg == V60_TCB ? r->tcb : r->reg[reg]);
 		}
 	
 		return buffer[which];

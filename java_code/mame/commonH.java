@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -174,15 +174,15 @@ public class commonH
 	#define ROMENTRY_COPY				((const char *)ROMENTRYTYPE_COPY)
 	
 	/* ----- per-entry macros ----- */
-	#define ROMENTRY_GETTYPE(r)			((FPTR)(r)._name)
+	#define ROMENTRY_GETTYPE(r)			((FPTR)(r)->_name)
 	#define ROMENTRY_ISSPECIAL(r)		(ROMENTRY_GETTYPE(r) < ROMENTRYTYPE_COUNT)
 	#define ROMENTRY_ISFILE(r)			(!ROMENTRY_ISSPECIAL(r))
-	#define ROMENTRY_ISREGION(r)		((r)._name == ROMENTRY_REGION)
-	#define ROMENTRY_ISEND(r)			((r)._name == ROMENTRY_END)
-	#define ROMENTRY_ISRELOAD(r)		((r)._name == ROMENTRY_RELOAD)
-	#define ROMENTRY_ISCONTINUE(r)		((r)._name == ROMENTRY_CONTINUE)
-	#define ROMENTRY_ISFILL(r)			((r)._name == ROMENTRY_FILL)
-	#define ROMENTRY_ISCOPY(r)			((r)._name == ROMENTRY_COPY)
+	#define ROMENTRY_ISREGION(r)		((r)->_name == ROMENTRY_REGION)
+	#define ROMENTRY_ISEND(r)			((r)->_name == ROMENTRY_END)
+	#define ROMENTRY_ISRELOAD(r)		((r)->_name == ROMENTRY_RELOAD)
+	#define ROMENTRY_ISCONTINUE(r)		((r)->_name == ROMENTRY_CONTINUE)
+	#define ROMENTRY_ISFILL(r)			((r)->_name == ROMENTRY_FILL)
+	#define ROMENTRY_ISCOPY(r)			((r)->_name == ROMENTRY_COPY)
 	#define ROMENTRY_ISREGIONEND(r)		(ROMENTRY_ISREGION(r) || ROMENTRY_ISEND(r))
 	
 	
@@ -227,9 +227,9 @@ public class commonH
 	#define		ROMREGION_DATATYPEDISK	0x00010000
 	
 	/* ----- per-region macros ----- */
-	#define ROMREGION_GETTYPE(r)		((UINT32)(r)._hashdata)
-	#define ROMREGION_GETLENGTH(r)		((r)._length)
-	#define ROMREGION_GETFLAGS(r)		((r)._flags)
+	#define ROMREGION_GETTYPE(r)		((UINT32)(r)->_hashdata)
+	#define ROMREGION_GETLENGTH(r)		((r)->_length)
+	#define ROMREGION_GETFLAGS(r)		((r)->_flags)
 	#define ROMREGION_GETWIDTH(r)		(8 << (ROMREGION_GETFLAGS(r) & ROMREGION_WIDTHMASK))
 	#define ROMREGION_ISLITTLEENDIAN(r)	((ROMREGION_GETFLAGS(r) & ROMREGION_ENDIANMASK) == ROMREGION_LE)
 	#define ROMREGION_ISBIGENDIAN(r)	((ROMREGION_GETFLAGS(r) & ROMREGION_ENDIANMASK) == ROMREGION_BE)
@@ -287,12 +287,12 @@ public class commonH
 	#define ROM_INHERITEDFLAGS			(ROM_GROUPMASK | ROM_SKIPMASK | ROM_REVERSEMASK | ROM_BITWIDTHMASK | ROM_BITSHIFTMASK | ROM_BIOSFLAGSMASK)
 	
 	/* ----- per-ROM macros ----- */
-	#define ROM_GETNAME(r)				((r)._name)
+	#define ROM_GETNAME(r)				((r)->_name)
 	#define ROM_SAFEGETNAME(r)			(ROMENTRY_ISFILL(r) ? "fill" : ROMENTRY_ISCOPY(r) ? "copy" : ROM_GETNAME(r))
-	#define ROM_GETOFFSET(r)			((r)._offset)
-	#define ROM_GETLENGTH(r)			((r)._length)
-	#define ROM_GETFLAGS(r)				((r)._flags)
-	#define ROM_GETHASHDATA(r)          ((r)._hashdata)
+	#define ROM_GETOFFSET(r)			((r)->_offset)
+	#define ROM_GETLENGTH(r)			((r)->_length)
+	#define ROM_GETFLAGS(r)				((r)->_flags)
+	#define ROM_GETHASHDATA(r)          ((r)->_hashdata)
 	#define ROM_ISOPTIONAL(r)			((ROM_GETFLAGS(r) & ROM_OPTIONALMASK) == ROM_OPTIONAL)
 	#define ROM_GETGROUPSIZE(r)			(((ROM_GETFLAGS(r) & ROM_GROUPMASK) >> 12) + 1)
 	#define ROM_GETSKIPCOUNT(r)			((ROM_GETFLAGS(r) & ROM_SKIPMASK) >> 16)
@@ -301,10 +301,10 @@ public class commonH
 	#define ROM_GETBITSHIFT(r)			((ROM_GETFLAGS(r) & ROM_BITSHIFTMASK) >> 24)
 	#define ROM_INHERITSFLAGS(r)		((ROM_GETFLAGS(r) & ROM_INHERITFLAGSMASK) == ROM_INHERITFLAGS)
 	#define ROM_GETBIOSFLAGS(r)			((ROM_GETFLAGS(r) & ROM_BIOSFLAGSMASK) >> 28)
-	#define ROM_NOGOODDUMP(r)			(hash_data_has_info((r)._hashdata, HASH_INFO_NO_DUMP))
+	#define ROM_NOGOODDUMP(r)			(hash_data_has_info((r)->_hashdata, HASH_INFO_NO_DUMP))
 	
 	/* ----- per-disk macros ----- */
-	#define DISK_GETINDEX(r)			((r)._offset)
+	#define DISK_GETINDEX(r)			((r)->_offset)
 	#define DISK_ISREADONLY(r)			((ROM_GETFLAGS(r) & DISK_READONLYMASK) == DISK_READONLY)
 	
 	
@@ -373,7 +373,7 @@ public class commonH
 	
 	***************************************************************************/
 	
-	#define BIOSENTRY_ISEND(b)		((b)._name == NULL)
+	#define BIOSENTRY_ISEND(b)		((b)->_name == NULL)
 	
 	/* ----- start/stop macros ----- */
 	#define SYSTEM_BIOS_START(name)			static const struct SystemBios system_bios_##name[] = {

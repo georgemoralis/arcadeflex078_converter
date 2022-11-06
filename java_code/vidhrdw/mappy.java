@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -41,8 +41,7 @@ public class mappy
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mappy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mappy  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -76,8 +75,7 @@ public class mappy
 	} };
 	
 	
-	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_common  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset (dirtybuffer, 1, videoram_size[0]);
@@ -88,28 +86,24 @@ public class mappy
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mappy  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mappy  = new VideoStartHandlerPtr() { public int handler(){
 		special_display = 0;
 		return video_start_common();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_motos  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_motos  = new VideoStartHandlerPtr() { public int handler(){
 		special_display = 1;
 		return video_start_common();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_todruaga  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_todruaga  = new VideoStartHandlerPtr() { public int handler(){
 		special_display = 2;
 		return video_start_common();
 	} };
 	
 	
 	
-	public static WriteHandlerPtr mappy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
@@ -118,8 +112,7 @@ public class mappy
 	} };
 	
 	
-	public static WriteHandlerPtr mappy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			dirtybuffer[offset] = 1;
@@ -128,8 +121,7 @@ public class mappy
 	} };
 	
 	
-	public static WriteHandlerPtr mappy_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mappy_scroll = offset >> 3;
 	} };
 	
@@ -140,12 +132,11 @@ public class mappy
 	{
 		if (special_display == 1) sy++;	/* Motos */
 	
-		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,Machine.visible_area,
+		drawgfx(dest,Machine->gfx[1],code,color,flipx,flipy,sx,sy,Machine->visible_area,
 			TRANSPARENCY_COLOR,15);
 	}
 	
-	public static WriteHandlerPtr mappy_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mappy_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -160,8 +151,7 @@ public class mappy
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_mappy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mappy  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		/* for every character in the Video RAM, check if it has been modified */
@@ -224,7 +214,7 @@ public class mappy
 					sy = my;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 59 - sy;
@@ -249,7 +239,7 @@ public class mappy
 			for (offs = 34;offs < 36;offs++)
 				scroll[offs] = 0;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				for (offs = 0;offs < 36;offs++)
 					scroll[offs] = 224 - scroll[offs];
@@ -271,7 +261,7 @@ public class mappy
 				int flipx = spriteram_3.read(offs)& 1;
 				int flipy = spriteram_3.read(offs)& 2;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -285,7 +275,7 @@ public class mappy
 	
 					case 4:		/* 2x horizontal */
 						sprite &= ~1;
-						if (flipx == 0)
+						if (NOT(flipx))
 						{
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);
@@ -299,7 +289,7 @@ public class mappy
 	
 					case 8:		/* 2x vertical */
 						sprite &= ~2;
-						if (flipy == 0)
+						if (NOT(flipy))
 						{
 							mappy_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y-16);
@@ -327,7 +317,7 @@ public class mappy
 							mappy_draw_sprite(bitmap,3+sprite,color,flipx,flipy,x,y-16);
 							mappy_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x+16,y-16);
 						}
-						else if (flipy != 0)
+						else if (flipy)
 						{
 							mappy_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 							mappy_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);
@@ -387,7 +377,7 @@ public class mappy
 						sy = (8*sy-mappy_scroll);
 					}
 	
-					if (flipscreen != 0)
+					if (flipscreen)
 					{
 						sx = 35 - sx;
 						sy = 216 - sy;

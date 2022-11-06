@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -182,38 +182,38 @@ public class wind3d
 		blitfx.DUMMYUNIONNAMEN(5).dwFillColor = 0;
 	
 		// clear the left edge
-		if (inner.left > outer.left)
+		if (inner->left > outer->left)
 		{
 			clear = *outer;
-			clear.right = inner.left;
-			if (surface != 0)
+			clear.right = inner->left;
+			if (surface)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the right edge
-		if (inner.right < outer.right)
+		if (inner->right < outer->right)
 		{
 			clear = *outer;
-			clear.left = inner.right;
-			if (surface != 0)
+			clear.left = inner->right;
+			if (surface)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the top edge
-		if (inner.top > outer.top)
+		if (inner->top > outer->top)
 		{
 			clear = *outer;
-			clear.bottom = inner.top;
-			if (surface != 0)
+			clear.bottom = inner->top;
+			if (surface)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	
 		// clear the bottom edge
-		if (inner.bottom < outer.bottom)
+		if (inner->bottom < outer->bottom)
 		{
 			clear = *outer;
-			clear.top = inner.bottom;
-			if (surface != 0)
+			clear.top = inner->bottom;
+			if (surface)
 				IDirectDrawSurface7_Blt(surface, &clear, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 		}
 	}
@@ -227,7 +227,7 @@ public class wind3d
 	static int win_d3d_test_hardware_caps(void)
 	{
 		// scanlines
-		if (win_d3d_use_scanlines != 0)
+		if (win_d3d_use_scanlines)
 		{
 			// ensure the grpahics hardware can handle 2 texture stages
 			if (d3d_device_desc.wMaxSimultaneousTextures < 2 || d3d_device_desc.wMaxTextureBlendStages < 2)
@@ -242,7 +242,7 @@ public class wind3d
 			{
 				d3dtop_scanlines = D3DTOP_ADDSMOOTH;
 			}
-			else if (verbose != 0)
+			else if (verbose)
 			{
 				fprintf(stderr, "Warning: using fall-back method for scanline blending.\n");
 			}
@@ -282,7 +282,7 @@ public class wind3d
 					d3dtfg_image = D3DTFG_FLATCUBIC;
 					d3dtfg_scanlines = D3DTFG_FLATCUBIC;
 				}
-				else if (verbose != 0)
+				else if (verbose)
 				{
 					fprintf(stderr, "Warning: flat bi-cubic filtering not supported, falling back to bi-linear\n");
 				}
@@ -296,7 +296,7 @@ public class wind3d
 					d3dtfg_image = D3DTFG_GAUSSIANCUBIC;
 					d3dtfg_scanlines = D3DTFG_GAUSSIANCUBIC;
 				}
-				else if (verbose != 0)
+				else if (verbose)
 				{
 					fprintf(stderr, "Warning: gaussian bi-cubic filtering not supported, falling back to bi-linear\n");
 				}
@@ -310,7 +310,7 @@ public class wind3d
 					d3dtfg_image = D3DTFG_ANISOTROPIC;
 					d3dtfg_scanlines = D3DTFG_ANISOTROPIC;
 				}
-				else if (verbose != 0)
+				else if (verbose)
 				{
 					fprintf(stderr, "Warning: anisotropic (mag) filtering not supported, falling back to bi-linear\n");
 				}
@@ -319,7 +319,7 @@ public class wind3d
 					d3dtfn_image = D3DTFN_ANISOTROPIC;
 					d3dtfn_scanlines = D3DTFN_ANISOTROPIC;
 				}
-				else if (verbose != 0)
+				else if (verbose)
 				{
 					fprintf(stderr, "Warning: anisotropic (min) filtering not supported, falling back to bi-linear\n");
 				}
@@ -335,7 +335,7 @@ public class wind3d
 			{
 				if (!(d3d_device_desc.dpcTriCaps.dwDestBlendCaps & D3DPBLENDCAPS_SRCCOLOR))
 				{
-					if (verbose != 0)
+					if (verbose)
 						fprintf(stderr, "Error: RGB effects (multiply mode) not supported\n");
 	
 					return 1;
@@ -348,7 +348,7 @@ public class wind3d
 				if (!(d3d_device_desc.dpcTriCaps.dwSrcBlendCaps & D3DPBLENDCAPS_SRCALPHA) ||
 					!(d3d_device_desc.dpcTriCaps.dwDestBlendCaps & D3DPBLENDCAPS_SRCCOLOR))
 				{
-					if (verbose != 0)
+					if (verbose)
 						fprintf(stderr, "Error: RGB effects (multiply & add mode) not supported\n");
 	
 					return 1;
@@ -371,13 +371,13 @@ public class wind3d
 		int image_width = win_visible_width;
 		int image_height = win_visible_height;
 	
-		if (image_width == 0)
+		if (!image_width)
 			image_width = max_width;
-		if (image_height == 0)
+		if (!image_height)
 			image_height = max_height;
 	
 		// if prescale is disbled just set the levels to 1
-		if (win_d3d_use_prescale == 0)
+		if (!win_d3d_use_prescale)
 		{
 			current_prescalex = current_prescaley = 1;
 	#if SHOW_PRESCALE
@@ -391,16 +391,16 @@ public class wind3d
 		// auto
 		if (win_d3d_use_prescale == 2)
 		{
-			if (win_d3d_effects_swapxy != 0)
+			if (win_d3d_effects_swapxy)
 			{
-				if (win_d3d_use_scanlines != 0)
+				if (win_d3d_use_scanlines)
 					current_prescalex = (int)((double)height / image_height * 0.50);
 				else
 					current_prescalex = (int)((double)height / image_height * 0.67);
 			}
 			else
 			{
-				if (win_d3d_use_scanlines != 0)
+				if (win_d3d_use_scanlines)
 					current_prescalex = (int)((double)width / image_width * 0.50);
 				else
 					current_prescalex = (int)((double)width / image_width * 0.67);
@@ -409,7 +409,7 @@ public class wind3d
 		// full
 		else if (win_d3d_use_prescale == 3)
 		{
-			if (win_d3d_effects_swapxy != 0)
+			if (win_d3d_effects_swapxy)
 				current_prescalex = (int)((double)height / image_height);
 			else
 				current_prescalex = (int)((double)width / image_width);
@@ -428,16 +428,16 @@ public class wind3d
 		// auto
 		if (win_d3d_use_prescale == 2)
 		{
-			if (win_d3d_effects_swapxy != 0)
+			if (win_d3d_effects_swapxy)
 			{
-				if (win_d3d_use_scanlines != 0)
+				if (win_d3d_use_scanlines)
 					current_prescaley = (int)((double)width / image_width * 0.75);
 				else
 					current_prescaley = (int)((double)width / image_width * 0.67);
 			}
 			else
 			{
-				if (win_d3d_use_scanlines != 0)
+				if (win_d3d_use_scanlines)
 					current_prescaley = (int)((double)height / image_height * 0.75);
 				else
 					current_prescaley = (int)((double)height / image_height * 0.67);
@@ -446,7 +446,7 @@ public class wind3d
 		// full
 		else if (win_d3d_use_prescale == 3)
 		{
-			if (win_d3d_effects_swapxy != 0)
+			if (win_d3d_effects_swapxy)
 				current_prescaley = (int)((double)width / image_width);
 			else
 				current_prescaley = (int)((double)height / image_height);
@@ -461,9 +461,9 @@ public class wind3d
 			current_prescaley = 1;
 	
 		// ensure the levels aren't too large
-		if (preprocess_surface != 0)
+		if (preprocess_surface)
 		{
-			if (blit_swapxy != 0)
+			if (blit_swapxy)
 			{
 				while (current_prescalex >= 1 && preprocess_desc.dwWidth < (current_prescalex * image_height))
 					current_prescalex--;
@@ -542,7 +542,7 @@ public class wind3d
 			IDirectDraw7_Release(ddraw7);
 		ddraw7 = NULL;
 	
-		if (ddraw_dll7 != 0)
+		if (ddraw_dll7)
 			FreeLibrary(ddraw_dll7);
 		ddraw_dll7 = NULL;
 	}
@@ -591,7 +591,7 @@ public class wind3d
 		}
 	
 		// print initialisation message and available video memory
-		if (verbose != 0)
+		if (verbose)
 		{
 			DDSCAPS2 caps = { 0 };
 			DWORD mem_total;
@@ -618,14 +618,14 @@ public class wind3d
 			needs_6bpp_per_gun	= ((attributes & VIDEO_NEEDS_6BITS_PER_GUN) != 0);
 			pixel_aspect_ratio	= (attributes & VIDEO_PIXEL_ASPECT_RATIO_MASK);
 		}
-		if (aspect != 0)
+		if (aspect)
 		{
 			aspect_ratio = aspect;
 		}
-		if (effect != 0)
+		if (effect)
 		{
-			effect_min_xscale = effect.min_xscale;
-			effect_min_yscale = effect.min_yscale;
+			effect_min_xscale = effect->min_xscale;
+			effect_min_yscale = effect->min_yscale;
 		}
 	
 		// set the cooperative level
@@ -646,11 +646,11 @@ public class wind3d
 	
 		// full screen mode: set the resolution
 		changed_resolutions = 0;
-		if (set_resolution() != 0)
+		if (set_resolution())
 			goto error_handling;
 	
 		// create the screen surfaces
-		if (create_surfaces() != 0)
+		if (create_surfaces())
 			goto error_handling;
 	
 		result = IDirect3D7_CreateDevice(d3d7, &IID_IDirect3DHALDevice, back_surface, &d3d_device7);
@@ -663,22 +663,22 @@ public class wind3d
 		// get device caps
 		result = IDirect3DDevice7_GetCaps(d3d_device7, &d3d_device_desc);
 	
-		if (win_d3d_test_hardware_caps() != 0)
+		if (win_d3d_test_hardware_caps())
 			goto error_handling;
 	
 		// create the blit surfaces
-		if (create_blit_surface() != 0)
+		if (create_blit_surface())
 			goto error_handling;
 	
 		// create the effects surfaces
-		if (create_effects_surfaces() != 0)
+		if (create_effects_surfaces())
 			goto error_handling;
 	
 		// erase all the surfaces we created
 		erase_surfaces();
 	
 		// init the surfaces used for the effects
-		if (win_d3d_effects_init_surfaces() != 0)
+		if (win_d3d_effects_init_surfaces())
 			goto error_handling;
 	
 		// attempt to get the current display mode
@@ -702,7 +702,7 @@ public class wind3d
 		IDirect3DDevice7_SetRenderState(d3d_device7, D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
 	
 		// print available video memory
-		if (verbose != 0)
+		if (verbose)
 		{
 			DDSCAPS2 caps = { 0 };
 			DWORD mem_total;
@@ -739,20 +739,20 @@ public class wind3d
 	
 	static HRESULT WINAPI enum_callback(LPDDSURFACEDESC2 desc, LPVOID context)
 	{
-		int refresh = (win_match_refresh || win_gfx_refresh) ? desc.DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
-		int depth = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
+		int refresh = (win_match_refresh || win_gfx_refresh) ? desc->DUMMYUNIONNAMEN(2).dwRefreshRate : 0;
+		int depth = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 		double score;
 	
 		// compute this mode's score
-		score = compute_mode_score(desc.dwWidth, desc.dwHeight, depth, refresh);
+		score = compute_mode_score(desc->dwWidth, desc->dwHeight, depth, refresh);
 	
 		// is it the best?
 		if (score > best_score)
 		{
 			// if so, remember it
 			best_score = score;
-			best_width = desc.dwWidth;
-			best_height = desc.dwHeight;
+			best_width = desc->dwWidth;
+			best_height = desc->dwHeight;
 			best_depth = depth;
 			best_refresh = refresh;
 		}
@@ -789,16 +789,16 @@ public class wind3d
 		target_height = max_height * effect_min_yscale;
 		if (pixel_aspect_ratio == VIDEO_PIXEL_ASPECT_RATIO_1_2)
 		{
-			if (blit_swapxy == 0)
+			if (!blit_swapxy)
 				target_height *= 2;
 			else
 				target_width *= 2;
 		}
-		else if (win_old_scanlines != 0)
+		else if (win_old_scanlines)
 			target_width *= 2, target_height *= 2;
 		if (pixel_aspect_ratio == VIDEO_PIXEL_ASPECT_RATIO_2_1)
 		{
-			if (blit_swapxy == 0)
+			if (!blit_swapxy)
 				target_width *= 2;
 			else
 				target_height *= 2;
@@ -853,7 +853,7 @@ public class wind3d
 			size_score *= 0.1;
 	
 		// now compute the aspect ratio score
-		if (win_d3d_use_rgbeffect != 0)
+		if (win_d3d_use_rgbeffect)
 			// strongly prefer square pixels
 			aspect_score = 1.0 / (1.0 + fabs((double)width / height - win_screen_aspect) * 10.0);
 		else
@@ -872,14 +872,14 @@ public class wind3d
 			return 0.0;
 	
 		// finally, compute refresh score
-		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine.drv.frames_per_second));
+		refresh_score = 1.0 / (1.0 + fabs((double)refresh - Machine->drv->frames_per_second));
 	
 		// if we're looking for a particular refresh, make sure it matches
 		if (win_gfx_refresh && refresh && refresh != win_gfx_refresh)
 			return 0.0;
 	
 		// if refresh is smaller than we'd like, it only scores up to 0.1
-		if ((double)refresh < Machine.drv.frames_per_second)
+		if ((double)refresh < Machine->drv->frames_per_second)
 			refresh_score *= 0.1;
 	
 		// weight size/aspect highest, followed by depth and refresh
@@ -919,12 +919,12 @@ public class wind3d
 				}
 	
 				// force to the current width/height
-				if (win_switch_res == 0)
+				if (!win_switch_res)
 				{
 					win_gfx_width = currmode.dwWidth;
 					win_gfx_height = currmode.dwHeight;
 				}
-				if (win_switch_bpp == 0)
+				if (!win_switch_bpp)
 					win_gfx_depth = currmode.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount;
 			}
 	
@@ -937,9 +937,9 @@ public class wind3d
 				goto error_handling;
 			}
 	
-			if (verbose != 0)
+			if (verbose)
 			{
-				if (best_refresh != 0)
+				if (best_refresh)
 					fprintf(stderr, "Best mode = %dx%dx%d @ %d Hz\n", best_width, best_height, best_depth, best_refresh);
 				else
 					fprintf(stderr, "Best mode = %dx%dx%d @ default Hz\n", best_width, best_height, best_depth);
@@ -1031,10 +1031,10 @@ public class wind3d
 		primary_desc.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE;
 	
 		// for full screen mode, allocate flipping surfaces
-		if (win_window_mode == 0)
+		if (!win_window_mode)
 		{
 			int buffer_count = 1;
-			if (win_triple_buffer != 0)
+			if (win_triple_buffer)
 				buffer_count = 2;
 	
 			primary_desc.dwFlags |= DDSD_BACKBUFFERCOUNT;
@@ -1052,7 +1052,7 @@ public class wind3d
 		result = IDirectDraw7_CreateSurface(ddraw7, &primary_desc, &primary_surface, NULL);
 		if (result != DD_OK)
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Error creating primary surface: %08x\n", (UINT32)result);
 			goto error_handling;
 		}
@@ -1066,12 +1066,12 @@ public class wind3d
 		}
 	
 		// print out the good stuff
-		if (verbose != 0)
+		if (verbose)
 		{
 			char size[80];
 			char colour[80];
 	
-			if (win_window_mode != 0)
+			if (win_window_mode)
 				fprintf(stderr, "Rendering to an off-screen surface and using blt()\n");
 			else
 				fprintf(stderr, "Using a %s buffer and pageflipping\n", win_triple_buffer ? "triple" : "double");
@@ -1090,7 +1090,7 @@ public class wind3d
 			set_brightness();
 	
 		// window mode: allocate the back surface seperately
-		if (win_window_mode != 0)
+		if (win_window_mode)
 		{
 	        DDSURFACEDESC2 back_desc = { sizeof(DDSURFACEDESC2) };
 	
@@ -1121,9 +1121,9 @@ public class wind3d
 		}
 	
 		// create a clipper for windowed mode
-		if (win_window_mode != 0)
+		if (win_window_mode)
 		{
-			if (create_clipper() != 0)
+			if (create_clipper())
 				goto error_handling;
 		}
 	
@@ -1146,7 +1146,7 @@ public class wind3d
 		HRESULT result = DD_OK;
 	
 		// create a surface that will hold the RGB effects pattern, based on the primary surface
-		if (win_d3d_use_rgbeffect != 0)
+		if (win_d3d_use_rgbeffect)
 		{
 	        DDSURFACEDESC2 desc = { sizeof(DDSURFACEDESC2) };
 	
@@ -1178,7 +1178,7 @@ public class wind3d
 				goto error_handling;
 			}
 	
-			if (verbose != 0)
+			if (verbose)
 			{
 				char size[80];
 	
@@ -1188,7 +1188,7 @@ public class wind3d
 		}
 	
 		// create 2 surfaces that will hold different sizes of scanlines, based on the primary surface
-		if (win_d3d_use_scanlines != 0)
+		if (win_d3d_use_scanlines)
 		{
 			int i;
 	
@@ -1216,7 +1216,7 @@ public class wind3d
 					goto error_handling;
 				}
 	
-				if (verbose != 0)
+				if (verbose)
 				{
 					char size[80];
 	
@@ -1241,12 +1241,12 @@ public class wind3d
 	
 	static HRESULT CALLBACK enum_textures_callback(LPDDPIXELFORMAT pixelformat, LPVOID preferred_pixelformat)
 	{
-	    if (pixelformat.dwFlags == DDPF_RGB && pixelformat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
+	    if (pixelformat->dwFlags == DDPF_RGB && pixelformat->DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
 	    {
 			// use RGB:555 format if supported by the 3D hardware and scaling effect
-			if (pixelformat.DUMMYUNIONNAMEN(2).dwRBitMask == 0x7C00 &&
-				pixelformat.DUMMYUNIONNAMEN(3).dwGBitMask == 0x03E0 &&
-				pixelformat.DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
+			if (pixelformat->DUMMYUNIONNAMEN(2).dwRBitMask == 0x7C00 &&
+				pixelformat->DUMMYUNIONNAMEN(3).dwGBitMask == 0x03E0 &&
+				pixelformat->DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
 			{
 				memcpy(preferred_pixelformat, pixelformat, sizeof(DDPIXELFORMAT));
 	
@@ -1255,9 +1255,9 @@ public class wind3d
 		}
 	
 		// use RGB:565 format otherwise
-		if (pixelformat.DUMMYUNIONNAMEN(2).dwRBitMask == 0xF800 &&
-			pixelformat.DUMMYUNIONNAMEN(3).dwGBitMask == 0x07E0 &&
-			pixelformat.DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
+		if (pixelformat->DUMMYUNIONNAMEN(2).dwRBitMask == 0xF800 &&
+			pixelformat->DUMMYUNIONNAMEN(3).dwGBitMask == 0x07E0 &&
+			pixelformat->DUMMYUNIONNAMEN(4).dwBBitMask == 0x001F)
 		{
 				memcpy(preferred_pixelformat, pixelformat, sizeof(DDPIXELFORMAT));
 	    }
@@ -1337,7 +1337,7 @@ public class wind3d
 	
 		if (texture_width > d3d_device_desc.dwMaxTextureWidth || texture_height > d3d_device_desc.dwMaxTextureHeight)
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Error: required texture size too large (max: %ix%i, need %ix%i)\n", (int)d3d_device_desc.dwMaxTextureWidth, (int)d3d_device_desc.dwMaxTextureHeight, texture_width, texture_height);
 			goto error_handling;
 		}
@@ -1347,13 +1347,13 @@ public class wind3d
 		blit_desc.dwFlags = DDSD_WIDTH | DDSD_HEIGHT | DDSD_PIXELFORMAT | DDSD_CAPS;
 	
 		// determine the preferred blit/texture surface colour format
-		if (needs_6bpp_per_gun == 0)
+		if (!needs_6bpp_per_gun)
 			IDirect3DDevice7_EnumTextureFormats(d3d_device7, &enum_textures_callback, (LPVOID)&preferred_pixelformat);
 		// if we have a preferred colour format, use it
 		if (preferred_pixelformat.dwSize)
 			blit_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat = preferred_pixelformat;
 	
-		if (win_d3d_tex_manage != 0)
+		if (win_d3d_tex_manage)
 		{
 			// the blit surface will also be the texture surface
 			blit_desc.dwWidth = texture_width;
@@ -1374,7 +1374,7 @@ public class wind3d
 		result = IDirectDraw7_CreateSurface(ddraw7, &blit_desc, &blit_surface, NULL);
 		if (result != DD_OK)
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Error creating blit surface: %08x\n", (UINT32)result);
 			goto error_handling;
 		}
@@ -1383,7 +1383,7 @@ public class wind3d
 		texture_surface = blit_surface;
 	
 		// modify the description of our texture surface, based on the blit surface
-		if (win_d3d_tex_manage == 0)
+		if (!win_d3d_tex_manage)
 		{
 			// fill in the differences
 			texture_desc.dwWidth = texture_width;
@@ -1395,7 +1395,7 @@ public class wind3d
 			result = IDirectDraw7_CreateSurface(ddraw7, &texture_desc, &texture_surface, NULL);
 			if (result != DD_OK)
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Error creating texture surface: %08x\n", (UINT32)result);
 				goto error_handling;
 			}
@@ -1403,7 +1403,7 @@ public class wind3d
 	
 		// now adjust prescale settings to that so we get the maximum
 	#if SHOW_PRESCALE
-		if (win_d3d_use_prescale != 0)
+		if (win_d3d_use_prescale)
 			fprintf(stderr, "max ");
 	#endif
 		adjust_prescale(primary_desc.dwWidth, primary_desc.dwHeight);
@@ -1430,7 +1430,7 @@ public class wind3d
 	
 			if (preprocess_desc.dwWidth > d3d_device_desc.dwMaxTextureWidth || preprocess_desc.dwHeight > d3d_device_desc.dwMaxTextureHeight)
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Warning: required texture size too large for prescale, disabling prescale\n");
 	
 				if (preprocess_desc.dwWidth > d3d_device_desc.dwMaxTextureWidth)
@@ -1465,21 +1465,21 @@ public class wind3d
 					}
 					else
 					{
-						if (verbose != 0)
+						if (verbose)
 							fprintf(stderr, "Error: feedback or prescale effects not supported.\n");
 					}
 					IDirect3DDevice7_SetRenderTarget(d3d_device7, previous_target, 0);
 					IDirectDrawSurface7_Release(previous_target);
 				}
 			}
-			if (can_render_to_texture == 0)
+			if (!can_render_to_texture)
 	#else
 			// create the pre-processing surface
 			result = IDirectDraw7_CreateSurface(ddraw7, &preprocess_desc, &preprocess_surface, NULL);
 			if (result != DD_OK)
 	#endif
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Error creating preprocess surface: %08x\n", (UINT32)result);
 				goto error_handling;
 			}
@@ -1508,7 +1508,7 @@ public class wind3d
 		compute_color_masks(&blit_desc);
 	
 		// print out the good stuff
-		if (verbose != 0)
+		if (verbose)
 		{
 			char size[80];
 			char colour[80];
@@ -1521,7 +1521,7 @@ public class wind3d
 				print_surface_size(blit_surface, size);
 				fprintf(stderr, "Blit surface created: %s\n", size);
 			}
-			if (preprocess_surface != 0)
+			if (preprocess_surface)
 			{
 				print_surface_size(preprocess_surface, size);
 				fprintf(stderr, "Pre-process texture surface created: %s\n", size);
@@ -1550,13 +1550,13 @@ public class wind3d
 		result = IDirectDrawSurface7_QueryInterface(primary_surface, &IID_IDirectDrawGammaControl, (void **)&gamma_control);
 		if (result != DD_OK)
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Warning: could not create gamma control to change brightness: %08x\n", (UINT32)result);
 			gamma_control = NULL;
 		}
 	
 		// if we got it, proceed
-		if (gamma_control != 0)
+		if (gamma_control)
 		{
 			DDGAMMARAMP ramp;
 			int i;
@@ -1638,20 +1638,20 @@ public class wind3d
 			result = IDirectDrawSurface7_Blt(blit_surface, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 	
 		// erase the texture surface
-		if (texture_surface != 0)
+		if (texture_surface)
 			result = IDirectDrawSurface7_Blt(texture_surface, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 	
 		// erase the preprocess surface
-		if (preprocess_surface != 0)
+		if (preprocess_surface)
 			result = IDirectDrawSurface7_Blt(preprocess_surface, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 	
 		// erase the RGB effects surface
-		if (win_d3d_background_surface != 0)
+		if (win_d3d_background_surface)
 			result = IDirectDrawSurface7_Blt(win_d3d_background_surface, NULL, NULL, NULL, DDBLT_COLORFILL | DDBLT_WAIT, &blitfx);
 	
 		win_d3d_effects_init_surfaces();
 	
-		if (win_window_mode == 0)
+		if (!win_window_mode)
 		{
 			// loop through enough to get all the back buffers
 			for (i = 0; i < 5; i++)
@@ -1681,7 +1681,7 @@ public class wind3d
 	{
 		HRESULT result;
 	
-	#define RESTORE_SURFACE(s) do { if (s != 0) { result = IDirectDrawSurface7_Restore(s); if (result != DD_OK) { return 1; } } } while (0)
+	#define RESTORE_SURFACE(s) do { if (s) { result = IDirectDrawSurface7_Restore(s); if (result != DD_OK) { return 1; } } } while (0)
 	
 		// restore the blit surface
 		if (blit_surface != texture_surface)
@@ -1724,7 +1724,7 @@ public class wind3d
 	static void release_surfaces(void)
 	{
 	
-	#define RELEASE_SURFACE(s) do { if (s != 0) { IDirectDrawSurface7_Release(s); s = NULL; } } while (0)
+	#define RELEASE_SURFACE(s) do { if (s) { IDirectDrawSurface7_Release(s); s = NULL; } } while (0)
 	
 		// release the blit surface
 		if (blit_surface != texture_surface)
@@ -1739,12 +1739,12 @@ public class wind3d
 		RELEASE_SURFACE(preprocess_surface);
 	
 		// release the clipper
-		if (primary_clipper != 0)
+		if (primary_clipper)
 			IDirectDrawClipper_Release(primary_clipper);
 		primary_clipper = NULL;
 	
 		// release the color controls
-		if (gamma_control != 0)
+		if (gamma_control)
 			IDirectDrawColorControl_Release(gamma_control);
 		gamma_control = NULL;
 	
@@ -1756,7 +1756,7 @@ public class wind3d
 		RELEASE_SURFACE(win_d3d_background_surface);
 	
 		// release the back surface seperately if needed
-		if (win_window_mode != 0)
+		if (win_window_mode)
 			RELEASE_SURFACE(back_surface);
 		else
 			back_surface = NULL;
@@ -1777,13 +1777,13 @@ public class wind3d
 	static void compute_color_masks(const DDSURFACEDESC2 *desc)
 	{
 		// 16bpp case
-		if (desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
+		if (desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 16)
 		{
 			int temp;
 	
 			// red
 			win_color16_rdst_shift = win_color16_rsrc_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_rdst_shift++;
 			while (!(temp & 0x80))
@@ -1791,7 +1791,7 @@ public class wind3d
 	
 			// green
 			win_color16_gdst_shift = win_color16_gsrc_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_gdst_shift++;
 			while (!(temp & 0x80))
@@ -1799,7 +1799,7 @@ public class wind3d
 	
 			// blue
 			win_color16_bdst_shift = win_color16_bsrc_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color16_bdst_shift++;
 			while (!(temp & 0x80))
@@ -1807,26 +1807,26 @@ public class wind3d
 		}
 	
 		// 24/32bpp case
-		else if (desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
-				 desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
+		else if (desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 24 ||
+				 desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount == 32)
 		{
 			int temp;
 	
 			// red
 			win_color32_rdst_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_rdst_shift++;
 	
 			// green
 			win_color32_gdst_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_gdst_shift++;
 	
 			// blue
 			win_color32_bdst_shift = 0;
-			temp = desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
+			temp = desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask;
 			while (!(temp & 1))
 				temp >>= 1, win_color32_bdst_shift++;
 		}
@@ -1846,7 +1846,7 @@ public class wind3d
 		int result;
 	
 		// handle forced updates
-		if (forced_updates != 0)
+		if (forced_updates)
 		{
 			forced_updates--;
 			update = 1;
@@ -1875,15 +1875,15 @@ public class wind3d
 		int result = throttle;
 	
 		// if we're using dirty pixels, we must succeed as well, or else we will leave debris
-		if (vector_dirty_pixels != 0)
+		if (vector_dirty_pixels)
 			result = 1;
 	
 		// if we're blitting a different source rect than before, we also must
 		// succeed, or else we will miss some areas
-		if (bounds != 0)
+		if (bounds)
 		{
-			if (bounds.min_x != last_bounds.min_x || bounds.min_y != last_bounds.min_y ||
-				bounds.max_x != last_bounds.max_x || bounds.max_y != last_bounds.max_y)
+			if (bounds->min_x != last_bounds.min_x || bounds->min_y != last_bounds.min_y ||
+				bounds->max_x != last_bounds.max_x || bounds->max_y != last_bounds.max_y)
 				result = 1;
 			last_bounds = *bounds;
 		}
@@ -1909,7 +1909,7 @@ public class wind3d
 		HRESULT result;
 		int render_and_flip_result;
 	
-		if (blit_swapxy != 0)
+		if (blit_swapxy)
 		{
 			blit_width = win_visible_height;
 			blit_height = win_visible_width;
@@ -1928,7 +1928,7 @@ public class wind3d
 		win_disorient_rect(&temprect);
 	
 	tryagain:
-		if (win_d3d_tex_manage != 0)
+		if (win_d3d_tex_manage)
 		{
 			// we only need to lock a part of the surface
 			src.left = 0;
@@ -1952,7 +1952,7 @@ public class wind3d
 			return 1;
 		if (result != DD_OK)
 		{
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Unable to lock blit_surface: %08x\n", (UINT32)result);
 			return 0;
 		}
@@ -1972,9 +1972,9 @@ public class wind3d
 		params.dstyskip		= 0;
 		params.dsteffect	= win_determine_effect(&params);
 	
-		params.srcdata		= bitmap.base;
-		params.srcpitch		= bitmap.rowbytes;
-		params.srcdepth		= bitmap.depth;
+		params.srcdata		= bitmap->base;
+		params.srcpitch		= bitmap->rowbytes;
+		params.srcdepth		= bitmap->depth;
 		params.srclookup	= win_prepare_palette(&params);
 	
 		// adjust for more optimal bounds
@@ -1983,10 +1983,10 @@ public class wind3d
 			params.dstxoffs -= temprect.min_x;
 			params.dstyoffs -= temprect.min_y;
 	
-			temprect.min_x	= bounds.min_x;
-			temprect.max_x	= bounds.max_x;
-			temprect.min_y	= bounds.min_y;
-			temprect.max_y	= bounds.max_y;
+			temprect.min_x	= bounds->min_x;
+			temprect.max_x	= bounds->max_x;
+			temprect.min_y	= bounds->min_y;
+			temprect.max_y	= bounds->max_y;
 	
 			win_disorient_rect(&temprect);
 	
@@ -2016,7 +2016,7 @@ public class wind3d
 		IDirectDrawSurface7_Unlock(blit_surface, NULL);
 	
 		// blit the image to the texture surface when texture management in't used
-		if (win_d3d_tex_manage == 0)
+		if (!win_d3d_tex_manage)
 		{
 			RECT blt_src = { params.dstxoffs, params.dstyoffs, params.dstxoffs, params.dstyoffs };
 	
@@ -2029,7 +2029,7 @@ public class wind3d
 			if (result != DD_OK)
 			{
 				// error, print the error and fall back
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Unable to blt blit_surface to texture_surface: %08x\n", (UINT32)result);
 				return 0;
 			}
@@ -2044,7 +2044,7 @@ public class wind3d
 		do {
 	
 			// window mode
-			if (win_window_mode != 0)
+			if (win_window_mode)
 			{
 				// just convert the client area to screen coords
 				GetClientRect(win_video_window, &dst);
@@ -2080,20 +2080,20 @@ public class wind3d
 			}
 		} while ((render_and_flip_result = render_and_flip(&src, &dst, update, wait_for_lock)) == 2);
 	
-		if (render_and_flip_result == 0)
+		if (!render_and_flip_result)
 			return 0;
 	
 		return 1;
 	
 	surface_lost:
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "Restoring surfaces\n");
 	
 		// go ahead and adjust the window
 		win_adjust_window();
 	
 		// restore the surfaces
-		if (restore_surfaces() == 0)
+		if (!restore_surfaces())
 			goto tryagain;
 	
 		// otherwise, return failure
@@ -2115,42 +2115,42 @@ public class wind3d
 		RECT margins;
 	
 		// determine the current zoom level
-		win_d3d_current_zoom = win_d3d_effects_swapxy ? (dst.right - dst.left) / win_visible_width :
-														(dst.bottom - dst.top) / win_visible_height;
+		win_d3d_current_zoom = win_d3d_effects_swapxy ? (dst->right - dst->left) / win_visible_width :
+														(dst->bottom - dst->top) / win_visible_height;
 	
 		// determing if the window position has changed
-		if (src.left != prev_src.left ||
-			src.right != prev_src.right ||
-			src.top != prev_src.top ||
-			src.bottom != prev_src.bottom ||
-			dst.left != prev_dst.left ||
-			dst.right != prev_dst.right ||
-			dst.top != prev_dst.top ||
-			dst.bottom != prev_dst.bottom)
+		if (src->left != prev_src.left ||
+			src->right != prev_src.right ||
+			src->top != prev_src.top ||
+			src->bottom != prev_src.bottom ||
+			dst->left != prev_dst.left ||
+			dst->right != prev_dst.right ||
+			dst->top != prev_dst.top ||
+			dst->bottom != prev_dst.bottom)
 		{
 			position_changed = 1;
 		}
 	
-		if (position_changed != 0)
+		if (position_changed)
 		{
 			char src_size_changed = 0;
 	
-			if ((src.right - src.left != prev_src.right - prev_src.left ||
-				 src.bottom - src.top != prev_src.bottom - prev_src.top))
+			if ((src->right - src->left != prev_src.right - prev_src.left ||
+				 src->bottom - src->top != prev_src.bottom - prev_src.top))
 			{
 				src_size_changed = 1;
 			}
 	
-			prev_src.left = src.left;
-			prev_src.right = src.right;
-			prev_src.top = src.top;
-			prev_src.bottom = src.bottom;
+			prev_src.left = src->left;
+			prev_src.right = src->right;
+			prev_src.top = src->top;
+			prev_src.bottom = src->bottom;
 	
 			if (win_default_constraints && src_size_changed)
 			{
-				if (win_window_mode != 0)
+				if (win_window_mode)
 				{
-					if (win_start_maximized != 0)
+					if (win_start_maximized)
 						win_toggle_maximize(1);
 	
 					// force dst to be re-computed
@@ -2164,23 +2164,23 @@ public class wind3d
 			}
 	
 			win_d3d_effects_init(video_attributes);
-			if (win_d3d_use_auto_effect != 0)
+			if (win_d3d_use_auto_effect)
 			{
 				win_d3d_effects_init_surfaces();
 			}
 	
 			// adjust prescale settings to the new zoom level
-			adjust_prescale(dst.right - dst.left, dst.bottom - dst.top);
+			adjust_prescale(dst->right - dst->left, dst->bottom - dst->top);
 	
 			init_vertices_screen(src, dst);
 	
 			if ((win_d3d_use_prescale && (current_prescalex > 1 || current_prescaley > 1)) || win_d3d_use_feedback)
 				init_vertices_preprocess(src);
 	
-			prev_dst.left = dst.left;
-			prev_dst.right = dst.right;
-			prev_dst.top = dst.top;
-			prev_dst.bottom = dst.bottom;
+			prev_dst.left = dst->left;
+			prev_dst.right = dst->right;
+			prev_dst.top = dst->top;
+			prev_dst.bottom = dst->bottom;
 	
 			position_changed = 0;
 		}
@@ -2215,7 +2215,7 @@ public class wind3d
 	
 			result = IDirect3DDevice7_BeginScene(d3d_device7);
 	
-			if (win_d3d_use_feedback != 0)
+			if (win_d3d_use_feedback)
 			{
 				// alpha blend the new image with the previous one
 				IDirect3DDevice7_SetRenderState(d3d_device7, D3DRENDERSTATE_SRCBLEND, D3DBLEND_ONE);
@@ -2256,7 +2256,7 @@ public class wind3d
 			if (result != DD_OK)
 			{
 				// error, print the error and fall back
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Unable to render to preprocess texture: %08x\n", (UINT32)result);
 				return 0;
 			}
@@ -2370,7 +2370,7 @@ public class wind3d
 		if (result != DD_OK)
 		{
 			// error, print the error and fall back
-			if (verbose != 0)
+			if (verbose)
 				fprintf(stderr, "Unable to render to back_surface: %08x\n", (UINT32)result);
 			return 0;
 		}
@@ -2381,7 +2381,7 @@ public class wind3d
 		result = IDirect3DDevice7_EndScene(d3d_device7);
 	
 		// sync to VBLANK?
-		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info().game_speed_percent > 95)
+		if ((win_wait_vsync || win_sync_refresh) && throttle && mame_get_performance_info()->game_speed_percent > 95)
 		{
 			BOOL is_vblank;
 	
@@ -2389,7 +2389,7 @@ public class wind3d
 			profiler_mark(PROFILER_IDLE);
 	
 			result = IDirectDraw7_GetVerticalBlankStatus(ddraw7, &is_vblank);
-			if (is_vblank == 0)
+			if (!is_vblank)
 				result = IDirectDraw7_WaitForVerticalBlank(ddraw7, DDWAITVB_BLOCKBEGIN, 0);
 	
 			// idle time done
@@ -2397,7 +2397,7 @@ public class wind3d
 		}
 	
 		// erase the edges if updating
-		if (update != 0)
+		if (update)
 		{
 			RECT outer;
 	
@@ -2406,10 +2406,10 @@ public class wind3d
 		}
 	
 		// if in windowed mode, blit the image from the back surface to the primary surface
-		if (win_window_mode != 0)
+		if (win_window_mode)
 		{
 			// blit from the upper left of the back surface to the correct position on the screen
-			RECT rect = { 0, 0, dst.right - dst.left, dst.bottom - dst.top };
+			RECT rect = { 0, 0, dst->right - dst->left, dst->bottom - dst->top };
 	
 			result = IDirectDrawSurface7_Blt(primary_surface, dst, back_surface, &rect, DDBLT_ASYNC, NULL);
 			if (result == DDERR_SURFACELOST)
@@ -2417,7 +2417,7 @@ public class wind3d
 			if (result != DD_OK)
 			{
 				// otherwise, print the error and fall back
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Unable to blt back_surface to primary_surface: %08x\n", (UINT32)result);
 				return 0;
 			}
@@ -2444,13 +2444,13 @@ public class wind3d
 		}
 	
 		// blit the pattern for the RGB effects (for the next frame)
-		if (win_d3d_use_rgbeffect != 0)
+		if (win_d3d_use_rgbeffect)
 		{
 			result = blit_rgb_pattern(dst, back_surface);
 			if (result != DD_OK)
 			{
 				// error, print the error and fall back
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Unable to blt RGB effect to back_surface: %08x\n",	(UINT32)result);
 				return 0;
 			}
@@ -2459,14 +2459,14 @@ public class wind3d
 		return 1;
 	
 	surface_lost:
-		if (verbose != 0)
+		if (verbose)
 			fprintf(stderr, "Restoring surfaces\n");
 	
 		// go ahead and adjust the window
 		win_adjust_window();
 	
 		// restore the surfaces
-		if (restore_surfaces() == 0)
+		if (!restore_surfaces())
 			goto tryagain;
 	
 		// otherwise, return failure
@@ -2491,23 +2491,23 @@ public class wind3d
 		{
 			RECT rgb_dst;
 			RECT rgb_src = { 0, 0,
-							 win_d3d_effects_swapxy ? zoom * win_visible_width : dst.right - dst.left,
-							 win_d3d_effects_swapxy ? dst.bottom - dst.top : zoom * win_visible_height};
+							 win_d3d_effects_swapxy ? zoom * win_visible_width : dst->right - dst->left,
+							 win_d3d_effects_swapxy ? dst->bottom - dst->top : zoom * win_visible_height};
 	
-			if (win_window_mode != 0)
+			if (win_window_mode)
 			{
 				rgb_dst.left = 0; rgb_dst.top = 0;
-				rgb_dst.right = dst.right - dst.left;
-				rgb_dst.bottom = dst.bottom - dst.top;
+				rgb_dst.right = dst->right - dst->left;
+				rgb_dst.bottom = dst->bottom - dst->top;
 			}
 	
 			return IDirectDrawSurface7_Blt(surface, win_window_mode ? &rgb_dst : dst, win_d3d_background_surface, &rgb_src, DDBLT_ASYNC, NULL);
 		}
 		else
 		{
-			RECT rect = { 0, 0, dst.right - dst.left, dst.bottom - dst.top };
+			RECT rect = { 0, 0, dst->right - dst->left, dst->bottom - dst->top };
 	
-			return IDirectDrawSurface7_BltFast(surface, win_window_mode ? 0 : dst.left, win_window_mode ? 0 : dst.top, win_d3d_background_surface, &rect, DDBLTFAST_WAIT);
+			return IDirectDrawSurface7_BltFast(surface, win_window_mode ? 0 : dst->left, win_window_mode ? 0 : dst->top, win_d3d_background_surface, &rect, DDBLTFAST_WAIT);
 		}
 	}
 	
@@ -2519,38 +2519,38 @@ public class wind3d
 	
 	static void set_texture_coordinates(LPRECT src, int texture_width, int texture_height)
 	{
-		if (win_d3d_tex_manage != 0)
+		if (win_d3d_tex_manage)
 		{
-			if (blit_swapxy != 0)
+			if (blit_swapxy)
 			{
-				screen_vertex[2].tu = screen_vertex[3].tu = (float)(!blit_flipy ? src.right : src.left) / texture_width;
-				screen_vertex[0].tu = screen_vertex[1].tu = (float)(!blit_flipy ? src.left : src.right) / texture_width;
-				screen_vertex[1].tv = screen_vertex[3].tv = (float)(!blit_flipx ? src.bottom : src.top) / texture_height;
-				screen_vertex[0].tv = screen_vertex[2].tv = (float)(!blit_flipx ? src.top : src.bottom) / texture_height;
+				screen_vertex[2].tu = screen_vertex[3].tu = (float)(!blit_flipy ? src->right : src->left) / texture_width;
+				screen_vertex[0].tu = screen_vertex[1].tu = (float)(!blit_flipy ? src->left : src->right) / texture_width;
+				screen_vertex[1].tv = screen_vertex[3].tv = (float)(!blit_flipx ? src->bottom : src->top) / texture_height;
+				screen_vertex[0].tv = screen_vertex[2].tv = (float)(!blit_flipx ? src->top : src->bottom) / texture_height;
 			}
 			else
 			{
-				screen_vertex[0].tu = screen_vertex[2].tu = (float)(blit_flipx ? src.right : src.left) / texture_width;
-				screen_vertex[1].tu = screen_vertex[3].tu = (float)(blit_flipx ? src.left : src.right) / texture_width;
-				screen_vertex[0].tv = screen_vertex[1].tv = (float)(blit_flipy ? src.bottom : src.top) / texture_height;
-				screen_vertex[2].tv = screen_vertex[3].tv = (float)(blit_flipy ? src.top : src.bottom) / texture_height;
+				screen_vertex[0].tu = screen_vertex[2].tu = (float)(blit_flipx ? src->right : src->left) / texture_width;
+				screen_vertex[1].tu = screen_vertex[3].tu = (float)(blit_flipx ? src->left : src->right) / texture_width;
+				screen_vertex[0].tv = screen_vertex[1].tv = (float)(blit_flipy ? src->bottom : src->top) / texture_height;
+				screen_vertex[2].tv = screen_vertex[3].tv = (float)(blit_flipy ? src->top : src->bottom) / texture_height;
 			}
 		}
 		else
 		{
-			if (blit_swapxy != 0)
+			if (blit_swapxy)
 			{
-				screen_vertex[2].tu = screen_vertex[3].tu = !blit_flipy ? (float)(src.right - src.left) / texture_width : 0;
-				screen_vertex[0].tu = screen_vertex[1].tu = !blit_flipy ? 0 : (float)(src.right - src.left)  / texture_width;
-				screen_vertex[1].tv = screen_vertex[3].tv = !blit_flipx ? (float)(src.bottom - src.top) / texture_height : 0;
-				screen_vertex[0].tv = screen_vertex[2].tv = !blit_flipx ? 0 : (float)(src.bottom - src.top) / texture_height;
+				screen_vertex[2].tu = screen_vertex[3].tu = !blit_flipy ? (float)(src->right - src->left) / texture_width : 0;
+				screen_vertex[0].tu = screen_vertex[1].tu = !blit_flipy ? 0 : (float)(src->right - src->left)  / texture_width;
+				screen_vertex[1].tv = screen_vertex[3].tv = !blit_flipx ? (float)(src->bottom - src->top) / texture_height : 0;
+				screen_vertex[0].tv = screen_vertex[2].tv = !blit_flipx ? 0 : (float)(src->bottom - src->top) / texture_height;
 			}
 			else
 			{
-				screen_vertex[0].tu = screen_vertex[2].tu = blit_flipx ? (float)(src.right - src.left) / texture_width : 0;
-				screen_vertex[1].tu = screen_vertex[3].tu = blit_flipx ? 0 : (float)(src.right - src.left) / texture_width;
-				screen_vertex[0].tv = screen_vertex[1].tv = blit_flipy ? (float)(src.bottom - src.top) / texture_height : 0;
-				screen_vertex[2].tv = screen_vertex[3].tv = blit_flipy ? 0 : (float)(src.bottom - src.top) / texture_height;
+				screen_vertex[0].tu = screen_vertex[2].tu = blit_flipx ? (float)(src->right - src->left) / texture_width : 0;
+				screen_vertex[1].tu = screen_vertex[3].tu = blit_flipx ? 0 : (float)(src->right - src->left) / texture_width;
+				screen_vertex[0].tv = screen_vertex[1].tv = blit_flipy ? (float)(src->bottom - src->top) / texture_height : 0;
+				screen_vertex[2].tv = screen_vertex[3].tv = blit_flipy ? 0 : (float)(src->bottom - src->top) / texture_height;
 			}
 		}
 	}
@@ -2576,26 +2576,26 @@ public class wind3d
 		set_texture_coordinates(src, texture_desc.dwWidth, texture_desc.dwHeight);
 	
 		// set the vertex coordinates
-		if (win_window_mode != 0)
+		if (win_window_mode)
 		{
 			// render to the upper left of the back surface
 			screen_vertex[0].sx = -0.5f;								   screen_vertex[0].sy = -0.5f;
-			screen_vertex[1].sx = -0.5f + (float)(dst.right - dst.left); screen_vertex[1].sy = -0.5f;
-			screen_vertex[2].sx = -0.5f;								   screen_vertex[2].sy = -0.5f + (float)(dst.bottom - dst.top);
-			screen_vertex[3].sx = -0.5f + (float)(dst.right - dst.left); screen_vertex[3].sy = -0.5f + (float)(dst.bottom - dst.top);
+			screen_vertex[1].sx = -0.5f + (float)(dst->right - dst->left); screen_vertex[1].sy = -0.5f;
+			screen_vertex[2].sx = -0.5f;								   screen_vertex[2].sy = -0.5f + (float)(dst->bottom - dst->top);
+			screen_vertex[3].sx = -0.5f + (float)(dst->right - dst->left); screen_vertex[3].sy = -0.5f + (float)(dst->bottom - dst->top);
 		}
 		else
 		{
-			screen_vertex[0].sx = -0.5f + (float)dst.left;  screen_vertex[0].sy = -0.5f + (float)dst.top;
-			screen_vertex[1].sx = -0.5f + (float)dst.right; screen_vertex[1].sy = -0.5f + (float)dst.top;
-			screen_vertex[2].sx = -0.5f + (float)dst.left;  screen_vertex[2].sy = -0.5f + (float)dst.bottom;
-			screen_vertex[3].sx = -0.5f + (float)dst.right; screen_vertex[3].sy = -0.5f + (float)dst.bottom;
+			screen_vertex[0].sx = -0.5f + (float)dst->left;  screen_vertex[0].sy = -0.5f + (float)dst->top;
+			screen_vertex[1].sx = -0.5f + (float)dst->right; screen_vertex[1].sy = -0.5f + (float)dst->top;
+			screen_vertex[2].sx = -0.5f + (float)dst->left;  screen_vertex[2].sy = -0.5f + (float)dst->bottom;
+			screen_vertex[3].sx = -0.5f + (float)dst->right; screen_vertex[3].sy = -0.5f + (float)dst->bottom;
 		}
 	
 		// set texture coordinates for scanlines
-		if (win_d3d_use_scanlines != 0)
+		if (win_d3d_use_scanlines)
 		{
-			if (win_d3d_effects_swapxy != 0)
+			if (win_d3d_effects_swapxy)
 			{
 				screen_vertex[2].tv1 = screen_vertex[0].tv1 = win_d3d_effects_flipy ? (float)win_visible_width : 0;
 				screen_vertex[3].tv1 = screen_vertex[1].tv1 = win_d3d_effects_flipy ? 0 : (float)win_visible_width;
@@ -2620,7 +2620,7 @@ public class wind3d
 	
 	static void init_vertices_preprocess(LPRECT src)
 	{
-		RECT rect = { 0, 0, (src.right - src.left) * current_prescalex, (src.bottom - src.top) * current_prescaley };
+		RECT rect = { 0, 0, (src->right - src->left) * current_prescalex, (src->bottom - src->top) * current_prescaley };
 		int i;
 	
 		for (i = 0; i < 4; i++)
@@ -2631,19 +2631,19 @@ public class wind3d
 		}
 	
 		// set the texture coordinates for the preprocess vertices
-		if (win_d3d_tex_manage != 0)
+		if (win_d3d_tex_manage)
 		{
-			preprocess_vertex[0].tu = preprocess_vertex[2].tu = (float)src.left / texture_desc.dwWidth;
-			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)src.right / texture_desc.dwWidth;
-			preprocess_vertex[0].tv = preprocess_vertex[1].tv = (float)src.top / texture_desc.dwHeight;
-			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)src.bottom / texture_desc.dwHeight;
+			preprocess_vertex[0].tu = preprocess_vertex[2].tu = (float)src->left / texture_desc.dwWidth;
+			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)src->right / texture_desc.dwWidth;
+			preprocess_vertex[0].tv = preprocess_vertex[1].tv = (float)src->top / texture_desc.dwHeight;
+			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)src->bottom / texture_desc.dwHeight;
 		}
 		else
 		{
 			preprocess_vertex[0].tu = preprocess_vertex[2].tu = 0;
-			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)(src.right - src.left) / texture_desc.dwWidth;
+			preprocess_vertex[1].tu = preprocess_vertex[3].tu = (float)(src->right - src->left) / texture_desc.dwWidth;
 			preprocess_vertex[0].tv = preprocess_vertex[1].tv = 0;
-			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)(src.bottom - src.top) / texture_desc.dwHeight;
+			preprocess_vertex[2].tv = preprocess_vertex[3].tv = (float)(src->bottom - src->top) / texture_desc.dwHeight;
 		}
 	
 		// set the texture coordinates for the screen vertices

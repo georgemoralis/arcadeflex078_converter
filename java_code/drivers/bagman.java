@@ -58,7 +58,7 @@ I/O C  ;AY-3-8910 Data Read Reg.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -150,14 +150,12 @@ public class bagman
 	}
 	
 	#if 0
-	public static ReadHandlerPtr bagman_ls259_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bagman_ls259_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ls259_buf[offset];
 	} };
 	#endif
 	
-	public static WriteHandlerPtr bagman_ls259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_ls259_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bagman_pal16r6_w(offset,data); /*this is just a simulation*/
 	
 		if (ls259_buf[offset] != (data&1) )
@@ -166,20 +164,19 @@ public class bagman
 	
 			if (offset==3)
 			{
-				if (ls259_buf[3] == 0)	/* 1.0 transition */
+				if (ls259_buf[3] == 0)	/* 1->0 transition */
 				{
 					reset_talking();
 				}
 				else
 				{
-					start_talking();	/* 0.1 transition */
+					start_talking();	/* 0->1 transition */
 				}
 			}
 		}
 	} };
 	
-	public static WriteHandlerPtr bagman_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bagman_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -271,7 +268,7 @@ public class bagman
 	
 	
 	
-	static InputPortPtr input_ports_bagman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bagman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bagman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -319,7 +316,7 @@ public class bagman
 	
 	/* EXACTLY the same as bagman, the only difference is that
 	Languade dip is replaced by Demo Sounds */
-	static InputPortPtr input_ports_bagmans = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bagmans = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bagmans )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -368,7 +365,7 @@ public class bagman
 	
 	/* EXACTLY the same as bagman, the only difference is that the START1 button */
 	/* also acts as the shoot button. */
-	static InputPortPtr input_ports_sbagman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbagman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbagman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -416,7 +413,7 @@ public class bagman
 		PORT_DIPSETTING(	0x00, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pickin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pickin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pickin )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -527,8 +524,7 @@ public class bagman
 		bagman_speech_rom_read_bit	/*M0 callback function. Called whenever chip requests a single bit of data*/
 	};
 	
-	public static MachineHandlerPtr machine_driver_bagman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bagman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -555,12 +551,9 @@ public class bagman
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(TMS5110, tms5110_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_pickin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pickin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -586,9 +579,7 @@ public class bagman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -801,12 +792,12 @@ public class bagman
 	
 	
 	
-	public static GameDriver driver_bagman	   = new GameDriver("1982"	,"bagman"	,"bagman.java"	,rom_bagman,null	,machine_driver_bagman	,input_ports_bagman	,null	,ROT270	,	"Valadon Automation", "Bagman" )
-	public static GameDriver driver_bagnard	   = new GameDriver("1982"	,"bagnard"	,"bagman.java"	,rom_bagnard,driver_bagman	,machine_driver_bagman	,input_ports_bagman	,null	,ROT270	,	"Valadon Automation", "Le Bagnard" )
-	public static GameDriver driver_bagmans	   = new GameDriver("1982"	,"bagmans"	,"bagman.java"	,rom_bagmans,driver_bagman	,machine_driver_bagman	,input_ports_bagmans	,null	,ROT270	,	"Valadon Automation (Stern license)", "Bagman (Stern set 1)" )
-	public static GameDriver driver_bagmans2	   = new GameDriver("1982"	,"bagmans2"	,"bagman.java"	,rom_bagmans2,driver_bagman	,machine_driver_bagman	,input_ports_bagman	,null	,ROT270	,	"Valadon Automation (Stern license)", "Bagman (Stern set 2)" )
-	public static GameDriver driver_sbagman	   = new GameDriver("1984"	,"sbagman"	,"bagman.java"	,rom_sbagman,null	,machine_driver_bagman	,input_ports_sbagman	,null	,ROT270	,	"Valadon Automation", "Super Bagman" )
-	public static GameDriver driver_sbagmans	   = new GameDriver("1984"	,"sbagmans"	,"bagman.java"	,rom_sbagmans,driver_sbagman	,machine_driver_bagman	,input_ports_sbagman	,null	,ROT270	,	"Valadon Automation (Stern license)", "Super Bagman (Stern)" )
-	public static GameDriver driver_pickin	   = new GameDriver("1983"	,"pickin"	,"bagman.java"	,rom_pickin,null	,machine_driver_pickin	,input_ports_pickin	,null	,ROT270	,	"Valadon Automation", "Pickin'" )
+	GAME(1982, bagman,	 0, 	  bagman, bagman,  0, ROT270, "Valadon Automation", "Bagman" )
+	GAME(1982, bagnard,  bagman,  bagman, bagman,  0, ROT270, "Valadon Automation", "Le Bagnard" )
+	GAME(1982, bagmans,  bagman,  bagman, bagmans, 0, ROT270, "Valadon Automation (Stern license)", "Bagman (Stern set 1)" )
+	GAME(1982, bagmans2, bagman,  bagman, bagman,  0, ROT270, "Valadon Automation (Stern license)", "Bagman (Stern set 2)" )
+	GAME(1984, sbagman,  0, 	  bagman, sbagman, 0, ROT270, "Valadon Automation", "Super Bagman" )
+	GAME(1984, sbagmans, sbagman, bagman, sbagman, 0, ROT270, "Valadon Automation (Stern license)", "Super Bagman (Stern)" )
+	GAME(1983, pickin,	 0, 	  pickin, pickin,  0, ROT270, "Valadon Automation", "Pickin'" )
 	
 }

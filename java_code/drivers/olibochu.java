@@ -5,14 +5,14 @@ Oli-Boo-Chu
 driver by Nicola Salmoria
 
 TODO:
-- main.sound cpu communication is completely wrong, commands don't play the
+- main->sound cpu communication is completely wrong, commands don't play the
   intended sound.
 
 ***************************************************************************/
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,8 +21,7 @@ public class olibochu
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static PaletteInitHandlerPtr palette_init_olibochu  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_olibochu  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -64,8 +63,7 @@ public class olibochu
 			COLOR(1,i) = (*(color_prom++) & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr olibochu_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr olibochu_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -73,8 +71,7 @@ public class olibochu
 		}
 	} };
 	
-	public static WriteHandlerPtr olibochu_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr olibochu_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -82,8 +79,7 @@ public class olibochu
 		}
 	} };
 	
-	public static WriteHandlerPtr olibochu_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr olibochu_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x80))
 		{
 			flip_screen_set(data & 0x80);
@@ -103,12 +99,11 @@ public class olibochu
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_olibochu  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_olibochu  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -130,7 +125,7 @@ public class olibochu
 			int sx = spriteram.read(offs+3);
 			int sy = ((spriteram.read(offs+2)+ 8) & 0xff) - 8;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -138,11 +133,11 @@ public class olibochu
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	
@@ -158,7 +153,7 @@ public class olibochu
 			int sx = spriteram_2.read(offs+3);
 			int sy = spriteram_2.read(offs+2);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 248 - sx;
 				sy = 248 - sy;
@@ -166,24 +161,22 @@ public class olibochu
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[0],
+			drawgfx(bitmap, Machine->gfx[0],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_olibochu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_olibochu  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		olibochu_draw_sprites(bitmap);
 	} };
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int cmd;
 		int c;
 	
@@ -244,7 +237,7 @@ public class olibochu
 	
 	
 	
-	static InputPortPtr input_ports_olibochu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_olibochu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( olibochu )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -400,16 +393,14 @@ public class olibochu
 	
 	
 	
-	public static InterruptHandlerPtr olibochu_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr olibochu_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h */
 		else
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 	} };
 	
-	public static MachineHandlerPtr machine_driver_olibochu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( olibochu )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ?? */
@@ -438,9 +429,7 @@ public class olibochu
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -487,5 +476,5 @@ public class olibochu
 	
 	
 	
-	public static GameDriver driver_olibochu	   = new GameDriver("1981"	,"olibochu"	,"olibochu.java"	,rom_olibochu,null	,machine_driver_olibochu	,input_ports_olibochu	,null	,ROT270	,	"Irem + GDI", "Oli-Boo-Chu", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, olibochu, 0, olibochu, olibochu, 0, ROT270, "Irem + GDI", "Oli-Boo-Chu", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
 }

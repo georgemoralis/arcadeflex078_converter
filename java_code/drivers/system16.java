@@ -116,7 +116,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -135,7 +135,7 @@ public class system16
 	
 	static WRITE16_HANDLER( sys16_3d_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x10;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -149,9 +149,8 @@ public class system16
 		}
 	}
 	
-	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (sys16_custom_irq != 0) sys16_custom_irq();
+	public static InterruptHandlerPtr sys16_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if(sys16_custom_irq) sys16_custom_irq();
 		cpu_set_irq_line(0, 4, HOLD_LINE); /* Interrupt vector 4, used by VBlank */
 	} };
 	
@@ -255,7 +254,7 @@ public class system16
 	};
 	
 	
-	public static WriteHandlerPtr UPD7759_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data) //*
+	public static WriteHandlerPtr UPD7759_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)/*
 	{
 		int offs, size = memory_region_length(REGION_CPU2) - 0x10000;
 	
@@ -277,14 +276,14 @@ public class system16
 	
 	
 	static WRITE16_HANDLER( sound_command_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_irq_line( 1, 0, HOLD_LINE );
 		}
 	}
 	
 	static WRITE16_HANDLER( sound_command_nmi_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			soundlatch_w( 0,data&0xff );
 			cpu_set_nmi_line(1, PULSE_LINE);
 		}
@@ -298,7 +297,7 @@ public class system16
 	
 	static WRITE16_HANDLER( sys16_coinctrl_w )
 	{
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			coinctrl = data&0xff;
 			sys16_refreshenable = coinctrl & 0x20;
 			coin_counter_w(0,coinctrl & 0x01);
@@ -312,8 +311,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_system16 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system16 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 10000000)
@@ -340,13 +338,10 @@ public class system16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("2151", YM2151, sys16_ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_system16_7759 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system16_7759 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -357,13 +352,10 @@ public class system16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("7759", UPD7759, sys16_upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_system16_7751 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system16_7751 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -379,9 +371,7 @@ public class system16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, sys16_7751_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -555,7 +545,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_alexkidd  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_alexkidd  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
@@ -563,15 +553,14 @@ public class system16
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = alexkidd_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_alexkidd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alexkidd  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_alexkidd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alexkidd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alexkidd )
 		SYS16_JOY1_SWAPPEDBUTTONS
 		SYS16_JOY2_SWAPPEDBUTTONS
 		SYS16_SERVICE
@@ -604,8 +593,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_alexkidd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alexkidd )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -613,9 +601,7 @@ public class system16
 		MDRV_CPU_MEMORY(alexkidd_readmem,alexkidd_writemem)
 	
 		MDRV_MACHINE_INIT(alexkidd)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -784,13 +770,13 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_aliensyn  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_aliensyn  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 		sys16_bg_priority_mode=1;
@@ -799,17 +785,16 @@ public class system16
 		sys16_update_proc = aliensyn_update_proc;
 	
 		sys16_alienfix = 1; //*
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_aliensyn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aliensyn  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 		sys16_bg1_trans=1;
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_aliensyn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aliensyn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aliensyn )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -841,8 +826,7 @@ public class system16
 	
 	/****************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_aliensyn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aliensyn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -850,9 +834,7 @@ public class system16
 		MDRV_CPU_MEMORY(aliensyn_readmem,aliensyn_writemem)
 	
 		MDRV_MACHINE_INIT(aliensyn)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -990,11 +972,11 @@ public class system16
 		set_tile_bank( sys16_workingram[0x3094/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_altbeast  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_altbeast  = new MachineInitHandlerPtr() { public void handler()
 		sys16_update_proc = altbeast_update_proc;
-	} };
+	}
 	
-	public static MachineInitHandlerPtr machine_init_altbeas2  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_altbeas2  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0x00,0x00,
 			0x01,0x00,
@@ -1004,19 +986,18 @@ public class system16
 			0x05,0x00,
 			0x06,0x00,
 			0x07,0x00
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_update_proc = altbeast_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_altbeast  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_altbeast  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_altbeast = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_altbeast = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( altbeast )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -1048,8 +1029,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_altbeast = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( altbeast )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1057,13 +1037,10 @@ public class system16
 		MDRV_CPU_MEMORY(altbeast_readmem,altbeast_writemem)
 	
 		MDRV_MACHINE_INIT(altbeast)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_altbeas2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( altbeas2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1071,9 +1048,7 @@ public class system16
 		MDRV_CPU_MEMORY(altbeast_readmem,altbeast_writemem)
 	
 		MDRV_MACHINE_INIT(altbeas2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -1114,7 +1089,7 @@ public class system16
 	MEMORY_END
 	
 	static WRITE16_HANDLER( atomicp_sound_w ){
-		if (ACCESSING_MSB != 0){
+		if( ACCESSING_MSB ){
 			if(offset==0)
 				YM2413_register_port_0_w(0,(data>>8)&0xff);
 			else
@@ -1148,18 +1123,17 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_atomicp  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_atomicp  = new MachineInitHandlerPtr() { public void handler()
 		sys16_update_proc = atomicp_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_atomicp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_atomicp  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_atomicp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atomicp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atomicp )
 	
 	PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
@@ -1236,16 +1210,14 @@ public class system16
 	INPUT_PORTS_END(); }}; 
 	
 	/***************************************************************************/
-	public static InterruptHandlerPtr ap_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ap_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int intleft=cpu_getiloops();
 		if(intleft!=0) cpu_set_irq_line(0, 2, HOLD_LINE);
 		else cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_atomicp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atomicp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -1260,9 +1232,7 @@ public class system16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("2151", YM2413, sys16_ym2413_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1405,21 +1375,19 @@ public class system16
 		set_tile_bank( sys16_extraram3[0x0002/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_aurail  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_aurail  = new MachineInitHandlerPtr() { public void handler()
 		sys16_spritesystem = sys16_sprite_aurail;
 		sys16_spritelist_end=0x8000;
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = aurail_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_aurail  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aurail  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
-	public static DriverInitHandlerPtr init_auraila  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_auraila  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 		int diff = 0x40000;	/* place decrypted opcodes in a empty hole */
 	
@@ -1436,7 +1404,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_aurail = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aurail = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aurail )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -1470,8 +1438,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_aurail = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aurail )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1479,9 +1446,7 @@ public class system16
 		MDRV_CPU_MEMORY(aurail_readmem,aurail_writemem)
 	
 		MDRV_MACHINE_INIT(aurail)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -1639,37 +1604,37 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_bayroute  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_bayroute  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_update_proc = bayroute_update_proc;
 		sys16_spritesystem = sys16_sprite_aurail;
 		sys16_spritelist_end=0xc000;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_bayroute  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_bayroute  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_bayrouta  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_bayrouta  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_bayrtbl1  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_bayrtbl1  = new DriverInitHandlerPtr() { public void handler()
 		int i;
 		machine_init_sys16_onetime();
 		/* invert the graphics bits on the tiles */
 		for (i = 0; i < 0x30000; i++)
 			memory_region(REGION_GFX1)[i] ^= 0xff;
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_bayroute = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bayroute = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bayroute )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -1702,8 +1667,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bayroute = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bayroute )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -1711,9 +1675,7 @@ public class system16
 		MDRV_CPU_MEMORY(bayroute_readmem,bayroute_writemem)
 	
 		MDRV_MACHINE_INIT(bayroute)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1800,7 +1762,7 @@ public class system16
 	/***************************************************************************/
 	
 	static MEMORY_READ16_START( bodyslam_readmem )
-		{ 0x000000, 0x02ffff, MRA16_ROM },
+		{ 0x000000, 0x02ffff, MRA16_ROM } };,
 		{ 0x400000, 0x40ffff, SYS16_MRA16_TILERAM },
 		{ 0x410000, 0x410fff, SYS16_MRA16_TEXTRAM },
 		{ 0x440000, 0x440fff, SYS16_MRA16_SPRITERAM },
@@ -1836,7 +1798,7 @@ public class system16
 		set_bg_page1( sys16_textram[0x0e9c/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_bodyslam  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_bodyslam  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
@@ -1850,7 +1812,7 @@ public class system16
 		sys16_textlayer_hi_max=0xff;
 	
 		sys16_update_proc = bodyslam_update_proc;
-	} };
+	}
 	
 	// I have no idea if this is needed, but I cannot find any code for the countdown
 	// timer in the code and this seems to work ok.
@@ -1893,20 +1855,20 @@ public class system16
 			}
 			else
 				tick--;
-		}
+		} };
 		sys16_workingram[0x200/2] = (flag<<8)+tick;
 		sys16_workingram[0x202/2] = (sec<<8)+min;
 	}
 	
-	public static DriverInitHandlerPtr init_bodyslam  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_bodyslam  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		sys16_bg1_trans=1;
 		sys16_custom_irq=bodyslam_irq_timer;
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_bodyslam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bodyslam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bodyslam )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -1942,8 +1904,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_bodyslam = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bodyslam )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -1951,9 +1912,7 @@ public class system16
 		MDRV_CPU_MEMORY(bodyslam_readmem,bodyslam_writemem)
 	
 		MDRV_MACHINE_INIT(bodyslam)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -1990,7 +1949,7 @@ public class system16
 	static READ16_HANDLER( dduxbl_skip_r ){
 		if (activecpu_get_pc()==0x502) {cpu_spinuntil_int(); return 0xffff;}
 		return sys16_workingram[0x36e0/2];
-	}
+	} };
 	
 	static MEMORY_READ16_START( dduxbl_readmem )
 		{ 0x000000, 0x0bffff, MRA16_ROM },
@@ -2059,13 +2018,13 @@ public class system16
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_dduxbl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_dduxbl  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = { //*
 			0,0,0,0,
 			0,0,0,4,
 			0,0,0,3,
 			0,2,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 		sys16_patch_code( 0x1eb2e, 0x01 );
@@ -2083,10 +2042,9 @@ public class system16
 	
 		sys16_update_proc = dduxbl_update_proc;
 		sys16_sprxoffset = -0x48;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_dduxbl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dduxbl  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -2097,7 +2055,7 @@ public class system16
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_dduxbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dduxbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dduxbl )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -2130,8 +2088,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_dduxbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dduxbl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2139,9 +2096,7 @@ public class system16
 		MDRV_CPU_MEMORY(dduxbl_readmem,dduxbl_writemem)
 	
 		MDRV_MACHINE_INIT(dduxbl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -2219,7 +2174,7 @@ public class system16
 	static int eswat_tilebank0;
 	
 	static WRITE16_HANDLER( eswat_tilebank0_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			eswat_tilebank0 = data&0xff;
 		}
 	}
@@ -2252,30 +2207,30 @@ public class system16
 		sys16_tile_bank0 = eswat_tilebank0;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_eswat  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_eswat  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[] = {
 			0,1,	4,5,
 			8,9,	12,13,
 			2,3,	6,7,
 			10,11,	14,15
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_sprxoffset = -0x23c;
 	
 		sys16_patch_code( 0x3897, 0x11 );
 	
 		sys16_update_proc = eswat_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_eswat  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_eswat  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		sys16_rowscroll_scroll=0x8000;
 		sys18_splittab_fg_x=&sys16_textram[0x0f80];
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_eswat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eswat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eswat )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -2308,8 +2263,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_eswat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( eswat )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -2317,9 +2271,7 @@ public class system16
 		MDRV_CPU_MEMORY(eswat_readmem,eswat_writemem)
 	
 		MDRV_MACHINE_INIT(eswat)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16A
@@ -2381,7 +2333,7 @@ public class system16
 	static READ16_HANDLER( fantzone_skip_r ){
 		if (activecpu_get_pc()==0x91b2) {cpu_spinuntil_int(); return 0xffff;}
 		return sys16_workingram[0x022a/2];
-	}
+	} };
 	
 	static MEMORY_READ16_START( fantzono_readmem )
 		{ 0x000000, 0x02ffff, MRA16_ROM },
@@ -2449,7 +2401,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_fantzono  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_fantzono  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_fantzone;
 		sys16_sprxoffset = -0xbe;
@@ -2481,9 +2433,9 @@ public class system16
 	*/
 	
 		sys16_update_proc = fantzone_update_proc;
-	} };
+	}
 	
-	public static MachineInitHandlerPtr machine_init_fantzone  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_fantzone  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_fantzone;
 		sys16_sprxoffset = -0xbe;
@@ -2497,15 +2449,14 @@ public class system16
 		sys16_patch_code(0x35e9,0x00);
 	
 		sys16_update_proc = fantzone_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_fantzone  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fantzone  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_fantzone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fantzone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fantzone )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -2538,8 +2489,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_fantzono = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fantzono )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2547,13 +2497,10 @@ public class system16
 		MDRV_CPU_MEMORY(fantzono_readmem,fantzono_writemem)
 	
 		MDRV_MACHINE_INIT(fantzono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fantzone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fantzone )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2561,9 +2508,7 @@ public class system16
 		MDRV_CPU_MEMORY(fantzone_readmem,fantzone_writemem)
 	
 		MDRV_MACHINE_INIT(fantzone)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -2679,7 +2624,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_fpoint  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_fpoint  = new MachineInitHandlerPtr() { public void handler()
 		sys16_patch_code( 0x454, 0x33 );
 		sys16_patch_code( 0x455, 0xf8 );
 		sys16_patch_code( 0x456, 0xe0 );
@@ -2705,13 +2650,13 @@ public class system16
 		sys16_patch_code( 0x2c9, 0x75 );
 	
 		sys16_update_proc = fpoint_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_fpoint  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_fpoint  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_fpointbl  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_fpointbl  = new DriverInitHandlerPtr() { public void handler()
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -2719,10 +2664,10 @@ public class system16
 		/* invert the graphics bits on the tiles */
 		for (i = 0; i < 0x30000; i++)
 			memory_region(REGION_GFX1)[i] ^= 0xff;
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_fpoint = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fpoint = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fpoint )
 	PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON3 );
@@ -2773,7 +2718,7 @@ public class system16
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fpointbj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fpointbj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fpointbj )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON3 );
@@ -2826,8 +2771,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_fpoint = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fpoint )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -2835,9 +2779,7 @@ public class system16
 		MDRV_CPU_MEMORY(fpoint_readmem,fpoint_writemem)
 	
 		MDRV_MACHINE_INIT(fpoint)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -2939,7 +2881,7 @@ public class system16
 	static READ16_HANDLER( goldnaxe_skip_r ){
 		if (activecpu_get_pc()==0x3cb0) {cpu_spinuntil_int(); return 0xffff;}
 		return sys16_workingram[0x2c1c/2];
-	}
+	} };
 	
 	static READ16_HANDLER( ga_io_players_r ) {
 		return (readinputport(0) << 8) | readinputport(1);
@@ -2968,7 +2910,7 @@ public class system16
 	
 	static WRITE16_HANDLER( ga_sound_command_w ){
 		COMBINE_DATA( &sys16_workingram[(0xecfc-0xc000)/2] );
-		if (ACCESSING_MSB != 0){
+		if( ACCESSING_MSB ){
 			soundlatch_w( 0,data>>8 );
 			cpu_set_irq_line( 1, 0, HOLD_LINE );
 		}
@@ -3011,13 +2953,13 @@ public class system16
 		set_tile_bank( sys16_workingram[0x2c94/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_goldnaxe  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_goldnaxe  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,1,4,5,
 			8,9,0,0,
 			2,3,6,7,
 			10,11,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 	// protection patch; no longer needed
@@ -3026,13 +2968,13 @@ public class system16
 	
 		sys16_sprxoffset = -0xb8;
 		sys16_update_proc = goldnaxe_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_goldnaxe  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_goldnaxe  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_goldnabl  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_goldnabl  = new DriverInitHandlerPtr() { public void handler()
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -3040,11 +2982,11 @@ public class system16
 		/* invert the graphics bits on the tiles */
 		for (i = 0; i < 0x60000; i++)
 			memory_region(REGION_GFX1)[i] ^= 0xff;
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_goldnaxe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_goldnaxe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( goldnaxe )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -3077,8 +3019,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_goldnaxe = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( goldnaxe )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3086,9 +3027,7 @@ public class system16
 		MDRV_CPU_MEMORY(goldnaxe_readmem,goldnaxe_writemem)
 	
 		MDRV_MACHINE_INIT(goldnaxe)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -3169,7 +3108,7 @@ public class system16
 	static READ16_HANDLER( goldnaxa_skip_r ){
 		if (activecpu_get_pc()==0x3ca0) {cpu_spinuntil_int(); return 0xffff;}
 		return sys16_workingram[0x2c1c/2];
-	}
+	} };
 	
 	// This version has somekind of hardware comparitor for collision detection,
 	// and a hardware multiplier.
@@ -3256,25 +3195,24 @@ public class system16
 		set_tile_bank( sys16_workingram[0x2c94/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_goldnaxa  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_goldnaxa  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,1,4,5,
 			8,9,0,0,
 			2,3,6,7,
 			10,11,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		//?
 		sys16_patch_code( 0x3CA2, 0x60 );
 		sys16_patch_code( 0x3CA3, 0x1e );
 		sys16_sprxoffset = -0xb8;
 		sys16_update_proc = goldnaxa_update_proc;
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_goldnaxa = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( goldnaxa )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3282,9 +3220,7 @@ public class system16
 		MDRV_CPU_MEMORY(goldnaxa_readmem,goldnaxa_writemem)
 	
 		MDRV_MACHINE_INIT(goldnaxa)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -3357,16 +3293,16 @@ public class system16
 			// monitor
 			data=input_port_0_r( offset );
 			if(input_port_1_r( offset ) & 4){
-				if (dodge_toggle != 0) data=0x38; else data=0x60;
+				if(dodge_toggle) data=0x38; else data=0x60;
 			}
 			if(input_port_1_r( offset ) & 8){
-				if (dodge_toggle != 0) data=0xc8; else data=0xa0;
+				if(dodge_toggle) data=0xc8; else data=0xa0;
 			}
 			if(input_port_1_r( offset ) & 0x10){
-				if (dodge_toggle != 0) data=0xff; else data=0xe0;
+				if(dodge_toggle) data=0xff; else data=0xe0;
 			}
 			if(input_port_1_r( offset ) & 0x20){
-				if (dodge_toggle != 0) data=0x0; else data=0x20;
+				if(dodge_toggle) data=0x0; else data=0x20;
 			}
 			if( hwc_handles_shifts[offset]==0) dodge_toggle^=1;
 		}
@@ -3385,7 +3321,7 @@ public class system16
 	}
 	
 	static WRITE16_HANDLER( hwc_ctrl1_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			sys16_refreshenable = data & 0x20;
 			coin_counter_w(0,data & 0x01);
 			set_led_status(0,data & 0x04);
@@ -3394,9 +3330,9 @@ public class system16
 	}
 	
 	static WRITE16_HANDLER( hwc_ctrl2_w ){
-		if (ACCESSING_LSB != 0){
+		if( ACCESSING_LSB ){
 			/* bit 4 is GONG */
-	//		if ((data & 0x10) != 0) usrintf_showmessage("GONG");
+	//		if (data & 0x10) usrintf_showmessage("GONG");
 			/* are the following really lamps? */
 	//		set_led_status(1,data & 0x20);
 	//		set_led_status(2,data & 0x40);
@@ -3446,19 +3382,18 @@ public class system16
 		sys16_tile_bank1 = sys16_extraram[1]&0xf;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_hwchamp  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_hwchamp  = new MachineInitHandlerPtr() { public void handler()
 		sys16_spritelist_end=0xc000;
 		sys16_update_proc = hwchamp_update_proc;
 		sys16_wwfix = 1; //*
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_hwchamp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hwchamp  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_hwchamp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hwchamp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hwchamp )
 	
 	PORT_START(); 	/* Monitor */
 		PORT_ANALOG( 0xff, 0x80, IPT_PADDLE  , 70, 4, 0x0, 0xff );
@@ -3504,8 +3439,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_hwchamp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hwchamp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -3513,9 +3447,7 @@ public class system16
 		MDRV_CPU_MEMORY(hwchamp_readmem,hwchamp_writemem)
 	
 		MDRV_MACHINE_INIT(hwchamp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// pre16
@@ -3604,14 +3536,14 @@ public class system16
 	
 		// Hitting has 8 values, but for easy of playing, I've only added 3
 	
-		if ((data1 & 1) != 0) ret=0x00;
-		else if ((data1 & 2) != 0) ret=0x03;
-		else if ((data1 & 4) != 0) ret=0x07;
+		if(data1 &1) ret=0x00;
+		else if(data1 &2) ret=0x03;
+		else if(data1 &4) ret=0x07;
 		else ret=0x0f;
 	
-		if ((data2 & 1) != 0) ret|=0x00;
-		else if ((data2 & 2) != 0) ret|=0x30;
-		else if ((data2 & 4) != 0) ret|=0x70;
+		if(data2 &1) ret|=0x00;
+		else if(data2 &2) ret|=0x30;
+		else if(data2 &4) ret|=0x70;
 		else ret|=0xf0;
 	
 		return ret;
@@ -3659,7 +3591,7 @@ public class system16
 		sys16_bg_scrolly = sys16_textram[0x793] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_mjleague  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_mjleague  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbd;
@@ -3669,16 +3601,15 @@ public class system16
 		sys16_patch_code( 0xBD42, 0x66 );
 	
 		sys16_update_proc = mjleague_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_mjleague  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mjleague  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_mjleague = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjleague = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjleague )
 	
 	PORT_START();  /* player 1 button fake */
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -3745,8 +3676,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_mjleague = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjleague )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -3754,9 +3684,7 @@ public class system16
 		MDRV_CPU_MEMORY(mjleague_readmem,mjleague_writemem)
 	
 		MDRV_MACHINE_INIT(mjleague)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -3956,7 +3884,7 @@ public class system16
 		set_bg_page( sys16_textram[0x0ff4/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_passsht  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_passsht  = new MachineInitHandlerPtr() { public void handler()
 		sys16_sprxoffset = -0x48;
 		sys16_spritesystem = sys16_sprite_passshot;
 	
@@ -3964,9 +3892,9 @@ public class system16
 		sys16_patch_code( 0x13a8,0xc0);
 	
 		sys16_update_proc = passsht_update_proc;
-	} };
+	}
 	
-	public static MachineInitHandlerPtr machine_init_passht4b  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_passht4b  = new MachineInitHandlerPtr() { public void handler()
 		sys16_sprxoffset = -0xb8;
 		sys16_spritesystem = sys16_sprite_passshot;
 	
@@ -3974,14 +3902,13 @@ public class system16
 		sys16_patch_code( 0x138a,0xc0);
 	
 		sys16_update_proc = passht4b_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_passsht  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_passsht  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
-	public static DriverInitHandlerPtr init_passht4b  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_passht4b  = new DriverInitHandlerPtr() { public void handler()
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -3989,11 +3916,11 @@ public class system16
 		/* invert the graphics bits on the tiles */
 		for (i = 0; i < 0x30000; i++)
 			memory_region(REGION_GFX1)[i] ^= 0xff;
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_passsht = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_passsht = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( passsht )
 	PORT_START();  /* joy 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -4042,7 +3969,7 @@ public class system16
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_passht4b = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_passht4b = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( passht4b )
 	PORT_START();  /* joy 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
@@ -4123,8 +4050,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_passsht = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( passsht )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4132,13 +4058,10 @@ public class system16
 		MDRV_CPU_MEMORY(passsht_readmem,passsht_writemem)
 	
 		MDRV_MACHINE_INIT(passsht)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_passht4b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( passht4b )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4146,9 +4069,7 @@ public class system16
 		MDRV_CPU_MEMORY(passht4b_readmem,passht4b_writemem)
 	
 		MDRV_MACHINE_INIT(passht4b)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// pre16
@@ -4233,7 +4154,7 @@ public class system16
 	static READ16_HANDLER( quartet_skip_r ){
 		if (activecpu_get_pc()==0x89b2) {cpu_spinuntil_int(); return 0xffff;}
 		return sys16_workingram[0x0800/2];
-	}
+	} };
 	#endif
 	
 	static MEMORY_READ16_START( quartet_readmem )
@@ -4281,22 +4202,21 @@ public class system16
 		set_bg_page1( sys16_workingram[0x0d1e/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_quartet  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_quartet  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
 		sys16_fgxoffset = sys16_bgxoffset = 7;
 	
 		sys16_update_proc = quartet_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_quartet  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_quartet  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_quartet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quartet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quartet )
 		// Player 1
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY  );
@@ -4369,8 +4289,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_quartet = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quartet )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -4378,9 +4297,7 @@ public class system16
 		MDRV_CPU_MEMORY(quartet_readmem,quartet_writemem)
 	
 		MDRV_MACHINE_INIT(quartet)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// pre16
@@ -4512,21 +4429,21 @@ public class system16
 		set_bg_page1( sys16_workingram[0x0d1e/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_quartet2  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_quartet2  = new MachineInitHandlerPtr() { public void handler()
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
 		sys16_sprxoffset = -0xbc;
 		sys16_fgxoffset = sys16_bgxoffset = 7;
 	
 		sys16_update_proc = quartet2_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_quartet2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_quartet2  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_quartet2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quartet2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quartet2 )
 		SYS16_JOY1_SWAPPEDBUTTONS
 		SYS16_JOY2_SWAPPEDBUTTONS
 		SYS16_SERVICE
@@ -4560,8 +4477,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_quartet2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quartet2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -4569,9 +4485,7 @@ public class system16
 		MDRV_CPU_MEMORY(quartet2_readmem,quartet2_writemem)
 	
 		MDRV_MACHINE_INIT(quartet2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -4613,7 +4527,7 @@ public class system16
 	static READ16_HANDLER( riotcity_skip_r ){
 		if (activecpu_get_pc()==0x3ce) {cpu_spinuntil_int(); return 0;}
 		return sys16_workingram[0x2cde/2];
-	}
+	} };
 	
 	static MEMORY_READ16_START( riotcity_readmem )
 		{ 0x000000, 0x0bffff, MRA16_ROM },
@@ -4661,29 +4575,28 @@ public class system16
 		sys16_tile_bank0 = sys16_extraram3[0x0000/2] & 0xf;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_riotcity  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_riotcity  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0x0,0x1,0x4,0x5,
 			0x8,0x9,0x0,0x0,
 			0x2,0x3,0x6,0x7,
 			0xa,0xb,0x0,0x0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_spritesystem = sys16_sprite_aurail;
 		sys16_spritelist_end=0x8000;
 		sys16_bg_priority_mode=1;
 	
 		sys16_update_proc = riotcity_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_riotcity  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_riotcity  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_riotcity = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_riotcity = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( riotcity )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -4716,8 +4629,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_riotcity = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( riotcity )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -4725,9 +4637,7 @@ public class system16
 		MDRV_CPU_MEMORY(riotcity_readmem,riotcity_writemem)
 	
 		MDRV_MACHINE_INIT(riotcity)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -4843,30 +4753,30 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_sdi  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_sdi  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 		sys16_patch_code( 0x102f2, 0x00 );
 		sys16_patch_code( 0x102f3, 0x02 );
 	
 		sys16_update_proc = sdi_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sdi  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_sdi  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		sys18_splittab_bg_x=&sys16_textram[0x0fc0];
 		sys16_rowscroll_scroll=0xff00;
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_sdi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sdi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sdi )
 	PORT_START(); 	/* DSW1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_DOWN  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP    | IPF_8WAY );
@@ -4930,8 +4840,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_sdi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sdi )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -4939,9 +4848,7 @@ public class system16
 		MDRV_CPU_MEMORY(sdi_readmem,sdi_writemem)
 	
 		MDRV_MACHINE_INIT(sdi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -5011,7 +4918,7 @@ public class system16
 	static READ16_HANDLER( shinobi_skip_r ){
 		if (activecpu_get_pc()==0x32e0) {cpu_spinuntil_int(); return 1<<8;}
 		return sys16_workingram[0x301c/2];
-	}
+	} };
 	
 	static MEMORY_READ16_START( shinobi_readmem )
 		{ 0x000000, 0x03ffff, MRA16_ROM },
@@ -5052,26 +4959,25 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_shinobi  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shinobi  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_dactype = 1;
 		sys16_update_proc = shinobi_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_shinobi  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shinobi  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_shinobi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shinobi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shinobi )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -5105,8 +5011,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_shinobi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shinobi )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5114,9 +5019,7 @@ public class system16
 		MDRV_CPU_MEMORY(shinobi_readmem,shinobi_writemem)
 	
 		MDRV_MACHINE_INIT(shinobi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16A
@@ -5232,11 +5135,11 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x7fd] & 0x01ff;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_shinobl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_shinobl  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[] = {
 			0,2,4,6,
 			1,3,5,7
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_textmode=1;
 		sys16_spritesystem = sys16_sprite_quartet2;
@@ -5246,14 +5149,13 @@ public class system16
 	
 		sys16_dactype = 1;
 		sys16_update_proc = shinobl_update_proc;
-	} };
+	}
 	
 	
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_shinobl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shinobl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7751)
@@ -5261,9 +5163,7 @@ public class system16
 		MDRV_CPU_MEMORY(shinobl_readmem,shinobl_writemem)
 	
 		MDRV_MACHINE_INIT(shinobl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -5369,26 +5269,24 @@ public class system16
 		set_bg_page( sys16_extraram2[0x28/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tetris  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_tetris  = new MachineInitHandlerPtr() { public void handler()
 		sys16_patch_code( 0xba6, 0x4e );
 		sys16_patch_code( 0xba7, 0x71 );
 	
 		sys16_sprxoffset = -0x40;
 		sys16_update_proc = tetris_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tetris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tetris  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
-	public static DriverInitHandlerPtr init_tetrisbl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tetrisbl  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_tetris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tetris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tetris )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -5421,8 +5319,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_tetris = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tetris )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -5430,9 +5327,7 @@ public class system16
 		MDRV_CPU_MEMORY(tetris_readmem,tetris_writemem)
 	
 		MDRV_MACHINE_INIT(tetris)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -5510,26 +5405,26 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_timscanr  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_timscanr  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 		sys16_textmode=1;
 		sys16_update_proc = timscanr_update_proc;
 		sys16_wwfix = -1; //*
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_timscanr  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_timscanr  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_timscanr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timscanr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timscanr )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -5596,8 +5491,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_timscanr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( timscanr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5605,9 +5499,7 @@ public class system16
 		MDRV_CPU_MEMORY(timscanr_readmem,timscanr_writemem)
 	
 		MDRV_MACHINE_INIT(timscanr)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -5641,7 +5533,7 @@ public class system16
 	/***************************************************************************/
 	
 	static MEMORY_READ16_START( toryumon_readmem )
-		{ 0x000000, 0x03ffff, MRA16_ROM },
+		{ 0x000000, 0x03ffff, MRA16_ROM } };,
 		{ 0x3e2000, 0x3e2003, SYS16_MRA16_EXTRAM },
 		{ 0x400000, 0x40ffff, SYS16_MRA16_TILERAM },
 		{ 0x410000, 0x410fff, SYS16_MRA16_TEXTRAM },
@@ -5682,17 +5574,16 @@ public class system16
 		sys16_tile_bank1 = sys16_extraram[1]&0xf;
 	}
 	
-	public static MachineInitHandlerPtr machine_init_toryumon  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_toryumon  = new MachineInitHandlerPtr() { public void handler()
 		sys16_update_proc = toryumon_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_toryumon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_toryumon  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_toryumon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toryumon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toryumon )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -5727,8 +5618,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_toryumon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toryumon )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5736,9 +5626,7 @@ public class system16
 		MDRV_CPU_MEMORY(toryumon_readmem,toryumon_writemem)
 	
 		MDRV_MACHINE_INIT(toryumon)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -5842,32 +5730,32 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tturf  = new MachineInitHandlerPtr() { public void handler(){
-		static int bank[16] = { 0,0,1,0,2,0,3,0 };
+	public static MachineInitHandlerPtr machine_init_tturf  = new MachineInitHandlerPtr() { public void handler()
+		static int bank[16] = { 0,0,1,0,2,0,3,0 } };;
 		sys16_obj_bank = bank;
 		sys16_spritelist_end=0xc000;
 		sys16_update_proc = tturf_update_proc;
-	} };
+	}
 	
-	public static MachineInitHandlerPtr machine_init_tturfu  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_tturfu  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,0,
 			0,0,0,1,
 			0,2,3,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_spritelist_end=0xc000;
 	
 		sys16_update_proc = tturf_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tturf  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_tturf  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_tturf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tturf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tturf )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -5899,8 +5787,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_tturf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tturf )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -5908,20 +5795,15 @@ public class system16
 		MDRV_CPU_MEMORY(tturf_readmem,tturf_writemem)
 	
 		MDRV_MACHINE_INIT(tturf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tturfu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tturfu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tturf)
 		MDRV_MACHINE_INIT(tturfu)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -5956,7 +5838,7 @@ public class system16
 	/***************************************************************************/
 	
 	static MEMORY_READ16_START( tturfbl_readmem )
-		{ 0x000000, 0x03ffff, MRA16_ROM },
+		{ 0x000000, 0x03ffff, MRA16_ROM } };,
 		{ 0x2001e6, 0x2001e7, tt_io_service_r },
 		{ 0x2001e8, 0x2001e9, tt_io_player1_r },
 		{ 0x2001ea, 0x2001eb, tt_io_player2_r },
@@ -6015,22 +5897,21 @@ public class system16
 		}
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tturfbl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_tturfbl  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			0,0,0,0,
 			0,0,0,3,
 			0,0,0,2,
 			0,1,0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_sprxoffset = -0x48;
 		sys16_spritelist_end=0xc000;
 	
 		sys16_update_proc = tturfbl_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_tturfbl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tturfbl  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -6041,8 +5922,7 @@ public class system16
 	} };
 	/***************************************************************************/
 	// sound ??
-	public static MachineHandlerPtr machine_driver_tturfbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tturfbl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -6050,9 +5930,7 @@ public class system16
 		MDRV_CPU_MEMORY(tturfbl_readmem,tturfbl_writemem)
 	
 		MDRV_MACHINE_INIT(tturfbl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -6122,7 +6000,7 @@ public class system16
 	MEMORY_END
 	
 	static WRITE16_HANDLER( wb3_sound_command_w ){
-		if (ACCESSING_MSB != 0) sound_command_w(offset,data>>8,0xff00); //*
+		if( ACCESSING_MSB ) sound_command_w(offset,data>>8,0xff00); //*
 	}
 	
 	static MEMORY_WRITE16_START( wb3_writemem )
@@ -6148,7 +6026,7 @@ public class system16
 		sys16_bg_scrollx = sys16_textram[0x74d];
 	}
 	
-	public static MachineInitHandlerPtr machine_init_wb3  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_wb3  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			2,0,
 			1,0,
@@ -6158,18 +6036,18 @@ public class system16
 			0,2,
 			0,1,
 			0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 		sys16_update_proc = wb3_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_wb3  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_wb3  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_wb3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wb3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wb3 )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -6203,8 +6081,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wb3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wb3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6212,9 +6089,7 @@ public class system16
 		MDRV_CPU_MEMORY(wb3_readmem,wb3_writemem)
 	
 		MDRV_MACHINE_INIT(wb3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -6247,7 +6122,7 @@ public class system16
 	/***************************************************************************/
 	
 	static MEMORY_READ16_START( wb3bl_readmem )
-		{ 0x000000, 0x03ffff, MRA16_ROM },
+		{ 0x000000, 0x03ffff, MRA16_ROM } };,
 		{ 0x400000, 0x40ffff, SYS16_MRA16_TILERAM },
 		{ 0x410000, 0x410fff, SYS16_MRA16_TEXTRAM },
 		{ 0x440000, 0x440fff, SYS16_MRA16_SPRITERAM },
@@ -6287,7 +6162,7 @@ public class system16
 		set_bg_page( sys16_textram[0x0ff4/2] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_wb3bl  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_wb3bl  = new MachineInitHandlerPtr() { public void handler()
 		static int bank[16] = {
 			2,0,
 			1,0,
@@ -6297,7 +6172,7 @@ public class system16
 			0,2,
 			0,1,
 			0,0
-		};
+		} };;
 		sys16_obj_bank = bank;
 	
 		sys16_patch_code( 0x17058, 0x4e );
@@ -6323,10 +6198,9 @@ public class system16
 		sys16_patch_code( 0x23dff, 0x1c );
 	
 		sys16_update_proc = wb3bl_update_proc;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_wb3bl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wb3bl  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		machine_init_sys16_onetime();
@@ -6338,8 +6212,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wb3bl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wb3bl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6347,9 +6220,7 @@ public class system16
 		MDRV_CPU_MEMORY(wb3bl_readmem,wb3bl_writemem)
 	
 		MDRV_MACHINE_INIT(wb3bl)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	// sys16B
@@ -6465,24 +6336,24 @@ public class system16
 		set_tile_bank( sys16_extraram[1] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_wrestwar  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_wrestwar  = new MachineInitHandlerPtr() { public void handler()
 		sys16_bg_priority_mode=2;
 		sys16_bg_priority_value=0x0a00;
 		sys16_update_proc = wrestwar_update_proc;
 		sys16_wwfix = 1; //*
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_wrestwar  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_wrestwar  = new DriverInitHandlerPtr() { public void handler()
 		machine_init_sys16_onetime();
 		sys16_bg1_trans=1;
 		sys16_MaxShadowColors=16;
 		sys18_splittab_bg_y=&sys16_textram[0x0f40];
 		sys18_splittab_fg_y=&sys16_textram[0x0f00];
 		sys16_rowscroll_scroll=0x8000;
-	} };
+	}
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_wrestwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wrestwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wrestwar )
 		SYS16_JOY1
 		SYS16_JOY2
 		SYS16_SERVICE
@@ -6516,8 +6387,7 @@ public class system16
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wrestwar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wrestwar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16_7759)
@@ -6525,16 +6395,14 @@ public class system16
 		MDRV_CPU_MEMORY(wrestwar_readmem,wrestwar_writemem)
 	
 		MDRV_MACHINE_INIT(wrestwar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*****************************************************************************/
 	/* Dummy drivers for games that don't have a working clone and are protected */
 	/*****************************************************************************/
 	
 	static MEMORY_READ16_START( sys16_dummy_readmem )
-		{ 0x000000, 0x0fffff, MRA16_ROM },
+		{ 0x000000, 0x0fffff, MRA16_ROM } };,
 		{ 0xff0000, 0xffffff, SYS16_MRA16_WORKINGRAM },
 	MEMORY_END
 	
@@ -6543,19 +6411,17 @@ public class system16
 		{ 0xff0000, 0xffffff, SYS16_MWA16_WORKINGRAM },
 	MEMORY_END
 	
-	public static MachineInitHandlerPtr machine_init_sys16_dummy  = new MachineInitHandlerPtr() { public void handler(){
-	} };
+	public static MachineInitHandlerPtr machine_init_sys16_dummy  = new MachineInitHandlerPtr() { public void handler()
+	}
 	
-	public static DriverInitHandlerPtr init_s16dummy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_s16dummy  = new DriverInitHandlerPtr() { public void handler(){
 		machine_init_sys16_onetime();
 	} };
 	
-	static InputPortPtr input_ports_s16dummy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_s16dummy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( s16dummy )
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_s16dummy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( s16dummy )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system16)
@@ -6563,9 +6429,7 @@ public class system16
 		MDRV_CPU_MEMORY(sys16_dummy_readmem,sys16_dummy_writemem)
 	
 		MDRV_MACHINE_INIT(sys16_dummy)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*****************************************************************************/
 	// Cotton
@@ -6849,86 +6713,86 @@ public class system16
 	/* pre-System16 */
 	/*          rom       parent    machine   inp       init */
 	/* Alien Syndrome */
-	public static GameDriver driver_mjleague	   = new GameDriver("1985"	,"mjleague"	,"system16.java"	,rom_mjleague,null	,machine_driver_mjleague	,input_ports_mjleague	,init_mjleague	,ROT270	,	"Sega",    "Major League" )
-	public static GameDriver driver_bodyslam	   = new GameDriver("1986"	,"bodyslam"	,"system16.java"	,rom_bodyslam,null	,machine_driver_bodyslam	,input_ports_bodyslam	,init_bodyslam	,ROT0	,	"Sega",    "Body Slam" )
-	public static GameDriver driver_dumpmtmt	   = new GameDriver("1986"	,"dumpmtmt"	,"system16.java"	,rom_dumpmtmt,driver_bodyslam	,machine_driver_bodyslam	,input_ports_bodyslam	,init_bodyslam	,ROT0	,	"Sega",    "Dump Matsumoto (Japan)" )
-	public static GameDriver driver_quartet	   = new GameDriver("1986"	,"quartet"	,"system16.java"	,rom_quartet,null	,machine_driver_quartet	,input_ports_quartet	,init_quartet	,ROT0	,	"Sega",    "Quartet" )
-	public static GameDriver driver_quartetj	   = new GameDriver("1986"	,"quartetj"	,"system16.java"	,rom_quartetj,driver_quartet	,machine_driver_quartet	,input_ports_quartet	,init_quartet	,ROT0	,	"Sega",    "Quartet (Japan)" )
-	public static GameDriver driver_quartet2	   = new GameDriver("1986"	,"quartet2"	,"system16.java"	,rom_quartet2,driver_quartet	,machine_driver_quartet2	,input_ports_quartet2	,init_quartet2	,ROT0	,	"Sega",    "Quartet 2" )
-	public static GameDriver driver_quartt2j	   = new GameDriver("1986"	,"quartt2j"	,"system16.java"	,rom_quartt2j,driver_quartet	,machine_driver_quartet2	,input_ports_quartet2	,init_quartet2	,ROT0	,	"Sega",    "Quartet 2 (Japan)" )
+	GAME( 1985, mjleague, 0,        mjleague, mjleague, mjleague, ROT270, "Sega",    "Major League" )
+	GAME( 1986, bodyslam, 0,        bodyslam, bodyslam, bodyslam, ROT0,   "Sega",    "Body Slam" )
+	GAME( 1986, dumpmtmt, bodyslam, bodyslam, bodyslam, bodyslam, ROT0,   "Sega",    "Dump Matsumoto (Japan)" )
+	GAME( 1986, quartet,  0,        quartet,  quartet,  quartet,  ROT0,   "Sega",    "Quartet" )
+	GAME( 1986, quartetj, quartet,  quartet,  quartet,  quartet,  ROT0,   "Sega",    "Quartet (Japan)" )
+	GAME( 1986, quartet2, quartet,  quartet2, quartet2, quartet2, ROT0,   "Sega",    "Quartet 2" )
+	GAME( 1986, quartt2j, quartet,  quartet2, quartet2, quartet2, ROT0,   "Sega",    "Quartet 2 (Japan)" )
 	
 	/* System16A */
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_afighter	   = new GameDriver("19??"	,"afighter"	,"system16.java"	,rom_afighter,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Action Fighter", GAME_NOT_WORKING )
-	public static GameDriver driver_alexkidd	   = new GameDriver("1986"	,"alexkidd"	,"system16.java"	,rom_alexkidd,null	,machine_driver_alexkidd	,input_ports_alexkidd	,init_alexkidd	,ROT0	,	"Sega",    "Alex Kidd: The Lost Stars (set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_alexkida	   = new GameDriver("1986"	,"alexkida"	,"system16.java"	,rom_alexkida,driver_alexkidd	,machine_driver_alexkidd	,input_ports_alexkidd	,init_alexkidd	,ROT0	,	"Sega",    "Alex Kidd: The Lost Stars (set 2)" )
-	public static GameDriver driver_fantzone	   = new GameDriver("1986"	,"fantzone"	,"system16.java"	,rom_fantzone,null	,machine_driver_fantzone	,input_ports_fantzone	,init_fantzone	,ROT0	,	"Sega",    "Fantasy Zone (Japan New Ver.)" )
-	public static GameDriver driver_fantzono	   = new GameDriver("1986"	,"fantzono"	,"system16.java"	,rom_fantzono,driver_fantzone	,machine_driver_fantzono	,input_ports_fantzone	,init_fantzone	,ROT0	,	"Sega",    "Fantasy Zone (Old Ver.)" )
-	public static GameDriver driver_ryukyu	   = new GameDriver("19??"	,"ryukyu"	,"system16.java"	,rom_ryukyu,driver_	,machine_driver_0	,input_ports_s16dummy	,init_s16dummy	,s16dummy	,	ROT0,   "Sega", "Ryukyu", GAME_NOT_WORKING )
-	public static GameDriver driver_shinobi	   = new GameDriver("1987"	,"shinobi"	,"system16.java"	,rom_shinobi,null	,machine_driver_shinobi	,input_ports_shinobi	,init_shinobi	,ROT0	,	"Sega",    "Shinobi (set 1)" )
-	public static GameDriver driver_shinobib	   = new GameDriver("1987"	,"shinobib"	,"system16.java"	,rom_shinobib,driver_shinobi	,machine_driver_shinobi	,input_ports_shinobi	,init_shinobi	,ROT0	,	"Sega",    "Shinobi (set 3)", GAME_NOT_WORKING )
-	public static GameDriver driver_shinobia	   = new GameDriver("1987"	,"shinobia"	,"system16.java"	,rom_shinobia,driver_shinobi	,machine_driver_shinobl	,input_ports_shinobi	,init_shinobi	,ROT0	,	"Sega",    "Shinobi (set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_shinobl	   = new GameDriver("1987"	,"shinobl"	,"system16.java"	,rom_shinobl,driver_shinobi	,machine_driver_shinobl	,input_ports_shinobi	,init_shinobi	,ROT0	,	"bootleg", "Shinobi (bootleg)" )
-	public static GameDriver driver_sdi	   = new GameDriver("1987"	,"sdi"	,"system16.java"	,rom_sdi,null	,machine_driver_sdi	,input_ports_sdi	,init_sdi	,ROT0	,	"Sega",    "SDI - Strategic Defense Initiative" )
-	public static GameDriver driver_sdioj	   = new GameDriver("1987"	,"sdioj"	,"system16.java"	,rom_sdioj,driver_sdi	,machine_driver_sdi	,input_ports_sdi	,init_sdi	,ROT0	,	"Sega",    "SDI - Strategic Defense Initiative (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_tetris	   = new GameDriver("1988"	,"tetris"	,"system16.java"	,rom_tetris,null	,machine_driver_tetris	,input_ports_tetris	,init_tetris	,ROT0	,	"Sega",    "Tetris (Sega Set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_tetrisbl	   = new GameDriver("1988"	,"tetrisbl"	,"system16.java"	,rom_tetrisbl,driver_tetris	,machine_driver_tetris	,input_ports_tetris	,init_tetrisbl	,ROT0	,	"bootleg", "Tetris (Sega bootleg)" )
-	public static GameDriver driver_tetrisa	   = new GameDriver("1988"	,"tetrisa"	,"system16.java"	,rom_tetrisa,driver_tetris	,machine_driver_tetris	,input_ports_tetris	,init_tetrisbl	,ROT0	,	"Sega",    "Tetris (Sega Set 2)", GAME_NOT_WORKING )
+	GAMEX(19??, afighter, 0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Action Fighter", GAME_NOT_WORKING )
+	GAMEX(1986, alexkidd, 0,        alexkidd, alexkidd, alexkidd, ROT0,   "Sega",    "Alex Kidd: The Lost Stars (set 1)", GAME_NOT_WORKING )
+	GAME( 1986, alexkida, alexkidd, alexkidd, alexkidd, alexkidd, ROT0,   "Sega",    "Alex Kidd: The Lost Stars (set 2)" )
+	GAME( 1986, fantzone, 0,        fantzone, fantzone, fantzone, ROT0,   "Sega",    "Fantasy Zone (Japan New Ver.)" )
+	GAME( 1986, fantzono, fantzone, fantzono, fantzone, fantzone, ROT0,   "Sega",    "Fantasy Zone (Old Ver.)" )
+	GAMEX(19??, ryukyu  , 0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Ryukyu", GAME_NOT_WORKING )
+	GAME( 1987, shinobi,  0,        shinobi,  shinobi,  shinobi,  ROT0,   "Sega",    "Shinobi (set 1)" )
+	GAMEX(1987, shinobib, shinobi,  shinobi,  shinobi,  shinobi,  ROT0,   "Sega",    "Shinobi (set 3)", GAME_NOT_WORKING )
+	GAMEX(1987, shinobia, shinobi,  shinobl,  shinobi,  shinobi,  ROT0,   "Sega",    "Shinobi (set 2)", GAME_NOT_WORKING )
+	GAME( 1987, shinobl,  shinobi,  shinobl,  shinobi,  shinobi,  ROT0,   "bootleg", "Shinobi (bootleg)" )
+	GAME( 1987, sdi,      0,        sdi,      sdi,      sdi,      ROT0,   "Sega",    "SDI - Strategic Defense Initiative" )
+	GAMEX(1987, sdioj,    sdi,      sdi,      sdi,      sdi,      ROT0,   "Sega",    "SDI - Strategic Defense Initiative (Japan)", GAME_NOT_WORKING )
+	GAMEX(1988, tetris,   0,        tetris,   tetris,   tetris,   ROT0,   "Sega",    "Tetris (Sega Set 1)", GAME_NOT_WORKING )
+	GAME( 1988, tetrisbl, tetris,   tetris,   tetris,   tetrisbl, ROT0,   "bootleg", "Tetris (Sega bootleg)" )
+	GAMEX(1988, tetrisa,  tetris,   tetris,   tetris,   tetrisbl, ROT0,   "Sega",    "Tetris (Sega Set 2)", GAME_NOT_WORKING )
 	
 	/* System16B */
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_atomicp	   = new GameDriver("1990"	,"atomicp"	,"system16.java"	,rom_atomicp,null	,machine_driver_atomicp	,input_ports_atomicp	,init_atomicp	,ROT0	,	"Philko",  "Atomic Point", GAME_NO_SOUND )
-	public static GameDriver driver_aliensyn	   = new GameDriver("1987"	,"aliensyn"	,"system16.java"	,rom_aliensyn,null	,machine_driver_aliensyn	,input_ports_aliensyn	,init_aliensyn	,ROT0	,	"Sega",    "Alien Syndrome (set 1)" )
-	public static GameDriver driver_aliensya	   = new GameDriver("1987"	,"aliensya"	,"system16.java"	,rom_aliensya,driver_aliensyn	,machine_driver_aliensyn	,input_ports_aliensyn	,init_aliensyn	,ROT0	,	"Sega",    "Alien Syndrome (set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_aliensyj	   = new GameDriver("1987"	,"aliensyj"	,"system16.java"	,rom_aliensyj,driver_aliensyn	,machine_driver_aliensyn	,input_ports_aliensyn	,init_aliensyn	,ROT0	,	"Sega",    "Alien Syndrome (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_aliensyb	   = new GameDriver("1987"	,"aliensyb"	,"system16.java"	,rom_aliensyb,driver_aliensyn	,machine_driver_aliensyn	,input_ports_aliensyn	,init_aliensyn	,ROT0	,	"Sega",    "Alien Syndrome (set 3)", GAME_NOT_WORKING )
-	public static GameDriver driver_altbeast	   = new GameDriver("1988"	,"altbeast"	,"system16.java"	,rom_altbeast,null	,machine_driver_altbeast	,input_ports_altbeast	,init_altbeast	,ROT0	,	"Sega",    "Altered Beast (Version 1)" )
-	public static GameDriver driver_altbeas2	   = new GameDriver("1988"	,"altbeas2"	,"system16.java"	,rom_altbeas2,driver_altbeast	,machine_driver_altbeas2	,input_ports_altbeast	,init_altbeast	,ROT0	,	"Sega",    "Altered Beast (Version 2)", GAME_NO_SOUND )
-	public static GameDriver driver_jyuohki	   = new GameDriver("1988"	,"jyuohki"	,"system16.java"	,rom_jyuohki,driver_altbeast	,machine_driver_altbeast	,input_ports_altbeast	,init_altbeast	,ROT0	,	"Sega",    "Jyuohki (Japan)",           GAME_NOT_WORKING )
-	public static GameDriver driver_aurail	   = new GameDriver("1990"	,"aurail"	,"system16.java"	,rom_aurail,null	,machine_driver_aurail	,input_ports_aurail	,init_aurail	,ROT0	,	"Sega / Westone", "Aurail (set 1)" )
-	public static GameDriver driver_auraila	   = new GameDriver("1990"	,"auraila"	,"system16.java"	,rom_auraila,driver_aurail	,machine_driver_aurail	,input_ports_aurail	,init_auraila	,ROT0	,	"Sega / Westone", "Aurail (set 2)" )
-	public static GameDriver driver_bayroute	   = new GameDriver("1989"	,"bayroute"	,"system16.java"	,rom_bayroute,null	,machine_driver_bayroute	,input_ports_bayroute	,init_bayroute	,ROT0	,	"Sunsoft / Sega", "Bay Route (set 1)" )
-	public static GameDriver driver_bayrouta	   = new GameDriver("1989"	,"bayrouta"	,"system16.java"	,rom_bayrouta,driver_bayroute	,machine_driver_bayroute	,input_ports_bayroute	,init_bayrouta	,ROT0	,	"Sunsoft / Sega", "Bay Route (set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_bayrtbl1	   = new GameDriver("1989"	,"bayrtbl1"	,"system16.java"	,rom_bayrtbl1,driver_bayroute	,machine_driver_bayroute	,input_ports_bayroute	,init_bayrtbl1	,ROT0	,	"bootleg", "Bay Route (bootleg set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_bayrtbl2	   = new GameDriver("1989"	,"bayrtbl2"	,"system16.java"	,rom_bayrtbl2,driver_bayroute	,machine_driver_bayroute	,input_ports_bayroute	,init_bayrtbl1	,ROT0	,	"bootleg", "Bay Route (bootleg set 2)", GAME_NOT_WORKING )
+	GAMEX(1990, atomicp,  0,        atomicp,  atomicp,  atomicp,  ROT0,   "Philko",  "Atomic Point", GAME_NO_SOUND )
+	GAME( 1987, aliensyn, 0,        aliensyn, aliensyn, aliensyn, ROT0,   "Sega",    "Alien Syndrome (set 1)" )
+	GAMEX(1987, aliensya, aliensyn, aliensyn, aliensyn, aliensyn, ROT0,   "Sega",    "Alien Syndrome (set 2)", GAME_NOT_WORKING )
+	GAMEX(1987, aliensyj, aliensyn, aliensyn, aliensyn, aliensyn, ROT0,   "Sega",    "Alien Syndrome (Japan)", GAME_NOT_WORKING )
+	GAMEX(1987, aliensyb, aliensyn, aliensyn, aliensyn, aliensyn, ROT0,   "Sega",    "Alien Syndrome (set 3)", GAME_NOT_WORKING )
+	GAME( 1988, altbeast, 0,        altbeast, altbeast, altbeast, ROT0,   "Sega",    "Altered Beast (Version 1)" )
+	GAMEX(1988, altbeas2, altbeast, altbeas2, altbeast, altbeast, ROT0,   "Sega",    "Altered Beast (Version 2)", GAME_NO_SOUND )
+	GAMEX(1988, jyuohki,  altbeast, altbeast, altbeast, altbeast, ROT0,   "Sega",    "Jyuohki (Japan)",           GAME_NOT_WORKING )
+	GAME( 1990, aurail,   0,        aurail,   aurail,   aurail,   ROT0,   "Sega / Westone", "Aurail (set 1)" )
+	GAME( 1990, auraila,  aurail,   aurail,   aurail,   auraila,  ROT0,   "Sega / Westone", "Aurail (set 2)" )
+	GAME( 1989, bayroute, 0,        bayroute, bayroute, bayroute, ROT0,   "Sunsoft / Sega", "Bay Route (set 1)" )
+	GAMEX(1989, bayrouta, bayroute, bayroute, bayroute, bayrouta, ROT0,   "Sunsoft / Sega", "Bay Route (set 2)", GAME_NOT_WORKING )
+	GAMEX(1989, bayrtbl1, bayroute, bayroute, bayroute, bayrtbl1, ROT0,   "bootleg", "Bay Route (bootleg set 1)", GAME_NOT_WORKING )
+	GAMEX(1989, bayrtbl2, bayroute, bayroute, bayroute, bayrtbl1, ROT0,   "bootleg", "Bay Route (bootleg set 2)", GAME_NOT_WORKING )
 	/* Bullet */
 	/* Charon */
-	public static GameDriver driver_cotton	   = new GameDriver("19??"	,"cotton"	,"system16.java"	,rom_cotton,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Cotton (Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_cottona	   = new GameDriver("19??"	,"cottona"	,"system16.java"	,rom_cottona,driver_cotton	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Cotton", GAME_NOT_WORKING )
-	public static GameDriver driver_dunkshot	   = new GameDriver("19??"	,"dunkshot"	,"system16.java"	,rom_dunkshot,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Dunk Shot", GAME_NOT_WORKING )
-	public static GameDriver driver_dduxbl	   = new GameDriver("1989"	,"dduxbl"	,"system16.java"	,rom_dduxbl,null	,machine_driver_dduxbl	,input_ports_dduxbl	,init_dduxbl	,ROT0	,	"bootleg", "Dynamite Dux (bootleg)" )
-	public static GameDriver driver_eswat	   = new GameDriver("1989"	,"eswat"	,"system16.java"	,rom_eswat,null	,machine_driver_eswat	,input_ports_eswat	,init_eswat	,ROT0	,	"Sega",    "E-Swat - Cyber Police", GAME_NOT_WORKING )
-	public static GameDriver driver_eswatbl	   = new GameDriver("1989"	,"eswatbl"	,"system16.java"	,rom_eswatbl,driver_eswat	,machine_driver_eswat	,input_ports_eswat	,init_eswat	,ROT0	,	"bootleg", "E-Swat - Cyber Police (bootleg)" )
-	public static GameDriver driver_exctleag	   = new GameDriver("19??"	,"exctleag"	,"system16.java"	,rom_exctleag,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Excite League", GAME_NOT_WORKING )
-	public static GameDriver driver_fpoint	   = new GameDriver("1989"	,"fpoint"	,"system16.java"	,rom_fpoint,null	,machine_driver_fpoint	,input_ports_fpoint	,init_fpoint	,ROT0	,	"Sega",    "Flash Point", GAME_NOT_WORKING )
-	public static GameDriver driver_fpointbl	   = new GameDriver("1989"	,"fpointbl"	,"system16.java"	,rom_fpointbl,driver_fpoint	,machine_driver_fpoint	,input_ports_fpoint	,init_fpointbl	,ROT0	,	"bootleg", "Flash Point (World, bootleg)" )
-	public static GameDriver driver_fpointbj	   = new GameDriver("1989"	,"fpointbj"	,"system16.java"	,rom_fpointbj,driver_fpoint	,machine_driver_fpoint	,input_ports_fpointbj	,init_fpointbl	,ROT0	,	"bootleg", "Flash Point (Japan, bootleg)", GAME_NO_SOUND )
-	public static GameDriver driver_goldnaxe	   = new GameDriver("1989"	,"goldnaxe"	,"system16.java"	,rom_goldnaxe,null	,machine_driver_goldnaxe	,input_ports_goldnaxe	,init_goldnaxe	,ROT0	,	"Sega",    "Golden Axe (Version 1)" )
-	public static GameDriver driver_goldnaxj	   = new GameDriver("1989"	,"goldnaxj"	,"system16.java"	,rom_goldnaxj,driver_goldnaxe	,machine_driver_goldnaxe	,input_ports_goldnaxe	,init_goldnaxe	,ROT0	,	"Sega",    "Golden Axe (Version 1, Japan)", GAME_NOT_WORKING )
-	public static GameDriver driver_goldnabl	   = new GameDriver("1989"	,"goldnabl"	,"system16.java"	,rom_goldnabl,driver_goldnaxe	,machine_driver_goldnaxe	,input_ports_goldnaxe	,init_goldnabl	,ROT0	,	"bootleg", "Golden Axe (bootleg)", GAME_NOT_WORKING )
-	public static GameDriver driver_goldnaxa	   = new GameDriver("1989"	,"goldnaxa"	,"system16.java"	,rom_goldnaxa,driver_goldnaxe	,machine_driver_goldnaxa	,input_ports_goldnaxe	,init_goldnaxe	,ROT0	,	"Sega",    "Golden Axe (Version 2)" )
-	public static GameDriver driver_goldnaxb	   = new GameDriver("1989"	,"goldnaxb"	,"system16.java"	,rom_goldnaxb,driver_goldnaxe	,machine_driver_goldnaxa	,input_ports_goldnaxe	,init_goldnaxe	,ROT0	,	"Sega",    "Golden Axe (Version 2 317-0110)", GAME_NOT_WORKING )
-	public static GameDriver driver_goldnaxc	   = new GameDriver("1989"	,"goldnaxc"	,"system16.java"	,rom_goldnaxc,driver_goldnaxe	,machine_driver_goldnaxa	,input_ports_goldnaxe	,init_goldnaxe	,ROT0	,	"Sega",    "Golden Axe (Version 2 317-0122)", GAME_NOT_WORKING )
-	public static GameDriver driver_hwchamp	   = new GameDriver("1987"	,"hwchamp"	,"system16.java"	,rom_hwchamp,null	,machine_driver_hwchamp	,input_ports_hwchamp	,init_hwchamp	,ROT0	,	"Sega",    "Heavyweight Champ" )
-	public static GameDriver driver_mvp	   = new GameDriver("19??"	,"mvp"	,"system16.java"	,rom_mvp,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "MVP", GAME_NOT_WORKING )
-	public static GameDriver driver_passsht	   = new GameDriver("1988"	,"passsht"	,"system16.java"	,rom_passsht,null	,machine_driver_passsht	,input_ports_passsht	,init_passsht	,ROT270	,	"Sega",    "Passing Shot (2 Players)", GAME_NOT_WORKING )
-	public static GameDriver driver_passshtb	   = new GameDriver("1988"	,"passshtb"	,"system16.java"	,rom_passshtb,driver_passsht	,machine_driver_passsht	,input_ports_passsht	,init_passsht	,ROT270	,	"bootleg", "Passing Shot (2 Players) (bootleg)" )
-	public static GameDriver driver_passht4b	   = new GameDriver("1988"	,"passht4b"	,"system16.java"	,rom_passht4b,driver_passsht	,machine_driver_passht4b	,input_ports_passht4b	,init_passht4b	,ROT270	,	"bootleg", "Passing Shot (4 Players) (bootleg)", GAME_NO_SOUND )
-	public static GameDriver driver_riotcity	   = new GameDriver("1991"	,"riotcity"	,"system16.java"	,rom_riotcity,null	,machine_driver_riotcity	,input_ports_riotcity	,init_riotcity	,ROT0	,	"Sega / Westone", "Riot City" )
+	GAMEX(19??, cotton,   0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Cotton (Japan)", GAME_NOT_WORKING )
+	GAMEX(19??, cottona,  cotton,   s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Cotton", GAME_NOT_WORKING )
+	GAMEX(19??, dunkshot, 0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Dunk Shot", GAME_NOT_WORKING )
+	GAME( 1989, dduxbl,   0,        dduxbl,   dduxbl,   dduxbl,   ROT0,   "bootleg", "Dynamite Dux (bootleg)" )
+	GAMEX(1989, eswat,    0,        eswat,    eswat,    eswat,    ROT0,   "Sega",    "E-Swat - Cyber Police", GAME_NOT_WORKING )
+	GAME( 1989, eswatbl,  eswat,    eswat,    eswat,    eswat,    ROT0,   "bootleg", "E-Swat - Cyber Police (bootleg)" )
+	GAMEX(19??, exctleag, 0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Excite League", GAME_NOT_WORKING )
+	GAMEX(1989, fpoint,   0,        fpoint,   fpoint,   fpoint,   ROT0,   "Sega",    "Flash Point", GAME_NOT_WORKING )
+	GAME( 1989, fpointbl, fpoint,   fpoint,   fpoint,   fpointbl, ROT0,   "bootleg", "Flash Point (World, bootleg)" )
+	GAMEX(1989, fpointbj, fpoint,   fpoint,   fpointbj, fpointbl, ROT0,   "bootleg", "Flash Point (Japan, bootleg)", GAME_NO_SOUND )
+	GAME( 1989, goldnaxe, 0,        goldnaxe, goldnaxe, goldnaxe, ROT0,   "Sega",    "Golden Axe (Version 1)" )
+	GAMEX(1989, goldnaxj, goldnaxe, goldnaxe, goldnaxe, goldnaxe, ROT0,   "Sega",    "Golden Axe (Version 1, Japan)", GAME_NOT_WORKING )
+	GAMEX(1989, goldnabl, goldnaxe, goldnaxe, goldnaxe, goldnabl, ROT0,   "bootleg", "Golden Axe (bootleg)", GAME_NOT_WORKING )
+	GAME( 1989, goldnaxa, goldnaxe, goldnaxa, goldnaxe, goldnaxe, ROT0,   "Sega",    "Golden Axe (Version 2)" )
+	GAMEX(1989, goldnaxb, goldnaxe, goldnaxa, goldnaxe, goldnaxe, ROT0,   "Sega",    "Golden Axe (Version 2 317-0110)", GAME_NOT_WORKING )
+	GAMEX(1989, goldnaxc, goldnaxe, goldnaxa, goldnaxe, goldnaxe, ROT0,   "Sega",    "Golden Axe (Version 2 317-0122)", GAME_NOT_WORKING )
+	GAME( 1987, hwchamp,  0,        hwchamp,  hwchamp,  hwchamp,  ROT0,   "Sega",    "Heavyweight Champ" )
+	GAMEX(19??, mvp,      0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "MVP", GAME_NOT_WORKING )
+	GAMEX(1988, passsht,  0,        passsht,  passsht,  passsht,  ROT270, "Sega",    "Passing Shot (2 Players)", GAME_NOT_WORKING )
+	GAME( 1988, passshtb, passsht,  passsht,  passsht,  passsht,  ROT270, "bootleg", "Passing Shot (2 Players) (bootleg)" )
+	GAMEX(1988, passht4b, passsht,  passht4b, passht4b, passht4b, ROT270, "bootleg", "Passing Shot (4 Players) (bootleg)", GAME_NO_SOUND )
+	GAME( 1991, riotcity, 0,        riotcity, riotcity, riotcity, ROT0,   "Sega / Westone", "Riot City" )
 	/* Ryukyu */
 	/* Shinobi */
 	/* Sonic Boom */
 	/* SDI */
 	/* Sukeban Jansi Ryuko */
-	public static GameDriver driver_suprleag	   = new GameDriver("19??"	,"suprleag"	,"system16.java"	,rom_suprleag,null	,machine_driver_s16dummy	,input_ports_s16dummy	,init_s16dummy	,ROT0	,	"Sega", "Super League", GAME_NOT_WORKING )
+	GAMEX(19??, suprleag, 0,        s16dummy, s16dummy, s16dummy, ROT0,   "Sega", "Super League", GAME_NOT_WORKING )
 	/* Tetris */
-	public static GameDriver driver_timscanr	   = new GameDriver("1987"	,"timscanr"	,"system16.java"	,rom_timscanr,null	,machine_driver_timscanr	,input_ports_timscanr	,init_timscanr	,ROT270	,	"Sega",    "Time Scanner" )
-	public static GameDriver driver_toryumon	   = new GameDriver("1994"	,"toryumon"	,"system16.java"	,rom_toryumon,null	,machine_driver_toryumon	,input_ports_toryumon	,init_toryumon	,ROT0	,	"Sega",    "Toryumon" )
-	public static GameDriver driver_tturf	   = new GameDriver("1989"	,"tturf"	,"system16.java"	,rom_tturf,null	,machine_driver_tturf	,input_ports_tturf	,init_tturf	,ROT0	,	"Sega / Sunsoft", "Tough Turf (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_tturfu	   = new GameDriver("1989"	,"tturfu"	,"system16.java"	,rom_tturfu,driver_tturf	,machine_driver_tturfu	,input_ports_tturf	,init_tturf	,ROT0	,	"Sega / Sunsoft", "Tough Turf (US)", GAME_NO_SOUND )
-	public static GameDriver driver_tturfbl	   = new GameDriver("1989"	,"tturfbl"	,"system16.java"	,rom_tturfbl,driver_tturf	,machine_driver_tturfbl	,input_ports_tturf	,init_tturfbl	,ROT0	,	"bootleg", "Tough Turf (bootleg)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_wb3	   = new GameDriver("1988"	,"wb3"	,"system16.java"	,rom_wb3,null	,machine_driver_wb3	,input_ports_wb3	,init_wb3	,ROT0	,	"Sega / Westone", "Wonder Boy III - Monster Lair (set 1)" ) //*
-	public static GameDriver driver_wb3a	   = new GameDriver("1988"	,"wb3a"	,"system16.java"	,rom_wb3a,driver_wb3	,machine_driver_wb3	,input_ports_wb3	,init_wb3	,ROT0	,	"Sega / Westone", "Wonder Boy III - Monster Lair (set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_wb3bl	   = new GameDriver("1988"	,"wb3bl"	,"system16.java"	,rom_wb3bl,driver_wb3	,machine_driver_wb3bl	,input_ports_wb3	,init_wb3bl	,ROT0	,	"bootleg", "Wonder Boy III - Monster Lair (bootleg)" )
-	public static GameDriver driver_wrestwar	   = new GameDriver("1989"	,"wrestwar"	,"system16.java"	,rom_wrestwar,null	,machine_driver_wrestwar	,input_ports_wrestwar	,init_wrestwar	,ROT270	,	"Sega",    "Wrestle War" )
+	GAME( 1987, timscanr, 0,        timscanr, timscanr, timscanr, ROT270, "Sega",    "Time Scanner" )
+	GAME (1994, toryumon, 0,        toryumon, toryumon, toryumon, ROT0,   "Sega",    "Toryumon" )
+	GAMEX(1989, tturf,    0,        tturf,    tturf,    tturf,    ROT0,   "Sega / Sunsoft", "Tough Turf (Japan)", GAME_NO_SOUND )
+	GAMEX(1989, tturfu,   tturf,    tturfu,   tturf,    tturf,    ROT0,   "Sega / Sunsoft", "Tough Turf (US)", GAME_NO_SOUND )
+	GAMEX(1989, tturfbl,  tturf,    tturfbl,  tturf,    tturfbl,  ROT0,   "bootleg", "Tough Turf (bootleg)", GAME_IMPERFECT_SOUND )
+	GAME( 1988, wb3,      0,        wb3,      wb3,      wb3,      ROT0,   "Sega / Westone", "Wonder Boy III - Monster Lair (set 1)" ) //*
+	GAMEX(1988, wb3a,     wb3,      wb3,      wb3,      wb3,      ROT0,   "Sega / Westone", "Wonder Boy III - Monster Lair (set 2)", GAME_NOT_WORKING )
+	GAME( 1988, wb3bl,    wb3,      wb3bl,    wb3,      wb3bl,    ROT0,   "bootleg", "Wonder Boy III - Monster Lair (bootleg)" )
+	GAME( 1989, wrestwar, 0,        wrestwar, wrestwar, wrestwar, ROT270, "Sega",    "Wrestle War" )
 }

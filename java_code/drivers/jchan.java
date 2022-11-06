@@ -151,7 +151,7 @@ there are 9 PALS on the pcb (not dumped)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -161,15 +161,13 @@ public class jchan
 	/* vidhrdw */
 	
 	
-	VIDEO_START(jchan)
-	{
+	public static VideoStartHandlerPtr video_start_jchan  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(jchan)
-	{
+	public static VideoUpdateHandlerPtr video_update_jchan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
-	}
+	} };
 	
 	/* memory maps */
 	
@@ -248,7 +246,7 @@ public class jchan
 	
 	/* input ports */
 	
-	static InputPortPtr input_ports_jchan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jchan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jchan )
 		PORT_START(); 	/* 16-bit */
 		PORT_DIPNAME( 0x0001, 0x0001, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -330,8 +328,7 @@ public class jchan
 	
 	/* machine driver */
 	
-	public static MachineHandlerPtr machine_driver_jchan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jchan )
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq1_line_hold,1) // ?
@@ -351,9 +348,7 @@ public class jchan
 		MDRV_VIDEO_UPDATE(jchan)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* rom loading */
 	
@@ -406,7 +401,7 @@ public class jchan
 	
 	
 	/* game drivers */
-	public static GameDriver driver_jchan	   = new GameDriver("1995"	,"jchan"	,"jchan.java"	,rom_jchan,null	,machine_driver_jchan	,input_ports_jchan	,null	,ROT0	,	"Kaneko", "Jackie Chan - Kung Fu Master", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1995, jchan, 0, jchan, jchan, 0, ROT0, "Kaneko", "Jackie Chan - Kung Fu Master", GAME_NOT_WORKING | GAME_NO_SOUND )
 	
 	/* other jchan copy / paste bits
 	
@@ -415,7 +410,7 @@ public class jchan
 	
 		const UINT16 *source = jchan_spriteram;
 		const UINT16 *finish = source+0x2000;  // or whatever size ..
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		while( source<finish )
 		{

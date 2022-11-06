@@ -6,7 +6,7 @@ TODO: 1943 is almost identical to GunSmoke (one more scrolling playfield). We
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,8 +20,7 @@ public class _1943
 	
 	/* this is a protection check. The game crashes (thru a jump to 0x8000) */
 	/* if a read from this address doesn't return the value it expects. */
-	public static ReadHandlerPtr c1943_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr c1943_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = activecpu_get_reg(Z80_BC) >> 8;
 		logerror("protection read, PC: %04x Result:%02x\n",activecpu_get_pc(),data);
 		return data;
@@ -84,7 +83,7 @@ public class _1943
 	
 	
 	
-	static InputPortPtr input_ports_1943 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_1943 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 1943 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -254,8 +253,7 @@ public class _1943
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_1943 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 1943 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz */
@@ -284,9 +282,7 @@ public class _1943
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -463,7 +459,7 @@ public class _1943
 	
 	
 	
-	public static GameDriver driver_1943	   = new GameDriver("1987"	,"1943"	,"_1943.java"	,rom_1943,null	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 - The Battle of Midway (US)" )
-	public static GameDriver driver_1943j	   = new GameDriver("1987"	,"1943j"	,"_1943.java"	,rom_1943j,driver_1943	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 - The Battle of Midway (Japan)" )
-	public static GameDriver driver_1943kai	   = new GameDriver("1987"	,"1943kai"	,"_1943.java"	,rom_1943kai,null	,machine_driver_1943	,input_ports_1943	,null	,ROT270	,	"Capcom", "1943 Kai - Midway Kaisen" )
+	GAME( 1987, 1943,    0,    1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (US)" )
+	GAME( 1987, 1943j,   1943, 1943, 1943, 0, ROT270, "Capcom", "1943 - The Battle of Midway (Japan)" )
+	GAME( 1987, 1943kai, 0,    1943, 1943, 0, ROT270, "Capcom", "1943 Kai - Midway Kaisen" )
 }

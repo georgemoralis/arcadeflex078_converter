@@ -107,7 +107,7 @@
  *	extra cycle if page boundary is crossed
  ***************************************************************/
 #define BRA(cond)												\
-	if (cond != 0)													\
+	if (cond)													\
 	{															\
 		tmp = RDOPARG();										\
 		EAW = PCW + (signed char)tmp;							\
@@ -249,7 +249,7 @@
  *	ADC Add with carry
  ***************************************************************/
 #define ADC 													\
-	if ((P & F_D) != 0)												\
+	if (P & F_D)												\
 	{															\
 	int c = (P & F_C);											\
 	int lo = (A & 0x0f) + (tmp & 0x0f) + c; 					\
@@ -261,12 +261,12 @@
 			hi += 0x10; 										\
 			lo += 0x06; 										\
 		}														\
-		if ((hi & 0x80) != 0) P|=F_N;									\
+		if (hi&0x80) P|=F_N;									\
 		if (~(A^tmp) & (A^hi) & F_N)							\
 			P |= F_V;											\
 		if (hi > 0x90)											\
 			hi += 0x60; 										\
-		if ((hi & 0xff00) != 0)										\
+		if (hi & 0xff00)										\
 			P |= F_C;											\
 		A = (lo & 0x0f) + (hi & 0xf0);							\
 	}															\
@@ -277,7 +277,7 @@
 		P &= ~(F_V | F_C);										\
 		if (~(A^tmp) & (A^sum) & F_N)							\
 			P |= F_V;											\
-		if ((sum & 0xff00) != 0)										\
+		if (sum & 0xff00)										\
 			P |= F_C;											\
 		A = (UINT8) sum;										\
 		SET_NZ(A); \
@@ -518,7 +518,7 @@
 
 /* 6502 ********************************************************
  *	LSR Logic shift right
- *	0 . [7][6][5][4][3][2][1][0] . C
+ *	0 -> [7][6][5][4][3][2][1][0] -> C
  ***************************************************************/
 #define LSR 													\
 	P = (P & ~F_C) | (tmp & F_C);								\
@@ -561,7 +561,7 @@
  *	PLP Pull processor status (flags)
  ***************************************************************/
 #define PLP 													\
-	if ((P & F_I) != 0) {											\
+	if ( P & F_I ) {											\
 		PULL(P);												\
 		if ((m6502.irq_state != CLEAR_LINE) && !(P & F_I)) {	\
 			LOG(("M6502#%d PLP sets after_cli\n",cpu_getactivecpu())); \
@@ -584,7 +584,7 @@
 
 /* 6502 ********************************************************
  * ROR	Rotate right
- *	C . [7][6][5][4][3][2][1][0] . new C
+ *	C -> [7][6][5][4][3][2][1][0] -> new C
  ***************************************************************/
 #define ROR 													\
 	tmp |= (P & F_C) << 8;										\
@@ -623,13 +623,13 @@
  *	SBC Subtract with carry
  ***************************************************************/
 #define SBC 													\
-	if ((P & F_D) != 0)												\
+	if (P & F_D)												\
 	{															\
 		int c = (P & F_C) ^ F_C;								\
 		int sum = A - tmp - c;									\
 		int lo = (A & 0x0f) - (tmp & 0x0f) - c; 				\
 		int hi = (A & 0xf0) - (tmp & 0xf0); 					\
-		if ((lo & 0x10) != 0)											\
+		if (lo & 0x10)											\
 		{														\
 			lo -= 6;											\
 			hi--;												\
@@ -637,7 +637,7 @@
 		P &= ~(F_V | F_C|F_Z|F_N);								\
 		if( (A^tmp) & (A^sum) & F_N )							\
 			P |= F_V;											\
-		if ((hi & 0x0100) != 0)										\
+		if( hi & 0x0100 )										\
 			hi -= 0x60; 										\
 		if( (sum & 0xff00) == 0 )								\
 			P |= F_C;											\

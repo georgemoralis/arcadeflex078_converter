@@ -94,7 +94,7 @@ have i been using x/y consistently, ie non rotated or rotated origin?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -123,16 +123,14 @@ public class marinedt
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr marinedt_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marinedt_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//might need to be reversed for cocktail stuff
 	
 		/* x/y multiplexed */
 		return readinputport(3 + ((marinedt_pf&0x08)>>3));
 	} };
 	
-	public static ReadHandlerPtr marinedt_coll_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marinedt_coll_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//76543210
 		//x------- obj1 to obj2 collision
 		//-xxx---- unused
@@ -149,8 +147,7 @@ public class marinedt
 	//id imagine they are returning the pf char where the collission took place?
 	//what about where there is lots of colls?
 	//maybe the first on a scanline basis
-	public static ReadHandlerPtr marinedt_obj1_x_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marinedt_obj1_x_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//76543210
 		//xxxx---- unknown
 		//----xxxx x pos in video ram
@@ -161,8 +158,7 @@ public class marinedt
 		return cx | (cxh<<4);
 	} };
 	
-	public static ReadHandlerPtr marinedt_obj1_yr_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marinedt_obj1_yr_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//76543210
 		//xxxx---- unknown
 		//----xxxx row in current screen quarter
@@ -172,8 +168,7 @@ public class marinedt
 		return cyr | (cyrh<<4);
 	} };
 	
-	public static ReadHandlerPtr marinedt_obj1_yq_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marinedt_obj1_yq_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//76543210
 		//xx------ unknown
 		//--xx---- screen quarter when flipped?
@@ -196,17 +191,16 @@ public class marinedt
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr marinedt_obj1_a_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_a = data; } };
-	public static WriteHandlerPtr marinedt_obj1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_x = data; } };
-	public static WriteHandlerPtr marinedt_obj1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj1_y = data; } };
-	public static WriteHandlerPtr marinedt_obj2_a_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_a = data; } };
-	public static WriteHandlerPtr marinedt_obj2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_x = data; } };
-	public static WriteHandlerPtr marinedt_obj2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data) {	marinedt_obj2_y = data; } };
+	public static WriteHandlerPtr marinedt_obj1_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj1_a = data; }
+	public static WriteHandlerPtr marinedt_obj1_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj1_x = data; }
+	public static WriteHandlerPtr marinedt_obj1_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj1_y = data; }
+	public static WriteHandlerPtr marinedt_obj2_a_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj2_a = data; }
+	public static WriteHandlerPtr marinedt_obj2_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj2_x = data; }
+	public static WriteHandlerPtr marinedt_obj2_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)	marinedt_obj2_y = data; }
 	
-	public static WriteHandlerPtr marinedt_music_w = new WriteHandlerPtr() {public void handler(int offset, int data){	marinedt_music = data; } };
+	public static WriteHandlerPtr marinedt_music_w = new WriteHandlerPtr() {public void handler(int offset, int data)marinedt_music = data; }
 	
-	public static WriteHandlerPtr marinedt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marinedt_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//76543210
 		//xx------ ??
 		//--x----- jet sound
@@ -219,8 +213,7 @@ public class marinedt
 		marinedt_sound = data;
 	} };
 	
-	public static WriteHandlerPtr marinedt_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marinedt_pd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//76543210
 		//xxx----- ?? unused
 		//---x---- ?? the rest should be used based on the table
@@ -232,8 +225,7 @@ public class marinedt
 		marinedt_pd = data;
 	} };
 	
-	public static WriteHandlerPtr marinedt_pf_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marinedt_pf_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//76543210
 		//xxxx---- ?? unused (will need to understand table of written values)
 	    //----x--- xy trackball select
@@ -243,7 +235,7 @@ public class marinedt
 	
 		marinedt_pf = data;
 	
-	//if ((data & 0xf0) != 0)
+	//if(data&0xf0)
 	//	logerror("pf:%02x %d\n",marinedt_pf);
 	//logerror("pd:%02x %d\n",marinedt_pd, cpu_getcurrentframe());
 	
@@ -265,7 +257,7 @@ public class marinedt
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_marinedt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_marinedt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( marinedt )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x0f, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x0f, DEF_STR( "9C_1C") );
@@ -376,8 +368,7 @@ public class marinedt
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static PaletteInitHandlerPtr palette_init_marinedt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_marinedt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,r,b,g;
 	
 		for (i = 0;i < Machine.drv.total_colors; i++)
@@ -408,8 +399,7 @@ public class marinedt
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_marinedt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_marinedt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy,flipx,flipy;
 	#if 0
 		int i=0,j=0;
@@ -464,17 +454,17 @@ public class marinedt
 	// 	ui_text(bitmap, "02 03 04 05 06 08 09 0a 0d 0f", 20, 234);
 	// 	ui_text(bitmap, buf, 20, 244);
 	
-	//  	if ((marinedt_sound & 0x02) != 0) ui_text(bitmap, "dot", 10, 4+36);
-	//  	if ((marinedt_sound & 0x04) != 0) ui_text(bitmap, "col", 50, 4+36);
-	//  	if ((marinedt_sound & 0x08) != 0) ui_text(bitmap, "ink", 90, 4+36);
-	//  	if ((marinedt_sound & 0x10) != 0) ui_text(bitmap, "foam", 130, 4+36);
-	//  	if ((marinedt_sound & 0x20) != 0) ui_text(bitmap, "jet", 180, 4+36);
+	//  	if (marinedt_sound&0x02) ui_text(bitmap, "dot", 10, 4+36);
+	//  	if (marinedt_sound&0x04) ui_text(bitmap, "col", 50, 4+36);
+	//  	if (marinedt_sound&0x08) ui_text(bitmap, "ink", 90, 4+36);
+	//  	if (marinedt_sound&0x10) ui_text(bitmap, "foam", 130, 4+36);
+	//  	if (marinedt_sound&0x20) ui_text(bitmap, "jet", 180, 4+36);
 	
 	//obj to obj coll
 	collh=0;cxh=0;cyrh=0;cyqh=0;
 	
 	#if 0
-	if ((marinedt_pd & 0x03) != 0)
+	if (marinedt_pd&0x03)
 	{
 		int o1x=256-32-marinedt_obj1_x;
 		int o1y=256-marinedt_obj1_y-1;
@@ -497,7 +487,7 @@ public class marinedt
 	//pf collision?
 	
 	#if 0
-	if ((marinedt_pd & 0x01) != 0)
+	if (marinedt_pd&0x01)
 	{
 	
 		drawgfx(bitmap,Machine.gfx[1],
@@ -514,10 +504,10 @@ public class marinedt
 				    (read_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1) != Machine.pens[0]))
 					coll=0x08;
 	
-	if (coll != 0)
+	if(coll)
 	{
 	--i;--j;
-	//	plot_pixel.handler(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[2]);
+	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[2]);
 	
 	//determine collision registers
 	{
@@ -547,8 +537,8 @@ public class marinedt
 	
 	}
 	//{
-	//	plot_pixel.handler(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine.pens[1]);
-	//			plot_pixel.handler(bitmap, 256+i, 32+j,Machine.pens[1]);
+	//	plot_pixel(bitmap, 256-28-marinedt_obj1_x+i, 256-2-marinedt_obj1_y+j,Machine.pens[1]);
+	//			plot_pixel(bitmap, 256+i, 32+j,Machine.pens[1]);
 	//}
 	
 	//	drawgfx(bitmap,Machine.gfx[1],
@@ -558,7 +548,7 @@ public class marinedt
 	//			256,32,
 	//			cliprect,TRANSPARENCY_PEN,0);
 	
-	//if (coll != 0)
+	//if(coll)
 	//	drawgfx(bitmap,Machine.gfx[1],
 	//			1,
 	//			marinedt_obj1_a&0x03,
@@ -582,7 +572,7 @@ public class marinedt
 	// ------xx colour
 	
 	//note the 22 mod in the code, possibly for flipped
-	if ((marinedt_pd & 0x02) != 0)
+	if (marinedt_pd&0x02)
 			drawgfx(bitmap,Machine.gfx[2],
 					((marinedt_obj2_a&0x04)<<1)+((marinedt_obj2_a&0x38)>>3),
 					marinedt_obj2_a&0x03,
@@ -594,7 +584,7 @@ public class marinedt
 	//at y+6 2 off flush with the left, y-6 flush with the right
 	//at y-1 overlap is equal at 5 pixels on left and right
 	//at x overlap is 6 on left and 5 on right, x+1 may be correct
-	if ((marinedt_pd & 0x01) != 0)
+	if (marinedt_pd&0x01)
 			drawgfx(bitmap,Machine.gfx[1],
 					((marinedt_obj1_a&0x04)<<1)+((marinedt_obj1_a&0x38)>>3),
 					marinedt_obj1_a&0x03,
@@ -604,12 +594,11 @@ public class marinedt
 	}
 	
 	
-	//if (coll != 0)
-	//	plot_pixel.handler(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[1]);
+	//if(coll)
+	//	plot_pixel(bitmap, 256-32-marinedt_obj1_x+i, 256-marinedt_obj1_y+j-1,Machine.pens[1]);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_marinedt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( marinedt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/4)
@@ -633,9 +622,7 @@ public class marinedt
 	
 		/* sound hardware */
 		//discrete sound
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -671,5 +658,5 @@ public class marinedt
 		ROM_LOAD( "mg17.bpr", 0x0060, 0x0020, CRC(13261a02) SHA1(050edd18e4f79d19d5206f55f329340432fd4099) )	//?? table of increasing values
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_marinedt	   = new GameDriver("1981"	,"marinedt"	,"marinedt.java"	,rom_marinedt,null	,machine_driver_marinedt	,input_ports_marinedt	,null	,ROT270	,	"Taito", "Marine Date", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1981, marinedt, 0, marinedt, marinedt, 0, ROT270, "Taito", "Marine Date", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

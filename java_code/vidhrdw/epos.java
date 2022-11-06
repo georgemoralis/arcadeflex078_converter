@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class epos
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_epos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_epos  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -64,8 +63,7 @@ public class epos
 	} };
 	
 	
-	public static WriteHandlerPtr epos_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr epos_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y;
 	
 		videoram.write(offset,data);
@@ -73,13 +71,12 @@ public class epos
 		x = (offset % 136) * 2;
 		y = (offset / 136);
 	
-		plot_pixel.handler(tmpbitmap, x,     y, Machine.pens[current_palette | (data & 0x0f)]);
-		plot_pixel.handler(tmpbitmap, x + 1, y, Machine.pens[current_palette | (data >> 4)]);
+		plot_pixel(tmpbitmap, x,     y, Machine->pens[current_palette | (data & 0x0f)]);
+		plot_pixel(tmpbitmap, x + 1, y, Machine->pens[current_palette | (data >> 4)]);
 	} };
 	
 	
-	public static WriteHandlerPtr epos_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr epos_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 - start light #1
 		   D1 - start light #2
 		   D2 - coin counter
@@ -107,9 +104,8 @@ public class epos
 	  To be used by bitmapped games not using sprites.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_epos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_epos  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			/* redraw bitmap */
 	

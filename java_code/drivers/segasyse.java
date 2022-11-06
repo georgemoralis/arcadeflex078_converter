@@ -157,7 +157,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -176,16 +176,9 @@ public class segasyse
 	
 	/*-- Prototypes --*/
 	
-	static WRITE_HANDLER (segae_mem_8000_w);
 	
-	static WRITE_HANDLER (segae_port_f7_w);
-	static READ_HANDLER (segae_port_7e_7f_r);
 	
-	static READ_HANDLER (segae_port_ba_bb_r);
-	static READ_HANDLER (segae_port_be_bf_r);
 	
-	static WRITE_HANDLER (segae_port_ba_bb_w);
-	static WRITE_HANDLER (segae_port_be_bf_w);
 	
 	/*- in (vidhrdw/segasyse.c) -*/
 	
@@ -263,17 +256,15 @@ public class segasyse
 	
 	/*-- Memory -- */
 	
-	static WRITE_HANDLER (segae_mem_8000_w)
-	{
+	public static WriteHandlerPtr segae_mem_8000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write the data the non-selected VRAM bank of the opposite number VDP chip stored in segae_8000bank */
 		segae_vdp_vram [1-segae_8000bank][offset + (0x4000-(segae_vdp_vrambank[1-segae_8000bank] * 0x4000))] = data;
-	}
+	} };
 	
 	/*-- Ports --*/
 	
 	/***************************************
-	 WRITE_HANDLER (segae_port_f7_w)
-	****************************************
+	 public static WriteHandlerPtr segae_port_f7_w = new WriteHandlerPtr() {public void handler(int offset, int data)****************************************
 	 writes here control the banking of
 	 ROM and RAM
 	
@@ -297,23 +288,21 @@ public class segasyse
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank( 1, &RAM[ 0x10000 + ( rombank * 0x4000 ) ] );
-	}
+	} };
 	
 	
-	static WRITE_HANDLER (segae_port_f7_w)
-	{
+	public static WriteHandlerPtr segae_port_f7_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		segae_vdp_vrambank[0] = (data & 0x80) >> 7; /* Back  Layer VDP (0) VRAM Bank */
 		segae_vdp_vrambank[1] = (data & 0x40) >> 6; /* Front Layer VDP (1) VRAM Bank */
 		segae_8000bank		  = (data & 0x20) >> 5; /* 0x8000 Write Select */
 		rombank				  =  data & 0x07;		/* Rom Banking */
 	
 		segae_bankswitch();
-	}
+	} };
 	
 	/*- Beam Position -*/
 	
-	static READ_HANDLER (segae_port_7e_7f_r)
-	{
+	public static ReadHandlerPtr segae_port_7e_7f_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 temp = 0;
 		UINT16 sline;
 	
@@ -329,12 +318,11 @@ public class segasyse
 				break;
 		}
 		return temp;
-	}
+	} };
 	
 	/*- VDP Related -*/
 	
-	static READ_HANDLER (segae_port_ba_bb_r)
-	{
+	public static ReadHandlerPtr segae_port_ba_bb_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* These Addresses access the Back Layer VDP (0) */
 		UINT8 temp = 0;
 	
@@ -346,10 +334,9 @@ public class segasyse
 				temp = segae_vdp_ctrl_r(0); break;
 		}
 		return temp;
-	}
+	} };
 	
-	static READ_HANDLER (segae_port_be_bf_r)
-	{
+	public static ReadHandlerPtr segae_port_be_bf_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* These Addresses access the Front Layer VDP (1) */
 		UINT8 temp = 0;
 	
@@ -361,10 +348,9 @@ public class segasyse
 				temp = segae_vdp_ctrl_r(1); break ;
 		}
 		return temp;
-	}
+	} };
 	
-	static WRITE_HANDLER (segae_port_ba_bb_w)
-	{
+	public static WriteHandlerPtr segae_port_ba_bb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* These Addresses access the Back Layer VDP (0) */
 		switch (offset)
 		{
@@ -373,10 +359,9 @@ public class segasyse
 			case 1: /* port 0xbb, VDP 0 CTRL Write */
 				segae_vdp_ctrl_w(0, data); break;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER (segae_port_be_bf_w)
-	{
+	public static WriteHandlerPtr segae_port_be_bf_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* These Addresses access the Front Layer VDP (1) */
 		switch (offset)
 		{
@@ -385,12 +370,11 @@ public class segasyse
 			case 1: /* port 0xbf, VDP 1 CTRL Write */
 				segae_vdp_ctrl_w(1, data); break;
 		}
-	}
+	} };
 	
 	/*- Hang On Jr. Specific -*/
 	
-	static READ_HANDLER (segae_hangonjr_port_f8_r)
-	{
+	public static ReadHandlerPtr segae_hangonjr_port_f8_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 temp;
 	
 		temp = 0;
@@ -402,20 +386,18 @@ public class segasyse
 			temp = readinputport(5);
 	
 		return temp;
-	}
+	} };
 	
-	static WRITE_HANDLER (segae_hangonjr_port_fa_w)
-	{
+	public static WriteHandlerPtr segae_hangonjr_port_fa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Seems to write the same pattern again and again bits ---- xx-x used */
 		port_fa_last = data;
-	}
+	} };
 	
 	/*- Riddle of Pythagoras Specific -*/
 	
 	static int port_to_read,last1,last2,diff1,diff2;
 	
-	static READ_HANDLER (segae_ridleofp_port_f8_r)
-	{
+	public static ReadHandlerPtr segae_ridleofp_port_f8_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (port_to_read)
 		{
 			default:
@@ -424,28 +406,27 @@ public class segasyse
 			case 2:	return diff2 & 0xff;
 			case 3:	return diff2 >> 8;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER (segae_ridleofp_port_fa_w)
-	{
+	public static WriteHandlerPtr segae_ridleofp_port_fa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0x10 is written before reading the dial (hold counters?) */
 		/* 0x03 is written after reading the dial (reset counters?) */
 	
 		port_to_read = (data & 0x0c) >> 2;
 	
-		if ((data & 1) != 0)
+		if (data & 1)
 		{
 			int curr = readinputport(4);
 			diff1 = ((curr - last1) & 0x0fff) | (curr & 0xf000);
 			last1 = curr;
 		}
-		if ((data & 2) != 0)
+		if (data & 2)
 		{
 			int curr = readinputport(5) & 0x0fff;
 			diff2 = ((curr - last2) & 0x0fff) | (curr & 0xf000);
 			last2 = curr;
 		}
-	}
+	} };
 	
 	
 	/*******************************************************************************
@@ -495,10 +476,10 @@ public class segasyse
 		PORT_DIPSETTING(    0xb0, DEF_STR( "1C_5C") ); \
 		PORT_DIPSETTING(    0xa0, DEF_STR( "1C_6C") );
 	
-	static InputPortPtr input_ports_dummy = new InputPortPtr(){ public void handler() {  /* Used by the Totally Non-Working Games */
+	static InputPortPtr input_ports_dummy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dummy ) /* Used by the Totally Non-Working Games */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_transfrm = new InputPortPtr(){ public void handler() {  /* Used By Transformer */
+	static InputPortPtr input_ports_transfrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( transfrm ) /* Used By Transformer */
 		PORT_START(); 	/* DSW0 Read from Port 0xf2 */
 		SEGA_COIN_A
 		SEGA_COIN_B
@@ -547,7 +528,7 @@ public class segasyse
 		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hangonjr = new InputPortPtr(){ public void handler() {  /* Used By Hang On Jr */
+	static InputPortPtr input_ports_hangonjr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hangonjr ) /* Used By Hang On Jr */
 		PORT_START(); 	/* DSW0 Read from Port 0xf2 */
 		SEGA_COIN_A
 		SEGA_COIN_B
@@ -603,7 +584,7 @@ public class segasyse
 		PORT_ANALOG( 0xff, 0x00, IPT_AD_STICK_Y | IPF_REVERSE | IPF_PLAYER1, 20, 10, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ridleofp = new InputPortPtr(){ public void handler() {  /* Used By Riddle Of Pythagoras */
+	static InputPortPtr input_ports_ridleofp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ridleofp ) /* Used By Riddle Of Pythagoras */
 		PORT_START(); 	/* DSW0 Read from Port 0xf2 */
 		SEGA_COIN_A
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
@@ -680,8 +661,7 @@ public class segasyse
 	 Interrupt enable bits etc are a bit uncertain
 	*******************************************************************************/
 	
-	 public static InterruptHandlerPtr segae_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	 public static InterruptHandlerPtr segae_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int sline;
 		sline = 261 - cpu_getiloops();
 	
@@ -738,8 +718,7 @@ public class segasyse
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_segae = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( segae )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10738600/2) /* correct for hangonjr, and astroflash/transformer at least  */
@@ -761,9 +740,7 @@ public class segasyse
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76489_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************
 	 General Init
@@ -771,8 +748,7 @@ public class segasyse
 	 for Save State support
 	*******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_segasyse  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_segasyse  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "8000 Write Bank",		&segae_8000bank, 1);
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "Vertical Int Pending",	&vintpending, 1);
 		state_save_register_UINT8 ( "SEGASYSE-MAIN", 0, "Line Int Pending",		&hintpending, 1);
@@ -787,8 +763,7 @@ public class segasyse
 	 we need for the controls
 	*******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_hangonjr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hangonjr  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler (0, 0xf8, 0xf8, segae_hangonjr_port_f8_r);
 		install_port_write_handler(0, 0xfa, 0xfa, segae_hangonjr_port_fa_w);
 	
@@ -797,16 +772,14 @@ public class segasyse
 		init_segasyse();
 	} };
 	
-	public static DriverInitHandlerPtr init_ridleofp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ridleofp  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler (0, 0xf8, 0xf8, segae_ridleofp_port_f8_r);
 		install_port_write_handler(0, 0xfa, 0xfa, segae_ridleofp_port_fa_w);
 	
 		init_segasyse();
 	} };
 	
-	public static DriverInitHandlerPtr init_astrofl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_astrofl  = new DriverInitHandlerPtr() { public void handler(){
 		astrofl_decode();
 	
 		init_segasyse();
@@ -891,10 +864,10 @@ public class segasyse
 	
 	/*-- Game Drivers --*/
 	
-	public static GameDriver driver_hangonjr	   = new GameDriver("1985"	,"hangonjr"	,"segasyse.java"	,rom_hangonjr,null	,machine_driver_segae	,input_ports_hangonjr	,init_hangonjr	,ROT0	,	"Sega", "Hang-On Jr." )
-	public static GameDriver driver_transfrm	   = new GameDriver("1986"	,"transfrm"	,"segasyse.java"	,rom_transfrm,null	,machine_driver_segae	,input_ports_transfrm	,init_segasyse	,ROT0	,	"Sega", "Transformer" )
-	public static GameDriver driver_astrofl	   = new GameDriver("1986"	,"astrofl"	,"segasyse.java"	,rom_astrofl,driver_transfrm	,machine_driver_segae	,input_ports_transfrm	,init_astrofl	,ROT0	,	"Sega", "Astro Flash (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ridleofp	   = new GameDriver("1986"	,"ridleofp"	,"segasyse.java"	,rom_ridleofp,null	,machine_driver_segae	,input_ports_ridleofp	,init_ridleofp	,ROT90	,	"Sega / Nasco", "Riddle of Pythagoras (Japan)" )
-	public static GameDriver driver_fantzn2	   = new GameDriver("198?"	,"fantzn2"	,"segasyse.java"	,rom_fantzn2,null	,machine_driver_segae	,input_ports_dummy	,init_segasyse	,ROT0	,	"????", "Fantasy Zone 2", GAME_NOT_WORKING )	/* encrypted */
-	public static GameDriver driver_opaopa	   = new GameDriver("198?"	,"opaopa"	,"segasyse.java"	,rom_opaopa,null	,machine_driver_segae	,input_ports_dummy	,init_segasyse	,ROT0	,	"????", "Opa Opa", GAME_NOT_WORKING )	/* either encrypted or bad */
+	GAME( 1985, hangonjr, 0,        segae, hangonjr, hangonjr, ROT0,  "Sega", "Hang-On Jr." )
+	GAME( 1986, transfrm, 0,        segae, transfrm, segasyse, ROT0,  "Sega", "Transformer" )
+	GAMEX(1986, astrofl,  transfrm, segae, transfrm, astrofl,  ROT0,  "Sega", "Astro Flash (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1986, ridleofp, 0,        segae, ridleofp, ridleofp, ROT90, "Sega / Nasco", "Riddle of Pythagoras (Japan)" )
+	GAMEX(198?, fantzn2,  0,        segae, dummy,    segasyse, ROT0,  "????", "Fantasy Zone 2", GAME_NOT_WORKING )	/* encrypted */
+	GAMEX(198?, opaopa,   0,        segae, dummy,    segasyse, ROT0,  "????", "Opa Opa", GAME_NOT_WORKING )	/* either encrypted or bad */
 }

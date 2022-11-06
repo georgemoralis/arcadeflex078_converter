@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_gridlee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gridlee  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -68,11 +67,10 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_gridlee  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gridlee  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate a local copy of video RAM */
 		local_videoram = auto_malloc(256 * 256);
-		if (local_videoram == 0)
+		if (!local_videoram)
 			return 1;
 	
 		/* reset the palette */
@@ -88,8 +86,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr gridlee_cocktail_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridlee_cocktail_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gridlee_cocktail_flip != (data & 1))
 		{
 			force_partial_update(cpu_getscanline() - 1);
@@ -105,8 +102,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr gridlee_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridlee_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 	
 		/* expand the two pixel values into two bytes */
@@ -122,8 +118,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr gridlee_palette_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridlee_palette_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* update the scanline palette */
 		if (palettebank_vis != (data & 0x3f))
 		{
@@ -140,8 +135,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gridlee  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		pen_t *pens = Machine.pens[palettebank_vis * 32];
 		int x, y, i;
 	
@@ -149,7 +143,7 @@ public class gridlee
 		for (y = cliprect.min_y; y <= cliprect.max_y; y++)
 		{
 			/* non-flipped: draw directly from the bitmap */
-			if (gridlee_cocktail_flip == 0)
+			if (!gridlee_cocktail_flip)
 				draw_scanline8(bitmap, 0, y, 256, &local_videoram[y * 256], pens + 16, -1);
 	
 			/* flipped: x-flip the scanline into a temp buffer and draw that */
@@ -183,7 +177,7 @@ public class gridlee
 				int currxor = 0;
 	
 				/* adjust for flip */
-				if (gridlee_cocktail_flip != 0)
+				if (gridlee_cocktail_flip)
 				{
 					ypos = 239 - ypos;
 					currxor = 0xff;
@@ -202,12 +196,12 @@ public class gridlee
 	
 						/* left pixel */
 						if (left && currx >= 0 && currx < 256)
-							plot_pixel.handler(bitmap, currx ^ currxor, ypos, pens[left]);
+							plot_pixel(bitmap, currx ^ currxor, ypos, pens[left]);
 						currx++;
 	
 						/* right pixel */
 						if (right && currx >= 0 && currx < 256)
-							plot_pixel.handler(bitmap, currx ^ currxor, ypos, pens[right]);
+							plot_pixel(bitmap, currx ^ currxor, ypos, pens[right]);
 						currx++;
 					}
 				}
@@ -215,7 +209,7 @@ public class gridlee
 					src += 4;
 	
 				/* de-adjust for flip */
-				if (gridlee_cocktail_flip != 0)
+				if (gridlee_cocktail_flip)
 					ypos = 239 - ypos;
 			}
 		}

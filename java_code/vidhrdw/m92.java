@@ -41,7 +41,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,7 +61,7 @@ public class m92
 	int m92_game_kludge;
 	
 	/* This is a kludgey speedup that I consider to be pretty ugly..  But -
-	it gets a massive speed increase (~40fps . ~65fps).  It works by avoiding
+	it gets a massive speed increase (~40fps -> ~65fps).  It works by avoiding
 	the need to dirty the top playfield twice a frame */
 	#define RYPELEO_SPEEDUP m92_game_kludge==1
 	
@@ -77,8 +77,7 @@ public class m92
 			m92_sprite_interrupt();
 	}
 	
-	public static WriteHandlerPtr m92_spritecontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_spritecontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int sprite_extent;
 	
 		m92_spritecontrol[offset]=data;
@@ -115,8 +114,7 @@ public class m92
 	//	logerror("%04x: m92_spritecontrol_w %08x %08x\n",activecpu_get_pc(),offset,data);
 	} };
 	
-	public static WriteHandlerPtr m92_videocontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_videocontrol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			Many games write:
 				0x2000
@@ -139,13 +137,11 @@ public class m92
 	//	logerror("%04x: m92_videocontrol_w %d = %02x\n",activecpu_get_pc(),offset,data);
 	} };
 	
-	public static ReadHandlerPtr m92_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return paletteram_r(offset + 0x800*m92_palette_bank);
 	} };
 	
-	public static WriteHandlerPtr m92_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		paletteram_xBBBBBGGGGGRRRRR_w(offset + 0x800*m92_palette_bank,data);
 	} };
 	
@@ -159,7 +155,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if ((color & 0x80) != 0) pri = 1;
+		else if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -177,7 +173,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if ((color & 0x80) != 0) pri = 1;
+		else if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -197,7 +193,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if ((color & 0x80) != 0) pri = 1;
+		else if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -215,7 +211,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if ((color & 0x80) != 0) pri = 1;
+		else if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -232,7 +228,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 	
-		if ((color & 0x80) != 0) pri = 1;
+		if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -250,7 +246,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 		if (m92_vram_data[tile_index+3]&1) pri = 2;
-		else if ((color & 0x80) != 0) pri = 1;
+		else if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -268,7 +264,7 @@ public class m92
 		tile=m92_vram_data[tile_index]+(m92_vram_data[tile_index+1]<<8)+((m92_vram_data[tile_index+3]&0x80)<<9);
 		color=m92_vram_data[tile_index+2];
 	
-		if ((color & 0x80) != 0) pri = 1;
+		if (color&0x80) pri = 1;
 		else pri = 0;
 	
 		SET_TILE_INFO(
@@ -280,13 +276,11 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static ReadHandlerPtr m92_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return m92_vram_data[offset];
 	} };
 	
-	public static WriteHandlerPtr m92_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int a,wide;
 	
 		m92_vram_data[offset]=data;
@@ -296,7 +290,7 @@ public class m92
 		wide=offset&0x7fff;
 		offset&=0x3fff;
 	
-		if (RYPELEO_SPEEDUP != 0) {
+		if (RYPELEO_SPEEDUP) {
 			if (a==0xc000) {
 				tilemap_mark_tile_dirty(pf1_hlayer,offset/4);
 				return;
@@ -320,23 +314,19 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static WriteHandlerPtr m92_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pf1_control[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr m92_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pf2_control[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr m92_pf3_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_pf3_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pf3_control[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr m92_master_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_master_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_pf1_ptr,last_pf2_ptr,last_pf3_ptr;
 	
 		pf4_control[offset]=data;
@@ -348,8 +338,8 @@ public class m92
 				pf1_vram_ptr=(pf4_control[0]&3)*0x4000;
 				pf1_shape=(pf4_control[0]&4)>>2;
 	
-				if (RYPELEO_SPEEDUP != 0) tilemap_set_enable(pf1_hlayer,pf1_enable);
-				if (pf1_shape != 0) {
+				if (RYPELEO_SPEEDUP) tilemap_set_enable(pf1_hlayer,pf1_enable);
+				if (pf1_shape) {
 					tilemap_set_enable(pf1_layer,0);
 					tilemap_set_enable(pf1_wide_layer,pf1_enable);
 				}
@@ -379,7 +369,7 @@ public class m92
 				if ((pf4_control[4]&0x40)==0x40) pf3_rowscroll=1; else pf3_rowscroll=0;
 				pf3_shape=(pf4_control[4]&4)>>2;
 	
-				if (pf3_shape != 0) {
+				if (pf3_shape) {
 					tilemap_set_enable(pf3_layer,0);
 					tilemap_set_enable(pf3_wide_layer,pf3_enable);
 				}
@@ -396,7 +386,7 @@ public class m92
 				break;
 			case 6:
 			case 7:
-	//			if (flip_screen != 0)
+	//			if (flip_screen())
 	//				m92_raster_irq_position=256-(((pf4_control[7]<<8) | pf4_control[6])-128);
 	//			else
 					m92_raster_irq_position=((pf4_control[7]<<8) | pf4_control[6])-128;
@@ -408,9 +398,8 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_m92  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (RYPELEO_SPEEDUP != 0) {
+	public static VideoStartHandlerPtr video_start_m92  = new VideoStartHandlerPtr() { public int handler(){
+		if (RYPELEO_SPEEDUP) {
 			pf1_hlayer = tilemap_create(
 				get_pf1_htile_info,tilemap_scan_rows,
 				TILEMAP_SPLIT,
@@ -560,31 +549,31 @@ public class m92
 			for (j=0; j<x_multi; j++)
 			{
 				s_ptr=8 * j;
-				if (fy == 0) s_ptr+=y_multi-1;
+				if (!fy) s_ptr+=y_multi-1;
 	
 				for (i=0; i<y_multi; i++)
 				{
-					if (flip_screen != 0) {
+					if (flip_screen()) {
 						int ffx=fx,ffy=fy;
-						if (ffx != 0) ffx=0; else ffx=1;
-						if (ffy != 0) ffy=0; else ffy=1;
-						pdrawgfx(bitmap,Machine.gfx[1],
+						if (ffx) ffx=0; else ffx=1;
+						if (ffy) ffy=0; else ffy=1;
+						pdrawgfx(bitmap,Machine->gfx[1],
 								sprite + s_ptr,
 								colour,
 								ffx,ffy,
 								496-x,496-(y-i*16),
 								cliprect,TRANSPARENCY_PEN,0,pri);
 					} else {
-						pdrawgfx(bitmap,Machine.gfx[1],
+						pdrawgfx(bitmap,Machine->gfx[1],
 								sprite + s_ptr,
 								colour,
 								fx,fy,
 								x,y-i*16,
 								cliprect,TRANSPARENCY_PEN,0,pri);
 					}
-					if (fy != 0) s_ptr++; else s_ptr--;
+					if (fy) s_ptr++; else s_ptr--;
 				}
-				if (fx != 0) x-=16; else x+=16;
+				if (fx) x-=16; else x+=16;
 				offs+=8;
 			}
 		}
@@ -592,13 +581,12 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_m92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Screen refresh is handled by raster interrupt routine, here
 			we just check the keyboard */
 		if (keyboard_pressed_memory(KEYCODE_F1)) {
 			m92_raster_enable ^= 1;
-			if (m92_raster_enable != 0)
+			if (m92_raster_enable)
 				usrintf_showmessage("Raster IRQ enabled");
 			else
 				usrintf_showmessage("Raster IRQ disabled");
@@ -626,7 +614,7 @@ public class m92
 	
 		*/
 	
-		if (flip_screen != 0) {
+		if (flip_screen()) {
 			pf1_off=-25;
 			pf2_off=-27;
 			pf3_off=-29;
@@ -636,7 +624,7 @@ public class m92
 			pf3_off=4;
 		}
 	
-		if (pf1_rowscroll != 0) {
+		if (pf1_rowscroll) {
 			tilemap_set_scroll_rows(pf1_layer,512);
 			tilemap_set_scroll_rows(pf1_wide_layer,512);
 			for (i=0; i<1024; i+=2)
@@ -650,7 +638,7 @@ public class m92
 			tilemap_set_scrollx( pf1_wide_layer,0, (pf1_control[5]<<8)+pf1_control[4]+256-pf1_off );
 		}
 	
-		if (pf2_rowscroll != 0) {
+		if (pf2_rowscroll) {
 			tilemap_set_scroll_rows(pf2_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf2_layer,i/2, (m92_vram_data[0xf800+i]+(m92_vram_data[0xf801+i]<<8))-pf2_off);
@@ -659,7 +647,7 @@ public class m92
 			tilemap_set_scrollx( pf2_layer,0, (pf2_control[5]<<8)+pf2_control[4]-pf2_off );
 		}
 	
-		if (pf3_rowscroll != 0) {
+		if (pf3_rowscroll) {
 			tilemap_set_scroll_rows(pf3_layer,512);
 			for (i=0; i<1024; i+=2)
 				tilemap_set_scrollx( pf3_layer,i/2, (m92_vram_data[0xfc00+i]+(m92_vram_data[0xfc01+i]<<8))-pf3_off);
@@ -679,7 +667,7 @@ public class m92
 		tilemap_set_scrolly( pf1_wide_layer,0, (pf1_control[1]<<8)+pf1_control[0] );
 		tilemap_set_scrolly( pf3_wide_layer,0, (pf3_control[1]<<8)+pf3_control[0] );
 	
-		if (RYPELEO_SPEEDUP != 0) {
+		if (RYPELEO_SPEEDUP) {
 			tilemap_set_scroll_rows(pf1_hlayer,1);
 			tilemap_set_scrollx( pf1_hlayer,0, (pf1_control[5]<<8)+pf1_control[4] );
 			tilemap_set_scrolly( pf1_hlayer,0, (pf1_control[1]<<8)+pf1_control[0] );
@@ -692,12 +680,12 @@ public class m92
 	{
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (pf3_enable != 0) {
+		if (pf3_enable) {
 			tilemap_draw(bitmap,cliprect,pf3_wide_layer,TILEMAP_BACK,0);
 			tilemap_draw(bitmap,cliprect,pf3_layer,TILEMAP_BACK,0);
 		}
 		else
-			fillbitmap(bitmap,Machine.pens[0],cliprect);
+			fillbitmap(bitmap,Machine->pens[0],cliprect);
 	
 		tilemap_draw(bitmap,cliprect,pf2_layer,TILEMAP_BACK,0);
 		tilemap_draw(bitmap,cliprect,pf1_wide_layer,TILEMAP_BACK,0);
@@ -722,14 +710,14 @@ public class m92
 	{
 		struct rectangle clip;
 	
-		clip.min_x = 0;//Machine.visible_area.min_x;
-		clip.max_x = 511;//Machine.visible_area.max_x;
+		clip.min_x = 0;//Machine->visible_area.min_x;
+		clip.max_x = 511;//Machine->visible_area.max_x;
 		clip.min_y = start_line+128;
 		clip.max_y = end_line+128;
-		if (clip.min_y < Machine.visible_area.min_y)
-			clip.min_y = Machine.visible_area.min_y;
-		if (clip.max_y > Machine.visible_area.max_y)
-			clip.max_y = Machine.visible_area.max_y;
+		if (clip.min_y < Machine->visible_area.min_y)
+			clip.min_y = Machine->visible_area.min_y;
+		if (clip.max_y > Machine->visible_area.max_y)
+			clip.max_y = Machine->visible_area.max_y;
 	
 		if (clip.max_y > clip.min_y)
 		{

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -55,8 +55,7 @@ public class news
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_news  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_news  = new VideoStartHandlerPtr() { public int handler(){
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32, 32);
 		tilemap_set_transparent_pen(fg_tilemap,0);
@@ -74,20 +73,17 @@ public class news
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr news_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr news_fgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		news_fgram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr news_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr news_bgram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		news_bgram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr news_bgpic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr news_bgpic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bgpic != data)
 		{
 			bgpic = data;
@@ -103,8 +99,7 @@ public class news
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_news  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_news  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };

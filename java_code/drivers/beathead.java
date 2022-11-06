@@ -99,7 +99,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -161,8 +161,7 @@ public class beathead
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_beathead  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_beathead  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset the common subsystems */
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -246,7 +245,7 @@ public class beathead
 	
 	static WRITE32_HANDLER( eeprom_data_w )
 	{
-		if (eeprom_enabled != 0)
+		if (eeprom_enabled)
 		{
 			mem_mask |= 0xffffff00;
 			COMBINE_DATA(&((data32_t *)generic_nvram)[offset]);
@@ -283,8 +282,8 @@ public class beathead
 	static READ32_HANDLER( input_2_r )
 	{
 		int result = readinputport(2);
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x10;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x20;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x10;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x20;
 		return result;
 	}
 	
@@ -310,7 +309,7 @@ public class beathead
 	
 	static WRITE32_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 			atarigen_sound_w(offset, data, mem_mask);
 	}
 	
@@ -389,7 +388,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_beathead = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_beathead = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( beathead )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
@@ -438,8 +437,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_beathead = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( beathead )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(ASAP, ATARI_CLOCK_14MHz)
@@ -462,9 +460,7 @@ public class beathead
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -543,8 +539,7 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_beathead  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_beathead  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the common systems */
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
@@ -567,5 +562,5 @@ public class beathead
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_beathead	   = new GameDriver("1993"	,"beathead"	,"beathead.java"	,rom_beathead,null	,machine_driver_beathead	,input_ports_beathead	,init_beathead	,ROT0	,	"Atari Games", "BeatHead (prototype)" )
+	GAME( 1993, beathead, 0, beathead, beathead, beathead, ROT0, "Atari Games", "BeatHead (prototype)" )
 }

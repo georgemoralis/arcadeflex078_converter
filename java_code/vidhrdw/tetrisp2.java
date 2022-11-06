@@ -40,7 +40,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -95,7 +95,7 @@ public class tetrisp2
 	
 	WRITE16_HANDLER( tetrisp2_priority_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			data |= ((data & 0xff00) >> 8);
 			tetrisp2_priority[offset] = data;
@@ -105,7 +105,7 @@ public class tetrisp2
 	
 	WRITE16_HANDLER( rockn_priority_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			tetrisp2_priority[offset] = data;
 		}
@@ -193,8 +193,7 @@ public class tetrisp2
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_tetrisp2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tetrisp2  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
 									16,16,NX_0,NY_0);
@@ -216,8 +215,7 @@ public class tetrisp2
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_rockntread  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rockntread  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap_bg = tilemap_create(	get_tile_info_bg,tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
 									16, 16, 256, 16);	// rockn ms(main),1,2,3,4
@@ -288,10 +286,10 @@ public class tetrisp2
 		UINT32 primask;
 		data16_t *priority_ram;
 	
-		int min_x = cliprect.min_x;
-		int max_x = cliprect.max_x;
-		int min_y = cliprect.min_y;
-		int max_y = cliprect.max_y;
+		int min_x = cliprect->min_x;
+		int max_x = cliprect->max_x;
+		int min_y = cliprect->min_y;
+		int max_y = cliprect->max_y;
 	
 		data16_t		*source	=	sprram_top;
 		const data16_t	*finish	=	sprram_top + (sprram_size - 0x10) / 2;
@@ -338,7 +336,7 @@ public class tetrisp2
 			sy		=	(sy & 0x1ff) - (sy & 0x200);
 	
 			/* Flip Screen */
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = max_x + 1 - sx - xsize;	flipx = NOT(flipx);
 				sy = max_y + 1 - sy - ysize;	flipy = NOT(flipy);
@@ -364,10 +362,10 @@ public class tetrisp2
 			if (clip.min_y < min_y)	clip.min_y = min_y;
 			if (clip.max_y > max_y)	clip.max_y = max_y;
 	
-			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1;  sx -= xnum*8 - xsize - (tx & 7); }
+			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1;  sx -= xnum*8 - xsize - (tx & 7); }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1;  sx -= tx & 7; }
 	
-			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1;  sy -= ynum*8 - ysize - (ty & 7); }
+			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1;  sy -= ynum*8 - ysize - (ty & 7); }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1;  sy -= ty & 7; }
 	
 			primask = 0;
@@ -384,7 +382,7 @@ public class tetrisp2
 			{
 				for (x = xstart; x != xend; x += xinc)
 				{
-					pdrawgfx(bitmap, Machine.gfx[gfxnum],
+					pdrawgfx(bitmap, Machine->gfx[gfxnum],
 							code++,
 							color,
 							flipx, flipy,
@@ -406,8 +404,7 @@ public class tetrisp2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tetrisp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int flipscreen_old = -1;
 		int flipscreen;
 		int asc_pri;
@@ -429,7 +426,7 @@ public class tetrisp2
 		}
 	
 		/* Flip Screen */
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
 			rot_ofsx = 0x053f;
 			rot_ofsy = 0x04df;
@@ -490,8 +487,7 @@ public class tetrisp2
 		tetrisp2_draw_sprites(bitmap,cliprect, spriteram16, spriteram_size[0], 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rockntread  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int flipscreen_old = -1;
 		int flipscreen;
 		int asc_pri;
@@ -513,7 +509,7 @@ public class tetrisp2
 		}
 	
 		/* Flip Screen */
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
 			rot_ofsx = 0x053f;
 			rot_ofsy = 0x04df;

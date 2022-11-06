@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,17 +26,17 @@ public class wwfsstar
 	
 	WRITE16_HANDLER( wwfsstar_fg0_videoram_w )
 	{
-		int oldword = wwfsstar_fg0_videoram.read(offset);
-		COMBINE_DATA(&wwfsstar_fg0_videoram.read(offset));
-		if (oldword != wwfsstar_fg0_videoram.read(offset))
+		int oldword = wwfsstar_fg0_videoram[offset];
+		COMBINE_DATA(&wwfsstar_fg0_videoram[offset]);
+		if (oldword != wwfsstar_fg0_videoram[offset])
 			tilemap_mark_tile_dirty(fg0_tilemap,offset/2);
 	}
 	
 	WRITE16_HANDLER( wwfsstar_bg0_videoram_w )
 	{
-		int oldword =wwfsstar_bg0_videoram.read(offset);
-		COMBINE_DATA(&wwfsstar_bg0_videoram.read(offset));
-		if (oldword != wwfsstar_bg0_videoram.read(offset))
+		int oldword =wwfsstar_bg0_videoram[offset];
+		COMBINE_DATA(&wwfsstar_bg0_videoram[offset]);
+		if (oldword != wwfsstar_bg0_videoram[offset])
 			tilemap_mark_tile_dirty(bg0_tilemap,offset/2);
 	}
 	
@@ -64,7 +64,7 @@ public class wwfsstar
 		data16_t *tilebase;
 		int tileno;
 		int colbank;
-		tilebase =  &wwfsstar_fg0_videoram.read(tile_index*2);
+		tilebase =  &wwfsstar_fg0_videoram[tile_index*2];
 		tileno =  (tilebase[1] & 0x00ff) | ((tilebase[0] & 0x000f) << 8);
 		colbank = (tilebase[0] & 0x00f0) >> 4;
 		SET_TILE_INFO(
@@ -99,7 +99,7 @@ public class wwfsstar
 	
 		data16_t *tilebase;
 		int tileno, colbank, flipx;
-		tilebase =  &wwfsstar_bg0_videoram.read(tile_index*2);
+		tilebase =  &wwfsstar_bg0_videoram[tile_index*2];
 		tileno =  (tilebase[1] & 0x00ff) | ((tilebase[0] & 0x000f) << 8);
 		colbank = (tilebase[0] & 0x0070) >> 4;
 		flipx   = (tilebase[0] & 0x0080) >> 7;
@@ -139,7 +139,7 @@ public class wwfsstar
 	
 		**- End of Comments -*/
 	
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data16_t *source = spriteram16;
 		data16_t *finish = source + 0x3ff/2;
 	
@@ -149,7 +149,7 @@ public class wwfsstar
 	
 			enable = (source [1] & 0x0001);
 	
-			if (enable != 0)
+			if (enable)
 			{
 				ypos = ((source [0] & 0x00ff) | ((source [1] & 0x0004) << 6) );
 				ypos = (((256 - ypos) & 0x1ff) - 16) ;
@@ -162,7 +162,7 @@ public class wwfsstar
 				number = (source [3] & 0x00ff) | ((source [2] & 0x003f) << 8);
 				colourbank = (source [1] & 0x00f0) >> 4;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipy = NOT(flipy);
 					flipx = NOT(flipx);
@@ -172,9 +172,9 @@ public class wwfsstar
 	
 				for (count=0;count<chain;count++)
 				{
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
-						if (flipy == 0)
+						if (NOT(flipy))
 						{
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos+16*count,cliprect,TRANSPARENCY_PEN,0);
 						}
@@ -185,7 +185,7 @@ public class wwfsstar
 					}
 					else
 					{
-						if (flipy == 0)
+						if (NOT(flipy))
 						{
 							drawgfx(bitmap,gfx,number+count,colourbank,flipx,flipy,xpos,ypos-(16*(chain-1))+(16*count),cliprect,TRANSPARENCY_PEN,0);
 						}
@@ -211,8 +211,7 @@ public class wwfsstar
 	*******************************************************************************/
 	
 	
-	public static VideoStartHandlerPtr video_start_wwfsstar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wwfsstar  = new VideoStartHandlerPtr() { public int handler(){
 		fg0_tilemap = tilemap_create(get_fg0_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		tilemap_set_transparent_pen(fg0_tilemap,0);
 	
@@ -225,8 +224,7 @@ public class wwfsstar
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wwfsstar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly( bg0_tilemap, 0, wwfsstar_scrolly  );
 		tilemap_set_scrollx( bg0_tilemap, 0, wwfsstar_scrollx  );
 	

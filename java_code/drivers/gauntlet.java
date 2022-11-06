@@ -120,7 +120,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -151,12 +151,12 @@ public class gauntlet
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate |= 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -166,15 +166,14 @@ public class gauntlet
 	static void scanline_update(int scanline)
 	{
 		/* sound IRQ is on 32V */
-		if ((scanline & 32) != 0)
+		if (scanline & 32)
 			atarigen_6502_irq_gen();
 		else
 			atarigen_6502_irq_ack_r(0);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_gauntlet  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gauntlet  = new MachineInitHandlerPtr() { public void handler(){
 		last_speech_write = 0x80;
 		sound_reset_val = 1;
 	
@@ -198,27 +197,27 @@ public class gauntlet
 		int result = readinputport(real_port);
 		int fake = readinputport(fake_port);
 	
-		if ((fake & 0x01) != 0)			/* up */
+		if (fake & 0x01)			/* up */
 		{
-			if ((fake & 0x04) != 0)		/* up and left */
+			if (fake & 0x04)		/* up and left */
 				result &= ~0x20;
-			else if ((fake & 0x08) != 0)	/* up and right */
+			else if (fake & 0x08)	/* up and right */
 				result &= ~0x10;
 			else					/* up only */
 				result &= ~0x30;
 		}
-		else if ((fake & 0x02) != 0)		/* down */
+		else if (fake & 0x02)		/* down */
 		{
-			if ((fake & 0x04) != 0)		/* down and left */
+			if (fake & 0x04)		/* down and left */
 				result &= ~0x80;
-			else if ((fake & 0x08) != 0)	/* down and right */
+			else if (fake & 0x08)	/* down and right */
 				result &= ~0x40;
 			else					/* down only */
 				result &= ~0xc0;
 		}
-		else if ((fake & 0x04) != 0)		/* left only */
+		else if (fake & 0x04)		/* left only */
 			result &= ~0x60;
-		else if ((fake & 0x08) != 0)		/* right only */
+		else if (fake & 0x08)		/* right only */
 			result &= ~0x90;
 	
 		return result;
@@ -234,8 +233,8 @@ public class gauntlet
 	static READ16_HANDLER( port4_r )
 	{
 		int temp = readinputport(4);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
 		return temp;
 	}
 	
@@ -249,7 +248,7 @@ public class gauntlet
 	
 	static WRITE16_HANDLER( sound_reset_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int oldword = sound_reset_val;
 			COMBINE_DATA(&sound_reset_val);
@@ -270,13 +269,12 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr switch_6502_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int temp = 0x30;
 	
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x80;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x40;
-		if (tms5220_ready_r() != 0) temp ^= 0x20;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x80;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x40;
+		if (tms5220_ready_r()) temp ^= 0x20;
 		if (!(readinputport(4) & 0x0008)) temp ^= 0x10;
 	
 		return temp;
@@ -290,8 +288,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr tms5220_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms5220_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speech_val = data;
 	} };
 	
@@ -303,8 +300,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sound_ctl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_ctl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 7)
 		{
 			case 0:	/* music reset, bit D7, low reset */
@@ -336,8 +332,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mixer_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mixer_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		atarigen_set_ym2151_vol((data & 7) * 100 / 7);
 		atarigen_set_pokey_vol(((data >> 3) & 3) * 100 / 3);
 		atarigen_set_tms5220_vol(((data >> 5) & 7) * 100 / 7);
@@ -430,7 +425,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_gauntlet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gauntlet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gauntlet )
 		PORT_START(); 	/* 803000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -491,7 +486,7 @@ public class gauntlet
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_vindctr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vindctr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vindctr2 )
 		PORT_START(); 	/* 803000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
@@ -628,8 +623,7 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_gauntlet = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gauntlet )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_14MHz/2)
@@ -660,9 +654,7 @@ public class gauntlet
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1605,26 +1597,22 @@ public class gauntlet
 	}
 	
 	
-	public static DriverInitHandlerPtr init_gauntlet  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gauntlet  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(104, 0);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_gaunt2p  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gaunt2p  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(107, 0);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_gauntlet2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gauntlet2  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(106, 0);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_vindctr2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vindctr2  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *gfx2_base = memory_region(REGION_GFX2);
 		UINT8 *data = malloc(0x8000);
 		int i;
@@ -1636,7 +1624,7 @@ public class gauntlet
 	
 		/* highly strange -- the address bits on the chip at 2J (and only that
 		   chip) are scrambled -- this is verified on the schematics! */
-		if (data != 0)
+		if (data)
 		{
 			memcpy(data, &gfx2_base[0x88000], 0x8000);
 			for (i = 0; i < 0x8000; i++)
@@ -1656,36 +1644,36 @@ public class gauntlet
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_gauntlet	   = new GameDriver("1985"	,"gauntlet"	,"gauntlet.java"	,rom_gauntlet,null	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 14)" )
-	public static GameDriver driver_gaunts	   = new GameDriver("1985"	,"gaunts"	,"gauntlet.java"	,rom_gaunts,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (Spanish, rev 15)" )
-	public static GameDriver driver_gauntj	   = new GameDriver("1985"	,"gauntj"	,"gauntlet.java"	,rom_gauntj,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (Japanese, rev 13)" )
-	public static GameDriver driver_gauntg	   = new GameDriver("1985"	,"gauntg"	,"gauntlet.java"	,rom_gauntg,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (German, rev 10)" )
-	public static GameDriver driver_gauntj12	   = new GameDriver("1985"	,"gauntj12"	,"gauntlet.java"	,rom_gauntj12,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (Japanese, rev 12)" )
-	public static GameDriver driver_gauntr9	   = new GameDriver("1985"	,"gauntr9"	,"gauntlet.java"	,rom_gauntr9,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 9)" )
-	public static GameDriver driver_gauntgr8	   = new GameDriver("1985"	,"gauntgr8"	,"gauntlet.java"	,rom_gauntgr8,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (German, rev 8)" )
-	public static GameDriver driver_gauntr7	   = new GameDriver("1985"	,"gauntr7"	,"gauntlet.java"	,rom_gauntr7,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 7)" )
-	public static GameDriver driver_gauntgr6	   = new GameDriver("1985"	,"gauntgr6"	,"gauntlet.java"	,rom_gauntgr6,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (German, rev 6)" )
-	public static GameDriver driver_gauntr5	   = new GameDriver("1985"	,"gauntr5"	,"gauntlet.java"	,rom_gauntr5,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 5)" )
-	public static GameDriver driver_gauntr4	   = new GameDriver("1985"	,"gauntr4"	,"gauntlet.java"	,rom_gauntr4,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 4)" )
-	public static GameDriver driver_gauntgr3	   = new GameDriver("1985"	,"gauntgr3"	,"gauntlet.java"	,rom_gauntgr3,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (German, rev 3)" )
-	public static GameDriver driver_gauntr2	   = new GameDriver("1985"	,"gauntr2"	,"gauntlet.java"	,rom_gauntr2,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 2)" )
-	public static GameDriver driver_gauntr1	   = new GameDriver("1985"	,"gauntr1"	,"gauntlet.java"	,rom_gauntr1,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet	,ROT0	,	"Atari Games", "Gauntlet (rev 1)" )
+	GAME( 1985, gauntlet, 0,        gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 14)" )
+	GAME( 1985, gaunts,   gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (Spanish, rev 15)" )
+	GAME( 1985, gauntj,   gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (Japanese, rev 13)" )
+	GAME( 1985, gauntg,   gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (German, rev 10)" )
+	GAME( 1985, gauntj12, gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (Japanese, rev 12)" )
+	GAME( 1985, gauntr9,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 9)" )
+	GAME( 1985, gauntgr8, gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (German, rev 8)" )
+	GAME( 1985, gauntr7,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 7)" )
+	GAME( 1985, gauntgr6, gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (German, rev 6)" )
+	GAME( 1985, gauntr5,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 5)" )
+	GAME( 1985, gauntr4,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 4)" )
+	GAME( 1985, gauntgr3, gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (German, rev 3)" )
+	GAME( 1985, gauntr2,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 2)" )
+	GAME( 1985, gauntr1,  gauntlet, gauntlet, gauntlet, gauntlet,  ROT0, "Atari Games", "Gauntlet (rev 1)" )
 	
-	public static GameDriver driver_gaunt2p	   = new GameDriver("1985"	,"gaunt2p"	,"gauntlet.java"	,rom_gaunt2p,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, rev 6)" )
-	public static GameDriver driver_gaunt2pj	   = new GameDriver("1985"	,"gaunt2pj"	,"gauntlet.java"	,rom_gaunt2pj,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, Japanese, rev 5)" )
-	public static GameDriver driver_gaunt2pg	   = new GameDriver("1985"	,"gaunt2pg"	,"gauntlet.java"	,rom_gaunt2pg,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, German, rev 4)" )
-	public static GameDriver driver_gaun2pr3	   = new GameDriver("1985"	,"gaun2pr3"	,"gauntlet.java"	,rom_gaun2pr3,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, rev 3)" )
-	public static GameDriver driver_gaun2pj2	   = new GameDriver("1985"	,"gaun2pj2"	,"gauntlet.java"	,rom_gaun2pj2,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, Japanese, rev 2)" )
-	public static GameDriver driver_gaun2pg1	   = new GameDriver("1985"	,"gaun2pg1"	,"gauntlet.java"	,rom_gaun2pg1,driver_gauntlet	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gaunt2p	,ROT0	,	"Atari Games", "Gauntlet (2 Players, German, rev 1)" )
+	GAME( 1985, gaunt2p,  gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, rev 6)" )
+	GAME( 1985, gaunt2pj, gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, Japanese, rev 5)" )
+	GAME( 1985, gaunt2pg, gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, German, rev 4)" )
+	GAME( 1985, gaun2pr3, gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, rev 3)" )
+	GAME( 1985, gaun2pj2, gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, Japanese, rev 2)" )
+	GAME( 1985, gaun2pg1, gauntlet, gauntlet, gauntlet, gaunt2p,   ROT0, "Atari Games", "Gauntlet (2 Players, German, rev 1)" )
 	
-	public static GameDriver driver_gaunt2	   = new GameDriver("1986"	,"gaunt2"	,"gauntlet.java"	,rom_gaunt2,null	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet2	,ROT0	,	"Atari Games", "Gauntlet II" )
-	public static GameDriver driver_gaunt2g	   = new GameDriver("1986"	,"gaunt2g"	,"gauntlet.java"	,rom_gaunt2g,driver_gaunt2	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet2	,ROT0	,	"Atari Games", "Gauntlet II (German)" )
+	GAME( 1986, gaunt2,   0,        gauntlet, gauntlet, gauntlet2, ROT0, "Atari Games", "Gauntlet II" )
+	GAME( 1986, gaunt2g,  gaunt2,   gauntlet, gauntlet, gauntlet2, ROT0, "Atari Games", "Gauntlet II (German)" )
 	
-	public static GameDriver driver_gaunt22p	   = new GameDriver("1986"	,"gaunt22p"	,"gauntlet.java"	,rom_gaunt22p,driver_gaunt2	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet2	,ROT0	,	"Atari Games", "Gauntlet II (2 Players, rev 2)" )
-	public static GameDriver driver_gaun22p1	   = new GameDriver("1986"	,"gaun22p1"	,"gauntlet.java"	,rom_gaun22p1,driver_gaunt2	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet2	,ROT0	,	"Atari Games", "Gauntlet II (2 Players, rev 1)" )
-	public static GameDriver driver_gaun22pg	   = new GameDriver("1986"	,"gaun22pg"	,"gauntlet.java"	,rom_gaun22pg,driver_gaunt2	,machine_driver_gauntlet	,input_ports_gauntlet	,init_gauntlet2	,ROT0	,	"Atari Games", "Gauntlet II (2 Players, German)" )
+	GAME( 1986, gaunt22p, gaunt2,   gauntlet, gauntlet, gauntlet2, ROT0, "Atari Games", "Gauntlet II (2 Players, rev 2)" )
+	GAME( 1986, gaun22p1, gaunt2,   gauntlet, gauntlet, gauntlet2, ROT0, "Atari Games", "Gauntlet II (2 Players, rev 1)" )
+	GAME( 1986, gaun22pg, gaunt2,   gauntlet, gauntlet, gauntlet2, ROT0, "Atari Games", "Gauntlet II (2 Players, German)" )
 	
-	public static GameDriver driver_vindctr2	   = new GameDriver("1988"	,"vindctr2"	,"gauntlet.java"	,rom_vindctr2,null	,machine_driver_gauntlet	,input_ports_vindctr2	,init_vindctr2	,ROT0	,	"Atari Games", "Vindicators Part II (rev 3)" )
-	public static GameDriver driver_vindc2r2	   = new GameDriver("1988"	,"vindc2r2"	,"gauntlet.java"	,rom_vindc2r2,driver_vindctr2	,machine_driver_gauntlet	,input_ports_vindctr2	,init_vindctr2	,ROT0	,	"Atari Games", "Vindicators Part II (rev 2)" )
-	public static GameDriver driver_vindc2r1	   = new GameDriver("1988"	,"vindc2r1"	,"gauntlet.java"	,rom_vindc2r1,driver_vindctr2	,machine_driver_gauntlet	,input_ports_vindctr2	,init_vindctr2	,ROT0	,	"Atari Games", "Vindicators Part II (rev 1)" )
+	GAME( 1988, vindctr2, 0,        gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 3)" )
+	GAME( 1988, vindc2r2, vindctr2, gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 2)" )
+	GAME( 1988, vindc2r1, vindctr2, gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 1)" )
 }

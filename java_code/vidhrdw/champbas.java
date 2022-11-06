@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,7 @@ public class champbas
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_champbas  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_champbas  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -83,8 +82,7 @@ public class champbas
 			COLOR(0,i) = (*(color_prom++) & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr champbas_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champbas_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -92,8 +90,7 @@ public class champbas
 		}
 	} };
 	
-	public static WriteHandlerPtr champbas_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champbas_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -101,8 +98,7 @@ public class champbas
 		}
 	} };
 	
-	public static WriteHandlerPtr champbas_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champbas_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxbank != (data & 0x01))
 		{
 			gfxbank = data & 0x01;
@@ -110,8 +106,7 @@ public class champbas
 		}
 	} };
 	
-	public static WriteHandlerPtr champbas_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champbas_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != data)
 		{
 			flip_screen_set(data);
@@ -127,12 +122,11 @@ public class champbas
 		SET_TILE_INFO(gfxbank, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_champbas  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_champbas  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -152,17 +146,16 @@ public class champbas
 			int sy = spriteram_2.read(offs)- 16;
 	
 			drawgfx(bitmap,
-				Machine.gfx[2 + gfxbank],
+				Machine->gfx[2 + gfxbank],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_champbas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_champbas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		champbas_draw_sprites(bitmap);
 	} };

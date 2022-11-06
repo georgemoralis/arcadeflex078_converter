@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,12 +43,12 @@ public class terracre
 	static void
 	draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *pGfx = Machine.gfx[2];
+		const struct GfxElement *pGfx = Machine->gfx[2];
 		const data16_t *pSource = spriteram16;
 		int i;
 		int transparent_pen;
 	
-		if( pGfx.total_elements > 0x200 )
+		if( pGfx->total_elements > 0x200 )
 		{ /* HORE HORE Kid */
 			transparent_pen = 0xf;
 		}
@@ -66,27 +66,27 @@ public class terracre
 			int sx = (pSource[3] & 0xff) - 0x80 + 256 * (attrs & 1);
 			int sy = 240 - (pSource[0] & 0xff);
 	
-			if (transparent_pen != 0)
+			if( transparent_pen )
 			{
 				int bank;
 	
-				if ((attrs & 0x02) != 0) tile |= 0x200;
-				if ((attrs & 0x10) != 0) tile |= 0x100;
+				if( attrs&0x02 ) tile |= 0x200;
+				if( attrs&0x10 ) tile |= 0x100;
 	
 				bank = (tile&0xfc)>>1;
-				if ((tile & 0x200) != 0) bank |= 0x80;
-				if ((tile & 0x100) != 0) bank |= 0x01;
+				if( tile&0x200 ) bank |= 0x80;
+				if( tile&0x100 ) bank |= 0x01;
 	
 				color &= 0xe;
 				color += 16*(spritepalettebank[bank]&0xf);
 			}
 			else
 			{
-				if ((attrs & 0x02) != 0) tile|= 0x100;
+				if( attrs&0x02 ) tile|= 0x100;
 				color += 16 * (spritepalettebank[(tile>>1)&0xff] & 0x0f);
 			}
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 					sx=240-sx;
 					sy=240-sy;
@@ -101,8 +101,7 @@ public class terracre
 		}
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_amazon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_amazon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
 		int i;
@@ -143,7 +142,7 @@ public class terracre
 		/* pens 0-7; the top two bits for pens 8-15. */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			if ((i & 8) != 0) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
+			if (i & 8) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
 			else COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0x30) >> 0);
 		}
 	
@@ -158,7 +157,7 @@ public class terracre
 	
 			for (j = 0;j < 16;j++)
 			{
-				if ((i & 8) != 0)
+				if (i & 8)
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (color_prom.read()& 0x0f);
 				else
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (color_prom.read()& 0x0f);
@@ -185,7 +184,7 @@ public class terracre
 	
 	WRITE16_HANDLER( amazon_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if( ACCESSING_LSB )
 		{
 			coin_counter_w( 0, data&0x01 );
 			coin_counter_w( 1, (data&0x02)>>1 );
@@ -205,8 +204,7 @@ public class terracre
 		tilemap_set_scrollx(background,0,xscroll);
 	}
 	
-	public static VideoStartHandlerPtr video_start_amazon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_amazon  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,16,16,64,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,64,32);
 		if( background && foreground )
@@ -217,9 +215,8 @@ public class terracre
 		return 1;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_amazon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if ((xscroll & 0x2000) != 0)
+	public static VideoUpdateHandlerPtr video_update_amazon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if( xscroll&0x2000 )
 		{
 			fillbitmap( bitmap,get_black_pen(),cliprect );
 		}

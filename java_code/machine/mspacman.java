@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -186,8 +186,7 @@ public class mspacman
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_mspacman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mspacman  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		mspacman_decode();
 		cpu_setbank (1, &RAM[0x00000]);
@@ -196,8 +195,7 @@ public class mspacman
 	} };
 	
 	
-	public static WriteHandlerPtr mspacman_activate_rom = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mspacman_activate_rom = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		if(data==1) cpu_setbank (1, &RAM[0x10000]);

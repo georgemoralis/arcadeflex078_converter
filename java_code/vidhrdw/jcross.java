@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,8 +15,7 @@ public class jcross
 	
 	int jcross_vregs[5];
 	
-	public static WriteHandlerPtr jcross_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jcross_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fg_color = data&0xf;
 	} };
 	
@@ -62,32 +61,26 @@ public class jcross
 		}
 	}
 	
-	public static WriteHandlerPtr jcross_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jcross_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram.write(offset,data);
 	} };
-	public static ReadHandlerPtr jcross_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jcross_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr jcross_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jcross_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
-	public static WriteHandlerPtr jcross_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jcross_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(bg_tilemap,offset);
 	} };
 	
-	public static ReadHandlerPtr jcross_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jcross_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jcr_textram[offset];
 	} };
 	
-	public static WriteHandlerPtr jcross_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jcross_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		jcr_textram[offset]=data;
 		tilemap_mark_tile_dirty(tx_tilemap,offset);
 	} };
@@ -112,8 +105,7 @@ public class jcross
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_jcross  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jcross  = new VideoStartHandlerPtr() { public int handler(){
 		flipscreen = -1;  old_fg_color = -1;
 	
 		stuff_palette( 0, 0, 16*8 );
@@ -141,7 +133,7 @@ public class jcross
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		const unsigned char *base =  memory_region(REGION_CPU1)+0xf400;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -167,7 +159,7 @@ public class jcross
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly )
 	{
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		const unsigned char *source, *finish;
 		source = jcr_sharedram;
 		finish = jcr_sharedram + 0x64;
@@ -197,19 +189,18 @@ public class jcross
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jcross  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scroll_attributes = jcross_vregs[0];
 		int sprite_scrolly = jcross_vregs[1];
 		int sprite_scrollx = jcross_vregs[2];
 		int bg_scrolly = jcross_vregs[3];
 		int bg_scrollx = jcross_vregs[4];
 	
-		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
-		if ((scroll_attributes & 2) != 0) bg_scrollx += 256;
+		if( scroll_attributes & 1 ) sprite_scrollx += 256;
+		if( scroll_attributes & 2 ) bg_scrollx += 256;
 	
-		if ((scroll_attributes & 8) != 0) sprite_scrolly += 256;
-		if ((scroll_attributes & 0x10) != 0) bg_scrolly += 256;
+		if( scroll_attributes & 8 ) sprite_scrolly += 256;
+		if( scroll_attributes & 0x10 ) bg_scrolly += 256;
 		update_palette(1);
 	
 	

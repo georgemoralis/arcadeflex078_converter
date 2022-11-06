@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -50,8 +50,7 @@ public class senjyo
 	static int channel;
 	
 	
-	public static WriteHandlerPtr senjyo_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_volume_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		single_volume = data & 0x0f;
 		mixer_set_volume(channel,single_volume * 100 / 15);
 	} };
@@ -65,7 +64,7 @@ public class senjyo
 		mixer_set_name(channel,"Tone");
 	
 		/* z80 ctc init */
-		ctc_intf.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
 		z80ctc_init (&ctc_intf);
 	
 		/* z80 pio init */
@@ -96,7 +95,7 @@ public class senjyo
 	{
 		double period;
 	
-		if (Machine.sample_rate == 0) return;
+		if (Machine->sample_rate == 0) return;
 	
 	
 		/* ctc2 timer single tone generator frequency */

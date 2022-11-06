@@ -49,7 +49,7 @@ and 2764 eprom (swapped D3/D4 and D5/D6 data lines)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -88,7 +88,7 @@ public class travrusa
 	
 	
 	
-	static InputPortPtr input_ports_travrusa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_travrusa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( travrusa )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -176,7 +176,7 @@ public class travrusa
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as travrusa, no "Title" switch */
-	static InputPortPtr input_ports_motorace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_motorace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( motorace )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -263,7 +263,7 @@ public class travrusa
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shtrider = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shtrider = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shtrider )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -402,8 +402,7 @@ public class travrusa
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_travrusa = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( travrusa )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -430,12 +429,9 @@ public class travrusa
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_shtrider = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shtrider )
 	
 		MDRV_IMPORT_FROM(travrusa)
 	
@@ -443,9 +439,7 @@ public class travrusa
 		MDRV_GFXDECODE(sht_gfxdecodeinfo)
 	
 		MDRV_PALETTE_INIT(shtrider)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -537,13 +531,12 @@ public class travrusa
 	
 	
 	
-	public static DriverInitHandlerPtr init_motorace  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_motorace  = new DriverInitHandlerPtr() { public void handler(){
 		int A,j;
 		unsigned char *rom = memory_region(REGION_CPU1);
 		data8_t *buffer = malloc(0x2000);
 	
-		if (buffer != 0)
+		if (buffer)
 		{
 			memcpy(buffer,rom,0x2000);
 	
@@ -558,8 +551,7 @@ public class travrusa
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_shtrider  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shtrider  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -570,7 +562,7 @@ public class travrusa
 	
 	
 	
-	public static GameDriver driver_travrusa	   = new GameDriver("1983"	,"travrusa"	,"travrusa.java"	,rom_travrusa,null	,machine_driver_travrusa	,input_ports_travrusa	,null	,ROT270	,	"Irem", "Traverse USA / Zippy Race" )
-	public static GameDriver driver_motorace	   = new GameDriver("1983"	,"motorace"	,"travrusa.java"	,rom_motorace,driver_travrusa	,machine_driver_travrusa	,input_ports_motorace	,init_motorace	,ROT270	,	"Irem (Williams license)", "MotoRace USA" )
-	public static GameDriver driver_shtrider	   = new GameDriver("1984"	,"shtrider"	,"travrusa.java"	,rom_shtrider,null	,machine_driver_shtrider	,input_ports_shtrider	,init_shtrider	,ROT270	,	ORIENTATION_FLIP_X, "Seibu Kaihatsu (Sigma license)", "Shot Rider", GAME_NO_COCKTAIL )
+	GAME( 1983, travrusa, 0,        travrusa, travrusa, 0,        ROT270, "Irem", "Traverse USA / Zippy Race" )
+	GAME( 1983, motorace, travrusa, travrusa, motorace, motorace, ROT270, "Irem (Williams license)", "MotoRace USA" )
+	GAMEX(1984, shtrider, 0,        shtrider, shtrider, shtrider, ROT270|ORIENTATION_FLIP_X, "Seibu Kaihatsu (Sigma license)", "Shot Rider", GAME_NO_COCKTAIL )
 }

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,8 @@ public class lethalj
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = ((readinputport(2 + player * 2) & 0xff) * Machine.drv.screen_width) / 255;
-		*y = ((readinputport(3 + player * 2) & 0xff) * Machine.drv.screen_height) / 255;
+		*x = ((readinputport(2 + player * 2) & 0xff) * Machine->drv->screen_width) / 255;
+		*y = ((readinputport(3 + player * 2) & 0xff) * Machine->drv->screen_height) / 255;
 	}
 	
 	
@@ -86,8 +86,7 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_lethalj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_lethalj  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, r, g, b;
 		for (r = i = 0; r < 32; r++)
 			for (g = 0; g < 32; g++)
@@ -103,11 +102,10 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_lethalj  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lethalj  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate video RAM for screen */
 		screenram = auto_malloc(BLITTER_DEST_WIDTH * BLITTER_DEST_HEIGHT * sizeof(screenram[0]));
-		if (screenram == 0)
+		if (!screenram)
 			return 1;
 	
 		/* predetermine blitter info */
@@ -163,7 +161,7 @@ public class lethalj
 					if (dx >= 0 && dx < BLITTER_DEST_WIDTH)
 					{
 						int pix = source[sx % BLITTER_SOURCE_WIDTH];
-						if (pix != 0)
+						if (pix)
 							dest[dx] = pix;
 					}
 			}
@@ -197,12 +195,11 @@ public class lethalj
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lethalj  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int beamx, beamy;
 		
 		/* blank palette: fill with white */
-		if (blank_palette != 0)
+		if (blank_palette)
 			fillbitmap(bitmap, 0x7fff, cliprect);
 		
 		/* otherwise, blit from screenram */

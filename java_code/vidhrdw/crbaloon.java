@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -33,8 +33,7 @@ public class crbaloon
 	  bit 0 RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_crbaloon  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -63,8 +62,7 @@ public class crbaloon
 		}
 	} };
 	
-	public static WriteHandlerPtr crbaloon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -72,8 +70,7 @@ public class crbaloon
 		}
 	} };
 	
-	public static WriteHandlerPtr crbaloon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -81,13 +78,11 @@ public class crbaloon
 		}
 	} };
 	
-	public static WriteHandlerPtr crbaloon_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_spritectrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spritectrl[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr crbaloon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crbaloon_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -103,12 +98,11 @@ public class crbaloon
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_crbaloon  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_crbaloon  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_xy, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
@@ -129,28 +123,28 @@ public class crbaloon
 	
 		tilemap_draw(tmpbitmap, 0, bg_tilemap, 0, 0);
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			by += 32;
 		}
 	
-		drawgfx(bitmap,Machine.gfx[1],
+		drawgfx(bitmap,Machine->gfx[1],
 				spritectrl[0] & 0x0f,
 				15,
 				0,0,
 				bx,by,
-				Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine->visible_area,TRANSPARENCY_PEN,0);
 	
 	    crbaloon_collision = 0;
 	
-		for (x = bx; x < bx + Machine.gfx[1].width; x++)
+		for (x = bx; x < bx + Machine->gfx[1]->width; x++)
 		{
-			for (y = by; y < by + Machine.gfx[1].height; y++)
+			for (y = by; y < by + Machine->gfx[1]->height; y++)
 	        {
-				if ((x < Machine.visible_area.min_x) ||
-				    (x > Machine.visible_area.max_x) ||
-				    (y < Machine.visible_area.min_y) ||
-				    (y > Machine.visible_area.max_y))
+				if ((x < Machine->visible_area.min_x) ||
+				    (x > Machine->visible_area.max_x) ||
+				    (y < Machine->visible_area.min_y) ||
+				    (y > Machine->visible_area.max_y))
 				{
 					continue;
 				}
@@ -166,16 +160,15 @@ public class crbaloon
 	
 		/* actually draw the balloon */
 	
-		drawgfx(bitmap,Machine.gfx[1],
+		drawgfx(bitmap,Machine->gfx[1],
 				spritectrl[0] & 0x0f,
 				(spritectrl[0] & 0xf0) >> 4,
 				0,0,
 				bx,by,
-				Machine.visible_area,TRANSPARENCY_PEN,0);
+				Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_crbaloon  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		crbaloon_draw_sprites(bitmap);
 	} };

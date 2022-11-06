@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class vicdual
 	  bit 0 -- Unused
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_vicdual  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_vicdual  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		/* for b&w games we'll use the Head On PROM */
 		static unsigned char bw_color_prom[] =
@@ -105,8 +104,7 @@ public class vicdual
 	
 	
 	
-	public static WriteHandlerPtr vicdual_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vicdual_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (vicdual_characterram[offset] != data)
 		{
 			dirtycharacter[(offset / 8) & 0xff] = 1;
@@ -115,13 +113,11 @@ public class vicdual
 		}
 	} };
 	
-	public static ReadHandlerPtr vicdual_characterram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vicdual_characterram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vicdual_characterram[offset];
 	} };
 	
-	public static WriteHandlerPtr vicdual_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vicdual_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palette_bank != (data & 3))
 		{
 			palette_bank = data & 3;
@@ -138,12 +134,11 @@ public class vicdual
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_vicdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vicdual  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size[0]);
 		}

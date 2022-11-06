@@ -22,7 +22,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,8 +37,7 @@ public class wilytowr
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_wilytowr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wilytowr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -93,8 +92,7 @@ public class wilytowr
 		}
 	} };
 	
-	public static WriteHandlerPtr wilytowr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wilytowr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -102,8 +100,7 @@ public class wilytowr
 		}
 	} };
 	
-	public static WriteHandlerPtr wilytowr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wilytowr_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -111,17 +108,15 @@ public class wilytowr
 		}
 	} };
 	
-	public static WriteHandlerPtr wilytowr_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (wilytowr_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr wilytowr_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (wilytowr_videoram2[offset] != data)
 		{
-			wilytowr_videoram2.write(data,data);
+			wilytowr_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr wilytwr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wilytwr_palbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (pal_bank != (data & 0x01))
 		{
 			pal_bank = data & 0x01;
@@ -129,8 +124,7 @@ public class wilytowr
 		}
 	} };
 	
-	public static WriteHandlerPtr wilytwr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wilytwr_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (~data & 0x01))
 		{
 			flip_screen_set(~data & 0x01);
@@ -149,23 +143,22 @@ public class wilytowr
 	
 	static void get_fg_tile_info(int tile_index)
 	{
-		int code = wilytowr_videoram2.read(tile_index);
+		int code = wilytowr_videoram2[tile_index];
 	
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_wilytowr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wilytowr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap, 32);
@@ -187,7 +180,7 @@ public class wilytowr
 			int sx = spriteram.read(offs + 3);
 			int sy = 238 - spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 238 - sy;
@@ -195,17 +188,16 @@ public class wilytowr
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[2],
+			drawgfx(bitmap, Machine->gfx[2],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_wilytowr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wilytowr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int col;
 	
 		for (col = 0; col < 32; col++)
@@ -217,22 +209,19 @@ public class wilytowr
 	} };
 	
 	
-	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, data & 0x01);
 	} };
 	
 	
-	public static WriteHandlerPtr snd_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snd_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 0, PULSE_LINE);
 	} };
 	
 	
 	static int p1,p2;
 	
-	public static WriteHandlerPtr snddata_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snddata_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((p2 & 0xf0) == 0xe0)
 			AY8910_control_port_0_w.handler(0,offset);
 		else if ((p2 & 0xf0) == 0xa0)
@@ -246,13 +235,11 @@ public class wilytowr
 			logerror("%04x: snddata_w ctrl = %02x, p1 = %02x, p2 = %02x, data = %02x\n",activecpu_get_pc(),data,p1,p2,offset);
 	} };
 	
-	public static WriteHandlerPtr p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr p1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p1 = data;
 	} };
 	
-	public static WriteHandlerPtr p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr p2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p2 = data;
 	} };
 	
@@ -318,7 +305,7 @@ public class wilytowr
 	
 	
 	
-	static InputPortPtr input_ports_wilytowr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wilytowr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wilytowr )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -457,8 +444,7 @@ public class wilytowr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_wilytowr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wilytowr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,4000000)	/* 4 MHz ???? */
@@ -486,9 +472,7 @@ public class wilytowr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -581,6 +565,6 @@ public class wilytowr
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_wilytowr	   = new GameDriver("1984"	,"wilytowr"	,"wilytowr.java"	,rom_wilytowr,null	,machine_driver_wilytowr	,input_ports_wilytowr	,null	,ROT180	,	"Irem",                    "Wily Tower", GAME_NO_SOUND )
-	public static GameDriver driver_atomboy	   = new GameDriver("1985"	,"atomboy"	,"wilytowr.java"	,rom_atomboy,driver_wilytowr	,machine_driver_wilytowr	,input_ports_wilytowr	,null	,ROT180	,	"Irem (Memetron license)", "Atomic Boy", GAME_NO_SOUND )
+	GAMEX( 1984, wilytowr, 0,        wilytowr, wilytowr, 0, ROT180, "Irem",                    "Wily Tower", GAME_NO_SOUND )
+	GAMEX( 1985, atomboy,  wilytowr, wilytowr, wilytowr, 0, ROT180, "Irem (Memetron license)", "Atomic Boy", GAME_NO_SOUND )
 }

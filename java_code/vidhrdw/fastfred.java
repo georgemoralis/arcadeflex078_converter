@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,7 +59,7 @@ public class fastfred
 		UINT8 r,g,b;
 		int bit0, bit1, bit2, bit3;
 	
-		pen_t total = Machine.drv.total_colors;
+		pen_t total = Machine->drv->total_colors;
 	
 		bit0 = (fastfred_color_prom[i + 0*total] >> 0) & 0x01;
 		bit1 = (fastfred_color_prom[i + 0*total] >> 1) & 0x01;
@@ -80,8 +80,7 @@ public class fastfred
 		palette_set_color(pen,r,g,b);
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_fastfred  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_fastfred  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		pen_t i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -120,7 +119,7 @@ public class fastfred
 	{
 		data8_t x = tile_index & 0x1f;
 	
-		data16_t code = charbank | fastfred_videoram.read(tile_index);
+		data16_t code = charbank | fastfred_videoram[tile_index];
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)
@@ -134,11 +133,10 @@ public class fastfred
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_fastfred  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_fastfred  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_scroll_cols(bg_tilemap, 32);
@@ -153,22 +151,20 @@ public class fastfred
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fastfred_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (fastfred_videoram.read(offset)!= data)
+	public static WriteHandlerPtr fastfred_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (fastfred_videoram[offset] != data)
 		{
-			fastfred_videoram.write(data,data);
+			fastfred_videoram[offset] = data;
 	
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr fastfred_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (fastfred_attributesram[offset] != data)
 		{
-			if ((offset & 0x01) != 0)
+			if (offset & 0x01)
 			{
 				/* color change */
 				int i;
@@ -187,8 +183,7 @@ public class fastfred
 	} };
 	
 	
-	public static WriteHandlerPtr fastfred_charbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_charbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data16_t new_data = (charbank & 0x0200) | ((data & 0x01) << 8);
 	
 		if (new_data != charbank)
@@ -199,8 +194,7 @@ public class fastfred
 		}
 	} };
 	
-	public static WriteHandlerPtr fastfred_charbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_charbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data16_t new_data = (charbank & 0x0100) | ((data & 0x01) << 9);
 	
 		if (new_data != charbank)
@@ -212,8 +206,7 @@ public class fastfred
 	} };
 	
 	
-	public static WriteHandlerPtr fastfred_colorbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_colorbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t new_data = (colorbank & 0x10) | ((data & 0x01) << 3);
 	
 		if (new_data != colorbank)
@@ -224,8 +217,7 @@ public class fastfred
 		}
 	} };
 	
-	public static WriteHandlerPtr fastfred_colorbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_colorbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t new_data = (colorbank & 0x08) | ((data & 0x01) << 4);
 	
 		if (new_data != colorbank)
@@ -237,14 +229,12 @@ public class fastfred
 	} };
 	
 	
-	public static WriteHandlerPtr fastfred_background_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_background_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_color(0, data);
 	} };
 	
 	
-	public static WriteHandlerPtr fastfred_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_x != (data & 0x01))
 		{
 			flip_screen_x = data & 0x01;
@@ -253,8 +243,7 @@ public class fastfred
 		}
 	} };
 	
-	public static WriteHandlerPtr fastfred_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fastfred_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen_y != (data & 0x01))
 		{
 			flip_screen_y = data & 0x01;
@@ -320,18 +309,18 @@ public class fastfred
 			}
 	
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					colorbank | (fastfred_spriteram[offs + 2] & 0x07),
 					flipx,flipy,
@@ -341,8 +330,7 @@ public class fastfred
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_fastfred  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fastfred  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		draw_sprites(bitmap, cliprect);
@@ -353,7 +341,7 @@ public class fastfred
 	{
 		data8_t x = tile_index & 0x1f;
 	
-		data16_t code = charbank * 0x100 + fastfred_videoram.read(tile_index);
+		data16_t code = charbank * 0x100 + fastfred_videoram[tile_index];
 		data8_t color = colorbank | (fastfred_attributesram[2 * x + 1] & 0x07);
 	
 		SET_TILE_INFO(0, code, color, 0)
@@ -366,8 +354,7 @@ public class fastfred
 	}
 	
 	
-	public static WriteHandlerPtr imago_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr imago_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( imago_fg_videoram[offset] != data)
 		{
 			imago_fg_videoram[offset] = data;
@@ -375,8 +362,7 @@ public class fastfred
 		}
 	} };
 	
-	public static WriteHandlerPtr imago_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr imago_charbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( charbank != data )
 		{
 			charbank = data;
@@ -384,8 +370,7 @@ public class fastfred
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_imago  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_imago  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(imago_get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 		fg_tilemap = tilemap_create(imago_get_tile_info_fg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -397,8 +382,7 @@ public class fastfred
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_imago  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_imago  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		draw_sprites(bitmap, cliprect);

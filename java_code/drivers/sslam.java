@@ -36,7 +36,7 @@ a small kid and even with a dog! And remember, Winners don't use Drugs ;)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,8 +54,6 @@ public class sslam
 	WRITE16_HANDLER( sslam_tx_tileram_w );
 	WRITE16_HANDLER( sslam_md_tileram_w );
 	WRITE16_HANDLER( sslam_bg_tileram_w );
-	VIDEO_START(sslam);
-	VIDEO_UPDATE(sslam);
 	
 	
 	/* Memory Maps */
@@ -108,7 +106,7 @@ public class sslam
 	
 	/* Input Ports */
 	
-	static InputPortPtr input_ports_sslam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sslam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sslam )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -247,8 +245,7 @@ public class sslam
 	
 	/* Machine Driver */
 	
-	public static MachineHandlerPtr machine_driver_sslam = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sslam )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz? */
@@ -270,9 +267,7 @@ public class sslam
 	
 		/* sound hardware */
 	//	MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_sslam = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0xD00000, REGION_CPU1, 0 ) /* 68000 Code */
@@ -297,5 +292,5 @@ public class sslam
 		ROM_LOAD( "it_20.bin", 0x00000, 0x80000, CRC(d0a9245f) SHA1(2e840cdd7bdfe7c6f986daf88576de0559597499) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_sslam	   = new GameDriver("1993"	,"sslam"	,"sslam.java"	,rom_sslam,null	,machine_driver_sslam	,input_ports_sslam	,null	,ROT0	,	"Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, sslam, 0, sslam, sslam, 0, ROT0, "Playmark", "Super Slam", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -9,8 +9,7 @@ public class irem
 	
 	
 	
-	public static WriteHandlerPtr irem_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_sound_cmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x80) == 0)
 			soundlatch_w.handler(0,data & 0x7f);
 		else
@@ -20,31 +19,29 @@ public class irem
 	
 	static int port1,port2;
 	
-	public static WriteHandlerPtr irem_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port1 = data;
 	} };
 	
-	public static WriteHandlerPtr irem_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write latch */
 		if ((port2 & 0x01) && !(data & 0x01))
 		{
 			/* control or data port? */
-			if ((port2 & 0x04) != 0)
+			if (port2 & 0x04)
 			{
 				/* PSG 0 or 1? */
-				if ((port2 & 0x08) != 0)
+				if (port2 & 0x08)
 					AY8910_control_port_0_w.handler(0,port1);
-				if ((port2 & 0x10) != 0)
+				if (port2 & 0x10)
 					AY8910_control_port_1_w.handler(0,port1);
 			}
 			else
 			{
 				/* PSG 0 or 1? */
-				if ((port2 & 0x08) != 0)
+				if (port2 & 0x08)
 					AY8910_write_port_0_w.handler(0,port1);
-				if ((port2 & 0x10) != 0)
+				if (port2 & 0x10)
 					AY8910_write_port_1_w.handler(0,port1);
 			}
 		}
@@ -52,25 +49,22 @@ public class irem
 	} };
 	
 	
-	public static ReadHandlerPtr irem_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irem_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* PSG 0 or 1? */
-		if ((port2 & 0x08) != 0)
+		if (port2 & 0x08)
 			return AY8910_read_port_0_r.handler(0);
-		if ((port2 & 0x10) != 0)
+		if (port2 & 0x10)
 			return AY8910_read_port_1_r.handler(0);
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr irem_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irem_port2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
 	
 	
-	public static WriteHandlerPtr irem_msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 2-4 select MSM5205 clock & 3b/4b playback mode */
 		MSM5205_playmode_w(0,(data >> 2) & 7);
 		MSM5205_playmode_w(1,((data >> 2) & 4) | 3);	/* always in slave mode */
@@ -80,8 +74,7 @@ public class irem
 		MSM5205_reset_w(1,data & 2);
 	} };
 	
-	public static WriteHandlerPtr irem_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w(offset,data);
 	} };
 	
@@ -94,10 +87,9 @@ public class irem
 		MSM5205_vclk_w(1,0);
 	}
 	
-	public static WriteHandlerPtr irem_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irem_analog_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef MAME_DEBUG
-	if ((data & 0x0f) != 0) usrintf_showmessage("analog sound %x",data&0x0f);
+	if (data&0x0f) usrintf_showmessage("analog sound %x",data&0x0f);
 	#endif
 	} };
 	
@@ -165,7 +157,5 @@ public class irem
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, irem_ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, irem_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 }

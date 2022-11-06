@@ -30,7 +30,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -68,8 +68,7 @@ public class sbrkout
 	
 	static UINT8 *sbrkout_sound;
 	
-	public static WriteHandlerPtr sbrkout_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbrkout_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sbrkout_sound[offset]=data;
 	} };
 	
@@ -87,8 +86,7 @@ public class sbrkout
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_sbrkout  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_sbrkout  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(TIME_IN_MSEC(TIME_4V), 0, sbrkout_tones_4V);
 	} };
 	
@@ -99,8 +97,7 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_sbrkout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sbrkout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00);
 		palette_set_color(1,0xff,0xff,0xff);
 	} };
@@ -161,7 +158,7 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_sbrkout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbrkout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbrkout )
 		PORT_START(); 		/* DSW - fake port, gets mapped to Super Breakout ports */
 		PORT_DIPNAME( 0x03, 0x00, "Language" );
 		PORT_DIPSETTING(	0x00, "English" );
@@ -274,8 +271,7 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_sbrkout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sbrkout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,375000) 	   /* 375 KHz? Should be 750KHz? */
@@ -300,9 +296,7 @@ public class sbrkout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -339,8 +333,7 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_sbrkout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sbrkout  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(sbrkout_overlay);
 	} };
 	
@@ -352,5 +345,5 @@ public class sbrkout
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_sbrkout	   = new GameDriver("1978"	,"sbrkout"	,"sbrkout.java"	,rom_sbrkout,null	,machine_driver_sbrkout	,input_ports_sbrkout	,init_sbrkout	,ROT270	,	"Atari", "Super Breakout" )
+	GAME( 1978, sbrkout, 0, sbrkout, sbrkout, sbrkout, ROT270, "Atari", "Super Breakout" )
 }

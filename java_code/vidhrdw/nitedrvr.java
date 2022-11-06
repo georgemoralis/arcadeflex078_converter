@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,8 +17,7 @@ public class nitedrvr
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr nitedrvr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nitedrvr_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -26,8 +25,7 @@ public class nitedrvr
 		}
 	} };
 	
-	public static WriteHandlerPtr nitedrvr_hvc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nitedrvr_hvc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nitedrvr_hvc[offset & 0x3f] = data;
 	
 	//	if ((offset & 0x30) == 0x30)
@@ -41,12 +39,11 @@ public class nitedrvr
 		SET_TILE_INFO(0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_nitedrvr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_nitedrvr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -61,7 +58,7 @@ public class nitedrvr
 			for (x=bx; x<ex; x++)
 			{
 				if ((y<256) && (x<256))
-					plot_pixel(bitmap, x, y, Machine.pens[1]);
+					plot_pixel(bitmap, x, y, Machine->pens[1]);
 			}
 		}
 	
@@ -98,21 +95,20 @@ public class nitedrvr
 		/* gear shift indicator - not a part of the original game!!! */
 		gear_buf[5]=0x30 + nitedrvr_gear;
 		for (offs = 0; offs < 6; offs++)
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					gear_buf[offs],0,
 					0,0,(offs)*8,31*8,
-					Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine->visible_area,TRANSPARENCY_NONE,0);
 	
 		/* track indicator - not a part of the original game!!! */
 		for (offs = 0; offs < 6; offs++)
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					track_buf[offs + 6*nitedrvr_track],0,
 					0,0,(offs+26)*8,31*8,
-					Machine.visible_area,TRANSPARENCY_NONE,0);
+					Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_nitedrvr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		nitedrvr_draw_road(bitmap);
 		//nitedrvr_draw_hacks(bitmap);

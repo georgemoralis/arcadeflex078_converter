@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -96,8 +96,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_atarig42  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_atarig42  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarirle_desc modesc =
 		{
 			REGION_GFX3,/* region where the GFX data lives */
@@ -126,7 +125,7 @@ public class atarig42
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, atarig42_playfield_scan, TILEMAP_OPAQUE, 8,8, 128,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -138,7 +137,7 @@ public class atarig42
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -185,7 +184,7 @@ public class atarig42
 			data16_t word;
 	
 			word = *base++;
-			if ((word & 0x8000) != 0)
+			if (word & 0x8000)
 			{
 				int newscroll = (word >> 5) & 0x3ff;
 				int newbank = word & 0x1f;
@@ -204,7 +203,7 @@ public class atarig42
 			}
 	
 			word = *base++;
-			if ((word & 0x8000) != 0)
+			if (word & 0x8000)
 			{
 				int newscroll = ((word >> 6) - (scanline + i)) & 0x1ff;
 				int newbank = word & 7;
@@ -232,8 +231,7 @@ public class atarig42
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atarig42  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the playfield */
 		fillbitmap(priority_bitmap, 0, cliprect);
 		tilemap_draw(bitmap, cliprect, atarigen_playfield_tilemap, 0, 0);

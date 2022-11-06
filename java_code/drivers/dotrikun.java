@@ -22,7 +22,7 @@ SOUND : (none)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -60,7 +60,7 @@ public class dotrikun
 	};
 	
 	
-	static InputPortPtr input_ports_dotrikun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dotrikun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dotrikun )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -73,8 +73,7 @@ public class dotrikun
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_dotrikun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dotrikun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)		 /* 4 MHz */
@@ -95,9 +94,7 @@ public class dotrikun
 		MDRV_VIDEO_UPDATE(dotrikun)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -117,6 +114,6 @@ public class dotrikun
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_dotrikun	   = new GameDriver("1990"	,"dotrikun"	,"dotrikun.java"	,rom_dotrikun,null	,machine_driver_dotrikun	,input_ports_dotrikun	,null	,ROT0	,	"Sega", "Dottori Kun (new version)", GAME_NO_SOUND )
-	public static GameDriver driver_dotriku2	   = new GameDriver("1990"	,"dotriku2"	,"dotrikun.java"	,rom_dotriku2,driver_dotrikun	,machine_driver_dotrikun	,input_ports_dotrikun	,null	,ROT0	,	"Sega", "Dottori Kun (old version)", GAME_NO_SOUND )
+	GAMEX( 1990, dotrikun, 0,        dotrikun, dotrikun, 0, ROT0, "Sega", "Dottori Kun (new version)", GAME_NO_SOUND )
+	GAMEX( 1990, dotriku2, dotrikun, dotrikun, dotrikun, 0, ROT0, "Sega", "Dottori Kun (old version)", GAME_NO_SOUND )
 }

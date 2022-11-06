@@ -16,7 +16,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,13 +28,11 @@ public class xain
 	
 	
 	
-	public static ReadHandlerPtr xain_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xain_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return xain_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr xain_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* locations 003d and 003e are used as a semaphores between CPU A and B, */
 		/* so let's resync every time they are changed to avoid deadlocks */
 		if ((offset == 0x003d || offset == 0x003e)
@@ -43,66 +41,55 @@ public class xain
 		xain_sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr xainCPUA_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xainCPUA_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if ((data & 0x08) != 0) {cpu_setbank(1,&RAM[0x10000]);}
+		if (data & 0x08) {cpu_setbank(1,&RAM[0x10000]);}
 		else {cpu_setbank(1,&RAM[0x4000]);}
 	} };
 	
-	public static WriteHandlerPtr xainCPUB_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xainCPUB_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
-		if ((data & 0x01) != 0) {cpu_setbank(2,&RAM[0x10000]);}
+		if (data & 0x01) {cpu_setbank(2,&RAM[0x10000]);}
 		else {cpu_setbank(2,&RAM[0x4000]);}
 	} };
 	
-	public static WriteHandlerPtr xain_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,M6809_IRQ_LINE,HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr xain_irqA_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_irqA_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,M6809_IRQ_LINE,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr xain_irqA_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_irqA_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,M6809_IRQ_LINE,CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr xain_firqA_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_firqA_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,M6809_FIRQ_LINE,CLEAR_LINE);
 	} };
 	
-	public static WriteHandlerPtr xain_irqB_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_irqB_assert_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,M6809_IRQ_LINE,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr xain_irqB_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_irqB_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,M6809_IRQ_LINE,CLEAR_LINE);
 	} };
 	
-	public static ReadHandlerPtr xain_68705_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xain_68705_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("read 68705\n");
 		return 0x4d;	/* fake P5 checksum test pass */
 	} };
 	
-	public static WriteHandlerPtr xain_68705_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xain_68705_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("write %02x to 68705\n",data);
 	} };
 	
-	public static InterruptHandlerPtr xainA_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr xainA_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* returning nmi on iloops() == 0 will cause lockups because the nmi handler */
 		/* waits for the vblank bit to be clear and there are other places in the code */
 		/* that wait for it to be set */
@@ -194,7 +181,7 @@ public class xain
 	
 	
 	
-	static InputPortPtr input_ports_xsleena = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xsleena = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xsleena )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -327,8 +314,7 @@ public class xain
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_xsleena = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xsleena )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)	/* 2 MHz ??? */
@@ -362,9 +348,7 @@ public class xain
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -529,8 +513,7 @@ public class xain
 	
 	
 	
-	public static DriverInitHandlerPtr init_xsleena  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_xsleena  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* do the same patch as the bootleg xsleena */
@@ -542,8 +525,7 @@ public class xain
 		RAM[0xd48d] = 0x12;
 	} };
 	
-	public static DriverInitHandlerPtr init_solarwar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_solarwar  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* do the same patch as the bootleg xsleena */
@@ -557,7 +539,7 @@ public class xain
 	
 	
 	
-	public static GameDriver driver_xsleena	   = new GameDriver("1986"	,"xsleena"	,"xain.java"	,rom_xsleena,null	,machine_driver_xsleena	,input_ports_xsleena	,init_xsleena	,ROT0	,	"Technos", "Xain'd Sleena" )
-	public static GameDriver driver_xsleenab	   = new GameDriver("1986"	,"xsleenab"	,"xain.java"	,rom_xsleenab,driver_xsleena	,machine_driver_xsleena	,input_ports_xsleena	,null	,ROT0	,	"bootleg", "Xain'd Sleena (bootleg)" )
-	public static GameDriver driver_solarwar	   = new GameDriver("1986"	,"solarwar"	,"xain.java"	,rom_solarwar,driver_xsleena	,machine_driver_xsleena	,input_ports_xsleena	,init_solarwar	,ROT0	,	"[Technos] Taito (Memetron license)", "Solar-Warrior" )
+	GAME( 1986, xsleena,  0,       xsleena, xsleena, xsleena,  ROT0, "Technos", "Xain'd Sleena" )
+	GAME( 1986, xsleenab, xsleena, xsleena, xsleena, 0,        ROT0, "bootleg", "Xain'd Sleena (bootleg)" )
+	GAME( 1986, solarwar, xsleena, xsleena, xsleena, solarwar, ROT0, "[Technos] Taito (Memetron license)", "Solar-Warrior" )
 }

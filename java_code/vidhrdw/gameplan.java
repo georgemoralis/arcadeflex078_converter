@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class gameplan
 	***************************************************************************/
 	
 	
-	public static VideoStartHandlerPtr video_start_gameplan  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gameplan  = new VideoStartHandlerPtr() { public int handler(){
 		if (strcmp(Machine.gamedrv.name, "kaos") == 0)
 			gameplan_this_is_kaos = 1;
 		else
@@ -59,8 +58,7 @@ public class gameplan
 	static int finished_sound = 0;
 	static int cb2 = -1;
 	
-	public static ReadHandlerPtr gameplan_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gameplan_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef VERBOSE
 		logerror("GAME:  read reg%X at PC %04x\n", offset, activecpu_get_pc());
 	#endif
@@ -68,7 +66,7 @@ public class gameplan
 		if (offset == 0)
 		{
 	#ifdef VERBOSE
-			if (finished_sound != 0)  logerror("[GAME: checking sound request ack: OK (%d)]\n", finished_sound);
+			if (finished_sound)  logerror("[GAME: checking sound request ack: OK (%d)]\n", finished_sound);
 			else  logerror("[GAME: checking sound request ack: BAD (%d)]\n", finished_sound);
 	#endif
 	
@@ -78,8 +76,7 @@ public class gameplan
 			return 0;
 	} };
 	
-	public static WriteHandlerPtr gameplan_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gameplan_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef VERBOSE
 		logerror("GAME: write reg%X with %02x at PC %04x\n", offset, data, activecpu_get_pc());
 	#endif
@@ -108,7 +105,7 @@ public class gameplan
 		}
 		else if (offset == 0x0c)	/* PCR */
 		{
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 			{
 				if ((data & 0x60) == 0x60)
 					cb2 = 1;
@@ -119,8 +116,7 @@ public class gameplan
 		}
 	} };
 	
-	public static ReadHandlerPtr gameplan_via5_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gameplan_via5_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef VERBOSE
 		logerror("SOUND:  read reg%X at PC %04x\n", offset, activecpu_get_pc());
 	#endif
@@ -155,8 +151,7 @@ public class gameplan
 		return 1;
 	} };
 	
-	public static WriteHandlerPtr gameplan_via5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gameplan_via5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef VERBOSE
 		logerror("SOUND: write reg%X with %02x at PC %04x\n", offset, data, activecpu_get_pc());
 	#endif
@@ -170,8 +165,7 @@ public class gameplan
 		}
 	} };
 	
-	public static ReadHandlerPtr gameplan_video_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gameplan_video_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int x;
 		x++;
 	#if 0
@@ -180,13 +174,12 @@ public class gameplan
 		return x;
 	} };
 	
-	public static WriteHandlerPtr gameplan_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gameplan_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int r0 = -1;
 		static unsigned char xpos, ypos, colour = 7;
 	
 	#ifdef VERBOSE
-		logerror("VIA 1: PC %04x: %x . reg%X\n", activecpu_get_pc(), data, offset);
+		logerror("VIA 1: PC %04x: %x -> reg%X\n", activecpu_get_pc(), data, offset);
 	#endif
 	
 		if (offset == 0)			/* write to 2000 */
@@ -200,9 +193,9 @@ public class gameplan
 		{
 			if (r0 == 0)
 			{
-				if (gameplan_this_is_kaos != 0)
+				if (gameplan_this_is_kaos)
 					colour = ~data & 0x07;
-				else if ((data & 0x0f) != 0)
+				else if (data & 0x0f)
 				{
 	#ifdef VERBOSE
 					logerror("  !movement command %02x unknown\n", data);
@@ -217,22 +210,22 @@ public class gameplan
 	#endif
 	#endif
 	
-				if ((data & 0x20) != 0)
+				if (data & 0x20)
 				{
-					if ((data & 0x80) != 0)
+					if (data & 0x80)
 						ypos--;
 					else
 						ypos++;
 				}
-				if ((data & 0x10) != 0)
+				if (data & 0x10)
 				{
-					if ((data & 0x40) != 0)
+					if (data & 0x40)
 						xpos--;
 					else
 						xpos++;
 				}
 	
-				plot_pixel.handler(tmpbitmap, xpos, ypos, Machine.pens[colour]);
+				plot_pixel(tmpbitmap, xpos, ypos, Machine->pens[colour]);
 			}
 			else if (r0 == 1)
 			{
@@ -345,7 +338,7 @@ public class gameplan
 		logerror("  clearing the screen to colour %d (%s)\n", clear_to_colour, colour_names[clear_to_colour]);
 	#endif
 	
-		fillbitmap(tmpbitmap, Machine.pens[clear_to_colour], 0);
+		fillbitmap(tmpbitmap, Machine->pens[clear_to_colour], 0);
 	
 		fix_clear_to_colour = -1;
 	}

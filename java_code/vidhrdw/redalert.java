@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -53,32 +53,29 @@ public class redalert
 	
 	static int backcolor, flip=0;
 	
-	public static WriteHandlerPtr redalert_c040_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_c040_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Only seems to load D0-D3 into a flip-flop. */
 		/* D0/D1 seem to head off to unconnected circuits */
 		/* D2 connects to a "NL" line, and NOTted to a "NH" line */
 		/* D3 connects to a "YI" line */
 	
 		/*
-			D0 == 1				. 1 player
-			D1 == 1 and D0 == 1 . 2 players
+			D0 == 1				-> 1 player
+			D1 == 1 and D0 == 1 -> 2 players
 		*/
 		flip = !(data & 0x04);
 	} };
 	
-	public static WriteHandlerPtr redalert_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Only seems to load D0-D2 into a flip-flop. */
 		/* Outputs feed into RAM which seems to feed to RGB lines. */
 		backcolor = data & 0x07;
 	} };
 	
-	public static WriteHandlerPtr demoneye_c040_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr demoneye_c040_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
-			D0 == 1				. 1 player
-			D1 == 1 and D0 == 1 . 2 players
+			D0 == 1				-> 1 player
+			D1 == 1 and D0 == 1 -> 2 players
 		*/
 		flip = data & 0x04;
 	} };
@@ -87,8 +84,7 @@ public class redalert
 	redalert_backram_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr redalert_backram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_backram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int charnum;
 	
 		charnum = offset / 8 % 0x400;
@@ -108,8 +104,7 @@ public class redalert
 	redalert_spriteram1_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr redalert_spriteram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_spriteram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (redalert_spriteram1[offset] != data)
 		{
 			redalert_dirtycharacter[((offset / 8) % 0x80) + 0x80] = 1;
@@ -122,8 +117,7 @@ public class redalert
 	redalert_spriteram2_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr redalert_spriteram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_spriteram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (redalert_spriteram2[offset] != data)
 		{
 	
@@ -137,8 +131,7 @@ public class redalert
 	redalert_characterram_w
 	***************************************************************************/
 	
-	public static WriteHandlerPtr redalert_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (redalert_characterram[offset] != data)
 		{
 			redalert_dirtycharacter[((offset / 8) % 0x80)] = 1;
@@ -147,8 +140,7 @@ public class redalert
 		}
 	} };
 	
-	public static WriteHandlerPtr redalert_characterram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_characterram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (redalert_characterram2[offset] != data)
 		{
 			redalert_dirtycharacter[((offset / 8) % 0x80)] = 1;
@@ -157,8 +149,7 @@ public class redalert
 		}
 	} };
 	
-	public static WriteHandlerPtr redalert_spriteram3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redalert_spriteram3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (redalert_spriteram3[offset] != data)
 		{
 			redalert_dirtycharacter2[((offset / 8) % 0x80) + 0x80] = 1;
@@ -176,8 +167,7 @@ public class redalert
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_redalert  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_redalert  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,i;
 	
 		/* for every character in the Video RAM, check if it has been modified */

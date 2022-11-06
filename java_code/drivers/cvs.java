@@ -84,7 +84,7 @@ Hardware Info
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -100,13 +100,11 @@ public class cvs
 		S2650 Memory Mirroring calls
 	***************************************************************************/
 	
-	public static ReadHandlerPtr cvs_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cvs_mirror_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_readmem16(0x1400+offset);
 	} };
 	
-	public static WriteHandlerPtr cvs_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvs_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_writemem16(0x1400+offset,data);
 	} };
 	
@@ -144,8 +142,7 @@ public class cvs
 	    speech_rom_bit     = 0x0;
 	}
 	
-	public static WriteHandlerPtr control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr control_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Controls both Speech and Effects */
 	
 		logerror("%4x : Sound Port = %2x\n",activecpu_get_pc(),data);
@@ -153,7 +150,7 @@ public class cvs
 	    /* Sample CPU write - Causes interrupt if bit 7 set */
 	
 	    soundlatch_w.handler(0,data);
-		if ((data & 0x80) != 0) cpu_set_irq_line(1,3,HOLD_LINE);
+		if(data & 0x80) cpu_set_irq_line(1,3,HOLD_LINE);
 	
 	
 	    /* Speech CPU stuff */
@@ -197,8 +194,7 @@ public class cvs
 		return bit;
 	}
 	
-	public static WriteHandlerPtr cvs_DAC2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cvs_DAC2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* 4 Bit DAC - 4 memory locations used */
 	
 		static int DAC_Value=0;
@@ -209,8 +205,7 @@ public class cvs
 		DAC_1_data_w(0,DAC_Value);
 	} };
 	
-	public static ReadHandlerPtr CVS_393hz_Clock_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr CVS_393hz_Clock_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  	if(cpu_scalebyfcount(6) & 1) return 0x80;
 	    else return 0;
 	} };
@@ -321,7 +316,7 @@ public class cvs
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_cvs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cvs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cvs )
 	
 		PORT_START(); 	/* Matrix 0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );			/* Confirmed */
@@ -424,8 +419,7 @@ public class cvs
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_cvs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cvs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,894886.25/3)
@@ -456,9 +450,7 @@ public class cvs
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(TMS5110, tms5110_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1250,32 +1242,28 @@ public class cvs
 		ROM_LOAD( "82s123.10k", 0x0800, 0x0020, CRC(b5221cec) SHA1(71d9830b33b1a8140b0fe1a2ba8024ba8e6e48e0) ) 
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_spacefrt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spacefrt  = new DriverInitHandlerPtr() { public void handler(){
 		/* Patch out 2nd Character Mode Change */
 	
 	    memory_region(REGION_CPU1)[0x0260] = 0xc0;
 	    memory_region(REGION_CPU1)[0x0261] = 0xc0;
 	} };
 	
-	public static DriverInitHandlerPtr init_cosmos  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cosmos  = new DriverInitHandlerPtr() { public void handler(){
 		/* Patch out 2nd Character Mode Change */
 	
 	    memory_region(REGION_CPU1)[0x0357] = 0xc0;
 	    memory_region(REGION_CPU1)[0x0358] = 0xc0;
 	} };
 	
-	public static DriverInitHandlerPtr init_goldbug  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_goldbug  = new DriverInitHandlerPtr() { public void handler(){
 		/* Redirect calls to real memory bank */
 	
 	    memory_region(REGION_CPU1)[0x4347] = 0x1e;
 	    memory_region(REGION_CPU1)[0x436a] = 0x1e;
 	} };
 	
-	public static DriverInitHandlerPtr init_huncholy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_huncholy  = new DriverInitHandlerPtr() { public void handler(){
 	    /* Patch out protection */
 	
 	    memory_region(REGION_CPU1)[0x0082] = 0xc0;
@@ -1292,8 +1280,7 @@ public class cvs
 	    memory_region(REGION_CPU1)[0x4458] = 0xc0;
 	} };
 	
-	public static DriverInitHandlerPtr init_superbik  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_superbik  = new DriverInitHandlerPtr() { public void handler(){
 	    /* Patch out protection */
 	
 	    memory_region(REGION_CPU1)[0x0079] = 0xc0;
@@ -1319,8 +1306,7 @@ public class cvs
 	    memory_region(REGION_CPU1)[0x00bd] = 0xc0;
 	} };
 	
-	public static DriverInitHandlerPtr init_hero  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hero  = new DriverInitHandlerPtr() { public void handler(){
 	    /* Patch out protection */
 	
 	    memory_region(REGION_CPU1)[0x0087] = 0xc0;
@@ -1341,26 +1327,26 @@ public class cvs
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_cvs	   = new GameDriver("1981"	,"cvs"	,"cvs.java"	,rom_cvs,null	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics","CVS Bios", NOT_A_DRIVER )
+	GAMEX( 1981, cvs,        0,        cvs,      cvs,    0,          ROT90, "Century Electronics","CVS Bios", NOT_A_DRIVER )
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_cosmos	   = new GameDriver("1981"	,"cosmos"	,"cvs.java"	,rom_cosmos,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_cosmos	,ROT90	,	"Century Electronics", "Cosmos", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_darkwar	   = new GameDriver("1981"	,"darkwar"	,"cvs.java"	,rom_darkwar,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Dark Warrior", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_spacefrt	   = new GameDriver("1981"	,"spacefrt"	,"cvs.java"	,rom_spacefrt,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_spacefrt	,ROT90	,	"Century Electronics", "Space Fortress", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_8ball	   = new GameDriver("1982"	,"8ball"	,"cvs.java"	,rom_8ball,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Video Eight Ball", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_8ball1	   = new GameDriver("1982"	,"8ball1"	,"cvs.java"	,rom_8ball1,driver_8ball	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Video Eight Ball (Rev.1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_logger	   = new GameDriver("1982"	,"logger"	,"cvs.java"	,rom_logger,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Logger", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_dazzler	   = new GameDriver("1982"	,"dazzler"	,"cvs.java"	,rom_dazzler,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Dazzler", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_wallst	   = new GameDriver("1982"	,"wallst"	,"cvs.java"	,rom_wallst,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Wall Street", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_radarzon	   = new GameDriver("1982"	,"radarzon"	,"cvs.java"	,rom_radarzon,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Radar Zone", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_radarzn1	   = new GameDriver("1982"	,"radarzn1"	,"cvs.java"	,rom_radarzn1,driver_radarzon	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Radar Zone (Rev.1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_radarznt	   = new GameDriver("1982"	,"radarznt"	,"cvs.java"	,rom_radarznt,driver_radarzon	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics (Tuni Electro Service Inc)", "Radar Zone (Tuni)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_outline	   = new GameDriver("1982"	,"outline"	,"cvs.java"	,rom_outline,driver_radarzon	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Outline", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_goldbug	   = new GameDriver("1982"	,"goldbug"	,"cvs.java"	,rom_goldbug,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_goldbug	,ROT90	,	"Century Electronics", "Gold Bug", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_heartatk	   = new GameDriver("1983"	,"heartatk"	,"cvs.java"	,rom_heartatk,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Heart Attack", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_hunchbak	   = new GameDriver("1983"	,"hunchbak"	,"cvs.java"	,rom_hunchbak,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,null	,ROT90	,	"Century Electronics", "Hunchback", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_superbik	   = new GameDriver("1983"	,"superbik"	,"cvs.java"	,rom_superbik,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_superbik	,ROT90	,	"Century Electronics", "Superbike", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_hero	   = new GameDriver("1983"	,"hero"	,"cvs.java"	,rom_hero,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_hero	,ROT90	,	"Seatongrove Ltd", "Hero", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_huncholy	   = new GameDriver("1984"	,"huncholy"	,"cvs.java"	,rom_huncholy,driver_cvs	,machine_driver_cvs	,input_ports_cvs	,init_huncholy	,ROT90	,	"Seatongrove Ltd", "Hunchback Olympic", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1981, cosmos,      cvs,      cvs,      cvs,    cosmos,     ROT90, "Century Electronics", "Cosmos", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1981, darkwar,     cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Dark Warrior", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1981, spacefrt,    cvs,      cvs,      cvs,    spacefrt,   ROT90, "Century Electronics", "Space Fortress", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, 8ball,       cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Video Eight Ball", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, 8ball1,      8ball,    cvs,      cvs,    0,          ROT90, "Century Electronics", "Video Eight Ball (Rev.1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, logger,      cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Logger", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, dazzler,     cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Dazzler", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, wallst,      cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Wall Street", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, radarzon,    cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Radar Zone", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, radarzn1,    radarzon, cvs,      cvs,    0,          ROT90, "Century Electronics", "Radar Zone (Rev.1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, radarznt,    radarzon, cvs,      cvs,    0,          ROT90, "Century Electronics (Tuni Electro Service Inc)", "Radar Zone (Tuni)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, outline,     radarzon, cvs,      cvs,    0,          ROT90, "Century Electronics", "Outline", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1982, goldbug,     cvs,      cvs,      cvs,    goldbug,    ROT90, "Century Electronics", "Gold Bug", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, heartatk,    cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Heart Attack", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, hunchbak,    cvs,      cvs,      cvs,    0,          ROT90, "Century Electronics", "Hunchback", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, superbik,    cvs,      cvs,      cvs,    superbik,   ROT90, "Century Electronics", "Superbike", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1983, hero,        cvs,      cvs,      cvs,    hero,       ROT90, "Seatongrove Ltd", "Hero", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1984, huncholy,    cvs,      cvs,      cvs,    huncholy,   ROT90, "Seatongrove Ltd", "Hunchback Olympic", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

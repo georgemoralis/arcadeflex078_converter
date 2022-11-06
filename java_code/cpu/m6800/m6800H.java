@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6800;
 
@@ -23,8 +23,8 @@ public class m6800H
 	#define M6800_IRQ_LINE	0			/* IRQ line number */
 	#define M6800_TIN_LINE	1			/* P20/Tin Input Capture line (eddge sense)     */
 										/* Active eddge is selecrable by internal reg.  */
-										/* raise eddge : CLEAR_LINE  . ASSERT_LINE     */
-										/* fall  eddge : ASSERT_LINE . CLEAR_LINE      */
+										/* raise eddge : CLEAR_LINE  -> ASSERT_LINE     */
+										/* fall  eddge : ASSERT_LINE -> CLEAR_LINE      */
 										/* it is usuali to use PULSE_LINE state         */
 	/* PUBLIC GLOBALS */
 	

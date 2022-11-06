@@ -42,7 +42,7 @@ same as Pooyan
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,13 +54,11 @@ public class timeplt
 	
 	
 	
-	public static WriteHandlerPtr timeplt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr timeplt_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset >> 1, data);
 	} };
 	
-	public static ReadHandlerPtr psurge_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psurge_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x80;
 	} };
 	
@@ -98,7 +96,7 @@ public class timeplt
 	};
 	
 	
-	static InputPortPtr input_ports_timeplt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timeplt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timeplt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -190,7 +188,7 @@ public class timeplt
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_psurge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psurge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psurge )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -306,8 +304,7 @@ public class timeplt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_timeplt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( timeplt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -335,9 +332,7 @@ public class timeplt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -442,8 +437,8 @@ public class timeplt
 	
 	
 	
-	public static GameDriver driver_timeplt	   = new GameDriver("1982"	,"timeplt"	,"timeplt.java"	,rom_timeplt,null	,machine_driver_timeplt	,input_ports_timeplt	,null	,ROT90	,	"Konami", "Time Pilot" )
-	public static GameDriver driver_timepltc	   = new GameDriver("1982"	,"timepltc"	,"timeplt.java"	,rom_timepltc,driver_timeplt	,machine_driver_timeplt	,input_ports_timeplt	,null	,ROT90	,	"Konami (Centuri license)", "Time Pilot (Centuri)" )
-	public static GameDriver driver_spaceplt	   = new GameDriver("1982"	,"spaceplt"	,"timeplt.java"	,rom_spaceplt,driver_timeplt	,machine_driver_timeplt	,input_ports_timeplt	,null	,ROT90	,	"bootleg", "Space Pilot" )
-	public static GameDriver driver_psurge	   = new GameDriver("1988"	,"psurge"	,"timeplt.java"	,rom_psurge,null	,machine_driver_timeplt	,input_ports_psurge	,null	,ROT270	,	"<unknown>", "Power Surge" )
+	GAME( 1982, timeplt,  0,       timeplt, timeplt, 0, ROT90,  "Konami", "Time Pilot" )
+	GAME( 1982, timepltc, timeplt, timeplt, timeplt, 0, ROT90,  "Konami (Centuri license)", "Time Pilot (Centuri)" )
+	GAME( 1982, spaceplt, timeplt, timeplt, timeplt, 0, ROT90,  "bootleg", "Space Pilot" )
+	GAME( 1988, psurge,   0,       timeplt, psurge,  0, ROT270, "<unknown>", "Power Surge" )
 }

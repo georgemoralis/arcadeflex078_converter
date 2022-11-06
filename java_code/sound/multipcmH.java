@@ -26,7 +26,5 @@ struct MultiPCM_interface
 int MultiPCM_sh_start(const struct MachineSound *msound);
 void MultiPCM_sh_stop(void);
 
-public static ReadHandlerPtr MultiPCM_reg_0_r  = new ReadHandlerPtr() { public int handler(int offset);
-public static ReadHandlerPtr MultiPCM_reg_1_r  = new ReadHandlerPtr() { public int handler(int offset);
 
 #endif

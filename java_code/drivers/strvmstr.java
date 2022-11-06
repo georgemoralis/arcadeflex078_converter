@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,68 +31,60 @@ public class strvmstr
 	static UINT8 *bg_videoram, *fg_videoram;
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static WriteHandlerPtr strvmstr_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strvmstr_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fg_videoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr strvmstr_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strvmstr_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr strvmstr_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr strvmstr_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	/*
 	
 	bits:
-		1 . change to 1 or 0 when change screen orientation
-		2 . setted in intro
-		3 . background bank
-		4,5 . question offsets
-		6 . unused ?
-		7 . unused ?
-		8 . setted when coin is inserted
+		1 -> change to 1 or 0 when change screen orientation
+		2 -> setted in intro
+		3 -> background bank
+		4,5 -> question offsets
+		6 -> unused ?
+		7 -> unused ?
+		8 -> setted when coin is inserted
 	
 	*/
 	
 		strvmstr_control = data;
 	
-		if ((data & 0x04) != 0)
+		if( data & 0x04)
 		{
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
 	} };
 	
-	public static WriteHandlerPtr a000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr a000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* ? */
 	} };
 	
 	
-	public static ReadHandlerPtr strvmstr_question_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr strvmstr_question_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *Question = memory_region(REGION_USER1);
 		return Question[offset + 0x10000 * ((strvmstr_control >> 3) & 3)];
 	} };
 	
 	static int b800_prev,b000_val,b000_ret;
 	
-	public static WriteHandlerPtr b000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		b000_val = data;
 	} };
 	
-	public static ReadHandlerPtr b000_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr b000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return b000_ret;
 	} };
 	
-	public static WriteHandlerPtr b800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(data)
 		{
 			case 0xc4:	b000_ret=AY8910_read_port_0_r.handler(0);	break;
@@ -148,7 +140,7 @@ public class strvmstr
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_strvmstr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_strvmstr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( strvmstr )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x02, 0x02, DEF_STR( "Unknown") );
@@ -232,8 +224,7 @@ public class strvmstr
 		SET_TILE_INFO(1,code,0,0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_strvmstr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_strvmstr  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create( get_tile_info_bg,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32 );
 		fg_tilemap = tilemap_create( get_tile_info_fg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32 );
 	
@@ -245,8 +236,7 @@ public class strvmstr
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_strvmstr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_strvmstr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
@@ -263,8 +253,7 @@ public class strvmstr
 	);
 	
 	
-	public static InterruptHandlerPtr strvmstr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr strvmstr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( readinputport(2) & 0x01 )
 		{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -278,8 +267,7 @@ public class strvmstr
 	#undef CLOCK
 	#define CLOCK 12000000/4-50000
 	
-	public static MachineHandlerPtr machine_driver_strvmstr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( strvmstr )
 		MDRV_CPU_ADD(Z80,CLOCK) //should be ok, it gives the 300 interrupts expected
 		MDRV_CPU_FLAGS(CPU_16BIT_PORT)
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -303,9 +291,7 @@ public class strvmstr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_strvmstr = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -334,5 +320,5 @@ public class strvmstr
 		ROM_LOAD( "entrtn.hi3",   0x38000, 0x8000, CRC(a8cf603b) SHA1(6efa5753d8d252452b3f5be8635a28364e4d8de1) ) 
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_strvmstr	   = new GameDriver("1986"	,"strvmstr"	,"strvmstr.java"	,rom_strvmstr,null	,machine_driver_strvmstr	,input_ports_strvmstr	,null	,ROT90	,	"Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1986, strvmstr, 0, strvmstr, strvmstr, 0, ROT90, "Enerdyne Technologies Inc.", "Super Trivia Master", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

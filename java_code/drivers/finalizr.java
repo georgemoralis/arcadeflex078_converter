@@ -8,7 +8,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,8 +25,7 @@ public class finalizr
 	
 	
 	
-	public static InterruptHandlerPtr finalizr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr finalizr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			if (*finalizr_interrupt_enable & 2)
@@ -39,19 +38,16 @@ public class finalizr
 		}
 	} };
 	
-	public static WriteHandlerPtr finalizr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr finalizr_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
 	} };
 	
-	public static WriteHandlerPtr finalizr_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr finalizr_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr i8039_irqen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8039_irqen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*  bit 0x80 goes active low, indicating that the
 			external IRQ being serviced is complete
 			bit 0x40 goes active high to enable the DAC ?
@@ -61,8 +57,7 @@ public class finalizr
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
 	} };
 	
-	public static ReadHandlerPtr i8039_T1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr i8039_T1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/*  I suspect the clock-out from the I8039 T0 line should be connected
 			here (See the i8039_T0_w handler below).
 			The frequency of this clock cannot be greater than I8039 CLKIN / 45
@@ -86,8 +81,7 @@ public class finalizr
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr i8039_T0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8039_T0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*	This becomes a clock output at a frequency of 3.072MHz (derived
 			by internally dividing the main xtal clock input by a factor of 3).
 			This output is divided by a factor of 16, then used as a 192KHz
@@ -163,7 +157,7 @@ public class finalizr
 	
 	
 	
-	static InputPortPtr input_ports_finalizr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalizr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalizr )
 		PORT_START(); 	/* IN2 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -270,7 +264,7 @@ public class finalizr
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_finalizb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalizb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalizb )
 		PORT_START(); 	/* IN2 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -428,8 +422,7 @@ public class finalizr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_finalizr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( finalizr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/6)	/* ??? */
@@ -459,9 +452,7 @@ public class finalizr
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -522,12 +513,11 @@ public class finalizr
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_finalizr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_finalizr  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_finalizr	   = new GameDriver("1985"	,"finalizr"	,"finalizr.java"	,rom_finalizr,null	,machine_driver_finalizr	,input_ports_finalizr	,init_finalizr	,ROT90	,	"Konami", "Finalizer - Super Transformation", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_finalizb	   = new GameDriver("1985"	,"finalizb"	,"finalizr.java"	,rom_finalizb,driver_finalizr	,machine_driver_finalizr	,input_ports_finalizb	,init_finalizr	,ROT90	,	"bootleg", "Finalizer - Super Transformation (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1985, finalizr, 0,        finalizr, finalizr, finalizr, ROT90, "Konami", "Finalizer - Super Transformation", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1985, finalizb, finalizr, finalizr, finalizb, finalizr, ROT90, "bootleg", "Finalizer - Super Transformation (bootleg)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

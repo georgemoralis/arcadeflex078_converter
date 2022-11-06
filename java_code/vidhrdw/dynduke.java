@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,13 +16,12 @@ public class dynduke
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr dynduke_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b;
 		int color;
 	
-		paletteram[offset]=data;
-		color=paletteram[offset&0xffe]|(paletteram[offset|1]<<8);
+		paletteram.write(offset,data);
+		color=paletteram.read(offset&0xffe)|(paletteram.read(offset|1)<<8);
 	
 		r = (color >> 0) & 0x0f;
 		g = (color >> 4) & 0x0f;
@@ -42,30 +41,25 @@ public class dynduke
 		}
 	} };
 	
-	public static ReadHandlerPtr dynduke_background_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dynduke_background_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dynduke_back_data[offset];
 	} };
 	
-	public static ReadHandlerPtr dynduke_foreground_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dynduke_foreground_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dynduke_fore_data[offset];
 	} };
 	
-	public static WriteHandlerPtr dynduke_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynduke_back_data[offset]=data;
 		tilemap_mark_tile_dirty(bg_layer,offset/2);
 	} };
 	
-	public static WriteHandlerPtr dynduke_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_foreground_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dynduke_fore_data[offset]=data;
 		tilemap_mark_tile_dirty(fg_layer,offset/2);
 	} };
 	
-	public static WriteHandlerPtr dynduke_text_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_text_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tx_layer,offset/2);
 	} };
@@ -110,8 +104,7 @@ public class dynduke
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_dynduke  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dynduke  = new VideoStartHandlerPtr() { public int handler(){
 		bg_layer = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,      16,16,32,32);
 		fg_layer = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,32,32);
 		tx_layer = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -124,12 +117,11 @@ public class dynduke
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr dynduke_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int old_back,old_fore;
 	
-		if ((data & 0x01) != 0) back_bankbase=0x1000; else back_bankbase=0;
-		if ((data & 0x10) != 0) fore_bankbase=0x1000; else fore_bankbase=0;
+		if (data&0x01) back_bankbase=0x1000; else back_bankbase=0;
+		if (data&0x10) fore_bankbase=0x1000; else fore_bankbase=0;
 	
 		if (back_bankbase!=old_back)
 			tilemap_mark_all_tiles_dirty(bg_layer);
@@ -140,18 +132,17 @@ public class dynduke
 		old_fore=fore_bankbase;
 	} };
 	
-	public static WriteHandlerPtr dynduke_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dynduke_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int old_bpal;
 	
 		dynduke_control_ram[offset]=data;
 	
 		if (offset!=6) return;
 	
-		if ((data & 0x1) != 0) back_enable=0; else back_enable=1;
-		if ((data & 0x2) != 0) back_palbase=16; else back_palbase=0;
-		if ((data & 0x4) != 0) fore_enable=0; else fore_enable=1;
-		if ((data & 0x8) != 0) sprite_enable=0; else sprite_enable=1;
+		if (data&0x1) back_enable=0; else back_enable=1;
+		if (data&0x2) back_palbase=16; else back_palbase=0;
+		if (data&0x4) fore_enable=0; else fore_enable=1;
+		if (data&0x8) sprite_enable=0; else sprite_enable=1;
 	
 		if (back_palbase!=old_bpal)
 			tilemap_mark_all_tiles_dirty(bg_layer);
@@ -165,7 +156,7 @@ public class dynduke
 	{
 		int offs,fx,fy,x,y,color,sprite;
 	
-		if (sprite_enable == 0) return;
+		if (!sprite_enable) return;
 	
 		for (offs = 0x1000-8;offs >= 0;offs -= 8)
 		{
@@ -185,22 +176,21 @@ public class dynduke
 			sprite = buffered_spriteram[offs+2]+(buffered_spriteram[offs+3]<<8);
 			sprite &= 0x3fff;
 	
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				x=240-x;
 				y=240-y;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[3],
+			drawgfx(bitmap,Machine->gfx[3],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_dynduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dynduke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps */
 		tilemap_set_scrolly( bg_layer,0, ((dynduke_scroll_ram[0x02]&0x30)<<4)+((dynduke_scroll_ram[0x04]&0x7f)<<1)+((dynduke_scroll_ram[0x04]&0x80)>>7) );
 		tilemap_set_scrollx( bg_layer,0, ((dynduke_scroll_ram[0x12]&0x30)<<4)+((dynduke_scroll_ram[0x14]&0x7f)<<1)+((dynduke_scroll_ram[0x14]&0x80)>>7) );
@@ -209,7 +199,7 @@ public class dynduke
 		tilemap_set_enable( bg_layer,back_enable);
 		tilemap_set_enable( fg_layer,fore_enable);
 	
-		if (back_enable != 0)
+		if (back_enable)
 			tilemap_draw(bitmap,cliprect,bg_layer,TILEMAP_BACK,0);
 		else
 			fillbitmap(bitmap,Machine.pens[0],cliprect);

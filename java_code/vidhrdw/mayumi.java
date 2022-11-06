@@ -9,7 +9,7 @@ Video hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class mayumi
 		SET_TILE_INFO(0, code, col, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mayumi  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mayumi  = new VideoStartHandlerPtr() { public int handler(){
 		mayumi_videoram = auto_malloc(0x1800);
 	
 		mayumi_tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32 );
@@ -39,20 +38,17 @@ public class mayumi
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr mayumi_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mayumi_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mayumi_videoram[offset] = data;
 	
 		tilemap_mark_tile_dirty(mayumi_tilemap, offset & 0x7ff );
 	} };
 	
-	public static ReadHandlerPtr mayumi_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mayumi_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mayumi_videoram[offset];
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mayumi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mayumi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, mayumi_tilemap, 0, 0);
 	} };
 	

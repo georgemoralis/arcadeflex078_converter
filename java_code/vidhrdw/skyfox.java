@@ -36,7 +36,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -60,13 +60,12 @@ public class skyfox
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr skyfox_vregs_r  = new ReadHandlerPtr() { public int handler(int offset)	// for debug
+	public static ReadHandlerPtr skyfox_vregs_r  = new ReadHandlerPtr() { public int handler(int offset)/ for debug
 	{
 		return vreg[offset];
 	} };
 	
-	public static WriteHandlerPtr skyfox_vregs_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyfox_vregs_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vreg[offset] = data;
 	
 		switch (offset)
@@ -99,8 +98,7 @@ public class skyfox
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_skyfox  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skyfox  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 256;i++)
@@ -173,8 +171,8 @@ public class skyfox
 	{
 		int offs;
 	
-		int width	=	Machine.drv.screen_width;
-		int height	=	Machine.drv.screen_height;
+		int width	=	Machine->drv->screen_width;
+		int height	=	Machine->drv->screen_height;
 	
 		/* The 32x32 tiles in the 80-ff range are bankswitched */
 		int shift	=	(skyfox_bg_ctrl & 0x80) ? (4-1) : 4;
@@ -204,14 +202,14 @@ public class skyfox
 			}
 	
 	#define DRAW_SPRITE(DX,DY,CODE) \
-			drawgfx(bitmap,Machine.gfx[0], \
+			drawgfx(bitmap,Machine->gfx[0], \
 					(CODE), \
 					0, \
 					flipx,flipy, \
 					x + (DX),y + (DY), \
-					Machine.visible_area,TRANSPARENCY_PEN, 0xff); \
+					Machine->visible_area,TRANSPARENCY_PEN, 0xff); \
 	
-			if ((skyfox_bg_ctrl & 1) != 0)	// flipscreen
+			if (skyfox_bg_ctrl & 1)	// flipscreen
 			{
 				x = width  - x - (n-1)*8;
 				y = height - y - (n-1)*8;
@@ -219,10 +217,10 @@ public class skyfox
 				flipy = NOT(flipy);
 			}
 	
-			if (flipx != 0)	{ xstart = n-1;  xend = -1;  xinc = -1; }
+			if (flipx)	{ xstart = n-1;  xend = -1;  xinc = -1; }
 			else		{ xstart = 0;    xend = n;   xinc = +1; }
 	
-			if (flipy != 0)	{ ystart = n-1;  yend = -1;  yinc = -1; }
+			if (flipy)	{ ystart = n-1;  yend = -1;  yinc = -1; }
 			else		{ ystart = 0;    yend = n;   yinc = +1; }
 	
 	
@@ -267,7 +265,7 @@ public class skyfox
 			x		=	RAM[offs+1]*2 + (i&1) + pos + ((i & 8)?512:0);
 			y		=	((i/8)/2)*8 + (i%8);
 	
-			if ((skyfox_bg_ctrl & 1) != 0)	// flipscreen
+			if (skyfox_bg_ctrl & 1)	// flipscreen
 			{
 				x = 512 * 2 - (x%(512*2));
 				y = 256     - (y%256);
@@ -277,7 +275,7 @@ public class skyfox
 				plot_pixel(	bitmap,
 							( (j&1)     + x ) % 512,
 							( ((j/2)&1) + y ) % 256,
-							Machine.pens[256+(pen&0x7f)] );
+							Machine->pens[256+(pen&0x7f)] );
 		}
 	}
 	
@@ -291,8 +289,7 @@ public class skyfox
 	***************************************************************************/
 	
 	
-	public static VideoUpdateHandlerPtr video_update_skyfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skyfox  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[255],Machine.visible_area);	// the bg is black
 		skyfox_draw_background(bitmap);
 		skyfox_draw_sprites(bitmap);

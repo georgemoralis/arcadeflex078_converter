@@ -11,7 +11,7 @@ ask.  - Mike Balfour (mab22@po.cwru.edu)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -154,7 +154,7 @@ public class redalert
 	};
 	
 	
-	static InputPortPtr input_ports_redalert = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_redalert = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( redalert )
 		PORT_START(); 			   /* DIP Switches */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -202,7 +202,7 @@ public class redalert
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_demoneye = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_demoneye = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( demoneye )
 		PORT_START(); 			   /* DIP Switches */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -320,8 +320,7 @@ public class redalert
 		0,8,5,1,
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_redalert  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_redalert  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* Arbitrary colors */
 		palette_set_color(0,0x40,0x80,0xff);	/* Background */
 		palette_set_color(1,0x00,0x00,0xff);	/* Blue */
@@ -336,8 +335,7 @@ public class redalert
 		memcpy(colortable,colortable_source,sizeof(colortable_source));
 	} };
 	
-	public static InterruptHandlerPtr redalert_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr redalert_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( readinputport(3) )
 		{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -359,8 +357,7 @@ public class redalert
 		new WriteHandlerPtr[] { redalert_AY8910_B_w }		/* Port B Write */
 	);
 	
-	public static MachineHandlerPtr machine_driver_redalert = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( redalert )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1000000)	   /* ???? */
@@ -394,9 +391,7 @@ public class redalert
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, redalert_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* PIA 0, sound CPU */
@@ -418,15 +413,13 @@ public class redalert
 		new WriteHandlerPtr[] { 0, 0 }		/* Port B Write */
 	);
 	
-	public static MachineInitHandlerPtr machine_init_demoneye  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_demoneye  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_reset();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_demoneye = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( demoneye )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 11730000/2)	/* 11.73MHz */
@@ -456,9 +449,7 @@ public class redalert
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, demoneye_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -558,6 +549,6 @@ public class redalert
 		ROM_LOAD( "demoneye.1a2", 0x0200, 0x0200, CRC(eaf5a66e) SHA1(d8ebe05ba5d75fbf6ad45f710e5bd27b6afad44b) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_redalert	   = new GameDriver("1981"	,"redalert"	,"redalert.java"	,rom_redalert,null	,machine_driver_redalert	,input_ports_redalert	,null	,ROT270	,	"Irem + GDI",	"Red Alert",  GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_demoneye	   = new GameDriver("1981"	,"demoneye"	,"redalert.java"	,rom_demoneye,null	,machine_driver_demoneye	,input_ports_demoneye	,null	,ROT270	,	"Irem",		"Demoneye-X", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1981, redalert, 0, redalert, redalert, 0, ROT270, "Irem + GDI",	"Red Alert",  GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, demoneye, 0, demoneye, demoneye, 0, ROT270, "Irem",		"Demoneye-X", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

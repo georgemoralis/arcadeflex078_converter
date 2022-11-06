@@ -23,7 +23,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,16 +35,14 @@ public class mjkjidai
 	
 	
 	
-	public static WriteHandlerPtr adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ADPCM_play(0,(data & 0x07) * 0x1000,0x1000*2);
 	} };
 	
 	
 	static int keyb,nvram_init_count;
 	
-	public static ReadHandlerPtr keyboard_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr keyboard_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 0x3f,i;
 	
 	//	logerror("%04x: keyboard_r\n",activecpu_get_pc());
@@ -60,7 +58,7 @@ public class mjkjidai
 	
 		res |= (readinputport(3) & 0xc0);
 	
-		if (nvram_init_count != 0)
+		if (nvram_init_count)
 		{
 			nvram_init_count--;
 			res &= 0xbf;
@@ -69,8 +67,7 @@ public class mjkjidai
 		return res;
 	} };
 	
-	public static WriteHandlerPtr keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr keyboard_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("%04x: keyboard_select %d = %02x\n",activecpu_get_pc(),offset,data);
 	
 		switch (offset)
@@ -85,9 +82,9 @@ public class mjkjidai
 	
 	void nvram_handler_mjkjidai(mame_file *file, int read_or_write)
 	{
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, nvram, nvram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, nvram, nvram_size);
 		else
 		{
@@ -138,7 +135,7 @@ public class mjkjidai
 	
 	
 	
-	static InputPortPtr input_ports_mjkjidai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjkjidai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjkjidai )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -310,8 +307,7 @@ public class mjkjidai
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mjkjidai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mjkjidai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,10000000/2)	/* 5 MHz ??? */
@@ -338,9 +334,7 @@ public class mjkjidai
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -375,5 +369,5 @@ public class mjkjidai
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_mjkjidai	   = new GameDriver("1986"	,"mjkjidai"	,"mjkjidai.java"	,rom_mjkjidai,null	,machine_driver_mjkjidai	,input_ports_mjkjidai	,null	,ROT0	,	"Sanritsu",  "Mahjong Kyou Jidai (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1986, mjkjidai, 0, mjkjidai, mjkjidai, 0, ROT0, "Sanritsu",  "Mahjong Kyou Jidai (Japan)", GAME_IMPERFECT_GRAPHICS )
 }

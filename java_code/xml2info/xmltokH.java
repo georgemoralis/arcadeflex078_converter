@@ -195,7 +195,7 @@ struct encoding {
 
 
 #define XmlTok(enc, state, ptr, end, nextTokPtr) \
-  (((enc).scanners[state])(enc, ptr, end, nextTokPtr))
+  (((enc)->scanners[state])(enc, ptr, end, nextTokPtr))
 
 #define XmlPrologTok(enc, ptr, end, nextTokPtr) \
    XmlTok(enc, XML_PROLOG_STATE, ptr, end, nextTokPtr)
@@ -217,7 +217,7 @@ struct encoding {
    of a literal that has already been returned by XmlTok.
 */
 #define XmlLiteralTok(enc, literalType, ptr, end, nextTokPtr) \
-  (((enc).literalScanners[literalType])(enc, ptr, end, nextTokPtr))
+  (((enc)->literalScanners[literalType])(enc, ptr, end, nextTokPtr))
 
 #define XmlAttributeValueTok(enc, ptr, end, nextTokPtr) \
    XmlLiteralTok(enc, XML_ATTRIBUTE_VALUE_LITERAL, ptr, end, nextTokPtr)
@@ -225,37 +225,37 @@ struct encoding {
 #define XmlEntityValueTok(enc, ptr, end, nextTokPtr) \
    XmlLiteralTok(enc, XML_ENTITY_VALUE_LITERAL, ptr, end, nextTokPtr)
 
-#define XmlSameName(enc, ptr1, ptr2) (((enc).sameName)(enc, ptr1, ptr2))
+#define XmlSameName(enc, ptr1, ptr2) (((enc)->sameName)(enc, ptr1, ptr2))
 
 #define XmlNameMatchesAscii(enc, ptr1, end1, ptr2) \
-  (((enc).nameMatchesAscii)(enc, ptr1, end1, ptr2))
+  (((enc)->nameMatchesAscii)(enc, ptr1, end1, ptr2))
 
 #define XmlNameLength(enc, ptr) \
-  (((enc).nameLength)(enc, ptr))
+  (((enc)->nameLength)(enc, ptr))
 
 #define XmlSkipS(enc, ptr) \
-  (((enc).skipS)(enc, ptr))
+  (((enc)->skipS)(enc, ptr))
 
 #define XmlGetAttributes(enc, ptr, attsMax, atts) \
-  (((enc).getAtts)(enc, ptr, attsMax, atts))
+  (((enc)->getAtts)(enc, ptr, attsMax, atts))
 
 #define XmlCharRefNumber(enc, ptr) \
-  (((enc).charRefNumber)(enc, ptr))
+  (((enc)->charRefNumber)(enc, ptr))
 
 #define XmlPredefinedEntityName(enc, ptr, end) \
-  (((enc).predefinedEntityName)(enc, ptr, end))
+  (((enc)->predefinedEntityName)(enc, ptr, end))
 
 #define XmlUpdatePosition(enc, ptr, end, pos) \
-  (((enc).updatePosition)(enc, ptr, end, pos))
+  (((enc)->updatePosition)(enc, ptr, end, pos))
 
 #define XmlIsPublicId(enc, ptr, end, badPtr) \
-  (((enc).isPublicId)(enc, ptr, end, badPtr))
+  (((enc)->isPublicId)(enc, ptr, end, badPtr))
 
 #define XmlUtf8Convert(enc, fromP, fromLim, toP, toLim) \
-  (((enc).utf8Convert)(enc, fromP, fromLim, toP, toLim))
+  (((enc)->utf8Convert)(enc, fromP, fromLim, toP, toLim))
 
 #define XmlUtf16Convert(enc, fromP, fromLim, toP, toLim) \
-  (((enc).utf16Convert)(enc, fromP, fromLim, toP, toLim))
+  (((enc)->utf16Convert)(enc, fromP, fromLim, toP, toLim))
 
 typedef struct {
   ENCODING initEnc;

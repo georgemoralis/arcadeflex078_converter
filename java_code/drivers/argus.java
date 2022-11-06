@@ -85,7 +85,7 @@ Known issues :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -113,8 +113,7 @@ public class argus
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr argus_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr argus_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		   cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 		else
@@ -172,14 +171,12 @@ public class argus
 	***************************************************************************/
 	
 	#if 0
-	public static ReadHandlerPtr argus_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr argus_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return argus_bank_latch;
 	} };
 	#endif
 	
-	public static WriteHandlerPtr argus_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -191,13 +188,11 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr butasan_pageselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_pageselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		butasan_page_latch = data;
 	} };
 	
-	public static ReadHandlerPtr butasan_pagedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_pagedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (!(butasan_page_latch & 0x01))
 		{
 			if (offset < 0x0800)		/* BG0 RAM */
@@ -224,8 +219,7 @@ public class argus
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr butasan_pagedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_pagedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!(butasan_page_latch & 0x01))
 		{
 			if (offset < 0x0800)		/* BG0 RAM */
@@ -444,7 +438,7 @@ public class argus
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_argus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_argus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( argus )
 		PORT_START();       /* System control (0) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -526,7 +520,7 @@ public class argus
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_valtric = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_valtric = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( valtric )
 		PORT_START();       /* System control (0) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -608,7 +602,7 @@ public class argus
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_butasan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_butasan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( butasan )
 		PORT_START();       /* System control (0) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -799,8 +793,7 @@ public class argus
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_argus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( argus )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)			/* 4 MHz */
@@ -828,12 +821,9 @@ public class argus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, argus_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_valtric = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( valtric )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)			/* 5 MHz */
@@ -861,12 +851,9 @@ public class argus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, valtric_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_butasan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( butasan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)			/* 5 MHz */
@@ -894,9 +881,7 @@ public class argus
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, butasan_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -999,7 +984,7 @@ public class argus
 	
 	
 	/*  ( YEAR   NAME     PARENT  MACHINE   INPUT     INIT  MONITOR  COMPANY                 FULLNAME ) */
-	public static GameDriver driver_argus	   = new GameDriver("1986"	,"argus"	,"argus.java"	,rom_argus,null	,machine_driver_argus	,input_ports_argus	,null	,ROT270	,	"[NMK] (Jaleco license)", "Argus"           )
-	public static GameDriver driver_valtric	   = new GameDriver("1986"	,"valtric"	,"argus.java"	,rom_valtric,null	,machine_driver_valtric	,input_ports_valtric	,null	,ROT270	,	"[NMK] (Jaleco license)", "Valtric"         )
-	public static GameDriver driver_butasan	   = new GameDriver("1987"	,"butasan"	,"argus.java"	,rom_butasan,null	,machine_driver_butasan	,input_ports_butasan	,null	,ROT0	,	"[NMK] (Jaleco license)", "Butasan (Japan)" )
+	GAME( 1986, argus,    0,      argus,    argus,    0,    ROT270,  "[NMK] (Jaleco license)", "Argus"           )
+	GAME( 1986, valtric,  0,      valtric,  valtric,  0,    ROT270,  "[NMK] (Jaleco license)", "Valtric"         )
+	GAME( 1987, butasan,  0,      butasan,  butasan,  0,    ROT0,    "[NMK] (Jaleco license)", "Butasan (Japan)" )
 }

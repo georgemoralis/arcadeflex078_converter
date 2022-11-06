@@ -62,7 +62,7 @@ Note #3: Bt481A 256-Word Color Palette 15, 16 & 24-bit Color Power-Down RAMDAC
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -107,8 +107,7 @@ public class policetr
 	}
 	
 	
-	public static InterruptHandlerPtr irq4_gen = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr irq4_gen = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, R3000_IRQ4, ASSERT_LINE);
 		timer_set(cpu_getscanlinetime(0), 0, irq5_gen);
 	} };
@@ -166,7 +165,7 @@ public class policetr
 		}
 	
 		/* log any unknown bits */
-		if ((data & 0x4f1fffff) != 0)
+		if (data & 0x4f1fffff)
 			logerror("%08X: control_w = %08X & %08X\n", activecpu_get_previouspc(), data, ~mem_mask);
 	}
 	
@@ -180,7 +179,7 @@ public class policetr
 	
 	static WRITE32_HANDLER( bsmt2000_reg_w )
 	{
-		if ((control_data & 0x80000000) != 0)
+		if (control_data & 0x80000000)
 			BSMT2000_data_0_w(bsmt_reg, data & 0xffff, mem_mask | 0xffff0000);
 		else
 			COMBINE_DATA(&bsmt_data_offset);
@@ -189,7 +188,7 @@ public class policetr
 	
 	static WRITE32_HANDLER( bsmt2000_data_w )
 	{
-		if ((control_data & 0x80000000) != 0)
+		if (control_data & 0x80000000)
 			COMBINE_DATA(&bsmt_reg);
 		else
 			COMBINE_DATA(&bsmt_data_bank);
@@ -254,14 +253,13 @@ public class policetr
 	};
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_policetr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_policetr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_policetr);
-			if (file != 0)	EEPROM_load(file);
+			if (file)	EEPROM_load(file);
 		}
 	} };
 	
@@ -319,7 +317,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_policetr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_policetr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( policetr )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -455,9 +453,7 @@ public class policetr
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(BSMT2000, bsmt2000_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( sshooter )
@@ -466,9 +462,7 @@ public class policetr
 		/* basic machine hardware */
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(policetr_readmem,sshooter_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -586,8 +580,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_policetr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_policetr  = new DriverInitHandlerPtr() { public void handler(){
 		speedup_data = install_mem_write32_handler(0, 0x00000fc8, 0x00000fcb, speedup_w);
 		speedup_pc = 0x1fc028ac;
 	
@@ -595,8 +588,7 @@ public class policetr
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sshooter  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sshooter  = new DriverInitHandlerPtr() { public void handler(){
 		speedup_data = install_mem_write32_handler(0, 0x00018fd8, 0x00018fdb, speedup_w);
 		speedup_pc = 0x1fc03470;
 	
@@ -611,8 +603,8 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_policetr	   = new GameDriver("1996"	,"policetr"	,"policetr.java"	,rom_policetr,null	,machine_driver_policetr	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.3)" )
-	public static GameDriver driver_policeto	   = new GameDriver("1996"	,"policeto"	,"policetr.java"	,rom_policeto,driver_policetr	,machine_driver_policetr	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.1)" )
-	public static GameDriver driver_plctr13b	   = new GameDriver("1996"	,"plctr13b"	,"policetr.java"	,rom_plctr13b,driver_policetr	,machine_driver_sshooter	,input_ports_policetr	,init_policetr	,ROT0	,	"P&P Marketing", "Police Trainer (Rev 1.3B)" )
-	public static GameDriver driver_sshooter	   = new GameDriver("1998"	,"sshooter"	,"policetr.java"	,rom_sshooter,null	,machine_driver_sshooter	,input_ports_policetr	,init_sshooter	,ROT0	,	"P&P Marketing", "Sharpshooter (Rev 1.7)" )
+	GAME( 1996, policetr, 0,        policetr, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.3)" )
+	GAME( 1996, policeto, policetr, policetr, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.1)" )
+	GAME( 1996, plctr13b, policetr, sshooter, policetr, policetr, ROT0, "P&P Marketing", "Police Trainer (Rev 1.3B)" )
+	GAME( 1998, sshooter, 0,        sshooter, policetr, sshooter, ROT0, "P&P Marketing", "Sharpshooter (Rev 1.7)" )
 }

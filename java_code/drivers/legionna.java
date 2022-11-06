@@ -62,7 +62,7 @@ Preliminary COP MCU memory map
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -790,7 +790,7 @@ public class legionna
 	
 	/*****************************************************************************/
 	
-	static InputPortPtr input_ports_legionna = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_legionna = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( legionna )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -878,7 +878,7 @@ public class legionna
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_heatbrl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_heatbrl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( heatbrl )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -984,7 +984,7 @@ public class legionna
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_godzilla = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_godzilla = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( godzilla )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -1082,7 +1082,7 @@ public class legionna
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sdgndmrb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sdgndmrb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sdgndmrb )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -1227,7 +1227,7 @@ public class legionna
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cupsoc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cupsoc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cupsoc )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -1444,8 +1444,7 @@ public class legionna
 	
 	/*****************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_legionna = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( legionna )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2) 	/* ??? */
@@ -1471,13 +1470,10 @@ public class legionna
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_heatbrl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( heatbrl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2) 	/* ??? */
@@ -1503,12 +1499,9 @@ public class legionna
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_godzilla = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( godzilla )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 20000000/2)
@@ -1534,12 +1527,9 @@ public class legionna
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2151_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sdgndmrb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sdgndmrb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 20000000/2)
@@ -1565,12 +1555,9 @@ public class legionna
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM2151_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cupsoc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cupsoc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)
@@ -1596,9 +1583,7 @@ public class legionna
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -2064,8 +2049,7 @@ public class legionna
 		ROM_LOAD( "seibu8.7a",    0x000000, 0x040000, CRC(6f594808) SHA1(218aa12068aa587c7656355f6a6b86d97c868774) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_legionna  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_legionna  = new DriverInitHandlerPtr() { public void handler(){
 		/* Unscramble gfx: quarters 1&2 swapped, quarters 3&4 swapped */
 	
 		data8_t *gfx = memory_region(REGION_GFX1);
@@ -2086,18 +2070,18 @@ public class legionna
 	
 	
 	
-	public static GameDriver driver_legionna	   = new GameDriver("1992"	,"legionna"	,"legionna.java"	,rom_legionna,null	,machine_driver_legionna	,input_ports_legionna	,init_legionna	,ROT0	,	"Tad", "Legionnaire (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_legionnu	   = new GameDriver("1992"	,"legionnu"	,"legionna.java"	,rom_legionnu,driver_legionna	,machine_driver_legionna	,input_ports_legionna	,init_legionna	,ROT0	,	"Tad (Fabtek license)", "Legionnaire (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, legionna, 0,        legionna, legionna, legionna, ROT0, "Tad", "Legionnaire (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, legionnu, legionna, legionna, legionna, legionna, ROT0, "Tad (Fabtek license)", "Legionnaire (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	public static GameDriver driver_heatbrl	   = new GameDriver("1992"	,"heatbrl"	,"legionna.java"	,rom_heatbrl,null	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_heatbrlo	   = new GameDriver("1992"	,"heatbrlo"	,"legionna.java"	,rom_heatbrlo,driver_heatbrl	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (World old version)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_heatbrlu	   = new GameDriver("1992"	,"heatbrlu"	,"legionna.java"	,rom_heatbrlu,driver_heatbrl	,machine_driver_heatbrl	,input_ports_heatbrl	,null	,ROT0	,	"Tad", "Heated Barrel (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, heatbrl,  0,        heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (World)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, heatbrlo, heatbrl,  heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (World old version)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, heatbrlu, heatbrl,  heatbrl,  heatbrl,  0,        ROT0, "Tad", "Heated Barrel (US)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	public static GameDriver driver_godzilla	   = new GameDriver("1993"	,"godzilla"	,"legionna.java"	,rom_godzilla,null	,machine_driver_godzilla	,input_ports_godzilla	,null	,ROT0	,	"Banpresto", "Godzilla", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1993, godzilla, 0,        godzilla, godzilla, 0,        ROT0, "Banpresto", "Godzilla", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	public static GameDriver driver_sdgndmrb	   = new GameDriver("1993"	,"sdgndmrb"	,"legionna.java"	,rom_sdgndmrb,null	,machine_driver_sdgndmrb	,input_ports_sdgndmrb	,null	,ROT0	,	"Banpresto", "SD Gundam Sangokushi Rainbow Tairiku Senki", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1993, sdgndmrb, 0,		 sdgndmrb, sdgndmrb, 0,		   ROT0, "Banpresto", "SD Gundam Sangokushi Rainbow Tairiku Senki", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	
-	public static GameDriver driver_cupsoc	   = new GameDriver("1992"	,"cupsoc"	,"legionna.java"	,rom_cupsoc,null	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Seibu Cup Soccer", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_cupsoc2	   = new GameDriver("1992"	,"cupsoc2"	,"legionna.java"	,rom_cupsoc2,driver_cupsoc	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Seibu Cup Soccer (set 2)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_olysoc92	   = new GameDriver("1992"	,"olysoc92"	,"legionna.java"	,rom_olysoc92,driver_cupsoc	,machine_driver_cupsoc	,input_ports_cupsoc	,null	,ROT0	,	"Seibu", "Olympic Soccer '92", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, cupsoc,   0,		 cupsoc,  cupsoc,	 0,        ROT0, "Seibu", "Seibu Cup Soccer", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, cupsoc2,  cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Seibu Cup Soccer (set 2)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, olysoc92, cupsoc,   cupsoc,  cupsoc,    0,        ROT0, "Seibu", "Olympic Soccer '92", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -40,8 +40,7 @@ public class mathbox
 	
 	/*define MB_TEST*/
 	
-	public static WriteHandlerPtr mb_go_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mb_go_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	  s32 mb_temp;  /* temp 32-bit multiply results */
 	  s16 mb_q;     /* temp used in division */
 	  int msb;
@@ -266,18 +265,15 @@ public class mathbox
 	#endif
 	} };
 	
-	public static ReadHandlerPtr mb_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mb_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x00; /* always done! */
 	} };
 	
-	public static ReadHandlerPtr mb_lo_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mb_lo_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mb_result & 0xff;
 	} };
 	
-	public static ReadHandlerPtr mb_hi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mb_hi_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (mb_result >> 8) & 0xff;
 	} };
 }

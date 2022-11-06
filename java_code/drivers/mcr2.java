@@ -80,7 +80,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -98,8 +98,7 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr kroozr_dial_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kroozr_dial_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int dial = readinputport(7);
 		int val = readinputport(1);
 	
@@ -110,25 +109,23 @@ public class mcr2
 	} };
 	
 	
-	public static ReadHandlerPtr kroozr_trakball_x_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kroozr_trakball_x_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val = readinputport(6);
 	
-		if ((val & 0x02) != 0)		/* left */
+		if (val & 0x02)		/* left */
 			return 0x64 - 0x34;
-		if ((val & 0x01) != 0)		/* right */
+		if (val & 0x01)		/* right */
 			return 0x64 + 0x34;
 		return 0x64;
 	} };
 	
 	
-	public static ReadHandlerPtr kroozr_trakball_y_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kroozr_trakball_y_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val = readinputport(6);
 	
-		if ((val & 0x08) != 0)		/* up */
+		if (val & 0x08)		/* up */
 			return 0x64 - 0x34;
-		if ((val & 0x04) != 0)		/* down */
+		if (val & 0x04)		/* down */
 			return 0x64 + 0x34;
 		return 0x64;
 	} };
@@ -141,15 +138,13 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr wacko_mux_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wacko_mux_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wacko_mux_select = data & 1;
 	} };
 	
 	
-	public static ReadHandlerPtr wacko_trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (wacko_mux_select == 0)
+	public static ReadHandlerPtr wacko_trackball_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (!wacko_mux_select)
 			return readinputport(1 + offset);
 		else
 			return readinputport(6 + offset);
@@ -163,10 +158,9 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr twotigra_yoke1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr twotigra_yoke1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int p1_yoke = readinputport(6);
-		if ((p1_yoke & 0x10) != 0)
+		if (p1_yoke & 0x10)
 		{
 			if ((p1_yoke & 0x01) != 0x01) return 0;
 			if ((p1_yoke & 0x02) != 0x02) return 255;
@@ -181,10 +175,9 @@ public class mcr2
 	} };
 	
 	
-	public static ReadHandlerPtr twotigra_yoke2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr twotigra_yoke2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int p1_yoke = readinputport(6);
-		if ((p1_yoke & 0x10) != 0)
+		if (p1_yoke & 0x10)
 		{
 			if ((p1_yoke & 0x04) != 0x04) return 0;
 			if ((p1_yoke & 0x08) != 0x08) return 255;
@@ -258,7 +251,7 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_shollow = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shollow = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shollow )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -297,7 +290,7 @@ public class mcr2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tron )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -343,7 +336,7 @@ public class mcr2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_kroozr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kroozr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kroozr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -390,7 +383,7 @@ public class mcr2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_domino = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_domino = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( domino )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -436,7 +429,7 @@ public class mcr2
 	
 	
 	
-	static InputPortPtr input_ports_journey = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_journey = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( journey )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -477,7 +470,7 @@ public class mcr2
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wacko = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wacko = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wacko )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -524,7 +517,7 @@ public class mcr2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_twotiger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twotiger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twotiger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -556,7 +549,7 @@ public class mcr2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_twotigra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twotigra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twotigra )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -630,8 +623,7 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_mcr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcr2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 2500000)
@@ -657,24 +649,18 @@ public class mcr2
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_twotigra = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( twotigra )
 		MDRV_IMPORT_FROM(mcr2)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(twotigra)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_journey = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( journey )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr2)
@@ -683,9 +669,7 @@ public class mcr2
 		/* video hardware */
 		MDRV_VIDEO_START(journey)
 		MDRV_VIDEO_UPDATE(journey)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -988,8 +972,7 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_mcr2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mcr2  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_write_handler(0, 0x00, 0x00, mcr_control_port_w);
 	
@@ -998,8 +981,7 @@ public class mcr2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_domino  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_domino  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_write_handler(0, 0x01, 0x01, mcr_control_port_w);
 	
@@ -1008,8 +990,7 @@ public class mcr2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_wacko  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wacko  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_write_handler(0, 0x04, 0x04, wacko_mux_select_w);
 		install_port_read_handler(0, 0x01, 0x02, wacko_trackball_r);
@@ -1019,8 +1000,7 @@ public class mcr2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_kroozr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kroozr  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_read_handler(0, 0x01, 0x01, kroozr_dial_r);
 		install_port_read_handler(0, 0x02, 0x02, kroozr_trakball_x_r);
@@ -1031,8 +1011,7 @@ public class mcr2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_twotigra  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_twotigra  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 		install_port_write_handler(0, 0x00, 0x00, mcr_control_port_w);
 		install_port_read_handler(0, 0x01, 0x01, twotigra_yoke2_r);
@@ -1052,14 +1031,14 @@ public class mcr2
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_shollow	   = new GameDriver("1981"	,"shollow"	,"mcr2.java"	,rom_shollow,null	,machine_driver_mcr2	,input_ports_shollow	,init_mcr2	,ROT90	,	"Bally Midway", "Satan's Hollow (set 1)" )
-	public static GameDriver driver_shollow2	   = new GameDriver("1981"	,"shollow2"	,"mcr2.java"	,rom_shollow2,driver_shollow	,machine_driver_mcr2	,input_ports_shollow	,init_mcr2	,ROT90	,	"Bally Midway", "Satan's Hollow (set 2)" )
-	public static GameDriver driver_tron	   = new GameDriver("1982"	,"tron"	,"mcr2.java"	,rom_tron,null	,machine_driver_mcr2	,input_ports_tron	,init_mcr2	,ROT90	,	"Bally Midway", "Tron (set 1)" )
-	public static GameDriver driver_tron2	   = new GameDriver("1982"	,"tron2"	,"mcr2.java"	,rom_tron2,driver_tron	,machine_driver_mcr2	,input_ports_tron	,init_mcr2	,ROT90	,	"Bally Midway", "Tron (set 2)" )
-	public static GameDriver driver_kroozr	   = new GameDriver("1982"	,"kroozr"	,"mcr2.java"	,rom_kroozr,null	,machine_driver_mcr2	,input_ports_kroozr	,init_kroozr	,ROT0	,	"Bally Midway", "Kozmik Kroozr" )
-	public static GameDriver driver_domino	   = new GameDriver("1982"	,"domino"	,"mcr2.java"	,rom_domino,null	,machine_driver_mcr2	,input_ports_domino	,init_domino	,ROT0	,	"Bally Midway", "Domino Man" )
-	public static GameDriver driver_wacko	   = new GameDriver("1982"	,"wacko"	,"mcr2.java"	,rom_wacko,null	,machine_driver_mcr2	,input_ports_wacko	,init_wacko	,ROT0	,	"Bally Midway", "Wacko" )
-	public static GameDriver driver_twotiger	   = new GameDriver("1984"	,"twotiger"	,"mcr2.java"	,rom_twotiger,null	,machine_driver_mcr2	,input_ports_twotiger	,init_mcr2	,ROT0	,	"Bally Midway", "Two Tigers" )
-	public static GameDriver driver_twotigra	   = new GameDriver("1984"	,"twotigra"	,"mcr2.java"	,rom_twotigra,driver_twotiger	,machine_driver_twotigra	,input_ports_twotigra	,init_twotigra	,ROT0	,	"Bally Midway", "Two Tigers (dedicated)" )
-	public static GameDriver driver_journey	   = new GameDriver("1983"	,"journey"	,"mcr2.java"	,rom_journey,null	,machine_driver_journey	,input_ports_journey	,init_mcr2	,ROT90	,	"Bally Midway", "Journey", GAME_IMPERFECT_SOUND )
+	GAME( 1981, shollow,  0,        mcr2,     shollow,  mcr2,     ROT90, "Bally Midway", "Satan's Hollow (set 1)" )
+	GAME( 1981, shollow2, shollow,  mcr2,     shollow,  mcr2,     ROT90, "Bally Midway", "Satan's Hollow (set 2)" )
+	GAME( 1982, tron,     0,        mcr2,     tron,     mcr2,     ROT90, "Bally Midway", "Tron (set 1)" )
+	GAME( 1982, tron2,    tron,     mcr2,     tron,     mcr2,     ROT90, "Bally Midway", "Tron (set 2)" )
+	GAME( 1982, kroozr,   0,        mcr2,     kroozr,   kroozr,   ROT0,  "Bally Midway", "Kozmik Kroozr" )
+	GAME( 1982, domino,   0,        mcr2,     domino,   domino,   ROT0,  "Bally Midway", "Domino Man" )
+	GAME( 1982, wacko,    0,        mcr2,     wacko,    wacko,    ROT0,  "Bally Midway", "Wacko" )
+	GAME( 1984, twotiger, 0,        mcr2,     twotiger, mcr2,     ROT0,  "Bally Midway", "Two Tigers" )
+	GAME( 1984, twotigra, twotiger, twotigra, twotigra, twotigra, ROT0,  "Bally Midway", "Two Tigers (dedicated)" )
+	GAMEX(1983, journey,  0,        journey,  journey,   mcr2,     ROT90, "Bally Midway", "Journey", GAME_IMPERFECT_SOUND )
 }

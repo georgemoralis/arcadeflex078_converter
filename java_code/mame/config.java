@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -192,17 +192,17 @@ public class config
 		UINT16 w;
 		if (readint(f,&i) != 0)
 			return -1;
-		in.type = i;
+		in->type = i;
 	
 		if (readword(f,&w) != 0)
 			return -1;
-		in.mask = w;
+		in->mask = w;
 	
 		if (readword(f,&w) != 0)
 			return -1;
-		in.default_value = w;
+		in->default_value = w;
 	
-		if (seq_read_ver_8(f,&in.seq) != 0)
+		if (seq_read_ver_8(f,&in->seq) != 0)
 			return -1;
 	
 		return 0;
@@ -242,51 +242,51 @@ public class config
 		int i;
 	
 		cfg = malloc(sizeof(struct _config_file));
-		if (cfg == 0)
+		if (!cfg)
 			goto error;
 		memset(cfg, 0, sizeof(*cfg));
 	
-		cfg.file = mame_fopen(name ? name : "default", 0, FILETYPE_CONFIG, save);
-		if (!cfg.file)
+		cfg->file = mame_fopen(name ? name : "default", 0, FILETYPE_CONFIG, save);
+		if (!cfg->file)
 			goto error;
 	
-		cfg.is_default = name ? 0 : 1;
-		cfg.is_write = save ? 1 : 0;
+		cfg->is_default = name ? 0 : 1;
+		cfg->is_write = save ? 1 : 0;
 	
-		if (save != 0)
+		if (save)
 		{
 			/* save */
-			cfg.format = &formats[0];
+			cfg->format = &formats[0];
 	
-			format_header = cfg.is_default ? formats[0].def_string : formats[0].cfg_string;
+			format_header = cfg->is_default ? formats[0].def_string : formats[0].cfg_string;
 	
-			if (mame_fwrite(cfg.file, format_header, sizeof(header)) != sizeof(header))
+			if (mame_fwrite(cfg->file, format_header, sizeof(header)) != sizeof(header))
 				goto error;
 		}
 		else
 		{
 			/* load */
-			if (mame_fread(cfg.file, header, sizeof(header)) != sizeof(header))
+			if (mame_fread(cfg->file, header, sizeof(header)) != sizeof(header))
 				goto error;
 	
 			for (i = 0; i < sizeof(formats) / sizeof(formats[0]); i++)
 			{
-				format_header = cfg.is_default ? formats[i].def_string : formats[i].cfg_string;
+				format_header = cfg->is_default ? formats[i].def_string : formats[i].cfg_string;
 				if (!memcmp(header, format_header, sizeof(header)))
 				{
-					cfg.format = &formats[i];
+					cfg->format = &formats[i];
 					break;
 				}
 			}
-			if (!cfg.format)
+			if (!cfg->format)
 				goto error;
 		}
 	
-		cfg.position = POSITION_BEGIN;
+		cfg->position = POSITION_BEGIN;
 		return cfg;
 	
 	error:
-		if (cfg != 0)
+		if (cfg)
 			config_close(cfg);
 		return NULL;
 	}
@@ -300,7 +300,7 @@ public class config
 	static unsigned int count_input_ports(const struct InputPort *in)
 	{
 		unsigned int total = 0;
-		while (in.type != IPT_END)
+		while (in->type != IPT_END)
 		{
 			total++;
 			in++;
@@ -338,8 +338,8 @@ public class config
 	
 	void config_close(config_file *cfg)
 	{
-		if (cfg.file)
-			mame_fclose(cfg.file);
+		if (cfg->file)
+			mame_fclose(cfg->file);
 		free(cfg);
 	}
 	
@@ -357,31 +357,31 @@ public class config
 		struct InputPort saved;
 		int (*read_input_port)(mame_file *, struct InputPort *);
 	
-		if (cfg.is_write || cfg.is_default)
+		if (cfg->is_write || cfg->is_default)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_BEGIN)
+		if (cfg->position != POSITION_BEGIN)
 			return CONFIG_ERROR_BADPOSITION;
 	
-		read_input_port = cfg.format.read_input_port;
+		read_input_port = cfg->format->read_input_port;
 	
 		/* calculate the size of the array */
 		total = count_input_ports(input_ports_default);
 	
 		/* read array size */
-		if (readint(cfg.file, &saved_total) != 0)
+		if (readint(cfg->file, &saved_total) != 0)
 			return CONFIG_ERROR_CORRUPT;
 	
 		/* read the original settings and compare them with the ones defined in the driver */
 		in = (struct InputPort *) input_ports_default;
-		while (in.type != IPT_END)
+		while (in->type != IPT_END)
 		{
-			if (read_input_port(cfg.file, &saved) != 0)
+			if (read_input_port(cfg->file, &saved) != 0)
 				return CONFIG_ERROR_CORRUPT;
 	
-			if (in.mask != saved.mask ||
-					in.default_value != saved.default_value ||
-					in.type != saved.type ||
-					seq_cmp(&in.seq, &saved.seq) !=0 )
+			if (in->mask != saved.mask ||
+					in->default_value != saved.default_value ||
+					in->type != saved.type ||
+					seq_cmp(&in->seq, &saved.seq) !=0 )
 			{
 				return CONFIG_ERROR_CORRUPT;	/* the default values are different */
 			}
@@ -391,14 +391,14 @@ public class config
 	
 		/* read the current settings */
 		in = input_ports;
-		while (in.type != IPT_END)
+		while (in->type != IPT_END)
 		{
-			if (read_input_port(cfg.file, in) != 0)
+			if (read_input_port(cfg->file, in) != 0)
 				break;
 			in++;
 		}
 	
-		cfg.position = POSITION_AFTER_PORTS;
+		cfg->position = POSITION_AFTER_PORTS;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -416,21 +416,21 @@ public class config
 		int i;
 		int (*read_seq)(mame_file *, InputSeq *);
 	
-		if (cfg.is_write || !cfg.is_default)
+		if (cfg->is_write || !cfg->is_default)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_BEGIN)
+		if (cfg->position != POSITION_BEGIN)
 			return CONFIG_ERROR_BADPOSITION;
 	
-		read_seq = cfg.format.read_seq;
+		read_seq = cfg->format->read_seq;
 	
 		for (;;)
 		{
-			if (readint(cfg.file, &type) != 0)
+			if (readint(cfg->file, &type) != 0)
 				break;
 	
-			if (read_seq(cfg.file, &def_seq)!=0)
+			if (read_seq(cfg->file, &def_seq)!=0)
 				break;
-			if (read_seq(cfg.file, &seq)!=0)
+			if (read_seq(cfg->file, &seq)!=0)
 				break;
 	
 			i = 0;
@@ -447,7 +447,7 @@ public class config
 			}
 		}
 	
-		cfg.position = POSITION_AFTER_PORTS;
+		cfg->position = POSITION_AFTER_PORTS;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -463,12 +463,12 @@ public class config
 		int coin_counters;
 		int i;
 	
-		if (cfg.is_write)
+		if (cfg->is_write)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_AFTER_PORTS)
+		if (cfg->position != POSITION_AFTER_PORTS)
 			return CONFIG_ERROR_BADPOSITION;
 	
-		coin_counters = cfg.format.coin_counters;
+		coin_counters = cfg->format->coin_counters;
 	
 		/* Clear the coin & ticket counters/flags - LBO 042898 */
 		for (i = 0; i < COIN_COUNTERS; i ++)
@@ -478,14 +478,14 @@ public class config
 		/* read in the coin/ticket counters */
 		for (i = 0; i < COIN_COUNTERS; i ++)
 		{
-			if (readint(cfg.file, &coins[i]) != 0)
+			if (readint(cfg->file, &coins[i]) != 0)
 				goto done;
 		}
-		if (readint(cfg.file, dispensed_tickets) != 0)
+		if (readint(cfg->file, dispensed_tickets) != 0)
 			goto done;
 	
 	done:
-		cfg.position = POSITION_AFTER_COINS;
+		cfg->position = POSITION_AFTER_COINS;
 		return 0;
 	}
 	
@@ -497,16 +497,16 @@ public class config
 	
 	int config_read_mixer_config(config_file *cfg, struct mixer_config *mixercfg)
 	{
-		if (cfg.is_write)
+		if (cfg->is_write)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_AFTER_COINS)
+		if (cfg->position != POSITION_AFTER_COINS)
 			return CONFIG_ERROR_BADPOSITION;
 	
-		memset(mixercfg.default_levels, 0xff, sizeof(mixercfg.default_levels));
-		memset(mixercfg.mixing_levels, 0xff, sizeof(mixercfg.mixing_levels));
-		mame_fread(cfg.file, mixercfg.default_levels, MIXER_MAX_CHANNELS);
-		mame_fread(cfg.file, mixercfg.mixing_levels, MIXER_MAX_CHANNELS);
-		cfg.position = POSITION_AFTER_MIXER;
+		memset(mixercfg->default_levels, 0xff, sizeof(mixercfg->default_levels));
+		memset(mixercfg->mixing_levels, 0xff, sizeof(mixercfg->mixing_levels));
+		mame_fread(cfg->file, mixercfg->default_levels, MIXER_MAX_CHANNELS);
+		mame_fread(cfg->file, mixercfg->mixing_levels, MIXER_MAX_CHANNELS);
+		cfg->position = POSITION_AFTER_MIXER;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -537,10 +537,10 @@ public class config
 	
 	static void input_port_write(mame_file *f, const struct InputPort *in)
 	{
-		writeint(f, in.type);
-		writeword(f, in.mask);
-		writeword(f, in.default_value);
-		seq_write(f, &in.seq);
+		writeint(f, in->type);
+		writeword(f, in->mask);
+		writeword(f, in->default_value);
+		seq_write(f, &in->seq);
 	}
 	
 	
@@ -554,34 +554,34 @@ public class config
 		unsigned int total;
 		const struct InputPort *in;
 	
-		if (!cfg.is_write || cfg.is_default)
+		if (!cfg->is_write || cfg->is_default)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_BEGIN)
+		if (cfg->position != POSITION_BEGIN)
 			return CONFIG_ERROR_BADPOSITION;
 	
 		/* calculate the size of the array */
 		total = count_input_ports(input_ports_default);
 	
 		/* write array size */
-		writeint(cfg.file, total);
+		writeint(cfg->file, total);
 	
 		/* write the original settings as defined in the driver */
 		in = input_ports_default;
-		while (in.type != IPT_END)
+		while (in->type != IPT_END)
 		{
-			input_port_write(cfg.file, in);
+			input_port_write(cfg->file, in);
 			in++;
 		}
 	
 		/* write the current settings */
 		in = input_ports;
-		while (in.type != IPT_END)
+		while (in->type != IPT_END)
 		{
-			input_port_write(cfg.file, in);
+			input_port_write(cfg->file, in);
 			in++;
 		}
 	
-		cfg.position = POSITION_AFTER_PORTS;
+		cfg->position = POSITION_AFTER_PORTS;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -595,23 +595,23 @@ public class config
 	{
 		int i = 0;
 	
-		if (!cfg.is_write || !cfg.is_default)
+		if (!cfg->is_write || !cfg->is_default)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_BEGIN)
+		if (cfg->position != POSITION_BEGIN)
 			return CONFIG_ERROR_BADPOSITION;
 	
 		while (input_ports_default[i].type != IPT_END)
 		{
 			if (input_ports_default[i].type != IPT_OSD_RESERVED)
 			{
-				writeint(cfg.file, input_ports_default[i].type);
-				seq_write(cfg.file, &input_ports_default_backup[i].seq);
-				seq_write(cfg.file, &input_ports_default[i].seq);
+				writeint(cfg->file, input_ports_default[i].type);
+				seq_write(cfg->file, &input_ports_default_backup[i].seq);
+				seq_write(cfg->file, &input_ports_default[i].seq);
 			}
 			i++;
 		}
 	
-		cfg.position = POSITION_AFTER_PORTS;
+		cfg->position = POSITION_AFTER_PORTS;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -628,9 +628,9 @@ public class config
 	
 		/* write out the coin/ticket counters for this machine - LBO 042898 */
 		for (i = 0; i < COIN_COUNTERS; i ++)
-			writeint(cfg.file, coins[i]);
-		writeint(cfg.file, dispensed_tickets);
-		cfg.position = POSITION_AFTER_COINS;
+			writeint(cfg->file, coins[i]);
+		writeint(cfg->file, dispensed_tickets);
+		cfg->position = POSITION_AFTER_COINS;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	
@@ -642,14 +642,14 @@ public class config
 	
 	int config_write_mixer_config(config_file *cfg, const struct mixer_config *mixercfg)
 	{
-		if (!cfg.is_write)
+		if (!cfg->is_write)
 			return CONFIG_ERROR_BADMODE;
-		if (cfg.position != POSITION_AFTER_COINS)
+		if (cfg->position != POSITION_AFTER_COINS)
 			return CONFIG_ERROR_BADPOSITION;
 	
-		mame_fwrite(cfg.file, mixercfg.default_levels, MIXER_MAX_CHANNELS);
-		mame_fwrite(cfg.file, mixercfg.mixing_levels, MIXER_MAX_CHANNELS);
-		cfg.position = POSITION_AFTER_MIXER;
+		mame_fwrite(cfg->file, mixercfg->default_levels, MIXER_MAX_CHANNELS);
+		mame_fwrite(cfg->file, mixercfg->mixing_levels, MIXER_MAX_CHANNELS);
+		cfg->position = POSITION_AFTER_MIXER;
 		return CONFIG_ERROR_SUCCESS;
 	}
 	

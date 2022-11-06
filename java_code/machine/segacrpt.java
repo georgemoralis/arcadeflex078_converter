@@ -179,7 +179,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -251,7 +251,7 @@ public class segacrpt
 	
 		f = fopen("table","rb");
 	
-		if (f != 0) fread(xortable,1,128,f);
+		if (f) fread(xortable,1,128,f);
 	
 		fclose(f);
 	}
@@ -296,7 +296,7 @@ public class segacrpt
 			/* pick the offset in the table from bits 3 and 5 of the source data */
 			col = ((src >> 3) & 1) + (((src >> 5) & 1) << 1);
 			/* the bottom half of the translation table is the mirror image of the top */
-			if ((src & 0x80) != 0)
+			if (src & 0x80)
 			{
 				col = 3 - col;
 				xor = 0xa8;
@@ -1014,17 +1014,17 @@ public class segacrpt
 			/* decode the opcodes */
 			tbl = swaptable[row >> 3];
 			rom[A + diff] = BITSWAP8(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]) ^ 0x40;
-			if ((row & 1) != 0) rom[A + diff] ^= 0x10;
-			if ((row & 2) != 0) rom[A + diff] ^= 0x04;
-			if ((row & 4) != 0) rom[A + diff] ^= 0x01;
+			if (row & 1) rom[A + diff] ^= 0x10;
+			if (row & 2) rom[A + diff] ^= 0x04;
+			if (row & 4) rom[A + diff] ^= 0x01;
 	
 			/* decode the data */
 			row++;	/* the data permutation table is shifted by one position!!!! */
 			tbl = swaptable[row >> 3];
 			rom[A] = BITSWAP8(src,7,tbl[0],5,tbl[1],3,tbl[2],1,tbl[3]);
-			if ((row & 1) != 0) rom[A] ^= 0x10;
-			if ((row & 2) != 0) rom[A] ^= 0x04;
-			if ((row & 4) != 0) rom[A] ^= 0x01;
+			if (row & 1) rom[A] ^= 0x10;
+			if (row & 2) rom[A] ^= 0x04;
+			if (row & 4) rom[A] ^= 0x01;
 		}
 	
 		/* copy the opcodes from the not encrypted part of the ROMs */

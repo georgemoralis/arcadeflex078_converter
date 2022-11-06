@@ -200,7 +200,7 @@ C - uses sub board with support for player 3 and 4 controls
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -218,8 +218,7 @@ public class namcos1
 	
 	/**********************************************************************/
 	
-	public static WriteHandlerPtr namcos1_sub_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_sub_firq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 1, HOLD_LINE);
 	} };
 	
@@ -317,15 +316,13 @@ public class namcos1
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = readinputport(2);
-		if ((offset & 2) != 0) ret>>=4;
+		if(offset&2) ret>>=4;
 		return 0xf0 | ret;
 	} };
 	
-	public static WriteHandlerPtr namcos1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(~data & 1);
 		coin_counter_w(0,data & 2);
 		coin_counter_w(1,data & 4);
@@ -338,8 +335,7 @@ public class namcos1
 		DAC_signed_data_16_w(0,0x8000+(dac0_value * dac0_gain)+(dac1_value * dac1_gain));
 	}
 	
-	public static WriteHandlerPtr namcos1_dac_gain_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_dac_gain_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int value;
 		/* DAC0 */
 		value = (data&1)|((data>>1)&2); /* GAIN0,GAIN1 */
@@ -350,25 +346,22 @@ public class namcos1
 		namcos1_update_DACs();
 	} };
 	
-	public static WriteHandlerPtr namcos1_dac0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_dac0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dac0_value = data-0x80; /* shift zero point */
 		namcos1_update_DACs();
 	} };
 	
-	public static WriteHandlerPtr namcos1_dac1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos1_dac1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dac1_value = data-0x80; /* shift zero point */
 		namcos1_update_DACs();
 	} };
 	
 	static int num=0, strobe=0;
 	
-	public static ReadHandlerPtr quester_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr quester_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
-		if (num == 0)
+		if (!num)
 			ret = (readinputport(0)&0x90) | strobe | (readinputport(4)&0x0f);
 		else
 			ret = (readinputport(0)&0x90) | strobe | (readinputport(5)&0x0f);
@@ -378,25 +371,23 @@ public class namcos1
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr quester_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr quester_in1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
-		if (num == 0)
+		if (!num)
 			ret = (readinputport(1)&0x90) | num | (readinputport(4)>>4);
 		else
 			ret = (readinputport(1)&0x90) | num | (readinputport(5)>>4);
 	
-		if (strobe == 0) num ^= 0x20;
+		if (!strobe) num ^= 0x20;
 	
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr faceoff_in0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr faceoff_in0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
-		if (num == 0)
+		if (!num)
 			ret = (readinputport(0)&0x80) | (readinputport(4)&0x1f);
 		else if (num==3)
 			ret = (readinputport(0)&0x80) | (readinputport(5)&0x1f);
@@ -406,13 +397,12 @@ public class namcos1
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr faceoff_in1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr faceoff_in1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret;
 	
-		if (strobe != 0)
+		if (strobe)
 		{
-			if (num == 0)
+			if (!num)
 				ret = (readinputport(1)&0x80) | strobe | ((readinputport(7)&0x07)<<3);
 			else
 				ret = (readinputport(1)&0x80) | strobe | (readinputport(7)&0x18);
@@ -504,7 +494,7 @@ public class namcos1
 	
 	
 	/* Standard Namco System 1 input port definition */
-	static InputPortPtr input_ports_ns1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ns1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ns1 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -549,7 +539,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Bakutotsu Kijyutei input port definition - dip switches are different */
-	static InputPortPtr input_ports_bakutotu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bakutotu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bakutotu )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -596,7 +586,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Dragon Spirit input port definition - dip switches are different */
-	static InputPortPtr input_ports_dspirit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dspirit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dspirit )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -635,7 +625,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Galaga '88 input port definition - dip switches are different */
-	static InputPortPtr input_ports_galaga88 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaga88 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaga88 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -679,7 +669,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Marchen Maze input port definition - dip switches are different */
-	static InputPortPtr input_ports_mmaze = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mmaze = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mmaze )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -724,7 +714,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Pac-Mania input port definition - dip switches are different */
-	static InputPortPtr input_ports_pacmania = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pacmania = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pacmania )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -771,7 +761,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Puzzle Club input port definition - dip switches are different */
-	static InputPortPtr input_ports_puzlclub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_puzlclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( puzlclub )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -817,7 +807,7 @@ public class namcos1
 	
 	
 	/* Splatter House input port definition - dip switches are different */
-	static InputPortPtr input_ports_splatter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_splatter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( splatter )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -860,7 +850,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* World Court input port definition - dip switches are different */
-	static InputPortPtr input_ports_wldcourt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wldcourt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wldcourt )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -905,7 +895,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Quester input port definition - paddle controls */
-	static InputPortPtr input_ports_quester = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quester = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quester )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNUSED );    /* paddle */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -950,7 +940,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Face Off input port definition - 4 player controls */
-	static InputPortPtr input_ports_faceoff = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_faceoff = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( faceoff )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x7f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );
@@ -1013,7 +1003,7 @@ public class namcos1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Beraboh Man input port definition - controls are different */
-	static InputPortPtr input_ports_berabohm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_berabohm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( berabohm )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -1155,8 +1145,7 @@ public class namcos1
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ns1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ns1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M6809,49152000/24) /* Not sure if divided by 32 or 24 */
@@ -1198,13 +1187,10 @@ public class namcos1
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bakutotu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bakutotu )
 	
 		MDRV_IMPORT_FROM(ns1)
 	
@@ -1214,35 +1200,27 @@ public class namcos1
 		// heavy sync required to prevent CPUs from fighting for video RAM access and going into deadlocks
 		MDRV_INTERLEAVE(640)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_quester = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quester )
 	
 		MDRV_IMPORT_FROM(ns1)
 	
 		MDRV_CPU_MODIFY("MCU")
 		MDRV_CPU_MEMORY(quester_mcu_readmem,mcu_writemem)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_faceoff = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( faceoff )
 	
 		MDRV_IMPORT_FROM(ns1)
 	
 		MDRV_CPU_MODIFY("MCU")
 		MDRV_CPU_MEMORY(faceoff_mcu_readmem,mcu_writemem)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***********************************************************************
@@ -2682,38 +2660,38 @@ public class namcos1
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_shadowld	   = new GameDriver("1987"	,"shadowld"	,"namcos1.java"	,rom_shadowld,null	,machine_driver_ns1	,input_ports_ns1	,init_shadowld	,ROT0	,	"Namco", "Shadow Land" )
-	public static GameDriver driver_youkaidk	   = new GameDriver("1987"	,"youkaidk"	,"namcos1.java"	,rom_youkaidk,driver_shadowld	,machine_driver_ns1	,input_ports_ns1	,init_shadowld	,ROT0	,	"Namco", "Yokai Douchuuki (Japan new version)" )
-	public static GameDriver driver_yokaidko	   = new GameDriver("1987"	,"yokaidko"	,"namcos1.java"	,rom_yokaidko,driver_shadowld	,machine_driver_ns1	,input_ports_ns1	,init_shadowld	,ROT0	,	"Namco", "Yokai Douchuuki (Japan old version)" )
-	public static GameDriver driver_dspirit	   = new GameDriver("1987"	,"dspirit"	,"namcos1.java"	,rom_dspirit,null	,machine_driver_ns1	,input_ports_dspirit	,init_dspirit	,ROT270	,	"Namco", "Dragon Spirit (new version)" )
-	public static GameDriver driver_dspirito	   = new GameDriver("1987"	,"dspirito"	,"namcos1.java"	,rom_dspirito,driver_dspirit	,machine_driver_ns1	,input_ports_dspirit	,init_dspirit	,ROT270	,	"Namco", "Dragon Spirit (old version)" )
-	public static GameDriver driver_blazer	   = new GameDriver("1987"	,"blazer"	,"namcos1.java"	,rom_blazer,null	,machine_driver_ns1	,input_ports_splatter	,init_blazer	,ROT270	,	"Namco", "Blazer (Japan)" )
-	public static GameDriver driver_quester	   = new GameDriver("1987"	,"quester"	,"namcos1.java"	,rom_quester,null	,machine_driver_quester	,input_ports_quester	,init_quester	,ROT270	,	"Namco", "Quester (Japan)" )
-	public static GameDriver driver_pacmania	   = new GameDriver("1987"	,"pacmania"	,"namcos1.java"	,rom_pacmania,null	,machine_driver_ns1	,input_ports_pacmania	,init_pacmania	,ROT90	,	"Namco", "Pac-Mania" )
-	public static GameDriver driver_pacmanij	   = new GameDriver("1987"	,"pacmanij"	,"namcos1.java"	,rom_pacmanij,driver_pacmania	,machine_driver_ns1	,input_ports_pacmania	,init_pacmania	,ROT270	,	"Namco", "Pac-Mania (Japan)" )
-	public static GameDriver driver_galaga88	   = new GameDriver("1987"	,"galaga88"	,"namcos1.java"	,rom_galaga88,null	,machine_driver_ns1	,input_ports_galaga88	,init_galaga88	,ROT90	,	"Namco", "Galaga '88 (set 1)" )
-	public static GameDriver driver_galag88b	   = new GameDriver("1987"	,"galag88b"	,"namcos1.java"	,rom_galag88b,driver_galaga88	,machine_driver_ns1	,input_ports_galaga88	,init_galaga88	,ROT90	,	"Namco", "Galaga '88 (set 2)" )
-	public static GameDriver driver_galag88j	   = new GameDriver("1987"	,"galag88j"	,"namcos1.java"	,rom_galag88j,driver_galaga88	,machine_driver_ns1	,input_ports_galaga88	,init_galaga88	,ROT270	,	"Namco", "Galaga '88 (Japan)" )
-	public static GameDriver driver_ws	   = new GameDriver("1988"	,"ws"	,"namcos1.java"	,rom_ws,null	,machine_driver_ns1	,input_ports_splatter	,init_ws	,ROT0	,	"Namco", "World Stadium (Japan)" )
-	public static GameDriver driver_berabohm	   = new GameDriver("1988"	,"berabohm"	,"namcos1.java"	,rom_berabohm,null	,machine_driver_ns1	,input_ports_berabohm	,init_berabohm	,ROT0	,	"Namco", "Beraboh Man (Japan version C)" )
-	public static GameDriver driver_beraboho	   = new GameDriver("1988"	,"beraboho"	,"namcos1.java"	,rom_beraboho,driver_berabohm	,machine_driver_ns1	,input_ports_berabohm	,init_berabohm	,ROT0	,	"Namco", "Beraboh Man (Japan version B)" )
-	//public static GameDriver driver_alice	   = new GameDriver("1988"	,"alice"	,"namcos1.java"	,rom_alice,null	,machine_driver_ns1	,input_ports_ns1	,init_alice	,ROT0	,	"Namco", "Alice In Wonderland" )
-	public static GameDriver driver_mmaze	   = new GameDriver("1988"	,"mmaze"	,"namcos1.java"	,rom_mmaze,null	,machine_driver_ns1	,input_ports_mmaze	,init_alice	,ROT0	,	"Namco", "Marchen Maze (Japan)" )
-	public static GameDriver driver_bakutotu	   = new GameDriver("1988"	,"bakutotu"	,"namcos1.java"	,rom_bakutotu,null	,machine_driver_bakutotu	,input_ports_bakutotu	,init_bakutotu	,ROT0	,	"Namco", "Bakutotsu Kijuutei" )
-	public static GameDriver driver_wldcourt	   = new GameDriver("1988"	,"wldcourt"	,"namcos1.java"	,rom_wldcourt,null	,machine_driver_ns1	,input_ports_wldcourt	,init_wldcourt	,ROT0	,	"Namco", "World Court (Japan)" )
-	public static GameDriver driver_splatter	   = new GameDriver("1988"	,"splatter"	,"namcos1.java"	,rom_splatter,null	,machine_driver_ns1	,input_ports_splatter	,init_splatter	,ROT0	,	"Namco", "Splatter House (Japan)" )
-	public static GameDriver driver_faceoff	   = new GameDriver("1988"	,"faceoff"	,"namcos1.java"	,rom_faceoff,null	,machine_driver_faceoff	,input_ports_faceoff	,init_faceoff	,ROT0	,	"Namco", "Face Off (Japan)" )
-	public static GameDriver driver_rompers	   = new GameDriver("1989"	,"rompers"	,"namcos1.java"	,rom_rompers,null	,machine_driver_ns1	,input_ports_splatter	,init_rompers	,ROT270	,	"Namco", "Rompers (Japan)" )
-	public static GameDriver driver_romperso	   = new GameDriver("1989"	,"romperso"	,"namcos1.java"	,rom_romperso,driver_rompers	,machine_driver_ns1	,input_ports_splatter	,init_rompers	,ROT270	,	"Namco", "Rompers (Japan old version)" )
-	public static GameDriver driver_blastoff	   = new GameDriver("1989"	,"blastoff"	,"namcos1.java"	,rom_blastoff,null	,machine_driver_ns1	,input_ports_splatter	,init_blastoff	,ROT270	,	"Namco", "Blast Off (Japan)" )
-	public static GameDriver driver_ws89	   = new GameDriver("1989"	,"ws89"	,"namcos1.java"	,rom_ws89,driver_ws	,machine_driver_ns1	,input_ports_wldcourt	,init_ws89	,ROT0	,	"Namco", "World Stadium '89 (Japan)" )
-	public static GameDriver driver_dangseed	   = new GameDriver("1989"	,"dangseed"	,"namcos1.java"	,rom_dangseed,null	,machine_driver_ns1	,input_ports_ns1	,init_dangseed	,ROT270	,	"Namco", "Dangerous Seed (Japan)" )
-	public static GameDriver driver_ws90	   = new GameDriver("1990"	,"ws90"	,"namcos1.java"	,rom_ws90,driver_ws	,machine_driver_ns1	,input_ports_wldcourt	,init_ws90	,ROT0	,	"Namco", "World Stadium '90 (Japan)" )
-	public static GameDriver driver_pistoldm	   = new GameDriver("1990"	,"pistoldm"	,"namcos1.java"	,rom_pistoldm,null	,machine_driver_ns1	,input_ports_splatter	,init_pistoldm	,ROT180	,	"Namco", "Pistol Daimyo no Bouken (Japan)" )
-	public static GameDriver driver_boxyboy	   = new GameDriver("1990"	,"boxyboy"	,"namcos1.java"	,rom_boxyboy,null	,machine_driver_ns1	,input_ports_ns1	,init_soukobdx	,ROT180	,	"Namco", "Boxy Boy (US)" )
-	public static GameDriver driver_soukobdx	   = new GameDriver("1990"	,"soukobdx"	,"namcos1.java"	,rom_soukobdx,driver_boxyboy	,machine_driver_ns1	,input_ports_ns1	,init_soukobdx	,ROT180	,	"Namco", "Souko Ban Deluxe (Japan)" )
-	public static GameDriver driver_puzlclub	   = new GameDriver("1990"	,"puzlclub"	,"namcos1.java"	,rom_puzlclub,null	,machine_driver_ns1	,input_ports_puzlclub	,init_puzlclub	,ROT270	,	"Namco", "Puzzle Club (Japan prototype)" )
-	public static GameDriver driver_tankfrce	   = new GameDriver("1991"	,"tankfrce"	,"namcos1.java"	,rom_tankfrce,null	,machine_driver_ns1	,input_ports_splatter	,init_tankfrce	,ROT180	,	"Namco", "Tank Force (US)" )
-	public static GameDriver driver_tankfrcj	   = new GameDriver("1991"	,"tankfrcj"	,"namcos1.java"	,rom_tankfrcj,driver_tankfrce	,machine_driver_ns1	,input_ports_splatter	,init_tankfrce	,ROT180	,	"Namco", "Tank Force (Japan)" )
+	GAME( 1987, shadowld, 0,        ns1,     ns1,     shadowld, ROT0,   "Namco", "Shadow Land" )
+	GAME( 1987, youkaidk, shadowld, ns1,     ns1,     shadowld, ROT0,   "Namco", "Yokai Douchuuki (Japan new version)" )
+	GAME( 1987, yokaidko, shadowld, ns1,     ns1,     shadowld, ROT0,   "Namco", "Yokai Douchuuki (Japan old version)" )
+	GAME( 1987, dspirit,  0,        ns1,     dspirit, dspirit,  ROT270, "Namco", "Dragon Spirit (new version)" )
+	GAME( 1987, dspirito, dspirit,  ns1,     dspirit, dspirit,  ROT270, "Namco", "Dragon Spirit (old version)" )
+	GAME( 1987, blazer,   0,        ns1,     splatter,blazer,   ROT270, "Namco", "Blazer (Japan)" )
+	GAME( 1987, quester,  0,        quester, quester, quester,  ROT270, "Namco", "Quester (Japan)" )
+	GAME( 1987, pacmania, 0,        ns1,     pacmania,pacmania, ROT90,  "Namco", "Pac-Mania" )
+	GAME( 1987, pacmanij, pacmania, ns1,     pacmania,pacmania, ROT270, "Namco", "Pac-Mania (Japan)" )
+	GAME( 1987, galaga88, 0,        ns1,     galaga88,galaga88, ROT90,  "Namco", "Galaga '88 (set 1)" )
+	GAME( 1987, galag88b, galaga88, ns1,     galaga88,galaga88, ROT90,  "Namco", "Galaga '88 (set 2)" )
+	GAME( 1987, galag88j, galaga88, ns1,     galaga88,galaga88, ROT270, "Namco", "Galaga '88 (Japan)" )
+	GAME( 1988, ws,       0,        ns1,     splatter,ws,       ROT0,   "Namco", "World Stadium (Japan)" )
+	GAME( 1988, berabohm, 0,        ns1,     berabohm,berabohm, ROT0,   "Namco", "Beraboh Man (Japan version C)" )
+	GAME( 1988, beraboho, berabohm, ns1,     berabohm,berabohm, ROT0,   "Namco", "Beraboh Man (Japan version B)" )
+	//GAME( 1988, alice,    0,        ns1,     ns1,     alice,    ROT0,   "Namco", "Alice In Wonderland" )
+	GAME( 1988, mmaze,    0,        ns1,     mmaze,   alice,    ROT0,   "Namco", "Marchen Maze (Japan)" )
+	GAME( 1988, bakutotu, 0,        bakutotu,bakutotu,bakutotu, ROT0,   "Namco", "Bakutotsu Kijuutei" )
+	GAME( 1988, wldcourt, 0,        ns1,     wldcourt,wldcourt, ROT0,   "Namco", "World Court (Japan)" )
+	GAME( 1988, splatter, 0,        ns1,     splatter,splatter, ROT0,   "Namco", "Splatter House (Japan)" )
+	GAME( 1988, faceoff,  0,        faceoff, faceoff, faceoff,  ROT0,   "Namco", "Face Off (Japan)" )
+	GAME( 1989, rompers,  0,        ns1,     splatter,rompers,  ROT270, "Namco", "Rompers (Japan)" )
+	GAME( 1989, romperso, rompers,  ns1,     splatter,rompers,  ROT270, "Namco", "Rompers (Japan old version)" )
+	GAME( 1989, blastoff, 0,        ns1,     splatter,blastoff, ROT270, "Namco", "Blast Off (Japan)" )
+	GAME( 1989, ws89,     ws,       ns1,     wldcourt,ws89,     ROT0,   "Namco", "World Stadium '89 (Japan)" )
+	GAME( 1989, dangseed, 0,        ns1,     ns1,     dangseed, ROT270, "Namco", "Dangerous Seed (Japan)" )
+	GAME( 1990, ws90,     ws,       ns1,     wldcourt,ws90,     ROT0,   "Namco", "World Stadium '90 (Japan)" )
+	GAME( 1990, pistoldm, 0,        ns1,     splatter,pistoldm, ROT180, "Namco", "Pistol Daimyo no Bouken (Japan)" )
+	GAME( 1990, boxyboy,  0,        ns1,     ns1,     soukobdx, ROT180, "Namco", "Boxy Boy (US)" )
+	GAME( 1990, soukobdx, boxyboy,  ns1,     ns1,     soukobdx, ROT180, "Namco", "Souko Ban Deluxe (Japan)" )
+	GAME( 1990, puzlclub, 0,        ns1,     puzlclub,puzlclub, ROT270, "Namco", "Puzzle Club (Japan prototype)" )
+	GAME( 1991, tankfrce, 0,        ns1,     splatter,tankfrce, ROT180, "Namco", "Tank Force (US)" )
+	GAME( 1991, tankfrcj, tankfrce, ns1,     splatter,tankfrce, ROT180, "Namco", "Tank Force (Japan)" )
 	
 }

@@ -33,7 +33,7 @@ a000-a3ff	R/W X/Y scroll position of each character (can be scrolled up
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,18 +47,15 @@ public class spcforce
 	static int spcforce_SN76496_latch;
 	static int spcforce_SN76496_select;
 	
-	public static WriteHandlerPtr spcforce_SN76496_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spcforce_SN76496_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spcforce_SN76496_latch = data;
 	} };
 	
-	public static ReadHandlerPtr spcforce_SN76496_select_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spcforce_SN76496_select_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spcforce_SN76496_select;
 	} };
 	
-	public static WriteHandlerPtr spcforce_SN76496_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spcforce_SN76496_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    spcforce_SN76496_select = data;
 	
 		if (~data & 0x40)  SN76496_0_w(0, spcforce_SN76496_latch);
@@ -66,15 +63,13 @@ public class spcforce
 		if (~data & 0x10)  SN76496_2_w(0, spcforce_SN76496_latch);
 	} };
 	
-	public static ReadHandlerPtr spcforce_t0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spcforce_t0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* SN76496 status according to Al - not supported by MAME?? */
 		return rand() & 1;
 	} };
 	
 	
-	public static WriteHandlerPtr spcforce_soundtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spcforce_soundtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, 0, (~data & 0x08) ? ASSERT_LINE : CLEAR_LINE);
 	} };
 	
@@ -135,7 +130,7 @@ public class spcforce
 	};
 	
 	
-	static InputPortPtr input_ports_spcforce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spcforce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spcforce )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -182,7 +177,7 @@ public class spcforce
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as spcforce, but no cocktail mode */
-	static InputPortPtr input_ports_spcforc2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spcforc2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spcforc2 )
 		PORT_START();       /* DSW */
 		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -254,8 +249,7 @@ public class spcforce
 		0, 3, 4, 5, 6, 7, 0, 1,
 		0, 2, 3, 4, 5, 6, 7, 0
 	};
-	static public static PaletteInitHandlerPtr palette_init_spcforce  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_spcforce  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0; i < 8; i++)
 			palette_set_color(i, (i & 1) * 0xff, ((i >> 1) & 1) * 0xff, ((i >> 2) & 1) * 0xff);
@@ -271,8 +265,7 @@ public class spcforce
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_spcforce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spcforce )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A, 4000000)        /* 4.00 MHz??? */
@@ -301,9 +294,7 @@ public class spcforce
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -381,7 +372,7 @@ public class spcforce
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_spcforce	   = new GameDriver("1980"	,"spcforce"	,"spcforce.java"	,rom_spcforce,null	,machine_driver_spcforce	,input_ports_spcforce	,null	,ROT270	,	"Venture Line", "Space Force", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_spcforc2	   = new GameDriver("19??"	,"spcforc2"	,"spcforce.java"	,rom_spcforc2,driver_spcforce	,machine_driver_spcforce	,input_ports_spcforc2	,null	,ROT270	,	"Elcon (bootleg?)", "Space Force (set 2)", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_meteor	   = new GameDriver("1981"	,"meteor"	,"spcforce.java"	,rom_meteor,driver_spcforce	,machine_driver_spcforce	,input_ports_spcforc2	,null	,ROT270	,	"Venture Line", "Meteoroids", GAME_IMPERFECT_COLORS )
+	GAMEX( 1980, spcforce, 0,        spcforce, spcforce, 0, ROT270, "Venture Line", "Space Force", GAME_IMPERFECT_COLORS )
+	GAMEX( 19??, spcforc2, spcforce, spcforce, spcforc2, 0, ROT270, "Elcon (bootleg?)", "Space Force (set 2)", GAME_IMPERFECT_COLORS )
+	GAMEX( 1981, meteor,   spcforce, spcforce, spcforc2, 0, ROT270, "Venture Line", "Meteoroids", GAME_IMPERFECT_COLORS )
 }

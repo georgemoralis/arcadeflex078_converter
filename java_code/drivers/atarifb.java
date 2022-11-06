@@ -104,7 +104,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -133,8 +133,7 @@ public class atarifb
 		0x03, 0x02,
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_atarifb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_atarifb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black  */
 		palette_set_color(1,0x80,0x80,0x80); /* grey  */
 		palette_set_color(2,0xff,0xff,0xff); /* white  */
@@ -256,7 +255,7 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_atarifb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atarifb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atarifb )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT ( 0x0F, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT ( 0x10, IP_ACTIVE_LOW,  IPT_BUTTON1 );
@@ -299,7 +298,7 @@ public class atarifb
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_atarifb4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atarifb4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atarifb4 )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT ( 0xff, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
@@ -362,7 +361,7 @@ public class atarifb
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_abaseb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_abaseb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( abaseb )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT ( 0x0F, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT ( 0x10, IP_ACTIVE_LOW,  IPT_BUTTON1 );
@@ -405,7 +404,7 @@ public class atarifb
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_soccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_soccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( soccer )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT ( 0xff, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
@@ -729,8 +728,7 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarifb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarifb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 750000)
@@ -754,13 +752,10 @@ public class atarifb
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, atarifb_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_atarifb4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarifb4 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
@@ -768,26 +763,20 @@ public class atarifb
 		MDRV_CPU_MEMORY(atarifb4_readmem,atarifb4_writemem)
 	
 		MDRV_VISIBLE_AREA(0*8, 38*8-1, 0*8, 32*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_abaseb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( abaseb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, abaseb_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_soccer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( soccer )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(atarifb)
@@ -797,9 +786,7 @@ public class atarifb
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 38*8-1, 2*8, 32*8-1)
 		MDRV_GFXDECODE(soccer_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -959,29 +946,25 @@ public class atarifb
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_atarifb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_atarifb  = new DriverInitHandlerPtr() { public void handler(){
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 1;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_atarifb4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_atarifb4  = new DriverInitHandlerPtr() { public void handler(){
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 2;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_abaseb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_abaseb  = new DriverInitHandlerPtr() { public void handler(){
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 3;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_soccer  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_soccer  = new DriverInitHandlerPtr() { public void handler(){
 		/* Tell the video code to draw the plays for this version */
 		atarifb_game = 4;
 	} };
@@ -995,10 +978,10 @@ public class atarifb
 	 *************************************/
 	
 	/*    YEAR  NAME      PARENT   MACHINE   INPUT     INIT      MONITOR  */
-	public static GameDriver driver_atarifb	   = new GameDriver("1978"	,"atarifb"	,"atarifb.java"	,rom_atarifb,null	,machine_driver_atarifb	,input_ports_atarifb	,init_atarifb	,ROT0	,	"Atari", "Atari Football (revision 2)" )
-	public static GameDriver driver_atarifb1	   = new GameDriver("1978"	,"atarifb1"	,"atarifb.java"	,rom_atarifb1,driver_atarifb	,machine_driver_atarifb	,input_ports_atarifb	,init_atarifb	,ROT0	,	"Atari", "Atari Football (revision 1)" )
-	public static GameDriver driver_atarifb4	   = new GameDriver("1979"	,"atarifb4"	,"atarifb.java"	,rom_atarifb4,driver_atarifb	,machine_driver_atarifb4	,input_ports_atarifb4	,init_atarifb4	,ROT0	,	"Atari", "Atari Football (4 players)" )
-	public static GameDriver driver_abaseb	   = new GameDriver("1979"	,"abaseb"	,"atarifb.java"	,rom_abaseb,null	,machine_driver_abaseb	,input_ports_abaseb	,init_abaseb	,ROT0	,	"Atari", "Atari Baseball (set 1)" )
-	public static GameDriver driver_abaseb2	   = new GameDriver("1979"	,"abaseb2"	,"atarifb.java"	,rom_abaseb2,driver_abaseb	,machine_driver_abaseb	,input_ports_abaseb	,init_abaseb	,ROT0	,	"Atari", "Atari Baseball (set 2)" )
-	public static GameDriver driver_soccer	   = new GameDriver("1980"	,"soccer"	,"atarifb.java"	,rom_soccer,null	,machine_driver_soccer	,input_ports_soccer	,init_soccer	,ROT0	,	"Atari", "Atari Soccer" )
+	GAME( 1978, atarifb,  0,       atarifb,  atarifb,  atarifb,  ROT0, "Atari", "Atari Football (revision 2)" )
+	GAME( 1978, atarifb1, atarifb, atarifb,  atarifb,  atarifb,  ROT0, "Atari", "Atari Football (revision 1)" )
+	GAME( 1979, atarifb4, atarifb, atarifb4, atarifb4, atarifb4, ROT0, "Atari", "Atari Football (4 players)" )
+	GAME( 1979, abaseb,   0,       abaseb,   abaseb,   abaseb,   ROT0, "Atari", "Atari Baseball (set 1)" )
+	GAME( 1979, abaseb2,  abaseb,  abaseb,   abaseb,   abaseb,   ROT0, "Atari", "Atari Baseball (set 2)" )
+	GAME( 1980, soccer,   0,       soccer,   soccer,   soccer,   ROT0, "Atari", "Atari Soccer" )
 }

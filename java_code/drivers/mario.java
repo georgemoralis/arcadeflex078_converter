@@ -70,7 +70,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -91,32 +91,28 @@ public class mario
 	#define ACTIVEHIGH_PORT_BIT(P,A,D)   ((P & (~(1 << A))) | (D << A))
 	
 	
-	public static WriteHandlerPtr mario_sh_getcoin_w = new WriteHandlerPtr() {public void handler(int offset, int data)    { t[0] = data; } };
-	public static WriteHandlerPtr mario_sh_crab_w = new WriteHandlerPtr() {public void handler(int offset, int data)       { p[1] = ACTIVEHIGH_PORT_BIT(p[1],0,data); } };
-	public static WriteHandlerPtr mario_sh_turtle_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[1] = ACTIVEHIGH_PORT_BIT(p[1],1,data); } };
-	public static WriteHandlerPtr mario_sh_fly_w = new WriteHandlerPtr() {public void handler(int offset, int data)        { p[1] = ACTIVEHIGH_PORT_BIT(p[1],2,data); } };
-	public static WriteHandlerPtr mario_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) { soundlatch_w.handler(offset,data); } };
+	public static WriteHandlerPtr mario_sh_getcoin_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { t[0] = data; } };
+	public static WriteHandlerPtr mario_sh_crab_w = new WriteHandlerPtr() {public void handler(int offset, int data)     { p[1] = ACTIVEHIGH_PORT_BIT(p[1],0,data); } };
+	public static WriteHandlerPtr mario_sh_turtle_w = new WriteHandlerPtr() {public void handler(int offset, int data)   { p[1] = ACTIVEHIGH_PORT_BIT(p[1],1,data); } };
+	public static WriteHandlerPtr mario_sh_fly_w = new WriteHandlerPtr() {public void handler(int offset, int data)      { p[1] = ACTIVEHIGH_PORT_BIT(p[1],2,data); } };
+	public static WriteHandlerPtr mario_sh_tuneselect_w = new WriteHandlerPtr() {public void handler(int offset, int data) soundlatch_w.handler(offset,data); }
 	
-	public static ReadHandlerPtr mario_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[1]; } };
-	public static ReadHandlerPtr mario_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset)   { return p[2]; } };
-	public static ReadHandlerPtr mario_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[0]; } };
-	public static ReadHandlerPtr mario_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset)   { return t[1]; } };
-	public static ReadHandlerPtr mario_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset) { return soundlatch_r(offset); } };
+	public static ReadHandlerPtr mario_sh_p1_r  = new ReadHandlerPtr() { public int handler(int offset) { return p[1]; } };
+	public static ReadHandlerPtr mario_sh_p2_r  = new ReadHandlerPtr() { public int handler(int offset) { return p[2]; } };
+	public static ReadHandlerPtr mario_sh_t0_r  = new ReadHandlerPtr() { public int handler(int offset) { return t[0]; } };
+	public static ReadHandlerPtr mario_sh_t1_r  = new ReadHandlerPtr() { public int handler(int offset) { return t[1]; } };
+	public static ReadHandlerPtr mario_sh_tune_r  = new ReadHandlerPtr() { public int handler(int offset) return soundlatch_r(offset); }
 	
-	public static WriteHandlerPtr mario_sh_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0,data);
 	} };
-	public static WriteHandlerPtr mario_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh_p1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p[1] = data;
 	} };
-	public static WriteHandlerPtr mario_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_sh_p2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		p[2] = data;
 	} };
-	public static WriteHandlerPtr masao_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr masao_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -221,7 +217,7 @@ public class mario
 	
 	
 	
-	static InputPortPtr input_ports_mario = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mario = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mario )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_2WAY );
@@ -265,7 +261,7 @@ public class mario
 		PORT_DIPSETTING(    0xc0, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mariojp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mariojp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mariojp )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_2WAY );
@@ -409,8 +405,7 @@ public class mario
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_mario = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mario )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -441,13 +436,10 @@ public class mario
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_masao = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( masao )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.000 MHz (?) */
@@ -475,9 +467,7 @@ public class mario
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -567,7 +557,7 @@ public class mario
 	
 	
 	
-	public static GameDriver driver_mario	   = new GameDriver("1983"	,"mario"	,"mario.java"	,rom_mario,null	,machine_driver_mario	,input_ports_mario	,null	,ROT180	,	"Nintendo of America", "Mario Bros. (US)" )
-	public static GameDriver driver_mariojp	   = new GameDriver("1983"	,"mariojp"	,"mario.java"	,rom_mariojp,driver_mario	,machine_driver_mario	,input_ports_mariojp	,null	,ROT180	,	"Nintendo", "Mario Bros. (Japan)" )
-	public static GameDriver driver_masao	   = new GameDriver("1983"	,"masao"	,"mario.java"	,rom_masao,driver_mario	,machine_driver_masao	,input_ports_mario	,null	,ROT180	,	"bootleg", "Masao" )
+	GAME( 1983, mario,   0,     mario, mario,   0, ROT180, "Nintendo of America", "Mario Bros. (US)" )
+	GAME( 1983, mariojp, mario, mario, mariojp, 0, ROT180, "Nintendo", "Mario Bros. (Japan)" )
+	GAME( 1983, masao,   mario, masao, mario,   0, ROT180, "bootleg", "Masao" )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -62,8 +62,7 @@ public class bottom9
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bottom9  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bottom9  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;	/* not used */
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 16;
@@ -89,13 +88,12 @@ public class bottom9
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bottom9  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bottom9  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		/* note: FIX layer is not used */
 		fillbitmap(bitmap,Machine.pens[layer_colorbase[1]],cliprect);
-	//	if (bottom9_video_enable != 0)
+	//	if (bottom9_video_enable)
 		{
 			K051960_sprites_draw(bitmap,cliprect,1,1);
 			K051316_zoom_draw_0(bitmap,cliprect,0,0);

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,13 +28,13 @@ public class blktiger
 	
 	static UINT32 bg8x4_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x70) << 4) + ((row & 0x30) << 7);
 	}
 	
 	static UINT32 bg4x8_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0x30) << 4) + ((row & 0x70) << 6);
 	}
 	
@@ -75,8 +75,7 @@ public class blktiger
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_blktiger  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_blktiger  = new VideoStartHandlerPtr() { public int handler(){
 		scroll_ram = auto_malloc(BGRAM_BANK_SIZE * BGRAM_BANKS);
 	
 		tx_tilemap =    tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -108,8 +107,7 @@ public class blktiger
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr blktiger_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (blktiger_txvideoram[offset] != data)
 		{
 			blktiger_txvideoram[offset] = data;
@@ -117,13 +115,11 @@ public class blktiger
 		}
 	} };
 	
-	public static ReadHandlerPtr blktiger_bgvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blktiger_bgvideoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return scroll_ram[offset + blktiger_scroll_bank];
 	} };
 	
-	public static WriteHandlerPtr blktiger_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset += blktiger_scroll_bank;
 	
 		if (scroll_ram[offset] != data)
@@ -134,14 +130,12 @@ public class blktiger
 		}
 	} };
 	
-	public static WriteHandlerPtr blktiger_bgvideoram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_bgvideoram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blktiger_scroll_bank = (data % BGRAM_BANKS) * BGRAM_BANK_SIZE;
 	} };
 	
 	
-	public static WriteHandlerPtr blktiger_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 		int scrolly;
 	
@@ -151,8 +145,7 @@ public class blktiger
 		tilemap_set_scrolly(bg_tilemap4x8,0,scrolly);
 	} };
 	
-	public static WriteHandlerPtr blktiger_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 		int scrollx;
 	
@@ -163,8 +156,7 @@ public class blktiger
 	} };
 	
 	
-	public static WriteHandlerPtr blktiger_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 are coin counters */
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
@@ -179,8 +171,7 @@ public class blktiger
 		chon = ~data & 0x80;
 	} };
 	
-	public static WriteHandlerPtr blktiger_video_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_video_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* not sure which is which, but I think that bit 1 and 2 enable background and sprites */
 		/* bit 1 enables bg ? */
 		bgon = ~data & 0x02;
@@ -189,8 +180,7 @@ public class blktiger
 		objon = ~data & 0x04;
 	} };
 	
-	public static WriteHandlerPtr blktiger_screen_layout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_screen_layout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		screen_layout = data;
 		tilemap_set_enable(bg_tilemap8x4, screen_layout);
 		tilemap_set_enable(bg_tilemap4x8,!screen_layout);
@@ -218,14 +208,14 @@ public class blktiger
 			int color = attr & 0x07;
 			int flipx = attr & 0x08;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
 				flipx = NOT(flipx);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					code,
 					color,
 					flipx,flip_screen(),
@@ -234,25 +224,23 @@ public class blktiger
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blktiger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[1023],cliprect);
 	
-		if (bgon != 0)
+		if (bgon)
 			tilemap_draw(bitmap,cliprect,screen_layout ? bg_tilemap8x4 : bg_tilemap4x8,TILEMAP_BACK,0);
 	
-		if (objon != 0)
+		if (objon)
 			draw_sprites(bitmap,cliprect);
 	
-		if (bgon != 0)
+		if (bgon)
 			tilemap_draw(bitmap,cliprect,screen_layout ? bg_tilemap8x4 : bg_tilemap4x8,TILEMAP_FRONT,0);
 	
-		if (chon != 0)
+		if (chon)
 			tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_blktiger  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_blktiger  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 }

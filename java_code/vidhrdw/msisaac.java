@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -65,8 +65,7 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_msisaac  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_msisaac  = new VideoStartHandlerPtr() { public int handler(){
 		background  = tilemap_create(get_bg_tile_info, tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 		background2 = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		foreground  = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -87,39 +86,32 @@ public class msisaac
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr msisaac_fg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_fg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly( foreground, 0, data );
 	} };
 	
-	public static WriteHandlerPtr msisaac_fg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_fg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx( foreground, 0, 9+data );
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly( background2, 0, data );
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx( background2, 0, 9+2+data );
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly( background, 0, data );
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx( background, 0, 9+4+data );
 	} };
 	
 	
-	public static WriteHandlerPtr msisaac_textbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_textbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( textbank1!=data )
 		{
 			textbank1 = data;
@@ -127,8 +119,7 @@ public class msisaac
 		}
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg2_textbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg2_textbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( bg2_textbank != data )
 		{
 			bg2_textbank = data;
@@ -142,8 +133,7 @@ public class msisaac
 		}
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( msisaac_videoram[offset]!=data )
 		{
 			msisaac_videoram[offset]=data;
@@ -151,8 +141,7 @@ public class msisaac
 		}
 	} };
 	
-	public static WriteHandlerPtr msisaac_bg2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_bg2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( msisaac_videoram2[offset]!=data )
 		{
 			msisaac_videoram2[offset]=data;
@@ -160,8 +149,7 @@ public class msisaac
 		}
 	} };
 	
-	public static WriteHandlerPtr msisaac_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
@@ -191,15 +179,15 @@ public class msisaac
 			int flipx = (attributes&0x1);
 			int flipy = (attributes&0x2);
 	
-			struct GfxElement *gfx = Machine.gfx[2];
+			struct GfxElement *gfx = Machine->gfx[2];
 	
-			if ((attributes & 4) != 0)
+			if (attributes&4)
 			{
 				//color = rand()&15;
-				gfx = Machine.gfx[3];
+				gfx = Machine->gfx[3];
 			}
 	
-			if ((attributes & 8) != 0)	/* double size sprite */
+			if (attributes&8)	/* double size sprite */
 			{
 				switch(attributes&3)
 				{
@@ -258,8 +246,7 @@ public class msisaac
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_msisaac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_msisaac  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,background, 0,0);
 		tilemap_draw(bitmap,cliprect,background2,0,0);
 		draw_sprites(bitmap,cliprect);

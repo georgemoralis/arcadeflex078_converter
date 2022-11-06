@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,66 +24,60 @@ public class sauro
 	
 	/* General */
 	
-	public static WriteHandlerPtr tecfri_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tecfri_videoram.read(offset)!= data)
+	public static WriteHandlerPtr tecfri_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tecfri_videoram[offset] != data)
 		{
-			tecfri_videoram.write(data,data);
+			tecfri_videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tecfri_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tecfri_colorram.read(offset)!= data)
+	public static WriteHandlerPtr tecfri_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tecfri_colorram[offset] != data)
 		{
-			tecfri_colorram.write(data,data);
+			tecfri_colorram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tecfri_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tecfri_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr tecfri_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tecfri_videoram2[offset] != data)
 		{
-			tecfri_videoram2.write(data,data);
+			tecfri_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tecfri_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tecfri_colorram2.read(offset)!= data)
+	public static WriteHandlerPtr tecfri_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tecfri_colorram2[offset] != data)
 		{
-			tecfri_colorram2.write(data,data);
+			tecfri_colorram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr tecfri_scroll_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecfri_scroll_bg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
 	static void get_tile_info_bg(int tile_index)
 	{
-		int code = tecfri_videoram.read(tile_index)+ ((tecfri_colorram.read(tile_index)& 0x07) << 8);
-		int color = (tecfri_colorram.read(tile_index)>> 4) & 0x0f;
-		int flags = tecfri_colorram.read(tile_index)& 0x08 ? TILE_FLIPX : 0;
+		int code = tecfri_videoram[tile_index] + ((tecfri_colorram[tile_index] & 0x07) << 8);
+		int color = (tecfri_colorram[tile_index] >> 4) & 0x0f;
+		int flags = tecfri_colorram[tile_index] & 0x08 ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
 	static void get_tile_info_fg(int tile_index)
 	{
-		int code = tecfri_videoram2.read(tile_index)+ ((tecfri_colorram2.read(tile_index)& 0x07) << 8);
-		int color = (tecfri_colorram2.read(tile_index)>> 4) & 0x0f;
-		int flags = tecfri_colorram2.read(tile_index)& 0x08 ? TILE_FLIPX : 0;
+		int code = tecfri_videoram2[tile_index] + ((tecfri_colorram2[tile_index] & 0x07) << 8);
+		int color = (tecfri_colorram2[tile_index] >> 4) & 0x0f;
+		int flags = tecfri_colorram2[tile_index] & 0x08 ? TILE_FLIPX : 0;
 	
 		SET_TILE_INFO(1, code, color, flags)
 	}
@@ -93,26 +87,24 @@ public class sauro
 	static int scroll2_map     [8] = {2, 1, 4, 3, 6, 5, 0, 7};
 	static int scroll2_map_flip[8] = {0, 7, 2, 1, 4, 3, 6, 5};
 	
-	public static WriteHandlerPtr sauro_scroll_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sauro_scroll_fg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int *map = (flip_screen() ? scroll2_map_flip : scroll2_map);
 		int scroll = (data & 0xf8) | map[data & 7];
 	
 		tilemap_set_scrollx(fg_tilemap, 0, scroll);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_sauro  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sauro  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 		
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_tile_info_fg, tilemap_scan_cols,
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 		
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -150,24 +142,23 @@ public class sauro
 	
 			flipx = spriteram.read(offs+3)& 0x04;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				sx = (235 - sx) & 0xff;  // The &0xff is not 100% percent correct
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap, Machine.gfx[2],
+			drawgfx(bitmap, Machine->gfx[2],
 					code,
 					color,
 					flipx,flip_screen(),
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sauro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		sauro_draw_sprites(bitmap);
@@ -175,17 +166,15 @@ public class sauro
 	
 	/* Tricky Doc */
 	
-	public static WriteHandlerPtr trckydoc_spriteram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trckydoc_spriteram_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram.write(offset,data);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_trckydoc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_trckydoc  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info_bg, tilemap_scan_cols,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 		
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		return 0;
@@ -229,24 +218,23 @@ public class sauro
 	
 			flipx = spriteram.read(offs+3)& 0x04;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				sx = (235 - sx) & 0xff;  /* The &0xff is not 100% percent correct */
 				sy = 240 - sy;
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 					code,
 					color,
 					flipx,flip_screen(),
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_trckydoc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		trckydoc_draw_sprites(bitmap);
 	} };

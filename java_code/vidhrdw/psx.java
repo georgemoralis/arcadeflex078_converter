@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -228,8 +228,7 @@ public class psx
 	#define TEXTURE_V( a ) ( (UINT8)a.b.h )
 	#define TEXTURE_U( a ) ( (UINT8)a.b.l )
 	
-	public static PaletteInitHandlerPtr palette_init_psx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_psx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		UINT32 n_r;
 		UINT32 n_g;
 		UINT32 n_b;
@@ -276,7 +275,7 @@ public class psx
 		int n_coord;
 		int n_colour;
 	
-		if (m_b_debugclear != 0)
+		if( m_b_debugclear )
 		{
 			fillbitmap( debugmesh, 0x0000, NULL );
 			m_b_debugclear = 0;
@@ -397,7 +396,7 @@ public class psx
 		{
 			m_b_debugmesh = !m_b_debugmesh;
 		}
-		if (m_b_debugmesh != 0)
+		if( m_b_debugmesh )
 		{
 			set_visible_area( 0, 1023, 0, 1023 );
 			copybitmap( bitmap, debugmesh, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0 );
@@ -414,7 +413,7 @@ public class psx
 		{
 			m_b_debugtexture = !m_b_debugtexture;
 		}
-		if (m_b_debugtexture != 0)
+		if( m_b_debugtexture )
 		{
 			if( keyboard_pressed_memory( KEYCODE_I ) )
 			{
@@ -464,7 +463,7 @@ public class psx
 					}
 					p_n_interleave[ n_x ] = m_p_p_vram[ n_yi ][ n_xi ];
 				}
-				draw_scanline16( bitmap, 0, n_y, 1023, p_n_interleave, Machine.pens, -1 );
+				draw_scanline16( bitmap, 0, n_y, 1023, p_n_interleave, Machine->pens, -1 );
 			}
 		}
 		return m_b_debugtexture;
@@ -618,30 +617,25 @@ public class psx
 		return 0;
 	}
 	
-	public static VideoStartHandlerPtr video_start_psx_type1_1024x1024  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_psx_type1_1024x1024  = new VideoStartHandlerPtr() { public int handler(){
 		m_n_gputype = 1;
 		return psx_gpu_init( 1024, 1024 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_psx_type2_1024x512  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_psx_type2_1024x512  = new VideoStartHandlerPtr() { public int handler(){
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 512 );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_psx_type2_1024x1024  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_psx_type2_1024x1024  = new VideoStartHandlerPtr() { public int handler(){
 		m_n_gputype = 2;
 		return psx_gpu_init( 1024, 1024 );
 	} };
 	
-	public static VideoStopHandlerPtr video_stop_psx  = new VideoStopHandlerPtr() { public void handler()
-	{
+	public static VideoStopHandlerPtr video_stop_psx  = new VideoStopHandlerPtr() { public void handler(){
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_psx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT32 n_x;
 		UINT32 n_y;
 	
@@ -713,7 +707,7 @@ public class psx
 		else
 		{
 			/* todo: clear border */
-			if (m_b_reverseflag != 0)
+			if( m_b_reverseflag )
 			{
 				n_x = ( 1023 - m_n_displaystartx );
 				/* todo: make this flip the screen, in the meantime.. */
@@ -3462,8 +3456,7 @@ public class psx
 		return data;
 	}
 	
-	public static InterruptHandlerPtr psx_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr psx_vblank = new InterruptHandlerPtr() {public void handler(){
 		m_n_gpustatus ^= ( 1L << 31 );
 		psx_irq_set( 0x0001 );
 	} };

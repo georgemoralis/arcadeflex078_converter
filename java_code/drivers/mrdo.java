@@ -14,7 +14,7 @@ VBlank duration: 1/VSYNC * (70/262) = 4368 us
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,8 +28,7 @@ public class mrdo
 	
 	/* this looks like some kind of protection. The game doesn't clear the screen */
 	/* if a read from this address doesn't return the value it expects. */
-	public static ReadHandlerPtr mrdo_SECRE_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mrdo_SECRE_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		return RAM[ activecpu_get_reg(Z80_HL) ];
 	} };
@@ -65,7 +64,7 @@ public class mrdo
 	};
 	
 	
-	static InputPortPtr input_ports_mrdo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrdo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrdo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -185,8 +184,7 @@ public class mrdo
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mrdo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrdo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)	/* 4 MHz */
@@ -210,9 +208,7 @@ public class mrdo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -406,11 +402,11 @@ public class mrdo
 	
 	
 	
-	public static GameDriver driver_mrdo	   = new GameDriver("1982"	,"mrdo"	,"mrdo.java"	,rom_mrdo,null	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"Universal", "Mr. Do!" )
-	public static GameDriver driver_mrdoy	   = new GameDriver("1982"	,"mrdoy"	,"mrdo.java"	,rom_mrdoy,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"Universal", "Mr. Do! (prototype)" )	/* aka "Yukidaruma" */
-	public static GameDriver driver_mrdot	   = new GameDriver("1982"	,"mrdot"	,"mrdo.java"	,rom_mrdot,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"Universal (Taito license)", "Mr. Do! (Taito)" )
-	public static GameDriver driver_mrdofix	   = new GameDriver("1982"	,"mrdofix"	,"mrdo.java"	,rom_mrdofix,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"Universal (Taito license)", "Mr. Do! (bugfixed)" )
-	public static GameDriver driver_mrlo	   = new GameDriver("1982"	,"mrlo"	,"mrdo.java"	,rom_mrlo,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"bootleg", "Mr. Lo!" )
-	public static GameDriver driver_mrdu	   = new GameDriver("1982"	,"mrdu"	,"mrdo.java"	,rom_mrdu,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"bootleg", "Mr. Du!" )
-	public static GameDriver driver_yankeedo	   = new GameDriver("1982"	,"yankeedo"	,"mrdo.java"	,rom_yankeedo,driver_mrdo	,machine_driver_mrdo	,input_ports_mrdo	,null	,ROT270	,	"hack", "Yankee DO!" )
+	GAME( 1982, mrdo,     0,    mrdo, mrdo, 0, ROT270, "Universal", "Mr. Do!" )
+	GAME( 1982, mrdoy,    mrdo, mrdo, mrdo, 0, ROT270, "Universal", "Mr. Do! (prototype)" )	/* aka "Yukidaruma" */
+	GAME( 1982, mrdot,    mrdo, mrdo, mrdo, 0, ROT270, "Universal (Taito license)", "Mr. Do! (Taito)" )
+	GAME( 1982, mrdofix,  mrdo, mrdo, mrdo, 0, ROT270, "Universal (Taito license)", "Mr. Do! (bugfixed)" )
+	GAME( 1982, mrlo,     mrdo, mrdo, mrdo, 0, ROT270, "bootleg", "Mr. Lo!" )
+	GAME( 1982, mrdu,     mrdo, mrdo, mrdo, 0, ROT270, "bootleg", "Mr. Du!" )
+	GAME( 1982, yankeedo, mrdo, mrdo, mrdo, 0, ROT270, "hack", "Yankee DO!" )
 }

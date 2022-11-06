@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,10 +38,10 @@ public class shuuz
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -55,8 +55,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_shuuz  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_shuuz  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 1);
 		atarigen_interrupt_reset(update_interrupts);
@@ -111,7 +110,7 @@ public class shuuz
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_data_0_w(offset, data & 0xff);
 	}
 	
@@ -182,7 +181,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_shuuz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shuuz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shuuz )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -207,7 +206,7 @@ public class shuuz
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_shuuz2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shuuz2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shuuz2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -292,8 +291,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_shuuz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shuuz )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -317,9 +315,7 @@ public class shuuz
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -390,8 +386,7 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_shuuz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_shuuz  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 	} };
 	
@@ -403,6 +398,6 @@ public class shuuz
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_shuuz	   = new GameDriver("1990"	,"shuuz"	,"shuuz.java"	,rom_shuuz,null	,machine_driver_shuuz	,input_ports_shuuz	,init_shuuz	,ROT0	,	"Atari Games", "Shuuz (version 8.0)" )
-	public static GameDriver driver_shuuz2	   = new GameDriver("1990"	,"shuuz2"	,"shuuz.java"	,rom_shuuz2,driver_shuuz	,machine_driver_shuuz	,input_ports_shuuz2	,init_shuuz	,ROT0	,	"Atari Games", "Shuuz (version 7.1)" )
+	GAME( 1990, shuuz,  0,     shuuz, shuuz,  shuuz, ROT0, "Atari Games", "Shuuz (version 8.0)" )
+	GAME( 1990, shuuz2, shuuz, shuuz, shuuz2, shuuz, ROT0, "Atari Games", "Shuuz (version 7.1)" )
 }

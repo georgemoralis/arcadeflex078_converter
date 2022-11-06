@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,36 +31,32 @@ public class sbrkout
 	key presses.  Also, MAME doesn't currently support a switch control like
 	DIP switches that's used as a runtime control.
 	***************************************************************************/
-	public static InterruptHandlerPtr sbrkout_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sbrkout_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    int game_switch=input_port_7_r(0);
 	
-	    if ((game_switch & 0x01) != 0)
+	    if (game_switch & 0x01)
 	        sbrkout_game_switch=SBRKOUT_PROGRESSIVE;
-	    else if ((game_switch & 0x02) != 0)
+	    else if (game_switch & 0x02)
 	        sbrkout_game_switch=SBRKOUT_DOUBLE;
-	    else if ((game_switch & 0x04) != 0)
+	    else if (game_switch & 0x04)
 	        sbrkout_game_switch=SBRKOUT_CAVITY;
 	
 	    cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr sbrkout_select1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sbrkout_select1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    if (sbrkout_game_switch==SBRKOUT_CAVITY)
 	        return 0x80;
 	    else return 0x00;
 	} };
 	
-	public static ReadHandlerPtr sbrkout_select2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sbrkout_select2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    if (sbrkout_game_switch==SBRKOUT_DOUBLE)
 	        return 0x80;
 	    else return 0x00;
 	} };
 	
-	public static WriteHandlerPtr sbrkout_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbrkout_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	        /* generate irq */
 	        cpu_set_irq_line(0,M6502_IRQ_LINE,HOLD_LINE);
 	} };
@@ -74,8 +70,7 @@ public class sbrkout
 	bytes, and MAME doesn't currently support that.
 	***************************************************************************/
 	
-	public static ReadHandlerPtr sbrkout_read_DIPs_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sbrkout_read_DIPs_r  = new ReadHandlerPtr() { public int handler(int offset){
 	        switch (offset)
 	        {
 	                /* DSW */
@@ -96,18 +91,15 @@ public class sbrkout
 	first address turns them off, the second address turns them on.  This is
 	reversed for the Serve LED, which has a NOT on the signal.
 	***************************************************************************/
-	public static WriteHandlerPtr sbrkout_start_1_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbrkout_start_1_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,offset & 1);
 	} };
 	
-	public static WriteHandlerPtr sbrkout_start_2_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbrkout_start_2_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1,offset & 1);
 	} };
 	
-	public static WriteHandlerPtr sbrkout_serve_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbrkout_serve_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(2,~offset & 1);
 	} };
 	

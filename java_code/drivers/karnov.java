@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -63,7 +63,7 @@ public class karnov
 	static void karnov_i8751_w(int data)
 	{
 		/* Pending coin operations may cause protection commands to be queued */
-		if (i8751_needs_ack != 0) {
+		if (i8751_needs_ack) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -93,7 +93,7 @@ public class karnov
 	static void wndrplnt_i8751_w(int data)
 	{
 		/* The last command hasn't been ACK'd (probably a conflict with coin command) */
-		if (i8751_needs_ack != 0) {
+		if (i8751_needs_ack) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -149,7 +149,7 @@ public class karnov
 		static int level;
 	
 		/* Pending coin operations may cause protection commands to be queued */
-		if (i8751_needs_ack != 0) {
+		if (i8751_needs_ack) {
 			i8751_command_queue=data;
 			return;
 		}
@@ -263,14 +263,14 @@ public class karnov
 			case 0: /* SECLR (Interrupt ack for Level 6 i8751 interrupt) */
 				cpu_set_irq_line(0,6,CLEAR_LINE);
 	
-				if (i8751_needs_ack != 0) {
+				if (i8751_needs_ack) {
 					/* If a command and coin insert happen at once, then the i8751 will queue the
 						coin command until the previous command is ACK'd */
-					if (i8751_coin_pending != 0) {
+					if (i8751_coin_pending) {
 						i8751_return=i8751_coin_pending;
 						cpu_set_irq_line(0,6,HOLD_LINE);
 						i8751_coin_pending=0;
-					} else if (i8751_command_queue != 0) {
+					} else if (i8751_command_queue) {
 						/* Pending control command - just write it back as SECREQ */
 						i8751_needs_ack=0;
 						karnov_control_w(3,i8751_command_queue,0xffff);
@@ -380,7 +380,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_karnov = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_karnov = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( karnov )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -466,7 +466,7 @@ public class karnov
 		PORT_DIPSETTING(    0x00, "Fast" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wndrplnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wndrplnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wndrplnt )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -551,7 +551,7 @@ public class karnov
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chelnov = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chelnov = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chelnov )
 		PORT_START(); 	/* Player controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -685,14 +685,13 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static InterruptHandlerPtr karnov_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr karnov_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int latch;
 	
 		/* Coin input to the i8751 generates an interrupt to the main cpu */
 		if (readinputport(3) == coin_mask) latch=1;
 		if (readinputport(3) != coin_mask && latch) {
-			if (i8751_needs_ack != 0) {
+			if (i8751_needs_ack) {
 				/* i8751 is busy - queue the command */
 				i8751_coin_pending=readinputport(3) | 0x8000;
 			} else {
@@ -732,13 +731,11 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_karnov  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_karnov  = new MachineInitHandlerPtr() { public void handler(){
 		memset(karnov_ram,0,0x4000/2); /* Chelnov likes ram clear on reset.. */
 	} };
 	
-	public static MachineHandlerPtr machine_driver_karnov = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( karnov )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -768,13 +765,10 @@ public class karnov
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wndrplnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wndrplnt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz */
@@ -804,9 +798,7 @@ public class karnov
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -1019,26 +1011,22 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_karnov  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_karnov  = new DriverInitHandlerPtr() { public void handler(){
 		microcontroller_id=KARNOV;
 		coin_mask=0;
 	} };
 	
-	public static DriverInitHandlerPtr init_karnovj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_karnovj  = new DriverInitHandlerPtr() { public void handler(){
 		microcontroller_id=KARNOVJ;
 		coin_mask=0;
 	} };
 	
-	public static DriverInitHandlerPtr init_wndrplnt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wndrplnt  = new DriverInitHandlerPtr() { public void handler(){
 		microcontroller_id=WNDRPLNT;
 		coin_mask=0;
 	} };
 	
-	public static DriverInitHandlerPtr init_chelnov  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chelnov  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
 		microcontroller_id=CHELNOV;
@@ -1047,8 +1035,7 @@ public class karnov
 		RAM[0x062a/2]=0x4E71;  /* hangs waiting on i8751 int */
 	} };
 	
-	public static DriverInitHandlerPtr init_chelnovw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chelnovw  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
 		microcontroller_id=CHELNOVW;
@@ -1057,8 +1044,7 @@ public class karnov
 		RAM[0x062a/2]=0x4E71;  /* hangs waiting on i8751 int */
 	} };
 	
-	public static DriverInitHandlerPtr init_chelnovj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chelnovj  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (UINT16 *)memory_region(REGION_CPU1);
 	
 		microcontroller_id=CHELNOVJ;
@@ -1069,10 +1055,10 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_karnov	   = new GameDriver("1987"	,"karnov"	,"karnov.java"	,rom_karnov,null	,machine_driver_karnov	,input_ports_karnov	,init_karnov	,ROT0	,	"Data East USA",         "Karnov (US)" )
-	public static GameDriver driver_karnovj	   = new GameDriver("1987"	,"karnovj"	,"karnov.java"	,rom_karnovj,driver_karnov	,machine_driver_karnov	,input_ports_karnov	,init_karnovj	,ROT0	,	"Data East Corporation", "Karnov (Japan)" )
-	public static GameDriver driver_wndrplnt	   = new GameDriver("1987"	,"wndrplnt"	,"karnov.java"	,rom_wndrplnt,null	,machine_driver_wndrplnt	,input_ports_wndrplnt	,init_wndrplnt	,ROT270	,	"Data East Corporation", "Wonder Planet (Japan)" )
-	public static GameDriver driver_chelnov	   = new GameDriver("1988"	,"chelnov"	,"karnov.java"	,rom_chelnov,null	,machine_driver_karnov	,input_ports_chelnov	,init_chelnovw	,ROT0	,	"Data East Corporation", "Chelnov - Atomic Runner (World)" )
-	public static GameDriver driver_chelnovu	   = new GameDriver("1988"	,"chelnovu"	,"karnov.java"	,rom_chelnovu,driver_chelnov	,machine_driver_karnov	,input_ports_chelnov	,init_chelnov	,ROT0	,	"Data East USA",         "Chelnov - Atomic Runner (US)" )
-	public static GameDriver driver_chelnovj	   = new GameDriver("1988"	,"chelnovj"	,"karnov.java"	,rom_chelnovj,driver_chelnov	,machine_driver_karnov	,input_ports_chelnov	,init_chelnovj	,ROT0	,	"Data East Corporation", "Chelnov - Atomic Runner (Japan)" )
+	GAME( 1987, karnov,   0,       karnov,   karnov,  karnov,   ROT0,   "Data East USA",         "Karnov (US)" )
+	GAME( 1987, karnovj,  karnov,  karnov,   karnov,  karnovj,  ROT0,   "Data East Corporation", "Karnov (Japan)" )
+	GAME( 1987, wndrplnt, 0,       wndrplnt, wndrplnt,wndrplnt, ROT270, "Data East Corporation", "Wonder Planet (Japan)" )
+	GAME( 1988, chelnov,  0,       karnov,   chelnov, chelnovw, ROT0,   "Data East Corporation", "Chelnov - Atomic Runner (World)" )
+	GAME( 1988, chelnovu, chelnov, karnov,   chelnov, chelnov,  ROT0,   "Data East USA",         "Chelnov - Atomic Runner (US)" )
+	GAME( 1988, chelnovj, chelnov, karnov,   chelnov, chelnovj, ROT0,   "Data East Corporation", "Chelnov - Atomic Runner (Japan)" )
 }

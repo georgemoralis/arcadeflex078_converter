@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -84,8 +84,7 @@ public class seattle
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_seattle  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_seattle  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, rambase);
 		cpu_setbank(2, rambase);
 		cpu_setbank(3, rombase);
@@ -155,7 +154,7 @@ public class seattle
 	static void clear_vblank(int param)
 	{
 		logerror("Clearing vblank_irq\n");
-		if (vblank_irq != 0)
+		if (vblank_irq)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_signalled = 0;
 	}
@@ -179,7 +178,7 @@ public class seattle
 	{
 		logerror("%06X:vblank_config_w = %08X\n", activecpu_get_pc(), data);
 		COMBINE_DATA(vblank_config);
-		if (vblank_irq != 0)
+		if (vblank_irq)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_irq = 2 + ((*vblank_config >> 14) & 3);
 	}
@@ -188,18 +187,17 @@ public class seattle
 	static WRITE32_HANDLER( vblank_clear_w )
 	{
 		logerror("%06X:vblank_clear_w = %08X\n", activecpu_get_pc(), data);
-		if (vblank_irq != 0)
+		if (vblank_irq)
 			cpu_set_irq_line(0, vblank_irq, CLEAR_LINE);
 		vblank_signalled = 0;
 	}
 	
 	
-	public static InterruptHandlerPtr assert_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr assert_vblank = new InterruptHandlerPtr() {public void handler(){
 		logerror("Setting IRQ3\n");
 		if (*vblank_enable & 0x80)
 		{
-			if (vblank_irq != 0)
+			if (vblank_irq)
 				cpu_set_irq_line(0, vblank_irq, ASSERT_LINE);
 			vblank_signalled = 1;
 			timer_set(cpu_getscanlinetime(cpu_getscanline() + 1), 0, clear_vblank);
@@ -307,13 +305,13 @@ public class seattle
 	{
 		if (galileo_regs[0xc18/4] & galileo_regs[0xc1c/4])
 		{
-			if (LOG_GALILEO != 0)
+			if (LOG_GALILEO)
 				logerror("Galileo IRQ asserted\n");
 			cpu_set_irq_line(0, 0, ASSERT_LINE);
 		}
 		else
 		{
-			if (LOG_GALILEO != 0)
+			if (LOG_GALILEO)
 				logerror("Galileo IRQ cleared\n");
 			cpu_set_irq_line(0, 0, CLEAR_LINE);
 		}
@@ -322,7 +320,7 @@ public class seattle
 	
 	static void timer_callback(int which)
 	{
-		if (LOG_GALILEO != 0)
+		if (LOG_GALILEO)
 			logerror("timer %d fired\n", which);
 	
 		/* copy the start value from the registers */
@@ -449,7 +447,7 @@ public class seattle
 			case 2:		dstinc = 0;		break;
 		}
 	
-		if (LOG_DMA != 0)
+		if (LOG_DMA)
 			logerror("Performing DMA%d: src=%08X dst=%08X bytes=%04X sinc=%d dinc=%d\n", which, srcaddr, dstaddr, bytesleft, srcinc, dstinc);
 	
 		/* special case: transfer ram to voodoo */
@@ -637,7 +635,7 @@ public class seattle
 				/* eat some time for those which poll this register */
 				activecpu_eat_cycles(100);
 	
-				if (LOG_TIMERS != 0)
+				if (LOG_TIMERS)
 					logerror("%06X:hires_timer_r = %08X\n", activecpu_get_pc(), result);
 				break;
 			}
@@ -648,7 +646,7 @@ public class seattle
 				break;
 	
 			case 0xc18/4:		/* interrupt cause */
-				if (LOG_GALILEO != 0)
+				if (LOG_GALILEO)
 					logerror("%06X:Galileo read from offset %03X = %08X\n", activecpu_get_pc(), offset*4, result);
 				break;
 	
@@ -706,7 +704,7 @@ public class seattle
 				galileo_regs[offset] |= (oldata & 0x4000);
 	
 				/* fetch next record */
-				if ((data & 0x2000) != 0)
+				if (data & 0x2000)
 					dma_fetch_next(which);
 				galileo_regs[offset] &= ~0x2000;
 	
@@ -727,7 +725,7 @@ public class seattle
 					data &= 0xffffff;
 				if (!timer_active[which])
 					timer_count[which] = data;
-				if (LOG_TIMERS != 0)
+				if (LOG_TIMERS)
 					logerror("%06X:timer/counter %d count = %08X [start=%08X]\n", activecpu_get_pc(), offset % 4, data, timer_count[which]);
 				break;
 			}
@@ -736,7 +734,7 @@ public class seattle
 			{
 				int which, mask;
 	
-				if (LOG_TIMERS != 0)
+				if (LOG_TIMERS)
 					logerror("%06X:timer/counter control = %08X\n", activecpu_get_pc(), data);
 				for (which = 0, mask = 0x01; which < 4; which++, mask <<= 2)
 				{
@@ -750,7 +748,7 @@ public class seattle
 								timer_count[which] &= 0xffffff;
 						}
 						timer_adjust(timer[which], TIMER_CLOCK * timer_count[which], which, 0);
-						if (LOG_TIMERS != 0)
+						if (LOG_TIMERS)
 							logerror("Adjusted timer to fire in %f secs\n", TIMER_CLOCK * timer_count[which]);
 					}
 					else if (timer_active[which] && !(data & mask))
@@ -759,7 +757,7 @@ public class seattle
 						timer_active[which] = 0;
 						timer_count[which] = (timer_count[which] > elapsed) ? (timer_count[which] - elapsed) : 0;
 						timer_adjust(timer[which], TIME_NEVER, which, 0);
-						if (LOG_TIMERS != 0)
+						if (LOG_TIMERS)
 							logerror("Disabled timer\n");
 					}
 				}
@@ -767,7 +765,7 @@ public class seattle
 			}
 	
 			case 0xc18/4:		/* IRQ clear */
-				if (LOG_GALILEO != 0)
+				if (LOG_GALILEO)
 					logerror("%06X:Galileo write to IRQ clear = %08X & %08X\n", offset*4, data, ~mem_mask);
 				galileo_regs[offset] = oldata & data;
 				update_galileo_irqs();
@@ -877,13 +875,12 @@ public class seattle
 	
 	INLINE void get_crosshair_xy(int player, int *x, int *y)
 	{
-		*x = (((readinputport(4 + player * 2) & 0xff) << 4) * Machine.visible_area.max_x) / 0xfff;
-		*y = (((readinputport(5 + player * 2) & 0xff) << 2) * Machine.visible_area.max_y) / 0x3ff;
+		*x = (((readinputport(4 + player * 2) & 0xff) << 4) * Machine->visible_area.max_x) / 0xfff;
+		*y = (((readinputport(5 + player * 2) & 0xff) << 2) * Machine->visible_area.max_y) / 0x3ff;
 	}
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_carnevil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_carnevil  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int beamx, beamy;
 	
 		/* first do common video update */
@@ -1044,7 +1041,7 @@ public class seattle
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_wg3dh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wg3dh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wg3dh )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0001, "Unknown0001" );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1148,7 +1145,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mace )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0001, "Unknown0001" );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1252,7 +1249,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sfrush = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sfrush = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sfrush )
 		PORT_START(); 	    /* DIPs */
 		PORT_BITX(0x0001, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE ) /* Test switch */
 		PORT_DIPNAME( 0x0002, 0x0002, "Boot ROM Test" );
@@ -1364,7 +1361,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_calspeed = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_calspeed = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( calspeed )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0001, "Unknown0001" );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1471,7 +1468,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_biofreak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_biofreak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( biofreak )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0001, "Unknown0001" );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -1577,7 +1574,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_blitz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blitz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blitz )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0000, "Coinage Source" );
 		PORT_DIPSETTING(      0x0001, "Dipswitch" );
@@ -1681,7 +1678,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_blitz99 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blitz99 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blitz99 )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0000, "Coinage Source" );
 		PORT_DIPSETTING(      0x0001, "Dipswitch" );
@@ -1803,7 +1800,7 @@ public class seattle
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_carnevil = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_carnevil = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( carnevil )
 		PORT_START(); 	    /* DIPs */
 		PORT_DIPNAME( 0x0001, 0x0000, "Coinage Source" );
 		PORT_DIPSETTING(      0x0001, "Dipswitch" );
@@ -1948,9 +1945,7 @@ public class seattle
 		MDRV_VIDEO_UPDATE(voodoo)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( seattle150 )
@@ -1958,26 +1953,20 @@ public class seattle
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs2_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( seattle200 )
 		MDRV_IMPORT_FROM(seattle150)
 		MDRV_CPU_REPLACE("main", R5000LE, 50000000*4)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( carnevil )
 		MDRV_IMPORT_FROM(seattle150)
 		MDRV_FRAMES_PER_SECOND(54)
 		MDRV_VIDEO_UPDATE(carnevil)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( flagstaff )
@@ -1989,9 +1978,7 @@ public class seattle
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(cage_seattle)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2156,8 +2143,7 @@ public class seattle
 	}
 	
 	
-	public static DriverInitHandlerPtr init_wg3dh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wg3dh  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x3839);
 		init_common(MIDWAY_IOASIC_STANDARD, 310/* others? */, 80);
 	
@@ -2167,8 +2153,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_mace  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mace  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x3839);
 		init_common(MIDWAY_IOASIC_MACE, 450/* unknown */, 80);
 	
@@ -2176,8 +2161,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sfrush  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sfrush  = new DriverInitHandlerPtr() { public void handler(){
 		cage_init(REGION_USER2, 0x5236);
 		init_common(MIDWAY_IOASIC_STANDARD, 315/* no alternates */, 100);
 	
@@ -2193,8 +2177,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_calspeed  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_calspeed  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x39c0);
 		init_common(MIDWAY_IOASIC_CALSPEED, 450/* unknown */, 100);
 		midway_ioasic_set_auto_ack(1);
@@ -2210,8 +2193,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_biofreak  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_biofreak  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x3835);
 		init_common(MIDWAY_IOASIC_STANDARD, 231/* no alternates */, 80);
 	
@@ -2221,8 +2203,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blitz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blitz  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x39c2);
 		init_common(MIDWAY_IOASIC_BLITZ99, 528/* or 444 */, 80);
 	
@@ -2235,8 +2216,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blitz99  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blitz99  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x0afb);
 		init_common(MIDWAY_IOASIC_BLITZ99, 520/* or 481 or 484 */, 80);
 	
@@ -2246,8 +2226,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blitz2k  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blitz2k  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x0b5d);
 		init_common(MIDWAY_IOASIC_BLITZ99, 498/* or 494 */, 80);
 	
@@ -2257,8 +2236,7 @@ public class seattle
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_carnevil  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_carnevil  = new DriverInitHandlerPtr() { public void handler(){
 		dcs2_init(0x0af7);
 		init_common(MIDWAY_IOASIC_CARNEVIL, 528/* or 469 or 486 */, 80);
 	
@@ -2280,15 +2258,15 @@ public class seattle
 	 *************************************/
 	
 	/* Atari */
-	public static GameDriver driver_wg3dh	   = new GameDriver("1996"	,"wg3dh"	,"seattle.java"	,rom_wg3dh,null	,machine_driver_seattle150	,input_ports_wg3dh	,init_wg3dh	,ROT0	,	"Atari Games",  "Wayne Gretzky's 3D Hockey" )
-	public static GameDriver driver_mace	   = new GameDriver("1996"	,"mace"	,"seattle.java"	,rom_mace,null	,machine_driver_seattle200	,input_ports_mace	,init_mace	,ROT0	,	"Atari Games",  "Mace: The Dark Age" )
-	public static GameDriver driver_sfrush	   = new GameDriver("1996"	,"sfrush"	,"seattle.java"	,rom_sfrush,null	,machine_driver_flagstaff	,input_ports_sfrush	,init_sfrush	,ROT0	,	"Atari Games",  "San Francisco Rush", GAME_NOT_WORKING )
-	public static GameDriver driver_calspeed	   = new GameDriver("1998"	,"calspeed"	,"seattle.java"	,rom_calspeed,null	,machine_driver_seattle150	,input_ports_calspeed	,init_calspeed	,ROT0	,	"Atari Games",  "California Speed" )
+	GAME ( 1996, wg3dh,    0,        seattle150, wg3dh,    wg3dh,    ROT0, "Atari Games",  "Wayne Gretzky's 3D Hockey" )
+	GAME ( 1996, mace,     0,        seattle200, mace,     mace,     ROT0, "Atari Games",  "Mace: The Dark Age" )
+	GAMEX( 1996, sfrush,   0,        flagstaff,  sfrush,   sfrush,   ROT0, "Atari Games",  "San Francisco Rush", GAME_NOT_WORKING )
+	GAME ( 1998, calspeed, 0,        seattle150, calspeed, calspeed, ROT0, "Atari Games",  "California Speed" )
 	
 	/* Midway */
-	public static GameDriver driver_biofreak	   = new GameDriver("1997"	,"biofreak"	,"seattle.java"	,rom_biofreak,null	,machine_driver_seattle150	,input_ports_biofreak	,init_biofreak	,ROT0	,	"Midway Games", "BioFreaks (prototype)" )
-	public static GameDriver driver_blitz	   = new GameDriver("1997"	,"blitz"	,"seattle.java"	,rom_blitz,null	,machine_driver_seattle150	,input_ports_blitz	,init_blitz	,ROT0	,	"Midway Games", "NFL Blitz" )
-	public static GameDriver driver_blitz99	   = new GameDriver("1998"	,"blitz99"	,"seattle.java"	,rom_blitz99,null	,machine_driver_seattle150	,input_ports_blitz99	,init_blitz99	,ROT0	,	"Midway Games", "NFL Blitz '99" )
-	public static GameDriver driver_blitz2k	   = new GameDriver("1999"	,"blitz2k"	,"seattle.java"	,rom_blitz2k,null	,machine_driver_seattle150	,input_ports_blitz99	,init_blitz2k	,ROT0	,	"Midway Games", "NFL Blitz 2000" )
-	public static GameDriver driver_carnevil	   = new GameDriver("1998"	,"carnevil"	,"seattle.java"	,rom_carnevil,null	,machine_driver_carnevil	,input_ports_carnevil	,init_carnevil	,ROT0	,	"Midway Games", "CarnEvil" )
+	GAME ( 1997, biofreak, 0,        seattle150, biofreak, biofreak, ROT0, "Midway Games", "BioFreaks (prototype)" )
+	GAME ( 1997, blitz,    0,        seattle150, blitz,    blitz,    ROT0, "Midway Games", "NFL Blitz" )
+	GAME ( 1998, blitz99,  0,        seattle150, blitz99,  blitz99,  ROT0, "Midway Games", "NFL Blitz '99" )
+	GAME ( 1999, blitz2k,  0,        seattle150, blitz99,  blitz2k,  ROT0, "Midway Games", "NFL Blitz 2000" )
+	GAME ( 1998, carnevil, 0,        carnevil,   carnevil, carnevil, ROT0, "Midway Games", "CarnEvil" )
 }

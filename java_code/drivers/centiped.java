@@ -273,7 +273,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -295,7 +295,7 @@ public class centiped
 	static void generate_interrupt(int scanline)
 	{
 		/* IRQ is clocked on the rising edge of 16V, equal to the previous 32V */
-		if ((scanline & 16) != 0)
+		if (scanline & 16)
 			cpu_set_irq_line(0, 0, ((scanline - 1) & 32) ? ASSERT_LINE : CLEAR_LINE);
 	
 		/* call back again after 16 scanlines */
@@ -306,8 +306,7 @@ public class centiped
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_centiped  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_centiped  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(0), 0, generate_interrupt);
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 		dsw_select = 0;
@@ -317,8 +316,7 @@ public class centiped
 	} };
 	
 	
-	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
@@ -353,11 +351,11 @@ public class centiped
 		int newpos;
 	
 		/* adjust idx if we're cocktail flipped */
-		if (centiped_flipscreen != 0)
+		if (centiped_flipscreen)
 			idx += 2;
 	
 		/* if we're to read the dipswitches behind the trackball data, do it now */
-		if (dsw_select != 0)
+		if (dsw_select)
 			return (readinputport(switch_port) & 0x7f) | sign[idx];
 	
 		/* get the new position and adjust the result */
@@ -373,26 +371,22 @@ public class centiped
 	}
 	
 	
-	public static ReadHandlerPtr centiped_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr centiped_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return read_trackball(0, 0);
 	} };
 	
 	
-	public static ReadHandlerPtr centiped_IN2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr centiped_IN2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return read_trackball(1, 2);
 	} };
 	
 	
-	public static ReadHandlerPtr milliped_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr milliped_IN1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return read_trackball(1, 1);
 	} };
 	
 	
-	public static WriteHandlerPtr input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dsw_select = (~data >> 7) & 1;
 	} };
 	
@@ -404,20 +398,17 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset, ~data & 0x80);
 	} };
 	
 	
-	public static ReadHandlerPtr centipdb_rand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr centipdb_rand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mame_rand() % 0xff;
 	} };
 	
 	
-	public static WriteHandlerPtr coin_count_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_count_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, data);
 	} };
 	
@@ -429,15 +420,13 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr centipdb_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr centipdb_AY8910_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		AY8910_control_port_0_w.handler(0, offset);
 		AY8910_write_port_0_w.handler(0, data);
 	} };
 	
 	
-	public static ReadHandlerPtr centipdb_AY8910_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr centipdb_AY8910_r  = new ReadHandlerPtr() { public int handler(int offset){
 		AY8910_control_port_0_w.handler(0, offset);
 		return AY8910_read_port_0_r.handler(0);
 	} };
@@ -623,7 +612,7 @@ public class centiped
 	
 	#define PORTS(GAMENAME, FOURTH_LANGUAGE)										\
 																					\
-	static InputPortPtr input_ports_GAMENAME = new InputPortPtr(){ public void handler() { 													\
+	static InputPortPtr input_ports_GAMENAME = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( GAMENAME )													\
 		PORT_START(); 	/* IN0 */														\
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_SPECIAL );/* trackball data */		\
 		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Cabinet") );								\
@@ -720,7 +709,7 @@ public class centiped
 	PORTS(centipdb, "Italian")
 	
 	
-	static InputPortPtr input_ports_centtime = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_centtime = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( centtime )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_SPECIAL );/* trackball data */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -810,7 +799,7 @@ public class centiped
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_magworm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_magworm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( magworm )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_SPECIAL );/* trackball data */
 		PORT_DIPNAME( 0x10, 0x00, DEF_STR( "Cabinet") );
@@ -897,7 +886,7 @@ public class centiped
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_milliped = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_milliped = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( milliped )
 		PORT_START(); 	/* IN0 $2000 */ /* see port 6 for x trackball */
 		PORT_DIPNAME(0x03, 0x00, "Language" );
 		PORT_DIPSETTING(   0x00, "English" );
@@ -1007,7 +996,7 @@ public class centiped
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_warlords = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warlords = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warlords )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_DIPNAME( 0x10, 0x00, "Diag Step" ); /* Not referenced */
@@ -1244,8 +1233,7 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_centiped = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( centiped )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 12096000/8)	/* 1.512 MHz (slows down to 0.75MHz while accessing playfield RAM) */
@@ -1271,26 +1259,20 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey", POKEY, centiped_pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_centipdb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( centipdb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipdb_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_centipb2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( centipb2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1299,26 +1281,20 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipb2_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_magworm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( magworm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", AY8910, centipb2_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_milliped = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( milliped )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1335,13 +1311,10 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, milliped_pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_warlords = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( warlords )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(centiped)
@@ -1359,9 +1332,7 @@ public class centiped
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, warlords_pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -1504,16 +1475,14 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_centipdb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_centipdb  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x1000, 0x100f, centipdb_AY8910_w);
 		install_mem_read_handler(0, 0x1000, 0x100f, centipdb_AY8910_r);
 		install_mem_read_handler(0, 0x1780, 0x1780, centipdb_rand_r);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_magworm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_magworm  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0x1001, 0x1001, AY8910_control_port_0_w);
 		install_mem_write_handler(0, 0x1003, 0x1003, AY8910_write_port_0_w);
 		install_mem_read_handler(0, 0x1003, 0x1003, AY8910_read_port_0_r);
@@ -1527,14 +1496,14 @@ public class centiped
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_centiped	   = new GameDriver("1980"	,"centiped"	,"centiped.java"	,rom_centiped,null	,machine_driver_centiped	,input_ports_centiped	,null	,ROT270	,	"Atari", "Centipede (revision 3)" )
-	public static GameDriver driver_centipd2	   = new GameDriver("1980"	,"centipd2"	,"centiped.java"	,rom_centipd2,driver_centiped	,machine_driver_centiped	,input_ports_centiped	,null	,ROT270	,	"Atari", "Centipede (revision 2)" )
-	public static GameDriver driver_centtime	   = new GameDriver("1980"	,"centtime"	,"centiped.java"	,rom_centtime,driver_centiped	,machine_driver_centiped	,input_ports_centtime	,null	,ROT270	,	"Atari", "Centipede (1 player, timed)" )
-	public static GameDriver driver_centipdb	   = new GameDriver("1980"	,"centipdb"	,"centiped.java"	,rom_centipdb,driver_centiped	,machine_driver_centipdb	,input_ports_centipdb	,init_centipdb	,ROT270	,	"bootleg", "Centipede (bootleg set 1)" )
-	public static GameDriver driver_centipb2	   = new GameDriver("1980"	,"centipb2"	,"centiped.java"	,rom_centipb2,driver_centiped	,machine_driver_centipb2	,input_ports_centiped	,null	,ROT270	,	"bootleg", "Centipede (bootleg set 2)" )
-	public static GameDriver driver_millpac	   = new GameDriver("1980"	,"millpac"	,"centiped.java"	,rom_millpac,driver_centiped	,machine_driver_centipb2	,input_ports_centiped	,null	,ROT270	,	"Valadon Automation", "Millpac" )
-	public static GameDriver driver_magworm	   = new GameDriver("1980"	,"magworm"	,"centiped.java"	,rom_magworm,driver_centiped	,machine_driver_magworm	,input_ports_magworm	,init_magworm	,ROT270	,	"bootleg", "Magic Worm (bootleg)" )
-	public static GameDriver driver_milliped	   = new GameDriver("1982"	,"milliped"	,"centiped.java"	,rom_milliped,null	,machine_driver_milliped	,input_ports_milliped	,null	,ROT270	,	"Atari", "Millipede" )
+	GAME( 1980, centiped, 0,        centiped, centiped, 0,        ROT270, "Atari", "Centipede (revision 3)" )
+	GAME( 1980, centipd2, centiped, centiped, centiped, 0,        ROT270, "Atari", "Centipede (revision 2)" )
+	GAME( 1980, centtime, centiped, centiped, centtime, 0,        ROT270, "Atari", "Centipede (1 player, timed)" )
+	GAME( 1980, centipdb, centiped, centipdb, centipdb, centipdb, ROT270, "bootleg", "Centipede (bootleg set 1)" )
+	GAME( 1980, centipb2, centiped, centipb2, centiped, 0,        ROT270, "bootleg", "Centipede (bootleg set 2)" )
+	GAME( 1980, millpac,  centiped, centipb2, centiped,  0, 	  ROT270, "Valadon Automation", "Millpac" )
+	GAME( 1980, magworm,  centiped, magworm,  magworm,  magworm,  ROT270, "bootleg", "Magic Worm (bootleg)" )
+	GAME( 1982, milliped, 0,        milliped, milliped, 0,        ROT270, "Atari", "Millipede" )
 	
-	public static GameDriver driver_warlords	   = new GameDriver("1980"	,"warlords"	,"centiped.java"	,rom_warlords,null	,machine_driver_warlords	,input_ports_warlords	,null	,ROT0	,	"Atari", "Warlords" )
+	GAME( 1980, warlords, 0,        warlords, warlords, 0,        ROT0,   "Atari", "Warlords" )
 }

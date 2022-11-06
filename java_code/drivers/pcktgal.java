@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,27 +25,24 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	public static WriteHandlerPtr pcktgal_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if ((data & 1) != 0) { cpu_setbank(1,&RAM[0x4000]); }
+		if (data & 1) { cpu_setbank(1,&RAM[0x4000]); }
 		else { cpu_setbank(1,&RAM[0x10000]); }
 	
-		if ((data & 2) != 0) { cpu_setbank(2,&RAM[0x6000]); }
+		if (data & 2) { cpu_setbank(2,&RAM[0x6000]); }
 		else { cpu_setbank(2,&RAM[0x12000]); }
 	} };
 	
-	public static WriteHandlerPtr pcktgal_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
-		if ((data & 4) != 0) { cpu_setbank(3,&RAM[0x14000]); }
+		if (data & 4) { cpu_setbank(3,&RAM[0x14000]); }
 		else { cpu_setbank(3,&RAM[0x10000]); }
 	} };
 	
-	public static WriteHandlerPtr pcktgal_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -60,17 +57,15 @@ public class pcktgal
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle != 0)
+		if (toggle)
 			cpu_set_irq_line(1,M6502_IRQ_LINE,HOLD_LINE);
 	}
 	
-	public static WriteHandlerPtr pcktgal_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pcktgal_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next=data;
 	} };
 	
-	public static ReadHandlerPtr pcktgal_adpcm_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pcktgal_adpcm_reset_r  = new ReadHandlerPtr() { public int handler(int offset){
 		MSM5205_reset_w(0,0);
 		return 0;
 	} };
@@ -129,7 +124,7 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_pcktgal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pcktgal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pcktgal )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -267,8 +262,7 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_pcktgal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pcktgal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 2000000)
@@ -298,18 +292,13 @@ public class pcktgal
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bootleg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bootleg )
 		MDRV_IMPORT_FROM(pcktgal)
 		MDRV_GFXDECODE(bootleg_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -431,8 +420,7 @@ public class pcktgal
 	
 	/***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_deco222  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_deco222  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom = memory_region(REGION_CPU2);
 		int diff = memory_region_length(REGION_CPU2) / 2;
@@ -445,8 +433,7 @@ public class pcktgal
 			rom[A + diff] = (rom[A] & 0x9f) | ((rom[A] & 0x20) << 1) | ((rom[A] & 0x40) >> 1);
 	} };
 	
-	public static DriverInitHandlerPtr init_graphics  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_graphics  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_GFX1);
 		int len = memory_region_length(REGION_GFX1);
 		int i,j,temp[16];
@@ -463,17 +450,16 @@ public class pcktgal
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_pcktgal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pcktgal  = new DriverInitHandlerPtr() { public void handler(){
 		init_deco222();
 		init_graphics();
 	} };
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_pcktgal	   = new GameDriver("1987"	,"pcktgal"	,"pcktgal.java"	,rom_pcktgal,null	,machine_driver_pcktgal	,input_ports_pcktgal	,init_pcktgal	,ROT0	,	"Data East Corporation", "Pocket Gal (Japan)" )
-	public static GameDriver driver_pcktgalb	   = new GameDriver("1987"	,"pcktgalb"	,"pcktgal.java"	,rom_pcktgalb,driver_pcktgal	,machine_driver_bootleg	,input_ports_pcktgal	,init_deco222	,ROT0	,	"bootleg", "Pocket Gal (bootleg)" )
-	public static GameDriver driver_pcktgal2	   = new GameDriver("1989"	,"pcktgal2"	,"pcktgal.java"	,rom_pcktgal2,driver_pcktgal	,machine_driver_pcktgal	,input_ports_pcktgal	,init_graphics	,ROT0	,	"Data East Corporation", "Pocket Gal 2 (World?)" )
-	public static GameDriver driver_spool3	   = new GameDriver("1989"	,"spool3"	,"pcktgal.java"	,rom_spool3,driver_pcktgal	,machine_driver_pcktgal	,input_ports_pcktgal	,init_graphics	,ROT0	,	"Data East Corporation", "Super Pool III (World?)" )
-	public static GameDriver driver_spool3i	   = new GameDriver("1990"	,"spool3i"	,"pcktgal.java"	,rom_spool3i,driver_pcktgal	,machine_driver_pcktgal	,input_ports_pcktgal	,init_graphics	,ROT0	,	"Data East Corporation (I-Vics license)", "Super Pool III (I-Vics)" )
+	GAME( 1987, pcktgal,  0,       pcktgal, pcktgal, pcktgal,  ROT0, "Data East Corporation", "Pocket Gal (Japan)" )
+	GAME( 1987, pcktgalb, pcktgal, bootleg, pcktgal, deco222,  ROT0, "bootleg", "Pocket Gal (bootleg)" )
+	GAME( 1989, pcktgal2, pcktgal, pcktgal, pcktgal, graphics, ROT0, "Data East Corporation", "Pocket Gal 2 (World?)" )
+	GAME( 1989, spool3,   pcktgal, pcktgal, pcktgal, graphics, ROT0, "Data East Corporation", "Super Pool III (World?)" )
+	GAME( 1990, spool3i,  pcktgal, pcktgal, pcktgal, graphics, ROT0, "Data East Corporation (I-Vics license)", "Super Pool III (I-Vics)" )
 }

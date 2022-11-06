@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -74,8 +74,7 @@ public class ajax
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ajax  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ajax  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 32;
@@ -99,15 +98,14 @@ public class ajax
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ajax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ajax  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		fillbitmap(bitmap,get_black_pen(),cliprect);
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],0,1);
-		if (ajax_priority != 0)
+		if (ajax_priority)
 		{
 			/* basic layer order is B, zoom, A, F */
 			K051316_zoom_draw_0(bitmap,cliprect,0,4);

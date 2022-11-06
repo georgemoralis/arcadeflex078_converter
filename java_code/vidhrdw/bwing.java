@@ -10,7 +10,7 @@ drivers by Acho A. Tang
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -68,21 +68,19 @@ public class bwing
 	);
 	
 	
-	public static WriteHandlerPtr bwing_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { buffered_spriteram[offset] = data; } };
-	public static WriteHandlerPtr bwing_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)  { videoram.write(offset,data); tilemap_mark_tile_dirty(charmap, offset); } };
+	public static WriteHandlerPtr bwing_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data) buffered_spriteram[offset] = data; }
+	public static WriteHandlerPtr bwing_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ videoram.write(offset,data); tilemap_mark_tile_dirty(charmap, offset); } };
 	
 	
-	public static ReadHandlerPtr bwing_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (srbank == 0) offset = srxlat[offset];
+	public static ReadHandlerPtr bwing_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (!srbank) offset = srxlat[offset];
 	
 		return((srbase[srbank])[offset]);
 	} };
 	
 	
-	public static WriteHandlerPtr bwing_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (srbank == 0)
+	public static WriteHandlerPtr bwing_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (!srbank)
 		{
 			offset = srxlat[offset];
 	
@@ -93,8 +91,7 @@ public class bwing
 	} };
 	
 	
-	public static WriteHandlerPtr bwing_scrollreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bwing_scrollreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned bp_ready=0;
 		unsigned i;
 		data8_t *src;
@@ -110,7 +107,7 @@ public class bwing
 				mapmask = data;
 				srbank = data >> 6;
 	
-				if (srbank != 0) bp_ready |= 1<<(srbank-1) & 7;
+				if (srbank) bp_ready |= 1<<(srbank-1) & 7;
 	
 				if (bp_ready == 7 && !srbank)
 				{
@@ -135,12 +132,11 @@ public class bwing
 	} };
 	
 	
-	public static WriteHandlerPtr bwing_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bwing_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		const float rgb[4][3]={{0.85,0.95,1.00},{0.90,1.00,1.00},{0.80,1.00,1.00},{0.75,0.90,1.10}};
 		int r, g, b, i;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		r = ~data & 7;
 		g = ~data>>4 & 7;
@@ -163,7 +159,7 @@ public class bwing
 		palette_set_color(offset, r, g, b);
 	
 		#if BW_DEBUG
-			paletteram[offset+0x40] = palatch;
+			paletteram.write(offset+0x40,palatch);
 		#endif
 	} };
 	
@@ -172,9 +168,9 @@ public class bwing
 	
 	#define BW_SET_TILE_INFO(GFX, CODE, COLOR) { \
 		tile_info.tile_number = (CODE); \
-		tile_info.pen_data = GFX.gfxdata + (CODE) * GFX.char_modulo; \
-		tile_info.pal_data = &GFX.colortable[(COLOR) << 3]; \
-		tile_info.pen_usage = GFX.pen_usage[(CODE)]; }
+		tile_info.pen_data = GFX->gfxdata + (CODE) * GFX->char_modulo; \
+		tile_info.pal_data = &GFX->colortable[(COLOR) << 3]; \
+		tile_info.pen_usage = GFX->pen_usage[(CODE)]; }
 	
 	INLINE void get_fgtileinfo(int i)
 	{
@@ -199,8 +195,7 @@ public class bwing
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_bwing  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bwing  = new VideoStartHandlerPtr() { public int handler(){
 		UINT32 *dwptr;
 		int i;
 	
@@ -240,7 +235,7 @@ public class bwing
 	static void bwing_drawsprites(struct mame_bitmap *bmp, const struct rectangle *clip, data8_t *ram, int pri)
 	{
 		int attrib, fx, fy, code, x, y, color, i;
-		struct GfxElement *gfx = Machine.gfx[1];
+		struct GfxElement *gfx = Machine->gfx[1];
 	
 		for (i=0; i<0x200; i+=4)
 		{
@@ -252,7 +247,7 @@ public class bwing
 			fy = ~attrib & 0x02;
 	
 			// normal/cocktail
-			if ((mapmask & 0x20) != 0) { fx = !fx; fy = !fy; x = 240 - x; y = 240 - y; }
+			if (mapmask & 0x20) { fx = !fx; fy = !fy; x = 240 - x; y = 240 - y; }
 	
 			// single/double
 			if (!(attrib & 0x10))
@@ -263,11 +258,10 @@ public class bwing
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bwing  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		unsigned x, y, shiftx;
 	
-		if ((mapmask & 0x20) != 0)
+		if (mapmask & 0x20)
 			{ mapflip = TILEMAP_FLIPX; shiftx = -8; }
 		else
 			{ mapflip = TILEMAP_FLIPY; shiftx = 8; }
@@ -303,7 +297,7 @@ public class bwing
 		bwing_drawsprites(bitmap, cliprect, buffered_spriteram, 1);
 	
 		// draw text layer
-	//	if ((mapmask & 4) != 0)
+	//	if (mapmask & 4)
 		{
 			tilemap_set_flip(charmap, mapflip);
 			tilemap_draw(bitmap, cliprect, charmap, 0, 0);

@@ -29,7 +29,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,8 +65,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_avalnche  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_avalnche  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* 2 colors in the palette: black & white */
 		palette_set_color(0,0x00,0x00,0x00);
 		palette_set_color(1,0xff,0xff,0xff);
@@ -109,7 +108,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_avalnche = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_avalnche = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( avalnche )
 		PORT_START();  /* IN0 */
 		PORT_BIT (0x03, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Spare */
 		PORT_DIPNAME( 0x0c, 0x04, DEF_STR( "Coinage") );
@@ -235,8 +234,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_avalnche = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( avalnche )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,12096000/16)	   /* clock input is the "2H" signal divided by two */
@@ -258,9 +256,7 @@ public class avalnche
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, avalnche_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -293,8 +289,7 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_avalnche  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_avalnche  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -318,5 +313,5 @@ public class avalnche
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_avalnche	   = new GameDriver("1978"	,"avalnche"	,"avalnche.java"	,rom_avalnche,null	,machine_driver_avalnche	,input_ports_avalnche	,init_avalnche	,ROT0	,	"Atari", "Avalanche" )
+	GAME( 1978, avalnche, 0, avalnche, avalnche, avalnche, ROT0, "Atari", "Avalanche" )
 }

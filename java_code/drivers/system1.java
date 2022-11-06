@@ -18,7 +18,7 @@ TODO: - background is misplaced in wbmlju
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,8 +27,7 @@ public class system1
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_system1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_system1  = new MachineInitHandlerPtr() { public void handler(){
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */
 		/* before doing the test */
@@ -38,8 +37,7 @@ public class system1
 		system1_define_background_memory(system1_BACKGROUND_MEMORY_SINGLE);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_wbml  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_wbml  = new MachineInitHandlerPtr() { public void handler(){
 		/* skip the long IC CHECK in Teddyboy Blues and Choplifter */
 		/* this is not a ROM patch, the game checks a RAM location */
 		/* before doing the test */
@@ -53,50 +51,42 @@ public class system1
 	
 	static int inport16_step,inport17_step,inport23_step;
 	
-	public static ReadHandlerPtr inport16_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inport16_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("IN  $16 : pc = %04x - data = %02x\n",activecpu_get_pc(),inport16_step);
 		return(inport16_step);
 	} };
 	
-	public static ReadHandlerPtr inport1c_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inport1c_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("IN  $1c : pc = %04x - data = 0x80\n",activecpu_get_pc());
 		return(0x80);	// infinite loop (at 0x0fb3) until bit 7 is set
 	} };
 	
-	public static ReadHandlerPtr inport22_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inport22_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("IN  $22 : pc = %04x - data = %02x\n",activecpu_get_pc(),inport17_step);
 		return(inport17_step);
 	} };
 	
-	public static ReadHandlerPtr inport23_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inport23_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//	logerror("IN  $23 : pc = %04x - step = %02x\n",activecpu_get_pc(),inport23_step);
 		return(inport23_step);
 	} };
 	
-	public static WriteHandlerPtr outport16_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr outport16_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("OUT $16 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport16_step = data;
 	} };
 	
-	public static WriteHandlerPtr outport17_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr outport17_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("OUT $17 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport17_step = data;
 	} };
 	
-	public static WriteHandlerPtr outport24_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr outport24_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("OUT $24 : pc = %04x - data = %02x\n",activecpu_get_pc(),data);
 		inport23_step = data;
 	} };
 	
-	public static WriteHandlerPtr hvymetal_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hvymetal_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -111,8 +101,7 @@ public class system1
 		system1_videomode_w(0, data);
 	} };
 	
-	public static WriteHandlerPtr brain_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brain_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -122,8 +111,7 @@ public class system1
 		system1_videomode_w(0, data);
 	} };
 	
-	public static WriteHandlerPtr chplft_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr chplft_videomode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -134,8 +122,7 @@ public class system1
 	} };
 	
 	
-	public static WriteHandlerPtr system1_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr system1_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		/* spin for a while to let the Z80 read the command (fixes hanging sound in Regulus) */
@@ -351,13 +338,11 @@ public class system1
 	
 	static unsigned char *work_ram;
 	
-	public static ReadHandlerPtr work_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr work_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return work_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr work_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr work_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		work_ram[offset] = data;
 	} };
 	
@@ -434,7 +419,7 @@ public class system1
 		PORT_DIPSETTING(	0x80, "Port $0D" );\
 		PORT_DIPSETTING(	0x00, "Port $10" );
 	
-	static InputPortPtr input_ports_starjack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starjack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starjack )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -486,7 +471,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_starjacs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starjacs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starjacs )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -537,7 +522,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_regulus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_regulus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( regulus )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -591,7 +576,7 @@ public class system1
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'regulus', but no "Allow Continue" Dip Switch */
-	static InputPortPtr input_ports_reguluso = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_reguluso = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( reguluso )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -644,7 +629,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_upndown = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_upndown = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( upndown )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -696,7 +681,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mrviking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrviking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrviking )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -748,7 +733,7 @@ public class system1
 	
 	/* Same as 'mrviking', but no "Maximum Credits" Dip Switch and "Difficulty" Dip Switch is
 	   handled by bit 7 instead of bit 6 (so bit 6 is unused) */
-	static InputPortPtr input_ports_mrvikngj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrvikngj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrvikngj )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -800,7 +785,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, "Hard" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_swat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_swat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( swat )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -853,7 +838,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_flicky = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flicky = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flicky )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -903,7 +888,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wmatch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wmatch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wmatch )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_DOWN  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_UP    | IPF_8WAY );
@@ -961,7 +946,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bullfgt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bullfgt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bullfgt )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1011,7 +996,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spatter = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spatter = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spatter )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1061,7 +1046,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pitfall2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pitfall2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pitfall2 )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1114,7 +1099,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pitfallu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pitfallu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pitfallu )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1166,7 +1151,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_seganinj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seganinj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seganinj )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1217,7 +1202,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_imsorry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_imsorry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( imsorry )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1267,7 +1252,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_teddybb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_teddybb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( teddybb )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1317,7 +1302,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hvymetal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hvymetal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hvymetal )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1369,7 +1354,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_myhero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_myhero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( myhero )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1419,7 +1404,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_shtngmst = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shtngmst = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shtngmst )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1470,7 +1455,7 @@ public class system1
 		DSW1_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chplft = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chplft = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chplft )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1523,7 +1508,7 @@ public class system1
 		DSW1_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_4dwarrio = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_4dwarrio = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 4dwarrio )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1574,7 +1559,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_brain = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brain = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brain )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1627,7 +1612,7 @@ public class system1
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_raflesia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raflesia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raflesia )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1677,7 +1662,7 @@ public class system1
 		DSW0_BIT7
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wboy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wboy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wboy )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1731,7 +1716,7 @@ public class system1
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as wboy, additional Energy Consumption switch */
-	static InputPortPtr input_ports_wbdeluxe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wbdeluxe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wbdeluxe )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Has to be 0 otherwise the game resets */
 													/* if you die after level 1. */
@@ -1785,7 +1770,7 @@ public class system1
 		PORT_DIPSETTING(	0x80, "Fast" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wboyu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wboyu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wboyu )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -1905,7 +1890,7 @@ public class system1
 	
 	*/
 	
-	static InputPortPtr input_ports_blockgal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockgal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockgal )
 		PORT_START();   /* IN1 */
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_REVERSE, 60, 15, 0, 0);
 	
@@ -1950,7 +1935,7 @@ public class system1
 		DSW1_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tokisens = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tokisens = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tokisens )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -2003,7 +1988,7 @@ public class system1
 		DSW1_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wbml = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wbml = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wbml )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -2056,7 +2041,7 @@ public class system1
 		DSW1_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_noboranb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_noboranb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( noboranb )
 		PORT_START();   /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );			// shot
@@ -2164,8 +2149,7 @@ public class system1
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_system1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 4000000)	/* My Hero has 2 OSCs 8 & 20 MHz (Cabbe Info) */
@@ -2197,13 +2181,10 @@ public class system1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* driver with reduced visible area for scrolling games */
-	public static MachineHandlerPtr machine_driver_small = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( small )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2211,25 +2192,19 @@ public class system1
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8+8, 32*8-1-8, 0*8, 28*8-1)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pitfall2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pitfall2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
 		MDRV_CPU_REPLACE( "main", Z80, 3600000 )/* should be 4 MHz but that value makes the title screen disappear */
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hvymetal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hvymetal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2237,13 +2212,10 @@ public class system1
 		MDRV_CPU_MEMORY(brain_readmem,writemem)
 		MDRV_CPU_PORTS(wbml_readport,hvymetal_writeport)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_chplft = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chplft )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2254,13 +2226,10 @@ public class system1
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(choplifter)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_brain = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( brain )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2268,13 +2237,10 @@ public class system1
 		MDRV_CPU_MEMORY(brain_readmem,writemem)
 		MDRV_CPU_PORTS(readport,brain_writeport)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wbml = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wbml )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2287,12 +2253,9 @@ public class system1
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(wbml)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_noboranb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( noboranb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2303,12 +2266,9 @@ public class system1
 		/* video hardware */
 		MDRV_VISIBLE_AREA(1*8, 31*8-1, 0*8, 28*8-1)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_blockgal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blockgal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( system1 )
@@ -2318,9 +2278,7 @@ public class system1
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(blockgal)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -3965,29 +3923,28 @@ public class system1
 		ROM_LOAD( "nobo_pr.13a", 0x0300, 0x0100, CRC(648350b8) SHA1(c7986aa9127ef5b50b845434cb4e81dff9861cd2) ) /* timing? (not used) */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_regulus  = new DriverInitHandlerPtr() { public void handler()	{ regulus_decode(); } };
-	public static DriverInitHandlerPtr init_mrviking  = new DriverInitHandlerPtr() { public void handler()	{ mrviking_decode(); } };
-	public static DriverInitHandlerPtr init_swat  = new DriverInitHandlerPtr() { public void handler()		{ swat_decode(); } };
-	public static DriverInitHandlerPtr init_flicky  = new DriverInitHandlerPtr() { public void handler()	{ flicky_decode(); } };
-	public static DriverInitHandlerPtr init_wmatch  = new DriverInitHandlerPtr() { public void handler()	{ wmatch_decode(); } };
-	public static DriverInitHandlerPtr init_bullfgtj  = new DriverInitHandlerPtr() { public void handler()	{ bullfgtj_decode(); } };
-	public static DriverInitHandlerPtr init_spatter  = new DriverInitHandlerPtr() { public void handler()	{ spatter_decode(); } };
-	public static DriverInitHandlerPtr init_pitfall2  = new DriverInitHandlerPtr() { public void handler()	{ pitfall2_decode(); } };
-	public static DriverInitHandlerPtr init_nprinces  = new DriverInitHandlerPtr() { public void handler()	{ nprinces_decode(); } };
-	public static DriverInitHandlerPtr init_seganinj  = new DriverInitHandlerPtr() { public void handler()	{ seganinj_decode(); } };
-	public static DriverInitHandlerPtr init_imsorry  = new DriverInitHandlerPtr() { public void handler()	{ imsorry_decode(); } };
-	public static DriverInitHandlerPtr init_teddybb  = new DriverInitHandlerPtr() { public void handler()	{ teddybb_decode(); } };
-	public static DriverInitHandlerPtr init_hvymetal  = new DriverInitHandlerPtr() { public void handler()	{ hvymetal_decode(); } };
-	public static DriverInitHandlerPtr init_myheroj  = new DriverInitHandlerPtr() { public void handler()	{ myheroj_decode(); } };
-	public static DriverInitHandlerPtr init_4dwarrio  = new DriverInitHandlerPtr() { public void handler()	{ fdwarrio_decode(); } };
-	public static DriverInitHandlerPtr init_wboy  = new DriverInitHandlerPtr() { public void handler()		{ astrofl_decode(); } };
-	public static DriverInitHandlerPtr init_wboy2  = new DriverInitHandlerPtr() { public void handler()		{ wboy2_decode(); } };
-	public static DriverInitHandlerPtr init_gardia  = new DriverInitHandlerPtr() { public void handler()	{ gardia_decode(); } };
-	public static DriverInitHandlerPtr init_gardiab  = new DriverInitHandlerPtr() { public void handler()	{ gardiab_decode(); } };
+	public static DriverInitHandlerPtr init_regulus  = new DriverInitHandlerPtr() { public void handler() regulus_decode(); }
+	public static DriverInitHandlerPtr init_mrviking  = new DriverInitHandlerPtr() { public void handler() mrviking_decode(); }
+	public static DriverInitHandlerPtr init_swat  = new DriverInitHandlerPtr() { public void handler(){ swat_decode(); } };
+	public static DriverInitHandlerPtr init_flicky  = new DriverInitHandlerPtr() { public void handler() flicky_decode(); }
+	public static DriverInitHandlerPtr init_wmatch  = new DriverInitHandlerPtr() { public void handler() wmatch_decode(); }
+	public static DriverInitHandlerPtr init_bullfgtj  = new DriverInitHandlerPtr() { public void handler() bullfgtj_decode(); }
+	public static DriverInitHandlerPtr init_spatter  = new DriverInitHandlerPtr() { public void handler() spatter_decode(); }
+	public static DriverInitHandlerPtr init_pitfall2  = new DriverInitHandlerPtr() { public void handler() pitfall2_decode(); }
+	public static DriverInitHandlerPtr init_nprinces  = new DriverInitHandlerPtr() { public void handler() nprinces_decode(); }
+	public static DriverInitHandlerPtr init_seganinj  = new DriverInitHandlerPtr() { public void handler() seganinj_decode(); }
+	public static DriverInitHandlerPtr init_imsorry  = new DriverInitHandlerPtr() { public void handler() imsorry_decode(); }
+	public static DriverInitHandlerPtr init_teddybb  = new DriverInitHandlerPtr() { public void handler() teddybb_decode(); }
+	public static DriverInitHandlerPtr init_hvymetal  = new DriverInitHandlerPtr() { public void handler() hvymetal_decode(); }
+	public static DriverInitHandlerPtr init_myheroj  = new DriverInitHandlerPtr() { public void handler() myheroj_decode(); }
+	public static DriverInitHandlerPtr init_4dwarrio  = new DriverInitHandlerPtr() { public void handler() fdwarrio_decode(); }
+	public static DriverInitHandlerPtr init_wboy  = new DriverInitHandlerPtr() { public void handler(){ astrofl_decode(); } };
+	public static DriverInitHandlerPtr init_wboy2  = new DriverInitHandlerPtr() { public void handler(){ wboy2_decode(); } };
+	public static DriverInitHandlerPtr init_gardia  = new DriverInitHandlerPtr() { public void handler() gardia_decode(); }
+	public static DriverInitHandlerPtr init_gardiab  = new DriverInitHandlerPtr() { public void handler() gardiab_decode(); }
 	
 	
-	public static DriverInitHandlerPtr init_myherok  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_myherok  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		unsigned char *rom;
 	
@@ -4030,16 +3987,14 @@ public class system1
 		myheroj_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_bootleg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bootleg  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
 		memory_set_opcode_base(0,rom+diff);
 	} };
 	
-	public static DriverInitHandlerPtr init_noboranb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_noboranb  = new DriverInitHandlerPtr() { public void handler(){
 		/* Patch to get PRG ROMS ('T', 'R' and 'S) status as "GOOD" in the "test mode" */
 		/* not really needed */
 	
@@ -4064,63 +4019,63 @@ public class system1
 	
 	
 	
-	public static GameDriver driver_starjack	   = new GameDriver("1983"	,"starjack"	,"system1.java"	,rom_starjack,null	,machine_driver_small	,input_ports_starjack	,null	,ROT270	,	"Sega", 			 	   "Star Jacker (Sega)" )
-	public static GameDriver driver_starjacs	   = new GameDriver("1983"	,"starjacs"	,"system1.java"	,rom_starjacs,driver_starjack	,machine_driver_small	,input_ports_starjacs	,null	,ROT270	,	"Stern",			  	   "Star Jacker (Stern)" )
-	public static GameDriver driver_regulus	   = new GameDriver("1983"	,"regulus"	,"system1.java"	,rom_regulus,null	,machine_driver_small	,input_ports_regulus	,init_regulus	,ROT270	,	"Sega", 			 	   "Regulus (New Ver.)" )
-	public static GameDriver driver_reguluso	   = new GameDriver("1983"	,"reguluso"	,"system1.java"	,rom_reguluso,driver_regulus	,machine_driver_small	,input_ports_reguluso	,init_regulus	,ROT270	,	"Sega", 			 	   "Regulus (Old Ver.)" )
-	public static GameDriver driver_regulusu	   = new GameDriver("1983"	,"regulusu"	,"system1.java"	,rom_regulusu,driver_regulus	,machine_driver_small	,input_ports_regulus	,null	,ROT270	,	"Sega", 			 	   "Regulus (not encrypted)" )
-	public static GameDriver driver_upndown	   = new GameDriver("1983"	,"upndown"	,"system1.java"	,rom_upndown,null	,machine_driver_system1	,input_ports_upndown	,init_nprinces	,ROT270	,	"Sega", 			 	   "Up'n Down" )
-	public static GameDriver driver_upndownu	   = new GameDriver("1983"	,"upndownu"	,"system1.java"	,rom_upndownu,driver_upndown	,machine_driver_system1	,input_ports_upndown	,null	,ROT270	,	"Sega", 			 	   "Up'n Down (not encrypted)" )
-	public static GameDriver driver_mrviking	   = new GameDriver("1984"	,"mrviking"	,"system1.java"	,rom_mrviking,null	,machine_driver_small	,input_ports_mrviking	,init_mrviking	,ROT270	,	"Sega", 			 	   "Mister Viking" )
-	public static GameDriver driver_mrvikngj	   = new GameDriver("1984"	,"mrvikngj"	,"system1.java"	,rom_mrvikngj,driver_mrviking	,machine_driver_small	,input_ports_mrvikngj	,init_mrviking	,ROT270	,	"Sega", 			 	   "Mister Viking (Japan)" )
-	public static GameDriver driver_swat	   = new GameDriver("1984"	,"swat"	,"system1.java"	,rom_swat,null	,machine_driver_system1	,input_ports_swat	,init_swat	,ROT270	,	"Coreland / Sega", 	   "SWAT" )
-	public static GameDriver driver_flicky	   = new GameDriver("1984"	,"flicky"	,"system1.java"	,rom_flicky,null	,machine_driver_system1	,input_ports_flicky	,init_flicky	,ROT0	,	"Sega", 			 	   "Flicky (128k Ver.)" )
-	public static GameDriver driver_flickyo	   = new GameDriver("1984"	,"flickyo"	,"system1.java"	,rom_flickyo,driver_flicky	,machine_driver_system1	,input_ports_flicky	,init_flicky	,ROT0	,	"Sega", 			 	   "Flicky (64k Ver.)" )
-	public static GameDriver driver_wmatch	   = new GameDriver("1984"	,"wmatch"	,"system1.java"	,rom_wmatch,null	,machine_driver_small	,input_ports_wmatch	,init_wmatch	,ROT270	,	"Sega", 			 	   "Water Match" )
-	public static GameDriver driver_bullfgt	   = new GameDriver("1984"	,"bullfgt"	,"system1.java"	,rom_bullfgt,null	,machine_driver_system1	,input_ports_bullfgt	,init_bullfgtj	,ROT0	,	"Coreland / Sega", 	   "Bullfight" )
-	public static GameDriver driver_thetogyu	   = new GameDriver("1984"	,"thetogyu"	,"system1.java"	,rom_thetogyu,driver_bullfgt	,machine_driver_system1	,input_ports_bullfgt	,init_bullfgtj	,ROT0	,	"Coreland / Sega", 	   "The Togyu (Japan)" )
-	public static GameDriver driver_spatter	   = new GameDriver("1984"	,"spatter"	,"system1.java"	,rom_spatter,null	,machine_driver_small	,input_ports_spatter	,init_spatter	,ROT0	,	"Sega", 			 	   "Spatter" )
-	public static GameDriver driver_ssanchan	   = new GameDriver("1984"	,"ssanchan"	,"system1.java"	,rom_ssanchan,driver_spatter	,machine_driver_small	,input_ports_spatter	,init_spatter	,ROT0	,	"Sega", 			 	   "Sanrin San Chan (Japan)" )
-	public static GameDriver driver_pitfall2	   = new GameDriver("1985"	,"pitfall2"	,"system1.java"	,rom_pitfall2,null	,machine_driver_pitfall2	,input_ports_pitfall2	,init_pitfall2	,ROT0	,	"Sega", 			 	   "Pitfall II" )
-	public static GameDriver driver_pitfallu	   = new GameDriver("1985"	,"pitfallu"	,"system1.java"	,rom_pitfallu,driver_pitfall2	,machine_driver_pitfall2	,input_ports_pitfallu	,null	,ROT0	,	"Sega", 			 	   "Pitfall II (not encrypted)" )
-	public static GameDriver driver_seganinj	   = new GameDriver("1985"	,"seganinj"	,"system1.java"	,rom_seganinj,null	,machine_driver_system1	,input_ports_seganinj	,init_seganinj	,ROT0	,	"Sega", 			 	   "Sega Ninja" )
-	public static GameDriver driver_seganinu	   = new GameDriver("1985"	,"seganinu"	,"system1.java"	,rom_seganinu,driver_seganinj	,machine_driver_system1	,input_ports_seganinj	,null	,ROT0	,	"Sega", 			 	   "Sega Ninja (not encrypted)" )
-	public static GameDriver driver_nprinces	   = new GameDriver("1985"	,"nprinces"	,"system1.java"	,rom_nprinces,driver_seganinj	,machine_driver_system1	,input_ports_seganinj	,init_flicky	,ROT0	,	"bootleg?", 		 	   "Ninja Princess (64k Ver. bootleg?)" )
-	public static GameDriver driver_nprincso	   = new GameDriver("1985"	,"nprincso"	,"system1.java"	,rom_nprincso,driver_seganinj	,machine_driver_system1	,input_ports_seganinj	,init_nprinces	,ROT0	,	"Sega", 			 	   "Ninja Princess (128k Ver.)" )
-	public static GameDriver driver_nprincsu	   = new GameDriver("1985"	,"nprincsu"	,"system1.java"	,rom_nprincsu,driver_seganinj	,machine_driver_system1	,input_ports_seganinj	,null	,ROT0	,	"Sega", 			 	   "Ninja Princess (64k Ver. not encrypted)" )
-	public static GameDriver driver_nprincsb	   = new GameDriver("1985"	,"nprincsb"	,"system1.java"	,rom_nprincsb,driver_seganinj	,machine_driver_system1	,input_ports_seganinj	,init_flicky	,ROT0	,	"bootleg?", 		 	   "Ninja Princess (128k Ver. bootleg?)" )
-	public static GameDriver driver_imsorry	   = new GameDriver("1985"	,"imsorry"	,"system1.java"	,rom_imsorry,null	,machine_driver_system1	,input_ports_imsorry	,init_imsorry	,ROT0	,	"Coreland / Sega", 	   "I'm Sorry (US)" )
-	public static GameDriver driver_imsorryj	   = new GameDriver("1985"	,"imsorryj"	,"system1.java"	,rom_imsorryj,driver_imsorry	,machine_driver_system1	,input_ports_imsorry	,init_imsorry	,ROT0	,	"Coreland / Sega", 	   "Gonbee no I'm Sorry (Japan)" )
-	public static GameDriver driver_teddybb	   = new GameDriver("1985"	,"teddybb"	,"system1.java"	,rom_teddybb,null	,machine_driver_system1	,input_ports_teddybb	,init_teddybb	,ROT0	,	"Sega", 			 	   "TeddyBoy Blues (New Ver.)" )
-	public static GameDriver driver_teddybbo	   = new GameDriver("1985"	,"teddybbo"	,"system1.java"	,rom_teddybbo,driver_teddybb	,machine_driver_system1	,input_ports_teddybb	,init_teddybb	,ROT0	,	"Sega", 			 	   "TeddyBoy Blues (Old Ver.)" )
-	public static GameDriver driver_hvymetal	   = new GameDriver("1985"	,"hvymetal"	,"system1.java"	,rom_hvymetal,null	,machine_driver_hvymetal	,input_ports_hvymetal	,init_hvymetal	,ROT0	,	"Sega", 			 	   "Heavy Metal" )
-	public static GameDriver driver_myhero	   = new GameDriver("1985"	,"myhero"	,"system1.java"	,rom_myhero,null	,machine_driver_system1	,input_ports_myhero	,null	,ROT0	,	"Sega", 			 	   "My Hero (US)" )
-	public static GameDriver driver_sscandal	   = new GameDriver("1985"	,"sscandal"	,"system1.java"	,rom_sscandal,driver_myhero	,machine_driver_system1	,input_ports_myhero	,init_myheroj	,ROT0	,	"Coreland / Sega", 	   "Seishun Scandal (Japan)" )
-	public static GameDriver driver_myherok	   = new GameDriver("1985"	,"myherok"	,"system1.java"	,rom_myherok,driver_myhero	,machine_driver_system1	,input_ports_myhero	,init_myherok	,ROT0	,	"Coreland / Sega", 	   "My Hero (Korea)" )
-	public static GameDriver driver_shtngmst	   = new GameDriver("1985"	,"shtngmst"	,"system1.java"	,rom_shtngmst,null	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"Sega", 			 	   "Shooting Master", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )	/* 8751 protection, mcu = 315-5159 */
-	public static GameDriver driver_chplft	   = new GameDriver("1985"	,"chplft"	,"system1.java"	,rom_chplft,null	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"Sega", 			 	   "Choplifter", GAME_UNEMULATED_PROTECTION )	/* 8751 protection */
-	public static GameDriver driver_chplftb	   = new GameDriver("1985"	,"chplftb"	,"system1.java"	,rom_chplftb,driver_chplft	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"Sega", 			 	   "Choplifter (alternate)" )
-	public static GameDriver driver_chplftbl	   = new GameDriver("1985"	,"chplftbl"	,"system1.java"	,rom_chplftbl,driver_chplft	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"bootleg", 		 	   "Choplifter (bootleg)" )
-	public static GameDriver driver_4dwarrio	   = new GameDriver("1985"	,"4dwarrio"	,"system1.java"	,rom_4dwarrio,null	,machine_driver_system1	,input_ports_4dwarrio	,init_4dwarrio	,ROT0	,	"Coreland / Sega", 	   "4-D Warriors" )
-	public static GameDriver driver_brain	   = new GameDriver("1986"	,"brain"	,"system1.java"	,rom_brain,null	,machine_driver_brain	,input_ports_brain	,null	,ROT0	,	"Coreland / Sega", 	   "Brain" )
-	public static GameDriver driver_raflesia	   = new GameDriver("1986"	,"raflesia"	,"system1.java"	,rom_raflesia,null	,machine_driver_system1	,input_ports_raflesia	,init_4dwarrio	,ROT270	,	"Coreland / Sega", 	   "Rafflesia" )
-	public static GameDriver driver_wboy	   = new GameDriver("1986"	,"wboy"	,"system1.java"	,rom_wboy,null	,machine_driver_system1	,input_ports_wboy	,init_wboy	,ROT0	,	"Sega (Escape license)", "Wonder Boy (set 1, new encryption)" )
-	public static GameDriver driver_wboyo	   = new GameDriver("1986"	,"wboyo"	,"system1.java"	,rom_wboyo,driver_wboy	,machine_driver_system1	,input_ports_wboy	,init_hvymetal	,ROT0	,	"Sega (Escape license)", "Wonder Boy (set 1, old encryption)" )
-	public static GameDriver driver_wboy2	   = new GameDriver("1986"	,"wboy2"	,"system1.java"	,rom_wboy2,driver_wboy	,machine_driver_system1	,input_ports_wboy	,init_wboy2	,ROT0	,	"Sega (Escape license)", "Wonder Boy (set 2)" )
-	public static GameDriver driver_wboy2u	   = new GameDriver("1986"	,"wboy2u"	,"system1.java"	,rom_wboy2u,driver_wboy	,machine_driver_system1	,input_ports_wboy	,null	,ROT0	,	"Sega (Escape license)", "Wonder Boy (set 2 not encrypted)" )
-	public static GameDriver driver_wboy3	   = new GameDriver("1986"	,"wboy3"	,"system1.java"	,rom_wboy3,driver_wboy	,machine_driver_system1	,input_ports_wboy	,init_hvymetal	,ROT0	,	"Sega (Escape license)", "Wonder Boy (set 3)" )
-	public static GameDriver driver_wboyu	   = new GameDriver("1986"	,"wboyu"	,"system1.java"	,rom_wboyu,driver_wboy	,machine_driver_system1	,input_ports_wboyu	,null	,ROT0	,	"Sega (Escape license)", "Wonder Boy (not encrypted)" )
-	public static GameDriver driver_wbdeluxe	   = new GameDriver("1986"	,"wbdeluxe"	,"system1.java"	,rom_wbdeluxe,driver_wboy	,machine_driver_system1	,input_ports_wbdeluxe	,null	,ROT0	,	"Sega (Escape license)", "Wonder Boy Deluxe" )
-	public static GameDriver driver_gardia	   = new GameDriver("1986"	,"gardia"	,"system1.java"	,rom_gardia,null	,machine_driver_brain	,input_ports_wboy	,init_gardia	,ROT270	,	"Sega / Coreland", 	   "Gardia", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_gardiab	   = new GameDriver("1986"	,"gardiab"	,"system1.java"	,rom_gardiab,driver_gardia	,machine_driver_brain	,input_ports_wboy	,init_gardiab	,ROT270	,	"bootleg", 		 	   "Gardia (bootleg)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_noboranb	   = new GameDriver("1986"	,"noboranb"	,"system1.java"	,rom_noboranb,null	,machine_driver_noboranb	,input_ports_noboranb	,init_noboranb	,ROT270	,	"bootleg", 		 	   "Noboranka (Japan)" )
-	public static GameDriver driver_blockgal	   = new GameDriver("1987"	,"blockgal"	,"system1.java"	,rom_blockgal,null	,machine_driver_blockgal	,input_ports_blockgal	,null	,ROT90	,	"Sega / Vic Tokai",	   "Block Gal", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_blckgalb	   = new GameDriver("1987"	,"blckgalb"	,"system1.java"	,rom_blckgalb,driver_blockgal	,machine_driver_blockgal	,input_ports_blockgal	,init_bootleg	,ROT90	,	"bootleg", 		 	   "Block Gal (bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tokisens	   = new GameDriver("1987"	,"tokisens"	,"system1.java"	,rom_tokisens,null	,machine_driver_wbml	,input_ports_tokisens	,null	,ROT90	,	"Sega", 			 	   "Toki no Senshi - Chrono Soldier", GAME_NO_COCKTAIL )
-	public static GameDriver driver_wbml	   = new GameDriver("1987"	,"wbml"	,"system1.java"	,rom_wbml,null	,machine_driver_wbml	,input_ports_wbml	,null	,ROT0	,	"Sega / Westone",  	   "Wonder Boy in Monster Land (Japan New Ver.)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_wbmljo	   = new GameDriver("1987"	,"wbmljo"	,"system1.java"	,rom_wbmljo,driver_wbml	,machine_driver_wbml	,input_ports_wbml	,null	,ROT0	,	"Sega / Westone",  	   "Wonder Boy in Monster Land (Japan Old Ver.)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_wbmljb	   = new GameDriver("1987"	,"wbmljb"	,"system1.java"	,rom_wbmljb,driver_wbml	,machine_driver_wbml	,input_ports_wbml	,init_bootleg	,ROT0	,	"bootleg", 		 	   "Wonder Boy in Monster Land (Japan not encrypted)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_wbmlb	   = new GameDriver("1987"	,"wbmlb"	,"system1.java"	,rom_wbmlb,driver_wbml	,machine_driver_wbml	,input_ports_wbml	,init_bootleg	,ROT0	,	"bootleg", 		 	   "Wonder Boy in Monster Land", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dakkochn	   = new GameDriver("1987"	,"dakkochn"	,"system1.java"	,rom_dakkochn,null	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"Sega", 			 	   "DakkoChan Jansoh", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_ufosensi	   = new GameDriver("1988"	,"ufosensi"	,"system1.java"	,rom_ufosensi,null	,machine_driver_chplft	,input_ports_chplft	,null	,ROT0	,	"Sega", 			 	   "Ufo Senshi Yohko Chan", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAME( 1983, starjack, 0,        small,    starjack, 0,        ROT270, "Sega", 			 	   "Star Jacker (Sega)" )
+	GAME( 1983, starjacs, starjack, small,    starjacs, 0,        ROT270, "Stern",			  	   "Star Jacker (Stern)" )
+	GAME( 1983, regulus,  0,        small,	  regulus,  regulus,  ROT270, "Sega", 			 	   "Regulus (New Ver.)" )
+	GAME( 1983, reguluso, regulus,  small,	  reguluso, regulus,  ROT270, "Sega", 			 	   "Regulus (Old Ver.)" )
+	GAME( 1983, regulusu, regulus,  small,	  regulus,  0,        ROT270, "Sega", 			 	   "Regulus (not encrypted)" )
+	GAME( 1983, upndown,  0,        system1,  upndown,  nprinces, ROT270, "Sega", 			 	   "Up'n Down" )
+	GAME( 1983, upndownu, upndown,  system1,  upndown,  0,        ROT270, "Sega", 			 	   "Up'n Down (not encrypted)" )
+	GAME( 1984, mrviking, 0,        small,    mrviking, mrviking, ROT270, "Sega", 			 	   "Mister Viking" )
+	GAME( 1984, mrvikngj, mrviking, small,    mrvikngj, mrviking, ROT270, "Sega", 			 	   "Mister Viking (Japan)" )
+	GAME( 1984, swat,     0,        system1,  swat,     swat,     ROT270, "Coreland / Sega", 	   "SWAT" )
+	GAME( 1984, flicky,   0,        system1,  flicky,   flicky,   ROT0,   "Sega", 			 	   "Flicky (128k Ver.)" )
+	GAME( 1984, flickyo,  flicky,   system1,  flicky,   flicky,   ROT0,   "Sega", 			 	   "Flicky (64k Ver.)" )
+	GAME( 1984, wmatch,   0,        small, 	  wmatch,   wmatch,   ROT270, "Sega", 			 	   "Water Match" )
+	GAME( 1984, bullfgt,  0,        system1,  bullfgt,  bullfgtj, ROT0,   "Coreland / Sega", 	   "Bullfight" )
+	GAME( 1984, thetogyu, bullfgt,  system1,  bullfgt,  bullfgtj, ROT0,   "Coreland / Sega", 	   "The Togyu (Japan)" )
+	GAME( 1984, spatter,  0,        small,    spatter,  spatter,  ROT0,   "Sega", 			 	   "Spatter" )
+	GAME( 1984, ssanchan, spatter,  small,    spatter,  spatter,  ROT0,   "Sega", 			 	   "Sanrin San Chan (Japan)" )
+	GAME( 1985, pitfall2, 0,        pitfall2, pitfall2, pitfall2, ROT0,   "Sega", 			 	   "Pitfall II" )
+	GAME( 1985, pitfallu, pitfall2, pitfall2, pitfallu, 0,        ROT0,   "Sega", 			 	   "Pitfall II (not encrypted)" )
+	GAME( 1985, seganinj, 0,        system1,  seganinj, seganinj, ROT0,   "Sega", 			 	   "Sega Ninja" )
+	GAME( 1985, seganinu, seganinj, system1,  seganinj, 0,        ROT0,   "Sega", 			 	   "Sega Ninja (not encrypted)" )
+	GAME( 1985, nprinces, seganinj, system1,  seganinj, flicky,   ROT0,   "bootleg?", 		 	   "Ninja Princess (64k Ver. bootleg?)" )
+	GAME( 1985, nprincso, seganinj, system1,  seganinj, nprinces, ROT0,   "Sega", 			 	   "Ninja Princess (128k Ver.)" )
+	GAME( 1985, nprincsu, seganinj, system1,  seganinj, 0,        ROT0,   "Sega", 			 	   "Ninja Princess (64k Ver. not encrypted)" )
+	GAME( 1985, nprincsb, seganinj, system1,  seganinj, flicky,   ROT0,   "bootleg?", 		 	   "Ninja Princess (128k Ver. bootleg?)" )
+	GAME( 1985, imsorry,  0,        system1,  imsorry,  imsorry,  ROT0,   "Coreland / Sega", 	   "I'm Sorry (US)" )
+	GAME( 1985, imsorryj, imsorry,  system1,  imsorry,  imsorry,  ROT0,   "Coreland / Sega", 	   "Gonbee no I'm Sorry (Japan)" )
+	GAME( 1985, teddybb,  0,        system1,  teddybb,  teddybb,  ROT0,   "Sega", 			 	   "TeddyBoy Blues (New Ver.)" )
+	GAME( 1985, teddybbo, teddybb,  system1,  teddybb,  teddybb,  ROT0,   "Sega", 			 	   "TeddyBoy Blues (Old Ver.)" )
+	GAME( 1985, hvymetal, 0,        hvymetal, hvymetal, hvymetal, ROT0,   "Sega", 			 	   "Heavy Metal" )
+	GAME( 1985, myhero,   0,        system1,  myhero,   0,        ROT0,   "Sega", 			 	   "My Hero (US)" )
+	GAME( 1985, sscandal, myhero,   system1,  myhero,   myheroj,  ROT0,   "Coreland / Sega", 	   "Seishun Scandal (Japan)" )
+	GAME( 1985, myherok,  myhero,   system1,  myhero,   myherok,  ROT0,   "Coreland / Sega", 	   "My Hero (Korea)" )
+	GAMEX(1985, shtngmst, 0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "Shooting Master", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )	/* 8751 protection, mcu = 315-5159 */
+	GAMEX(1985, chplft,   0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "Choplifter", GAME_UNEMULATED_PROTECTION )	/* 8751 protection */
+	GAME( 1985, chplftb,  chplft,   chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "Choplifter (alternate)" )
+	GAME( 1985, chplftbl, chplft,   chplft,   chplft,   0,        ROT0,   "bootleg", 		 	   "Choplifter (bootleg)" )
+	GAME( 1985, 4dwarrio, 0,        system1,  4dwarrio, 4dwarrio, ROT0,   "Coreland / Sega", 	   "4-D Warriors" )
+	GAME( 1986, brain,    0,        brain,    brain,    0,        ROT0,   "Coreland / Sega", 	   "Brain" )
+	GAME( 1986, raflesia, 0,        system1,  raflesia, 4dwarrio, ROT270, "Coreland / Sega", 	   "Rafflesia" )
+	GAME( 1986, wboy,     0,        system1,  wboy,     wboy,     ROT0,   "Sega (Escape license)", "Wonder Boy (set 1, new encryption)" )
+	GAME( 1986, wboyo,    wboy,     system1,  wboy,     hvymetal, ROT0,   "Sega (Escape license)", "Wonder Boy (set 1, old encryption)" )
+	GAME( 1986, wboy2,    wboy,     system1,  wboy,     wboy2,    ROT0,   "Sega (Escape license)", "Wonder Boy (set 2)" )
+	GAME( 1986, wboy2u,   wboy,     system1,  wboy,     0,        ROT0,   "Sega (Escape license)", "Wonder Boy (set 2 not encrypted)" )
+	GAME( 1986, wboy3,    wboy,     system1,  wboy,     hvymetal, ROT0,   "Sega (Escape license)", "Wonder Boy (set 3)" )
+	GAME( 1986, wboyu,    wboy,     system1,  wboyu,    0,        ROT0,   "Sega (Escape license)", "Wonder Boy (not encrypted)" )
+	GAME( 1986, wbdeluxe, wboy,     system1,  wbdeluxe, 0,        ROT0,   "Sega (Escape license)", "Wonder Boy Deluxe" )
+	GAMEX(1986, gardia,   0,        brain,    wboy,     gardia,   ROT270, "Sega / Coreland", 	   "Gardia", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1986, gardiab,  gardia,   brain,    wboy,     gardiab,  ROT270, "bootleg", 		 	   "Gardia (bootleg)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAME( 1986, noboranb, 0,        noboranb, noboranb, noboranb, ROT270, "bootleg", 		 	   "Noboranka (Japan)" )
+	GAMEX(1987, blockgal, 0,        blockgal, blockgal, 0,        ROT90,  "Sega / Vic Tokai",	   "Block Gal", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1987, blckgalb, blockgal, blockgal, blockgal, bootleg,  ROT90,  "bootleg", 		 	   "Block Gal (bootleg)", GAME_NO_COCKTAIL )
+	GAMEX(1987, tokisens, 0,        wbml,     tokisens, 0,        ROT90,  "Sega", 			 	   "Toki no Senshi - Chrono Soldier", GAME_NO_COCKTAIL )
+	GAMEX(1987, wbml,     0,        wbml,     wbml,     0,        ROT0,   "Sega / Westone",  	   "Wonder Boy in Monster Land (Japan New Ver.)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1987, wbmljo,   wbml,     wbml,     wbml,     0,        ROT0,   "Sega / Westone",  	   "Wonder Boy in Monster Land (Japan Old Ver.)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1987, wbmljb,   wbml,     wbml,     wbml,     bootleg,  ROT0,   "bootleg", 		 	   "Wonder Boy in Monster Land (Japan not encrypted)", GAME_NO_COCKTAIL )
+	GAMEX(1987, wbmlb,    wbml,     wbml,     wbml,     bootleg,  ROT0,   "bootleg", 		 	   "Wonder Boy in Monster Land", GAME_NO_COCKTAIL )
+	GAMEX(1987, dakkochn, 0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "DakkoChan Jansoh", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX(1988, ufosensi, 0,        chplft,   chplft,   0,        ROT0,   "Sega", 			 	   "Ufo Senshi Yohko Chan", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
 }

@@ -11,7 +11,7 @@ Todo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -19,8 +19,7 @@ public class dorachan
 {
 	
 	
-	public static ReadHandlerPtr dorachan_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dorachan_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 		switch (activecpu_get_previouspc())
 		{
@@ -32,16 +31,14 @@ public class dorachan
 		return 0xff;
 	} };
 	
-	public static ReadHandlerPtr dorachan_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dorachan_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/* to avoid resetting (when player 2 starts) bit 0 need to be reversed when screen is flipped */
 		return ((cpu_getscanline()>100)?1:0)^(dorachan_ctrl>>6);
 	} };
 	
-	static WRITE_HANDLER(dorachan_ctrl_w)
-	{
+	public static WriteHandlerPtr dorachan_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dorachan_ctrl=data;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -81,7 +78,7 @@ public class dorachan
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_dorachan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dorachan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dorachan )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -110,8 +107,7 @@ public class dorachan
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_dorachan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dorachan )
 		MDRV_CPU_ADD(Z80, 2000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -124,9 +120,7 @@ public class dorachan
 		MDRV_PALETTE_LENGTH(8)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_dorachan = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -147,6 +141,6 @@ public class dorachan
 		ROM_LOAD( "d14.rom",    0x0000, 0x400, CRC(c0d3ee84) SHA1(f2207c685ce8d5144a373c28f11d2cebf9518b65) ) /* color map ? */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_dorachan	   = new GameDriver("1980"	,"dorachan"	,"dorachan.java"	,rom_dorachan,null	,machine_driver_dorachan	,input_ports_dorachan	,null	,ROT90	,	"Craul Denshi", "Dorachan",GAME_NO_SOUND)
+	GAMEX( 1980, dorachan, 0, dorachan, dorachan, 0, ROT90, "Craul Denshi", "Dorachan",GAME_NO_SOUND)
 	
 }

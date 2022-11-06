@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,7 +55,7 @@ public class truco
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_truco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_truco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( truco )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -103,8 +103,7 @@ public class truco
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineInitHandlerPtr machine_init_truco  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_truco  = new MachineInitHandlerPtr() { public void handler(){
 		int a;
 		data8_t *	mem = memory_region( REGION_CPU1 );
 	
@@ -134,8 +133,7 @@ public class truco
 		mem[0x7c20] = mem[0x7c11];
 	} };
 	
-	public static InterruptHandlerPtr truco_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr truco_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* coinup */
 		static int trigger = 0;
 	
@@ -150,8 +148,7 @@ public class truco
 			trigger = 0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_truco = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( truco )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1000000)        /* 1 MHz ? */
@@ -173,9 +170,7 @@ public class truco
 		MDRV_VIDEO_UPDATE(truco)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -190,5 +185,5 @@ public class truco
 		ROM_LOAD( "truco.u2",   0x0c000, 0x4000, CRC(ff355750) SHA1(1538f20b1919928ffca439e4046a104ddfbc756c) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_truco	   = new GameDriver("198?"	,"truco"	,"truco.java"	,rom_truco,null	,machine_driver_truco	,input_ports_truco	,null	,ROT0	,	"Playtronic SRL", "Truco-Tron", GAME_NO_SOUND )
+	GAMEX( 198?, truco,  0, truco, truco, 0, ROT0, "Playtronic SRL", "Truco-Tron", GAME_NO_SOUND )
 }

@@ -6,7 +6,7 @@ Atari Destroyer video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class destroyr
 	UINT8* destroyr_alpha_num_ram;
 	
 	
-	public static VideoUpdateHandlerPtr video_update_destroyr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_destroyr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		int j;
 	
@@ -90,8 +89,8 @@ public class destroyr
 	
 		for (i = 0; i < 256; i++)
 		{
-			if ((i & 4) != 0)
-				plot_pixel.handler(bitmap, i, destroyr_cursor ^ 0xff, Machine.pens[7]);
+			if (i & 4)
+				plot_pixel(bitmap, i, destroyr_cursor ^ 0xff, Machine.pens[7]);
 		}
 	} };
 }

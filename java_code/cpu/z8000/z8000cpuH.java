@@ -76,7 +76,7 @@
 #define OP2     2
 
 /* nibble shift factors for an opcode word */
-/* left to right: 0x1340 . NIB0=1, NIB1=3, NIB2=4, NIB3=0 */
+/* left to right: 0x1340 -> NIB0=1, NIB1=3, NIB2=4, NIB3=0 */
 #define NIB0    12
 #define NIB1	8
 #define NIB2	4

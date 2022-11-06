@@ -29,7 +29,7 @@
 /* Import the configuration for this build */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m68000;
 

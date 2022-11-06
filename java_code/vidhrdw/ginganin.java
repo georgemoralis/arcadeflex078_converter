@@ -58,7 +58,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 **************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -149,8 +149,7 @@ public class ginganin
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_ginganin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ginganin  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,16,16,BG_NX,BG_NY);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,FG_NX,FG_NY);
 		tx_tilemap = tilemap_create(get_txt_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,TXT_NX,TXT_NY);
@@ -241,13 +240,13 @@ public class ginganin
 			x = (x & 0xFF) - (x & 0x100);
 			y = (y & 0xFF) - (y & 0x100);
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				x = 240 - x;		y = 240 - y;
 				flipx = NOT(flipx); 	flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[3],
+			drawgfx(bitmap,Machine->gfx[3],
 					code & 0x3fff,
 					attr >> 12,
 					flipx, flipy,
@@ -258,8 +257,7 @@ public class ginganin
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_ginganin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ginganin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl1;
 	
 		layers_ctrl1 = layers_ctrl;
@@ -293,12 +291,12 @@ public class ginganin
 	#endif
 	
 	
-		if ((layers_ctrl1 & 1) != 0)	tilemap_draw(bitmap,cliprect, bg_tilemap,  0,0);
+		if (layers_ctrl1 & 1)	tilemap_draw(bitmap,cliprect, bg_tilemap,  0,0);
 		else					fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if ((layers_ctrl1 & 2) != 0)	tilemap_draw(bitmap,cliprect, fg_tilemap,  0,0);
-		if ((layers_ctrl1 & 8) != 0)	draw_sprites(bitmap,cliprect);
-		if ((layers_ctrl1 & 4) != 0)	tilemap_draw(bitmap,cliprect, tx_tilemap, 0,0);
+		if (layers_ctrl1 & 2)	tilemap_draw(bitmap,cliprect, fg_tilemap,  0,0);
+		if (layers_ctrl1 & 8)	draw_sprites(bitmap,cliprect);
+		if (layers_ctrl1 & 4)	tilemap_draw(bitmap,cliprect, tx_tilemap, 0,0);
 	
 	} };
 	

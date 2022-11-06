@@ -68,7 +68,7 @@ Revision:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,21 +80,18 @@ public class mexico86
 	/* in vidhrdw/mexico86.c */
 	
 	//AT
-	public static ReadHandlerPtr kiki_2203_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kiki_2203_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return(YM2203Read(0,0) & 0x7f);
 	} };
 	//ZT
 	
 	static unsigned char *shared;
 	
-	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared[offset];
 	} };
 	
-	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared[offset] = data;
 	} };
 	
@@ -109,8 +106,7 @@ public class mexico86
 	bit 1 = microcontroller reset line
 	bit 0 = ? (unused?)
 	*/
-	public static WriteHandlerPtr mexico86_f008_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_f008_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(1,(data & 4) ? CLEAR_LINE : ASSERT_LINE);
 		cpu_set_reset_line(2,(data & 2) ? CLEAR_LINE : ASSERT_LINE);
 	} };
@@ -190,7 +186,7 @@ public class mexico86
 	
 	
 	
-	static InputPortPtr input_ports_mexico86 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mexico86 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mexico86 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -284,7 +280,7 @@ public class mexico86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kikikai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kikikai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kikikai )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -422,8 +418,7 @@ public class mexico86
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mexico86 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mexico86 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)      /* 6 MHz??? */
@@ -454,22 +449,17 @@ public class mexico86
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kikikai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kikikai )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mexico86)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(kikikai)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -562,7 +552,7 @@ public class mexico86
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_kikikai	   = new GameDriver("1986"	,"kikikai"	,"mexico86.java"	,rom_kikikai,null	,machine_driver_kikikai	,input_ports_kikikai	,null	,ROT90	,	"Taito Corporation", "KiKi KaiKai" )
-	public static GameDriver driver_kicknrun	   = new GameDriver("1986"	,"kicknrun"	,"mexico86.java"	,rom_kicknrun,null	,machine_driver_mexico86	,input_ports_mexico86	,null	,ROT0	,	"Taito Corporation", "Kick and Run" )
-	public static GameDriver driver_mexico86	   = new GameDriver("1986"	,"mexico86"	,"mexico86.java"	,rom_mexico86,driver_kicknrun	,machine_driver_mexico86	,input_ports_mexico86	,null	,ROT0	,	"bootleg", "Mexico 86" )
+	GAME( 1986, kikikai,  0,        kikikai,  kikikai,  0, ROT90, "Taito Corporation", "KiKi KaiKai" )
+	GAME( 1986, kicknrun, 0,        mexico86, mexico86, 0, ROT0, "Taito Corporation", "Kick and Run" )
+	GAME( 1986, mexico86, kicknrun, mexico86, mexico86, 0, ROT0, "bootleg", "Mexico 86" )
 }

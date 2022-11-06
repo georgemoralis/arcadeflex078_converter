@@ -197,7 +197,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -218,8 +218,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr bzone_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bzone_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(0) & 0x10)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
@@ -232,8 +231,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr bzone_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bzone_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = readinputport(0);
@@ -243,7 +241,7 @@ public class bzone
 		else
 			res &= ~IN0_3KHZ;
 	
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			res |= IN0_VG_HALT;
 		else
 			res &= ~IN0_VG_HALT;
@@ -259,8 +257,7 @@ public class bzone
 		0x09,0x08,0x04,0x00,0x00,0x00,0x00,0x00
 	};
 	
-	public static ReadHandlerPtr bzone_IN3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bzone_IN3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res,res1;
 	
 		res=readinputport(3);
@@ -272,8 +269,7 @@ public class bzone
 	} };
 	
 	
-	public static WriteHandlerPtr bzone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bzone_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -285,8 +281,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr redbaron_joy_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr redbaron_joy_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(rb_input_select ? 5 : 6);
 	} };
 	
@@ -393,7 +388,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_bzone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bzone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bzone )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -471,7 +466,7 @@ public class bzone
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_redbaron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_redbaron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( redbaron )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN1);
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN2);
@@ -538,7 +533,7 @@ public class bzone
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bradley = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bradley = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bradley )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -716,8 +711,7 @@ public class bzone
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_bzone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bzone )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)
@@ -739,26 +733,20 @@ public class bzone
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey",  POKEY,  bzone_pokey_interface)
 		MDRV_SOUND_ADD_TAG("custom", CUSTOM, bzone_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bradley = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bradley )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bzone)
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey",  POKEY,  bradley_pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_redbaron = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( redbaron )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bzone)
@@ -777,9 +765,7 @@ public class bzone
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey",  POKEY,  redbaron_pokey_interface)
 		MDRV_SOUND_REPLACE("custom", CUSTOM, redbaron_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -877,27 +863,23 @@ public class bzone
 	
 	static UINT8 analog_data;
 	
-	public static ReadHandlerPtr analog_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr analog_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return analog_data;
 	} };
 	
 	
-	public static WriteHandlerPtr analog_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr analog_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset <= 2)
 			analog_data = readinputport(6 + offset);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_bzone  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bzone  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(bzone_overlay);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_bradley  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bradley  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x400, 0x7ff, MRA_RAM);
 		install_mem_write_handler(0, 0x400, 0x7ff, MWA_RAM);
 	
@@ -908,8 +890,7 @@ public class bzone
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_redbaron  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_redbaron  = new DriverInitHandlerPtr() { public void handler(){
 		OVERLAY_START( redbaron_overlay )
 			OVERLAY_RECT( 0.0, 0.0, 1.0, 1.0, MAKE_ARGB(0x04,0x88,0xff,0xff) )
 		OVERLAY_END
@@ -925,9 +906,9 @@ public class bzone
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_bzone	   = new GameDriver("1980"	,"bzone"	,"bzone.java"	,rom_bzone,null	,machine_driver_bzone	,input_ports_bzone	,init_bzone	,ROT0	,	"Atari", "Battle Zone (set 1)" )
-	public static GameDriver driver_bzone2	   = new GameDriver("1980"	,"bzone2"	,"bzone.java"	,rom_bzone2,driver_bzone	,machine_driver_bzone	,input_ports_bzone	,init_bzone	,ROT0	,	"Atari", "Battle Zone (set 2)" )
-	public static GameDriver driver_bzonec	   = new GameDriver("1980"	,"bzonec"	,"bzone.java"	,rom_bzonec,driver_bzone	,machine_driver_bzone	,input_ports_bzone	,init_bzone	,ROT0	,	"Atari", "Battle Zone (cocktail)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bradley	   = new GameDriver("1980"	,"bradley"	,"bzone.java"	,rom_bradley,null	,machine_driver_bradley	,input_ports_bradley	,init_bradley	,ROT0	,	"Atari", "Bradley Trainer" )
-	public static GameDriver driver_redbaron	   = new GameDriver("1980"	,"redbaron"	,"bzone.java"	,rom_redbaron,null	,machine_driver_redbaron	,input_ports_redbaron	,init_redbaron	,ROT0	,	"Atari", "Red Baron" )
+	GAME( 1980, bzone,    0,     bzone,    bzone,    bzone,    ROT0, "Atari", "Battle Zone (set 1)" )
+	GAME( 1980, bzone2,   bzone, bzone,    bzone,    bzone,    ROT0, "Atari", "Battle Zone (set 2)" )
+	GAMEX(1980, bzonec,   bzone, bzone,    bzone,    bzone,    ROT0, "Atari", "Battle Zone (cocktail)", GAME_NO_COCKTAIL )
+	GAME( 1980, bradley,  0,     bradley,  bradley,  bradley,  ROT0, "Atari", "Bradley Trainer" )
+	GAME( 1980, redbaron, 0,     redbaron, redbaron, redbaron, ROT0, "Atari", "Red Baron" )
 }

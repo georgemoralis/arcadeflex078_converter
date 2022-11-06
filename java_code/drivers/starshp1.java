@@ -2,14 +2,14 @@
 
 Atari Starship 1 driver
 
-  "starshp1" . regular version, bonus time for 3500 points
-  "starshpp" . possible prototype, bonus time for 2700 points
+  "starshp1" -> regular version, bonus time for 3500 points
+  "starshpp" -> possible prototype, bonus time for 2700 points
 
 ***************************************************************************/
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -28,8 +28,7 @@ public class starshp1
 	static int starshp1_analog_in_select;
 	
 	
-	public static InterruptHandlerPtr starshp1_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr starshp1_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if ((readinputport(0) & 0x90) != 0x90)
 		{
 			cpu_set_irq_line(0, 0, PULSE_LINE);
@@ -50,8 +49,7 @@ public class starshp1
 	}
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_starshp1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_starshp1  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		static const UINT16 colortable_source[] =
 		{
 			0, 3,       /* for the alpha numerics */
@@ -67,8 +65,7 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_audio_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_audio_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 1;
 	
 		switch (offset & 7)
@@ -101,14 +98,12 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_collision_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		starshp1_collision_latch = 0;
 	} };
 	
 	
-	public static ReadHandlerPtr starshp1_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starshp1_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int val = 0;
 	
 		switch (starshp1_analog_in_select)
@@ -131,26 +126,22 @@ public class starshp1
 	} };
 	
 	
-	public static ReadHandlerPtr starshp1_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starshp1_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2) | (starshp1_collision_latch & 0x0f);
 	} };
 	
 	
-	public static ReadHandlerPtr starshp1_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starshp1_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_analog_in_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_analog_in_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		starshp1_analog_in_select = offset & 3;
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_analog_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_analog_out_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 7)
 		{
 		case 1:
@@ -178,8 +169,7 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data &= 1;
 	
 		switch (offset & 7)
@@ -212,8 +202,7 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
@@ -252,7 +241,7 @@ public class starshp1
 	};
 	
 	
-	static InputPortPtr input_ports_starshp1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starshp1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starshp1 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* SWA1? */
@@ -360,8 +349,7 @@ public class starshp1
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_starshp1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starshp1 )
 	
 		/* basic machine hardware */
 	
@@ -387,9 +375,7 @@ public class starshp1
 		MDRV_VIDEO_EOF(starshp1)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -461,6 +447,6 @@ public class starshp1
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_starshp1	   = new GameDriver("1977"	,"starshp1"	,"starshp1.java"	,rom_starshp1,null	,machine_driver_starshp1	,input_ports_starshp1	,null	,ORIENTATION_FLIP_X	,	"Atari", "Starship 1",              GAME_NO_SOUND )
-	public static GameDriver driver_starshpp	   = new GameDriver("1977"	,"starshpp"	,"starshp1.java"	,rom_starshpp,driver_starshp1	,machine_driver_starshp1	,input_ports_starshp1	,null	,ORIENTATION_FLIP_X	,	"Atari", "Starship 1 (prototype?)", GAME_NO_SOUND )
+	GAMEX( 1977, starshp1, 0,        starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1",              GAME_NO_SOUND )
+	GAMEX( 1977, starshpp, starshp1, starshp1, starshp1, 0, ORIENTATION_FLIP_X, "Atari", "Starship 1 (prototype?)", GAME_NO_SOUND )
 }

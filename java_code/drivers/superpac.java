@@ -37,7 +37,7 @@ CPU #2 uses no interrupts
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -124,7 +124,7 @@ public class superpac
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_superpac = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superpac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superpac )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x0f, 0x00, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x00, "Rank 0-Normal" );
@@ -223,7 +223,7 @@ public class superpac
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pacnpal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pacnpal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pacnpal )
 		PORT_START(); 	/* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -367,8 +367,7 @@ public class superpac
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_superpac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( superpac )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -399,9 +398,7 @@ public class superpac
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -541,9 +538,9 @@ public class superpac
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_superpac	   = new GameDriver("1982"	,"superpac"	,"superpac.java"	,rom_superpac,null	,machine_driver_superpac	,input_ports_superpac	,null	,ROT90	,	"Namco", "Super Pac-Man" )
-	public static GameDriver driver_superpcm	   = new GameDriver("1982"	,"superpcm"	,"superpac.java"	,rom_superpcm,driver_superpac	,machine_driver_superpac	,input_ports_superpac	,null	,ROT90	,	"[Namco] (Bally Midway license)", "Super Pac-Man (Midway)" )
-	public static GameDriver driver_pacnpal	   = new GameDriver("1983"	,"pacnpal"	,"superpac.java"	,rom_pacnpal,null	,machine_driver_superpac	,input_ports_pacnpal	,null	,ROT90	,	"Namco", "Pac & Pal" )
-	public static GameDriver driver_pacnpal2	   = new GameDriver("1983"	,"pacnpal2"	,"superpac.java"	,rom_pacnpal2,driver_pacnpal	,machine_driver_superpac	,input_ports_pacnpal	,null	,ROT90	,	"Namco", "Pac & Pal (older)" )
-	public static GameDriver driver_pacnchmp	   = new GameDriver("1983"	,"pacnchmp"	,"superpac.java"	,rom_pacnchmp,driver_pacnpal	,machine_driver_superpac	,input_ports_pacnpal	,null	,ROT90	,	"Namco", "Pac-Man & Chomp Chomp", GAME_IMPERFECT_COLORS )
+	GAME( 1982, superpac, 0,        superpac, superpac, 0, ROT90, "Namco", "Super Pac-Man" )
+	GAME( 1982, superpcm, superpac, superpac, superpac, 0, ROT90, "[Namco] (Bally Midway license)", "Super Pac-Man (Midway)" )
+	GAME( 1983, pacnpal,  0,        superpac, pacnpal,  0, ROT90, "Namco", "Pac & Pal" )
+	GAME( 1983, pacnpal2, pacnpal,  superpac, pacnpal,  0, ROT90, "Namco", "Pac & Pal (older)" )
+	GAMEX(1983, pacnchmp, pacnpal,  superpac, pacnpal,  0, ROT90, "Namco", "Pac-Man & Chomp Chomp", GAME_IMPERFECT_COLORS )
 }

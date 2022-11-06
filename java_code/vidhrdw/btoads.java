@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -51,8 +51,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_btoads  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_btoads  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize the swapped pointers */
 		vram_fg_draw = (UINT8 *)btoads_vram_fg0;
 		vram_fg_display = (UINT8 *)btoads_vram_fg1;
@@ -78,13 +77,13 @@ public class btoads
 	
 	WRITE16_HANDLER( btoads_display_control_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* allow multiple changes during display */
 			force_partial_update(cpu_getscanline() - 1);
 	
 			/* bit 15 controls which page is rendered and which page is displayed */
-			if ((data & 0x8000) != 0)
+			if (data & 0x8000)
 			{
 				vram_fg_draw = (UINT8 *)btoads_vram_fg1;
 				vram_fg_display = (UINT8 *)btoads_vram_fg0;
@@ -114,9 +113,9 @@ public class btoads
 		force_partial_update(cpu_getscanline() - 1);
 	
 		/* upper bits are Y scroll, lower bits are X scroll */
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			yscroll0 = data >> 8;
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			xscroll0 = data & 0xff;
 	}
 	
@@ -127,9 +126,9 @@ public class btoads
 		force_partial_update(cpu_getscanline() - 1);
 	
 		/* upper bits are Y scroll, lower bits are X scroll */
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			yscroll1 = data >> 8;
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			xscroll1 = data & 0xff;
 	}
 	
@@ -193,14 +192,14 @@ public class btoads
 	
 	WRITE16_HANDLER( btoads_vram_fg_display_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			vram_fg_display[offset] = data;
 	}
 	
 	
 	WRITE16_HANDLER( btoads_vram_fg_draw_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			vram_fg_draw[offset] = data;
 	}
 	
@@ -241,10 +240,10 @@ public class btoads
 			for ( ; srcoffs < srcend; srcoffs += srcstep, dstoffs += dststep)
 			{
 				UINT16 src = sprite_source[(srcoffs >> 10) & 0x1ff];
-				if (src != 0)
+				if (src)
 				{
 					src = (src >> (((srcoffs ^ flipxor) >> 6) & 0x0c)) & 0x0f;
-					if (src != 0)
+					if (src)
 						sprite_dest_base[(dstoffs >> 8) & 0x1ff] = src | color;
 				}
 			}
@@ -256,10 +255,10 @@ public class btoads
 			for ( ; srcoffs < srcend; srcoffs += srcstep, dstoffs += dststep)
 			{
 				UINT16 src = sprite_source[(srcoffs >> 10) & 0x1ff];
-				if (src != 0)
+				if (src)
 				{
 					src = (src >> (((srcoffs ^ flipxor) >> 6) & 0x0c)) & 0x0f;
-					if (src != 0)
+					if (src)
 						sprite_dest_base[(dstoffs >> 8) & 0x1ff] = color;
 				}
 			}
@@ -336,8 +335,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_btoads  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 	
 		/* loop over all scanlines */
@@ -361,7 +359,7 @@ public class btoads
 					{
 						UINT8 sprpix = spr_base[x];
 	
-						if (sprpix != 0)
+						if (sprpix)
 						{
 							dst[0] = sprpix;
 							dst[1] = sprpix;
@@ -371,7 +369,7 @@ public class btoads
 							UINT16 bg0pix = bg0_base[(x + xscroll0) & 0xff];
 							UINT16 bg1pix = bg1_base[(x + xscroll1) & 0xff];
 	
-							if ((bg1pix & 0xff) != 0)
+							if (bg1pix & 0xff)
 								dst[0] = bg1pix;
 							else
 								dst[0] = bg0pix;
@@ -400,20 +398,20 @@ public class btoads
 							UINT16 bg0pix = bg0_base[(x + xscroll0) & 0xff];
 							UINT16 bg1pix = bg1_base[(x + xscroll1) & 0xff];
 	
-							if ((bg0pix & 0xff) != 0)
+							if (bg0pix & 0xff)
 								dst[0] = bg0pix;
-							else if ((bg1pix & 0x80) != 0)
+							else if (bg1pix & 0x80)
 								dst[0] = bg1pix;
-							else if (sprpix != 0)
+							else if (sprpix)
 								dst[0] = sprpix;
 							else
 								dst[0] = bg1pix;
 	
 							if (bg0pix >> 8)
 								dst[1] = bg0pix >> 8;
-							else if ((bg1pix & 0x8000) != 0)
+							else if (bg1pix & 0x8000)
 								dst[1] = bg1pix >> 8;
-							else if (sprpix != 0)
+							else if (sprpix)
 								dst[1] = sprpix;
 							else
 								dst[1] = bg1pix >> 8;
@@ -429,24 +427,24 @@ public class btoads
 						UINT16 bg1pix = bg1_base[(x + xscroll1) & 0xff];
 						UINT8 sprpix = spr_base[x];
 	
-						if ((bg1pix & 0x80) != 0)
+						if (bg1pix & 0x80)
 							dst[0] = bg1pix;
-						else if ((sprpix & 0x80) != 0)
+						else if (sprpix & 0x80)
 							dst[0] = sprpix;
-						else if ((bg1pix & 0xff) != 0)
+						else if (bg1pix & 0xff)
 							dst[0] = bg1pix;
-						else if (sprpix != 0)
+						else if (sprpix)
 							dst[0] = sprpix;
 						else
 							dst[0] = bg0pix;
 	
-						if ((bg1pix & 0x8000) != 0)
+						if (bg1pix & 0x8000)
 							dst[1] = bg1pix >> 8;
-						else if ((sprpix & 0x80) != 0)
+						else if (sprpix & 0x80)
 							dst[1] = sprpix;
 						else if (bg1pix >> 8)
 							dst[1] = bg1pix >> 8;
-						else if (sprpix != 0)
+						else if (sprpix)
 							dst[1] = sprpix;
 						else
 							dst[1] = bg0pix >> 8;

@@ -20,7 +20,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -29,8 +29,7 @@ public class enigma2
 	
 	static int cmap;
 	
-	public static WriteHandlerPtr enigma2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr enigma2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			int i,x,y,col;
@@ -43,18 +42,17 @@ public class enigma2
 	
 			for (i = 0; i < 8; i++)
 			{
-				if ((data & 0x80) != 0)
-					plot_pixel.handler(tmpbitmap, x, 255 - y, cmap?(memory_region(REGION_PROMS)[((y+16) >> 3 << 5) | ((col+i) >> 3)] & 0x07):Machine.pens[7]);
+				if( data & 0x80 )
+					plot_pixel(tmpbitmap, x, 255 - y, cmap?(memory_region(REGION_PROMS)[((y+16) >> 3 << 5) | ((col+i) >> 3)] & 0x07):Machine->pens[7]);
 				else
-					plot_pixel.handler(tmpbitmap, x, 255 - y, Machine.pens[0]);
+					plot_pixel(tmpbitmap, x, 255 - y, Machine->pens[0]);
 				x++;
 				data <<= 1;
 			}
 		}
 	} };
 	
-	public static ReadHandlerPtr fake_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int cnt;
 		/* HACK! to get dip-switches working, since they are read by the sound board
 								  enigma						 enigma2a */
@@ -70,16 +68,14 @@ public class enigma2
 		}
 	} };
 	
-	public static ReadHandlerPtr fake_r2  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_r2  = new ReadHandlerPtr() { public int handler(int offset){
 		if( activecpu_get_pc() == 0x7e5 ) /* needed by enigma2a*/
 			return 0xaa;
 		else
 			return 0xf4;
 	} };
 	
-	public static ReadHandlerPtr fake_r3  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fake_r3  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x38;
 	} };
 	
@@ -126,7 +122,7 @@ public class enigma2
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_enigma2a = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_enigma2a = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( enigma2a )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -173,7 +169,7 @@ public class enigma2
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_enigma2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_enigma2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( enigma2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -220,14 +216,12 @@ public class enigma2
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
 	INPUT_PORTS_END(); }}; 
 	
-	public static InterruptHandlerPtr enigma2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr enigma2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int vector = cpu_getvblank() ? 0xcf : 0xd7;
 	    cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, vector);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_enigma2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_enigma2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	/*
 		Washed colors were hand-tuned from :
 		http://www.arcadeflyers.com/?page=flyerdb&subpage=thumbs&id=1756&PHPSESSID=9c8361a00f26b15f9b49bdd7cca9d47f
@@ -242,8 +236,7 @@ public class enigma2
 		palette_set_color(7,0xff,0xff,0xff);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_enigma2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( enigma2 )
 		MDRV_CPU_ADD_TAG("main",Z80, 2500000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -261,17 +254,12 @@ public class enigma2
 	
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_enigma2a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( enigma2a )
 		MDRV_IMPORT_FROM(enigma2)
 		MDRV_CPU_REPLACE("main", 8080, 2000000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_enigma2a = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -310,9 +298,9 @@ public class enigma2
 		ROM_LOAD( "8.13f",        0x0000, 0x0800, CRC(e9cb116d) SHA1(41da4f46c5614ec3345c233467ebad022c6b0bf5) )
 	ROM_END(); }}; 
 	
-	static DRIVER_INIT(enigma2) {	cmap=1;}
-	static DRIVER_INIT(enigma2a){	cmap=0;}
+	public static DriverInitHandlerPtr init_enigma2  = new DriverInitHandlerPtr() { public void handler()	cmap=1;}
+	public static DriverInitHandlerPtr init_enigma2a  = new DriverInitHandlerPtr() { public void handler()cmap=0;}
 	
-	public static GameDriver driver_enigma2	   = new GameDriver("1981"	,"enigma2"	,"enigma2.java"	,rom_enigma2,null	,machine_driver_enigma2	,input_ports_enigma2	,init_enigma2	,ROT90	,	"GamePlan (Zilec Electronics license)", "Enigma 2", GAME_NO_SOUND | GAME_WRONG_COLORS )
-	public static GameDriver driver_enigma2a	   = new GameDriver("1984"	,"enigma2a"	,"enigma2.java"	,rom_enigma2a,driver_enigma2	,machine_driver_enigma2a	,input_ports_enigma2a	,init_enigma2a	,ROT90	,	"Zilec Electronics", "Enigma 2 (Space Invaders Hardware)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	GAMEX( 1981, enigma2,  0,		enigma2, enigma2,  enigma2, ROT90, "GamePlan (Zilec Electronics license)", "Enigma 2", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	GAMEX( 1984, enigma2a, enigma2, enigma2a, enigma2a, enigma2a, ROT90, "Zilec Electronics", "Enigma 2 (Space Invaders Hardware)", GAME_NO_SOUND | GAME_WRONG_COLORS )
 }

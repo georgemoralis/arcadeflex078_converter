@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,8 +39,7 @@ public class tnzs
 	  form 512 xRRRRRGGGGGBBBBB color values.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_arknoid2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_arknoid2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,col,r,g,b;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -102,7 +101,7 @@ public class tnzs
 		for (column = 0;column < tot;column++)
 		{
 			scrollx = tnzs_scrollram[column*16+4] - ((upperbits & 0x01) * 256);
-			if (tnzs_screenflip != 0)
+			if (tnzs_screenflip)
 				scrolly = tnzs_scrollram[column*16] + 1 - 256;
 			else
 				scrolly = -tnzs_scrollram[column*16] + 1;
@@ -121,14 +120,14 @@ public class tnzs
 					sy = y*16;
 					flipx = m[i + 0x1000] & 0x80;
 					flipy = m[i + 0x1000] & 0x40;
-					if (tnzs_screenflip != 0)
+					if (tnzs_screenflip)
 					{
 						sy = 240 - sy;
 						flipx = NOT(flipx);
 						flipy = NOT(flipy);
 					}
 	
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 							code,
 							color,
 							flipx,flipy,
@@ -163,7 +162,7 @@ public class tnzs
 			sy = 240 - y_pointer[i];
 			flipx = ctrl_pointer[i] & 0x80;
 			flipy = ctrl_pointer[i] & 0x40;
-			if (tnzs_screenflip != 0)
+			if (tnzs_screenflip)
 			{
 				sy = 240 - sy;
 				flipx = NOT(flipx);
@@ -172,17 +171,16 @@ public class tnzs
 				if ((sy == 0) && (code == 0)) sy += 240;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy+2,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tnzs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tnzs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* If the byte at f300 has bit 6 set, flip the screen
 		   (I'm not 100% sure about this) */
 		tnzs_screenflip = (tnzs_scrollram[0x100] & 0x40) >> 6;

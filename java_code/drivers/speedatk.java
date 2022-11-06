@@ -45,7 +45,7 @@ CB2.BPR :6K 82S129
 DIP SWITCH 8BIT (Default: ALL ON)
 
 SW 1,2 : COIN CREDIT   LL:1-1 HL:1-2 LH:1-5 HH:1-10
-SW 3,4 : LEVEL LL:EASY . LH . HL . HH:HARD
+SW 3,4 : LEVEL LL:EASY -> LH -> HL -> HH:HARD
 SW 5,6 : NOT USE
 SW 7   : FLIP SCREEN H:FLIP
 SW 8   : TEST MODE H:TEST
@@ -76,7 +76,7 @@ PS / PD :  key matrix
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -90,8 +90,7 @@ public class speedatk
 	 * example pressing button A + button B it causes an output of button C.               *
 	 * This function converts the bit inputs of this game into the usual way MAME does,and *
 	 * it handles the multiplexer device between player one and two.                       */
-	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr key_matrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(mux_data)
 		{
 			case 0x02:
@@ -138,13 +137,11 @@ public class speedatk
 		return 0x00;
 	} };
 	
-	public static WriteHandlerPtr key_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr key_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mux_data = data;
 	} };
 	
-	public static ReadHandlerPtr read_8001  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr read_8001  = new ReadHandlerPtr() { public int handler(int offset){
 		return 1;
 	} };
 	
@@ -191,7 +188,7 @@ public class speedatk
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_speedatk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_speedatk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( speedatk )
 		PORT_START(); 
 		PORT_SERVICE( 0x01, IP_ACTIVE_HIGH );
 		PORT_DIPNAME( 0x02, 0x00, DEF_STR( "Flip_Screen") );
@@ -285,8 +282,7 @@ public class speedatk
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_speedatk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( speedatk )
 		MDRV_CPU_ADD(Z80,12000000/2)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -310,9 +306,7 @@ public class speedatk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_speedatk = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -335,5 +329,5 @@ public class speedatk
 		ROM_LOAD( "cb2.bpr",      0x0020, 0x0100, CRC(a604cf96) SHA1(a4ef6e77dcd3abe4c27e8e636222a5ee711a51f5) ) /* lookup table */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_speedatk	   = new GameDriver("1984"	,"speedatk"	,"speedatk.java"	,rom_speedatk,null	,machine_driver_speedatk	,input_ports_speedatk	,null	,ROT0	,	"Seta Kikaku Corp.", "Speed Attack!" )
+	GAME( 1984, speedatk, 0, speedatk, speedatk, 0, ROT0, "Seta Kikaku Corp.", "Speed Attack!" )
 }

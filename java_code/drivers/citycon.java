@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -16,8 +16,7 @@ public class citycon
 	
 	
 	
-	public static ReadHandlerPtr citycon_in_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr citycon_in_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(flip_screen() ? 1 : 0);
 	} };
 	
@@ -71,7 +70,7 @@ public class citycon
 	
 	
 	
-	static InputPortPtr input_ports_citycon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_citycon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( citycon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -227,8 +226,7 @@ public class citycon
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_citycon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( citycon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)        /* 2.048 MHz ??? */
@@ -256,9 +254,7 @@ public class citycon
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -351,8 +347,7 @@ public class citycon
 	
 	
 	
-	public static DriverInitHandlerPtr init_citycon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_citycon  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_GFX1);
 		int i;
 	
@@ -371,15 +366,15 @@ public class citycon
 			rom[3*i+1] = 0;
 			rom[3*i+2] = 0;
 			mask = rom[i] | (rom[i] << 4) | (rom[i] >> 4);
-			if ((i & 0x01) != 0) rom[3*i+1] |= mask & 0xf0;
-			if ((i & 0x02) != 0) rom[3*i+1] |= mask & 0x0f;
-			if ((i & 0x04) != 0) rom[3*i+2] |= mask & 0xf0;
+			if (i & 0x01) rom[3*i+1] |= mask & 0xf0;
+			if (i & 0x02) rom[3*i+1] |= mask & 0x0f;
+			if (i & 0x04) rom[3*i+2] |= mask & 0xf0;
 		}
 	} };
 	
 	
 	
-	public static GameDriver driver_citycon	   = new GameDriver("1985"	,"citycon"	,"citycon.java"	,rom_citycon,null	,machine_driver_citycon	,input_ports_citycon	,init_citycon	,ROT0	,	"Jaleco", "City Connection (set 1)" )
-	public static GameDriver driver_citycona	   = new GameDriver("1985"	,"citycona"	,"citycon.java"	,rom_citycona,driver_citycon	,machine_driver_citycon	,input_ports_citycon	,init_citycon	,ROT0	,	"Jaleco", "City Connection (set 2)" )
-	public static GameDriver driver_cruisin	   = new GameDriver("1985"	,"cruisin"	,"citycon.java"	,rom_cruisin,driver_citycon	,machine_driver_citycon	,input_ports_citycon	,init_citycon	,ROT0	,	"Jaleco (Kitkorp license)", "Cruisin" )
+	GAME( 1985, citycon,  0,       citycon, citycon, citycon, ROT0, "Jaleco", "City Connection (set 1)" )
+	GAME( 1985, citycona, citycon, citycon, citycon, citycon, ROT0, "Jaleco", "City Connection (set 2)" )
+	GAME( 1985, cruisin,  citycon, citycon, citycon, citycon, ROT0, "Jaleco (Kitkorp license)", "Cruisin" )
 }

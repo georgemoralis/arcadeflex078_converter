@@ -12,7 +12,7 @@ driver by Barry Rodewald
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,15 +20,13 @@ public class rotaryf
 {
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_rotaryf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rotaryf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 	} };
 	
-	public static InterruptHandlerPtr rotaryf_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getvblank() != 0)
+	public static InterruptHandlerPtr rotaryf_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if(cpu_getvblank())
 			cpu_set_irq_line(0,I8085_RST55_LINE,HOLD_LINE);
 		else
 			cpu_set_irq_line(0,I8085_RST75_LINE,HOLD_LINE);
@@ -75,7 +73,7 @@ public class rotaryf
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_rotaryf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rotaryf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rotaryf )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -134,8 +132,7 @@ public class rotaryf
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_rotaryf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rotaryf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",8085A,2000000) /* 8080? */ /* 2 MHz? */
@@ -158,9 +155,7 @@ public class rotaryf
 		MDRV_SOUND_ADD(SAMPLES, invaders_samples_interface)
 		MDRV_SOUND_ADD(SN76477, invaders_sn76477_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_rotaryf = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )     /* 64k for code */
@@ -173,5 +168,5 @@ public class rotaryf
 		ROM_LOAD( "krf-6.bin",            0x5400, 0x0400, CRC(e28b3713) SHA1(428f73891125f80c722357f1029b18fa9416bcfd) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_rotaryf	   = new GameDriver("19??"	,"rotaryf"	,"rotaryf.java"	,rom_rotaryf,null	,machine_driver_rotaryf	,input_ports_rotaryf	,init_8080bw	,ROT270	,	"<unknown>", "Rotary Fighter", GAME_NO_SOUND )
+	GAMEX(19??, rotaryf, 0,        rotaryf, rotaryf, 8080bw,	ROT270,   "<unknown>", "Rotary Fighter", GAME_NO_SOUND )
 }

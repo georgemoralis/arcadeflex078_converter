@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -188,7 +188,7 @@ public class networkH
 		/* char  0: start of mameversion string
 		   char 25: start of netversion string */
 	#define NET_INIT_GAME 0x03 /* Game/ROM version checking */
-		/* char  0: start of GameDriver.name */
+		/* char  0: start of GameDriver->name */
 	
 	#define NET_SYNC_INIT 0x10 /* Basic synchronization */
 	#define NET_SYNC_INPT 0x11 /* Sync basic input      */

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_vindictr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vindictr  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -100,7 +99,7 @@ public class vindictr
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_cols, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -109,7 +108,7 @@ public class vindictr
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -209,8 +208,8 @@ public class vindictr
 				{
 					/* a new vscroll latches the offset into a counter; we must adjust for this */
 					int offset = scanline;
-					if (offset > Machine.visible_area.max_y)
-						offset -= Machine.visible_area.max_y + 1;
+					if (offset > Machine->visible_area.max_y)
+						offset -= Machine->visible_area.max_y + 1;
 	
 					if (playfield_yscroll != ((data - offset) & 0x1ff))
 					{
@@ -232,8 +231,7 @@ public class vindictr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_vindictr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vindictr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -255,7 +253,7 @@ public class vindictr
 	
 							SHADE = PAL(MPR1-0, LB7-0, PFX6-5, PFX3-2, PF/M)
 	
-							if (SHADE != 0)
+							if (SHADE)
 								CRA |= 0x100
 	
 							MOG3-1 = ~MAT3-1 if MAT6==1 and MSD3==1
@@ -263,7 +261,7 @@ public class vindictr
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority signals special rendering and doesn't draw anything */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 							continue;
 	
 						/* MO pen 1 doesn't draw, but it sets the SHADE flag and bumps the palette offset */
@@ -295,7 +293,7 @@ public class vindictr
 						int mopriority = mo[x] >> ATARIMO_PRIORITY_SHIFT;
 	
 						/* upper bit of MO priority might mean palette kludges */
-						if ((mopriority & 4) != 0)
+						if (mopriority & 4)
 						{
 							/* if bit 2 is set, start setting high palette bits */
 							if (mo[x] & 2)

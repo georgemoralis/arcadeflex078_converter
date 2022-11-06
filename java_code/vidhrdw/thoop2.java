@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,8 +52,8 @@ public class thoop2
 	
 	static void get_tile_info_thoop2_screen0(int tile_index)
 	{
-		int data = thoop2_videoram.read(tile_index << 1);
-		int data2 = thoop2_videoram.read((tile_index << 1) + 1);
+		int data = thoop2_videoram[tile_index << 1];
+		int data2 = thoop2_videoram[(tile_index << 1) + 1];
 		int code = ((data & 0xfffc) >> 2) | ((data & 0x0003) << 14);
 	
 		tile_info.priority = (data2 >> 6) & 0x03;
@@ -64,8 +64,8 @@ public class thoop2
 	
 	static void get_tile_info_thoop2_screen1(int tile_index)
 	{
-		int data = thoop2_videoram.read((0x1000/2) + (tile_index << 1));
-		int data2 = thoop2_videoram.read((0x1000/2) + (tile_index << 1) + 1);
+		int data = thoop2_videoram[(0x1000/2) + (tile_index << 1)];
+		int data2 = thoop2_videoram[(0x1000/2) + (tile_index << 1) + 1];
 		int code = ((data & 0xfffc) >> 2) | ((data & 0x0003) << 14);
 	
 		tile_info.priority = (data2 >> 6) & 0x03;
@@ -81,10 +81,10 @@ public class thoop2
 	
 	WRITE16_HANDLER( thoop2_vram_w )
 	{
-		int oldword = thoop2_videoram.read(offset);
-		COMBINE_DATA(&thoop2_videoram.read(offset));
+		int oldword = thoop2_videoram[offset];
+		COMBINE_DATA(&thoop2_videoram[offset]);
 	
-		if (oldword != thoop2_videoram.read(offset))
+		if (oldword != thoop2_videoram[offset])
 			tilemap_mark_tile_dirty(pant[offset >> 11],((offset << 1) & 0x0fff) >> 2);
 	}
 	
@@ -94,8 +94,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_thoop2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_thoop2  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		pant[0] = tilemap_create(get_tile_info_thoop2_screen0,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
@@ -134,8 +133,8 @@ public class thoop2
 		sprite_count[4] = 0;
 	
 		for (i = 3; i < (0x1000 - 6)/2; i += 4){
-			int color = (thoop2_spriteram.read(i+2)& 0x7e00) >> 9;
-			int priority = (thoop2_spriteram.read(i)& 0x3000) >> 12;
+			int color = (thoop2_spriteram[i+2] & 0x7e00) >> 9;
+			int priority = (thoop2_spriteram[i] & 0x3000) >> 12;
 	
 			/* palettes 0x38-0x3f are used for high priority sprites in Big Karnak */
 			if (color >= 0x38){
@@ -171,18 +170,18 @@ public class thoop2
 	static void gaelco_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect, int pri)
 	{
 		int j, x, y, ex, ey;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		static int x_offset[2] = {0x0,0x2};
 		static int y_offset[2] = {0x0,0x1};
 	
 		for (j = 0; j < sprite_count[pri]; j++){
 			int i = sprite_table[pri][j];
-			int sx = thoop2_spriteram.read(i+2)& 0x01ff;
-			int sy = (240 - (thoop2_spriteram.read(i)& 0x00ff)) & 0x00ff;
-			int number = thoop2_spriteram.read(i+3);
-			int color = (thoop2_spriteram.read(i+2)& 0x7e00) >> 9;
-			int attr = (thoop2_spriteram.read(i)& 0xfe00) >> 9;
+			int sx = thoop2_spriteram[i+2] & 0x01ff;
+			int sy = (240 - (thoop2_spriteram[i] & 0x00ff)) & 0x00ff;
+			int number = thoop2_spriteram[i+3];
+			int color = (thoop2_spriteram[i+2] & 0x7e00) >> 9;
+			int attr = (thoop2_spriteram[i] & 0xfe00) >> 9;
 	
 			int xflip = attr & 0x20;
 			int yflip = attr & 0x40;
@@ -190,7 +189,7 @@ public class thoop2
 	
 			number |= ((number & 0x03) << 16);
 	
-			if ((attr & 0x04) != 0){
+			if (attr & 0x04){
 				spr_size = 1;
 			}
 			else{
@@ -207,7 +206,7 @@ public class thoop2
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							color,xflip,yflip,
 							sx-0x0f+x*8,sy+y*8,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -219,8 +218,7 @@ public class thoop2
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_thoop2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, thoop2_vregs[0]);
 		tilemap_set_scrollx(pant[0], 0, thoop2_vregs[1]+4);

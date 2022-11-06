@@ -60,7 +60,7 @@ Word | Bit(s)           | Use
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -78,12 +78,11 @@ public class shangha3
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_shangha3  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_shangha3  = new VideoStartHandlerPtr() { public int handler(){
 		if ((rawbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
-		if (shangha3_do_shadows != 0)
+		if (shangha3_do_shadows)
 		{
 			int i;
 	
@@ -103,7 +102,7 @@ public class shangha3
 	
 	WRITE16_HANDLER( shangha3_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 7 flips screen, the rest seems to always be set to 0x7e */
 			flip_screen_set(data & 0x80);
@@ -143,7 +142,7 @@ public class shangha3
 			zoomx = shangha3_ram[offs+10];
 			zoomy = shangha3_ram[offs+13];
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 383 - sx - sizex;
 				sy = 255 - sy - sizey;
@@ -179,7 +178,7 @@ public class shangha3
 					h = (sizey+15)/16+1;
 					w = (sizex+15)/16+1;
 	
-					if (condensed != 0)
+					if (condensed)
 					{
 						h *= 2;
 						w *= 2;
@@ -198,7 +197,7 @@ public class shangha3
 						{
 							int dx,dy,tile;
 	
-							if (condensed != 0)
+							if (condensed)
 							{
 								int addr = ((y+srcy) & 0x1f) +
 											0x20 * ((x+srcx) & 0xff);
@@ -216,12 +215,12 @@ public class shangha3
 								dy = 16*y*(0x200-zoomy)/0x100 - dispy;
 							}
 	
-							if (flipx != 0) dx = sx + sizex-15 - dx;
+							if (flipx) dx = sx + sizex-15 - dx;
 							else dx = sx + dx;
-							if (flipy != 0) dy = sy + sizey-15 - dy;
+							if (flipy) dy = sy + sizey-15 - dy;
 							else dy = sy + dy;
 	
-							drawgfx(rawbitmap,Machine.gfx[0],
+							drawgfx(rawbitmap,Machine->gfx[0],
 									(tile & 0x0fff) | (code & 0xf000),
 									(tile >> 12) | (color & 0x70),
 									flipx,flipy,
@@ -235,7 +234,7 @@ public class shangha3
 					int w;
 	
 	if (zoomx <= 1 && zoomy <= 1)
-		drawgfxzoom(rawbitmap,Machine.gfx[0],
+		drawgfxzoom(rawbitmap,Machine->gfx[0],
 				code,
 				color,
 				flipx,flipy,
@@ -248,7 +247,7 @@ public class shangha3
 	
 					for (x = 0;x < w;x++)
 					{
-						drawgfxzoom(rawbitmap,Machine.gfx[0],
+						drawgfxzoom(rawbitmap,Machine->gfx[0],
 								code,
 								color,
 								flipx,flipy,
@@ -270,8 +269,7 @@ public class shangha3
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shangha3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap,rawbitmap,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 	} };
 }

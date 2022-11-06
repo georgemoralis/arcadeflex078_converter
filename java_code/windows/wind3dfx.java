@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -185,7 +185,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_scan(struct rc_option *option, const char *arg, int priority)
 	{
-		option.priority = priority;
+		option->priority = priority;
 	
 		if (priority_use_scanlines <= priority)
 		{
@@ -207,7 +207,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_feedback(struct rc_option *option, const char *arg, int priority)
 	{
-		option.priority = priority;
+		option->priority = priority;
 	
 		if (priority_use_feedback <= priority)
 		{
@@ -228,7 +228,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_prescale(struct rc_option *option, const char *arg, int priority)
 	{
-		option.priority = priority;
+		option->priority = priority;
 	
 		if (priority_use_prescale <= priority)
 		{
@@ -273,12 +273,12 @@ public class wind3dfx
 	
 	static int win_d3d_decode_rotate(struct rc_option *option, const char *arg, int priority)
 	{
-		option.priority = priority;
+		option->priority = priority;
 	
 		if (priority_use_rotate <= priority)
 		{
 			priority_use_rotate = priority;
-			if (d3d_rc_rotate != 0)
+			if (d3d_rc_rotate)
 			{
 				use_rotate = 1;
 			}
@@ -293,7 +293,7 @@ public class wind3dfx
 	
 	static int win_d3d_decode_custom(struct rc_option *option, const char *arg, int priority)
 	{
-		option.priority = priority;
+		option->priority = priority;
 	
 		if (priority_use_effect_preset <= priority)
 		{
@@ -322,7 +322,7 @@ public class wind3dfx
 		int i;
 	
 		// ensure .ini settings will still be processed
-		option.priority = 0;
+		option->priority = 0;
 	
 		// no effects
 		if (!strcmp(arg, "none"))
@@ -371,7 +371,7 @@ public class wind3dfx
 	static int win_d3d_decode_expert(struct rc_option *option, const char *arg, int priority)
 	{
 		// ensure .ini settings will still be processed
-		option.priority = 0;
+		option->priority = 0;
 	
 		// extra interface for normal settings (takes a floating point value)
 	
@@ -519,7 +519,7 @@ public class wind3dfx
 	{
 		int scanline_intensity;
 	
-		if (win_d3d_use_auto_effect != 0)
+		if (win_d3d_use_auto_effect)
 		{
 			int zoom = (win_d3d_current_zoom > MAX_AUTOEFFECT_ZOOM) ? MAX_AUTOEFFECT_ZOOM : win_d3d_current_zoom;
 			active_preset = effects_preset[zoom > 1 ? zoom : 1];
@@ -555,7 +555,7 @@ public class wind3dfx
 										  (use_scanlines <<  0);
 	
 		// do some adjustments if the effects are rotated to compensate for imperfect CRTs (this only affects scanlines and RGB effects)
-		if (win_d3d_effects_swapxy != 0)
+		if (win_d3d_effects_swapxy)
 		{
 			active_preset.pattern_white_level = active_preset.pattern_white_level * 240 / 256;
 			active_preset.pattern_desaturation += (256 - active_preset.pattern_desaturation) * 112 / 256;
@@ -583,13 +583,13 @@ public class wind3dfx
 		win_d3d_tfactor = ((255 - active_preset.image_white_level_adjust) << 24) | scanline_intensity;
 	
 		// feedback
-		if (use_feedback != 0)
+		if (use_feedback)
 			active_preset.use_feedback = use_feedback;
 	
 		win_d3d_use_feedback = active_preset.use_feedback ? 1 : 0;
 	
 		// set up the texture colours for the feedback effect
-		if (win_d3d_use_feedback != 0)
+		if (win_d3d_use_feedback)
 		{
 			win_d3d_preprocess_tfactor = (active_preset.use_feedback		 << 24) |
 										 ((255 - active_preset.use_feedback) << 16) |
@@ -606,7 +606,7 @@ public class wind3dfx
 		win_d3d_prescaley = 1;
 		win_d3d_use_prescale = 0;
 	
-		if (win_d3d_use_filter != 0)
+		if (win_d3d_use_filter)
 		{
 			int prescale = (use_prescale == -2) ? active_preset.use_prescale : use_prescale;
 	
@@ -630,7 +630,7 @@ public class wind3dfx
 			}
 		}
 	
-		if ((attributes & VIDEO_TYPE_VECTOR) != 0)
+		if (attributes & VIDEO_TYPE_VECTOR)
 		{
 			win_d3d_use_auto_effect = 0;
 			win_d3d_use_rgbeffect = 0;
@@ -652,12 +652,12 @@ public class wind3dfx
 	
 	int win_d3d_effects_init_surfaces(void)
 	{
-		if (win_d3d_background_surface != 0)
-			if (effects_rgb_init() != 0)
+		if (win_d3d_background_surface)
+			if (effects_rgb_init())
 				return 1;
 	
 		if (win_d3d_scanline_surface[0] && win_d3d_scanline_surface[1])
-			if (effects_scanline_init() != 0)
+			if (effects_scanline_init())
 				return 1;
 	
 		return 0;
@@ -688,7 +688,7 @@ public class wind3dfx
 			// copy the data
 			for (y = 0; y < (2 << i); y++)
 				for (x = 0; x < (2 << i); x++)
-					if (use_pixelcounter != 0)
+					if (use_pixelcounter)
 					{
 						if (x && y)
 							win_ddrawsurf_plot_pixel(&surface_desc, x, y, 0xFFFFFF);
@@ -758,13 +758,13 @@ public class wind3dfx
 			}
 		}
 	
-		if (internal_pattern == 0) {
+		if (!internal_pattern) {
 			FILE* fp = fopen(active_preset.pattern_name, "rb");
 			int filesize;
 	
 			if (fp == NULL)
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "Unable to find RGB effects pattern\n");
 				free(pattern_rgb_data);
 				return 1;
@@ -773,7 +773,7 @@ public class wind3dfx
 			filesize = ftell(fp);
 			if (filesize != patternsize)
 			{
-				if (verbose != 0)
+				if (verbose)
 					fprintf(stderr, "RGB pattern has a wrong filesize (expected %i bytes, found %i)\n", patternsize, filesize);
 				free(pattern_rgb_data);
 				return 1;
@@ -857,7 +857,7 @@ public class wind3dfx
 			return 1;
 	
 		// the RGB pattern needs to be rotated
-		if (win_d3d_effects_swapxy != 0)
+		if (win_d3d_effects_swapxy)
 		{
 			for (y = 0; y < surface_desc.dwHeight; y++)
 			{
@@ -913,30 +913,30 @@ public class wind3dfx
 		// first convert the 24-bit colour to the format of the surface
 	
 		// red
-		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(2).dwRBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour <<  8) >> shift) & mask;
 	
 		// green
-		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(3).dwGBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour << 16) >> shift) & mask;
 	
 		// blue
-		for (shift = 0, mask = surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask; !((0x80000000 >> shift) & mask); shift++) { }
+		for (shift = 0, mask = surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(4).dwBBitMask; !((0x80000000 >> shift) & mask); shift++) { }
 		dest_colour |= ((colour << 24) >> shift) & mask;
 	
 		// now write the colour value
-		switch (surface_desc.DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount >> 3)
+		switch (surface_desc->DUMMYUNIONNAMEN(4).ddpfPixelFormat.DUMMYUNIONNAMEN(1).dwRGBBitCount >> 3)
 		{
 			// 16-bit
 			case 2:
 			{
-				((UINT16 *)((char *)surface_desc.lpSurface + y * surface_desc.DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT16)dest_colour;
+				((UINT16 *)((char *)surface_desc->lpSurface + y * surface_desc->DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT16)dest_colour;
 				 break;
 			}
 			// 32-bit
 			case 4:
 			{
-				((UINT32 *)((char *)surface_desc.lpSurface + y * surface_desc.DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT32)dest_colour;
+				((UINT32 *)((char *)surface_desc->lpSurface + y * surface_desc->DUMMYUNIONNAMEN(1).lPitch))[x] = (UINT32)dest_colour;
 				break;
 			}
 		}

@@ -47,16 +47,16 @@
    0x00124e : mask = 0x0300 (player 1 lives)
    0x001292 : mask = 0x0300 (player 2 lives)
 
-   0x0046ea : mask = 0x0001 (unknown effect - flip ? demo sounds ?) .
+   0x0046ea : mask = 0x0001 (unknown effect - flip ? demo sounds ?) ->
 
    0x004182 : mask = 0x1800 (time, difficulty)
 
 
  reads from 0x230200.w :
 
-   0x001000 : mask = 0xffff . >>  0 in 0x080010
-   0x001000 : mask = 0x00f0 . >>  4 in 0x080016 (player 1 directions)
-   0x001000 : mask = 0xf000 . >> 12 in 0x080018 (player 2 directions)
+   0x001000 : mask = 0xffff -> >>  0 in 0x080010
+   0x001000 : mask = 0x00f0 -> >>  4 in 0x080016 (player 1 directions)
+   0x001000 : mask = 0xf000 -> >> 12 in 0x080018 (player 2 directions)
 
 
  0x080010.w : inputs
@@ -101,7 +101,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -176,7 +176,7 @@ public class pass
 	
 	
 	/* todo : work out function of unknown but used dsw */
-	static InputPortPtr input_ports_pass = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pass = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pass )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x0001, 0x0001, "Unknown SW 0-0" );// USED ! Check code at 0x0046ea
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -297,8 +297,7 @@ public class pass
 		{ 60 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_pass = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pass )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14318180/2 )
 		MDRV_CPU_MEMORY(pass_readmem,pass_writemem)
@@ -328,9 +327,7 @@ public class pass
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
 	
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_pass = new RomLoadPtr(){ public void handler(){ 
@@ -356,5 +353,5 @@ public class pass
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_pass	   = new GameDriver("1992"	,"pass"	,"pass.java"	,rom_pass,null	,machine_driver_pass	,input_ports_pass	,null	,ROT0	,	"Oksan", "Pass")
+	GAME( 1992, pass, 0, pass, pass, 0, ROT0, "Oksan", "Pass")
 }

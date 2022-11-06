@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -98,9 +98,9 @@ public class itech32
 		if (qint != -1) qint_state = qint;
 	
 		/* determine which level is active */
-		if (vint_state != 0) level = 1;
-		if (xint_state != 0) level = 2;
-		if (qint_state != 0) level = 3;
+		if (vint_state) level = 1;
+		if (xint_state) level = 2;
+		if (qint_state) level = 3;
 	
 		/* Driver's Edge shifts the interrupts a bit */
 		if (is_drivedge && level) level += 2;
@@ -114,18 +114,17 @@ public class itech32
 		int level = determine_irq_state(vint, xint, qint);
 	
 		/* update it */
-		if (level != 0)
+		if (level)
 			cpu_set_irq_line(0, level, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static InterruptHandlerPtr generate_int1 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr generate_int1 = new InterruptHandlerPtr() {public void handler(){
 		/* signal the NMI */
 		itech32_update_interrupts(1, -1, -1);
-		if (FULL_LOGGING != 0) logerror("------------ VBLANK (%d) --------------", cpu_getscanline());
+		if (FULL_LOGGING) logerror("------------ VBLANK (%d) --------------", cpu_getscanline());
 	} };
 	
 	
@@ -144,8 +143,7 @@ public class itech32
 	
 	static void via6522_timer_callback(int which);
 	
-	public static MachineInitHandlerPtr machine_init_itech32  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_itech32  = new MachineInitHandlerPtr() { public void handler(){
 		vint_state = xint_state = qint_state = 0;
 		sound_data = 0;
 		sound_int_state = 0;
@@ -160,7 +158,7 @@ public class itech32
 		ticket_dispenser_init(200, TICKET_MOTOR_ACTIVE_HIGH, TICKET_STATUS_ACTIVE_HIGH);
 	
 		/* map the mirrored RAM in Driver's Edge */
-		if (is_drivedge != 0)
+		if (is_drivedge)
 			cpu_setbank(2, main_ram);
 	} };
 	
@@ -175,7 +173,7 @@ public class itech32
 	static READ16_HANDLER( special_port3_r )
 	{
 		int result = readinputport(3);
-		if (sound_int_state != 0) result ^= 0x08;
+		if (sound_int_state) result ^= 0x08;
 		return result;
 	}
 	
@@ -183,7 +181,7 @@ public class itech32
 	static READ16_HANDLER( special_port4_r )
 	{
 		int result = readinputport(4);
-		if (sound_int_state != 0) result ^= 0x08;
+		if (sound_int_state) result ^= 0x08;
 		return result;
 	}
 	
@@ -312,8 +310,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("sound bank = %02x", data);
 		cpu_setbank(1, &memory_region(REGION_CPU2)[0x10000 + data * 0x4000]);
 	} };
@@ -337,7 +334,7 @@ public class itech32
 	
 	static WRITE16_HANDLER( sound_data_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_data_w);
 	}
 	
@@ -349,8 +346,7 @@ public class itech32
 	}
 	
 	
-	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("sound_data_r() = %02x", sound_data);
 		cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
 		sound_int_state = 0;
@@ -358,8 +354,7 @@ public class itech32
 	} };
 	
 	
-	public static ReadHandlerPtr sound_data_buffer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_data_buffer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
@@ -371,8 +366,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("PIA port B write = %02x", data);
 	
 		/* bit 4 controls the ticket dispenser */
@@ -383,8 +377,7 @@ public class itech32
 	} };
 	
 	
-	public static WriteHandlerPtr sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("sound output write = %02x", data);
 	
 		coin_counter_w(0, (~data & 0x20) >> 5);
@@ -415,8 +408,7 @@ public class itech32
 	}
 	
 	
-	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		double period;
 	
 		/* update the data */
@@ -444,15 +436,14 @@ public class itech32
 				break;
 	
 			default:	/* log everything else */
-				if (FULL_LOGGING != 0) logerror("VIA write(%02x) = %02x", offset, data);
+				if (FULL_LOGGING) logerror("VIA write(%02x) = %02x", offset, data);
 				break;
 		}
 	
 	} };
 	
 	
-	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		/* switch off the offset */
@@ -469,7 +460,7 @@ public class itech32
 				break;
 		}
 	
-		if (FULL_LOGGING != 0) logerror("VIA read(%02x) = %02x", offset, result);
+		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x", offset, result);
 		return result;
 	} };
 	
@@ -481,8 +472,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr firq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1, M6809_FIRQ_LINE, CLEAR_LINE);
 	} };
 	
@@ -494,8 +484,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr sound_speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (sound_speedup_data[0] == sound_speedup_data[1] && activecpu_get_previouspc() == sound_speedup_pc)
 			cpu_spinuntil_int();
 		return sound_speedup_data[0];
@@ -558,13 +547,12 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_itech32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_itech32  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		int i;
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, main_ram, main_ram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, main_ram, main_ram_size);
 		else
 			for (i = 0x80; i < main_ram_size; i++)
@@ -572,13 +560,12 @@ public class itech32
 	} };
 	
 	
-	public static NVRAMHandlerPtr nvram_handler_itech020  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_itech020  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		int i;
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, nvram, nvram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, nvram, nvram_size);
 		else
 			for (i = 0; i < nvram_size; i++)
@@ -819,7 +806,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_timekill = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timekill = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timekill )
 		PORT_START(); 	/* 40000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1        | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2        | IPF_PLAYER1 );
@@ -870,7 +857,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bloodstm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bloodstm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bloodstm )
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -926,7 +913,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hardyard = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hardyard = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hardyard )
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -989,7 +976,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pairs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pairs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pairs )
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -1039,7 +1026,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wcbowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wcbowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wcbowl )
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -1093,7 +1080,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wcbowln = new InputPortPtr(){ public void handler() {  /* WCB version 1.66 supports cocktail mode */
+	static InputPortPtr input_ports_wcbowln = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wcbowln ) /* WCB version 1.66 supports cocktail mode */
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -1150,7 +1137,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_drivedge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drivedge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drivedge )
 		PORT_START(); 	/* 40000 */
 		PORT_BIT ( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1211,7 +1198,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sftm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sftm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sftm )
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -1268,7 +1255,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_shufshot = new InputPortPtr(){ public void handler() {  /* ShuffleShot version 1.39 supports cocktail mode */
+	static InputPortPtr input_ports_shufshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shufshot ) /* ShuffleShot version 1.39 supports cocktail mode */
 		PORT_START(); 	/* 080000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_START1 );
@@ -1325,7 +1312,7 @@ public class itech32
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_shufbowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shufbowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shufbowl )
 		/*
 		Earlier versions of Shuffleshot & World Class Bowling share the same input
 		port set up. IE: "Freeze Screen" and no support for a cocktail mode
@@ -1413,8 +1400,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_timekill = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( timekill )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, CLOCK_12MHz)
@@ -1441,13 +1427,10 @@ public class itech32
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(ES5506, es5506_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bloodstm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bloodstm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(timekill)
@@ -1457,39 +1440,30 @@ public class itech32
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(32768)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pairs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pairs )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(pairs_readmem,pairs_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wcbowl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wcbowl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 383, 0, 254)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_drivedge = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drivedge )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
@@ -1499,13 +1473,10 @@ public class itech32
 		MDRV_CPU_VBLANK_INT(NULL,0)
 	
 		MDRV_NVRAM_HANDLER(itech020)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sftm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sftm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bloodstm)
@@ -1521,9 +1492,7 @@ public class itech32
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 383, 0, 254)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2286,8 +2255,7 @@ public class itech32
 	}
 	
 	
-	public static DriverInitHandlerPtr init_timekill  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_timekill  = new DriverInitHandlerPtr() { public void handler(){
 		init_program_rom();
 		init_sound_speedup(0x2010, 0x8c54);
 		itech32_vram_height = 512;
@@ -2296,8 +2264,7 @@ public class itech32
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_hardyard  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hardyard  = new DriverInitHandlerPtr() { public void handler(){
 		init_program_rom();
 		init_sound_speedup(0x2010, 0x8e16);
 		itech32_vram_height = 1024;
@@ -2306,8 +2273,7 @@ public class itech32
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_bloodstm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bloodstm  = new DriverInitHandlerPtr() { public void handler(){
 		init_program_rom();
 		init_sound_speedup(0x2011, 0x8ebf);
 		itech32_vram_height = 1024;
@@ -2316,8 +2282,7 @@ public class itech32
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_wcbowl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wcbowl  = new DriverInitHandlerPtr() { public void handler(){
 		init_program_rom();
 		init_sound_speedup(0x2011, 0x8f93);
 		itech32_vram_height = 1024;
@@ -2331,8 +2296,7 @@ public class itech32
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_drivedge  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_drivedge  = new DriverInitHandlerPtr() { public void handler(){
 		init_program_rom();
 	//	init_sound_speedup(0x2011, 0x8ebf);
 		itech32_vram_height = 1024;
@@ -2356,14 +2320,12 @@ public class itech32
 	}
 	
 	
-	public static DriverInitHandlerPtr init_sftm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sftm  = new DriverInitHandlerPtr() { public void handler(){
 		init_sftm_common(0x7a6a, 0x905f);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sftm110  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sftm110  = new DriverInitHandlerPtr() { public void handler(){
 		init_sftm_common(0x7a66, 0x9059);
 	} };
 	
@@ -2389,12 +2351,12 @@ public class itech32
 		install_mem_read32_handler(0, 0x181000, 0x181003, trackball32_4bit_p2_r);
 	}
 	
-	public static DriverInitHandlerPtr init_shufshot  = new DriverInitHandlerPtr() { public void handler()	/* PIC 16C54 labeled as ITSHF-1 */
+	public static DriverInitHandlerPtr init_shufshot  = new DriverInitHandlerPtr() { public void handler()* PIC 16C54 labeled as ITSHF-1 */
 	{
 		init_shuffle_bowl_common(0x111a, 0x906c);
 	} };
 	
-	public static DriverInitHandlerPtr init_wcbowln  = new DriverInitHandlerPtr() { public void handler()	/* PIC 16C54 labeled as ITBWL-3 */
+	public static DriverInitHandlerPtr init_wcbowln  = new DriverInitHandlerPtr() { public void handler()* PIC 16C54 labeled as ITBWL-3 */
 	{
 		/* The security PROM is NOT interchangable between the Deluxe and "normal" versions. */
 		init_shuffle_bowl_common(0x1116, 0x9067);
@@ -2409,25 +2371,25 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_timekill	   = new GameDriver("1992"	,"timekill"	,"itech32.java"	,rom_timekill,null	,machine_driver_timekill	,input_ports_timekill	,init_timekill	,ROT0	,	"Strata/Incredible Technologies", "Time Killers (v1.32)" )
-	public static GameDriver driver_timek131	   = new GameDriver("1992"	,"timek131"	,"itech32.java"	,rom_timek131,driver_timekill	,machine_driver_timekill	,input_ports_timekill	,init_timekill	,ROT0	,	"Strata/Incredible Technologies", "Time Killers (v1.31)" )
-	public static GameDriver driver_hardyard	   = new GameDriver("1993"	,"hardyard"	,"itech32.java"	,rom_hardyard,null	,machine_driver_bloodstm	,input_ports_hardyard	,init_hardyard	,ROT0	,	"Strata/Incredible Technologies", "Hard Yardage (v1.20)" )
-	public static GameDriver driver_hardyd10	   = new GameDriver("1993"	,"hardyd10"	,"itech32.java"	,rom_hardyd10,driver_hardyard	,machine_driver_bloodstm	,input_ports_hardyard	,init_hardyard	,ROT0	,	"Strata/Incredible Technologies", "Hard Yardage (v1.00)" )
-	public static GameDriver driver_bloodstm	   = new GameDriver("1994"	,"bloodstm"	,"itech32.java"	,rom_bloodstm,null	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.22)" )
-	public static GameDriver driver_bloods22	   = new GameDriver("1994"	,"bloods22"	,"itech32.java"	,rom_bloods22,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.20)" )
-	public static GameDriver driver_bloods21	   = new GameDriver("1994"	,"bloods21"	,"itech32.java"	,rom_bloods21,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v2.10)" )
-	public static GameDriver driver_bloods11	   = new GameDriver("1994"	,"bloods11"	,"itech32.java"	,rom_bloods11,driver_bloodstm	,machine_driver_bloodstm	,input_ports_bloodstm	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Blood Storm (v1.10)" )
-	public static GameDriver driver_pairs	   = new GameDriver("1994"	,"pairs"	,"itech32.java"	,rom_pairs,null	,machine_driver_pairs	,input_ports_pairs	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Pairs (V1.2, 09/30/94)" )
-	public static GameDriver driver_pairsa	   = new GameDriver("1994"	,"pairsa"	,"itech32.java"	,rom_pairsa,driver_pairs	,machine_driver_pairs	,input_ports_pairs	,init_bloodstm	,ROT0	,	"Strata/Incredible Technologies", "Pairs (09/07/94)" )
-	public static GameDriver driver_drivedge	   = new GameDriver("1994"	,"drivedge"	,"itech32.java"	,rom_drivedge,null	,machine_driver_drivedge	,input_ports_drivedge	,init_drivedge	,ROT0	,	"Strata/Incredible Technologies", "Driver's Edge", GAME_NOT_WORKING )
-	public static GameDriver driver_wcbowl	   = new GameDriver("1995"	,"wcbowl"	,"itech32.java"	,rom_wcbowl,null	,machine_driver_sftm	,input_ports_wcbowln	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.66)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	public static GameDriver driver_wcbwl165	   = new GameDriver("1995"	,"wcbwl165"	,"itech32.java"	,rom_wcbwl165,driver_wcbowl	,machine_driver_sftm	,input_ports_shufbowl	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.65)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	public static GameDriver driver_wcbwl161	   = new GameDriver("1995"	,"wcbwl161"	,"itech32.java"	,rom_wcbwl161,driver_wcbowl	,machine_driver_sftm	,input_ports_shufbowl	,init_wcbowln	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.61)" ) /* PIC 16C54 labeled as ITBWL-3 */
-	public static GameDriver driver_wcbwl12	   = new GameDriver("1995"	,"wcbwl12"	,"itech32.java"	,rom_wcbwl12,driver_wcbowl	,machine_driver_wcbowl	,input_ports_wcbowl	,init_wcbowl	,ROT0	,	"Incredible Technologies", "World Class Bowling (v1.2)" ) /* PIC 16C54 labeled as ITBWL-1 */
-	public static GameDriver driver_sftm	   = new GameDriver("1995"	,"sftm"	,"itech32.java"	,rom_sftm,null	,machine_driver_sftm	,input_ports_sftm	,init_sftm	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12)" )	/* PIC 16C54 labeled as ITSF-1 */
-	public static GameDriver driver_sftm111	   = new GameDriver("1995"	,"sftm111"	,"itech32.java"	,rom_sftm111,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm110	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.11)" )	/* PIC 16C54 labeled as ITSF-1 */
-	public static GameDriver driver_sftm110	   = new GameDriver("1995"	,"sftm110"	,"itech32.java"	,rom_sftm110,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm110	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.10)" )	/* PIC 16C54 labeled as ITSF-1 */
-	public static GameDriver driver_sftmj	   = new GameDriver("1995"	,"sftmj"	,"itech32.java"	,rom_sftmj,driver_sftm	,machine_driver_sftm	,input_ports_sftm	,init_sftm	,ROT0	,	"Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12N, Japan)" )	/* PIC 16C54 labeled as ITSF-1 */
-	public static GameDriver driver_shufshot	   = new GameDriver("1997"	,"shufshot"	,"itech32.java"	,rom_shufshot,null	,machine_driver_sftm	,input_ports_shufshot	,init_shufshot	,ROT0	,	"Strata/Incredible Technologies", "Shuffleshot (v1.39)" ) /* PIC 16C54 labeled as ITSHF-1 */
-	public static GameDriver driver_sshot137	   = new GameDriver("1997"	,"sshot137"	,"itech32.java"	,rom_sshot137,driver_shufshot	,machine_driver_sftm	,input_ports_shufbowl	,init_shufshot	,ROT0	,	"Strata/Incredible Technologies", "Shuffleshot (v1.37)" ) /* PIC 16C54 labeled as ITSHF-1 */
+	GAME( 1992, timekill, 0,        timekill, timekill, timekill, ROT0, "Strata/Incredible Technologies", "Time Killers (v1.32)" )
+	GAME( 1992, timek131, timekill, timekill, timekill, timekill, ROT0, "Strata/Incredible Technologies", "Time Killers (v1.31)" )
+	GAME( 1993, hardyard, 0,        bloodstm, hardyard, hardyard, ROT0, "Strata/Incredible Technologies", "Hard Yardage (v1.20)" )
+	GAME( 1993, hardyd10, hardyard, bloodstm, hardyard, hardyard, ROT0, "Strata/Incredible Technologies", "Hard Yardage (v1.00)" )
+	GAME( 1994, bloodstm, 0,        bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.22)" )
+	GAME( 1994, bloods22, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.20)" )
+	GAME( 1994, bloods21, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v2.10)" )
+	GAME( 1994, bloods11, bloodstm, bloodstm, bloodstm, bloodstm, ROT0, "Strata/Incredible Technologies", "Blood Storm (v1.10)" )
+	GAME( 1994, pairs,    0,        pairs,    pairs,    bloodstm, ROT0, "Strata/Incredible Technologies", "Pairs (V1.2, 09/30/94)" )
+	GAME( 1994, pairsa,   pairs,    pairs,    pairs,    bloodstm, ROT0, "Strata/Incredible Technologies", "Pairs (09/07/94)" )
+	GAMEX(1994, drivedge, 0,        drivedge, drivedge, drivedge, ROT0, "Strata/Incredible Technologies", "Driver's Edge", GAME_NOT_WORKING )
+	GAME( 1995, wcbowl,   0,        sftm,     wcbowln,  wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.66)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	GAME( 1995, wcbwl165, wcbowl,   sftm,     shufbowl, wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.65)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	GAME( 1995, wcbwl161, wcbowl,   sftm,     shufbowl, wcbowln,  ROT0, "Incredible Technologies", "World Class Bowling (v1.61)" ) /* PIC 16C54 labeled as ITBWL-3 */
+	GAME( 1995, wcbwl12,  wcbowl,   wcbowl,   wcbowl,   wcbowl,   ROT0, "Incredible Technologies", "World Class Bowling (v1.2)" ) /* PIC 16C54 labeled as ITBWL-1 */
+	GAME( 1995, sftm,     0,        sftm,     sftm,     sftm,     ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12)" )	/* PIC 16C54 labeled as ITSF-1 */
+	GAME( 1995, sftm111,  sftm,     sftm,     sftm,     sftm110,  ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.11)" )	/* PIC 16C54 labeled as ITSF-1 */
+	GAME( 1995, sftm110,  sftm,     sftm,     sftm,     sftm110,  ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.10)" )	/* PIC 16C54 labeled as ITSF-1 */
+	GAME( 1995, sftmj,    sftm,     sftm,     sftm,     sftm,     ROT0, "Capcom/Incredible Technologies", "Street Fighter: The Movie (v1.12N, Japan)" )	/* PIC 16C54 labeled as ITSF-1 */
+	GAME( 1997, shufshot, 0,        sftm,     shufshot, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.39)" ) /* PIC 16C54 labeled as ITSHF-1 */
+	GAME( 1997, sshot137, shufshot, sftm,     shufbowl, shufshot, ROT0, "Strata/Incredible Technologies", "Shuffleshot (v1.37)" ) /* PIC 16C54 labeled as ITSHF-1 */
 }

@@ -47,7 +47,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -67,18 +67,15 @@ public class lwings
 	static data8_t *avengers_soundlatch2, avengers_soundstate=0;
 	static data8_t avengers_adpcm;
 	
-	public static WriteHandlerPtr avengers_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avengers_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		avengers_adpcm = data;
 	} };
 	
-	public static ReadHandlerPtr avengers_adpcm_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr avengers_adpcm_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return avengers_adpcm;
 	} };
 	
-	public static WriteHandlerPtr lwings_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lwings_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM;
 		int bank;
 	
@@ -98,22 +95,19 @@ public class lwings
 		coin_counter_w(0,data & 0x80);
 	} };
 	
-	public static InterruptHandlerPtr lwings_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr lwings_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (interrupt_enable_r(0))
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7); /* RST 10h */
 	} };
 	
-	public static InterruptHandlerPtr avengers_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr avengers_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( cpu_getiloops()==0 )
 			irq0_line_hold();
 		else
 			nmi_line_pulse();
 	} };
 	
-	public static WriteHandlerPtr avengers_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avengers_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int pc = activecpu_get_pc();
 	
 		if( pc == 0x2eeb )
@@ -139,8 +133,7 @@ public class lwings
 		}
 	} };
 	
-	public static WriteHandlerPtr avengers_prot_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avengers_prot_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		avengers_palette_pen = data*64;
 	} };
 	
@@ -226,8 +219,7 @@ public class lwings
 		return result;
 	}
 	
-	public static ReadHandlerPtr avengers_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr avengers_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		const int xpos[8] = { 10, 7,  0, -7, -10, -7,   0,  7 };
 		const int ypos[8] = {  0, 7, 10,  7,   0, -7, -10, -7 };
 		int best_dist = 0;
@@ -262,15 +254,13 @@ public class lwings
 		return best_dir<<5;
 	} };
 	
-	public static ReadHandlerPtr avengers_soundlatch2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr avengers_soundlatch2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t data = *avengers_soundlatch2 | avengers_soundstate;
 		avengers_soundstate = 0;
 		return(data);
 	} };
 	
-	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(offset,(data>>7)&1);
 		MSM5205_data_w(offset,data);
 		MSM5205_vclk_w(offset,1);
@@ -416,7 +406,7 @@ public class lwings
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_sectionz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sectionz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sectionz )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -493,7 +483,7 @@ public class lwings
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lwings = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lwings = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lwings )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -573,7 +563,7 @@ public class lwings
 		PORT_DIPSETTING(    0x00, "None" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_trojan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_trojan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( trojan )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -653,7 +643,7 @@ public class lwings
 	INPUT_PORTS_END(); }}; 
 	
 	/* Trojan with level selection - starting level dip switches not used */
-	static InputPortPtr input_ports_trojanls = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_trojanls = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( trojanls )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -733,7 +723,7 @@ public class lwings
 		PORT_DIPSETTING(    0x80, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_avengers = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_avengers = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( avengers )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -900,8 +890,7 @@ public class lwings
 		{ 50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_lwings = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lwings )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)        /* 4 MHz (?) */
@@ -929,13 +918,10 @@ public class lwings
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_trojan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trojan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)        /* 4 MHz (?) */
@@ -970,13 +956,10 @@ public class lwings
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_avengers = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( avengers )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000) //AT: (avengers37b16gre)
@@ -1011,9 +994,7 @@ public class lwings
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -1463,15 +1444,15 @@ public class lwings
 		ROM_LOAD( "tbb_1bpr.1e",  0x0100,  0x0100, CRC(5052fa9d) SHA1(8cd240f4795a7ae76499573c09069dba37182be2) )	/* priority (not used) */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_sectionz	   = new GameDriver("1985"	,"sectionz"	,"lwings.java"	,rom_sectionz,null	,machine_driver_lwings	,input_ports_sectionz	,null	,ROT0	,	"Capcom", "Section Z (set 1)" )
-	public static GameDriver driver_sctionza	   = new GameDriver("1985"	,"sctionza"	,"lwings.java"	,rom_sctionza,driver_sectionz	,machine_driver_lwings	,input_ports_sectionz	,null	,ROT0	,	"Capcom", "Section Z (set 2)" )
-	public static GameDriver driver_lwings	   = new GameDriver("1986"	,"lwings"	,"lwings.java"	,rom_lwings,null	,machine_driver_lwings	,input_ports_lwings	,null	,ROT90	,	"Capcom", "Legendary Wings (US set 1)" )
-	public static GameDriver driver_lwings2	   = new GameDriver("1986"	,"lwings2"	,"lwings.java"	,rom_lwings2,driver_lwings	,machine_driver_lwings	,input_ports_lwings	,null	,ROT90	,	"Capcom", "Legendary Wings (US set 2)" )
-	public static GameDriver driver_lwingsjp	   = new GameDriver("1986"	,"lwingsjp"	,"lwings.java"	,rom_lwingsjp,driver_lwings	,machine_driver_lwings	,input_ports_lwings	,null	,ROT90	,	"Capcom", "Ares no Tsubasa (Japan)" )
-	public static GameDriver driver_trojan	   = new GameDriver("1986"	,"trojan"	,"lwings.java"	,rom_trojan,null	,machine_driver_trojan	,input_ports_trojanls	,null	,ROT0	,	"Capcom", "Trojan (US)" )
-	public static GameDriver driver_trojanr	   = new GameDriver("1986"	,"trojanr"	,"lwings.java"	,rom_trojanr,driver_trojan	,machine_driver_trojan	,input_ports_trojan	,null	,ROT0	,	"Capcom (Romstar license)", "Trojan (Romstar)" )
-	public static GameDriver driver_trojanj	   = new GameDriver("1986"	,"trojanj"	,"lwings.java"	,rom_trojanj,driver_trojan	,machine_driver_trojan	,input_ports_trojan	,null	,ROT0	,	"Capcom", "Tatakai no Banka (Japan)" )
-	public static GameDriver driver_avengers	   = new GameDriver("1987"	,"avengers"	,"lwings.java"	,rom_avengers,null	,machine_driver_avengers	,input_ports_avengers	,null	,ROT90	,	"Capcom", "Avengers (US set 1)" )
-	public static GameDriver driver_avenger2	   = new GameDriver("1987"	,"avenger2"	,"lwings.java"	,rom_avenger2,driver_avengers	,machine_driver_avengers	,input_ports_avengers	,null	,ROT90	,	"Capcom", "Avengers (US set 2)" )
-	public static GameDriver driver_buraiken	   = new GameDriver("1987"	,"buraiken"	,"lwings.java"	,rom_buraiken,driver_avengers	,machine_driver_avengers	,input_ports_avengers	,null	,ROT90	,	"Capcom", "Hissatsu Buraiken (Japan)" )
+	GAME( 1985, sectionz, 0,        lwings,   sectionz, 0, ROT0,  "Capcom", "Section Z (set 1)" )
+	GAME( 1985, sctionza, sectionz, lwings,   sectionz, 0, ROT0,  "Capcom", "Section Z (set 2)" )
+	GAME( 1986, lwings,   0,        lwings,   lwings,   0, ROT90, "Capcom", "Legendary Wings (US set 1)" )
+	GAME( 1986, lwings2,  lwings,   lwings,   lwings,   0, ROT90, "Capcom", "Legendary Wings (US set 2)" )
+	GAME( 1986, lwingsjp, lwings,   lwings,   lwings,   0, ROT90, "Capcom", "Ares no Tsubasa (Japan)" )
+	GAME( 1986, trojan,   0,        trojan,   trojanls, 0, ROT0,  "Capcom", "Trojan (US)" )
+	GAME( 1986, trojanr,  trojan,   trojan,   trojan,   0, ROT0,  "Capcom (Romstar license)", "Trojan (Romstar)" )
+	GAME( 1986, trojanj,  trojan,   trojan,   trojan,   0, ROT0,  "Capcom", "Tatakai no Banka (Japan)" )
+	GAME( 1987, avengers, 0,        avengers, avengers, 0, ROT90, "Capcom", "Avengers (US set 1)" )
+	GAME( 1987, avenger2, avengers, avengers, avengers, 0, ROT90, "Capcom", "Avengers (US set 2)" )
+	GAME( 1987, buraiken, avengers, avengers, avengers, 0, ROT90, "Capcom", "Hissatsu Buraiken (Japan)" )
 }

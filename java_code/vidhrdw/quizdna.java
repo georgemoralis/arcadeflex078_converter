@@ -11,7 +11,7 @@ Video hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,8 +61,7 @@ public class quizdna
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_quizdna  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_quizdna  = new VideoStartHandlerPtr() { public int handler(){
 		quizdna_bg_ram = auto_malloc(0x2000);
 		quizdna_fg_ram = auto_malloc(0x1000);
 	
@@ -77,8 +76,7 @@ public class quizdna
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr quizdna_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_bg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		quizdna_bg_ram[offset] = data;
 		RAM[0x12000+offset] = data;
@@ -86,8 +84,7 @@ public class quizdna
 		tilemap_mark_tile_dirty(quizdna_bg_tilemap, (offset & 0xfff) / 2 );
 	} };
 	
-	public static WriteHandlerPtr quizdna_fg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_fg_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		int offs = offset & 0xfff;
 		data8_t *RAM = memory_region(REGION_CPU1);
@@ -100,13 +97,11 @@ public class quizdna
 			tilemap_mark_tile_dirty(quizdna_fg_tilemap, ((offs/2) & 0x1f) + i*0x20 );
 	} };
 	
-	public static WriteHandlerPtr quizdna_bg_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_bg_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolldy( quizdna_bg_tilemap, 255-data, 255-data+1 );
 	} };
 	
-	public static WriteHandlerPtr quizdna_bg_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_bg_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x;
 		quizdna_bg_xscroll[offset] = data;
 		x = ~(quizdna_bg_xscroll[0] + quizdna_bg_xscroll[1]*0x100) & 0x1ff;
@@ -114,8 +109,7 @@ public class quizdna
 		tilemap_set_scrolldx( quizdna_bg_tilemap, x+64, x-64+10 );
 	} };
 	
-	public static WriteHandlerPtr quizdna_screen_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr quizdna_screen_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int tmp = (data & 0x10) >> 4;
 		quizdna_video_enable = data & 0x20;
 	
@@ -130,15 +124,14 @@ public class quizdna
 		tilemap_set_scrolldx( quizdna_fg_tilemap, 64, -64 +16);
 	} };
 	
-	public static WriteHandlerPtr paletteram_xBGR_RRRR_GGGG_BBBB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paletteram_xBGR_RRRR_GGGG_BBBB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r,g,b,d0,d1;
 		int offs = offset & ~1;
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
-		d0 = paletteram[offs];
-		d1 = paletteram[offs+1];
+		d0 = paletteram.read(offs);
+		d1 = paletteram.read(offs+1);
 	
 		r = ((d1 << 1) & 0x1e) | ((d1 >> 4) & 1);
 		g = ((d0 >> 3) & 0x1e) | ((d1 >> 5) & 1);
@@ -169,7 +162,7 @@ public class quizdna
 			int dy = 0x10;
 			col &= 0x1f;
 	
-			if (quizdna_flipscreen != 0)
+			if (quizdna_flipscreen)
 			{
 				x -= 7;
 				y += 1;
@@ -179,7 +172,7 @@ public class quizdna
 			if (x>0x1f0)
 				x -= 0x200;
 	
-			if (fy != 0)
+			if (fy)
 			{
 				dy = -0x10;
 				y += 0x10 * ysize;
@@ -192,7 +185,7 @@ public class quizdna
 			{
 				y &= 0x1ff;
 	
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						code ^ i,
 						col,
 						fx,fy,
@@ -204,9 +197,8 @@ public class quizdna
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (quizdna_video_enable != 0)
+	public static VideoUpdateHandlerPtr video_update_quizdna  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (quizdna_video_enable)
 		{
 			tilemap_draw(bitmap, cliprect, quizdna_bg_tilemap, 0, 0);
 			quizdna_drawsprites(bitmap, cliprect);

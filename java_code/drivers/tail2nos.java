@@ -11,7 +11,7 @@ press F1+F3 to see ROM/RAM tests and the final animation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class tail2nos
 	WRITE16_HANDLER( tail2nos_gfxbank_w );
 	
 	
-	public static MachineInitHandlerPtr machine_init_tail2nos  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tail2nos  = new MachineInitHandlerPtr() { public void handler(){
 		/* point to the extra ROMs */
 		cpu_setbank(1,memory_region(REGION_USER1));
 		cpu_setbank(2,memory_region(REGION_USER2));
@@ -39,7 +38,7 @@ public class tail2nos
 	
 	static WRITE16_HANDLER( sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -53,18 +52,17 @@ public class tail2nos
 	
 	static WRITE16_HANDLER( tail2nos_K051316_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_0_w(offset,data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( tail2nos_K051316_ctrl_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051316_ctrl_0_w(offset,data & 0xff);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(3,memory_region(REGION_CPU2) + 0x10000 + (data & 0x01) * 0x8000);
 	} };
 	
@@ -139,7 +137,7 @@ public class tail2nos
 	
 	
 	
-	static InputPortPtr input_ports_tail2nos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tail2nos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tail2nos )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -274,8 +272,7 @@ public class tail2nos
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tail2nos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tail2nos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)	/* 10 MHz (?) */
@@ -305,9 +302,7 @@ public class tail2nos
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -383,6 +378,6 @@ public class tail2nos
 	
 	
 	
-	public static GameDriver driver_tail2nos	   = new GameDriver("1989"	,"tail2nos"	,"tail2nos.java"	,rom_tail2nos,null	,machine_driver_tail2nos	,input_ports_tail2nos	,null	,ROT90	,	"V-System Co.", "Tail to Nose - Great Championship", GAME_NO_COCKTAIL )
-	public static GameDriver driver_sformula	   = new GameDriver("1989"	,"sformula"	,"tail2nos.java"	,rom_sformula,driver_tail2nos	,machine_driver_tail2nos	,input_ports_tail2nos	,null	,ROT90	,	"V-System Co.", "Super Formula (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1989, tail2nos, 0,        tail2nos, tail2nos, 0, ROT90, "V-System Co.", "Tail to Nose - Great Championship", GAME_NO_COCKTAIL )
+	GAMEX( 1989, sformula, tail2nos, tail2nos, tail2nos, 0, ROT90, "V-System Co.", "Super Formula (Japan)", GAME_NO_COCKTAIL )
 }

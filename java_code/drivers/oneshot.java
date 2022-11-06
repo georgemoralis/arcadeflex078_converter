@@ -31,7 +31,7 @@ TO DO :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -104,7 +104,7 @@ public class oneshot
 	
 	static WRITE16_HANDLER( soundbank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, 0x40000 * ((data & 0x03) ^ 0x03));
 		}
@@ -164,8 +164,8 @@ public class oneshot
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_oneshot = new InputPortPtr(){ public void handler() { 
-		PORT_START(); 	/* DSW 1	(0x19c020.l . 0x08006c.l) */
+	static InputPortPtr input_ports_oneshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( oneshot )
+		PORT_START(); 	/* DSW 1	(0x19c020.l -> 0x08006c.l) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );		// 0x080084.l : credits (00-09)
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "2C_1C") );
@@ -187,7 +187,7 @@ public class oneshot
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW 2	(0x19c024.l . 0x08006e.l) */
+		PORT_START(); 	/* DSW 2	(0x19c024.l -> 0x08006e.l) */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );		// 0x082500.l
 		PORT_DIPSETTING(    0x01, "1" );
 		PORT_DIPSETTING(    0x02, "2" );
@@ -211,7 +211,7 @@ public class oneshot
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* Credits	(0x19c02c.l . 0x08007a.l) */
+		PORT_START(); 	/* Credits	(0x19c02c.l -> 0x08007a.l) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -255,7 +255,7 @@ public class oneshot
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_maddonna = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maddonna = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maddonna )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "3C_1C") );
@@ -387,8 +387,7 @@ public class oneshot
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_oneshot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( oneshot )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -414,21 +413,16 @@ public class oneshot
 	
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_maddonna = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( maddonna )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(oneshot)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(maddonna) // no crosshair
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_oneshot = new RomLoadPtr(){ public void handler(){ 
@@ -512,7 +506,7 @@ public class oneshot
 	
 	
 	
-	public static GameDriver driver_oneshot	   = new GameDriver("199?"	,"oneshot"	,"oneshot.java"	,rom_oneshot,null	,machine_driver_oneshot	,input_ports_oneshot	,init_	,0	,	ROT0, "<unknown>", "One Shot One Kill", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_maddonna	   = new GameDriver("1995"	,"maddonna"	,"oneshot.java"	,rom_maddonna,null	,machine_driver_maddonna	,input_ports_maddonna	,null	,ROT0	,	"Tuning",  "Mad Donna (set 1)" )
-	public static GameDriver driver_maddonnb	   = new GameDriver("1995"	,"maddonnb"	,"oneshot.java"	,rom_maddonnb,driver_maddonna	,machine_driver_maddonna	,input_ports_maddonna	,null	,ROT0	,	"Tuning",  "Mad Donna (set 2)", GAME_NOT_WORKING )
+	GAMEX(199?, oneshot,  0,        oneshot,  oneshot , 0, ROT0, "<unknown>", "One Shot One Kill", GAME_IMPERFECT_GRAPHICS )
+	GAME (1995, maddonna, 0,        maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 1)" )
+	GAMEX(1995, maddonnb, maddonna, maddonna, maddonna, 0, ROT0, "Tuning",  "Mad Donna (set 2)", GAME_NOT_WORKING )
 }

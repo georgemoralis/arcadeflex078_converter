@@ -56,7 +56,7 @@ Note:	if MAME_DEBUG is defined, pressing Z with:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -157,12 +157,12 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -195,12 +195,12 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -238,12 +238,12 @@ public class hyprduel
 		tile			=	(hyprduel_tiletable[table_index + 0] << 16 ) +
 							 hyprduel_tiletable[table_index + 1];
 	
-		if ((code & 0x8000) != 0) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
+		if (code & 0x8000) /* Special: draw a tile of a single color (i.e. not from the gfx ROMs) */
 		{
 			int _code = code & 0x000f;
 			tile_info.tile_number = _code;
 			tile_info.pen_data = empty_tiles + _code*16*16;
-			tile_info.pal_data = Machine.remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
+			tile_info.pal_data = Machine->remapped_colortable[(((code & 0x0ff0) ^ 0x0f0) + 0x1000)];
 			tile_info.pen_usage = 0;
 			tile_info.flags = 0;
 		}
@@ -325,15 +325,14 @@ public class hyprduel
 		int code,i;
 	
 		empty_tiles = auto_malloc(16*16*16);
-		if (empty_tiles == 0) return;
+		if (!empty_tiles) return;
 	
 		for (code = 0;code < 0x10;code++)
 			for (i = 0;i < 16*16;i++)
 				empty_tiles[16*16*code + i] = code ^ 0x0f;
 	}
 	
-	public static VideoStartHandlerPtr video_start_hyprduel_14220  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hyprduel_14220  = new VideoStartHandlerPtr() { public int handler(){
 		alloc_empty_tiles();
 		hypr_tiletable_old = auto_malloc(hyprduel_tiletable_size);
 	
@@ -418,8 +417,8 @@ public class hyprduel
 		unsigned char *base_gfx	=	memory_region(region);
 		unsigned char *gfx_max	=	base_gfx + memory_region_length(region);
 	
-		int max_x				=	Machine.drv.screen_width;
-		int max_y				=	Machine.drv.screen_height;
+		int max_x				=	Machine->drv->screen_width;
+		int max_y				=	Machine->drv->screen_height;
 	
 		int max_sprites			=	spriteram_size / 8;
 		int sprites				=	hyprduel_videoregs[0x00/2] % max_sprites;
@@ -468,7 +467,7 @@ public class hyprduel
 	
 			gfxdata		=	base_gfx + (8*8*4/8) * (((attr & 0x000f) << 16) + code);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);		x = max_x - x - width;
 				flipy = NOT(flipy);		y = max_y - y - height;
@@ -482,7 +481,7 @@ public class hyprduel
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 256;
-				gfx.colortable = Machine.remapped_colortable;
+				gfx.colortable = Machine->remapped_colortable;
 				gfx.total_colors = 0x20;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -510,7 +509,7 @@ public class hyprduel
 				gfx.height = height;
 				gfx.total_elements = 1;
 				gfx.color_granularity = 16;
-				gfx.colortable = Machine.remapped_colortable;
+				gfx.colortable = Machine->remapped_colortable;
 				gfx.total_colors = 0x200;
 				gfx.pen_usage = NULL;
 				gfx.gfxdata = gfxdata;
@@ -536,7 +535,7 @@ public class hyprduel
 		sprintf(buf, "%02X %02X",((src[ 0 ] & 0xf800) >> 11)^0x1f,((src[ 1 ] & 0xfc00) >> 10) );
 	    dt[0].text = buf;	dt[0].color = UI_COLOR_NORMAL;
 	    dt[0].x = x;    dt[0].y = y;    dt[1].text = 0; /* terminate array */
-		displaytext(Machine.scrbitmap,dt);		}
+		displaytext(Machine->scrbitmap,dt);		}
 	#endif
 		}
 	}
@@ -570,7 +569,7 @@ public class hyprduel
 	
 				if (layers_ctrl & (1<<layer))
 				{
-					for (offs = cliprect.min_y; offs <= cliprect.max_y; offs++)
+					for (offs = cliprect->min_y; offs <= cliprect->max_y; offs++)
 					{
 						clip.min_y = offs;
 						clip.max_y = offs;
@@ -605,14 +604,13 @@ public class hyprduel
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_hyprduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hyprduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,pri,sprites_pri,layers_ctrl = -1;
 		data8_t *dirtyindex;
 		data16_t screenctrl = *hyprduel_screenctrl;
 	
 		dirtyindex = malloc(hyprduel_tiletable_size/4);
-		if (dirtyindex != 0)
+		if (dirtyindex)
 		{
 			int dirty = 0;
 	
@@ -630,7 +628,7 @@ public class hyprduel
 			}
 			memcpy(hypr_tiletable_old,hyprduel_tiletable,hyprduel_tiletable_size);
 	
-			if (dirty != 0)
+			if (dirty)
 			{
 				dirty_tiles(0,hyprduel_vram_0,dirtyindex);
 				dirty_tiles(1,hyprduel_vram_1,dirtyindex);
@@ -656,7 +654,7 @@ public class hyprduel
 			---- ---- ---4 32--
 			---- ---- ---- --1-		? Blank Screen
 			---- ---- ---- ---0		Flip  Screen	*/
-		if ((screenctrl & 2) != 0)	return;
+		if (screenctrl & 2)	return;
 		flip_screen_set(screenctrl & 1);
 	
 		/* If the game supports 16x16 tiles, make sure that the

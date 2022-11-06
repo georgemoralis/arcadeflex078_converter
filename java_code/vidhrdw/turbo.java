@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_turbo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_turbo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 512; i++, color_prom++)
@@ -94,8 +93,7 @@ public class turbo
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_subroc3d  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_subroc3d  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* Subroc3D uses a common final color PROM with 512 entries */
@@ -126,8 +124,7 @@ public class turbo
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_buckrog  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_buckrog  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* Buck Rogers uses 1024 entries for the sprite color PROM */
@@ -229,12 +226,12 @@ public class turbo
 	
 		/* allocate the expanded sprite data */
 		sprite_expanded_data = auto_malloc(sprite_length * 2 * sizeof(UINT32));
-		if (sprite_expanded_data == 0)
+		if (!sprite_expanded_data)
 			return 1;
 	
 		/* allocate the expanded sprite enable array */
 		sprite_expanded_enable = auto_malloc(sprite_length * 2 * sizeof(UINT8));
-		if (sprite_expanded_enable == 0)
+		if (!sprite_expanded_enable)
 			return 1;
 	
 		/* expand the sprite ROMs */
@@ -284,7 +281,7 @@ public class turbo
 	
 		/* allocate the expanded foreground data */
 		fore_expanded_data = auto_malloc(fore_length);
-		if (fore_expanded_data == 0)
+		if (!fore_expanded_data)
 			return 1;
 	
 		/* expand the foreground ROMs */
@@ -315,8 +312,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_turbo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_turbo  = new VideoStartHandlerPtr() { public int handler(){
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
 		UINT16 *dst;
@@ -339,9 +335,9 @@ public class turbo
 		for (i = 0; i < 16; i++)
 		{
 			UINT32 value = 0;
-			if ((i & 1) != 0) value |= 0x00000001;
-			if ((i & 2) != 0) value |= 0x00000100;
-			if ((i & 4) != 0) value |= 0x00010000;
+			if (i & 1) value |= 0x00000001;
+			if (i & 2) value |= 0x00000100;
+			if (i & 4) value |= 0x00010000;
 	
 			/* special value for the end-of-row */
 			if ((i & 0x0c) == 0x04) value = END_OF_ROW_VALUE;
@@ -355,12 +351,12 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore() != 0)
+		if (init_fore())
 			return 1;
 	
 		/* allocate the expanded road palette */
 		road_expanded_palette = auto_malloc(0x40 * sizeof(UINT16));
-		if (road_expanded_palette == 0)
+		if (!road_expanded_palette)
 			return 1;
 	
 		/* expand the road palette */
@@ -378,8 +374,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_subroc3d  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_subroc3d  = new VideoStartHandlerPtr() { public int handler(){
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
 		int i;
@@ -400,12 +395,12 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore() != 0)
+		if (init_fore())
 			return 1;
 	
 		/* allocate the expanded sprite priority map */
 		sprite_expanded_priority = auto_malloc(1 << 12);
-		if (sprite_expanded_priority == 0)
+		if (!sprite_expanded_priority)
 			return 1;
 	
 		/* expand the sprite priority map */
@@ -426,8 +421,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_buckrog  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_buckrog  = new VideoStartHandlerPtr() { public int handler(){
 		UINT32 sprite_expand[16];
 		UINT8 sprite_enable[16];
 		int i;
@@ -448,32 +442,32 @@ public class turbo
 			return 1;
 	
 		/* initialize the fore data */
-		if (init_fore() != 0)
+		if (init_fore())
 			return 1;
 	
 		/* allocate the expanded sprite priority map */
 		sprite_expanded_priority = auto_malloc(1 << 8);
-		if (sprite_expanded_priority == 0)
+		if (!sprite_expanded_priority)
 			return 1;
 	
 		/* expand the sprite priority map */
 		for (i = 0; i < (1 << 8); i++)
 		{
-			if ((i & 0x01) != 0) sprite_expanded_priority[i] = 0 | 8;
-			else if ((i & 0x02) != 0) sprite_expanded_priority[i] = 1 | 8;
-			else if ((i & 0x04) != 0) sprite_expanded_priority[i] = 2 | 8;
-			else if ((i & 0x08) != 0) sprite_expanded_priority[i] = 3 | 8;
-			else if ((i & 0x10) != 0) sprite_expanded_priority[i] = 4 | 8;
-			else if ((i & 0x20) != 0) sprite_expanded_priority[i] = 5 | 8;
-			else if ((i & 0x40) != 0) sprite_expanded_priority[i] = 6 | 8;
-			else if ((i & 0x80) != 0) sprite_expanded_priority[i] = 7 | 8;
+			if (i & 0x01) sprite_expanded_priority[i] = 0 | 8;
+			else if (i & 0x02) sprite_expanded_priority[i] = 1 | 8;
+			else if (i & 0x04) sprite_expanded_priority[i] = 2 | 8;
+			else if (i & 0x08) sprite_expanded_priority[i] = 3 | 8;
+			else if (i & 0x10) sprite_expanded_priority[i] = 4 | 8;
+			else if (i & 0x20) sprite_expanded_priority[i] = 5 | 8;
+			else if (i & 0x40) sprite_expanded_priority[i] = 6 | 8;
+			else if (i & 0x80) sprite_expanded_priority[i] = 7 | 8;
 			else sprite_expanded_priority[i] = 0;
 			sprite_expanded_priority[i] *= 4;
 		}
 	
 		/* allocate the bitmap RAM */
 		buckrog_bitmap_ram = auto_malloc(0xe000);
-		if (buckrog_bitmap_ram == 0)
+		if (!buckrog_bitmap_ram)
 			return 1;
 	
 		/* other stuff */
@@ -502,23 +496,23 @@ public class turbo
 			UINT8 *sprite_base = spriteram + 16 * i;
 	
 			/* snarf all the data */
-			data.base = sprite_expanded_data + (i & 7) * 0x8000;
-			data.enable = sprite_expanded_enable + (i & 7) * 0x8000;
-			data.offset = (sprite_base[6] + 256 * sprite_base[7]) & sprite_mask;
-			data.rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]);
-			data.miny = sprite_base[0];
-			data.maxy = sprite_base[1];
-			data.xscale = ((5 * 256 - 4 * sprite_base[2]) << 16) / (5 * 256);
-			data.yscale = (4 << 16) / (sprite_base[3] + 4);
-			data.xoffs = -1;
-			data.flip = 0;
+			data->base = sprite_expanded_data + (i & 7) * 0x8000;
+			data->enable = sprite_expanded_enable + (i & 7) * 0x8000;
+			data->offset = (sprite_base[6] + 256 * sprite_base[7]) & sprite_mask;
+			data->rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]);
+			data->miny = sprite_base[0];
+			data->maxy = sprite_base[1];
+			data->xscale = ((5 * 256 - 4 * sprite_base[2]) << 16) / (5 * 256);
+			data->yscale = (4 << 16) / (sprite_base[3] + 4);
+			data->xoffs = -1;
+			data->flip = 0;
 		}
 	
 		/* now find the X positions */
 		for (i = 0; i < 0x200; i++)
 		{
 			int value = sega_sprite_position[i];
-			if (value != 0)
+			if (value)
 			{
 				int base = (i & 0x100) >> 5;
 				int which;
@@ -541,23 +535,23 @@ public class turbo
 			UINT8 *sprite_base = spriteram + 8 * i;
 	
 			/* snarf all the data */
-			data.base = sprite_expanded_data + (i & 7) * 0x10000;
-			data.enable = sprite_expanded_enable + (i & 7) * 0x10000;
-			data.offset = ((sprite_base[6] + 256 * sprite_base[7]) * 2) & sprite_mask;
-			data.rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]) * 2;
-			data.miny = sprite_base[0] ^ 0xff;
-			data.maxy = (sprite_base[1] ^ 0xff) - 1;
-			data.xscale = 65536.0 * (1.0 - 0.004 * (double)(sprite_base[2] - 0x40));
-			data.yscale = (4 << 16) / (sprite_base[3] + 4);
-			data.xoffs = -1;
-			data.flip = sprite_base[7]>>7;
+			data->base = sprite_expanded_data + (i & 7) * 0x10000;
+			data->enable = sprite_expanded_enable + (i & 7) * 0x10000;
+			data->offset = ((sprite_base[6] + 256 * sprite_base[7]) * 2) & sprite_mask;
+			data->rowbytes = (INT16)(sprite_base[4] + 256 * sprite_base[5]) * 2;
+			data->miny = sprite_base[0] ^ 0xff;
+			data->maxy = (sprite_base[1] ^ 0xff) - 1;
+			data->xscale = 65536.0 * (1.0 - 0.004 * (double)(sprite_base[2] - 0x40));
+			data->yscale = (4 << 16) / (sprite_base[3] + 4);
+			data->xoffs = -1;
+			data->flip = sprite_base[7]>>7;
 		}
 	
 		/* now find the X positions */
 		for (i = 0; i < 0x200; i++)
 		{
 			int value = sega_sprite_position[i];
-			if (value != 0)
+			if (value)
 			{
 				int base = (i & 0x01) << 3;
 				int which;
@@ -578,19 +572,19 @@ public class turbo
 	
 	static void draw_one_sprite(const struct sprite_params_data *data, UINT32 *dest, UINT8 *edest, int xclip, int scanline)
 	{
-		int xstep = data.flip ? -data.xscale : data.xscale;
-		int xoffs = data.xoffs;
+		int xstep = data->flip ? -data->xscale : data->xscale;
+		int xoffs = data->xoffs;
 		UINT32 xcurr;
 		UINT32 *src;
 		UINT8 *esrc;
 		int offset;
 	
 		/* xoffs of -1 means don't draw */
-		if (xoffs == -1 || data.xscale <= 0) return;
+		if (xoffs == -1 || data->xscale <= 0) return;
 	
 		/* compute the current data offset */
-		scanline = ((scanline - data.miny) * data.yscale) >> 16;
-		offset = data.offset + (scanline + 1) * data.rowbytes;
+		scanline = ((scanline - data->miny) * data->yscale) >> 16;
+		offset = data->offset + (scanline + 1) * data->rowbytes;
 	
 		/* clip to the road */
 		xcurr = offset << 16;
@@ -602,8 +596,8 @@ public class turbo
 		}
 	
 		/* determine the bitmap location */
-		src = data.base;
-		esrc = data.enable;
+		src = data->base;
+		esrc = data->enable;
 	
 		/* two cases: easy case is with xstep <= 0x10000 */
 		if (xstep >= -0x10000 && xstep <= 0x10000)
@@ -669,12 +663,12 @@ public class turbo
 			{
 				/* if the sprite intersects this scanline, draw it */
 				data = &sprite_params[i];
-				if (scanline >= data.miny && scanline < data.maxy)
+				if (scanline >= data->miny && scanline < data->maxy)
 					draw_one_sprite(data, dest, edest, xclip, scanline);
 	
 				/* if the sprite intersects this scanline, draw it */
 				data = &sprite_params[8 + i];
-				if (scanline >= data.miny && scanline < data.maxy)
+				if (scanline >= data->miny && scanline < data->maxy)
 					draw_one_sprite(data, dest, edest, xclip, scanline);
 			}
 		}
@@ -701,7 +695,7 @@ public class turbo
 		turbo_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = Machine.pens[(turbo_fbcol & 6) << 6];
+		colortable = Machine->pens[(turbo_fbcol & 6) << 6];
 	
 		/* loop over rows */
 		for (y = 4; y < VIEW_HEIGHT - 4; y++)
@@ -739,7 +733,7 @@ public class turbo
 					int carry = (x + i + turbo_opb) >> 8;
 	
 					/* the carry selects which inputs to use (p. 141) */
-					if (carry != 0)
+					if (carry)
 					{
 						sel	 = turbo_ipb;
 						coch = turbo_ipc >> 4;
@@ -781,7 +775,7 @@ public class turbo
 					turbo_collision |= collision_map[(enable & 7) | (slipar_acciar >> 1)];
 	
 					/* we only need to continue if we're actually drawing */
-					if (bitmap != 0)
+					if (bitmap)
 					{
 						int bacol, red, grn, blu, priority, forebits, mx;
 	
@@ -815,7 +809,7 @@ public class turbo
 			}
 	
 			/* render the scanline */
-			if (bitmap != 0)
+			if (bitmap)
 				draw_scanline8(bitmap, 8, y, VIEW_WIDTH - 8, &scanline[8], colortable, -1);
 		}
 	}
@@ -831,7 +825,7 @@ public class turbo
 		subroc3d_update_sprite_info();
 	
 		/* determine the color offset */
-		colortable = Machine.pens[(subroc3d_col & 15) << 5];
+		colortable = Machine->pens[(subroc3d_col & 15) << 5];
 	
 		/* loop over rows */
 		for (y = 0; y < VIEW_HEIGHT; y++)
@@ -870,7 +864,7 @@ public class turbo
 					mux = mplb ? sprite_priority_base[sprite_enable[x + i]] : 0;
 	
 					/* mux3 selects either sprite or foreground */
-					if ((mux & 0x20) != 0)
+					if (mux & 0x20)
 						bits = (sprite_buffer[x + i] >> (mux & 0x1c)) & 0x0f;
 					else
 						bits = forebits;
@@ -936,7 +930,7 @@ public class turbo
 					/* final result is based on sprite/foreground/star priorities */
 					if (!(forepri & 0x80))
 						bits = 1024 | forebits;
-					else if ((mux & 0x20) != 0)
+					else if (mux & 0x20)
 						bits = (buckrog_obch << 7) | ((mux & 0x1c) << 2) | ((sprite_buffer[x + i] >> (mux & 0x1c)) & 0x0f);
 					else if (!(forepri & 0x40))
 						bits = 1024 | forebits;
@@ -950,7 +944,7 @@ public class turbo
 			}
 	
 			/* render the scanline */
-			draw_scanline16(bitmap, 0, y, VIEW_WIDTH, scanline, Machine.pens, -1);
+			draw_scanline16(bitmap, 0, y, VIEW_WIDTH, scanline, Machine->pens, -1);
 		}
 	}
 	
@@ -962,17 +956,15 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_turbo  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_turbo  = new VideoEofHandlerPtr() { public void handler(){
 		/* only do collision checking if we didn't draw */
-		if (drew_frame == 0)
+		if (!drew_frame)
 			turbo_render(NULL);
 		drew_frame = 0;
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_turbo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* perform the actual drawing */
 		turbo_render(bitmap);
 	
@@ -984,8 +976,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_subroc3d  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* perform the actual drawing */
 		subroc3d_render(bitmap);
 	
@@ -994,8 +985,7 @@ public class turbo
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_buckrog  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* perform the actual drawing */
 		buckrog_render(bitmap);
 	
@@ -1011,8 +1001,7 @@ public class turbo
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr buckrog_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buckrog_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buckrog_bitmap_ram[offset] = data & 1;
 	} };
 }

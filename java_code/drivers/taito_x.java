@@ -225,7 +225,7 @@ its place. The East Technology games on this hardware follow Daisenpu.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -316,8 +316,7 @@ public class taito_x
 		cpu_setbank( 2, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 3;
 		reset_sound_region();
 	} };
@@ -581,7 +580,7 @@ public class taito_x
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_TILT );
 	
 	
-	static InputPortPtr input_ports_superman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superman )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -639,7 +638,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_twinhawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twinhawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twinhawk )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -690,7 +689,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_twinhwku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twinhwku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twinhwku )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -741,7 +740,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_daisenpu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_daisenpu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( daisenpu )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -792,7 +791,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gigandes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gigandes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gigandes )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -857,7 +856,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ballbros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ballbros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ballbros )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -924,7 +923,7 @@ public class taito_x
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kyustrkr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kyustrkr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kyustrkr )
 		PORT_START();  /* DSW A / DSW B */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -1085,8 +1084,7 @@ public class taito_x
 	
 	/**************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_superman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( superman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1114,13 +1112,10 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_daisenpu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( daisenpu )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1148,12 +1143,9 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gigandes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gigandes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1181,13 +1173,10 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ballbros_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ballbros = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ballbros )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz? */
@@ -1216,9 +1205,7 @@ public class taito_x
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ballbros_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1368,23 +1355,21 @@ public class taito_x
 		ROM_LOAD( "m-8-4.u1",     0x00000, 0x20000, CRC(d3f6047a) SHA1(0db6d762bbe2d68cddf30e06125b904e1021b96d) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_taitox  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_taitox  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("taitof2", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
-	public static DriverInitHandlerPtr init_kyustrkr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kyustrkr  = new DriverInitHandlerPtr() { public void handler(){
 		init_taitox();
 		install_mem_write16_handler (0, 0x900000, 0x90000f, kyustrkr_input_w);
 	} };
 	
-	public static GameDriver driver_superman	   = new GameDriver("1988"	,"superman"	,"taito_x.java"	,rom_superman,null	,machine_driver_superman	,input_ports_superman	,init_taitox	,ROT0	,	"Taito Corporation", "Superman" )
-	public static GameDriver driver_twinhawk	   = new GameDriver("1989"	,"twinhawk"	,"taito_x.java"	,rom_twinhawk,null	,machine_driver_daisenpu	,input_ports_twinhawk	,init_taitox	,ROT270	,	"Taito Corporation Japan", "Twin Hawk (World)" )
-	public static GameDriver driver_twinhwku	   = new GameDriver("1989"	,"twinhwku"	,"taito_x.java"	,rom_twinhwku,driver_twinhawk	,machine_driver_daisenpu	,input_ports_twinhwku	,init_taitox	,ROT270	,	"Taito America Corporation", "Twin Hawk (US)" )
-	public static GameDriver driver_daisenpu	   = new GameDriver("1989"	,"daisenpu"	,"taito_x.java"	,rom_daisenpu,driver_twinhawk	,machine_driver_daisenpu	,input_ports_daisenpu	,init_taitox	,ROT270	,	"Taito Corporation", "Daisenpu (Japan)" )
-	public static GameDriver driver_gigandes	   = new GameDriver("1989"	,"gigandes"	,"taito_x.java"	,rom_gigandes,null	,machine_driver_gigandes	,input_ports_gigandes	,init_taitox	,ROT0	,	"East Technology", "Gigandes" )
-	public static GameDriver driver_kyustrkr	   = new GameDriver("1989"	,"kyustrkr"	,"taito_x.java"	,rom_kyustrkr,null	,machine_driver_ballbros	,input_ports_kyustrkr	,init_kyustrkr	,ROT180	,	"East Technology", "Last Striker / Kyuukyoku no Striker" )
-	public static GameDriver driver_ballbros	   = new GameDriver("1992"	,"ballbros"	,"taito_x.java"	,rom_ballbros,null	,machine_driver_ballbros	,input_ports_ballbros	,init_taitox	,ROT0	,	"East Technology", "Balloon Brothers" )
+	GAME( 1988, superman, 0,        superman, superman, taitox,   ROT0,   "Taito Corporation", "Superman" )
+	GAME( 1989, twinhawk, 0,        daisenpu, twinhawk, taitox,   ROT270, "Taito Corporation Japan", "Twin Hawk (World)" )
+	GAME( 1989, twinhwku, twinhawk, daisenpu, twinhwku, taitox,   ROT270, "Taito America Corporation", "Twin Hawk (US)" )
+	GAME( 1989, daisenpu, twinhawk, daisenpu, daisenpu, taitox,   ROT270, "Taito Corporation", "Daisenpu (Japan)" )
+	GAME( 1989, gigandes, 0,        gigandes, gigandes, taitox,   ROT0,   "East Technology", "Gigandes" )
+	GAME( 1989, kyustrkr, 0,        ballbros, kyustrkr, kyustrkr, ROT180, "East Technology", "Last Striker / Kyuukyoku no Striker" )
+	GAME( 1992, ballbros, 0,        ballbros, ballbros, taitox,   ROT0,   "East Technology", "Balloon Brothers" )
 }

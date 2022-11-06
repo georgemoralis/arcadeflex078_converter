@@ -47,7 +47,7 @@ Sound: YM2203 and YM3526 driven by 6809.  Sound added by Bryan McPhail, 1/4/98.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,15 +61,13 @@ public class brkthru
 	
 	static int nmi_enable;
 	
-	public static WriteHandlerPtr brkthru_1803_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brkthru_1803_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 = NMI enable */
 		nmi_enable = ~data & 1;
 	
 		/* bit 1 = ? maybe IRQ acknowledge */
 	} };
-	public static WriteHandlerPtr darwin_0803_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darwin_0803_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 = NMI enable */
 		/*nmi_enable = ~data & 1;*/
 		logerror("0803 %02X\n",data);
@@ -77,8 +75,7 @@ public class brkthru
 		/* bit 1 = ? maybe IRQ acknowledge */
 	} };
 	
-	public static WriteHandlerPtr brkthru_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brkthru_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -166,11 +163,10 @@ public class brkthru
 	
 	
 	
-	public static InterruptHandlerPtr brkthru_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr brkthru_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
-			if (nmi_enable != 0)
+			if (nmi_enable)
 				cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else
@@ -181,7 +177,7 @@ public class brkthru
 		}
 	} };
 	
-	static InputPortPtr input_ports_brkthru = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brkthru = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brkthru )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -245,7 +241,7 @@ public class brkthru
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Cocktail") );		// "Cocktail 2 Players"
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_brkthruj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brkthruj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brkthruj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -307,7 +303,7 @@ public class brkthru
 		PORT_DIPSETTING(    0xc0, DEF_STR( "Cocktail") );		// "Cocktail 2 Players"
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_darwin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darwin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darwin )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -465,8 +461,7 @@ public class brkthru
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_brkthru = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( brkthru )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz ? */
@@ -494,12 +489,9 @@ public class brkthru
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_darwin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darwin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)        /* 1.25 MHz ? */
@@ -539,9 +531,7 @@ public class brkthru
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -672,7 +662,7 @@ public class brkthru
 	
 	
 	
-	public static GameDriver driver_brkthru	   = new GameDriver("1986"	,"brkthru"	,"brkthru.java"	,rom_brkthru,null	,machine_driver_brkthru	,input_ports_brkthru	,null	,ROT0	,	"Data East USA", "Break Thru (US)" )
-	public static GameDriver driver_brkthruj	   = new GameDriver("1986"	,"brkthruj"	,"brkthru.java"	,rom_brkthruj,driver_brkthru	,machine_driver_brkthru	,input_ports_brkthruj	,null	,ROT0	,	"Data East Corporation", "Kyohkoh-Toppa (Japan)" )
-	public static GameDriver driver_darwin	   = new GameDriver("1986"	,"darwin"	,"brkthru.java"	,rom_darwin,null	,machine_driver_darwin	,input_ports_darwin	,null	,ROT270	,	"Data East Corporation", "Darwin 4078 (Japan)" )
+	GAME( 1986, brkthru,  0,       brkthru, brkthru,  0, ROT0,   "Data East USA", "Break Thru (US)" )
+	GAME( 1986, brkthruj, brkthru, brkthru, brkthruj, 0, ROT0,   "Data East Corporation", "Kyohkoh-Toppa (Japan)" )
+	GAME( 1986, darwin,   0,       darwin,  darwin,   0, ROT270, "Data East Corporation", "Darwin 4078 (Japan)" )
 }

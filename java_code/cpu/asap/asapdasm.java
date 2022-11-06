@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.asap;
 
@@ -82,7 +82,7 @@ public class asapdasm
 								return 12;
 							}
 						}
-						if (rdst != 0)
+						if (rdst)
 						sprintf(buffer, "bsr    %s,$%08x", reg[rdst], pc + ((INT32)(op << 10) >> 8));
 						else
 						sprintf(buffer, "bra    $%08x", pc + ((INT32)(op << 10) >> 8));							break;
@@ -93,9 +93,9 @@ public class asapdasm
 			case 0x07:	sprintf(buffer, "xorn%s %s,%s,%s", setcond[cond], reg[rsrc1], src2(op,0), reg[rdst]);	break;
 			case 0x08:	if (!rsrc1 && !rdst && rsrc2_iszero)
 						sprintf(buffer, "nop");	
-						else if (rsrc1 == 0)
+						else if (!rsrc1)
 						sprintf(buffer, "mov%s  %s,%s", setcond[cond], src2(op,0), reg[rdst]);
-						else if (rsrc2_iszero != 0)
+						else if (rsrc2_iszero)
 						sprintf(buffer, "mov%s  %s,%s", setcond[cond], reg[rsrc1], reg[rdst]);
 						else
 						sprintf(buffer, "add%s  %s,%s,%s", setcond[cond], reg[rsrc1], src2(op,0), reg[rdst]);	break;
@@ -106,9 +106,9 @@ public class asapdasm
 			case 0x0d:	sprintf(buffer, "andn%s %s,%s,%s", setcond[cond], reg[rsrc1], src2(op,0), reg[rdst]);	break;
 			case 0x0e:	if (!rsrc1 && !rdst && rsrc2_iszero)
 						sprintf(buffer, "nop");
-						else if (rsrc1 == 0)
+						else if (!rsrc1)
 						sprintf(buffer, "mov%s  %s,%s", setcond[cond], src2(op,0), reg[rdst]);
-						else if (rsrc2_iszero != 0)
+						else if (rsrc2_iszero)
 						sprintf(buffer, "mov%s  %s,%s", setcond[cond], reg[rsrc1], reg[rdst]);
 						else
 						sprintf(buffer, "or%s   %s,%s,%s", setcond[cond], reg[rsrc1], src2(op,0), reg[rdst]);	break;
@@ -129,9 +129,9 @@ public class asapdasm
 			case 0x1d:	sprintf(buffer, "putps  %s", src2(op,0));												break;
 			case 0x1e:	if (rdst && rsrc2_iszero)
 						sprintf(buffer, "jsr%s  %s,%s", setcond[cond], reg[rdst], reg[rsrc1]);
-						else if (rdst != 0)
+						else if (rdst)
 						sprintf(buffer, "jsr%s  %s,%s[%s]", setcond[cond], reg[rdst], reg[rsrc1], src2(op,2));
-						else if (rsrc2_iszero != 0)
+						else if (rsrc2_iszero)
 						sprintf(buffer, "jmp%s  %s", setcond[cond], reg[rsrc1]);
 						else
 						sprintf(buffer, "jmp%s  %s[%s]", setcond[cond], reg[rsrc1], src2(op,2));				break;

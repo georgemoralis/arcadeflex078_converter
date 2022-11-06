@@ -20,7 +20,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,21 +34,18 @@ public class zodiack
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_zodiack  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zodiack  = new MachineInitHandlerPtr() { public void handler(){
 		percuss_hardware = 0;
 		machine_init_espial();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_percuss  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_percuss  = new MachineInitHandlerPtr() { public void handler(){
 		percuss_hardware = 1;
 		machine_init_espial();
 	} };
 	
 	
-	public static WriteHandlerPtr zodiack_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zodiack_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bit 0-1 - coin counters */
 		coin_counter_w(0, data & 0x02);
 		coin_counter_w(1, data & 0x01);
@@ -119,7 +116,7 @@ public class zodiack
 	
 	
 	
-	static InputPortPtr input_ports_zodiack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zodiack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zodiack )
 		PORT_START();       /* DSW0 */  /* never read in this game */
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED );
 	
@@ -169,7 +166,7 @@ public class zodiack
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dogfight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dogfight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dogfight )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x00, DEF_STR( "Coin_B") );
 		PORT_DIPSETTING(    0x05, DEF_STR( "2C_1C") );
@@ -242,7 +239,7 @@ public class zodiack
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_moguchan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moguchan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moguchan )
 		PORT_START();       /* DSW0 */
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
@@ -292,7 +289,7 @@ public class zodiack
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_percuss = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_percuss = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( percuss )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -361,7 +358,7 @@ public class zodiack
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bounty = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bounty = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bounty )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -502,8 +499,7 @@ public class zodiack
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_zodiack = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zodiack )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4.00 MHz??? */
@@ -534,25 +530,17 @@ public class zodiack
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_percuss = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( percuss )
 		MDRV_IMPORT_FROM(zodiack)
 		MDRV_MACHINE_INIT(percuss)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_moguchan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moguchan )
 		MDRV_IMPORT_FROM(zodiack)
 		MDRV_MACHINE_INIT(percuss)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -662,9 +650,9 @@ public class zodiack
 	
 	
 	
-	public static GameDriver driver_zodiack	   = new GameDriver("1983"	,"zodiack"	,"zodiack.java"	,rom_zodiack,null	,machine_driver_zodiack	,input_ports_zodiack	,null	,ROT270	,	"Orca (Esco Trading Co)", "Zodiack", GAME_IMPERFECT_COLORS )	/* bullet color needs to be verified */
-	public static GameDriver driver_dogfight	   = new GameDriver("1983"	,"dogfight"	,"zodiack.java"	,rom_dogfight,null	,machine_driver_zodiack	,input_ports_dogfight	,null	,ROT270	,	"[Orca] Thunderbolt", "Dog Fight (Thunderbolt)", GAME_IMPERFECT_COLORS )	/* bullet color needs to be verified */
-	public static GameDriver driver_moguchan	   = new GameDriver("1982"	,"moguchan"	,"zodiack.java"	,rom_moguchan,null	,machine_driver_percuss	,input_ports_moguchan	,null	,ROT270	,	"Orca (Eastern Commerce Inc. license) (bootleg?)",  /* this is in the ROM at $0b5c */ "Moguchan", GAME_WRONG_COLORS )
-	public static GameDriver driver_percuss	   = new GameDriver("1981"	,"percuss"	,"zodiack.java"	,rom_percuss,null	,machine_driver_percuss	,input_ports_percuss	,null	,ROT270	,	"Orca", "The Percussor" )
-	public static GameDriver driver_bounty	   = new GameDriver("1982"	,"bounty"	,"zodiack.java"	,rom_bounty,null	,machine_driver_percuss	,input_ports_bounty	,null	,ROT180	,	"Orca", "The Bounty" )
+	GAMEX(1983, zodiack,  0, zodiack, zodiack,  0, ROT270, "Orca (Esco Trading Co)", "Zodiack", GAME_IMPERFECT_COLORS )	/* bullet color needs to be verified */
+	GAMEX(1983, dogfight, 0, zodiack, dogfight, 0, ROT270, "[Orca] Thunderbolt", "Dog Fight (Thunderbolt)", GAME_IMPERFECT_COLORS )	/* bullet color needs to be verified */
+	GAMEX(1982, moguchan, 0, percuss, moguchan, 0, ROT270, "Orca (Eastern Commerce Inc. license) (bootleg?)",  /* this is in the ROM at $0b5c */ "Moguchan", GAME_WRONG_COLORS )
+	GAME( 1981, percuss,  0, percuss, percuss,  0, ROT270, "Orca", "The Percussor" )
+	GAME( 1982, bounty,   0, percuss, bounty,   0, ROT180, "Orca", "The Bounty" )
 }

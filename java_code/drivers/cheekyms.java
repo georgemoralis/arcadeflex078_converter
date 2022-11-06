@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,8 +53,7 @@ public class cheekyms
 	};
 	
 	
-	public static InterruptHandlerPtr cheekyms_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr cheekyms_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(2) & 1)	/* Coin */
 			nmi_line_pulse();
 		else
@@ -62,7 +61,7 @@ public class cheekyms
 	} };
 	
 	
-	static InputPortPtr input_ports_cheekyms = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cheekyms = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cheekyms )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "2" );
@@ -147,8 +146,7 @@ public class cheekyms
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_cheekyms = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cheekyms )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,5000000/2)  /* 2.5 MHz */
@@ -173,9 +171,7 @@ public class cheekyms
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -209,5 +205,5 @@ public class cheekyms
 	
 	
 	
-	public static GameDriver driver_cheekyms	   = new GameDriver("1980?"	,"cheekyms"	,"cheekyms.java"	,rom_cheekyms,null	,machine_driver_cheekyms	,input_ports_cheekyms	,null	,ROT270	,	"Universal", "Cheeky Mouse", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1980?, cheekyms, 0, cheekyms, cheekyms, 0, ROT270, "Universal", "Cheeky Mouse", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND )
 }

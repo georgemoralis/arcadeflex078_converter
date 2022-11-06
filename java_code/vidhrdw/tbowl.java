@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class tbowl
 		SET_TILE_INFO(0,tileno,col,0)
 	}
 	
-	public static WriteHandlerPtr tbowl_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowl_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_txvideoram[offset] != data)
 		{
 			tbowl_txvideoram[offset] = data;
@@ -60,8 +59,7 @@ public class tbowl
 		SET_TILE_INFO(1,tileno,col,0)
 	}
 	
-	public static WriteHandlerPtr tbowl_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowl_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_bg2videoram[offset] != data)
 		{
 			tbowl_bg2videoram[offset] = data;
@@ -69,29 +67,25 @@ public class tbowl
 		}
 	} };
 	
-	WRITE_HANDLER (tbowl_bgxscroll_lo)
-	{
+	public static WriteHandlerPtr tbowl_bgxscroll_lo = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_xscroll = (tbowl_xscroll & 0xff00) | data;
 	tilemap_set_scrollx(bg_tilemap, 0, tbowl_xscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bgxscroll_hi)
-	{
+	public static WriteHandlerPtr tbowl_bgxscroll_hi = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_xscroll = (tbowl_xscroll & 0x00ff) | (data << 8);
 	tilemap_set_scrollx(bg_tilemap, 0, tbowl_xscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bgyscroll_lo)
-	{
+	public static WriteHandlerPtr tbowl_bgyscroll_lo = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_yscroll = (tbowl_yscroll & 0xff00) | data;
 	tilemap_set_scrolly(bg_tilemap, 0, tbowl_yscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bgyscroll_hi)
-	{
+	public static WriteHandlerPtr tbowl_bgyscroll_hi = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_yscroll = (tbowl_yscroll & 0x00ff) | (data << 8);
 	tilemap_set_scrolly(bg_tilemap, 0, tbowl_yscroll );
-	}
+	} };
 	
 	/* Middle BG Layer (bg2) Tilemaps */
 	
@@ -107,8 +101,7 @@ public class tbowl
 		SET_TILE_INFO(2,tileno,col,0)
 	}
 	
-	public static WriteHandlerPtr tbowl_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowl_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tbowl_bgvideoram[offset] != data)
 		{
 			tbowl_bgvideoram[offset] = data;
@@ -116,29 +109,25 @@ public class tbowl
 		}
 	} };
 	
-	WRITE_HANDLER (tbowl_bg2xscroll_lo)
-	{
+	public static WriteHandlerPtr tbowl_bg2xscroll_lo = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_bg2xscroll = (tbowl_bg2xscroll & 0xff00) | data;
 	tilemap_set_scrollx(bg2_tilemap, 0, tbowl_bg2xscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bg2xscroll_hi)
-	{
+	public static WriteHandlerPtr tbowl_bg2xscroll_hi = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_bg2xscroll = (tbowl_bg2xscroll & 0x00ff) | (data << 8);
 	tilemap_set_scrollx(bg2_tilemap, 0, tbowl_bg2xscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bg2yscroll_lo)
-	{
+	public static WriteHandlerPtr tbowl_bg2yscroll_lo = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_bg2yscroll = (tbowl_bg2yscroll & 0xff00) | data;
 	tilemap_set_scrolly(bg2_tilemap, 0, tbowl_bg2yscroll );
-	}
+	} };
 	
-	WRITE_HANDLER (tbowl_bg2yscroll_hi)
-	{
+	public static WriteHandlerPtr tbowl_bg2yscroll_hi = new WriteHandlerPtr() {public void handler(int offset, int data){
 	tbowl_bg2yscroll = (tbowl_bg2yscroll & 0x00ff) | (data << 8);
 	tilemap_set_scrolly(bg2_tilemap, 0, tbowl_bg2yscroll );
-	}
+	} };
 	
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect)
 	{
@@ -180,7 +169,7 @@ public class tbowl
 					{
 						int sx = xpos + 8*(flipx?(sizex-1-x):x);
 						int sy = ypos + 8*(flipy?(sizey-1-y):y);
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -188,7 +177,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -196,7 +185,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -204,7 +193,7 @@ public class tbowl
 								cliprect,TRANSPARENCY_PEN,0 );
 	
 						/* wraparound */
-						drawgfx(bitmap,Machine.gfx[3],
+						drawgfx(bitmap,Machine->gfx[3],
 								code + layout[y][x],
 								color,
 								flipx,flipy,
@@ -223,8 +212,7 @@ public class tbowl
 	
 	/*** Video Start / Update ***/
 	
-	public static VideoStartHandlerPtr video_start_tbowl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tbowl  = new VideoStartHandlerPtr() { public int handler(){
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,128,32);
 		bg2_tilemap = tilemap_create(get_bg2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,128,32);
@@ -240,8 +228,7 @@ public class tbowl
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,0x100,cliprect); /* is there a register controling the colour? looks odd when screen is blank */
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);

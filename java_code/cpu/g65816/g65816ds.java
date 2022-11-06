@@ -18,7 +18,7 @@ author (Karl Stenerud) at karl@higashiyama-unet.ocn.ne.jp.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.g65816;
 
@@ -175,7 +175,7 @@ public class g65816ds
 	
 	   val &= 0xff;
 	
-	   if ((val & 0x80) != 0)
+	   if(val & 0x80)
 	      sprintf(str, "-$%x", (0-val) & 0x7f);
 	   else
 	      sprintf(str, "$%x", val & 0x7f);
@@ -189,7 +189,7 @@ public class g65816ds
 	
 	   val &= 0xffff;
 	
-	   if ((val & 0x8000) != 0)
+	   if(val & 0x8000)
 	      sprintf(str, "-$%x", (0-val) & 0x7fff);
 	   else
 	      sprintf(str, "$%x", val & 0x7fff);
@@ -213,10 +213,10 @@ public class g65816ds
 		instruction = read_8(address);
 		opcode = g_opcodes + instruction;
 	
-		strcpy(buff, g_opnames[opcode.name]);
+		strcpy(buff, g_opnames[opcode->name]);
 		ptr = buff + strlen(buff);
 	
-		switch(opcode.ea)
+		switch(opcode->ea)
 		{
 			case IMP :
 				break;
@@ -235,7 +235,7 @@ public class g65816ds
 				length += 2;
 				break;
 			case IMM :
-				if((opcode.flag == M && !m_flag) || (opcode.flag == X && !x_flag))
+				if((opcode->flag == M && !m_flag) || (opcode->flag == X && !x_flag))
 				{
 					sprintf(ptr, " #$%04x", read_16(address+1));
 					length += 2;

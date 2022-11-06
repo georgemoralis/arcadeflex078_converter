@@ -48,7 +48,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -63,8 +63,7 @@ public class segar
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr segar_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr segar_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(5) & 1)       /* get status of the F2 key */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);	/* trigger self test */
 		else
@@ -96,8 +95,7 @@ public class segar
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr segar_ports_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr segar_ports_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int dip1, dip2;
 	
 		dip1 = input_port_6_r.handler(offset);
@@ -132,8 +130,7 @@ public class segar
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sindbadm_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sindbadm_soundport_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 		/* spin for a while to let the Z80 read the command */
@@ -142,16 +139,14 @@ public class segar
 	
 	
 	/* the data lines are flipped */
-	public static WriteHandlerPtr sindbadm_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sindbadm_SN76496_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int flipped = ((data >> 7) & 0x01) | ((data >> 5) & 0x02) | ((data >> 3) & 0x04) | ((data >> 1) & 0x08) |
 				      ((data << 1) & 0x10) | ((data << 3) & 0x20) | ((data << 5) & 0x40) | ((data << 7) & 0x80);
 		SN76496_0_w(offset, flipped);
 	} };
 	
 	
-	public static WriteHandlerPtr sindbadm_SN76496_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sindbadm_SN76496_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int flipped = ((data >> 7) & 0x01) | ((data >> 5) & 0x02) | ((data >> 3) & 0x04) | ((data >> 1) & 0x08) |
 				      ((data << 1) & 0x10) | ((data << 3) & 0x20) | ((data << 5) & 0x40) | ((data << 7) & 0x80);
 		SN76496_1_w(offset, flipped);
@@ -362,7 +357,7 @@ public class segar
 		PORT_DIPSETTING(    0x10, DEF_STR( "1C_6C") );
 	
 	
-	static InputPortPtr input_ports_astrob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astrob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astrob )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -431,7 +426,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_astrob2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astrob2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astrob2 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -500,7 +495,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_astrob1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astrob1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astrob1 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -569,7 +564,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_005 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_005 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 005 )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -640,7 +635,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_monsterb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_monsterb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( monsterb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -708,7 +703,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spaceod = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spaceod = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spaceod )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -777,7 +772,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pignewt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pignewt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pignewt )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -847,7 +842,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pignewta = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pignewta = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pignewta )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -914,7 +909,7 @@ public class segar
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sindbadm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sindbadm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sindbadm )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -1163,8 +1158,7 @@ public class segar
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_segar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( segar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 3867120)
@@ -1186,13 +1180,10 @@ public class segar
 		MDRV_PALETTE_INIT(segar)
 		MDRV_VIDEO_START(segar)
 		MDRV_VIDEO_UPDATE(segar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_astrob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( astrob )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1205,13 +1196,10 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, astrob_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spaceod = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spaceod )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1226,26 +1214,20 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, spaceod_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_005 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 005 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_005)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_monsterb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( monsterb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1267,13 +1249,10 @@ public class segar
 		MDRV_SOUND_ADD(SAMPLES, monsterb_samples_interface)
 		MDRV_SOUND_ADD(TMS36XX, monsterb_tms3617_interface)
 		MDRV_SOUND_ADD(DAC,     monsterb_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pignewt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pignewt )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(segar)
@@ -1285,13 +1264,10 @@ public class segar
 	
 		MDRV_VIDEO_START(monsterb)
 		MDRV_VIDEO_UPDATE(sindbadm)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sindbadm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sindbadm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -1321,9 +1297,7 @@ public class segar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1647,8 +1621,7 @@ public class segar
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_astrob  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_astrob  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0062 security chip */
 		sega_security(62);
 	
@@ -1657,15 +1630,13 @@ public class segar
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_005  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_005  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0070 security chip */
 		sega_security(70);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_monsterb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_monsterb  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0082 security chip */
 		sega_security(82);
 	
@@ -1674,8 +1645,7 @@ public class segar
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_spaceod  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spaceod  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0063 security chip */
 		sega_security(63);
 	
@@ -1688,8 +1658,7 @@ public class segar
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_pignewt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pignewt  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0063? security chip */
 		sega_security(63);
 	
@@ -1699,8 +1668,7 @@ public class segar
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sindbadm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sindbadm  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses an encrypted CPU */
 		sindbadm_decode();
 	} };
@@ -1713,13 +1681,13 @@ public class segar
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_astrob	   = new GameDriver("1981"	,"astrob"	,"segar.java"	,rom_astrob,null	,machine_driver_astrob	,input_ports_astrob	,init_astrob	,ROT270	,	"Sega", "Astro Blaster (version 3)" )
-	public static GameDriver driver_astrob2	   = new GameDriver("1981"	,"astrob2"	,"segar.java"	,rom_astrob2,driver_astrob	,machine_driver_astrob	,input_ports_astrob2	,init_astrob	,ROT270	,	"Sega", "Astro Blaster (version 2)" )
-	public static GameDriver driver_astrob1	   = new GameDriver("1981"	,"astrob1"	,"segar.java"	,rom_astrob1,driver_astrob	,machine_driver_astrob	,input_ports_astrob1	,init_astrob	,ROT270	,	"Sega", "Astro Blaster (version 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_005	   = new GameDriver("1981"	,"005"	,"segar.java"	,rom_005,null	,machine_driver_005	,input_ports_005	,init_005	,ROT270	,	"Sega", "005", GAME_NO_SOUND )
-	public static GameDriver driver_monsterb	   = new GameDriver("1982"	,"monsterb"	,"segar.java"	,rom_monsterb,null	,machine_driver_monsterb	,input_ports_monsterb	,init_monsterb	,ROT270	,	"Sega", "Monster Bash" )
-	public static GameDriver driver_spaceod	   = new GameDriver("1981"	,"spaceod"	,"segar.java"	,rom_spaceod,null	,machine_driver_spaceod	,input_ports_spaceod	,init_spaceod	,ROT270	,	"Sega", "Space Odyssey" )
-	public static GameDriver driver_pignewt	   = new GameDriver("1983"	,"pignewt"	,"segar.java"	,rom_pignewt,null	,machine_driver_pignewt	,input_ports_pignewt	,init_pignewt	,ROT270	,	"Sega", "Pig Newton (version C)", GAME_NO_SOUND )
-	public static GameDriver driver_pignewta	   = new GameDriver("1983"	,"pignewta"	,"segar.java"	,rom_pignewta,driver_pignewt	,machine_driver_pignewt	,input_ports_pignewta	,init_pignewt	,ROT270	,	"Sega", "Pig Newton (version A)", GAME_NO_SOUND )
-	public static GameDriver driver_sindbadm	   = new GameDriver("1983"	,"sindbadm"	,"segar.java"	,rom_sindbadm,null	,machine_driver_sindbadm	,input_ports_sindbadm	,init_sindbadm	,ROT270	,	"Sega", "Sindbad Mystery" )
+	GAME( 1981, astrob,   0,       astrob,   astrob,   astrob,   ROT270, "Sega", "Astro Blaster (version 3)" )
+	GAME( 1981, astrob2,  astrob,  astrob,   astrob2,  astrob,   ROT270, "Sega", "Astro Blaster (version 2)" )
+	GAMEX(1981, astrob1,  astrob,  astrob,   astrob1,  astrob,   ROT270, "Sega", "Astro Blaster (version 1)", GAME_NOT_WORKING )
+	GAMEX(1981, 005,      0,       005,      005,      005,      ROT270, "Sega", "005", GAME_NO_SOUND )
+	GAME( 1982, monsterb, 0,       monsterb, monsterb, monsterb, ROT270, "Sega", "Monster Bash" )
+	GAME( 1981, spaceod,  0,       spaceod,  spaceod,  spaceod,  ROT270, "Sega", "Space Odyssey" )
+	GAMEX(1983, pignewt,  0,       pignewt,  pignewt,  pignewt,  ROT270, "Sega", "Pig Newton (version C)", GAME_NO_SOUND )
+	GAMEX(1983, pignewta, pignewt, pignewt,  pignewta, pignewt,  ROT270, "Sega", "Pig Newton (version A)", GAME_NO_SOUND )
+	GAME( 1983, sindbadm, 0,       sindbadm, sindbadm, sindbadm, ROT270, "Sega", "Sindbad Mystery" )
 }

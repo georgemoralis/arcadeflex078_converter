@@ -10,7 +10,7 @@ Markham (c) 1983 Sun Electronics
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,18 +24,15 @@ public class markham
 	/****************************************************************************/
 	
 	
-	public static WriteHandlerPtr markham_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr markham_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		markham_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr markham_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr markham_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return markham_sharedram[offset];
 	} };
 	
-	public static ReadHandlerPtr markham_e004_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr markham_e004_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
@@ -103,7 +100,7 @@ public class markham
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_markham = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_markham = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( markham )
 		PORT_START();   /* dsw1 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -233,8 +230,7 @@ public class markham
 		{ 75, 75 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_markham = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( markham )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2) /* 4.000MHz */
@@ -263,9 +259,7 @@ public class markham
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -298,5 +292,5 @@ public class markham
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_markham	   = new GameDriver("1983"	,"markham"	,"markham.java"	,rom_markham,null	,machine_driver_markham	,input_ports_markham	,null	,ROT0	,	"Sun Electronics", "Markham" )
+	GAME( 1983, markham, 0, markham, markham, 0, ROT0, "Sun Electronics", "Markham" )
 }

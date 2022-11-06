@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,7 @@ public class route16
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_route16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_route16  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		route16_color_prom = color_prom;	/* we'll need this later */
 	} };
 	
@@ -51,8 +50,7 @@ public class route16
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_route16  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_route16  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -74,8 +72,7 @@ public class route16
 	/***************************************************************************
 	  route16_out0_w
 	***************************************************************************/
-	public static WriteHandlerPtr route16_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr route16_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_write = 0;
 	
 		if (data == last_write) return;
@@ -93,8 +90,7 @@ public class route16
 	/***************************************************************************
 	  route16_out1_w
 	***************************************************************************/
-	public static WriteHandlerPtr route16_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr route16_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_write = 0;
 	
 		if (data == last_write) return;
@@ -116,10 +112,9 @@ public class route16
 	  Handle Stratovox's extra sound effects.
 	
 	***************************************************************************/
-	public static WriteHandlerPtr stratvox_sn76477_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stratvox_sn76477_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* get out for Route 16 */
-		if (route16_hardware != 0) return;
+		if (route16_hardware) return;
 	
 	    /***************************************************************
 	     * AY8910 output bits are connected to...
@@ -141,16 +136,14 @@ public class route16
 	/***************************************************************************
 	  route16_sharedram_r
 	***************************************************************************/
-	public static ReadHandlerPtr route16_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr route16_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return route16_sharedram[offset];
 	} };
 	
 	/***************************************************************************
 	  route16_sharedram_w
 	***************************************************************************/
-	public static WriteHandlerPtr route16_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr route16_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		route16_sharedram[offset] = data;
 	
 		// 4313-4319 are used in Route 16 as triggers to wake the other CPU
@@ -171,8 +164,7 @@ public class route16
 	***************************************************************************/
 	static int speakres_vrx;
 	
-	public static ReadHandlerPtr speakres_in3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speakres_in3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int bit2=4, bit1=2, bit0=1;
 	
 		/* just using a counter, the constants are the number of reads
@@ -186,8 +178,7 @@ public class route16
 		return 0xf8|bit2|bit1|bit0;
 	} };
 	
-	public static WriteHandlerPtr speakres_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speakres_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speakres_vrx=0;
 	} };
 	
@@ -195,37 +186,33 @@ public class route16
 	/***************************************************************************
 	  route16_videoram1_r
 	***************************************************************************/
-	public static ReadHandlerPtr route16_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return route16_videoram1.read(offset);
+	public static ReadHandlerPtr route16_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return route16_videoram1[offset];
 	} };
 	
 	/***************************************************************************
 	  route16_videoram2_r
 	***************************************************************************/
-	public static ReadHandlerPtr route16_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return route16_videoram1.read(offset);
+	public static ReadHandlerPtr route16_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return route16_videoram1[offset];
 	} };
 	
 	/***************************************************************************
 	  route16_videoram1_w
 	***************************************************************************/
-	public static WriteHandlerPtr route16_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		route16_videoram1.write(data,data);
+	public static WriteHandlerPtr route16_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		route16_videoram1[offset] = data;
 	
-		common_videoram_w.handler(offset, data, 0, tmpbitmap1);
+		common_videoram_w(offset, data, 0, tmpbitmap1);
 	} };
 	
 	/***************************************************************************
 	  route16_videoram2_w
 	***************************************************************************/
-	public static WriteHandlerPtr route16_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		route16_videoram2.write(data,data);
+	public static WriteHandlerPtr route16_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		route16_videoram2[offset] = data;
 	
-		common_videoram_w.handler(offset, data, 4, tmpbitmap2);
+		common_videoram_w(offset, data, 4, tmpbitmap2);
 	} };
 	
 	/***************************************************************************
@@ -239,7 +226,7 @@ public class route16
 		x = ((offset & 0x3f) << 2);
 		y = (offset & 0xffc0) >> 6;
 	
-		if (video_flip != 0)
+		if (video_flip)
 		{
 			x = 255 - x;
 			y = 255 - y;
@@ -250,19 +237,19 @@ public class route16
 		color2 = ((data & 0x20) >> 4) | ((data & 0x02) >> 1);
 		color1 = ((data & 0x10) >> 3) | ((data & 0x01)     );
 	
-		if (video_flip != 0)
+		if (video_flip)
 		{
-			plot_pixel(bitmap, x  , y, Machine.pens[color1 | coloroffset]);
-			plot_pixel(bitmap, x-1, y, Machine.pens[color2 | coloroffset]);
-			plot_pixel(bitmap, x-2, y, Machine.pens[color3 | coloroffset]);
-			plot_pixel(bitmap, x-3, y, Machine.pens[color4 | coloroffset]);
+			plot_pixel(bitmap, x  , y, Machine->pens[color1 | coloroffset]);
+			plot_pixel(bitmap, x-1, y, Machine->pens[color2 | coloroffset]);
+			plot_pixel(bitmap, x-2, y, Machine->pens[color3 | coloroffset]);
+			plot_pixel(bitmap, x-3, y, Machine->pens[color4 | coloroffset]);
 		}
 		else
 		{
-			plot_pixel(bitmap, x  , y, Machine.pens[color1 | coloroffset]);
-			plot_pixel(bitmap, x+1, y, Machine.pens[color2 | coloroffset]);
-			plot_pixel(bitmap, x+2, y, Machine.pens[color3 | coloroffset]);
-			plot_pixel(bitmap, x+3, y, Machine.pens[color4 | coloroffset]);
+			plot_pixel(bitmap, x  , y, Machine->pens[color1 | coloroffset]);
+			plot_pixel(bitmap, x+1, y, Machine->pens[color2 | coloroffset]);
+			plot_pixel(bitmap, x+2, y, Machine->pens[color3 | coloroffset]);
+			plot_pixel(bitmap, x+3, y, Machine->pens[color4 | coloroffset]);
 		}
 	}
 	
@@ -273,9 +260,8 @@ public class route16
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_route16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-	    if (video_remap_1 != 0)
+	public static VideoUpdateHandlerPtr video_update_route16  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	    if (video_remap_1)
 		{
 			modify_pen(0, video_color_select_1 + 0);
 			modify_pen(1, video_color_select_1 + 1);
@@ -283,7 +269,7 @@ public class route16
 			modify_pen(3, video_color_select_1 + 3);
 		}
 	
-		if (video_remap_2 != 0)
+		if (video_remap_2)
 		{
 			modify_pen(4, video_color_select_2 + 0);
 			modify_pen(5, video_color_select_2 + 1);
@@ -299,8 +285,8 @@ public class route16
 			// redraw bitmaps
 			for (offs = 0; offs < route16_videoram_size; offs++)
 			{
-				route16_videoram1_w(offs, route16_videoram1.read(offs));
-				route16_videoram2_w(offs, route16_videoram2.read(offs));
+				route16_videoram1_w(offs, route16_videoram1[offs]);
+				route16_videoram2_w(offs, route16_videoram2[offs]);
 			}
 		}
 	
@@ -308,14 +294,14 @@ public class route16
 		video_remap_2 = 0;
 	
 	
-		if (video_disable_2 == 0)
+		if (!video_disable_2)
 		{
 			copybitmap(bitmap,tmpbitmap2,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 		}
 	
-		if (video_disable_1 == 0)
+		if (!video_disable_1)
 		{
-			if (video_disable_2 != 0)
+			if (video_disable_2)
 				copybitmap(bitmap,tmpbitmap1,0,0,0,0,Machine.visible_area,TRANSPARENCY_NONE,0);
 			else
 				copybitmap(bitmap,tmpbitmap1,0,0,0,0,Machine.visible_area,TRANSPARENCY_COLOR,0);

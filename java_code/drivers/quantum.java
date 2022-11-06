@@ -45,7 +45,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -72,14 +72,12 @@ public class quantum
 	}
 	
 	
-	public static ReadHandlerPtr input_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) << (7 - (offset - POT0_C))) & 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr input_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(2) << (7 - (offset - POT0_C))) & 0x80;
 	} };
 	
@@ -93,7 +91,7 @@ public class quantum
 	
 	static WRITE16_HANDLER( led_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bits 0 and 1 are coin counters */
 			coin_counter_w(0, data & 2);
@@ -121,7 +119,7 @@ public class quantum
 	
 	static WRITE16_HANDLER( pokey_word_w )
 	{
-		if ((offset & 0x10) != 0) /* A5 selects chip */
+		if (offset & 0x10) /* A5 selects chip */
 			pokey2_w(offset & 0x0f, data);
 		else
 			pokey1_w(offset & 0x0f, data);
@@ -130,7 +128,7 @@ public class quantum
 	
 	static READ16_HANDLER( pokey_word_r )
 	{
-		if ((offset & 0x10) != 0)
+		if (offset & 0x10)
 			return pokey2_r(offset & 0x0f);
 		else
 			return pokey1_r(offset & 0x0f);
@@ -180,7 +178,7 @@ public class quantum
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_quantum = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quantum = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quantum )
 		PORT_START(); 		/* IN0 */
 		/* YHALT here MUST BE ALWAYS 0  */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH,IPT_SPECIAL );/* vg YHALT */
@@ -258,8 +256,7 @@ public class quantum
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_quantum = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quantum )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,6000000)
@@ -281,9 +278,7 @@ public class quantum
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -345,7 +340,7 @@ public class quantum
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_quantum	   = new GameDriver("1982"	,"quantum"	,"quantum.java"	,rom_quantum,null	,machine_driver_quantum	,input_ports_quantum	,null	,ROT270	,	"Atari", "Quantum (rev 2)" )
-	public static GameDriver driver_quantum1	   = new GameDriver("1982"	,"quantum1"	,"quantum.java"	,rom_quantum1,driver_quantum	,machine_driver_quantum	,input_ports_quantum	,null	,ROT270	,	"Atari", "Quantum (rev 1)" )
-	public static GameDriver driver_quantump	   = new GameDriver("1982"	,"quantump"	,"quantum.java"	,rom_quantump,driver_quantum	,machine_driver_quantum	,input_ports_quantum	,null	,ROT270	,	"Atari", "Quantum (prototype)" )
+	GAME( 1982, quantum,  0,       quantum, quantum, 0, ROT270, "Atari", "Quantum (rev 2)" )
+	GAME( 1982, quantum1, quantum, quantum, quantum, 0, ROT270, "Atari", "Quantum (rev 1)" )
+	GAME( 1982, quantump, quantum, quantum, quantum, 0, ROT270, "Atari", "Quantum (prototype)" )
 }

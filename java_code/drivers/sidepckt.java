@@ -15,7 +15,7 @@ i8751 protection simluation and other fixes by Bryan McPhail, 15/10/00.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,19 +27,16 @@ public class sidepckt
 	static int i8751_return;
 	
 	
-	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    soundlatch_w.handler(offset,data);
 	    cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr sidepckt_i8751_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sidepckt_i8751_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return i8751_return;
 	} };
 	
-	public static WriteHandlerPtr sidepckt_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidepckt_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int table_1[]={5,3,2};
 		int table_2[]={0x8e,0x42,0xad,0x58,0xec,0x85,0xdd,0x4c,0xad,0x9f,0x00,0x4c,0x7e,0x42,0xa2,0xff};
 		int table_3[]={0xbd,0x73,0x80,0xbd,0x73,0xa7,0xbd,0x73,0xe0,0x7e,0x72,0x56,0xff,0xff,0xff,0xff};
@@ -79,8 +76,7 @@ public class sidepckt
 		}
 	} };
 	
-	public static WriteHandlerPtr sidepctj_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidepctj_i8751_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int table_1[]={5,3,0};
 		int table_2[]={0x8e,0x42,0xb2,0x58,0xec,0x85,0xdd,0x4c,0xad,0x9f,0x00,0x4c,0x7e,0x42,0xa7,0xff};
 		int table_3[]={0xbd,0x71,0xc8,0xbd,0x71,0xef,0xbd,0x72,0x28,0x7e,0x70,0x9e,0xff,0xff,0xff,0xff};
@@ -184,7 +180,7 @@ public class sidepckt
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_sidepckt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sidepckt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sidepckt )
 	    PORT_START();  /* 0x3000 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -312,8 +308,7 @@ public class sidepckt
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_sidepckt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sidepckt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)        /* 2 MHz */
@@ -341,13 +336,10 @@ public class sidepckt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sidepctj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sidepctj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2000000)        /* 2 MHz */
@@ -375,9 +367,7 @@ public class sidepckt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -454,7 +444,7 @@ public class sidepckt
 	
 	
 	
-	public static GameDriver driver_sidepckt	   = new GameDriver("1986"	,"sidepckt"	,"sidepckt.java"	,rom_sidepckt,null	,machine_driver_sidepckt	,input_ports_sidepckt	,null	,ROT0	,	"Data East Corporation", "Side Pocket (World)" )
-	public static GameDriver driver_sidepctj	   = new GameDriver("1986"	,"sidepctj"	,"sidepckt.java"	,rom_sidepctj,driver_sidepckt	,machine_driver_sidepctj	,input_ports_sidepckt	,null	,ROT0	,	"Data East Corporation", "Side Pocket (Japan)" )
-	public static GameDriver driver_sidepctb	   = new GameDriver("1986"	,"sidepctb"	,"sidepckt.java"	,rom_sidepctb,driver_sidepckt	,machine_driver_sidepckt	,input_ports_sidepckt	,null	,ROT0	,	"bootleg", "Side Pocket (bootleg)" )
+	GAME( 1986, sidepckt, 0,        sidepckt, sidepckt, 0, ROT0, "Data East Corporation", "Side Pocket (World)" )
+	GAME( 1986, sidepctj, sidepckt, sidepctj, sidepckt, 0, ROT0, "Data East Corporation", "Side Pocket (Japan)" )
+	GAME( 1986, sidepctb, sidepckt, sidepckt, sidepckt, 0, ROT0, "bootleg", "Side Pocket (bootleg)" )
 }

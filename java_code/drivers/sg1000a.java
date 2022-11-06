@@ -30,7 +30,7 @@ secondary crystal, numbers unknown for the TMS9928
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,22 +53,26 @@ public class sg1000a
 	};
 	
 	
-	static PORT_READ_START ( readport )
-	    { 0xBE, 0xBE, TMS9928A_vram_r },
-	    { 0xBF, 0xBF, TMS9928A_register_r },
-	    { 0xDC, 0xDC, input_port_0_r},
-	    { 0xDD, 0xDD, input_port_1_r},
-	    { 0xDE, 0xDE, input_port_2_r},
-	PORT_END
+	public static IO_ReadPort readport[]={
+		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_ReadPort( 0xBE, 0xBE, TMS9928A_vram_r ),
+	    new IO_ReadPort( 0xBF, 0xBF, TMS9928A_register_r ),
+	    new IO_ReadPort( 0xDC, 0xDC, input_port_0_r),
+	    new IO_ReadPort( 0xDD, 0xDD, input_port_1_r),
+	    new IO_ReadPort( 0xDE, 0xDE, input_port_2_r),
+		new IO_ReadPort(MEMPORT_MARKER, 0)
+	};
 	
-	static PORT_WRITE_START ( writeport )
-	    { 0xBE, 0xBE, TMS9928A_vram_w },
-	    { 0xBF, 0xBF, TMS9928A_register_w },
-	    { 0xDF, 0xDF, MWA_NOP },  //? 8255 ?
-	    { 0x7f, 0x7F, SN76496_0_w },
-	PORT_END
+	public static IO_WritePort writeport[]={
+		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
+	    new IO_WritePort( 0xBE, 0xBE, TMS9928A_vram_w ),
+	    new IO_WritePort( 0xBF, 0xBF, TMS9928A_register_w ),
+	    new IO_WritePort( 0xDF, 0xDF, MWA_NOP ),  //? 8255 ?
+	    new IO_WritePort( 0x7f, 0x7F, SN76496_0_w ),
+		new IO_WritePort(MEMPORT_MARKER, 0)
+	};
 	
-	static InputPortPtr input_ports_chwrestl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chwrestl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chwrestl )
 	    PORT_START(); 
 	    PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP |IPF_PLAYER2 );
 	    PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN |IPF_PLAYER2 );
@@ -105,7 +109,7 @@ public class sg1000a
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_chboxing = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chboxing = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chboxing )
 	    PORT_START(); 
 	    PORT_BIT ( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );
 	    PORT_BIT ( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );
@@ -148,8 +152,7 @@ public class sg1000a
 	    { 100 }
 	};
 	
-	public static InterruptHandlerPtr sg100a_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sg100a_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    TMS9928A_interrupt();
 	} };
 	
@@ -165,8 +168,7 @@ public class sg1000a
 		vdp_interrupt
 	};
 	
-	public static MachineHandlerPtr machine_driver_sg1000a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sg1000a )
 		MDRV_CPU_ADD(Z80, 3579545)       /* 3.579545 Mhz */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -175,9 +177,7 @@ public class sg1000a
 		MDRV_VBLANK_DURATION(DEFAULT_REAL_60HZ_VBLANK_DURATION)
 		MDRV_TMS9928A( &tms9928a_interface )
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_chwrestl = new RomLoadPtr(){ public void handler(){ 
@@ -195,12 +195,11 @@ public class sg1000a
 	ROM_END(); }}; 
 	
 	
-	DRIVER_INIT(chwrestl)
-	{
+	public static DriverInitHandlerPtr init_chwrestl  = new DriverInitHandlerPtr() { public void handler(){
 		regulus_decode();
-	}
+	} };
 	
-	public static GameDriver driver_chboxing	   = new GameDriver("1984"	,"chboxing"	,"sg1000a.java"	,rom_chboxing,null	,machine_driver_sg1000a	,input_ports_chboxing	,null	,ROT0	,	"Sega", "Champion Boxing")
-	public static GameDriver driver_chwrestl	   = new GameDriver("1985"	,"chwrestl"	,"sg1000a.java"	,rom_chwrestl,null	,machine_driver_sg1000a	,input_ports_chwrestl	,init_chwrestl	,ROT0	,	"Sega", "Champion Pro Wrestling")
+	GAME( 1984, chboxing, 0, sg1000a, chboxing, 0, ROT0, "Sega", "Champion Boxing")
+	GAME( 1985, chwrestl, 0, sg1000a, chwrestl, chwrestl, ROT0, "Sega", "Champion Pro Wrestling")
 	
 }

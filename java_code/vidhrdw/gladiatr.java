@@ -6,7 +6,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,55 +48,53 @@ public class gladiatr
 		palette_set_color(513,0xff,0xff,0xff);
 	}
 	
-	public static WriteHandlerPtr gladiatr_paletteram_rg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		paletteram[offset] = data;
+	public static WriteHandlerPtr gladiatr_paletteram_rg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		paletteram.write(offset,data);
 		update_color(offset);
 	} };
 	
-	public static WriteHandlerPtr gladiatr_paletteram_b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		paletteram_2[offset] = data;
+	public static WriteHandlerPtr gladiatr_paletteram_b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		paletteram_2.write(offset,data);
 		update_color(offset);
 	} };
 	
 	
-	public static WriteHandlerPtr gladiatr_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr gladiatr_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		sprite_bank = (data)?4:2;
-	} };
+	}
 	
-	public static ReadHandlerPtr gladiatr_video_registers_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr gladiatr_video_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
 		switch( offset ){
 			case 0x080: return video_attributes;
 			case 0x100: return base_scroll;
 			case 0x300: return background_scroll;
-		}
+		} };
 		return 0;
-	} };
+	}
 	
-	public static WriteHandlerPtr gladiatr_video_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr gladiatr_video_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		switch( offset ){
 			case 0x000: break;
 			case 0x080: video_attributes = data; break;
 			case 0x100: base_scroll = data; break;
 			case 0x200: break;
 			case 0x300: background_scroll = data; break;
-		}
-	} };
+		} };
+	}
 	
 	
-	public static VideoStartHandlerPtr video_start_gladiatr  = new VideoStartHandlerPtr() { public int handler(){
+	public static VideoStartHandlerPtr video_start_gladiatr  = new VideoStartHandlerPtr() { public int handler()
 		sprite_bank = 2;
 	
 		dirtybuffer = auto_malloc(64*32);
-		if (dirtybuffer == 0)
+		if( !dirtybuffer )
 			return 1;
 		tmpbitmap = auto_bitmap_alloc(512,256);
-		if (tmpbitmap == 0)
+		if( !tmpbitmap )
 			return 1;
 		memset(dirtybuffer,1,64*32);
 		return 0;
-	} };
+	}
 	
 	
 	static void render_background( struct mame_bitmap *bitmap );
@@ -109,12 +107,12 @@ public class gladiatr
 		if( base_scroll < 0xd0 ){
 			scrollx += 256-(0xd0)-64-32;
 	
-			if ((video_attributes & 0x04) != 0){
+			if( video_attributes&0x04 ){
 				scrollx += 256;
 			}
-		}
+		} };
 		else {
-			if ((video_attributes & 0x04) != 0){
+			if( video_attributes&0x04 ){
 				scrollx += base_scroll;
 			}
 			else {
@@ -124,7 +122,7 @@ public class gladiatr
 	
 		{
 			int old_bank_select = tile_bank_select;
-			if ((video_attributes & 0x10) != 0){
+			if( video_attributes & 0x10 ){
 				tile_bank_select = 256*8;
 			}
 			else {
@@ -143,7 +141,7 @@ public class gladiatr
 				int color = 0x1F - (attributes>>3);
 				int tile_number = videoram.read(i)+ 256*(attributes&0x7) + tile_bank_select;
 	
-				drawgfx(tmpbitmap,Machine.gfx[1+(tile_number/512)],
+				drawgfx(tmpbitmap,Machine->gfx[1+(tile_number/512)],
 					tile_number%512,
 					color,
 					0,0, /* no flip */
@@ -158,13 +156,13 @@ public class gladiatr
 		copyscrollbitmap(bitmap,tmpbitmap,
 			1,&scrollx,
 			0,0,
-			Machine.visible_area,TRANSPARENCY_NONE,0);
+			Machine->visible_area,TRANSPARENCY_NONE,0);
 	}
 	
 	static void render_text( struct mame_bitmap *bitmap );
 	static void render_text( struct mame_bitmap *bitmap ){
-		const struct rectangle *clip = Machine.visible_area;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct rectangle *clip = Machine->visible_area;
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		int tile_bank_offset = (video_attributes&3)*256;
 	
@@ -176,7 +174,7 @@ public class gladiatr
 	
 		if( base_scroll < 0xd0 ){ /* panning text */
 			dx = 256-(0xd0)-64-32- background_scroll;
-			if ((video_attributes & 0x04) != 0){ dx += 256; }
+			if( video_attributes&0x04 ){ dx += 256; }
 		}
 		else { /* fixed text */
 			dx = 0;
@@ -198,7 +196,7 @@ public class gladiatr
 	
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big );
 	static void draw_sprite( struct mame_bitmap *bitmap, int tile_number, int color, int sx, int sy, int xflip, int yflip, int big ){
-		const struct rectangle *clip = Machine.visible_area;
+		const struct rectangle *clip = Machine->visible_area;
 	
 		static int tile_offset[4][4] = {
 			{0x0,0x1,0x4,0x5},
@@ -218,7 +216,7 @@ public class gladiatr
 	
 				int t = tile_offset[ey][ex] + tile_number;
 	
-				drawgfx(bitmap,Machine.gfx[1+8+((t/512)%12)],
+				drawgfx(bitmap,Machine->gfx[1+8+((t/512)%12)],
 					t%512,
 	
 					color,
@@ -258,9 +256,8 @@ public class gladiatr
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if ((video_attributes & 0x20) != 0)	/* screen refresh enable? */
+	public static VideoUpdateHandlerPtr video_update_gladiatr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (video_attributes & 0x20)	/* screen refresh enable? */
 		{
 			render_background( bitmap );
 			render_sprites( bitmap );

@@ -23,7 +23,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -76,8 +76,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bbuster  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bbuster  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,128,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,128,32);
@@ -91,8 +90,7 @@ public class bbusters
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mechatt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mechatt  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_bbuster_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,256,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,16,16,256,32);
@@ -110,22 +108,22 @@ public class bbusters
 	
 	#define ADJUST_4x4 \
 			if ((dx&0x10) && (dy&0x10)) code+=3;	\
-			else if ((dy & 0x10) != 0) code+=2;				\
-			else if ((dx & 0x10) != 0) code+=1
+			else if (dy&0x10) code+=2;				\
+			else if (dx&0x10) code+=1
 	
 	#define ADJUST_8x8 \
 			if ((dx&0x20) && (dy&0x20)) code+=12;	\
-			else if ((dy & 0x20) != 0) code+=8;				\
-			else if ((dx & 0x20) != 0) code+=4
+			else if (dy&0x20) code+=8;				\
+			else if (dx&0x20) code+=4
 	
 	#define ADJUST_16x16 \
 			if ((dx&0x40) && (dy&0x40)) code+=48;	\
-			else if ((dy & 0x40) != 0) code+=32;				\
-			else if ((dx & 0x40) != 0) code+=16
+			else if (dy&0x40) code+=32;				\
+			else if (dx&0x40) code+=16
 	
 	INLINE const data8_t *get_source_ptr(unsigned int sprite, int dx, int dy, int bank, int block)
 	{
-		const struct GfxElement *gfx=Machine.gfx[bank];
+		const struct GfxElement *gfx=Machine->gfx[bank];
 		int source_base,code=0;
 	
 		/* Get a tile index from the x,y position in the block */
@@ -159,13 +157,13 @@ public class bbusters
 			break;
 		}
 	
-		source_base=((sprite+code) % gfx.total_elements) * 16;
-		return gfx.gfxdata + ((source_base+(dy%16)) * gfx.line_modulo);
+		source_base=((sprite+code) % gfx->total_elements) * 16;
+		return gfx->gfxdata + ((source_base+(dy%16)) * gfx->line_modulo);
 	}
 	
 	static void bbusters_draw_block(struct mame_bitmap *dest,int x,int y,int size,int flipx,int flipy,unsigned int sprite,int color,int bank,int block)
 	{
-		const pen_t *pal = Machine.gfx[bank].colortable[Machine.gfx[bank].color_granularity * (color % Machine.gfx[bank].total_colors)];
+		const pen_t *pal = Machine->gfx[bank]->colortable[Machine->gfx[bank]->color_granularity * (color % Machine->gfx[bank]->total_colors)];
 		unsigned int xinc=(scale_line_count * 0x10000 ) / size;
 		data8_t pixel;
 		int x_index;
@@ -175,14 +173,14 @@ public class bbusters
 		while (scale_line_count) {
 	
 			if (dy>=16 && dy<240) {
-				UINT16 *destline = (UINT16 *)dest.line[dy];
+				UINT16 *destline = (UINT16 *)dest->line[dy];
 				data8_t srcline=*scale_table_ptr;
 				const data8_t *srcptr=0;
 	
-				if (flipy == 0)
+				if (NOT(flipy))
 					srcline=size-srcline-1;
 	
-				if (flipx != 0)
+				if (flipx)
 					x_index=(ex-1)*0x10000;
 				else
 					x_index=0;
@@ -195,7 +193,7 @@ public class bbusters
 					if (x+(x_index>>16)>=0 && x+(x_index>>16)<256 && pixel!=15)
 						destline[x+(x_index>>16)]=pal[pixel];
 	
-					if (flipx != 0)
+					if (flipx)
 						x_index-=xinc;
 					else
 						x_index+=xinc;
@@ -226,7 +224,7 @@ public class bbusters
 		    y=source[offs+3];
 			if (y>254) continue; /* Speedup */
 		    x=source[offs+2];
-			if ((x & 0x200) != 0) x=-(0x100-(x&0xff));
+			if (x&0x200) x=-(0x100-(x&0xff));
 			if (x>256) continue; /* Speedup */
 	
 			/*
@@ -285,8 +283,7 @@ public class bbusters
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bbuster  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );
 		tilemap_set_scrollx( pf2_tilemap,0, bbuster_pf2_scroll_data[0] );
@@ -304,8 +301,7 @@ public class bbusters
 		draw_crosshair(bitmap,readinputport(10),readinputport(9),cliprect);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mechatt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( pf1_tilemap,0, bbuster_pf1_scroll_data[0] );
 		tilemap_set_scrolly( pf1_tilemap,0, bbuster_pf1_scroll_data[1] );
 		tilemap_set_scrollx( pf2_tilemap,0, bbuster_pf2_scroll_data[0] );

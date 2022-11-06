@@ -5,7 +5,7 @@
 *****************************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class speedatk
 	
 	*/
 	
-	public static PaletteInitHandlerPtr palette_init_speedatk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_speedatk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 0x10;i++)
@@ -70,8 +69,7 @@ public class speedatk
 			colortable[i] = color_prom.read(i);	
 	} };
 	
-	public static WriteHandlerPtr speedatk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedatk_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -79,8 +77,7 @@ public class speedatk
 		}
 	} };
 	
-	public static WriteHandlerPtr speedatk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedatk_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -88,8 +85,7 @@ public class speedatk
 		}
 	} };
 	
-	public static WriteHandlerPtr speedatk_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedatk_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -102,24 +98,22 @@ public class speedatk
 		region = (colorram.read(tile_index)& 0x10) >> 4;
 	
 		color += 2;
-		if (region != 0)
+		if(region)
 			color += 0x10;
 	
 		SET_TILE_INFO(region, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_speedatk  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_speedatk  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,34,32);
 	
-		if (tilemap == 0)
+		if(!tilemap)
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_speedatk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);
 	} };
 }

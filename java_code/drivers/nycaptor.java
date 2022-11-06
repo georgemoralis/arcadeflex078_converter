@@ -146,7 +146,7 @@ Stephh's additional notes (based on the game Z80 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -164,60 +164,50 @@ public class nycaptor
 	
 	
 	
-	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sub_cpu_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, (data )? ASSERT_LINE : CLEAR_LINE);
 	} };
 	
 	static UINT8 snd_data;
 	
-	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr from_snd_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return snd_data;
 	} };
 	
-	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr to_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_data = data;
 	} };
 	
 	
-	READ_HANDLER(nycaptor_sharedram_r)
-	{
+	public static ReadHandlerPtr nycaptor_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return nycaptor_sharedram[offset];
-	}
+	} };
 	
-	WRITE_HANDLER(nycaptor_sharedram_w)
-	{
+	public static WriteHandlerPtr nycaptor_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nycaptor_sharedram[offset]=data;
-	}
+	} };
 	
 	
-	public static ReadHandlerPtr nycaptor_b_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_b_r  = new ReadHandlerPtr() { public int handler(int offset){
 			return 1;
 	} };
 	
-	public static ReadHandlerPtr nycaptor_by_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_by_r  = new ReadHandlerPtr() { public int handler(int offset){
 			return readinputport(6)-8;
 	} };
 	
-	public static ReadHandlerPtr nycaptor_bx_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_bx_r  = new ReadHandlerPtr() { public int handler(int offset){
 			return (readinputport(5)+0x27)|1;
 	} };
 	
 	
-	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_cpu_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_reset_line(2, (data&1 )? ASSERT_LINE : CLEAR_LINE);
 	} };
 	
 	static int vol_ctrl[16];
 	
-	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		double db			= 0.0;
@@ -235,25 +225,22 @@ public class nycaptor
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
@@ -280,13 +267,11 @@ public class nycaptor
 	};
 	
 	
-	static public static ReadHandlerPtr nycaptor_generic_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nycaptor_generic_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return generic_control_reg;
 	} };
 	
-	public static WriteHandlerPtr nycaptor_generic_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nycaptor_generic_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		generic_control_reg = data;
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000 + ((data&0x08)>>3)*0x4000 );
 	} };
@@ -423,17 +408,15 @@ public class nycaptor
 	/* Cycle Shooting */
 	
 	
-	static READ_HANDLER(cyclshtg_mcu_status_r)
-	{
+	public static ReadHandlerPtr cyclshtg_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return 0xff;
-	}
+	} };
 	
-	static READ_HANDLER(cyclshtg_mcu_r)
-	{
+	public static ReadHandlerPtr cyclshtg_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return 7;
-	}
+	} };
 	
-	static WRITE_HANDLER(cyclshtg_mcu_w){}
+	public static WriteHandlerPtr cyclshtg_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 	
 	
@@ -512,7 +495,7 @@ public class nycaptor
 	
 	
 	/* Cycle Shooting */
-	static InputPortPtr input_ports_cyclshtg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cyclshtg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cyclshtg )
 	
 	
 	
@@ -553,7 +536,7 @@ public class nycaptor
 	
 	
 	
-	static InputPortPtr input_ports_nycaptor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nycaptor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nycaptor )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x02, "20k, 80k then every 80k" );
@@ -694,8 +677,7 @@ public class nycaptor
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_nycaptor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nycaptor )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)		/* ??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -733,12 +715,9 @@ public class nycaptor
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cyclshtg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cyclshtg )
 		MDRV_CPU_ADD(Z80,8000000/2)
 	
 		MDRV_CPU_MEMORY(cyclshtg_readmem,cyclshtg_writemem)
@@ -773,9 +752,7 @@ public class nycaptor
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -845,6 +822,6 @@ public class nycaptor
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_nycaptor	   = new GameDriver("1985"	,"nycaptor"	,"nycaptor.java"	,rom_nycaptor,null	,machine_driver_nycaptor	,input_ports_nycaptor	,null	,ROT0	,	"Taito", "N.Y. Captor", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_cyclshtg	   = new GameDriver("1986"	,"cyclshtg"	,"nycaptor.java"	,rom_cyclshtg,null	,machine_driver_cyclshtg	,input_ports_cyclshtg	,null	,ROT90	,	"Taito", "Cycle Shooting", GAME_NOT_WORKING)
+	GAMEX(1985, nycaptor, 0,       nycaptor,  nycaptor, 0, ROT0,  "Taito", "N.Y. Captor", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX(1986, cyclshtg, 0,       cyclshtg,  cyclshtg, 0, ROT90, "Taito", "Cycle Shooting", GAME_NOT_WORKING)
 }

@@ -15,7 +15,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,33 +31,33 @@ public class pandoras
 	
 	/* from vidhrdw */
 	
-	public static InterruptHandlerPtr pandoras_interrupt_a = new InterruptHandlerPtr() {public void handler(){
-		if (irq_enable_a != 0)
+	public static InterruptHandlerPtr pandoras_interrupt_a = new InterruptHandlerPtr() {public void handler()
+		if (irq_enable_a)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
-	} };
+	}
 	
-	public static InterruptHandlerPtr pandoras_interrupt_b = new InterruptHandlerPtr() {public void handler(){
-		if (irq_enable_b != 0)
+	public static InterruptHandlerPtr pandoras_interrupt_b = new InterruptHandlerPtr() {public void handler()
+		if (irq_enable_b)
 			cpu_set_irq_line(1, M6809_IRQ_LINE, HOLD_LINE);
-	} };
+	}
 	
-	public static ReadHandlerPtr pandoras_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr pandoras_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return pandoras_sharedram[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr pandoras_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr pandoras_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		pandoras_sharedram[offset] = data;
-	} };
+	}
 	
-	public static ReadHandlerPtr pandoras_sharedram2_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr pandoras_sharedram2_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return pandoras_sharedram2[offset];
-	} };
+	}
 	
-	public static WriteHandlerPtr pandoras_sharedram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr pandoras_sharedram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		pandoras_sharedram2[offset] = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr pandoras_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr pandoras_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		/*	byte 0:	irq enable (CPU A)
 			byte 2:	coin counter 1
 			byte 3: coin counter 2
@@ -68,7 +68,7 @@ public class pandoras
 			other bytes unknown */
 	
 		switch (offset){
-			case 0x00:	if (data == 0) cpu_set_irq_line(0, M6809_IRQ_LINE, CLEAR_LINE);
+			case 0x00:	if (!data) cpu_set_irq_line(0, M6809_IRQ_LINE, CLEAR_LINE);
 						irq_enable_a = data;
 						break;
 			case 0x02:	coin_counter_w(0,data & 0x01);
@@ -77,7 +77,7 @@ public class pandoras
 						break;
 			case 0x05:	pandoras_flipscreen_w(0, data);
 						break;
-			case 0x06:	if (data == 0) cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
+			case 0x06:	if (!data) cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
 						irq_enable_b = data;
 						break;
 			case 0x07:	cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -85,32 +85,30 @@ public class pandoras
 	
 			default:
 				logerror("%04x: (irq_ctrl) write %02x to %02x\n",activecpu_get_pc(), data, offset);
-		}
-	} };
+		} };
+	}
 	
-	public static WriteHandlerPtr pandoras_cpua_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr pandoras_cpua_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if (!firq_old_data_a && data){
 			cpu_set_irq_line(0,M6809_FIRQ_LINE,HOLD_LINE);
-		}
+		} };
 	
 		firq_old_data_a = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr pandoras_cpub_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr pandoras_cpub_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if (!firq_old_data_b && data){
 			cpu_set_irq_line(1,M6809_FIRQ_LINE,HOLD_LINE);
-		}
+		} };
 	
 		firq_old_data_b = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr pandoras_i8039_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_i8039_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(3, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr i8039_irqen_and_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7 enables IRQ */
 		if ((data & 0x80) == 0)
 			cpu_set_irq_line(3, 0, CLEAR_LINE);
@@ -119,8 +117,7 @@ public class pandoras
 		i8039_status = (data & 0x20) >> 5;
 	} };
 	
-	public static WriteHandlerPtr pandoras_z80_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_z80_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	} };
 	
@@ -236,7 +233,7 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_pandoras = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pandoras = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pandoras )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -387,19 +384,16 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_pandoras  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pandoras  = new MachineInitHandlerPtr() { public void handler(){
 		firq_old_data_a = firq_old_data_b = 0;
 		irq_enable_a = irq_enable_b = 0;
 	} };
 	
-	public static ReadHandlerPtr pandoras_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pandoras_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return i8039_status;
 	} };
 	
-	public static ReadHandlerPtr pandoras_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pandoras_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (activecpu_gettotalcycles() / 512) & 0x0f;
 	} };
 	
@@ -420,8 +414,7 @@ public class pandoras
 		{ 25 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_pandoras = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pandoras )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/6)	/* CPU A */
@@ -462,9 +455,7 @@ public class pandoras
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -506,5 +497,5 @@ public class pandoras
 	
 	
 	
-	public static GameDriver driver_pandoras	   = new GameDriver("1984"	,"pandoras"	,"pandoras.java"	,rom_pandoras,null	,machine_driver_pandoras	,input_ports_pandoras	,null	,ROT90	,	"Konami/Interlogic", "Pandora's Palace" )
+	GAME( 1984, pandoras, 0, pandoras, pandoras, 0, ROT90, "Konami/Interlogic", "Pandora's Palace" )
 }

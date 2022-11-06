@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -60,8 +60,7 @@ public class _88games
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_88games  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_88games  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 64;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 16;
@@ -85,11 +84,10 @@ public class _88games
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_88games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
-		if (k88games_priority != 0)
+		if (k88games_priority)
 		{
 			tilemap_draw(bitmap,cliprect,K052109_tilemap[0],TILEMAP_IGNORE_TRANSPARENCY,0);
 			K051960_sprites_draw(bitmap,cliprect,1,1);

@@ -38,7 +38,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -68,15 +68,14 @@ public class rungun
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_rungun  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_rungun  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -122,11 +121,11 @@ public class rungun
 			break;
 	
 			case 0x06/2:
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					data = readinputport(1) | EEPROM_read_bit();
 	
-					if (init_eeprom_count != 0)
+					if (init_eeprom_count)
 					{
 						init_eeprom_count--;
 						data &= 0xf7;
@@ -154,7 +153,7 @@ public class rungun
 					bit7  : set before massive memory writes
 					bit10 : IRQ5 ACK
 				*/
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					EEPROM_write_bit((data & 0x01) ? 1 : 0);
 					EEPROM_set_cs_line((data & 0x02) ? CLEAR_LINE : ASSERT_LINE);
@@ -179,35 +178,34 @@ public class rungun
 	
 	static WRITE16_HANDLER( sound_cmd1_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			soundlatch_w(0, data>>8);
 	}
 	
 	static WRITE16_HANDLER( sound_cmd2_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			soundlatch2_w(0, data>>8);
 	}
 	
 	static WRITE16_HANDLER( sound_irq_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 	}
 	
 	static READ16_HANDLER( sound_status_msb_r )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			return(rng_sound_status<<8);
 	
 		return(0);
 	}
 	
-	static INTERRUPT_GEN(rng_interrupt)
-	{
+	public static InterruptHandlerPtr rng_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (rng_sysreg[0x0c/2] & 0x09)
 			cpu_set_irq_line(0, MC68000_IRQ_5, ASSERT_LINE);
-	}
+	} };
 	
 	static MEMORY_READ16_START( rngreadmem )
 		{ 0x000000, 0x2fffff, MRA16_ROM },		// main program + data
@@ -253,27 +251,24 @@ public class rungun
 	
 	/**********************************************************************************/
 	
-	public static WriteHandlerPtr sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rng_sound_status = data;
 	} };
 	
-	public static WriteHandlerPtr z80ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rng_z80_control = data;
 	
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + (data & 0x07) * 0x4000);
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			cpu_set_nmi_line(1, CLEAR_LINE);
 	} };
 	
-	static INTERRUPT_GEN(audio_interrupt)
-	{
-		if ((rng_z80_control & 0x80) != 0) return;
+	public static InterruptHandlerPtr audio_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (rng_z80_control & 0x80) return;
 	
 		cpu_set_nmi_line(1, ASSERT_LINE);
-	}
+	} };
 	
 	/* sound (this should be split into sndhrdw/xexex.c or pregx.c or so someday) */
 	
@@ -335,8 +330,7 @@ public class rungun
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_rng = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rng )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -369,11 +363,9 @@ public class rungun
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_rng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rng )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -571,13 +563,11 @@ public class rungun
 		ROM_LOAD( "247-a07", 0x200000, 0x200000, CRC(0108142d) SHA1(4dc6a36d976dad9c0da5a5b1f01f2eb3b369c99d) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_rng  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rng  = new DriverInitHandlerPtr() { public void handler(){
 		K054539_init_flags(K054539_REVERSE_STEREO);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_rng  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_rng  = new MachineInitHandlerPtr() { public void handler(){
 		memset(rng_sysreg, 0, 0x20);
 	
 		init_eeprom_count = 0;
@@ -585,7 +575,7 @@ public class rungun
 		rng_sound_status = 0;
 	} };
 	
-	public static GameDriver driver_rungun	   = new GameDriver("1993"	,"rungun"	,"rungun.java"	,rom_rungun,null	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Run and Gun (World ver. EAA)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_rungunu	   = new GameDriver("1993"	,"rungunu"	,"rungun.java"	,rom_rungunu,driver_rungun	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Run and Gun (US ver. UAB)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_slmdunkj	   = new GameDriver("1993"	,"slmdunkj"	,"rungun.java"	,rom_slmdunkj,driver_rungun	,machine_driver_rng	,input_ports_rng	,init_rng	,ROT0	,	"Konami", "Slam Dunk (Japan ver. JAA))", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1993, rungun,   0,      rng, rng, rng, ROT0, "Konami", "Run and Gun (World ver. EAA)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1993, rungunu,  rungun, rng, rng, rng, ROT0, "Konami", "Run and Gun (US ver. UAB)", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1993, slmdunkj, rungun, rng, rng, rng, ROT0, "Konami", "Slam Dunk (Japan ver. JAA))", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS | GAME_IMPERFECT_SOUND )
 }

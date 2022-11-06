@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms34010;
 
@@ -70,13 +70,13 @@ public class dis34010
 			}
 		}
 	
-		if (filename == 0)
+		if (!filename)
 		{
 			usage();
 			return 1;
 		}
 		f=fopen (filename,"rb");
-		if (f == 0)
+		if (!f)
 		{
 			printf ("Unable to open %s\n",filename);
 			return 2;
@@ -86,7 +86,7 @@ public class dis34010
 		fseek (f,begin,SEEK_SET);
 		len=(filelen>end)? (end-begin+1):(filelen-begin);
 		filebuf=malloc(len+16);
-		if (filebuf == 0)
+		if (!filebuf)
 		{
 			printf ("Memory allocation error\n");
 			fclose (f);

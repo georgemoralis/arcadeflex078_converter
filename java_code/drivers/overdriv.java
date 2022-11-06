@@ -20,7 +20,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,25 +54,25 @@ public class overdriv
 	
 	static WRITE16_HANDLER( K051316_0_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051316_0_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_1_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051316_1_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_ctrl_0_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051316_ctrl_0_w(offset,data >> 8);
 	}
 	
 	static WRITE16_HANDLER( K051316_ctrl_1_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051316_ctrl_1_w(offset,data >> 8);
 	}
 	
@@ -107,15 +107,14 @@ public class overdriv
 		"010011000000"	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_overdriv  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_overdriv  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,sizeof(default_eeprom));
@@ -136,7 +135,7 @@ public class overdriv
 	static WRITE16_HANDLER( eeprom_w )
 	{
 	//logerror("%06x: write %04x to eeprom_w\n",activecpu_get_pc(),data);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 is data */
 			/* bit 1 is clock (active high) */
@@ -151,27 +150,24 @@ public class overdriv
 	
 	
 	
-	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0) cpu_set_irq_line(0, 5, HOLD_LINE);
+	public static InterruptHandlerPtr cpuA_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops()) cpu_set_irq_line(0, 5, HOLD_LINE);
 		else cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(1, 4, HOLD_LINE);
+	public static InterruptHandlerPtr cpuB_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K053246_is_IRQ_enabled()) cpu_set_irq_line(1, 4, HOLD_LINE);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_overdriv  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_overdriv  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with cpu B halted */
 		cpu_set_reset_line(1,ASSERT_LINE);
 	} };
 	
 	static WRITE16_HANDLER( cpuA_ctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 probably enables the second 68000 */
 			cpu_set_reset_line(1,(data & 0x01) ? CLEAR_LINE : ASSERT_LINE);
@@ -198,7 +194,7 @@ public class overdriv
 	{
 		COMBINE_DATA(&cpuB_ctrl);
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 = enable sprite ROM reading */
 			K053246_set_OBJCHA_line((data & 0x01) ? ASSERT_LINE : CLEAR_LINE);
@@ -344,7 +340,7 @@ public class overdriv
 	
 	
 	
-	static InputPortPtr input_ports_overdriv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_overdriv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( overdriv )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_TOGGLE );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -410,8 +406,7 @@ public class overdriv
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_overdriv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( overdriv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)	/* 12 MHz */
@@ -449,9 +444,7 @@ public class overdriv
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -501,12 +494,11 @@ public class overdriv
 	
 	
 	
-	public static DriverInitHandlerPtr init_overdriv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_overdriv  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_4(REGION_GFX1);
 	} };
 	
 	
 	
-	public static GameDriver driver_overdriv	   = new GameDriver("1990"	,"overdriv"	,"overdriv.java"	,rom_overdriv,null	,machine_driver_overdriv	,input_ports_overdriv	,init_overdriv	,ROT90	,	"Konami", "Over Drive", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1990, overdriv, 0, overdriv, overdriv, overdriv, ROT90, "Konami", "Over Drive", GAME_IMPERFECT_GRAPHICS )
 }

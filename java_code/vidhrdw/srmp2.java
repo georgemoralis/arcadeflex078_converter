@@ -9,7 +9,7 @@ Functions to emulate the video hardware of the machine.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class srmp2
 	int mjyuugi_gfx_bank;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_srmp2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_srmp2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -52,8 +51,7 @@ public class srmp2
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_srmp3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_srmp3  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < Machine.drv.total_colors; i++)
@@ -109,7 +107,7 @@ public class srmp2
 		/* Sprites Banking and/or Sprites Buffering */
 		data16_t *src = spriteram16_2 + ( ((ctrl2 ^ (~ctrl2<<1)) & 0x40) ? 0x2000/2 : 0 );
 	
-		int max_y	=	Machine . drv . screen_height;
+		int max_y	=	Machine -> drv -> screen_height;
 	
 		xoffs	=	flip ? 0x10 : 0x10;
 		yoffs	=	flip ? 0x05 : 0x07;
@@ -126,7 +124,7 @@ public class srmp2
 	
 			int color   = (x >> 11) & 0x1f;
 	
-			if (flip != 0)
+			if (flip)
 			{
 				y = max_y - y;
 				flipx = NOT(flipx);
@@ -135,15 +133,15 @@ public class srmp2
 	
 			code = code & 0x3fff;
 	
-			if (srmp2_color_bank != 0) color |= 0x20;
+			if (srmp2_color_bank) color |= 0x20;
 	
-			drawgfx(bitmap, Machine.gfx[0],
+			drawgfx(bitmap, Machine->gfx[0],
 					code,
 					color,
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					Machine.visible_area, TRANSPARENCY_PEN, 15);
+					Machine->visible_area, TRANSPARENCY_PEN, 15);
 		}
 	}
 	
@@ -189,11 +187,11 @@ public class srmp2
 	
 				int sx		=	  x + xoffs  + (offs & 1) * 16;
 				int sy		=	-(y + yoffs) + (offs / 2) * 16 -
-								(Machine.drv.screen_height-(Machine.visible_area.max_y + 1));
+								(Machine->drv->screen_height-(Machine->visible_area.max_y + 1));
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip != 0)
+				if (flip)
 				{
 					sy = max_y - 14 - sy - 0x100;
 					flipx = NOT(flipx);
@@ -203,12 +201,12 @@ public class srmp2
 				code = code & 0x1fff;
 	
 	#define DRAWTILE(_x_, _y_)  \
-				drawgfx(bitmap, Machine.gfx[0], \
+				drawgfx(bitmap, Machine->gfx[0], \
 						code, \
 						color, \
 						flipx, flipy, \
 						_x_, _y_, \
-						Machine.visible_area, TRANSPARENCY_PEN, 0);
+						Machine->visible_area, TRANSPARENCY_PEN, 0);
 	
 				DRAWTILE(sx - 0x000, sy + 0x000)
 				DRAWTILE(sx - 0x200, sy + 0x000)
@@ -259,7 +257,7 @@ public class srmp2
 		int offs;
 		int xoffs, yoffs;
 	
-		int max_y	=	Machine . drv . screen_height;
+		int max_y	=	Machine -> drv -> screen_height;
 	
 		int ctrl	=	spriteram.read( 0x600/2 );
 	//	int ctrl2	=	spriteram.read( 0x602/2 );
@@ -285,22 +283,22 @@ public class srmp2
 			int flipy	=	code & 0x4000;
 	
 			code = (code & 0x1fff);
-			if (gfxbank != 0) code += ((srmp3_gfx_bank + 1) * 0x2000);
+			if (gfxbank) code += ((srmp3_gfx_bank + 1) * 0x2000);
 	
-			if (flip != 0)
+			if (flip)
 			{
 				y = max_y - y;
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					Machine.visible_area, TRANSPARENCY_PEN, 0);
+					Machine->visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
@@ -310,7 +308,7 @@ public class srmp2
 		int offs, col;
 		int xoffs, yoffs;
 	
-		int total_color_codes	=	Machine.drv.gfxdecodeinfo[0].total_color_codes;
+		int total_color_codes	=	Machine->drv->gfxdecodeinfo[0].total_color_codes;
 	
 		int ctrl	=	spriteram16[ 0x600/2 ];
 		int ctrl2	=	spriteram16[ 0x602/2 ];
@@ -352,11 +350,11 @@ public class srmp2
 	
 				int sx		=	  x + xoffs  + (offs & 1) * 16;
 				int sy		=	-(y + yoffs) + (offs / 2) * 16 -
-								(Machine.drv.screen_height-(Machine.visible_area.max_y + 1));
+								(Machine->drv->screen_height-(Machine->visible_area.max_y + 1));
 	
 				if (upper & (1 << col))	sx += 256;
 	
-				if (flip != 0)
+				if (flip)
 				{
 					sy = max_y - 16 - sy - 0x100;
 					flipx = NOT(flipx);
@@ -367,12 +365,12 @@ public class srmp2
 				code	=	(code & 0x3fff) + (gfxbank ? 0x4000 : 0);
 	
 	#define DRAWTILE(_x_, _y_)  \
-				drawgfx(bitmap, Machine.gfx[0], \
+				drawgfx(bitmap, Machine->gfx[0], \
 						code, \
 						color, \
 						flipx, flipy, \
 						_x_, _y_, \
-						Machine.visible_area, TRANSPARENCY_PEN, 0);
+						Machine->visible_area, TRANSPARENCY_PEN, 0);
 	
 				DRAWTILE(sx - 0x000, sy + 0x000)
 				DRAWTILE(sx - 0x200, sy + 0x000)
@@ -420,7 +418,7 @@ public class srmp2
 		/* Sprites Banking and/or Sprites Buffering */
 		data16_t *src = spriteram16_2 + ( ((ctrl2 ^ (~ctrl2<<1)) & 0x40) ? 0x2000/2 : 0 );
 	
-		int max_y	=	Machine . drv . screen_height;
+		int max_y	=	Machine -> drv -> screen_height;
 	
 		mjyuugi_draw_sprites_map(bitmap);
 	
@@ -441,43 +439,40 @@ public class srmp2
 			int flipy	=	code & 0x4000;
 	
 			code = (code & 0x1fff);
-			if (gfxbank != 0) code += ((mjyuugi_gfx_bank + 1) * 0x2000);
+			if (gfxbank) code += ((mjyuugi_gfx_bank + 1) * 0x2000);
 	
-			if (flip != 0)
+			if (flip)
 			{
 				y = max_y - y
-					+(Machine.drv.screen_height-(Machine.visible_area.max_y + 1));
+					+(Machine->drv->screen_height-(Machine->visible_area.max_y + 1));
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx, flipy,
 					(x + xoffs) & 0x1ff,
 					max_y - ((y + yoffs) & 0x0ff),
-					Machine.visible_area, TRANSPARENCY_PEN, 0);
+					Machine->visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_srmp2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		srmp2_draw_sprites(bitmap);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_srmp3  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		srmp3_draw_sprites(bitmap);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mjyuugi  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0x1f0], Machine.visible_area);
 		mjyuugi_draw_sprites(bitmap);
 	} };

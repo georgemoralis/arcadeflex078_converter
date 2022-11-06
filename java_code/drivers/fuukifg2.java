@@ -36,7 +36,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -66,7 +66,7 @@ public class fuukifg2
 	
 	static WRITE16_HANDLER( fuuki16_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -118,8 +118,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr fuuki16_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fuuki16_sound_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data <= 2)
 			cpu_setbank(1, memory_region(REGION_CPU2) + 0x8000 * data + 0x10000);
 		else
@@ -173,7 +172,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gogomile = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gogomile = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gogomile )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
@@ -257,7 +256,7 @@ public class fuukifg2
 	
 	/* Same as gogomile, but the default country is different and
 	   the coinage settings too. */
-	static InputPortPtr input_ports_gogomilj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gogomilj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gogomilj )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
@@ -340,7 +339,7 @@ public class fuukifg2
 	
 	
 	
-	static InputPortPtr input_ports_pbancho = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pbancho = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pbancho )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
@@ -535,8 +534,7 @@ public class fuukifg2
 				also used for water effects and titlescreen linescroll on gogomile
 	*/
 	#define INTERRUPTS_NUM	(256-1) // Give much better results than 256..
-	public static InterruptHandlerPtr fuuki16_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fuuki16_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if ( cpu_getiloops() == 1 )
 			cpu_set_irq_line(0, 1, PULSE_LINE);
 	
@@ -557,12 +555,11 @@ public class fuukifg2
 		if ( (fuuki16_vregs[0x1c/2] & 0xff) == (INTERRUPTS_NUM-1 - cpu_getiloops()) )
 		{
 			cpu_set_irq_line(0, 5, PULSE_LINE);	// Raster Line IRQ
-			if (fuuki16_raster_enable != 0) force_partial_update(cpu_getscanline());
+			if(fuuki16_raster_enable) force_partial_update(cpu_getscanline());
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_fuuki16 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fuuki16 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -592,9 +589,7 @@ public class fuukifg2
 		MDRV_SOUND_ADD(YM2203, fuuki16_ym2203_intf)
 		MDRV_SOUND_ADD(YM3812, fuuki16_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, fuuki16_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -773,7 +768,7 @@ public class fuukifg2
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_gogomile	   = new GameDriver("1995"	,"gogomile"	,"fuukifg2.java"	,rom_gogomile,null	,machine_driver_fuuki16	,input_ports_gogomile	,null	,ROT0	,	"Fuuki", "Go Go! Mile Smile",          GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_gogomilj	   = new GameDriver("1995"	,"gogomilj"	,"fuukifg2.java"	,rom_gogomilj,driver_gogomile	,machine_driver_fuuki16	,input_ports_gogomilj	,null	,ROT0	,	"Fuuki", "Susume! Mile Smile (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_pbancho	   = new GameDriver("1996"	,"pbancho"	,"fuukifg2.java"	,rom_pbancho,null	,machine_driver_fuuki16	,input_ports_pbancho	,null	,ROT0	,	"Fuuki", "Gyakuten!! Puzzle Bancho (Japan)")
+	GAMEX(1995, gogomile, 0,        fuuki16, gogomile, 0, ROT0, "Fuuki", "Go Go! Mile Smile",          GAME_IMPERFECT_SOUND )
+	GAMEX(1995, gogomilj, gogomile, fuuki16, gogomilj, 0, ROT0, "Fuuki", "Susume! Mile Smile (Japan)", GAME_IMPERFECT_SOUND )
+	GAME( 1996, pbancho,  0,        fuuki16, pbancho,  0, ROT0, "Fuuki", "Gyakuten!! Puzzle Bancho (Japan)")
 }

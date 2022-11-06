@@ -21,7 +21,7 @@ Change Log:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,19 +36,19 @@ public class ninjakid
 	
 	static UINT8 *ninjakid_gfx_rom;
 	
-	public static ReadHandlerPtr ninjakid_shared_rom_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr ninjakid_shared_rom_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return ninjakid_gfx_rom[offset];
-	} };
+	}
 	
 	/* working RAM is shared, but an address line is inverted */
 	static UINT8 *shareram;
 	
-	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		shareram[offset^0x400] = data;
-	} };
-	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset){
+	}
+	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return shareram[offset^0x400];
-	} };
+	}
 	
 	/*******************************************************************************
 	 0xA000 Read / Write Handlers
@@ -56,19 +56,19 @@ public class ninjakid
 	
 	static UINT8 ninjakun_io_a002_ctrl;
 	
-	public static ReadHandlerPtr ninjakun_io_A002_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr ninjakun_io_A002_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return ninjakun_io_a002_ctrl | readinputport(2); /* vblank */
-	} };
+	}
 	
-	public static WriteHandlerPtr cpu1_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr cpu1_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if( data == 0x80 ) ninjakun_io_a002_ctrl |= 0x04;
 		if( data == 0x40 ) ninjakun_io_a002_ctrl &= ~0x08;
-	} };
+	}
 	
-	public static WriteHandlerPtr cpu2_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr cpu2_A002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if( data == 0x40 ) ninjakun_io_a002_ctrl |= 0x08;
 		if( data == 0x80 ) ninjakun_io_a002_ctrl &= ~0x04;
-	} };
+	}
 	
 	/*******************************************************************************
 	 Memory Maps
@@ -185,8 +185,7 @@ public class ninjakid
 		new int[] { 50, 50 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_ninjakid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjakid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000) /* 3.00MHz */
@@ -213,9 +212,7 @@ public class ninjakid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************
 	 Rom Definitions
@@ -251,7 +248,7 @@ public class ninjakid
 	 2 Sets of Dipsiwtches
 	*******************************************************************************/
 	
-	static InputPortPtr input_ports_ninjakid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjakid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjakid )
 		PORT_START(); 	/* 0xa000 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW,	IPT_JOYSTICK_LEFT | IPF_2WAY );/* "XPOS1" */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW,	IPT_JOYSTICK_RIGHT| IPF_2WAY );
@@ -330,8 +327,7 @@ public class ninjakid
 	 Init
 	*******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_ninjakid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ninjakid  = new DriverInitHandlerPtr() { public void handler(){
 		/* Save State Stuff */
 		state_save_register_UINT8 ("NK_Main", 0, "ninjakun_io_a002_ctrl", &ninjakun_io_a002_ctrl, 1);
 	} };
@@ -340,5 +336,5 @@ public class ninjakid
 	 Game Drivers
 	*******************************************************************************/
 	
-	public static GameDriver driver_ninjakun	   = new GameDriver("1984"	,"ninjakun"	,"ninjakid.java"	,rom_ninjakun,null	,machine_driver_ninjakid	,input_ports_ninjakid	,init_ninjakid	,ROT0	,	"[UPL] (Taito license)", "Ninjakun Majou no Bouken" )
+	GAME( 1984, ninjakun, 0, ninjakid, ninjakid, ninjakid, ROT0, "[UPL] (Taito license)", "Ninjakun Majou no Bouken" )
 }

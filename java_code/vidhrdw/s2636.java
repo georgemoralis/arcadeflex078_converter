@@ -75,7 +75,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -143,24 +143,24 @@ public class s2636
 	
 	            /* Draw first sprite */
 	
-			    drawgfxzoom(collision_bitmap,Machine.gfx[Graphics_Bank],
+			    drawgfxzoom(collision_bitmap,Machine->gfx[Graphics_Bank],
 			                char1,
 				            1,
 			                0,0,
 			                fx1,fy1,
-			                Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine->visible_area, TRANSPARENCY_PEN, 0,
 					        expand1,expand1);
 	
 	            /* Get fingerprint */
 	
-		        for (x = fx1; x < fx1 + Machine.gfx[Graphics_Bank].width; x++)
+		        for (x = fx1; x < fx1 + Machine->gfx[Graphics_Bank]->width; x++)
 		        {
-			        for (y = fy1; y < fy1 + Machine.gfx[Graphics_Bank].height; y++)
+			        for (y = fy1; y < fy1 + Machine->gfx[Graphics_Bank]->height; y++)
 	                {
-				        if ((x < Machine.visible_area.min_x) ||
-				            (x > Machine.visible_area.max_x) ||
-				            (y < Machine.visible_area.min_y) ||
-				            (y > Machine.visible_area.max_y))
+				        if ((x < Machine->visible_area.min_x) ||
+				            (x > Machine->visible_area.max_x) ||
+				            (y < Machine->visible_area.min_y) ||
+				            (y > Machine->visible_area.max_y))
 				        {
 					        continue;
 				        }
@@ -171,24 +171,24 @@ public class s2636
 	
 	            /* Blackout second sprite */
 	
-			    drawgfxzoom(collision_bitmap,Machine.gfx[Graphics_Bank],
+			    drawgfxzoom(collision_bitmap,Machine->gfx[Graphics_Bank],
 			                char2,
 				            0,
 			                0,0,
 					        fx2,fy2,
-			                Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine->visible_area, TRANSPARENCY_PEN, 0,
 					        expand2,expand2);
 	
 	            /* Remove fingerprint */
 	
-		        for (x = fx1; x < fx1 + Machine.gfx[Graphics_Bank].width; x++)
+		        for (x = fx1; x < fx1 + Machine->gfx[Graphics_Bank]->width; x++)
 		        {
-			        for (y = fy1; y < fy1 + Machine.gfx[Graphics_Bank].height; y++)
+			        for (y = fy1; y < fy1 + Machine->gfx[Graphics_Bank]->height; y++)
 	                {
-				        if ((x < Machine.visible_area.min_x) ||
-				            (x > Machine.visible_area.max_x) ||
-				            (y < Machine.visible_area.min_y) ||
-				            (y > Machine.visible_area.max_y))
+				        if ((x < Machine->visible_area.min_x) ||
+				            (x > Machine->visible_area.max_x) ||
+				            (y < Machine->visible_area.min_y) ||
+				            (y > Machine->visible_area.max_y))
 				        {
 					        continue;
 				        }
@@ -199,12 +199,12 @@ public class s2636
 	
 	            /* Zero bitmap */
 	
-			    drawgfxzoom(collision_bitmap,Machine.gfx[Graphics_Bank],
+			    drawgfxzoom(collision_bitmap,Machine->gfx[Graphics_Bank],
 			                char1,
 				            0,
 			                0,0,
 			                fx1,fy1,
-			                Machine.visible_area, TRANSPARENCY_PEN, 0,
+			                Machine->visible_area, TRANSPARENCY_PEN, 0,
 					        expand1,expand1);
 	            }
 	    }
@@ -241,16 +241,16 @@ public class s2636
 	
 	                if(dirty[spriteno])
 	                {
-		   			    decodechar(Machine.gfx[Graphics_Bank],charno,workram,Machine.drv.gfxdecodeinfo[Graphics_Bank].gfxlayout);
+		   			    decodechar(Machine->gfx[Graphics_Bank],charno,workram,Machine->drv->gfxdecodeinfo[Graphics_Bank].gfxlayout);
 	                    dirty[spriteno] = 0;
 	                }
 	
-			        drawgfxzoom(bitmap,Machine.gfx[Graphics_Bank],
+			        drawgfxzoom(bitmap,Machine->gfx[Graphics_Bank],
 				                charno,
 					            colour,
 				                0,0,
 				                bx,by,
-				                Machine.visible_area,
+				                Machine->visible_area,
 								TRANSPARENCY_BLEND_RAW, 0,
 						        expand,expand);
 	
@@ -266,12 +266,12 @@ public class s2636
 						    {
 							    by=by+10+workram[offs+13];
 	
-					            drawgfxzoom(bitmap,Machine.gfx[Graphics_Bank],
+					            drawgfxzoom(bitmap,Machine->gfx[Graphics_Bank],
 						                    charno,
 							                colour,
 					    	                0,0,
 					        	            bx,by,
-					            	        Machine.visible_area,
+					            	        Machine->visible_area,
 											TRANSPARENCY_BLEND_RAW, 0,
 							        	    expand,expand);
 		                    }
@@ -281,7 +281,7 @@ public class s2636
 	        }
 	    }
 	
-	    /* Sprite.Sprite collision detection */
+	    /* Sprite->Sprite collision detection */
 	
 	    if(SpriteCheck(0,1,workram,Graphics_Bank,collision_bitmap)) CollisionSprite |= 0x20;
 	    if(SpriteCheck(0,2,workram,Graphics_Bank,collision_bitmap)) CollisionSprite |= 0x10;

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -90,8 +90,7 @@ public class lastduel
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_lastduel  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lastduel  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(ld_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,64,64);
 		fg_tilemap = tilemap_create(ld_get_fg_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,64,64);
 		tx_tilemap = tilemap_create(get_fix_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -109,8 +108,7 @@ public class lastduel
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_madgear  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_madgear  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_cols,TILEMAP_SPLIT,16,16,64,32);
 		tx_tilemap = tilemap_create(get_fix_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -138,7 +136,7 @@ public class lastduel
 	
 	WRITE16_HANDLER( lastduel_flip_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			flip_screen_set(data & 0x01);
 	
@@ -215,7 +213,7 @@ public class lastduel
 	{
 		int offs;
 	
-		if (sprite_pri_mask == 0)
+		if (!sprite_pri_mask)
 			if (pri == 1) return;	/* only low priority sprites in lastduel */
 	
 		for(offs=0x400-4;offs>=0;offs-=4)
@@ -223,7 +221,7 @@ public class lastduel
 			int attr,sy,sx,flipx,flipy,code,color;
 	
 			attr = buffered_spriteram16[offs+1];
-			if (sprite_pri_mask != 0)	/* only madgear seems to have this */
+			if (sprite_pri_mask)	/* only madgear seems to have this */
 			{
 				if (pri==1 && (attr & sprite_pri_mask)) continue;
 				if (pri==0 && !(attr & sprite_pri_mask)) continue;
@@ -239,7 +237,7 @@ public class lastduel
 			flipy = attr & sprite_flipy_mask;	/* 0x40 for lastduel, 0x80 for madgear */
 			color = attr & 0x0f;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
@@ -247,7 +245,7 @@ public class lastduel
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color,
 					flipx,flipy,
@@ -257,8 +255,7 @@ public class lastduel
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_lastduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lastduel  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect,0);
@@ -268,8 +265,7 @@ public class lastduel
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_lastduel  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_lastduel  = new VideoEofHandlerPtr() { public void handler(){
 		/* Spriteram is always 1 frame ahead, suggesting buffering.  I can't find
 			a register to control this so I assume it happens automatically
 			every frame at the end of vblank */

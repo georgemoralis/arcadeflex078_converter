@@ -71,20 +71,18 @@ Based on sketch made by Tormod
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class mustache
 {
 	
-	public static WriteHandlerPtr mustache_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
 	
 	static int read_coins=0;
 	
-	public static ReadHandlerPtr mustache_coin_hack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mustache_coin_hack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (read_coins)?((offset&1	)?(input_port_5_r.handler(0)<<5)|(input_port_5_r.handler(0)<<7):(input_port_5_r.handler(0)<<4)):0;
 	} };
 	
@@ -119,7 +117,7 @@ public class mustache
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_mustache = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mustache = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mustache )
 		PORT_START(); 	/* IN 1 */
 	
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP  );
@@ -221,15 +219,13 @@ public class mustache
 	};
 	
 	
-	public static InterruptHandlerPtr mustache_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mustache_interrupt = new InterruptHandlerPtr() {public void handler(){
 		read_coins^=1;
 		cpu_set_irq_line(0, 0, PULSE_LINE);
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_mustache = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mustache )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/4) /* maybe 12000000/3 - two xtals (18.432 and 12.xxx) near cpu*/
@@ -249,9 +245,7 @@ public class mustache
 		MDRV_PALETTE_INIT(mustache)
 		MDRV_VIDEO_START(mustache)
 		MDRV_VIDEO_UPDATE(mustache)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_mustache = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )
@@ -280,8 +274,7 @@ public class mustache
 		ROM_LOAD( "mustache.b6",0x0300, 0x1000, CRC(5f83fa35) SHA1(cb13e63577762d818e5dcbb52b8a53f66e284e8f) ) /* 63S281N near SEI0070BU */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_mustache  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mustache  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		#define G1 (memory_region_length(REGION_GFX1)/3)
@@ -329,5 +322,5 @@ public class mustache
 	} };
 	
 	
-	public static GameDriver driver_mustache	   = new GameDriver("1987"	,"mustache"	,"mustache.java"	,rom_mustache,null	,machine_driver_mustache	,input_ports_mustache	,init_mustache	,ROT90	,	"[Seibu Kaihatsu] (March license)", "Mustache Boy", GAME_NO_SOUND )
+	GAMEX( 1987, mustache, 0, mustache, mustache, mustache, ROT90, "[Seibu Kaihatsu] (March license)", "Mustache Boy", GAME_NO_SOUND )
 }

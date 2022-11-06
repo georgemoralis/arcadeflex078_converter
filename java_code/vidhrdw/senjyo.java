@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,21 +35,18 @@ public class senjyo
 	static struct mame_bitmap *bgbitmap;
 	
 	
-	public static DriverInitHandlerPtr init_starforc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starforc  = new DriverInitHandlerPtr() { public void handler(){
 		senjyo = 0;
 		scrollhack = 1;
 	} };
-	public static DriverInitHandlerPtr init_starfore  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starfore  = new DriverInitHandlerPtr() { public void handler(){
 		/* encrypted CPU */
 		suprloco_decode();
 	
 		senjyo = 0;
 		scrollhack = 0;
 	} };
-	public static DriverInitHandlerPtr init_senjyo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_senjyo  = new DriverInitHandlerPtr() { public void handler(){
 		senjyo = 1;
 		scrollhack = 0;
 	} };
@@ -124,14 +121,13 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_senjyo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_senjyo  = new VideoStartHandlerPtr() { public int handler(){
 		bgbitmap = auto_bitmap_alloc(256,256);
-		if (bgbitmap == 0)
+		if (!bgbitmap)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
-		if (senjyo != 0)
+		if (senjyo)
 		{
 			bg1_tilemap = tilemap_create(senjyo_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,32);
 			bg2_tilemap = tilemap_create(get_bg2_tile_info,   tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,48);	/* only 16x32 used by Star Force */
@@ -167,40 +163,35 @@ public class senjyo
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr senjyo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (senjyo_fgvideoram[offset] != data)
 		{
 			senjyo_fgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };
-	public static WriteHandlerPtr senjyo_fgcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_fgcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (senjyo_fgcolorram[offset] != data)
 		{
 			senjyo_fgcolorram[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap,offset);
 		}
 	} };
-	public static WriteHandlerPtr senjyo_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (senjyo_bg1videoram[offset] != data)
 		{
 			senjyo_bg1videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg1_tilemap,offset);
 		}
 	} };
-	public static WriteHandlerPtr senjyo_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (senjyo_bg2videoram[offset] != data)
 		{
 			senjyo_bg2videoram[offset] = data;
 			tilemap_mark_tile_dirty(bg2_tilemap,offset);
 		}
 	} };
-	public static WriteHandlerPtr senjyo_bg3videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_bg3videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (senjyo_bg3videoram[offset] != data)
 		{
 			senjyo_bg3videoram[offset] = data;
@@ -208,8 +199,7 @@ public class senjyo
 		}
 	} };
 	
-	public static WriteHandlerPtr senjyo_bgstripes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr senjyo_bgstripes_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		*senjyo_bgstripesram = data;
 		set_vh_global_attribute(&senjyo_bgstripes, data);
 	} };
@@ -227,32 +217,32 @@ public class senjyo
 	
 		if (senjyo_bgstripes == 0xff)	/* off */
 		{
-			fillbitmap(bitmap,Machine.pens[0],cliprect);
+			fillbitmap(bitmap,Machine->pens[0],cliprect);
 			return;
 		}
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			pen = 0;
 			count = 0;
 			strwid = senjyo_bgstripes;
 			if (strwid == 0) strwid = 0x100;
-			if (flip_screen != 0) strwid ^= 0xff;
+			if (flip_screen()) strwid ^= 0xff;
 	
 			for (x = 0;x < 256;x++)
 			{
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					for (y = 0;y < 256;y++)
 					{
-						plot_pixel(bgbitmap, 255 - x, y, Machine.pens[384 + pen]);
+						plot_pixel(bgbitmap, 255 - x, y, Machine->pens[384 + pen]);
 					}
 				}
 				else
 				{
 					for (y = 0;y < 256;y++)
 					{
-						plot_pixel(bgbitmap, x, y, Machine.pens[384 + pen]);
+						plot_pixel(bgbitmap, x, y, Machine->pens[384 + pen]);
 					}
 				}
 	
@@ -285,17 +275,17 @@ public class senjyo
 						sx = (8 * (offs % 8) + x) + 256-64;
 						sy = ((offs & 0x1ff) / 8) + 96;
 	
-						if (flip_screen != 0)
+						if (flip_screen())
 						{
 							sx = 255 - sx;
 							sy = 255 - sy;
 						}
 	
-						if (sy >= cliprect.min_y && sy <= cliprect.max_y &&
-							sx >= cliprect.min_x && sx <= cliprect.max_x)
+						if (sy >= cliprect->min_y && sy <= cliprect->max_y &&
+							sx >= cliprect->min_x && sx <= cliprect->max_x)
 							plot_pixel(bitmap,
 									   sx, sy,
-									   Machine.pens[offs < 0x200 ? 400 : 401]);
+									   Machine->pens[offs < 0x200 ? 400 : 401]);
 					}
 				}
 			}
@@ -313,24 +303,24 @@ public class senjyo
 	
 			if (((spriteram.read(offs+1)& 0x30) >> 4) == priority)
 			{
-				if (senjyo != 0)	/* Senjyo */
+				if (senjyo)	/* Senjyo */
 					big = (spriteram.read(offs)& 0x80);
 				else	/* Star Force */
 					big = ((spriteram.read(offs)& 0xc0) == 0xc0);
 				sx = spriteram.read(offs+3);
-				if (big != 0)
+				if (big)
 					sy = 224-spriteram.read(offs+2);
 				else
 					sy = 240-spriteram.read(offs+2);
 				flipx = spriteram.read(offs+1)& 0x40;
 				flipy = spriteram.read(offs+1)& 0x80;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 	
-					if (big != 0)
+					if (big)
 					{
 						sx = 224 - sx;
 						sy = 226 - sy;
@@ -343,7 +333,7 @@ public class senjyo
 				}
 	
 	
-				drawgfx(bitmap,Machine.gfx[big ? 5 : 4],
+				drawgfx(bitmap,Machine->gfx[big ? 5 : 4],
 						spriteram.read(offs),
 						spriteram.read(offs + 1)& 0x07,
 						flipx,flipy,
@@ -353,8 +343,7 @@ public class senjyo
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_senjyo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	
@@ -370,26 +359,26 @@ public class senjyo
 	
 			scrollx = senjyo_scrollx1[0];
 			scrolly = senjyo_scrolly1[0] + 256 * senjyo_scrolly1[1];
-			if (flip_screen != 0)
+			if (flip_screen())
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg1_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg1_tilemap,0,scrolly);
 	
 			scrollx = senjyo_scrollx2[0];
 			scrolly = senjyo_scrolly2[0] + 256 * senjyo_scrolly2[1];
-			if (scrollhack != 0)	/* Star Force, but NOT the encrypted version */
+			if (scrollhack)	/* Star Force, but NOT the encrypted version */
 			{
 				scrollx = senjyo_scrollx1[0];
 				scrolly = senjyo_scrolly1[0] + 256 * senjyo_scrolly1[1];
 			}
-			if (flip_screen != 0)
+			if (flip_screen())
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg2_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg2_tilemap,0,scrolly);
 	
 			scrollx = senjyo_scrollx3[0];
 			scrolly = senjyo_scrolly3[0] + 256 * senjyo_scrolly3[1];
-			if (flip_screen != 0)
+			if (flip_screen())
 				scrollx = -scrollx;
 			tilemap_set_scrollx(bg3_tilemap,0,scrollx);
 			tilemap_set_scrolly(bg3_tilemap,0,scrolly);

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class thepit
 	
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_thepit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_thepit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -96,8 +95,7 @@ public class thepit
 	 unknown.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_suprmous  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_suprmous  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -145,8 +143,7 @@ public class thepit
 	} };
 	
 	
-	public static WriteHandlerPtr thepit_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thepit_attributes_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 1) && thepit_attributesram[offset] != data)
 		{
 			int i;
@@ -160,17 +157,15 @@ public class thepit
 	} };
 	
 	
-	public static WriteHandlerPtr intrepid_graphics_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr intrepid_graphics_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_vh_global_attribute(&graphics_bank, data << 1);
 	} };
 	
 	
-	public static ReadHandlerPtr thepit_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr thepit_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Read either the real or the fake input ports depending on the
 		   horizontal flip switch. (This is how the real PCB does it) */
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			return input_port_3_r.handler(offset);
 		}
@@ -181,8 +176,7 @@ public class thepit
 	} };
 	
 	
-	public static WriteHandlerPtr thepit_sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thepit_sound_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mixer_sound_enable_global_w(data);
 	} };
 	
@@ -202,7 +196,7 @@ public class thepit
 		if (priority == 1)
 		{
 			/* find the space character */
-			while (Machine.gfx[0].pen_usage[spacechar] & ~1) spacechar++;
+			while (Machine->gfx[0]->pen_usage[spacechar] & ~1) spacechar++;
 		}
 	
 	
@@ -239,17 +233,17 @@ public class thepit
 					sy = (sy - thepit_attributesram[2 * sx]) & 0xff;
 				}
 	
-				if (flip_screen_x != 0) sx = 31 - sx;
-				if (flip_screen_y != 0) sy = 248 - sy;
+				if (flip_screen_x) sx = 31 - sx;
+				if (flip_screen_y) sy = 248 - sy;
 	
-				color = colorram.read(offs)& (Machine.drv.gfxdecodeinfo[bank].total_color_codes - 1);
+				color = colorram.read(offs)& (Machine->drv->gfxdecodeinfo[bank].total_color_codes - 1);
 	
 				/* set up the background color */
-				Machine.gfx[bank].
-						colortable[color * Machine.gfx[bank].color_granularity] =
-						Machine.pens[bgcolor];
+				Machine->gfx[bank]->
+						colortable[color * Machine->gfx[bank]->color_granularity] =
+						Machine->pens[bgcolor];
 	
-				drawgfx(priority == 0 ? tmpbitmap : bitmap,Machine.gfx[bank],
+				drawgfx(priority == 0 ? tmpbitmap : bitmap,Machine->gfx[bank],
 						code,
 						color,
 						flip_screen_x,flip_screen_y,
@@ -264,12 +258,12 @@ public class thepit
 		{
 			int i, scroll[32];
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				for (i = 0;i < 32;i++)
 				{
 					scroll[31-i] = -thepit_attributesram[2 * i];
-					if (flip_screen_y != 0) scroll[31-i] = -scroll[31-i];
+					if (flip_screen_y) scroll[31-i] = -scroll[31-i];
 				}
 			}
 			else
@@ -277,11 +271,11 @@ public class thepit
 				for (i = 0;i < 32;i++)
 				{
 					scroll[i] = -thepit_attributesram[2 * i];
-					if (flip_screen_y != 0) scroll[i] = -scroll[i];
+					if (flip_screen_y) scroll[i] = -scroll[i];
 				}
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap,0,0,32,scroll,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -310,13 +304,13 @@ public class thepit
 				flipx = spriteram.read(offs + 1)& 0x40;
 				flipy = spriteram.read(offs + 1)& 0x80;
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 242 - sx;
 					flipx = NOT(flipx);
 				}
 	
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 240 - sy;
 					flipy = NOT(flipy);
@@ -325,7 +319,7 @@ public class thepit
 				/* Sprites 0-3 are drawn one pixel to the left */
 				if (offs <= 3*4) sy++;
 	
-				drawgfx(bitmap,Machine.gfx[graphics_bank | 1],
+				drawgfx(bitmap,Machine->gfx[graphics_bank | 1],
 						spriteram.read(offs + 1)& 0x3f,
 						spriteram.read(offs + 2)& 0x07,
 						flipx,flipy,
@@ -336,9 +330,8 @@ public class thepit
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_thepit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_thepit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer, 1, videoram_size[0]);
 		}

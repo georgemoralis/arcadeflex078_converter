@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,20 +55,19 @@ public class atarig1
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 1;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_atarig1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarig1  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -86,7 +85,7 @@ public class atarig1
 	
 	static WRITE16_HANDLER( mo_control_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			atarirle_control_w(0, data & 7);
 	}
 	
@@ -108,7 +107,7 @@ public class atarig1
 	static READ16_HANDLER( special_port0_r )
 	{
 		int temp = readinputport(0);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x1000;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x1000;
 		temp ^= 0x2000;		/* A2DOK always high for now */
 		return temp;
 	}
@@ -123,7 +122,7 @@ public class atarig1
 	static READ16_HANDLER( a2d_data_r )
 	{
 		/* Pit Fighter has no A2D, just another input port */
-		if (atarig1_pitfight != 0)
+		if (atarig1_pitfight)
 			return readinputport(1);
 	
 		/* otherwise, assume it's hydra */
@@ -170,7 +169,7 @@ public class atarig1
 			bslapstic_primed = 1;
 	
 		/* one of 4 bankswitchers produces the result */
-		else if (bslapstic_primed != 0)
+		else if (bslapstic_primed)
 		{
 			if (offset == 0x42)
 				update_bank(0), bslapstic_primed = 0;
@@ -192,7 +191,7 @@ public class atarig1
 	
 		/* allocate memory for a copy of bank 0 */
 		bslapstic_bank0 = auto_malloc(0x2000);
-		if (bslapstic_bank0 != 0)
+		if (bslapstic_bank0)
 			memcpy(bslapstic_bank0, bslapstic_base, 0x2000);
 	
 		/* not primed by default */
@@ -247,7 +246,7 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_hydra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hydra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hydra )
 		PORT_START(); 		/* fc0000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON5 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -275,7 +274,7 @@ public class atarig1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pitfight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pitfight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pitfight )
 		PORT_START(); 		/* fc0000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
@@ -321,7 +320,7 @@ public class atarig1
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pitfighj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pitfighj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pitfighj )
 		PORT_START(); 		/* fc0000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
@@ -416,8 +415,7 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarig1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarig1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz)
@@ -443,9 +441,7 @@ public class atarig1
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -862,12 +858,12 @@ public class atarig1
 		atarig1_pitfight = is_pitfight;
 	}
 	
-	public static DriverInitHandlerPtr init_hydra  = new DriverInitHandlerPtr() { public void handler()    { init_g1_common(0x078000, 116, 0); } };
-	public static DriverInitHandlerPtr init_hydrap  = new DriverInitHandlerPtr() { public void handler()   { init_g1_common(0x000000,   0, 0); } };
+	public static DriverInitHandlerPtr init_hydra  = new DriverInitHandlerPtr() { public void handler()  { init_g1_common(0x078000, 116, 0); } };
+	public static DriverInitHandlerPtr init_hydrap  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x000000,   0, 0); } };
 	
-	public static DriverInitHandlerPtr init_pitfight  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000, 111, 1); } };
-	public static DriverInitHandlerPtr init_pitfighj  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000, 113, 1); } };
-	public static DriverInitHandlerPtr init_pitfighb  = new DriverInitHandlerPtr() { public void handler() { init_g1_common(0x038000,  -1, 1); } };
+	public static DriverInitHandlerPtr init_pitfight  = new DriverInitHandlerPtr() { public void handler() init_g1_common(0x038000, 111, 1); }
+	public static DriverInitHandlerPtr init_pitfighj  = new DriverInitHandlerPtr() { public void handler() init_g1_common(0x038000, 113, 1); }
+	public static DriverInitHandlerPtr init_pitfighb  = new DriverInitHandlerPtr() { public void handler() init_g1_common(0x038000,  -1, 1); }
 	
 	
 	
@@ -877,12 +873,12 @@ public class atarig1
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_hydra	   = new GameDriver("1990"	,"hydra"	,"atarig1.java"	,rom_hydra,null	,machine_driver_atarig1	,input_ports_hydra	,init_hydra	,ROT0	,	"Atari Games", "Hydra" )
-	public static GameDriver driver_hydrap	   = new GameDriver("1990"	,"hydrap"	,"atarig1.java"	,rom_hydrap,driver_hydra	,machine_driver_atarig1	,input_ports_hydra	,init_hydrap	,ROT0	,	"Atari Games", "Hydra (prototype 5/14/90)" )
-	public static GameDriver driver_hydrap2	   = new GameDriver("1990"	,"hydrap2"	,"atarig1.java"	,rom_hydrap2,driver_hydra	,machine_driver_atarig1	,input_ports_hydra	,init_hydrap	,ROT0	,	"Atari Games", "Hydra (prototype 5/25/90)" )
+	GAME( 1990, hydra,    0,        atarig1, hydra,    hydra,    ROT0, "Atari Games", "Hydra" )
+	GAME( 1990, hydrap,   hydra,    atarig1, hydra,    hydrap,   ROT0, "Atari Games", "Hydra (prototype 5/14/90)" )
+	GAME( 1990, hydrap2,  hydra,    atarig1, hydra,    hydrap,   ROT0, "Atari Games", "Hydra (prototype 5/25/90)" )
 	
-	public static GameDriver driver_pitfight	   = new GameDriver("1990"	,"pitfight"	,"atarig1.java"	,rom_pitfight,null	,machine_driver_atarig1	,input_ports_pitfight	,init_pitfight	,ROT0	,	"Atari Games", "Pit Fighter (rev 4)" )
-	public static GameDriver driver_pitfigh3	   = new GameDriver("1990"	,"pitfigh3"	,"atarig1.java"	,rom_pitfigh3,driver_pitfight	,machine_driver_atarig1	,input_ports_pitfight	,init_pitfight	,ROT0	,	"Atari Games", "Pit Fighter (rev 3)" )
-	public static GameDriver driver_pitfighj	   = new GameDriver("1990"	,"pitfighj"	,"atarig1.java"	,rom_pitfighj,driver_pitfight	,machine_driver_atarig1	,input_ports_pitfighj	,init_pitfighj	,ROT0	,	"Atari Games", "Pit Fighter (Japan, 2 players)" )
-	public static GameDriver driver_pitfighb	   = new GameDriver("1990"	,"pitfighb"	,"atarig1.java"	,rom_pitfighb,driver_pitfight	,machine_driver_atarig1	,input_ports_pitfight	,init_pitfighb	,ROT0	,	"Atari Games", "Pit Fighter (bootleg)" )
+	GAME( 1990, pitfight, 0,        atarig1, pitfight, pitfight, ROT0, "Atari Games", "Pit Fighter (rev 4)" )
+	GAME( 1990, pitfigh3, pitfight, atarig1, pitfight, pitfight, ROT0, "Atari Games", "Pit Fighter (rev 3)" )
+	GAME( 1990, pitfighj, pitfight, atarig1, pitfighj, pitfighj, ROT0, "Atari Games", "Pit Fighter (Japan, 2 players)" )
+	GAME( 1990, pitfighb, pitfight, atarig1, pitfight, pitfighb, ROT0, "Atari Games", "Pit Fighter (bootleg)" )
 }

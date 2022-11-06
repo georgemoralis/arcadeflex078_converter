@@ -22,7 +22,7 @@ a 0xff mark.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -79,13 +79,13 @@ public class namcos86
 		size = sizeof( struct GameSamples ) + n * sizeof( struct GameSamples * );
 	
 		/* allocate */
-		if ( ( Machine.samples = auto_malloc( size ) ) == NULL )
+		if ( ( Machine->samples = auto_malloc( size ) ) == NULL )
 			return 1;
 	
-		samples = Machine.samples;
-		samples.total = n;
+		samples = Machine->samples;
+		samples->total = n;
 	
-		for ( n = 0; n < samples.total; n++ ) {
+		for ( n = 0; n < samples->total; n++ ) {
 			int indx, start, offs;
 	
 			if ( n < rt_totalsamples[0] ) {
@@ -138,16 +138,16 @@ public class namcos86
 			}
 	
 			/* allocate sample */
-			if ( ( samples.sample[n] = auto_malloc( sizeof( struct GameSample ) + size * sizeof( unsigned char ) ) ) == NULL )
+			if ( ( samples->sample[n] = auto_malloc( sizeof( struct GameSample ) + size * sizeof( unsigned char ) ) ) == NULL )
 				return 1;
 	
 			/* fill up the sample info */
-			samples.sample[n].length = size;
-			samples.sample[n].smpfreq = 6000;	/* 6 kHz */
-			samples.sample[n].resolution = 8;	/* 8 bit */
+			samples->sample[n]->length = size;
+			samples->sample[n]->smpfreq = 6000;	/* 6 kHz */
+			samples->sample[n]->resolution = 8;	/* 8 bit */
 	
 			/* unpack sample */
-			dest = (unsigned char *)samples.sample[n].data;
+			dest = (unsigned char *)samples->sample[n]->data;
 			scan = &src[start];
 	
 			while ( *scan != 0xff ) {
@@ -180,15 +180,15 @@ public class namcos86
 			sample_start( ch, voice[ch], 0 );
 	}
 	
-	public static WriteHandlerPtr namco_voice0_play_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr namco_voice0_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		namco_voice_play(offset, data, 0);
-	} };
+	}
 	
-	public static WriteHandlerPtr namco_voice1_play_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr namco_voice1_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		namco_voice_play(offset, data, 1);
-	} };
+	}
 	
 	/* select voice sample (Modified and Added by Takahiro Nogi. 1999/09/26) */
 	static void namco_voice_select( int offset, int data, int ch ) {
@@ -238,7 +238,7 @@ public class namcos86
 					data += rt_totalsamples[0] + rt_totalsamples[1] + rt_totalsamples[2] + rt_totalsamples[3] + rt_totalsamples[4] + rt_totalsamples[5] + rt_totalsamples[6];
 				break;
 			}
-		} else {
+		} }; else {
 			switch ( data & 0xc0 ) {
 				case 0x00:
 				break;
@@ -263,35 +263,32 @@ public class namcos86
 		voice[ch] = data - 1;
 	}
 	
-	public static WriteHandlerPtr namco_voice0_select_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr namco_voice0_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		namco_voice_select(offset, data, 0);
-	} };
+	}
 	
-	public static WriteHandlerPtr namco_voice1_select_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr namco_voice1_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		namco_voice_select(offset, data, 1);
-	} };
+	}
 	/*******************************************************************/
 	
 	/* shared memory area with the mcu */
 	static unsigned char *shared1;
-	public static ReadHandlerPtr shared1_r  = new ReadHandlerPtr() { public int handler(int offset) { return shared1[offset]; } };
-	public static WriteHandlerPtr shared1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { shared1[offset] = data; } };
+	public static ReadHandlerPtr shared1_r  = new ReadHandlerPtr() { public int handler(int offset) return shared1[offset]; }
+	public static WriteHandlerPtr shared1_w = new WriteHandlerPtr() {public void handler(int offset, int data) shared1[offset] = data; }
 	
 	
 	
-	public static WriteHandlerPtr spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram.write(offset,data);
 	} };
-	public static ReadHandlerPtr spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *base = memory_region(REGION_CPU1) + 0x10000;
 	
 		/* if the ROM expansion module is available, don't do anything. This avoids conflict */
@@ -301,8 +298,7 @@ public class namcos86
 		cpu_setbank(1,base + ((data & 0x03) * 0x2000));
 	} };
 	
-	public static WriteHandlerPtr bankswitch1_ext_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch1_ext_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *base = memory_region(REGION_USER1);
 	
 		if (base == 0) return;
@@ -310,16 +306,14 @@ public class namcos86
 		cpu_setbank(1,base + ((data & 0x1f) * 0x2000));
 	} };
 	
-	public static WriteHandlerPtr bankswitch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bankswitch2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *base = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(2,base + ((data & 0x03) * 0x2000));
 	} };
 	
 	/* Stubs to pass the correct Dip Switch setup to the MCU */
-	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int rhi, rlo;
 	
 		rhi = ( readinputport( 2 ) & 0x01 ) << 4;
@@ -335,8 +329,7 @@ public class namcos86
 		return ~( rhi | rlo ) & 0xff; /* Active Low */
 	} };
 	
-	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int rhi, rlo;
 	
 		rhi = ( readinputport( 2 ) & 0x02 ) << 3;
@@ -354,18 +347,15 @@ public class namcos86
 	
 	static int int_enabled[2];
 	
-	public static WriteHandlerPtr int_ack1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr int_ack1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int_enabled[0] = 1;
 	} };
 	
-	public static WriteHandlerPtr int_ack2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr int_ack2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int_enabled[1] = 1;
 	} };
 	
-	public static InterruptHandlerPtr namco86_interrupt1 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namco86_interrupt1 = new InterruptHandlerPtr() {public void handler(){
 		if (int_enabled[0])
 		{
 			int_enabled[0] = 0;
@@ -373,8 +363,7 @@ public class namcos86
 		}
 	} };
 	
-	public static InterruptHandlerPtr namco86_interrupt2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namco86_interrupt2 = new InterruptHandlerPtr() {public void handler(){
 		if (int_enabled[1])
 		{
 			int_enabled[1] = 0;
@@ -382,15 +371,13 @@ public class namcos86
 		}
 	} };
 	
-	public static WriteHandlerPtr namcos86_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos86_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(data & 1);
 		coin_counter_w(0,~data & 2);
 		coin_counter_w(1,~data & 4);
 	} };
 	
-	public static WriteHandlerPtr namcos86_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos86_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
 	} };
@@ -538,8 +525,7 @@ public class namcos86
 	#undef UNUSED
 	
 	
-	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -560,7 +546,7 @@ public class namcos86
 	
 	/*******************************************************************/
 	
-	static InputPortPtr input_ports_hopmappy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hopmappy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hopmappy )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 2 player 1 */
@@ -639,7 +625,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skykiddx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skykiddx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skykiddx )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -718,7 +704,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_roishtar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_roishtar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( roishtar )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -800,7 +786,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICKRIGHT_LEFT | IPF_8WAY );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_genpeitd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_genpeitd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( genpeitd )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -878,7 +864,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rthunder = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rthunder = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rthunder )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -957,7 +943,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rthundro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rthundro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rthundro )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1036,7 +1022,7 @@ public class namcos86
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wndrmomo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wndrmomo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wndrmomo )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* button 3 player 2 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1201,8 +1187,7 @@ public class namcos86
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_namco86  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_namco86  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *base = memory_region(REGION_CPU1) + 0x10000;
 	
 		cpu_setbank(1,base);
@@ -1211,8 +1196,7 @@ public class namcos86
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_hopmappy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hopmappy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("cpu1", M6809, 6000000/4)	/*49152000/32, rthunder doesn't work with this */
@@ -1251,13 +1235,10 @@ public class namcos86
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_skykiddx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skykiddx )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1266,13 +1247,10 @@ public class namcos86
 	
 		MDRV_CPU_MODIFY("mcu")
 		MDRV_CPU_MEMORY(skykiddx_mcu_readmem,skykiddx_mcu_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_roishtar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( roishtar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1281,13 +1259,10 @@ public class namcos86
 	
 		MDRV_CPU_MODIFY("mcu")
 		MDRV_CPU_MEMORY(roishtar_mcu_readmem,roishtar_mcu_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_genpeitd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( genpeitd )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1299,13 +1274,10 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_1024)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rthunder = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rthunder )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1317,13 +1289,10 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_512)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wndrmomo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wndrmomo )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hopmappy)
@@ -1335,9 +1304,7 @@ public class namcos86
 	
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_512)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1710,8 +1677,7 @@ public class namcos86
 	
 	
 	
-	public static DriverInitHandlerPtr init_namco86  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_namco86  = new DriverInitHandlerPtr() { public void handler(){
 		int size;
 		unsigned char *gfx;
 		unsigned char *buffer;
@@ -1721,7 +1687,7 @@ public class namcos86
 		size = memory_region_length(REGION_GFX1) * 2 / 3;
 		buffer = malloc( size );
 	
-		if (buffer != 0)
+		if ( buffer )
 		{
 			unsigned char *dest1 = gfx;
 			unsigned char *dest2 = gfx + ( size / 2 );
@@ -1747,7 +1713,7 @@ public class namcos86
 		size = memory_region_length(REGION_GFX2) * 2 / 3;
 		buffer = malloc( size );
 	
-		if (buffer != 0)
+		if ( buffer )
 		{
 			unsigned char *dest1 = gfx;
 			unsigned char *dest2 = gfx + ( size / 2 );
@@ -1772,16 +1738,14 @@ public class namcos86
 	
 	
 	
-	public static WriteHandlerPtr roishtar_semaphore_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr roishtar_semaphore_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    rthunder_videoram1_w(0x7e24-0x6000+offset,data);
 	
 	    if (data == 0x02)
 		    cpu_spinuntil_int();
 	} };
 	
-	public static DriverInitHandlerPtr init_roishtar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_roishtar  = new DriverInitHandlerPtr() { public void handler(){
 		/* install hook to avoid hang at game over */
 	    install_mem_write_handler(1, 0x7e24, 0x7e24, roishtar_semaphore_w);
 	
@@ -1790,12 +1754,12 @@ public class namcos86
 	
 	
 	
-	public static GameDriver driver_hopmappy	   = new GameDriver("1986"	,"hopmappy"	,"namcos86.java"	,rom_hopmappy,null	,machine_driver_hopmappy	,input_ports_hopmappy	,init_namco86	,ROT0	,	"Namco", "Hopping Mappy" )
-	public static GameDriver driver_skykiddx	   = new GameDriver("1986"	,"skykiddx"	,"namcos86.java"	,rom_skykiddx,null	,machine_driver_skykiddx	,input_ports_skykiddx	,init_namco86	,ROT180	,	"Namco", "Sky Kid Deluxe (set 1)" )
-	public static GameDriver driver_skykiddo	   = new GameDriver("1986"	,"skykiddo"	,"namcos86.java"	,rom_skykiddo,driver_skykiddx	,machine_driver_skykiddx	,input_ports_skykiddx	,init_namco86	,ROT180	,	"Namco", "Sky Kid Deluxe (set 2)" )
-	public static GameDriver driver_roishtar	   = new GameDriver("1986"	,"roishtar"	,"namcos86.java"	,rom_roishtar,null	,machine_driver_roishtar	,input_ports_roishtar	,init_roishtar	,ROT0	,	"Namco", "The Return of Ishtar" )
-	public static GameDriver driver_genpeitd	   = new GameDriver("1986"	,"genpeitd"	,"namcos86.java"	,rom_genpeitd,null	,machine_driver_genpeitd	,input_ports_genpeitd	,init_namco86	,ROT0	,	"Namco", "Genpei ToumaDen" )
-	public static GameDriver driver_rthunder	   = new GameDriver("1986"	,"rthunder"	,"namcos86.java"	,rom_rthunder,null	,machine_driver_rthunder	,input_ports_rthunder	,init_namco86	,ROT0	,	"Namco", "Rolling Thunder (new version)" )
-	public static GameDriver driver_rthundro	   = new GameDriver("1986"	,"rthundro"	,"namcos86.java"	,rom_rthundro,driver_rthunder	,machine_driver_rthunder	,input_ports_rthundro	,init_namco86	,ROT0	,	"Namco", "Rolling Thunder (old version)" )
-	public static GameDriver driver_wndrmomo	   = new GameDriver("1987"	,"wndrmomo"	,"namcos86.java"	,rom_wndrmomo,null	,machine_driver_wndrmomo	,input_ports_wndrmomo	,init_namco86	,ROT0	,	"Namco", "Wonder Momo" )
+	GAME( 1986, hopmappy, 0,        hopmappy, hopmappy, namco86,  ROT0,   "Namco", "Hopping Mappy" )
+	GAME( 1986, skykiddx, 0,        skykiddx, skykiddx, namco86,  ROT180, "Namco", "Sky Kid Deluxe (set 1)" )
+	GAME( 1986, skykiddo, skykiddx, skykiddx, skykiddx, namco86,  ROT180, "Namco", "Sky Kid Deluxe (set 2)" )
+	GAME( 1986, roishtar, 0,        roishtar, roishtar, roishtar, ROT0,   "Namco", "The Return of Ishtar" )
+	GAME( 1986, genpeitd, 0,        genpeitd, genpeitd, namco86,  ROT0,   "Namco", "Genpei ToumaDen" )
+	GAME( 1986, rthunder, 0,        rthunder, rthunder, namco86,  ROT0,   "Namco", "Rolling Thunder (new version)" )
+	GAME( 1986, rthundro, rthunder, rthunder, rthundro, namco86,  ROT0,   "Namco", "Rolling Thunder (old version)" )
+	GAME( 1987, wndrmomo, 0,        wndrmomo, wndrmomo, namco86,  ROT0,   "Namco", "Wonder Momo" )
 }

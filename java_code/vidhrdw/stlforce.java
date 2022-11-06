@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,17 +19,17 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_bg_videoram.read(tile_index)& 0x0fff;
-		colour = stlforce_bg_videoram.read(tile_index)& 0xe000;
+		tileno = stlforce_bg_videoram[tile_index] & 0x0fff;
+		colour = stlforce_bg_videoram[tile_index] & 0xe000;
 		colour = colour >> 13;
 		SET_TILE_INFO(0,tileno,colour,0)
 	}
 	
 	WRITE16_HANDLER( stlforce_bg_videoram_w )
 	{
-		if (stlforce_bg_videoram.read(offset)!= data)
+		if (stlforce_bg_videoram[offset] != data)
 		{
-			stlforce_bg_videoram.write(data,data);
+			stlforce_bg_videoram[offset] = data;
 			tilemap_mark_tile_dirty(stlforce_bg_tilemap,offset);
 		}
 	}
@@ -40,8 +40,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_mlow_videoram.read(tile_index)& 0x0fff;
-		colour = stlforce_mlow_videoram.read(tile_index)& 0xe000;
+		tileno = stlforce_mlow_videoram[tile_index] & 0x0fff;
+		colour = stlforce_mlow_videoram[tile_index] & 0xe000;
 		colour = colour >> 13;
 		colour += 8;
 		tileno += 0x1000;
@@ -51,9 +51,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_mlow_videoram_w )
 	{
-		if (stlforce_mlow_videoram.read(offset)!= data)
+		if (stlforce_mlow_videoram[offset] != data)
 		{
-			stlforce_mlow_videoram.write(data,data);
+			stlforce_mlow_videoram[offset] = data;
 			tilemap_mark_tile_dirty(stlforce_mlow_tilemap,offset);
 		}
 	}
@@ -64,8 +64,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_mhigh_videoram.read(tile_index)& 0x0fff;
-		colour = stlforce_mhigh_videoram.read(tile_index)& 0xe000;
+		tileno = stlforce_mhigh_videoram[tile_index] & 0x0fff;
+		colour = stlforce_mhigh_videoram[tile_index] & 0xe000;
 		colour = colour >> 13;
 		colour += 16;
 		tileno += 0x2000;
@@ -75,9 +75,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_mhigh_videoram_w )
 	{
-		if (stlforce_mhigh_videoram.read(offset)!= data)
+		if (stlforce_mhigh_videoram[offset] != data)
 		{
-			stlforce_mhigh_videoram.write(data,data);
+			stlforce_mhigh_videoram[offset] = data;
 			tilemap_mark_tile_dirty(stlforce_mhigh_tilemap,offset);
 		}
 	}
@@ -88,8 +88,8 @@ public class stlforce
 	{
 		int tileno,colour;
 	
-		tileno = stlforce_tx_videoram.read(tile_index)& 0x0fff;
-		colour = stlforce_tx_videoram.read(tile_index)& 0xe000;
+		tileno = stlforce_tx_videoram[tile_index] & 0x0fff;
+		colour = stlforce_tx_videoram[tile_index] & 0xe000;
 		colour = colour >> 13;
 	
 		tileno += 0xc000;
@@ -100,9 +100,9 @@ public class stlforce
 	
 	WRITE16_HANDLER( stlforce_tx_videoram_w )
 	{
-		if (stlforce_tx_videoram.read(offset)!= data)
+		if (stlforce_tx_videoram[offset] != data)
 		{
-			stlforce_tx_videoram.write(data,data);
+			stlforce_tx_videoram[offset] = data;
 			tilemap_mark_tile_dirty(stlforce_tx_tilemap,offset);
 		}
 	}
@@ -114,7 +114,7 @@ public class stlforce
 	
 		const UINT16 *source = stlforce_spriteram+0x0;
 		const UINT16 *finish = stlforce_spriteram+0x800;
-		const struct GfxElement *gfx = Machine.gfx[2];
+		const struct GfxElement *gfx = Machine->gfx[2];
 	
 		while( source<finish )
 		{
@@ -139,8 +139,7 @@ public class stlforce
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_stlforce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_stlforce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
 		tilemap_set_scrollx( stlforce_bg_tilemap, 0, stlforce_bg_scrollram[0]+8);
 		tilemap_set_scrolly( stlforce_bg_tilemap, 0, stlforce_vidattrram[1] );
@@ -161,8 +160,7 @@ public class stlforce
 	//usrintf_showmessage	("Regs %04x, %04x, %04x, %04x, %04", stlforce_vidattrram[0tlforce_tx_scrollram], stlforce_vidattrram[4],stlforce_vidattrram[5],stlforce_vidattrram[6],stlforce_vidattrram[7] );
 	} };
 	
-	public static VideoStartHandlerPtr video_start_stlforce  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stlforce  = new VideoStartHandlerPtr() { public int handler(){
 		stlforce_bg_tilemap = tilemap_create(get_stlforce_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE, 16, 16,64,16);
 	
 		stlforce_mlow_tilemap = tilemap_create(get_stlforce_mlow_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT, 16, 16,64,16);

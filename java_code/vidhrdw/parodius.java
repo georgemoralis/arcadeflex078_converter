@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class parodius
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_parodius  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_parodius  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,tile_callback))
@@ -77,8 +76,7 @@ public class parodius
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_parodius  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[3];
 	
 	

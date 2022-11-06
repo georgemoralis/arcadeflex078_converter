@@ -80,7 +80,7 @@ INLINE void set_mstat(int new_value)
 		adsp2100.core = adsp2100.alt;
 		adsp2100.alt = temp;
 	}
-	if ((new_value & MSTAT_STICKYV) != 0)
+	if (new_value & MSTAT_STICKYV)
 		adsp2100.astat_clear = ~(CFLAG | NFLAG | ZFLAG);
 	else
 		adsp2100.astat_clear = ~(CFLAG | VFLAG | NFLAG | ZFLAG);
@@ -362,20 +362,20 @@ static void wr_px(INT32 val)    { adsp2100.px = val; }
 static void wr_ifc(INT32 val)
 {
 	adsp2100.ifc = val;
-	if ((val & 0x002) != 0) adsp2100.irq_latch[ADSP2101_IRQ0] = 0;
-	if ((val & 0x004) != 0) adsp2100.irq_latch[ADSP2101_IRQ1] = 0;
-	if ((val & 0x008) != 0) adsp2100.irq_latch[ADSP2101_SPORT0_RX] = 0;
-	if ((val & 0x010) != 0) adsp2100.irq_latch[ADSP2101_SPORT0_TX] = 0;
-	if ((val & 0x020) != 0) adsp2100.irq_latch[ADSP2101_IRQ2] = 0;
-	if ((val & 0x080) != 0) adsp2100.irq_latch[ADSP2101_IRQ0] = 1;
-	if ((val & 0x100) != 0) adsp2100.irq_latch[ADSP2101_IRQ1] = 1;
-	if ((val & 0x200) != 0) adsp2100.irq_latch[ADSP2101_SPORT0_RX] = 1;
-	if ((val & 0x400) != 0) adsp2100.irq_latch[ADSP2101_SPORT0_TX] = 1;
-	if ((val & 0x800) != 0) adsp2100.irq_latch[ADSP2101_IRQ2] = 1;
+	if (val & 0x002) adsp2100.irq_latch[ADSP2101_IRQ0] = 0;
+	if (val & 0x004) adsp2100.irq_latch[ADSP2101_IRQ1] = 0;
+	if (val & 0x008) adsp2100.irq_latch[ADSP2101_SPORT0_RX] = 0;
+	if (val & 0x010) adsp2100.irq_latch[ADSP2101_SPORT0_TX] = 0;
+	if (val & 0x020) adsp2100.irq_latch[ADSP2101_IRQ2] = 0;
+	if (val & 0x080) adsp2100.irq_latch[ADSP2101_IRQ0] = 1;
+	if (val & 0x100) adsp2100.irq_latch[ADSP2101_IRQ1] = 1;
+	if (val & 0x200) adsp2100.irq_latch[ADSP2101_SPORT0_RX] = 1;
+	if (val & 0x400) adsp2100.irq_latch[ADSP2101_SPORT0_TX] = 1;
+	if (val & 0x800) adsp2100.irq_latch[ADSP2101_IRQ2] = 1;
 	check_irqs();
 }
-static void wr_tx0(INT32 val)	{ if (sport_tx_callback != 0) (*sport_tx_callback)(0, val); }
-static void wr_tx1(INT32 val)	{ if (sport_tx_callback != 0) (*sport_tx_callback)(1, val); }
+static void wr_tx0(INT32 val)	{ if (sport_tx_callback) (*sport_tx_callback)(0, val); }
+static void wr_tx1(INT32 val)	{ if (sport_tx_callback) (*sport_tx_callback)(1, val); }
 static void wr_owrctr(INT32 val) { adsp2100.cntr = val & 0x3fff; }
 static void wr_topstack(INT32 val) { pc_stack_push_val(val & 0x3fff); }
 
@@ -456,8 +456,8 @@ static INT32 rd_icntl(void) { return adsp2100.icntl; }
 static INT32 rd_cntr(void)  { return adsp2100.cntr; }
 static INT32 rd_sb(void)    { return adsp2100.core.sb.s; }
 static INT32 rd_px(void)    { return adsp2100.px; }
-static INT32 rd_rx0(void)	{ if (sport_rx_callback != 0) return (*sport_rx_callback)(0); else return 0; }
-static INT32 rd_rx1(void)	{ if (sport_rx_callback != 0) return (*sport_rx_callback)(1); else return 0; }
+static INT32 rd_rx0(void)	{ if (sport_rx_callback) return (*sport_rx_callback)(0); else return 0; }
+static INT32 rd_rx1(void)	{ if (sport_rx_callback) return (*sport_rx_callback)(1); else return 0; }
 static INT32 rd_stacktop(void)	{ return pc_stack_pop_val(); }
 
 #define READ_REG(grp,reg) ((*rd_reg[grp][reg])())
@@ -839,7 +839,7 @@ void alu_op_ar(int op)
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
 			CLR_S;
-			if ((xop & 0x8000) != 0) SET_S;
+			if (xop & 0x8000) SET_S;
 			break;
 		default:
 			res = 0;	/* just to keep the compiler happy */
@@ -978,7 +978,7 @@ void alu_op_af(int op)
 			if (xop == 0) SET_Z;
 			if (xop == 0x8000) SET_N, SET_V;
 			CLR_S;
-			if ((xop & 0x8000) != 0) SET_S;
+			if (xop & 0x8000) SET_S;
 			break;
 		default:
 			res = 0;	/* just to keep the compiler happy */
@@ -1441,7 +1441,7 @@ void shift_op(int op)
 		case 0x0d<<11:
 			/* EXP (HIX) */
 			xop = SHIFT_GETXREG_SIGNED(xop) << 16;
-			if (GET_V != 0)
+			if (GET_V)
 			{
 				adsp2100.core.se.s = 1;
 				if (xop < 0) CLR_SS;
@@ -1470,7 +1470,7 @@ void shift_op(int op)
 			{
 				xop = SHIFT_GETXREG_SIGNED(xop);
 				res = 15;
-				if (GET_SS != 0)
+				if (GET_SS)
 					while ((xop & 0x8000) != 0) res++, xop <<= 1;
 				else
 				{

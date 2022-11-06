@@ -21,7 +21,7 @@ Year + Game					By		Hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,9 +47,9 @@ public class suna16
 	
 	WRITE16_HANDLER( suna16_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if (Machine.sample_rate != 0)
+			if (Machine->sample_rate != 0)
 				soundlatch_w( 0, data & 0xff );
 		}
 		if (data & ~0xff)	logerror("CPU#0 PC %06X - Sound latch unknown bits: %04X\n", activecpu_get_pc(), data);
@@ -58,7 +58,7 @@ public class suna16
 	
 	WRITE16_HANDLER( bssoccer_leds_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			set_led_status(0, data & 0x01);
 			set_led_status(1, data & 0x02);
@@ -72,7 +72,7 @@ public class suna16
 	
 	WRITE16_HANDLER( uballoon_leds_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0, data & 0x01);
 			set_led_status(0, data & 0x02);
@@ -229,16 +229,14 @@ public class suna16
 	
 	/* Bank Switching */
 	
-	public static WriteHandlerPtr bssoccer_pcm_1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bssoccer_pcm_1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 		int bank = data & 7;
 		if (bank & ~7)	logerror("CPU#2 PC %06X - ROM bank unknown bits: %02X\n", activecpu_get_pc(), data);
 		cpu_setbank(1, &RAM[bank * 0x10000 + 0x1000]);
 	} };
 	
-	public static WriteHandlerPtr bssoccer_pcm_2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bssoccer_pcm_2_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU4);
 		int bank = data & 7;
 		if (bank & ~7)	logerror("CPU#3 PC %06X - ROM bank unknown bits: %02X\n", activecpu_get_pc(), data);
@@ -278,13 +276,11 @@ public class suna16
 	
 	/* 2 DACs per CPU - 4 bits per sample */
 	
-	public static WriteHandlerPtr bssoccer_DAC_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bssoccer_DAC_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w( 0 + (offset & 1), (data & 0xf) * 0x11 );
 	} };
 	
-	public static WriteHandlerPtr bssoccer_DAC_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bssoccer_DAC_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w( 2 + (offset & 1), (data & 0xf) * 0x11 );
 	} };
 	
@@ -322,8 +318,7 @@ public class suna16
 	
 	/* Bank Switching */
 	
-	public static WriteHandlerPtr uballoon_pcm_1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr uballoon_pcm_1_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 		int bank = data & 1;
 		if (bank & ~1)	logerror("CPU#2 PC %06X - ROM bank unknown bits: %02X\n", activecpu_get_pc(), data);
@@ -380,7 +375,7 @@ public class suna16
 								Back Street Soccer
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bssoccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bssoccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bssoccer )
 	
 		PORT_START(); 	// IN0 - $a00001.b - Player 1
 		JOY(1)
@@ -463,7 +458,7 @@ public class suna16
 									Ultra Balloon
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_uballoon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_uballoon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( uballoon )
 	
 		PORT_START(); 	// IN0 - $600000.w - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP     | IPF_PLAYER1 );
@@ -615,8 +610,7 @@ public class suna16
 			MIXER(40,MIXER_PAN_LEFT), MIXER(40,MIXER_PAN_RIGHT)	}
 	};
 	
-	public static InterruptHandlerPtr bssoccer_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bssoccer_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0: 	cpu_set_irq_line(0, 1, HOLD_LINE);	break;
@@ -624,8 +618,7 @@ public class suna16
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_bssoccer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bssoccer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* ? */
@@ -664,9 +657,7 @@ public class suna16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, bssoccer_ym2151_interface)
 		MDRV_SOUND_ADD(DAC, bssoccer_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -689,8 +680,7 @@ public class suna16
 		{ MIXER(50,MIXER_PAN_LEFT), MIXER(50,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_uballoon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( uballoon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -726,9 +716,7 @@ public class suna16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, uballoon_ym2151_interface)
 		MDRV_SOUND_ADD(DAC, uballoon_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -831,8 +819,7 @@ public class suna16
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_uballoon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_uballoon  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
 		/* Patch out the protection checks */
@@ -854,6 +841,6 @@ public class suna16
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_bssoccer	   = new GameDriver("1996"	,"bssoccer"	,"suna16.java"	,rom_bssoccer,null	,machine_driver_bssoccer	,input_ports_bssoccer	,null	,ROT0	,	"SunA", "Back Street Soccer" )
-	public static GameDriver driver_uballoon	   = new GameDriver("1996"	,"uballoon"	,"suna16.java"	,rom_uballoon,null	,machine_driver_uballoon	,input_ports_uballoon	,init_uballoon	,ROT0	,	"SunA", "Ultra Balloon" )
+	GAME( 1996, bssoccer, 0, bssoccer, bssoccer, 0,        ROT0, "SunA", "Back Street Soccer" )
+	GAME( 1996, uballoon, 0, uballoon, uballoon, uballoon, ROT0, "SunA", "Ultra Balloon" )
 }

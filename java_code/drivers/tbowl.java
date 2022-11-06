@@ -15,7 +15,7 @@ Might be some priority glitches
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,14 +24,7 @@ public class tbowl
 	
 	/* in vidhrdw/tbowl.c */
 	
-	WRITE_HANDLER (tbowl_bg2videoram_w);
-	WRITE_HANDLER (tbowl_bgvideoram_w);
-	WRITE_HANDLER (tbowl_txvideoram_w);
 	
-	WRITE_HANDLER (tbowl_bg2xscroll_lo); WRITE_HANDLER (tbowl_bg2xscroll_hi);
-	WRITE_HANDLER (tbowl_bg2yscroll_lo); WRITE_HANDLER (tbowl_bg2yscroll_hi);
-	WRITE_HANDLER (tbowl_bgxscroll_lo);  WRITE_HANDLER (tbowl_bgxscroll_hi);
-	WRITE_HANDLER (tbowl_bgyscroll_lo);  WRITE_HANDLER (tbowl_bgyscroll_hi);
 	
 	
 	/*** Banking
@@ -40,8 +33,7 @@ public class tbowl
 	
 	***/
 	
-	public static WriteHandlerPtr tbowlb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowlb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -50,8 +42,7 @@ public class tbowl
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr tbowlc_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowlc_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -68,18 +59,15 @@ public class tbowl
 	
 	static unsigned char *shared_ram;
 	
-	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shared_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shared_ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr tbowl_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowl_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -145,8 +133,7 @@ public class tbowl
 	};
 	
 	/* Board C */
-	static public static WriteHandlerPtr tbowl_trigger_nmi = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tbowl_trigger_nmi = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* trigger NMI on 6206B's Cpu? (guess but seems to work..) */
 		cpu_set_nmi_line(0, PULSE_LINE);
 	} };
@@ -265,7 +252,7 @@ public class tbowl
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START##_n_ );
 	
 	
-	static InputPortPtr input_ports_tbowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tbowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tbowl )
 		PORT_START(); 	/* player 1 inputs (0xfc00) */
 		TBOWL_PLAYER_INPUT(1)
 	
@@ -278,7 +265,7 @@ public class tbowl
 		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START(); 	/* system inputs (0xfc07 . 0x80f9) */
+		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -288,7 +275,7 @@ public class tbowl
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	/* DSW1 (0xfc08 . 0xffb4) */
+		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
@@ -332,7 +319,7 @@ public class tbowl
 		PORT_DIPSETTING (   0xf0, "0:25" );
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START(); 	/* DSW2 (0xfc09 . 0xffb5) */
+		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
 		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
@@ -355,7 +342,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (0xfc0a . 0xffb6) */
+		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
 		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );
@@ -371,7 +358,7 @@ public class tbowl
 	
 	/* same as 'tbowl', but different "Quarter Time" Dip Switch
 	   ("3:00" and "4:00" are inverted) */
-	static InputPortPtr input_ports_tbowlj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tbowlj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tbowlj )
 		PORT_START(); 	/* player 1 inputs (0xfc00) */
 		TBOWL_PLAYER_INPUT(1)
 	
@@ -384,7 +371,7 @@ public class tbowl
 		PORT_START(); 	/* player 4 inputs (0xfc03) */
 		TBOWL_PLAYER_INPUT(4)
 	
-		PORT_START(); 	/* system inputs (0xfc07 . 0x80f9) */
+		PORT_START(); 	/* system inputs (0xfc07 -> 0x80f9) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_COIN3 );
@@ -394,7 +381,7 @@ public class tbowl
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-		PORT_START(); 	/* DSW1 (0xfc08 . 0xffb4) */
+		PORT_START(); 	/* DSW1 (0xfc08 -> 0xffb4) */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Coinage") );
 		PORT_DIPSETTING (   0x00, DEF_STR( "8C_1C") );
 		PORT_DIPSETTING (   0x01, DEF_STR( "7C_1C") );
@@ -438,7 +425,7 @@ public class tbowl
 		PORT_DIPSETTING (   0xf0, "0:25" );
 	//	PORT_DIPSETTING (   0xf8, "1:00" );
 	
-		PORT_START(); 	/* DSW2 (0xfc09 . 0xffb5) */
+		PORT_START(); 	/* DSW2 (0xfc09 -> 0xffb5) */
 		PORT_DIPNAME( 0x03, 0x03, "Difficulty (unused ?"));// To be checked again
 		PORT_DIPSETTING (   0x00, "0x00" );
 		PORT_DIPSETTING (   0x01, "0x01" );
@@ -461,7 +448,7 @@ public class tbowl
 		PORT_DIPSETTING (   0x00, DEF_STR( "Off") );
 		PORT_DIPSETTING (   0x80, DEF_STR( "On") );
 	
-		PORT_START(); 	/* DSW3 (0xfc0a . 0xffb6) */
+		PORT_START(); 	/* DSW3 (0xfc0a -> 0xffb6) */
 		PORT_DIPNAME( 0x03, 0x03, "Time (Quarter"));
 		PORT_DIPSETTING (   0x00, "8:00" );
 		PORT_DIPSETTING (   0x01, "5:00" );
@@ -555,8 +542,7 @@ public class tbowl
 	
 	***/
 	
-	public static MachineHandlerPtr machine_driver_tbowl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tbowl )
 	
 		/* CPU on Board '6206B' */
 		MDRV_CPU_ADD(Z80, 8000000) /* NEC D70008AC-8 (Z80 Clone) */
@@ -591,9 +577,7 @@ public class tbowl
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		/* something for the samples? */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Board Layout from readme.txt
@@ -750,6 +734,6 @@ public class tbowl
 		ROM_LOAD( "6206a.3",	0x10000, 0x10000, CRC(3aa24744) SHA1(06de3f9a2431777218cc67f59230fddbfa01cf2d) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_tbowl	   = new GameDriver("1987"	,"tbowl"	,"tbowl.java"	,rom_tbowl,null	,machine_driver_tbowl	,input_ports_tbowl	,null	,ROT0	,	"Tecmo", "Tecmo Bowl (World?)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tbowlj	   = new GameDriver("1987"	,"tbowlj"	,"tbowl.java"	,rom_tbowlj,driver_tbowl	,machine_driver_tbowl	,input_ports_tbowlj	,null	,ROT0	,	"Tecmo", "Tecmo Bowl (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1987, tbowl,    0,        tbowl,    tbowl,    0, ROT0,  "Tecmo", "Tecmo Bowl (World?)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1987, tbowlj,   tbowl,    tbowl,    tbowlj,   0, ROT0,  "Tecmo", "Tecmo Bowl (Japan)", GAME_IMPERFECT_SOUND )
 }

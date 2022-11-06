@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class ddrible
 	static struct tilemap *fg_tilemap,*bg_tilemap;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_ddrible  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ddrible  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -39,8 +38,7 @@ public class ddrible
 			COLOR(3,i) = (*(color_prom++) & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr K005885_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K005885_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset){
 			case 0x03:	/* char bank selection for set 1 */
 				if ((data & 0x03) != charbank[0])
@@ -56,8 +54,7 @@ public class ddrible
 		ddribble_vregs[0][offset] = data;
 	} };
 	
-	public static WriteHandlerPtr K005885_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K005885_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset){
 			case 0x03:	/* char bank selection for set 2 */
 				if ((data & 0x03) != charbank[1])
@@ -81,7 +78,7 @@ public class ddrible
 	
 	static UINT32 tilemap_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);	/* skip 0x400 */
 	}
 	
@@ -115,8 +112,7 @@ public class ddrible
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ddrible  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ddrible  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan,TILEMAP_OPAQUE,     8,8,64,32);
 	
@@ -134,8 +130,7 @@ public class ddrible
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr ddrible_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ddrible_fg_videoram[offset] != data)
 		{
 			ddrible_fg_videoram[offset] = data;
@@ -143,8 +138,7 @@ public class ddrible
 		}
 	} };
 	
-	public static WriteHandlerPtr ddrible_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ddrible_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ddrible_bg_videoram[offset] != data)
 		{
 			ddrible_bg_videoram[offset] = data;
@@ -176,7 +170,7 @@ public class ddrible
 	
 	static void ddribble_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, unsigned char* source, int lenght, int gfxset, int flipscreen )
 	{
-		struct GfxElement *gfx = Machine.gfx[gfxset];
+		struct GfxElement *gfx = Machine->gfx[gfxset];
 		const unsigned char *finish = source + lenght;
 	
 		while( source < finish )
@@ -190,7 +184,7 @@ public class ddrible
 			int color = (source[1] & 0xf0) >> 4;				/* color */
 			int width,height;
 	
-			if (flipscreen != 0){
+			if (flipscreen){
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 					sx = 240 - sx;
@@ -244,8 +238,7 @@ public class ddrible
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ddrible  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ddrible  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_flip(fg_tilemap, (ddribble_vregs[0][4] & 0x08) ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		tilemap_set_flip(bg_tilemap, (ddribble_vregs[1][4] & 0x08) ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	

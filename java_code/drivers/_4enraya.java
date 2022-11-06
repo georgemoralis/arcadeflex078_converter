@@ -29,7 +29,7 @@ Video :
 	32x32 Tilemap stored in VRAM (10 bits/tile (tile numebr 0-1023))
 
 	3 gfx ROMS
-	ROM1 - R component (ROM .(parallel in) shift register 74166 (serial out) . jamma output
+	ROM1 - R component (ROM ->(parallel in) shift register 74166 (serial out) -> jamma output
 	ROM2 - B component
 	ROM3 - G component
 
@@ -50,7 +50,7 @@ Sound :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -61,17 +61,15 @@ public class _4enraya
 	
 	static int soundlatch;
 	
-	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch = data;
 	} };
 	
-	public static WriteHandlerPtr sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 		if ((last & 0x04) == 0x04 && (data & 0x4) == 0x00)
 		{
-			if ((last & 0x01) != 0)
+			if (last & 0x01)
 				AY8910_control_port_0_w.handler(0,soundlatch);
 			else
 				AY8910_write_port_0_w.handler(0,soundlatch);
@@ -111,7 +109,7 @@ public class _4enraya
 	};
 	
 	
-	static InputPortPtr input_ports_4enraya = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_4enraya = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 4enraya )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x01, "Easy" );
@@ -187,8 +185,7 @@ public class _4enraya
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_4enraya = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 4enraya )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)
@@ -211,9 +208,7 @@ public class _4enraya
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -235,5 +230,5 @@ public class _4enraya
 		ROM_LOAD( "1.bpr",   0x0000, 0x0020, CRC(dcbd2352) SHA1(ce72e84129ed1b455aaf648e1dfaa4333e7e7628) )	/* not used */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_4enraya	   = new GameDriver("1990"	,"4enraya"	,"_4enraya.java"	,rom_4enraya,null	,machine_driver_4enraya	,input_ports_4enraya	,null	,ROT0	,	"IDSA", "4 En Raya" )
+	GAME( 1990, 4enraya,  0,       4enraya,  4enraya,  0, ROT0, "IDSA", "4 En Raya" )
 }

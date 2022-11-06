@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -90,13 +90,13 @@ public class decocass
 	
 	static UINT32 fgvideoram_scan_cols( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (num_cols - 1 - col) * num_rows + row;
 	}
 	
 	static UINT32 bgvideoram_scan_cols( UINT32 col, UINT32 row, UINT32 num_cols, UINT32 num_rows )
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return tile_offset[col * num_rows + row];
 	}
 	
@@ -146,15 +146,15 @@ public class decocass
 	
 		sy = 192 - (part_v_shift & 0x7f);
 	
-		if ((part_h_shift & 0x80) != 0)
+		if (part_h_shift & 0x80)
 			sx = (part_h_shift & 0x7f) + 1;
 		else
 			sx = 91 - (part_h_shift & 0x7f);
 	
-		drawgfx(bitmap, Machine.gfx[3], 0, color, 0, 0, sx + 64, sy, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine.gfx[3], 1, color, 0, 0, sx, sy, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine.gfx[3], 0, color, 0, 1, sx + 64, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
-		drawgfx(bitmap, Machine.gfx[3], 1, color, 0, 1, sx, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine->gfx[3], 0, color, 0, 0, sx + 64, sy, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine->gfx[3], 1, color, 0, 0, sx, sy, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine->gfx[3], 0, color, 0, 1, sx + 64, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
+		drawgfx(bitmap, Machine->gfx[3], 1, color, 0, 1, sx, sy - 64, cliprect, TRANSPARENCY_PEN, 0);
 	}
 	
 	static void draw_center(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
@@ -162,25 +162,25 @@ public class decocass
 		int sx, sy, x, y, color;
 	
 		color = 0;
-		if ((color_center_bot & 0x10) != 0)
+		if (color_center_bot & 0x10)
 			color |= 4;
-		if ((color_center_bot & 0x20) != 0)
+		if (color_center_bot & 0x20)
 			color |= 2;
-		if ((color_center_bot & 0x40) != 0)
+		if (color_center_bot & 0x40)
 			color |= 1;
-		if ((color_center_bot & 0x80) != 0)
+		if (color_center_bot & 0x80)
 			color = (color & 4) + ((color << 1) & 2) + ((color >> 1) & 1);
 	
 		sy = center_v_shift;
 		sx = (center_h_shift_space >> 2) & 0x3c;
 	
 		for (y = 0; y < 4; y++)
-			if ((sy + y) >= cliprect.min_y && (sy + y) <= cliprect.max_y)
+			if ((sy + y) >= cliprect->min_y && (sy + y) <= cliprect->max_y)
 			{
 				if (((sy + y) & color_center_bot & 3) == (sy & color_center_bot & 3))
 					for (x = 0; x < 256; x++)
 						if (0 != (x & 16) || 0 != (center_h_shift_space & 1))
-							plot_pixel(bitmap, (sx + x) & 255, sy + y, Machine.pens[color]);
+							plot_pixel(bitmap, (sx + x) & 255, sy + y, Machine->pens[color]);
 			}
 	}
 	
@@ -188,18 +188,16 @@ public class decocass
 		memory handlers
 	 ********************************************/
 	
-	public static WriteHandlerPtr decocass_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 		 * RGB output is inverted and A4 is inverted too
-		 * (ME/ input on 1st paletteram, inverter . ME/ on 2nd)
+		 * (ME/ input on 1st paletteram, inverter -> ME/ on 2nd)
 		 */
 		offset = (offset & 31) ^ 16;
 		paletteram_BBGGGRRR_w( offset, ~data );
 	} };
 	
-	public static WriteHandlerPtr decocass_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_charram[offset])
 			return;
 		decocass_charram[offset] = data;
@@ -210,16 +208,14 @@ public class decocass
 	} };
 	
 	
-	public static WriteHandlerPtr decocass_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_fgvideoram[offset])
 			return;
 		decocass_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty( fg_tilemap, offset );
 	} };
 	
-	public static WriteHandlerPtr decocass_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_colorram[offset])
 			return;
 		decocass_colorram[offset] = data;
@@ -228,14 +224,13 @@ public class decocass
 	
 	static void mark_bg_tile_dirty(offs_t offset)
 	{
-		if ((offset & 0x80) != 0)
+		if (offset & 0x80)
 			tilemap_mark_tile_dirty( bg_tilemap_r, offset );
 		else
 			tilemap_mark_tile_dirty( bg_tilemap_l, offset );
 	}
 	
-	public static WriteHandlerPtr decocass_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_tileram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_tileram[offset])
 			return;
 		decocass_tileram[offset] = data;
@@ -246,8 +241,7 @@ public class decocass
 			mark_bg_tile_dirty( offset );
 	} };
 	
-	public static WriteHandlerPtr decocass_objectram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_objectram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_objectram[offset])
 			return;
 		decocass_objectram[offset] = data;
@@ -255,16 +249,14 @@ public class decocass
 		object_dirty = 1;
 	} };
 	
-	public static WriteHandlerPtr decocass_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == decocass_bgvideoram[offset])
 			return;
 		decocass_bgvideoram[offset] = data;
 		mark_bg_tile_dirty( offset );
 	} };
 	
-	public static ReadHandlerPtr decocass_mirrorvideoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr decocass_mirrorvideoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int x,y;
 	
 		/* swap x and y coordinates */
@@ -275,8 +267,7 @@ public class decocass
 		return decocass_fgvideoram[offset];
 	} };
 	
-	public static ReadHandlerPtr decocass_mirrorcolorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr decocass_mirrorcolorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int x,y;
 	
 		/* swap x and y coordinates */
@@ -287,8 +278,7 @@ public class decocass
 		return decocass_colorram[offset];
 	} };
 	
-	public static WriteHandlerPtr decocass_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_mirrorvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y;
 	
 		/* swap x and y coordinates */
@@ -299,8 +289,7 @@ public class decocass
 		decocass_fgvideoram_w(offset,data);
 	} };
 	
-	public static WriteHandlerPtr decocass_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_mirrorcolorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int x,y;
 	
 		/* swap x and y coordinates */
@@ -312,20 +301,17 @@ public class decocass
 	} };
 	
 	/* The watchdog is a 4bit counter counting down every frame */
-	public static WriteHandlerPtr decocass_watchdog_count_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_watchdog_count_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LOG(1,("decocass_watchdog_count_w: $%02x\n", data));
 		watchdog_count = data & 0x0f;
 	} };
 	
-	public static WriteHandlerPtr decocass_watchdog_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_watchdog_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LOG(1,("decocass_watchdog_flip_w: $%02x\n", data));
 		watchdog_flip = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_color_missiles_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_color_missiles_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LOG(1,("decocass_color_missiles_w: $%02x\n", data));
 		/* only bits D0-D2 and D4-D6 are connected to
 		 * the color RAM demux:
@@ -345,8 +331,7 @@ public class decocass
 	 * D6 - tunnel
 	 * D7 - part h enable
 	 */
-	public static WriteHandlerPtr decocass_mode_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_mode_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == mode_set)
 			return;
 		LOG(1,("decocass_mode_set_w: $%02x (%s%s%s%s%s%s%s%s)\n", data,
@@ -362,8 +347,7 @@ public class decocass
 		set_vh_global_attribute( &mode_set, data );
 	} };
 	
-	public static WriteHandlerPtr decocass_color_center_bot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_color_center_bot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == color_center_bot)
 			return;
 		LOG(1,("decocass_color_center_bot_w: $%02x (color:%d, center_bot:%d)\n", data, data&3, data>>4));
@@ -380,56 +364,49 @@ public class decocass
 		set_vh_global_attribute( &color_center_bot, data);
 	} };
 	
-	public static WriteHandlerPtr decocass_back_h_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_back_h_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == back_h_shift)
 			return;
 		LOG(1,("decocass_back_h_shift_w: $%02x\n", data));
 		back_h_shift = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_back_vl_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_back_vl_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == back_vl_shift)
 			return;
 		LOG(1,("decocass_back_vl_shift_w: $%02x\n", data));
 		back_vl_shift = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_back_vr_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_back_vr_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == back_vr_shift)
 			return;
 		LOG(1,("decocass_back_vr_shift_w: $%02x\n", data));
 		back_vr_shift = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_part_h_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_part_h_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == part_v_shift )
 			return;
 		LOG(1,("decocass_part_h_shift_w: $%02x\n", data));
 		part_h_shift = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_part_v_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_part_v_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == part_v_shift )
 			return;
 		LOG(1,("decocass_part_v_shift_w: $%02x\n", data));
 		part_v_shift = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_center_h_shift_space_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_center_h_shift_space_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == center_h_shift_space)
 			return;
 		LOG(1,("decocass_center_h_shift_space_w: $%02x\n", data));
 		center_h_shift_space = data;
 	} };
 	
-	public static WriteHandlerPtr decocass_center_v_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr decocass_center_v_shift_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		LOG(1,("decocass_center_v_shift_w: $%02x\n", data));
 		center_v_shift = data;
 	} };
@@ -458,7 +435,7 @@ public class decocass
 			flipx = sprite_ram[offs + 0] & 0x04;
 			flipy = sprite_ram[offs + 0] & 0x02;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + sprite_y_adjust_flip_screen;
@@ -469,7 +446,7 @@ public class decocass
 	
 			sy -= sprite_y_adjust;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sprite_ram[offs + interleave],
 					color,
 					flipx,flipy,
@@ -479,7 +456,7 @@ public class decocass
 			sy += (flip_screen() ? -256 : 256);
 	
 			// Wrap around
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sprite_ram[offs + interleave],
 					color,
 					flipx,flipy,
@@ -503,25 +480,25 @@ public class decocass
 	
 			sy = 255 - missile_ram[offs + 0*interleave];
 			sx = 255 - missile_ram[offs + 2*interleave];
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + missile_y_adjust_flip_screen;
 			}
 			sy -= missile_y_adjust;
-			drawgfx(bitmap,Machine.gfx[4],
+			drawgfx(bitmap,Machine->gfx[4],
 					0,32 + ((color_missiles >> 4) & 7), 0,0, sx,sy,
 					cliprect, TRANSPARENCY_PEN, 0);
 	
 			sy = 255 - missile_ram[offs + 1*interleave];
 			sx = 255 - missile_ram[offs + 3*interleave];
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy + missile_y_adjust_flip_screen;
 			}
 			sy -= missile_y_adjust;
-			drawgfx(bitmap,Machine.gfx[4],
+			drawgfx(bitmap,Machine->gfx[4],
 					0,32 + (color_missiles & 7), 0,0, sx,sy,
 					cliprect, TRANSPARENCY_PEN, 0);
 		}
@@ -542,7 +519,7 @@ public class decocass
 			switch (char_dirty[code])
 			{
 			case 1:
-				decodechar(Machine.gfx[0],code,decocass_charram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
+				decodechar(Machine->gfx[0],code,decocass_charram,Machine->drv->gfxdecodeinfo[0].gfxlayout);
 				char_dirty[code] = 2;
 				/* fall through */
 			case 2:
@@ -569,7 +546,7 @@ public class decocass
 			{
 				sprite_dirty[code] = 0;
 	
-				decodechar(Machine.gfx[1],code,decocass_charram,Machine.drv.gfxdecodeinfo[1].gfxlayout);
+				decodechar(Machine->gfx[1],code,decocass_charram,Machine->drv->gfxdecodeinfo[1].gfxlayout);
 			}
 		}
 	
@@ -582,7 +559,7 @@ public class decocass
 			{
 				tile_dirty[code] = 0;
 	
-				decodechar(Machine.gfx[2],code,decocass_tileram,Machine.drv.gfxdecodeinfo[2].gfxlayout);
+				decodechar(Machine->gfx[2],code,decocass_tileram,Machine->drv->gfxdecodeinfo[2].gfxlayout);
 	
 				/* mark all visible tiles dirty */
 				for (i = offs; i < decocass_bgvideoram_size; i++)
@@ -592,16 +569,15 @@ public class decocass
 		}
 	
 		/* decode object if it is dirty */
-		if (object_dirty != 0)
+		if (object_dirty)
 		{
-			decodechar(Machine.gfx[3], 0, decocass_objectram, Machine.drv.gfxdecodeinfo[3].gfxlayout);
-			decodechar(Machine.gfx[3], 1, decocass_objectram, Machine.drv.gfxdecodeinfo[3].gfxlayout);
+			decodechar(Machine->gfx[3], 0, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
+			decodechar(Machine->gfx[3], 1, decocass_objectram, Machine->drv->gfxdecodeinfo[3].gfxlayout);
 			object_dirty = 0;
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_decocass  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_decocass  = new VideoStartHandlerPtr() { public int handler(){
 		if (NULL == (sprite_dirty = auto_malloc(256)) ||
 			NULL == (char_dirty = auto_malloc(1024)) ||
 			NULL == (tile_dirty = auto_malloc(16)))
@@ -644,8 +620,7 @@ public class decocass
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_decocass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int scrollx, scrolly_l, scrolly_r;
 		struct rectangle clip;
 	
@@ -658,7 +633,7 @@ public class decocass
 			watchdog_reset_w (0,0);
 	
 	#if TAPE_UI_DISPLAY
-		if (tape_timer != 0)
+		if (tape_timer)
 		{
 			double tape_time = tape_time0 + tape_dir * timer_timeelapsed(tape_timer);
 			if (tape_time < 0.0)
@@ -678,7 +653,7 @@ public class decocass
 			static int showmsg;
 			if (code_pressed_memory(KEYCODE_I))
 				showmsg ^= 1;
-			if (showmsg != 0)
+			if (showmsg)
 				usrintf_showmessage_secs(1, "mode:$%02x cm:$%02x ccb:$%02x h:$%02x vl:$%02x vr:$%02x ph:$%02x pv:$%02x ch:$%02x cv:$%02x",
 					mode_set,
 					color_missiles,
@@ -721,9 +696,9 @@ public class decocass
 		tilemap_set_scrollx( bg_tilemap_r, 0, scrollx );
 		tilemap_set_scrolly( bg_tilemap_r, 0, scrolly_r );
 	
-		if ((mode_set & 0x20) != 0)
+		if (mode_set & 0x20)
 		{
-			if ((mode_set & 0x08) != 0)	/* bkg_ena on ? */
+			if (mode_set & 0x08)	/* bkg_ena on ? */
 			{
 				clip = bg_tilemap_l_clip;
 				sect_rect(&clip,cliprect);
@@ -740,7 +715,7 @@ public class decocass
 		{
 			draw_object(bitmap,cliprect);
 			draw_center(bitmap,cliprect);
-			if ((mode_set & 0x08) != 0)	/* bkg_ena on ? */
+			if (mode_set & 0x08)	/* bkg_ena on ? */
 			{
 				clip = bg_tilemap_l_clip;
 				sect_rect(&clip,cliprect);

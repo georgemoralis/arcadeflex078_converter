@@ -49,7 +49,7 @@ Thanks to HIGHWAYMAN for providing info on how to get to these epoxies
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -82,8 +82,7 @@ public class wallc
 	
 	***************************************************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_wallc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_wallc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		const int resistances_rg[2] = { 330, 220 };
@@ -119,8 +118,7 @@ public class wallc
 		}
 	} };
 	
-	public static WriteHandlerPtr wallc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wallc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -136,25 +134,22 @@ public class wallc
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_wallc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wallc  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wallc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wallc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 	} };
 	
 	static int wcb0=-1;
-	public static WriteHandlerPtr wc_b0 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc_b0 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wcb0!=data)
 		{
 			wcb0 = data;
@@ -162,8 +157,7 @@ public class wallc
 		}
 	} };
 	static int wcb1=-1;
-	public static WriteHandlerPtr wc_b1 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc_b1 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wcb1!=data)
 		{
 			wcb1 = data;
@@ -171,8 +165,7 @@ public class wallc
 		}
 	} };
 	static int wcb2=-1;
-	public static WriteHandlerPtr wc_b2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc_b2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wcb2!=data)
 		{
 			wcb2 = data;
@@ -220,7 +213,7 @@ public class wallc
 	};
 	
 	
-	static InputPortPtr input_ports_wallc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wallc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wallc )
 		PORT_START(); 	/* DSW - read from b000 */
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(	0x03, "5" );
@@ -296,8 +289,7 @@ public class wallc
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static DriverInitHandlerPtr init_wallc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wallc  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char c;
 		unsigned int i;
 	
@@ -325,8 +317,7 @@ public class wallc
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_wallc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wallc )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 12288000 / 4)	/* 3.072 MHz ? */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -348,9 +339,7 @@ public class wallc
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -372,5 +361,5 @@ public class wallc
 		ROM_LOAD( "74s288.c2",  0x0000, 0x0020, CRC(83e3e293) SHA1(a98c5e63b688de8d175adb6539e0cdc668f313fd) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_wallc	   = new GameDriver("1984"	,"wallc"	,"wallc.java"	,rom_wallc,null	,machine_driver_wallc	,input_ports_wallc	,init_wallc	,ROT0	,	"Midcoin", "Wall Crash" )
+	GAME( 1984, wallc, 0,      wallc,  wallc, wallc, ROT0, "Midcoin", "Wall Crash" )
 }

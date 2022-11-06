@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,15 +31,14 @@ public class simpsons
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_simpsons  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_simpsons  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -49,8 +48,7 @@ public class simpsons
 		}
 	} };
 	
-	public static ReadHandlerPtr simpsons_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr simpsons_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = (EEPROM_read_bit() << 4);
@@ -59,7 +57,7 @@ public class simpsons
 	
 		res |= readinputport( 5 ) & 1; /* test switch */
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xfe;
@@ -67,8 +65,7 @@ public class simpsons
 		return res;
 	} };
 	
-	public static WriteHandlerPtr simpsons_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr simpsons_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ( data == 0xff )
 			return;
 	
@@ -87,8 +84,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr simpsons_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr simpsons_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0,1 coin counters */
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
@@ -100,17 +96,15 @@ public class simpsons
 		K053246_set_OBJCHA_line((~data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 	} };
 	
-	public static ReadHandlerPtr simpsons_sound_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr simpsons_sound_interrupt_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
 		return 0x00;
 	} };
 	
-	public static ReadHandlerPtr simpsons_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr simpsons_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else
 		{
 			static int res = 0x80;
@@ -126,8 +120,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr simpsons_speedup1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr simpsons_speedup1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		int data1 = RAM[0x486a];
@@ -155,8 +148,7 @@ public class simpsons
 		return RAM[0x4942];
 	} };
 	
-	public static ReadHandlerPtr simpsons_speedup2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr simpsons_speedup2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = memory_region(REGION_CPU1)[0x4856];
 	
 		if ( data == 1 )
@@ -202,8 +194,7 @@ public class simpsons
 		cpu_setbank( 1, &RAM[offs] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_simpsons  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_simpsons  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = simpsons_banking;

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,7 +34,7 @@ public class aztarac
 	    int x, y, c, intensity, xoffset, yoffset, color;
 	    int defaddr, objaddr=0, ndefs;
 	
-	    if (data != 0) /* data is the global intensity (always 0xff in Aztarac). */
+	    if (data) /* data is the global intensity (always 0xff in Aztarac). */
 	    {
 	        vector_clear_list();
 	
@@ -43,7 +43,7 @@ public class aztarac
 	            read_vectorram (objaddr, &xoffset, &yoffset, &c);
 	            objaddr++;
 	
-	            if ((c & 0x4000) != 0)
+	            if (c & 0x4000)
 	                break;
 	
 	            if ((c & 0x2000) == 0)
@@ -54,7 +54,7 @@ public class aztarac
 	                read_vectorram (defaddr, &x, &ndefs, &c);
 					ndefs++;
 	
-	                if ((c & 0xff00) != 0)
+	                if (c & 0xff00)
 	                {
 	                    /* latch color only once */
 	                    intensity = (c >> 8);
@@ -86,8 +86,7 @@ public class aztarac
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_aztarac  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_aztarac  = new VideoStartHandlerPtr() { public int handler(){
 		int xmin = Machine.visible_area.min_x;
 		int ymin = Machine.visible_area.min_y;
 		int xmax = Machine.visible_area.max_x;

@@ -44,7 +44,7 @@ This info came from http://www.ne.jp/asahi/cc-sakura/akkun/old/fryski.html
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -57,13 +57,12 @@ public class seicross
 	static UINT8 *nvram;
 	static size_t nvram_size;
 	
-	public static NVRAMHandlerPtr nvram_handler_seicross  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_seicross  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file,nvram,nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file,nvram,nvram_size);
 			else
 			{
@@ -77,8 +76,7 @@ public class seicross
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_friskyt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_friskyt  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with the protection mcu halted */
 		cpu_set_halt_line(1, ASSERT_LINE);
 	} };
@@ -87,13 +85,11 @@ public class seicross
 	
 	static int portb;
 	
-	public static ReadHandlerPtr friskyt_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr friskyt_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (portb & 0x9f) | (readinputport(6) & 0x60);
 	} };
 	
-	public static WriteHandlerPtr friskyt_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr friskyt_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("PC %04x: 8910 port B = %02x\n",activecpu_get_pc(),data);
 		/* bit 0 is IRQ enable */
 		interrupt_enable_w(0,data & 1);
@@ -115,13 +111,11 @@ public class seicross
 	
 	static UINT8 *sharedram;
 	
-	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
@@ -211,7 +205,7 @@ public class seicross
 	
 	
 	
-	static InputPortPtr input_ports_friskyt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_friskyt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( friskyt )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -244,7 +238,7 @@ public class seicross
 		PORT_BIT( 0xfc, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_radrad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_radrad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( radrad )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -320,7 +314,7 @@ public class seicross
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_seicross = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_seicross = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( seicross )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -454,8 +448,7 @@ public class seicross
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_nvram = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nvram )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz? */
@@ -487,13 +480,10 @@ public class seicross
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_no_nvram = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( no_nvram )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(nvram)
@@ -501,9 +491,7 @@ public class seicross
 		MDRV_CPU_MEMORY(mcu_no_nvram_readmem,mcu_no_nvram_writemem)
 	
 		MDRV_NVRAM_HANDLER(NULL)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -639,8 +627,7 @@ public class seicross
 	
 	
 	
-	public static DriverInitHandlerPtr init_friskyt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_friskyt  = new DriverInitHandlerPtr() { public void handler(){
 		int A;
 		UINT8 *src,*dest;
 	
@@ -655,9 +642,9 @@ public class seicross
 	
 	
 	
-	public static GameDriver driver_friskyt	   = new GameDriver("1981"	,"friskyt"	,"seicross.java"	,rom_friskyt,null	,machine_driver_nvram	,input_ports_friskyt	,init_friskyt	,ROT0	,	"Nichibutsu", "Frisky Tom (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_friskyta	   = new GameDriver("1981"	,"friskyta"	,"seicross.java"	,rom_friskyta,driver_friskyt	,machine_driver_nvram	,input_ports_friskyt	,init_friskyt	,ROT0	,	"Nichibutsu", "Frisky Tom (set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_radrad	   = new GameDriver("1982"	,"radrad"	,"seicross.java"	,rom_radrad,null	,machine_driver_no_nvram	,input_ports_radrad	,init_friskyt	,ROT0	,	"Nichibutsu USA", "Radical Radial", GAME_NO_COCKTAIL )
-	public static GameDriver driver_seicross	   = new GameDriver("1984"	,"seicross"	,"seicross.java"	,rom_seicross,null	,machine_driver_no_nvram	,input_ports_seicross	,init_friskyt	,ROT90	,	"Nichibutsu + Alice", "Seicross", GAME_NO_COCKTAIL )
-	public static GameDriver driver_sectrzon	   = new GameDriver("1984"	,"sectrzon"	,"seicross.java"	,rom_sectrzon,driver_seicross	,machine_driver_no_nvram	,input_ports_seicross	,init_friskyt	,ROT90	,	"Nichibutsu + Alice", "Sector Zone", GAME_NO_COCKTAIL )
+	GAMEX( 1981, friskyt,  0,        nvram,    friskyt,  friskyt, ROT0,  "Nichibutsu", "Frisky Tom (set 1)", GAME_NO_COCKTAIL )
+	GAMEX( 1981, friskyta, friskyt,  nvram,    friskyt,  friskyt, ROT0,  "Nichibutsu", "Frisky Tom (set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1982, radrad,   0,        no_nvram, radrad,   friskyt, ROT0,  "Nichibutsu USA", "Radical Radial", GAME_NO_COCKTAIL )
+	GAMEX( 1984, seicross, 0,        no_nvram, seicross, friskyt, ROT90, "Nichibutsu + Alice", "Seicross", GAME_NO_COCKTAIL )
+	GAMEX( 1984, sectrzon, seicross, no_nvram, seicross, friskyt, ROT90, "Nichibutsu + Alice", "Sector Zone", GAME_NO_COCKTAIL )
 }

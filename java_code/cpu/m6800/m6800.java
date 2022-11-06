@@ -54,7 +54,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m6800;
 
@@ -266,7 +266,7 @@ public class m6800
 	#define CLR_C		CC&=0xfe
 	
 	/* macros for CC -- CC bits affected should be reset before calling */
-	#define SET_Z(a)		if (a == 0)SEZ
+	#define SET_Z(a)		if(!a)SEZ
 	#define SET_Z8(a)		SET_Z((UINT8)a)
 	#define SET_Z16(a)		SET_Z((UINT16)a)
 	#define SET_N8(a)		CC|=((a&0x80)>>4)
@@ -389,7 +389,7 @@ public class m6800
 	
 	/* Macros for branch instructions */
 	#define CHANGE_PC() change_pc16(PCD)
-	#define BRANCH(f) {IMMBYTE(t);if (f != 0){PC+=SIGNED(t);CHANGE_PC();}}
+	#define BRANCH(f) {IMMBYTE(t);if(f){PC+=SIGNED(t);CHANGE_PC();}}
 	#define NXORV  ((CC&0x08)^((CC&0x02)<<2))
 	
 	static const UINT8 cycles_6800[] =
@@ -484,8 +484,8 @@ public class m6800
 	
 	INLINE void WM16( UINT32 Addr, PAIR *p )
 	{
-		WM( Addr, p.b.h );
-		WM( (Addr+1)&0xffff, p.b.l );
+		WM( Addr, p->b.h );
+		WM( (Addr+1)&0xffff, p->b.l );
 	}
 	
 	/* IRQ enter */
@@ -608,7 +608,7 @@ public class m6800
 	 ****************************************************************************/
 	unsigned m6800_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(m6800_Regs*)dst = m6800;
 		return sizeof(m6800_Regs);
 	}
@@ -619,7 +619,7 @@ public class m6800
 	 ****************************************************************************/
 	void m6800_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 			m6800 = *(m6800_Regs*)src;
 		CHANGE_PC();
 		CHECK_IRQ_LINES(); /* HJB 990417 */
@@ -1056,30 +1056,30 @@ public class m6800
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &m6800;
 	
 		switch( regnum )
 		{
-			case CPU_INFO_REG+M6800_A: sprintf(buffer[which], "A:%02X", r.d.b.h); break;
-			case CPU_INFO_REG+M6800_B: sprintf(buffer[which], "B:%02X", r.d.b.l); break;
-			case CPU_INFO_REG+M6800_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+M6800_S: sprintf(buffer[which], "S:%04X", r.s.w.l); break;
-			case CPU_INFO_REG+M6800_X: sprintf(buffer[which], "X:%04X", r.x.w.l); break;
-			case CPU_INFO_REG+M6800_CC: sprintf(buffer[which], "CC:%02X", r.cc); break;
-			case CPU_INFO_REG+M6800_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+M6800_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state[M6800_IRQ_LINE]); break;
-	//		case CPU_INFO_REG+M6800_TIN_STATE: sprintf(buffer[which], "TIN:%X", r.irq_state[M6800_TIN_LINE]); break;
+			case CPU_INFO_REG+M6800_A: sprintf(buffer[which], "A:%02X", r->d.b.h); break;
+			case CPU_INFO_REG+M6800_B: sprintf(buffer[which], "B:%02X", r->d.b.l); break;
+			case CPU_INFO_REG+M6800_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+M6800_S: sprintf(buffer[which], "S:%04X", r->s.w.l); break;
+			case CPU_INFO_REG+M6800_X: sprintf(buffer[which], "X:%04X", r->x.w.l); break;
+			case CPU_INFO_REG+M6800_CC: sprintf(buffer[which], "CC:%02X", r->cc); break;
+			case CPU_INFO_REG+M6800_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+M6800_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state[M6800_IRQ_LINE]); break;
+	//		case CPU_INFO_REG+M6800_TIN_STATE: sprintf(buffer[which], "TIN:%X", r->irq_state[M6800_TIN_LINE]); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c",
-					r.cc & 0x80 ? '?':'.',
-					r.cc & 0x40 ? '?':'.',
-					r.cc & 0x20 ? 'H':'.',
-					r.cc & 0x10 ? 'I':'.',
-					r.cc & 0x08 ? 'N':'.',
-					r.cc & 0x04 ? 'Z':'.',
-					r.cc & 0x02 ? 'V':'.',
-					r.cc & 0x01 ? 'C':'.');
+					r->cc & 0x80 ? '?':'.',
+					r->cc & 0x40 ? '?':'.',
+					r->cc & 0x20 ? 'H':'.',
+					r->cc & 0x10 ? 'I':'.',
+					r->cc & 0x08 ? 'N':'.',
+					r->cc & 0x04 ? 'Z':'.',
+					r->cc & 0x02 ? 'V':'.',
+					r->cc & 0x01 ? 'C':'.');
 				break;
 			case CPU_INFO_NAME: return "M6800";
 			case CPU_INFO_FAMILY: return "Motorola 6800";
@@ -1980,13 +1980,11 @@ public class m6800
 		TAKE_TRAP;
 	}
 	
-	public static ReadHandlerPtr hd63701_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hd63701_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return m6803_internal_registers_r(offset);
 	} };
 	
-	public static WriteHandlerPtr hd63701_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hd63701_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m6803_internal_registers_w(offset,data);
 	} };
 	
@@ -2355,8 +2353,7 @@ public class m6800
 	
 	#if (HAS_M6803||HAS_HD63701)
 	
-	public static ReadHandlerPtr m6803_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m6803_internal_registers_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0x00:
@@ -2438,8 +2435,7 @@ public class m6800
 		}
 	} };
 	
-	public static WriteHandlerPtr m6803_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m6803_internal_registers_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int latch09;
 	
 		switch (offset)

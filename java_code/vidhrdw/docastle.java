@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,8 @@ public class docastle
 			int priority)
 	{
 		int i,j;
-		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
-		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
+		#define TOTAL_COLORS(gfxn) (Machine->gfx[gfxn]->total_colors * Machine->gfx[gfxn]->color_granularity)
+		#define COLOR(gfxn,offs) (colortable[Machine->drv->gfxdecodeinfo[gfxn].color_codes_start + offs])
 	
 	
 		for (i = 0;i < 256;i++)
@@ -136,18 +136,15 @@ public class docastle
 		}
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_docastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_docastle  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		convert_color_prom(colortable,color_prom,0);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_dorunrun  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dorunrun  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		convert_color_prom(colortable,color_prom,1);
 	} };
 	
-	public static WriteHandlerPtr docastle_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr docastle_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -156,8 +153,7 @@ public class docastle
 		}
 	} };
 	
-	public static WriteHandlerPtr docastle_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr docastle_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -166,28 +162,24 @@ public class docastle
 		}
 	} };
 	
-	public static ReadHandlerPtr docastle_flipscreen_off_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr docastle_flipscreen_off_r  = new ReadHandlerPtr() { public int handler(int offset){
 		flip_screen_set(0);
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr docastle_flipscreen_on_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr docastle_flipscreen_on_r  = new ReadHandlerPtr() { public int handler(int offset){
 		flip_screen_set(1);
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		return 1;
 	} };
 	
-	public static WriteHandlerPtr docastle_flipscreen_off_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr docastle_flipscreen_off_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(0);
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 	} };
 	
-	public static WriteHandlerPtr docastle_flipscreen_on_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr docastle_flipscreen_on_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(1);
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 	} };
@@ -208,18 +200,17 @@ public class docastle
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_docastle  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_docastle  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows,
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,
 			TILEMAP_TRANSPARENT_COLOR, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 256);
@@ -237,7 +228,7 @@ public class docastle
 		{
 			int sx,sy,flipx,flipy,code,color;
 	
-			if (Machine.gfx[1].total_elements > 256)
+			if (Machine->gfx[1]->total_elements > 256)
 			{
 				/* spriteram
 	
@@ -290,7 +281,7 @@ public class docastle
 				flipy = spriteram.read(offs + 2)& 0x80;
 			}
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -299,27 +290,26 @@ public class docastle
 			}
 	
 			/* first draw the sprite, visible */
-			pdrawgfx(bitmap,Machine.gfx[1],
+			pdrawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_COLOR,256,
+					Machine->visible_area,TRANSPARENCY_COLOR,256,
 					0x00);
 	
 			/* then draw the mask, behind the background but obscuring following sprites */
-			pdrawgfx(bitmap,Machine.gfx[1],
+			pdrawgfx(bitmap,Machine->gfx[1],
 					code,
 					color + 32,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_COLOR,256,
+					Machine->visible_area,TRANSPARENCY_COLOR,256,
 					0x02);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_docastle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		docastle_draw_sprites(bitmap);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);

@@ -123,7 +123,7 @@ RAM			RW		0f0000-0f3fff		0e0000-0effff?		<
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -152,8 +152,7 @@ public class megasys1
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_megasys1  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_megasys1  = new MachineInitHandlerPtr() { public void handler(){
 		ip_select = 0;	/* reset protection */
 	} };
 	
@@ -182,8 +181,7 @@ public class megasys1
 	
 	
 	#define INTERRUPT_NUM_A		3
-	public static InterruptHandlerPtr interrupt_A = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_A = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:		cpu_set_irq_line(0, 3, HOLD_LINE);	break;
@@ -192,8 +190,7 @@ public class megasys1
 		}
 	} };
 	
-	public static InterruptHandlerPtr interrupt_A_iganinju = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_A_iganinju = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:		cpu_set_irq_line(0, 2, HOLD_LINE);	break;
@@ -241,8 +238,7 @@ public class megasys1
 	***************************************************************************/
 	
 	#define INTERRUPT_NUM_B		3
-	public static InterruptHandlerPtr interrupt_B = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_B = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 4, HOLD_LINE); break;
@@ -368,8 +364,7 @@ public class megasys1
 	***************************************************************************/
 	
 	#define INTERRUPT_NUM_D		1
-	public static InterruptHandlerPtr interrupt_D = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_D = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
 	
@@ -467,7 +462,7 @@ public class megasys1
 	/* YM2151 IRQ */
 	static void megasys1_sound_irq(int irq)
 	{
-		if (irq != 0)
+		if (irq)
 			cpu_set_irq_line(1, 4, HOLD_LINE);
 	}
 	
@@ -667,8 +662,7 @@ public class megasys1
 		{ MIXER(30,MIXER_PAN_LEFT), MIXER(30,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_system_A = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_A )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 12000000)
@@ -699,23 +693,17 @@ public class megasys1
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_system_A_iganinju = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_A_iganinju )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system_A)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_VBLANK_INT(interrupt_A_iganinju,INTERRUPT_NUM_A)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_system_B = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_B )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system_A)
@@ -725,13 +713,10 @@ public class megasys1
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(sound_readmem_B,sound_writemem_B)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_system_C = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_C )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(system_A)
@@ -741,9 +726,7 @@ public class megasys1
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(sound_readmem_C,sound_writemem_C)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -765,8 +748,7 @@ public class megasys1
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_system_D = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_D )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* ? */
@@ -791,9 +773,7 @@ public class megasys1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_D)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -827,8 +807,7 @@ public class megasys1
 		{ irq_handler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_system_Z = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( system_Z )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000) /* ??? */
@@ -855,9 +834,7 @@ public class megasys1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -877,9 +854,9 @@ public class megasys1
 	
 	(World version)
 	interrupts:	1] 10eac:	disabled while b6c4=6 (10fb6 test)
-							if (8b1c != 0)	8b1c<-0
+							if (8b1c)	8b1c<-0
 								color cycle
-								copies 800 bytes 98da.8008
+								copies 800 bytes 98da->8008
 	
 				2] 10f28:	switch b6c4
 							0	RTE
@@ -893,8 +870,8 @@ public class megasys1
 							many routines...
 							b6c2<-0
 	
-	13ca	print a string: a7.screen disp.l(base=f0004),src.l
-	13ea	print a string: a1.(chars)*
+	13ca	print a string: a7->screen disp.l(base=f0004),src.l
+	13ea	print a string: a1->(chars)*
 	1253c	hw test (table of tests at 125c6)		*TRAP#D*
 	125f8	mem test (table of mem tests at 126d4)
 	1278e	input test (table of tests at 12808)
@@ -973,7 +950,7 @@ public class megasys1
 	
 	
 	
-	static InputPortPtr input_ports_64street = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_64street = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 64street )
 		COINS
 	//	fire	jump
 		JOY_2BUTTONS(IPF_PLAYER1)
@@ -1106,7 +1083,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_astyanax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astyanax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astyanax )
 		COINS						/* IN0 0x80001.b */
 	//	fire	jump	magic
 		JOY_3BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -1264,7 +1241,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_avspirit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_avspirit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( avspirit )
 		COINS
 		JOY_2BUTTONS(IPF_PLAYER1)
 		RESERVE
@@ -1347,7 +1324,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bigstrik = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigstrik = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigstrik )
 		COINS
 	//	pass	shoot	feint
 		JOY_3BUTTONS(IPF_PLAYER1)
@@ -1459,7 +1436,7 @@ public class megasys1
 		ROM_LOAD( "prom",         0x0000, 0x0200, NO_DUMP )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_chimerab = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chimerab = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chimerab )
 	
 		COINS
 	//	fire	jump	unused?(shown in service mode, but not in instructions)
@@ -1558,7 +1535,7 @@ public class megasys1
 		ROM_LOAD( "pr-91028.12",  0x0000, 0x0200, CRC(cfe90082) SHA1(b59991ec7b3e83ba645b709547e5b4cbe03c0f11) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_cybattlr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cybattlr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cybattlr )
 	
 		COINS
 	//	fire	sword
@@ -1629,9 +1606,9 @@ public class megasys1
 								move.w  #$ffff,		$60da8.l
 				4,5,6]	5928 +	move.w	#$ffff,		$60010.l
 	
-	89e			(a7)+ . 44000.w & 6000e.w
-	8cc			(a7)+ . 44204.w ; 4420c.w ; 4400c.w
-	fc0			(a7)+ . 58000 (string)
+	89e			(a7)+ -> 44000.w & 6000e.w
+	8cc			(a7)+ -> 44204.w ; 4420c.w ; 4400c.w
+	fc0			(a7)+ -> 58000 (string)
 	
 	616f4.w		*** lives ***
 	60d8a.w		*** level(1..) ***
@@ -1671,7 +1648,7 @@ public class megasys1
 		ROM_LOAD( "prom.14m",    0x0000, 0x0200, CRC(1d877538) SHA1(a5be0dc65dcfc36fbba10d1fddbe155e24b6122f) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_edf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_edf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( edf )
 		COINS
 	//	fire	unfold_weapons
 		JOY_2BUTTONS(IPF_PLAYER1)
@@ -1761,7 +1738,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hachoo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hachoo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hachoo )
 		COINS						/* IN0 0x80001.b */
 	//	fire	jump
 		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -1856,7 +1833,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_iganinju = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iganinju = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iganinju )
 	
 		COINS						/* IN0 0x80001.b */
 	//	fire	jump
@@ -1958,7 +1935,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_jitsupro = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jitsupro = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jitsupro )
 	
 		COINS						/* IN0 0x80001.b */
 		//	shoot	change view		change bat
@@ -2074,11 +2051,11 @@ public class megasys1
 		ROM_LOAD( "kick.bin",    0x0000, 0x0200, CRC(85b30ac4) SHA1(b03f577ceb0f26b67453ffa52ef61fea76a93184) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_kickoff = new InputPortPtr(){ public void handler() { 
-		COINS						/* IN0 0x80001.b .  !f0008/a.w  */
+	static InputPortPtr input_ports_kickoff = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kickoff )
+		COINS						/* IN0 0x80001.b ->  !f0008/a.w  */
 	//	shoot	pass
-		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b .  !f000c/e.w  */
-		RESERVE						/* IN2 0x80004.b -. !f0010/11.w */
+		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b ->  !f000c/e.w  */
+		RESERVE						/* IN2 0x80004.b --> !f0010/11.w */
 		JOY_2BUTTONS(IPF_PLAYER2)	/* IN3 0x80005.b /               */
 	
 		PORT_START(); 			/* IN4 0x80006.b */
@@ -2108,7 +2085,7 @@ public class megasys1
 		PORT_DIPSETTING(    0x00, "English" );// show "Japan Only" warning
 	
 		PORT_START(); 			/* IN5 0x80007.b */
-		PORT_DIPNAME( 0x03, 0x03, "Time" );// . !f0082.w
+		PORT_DIPNAME( 0x03, 0x03, "Time" );// -> !f0082.w
 		PORT_DIPSETTING(    0x03, "3'" );
 		PORT_DIPSETTING(    0x02, "4'" );
 		PORT_DIPSETTING(    0x01, "5'" );
@@ -2119,7 +2096,7 @@ public class megasys1
 		PORT_DIPNAME( 0x08, 0x08, "Unknown 2-3" );// unused?
 		PORT_DIPSETTING(    0x08, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		PORT_DIPNAME( 0x30, 0x30, "?Difficulty?" );// . !f0084.w
+		PORT_DIPNAME( 0x30, 0x30, "?Difficulty?" );// -> !f0084.w
 		PORT_DIPSETTING(    0x30, "0" );
 		PORT_DIPSETTING(    0x20, "1" );
 		PORT_DIPSETTING(    0x10, "2" );
@@ -2184,7 +2161,7 @@ public class megasys1
 		ROM_LOAD( "makaiden.10", 0x0100, 0x0100, CRC(e6709c51) SHA1(f5cd4f0454c1a71a5b0006b098f9e76c2d8a27d2) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_lomakai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lomakai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lomakai )
 		COINS						/* IN0 0x80001.b */
 	//	fire	jump
 		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -2235,7 +2212,7 @@ public class megasys1
 	interrupts:	1]	53e		2] 540
 	
 	517a		print word string: (a6)+,(a5)+$40. FFFF ends
-	5dbc		print string(s) to (a1)+$40: a6. len.b,x.b,y.b,(chars.b)*
+	5dbc		print string(s) to (a1)+$40: a6-> len.b,x.b,y.b,(chars.b)*
 	726a		prints screen
 	7300		ram test
 	7558		ip test
@@ -2363,7 +2340,7 @@ public class megasys1
 		ROM_LOAD( "prom.14m",    0x0000, 0x0200, CRC(1d877538) SHA1(a5be0dc65dcfc36fbba10d1fddbe155e24b6122f) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_p47 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_p47 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( p47 )
 	
 		COINS						/* IN0 0x80001.b */
 	//	fire	bomb
@@ -2440,8 +2417,8 @@ public class megasys1
 	0f8000-0f8001	???
 	
 	010000-010001	protection\watchdog;
-		fb . fb
-		9x .	0		watchdog reset?
+		fb -> fb
+		9x ->	0		watchdog reset?
 				else	samples bank?
 						$1ff010 = sample
 						$1ff014 = bank = sample - $22 (33DC: 1 1 2 3 4 5 6 6 6 6)
@@ -2451,8 +2428,8 @@ public class megasys1
 	000000-01ffff
 	020000-03ffff	banked
 	
-		51 . paddle p1
-		52 . paddle p2
+		51 -> paddle p1
+		52 -> paddle p2
 		4bba waits for 1f000a to go !0, then clears 1f000a (int 4)
 		4bca waits (100000) & FF == 3
 		sequence $81, $71, $67 written
@@ -2518,7 +2495,7 @@ public class megasys1
 		ROM_LOAD( "priority.69",    0x000000, 0x200, CRC(b40bff56) SHA1(39c95eed79328ef2df754988db83e07909e848f8) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_peekaboo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_peekaboo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( peekaboo )
 	
 		PORT_START(); 		/* IN0 - COINS + P1&P2 Buttons - .b */
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN3 );	// called "service"
@@ -2674,7 +2651,7 @@ public class megasys1
 		ROM_LOAD( "prom.14m",     0x0000, 0x0200, CRC(1d877538) SHA1(a5be0dc65dcfc36fbba10d1fddbe155e24b6122f) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_plusalph = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_plusalph = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( plusalph )
 		COINS						/* IN0 0x80001.b */
 	//	fire	bomb
 		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -2722,16 +2699,16 @@ public class megasys1
 								[ RodLand ]
 	
 	(World version)
-	interrupts:	1] 418.3864: rts	2] 420: move.w #-1,f0010; jsr 3866	3] rte
+	interrupts:	1] 418->3864: rts	2] 420: move.w #-1,f0010; jsr 3866	3] rte
 	
 	213da	print test error (20c12 = string address 0-4)
 	
-	f0018.84200	f0020.84208	f0028.84008
-	f001c.84202	f0024.8420a	f002c.8400a
-	f0012.84204	f0014.8420c	f0016.8400c
+	f0018->84200	f0020->84208	f0028->84008
+	f001c->84202	f0024->8420a	f002c->8400a
+	f0012->84204	f0014->8420c	f0016->8400c
 	
-	7fe		d0.w . 84000.w & f000e.w
-	81a		d0/d1/d2 & $D . 84204 / 8420c /8400c
+	7fe		d0.w -> 84000.w & f000e.w
+	81a		d0/d1/d2 & $D -> 84204 / 8420c /8400c
 	
 	***************************************************************************/
 	
@@ -2850,7 +2827,7 @@ public class megasys1
 	ROM_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rodland = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rodland = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rodland )
 	
 		COINS						/* IN0 0x80001.b */
 	//	fire	ladder
@@ -2944,7 +2921,7 @@ public class megasys1
 		ROM_LOAD( "prom.14m",    0x0000, 0x0200, CRC(1d877538) SHA1(a5be0dc65dcfc36fbba10d1fddbe155e24b6122f) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_stdragon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stdragon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stdragon )
 		COINS						/* IN0 0x80001.b */
 	//	fire	fire
 		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -3033,7 +3010,7 @@ public class megasys1
 		ROM_LOAD( "soldam.m14",   0x0000, 0x0200, CRC(8914e72d) SHA1(80a664471f14c8ed8544a5e226fdca425ab3c657) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_soldamj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_soldamj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( soldamj )
 		COINS						/* IN0 0x80001.b */
 		//	turn	turn	(3rd button is shown in service mode, but seems unused)
 		JOY_2BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -3168,7 +3145,7 @@ public class megasys1
 		ROM_LOAD( "ts.bpr",        0x0000, 0x0200, CRC(85b30ac4) SHA1(b03f577ceb0f26b67453ffa52ef61fea76a93184) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_tshingen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tshingen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tshingen )
 		COINS						/* IN0 0x80001.b */
 		// sword_left	sword_right		jump
 		JOY_3BUTTONS(IPF_PLAYER1)	/* IN1 0x80003.b */
@@ -3328,7 +3305,7 @@ public class megasys1
 		data8_t *buffer;
 		int i;
 	
-		/* data lines swap: 76543210 . 64537210 */
+		/* data lines swap: 76543210 -> 64537210 */
 		for (i = 0;i < size;i++)
 			rom[i] =   (rom[i] & 0x27)
 					| ((rom[i] & 0x80) >> 4)
@@ -3336,11 +3313,11 @@ public class megasys1
 					| ((rom[i] & 0x10) << 2);
 	
 		buffer = malloc(size);
-		if (buffer == 0) return;
+		if (!buffer) return;
 	
 		memcpy(buffer,rom,size);
 	
-		/* address lines swap: ..dcba9876543210 . ..acb8937654d210 */
+		/* address lines swap: ..dcba9876543210 -> ..acb8937654d210 */
 		for (i = 0;i < size;i++)
 		{
 			int a =    (i &~0x2508)
@@ -3361,16 +3338,16 @@ public class megasys1
 		data8_t *buffer;
 		int i;
 	
-		/* data lines swap: 76543210 . 43576210 */
+		/* data lines swap: 76543210 -> 43576210 */
 		for (i = 0;i < size;i++)
 			rom[i] =   BITSWAP8(rom[i],0x4,0x3,0x5,0x7,0x6,0x2,0x1,0x0);
 	
 		buffer = malloc(size);
-		if (buffer == 0) return;
+		if (!buffer) return;
 	
 		memcpy(buffer,rom,size);
 	
-		/* address lines swap: fedcba9876543210 . fe8cb39d7654a210 */
+		/* address lines swap: fedcba9876543210 -> fe8cb39d7654a210 */
 		for (i = 0;i < size;i++)
 		{
 			int a = (i & ~0xffff) |
@@ -3385,8 +3362,7 @@ public class megasys1
 	
 	
 	
-	public static DriverInitHandlerPtr init_64street  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_64street  = new DriverInitHandlerPtr() { public void handler(){
 	//	data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	//	RAM[0x006b8/2] = 0x6004;		// d8001 test
 	//	RAM[0x10EDE/2] = 0x6012;		// watchdog
@@ -3398,8 +3374,7 @@ public class megasys1
 		ip_select_values[4] = 0x56;
 	} };
 	
-	public static DriverInitHandlerPtr init_astyanax  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_astyanax  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM;
 	
 		astyanax_rom_decode(0);
@@ -3408,8 +3383,7 @@ public class megasys1
 		RAM[0x0004e6/2] = 0x6040;	// protection
 	} };
 	
-	public static DriverInitHandlerPtr init_avspirit  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_avspirit  = new DriverInitHandlerPtr() { public void handler(){
 		ip_select_values[0] = 0x37;
 		ip_select_values[1] = 0x35;
 		ip_select_values[2] = 0x36;
@@ -3422,8 +3396,7 @@ public class megasys1
 		megasys1_ram += 0x10000/2;
 	} };
 	
-	public static DriverInitHandlerPtr init_bigstrik  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bigstrik  = new DriverInitHandlerPtr() { public void handler(){
 		ip_select_values[0] = 0x58;
 		ip_select_values[1] = 0x54;
 		ip_select_values[2] = 0x55;
@@ -3431,8 +3404,7 @@ public class megasys1
 		ip_select_values[4] = 0x57;
 	} };
 	
-	public static DriverInitHandlerPtr init_chimerab  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_chimerab  = new DriverInitHandlerPtr() { public void handler(){
 		/* same as cybattlr */
 		ip_select_values[0] = 0x56;
 		ip_select_values[1] = 0x52;
@@ -3441,8 +3413,7 @@ public class megasys1
 		ip_select_values[4] = 0x55;
 	} };
 	
-	public static DriverInitHandlerPtr init_cybattlr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cybattlr  = new DriverInitHandlerPtr() { public void handler(){
 		ip_select_values[0] = 0x56;
 		ip_select_values[1] = 0x52;
 		ip_select_values[2] = 0x53;
@@ -3450,8 +3421,7 @@ public class megasys1
 		ip_select_values[4] = 0x55;
 	} };
 	
-	public static DriverInitHandlerPtr init_edf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_edf  = new DriverInitHandlerPtr() { public void handler(){
 		ip_select_values[0] = 0x20;
 		ip_select_values[1] = 0x21;
 		ip_select_values[2] = 0x22;
@@ -3459,8 +3429,7 @@ public class megasys1
 		ip_select_values[4] = 0x24;
 	} };
 	
-	public static DriverInitHandlerPtr init_hachoo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hachoo  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM;
 	
 		astyanax_rom_decode(0);
@@ -3469,8 +3438,7 @@ public class megasys1
 		RAM[0x0006da/2] = 0x6000;	// protection
 	} };
 	
-	public static DriverInitHandlerPtr init_iganinju  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_iganinju  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM;
 	
 		phantasm_rom_decode(0);
@@ -3484,17 +3452,16 @@ public class megasys1
 	
 	static WRITE16_HANDLER( OKIM6295_data_0_both_w )
 	{
-		if (ACCESSING_LSB != 0)	OKIM6295_data_0_w(0, (data >> 0) & 0xff );
+		if (ACCESSING_LSB)	OKIM6295_data_0_w(0, (data >> 0) & 0xff );
 		else				OKIM6295_data_0_w(0, (data >> 8) & 0xff );
 	}
 	static WRITE16_HANDLER( OKIM6295_data_1_both_w )
 	{
-		if (ACCESSING_LSB != 0)	OKIM6295_data_1_w(0, (data >> 0) & 0xff );
+		if (ACCESSING_LSB)	OKIM6295_data_1_w(0, (data >> 0) & 0xff );
 		else				OKIM6295_data_1_w(0, (data >> 8) & 0xff );
 	}
 	
-	public static DriverInitHandlerPtr init_jitsupro  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jitsupro  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM  = (data16_t *) memory_region(REGION_CPU1);
 	
 		astyanax_rom_decode(0);		// Code
@@ -3510,19 +3477,16 @@ public class megasys1
 		install_mem_write16_handler(1, 0xc0000, 0xc0003, OKIM6295_data_1_both_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_peekaboo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_peekaboo  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler (0, 0x100000, 0x100001, protection_peekaboo_r);
 		install_mem_write16_handler(0, 0x100000, 0x100001, protection_peekaboo_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_phantasm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_phantasm  = new DriverInitHandlerPtr() { public void handler(){
 		phantasm_rom_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_plusalph  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_plusalph  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM;
 	
 		astyanax_rom_decode(0);
@@ -3531,21 +3495,18 @@ public class megasys1
 		RAM[0x0012b6/2] = 0x0000;	// protection
 	} };
 	
-	public static DriverInitHandlerPtr init_rodland  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rodland  = new DriverInitHandlerPtr() { public void handler(){
 		rodland_rom_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_rodlandj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rodlandj  = new DriverInitHandlerPtr() { public void handler(){
 		rodlandj_gfx_unmangle(0);
 		rodlandj_gfx_unmangle(3);
 	
 		astyanax_rom_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_soldam  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_soldam  = new DriverInitHandlerPtr() { public void handler(){
 		astyanax_rom_decode(0);
 	
 		/* Sprite RAM is mirrored. Why? */
@@ -3553,8 +3514,7 @@ public class megasys1
 		install_mem_write16_handler(0, 0x8c000, 0x8cfff, soldamj_spriteram16_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_stdragon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stdragon  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM;
 	
 		phantasm_rom_decode(0);
@@ -3565,31 +3525,31 @@ public class megasys1
 	
 	
 	
-	public static GameDriver driver_lomakai	   = new GameDriver("1988"	,"lomakai"	,"megasys1.java"	,rom_lomakai,null	,machine_driver_system_Z	,input_ports_lomakai	,null	,ROT0	,	"Jaleco", "Legend of Makai (World)" )
-	public static GameDriver driver_makaiden	   = new GameDriver("1988"	,"makaiden"	,"megasys1.java"	,rom_makaiden,driver_lomakai	,machine_driver_system_Z	,input_ports_lomakai	,null	,ROT0	,	"Jaleco", "Makai Densetsu (Japan)" )
-	public static GameDriver driver_p47	   = new GameDriver("1988"	,"p47"	,"megasys1.java"	,rom_p47,null	,machine_driver_system_A	,input_ports_p47	,null	,ROT0	,	"Jaleco", "P-47 - The Phantom Fighter (World)" )
-	public static GameDriver driver_p47j	   = new GameDriver("1988"	,"p47j"	,"megasys1.java"	,rom_p47j,driver_p47	,machine_driver_system_A	,input_ports_p47	,null	,ROT0	,	"Jaleco", "P-47 - The Freedom Fighter (Japan)" )
-	public static GameDriver driver_kickoff	   = new GameDriver("1988"	,"kickoff"	,"megasys1.java"	,rom_kickoff,null	,machine_driver_system_A	,input_ports_kickoff	,null	,ROT0	,	"Jaleco", "Kick Off (Japan)" )
-	public static GameDriver driver_tshingen	   = new GameDriver("1988"	,"tshingen"	,"megasys1.java"	,rom_tshingen,null	,machine_driver_system_A	,input_ports_tshingen	,init_phantasm	,ROT0	,	"Jaleco", "Takeda Shingen (Japan, Japanese)" )
-	public static GameDriver driver_tshingna	   = new GameDriver("1988"	,"tshingna"	,"megasys1.java"	,rom_tshingna,driver_tshingen	,machine_driver_system_A	,input_ports_tshingen	,init_phantasm	,ROT0	,	"Jaleco", "Shingen Samurai-Fighter (Japan, English)" )
-	public static GameDriver driver_iganinju	   = new GameDriver("1988"	,"iganinju"	,"megasys1.java"	,rom_iganinju,null	,machine_driver_system_A_iganinju	,input_ports_iganinju	,init_iganinju	,ROT0	,	"Jaleco", "Iga Ninjyutsuden (Japan)" )
-	public static GameDriver driver_astyanax	   = new GameDriver("1989"	,"astyanax"	,"megasys1.java"	,rom_astyanax,null	,machine_driver_system_A	,input_ports_astyanax	,init_astyanax	,ROT0	,	"Jaleco", "The Astyanax" )
-	public static GameDriver driver_lordofk	   = new GameDriver("1989"	,"lordofk"	,"megasys1.java"	,rom_lordofk,driver_astyanax	,machine_driver_system_A	,input_ports_astyanax	,init_astyanax	,ROT0	,	"Jaleco", "The Lord of King (Japan)" )
-	public static GameDriver driver_hachoo	   = new GameDriver("1989"	,"hachoo"	,"megasys1.java"	,rom_hachoo,null	,machine_driver_system_A	,input_ports_hachoo	,init_hachoo	,ROT0	,	"Jaleco", "Hachoo!", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_jitsupro	   = new GameDriver("1989"	,"jitsupro"	,"megasys1.java"	,rom_jitsupro,null	,machine_driver_system_A	,input_ports_jitsupro	,init_jitsupro	,ROT0	,	"Jaleco", "Jitsuryoku!! Pro Yakyuu (Japan)" )
-	public static GameDriver driver_plusalph	   = new GameDriver("1989"	,"plusalph"	,"megasys1.java"	,rom_plusalph,null	,machine_driver_system_A	,input_ports_plusalph	,init_plusalph	,ROT270	,	"Jaleco", "Plus Alpha" )
-	public static GameDriver driver_stdragon	   = new GameDriver("1989"	,"stdragon"	,"megasys1.java"	,rom_stdragon,null	,machine_driver_system_A	,input_ports_stdragon	,init_stdragon	,ROT0	,	"Jaleco", "Saint Dragon" )
-	public static GameDriver driver_rodland	   = new GameDriver("1990"	,"rodland"	,"megasys1.java"	,rom_rodland,null	,machine_driver_system_A	,input_ports_rodland	,init_rodland	,ROT0	,	"Jaleco", "Rod-Land (World)" )
-	public static GameDriver driver_rodlandj	   = new GameDriver("1990"	,"rodlandj"	,"megasys1.java"	,rom_rodlandj,driver_rodland	,machine_driver_system_A	,input_ports_rodland	,init_rodlandj	,ROT0	,	"Jaleco", "Rod-Land (Japan)" )
-	public static GameDriver driver_rodlndjb	   = new GameDriver("1990"	,"rodlndjb"	,"megasys1.java"	,rom_rodlndjb,driver_rodland	,machine_driver_system_A	,input_ports_rodland	,null	,ROT0	,	"Jaleco", "Rod-Land (Japan bootleg)" )
-	public static GameDriver driver_avspirit	   = new GameDriver("1991"	,"avspirit"	,"megasys1.java"	,rom_avspirit,null	,machine_driver_system_B	,input_ports_avspirit	,init_avspirit	,ROT0	,	"Jaleco", "Avenging Spirit" )
-	public static GameDriver driver_phantasm	   = new GameDriver("1990"	,"phantasm"	,"megasys1.java"	,rom_phantasm,driver_avspirit	,machine_driver_system_A	,input_ports_avspirit	,init_phantasm	,ROT0	,	"Jaleco", "Phantasm (Japan)" )
-	public static GameDriver driver_edf	   = new GameDriver("1991"	,"edf"	,"megasys1.java"	,rom_edf,null	,machine_driver_system_B	,input_ports_edf	,init_edf	,ROT0	,	"Jaleco", "E.D.F. : Earth Defense Force" )
-	public static GameDriver driver_64street	   = new GameDriver("1991"	,"64street"	,"megasys1.java"	,rom_64street,null	,machine_driver_system_C	,input_ports_64street	,init_64street	,ROT0	,	"Jaleco", "64th. Street - A Detective Story (World)" )
-	public static GameDriver driver_64streej	   = new GameDriver("1991"	,"64streej"	,"megasys1.java"	,rom_64streej,driver_64street	,machine_driver_system_C	,input_ports_64street	,init_64street	,ROT0	,	"Jaleco", "64th. Street - A Detective Story (Japan)" )
-	public static GameDriver driver_soldamj	   = new GameDriver("1992"	,"soldamj"	,"megasys1.java"	,rom_soldamj,null	,machine_driver_system_A	,input_ports_soldamj	,init_soldam	,ROT0	,	"Jaleco", "Soldam (Japan)" )
-	public static GameDriver driver_bigstrik	   = new GameDriver("1992"	,"bigstrik"	,"megasys1.java"	,rom_bigstrik,null	,machine_driver_system_C	,input_ports_bigstrik	,init_bigstrik	,ROT0	,	"Jaleco", "Big Striker" )
-	public static GameDriver driver_chimerab	   = new GameDriver("1993"	,"chimerab"	,"megasys1.java"	,rom_chimerab,null	,machine_driver_system_C	,input_ports_chimerab	,init_chimerab	,ROT0	,	"Jaleco", "Chimera Beast (prototype)" )
-	public static GameDriver driver_cybattlr	   = new GameDriver("1993"	,"cybattlr"	,"megasys1.java"	,rom_cybattlr,null	,machine_driver_system_C	,input_ports_cybattlr	,init_cybattlr	,ROT90	,	"Jaleco", "Cybattler" )
-	public static GameDriver driver_peekaboo	   = new GameDriver("1993"	,"peekaboo"	,"megasys1.java"	,rom_peekaboo,null	,machine_driver_system_D	,input_ports_peekaboo	,init_peekaboo	,ROT0	,	"Jaleco", "Peek-a-Boo!" )
+	GAME( 1988, lomakai,  0,        system_Z,          lomakai,  0,        ROT0,   "Jaleco", "Legend of Makai (World)" )
+	GAME( 1988, makaiden, lomakai,  system_Z,          lomakai,  0,        ROT0,   "Jaleco", "Makai Densetsu (Japan)" )
+	GAME( 1988, p47,      0,        system_A,          p47,      0,        ROT0,   "Jaleco", "P-47 - The Phantom Fighter (World)" )
+	GAME( 1988, p47j,     p47,      system_A,          p47,      0,        ROT0,   "Jaleco", "P-47 - The Freedom Fighter (Japan)" )
+	GAME( 1988, kickoff,  0,        system_A,          kickoff,  0,        ROT0,   "Jaleco", "Kick Off (Japan)" )
+	GAME( 1988, tshingen, 0,        system_A,          tshingen, phantasm, ROT0,   "Jaleco", "Takeda Shingen (Japan, Japanese)" )
+	GAME( 1988, tshingna, tshingen, system_A,          tshingen, phantasm, ROT0,   "Jaleco", "Shingen Samurai-Fighter (Japan, English)" )
+	GAME( 1988, iganinju, 0,        system_A_iganinju, iganinju, iganinju, ROT0,   "Jaleco", "Iga Ninjyutsuden (Japan)" )
+	GAME( 1989, astyanax, 0,        system_A,          astyanax, astyanax, ROT0,   "Jaleco", "The Astyanax" )
+	GAME( 1989, lordofk,  astyanax, system_A,          astyanax, astyanax, ROT0,   "Jaleco", "The Lord of King (Japan)" )
+	GAMEX(1989, hachoo,   0,        system_A,          hachoo,   hachoo,   ROT0,   "Jaleco", "Hachoo!", GAME_IMPERFECT_SOUND )
+	GAME( 1989, jitsupro, 0,        system_A,          jitsupro, jitsupro, ROT0,   "Jaleco", "Jitsuryoku!! Pro Yakyuu (Japan)" )
+	GAME( 1989, plusalph, 0,        system_A,          plusalph, plusalph, ROT270, "Jaleco", "Plus Alpha" )
+	GAME( 1989, stdragon, 0,        system_A,          stdragon, stdragon, ROT0,   "Jaleco", "Saint Dragon" )
+	GAME( 1990, rodland,  0,        system_A,          rodland,  rodland,  ROT0,   "Jaleco", "Rod-Land (World)" )
+	GAME( 1990, rodlandj, rodland,  system_A,          rodland,  rodlandj, ROT0,   "Jaleco", "Rod-Land (Japan)" )
+	GAME( 1990, rodlndjb, rodland,  system_A,          rodland,  0,        ROT0,   "Jaleco", "Rod-Land (Japan bootleg)" )
+	GAME( 1991, avspirit, 0,        system_B,          avspirit, avspirit, ROT0,   "Jaleco", "Avenging Spirit" )
+	GAME( 1990, phantasm, avspirit, system_A,          avspirit, phantasm, ROT0,   "Jaleco", "Phantasm (Japan)" )
+	GAME( 1991, edf,      0,        system_B,          edf,      edf,      ROT0,   "Jaleco", "E.D.F. : Earth Defense Force" )
+	GAME( 1991, 64street, 0,        system_C,          64street, 64street, ROT0,   "Jaleco", "64th. Street - A Detective Story (World)" )
+	GAME( 1991, 64streej, 64street, system_C,          64street, 64street, ROT0,   "Jaleco", "64th. Street - A Detective Story (Japan)" )
+	GAME( 1992, soldamj,  0,        system_A,          soldamj,  soldam,   ROT0,   "Jaleco", "Soldam (Japan)" )
+	GAME( 1992, bigstrik, 0,        system_C,          bigstrik, bigstrik, ROT0,   "Jaleco", "Big Striker" )
+	GAME( 1993, chimerab, 0,        system_C,          chimerab, chimerab, ROT0,   "Jaleco", "Chimera Beast (prototype)" )
+	GAME( 1993, cybattlr, 0,        system_C,          cybattlr, cybattlr, ROT90,  "Jaleco", "Cybattler" )
+	GAME( 1993, peekaboo, 0,        system_D,          peekaboo, peekaboo, ROT0,   "Jaleco", "Peek-a-Boo!" )
 }

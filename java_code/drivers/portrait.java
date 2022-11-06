@@ -19,7 +19,7 @@ RAM Location 9240: Controls what level you are on: 0-3 (for each scene)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -57,15 +57,14 @@ public class portrait
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static READ_HANDLER(a000_r)
-	{
+	public static ReadHandlerPtr a000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( offset )
 		{
 		case 0x00: /*Dipswitch 1*/
-			return input_port_2_r(0)^0xff;
+			return input_port_2_r.handler(0)^0xff;
 	
 		case 0x04: /*Dipswitch 2*/
-			return input_port_3_r(0)^0xff;
+			return input_port_3_r.handler(0)^0xff;
 	
 		/*Service Switches? Coin Inputs, Player 1 & 2 Start, and more?*/
 		case 0x08:
@@ -79,8 +78,8 @@ public class portrait
 			  Bit 6 = Service Switch 1? (Inverted?) (If 0, then switch is on!)
 			  Bit 7 = Service Switch 2? (Inverted?) (If 0, then switch is on!)
 			*/
-			return	((input_port_4_r(0)^0x03)<<6)|	//Grab cab switches
-					(input_port_0_r(0) & 0x3f);		//Grab player inputs
+			return	((input_port_4_r.handler(0)^0x03)<<6)|	//Grab cab switches
+					(input_port_0_r.handler(0) & 0x3f);		//Grab player inputs
 	
 		/*Player Inputs and Camera ready status? Note: it's inverted, but perhaps it works if I change to ACTIVE_LOW signal*/
 		case 0x10:
@@ -94,7 +93,7 @@ public class portrait
 			  Bit 6 = Camera status? Ready flag?
 			  Bit 7 = Unused??
 			*/
-			return input_port_1_r(0)^0xff;
+			return input_port_1_r.handler(0)^0xff;
 	
 		case 0x18:
 			return portrait_scrollx_hi;
@@ -104,10 +103,9 @@ public class portrait
 		default:
 			return 0x00;
 		}
-	}
+	} };
 	
-	static WRITE_HANDLER(a000_w)
-	{
+	public static WriteHandlerPtr a000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( offset )
 		{
 		case 0x00: /* sound command? */
@@ -131,7 +129,7 @@ public class portrait
 		default:
 			break;
 		}
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -158,7 +156,7 @@ public class portrait
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_portrait = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_portrait = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( portrait )
 		PORT_START(); 		/* IN 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -248,8 +246,7 @@ public class portrait
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_portrait = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( portrait )
 		MDRV_CPU_ADD(Z80, 4000000)     /* 4 MHz ? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
@@ -272,9 +269,7 @@ public class portrait
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface) /* ? */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_portrait = new RomLoadPtr(){ public void handler(){ 
@@ -302,6 +297,6 @@ public class portrait
 		/* proms? */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_portrait	   = new GameDriver("1983"	,"portrait"	,"portrait.java"	,rom_portrait,null	,machine_driver_portrait	,input_ports_portrait	,null	,ROT270	,	"Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
+	GAMEX( 1983, portrait,  0,    portrait, portrait,  0, ROT270, "Olympia", "Portraits", GAME_NO_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS | GAME_NOT_WORKING )
 	
 }

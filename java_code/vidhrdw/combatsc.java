@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,7 +17,7 @@ public class combatsc
 	
 	static struct tilemap *tilemap[2];
 	static struct tilemap *textlayer;
-	static unsigned char *private_spriteram.read(2);
+	static unsigned char *private_spriteram[2];
 	static int priority;
 	
 	unsigned char *combasc_io_ram;
@@ -32,8 +32,7 @@ public class combatsc
 	static unsigned char *combasc_scrollram;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_combasc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_combasc  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,pal,clut = 0;
 		for( pal=0; pal<8; pal++ )
 		{
@@ -75,8 +74,7 @@ public class combatsc
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_combascb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_combascb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,pal;
 		for( pal=0; pal<8; pal++ )
 		{
@@ -105,9 +103,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if ((attributes & 0x80) != 0) bank += 1;
-		if ((attributes & 0x10) != 0) bank += 2;
-		if ((attributes & 0x20) != 0) bank += 4;
+		if (attributes & 0x80) bank += 1;
+		if (attributes & 0x10) bank += 2;
+		if (attributes & 0x20) bank += 4;
 	
 		color = ((K007121_ctrlram[0][6]&0x10)*2+16) + (attributes & 0x0f);
 	
@@ -130,9 +128,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if ((attributes & 0x80) != 0) bank += 1;
-		if ((attributes & 0x10) != 0) bank += 2;
-		if ((attributes & 0x20) != 0) bank += 4;
+		if (attributes & 0x80) bank += 1;
+		if (attributes & 0x10) bank += 2;
+		if (attributes & 0x20) bank += 4;
 	
 		color = ((K007121_ctrlram[1][6]&0x10)*2+16+4*16) + (attributes & 0x0f);
 	
@@ -169,9 +167,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if ((attributes & 0x80) != 0) bank += 1;
-		if ((attributes & 0x10) != 0) bank += 2;
-		if ((attributes & 0x20) != 0) bank += 4;
+		if (attributes & 0x80) bank += 1;
+		if (attributes & 0x10) bank += 2;
+		if (attributes & 0x20) bank += 4;
 	
 		pal = (bank == 0 || bank >= 0x1c || (attributes & 0x40)) ? 1 : 3;
 		color = pal*16;// + (attributes & 0x0f);
@@ -193,9 +191,9 @@ public class combatsc
 		if (bank < 0) bank = 0;
 		if ((attributes & 0xb0) == 0) bank = 0;	/* text bank */
 	
-		if ((attributes & 0x80) != 0) bank += 1;
-		if ((attributes & 0x10) != 0) bank += 2;
-		if ((attributes & 0x20) != 0) bank += 4;
+		if (attributes & 0x80) bank += 1;
+		if (attributes & 0x10) bank += 2;
+		if (attributes & 0x20) bank += 4;
 	
 		pal = (bank == 0 || bank >= 0x1c || (attributes & 0x40)) ? 5 : 7;
 		color = pal*16;// + (attributes & 0x0f);
@@ -227,18 +225,17 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_combasc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_combasc  = new VideoStartHandlerPtr() { public int handler(){
 		combasc_vreg = -1;
 	
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		textlayer =  tilemap_create(get_text_info, tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 	
-		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
-		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
-		memset(private_spriteram.read(0),0,0x800);
-		memset(private_spriteram.read(1),0,0x800);
+		private_spriteram[0] = auto_malloc(0x800);
+		private_spriteram[1] = auto_malloc(0x800);
+		memset(private_spriteram[0],0,0x800);
+		memset(private_spriteram[1],0,0x800);
 	
 		if (tilemap[0] && tilemap[1] && textlayer)
 		{
@@ -254,18 +251,17 @@ public class combatsc
 		return 1;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_combascb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_combascb  = new VideoStartHandlerPtr() { public int handler(){
 		combasc_vreg = -1;
 	
 		tilemap[0] = tilemap_create(get_tile_info0_bootleg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		tilemap[1] = tilemap_create(get_tile_info1_bootleg,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		textlayer =  tilemap_create(get_text_info_bootleg, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
-		private_spriteram.write(auto_malloc(0x800),auto_malloc(0x800));
-		memset(private_spriteram.read(0),0,0x800);
-		memset(private_spriteram.read(1),0,0x800);
+		private_spriteram[0] = auto_malloc(0x800);
+		private_spriteram[1] = auto_malloc(0x800);
+		memset(private_spriteram[0],0,0x800);
+		memset(private_spriteram[1],0,0x800);
 	
 		if (tilemap[0] && tilemap[1] && textlayer)
 		{
@@ -288,19 +284,17 @@ public class combatsc
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr combasc_video_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr combasc_video_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr combasc_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
 			if( offset<0x800 )
 			{
-				if (combasc_video_circuit != 0)
+				if (combasc_video_circuit)
 					tilemap_mark_tile_dirty(tilemap[1],offset & 0x3ff);
 				else
 					tilemap_mark_tile_dirty(tilemap[0],offset & 0x3ff);
@@ -313,8 +307,7 @@ public class combatsc
 	} };
 	
 	
-	public static WriteHandlerPtr combasc_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != combasc_vreg)
 		{
 			tilemap_mark_all_tiles_dirty( textlayer );
@@ -326,14 +319,12 @@ public class combatsc
 		}
 	} };
 	
-	public static WriteHandlerPtr combascb_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combascb_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static ReadHandlerPtr combasc_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr combasc_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((offset <= 0x403) && (offset >= 0x400))
 		{
 			switch (offset)
@@ -347,8 +338,7 @@ public class combatsc
 		return banked_area[offset];
 	} };
 	
-	public static WriteHandlerPtr combasc_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0x400: priority = data & 0x20; break;
@@ -359,11 +349,10 @@ public class combatsc
 		}
 	} };
 	
-	public static WriteHandlerPtr combasc_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *page = memory_region(REGION_CPU1) + 0x10000;
 	
-		if ((data & 0x40) != 0)
+		if (data & 0x40)
 		{
 			combasc_video_circuit = 1;
 			videoram = combasc_page[1];
@@ -378,7 +367,7 @@ public class combatsc
 	
 		priority = data & 0x20;
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 		{
 			cpu_setbank(1,page + 0x4000 * ((data & 0x0e) >> 1));
 		}
@@ -388,9 +377,8 @@ public class combatsc
 		}
 	} };
 	
-	public static WriteHandlerPtr combascb_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x40) != 0)
+	public static WriteHandlerPtr combascb_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x40)
 		{
 			combasc_video_circuit = 1;
 			videoram = combasc_page[1];
@@ -407,7 +395,7 @@ public class combatsc
 			unsigned char *page = memory_region(REGION_CPU1) + 0x10000;
 			combasc_bank_select = data;
 	
-			if ((data & 0x10) != 0)
+			if (data & 0x10)
 			{
 				cpu_setbank(1,page + 0x4000 * ((data & 0x0e) >> 1));
 			}
@@ -430,8 +418,7 @@ public class combatsc
 		}
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_combasc  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_combasc  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *MEM = memory_region(REGION_CPU1) + 0x38000;
 	
 	
@@ -447,8 +434,7 @@ public class combatsc
 		combasc_bankselect_w( 0,0 );
 	} };
 	
-	public static WriteHandlerPtr combasc_pf_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_pf_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007121_ctrl_w(combasc_video_circuit,offset,data);
 	
 		if (offset == 7)
@@ -456,20 +442,18 @@ public class combatsc
 	
 		if (offset == 3)
 		{
-			if ((data & 0x08) != 0)
-				memcpy(private_spriteram.read(combasc_video_circuit),combasc_page[combasc_video_circuit]+0x1000,0x800);
+			if (data & 0x08)
+				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1000,0x800);
 			else
-				memcpy(private_spriteram.read(combasc_video_circuit),combasc_page[combasc_video_circuit]+0x1800,0x800);
+				memcpy(private_spriteram[combasc_video_circuit],combasc_page[combasc_video_circuit]+0x1800,0x800);
 		}
 	} };
 	
-	public static ReadHandlerPtr combasc_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr combasc_scrollram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return combasc_scrollram[offset];
 	} };
 	
-	public static WriteHandlerPtr combasc_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_scrollram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		combasc_scrollram[offset] = data;
 	} };
 	
@@ -489,8 +473,7 @@ public class combatsc
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_combasc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	
@@ -535,8 +518,8 @@ public class combatsc
 			tilemap_draw(bitmap,cliprect,tilemap[0],1,2);
 	
 			/* we use the priority buffer so sprites are drawn front to back */
-			draw_sprites(bitmap,cliprect,private_spriteram.read(1),1,0x0f00);
-			draw_sprites(bitmap,cliprect,private_spriteram.read(0),0,0x4444);
+			draw_sprites(bitmap,cliprect,private_spriteram[1],1,0x0f00);
+			draw_sprites(bitmap,cliprect,private_spriteram[0],0,0x4444);
 		}
 		else
 		{
@@ -546,8 +529,8 @@ public class combatsc
 			tilemap_draw(bitmap,cliprect,tilemap[1],0,8);
 	
 			/* we use the priority buffer so sprites are drawn front to back */
-			draw_sprites(bitmap,cliprect,private_spriteram.read(1),1,0x0f00);
-			draw_sprites(bitmap,cliprect,private_spriteram.read(0),0,0x4444);
+			draw_sprites(bitmap,cliprect,private_spriteram[1],1,0x0f00);
+			draw_sprites(bitmap,cliprect,private_spriteram[0],0,0x4444);
 		}
 	
 		if (K007121_ctrlram[0][0x01] & 0x08)
@@ -604,7 +587,7 @@ public class combatsc
 	
 	static void bootleg_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, const unsigned char *source, int circuit )
 	{
-		const struct GfxElement *gfx = Machine.gfx[circuit+2];
+		const struct GfxElement *gfx = Machine->gfx[circuit+2];
 	
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int limit = ( circuit) ? (RAM[0xc2]*256 + RAM[0xc3]) : (RAM[0xc0]*256 + RAM[0xc1]);
@@ -648,8 +631,7 @@ public class combatsc
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_combascb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		for( i=0; i<32; i++ )

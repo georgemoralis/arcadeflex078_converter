@@ -13,7 +13,7 @@ robbiex@rocketmail.com
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,8 +26,7 @@ public class tehkanwc
 	
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
-	public static WriteHandlerPtr tehkanwc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -35,8 +34,7 @@ public class tehkanwc
 		}
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -44,49 +42,42 @@ public class tehkanwc
 		}
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (tehkanwc_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr tehkanwc_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (tehkanwc_videoram2[offset] != data)
 		{
-			tehkanwc_videoram2.write(data,data);
+			tehkanwc_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset / 2);
 		}
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_scroll_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_x[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_scroll_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_flipscreen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(data & 0x40);
 	} };
 	
-	public static WriteHandlerPtr tehkanwc_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tehkanwc_flipscreen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(data & 0x40);
 	} };
 	
-	public static WriteHandlerPtr gridiron_led0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridiron_led0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		led0 = data;
 	} };
-	public static WriteHandlerPtr gridiron_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridiron_led1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		led1 = data;
 	} };
 	
 	static void get_bg_tile_info(int tile_index)
 	{
 		int offs = tile_index * 2;
-		int attr = tehkanwc_videoram2.read(offs + 1);
-		int code = tehkanwc_videoram2.read(offs)+ ((attr & 0x30) << 4);
+		int attr = tehkanwc_videoram2[offs + 1];
+		int code = tehkanwc_videoram2[offs] + ((attr & 0x30) << 4);
 		int color = attr & 0x0f;
 		int flags = ((attr & 0x40) ? TILE_FLIPX : 0) | ((attr & 0x80) ? TILE_FLIPY : 0);
 	
@@ -105,18 +96,17 @@ public class tehkanwc
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_tehkanwc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tehkanwc  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -162,19 +152,19 @@ public class tehkanwc
 		if (i < 10)
 		{
 			if (player == 0)
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						0xc0 + i,
 						0x0a,
 						0,0,
 						0,232,
-						Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine->visible_area,TRANSPARENCY_NONE,0);
 			else
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						0xc0 + i,
 						0x03,
 						1,1,
 						0,16,
-						Machine.visible_area,TRANSPARENCY_NONE,0);
+						Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	else logerror("unknown LED %02x for player %d\n",led,player);
 	}
@@ -193,26 +183,25 @@ public class tehkanwc
 			int sx = spriteram.read(offs + 2)+ ((attr & 0x20) << 3) - 128;
 			int sy = spriteram.read(offs + 3);
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				sx = 240 - sx;
 				flipx = NOT(flipx);
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color, flipx, flipy, sx, sy,
-				Machine.visible_area, TRANSPARENCY_PEN, 0);
+				Machine->visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tehkanwc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tehkanwc  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap, 0, scroll_x[0] + 256 * scroll_x[1]);
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);

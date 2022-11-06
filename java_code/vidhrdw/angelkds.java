@@ -8,7 +8,7 @@ enable / disable tilemap bits might be wrong
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class angelkds
 		SET_TILE_INFO(0,tileno,0,0)
 	}
 	
-	public static WriteHandlerPtr angelkds_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_txvideoram[offset] != data)
 		{
 			angelkds_txvideoram[offset] = data;
@@ -45,8 +44,7 @@ public class angelkds
 		}
 	} };
 	
-	public static WriteHandlerPtr angelkds_txbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_txbank_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	if (angelkds_txbank != data)
 		{
@@ -73,8 +71,7 @@ public class angelkds
 		SET_TILE_INFO(1,tileno,0,0)
 	}
 	
-	public static WriteHandlerPtr angelkds_bgtopvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgtopvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_bgtopvideoram[offset] != data)
 		{
 			angelkds_bgtopvideoram[offset] = data;
@@ -82,8 +79,7 @@ public class angelkds
 		}
 	} };
 	
-	public static WriteHandlerPtr angelkds_bgtopbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgtopbank_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	if (angelkds_bgtopbank != data)
 		{
@@ -93,8 +89,7 @@ public class angelkds
 	
 	} };
 	
-	public static WriteHandlerPtr angelkds_bgtopscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgtopscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bgtop_tilemap, 0, data );
 	} };
 	
@@ -114,8 +109,7 @@ public class angelkds
 		SET_TILE_INFO(1,tileno,1,0)
 	}
 	
-	public static WriteHandlerPtr angelkds_bgbotvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgbotvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (angelkds_bgbotvideoram[offset] != data)
 		{
 			angelkds_bgbotvideoram[offset] = data;
@@ -124,8 +118,7 @@ public class angelkds
 	} };
 	
 	
-	public static WriteHandlerPtr angelkds_bgbotbank_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgbotbank_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	if (angelkds_bgbotbank != data)
 		{
@@ -135,15 +128,13 @@ public class angelkds
 	
 	} };
 	
-	public static WriteHandlerPtr angelkds_bgbotscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_bgbotscroll_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bgbot_tilemap, 0, data );
 	} };
 	
 	UINT8 angelkds_layer_ctrl;
 	
-	public static WriteHandlerPtr angelkds_layer_ctrl_write = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_layer_ctrl_write = new WriteHandlerPtr() {public void handler(int offset, int data){
 		angelkds_layer_ctrl = data;
 	} };
 	
@@ -158,7 +149,7 @@ public class angelkds
 	{
 		const UINT8 *source = spriteram;
 		const UINT8 *finish = source+0x0100;
-		const struct GfxElement *gfx = Machine.gfx[2];
+		const struct GfxElement *gfx = Machine->gfx[2];
 	
 		while( source<finish )
 		{
@@ -191,11 +182,11 @@ public class angelkds
 		UINT8 bank = attr & 0x08;
 		UINT8 color = attr & 0x03;
 	
-		if (bank != 0) tile_no +=0x100;
+		if (bank) tile_no +=0x100;
 	
 		ypos= 0xff-ypos;
 	
-		if ((enable & enable_n) != 0)
+		if (enable & enable_n)
 		{
 				drawgfx(
 						bitmap,
@@ -261,20 +252,19 @@ public class angelkds
 	
 	*/
 	
-	public static WriteHandlerPtr angelkds_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr angelkds_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int no, r,g,b;
 	
 	
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		no=offset & 0xff;
 	
-		g = (paletteram[no] & 0xf0)<< 0;
+		g = (paletteram.read(no)& 0xf0)<< 0;
 	
-		r = (paletteram[no] & 0x0f) << 4;
+		r = (paletteram.read(no)& 0x0f) << 4;
 	
-		b = (paletteram[no+0x100] & 0x0f) << 4;
+		b = (paletteram.read(no+0x100)& 0x0f) << 4;
 	
 		palette_set_color(no,r,g,b);
 	} };
@@ -283,8 +273,7 @@ public class angelkds
 	
 	*/
 	
-	public static VideoStartHandlerPtr video_start_angelkds  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_angelkds  = new VideoStartHandlerPtr() { public int handler(){
 	
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		tilemap_set_transparent_pen(tx_tilemap,0);
@@ -300,8 +289,7 @@ public class angelkds
 	
 	/* enable bits are uncertain */
 	
-	public static VideoUpdateHandlerPtr video_update_angelkds  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_angelkds  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle clip;
 	
 		fillbitmap(bitmap,0x3f,cliprect); /* is there a register controling the colour?, we currently use the last colour of the tx palette */

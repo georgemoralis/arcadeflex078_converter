@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,8 +20,7 @@ public class fastfred
 	// These values were derived based on disassembly of the code. Usually, it
 	// was pretty obvious what the values should be. Of course, this will have
 	// to change if a different ROM set ever surfaces.
-	public static ReadHandlerPtr fastfred_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fastfred_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    switch (activecpu_get_pc())
 	    {
 	    case 0x03c0: return 0x9d;
@@ -52,8 +51,7 @@ public class fastfred
 	    return 0x00;
 	} };
 	
-	public static ReadHandlerPtr jumpcoas_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jumpcoas_custom_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0x100)  return 0x63;
 	
 		return 0x00;
@@ -202,7 +200,7 @@ public class fastfred
 	};
 	
 	
-	static InputPortPtr input_ports_fastfred = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fastfred = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fastfred )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -254,7 +252,7 @@ public class fastfred
 		PORT_DIPSETTING(    0x80, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_flyboy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flyboy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flyboy )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -299,7 +297,7 @@ public class fastfred
 		PORT_DIPSETTING(    0x80, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jumpcoas = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jumpcoas = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jumpcoas )
 		PORT_START();       /* DSW 0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "6C_1C") );
@@ -346,7 +344,7 @@ public class fastfred
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN | IPF_8WAY | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_boggy84 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_boggy84 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( boggy84 )
 		PORT_START();       /* DSW 0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x03, DEF_STR( "6C_1C") );
@@ -417,7 +415,7 @@ public class fastfred
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_redrobin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_redrobin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( redrobin )
 		PORT_START();       /* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -457,7 +455,7 @@ public class fastfred
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );		/* monsters */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_imago = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_imago = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( imago )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -575,8 +573,7 @@ public class fastfred
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_fastfred = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fastfred )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, CLOCK/6)     /* 3.072 MHz */
@@ -605,12 +602,9 @@ public class fastfred
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("ay8910", AY8910, fastfred_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_jumpcoas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jumpcoas )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(fastfred)
@@ -624,12 +618,9 @@ public class fastfred
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("ay8910", AY8910, jumpcoas_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_imago = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( imago )
 		
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(fastfred)
@@ -641,9 +632,7 @@ public class fastfred
 	
 		MDRV_VIDEO_START(imago)
 		MDRV_VIDEO_UPDATE(imago)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	#undef CLOCK
 	
@@ -864,42 +853,37 @@ public class fastfred
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_flyboy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_flyboy  = new DriverInitHandlerPtr() { public void handler(){
 		fastfred_hardware_type = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_fastfred  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fastfred  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler( 0, 0xc800, 0xcfff, fastfred_custom_io_r);
 		fastfred_hardware_type = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_jumpcoas  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jumpcoas  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler(0,  0xc800, 0xcfff, jumpcoas_custom_io_r);
 		fastfred_hardware_type = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_boggy84  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_boggy84  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0xc800, 0xcfff, MWA_NOP );
 		install_mem_read_handler(0,  0xc800, 0xcfff, jumpcoas_custom_io_r);
 		fastfred_hardware_type = 2;
 	} };
 	
-	public static DriverInitHandlerPtr init_imago  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_imago  = new DriverInitHandlerPtr() { public void handler(){
 		fastfred_hardware_type = 3;
 	} };
 	
-	public static GameDriver driver_flyboy	   = new GameDriver("1982"	,"flyboy"	,"fastfred.java"	,rom_flyboy,null	,machine_driver_fastfred	,input_ports_flyboy	,init_flyboy	,ROT90	,	"Kaneko", "Fly-Boy", GAME_NOT_WORKING )	/* protection */
-	public static GameDriver driver_flyboyb	   = new GameDriver("1982"	,"flyboyb"	,"fastfred.java"	,rom_flyboyb,driver_flyboy	,machine_driver_fastfred	,input_ports_flyboy	,init_flyboy	,ROT90	,	"Kaneko", "Fly-Boy (bootleg)" )
-	public static GameDriver driver_fastfred	   = new GameDriver("1982"	,"fastfred"	,"fastfred.java"	,rom_fastfred,driver_flyboy	,machine_driver_fastfred	,input_ports_fastfred	,init_fastfred	,ROT90	,	"Atari", "Fast Freddie" )
-	public static GameDriver driver_jumpcoas	   = new GameDriver("1983"	,"jumpcoas"	,"fastfred.java"	,rom_jumpcoas,null	,machine_driver_jumpcoas	,input_ports_jumpcoas	,init_jumpcoas	,ROT90	,	"Kaneko", "Jump Coaster" )
-	public static GameDriver driver_boggy84	   = new GameDriver("1983"	,"boggy84"	,"fastfred.java"	,rom_boggy84,null	,machine_driver_jumpcoas	,input_ports_boggy84	,init_boggy84	,ROT90	,	"bootleg", "Boggy '84" )
-	public static GameDriver driver_redrobin	   = new GameDriver("1986"	,"redrobin"	,"fastfred.java"	,rom_redrobin,null	,machine_driver_fastfred	,input_ports_redrobin	,init_flyboy	,ROT90	,	"Elettronolo", "Red Robin" )
-	public static GameDriver driver_imago	   = new GameDriver("1983"	,"imago"	,"fastfred.java"	,rom_imago,null	,machine_driver_imago	,input_ports_imago	,init_imago	,ROT90	,	"Acom", "Imago", GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS )
+	GAMEX(1982, flyboy,   0,      fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy", GAME_NOT_WORKING )	/* protection */
+	GAME( 1982, flyboyb,  flyboy, fastfred, flyboy,   flyboy,   ROT90, "Kaneko", "Fly-Boy (bootleg)" )
+	GAME( 1982, fastfred, flyboy, fastfred, fastfred, fastfred, ROT90, "Atari", "Fast Freddie" )
+	GAME( 1983, jumpcoas, 0,      jumpcoas, jumpcoas, jumpcoas, ROT90, "Kaneko", "Jump Coaster" )
+	GAME( 1983, boggy84,  0,      jumpcoas, boggy84,  boggy84,  ROT90, "bootleg", "Boggy '84" )
+	GAME( 1986, redrobin, 0,      fastfred, redrobin, flyboy,   ROT90, "Elettronolo", "Red Robin" )
+	GAMEX(1983, imago,	  0,	  imago,	imago,	  imago,	ROT90, "Acom", "Imago", GAME_IMPERFECT_GRAPHICS | GAME_WRONG_COLORS )
 }

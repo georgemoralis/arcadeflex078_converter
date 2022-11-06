@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -48,8 +48,7 @@ public class megazone
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_megazone  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_megazone  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -90,8 +89,7 @@ public class megazone
 			COLOR(0,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	public static WriteHandlerPtr megazone_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr megazone_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -99,8 +97,7 @@ public class megazone
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_megazone  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_megazone  = new VideoStartHandlerPtr() { public int handler(){
 		dirtybuffer = 0;
 		tmpbitmap = 0;
 	
@@ -122,8 +119,7 @@ public class megazone
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_megazone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_megazone  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int x,y;
 	
@@ -141,7 +137,7 @@ public class megazone
 				sy = offs / 32;
 				flipx = colorram.read(offs)& (1<<6);
 				flipy = colorram.read(offs)& (1<<5);
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -163,7 +159,7 @@ public class megazone
 			int scrollx;
 			int scrolly;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				scrollx = *megazone_scrolly;
 				scrolly = *megazone_scrollx;
@@ -187,9 +183,9 @@ public class megazone
 	
 	
 				sx = spriteram.read(offs + 3);
-				if (flipscreen != 0) sx-=11; else sx+=4*8;   	  // Sprite y-position correction depending on screen flip
+				if (flipscreen) sx-=11; else sx+=4*8;   	  // Sprite y-position correction depending on screen flip
 				sy = 255-((spriteram.read(offs + 1)+16)&0xff);
-				if (flipscreen != 0) sy+=2; 			  	  // Sprite x-position correction depending on screen flip
+				if (flipscreen) sy+=2; 			  	  // Sprite x-position correction depending on screen flip
 	
 				flipx = ~spriteram.read(offs+0)& 0x40;
 				flipy = spriteram.read(offs+0)& 0x80;
@@ -216,7 +212,7 @@ public class megazone
 				flipx = megazone_colorram2[offs] & (1<<6);
 				flipy = megazone_colorram2[offs] & (1<<5);
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 31 - sy;

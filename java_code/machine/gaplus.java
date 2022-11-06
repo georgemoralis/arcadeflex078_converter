@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -23,71 +23,60 @@ public class gaplus
 	static int credits, coincounter1, coincounter2;
 	
 	
-	public static MachineInitHandlerPtr machine_init_gaplus  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gaplus  = new MachineInitHandlerPtr() { public void handler(){
 	    int_enable_2 = int_enable_3 = 1;
 	    credits = coincounter1 = coincounter2 = 0;
 	} };
 	
 	/* shared ram functions */
-	public static ReadHandlerPtr gaplus_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplus_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return gaplus_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr gaplus_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0x082c)	/* 0x102c */
 			flip_screen_set(data);
 	    gaplus_sharedram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr gaplus_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplus_snd_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return gaplus_snd_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr gaplus_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_snd_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    gaplus_snd_sharedram[offset] = data;
 	} };
 	
 	/* irq control functions */
-	public static WriteHandlerPtr gaplus_interrupt_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int_enable_2 = offset;
 	} };
 	
-	public static WriteHandlerPtr gaplus_interrupt_ctrl_3a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_3a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int_enable_3 = 1;
 	} };
 	
-	public static WriteHandlerPtr gaplus_interrupt_ctrl_3b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_interrupt_ctrl_3b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int_enable_3 = 0;
 	} };
 	
-	public static InterruptHandlerPtr gaplus_interrupt_1 = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr gaplus_interrupt_1 = new InterruptHandlerPtr() {public void handler()
 	
 		gaplus_starfield_update(); /* update starfields */
 		cpu_set_irq_line(0, 0, HOLD_LINE);
-	} };
+	}
 	
-	public static InterruptHandlerPtr gaplus_interrupt_2 = new InterruptHandlerPtr() {public void handler()
-	{
-	    if (int_enable_2 != 0)
+	public static InterruptHandlerPtr gaplus_interrupt_2 = new InterruptHandlerPtr() {public void handler(){
+	    if (int_enable_2)
 	    	cpu_set_irq_line(1, 0, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr gaplus_interrupt_3 = new InterruptHandlerPtr() {public void handler()
-	{
-	    if (int_enable_3 != 0)
+	public static InterruptHandlerPtr gaplus_interrupt_3 = new InterruptHandlerPtr() {public void handler(){
+	    if (int_enable_3)
 	    	cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr gaplus_reset_2_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_reset_2_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    int_enable_2 = int_enable_3 = 1;
 	    cpu_set_reset_line(1,PULSE_LINE);
 	    cpu_set_reset_line(2,PULSE_LINE);
@@ -100,18 +89,15 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	public static WriteHandlerPtr gaplus_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_customio_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    gaplus_customio_1[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr gaplus_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_customio_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    gaplus_customio_2[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr gaplus_customio_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gaplus_customio_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset == 0x09) && (data >= 0x0f))
 			sample_start(0,0,0);
 	    gaplus_customio_3[offset] = data;
@@ -120,8 +106,7 @@ public class gaplus
 	static int credmoned [] = { 1, 1, 2, 3 };
 	static int monedcred [] = { 1, 2, 1, 1 };
 	
-	public static ReadHandlerPtr gaplus_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplus_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode;
 	
 	    mode = gaplus_customio_1[8];
@@ -162,8 +147,7 @@ public class gaplus
 	    return gaplus_customio_1[offset];
 	} };
 	
-	public static ReadHandlerPtr gaplus_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplus_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int val, mode;
 	
 	    mode = gaplus_customio_2[8];
@@ -204,8 +188,7 @@ public class gaplus
 	        return gaplus_customio_2[offset];
 	} };
 	
-	public static ReadHandlerPtr gaplus_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplus_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode;
 	
 	    mode = gaplus_customio_3[8];
@@ -251,8 +234,7 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	public static ReadHandlerPtr gapluso_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gapluso_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode, val, temp1, temp2;
 	
 	    mode = gaplus_customio_1[8];
@@ -381,8 +363,7 @@ public class gaplus
 	    return gaplus_customio_1[offset];
 	} };
 	
-	public static ReadHandlerPtr gapluso_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gapluso_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int val, mode;
 	
 	    mode = gaplus_customio_2[8];
@@ -423,8 +404,7 @@ public class gaplus
 			return gaplus_customio_2[offset];
 	} };
 	
-	public static ReadHandlerPtr gapluso_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gapluso_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode;
 	
 	    mode = gaplus_customio_3[8];
@@ -467,8 +447,7 @@ public class gaplus
 	*																					*
 	************************************************************************************/
 	
-	public static ReadHandlerPtr gaplusa_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplusa_customio_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode, val, temp1, temp2;
 	
 	    mode = gaplus_customio_1[8];
@@ -595,8 +574,7 @@ public class gaplus
 	    return gaplus_customio_1[offset];
 	} };
 	
-	public static ReadHandlerPtr gaplusa_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplusa_customio_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int val, mode;
 	
 	    mode = gaplus_customio_2[8];
@@ -639,8 +617,7 @@ public class gaplus
 			return gaplus_customio_2[offset];
 	} };
 	
-	public static ReadHandlerPtr gaplusa_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gaplusa_customio_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int mode;
 	
 	    mode = gaplus_customio_3[8];

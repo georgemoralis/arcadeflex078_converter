@@ -72,7 +72,7 @@ World Cup 90 bootleg.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -90,18 +90,15 @@ public class wc90b
 	
 	static data8_t *wc90b_shared;
 	
-	public static ReadHandlerPtr wc90b_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wc90b_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wc90b_shared[offset];
 	} };
 	
-	public static WriteHandlerPtr wc90b_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wc90b_shared[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr wc90b_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -110,8 +107,7 @@ public class wc90b
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr wc90b_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -120,8 +116,7 @@ public class wc90b
 		cpu_setbank(2,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr wc90b_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,0,HOLD_LINE);
 	} };
@@ -213,7 +208,7 @@ public class wc90b
 	
 	
 	
-	static InputPortPtr input_ports_wc90b = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wc90b = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wc90b )
 		PORT_START(); 	/* IN0 bit 0-5 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -372,8 +367,7 @@ public class wc90b
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_wc90b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wc90b )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6.0 MHz ??? */
@@ -403,9 +397,7 @@ public class wc90b
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_wc90b = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */
@@ -443,8 +435,7 @@ public class wc90b
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_wc90b  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wc90b  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* sprite graphics are inverted */
@@ -453,5 +444,5 @@ public class wc90b
 	} };
 	
 	
-	public static GameDriver driver_wc90b	   = new GameDriver("1989"	,"wc90b"	,"wc90b.java"	,rom_wc90b,driver_wc90	,machine_driver_wc90b	,input_ports_wc90b	,init_wc90b	,ROT0	,	"bootleg", "Euro League", GAME_NO_COCKTAIL )
+	GAMEX( 1989, wc90b, wc90, wc90b, wc90b, wc90b, ROT0, "bootleg", "Euro League", GAME_NO_COCKTAIL )
 }

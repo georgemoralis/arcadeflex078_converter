@@ -16,7 +16,7 @@ Todo :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,17 +24,15 @@ public class homerun
 {
 	
 	
-	VIDEO_START(homerun);
-	VIDEO_UPDATE(homerun);
 	
-	static WRITE_HANDLER(pa_w){homerun_xpa=data;}
-	static WRITE_HANDLER(pb_w){homerun_xpb=data;}
-	static WRITE_HANDLER(pc_w){homerun_xpc=data;}
+	public static WriteHandlerPtr pa_w = new WriteHandlerPtr() {public void handler(int offset, int data)omerun_xpa=data;}
+	public static WriteHandlerPtr pb_w = new WriteHandlerPtr() {public void handler(int offset, int data)omerun_xpb=data;}
+	public static WriteHandlerPtr pc_w = new WriteHandlerPtr() {public void handler(int offset, int data)omerun_xpc=data;}
 	
 	static ppi8255_interface ppi8255_intf =
 	{
 		1, 		
-		{ 0 },
+		{ 0 } };,
 		{ 0  },
 		{ 0  },
 		{ pa_w },
@@ -43,8 +41,7 @@ public class homerun
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_homerun  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_homerun  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
@@ -101,13 +98,12 @@ public class homerun
 	};
 	
 	
-	static READ_HANDLER(homerun_40_r)
-	{
+	public static ReadHandlerPtr homerun_40_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(cpu_getscanline()>116)
-			return input_port_0_r(0)|0x40;
+			return input_port_0_r.handler(0)|0x40;
 		else
-			return input_port_0_r(0);
-	}
+			return input_port_0_r.handler(0);
+	} };
 	
 	
 	public static IO_ReadPort readport[]={
@@ -144,7 +140,7 @@ public class homerun
 	};
 	
 	
-	static InputPortPtr input_ports_homerun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_homerun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( homerun )
 		PORT_START(); 
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_COIN1  );
 		PORT_DIPNAME( 0x80, 0x80, DEF_STR( "Unknown") );
@@ -174,8 +170,7 @@ public class homerun
 		
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_homerun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( homerun )
 		MDRV_CPU_ADD(Z80, 5000000)
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
 		
@@ -195,9 +190,7 @@ public class homerun
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_MACHINE_INIT(homerun)
 		
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_homerun = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x30000, REGION_CPU1, 0 )	  
@@ -215,6 +208,6 @@ public class homerun
 		
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_homerun	   = new GameDriver("1988"	,"homerun"	,"homerun.java"	,rom_homerun,null	,machine_driver_homerun	,input_ports_homerun	,null	,ROT0	,	"Jaleco", "Moero Pro Yakyuu Homerun",GAME_IMPERFECT_GRAPHICS)
+	GAMEX( 1988, homerun, 0, homerun, homerun, 0, ROT0, "Jaleco", "Moero Pro Yakyuu Homerun",GAME_IMPERFECT_GRAPHICS)
 	
 }

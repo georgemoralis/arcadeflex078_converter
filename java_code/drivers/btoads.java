@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,8 +41,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_btoads  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_btoads  = new MachineInitHandlerPtr() { public void handler(){
 		tlc34076_reset(6);
 	} };
 	
@@ -50,7 +49,7 @@ public class btoads
 	
 	/*************************************
 	 *
-	 *	Main . sound CPU communication
+	 *	Main -> sound CPU communication
 	 *
 	 *************************************/
 	
@@ -67,7 +66,7 @@ public class btoads
 	
 	static WRITE16_HANDLER( main_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			timer_set(TIME_NOW, data & 0xff, delayed_sound_w);
 	}
 	
@@ -76,9 +75,9 @@ public class btoads
 	{
 		int result = readinputport(4) & ~0x81;
 	
-		if (sound_to_main_ready != 0)
+		if (sound_to_main_ready)
 			result |= 0x01;
-		if (main_to_sound_ready != 0)
+		if (main_to_sound_ready)
 			result |= 0x80;
 		return result;
 	}
@@ -94,32 +93,28 @@ public class btoads
 	
 	/*************************************
 	 *
-	 *	Sound . main CPU communication
+	 *	Sound -> main CPU communication
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_to_main_data = data;
 		sound_to_main_ready = 1;
 	} };
 	
 	
-	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		main_to_sound_ready = 0;
 		return main_to_sound_data;
 	} };
 	
 	
-	public static ReadHandlerPtr sound_ready_to_send_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_ready_to_send_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_to_main_ready ? 0x00 : 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr sound_data_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_data_ready_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc() == 0xd50 && !main_to_sound_ready)
 			cpu_spinuntil_int();
 		return main_to_sound_ready ? 0x00 : 0x80;
@@ -133,9 +128,8 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if ((sound_int_state & 0x80) != 0)
+	public static InterruptHandlerPtr sound_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (sound_int_state & 0x80)
 		{
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 			sound_int_state = 0x00;
@@ -143,8 +137,7 @@ public class btoads
 	} };
 	
 	
-	public static WriteHandlerPtr sound_int_state_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_int_state_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (!(sound_int_state & 0x80) && (data & 0x80))
 			cpu_set_irq_line(1, 0, CLEAR_LINE);
 	
@@ -159,14 +152,12 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr bsmt_ready_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bsmt_ready_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x80;
 	} };
 	
 	
-	public static WriteHandlerPtr bsmt2000_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bsmt2000_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT16 reg = offset >> 8;
 		UINT16 val = ((offset & 0xff) << 8) | data;
 		BSMT2000_data_0_w(reg, val, 0);
@@ -284,7 +275,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_btoads = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_btoads = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( btoads )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -396,8 +387,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_btoads = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( btoads )
 	
 		MDRV_CPU_ADD(TMS34020, 40000000/TMS34020_CLOCK_DIVIDER)
 		MDRV_CPU_CONFIG(cpu_config)
@@ -426,9 +416,7 @@ public class btoads
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(BSMT2000, bsmt2000_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -460,8 +448,7 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_btoads  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_btoads  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
@@ -477,5 +464,5 @@ public class btoads
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_btoads	   = new GameDriver("1994"	,"btoads"	,"btoads.java"	,rom_btoads,null	,machine_driver_btoads	,input_ports_btoads	,init_btoads	,ROT0	,	"Rare",   "Battle Toads" )
+	GAME( 1994, btoads,   0,         btoads, btoads, btoads, ROT0, "Rare",   "Battle Toads" )
 }

@@ -12,7 +12,7 @@ TO DO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -102,7 +102,7 @@ public class ajax
 	};
 	
 	
-	static InputPortPtr input_ports_ajax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ajax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ajax )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -231,8 +231,7 @@ public class ajax
 		0	/ 2MBANK
 	*/
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_A, bank_B;
 	
 		/* banks # for the 007232 (chip 1) */
@@ -252,8 +251,7 @@ public class ajax
 		K007232_set_volume(0,1,0,(v & 0x0f) * 0x11);
 	}
 	
-	public static WriteHandlerPtr k007232_extvol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr k007232_extvol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* channel A volume (mono) */
 		K007232_set_volume(1,0,(data & 0x0f) * 0x11/2,(data & 0x0f) * 0x11/2);
 	} };
@@ -276,8 +274,7 @@ public class ajax
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ajax = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ajax )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* 12/4 MHz*/
@@ -309,9 +306,7 @@ public class ajax
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -424,15 +419,14 @@ public class ajax
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_ajax  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ajax  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_ajax	   = new GameDriver("1987"	,"ajax"	,"ajax.java"	,rom_ajax,null	,machine_driver_ajax	,input_ports_ajax	,init_ajax	,ROT90	,	"Konami", "Ajax" )
-	public static GameDriver driver_typhoon	   = new GameDriver("1987"	,"typhoon"	,"ajax.java"	,rom_typhoon,driver_ajax	,machine_driver_ajax	,input_ports_ajax	,init_ajax	,ROT90	,	"Konami", "Typhoon" )
-	public static GameDriver driver_ajaxj	   = new GameDriver("1987"	,"ajaxj"	,"ajax.java"	,rom_ajaxj,driver_ajax	,machine_driver_ajax	,input_ports_ajax	,init_ajax	,ROT90	,	"Konami", "Ajax (Japan)" )
+	GAME( 1987, ajax,    0,    ajax, ajax, ajax, ROT90, "Konami", "Ajax" )
+	GAME( 1987, typhoon, ajax, ajax, ajax, ajax, ROT90, "Konami", "Typhoon" )
+	GAME( 1987, ajaxj,   ajax, ajax, ajax, ajax, ROT90, "Konami", "Ajax (Japan)" )
 }

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -76,8 +76,7 @@ public class pulsar
 	
 	static int port1State = 0;
 	
-	public static WriteHandlerPtr pulsar_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pulsar_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bitsChanged;
 		int bitsGoneHigh;
 		int bitsGoneLow;
@@ -89,45 +88,44 @@ public class pulsar
 	
 		port1State = data;
 	
-		if ((bitsGoneLow & OUT_PORT_1_CLANG) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_CLANG )
 		{
 			PLAY( SND_CLANG, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_KEY) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_KEY )
 		{
 			PLAY( SND_KEY, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_ALIENHIT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_ALIENHIT )
 		{
 			PLAY( SND_ALIENHIT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_PHIT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_PHIT )
 		{
 			PLAY( SND_PHIT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_ASHOOT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_ASHOOT )
 		{
 			PLAY( SND_ASHOOT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_PSHOOT) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_PSHOOT )
 		{
 			PLAY( SND_PSHOOT, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_1_BONUS) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_BONUS )
 		{
 			PLAY( SND_BONUS, 0 );
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr pulsar_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pulsar_sh_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int port2State = 0;
 		int bitsChanged;
 		int bitsGoneHigh;
@@ -140,39 +138,39 @@ public class pulsar
 	
 		port2State = data;
 	
-		if ((bitsGoneLow & OUT_PORT_2_SIZZLE) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_SIZZLE )
 		{
 			PLAY( SND_SIZZLE, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_GATE) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_GATE )
 		{
 			sample_start( SND_CLANG, SND_GATE, 0 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_2_GATE) != 0)
+		if ( bitsGoneHigh & OUT_PORT_2_GATE )
 		{
 			STOP( SND_CLANG );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_BIRTH) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_BIRTH )
 		{
 			PLAY( SND_BIRTH, 0 );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_HBEAT) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_HBEAT )
 		{
 			PLAY( SND_HBEAT, 1 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_2_HBEAT) != 0)
+		if ( bitsGoneHigh & OUT_PORT_2_HBEAT )
 		{
 			STOP( SND_HBEAT );
 		}
 	
-		if ((bitsGoneLow & OUT_PORT_2_MOVMAZE) != 0)
+		if ( bitsGoneLow & OUT_PORT_2_MOVMAZE )
 		{
 			PLAY( SND_MOVMAZE, 1 );
 		}
-		if ((bitsGoneHigh & OUT_PORT_2_MOVMAZE) != 0)
+		if ( bitsGoneHigh & OUT_PORT_2_MOVMAZE )
 		{
 			STOP( SND_MOVMAZE );
 		}

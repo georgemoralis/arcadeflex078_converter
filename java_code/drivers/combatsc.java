@@ -119,7 +119,7 @@ e000-e001	YM2203
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -134,8 +134,7 @@ public class combatsc
 	
 	
 	
-	public static WriteHandlerPtr combasc_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* b7-b3: unused? */
 		/* b1: coin counter 2 */
 		/* b0: coin counter 1 */
@@ -144,8 +143,7 @@ public class combatsc
 		coin_counter_w(1,data & 0x02);
 	} };
 	
-	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr trackball_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static UINT8 pos[4],sign[4];
 	
 		if (offset == 0)
@@ -183,57 +181,49 @@ public class combatsc
 	/* the protection is a simple multiply */
 	static int prot[2];
 	
-	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		prot[offset] = data;
 	} };
-	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ((prot[0] * prot[1]) >> (offset * 8)) & 0xff;
 	} };
-	public static WriteHandlerPtr protection_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0x3f is written here every time before accessing the other registers */
 	} };
 	
 	
 	/****************************************************************************/
 	
-	public static WriteHandlerPtr combasc_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr combasc_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_play_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_start_w(0, data & 2);
 	} };
 	
-	public static WriteHandlerPtr combasc_voice_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_voice_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    UPD7759_reset_w(0,data & 1);
 	} };
 	
-	public static WriteHandlerPtr combasc_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr combasc_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* unknown. always write 0 */
 	} };
 	
 	static mame_timer *combasc_interleave_timer;
 	
-	static public static ReadHandlerPtr combasc_YM2203_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr combasc_YM2203_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int boost = 1;
 		int status = YM2203Read(0,0);
 	
 		if (activecpu_get_pc() == 0x334)
 		{
-			if (boost != 0)
+			if (boost)
 			{
 				boost = 0;
 				timer_adjust(combasc_interleave_timer, TIME_NOW, 0, TIME_IN_CYCLES(80,1));
 			}
-			else if ((status & 2) != 0)
+			else if (status & 2)
 			{
 				boost = 1;
 				timer_adjust(combasc_interleave_timer, TIME_NOW, 0, TIME_NEVER);
@@ -394,7 +384,7 @@ public class combatsc
 		PORT_DIPSETTING(    0x90, DEF_STR( "1C_7C") ); \
 		PORT_DIPSETTING(    0x00, "coin 2 invalidity" );
 	
-	static InputPortPtr input_ports_combasc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_combasc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( combasc )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -469,7 +459,7 @@ public class combatsc
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_combasct = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_combasct = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( combasct )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -539,7 +529,7 @@ public class combatsc
 		PORT_ANALOG( 0xff, 0x00, IPT_TRACKBALL_X | IPF_PLAYER2, 10, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_combascb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_combascb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( combascb )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -670,8 +660,7 @@ public class combatsc
 	
 	
 	/* combat school (original) */
-	public static MachineHandlerPtr machine_driver_combasc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( combasc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)	/* 3 MHz? */
@@ -703,13 +692,10 @@ public class combatsc
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* combat school (bootleg on different hardware) */
-	public static MachineHandlerPtr machine_driver_combascb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( combascb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)	/* 3 MHz? */
@@ -741,9 +727,7 @@ public class combatsc
 		/* We are using the original sound subsystem */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -906,21 +890,18 @@ public class combatsc
 		combasc_interleave_timer = timer_alloc(NULL);
 	}
 	
-	public static DriverInitHandlerPtr init_combasct  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_combasct  = new DriverInitHandlerPtr() { public void handler(){
 		combasc_init_common();
 	} };
 	
-	public static DriverInitHandlerPtr init_combasc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_combasc  = new DriverInitHandlerPtr() { public void handler(){
 		/* joystick instead of trackball */
 		install_mem_read_handler(0,0x0404,0x0404,input_port_4_r);
 	
 		combasc_init_common();
 	} };
 	
-	public static DriverInitHandlerPtr init_combascb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_combascb  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *gfx;
 		int i;
 	
@@ -937,9 +918,9 @@ public class combatsc
 	
 	
 	
-	public static GameDriver driver_combasc	   = new GameDriver("1988"	,"combasc"	,"combatsc.java"	,rom_combasc,null	,machine_driver_combasc	,input_ports_combasc	,init_combasc	,ROT0	,	"Konami", "Combat School (joystick)" )
-	public static GameDriver driver_combasct	   = new GameDriver("1987"	,"combasct"	,"combatsc.java"	,rom_combasct,driver_combasc	,machine_driver_combasc	,input_ports_combasct	,init_combasct	,ROT0	,	"Konami", "Combat School (trackball)" )
-	public static GameDriver driver_combascj	   = new GameDriver("1987"	,"combascj"	,"combatsc.java"	,rom_combascj,driver_combasc	,machine_driver_combasc	,input_ports_combasct	,init_combasct	,ROT0	,	"Konami", "Combat School (Japan trackball)" )
-	public static GameDriver driver_bootcamp	   = new GameDriver("1987"	,"bootcamp"	,"combatsc.java"	,rom_bootcamp,driver_combasc	,machine_driver_combasc	,input_ports_combasct	,init_combasct	,ROT0	,	"Konami", "Boot Camp" )
-	public static GameDriver driver_combascb	   = new GameDriver("1988"	,"combascb"	,"combatsc.java"	,rom_combascb,driver_combasc	,machine_driver_combascb	,input_ports_combascb	,init_combascb	,ROT0	,	"bootleg", "Combat School (bootleg)", GAME_IMPERFECT_COLORS )
+	GAME( 1988, combasc,  0,       combasc,  combasc,  combasc,  ROT0, "Konami", "Combat School (joystick)" )
+	GAME( 1987, combasct, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Combat School (trackball)" )
+	GAME( 1987, combascj, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Combat School (Japan trackball)" )
+	GAME( 1987, bootcamp, combasc, combasc,  combasct, combasct, ROT0, "Konami", "Boot Camp" )
+	GAMEX(1988, combascb, combasc, combascb, combascb, combascb, ROT0, "bootleg", "Combat School (bootleg)", GAME_IMPERFECT_COLORS )
 }

@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms34010;
 
@@ -111,7 +111,7 @@ public class _34010dsm
 	static void print_constant_1_32(void)
 	{
 		UINT8 constant = (op >> 5) & 0x1f;
-		if (constant == 0) constant = 0x20;
+		if (!constant) constant = 0x20;
 	
 		sprintf(temp, "%Xh", constant);
 		strcat(buffer, temp);
@@ -156,7 +156,7 @@ public class _34010dsm
 	static void print_relative_5bit(void)
 	{
 		INT8 ls = (INT8)((op >> 5) & 0x1f);
-		if ((op & 0x0400) != 0) ls = -ls;
+		if (op & 0x0400) ls = -ls;
 	
 		sprintf(temp, "%Xh", PC + 16 + (ls << 4));
 		strcat(buffer, temp);
@@ -215,7 +215,7 @@ public class _34010dsm
 		{
 			int moved;
 	
-			if (rev != 0)
+			if (rev)
 			{
 				moved = l & 0x8000;
 				l <<= 1;
@@ -226,7 +226,7 @@ public class _34010dsm
 				l >>= 1;
 			}
 	
-			if (moved != 0)
+			if (moved)
 			{
 				if (first == -1)
 				{
@@ -273,21 +273,21 @@ public class _34010dsm
 				break;
 	
 			case 0x0040:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "IDLE   ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0080:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "MWAIT  ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x00e0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "BLMOVE %d,%d", (op >> 1) & 1, op & 1);
 				else
 					bad = 1;
@@ -340,21 +340,21 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0040:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "SETCSP ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0060:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "SETCDP ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0080:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "RPIX   ");
 					print_des_reg();
@@ -364,7 +364,7 @@ public class _34010dsm
 				break;
 	
 			case 0x00a0:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "EXGPS  ");
 					print_des_reg();
@@ -374,7 +374,7 @@ public class _34010dsm
 				break;
 	
 			case 0x00c0:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "GETPS  ");
 					print_des_reg();
@@ -384,7 +384,7 @@ public class _34010dsm
 				break;
 	
 			case 0x00e0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "SETCMP ");
 				else
 					bad = 1;
@@ -619,7 +619,7 @@ public class _34010dsm
 				break;
 	
 			case 0x01e0:
-				if ((op & 0x200) != 0)
+				if (op & 0x200)
 				{
 					sprintf (buffer, "MOVE   @");
 					print_long_parm();
@@ -645,14 +645,14 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0000:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "TRAPL  ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0020:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					UINT32 x;
 					PARAM_LONG(x);
@@ -667,21 +667,21 @@ public class _34010dsm
 				break;
 	
 			case 0x0040:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "VBLT   B,L");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0060:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf(buffer, "RETM   ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x00e0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "CLIP   ");
 				else
 					bad = 1;
@@ -702,7 +702,7 @@ public class _34010dsm
 	
 			case 0x0160:
 				sprintf (buffer, "RETS   ");
-				if ((op & 0x1f) != 0)
+				if (op & 0x1f)
 				{
 					sprintf(temp, "%Xh", op & 0x1f);
 					strcat(buffer, temp);
@@ -745,28 +745,28 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0000:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "VLCOL  ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0020:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "PFILL  XY");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0040:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "VFILL  L");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0060:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "CVMXYL ");
 					print_des_reg();
@@ -776,7 +776,7 @@ public class _34010dsm
 				break;
 	
 			case 0x0080:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "CVDXYL ");
 					print_des_reg();
@@ -786,14 +786,14 @@ public class _34010dsm
 				break;
 	
 			case 0x00a0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "FPIXEQ ");
 				else
 					bad = 1;
 				break;
 	
 			case 0x00c0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "FPIXNE ");
 				else
 					bad = 1;
@@ -865,7 +865,7 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0000:
-				if (is_34020 != 0)
+				if (is_34020)
 				{
 					sprintf (buffer, "ADDXYI ");
 		            print_long_parm();
@@ -877,7 +877,7 @@ public class _34010dsm
 				break;
 	
 			case 0x0040:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "LINIT  ");
 				else
 					bad = 1;
@@ -939,14 +939,14 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0000:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "PIXBLT L,M,L");
 				else
 					bad = 1;
 				break;
 	
 			case 0x00e0:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "TFILL  XY");
 				else
 					bad = 1;
@@ -1088,7 +1088,7 @@ public class _34010dsm
 	
 		case 0x3400:
 		case 0x3600:
-			if (is_34020 != 0)
+			if (is_34020)
 			{
 				sprintf (buffer, "CMPK   ");
 				print_constant_1_32();
@@ -1278,7 +1278,7 @@ public class _34010dsm
 	
 	
 		case 0x7a00:
-			if (is_34020 != 0)
+			if (is_34020)
 			{
 				sprintf (buffer, "RMO    ");
 				print_src_des_reg();
@@ -1288,7 +1288,7 @@ public class _34010dsm
 			break;
 	
 		case 0x7e00:
-			if (is_34020 != 0)
+			if (is_34020)
 			{
 				sprintf (buffer, "SWAPF  *");
 				print_src_des_reg();
@@ -1566,7 +1566,7 @@ public class _34010dsm
 			break;
 	
 		case 0xd800:
-			if (is_34020 != 0)
+			if (is_34020)
 			{
 				UINT32 x;
 				PARAM_WORD(x);
@@ -1581,14 +1581,14 @@ public class _34010dsm
 			switch (subop)
 			{
 			case 0x0000:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "FLINE   0");
 				else
 					bad = 1;
 				break;
 	
 			case 0x0080:
-				if (is_34020 != 0)
+				if (is_34020)
 					sprintf (buffer, "FLINE   1");
 				else
 					bad = 1;
@@ -1638,7 +1638,7 @@ public class _34010dsm
 	
 	
 		case 0xea00:
-			if (is_34020 != 0)
+			if (is_34020)
 			{
 				sprintf (buffer, "CVSXYL ");
 				print_src_des_reg();
@@ -1717,7 +1717,7 @@ public class _34010dsm
 			bad = 1;
 		}
 	
-		if (bad != 0)
+		if (bad)
 		{
 			sprintf (buffer, "DW     %04Xh", op & 0xffff);
 		}

@@ -26,7 +26,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,8 +39,7 @@ public class ddragon3
 	
 	/* Read/Write Handlers */
 	
-	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr oki_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, (data & 1) * 0x40000);
 	} };
 	
@@ -202,7 +201,7 @@ public class ddragon3
 	
 	/* Input Ports */
 	
-	static InputPortPtr input_ports_ddragon3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddragon3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddragon3 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -281,7 +280,7 @@ public class ddragon3
 		PORT_BIT( 0xff00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ddrago3b = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddrago3b = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddrago3b )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -362,7 +361,7 @@ public class ddragon3
 		PORT_BIT( 0xfc00, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ctribe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ctribe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ctribe )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -504,19 +503,18 @@ public class ddragon3
 	
 	/* Interrupt Generators */
 	
-	public static InterruptHandlerPtr ddragon3_cpu_interrupt = new InterruptHandlerPtr() {public void handler() { /* 6:0x177e - 5:0x176a */
+	public static InterruptHandlerPtr ddragon3_cpu_interrupt = new InterruptHandlerPtr() {public void handler() /* 6:0x177e - 5:0x176a */
 		if( cpu_getiloops() == 0 ){
 			cpu_set_irq_line(0, 6, HOLD_LINE);  /* VBlank */
-		}
+		} };
 		else {
 			cpu_set_irq_line(0, 5, HOLD_LINE); /* Input Ports */
 		}
-	} };
+	}
 	
 	/* Machine Drivers */
 	
-	public static MachineHandlerPtr machine_driver_ddragon3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddragon3 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 12000000) // Guess
 		MDRV_CPU_MEMORY(readmem, writemem)
@@ -543,22 +541,16 @@ public class ddragon3
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ddrago3b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ddrago3b )
 		MDRV_IMPORT_FROM(ddragon3)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(dd3b_readmem, dd3b_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ctribe = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ctribe )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* Guess */
 		MDRV_CPU_MEMORY(ctribe_readmem,ctribe_writemem)
@@ -585,9 +577,7 @@ public class ddragon3
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROMs */
 	
@@ -754,8 +744,8 @@ public class ddragon3
 	
 	/* Game Drivers */
 	
-	public static GameDriver driver_ddragon3	   = new GameDriver("1990"	,"ddragon3"	,"ddragon3.java"	,rom_ddragon3,null	,machine_driver_ddragon3	,input_ports_ddragon3	,null	,ROT0	,	"Technos", "Double Dragon 3 - The Rosetta Stone (US)" )
-	public static GameDriver driver_ddrago3b	   = new GameDriver("1990"	,"ddrago3b"	,"ddragon3.java"	,rom_ddrago3b,driver_ddragon3	,machine_driver_ddrago3b	,input_ports_ddrago3b	,null	,ROT0	,	"bootleg", "Double Dragon 3 - The Rosetta Stone (bootleg)" )
-	public static GameDriver driver_ctribe	   = new GameDriver("1990"	,"ctribe"	,"ddragon3.java"	,rom_ctribe,null	,machine_driver_ctribe	,input_ports_ctribe	,null	,ROT0	,	"Technos", "The Combatribes (US)" )
-	public static GameDriver driver_ctribeb	   = new GameDriver("1990"	,"ctribeb"	,"ddragon3.java"	,rom_ctribeb,driver_ctribe	,machine_driver_ctribe	,input_ports_ctribe	,null	,ROT0	,	"bootleg", "The Combatribes (bootleg)" )
+	GAME( 1990, ddragon3, 0,		ddragon3, ddragon3, 0, ROT0, "Technos", "Double Dragon 3 - The Rosetta Stone (US)" )
+	GAME( 1990, ddrago3b, ddragon3, ddrago3b, ddrago3b, 0, ROT0, "bootleg", "Double Dragon 3 - The Rosetta Stone (bootleg)" )
+	GAME( 1990, ctribe,   0,		ctribe,   ctribe,	0, ROT0, "Technos", "The Combatribes (US)" )
+	GAME( 1990, ctribeb,  ctribe,	ctribe,   ctribe,	0, ROT0, "bootleg", "The Combatribes (bootleg)" )
 }

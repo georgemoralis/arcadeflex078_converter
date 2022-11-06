@@ -54,7 +54,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,8 +69,7 @@ public class copsnrob
 	 *
 	 *************************************/
 	
-	static public static PaletteInitHandlerPtr palette_init_copsnrob  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_copsnrob  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* black */
 		palette_set_color(1,0xff,0xff,0xff);  /* white */
 	} };
@@ -140,7 +139,7 @@ public class copsnrob
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_copsnrob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_copsnrob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( copsnrob )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_VBLANK );
 	
@@ -260,8 +259,7 @@ public class copsnrob
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_copsnrob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( copsnrob )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,14318180/16)		/* 894886.25 kHz */
@@ -279,9 +277,7 @@ public class copsnrob
 	
 		MDRV_PALETTE_INIT(copsnrob)
 		MDRV_VIDEO_UPDATE(copsnrob)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -330,8 +326,7 @@ public class copsnrob
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_copsnrob  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_copsnrob  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(copsnrob_overlay);
 	} };
 	
@@ -343,5 +338,5 @@ public class copsnrob
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_copsnrob	   = new GameDriver("1976"	,"copsnrob"	,"copsnrob.java"	,rom_copsnrob,null	,machine_driver_copsnrob	,input_ports_copsnrob	,init_copsnrob	,ROT0	,	"Atari", "Cops'n Robbers", GAME_NO_SOUND )
+	GAMEX( 1976, copsnrob, 0, copsnrob, copsnrob, copsnrob, ROT0, "Atari", "Cops'n Robbers", GAME_NO_SOUND )
 }

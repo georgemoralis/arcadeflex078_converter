@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -43,25 +43,24 @@ public class thunderj
 		int newstate = 0;
 		int newstate2 = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate |= 4, newstate2 |= 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	
-		if (newstate2 != 0)
+		if (newstate2)
 			cpu_set_irq_line(1, newstate2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_thunderj  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_thunderj  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);
 		atarigen_interrupt_reset(update_interrupts);
@@ -84,8 +83,8 @@ public class thunderj
 	{
 		int result = readinputport(2);
 	
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0004;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0008;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x0004;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0008;
 		result ^= 0x0010;
 	
 		return result;
@@ -95,10 +94,10 @@ public class thunderj
 	static WRITE16_HANDLER( latch_w )
 	{
 		/* reset extra CPU */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* 0 means hold CPU 2's reset low */
-			if ((data & 1) != 0)
+			if (data & 1)
 				cpu_set_reset_line(1, CLEAR_LINE);
 			else
 				cpu_set_reset_line(1, ASSERT_LINE);
@@ -266,7 +265,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_thunderj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thunderj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thunderj )
 		PORT_START(); 		/* 260000 */
 		PORT_BIT( 0xffff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
@@ -348,8 +347,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_thunderj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thunderj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -377,9 +375,7 @@ public class thunderj
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -465,8 +461,7 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_thunderj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_thunderj  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(2, 3, 2, 0x0002);
 		atarigen_init_6502_speedup(2, 0x4159, 0x4171);
@@ -480,5 +475,5 @@ public class thunderj
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_thunderj	   = new GameDriver("1990"	,"thunderj"	,"thunderj.java"	,rom_thunderj,null	,machine_driver_thunderj	,input_ports_thunderj	,init_thunderj	,ROT0	,	"Atari Games", "ThunderJaws" )
+	GAME( 1990, thunderj, 0, thunderj, thunderj, thunderj, ROT0, "Atari Games", "ThunderJaws" )
 }

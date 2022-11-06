@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,8 +40,7 @@ public class gunsmoke
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_gunsmoke  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gunsmoke  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -99,8 +98,7 @@ public class gunsmoke
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_gunsmoke  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gunsmoke  = new VideoStartHandlerPtr() { public int handler(){
 		if ((bgbitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
 	
@@ -114,8 +112,7 @@ public class gunsmoke
 	
 	
 	
-	public static WriteHandlerPtr gunsmoke_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gunsmoke_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -139,8 +136,7 @@ public class gunsmoke
 	
 	
 	
-	public static WriteHandlerPtr gunsmoke_d806_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gunsmoke_d806_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-2 select the sprite 3 bank */
 		sprite3bank = data & 0x07;
 	
@@ -160,24 +156,23 @@ public class gunsmoke
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_gunsmoke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gunsmoke  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 		int bg_scrolly, bg_scrollx;
 		unsigned char *p=memory_region(REGION_GFX4);
 		int top,left;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset (bgmap, 0xff, sizeof (bgmap));
 	
 	
-		if (bgon != 0)
+		if (bgon)
 		{
 			bg_scrolly = gunsmoke_bg_scrolly[0] + 256 * gunsmoke_bg_scrolly[1];
 			bg_scrollx = gunsmoke_bg_scrollx[0];
 			offs = 16 * ((bg_scrolly>>5)+8)+2*(bg_scrollx>>5) ;
-			if ((bg_scrollx & 0x80) != 0) offs -= 0x10;
+			if (bg_scrollx & 0x80) offs -= 0x10;
 	
 			top = 8 - (bg_scrolly>>5) % 9;
 			left = (bg_scrollx>>5) % 9;
@@ -210,7 +205,7 @@ public class gunsmoke
 						flipx = p[offset+1] & 0x40;
 						flipy = p[offset+1] & 0x80;
 	
-						if (flip_screen != 0)
+						if (flip_screen())
 						{
 							tx = 8 - tx;
 							ty = 8 - ty;
@@ -234,7 +229,7 @@ public class gunsmoke
 				xscroll = (top*32-bg_scrolly);
 				yscroll = -(left*32+bg_scrollx);
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					xscroll = 256 - xscroll;
 					yscroll = 256 - yscroll;
@@ -248,7 +243,7 @@ public class gunsmoke
 	
 	
 	
-		if (objon != 0)
+		if (objon)
 		{
 			/* Draw the sprites. */
 			for (offs = spriteram_size[0] - 32;offs >= 0;offs -= 32)
@@ -263,7 +258,7 @@ public class gunsmoke
 	 			sy = spriteram.read(offs + 2);
 				flipx = 0;
 				flipy = spriteram.read(offs + 1)& 0x10;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -281,14 +276,14 @@ public class gunsmoke
 		}
 	
 	
-		if (chon != 0)
+		if (chon)
 		{
 			/* draw the frontmost playfield. They are characters, but draw them as sprites */
 			for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 			{
 				sx = offs % 32;
 				sy = offs / 32;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

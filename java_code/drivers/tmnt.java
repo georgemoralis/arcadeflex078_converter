@@ -66,7 +66,7 @@ Updates:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -109,9 +109,9 @@ public class tmnt
 	{
 		/* it seems that a word write is supposed to affect only the MSB. The */
 		/* "ROUND 1" text in punkshtj goes lost otherwise. */
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K052109_w(offset,(data >> 8) & 0xff);
-		else if (ACCESSING_LSB != 0)
+		else if (ACCESSING_LSB)
 			K052109_w(offset + 0x2000,data & 0xff);
 	}
 	
@@ -129,7 +129,7 @@ public class tmnt
 	/* A1, A5 and A6 don't go to the 053245. */
 	static READ16_HANDLER( K053245_scattered_word_r )
 	{
-		if ((offset & 0x0031) != 0)
+		if (offset & 0x0031)
 			return spriteram16[offset];
 		else
 		{
@@ -160,14 +160,13 @@ public class tmnt
 	{
 		offset &= ~1;	/* handle mirror address */
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K053244_w(offset,(data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053244_w(offset + 1,data & 0xff);
 	}
 	
-	static INTERRUPT_GEN(cbj_interrupt)
-	{
+	public static InterruptHandlerPtr cbj_interrupt = new InterruptHandlerPtr() {public void handler(){
 		// cheap IRQ multiplexing to avoid losing sound IRQs
 		switch (cpu_getiloops())
 		{
@@ -176,21 +175,19 @@ public class tmnt
 				break;
 	
 			default:
-				if (cbj_snd_irqlatch != 0)
+				if (cbj_snd_irqlatch)
 					cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
 				break;
 		}
-	}
+	} };
 	
-	public static InterruptHandlerPtr punkshot_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0) irq4_line_hold();
+	public static InterruptHandlerPtr punkshot_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled()) irq4_line_hold();
 	
 	} };
 	
-	public static InterruptHandlerPtr lgtnfght_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0) irq5_line_hold();
+	public static InterruptHandlerPtr lgtnfght_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled()) irq5_line_hold();
 	
 	} };
 	
@@ -198,7 +195,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( tmnt_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -206,7 +203,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return 0x80;
 	}
 	
@@ -214,7 +211,7 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return offset ? 0xfe : 0x00;
 	}
 	
@@ -222,16 +219,16 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset) << 8;
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset) << 8;
 		else return 0;
 	}
 	
 	static WRITE16_HANDLER( glfgreat_sound_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K053260_0_w(offset, (data >> 8) & 0xff);
 	
-		if (offset != 0)
+		if (offset)
 			cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	}
 	
@@ -242,14 +239,14 @@ public class tmnt
 	
 	static WRITE16_HANDLER( prmrsocr_sound_cmd_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xff;
 			if (offset == 0) soundlatch_w(0,data);
 			else soundlatch2_w(0,data);
 	
 			/* If the sound CPU is not running, make the tests pass anyway */
-			if (offset == 0 && !Machine.sample_rate)
+			if (offset == 0 && !Machine->sample_rate)
 			{
 				if (data == 0xfe)	/* ROM & RAM test */
 					soundlatch3_w(0,0x0f);
@@ -264,8 +261,7 @@ public class tmnt
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	}
 	
-	public static WriteHandlerPtr prmrsocr_s_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prmrsocr_s_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 7) * 0x4000);
@@ -276,22 +272,20 @@ public class tmnt
 	{
 		/* If the sound CPU is running, read the status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0) 	return K053260_0_r(2 + offset);
+		if (Machine->sample_rate != 0) 	return K053260_0_r(2 + offset);
 		else return offset ? 0x00 : 0x80;
 	}
 	
-	public static ReadHandlerPtr tmnt_sres_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tmnt_sres_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tmnt_soundlatch;
 	} };
 	
-	public static WriteHandlerPtr tmnt_sres_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tmnt_sres_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 resets the UPD7795C sound chip */
 		UPD7759_reset_w(0, data & 2);
 	
 		/* bit 2 plays the title music */
-		if ((data & 0x04) != 0)
+		if (data & 0x04)
 		{
 			if (!sample_playing(0))	sample_start(0,0,0);
 		}
@@ -308,19 +302,19 @@ public class tmnt
 		struct GameSamples *samples;
 	
 	
-		if ((Machine.samples = auto_malloc(sizeof(struct GameSamples))) == NULL)
+		if ((Machine->samples = auto_malloc(sizeof(struct GameSamples))) == NULL)
 			return 1;
 	
-		samples = Machine.samples;
+		samples = Machine->samples;
 	
-		if ((samples.sample[0] = auto_malloc(sizeof(struct GameSample) + (0x40000)*sizeof(short))) == NULL)
+		if ((samples->sample[0] = auto_malloc(sizeof(struct GameSample) + (0x40000)*sizeof(short))) == NULL)
 			return 1;
 	
-		samples.sample[0].length = 0x40000*2;
-		samples.sample[0].smpfreq = 20000;	/* 20 kHz */
-		samples.sample[0].resolution = 16;
-		dest = (signed short *)samples.sample[0].data;
-		samples.total = 1;
+		samples->sample[0]->length = 0x40000*2;
+		samples->sample[0]->smpfreq = 20000;	/* 20 kHz */
+		samples->sample[0]->resolution = 16;
+		dest = (signed short *)samples->sample[0]->data;
+		samples->total = 1;
 	
 		/*	Sound sample for TMNT.D05 is stored in the following mode (ym3012 format):
 		 *
@@ -365,8 +359,7 @@ public class tmnt
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	sound_nmi_enabled = 1;
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
@@ -476,15 +469,14 @@ public class tmnt
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_eeprom  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_eeprom  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -502,7 +494,7 @@ public class tmnt
 		/* bit 3 is service button */
 		/* bit 6 is ??? VBLANK? OBJMPX? */
 		res = input_port_2_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -531,7 +523,7 @@ public class tmnt
 		/* bit 2 is VBLANK (???) */
 		/* bit 7 is service button */
 		res = EEPROM_read_bit() | input_port_3_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0x7f;
@@ -550,7 +542,7 @@ public class tmnt
 		/* bit 2 is VBLANK (???) */
 		/* bit 3 is service button */
 		res = EEPROM_read_bit() | input_port_3_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -561,7 +553,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( detatwin_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -586,15 +578,14 @@ public class tmnt
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_thndrx2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_thndrx2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&thndrx2_eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -609,7 +600,7 @@ public class tmnt
 		int res;
 	
 		res = input_port_0_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7ff;
@@ -635,7 +626,7 @@ public class tmnt
 	{
 		static int last;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/* bit 0 is data */
 			/* bit 1 is cs (active low) */
@@ -661,7 +652,7 @@ public class tmnt
 		int res;
 	
 		res = input_port_0_word_r(0,0);
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xfdff;
@@ -678,12 +669,12 @@ public class tmnt
 	
 	static WRITE16_HANDLER( prmrsocr_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			prmrsocr_122000_w(offset,data,mem_mask);
 		}
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			/* bit 8 is data */
 			/* bit 9 is cs (active low) */
@@ -701,7 +692,7 @@ public class tmnt
 	
 	static WRITE16_HANDLER( cbj_snd_w )
 	{
-		if (offset != 0)
+		if (offset)
 		{
 			YM2151_data_port_0_w(0, data>>8);
 		}
@@ -1070,10 +1061,10 @@ public class tmnt
 		i = mod[0];
 		attr2 |= i & 0x0060;	// priority
 		keepaspect = (i & 0x0014) == 0x0014;
-		if ((i & 0x8000) != 0) { attr1 |= 0x8000; }	// active
-		if (keepaspect != 0)	{ attr1 |= 0x4000; }	// keep aspect
+		if (i & 0x8000) { attr1 |= 0x8000; }	// active
+		if (keepaspect)	{ attr1 |= 0x4000; }	// keep aspect
 	//	if (i & 0x????) { attr1 ^= 0x2000; yoffs = -yoffs; }	// flip y (not used?)
-		if ((i & 0x4000) != 0) { attr1 ^= 0x1000; xoffs = -xoffs; }	// flip x
+		if (i & 0x4000) { attr1 ^= 0x1000; xoffs = -xoffs; }	// flip x
 	
 		xmod = (INT16)mod[6];	// global x
 		ymod = (INT16)mod[7];	// global y
@@ -1108,7 +1099,7 @@ public class tmnt
 			 0x60 | 0x40/0x2f
 			 0x7b | 0x40/0x14
 		*/
-		if (xlock == 0)
+		if (!xlock)
 		{
 			i = xzoom - 0x4f00;
 			if (i > 0)
@@ -1122,7 +1113,7 @@ public class tmnt
 				xoffs = (i > 0) ? (xoffs * i / 0x4f00) : 0;
 			}
 		}
-		if (ylock == 0)
+		if (!ylock)
 		{
 			i = yzoom - 0x4f00;
 			if (i > 0)
@@ -1137,7 +1128,7 @@ public class tmnt
 			}
 	
 		}
-		if (zlock == 0) yoffs += zmod;
+		if (!zlock) yoffs += zmod;
 		xoffs += xmod;
 		yoffs += ymod;
 	
@@ -1496,12 +1487,10 @@ public class tmnt
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr K054539_0_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K054539_0_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K054539_0_r(0x200+offset);
 	} };
-	public static WriteHandlerPtr K054539_0_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K054539_0_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K054539_0_w(0x200+offset,data);
 	} };
 	
@@ -1551,7 +1540,7 @@ public class tmnt
 		PORT_BIT(  0x8000, IP_ACTIVE_LOW, start );
 	
 	
-	static InputPortPtr input_ports_mia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mia )
 		PORT_START();       /* COINS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1636,7 +1625,7 @@ public class tmnt
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tmnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tmnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tmnt )
 		PORT_START();       /* COINS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1716,7 +1705,7 @@ public class tmnt
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tmnt2p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tmnt2p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tmnt2p )
 		PORT_START();       /* COINS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1813,7 +1802,7 @@ public class tmnt
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_punkshot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_punkshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( punkshot )
 		PORT_START(); 	/* DSW1/DSW2 */
 		PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "5C_1C") );
@@ -1899,7 +1888,7 @@ public class tmnt
 		KONAMI_PLAYERS_INPUT_MSB( IPF_PLAYER4, IPT_UNKNOWN, IPT_UNKNOWN )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_punksht2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_punksht2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( punksht2 )
 		PORT_START(); 	/* DSW1/DSW2 */
 		PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "5C_1C") );
@@ -1981,7 +1970,7 @@ public class tmnt
 		KONAMI_PLAYERS_INPUT_MSB( IPF_PLAYER2, IPT_UNKNOWN, IPT_UNKNOWN )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lgtnfght = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lgtnfght = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lgtnfght )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2071,7 +2060,7 @@ public class tmnt
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_detatwin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_detatwin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( detatwin )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_UNKNOWN )
 	
@@ -2094,7 +2083,7 @@ public class tmnt
 		PORT_BIT( 0xfc, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_glfgreat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_glfgreat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( glfgreat )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_BUTTON3, IPT_BUTTON4 | IPF_PLAYER1 )
 		KONAMI_PLAYERS_INPUT_MSB( IPF_PLAYER2, IPT_BUTTON3, IPT_BUTTON4 | IPF_PLAYER2 )
@@ -2188,7 +2177,7 @@ public class tmnt
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ssriders = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssriders = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssriders )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1 )
 	
@@ -2215,7 +2204,7 @@ public class tmnt
 		PORT_BITX(0x80, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ssridr4p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssridr4p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssridr4p )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_UNKNOWN )
 	
@@ -2250,7 +2239,7 @@ public class tmnt
 	
 	/* Same as 'ssridr4p', but additional Start button for each player.
 	   COIN3, COIN4, SERVICE3 and SERVICE4 only have an effect in the "test mode". */
-	static InputPortPtr input_ports_ssrid4ps = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssrid4ps = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssrid4ps )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1 )
 	
@@ -2284,7 +2273,7 @@ public class tmnt
 	INPUT_PORTS_END(); }}; 
 	
 	/* Version for the bootleg, which has the service switch a little different */
-	static InputPortPtr input_ports_ssridbl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssridbl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssridbl )
 		PORT_START(); 	/* IN0 */
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1 )
 	
@@ -2317,7 +2306,7 @@ public class tmnt
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER4, IPT_UNKNOWN, IPT_START4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_qgakumon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qgakumon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qgakumon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );// Joystick control : Left
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER1 );// Joystick control : Right
@@ -2358,7 +2347,7 @@ public class tmnt
 		PORT_BITX(0x80, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thndrx2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thndrx2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thndrx2 )
 		PORT_START(); 
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1 )
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -2382,7 +2371,7 @@ public class tmnt
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_prmrsocr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_prmrsocr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( prmrsocr )
 		PORT_START(); 
 		KONAMI_PLAYERS_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1 )
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_SERVICE1 );
@@ -2508,8 +2497,7 @@ public class tmnt
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_cuebrckj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cuebrckj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz */
@@ -2531,12 +2519,9 @@ public class tmnt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface_cbj)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mia = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mia )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz */
@@ -2562,13 +2547,10 @@ public class tmnt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tmnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tmnt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz */
@@ -2597,13 +2579,10 @@ public class tmnt
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_punkshot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( punkshot )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* CPU is 68000/12, but this doesn't necessarily mean it's */
@@ -2630,13 +2609,10 @@ public class tmnt
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface_nmi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lgtnfght = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lgtnfght )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2663,13 +2639,10 @@ public class tmnt
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_detatwin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( detatwin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz */
@@ -2699,9 +2672,7 @@ public class tmnt
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface_nmi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2723,8 +2694,7 @@ public class tmnt
 		new GfxDecodeInfo( -1 )
 	};
 	
-	public static MachineHandlerPtr machine_driver_glfgreat = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( glfgreat )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* ? */
@@ -2751,9 +2721,7 @@ public class tmnt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K053260, glfgreat_k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static void sound_nmi(void)
@@ -2771,8 +2739,7 @@ public class tmnt
 		{ sound_nmi }
 	};
 	
-	public static MachineHandlerPtr machine_driver_prmrsocr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( prmrsocr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* ? */
@@ -2801,13 +2768,10 @@ public class tmnt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tmnt2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {//*
+	static MACHINE_DRIVER_START( tmnt2 ) //*
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz */
@@ -2840,13 +2804,10 @@ public class tmnt
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface_nmi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ssriders = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssriders )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz */
@@ -2875,13 +2836,10 @@ public class tmnt
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface_nmi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ssridersbl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssridersbl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* 16 MHz */
@@ -2905,12 +2863,9 @@ public class tmnt
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_thndrx2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thndrx2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz */
@@ -2939,9 +2894,7 @@ public class tmnt
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface_nmi)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -3855,14 +3808,12 @@ public class tmnt
 		ROM_LOAD( "101a06.1d",    0x0000, 0x200000, CRC(4f48e043) SHA1(f50e8642d9d3a028c243777640e7cd13da1abf86) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_gfx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gfx  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
-	public static DriverInitHandlerPtr init_mia  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mia  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *gfxdata;
 		int len;
 		int i,j,k,A,B;
@@ -3915,7 +3866,7 @@ public class tmnt
 		}
 	
 		temp = malloc(len);
-		if (temp == 0) return;	/* bad thing! */
+		if (!temp) return;	/* bad thing! */
 		memcpy(temp,gfxdata,len);
 		for (A = 0;A < len/4;A++)
 		{
@@ -3957,8 +3908,7 @@ public class tmnt
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tmnt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tmnt  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *gfxdata;
 		int len;
 		int i,j,k,A,B,entry;
@@ -4011,7 +3961,7 @@ public class tmnt
 		}
 	
 		temp = malloc(len);
-		if (temp == 0) return;	/* bad thing! */
+		if (!temp) return;	/* bad thing! */
 		memcpy(temp,gfxdata,len);
 		for (A = 0;A < len/4;A++)
 		{
@@ -4088,15 +4038,13 @@ public class tmnt
 		shuffle(buf + len,len);
 	}
 	
-	public static DriverInitHandlerPtr init_glfgreat  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_glfgreat  = new DriverInitHandlerPtr() { public void handler(){
 		/* ROMs are interleaved at byte level */
 		shuffle(memory_region(REGION_GFX1),memory_region_length(REGION_GFX1));
 		shuffle(memory_region(REGION_GFX2),memory_region_length(REGION_GFX2));
 	} };
 	
-	public static DriverInitHandlerPtr init_cuebrckj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cuebrckj  = new DriverInitHandlerPtr() { public void handler(){
 		generic_nvram = (data8_t *)cbj_nvram;
 		generic_nvram_size = 0x400*0x20;
 	
@@ -4105,51 +4053,51 @@ public class tmnt
 		shuffle(memory_region(REGION_GFX2),memory_region_length(REGION_GFX2));
 	} };
 	
-	public static GameDriver driver_cuebrckj	   = new GameDriver("1989"	,"cuebrckj"	,"tmnt.java"	,rom_cuebrckj,driver_cuebrick	,machine_driver_cuebrckj	,input_ports_mia	,init_cuebrckj	,ROT0	,	"Konami", "Cue Brick (World version D)" )
+	GAME( 1989, cuebrckj, cuebrick, cuebrckj, mia,      cuebrckj, ROT0,  "Konami", "Cue Brick (World version D)" )
 	
-	public static GameDriver driver_mia	   = new GameDriver("1989"	,"mia"	,"tmnt.java"	,rom_mia,null	,machine_driver_mia	,input_ports_mia	,init_mia	,ROT0	,	"Konami", "M.I.A. - Missing in Action (version T)" )
-	public static GameDriver driver_mia2	   = new GameDriver("1989"	,"mia2"	,"tmnt.java"	,rom_mia2,driver_mia	,machine_driver_mia	,input_ports_mia	,init_mia	,ROT0	,	"Konami", "M.I.A. - Missing in Action (version S)" )
+	GAME( 1989, mia,      0,        mia,      mia,      mia,      ROT0,  "Konami", "M.I.A. - Missing in Action (version T)" )
+	GAME( 1989, mia2,     mia,      mia,      mia,      mia,      ROT0,  "Konami", "M.I.A. - Missing in Action (version S)" )
 	
-	public static GameDriver driver_tmnt	   = new GameDriver("1989"	,"tmnt"	,"tmnt.java"	,rom_tmnt,null	,machine_driver_tmnt	,input_ports_tmnt	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles (World 4 Players)" )
-	public static GameDriver driver_tmntu	   = new GameDriver("1989"	,"tmntu"	,"tmnt.java"	,rom_tmntu,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles (US 4 Players)" )
-	public static GameDriver driver_tmht	   = new GameDriver("1989"	,"tmht"	,"tmnt.java"	,rom_tmht,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Hero Turtles (UK 4 Players)" )
-	public static GameDriver driver_tmntj	   = new GameDriver("1990"	,"tmntj"	,"tmnt.java"	,rom_tmntj,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles (Japan 4 Players)" )
-	public static GameDriver driver_tmht2p	   = new GameDriver("1989"	,"tmht2p"	,"tmnt.java"	,rom_tmht2p,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt2p	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Hero Turtles (UK 2 Players)" )
-	public static GameDriver driver_tmnt2pj	   = new GameDriver("1990"	,"tmnt2pj"	,"tmnt.java"	,rom_tmnt2pj,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt2p	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles (Japan 2 Players)" )
-	public static GameDriver driver_tmnt2po	   = new GameDriver("1989"	,"tmnt2po"	,"tmnt.java"	,rom_tmnt2po,driver_tmnt	,machine_driver_tmnt	,input_ports_tmnt2p	,init_tmnt	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles (Oceania 2 Players)" )
+	GAME( 1989, tmnt,     0,        tmnt,     tmnt,     tmnt,     ROT0,  "Konami", "Teenage Mutant Ninja Turtles (World 4 Players)" )
+	GAME( 1989, tmntu,    tmnt,     tmnt,     tmnt,     tmnt,     ROT0,  "Konami", "Teenage Mutant Ninja Turtles (US 4 Players)" )
+	GAME( 1989, tmht,     tmnt,     tmnt,     tmnt,     tmnt,     ROT0,  "Konami", "Teenage Mutant Hero Turtles (UK 4 Players)" )
+	GAME( 1990, tmntj,    tmnt,     tmnt,     tmnt,     tmnt,     ROT0,  "Konami", "Teenage Mutant Ninja Turtles (Japan 4 Players)" )
+	GAME( 1989, tmht2p,   tmnt,     tmnt,     tmnt2p,   tmnt,     ROT0,  "Konami", "Teenage Mutant Hero Turtles (UK 2 Players)" )
+	GAME( 1990, tmnt2pj,  tmnt,     tmnt,     tmnt2p,   tmnt,     ROT0,  "Konami", "Teenage Mutant Ninja Turtles (Japan 2 Players)" )
+	GAME( 1989, tmnt2po,  tmnt,     tmnt,     tmnt2p,   tmnt,     ROT0,  "Konami", "Teenage Mutant Ninja Turtles (Oceania 2 Players)" )
 	
-	public static GameDriver driver_punkshot	   = new GameDriver("1990"	,"punkshot"	,"tmnt.java"	,rom_punkshot,null	,machine_driver_punkshot	,input_ports_punkshot	,init_gfx	,ROT0	,	"Konami", "Punk Shot (US 4 Players)" )
-	public static GameDriver driver_punksht2	   = new GameDriver("1990"	,"punksht2"	,"tmnt.java"	,rom_punksht2,driver_punkshot	,machine_driver_punkshot	,input_ports_punksht2	,init_gfx	,ROT0	,	"Konami", "Punk Shot (US 2 Players)" )
-	public static GameDriver driver_punkshtj	   = new GameDriver("1990"	,"punkshtj"	,"tmnt.java"	,rom_punkshtj,driver_punkshot	,machine_driver_punkshot	,input_ports_punksht2	,init_gfx	,ROT0	,	"Konami", "Punk Shot (Japan 2 Players)" )
+	GAME( 1990, punkshot, 0,        punkshot, punkshot, gfx,      ROT0,  "Konami", "Punk Shot (US 4 Players)" )
+	GAME( 1990, punksht2, punkshot, punkshot, punksht2, gfx,      ROT0,  "Konami", "Punk Shot (US 2 Players)" )
+	GAME( 1990, punkshtj, punkshot, punkshot, punksht2, gfx,      ROT0,  "Konami", "Punk Shot (Japan 2 Players)" )
 	
-	public static GameDriver driver_lgtnfght	   = new GameDriver("1990"	,"lgtnfght"	,"tmnt.java"	,rom_lgtnfght,null	,machine_driver_lgtnfght	,input_ports_lgtnfght	,init_gfx	,ROT90	,	"Konami", "Lightning Fighters (US)" )
-	public static GameDriver driver_trigon	   = new GameDriver("1990"	,"trigon"	,"tmnt.java"	,rom_trigon,driver_lgtnfght	,machine_driver_lgtnfght	,input_ports_lgtnfght	,init_gfx	,ROT90	,	"Konami", "Trigon (Japan)" )
+	GAME( 1990, lgtnfght, 0,        lgtnfght, lgtnfght, gfx,      ROT90, "Konami", "Lightning Fighters (US)" )
+	GAME( 1990, trigon,   lgtnfght, lgtnfght, lgtnfght, gfx,      ROT90, "Konami", "Trigon (Japan)" )
 	
-	public static GameDriver driver_blswhstl	   = new GameDriver("1991"	,"blswhstl"	,"tmnt.java"	,rom_blswhstl,null	,machine_driver_detatwin	,input_ports_detatwin	,init_gfx	,ROT90	,	"Konami", "Bells & Whistles (Version L)" )		// version L
-	public static GameDriver driver_detatwin	   = new GameDriver("1991"	,"detatwin"	,"tmnt.java"	,rom_detatwin,driver_blswhstl	,machine_driver_detatwin	,input_ports_detatwin	,init_gfx	,ROT90	,	"Konami", "Detana!! Twin Bee (Japan ver. J)" )	// version J
+	GAME( 1991, blswhstl, 0,        detatwin, detatwin, gfx,      ROT90, "Konami", "Bells & Whistles (Version L)" )		// version L
+	GAME( 1991, detatwin, blswhstl, detatwin, detatwin, gfx,      ROT90, "Konami", "Detana!! Twin Bee (Japan ver. J)" )	// version J
 	
-	public static GameDriver driver_glfgreat	   = new GameDriver("1991"	,"glfgreat"	,"tmnt.java"	,rom_glfgreat,null	,machine_driver_glfgreat	,input_ports_glfgreat	,init_glfgreat	,ROT0	,	"Konami", "Golfing Greats", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_glfgretj	   = new GameDriver("1991"	,"glfgretj"	,"tmnt.java"	,rom_glfgretj,driver_glfgreat	,machine_driver_glfgreat	,input_ports_glfgreat	,init_glfgreat	,ROT0	,	"Konami", "Golfing Greats (Japan)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX(1991, glfgreat, 0,        glfgreat, glfgreat, glfgreat, ROT0,  "Konami", "Golfing Greats", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX(1991, glfgretj, glfgreat, glfgreat, glfgreat, glfgreat, ROT0,  "Konami", "Golfing Greats (Japan)", GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 	
-	public static GameDriver driver_tmnt2	   = new GameDriver("1991"	,"tmnt2"	,"tmnt.java"	,rom_tmnt2,null	,machine_driver_tmnt2	,input_ports_ssridr4p	,init_gfx	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (US 4 Players ver. UAA)", GAME_UNEMULATED_PROTECTION )		// ver. UAA
-	public static GameDriver driver_tmnt22p	   = new GameDriver("1991"	,"tmnt22p"	,"tmnt.java"	,rom_tmnt22p,driver_tmnt2	,machine_driver_tmnt2	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (US 2 Players ver. UDA)", GAME_UNEMULATED_PROTECTION )		// ver. UDA
-	public static GameDriver driver_tmnt2a	   = new GameDriver("1991"	,"tmnt2a"	,"tmnt.java"	,rom_tmnt2a,driver_tmnt2	,machine_driver_tmnt2	,input_ports_ssrid4ps	,init_gfx	,ROT0	,	"Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (Asia 4 Players ver. ADA)", GAME_UNEMULATED_PROTECTION )	// ver. ADA
+	GAMEX(1991, tmnt2,    0,        tmnt2,    ssridr4p, gfx,      ROT0,  "Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (US 4 Players ver. UAA)", GAME_UNEMULATED_PROTECTION )		// ver. UAA
+	GAMEX(1991, tmnt22p,  tmnt2,    tmnt2,    ssriders, gfx,      ROT0,  "Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (US 2 Players ver. UDA)", GAME_UNEMULATED_PROTECTION )		// ver. UDA
+	GAMEX(1991, tmnt2a,   tmnt2,    tmnt2,    ssrid4ps, gfx,      ROT0,  "Konami", "Teenage Mutant Ninja Turtles - Turtles in Time (Asia 4 Players ver. ADA)", GAME_UNEMULATED_PROTECTION )	// ver. ADA
 	
-	public static GameDriver driver_qgakumon	   = new GameDriver("1993"	,"qgakumon"	,"tmnt.java"	,rom_qgakumon,null	,machine_driver_tmnt2	,input_ports_qgakumon	,init_gfx	,ROT0	,	"Konami", "Quiz Gakumon no Susume (Japan ver. JA2 Type L)" )
+	GAME( 1993, qgakumon, 0,        tmnt2,    qgakumon, gfx,      ROT0,  "Konami", "Quiz Gakumon no Susume (Japan ver. JA2 Type L)" )
 	
-	public static GameDriver driver_ssriders	   = new GameDriver("1991"	,"ssriders"	,"tmnt.java"	,rom_ssriders,null	,machine_driver_ssriders	,input_ports_ssridr4p	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (World 4 Players ver. EAC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdrebd	   = new GameDriver("1991"	,"ssrdrebd"	,"tmnt.java"	,rom_ssrdrebd,driver_ssriders	,machine_driver_ssriders	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (World 2 Players ver. EBD)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdrebc	   = new GameDriver("1991"	,"ssrdrebc"	,"tmnt.java"	,rom_ssrdrebc,driver_ssriders	,machine_driver_ssriders	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (World 2 Players ver. EBC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdruda	   = new GameDriver("1991"	,"ssrdruda"	,"tmnt.java"	,rom_ssrdruda,driver_ssriders	,machine_driver_ssriders	,input_ports_ssrid4ps	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (US 4 Players ver. UDA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdruac	   = new GameDriver("1991"	,"ssrdruac"	,"tmnt.java"	,rom_ssrdruac,driver_ssriders	,machine_driver_ssriders	,input_ports_ssridr4p	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (US 4 Players ver. UAC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdrubc	   = new GameDriver("1991"	,"ssrdrubc"	,"tmnt.java"	,rom_ssrdrubc,driver_ssriders	,machine_driver_ssriders	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (US 2 Players ver. UBC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdrabd	   = new GameDriver("1991"	,"ssrdrabd"	,"tmnt.java"	,rom_ssrdrabd,driver_ssriders	,machine_driver_ssriders	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (Asia 2 Players ver. ABD)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssrdrjbd	   = new GameDriver("1991"	,"ssrdrjbd"	,"tmnt.java"	,rom_ssrdrjbd,driver_ssriders	,machine_driver_ssriders	,input_ports_ssriders	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (Japan 2 Players ver. JBD)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sunsetbl	   = new GameDriver("1991"	,"sunsetbl"	,"tmnt.java"	,rom_sunsetbl,driver_ssriders	,machine_driver_ssridersbl	,input_ports_ssridbl	,init_gfx	,ROT0	,	"Konami", "Sunset Riders (bootleg 4 Players ver. ADD)", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssriders, 0,        ssriders, ssridr4p, gfx,      ROT0,  "Konami", "Sunset Riders (World 4 Players ver. EAC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdrebd, ssriders, ssriders, ssriders, gfx,      ROT0,  "Konami", "Sunset Riders (World 2 Players ver. EBD)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdrebc, ssriders, ssriders, ssriders, gfx,      ROT0,  "Konami", "Sunset Riders (World 2 Players ver. EBC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdruda, ssriders, ssriders, ssrid4ps, gfx,      ROT0,  "Konami", "Sunset Riders (US 4 Players ver. UDA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdruac, ssriders, ssriders, ssridr4p, gfx,      ROT0,  "Konami", "Sunset Riders (US 4 Players ver. UAC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdrubc, ssriders, ssriders, ssriders, gfx,      ROT0,  "Konami", "Sunset Riders (US 2 Players ver. UBC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdrabd, ssriders, ssriders, ssriders, gfx,      ROT0,  "Konami", "Sunset Riders (Asia 2 Players ver. ABD)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, ssrdrjbd, ssriders, ssriders, ssriders, gfx,      ROT0,  "Konami", "Sunset Riders (Japan 2 Players ver. JBD)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1991, sunsetbl, ssriders, ssridersbl, ssridbl, gfx,     ROT0,  "Konami", "Sunset Riders (bootleg 4 Players ver. ADD)", GAME_NOT_WORKING | GAME_IMPERFECT_GRAPHICS )
 	
-	public static GameDriver driver_thndrx2	   = new GameDriver("1991"	,"thndrx2"	,"tmnt.java"	,rom_thndrx2,null	,machine_driver_thndrx2	,input_ports_thndrx2	,init_gfx	,ROT0	,	"Konami", "Thunder Cross II (Japan)" )
-	public static GameDriver driver_thndrx2a	   = new GameDriver("1991"	,"thndrx2a"	,"tmnt.java"	,rom_thndrx2a,driver_thndrx2	,machine_driver_thndrx2	,input_ports_thndrx2	,init_gfx	,ROT0	,	"Konami", "Thunder Cross II (Asia)" )
+	GAME( 1991, thndrx2,  0,        thndrx2,  thndrx2,  gfx,      ROT0,  "Konami", "Thunder Cross II (Japan)" )
+	GAME( 1991, thndrx2a, thndrx2,  thndrx2,  thndrx2,  gfx,      ROT0,  "Konami", "Thunder Cross II (Asia)" )
 	
-	public static GameDriver driver_prmrsocr	   = new GameDriver("1993"	,"prmrsocr"	,"tmnt.java"	,rom_prmrsocr,null	,machine_driver_prmrsocr	,input_ports_prmrsocr	,init_glfgreat	,ROT0	,	"Konami", "Premier Soccer (Europe ver. EAB)" )
-	public static GameDriver driver_prmrsocj	   = new GameDriver("1993"	,"prmrsocj"	,"tmnt.java"	,rom_prmrsocj,driver_prmrsocr	,machine_driver_prmrsocr	,input_ports_prmrsocr	,init_glfgreat	,ROT0	,	"Konami", "Premier Soccer (Japan ver. JAB)" )
+	GAME( 1993, prmrsocr, 0,        prmrsocr, prmrsocr, glfgreat, ROT0,  "Konami", "Premier Soccer (Europe ver. EAB)" )
+	GAME( 1993, prmrsocj, prmrsocr, prmrsocr, prmrsocr, glfgreat, ROT0,  "Konami", "Premier Soccer (Japan ver. JAB)" )
 }

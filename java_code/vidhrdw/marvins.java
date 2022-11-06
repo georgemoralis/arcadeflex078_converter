@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static WriteHandlerPtr marvins_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marvins_palette_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_color = data>>4;
 		fg_color = data&0xf;
 	} };
@@ -94,43 +93,35 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static WriteHandlerPtr marvins_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marvins_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spriteram.write(offset,data);
 	} };
-	public static ReadHandlerPtr marvins_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marvins_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr marvins_foreground_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marvins_foreground_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram_2.read(offset);
 	} };
-	public static WriteHandlerPtr marvins_foreground_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marvins_foreground_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x800 && spriteram_2.read(offset)!= data) tilemap_mark_tile_dirty(fg_tilemap,offset);
 	
 		spriteram_2.write(offset,data);
 	} };
 	
-	public static ReadHandlerPtr marvins_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marvins_background_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return spriteram_3.read(offset);
 	} };
-	public static WriteHandlerPtr marvins_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marvins_background_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x800 && spriteram_3.read(offset)!= data) tilemap_mark_tile_dirty(bg_tilemap,offset);
 	
 		spriteram_3.write(offset,data);
 	} };
 	
-	public static ReadHandlerPtr marvins_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr marvins_text_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
-	public static WriteHandlerPtr marvins_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr marvins_text_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x400 && videoram.read(offset)!= data) tilemap_mark_tile_dirty(tx_tilemap,offset);
 	
 		videoram.write(offset,data);
@@ -176,8 +167,7 @@ public class marvins
 	**
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_marvins  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_marvins  = new VideoStartHandlerPtr() { public int handler(){
 		flipscreen = -1; old_bg_color = old_fg_color = -1;
 	
 		stuff_palette( 0, 0, 16*8 ); /* load sprite colors */
@@ -260,7 +250,7 @@ public class marvins
 	static void draw_status( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		const unsigned char *base = videoram+0x400;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		int row;
 		for( row=0; row<4; row++ )
 		{
@@ -291,12 +281,12 @@ public class marvins
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int scrollx, int scrolly,
 			int priority, unsigned char sprite_partition )
 	{
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		const unsigned char *source, *finish;
 	
 		if( sprite_partition>0x64 ) sprite_partition = 0x64;
 	
-		if (priority != 0)
+		if( priority )
 		{
 			source = spriteram + sprite_partition;
 			finish = spriteram + 0x64;
@@ -317,9 +307,9 @@ public class marvins
 			int flipy = (attributes&0x20);
 			int flipx = 0;
 	
-			if (flipscreen != 0)
+			if( flipscreen )
 			{
-				if (flipy != 0)
+				if( flipy )
 				{
 				    flipx = 1; flipy = 0;
 				}
@@ -347,8 +337,7 @@ public class marvins
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_marvins  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		unsigned char *mem = memory_region(REGION_CPU1);
 		unsigned char sprite_partition = mem[0xfe00];
 	
@@ -366,8 +355,8 @@ public class marvins
 		sect_rect(&finalclip, cliprect);
 	
 		if( (scroll_attributes & 4)==0 ) bg_scrollx += 256;
-		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
-		if ((scroll_attributes & 2) != 0) fg_scrollx += 256;
+		if( scroll_attributes & 1 ) sprite_scrollx += 256;
+		if( scroll_attributes & 2 ) fg_scrollx += 256;
 	
 		/* palette bank for background/foreground is set by a memory-write handler */
 		update_palette(0);
@@ -393,8 +382,7 @@ public class marvins
 		draw_status( bitmap,cliprect );
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_madcrash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_madcrash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	/***************************************************************************
 	**
 	**	Game Specific Initialization
@@ -425,8 +413,8 @@ public class marvins
 		sect_rect(&finalclip, cliprect);
 	
 		if( (scroll_attributes & 4)==0 ) bg_scrollx += 256;
-		if ((scroll_attributes & 1) != 0) sprite_scrollx += 256;
-		if ((scroll_attributes & 2) != 0) fg_scrollx += 256;
+		if( scroll_attributes & 1 ) sprite_scrollx += 256;
+		if( scroll_attributes & 2 ) fg_scrollx += 256;
 	
 		marvins_palette_bank_w(0, mem[0xc800]);
 		update_palette(1);

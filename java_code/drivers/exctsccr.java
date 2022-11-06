@@ -24,7 +24,7 @@ based on wich Coin input was connected.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,8 +37,7 @@ public class exctsccr
 	/* from machine */
 	
 	
-	public static WriteHandlerPtr exctsccr_DAC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exctsccr_DAC_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(offset,data << 2);
 	} };
 	
@@ -173,7 +172,7 @@ public class exctsccr
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_exctsccr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exctsccr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exctsccr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -351,8 +350,7 @@ public class exctsccr
 	
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_exctsccr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exctsccr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4.0 MHz (?) */
@@ -382,13 +380,10 @@ public class exctsccr
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* Bootleg */
-	public static MachineHandlerPtr machine_driver_exctsccb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exctsccb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4.0 MHz (?) */
@@ -416,9 +411,7 @@ public class exctsccr
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, bl_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, bl_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -540,8 +533,8 @@ public class exctsccr
 	
 	
 	
-	public static GameDriver driver_exctsccr	   = new GameDriver("1983"	,"exctsccr"	,"exctsccr.java"	,rom_exctsccr,null	,machine_driver_exctsccr	,input_ports_exctsccr	,null	,ROT90	,	"Alpha Denshi Co.", "Exciting Soccer" )
-	public static GameDriver driver_exctscca	   = new GameDriver("1983"	,"exctscca"	,"exctsccr.java"	,rom_exctscca,driver_exctsccr	,machine_driver_exctsccr	,input_ports_exctsccr	,null	,ROT90	,	"Alpha Denshi Co.", "Exciting Soccer (alternate music)" )
-	public static GameDriver driver_exctsccb	   = new GameDriver("1983"	,"exctsccb"	,"exctsccr.java"	,rom_exctsccb,driver_exctsccr	,machine_driver_exctsccb	,input_ports_exctsccr	,null	,ROT90	,	"bootleg", "Exciting Soccer (bootleg)" )
-	public static GameDriver driver_exctscc2	   = new GameDriver("1984"	,"exctscc2"	,"exctsccr.java"	,rom_exctscc2,driver_exctsccr	,machine_driver_exctsccr	,input_ports_exctsccr	,null	,ROT90	,	"Alpha Denshi Co.", "Exciting Soccer II", GAME_NOT_WORKING )
+	GAME( 1983, exctsccr, 0,        exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co.", "Exciting Soccer" )
+	GAME( 1983, exctscca, exctsccr, exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co.", "Exciting Soccer (alternate music)" )
+	GAME( 1983, exctsccb, exctsccr, exctsccb, exctsccr, 0, ROT90, "bootleg", "Exciting Soccer (bootleg)" )
+	GAMEX(1984, exctscc2, exctsccr, exctsccr, exctsccr, 0, ROT90, "Alpha Denshi Co.", "Exciting Soccer II", GAME_NOT_WORKING )
 }

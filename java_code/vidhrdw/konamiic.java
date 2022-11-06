@@ -1152,7 +1152,7 @@ Registers (word-wise):
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -1232,13 +1232,11 @@ public class konamiic
 		K007121_ctrlram[chip][offset] = data;
 	}
 	
-	public static WriteHandlerPtr K007121_ctrl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007121_ctrl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007121_ctrl_w(0,offset,data);
 	} };
 	
-	public static WriteHandlerPtr K007121_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007121_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007121_ctrl_w(1,offset,data);
 	} };
 	
@@ -1270,11 +1268,11 @@ public class konamiic
 	 * compatibility mode with an older custom IC. It is not known how this
 	 * alternate layout is selected.
 	 *
-	 * 0 . e
-	 * 1 . f
-	 * 2 . 6
-	 * 3 . 4
-	 * 4 . 8
+	 * 0 -> e
+	 * 1 -> f
+	 * 2 -> 6
+	 * 3 -> 4
+	 * 4 -> 8
 	 *
 	 */
 	
@@ -1282,7 +1280,7 @@ public class konamiic
 			const unsigned char *source,int base_color,int global_x_offset,int bank_base,
 			UINT32 pri_mask)
 	{
-		const struct GfxElement *gfx = Machine.gfx[chip];
+		const struct GfxElement *gfx = Machine->gfx[chip];
 		int flipscreen = K007121_flipscreen[chip];
 		int i,num,inc,offs[5],trans;
 		int is_flakatck = K007121_ctrlram[chip][0x06] & 0x04;	/* WRONG!!!! */
@@ -1296,7 +1294,7 @@ public class konamiic
 	{
 		FILE *fp;
 		fp=fopen(chip?"SPRITE1.DMP":"SPRITE0.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(source, 0x800, 1, fp);
 			usrintf_showmessage("saved");
@@ -1305,7 +1303,7 @@ public class konamiic
 	}
 	#endif
 	
-		if (is_flakatck != 0)
+		if (is_flakatck)
 		{
 			num = 0x40;
 			inc = -0x20;
@@ -1354,7 +1352,7 @@ public class konamiic
 			static int y_offset[4] = {0x0,0x2,0x8,0xa};
 			int x,y, ex, ey;
 	
-			if ((attr & 0x01) != 0) sx -= 256;
+			if (attr & 0x01) sx -= 256;
 			if (sy >= 240) sy -= 256;
 	
 			number += ((sprite_bank & 0x3) << 8) + ((attr & 0xc0) << 4);
@@ -1384,7 +1382,7 @@ public class konamiic
 						ex = xflip ? (width-1-x) : x;
 						ey = yflip ? (height-1-y) : y;
 	
-						if (flipscreen != 0)
+						if (flipscreen)
 						{
 							if (pri_mask != -1)
 								pdrawgfx(bitmap,gfx,
@@ -1466,7 +1464,7 @@ public class konamiic
 	
 	static UINT32 K007342_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -1521,13 +1519,11 @@ public class konamiic
 		return 0;
 	}
 	
-	public static ReadHandlerPtr K007342_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007342_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K007342_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr K007342_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007342_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x1000)
 		{		/* layer 0 */
 			if (K007342_ram[offset] != data)
@@ -1546,18 +1542,15 @@ public class konamiic
 		}
 	} };
 	
-	public static ReadHandlerPtr K007342_scroll_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007342_scroll_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K007342_scroll_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr K007342_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007342_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007342_scroll_ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr K007342_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007342_vreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(offset)
 		{
 			case 0x00:
@@ -1679,10 +1672,10 @@ public class konamiic
 	
 	int K007420_vh_start(int gfxnum, void (*callback)(int *code,int *color))
 	{
-		K007420_gfx = Machine.gfx[gfxnum];
+		K007420_gfx = Machine->gfx[gfxnum];
 		K007420_callback = callback;
 		K007420_ram = auto_malloc(0x200);
-		if (K007420_ram == 0) return 1;
+		if (!K007420_ram) return 1;
 	
 		memset(K007420_ram,0,0x200);
 	
@@ -1691,13 +1684,11 @@ public class konamiic
 		return 0;
 	}
 	
-	public static ReadHandlerPtr K007420_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K007420_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K007420_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr K007420_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K007420_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007420_ram[offset] = data;
 	} };
 	
@@ -1748,7 +1739,7 @@ public class konamiic
 	
 			/* 0x080 = normal scale, 0x040 = double size, 0x100 half size */
 			zoom = K007420_ram[offs+5] | ((K007420_ram[offs+4] & 0x03) << 8);
-			if (zoom == 0) continue;
+			if (!zoom) continue;
 			zoom = 0x10000 * 128 / zoom;
 	
 			switch (K007420_ram[offs+4] & 0x70)
@@ -1762,7 +1753,7 @@ public class konamiic
 	//logerror("Unknown sprite size %02x\n",(K007420_ram[offs+4] & 0x70)>>4);
 			}
 	
-			if (K007342_flipscreen != 0)
+			if (K007342_flipscreen)
 			{
 				ox = 256 - ox - ((zoom * w + (1<<12)) >> 13);
 				oy = 256 - oy - ((zoom * h + (1<<12)) >> 13);
@@ -1783,12 +1774,12 @@ public class konamiic
 						int c = code;
 	
 						sx = ox + 8 * x;
-						if (flipx != 0) c += xoffset[(w-1-x)];
+						if (flipx) c += xoffset[(w-1-x)];
 						else c += xoffset[x];
-						if (flipy != 0) c += yoffset[(h-1-y)];
+						if (flipy) c += yoffset[(h-1-y)];
 						else c += yoffset[y];
 	
-						if ((c & bankmask) != 0) continue; else c += bank;
+						if (c & bankmask) continue; else c += bank;
 	
 						drawgfx(bitmap,K007420_gfx,
 							c,
@@ -1821,12 +1812,12 @@ public class konamiic
 	
 						sx = ox + ((zoom * x + (1<<12)) >> 13);
 						zw = (ox + ((zoom * (x+1) + (1<<12)) >> 13)) - sx;
-						if (flipx != 0) c += xoffset[(w-1-x)];
+						if (flipx) c += xoffset[(w-1-x)];
 						else c += xoffset[x];
-						if (flipy != 0) c += yoffset[(h-1-y)];
+						if (flipy) c += yoffset[(h-1-y)];
 						else c += yoffset[y];
 	
-						if ((c & bankmask) != 0) continue; else c += bank;
+						if (c & bankmask) continue; else c += bank;
 	
 						drawgfxzoom(bitmap,K007420_gfx,
 							c,
@@ -1917,7 +1908,7 @@ public class konamiic
 		int code = vram1[tile_index] + 256 * vram2[tile_index];
 		int color = cram[tile_index];
 		int bank = K052109_charrombank[(color & 0x0c) >> 2];
-	if (has_extra_video_ram != 0) bank = (color & 0x0c) >> 2;	/* kludge for X-Men */
+	if (has_extra_video_ram) bank = (color & 0x0c) >> 2;	/* kludge for X-Men */
 		color = (color & 0xf3) | ((bank & 0x03) << 2);
 		bank >>= 2;
 	
@@ -1973,7 +1964,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -1986,20 +1977,20 @@ public class konamiic
 		charlayout.planeoffset[3] = plane0 * 8;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 		K052109_memory_region = gfx_memory_region;
@@ -2049,8 +2040,7 @@ public class konamiic
 	
 	
 	
-	public static ReadHandlerPtr K052109_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K052109_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (K052109_RMRD_line == CLEAR_LINE)
 		{
 			if ((offset & 0x1fff) >= 0x1800)
@@ -2078,7 +2068,7 @@ public class konamiic
 			int bank = K052109_charrombank[(color & 0x0c) >> 2] >> 2;   /* discard low bits (TMNT) */
 			int addr;
 	
-	if (has_extra_video_ram != 0) code |= color << 8;	/* kludge for X-Men */
+	if (has_extra_video_ram) code |= color << 8;	/* kludge for X-Men */
 	else
 			(*K052109_callback)(0,bank,&code,&color);
 	
@@ -2091,8 +2081,7 @@ public class konamiic
 		}
 	} };
 	
-	public static WriteHandlerPtr K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K052109_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 0x1fff) < 0x1800) /* tilemap RAM */
 		{
 			if (K052109_ram[offset] != data)
@@ -2132,7 +2121,7 @@ public class konamiic
 	
 				if (K052109_charrombank[0] != (data & 0x0f)) dirty |= 1;
 				if (K052109_charrombank[1] != ((data >> 4) & 0x0f)) dirty |= 2;
-				if (dirty != 0)
+				if (dirty)
 				{
 					int i;
 	
@@ -2175,7 +2164,7 @@ public class konamiic
 	
 				if (K052109_charrombank[2] != (data & 0x0f)) dirty |= 1;
 				if (K052109_charrombank[3] != ((data >> 4) & 0x0f)) dirty |= 2;
-				if (dirty != 0)
+				if (dirty)
 				{
 					int i;
 	
@@ -2206,9 +2195,9 @@ public class konamiic
 	
 	WRITE16_HANDLER( K052109_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K052109_w(offset,(data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K052109_w(offset + 0x2000,data & 0xff);
 	}
 	
@@ -2219,7 +2208,7 @@ public class konamiic
 	
 	WRITE16_HANDLER(K052109_lsb_w)
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			K052109_w(offset, data & 0xff);
 	}
 	
@@ -2384,7 +2373,7 @@ public class konamiic
 	{
 		FILE *fp;
 		fp=fopen("TILE.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(K052109_ram, 0x6000, 1, fp);
 			usrintf_showmessage("saved");
@@ -2437,7 +2426,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -2450,24 +2439,24 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane3 * 8;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
@@ -2478,10 +2467,10 @@ public class konamiic
 		gfx_drawmode_table[15] = DRAWMODE_SHADOW;
 	
 		K051960_memory_region = gfx_memory_region;
-		K051960_gfx = Machine.gfx[gfx_index];
+		K051960_gfx = Machine->gfx[gfx_index];
 		K051960_callback = callback;
 		K051960_ram = auto_malloc(0x400);
-		if (K051960_ram == 0) return 1;
+		if (!K051960_ram) return 1;
 		memset(K051960_ram,0,0x400);
 	
 		return 0;
@@ -2510,9 +2499,8 @@ public class konamiic
 		return memory_region(K051960_memory_region)[addr];
 	}
 	
-	public static ReadHandlerPtr K051960_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (K051960_readroms != 0)
+	public static ReadHandlerPtr K051960_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (K051960_readroms)
 		{
 			/* the 051960 remembers the last address read and uses it when reading the sprite ROMs */
 			K051960_romoffset = (offset & 0x3fc) >> 2;
@@ -2522,8 +2510,7 @@ public class konamiic
 			return K051960_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr K051960_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051960_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051960_ram[offset] = data;
 	} };
 	
@@ -2534,14 +2521,13 @@ public class konamiic
 	
 	WRITE16_HANDLER( K051960_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051960_w(offset*2,(data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051960_w(offset*2 + 1,data & 0xff);
 	}
 	
-	public static ReadHandlerPtr K051937_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051937_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (K051960_readroms && offset >= 4 && offset < 8)
 		{
 			return K051960_fetchromdata(offset & 3);
@@ -2560,12 +2546,11 @@ public class konamiic
 		}
 	} };
 	
-	public static WriteHandlerPtr K051937_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051937_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 	
-	//if ((data & 0xc2) != 0) usrintf_showmessage("051937 reg 00 = %02x",data);
+	//if (data & 0xc2) usrintf_showmessage("051937 reg 00 = %02x",data);
 	
 			/* bit 0 is IRQ enable */
 			K051960_irq_enabled = (data & 0x01);
@@ -2607,9 +2592,9 @@ public class konamiic
 	
 	WRITE16_HANDLER( K051937_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K051937_w(offset*2,(data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K051937_w(offset*2 + 1,data & 0xff);
 	}
 	
@@ -2718,7 +2703,7 @@ public class konamiic
 			zoomx = 0x10000 / 128 * (128 - zoomx);
 			zoomy = 0x10000 / 128 * (128 - zoomy);
 	
-			if (K051960_spriteflip != 0)
+			if (K051960_spriteflip)
 			{
 				ox = 512 - (zoomx * w >> 12) - ox;
 				oy = 256 - (zoomy * h >> 12) - oy;
@@ -2739,9 +2724,9 @@ public class konamiic
 						int c = code;
 	
 						sx = ox + 16 * x;
-						if (flipx != 0) c += xoffset[(w-1-x)];
+						if (flipx) c += xoffset[(w-1-x)];
 						else c += xoffset[x];
-						if (flipy != 0) c += yoffset[(h-1-y)];
+						if (flipy) c += yoffset[(h-1-y)];
 						else c += yoffset[y];
 	
 						if (max_priority == -1)
@@ -2776,9 +2761,9 @@ public class konamiic
 	
 						sx = ox + ((zoomx * x + (1<<11)) >> 12);
 						zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
-						if (flipx != 0) c += xoffset[(w-1-x)];
+						if (flipx) c += xoffset[(w-1-x)];
 						else c += xoffset[x];
-						if (flipy != 0) c += yoffset[(h-1-y)];
+						if (flipy) c += yoffset[(h-1-y)];
 						else c += yoffset[y];
 	
 						if (max_priority == -1)
@@ -2806,7 +2791,7 @@ public class konamiic
 	{
 		FILE *fp;
 		fp=fopen("SPRITE.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(K051960_ram, 0x400, 1, fp);
 			usrintf_showmessage("saved");
@@ -2830,8 +2815,7 @@ public class konamiic
 	
 	
 	
-	public static ReadHandlerPtr K052109_051960_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K052109_051960_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (K052109_RMRD_line == CLEAR_LINE)
 		{
 			if (offset >= 0x3800 && offset < 0x3808)
@@ -2844,8 +2828,7 @@ public class konamiic
 		else return K052109_r(offset);
 	} };
 	
-	public static WriteHandlerPtr K052109_051960_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K052109_051960_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset >= 0x3800 && offset < 0x3808)
 			K051937_w(offset - 0x3800,data);
 		else if (offset < 0x3c00)
@@ -2921,7 +2904,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -2934,24 +2917,24 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane0 * 8;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
@@ -2962,15 +2945,15 @@ public class konamiic
 		gfx_drawmode_table[15] = DRAWMODE_SHADOW;
 		K05324x_z_rejection = -1;
 		K053245_memory_region = gfx_memory_region;
-		K053245_gfx = Machine.gfx[gfx_index];
+		K053245_gfx = Machine->gfx[gfx_index];
 		K053245_callback = callback;
 		K053244_rombank = 0;
 		K053245_ramsize = 0x800;
 		K053245_ram = auto_malloc(K053245_ramsize);
-		if (K053245_ram == 0) return 1;
+		if (!K053245_ram) return 1;
 	
 		K053245_buffer = auto_malloc(K053245_ramsize);
-		if (K053245_buffer == 0)
+		if (!K053245_buffer)
 			return 1;
 	
 		memset(K053245_ram,0,K053245_ramsize);
@@ -2989,17 +2972,15 @@ public class konamiic
 		COMBINE_DATA(K053245_ram+offset);
 	}
 	
-	public static ReadHandlerPtr K053245_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 1) != 0)
+	public static ReadHandlerPtr K053245_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if(offset & 1)
 			return K053245_ram[offset>>1] & 0xff;
 		else
 			return (K053245_ram[offset>>1]>>8) & 0xff;
 	} };
 	
-	public static WriteHandlerPtr K053245_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 1) != 0)
+	public static WriteHandlerPtr K053245_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(offset & 1)
 			K053245_ram[offset>>1] = (K053245_ram[offset>>1] & 0xff00) | data;
 		else
 			K053245_ram[offset>>1] = (K053245_ram[offset>>1] & 0x00ff) | (data<<8);
@@ -3016,8 +2997,7 @@ public class konamiic
 		memcpy(K053245_buffer, K053245_ram, K053245_ramsize);
 	}
 	
-	public static ReadHandlerPtr K053244_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K053244_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if ((K053244_regs[5] & 0x10) && offset >= 0x0c && offset < 0x10)
 		{
 			int addr;
@@ -3043,13 +3023,12 @@ public class konamiic
 		}
 	} };
 	
-	public static WriteHandlerPtr K053244_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053244_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K053244_regs[offset] = data;
 	
 		switch(offset) {
 		case 0x05: {
-	//		if ((data & 0xc8) != 0)
+	//		if (data & 0xc8)
 	//			usrintf_showmessage("053244 reg 05 = %02x",data);
 			/* bit 2 = unknown, Parodius uses it */
 			/* bit 5 = unknown, Rollergames uses it */
@@ -3069,7 +3048,7 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053244_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053244_w(offset, data & 0xff);
 	}
 	
@@ -3080,9 +3059,9 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053244_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K053244_w(offset*2, (data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053244_w(offset*2+1, data & 0xff);
 	}
 	
@@ -3138,7 +3117,7 @@ public class konamiic
 		for (i=K053245_ramsize/2, offs=0; offs<i; offs+=8)
 		{
 			pri_code = K053245_buffer[offs];
-			if ((pri_code & 0x8000) != 0)
+			if (pri_code & 0x8000)
 			{
 				pri_code &= 0x007f;
 	
@@ -3202,13 +3181,13 @@ public class konamiic
 			*/
 			zoomy = K053245_buffer[offs+4];
 			if (zoomy > 0x2000) continue;
-			if (zoomy != 0) zoomy = (0x400000+zoomy/2) / zoomy;
+			if (zoomy) zoomy = (0x400000+zoomy/2) / zoomy;
 			else zoomy = 2 * 0x400000;
 			if ((K053245_buffer[offs] & 0x4000) == 0)
 			{
 				zoomx = K053245_buffer[offs+5];
 				if (zoomx > 0x2000) continue;
-				if (zoomx != 0) zoomx = (0x400000+zoomx/2) / zoomx;
+				if (zoomx) zoomx = (0x400000+zoomx/2) / zoomx;
 				else zoomx = 2 * 0x400000;
 	//			else zoomx = zoomy; /* workaround for TMNT2 */
 			}
@@ -3220,19 +3199,19 @@ public class konamiic
 			flipx = K053245_buffer[offs] & 0x1000;
 			flipy = K053245_buffer[offs] & 0x2000;
 			mirrorx = K053245_buffer[offs+6] & 0x0100;
-			if (mirrorx != 0) flipx = 0; // documented and confirmed
+			if (mirrorx) flipx = 0; // documented and confirmed
 			mirrory = K053245_buffer[offs+6] & 0x0200;
 			shadow = K053245_buffer[offs+6] & 0x0080;
 	
-			if (flipscreenX != 0)
+			if (flipscreenX)
 			{
 				ox = 512 - ox;
-				if (mirrorx == 0) flipx = NOT(flipx);
+				if (!mirrorx) flipx = NOT(flipx);
 			}
-			if (flipscreenY != 0)
+			if (flipscreenY)
 			{
 				oy = -oy;
-				if (mirrory == 0) flipy = NOT(flipy);
+				if (!mirrory) flipy = NOT(flipy);
 			}
 	
 			ox = (ox + 0x5d) & 0x3ff;
@@ -3258,7 +3237,7 @@ public class konamiic
 					sx = ox + ((zoomx * x + (1<<11)) >> 12);
 					zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
 					c = code;
-					if (mirrorx != 0)
+					if (mirrorx)
 					{
 						if ((flipx == 0) ^ (2*x < w))
 						{
@@ -3274,11 +3253,11 @@ public class konamiic
 					}
 					else
 					{
-						if (flipx != 0) c += w-1-x;
+						if (flipx) c += w-1-x;
 						else c += x;
 						fx = flipx;
 					}
-					if (mirrory != 0)
+					if (mirrory)
 					{
 						if ((flipy == 0) ^ (2*y >= h))
 						{
@@ -3294,7 +3273,7 @@ public class konamiic
 					}
 					else
 					{
-						if (flipy != 0) c += 8*(h-1-y);
+						if (flipy) c += 8*(h-1-y);
 						else c += 8*y;
 						fy = flipy;
 					}
@@ -3331,7 +3310,7 @@ public class konamiic
 	{
 		FILE *fp;
 		fp=fopen("SPRITE.DMP", "w+b");
-		if (fp != 0)
+		if (fp)
 		{
 			fwrite(K053245_buffer, 0x800, 1, fp);
 			usrintf_showmessage("saved");
@@ -3401,7 +3380,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -3414,31 +3393,31 @@ public class konamiic
 		spritelayout.planeoffset[3] = plane3;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&spritelayout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (Machine.color_depth == 32)
+		if (Machine->color_depth == 32)
 		{
-			if ((Machine.drv.video_attributes & (VIDEO_HAS_SHADOWS|VIDEO_HAS_HIGHLIGHTS)) != VIDEO_HAS_SHADOWS+VIDEO_HAS_HIGHLIGHTS)
+			if ((Machine->drv->video_attributes & (VIDEO_HAS_SHADOWS|VIDEO_HAS_HIGHLIGHTS)) != VIDEO_HAS_SHADOWS+VIDEO_HAS_HIGHLIGHTS)
 				usrintf_showmessage("driver missing SHADOWS or HIGHLIGHTS flag");
 		}
 		else
 		{
-			if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
+			if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
 				usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 		}
 	#endif
@@ -3454,11 +3433,11 @@ public class konamiic
 		K053247_wraparound = 1;
 		K05324x_z_rejection = -1;
 		K053247_memory_region = gfx_memory_region;
-		K053247_gfx = Machine.gfx[gfx_index];
+		K053247_gfx = Machine->gfx[gfx_index];
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
-		if (K053247_ram == 0) return 1;
+		if (!K053247_ram) return 1;
 	
 		memset(K053247_ram,  0, 0x1000);
 		memset(K053246_regs, 0, 8);
@@ -3526,7 +3505,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -3552,7 +3531,7 @@ public class konamiic
 				*d++ = *s2++;
 			}
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout);
+			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout);
 			break;
 		}
 		case K055673_LAYOUT_RNG:
@@ -3560,46 +3539,46 @@ public class konamiic
 			spritelayout2.total = memory_region_length(gfx_memory_region) / (16*16/2);
 	
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout2);
+			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout2);
 			break;
 		case K055673_LAYOUT_LE2:
 			K055673_rom = (data16_t *)memory_region(gfx_memory_region);
 			spritelayout3.total = memory_region_length(gfx_memory_region) / (16*16);
 	
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout3);
+			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout3);
 			break;
 		case K055673_LAYOUT_GX6:
 			K055673_rom = (data16_t *)memory_region(gfx_memory_region);
 			spritelayout4.total = memory_region_length(gfx_memory_region) / (16*16*6/8);
 	
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout4);
+			Machine->gfx[gfx_index] = decodegfx((data8_t *)K055673_rom, &spritelayout4);
 			break;
 		}
 	
-		if (!Machine.gfx[gfx_index])
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 	#if VERBOSE
-		if (!(Machine.drv.video_attributes & VIDEO_HAS_SHADOWS))
+		if (!(Machine->drv->video_attributes & VIDEO_HAS_SHADOWS))
 			usrintf_showmessage("driver should use VIDEO_HAS_SHADOWS");
 	#endif
 	
 		/* prepare shadow draw table */
-		c = Machine.gfx[gfx_index].color_granularity-1;
+		c = Machine->gfx[gfx_index]->color_granularity-1;
 		gfx_drawmode_table[0] = DRAWMODE_NONE;
 		for (i = 1;i < c;i++)
 			gfx_drawmode_table[i] = DRAWMODE_SOURCE;
@@ -3610,11 +3589,11 @@ public class konamiic
 		K053247_wraparound = 1;
 		K05324x_z_rejection = -1;
 		K053247_memory_region = gfx_memory_region;
-		K053247_gfx = Machine.gfx[gfx_index];
+		K053247_gfx = Machine->gfx[gfx_index];
 		K053247_callback = callback;
 		K053246_OBJCHA_line = CLEAR_LINE;
 		K053247_ram = auto_malloc(0x1000);
-		if (K053247_ram == 0) return 1;
+		if (!K053247_ram) return 1;
 	
 		memset(K053247_ram,  0, 0x1000);
 		memset(K053246_regs, 0, 8);
@@ -3666,21 +3645,19 @@ public class konamiic
 		COMBINE_DATA(K053247_ram + offset);
 	}
 	
-	public static ReadHandlerPtr K053247_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K053247_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int offs = offset >> 1;
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 			return(K053247_ram[offs] & 0xff);
 		else
 			return(K053247_ram[offs] >> 8);
 	} };
 	
-	public static WriteHandlerPtr K053247_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053247_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs = offset >> 1;
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 			K053247_ram[offs] = (K053247_ram[offs] & 0xff00) | data;
 		else
 			K053247_ram[offs] = (K053247_ram[offs] & 0x00ff) | (data<<8);
@@ -3778,8 +3755,7 @@ public class konamiic
 		return 0;
 	}
 	
-	public static ReadHandlerPtr K053246_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K053246_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (K053246_OBJCHA_line == ASSERT_LINE)
 		{
 			int addr;
@@ -3800,8 +3776,7 @@ public class konamiic
 		}
 	} };
 	
-	public static WriteHandlerPtr K053246_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053246_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K053246_regs[offset] = data;
 	} };
 	
@@ -3813,9 +3788,9 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053246_word_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K053246_w(offset<<1,(data >> 8) & 0xff);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053246_w((offset<<1) + 1,data & 0xff);
 	}
 	
@@ -3899,17 +3874,17 @@ public class konamiic
 		int offx = (short)((K053246_regs[0] << 8) | K053246_regs[1]);
 		int offy = (short)((K053246_regs[2] << 8) | K053246_regs[3]);
 	
-		int solidpens = K053247_gfx.color_granularity - 1;
-		int screen_width = Machine.drv.screen_width;
+		int solidpens = K053247_gfx->color_granularity - 1;
+		int screen_width = Machine->drv->screen_width;
 	
 		/*
 			safeguard older drivers missing any of the following video attributes:
 	
 			VIDEO_NEEDS_6BITS_PER_GUN | VIDEO_RGB_DIRECT | VIDEO_HAS_SHADOWS | VIDEO_HAS_HIGHLIGHTS
 		*/
-		if (Machine.drv.video_attributes & VIDEO_HAS_SHADOWS)
+		if (Machine->drv->video_attributes & VIDEO_HAS_SHADOWS)
 		{
-			if (Machine.color_depth == 32 && (Machine.drv.video_attributes & VIDEO_HAS_HIGHLIGHTS))
+			if (Machine->color_depth == 32 && (Machine->drv->video_attributes & VIDEO_HAS_HIGHLIGHTS))
 				shdmask = 3; // enable all shadows and highlights
 			else
 				shdmask = 0; // enable default shadows
@@ -4012,18 +3987,18 @@ public class konamiic
 			/* adjust the offsets to draw it correctly. Simpsons does this all the time. */
 			xa = 0;
 			ya = 0;
-			if ((code & 0x01) != 0) xa += 1;
-			if ((code & 0x02) != 0) ya += 1;
-			if ((code & 0x04) != 0) xa += 2;
-			if ((code & 0x08) != 0) ya += 2;
-			if ((code & 0x10) != 0) xa += 4;
-			if ((code & 0x20) != 0) ya += 4;
+			if (code & 0x01) xa += 1;
+			if (code & 0x02) ya += 1;
+			if (code & 0x04) xa += 2;
+			if (code & 0x08) ya += 2;
+			if (code & 0x10) xa += 4;
+			if (code & 0x20) ya += 4;
 			code &= ~0x3f;
 	
 			oy = (short)K053247_ram[offs+2];
 			ox = (short)K053247_ram[offs+3];
 	
-			if (K053247_wraparound != 0)
+			if (K053247_wraparound)
 			{
 				offx &= 0x3ff;
 				offy &= 0x3ff;
@@ -4037,11 +4012,11 @@ public class konamiic
 			  >0x40 reduce (0x80 = half size)
 			*/
 			y = zoomy = K053247_ram[offs+4] & 0x3ff;
-			if (zoomy != 0) zoomy = (0x400000+(zoomy>>1)) / zoomy; else zoomy = 0x800000;
+			if (zoomy) zoomy = (0x400000+(zoomy>>1)) / zoomy; else zoomy = 0x800000;
 			if (!(temp & 0x4000))
 			{
 				x = zoomx = K053247_ram[offs+5] & 0x3ff;
-				if (zoomx != 0) zoomx = (0x400000+(zoomx>>1)) / zoomx;
+				if (zoomx) zoomx = (0x400000+(zoomx>>1)) / zoomx;
 				else zoomx = 0x800000;
 			}
 			else { zoomx = zoomy; x = y; }
@@ -4059,7 +4034,7 @@ public class konamiic
 			{
 				zoomx >>= 1;		// Fix sprite width to HALF size
 				ox = (ox >> 1) + 1;	// Fix sprite draw position
-				if (flipscreenx != 0) ox += screen_width;
+				if (flipscreenx) ox += screen_width;
 				nozoom = 0;
 			}
 			else
@@ -4068,7 +4043,7 @@ public class konamiic
 			flipx = temp & 0x1000;
 			flipy = temp & 0x2000;
 			mirrorx = shadow & 0x4000;
-			if (mirrorx != 0) flipx = 0; // documented and confirmed
+			if (mirrorx) flipx = 0; // documented and confirmed
 			mirrory = shadow & 0x8000;
 	
 			if (color == -1)
@@ -4108,24 +4083,24 @@ public class konamiic
 				zoomx = zoomx >> 1;	// Fix sprite width to HALF size
 				ox = (ox >> 1) + 1;	// Fix sprite draw position
 	
-				if (flipscreenx != 0)
+				if (flipscreenx)
 					ox = ox + screen_width;
 			}
 	
 	
-			if (flipscreenx != 0)
+			if (flipscreenx)
 			{
 				ox = -ox;
-				if (mirrorx == 0) flipx = NOT(flipx);
+				if (!mirrorx) flipx = NOT(flipx);
 			}
-			if (flipscreeny != 0)
+			if (flipscreeny)
 			{
 				oy = -oy;
-				if (mirrory == 0) flipy = NOT(flipy);
+				if (!mirrory) flipy = NOT(flipy);
 			}
 	
 			// apply wrapping and global offsets
-			if (K053247_wraparound != 0)
+			if (K053247_wraparound)
 			{
 				ox = ( ox - offx) & 0x3ff;
 				oy = (-oy - offy) & 0x3ff;
@@ -4160,7 +4135,7 @@ public class konamiic
 					sx = ox + ((zoomx * x + (1<<11)) >> 12);
 					zw = (ox + ((zoomx * (x+1) + (1<<11)) >> 12)) - sx;
 					c = code;
-					if (mirrorx != 0)
+					if (mirrorx)
 					{
 						if ((flipx == 0) ^ ((x<<1) < w))
 						{
@@ -4176,11 +4151,11 @@ public class konamiic
 					}
 					else
 					{
-						if (flipx != 0) c += xoffset[(w-1-x+xa)&7];
+						if (flipx) c += xoffset[(w-1-x+xa)&7];
 						else c += xoffset[(x+xa)&7];
 						fx = flipx;
 					}
-					if (mirrory != 0)
+					if (mirrory)
 					{
 						if ((flipy == 0) ^ ((y<<1) >= h))
 						{
@@ -4196,12 +4171,12 @@ public class konamiic
 					}
 					else
 					{
-						if (flipy != 0) c += yoffset[(h-1-y+ya)&7];
+						if (flipy) c += yoffset[(h-1-y+ya)&7];
 						else c += yoffset[(y+ya)&7];
 						fy = flipy;
 					}
 	
-					if (nozoom != 0)
+					if (nozoom)
 					{
 						pdrawgfx(bitmap,K053247_gfx,
 								c,
@@ -4223,7 +4198,7 @@ public class konamiic
 	
 					if (mirrory && h == 1)  /* Simpsons shadows */
 					{
-						if (nozoom != 0)
+						if (nozoom)
 						{
 							pdrawgfx(bitmap,K053247_gfx,
 									c,
@@ -4309,7 +4284,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -4334,7 +4309,7 @@ public class konamiic
 			charlayout.total = memory_region_length(gfx_memory_region) / 128;
 	
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+			Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
 		}
 		else if (bpp == 7 || bpp == 8)
 		{
@@ -4360,7 +4335,7 @@ public class konamiic
 			else for (i = 0;i < 8;i++) charlayout.planeoffset[i] = i;
 	
 			/* decode the graphics */
-			Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
+			Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region),&charlayout);
 		}
 		else
 		{
@@ -4368,19 +4343,19 @@ public class konamiic
 			return 1;
 		}
 	
-		if (!Machine.gfx[gfx_index])
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / (1 << bpp);
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / (1 << bpp);
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / (1 << bpp);
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / (1 << bpp);
 		}
 	
 		K051316_memory_region[chip] = gfx_memory_region;
@@ -4430,18 +4405,15 @@ public class konamiic
 		return K051316_ram[chip][offset];
 	}
 	
-	public static ReadHandlerPtr K051316_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_r(0, offset);
 	} };
 	
-	public static ReadHandlerPtr K051316_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_r(1, offset);
 	} };
 	
-	public static ReadHandlerPtr K051316_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_r(2, offset);
 	} };
 	
@@ -4455,18 +4427,15 @@ public class konamiic
 		}
 	}
 	
-	public static WriteHandlerPtr K051316_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_w(0,offset,data);
 	} };
 	
-	public static WriteHandlerPtr K051316_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_w(1,offset,data);
 	} };
 	
-	public static WriteHandlerPtr K051316_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_w(2,offset,data);
 	} };
 	
@@ -4492,18 +4461,15 @@ public class konamiic
 		}
 	}
 	
-	public static ReadHandlerPtr K051316_rom_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_rom_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_rom_r(0,offset);
 	} };
 	
-	public static ReadHandlerPtr K051316_rom_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_rom_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_rom_r(1,offset);
 	} };
 	
-	public static ReadHandlerPtr K051316_rom_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051316_rom_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return K051316_rom_r(2,offset);
 	} };
 	
@@ -4515,18 +4481,15 @@ public class konamiic
 	//if (offset >= 0x0c) logerror("%04x: write %02x to 051316 reg %x\n",activecpu_get_pc(),data,offset);
 	}
 	
-	public static WriteHandlerPtr K051316_ctrl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_ctrl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_ctrl_w(0,offset,data);
 	} };
 	
-	public static WriteHandlerPtr K051316_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_ctrl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_ctrl_w(1,offset,data);
 	} };
 	
-	public static WriteHandlerPtr K051316_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051316_ctrl_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K051316_ctrl_w(2,offset,data);
 	} };
 	
@@ -4630,25 +4593,25 @@ public class konamiic
 			{
 				my_clip.min_x = ctrl[0x08] + K053936_offset[chip][0]+2;
 				my_clip.max_x = ctrl[0x09] + K053936_offset[chip][0]+2 - 1;
-				if (my_clip.min_x < cliprect.min_x)
-					my_clip.min_x = cliprect.min_x;
-				if (my_clip.max_x > cliprect.max_x)
-					my_clip.max_x = cliprect.max_x;
+				if (my_clip.min_x < cliprect->min_x)
+					my_clip.min_x = cliprect->min_x;
+				if (my_clip.max_x > cliprect->max_x)
+					my_clip.max_x = cliprect->max_x;
 	
 				y = ctrl[0x0a] + K053936_offset[chip][1]-2;
-				if (y < cliprect.min_y)
-					y = cliprect.min_y;
+				if (y < cliprect->min_y)
+					y = cliprect->min_y;
 				maxy = ctrl[0x0b] + K053936_offset[chip][1]-2 - 1;
-				if (maxy > cliprect.max_y)
-					maxy = cliprect.max_y;
+				if (maxy > cliprect->max_y)
+					maxy = cliprect->max_y;
 			}
 			else
 			{
-				my_clip.min_x = cliprect.min_x;
-				my_clip.max_x = cliprect.max_x;
+				my_clip.min_x = cliprect->min_x;
+				my_clip.max_x = cliprect->max_x;
 	
-				y = cliprect.min_y;
-				maxy = cliprect.max_y;
+				y = cliprect->min_y;
+				maxy = cliprect->max_y;
 			}
 	
 			while (y <= maxy)
@@ -4791,8 +4754,7 @@ public class konamiic
 		K053251_tilemaps_set = (ci0 || ci1 || ci2 || ci3 || ci4) ? 1 : 0;
 	}
 	
-	public static WriteHandlerPtr K053251_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K053251_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i,newind;
 	
 		data &= 0x3f;
@@ -4815,7 +4777,7 @@ public class konamiic
 					}
 				}
 	
-				if (K053251_tilemaps_set == 0)
+				if (!K053251_tilemaps_set)
 					tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 			}
 			else if (offset == 10)
@@ -4833,7 +4795,7 @@ public class konamiic
 					}
 				}
 	
-				if (K053251_tilemaps_set == 0)
+				if (!K053251_tilemaps_set)
 					tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 			}
 		}
@@ -4841,13 +4803,13 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053251_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K053251_w(offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( K053251_msb_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			K053251_w(offset, (data >> 8) & 0xff);
 	}
 	
@@ -4871,15 +4833,13 @@ public class konamiic
 	
 	static unsigned char K054000_ram[0x20];
 	
-	public static WriteHandlerPtr K054000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K054000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: write %02x to 054000 address %02x\n",activecpu_get_pc(),data,offset);
 	
 		K054000_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr K054000_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K054000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int Acx,Acy,Aax,Aay;
 		int Bcx,Bcy,Bax,Bay;
 	
@@ -4922,7 +4882,7 @@ public class konamiic
 	
 	WRITE16_HANDLER( K054000_lsb_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			K054000_w(offset, data & 0xff);
 	}
 	
@@ -4936,8 +4896,7 @@ public class konamiic
 	
 	static unsigned char K051733_ram[0x20];
 	
-	public static WriteHandlerPtr K051733_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr K051733_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: write %02x to 051733 address %02x\n",activecpu_get_pc(),data,offset);
 	
 		K051733_ram[offset] = data;
@@ -4960,8 +4919,7 @@ public class konamiic
 		return i;
 	}
 	
-	public static ReadHandlerPtr K051733_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr K051733_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int op1 = (K051733_ram[0x00] << 8) | K051733_ram[0x01];
 		int op2 = (K051733_ram[0x02] << 8) | K051733_ram[0x03];
 		int op3 = (K051733_ram[0x04] << 8) | K051733_ram[0x05];
@@ -4976,18 +4934,18 @@ public class konamiic
 	
 		switch(offset){
 			case 0x00:
-				if (op2 != 0) return	(op1 / op2) >> 8;
+				if (op2) return	(op1 / op2) >> 8;
 				else return 0xff;
 			case 0x01:
-				if (op2 != 0) return	(op1 / op2) & 0xff;
+				if (op2) return	(op1 / op2) & 0xff;
 				else return 0xff;
 	
 			/* this is completely unverified */
 			case 0x02:
-				if (op2 != 0) return	(op1 % op2) >> 8;
+				if (op2) return	(op1 % op2) >> 8;
 				else return 0xff;
 			case 0x03:
-				if (op2 != 0) return	(op1 % op2) & 0xff;
+				if (op2) return	(op1 % op2) & 0xff;
 				else return 0xff;
 	
 			case 0x04:
@@ -5229,7 +5187,7 @@ public class konamiic
 	{
 		int bank;
 	
-		if (K054157_uses_tile_banks != 0)	/* asterix */
+		if (K054157_uses_tile_banks)	/* asterix */
 			bank = (K054157_regs[0x1a] >> 8) | (K054157_regs[0x1b] << 4) | (K054157_cur_tile_bank << 6);
 		else	/* everything else */
 			bank = K054157_regs[0x1a] | (K054157_regs[0x1b] << 16);
@@ -5255,7 +5213,7 @@ public class konamiic
 	
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == 0)
+			if (Machine->gfx[gfx_index] == 0)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return 1;
@@ -5268,20 +5226,20 @@ public class konamiic
 		charlayout.planeoffset[3] = plane3;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout);
+		if (!Machine->gfx[gfx_index])
 			return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
 	
 		K054157_memory_region = gfx_memory_region;
@@ -5317,7 +5275,7 @@ public class konamiic
 		   || !K054157_tilemaps[0] || !K054157_tilemaps[1] || !K054157_tilemaps[2] || !K054157_tilemaps[3])
 			return 1;
 	
-		if (big != 0) {
+		if(big) {
 			K054157_rambasel[0] = K054157_rambase + 0x2000;
 			K054157_rambasel[1] = K054157_rambase + 0x6000;
 			K054157_rambasel[2] = K054157_rambase + 0x3000;
@@ -5507,7 +5465,7 @@ public class konamiic
 	
 		res = (K054157_regs[0x1c] >> (bits << 2)) & 0x0f;
 	
-		if (K054157_uses_tile_banks != 0)	/* Asterix */
+		if (K054157_uses_tile_banks)	/* Asterix */
 			res |= K054157_cur_tile_bank << 4;
 	
 		return res;
@@ -5569,8 +5527,8 @@ public class konamiic
 	static int K056832_LSRAMPage[4][2];
 	static int K056832_X[4];	// 0..3 left
 	static int K056832_Y[4];	// 0..3 top
-	static int K056832_W[4];	// 0..3 width  . 1..4 pages
-	static int K056832_H[4];	// 0..3 height . 1..4 pages
+	static int K056832_W[4];	// 0..3 width  -> 1..4 pages
+	static int K056832_H[4];	// 0..3 height -> 1..4 pages
 	static int K056832_dx[4];	// scroll
 	static int K056832_dy[4];	// scroll
 	static UINT32 K056832_LineDirty[K056832_PAGE_COUNT][8];
@@ -5664,7 +5622,7 @@ public class konamiic
 				for (c=0; c<colspan; c++)
 				{
 					pageIndex = (((rowstart + r) & 3) << 2) + ((colstart + c) & 3);
-	if (stricmp(Machine.gamedrv.source_file+12, "djmain.c") || K056832_LayerAssociatedWithPage[pageIndex] == -1) //*
+	if (stricmp(Machine->gamedrv->source_file+12, "djmain.c") || K056832_LayerAssociatedWithPage[pageIndex] == -1) //*
 						K056832_LayerAssociatedWithPage[pageIndex] = setlayer;
 				}
 			}
@@ -5695,7 +5653,7 @@ public class konamiic
 	
 		pMem  = &K056832_videoram[(pageIndex<<12)+(tile_index<<1)];
 	
-		if (K056832_LayerAssociation != 0)
+		if (K056832_LayerAssociation)
 		{
 			layer = K056832_LayerAssociatedWithPage[pageIndex];
 			if (layer == -1) layer = 0;	// use layer 0's palette info for unmapped pages
@@ -5712,8 +5670,8 @@ public class konamiic
 		// normalize the flip/palette flags
 		// see the tables on pages 4 and 10 of the Pt. 2-3 "VRAM" manual
 		// for a description of these bits "FBIT0" and "FBIT1"
-		flip &= attr>>smptr.flips & 3;
-		attr  = (attr & smptr.palm1) | (attr>>smptr.pals2 & smptr.palm2);
+		flip &= attr>>smptr->flips & 3;
+		attr  = (attr & smptr->palm1) | (attr>>smptr->pals2 & smptr->palm2);
 		tile_info.flags = TILE_FLIPYX(flip);
 	
 		(*K056832_callback)(layer, &code, &attr);
@@ -5818,7 +5776,7 @@ public class konamiic
 		/* find first empty slot to decode gfx */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
 		{
-			if (Machine.gfx[gfx_index] == 0) break;
+			if (Machine->gfx[gfx_index] == 0) break;
 		}
 		if (gfx_index == MAX_GFX_ELEMENTS) return 1;
 	
@@ -5831,7 +5789,7 @@ public class konamiic
 				charlayout4.total = memory_region_length(gfx_memory_region) / (i*4);
 	
 				/* decode the graphics */
-				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4);
+				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4);
 				break;
 	
 			case K056832_BPP_5:
@@ -5839,7 +5797,7 @@ public class konamiic
 				charlayout5.total = memory_region_length(gfx_memory_region) / (i*5);
 	
 				/* decode the graphics */
-				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout5);
+				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout5);
 				break;
 	
 			case K056832_BPP_6:
@@ -5847,7 +5805,7 @@ public class konamiic
 				charlayout6.total = memory_region_length(gfx_memory_region) / (i*6);
 	
 				/* decode the graphics */
-				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout6);
+				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout6);
 				break;
 	
 			case K056832_BPP_8:
@@ -5855,32 +5813,32 @@ public class konamiic
 				charlayout8.total = memory_region_length(gfx_memory_region) / (i*8);
 	
 				/* decode the graphics */
-				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout8);
+				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout8);
 				break;
 	
 			case K056832_BPP_4dj:
 				charlayout4dj.total = memory_region_length(gfx_memory_region) / (i*4);
 	
 				/* decode the graphics */
-				Machine.gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4dj);
+				Machine->gfx[gfx_index] = decodegfx(memory_region(gfx_memory_region), &charlayout4dj);
 				break;
 		}
 	
 		/* make sure the decode went OK */
-		if (!Machine.gfx[gfx_index]) return 1;
+		if (!Machine->gfx[gfx_index]) return 1;
 	
 		/* set the color information */
-		if (Machine.drv.color_table_len)
+		if (Machine->drv->color_table_len)
 		{
-			Machine.gfx[gfx_index].colortable = Machine.remapped_colortable;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.color_table_len / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->color_table_len / 16;
 		}
 		else
 		{
-			Machine.gfx[gfx_index].colortable = Machine.pens;
-			Machine.gfx[gfx_index].total_colors = Machine.drv.total_colors / 16;
+			Machine->gfx[gfx_index]->colortable = Machine->pens;
+			Machine->gfx[gfx_index]->total_colors = Machine->drv->total_colors / 16;
 		}
-		Machine.gfx[gfx_index].color_granularity = 16; /* override */
+		Machine->gfx[gfx_index]->color_granularity = 16; /* override */
 	
 		K056832_memory_region = gfx_memory_region;
 		K056832_gfxnum = gfx_index;
@@ -5995,7 +5953,7 @@ public class konamiic
 		// get the starting offset of the proper word inside the block
 		base += (offset % blksize) * 2;
 	
-		if (K056832_rom_half != 0)
+		if (K056832_rom_half)
 		{
 			ret = rombase[base+1];
 		}
@@ -6093,10 +6051,10 @@ public class konamiic
 		ofs16 += (K056832_CurGfxBank*5*1024);
 		ofs8 += (K056832_CurGfxBank*10*1024);
 	
-	//	if (offset == 0)
+	//	if (!offset)
 	//		printf("CurGfxBank = %x\n", K056832_CurGfxBank);
 	
-		if (K056832_rombase == 0)
+		if (!K056832_rombase)
 		{
 			K056832_rombase = memory_region(K056832_memory_region);
 		}
@@ -6207,8 +6165,8 @@ public class konamiic
 					if ((new_data & 0x30) != (old_data & 0x30))
 					{
 						flip = 0;
-						if ((new_data & 0x20) != 0) flip |= TILEMAP_FLIPY;
-						if ((new_data & 0x10) != 0) flip |= TILEMAP_FLIPX;
+						if (new_data & 0x20) flip |= TILEMAP_FLIPY;
+						if (new_data & 0x10) flip |= TILEMAP_FLIPX;
 						for (i=0; i<K056832_PAGE_COUNT; i++)
 						{
 							tilemap_set_flip(K056832_tilemap[i], flip);
@@ -6301,7 +6259,7 @@ public class konamiic
 	WRITE32_HANDLER( K056832_long_w )
 	{
 		// GX does access of all 3 widths (8/16/32) so we can't do the
-		// if (ACCESSING_xxx != 0) trick.  in particular, 8-bit writes
+		// if (ACCESSING_xxx) trick.  in particular, 8-bit writes
 		// are used to the tilemap bank register.
 		offset <<= 1;
 		K056832_word_w(offset, data>>16, mem_mask >> 16);
@@ -6315,11 +6273,11 @@ public class konamiic
 	
 	WRITE32_HANDLER( K056832_b_long_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			K056832_b_word_w(offset<<1, data>>16, mem_mask >> 16);
 		}
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 		{
 			K056832_b_word_w((offset<<1)+1, data, mem_mask);
 		}
@@ -6355,7 +6313,7 @@ public class konamiic
 		UINT8 code_transparent, code_opaque;
 	
 		if (K056832_PageTileMode[page]) return(0);
-		if (K056832_linemap_enabled == 0) return(1);
+		if (!K056832_linemap_enabled) return(1);
 	
 		tilemap = K056832_tilemap[page];
 		pixmap  = K056832_pixmap[page];
@@ -6365,7 +6323,7 @@ public class konamiic
 		dirty = K056832_LineDirty[page];
 		all_dirty = K056832_AllLinesDirty[page];
 	
-		if (all_dirty != 0)
+		if (all_dirty)
 		{
 			dirty[7]=dirty[6]=dirty[5]=dirty[4]=dirty[3]=dirty[2]=dirty[1]=dirty[0] = 0;
 			K056832_AllLinesDirty[page] = 0;
@@ -6382,18 +6340,18 @@ public class konamiic
 			if (!(dirty[0]|dirty[1]|dirty[2]|dirty[3]|dirty[4]|dirty[5]|dirty[6]|dirty[7])) return(0);
 		}
 	
-		pal_ptr    = Machine.remapped_colortable;
-		src_gfx    = Machine.gfx[K056832_gfxnum];
-		src_base   = src_gfx.gfxdata;
-		src_pitch  = src_gfx.line_modulo;
-		src_modulo = src_gfx.char_modulo;
-		xpr_ptr    = (UINT8*)xprmap.base + LINE_WIDTH;
-		dst_ptr    = (UINT16*)pixmap.base + LINE_WIDTH;
-		dst_pitch  = pixmap.rowpixels;
+		pal_ptr    = Machine->remapped_colortable;
+		src_gfx    = Machine->gfx[K056832_gfxnum];
+		src_base   = src_gfx->gfxdata;
+		src_pitch  = src_gfx->line_modulo;
+		src_modulo = src_gfx->char_modulo;
+		xpr_ptr    = (UINT8*)xprmap->base + LINE_WIDTH;
+		dst_ptr    = (UINT16*)pixmap->base + LINE_WIDTH;
+		dst_pitch  = pixmap->rowpixels;
 	
 		for (line=0; line<256; xpr_ptr+=dst_pitch, dst_ptr+=dst_pitch, line++)
 		{
-			if (all_dirty == 0)
+			if (!all_dirty)
 			{
 				offs = line >> 5;
 				mask = 1 << (line & 0x1f);
@@ -6459,16 +6417,16 @@ public class konamiic
 		height = rowspan * K056832_PAGE_HEIGHT;
 		width  = colspan * K056832_PAGE_WIDTH;
 	
-		cminx = cliprect.min_x;
-		cmaxx = cliprect.max_x;
-		cminy = cliprect.min_y;
-		cmaxy = cliprect.max_y;
+		cminx = cliprect->min_x;
+		cmaxx = cliprect->max_x;
+		cminy = cliprect->min_y;
+		cmaxy = cliprect->max_y;
 	
 		// flip correction registers
 		if ((flipy = K056832_regs[0] & 0x20))
 		{
 			corr = K056832_regs[0x3c/2];
-			if ((corr & 0x400) != 0)
+			if (corr & 0x400)
 				corr |= 0xfffff800;
 		} else corr = 0;
 		dy += corr;
@@ -6477,7 +6435,7 @@ public class konamiic
 		if ((flipx = K056832_regs[0] & 0x10))
 		{
 			corr = K056832_regs[0x3a/2];
-			if ((corr & 0x800) != 0)
+			if (corr & 0x800)
 				corr |= 0xfffff000;
 		} else corr = 0;
 		corr -= K056832_LayerOffset[layer][0];
@@ -6510,7 +6468,7 @@ public class konamiic
 				ram16[0] = 0;
 				ram16[1] = dx;
 		}
-		if (flipy != 0) sdat_adv = -sdat_adv;
+		if (flipy) sdat_adv = -sdat_adv;
 	
 		last_active = K056832_ActiveLayer;
 		new_colorbase = (K056832_UpdateMode) ? K055555_get_palette_index(layer) : 0;
@@ -6522,7 +6480,7 @@ public class konamiic
 			sy = ay;
 			ty = r * K056832_PAGE_HEIGHT;
 	
-			if (flipy == 0)
+			if (NOT(flipy))
 			{
 				// handle bottom-edge wraparoundness and cull off-screen tilemaps
 				if ((r == 0) && (sy > height - K056832_PAGE_HEIGHT)) sy -= height;
@@ -6578,7 +6536,7 @@ public class konamiic
 			cliph = line_endy = K056832_PAGE_HEIGHT;
 			clipy = line_starty = 0;
 	
-			if (flipy == 0)
+			if (NOT(flipy))
 				sdat_start = dy;
 			else
 				/*
@@ -6601,7 +6559,7 @@ public class konamiic
 		{
 			pageIndex = (((rowstart + r) & 3) << 2) + ((colstart + c) & 3);
 	
-			if (K056832_LayerAssociation != 0)
+			if (K056832_LayerAssociation)
 			{
 				if (K056832_LayerAssociatedWithPage[pageIndex] != layer) continue;
 			}
@@ -6611,7 +6569,7 @@ public class konamiic
 				K056832_ActiveLayer = layer;
 			}
 	
-			if (K056832_UpdateMode != 0)
+			if (K056832_UpdateMode)
 			{
 				if (last_colorbase[pageIndex] != new_colorbase)
 				{
@@ -6620,7 +6578,7 @@ public class konamiic
 				}
 			}
 			else
-				if (pageIndex == 0) K056832_ActiveLayer = 0;
+				if (!pageIndex) K056832_ActiveLayer = 0;
 	
 			if (K056832_update_linemap(bitmap, pageIndex, flags)) continue;
 	
@@ -6646,7 +6604,7 @@ public class konamiic
 	
 				dx = ((int)pScrollData[sdat_offs]<<16 | (int)pScrollData[sdat_offs+1]) + corr;
 	
-				if (last_dx == dx) { if (last_visible != 0) goto LINE_SHORTCIRCUIT; continue; }
+				if (last_dx == dx) { if (last_visible) goto LINE_SHORTCIRCUIT; continue; }
 				last_dx = dx;
 	
 				if (colspan > 1)
@@ -6657,7 +6615,7 @@ public class konamiic
 					//tx = c * K056832_PAGE_WIDTH;
 					tx = c << 9;
 	
-					if (flipx == 0)
+					if (NOT(flipx))
 					{
 						// handle right-edge wraparoundness and cull off-screen tilemaps
 						if ((c == 0) && (sx > width - K056832_PAGE_WIDTH)) sx -= width;
@@ -6735,16 +6693,16 @@ public class konamiic
 		height = rowspan * K056832_PAGE_HEIGHT;
 		width  = colspan * K056832_PAGE_WIDTH;
 	
-		cminx = cliprect.min_x;
-		cmaxx = cliprect.max_x;
-		cminy = cliprect.min_y;
-		cmaxy = cliprect.max_y;
+		cminx = cliprect->min_x;
+		cmaxx = cliprect->max_x;
+		cminy = cliprect->min_y;
+		cmaxy = cliprect->max_y;
 	
 		// flip correction registers
 		if ((flipy = K056832_regs[0] & 0x20))
 		{
 			corr = K056832_regs[0x3c/2];
-			if ((corr & 0x400) != 0)
+			if (corr & 0x400)
 				corr |= 0xfffff800;
 		} else corr = 0;
 		dy += corr;
@@ -6753,7 +6711,7 @@ public class konamiic
 		if ((flipx = K056832_regs[0] & 0x10))
 		{
 			corr = K056832_regs[0x3a/2];
-			if ((corr & 0x800) != 0)
+			if (corr & 0x800)
 				corr |= 0xfffff000;
 		} else corr = 0;
 		corr -= K056832_LayerOffset[layer][0];
@@ -6786,7 +6744,7 @@ public class konamiic
 				ram16[0] = 0;
 				ram16[1] = dx;
 		}
-		if (flipy != 0) sdat_adv = -sdat_adv;
+		if (flipy) sdat_adv = -sdat_adv;
 	
 		last_active = K056832_ActiveLayer;
 		new_colorbase = (K056832_UpdateMode) ? K055555_get_palette_index(layer) : 0;
@@ -6858,7 +6816,7 @@ public class konamiic
 			else
 				pageIndex = (((rowstart + r) & 3) << 2) + ((colstart + c) & 3);
 	
-			if (K056832_LayerAssociation != 0)
+			if (K056832_LayerAssociation)
 			{
 				if (K056832_LayerAssociatedWithPage[pageIndex] != layer) continue;
 			}
@@ -6868,7 +6826,7 @@ public class konamiic
 				K056832_ActiveLayer = layer;
 			}
 	
-			if (K056832_UpdateMode != 0)
+			if (K056832_UpdateMode)
 			{
 				if (last_colorbase[pageIndex] != new_colorbase)
 				{
@@ -6877,7 +6835,7 @@ public class konamiic
 				}
 			}
 			else
-				if (pageIndex == 0) K056832_ActiveLayer = 0;
+				if (!pageIndex) K056832_ActiveLayer = 0;
 	
 			if (K056832_update_linemap(bitmap, pageIndex, flags)) continue;
 	
@@ -6903,7 +6861,7 @@ public class konamiic
 	
 				dx = ((int)pScrollData[sdat_offs]<<16 | (int)pScrollData[sdat_offs+1]) + corr;
 	
-				if (last_dx == dx) { if (last_visible != 0) goto LINE_SHORTCIRCUIT; continue; }
+				if (last_dx == dx) { if (last_visible) goto LINE_SHORTCIRCUIT; continue; }
 				last_dx = dx;
 	
 				if (colspan > 1)
@@ -6914,7 +6872,7 @@ public class konamiic
 					//tx = c * K056832_PAGE_WIDTH;
 					tx = c << 9;
 	
-					if (flipx == 0)
+					if (NOT(flipx))
 					{
 						// handle right-edge wraparoundness and cull off-screen tilemaps
 						if ((c == 0) && (sx > width - K056832_PAGE_WIDTH)) sx -= width;
@@ -7173,11 +7131,11 @@ public class konamiic
 		bgcolor |= K054338_read_register(K338_REG_BGC_GB);
 	
 		/* and fill the screen with it */
-		for (y = 0; y < bitmap.height; y++)
+		for (y = 0; y < bitmap->height; y++)
 		{
-			pLine = (UINT32 *)bitmap.base;
-			pLine += ((bitmap.rowbytes / 4)*y);
-			for (x = 0; x < bitmap.width; x++)
+			pLine = (UINT32 *)bitmap->base;
+			pLine += ((bitmap->rowbytes / 4)*y);
+			for (x = 0; x < bitmap->width; x++)
 				*pLine++ = bgcolor;
 		}
 	}
@@ -7190,19 +7148,19 @@ public class konamiic
 		UINT32 *dst_ptr, *pal_ptr;
 		register int bgcolor;
 	
-		clipx = Machine.visible_area.min_x & ~3;
-		clipy = Machine.visible_area.min_y;
-		clipw = (Machine.visible_area.max_x - clipx + 4) & ~3;
-		cliph = Machine.visible_area.max_y - clipy + 1;
+		clipx = Machine->visible_area.min_x & ~3;
+		clipy = Machine->visible_area.min_y;
+		clipw = (Machine->visible_area.max_x - clipx + 4) & ~3;
+		cliph = Machine->visible_area.max_y - clipy + 1;
 	
-		dst_ptr = (UINT32 *)bitmap.line[clipy];
-		dst_pitch = bitmap.rowpixels;
+		dst_ptr = (UINT32 *)bitmap->line[clipy];
+		dst_pitch = bitmap->rowpixels;
 		dst_ptr += clipx;
 	
 		BGC_SET = 0;
 		pal_ptr = paletteram32;
 	
-		if (mode == 0)
+		if (!mode)
 		{
 			// single color output from CLTC
 			bgcolor = (int)(k54338_regs[K338_REG_BGC_R]&0xff)<<16 | (int)k54338_regs[K338_REG_BGC_GB];
@@ -7217,7 +7175,7 @@ public class konamiic
 			if (!(BGC_SET & 2)) { bgcolor = *pal_ptr; mode = 0; } else bgcolor = 0;
 		}
 	
-		if (mode == 0)
+		if (!mode)
 		{
 			// single color fill
 			dst_ptr += clipw;
@@ -7281,7 +7239,7 @@ public class konamiic
 		mixset = regs[K338_REG_PBLEND + (pblend>>1 & 1)] >> (~pblend<<3 & 8);
 		mixlv  = mixset & 0x1f;
 	
-		if (K054338_alphainverted != 0) mixlv = 0x1f - mixlv;
+		if (K054338_alphainverted) mixlv = 0x1f - mixlv;
 	
 		if (!(mixset & 0x20))
 		{
@@ -7290,7 +7248,7 @@ public class konamiic
 	    }
 		else
 		{
-			if (mixpri == 0)
+			if (!mixpri)
 			{
 				// source x alpha  +  target (clipped at 255)
 			}
@@ -7351,8 +7309,7 @@ public class konamiic
 		K053250_info.chip[chip].offsy = offsy;
 	}
 	
-	// The DMA process should be instantaneous but since rendering in MAME is performed at public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	// the K053250 memory must be buffered to maintain visual integrity.
+	// The DMA process should be instantaneous but since rendering in MAME is performed at public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)// the K053250 memory must be buffered to maintain visual integrity.
 	void K053250_dma(int chip, int limiter)
 	{
 		struct K053250_CHIPTAG *chip_ptr;
@@ -7420,7 +7377,7 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053250_0_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// start LVC DMA transfer at the falling edge of control register's bit1
 			if (offset == 4 && !(data & 2) && (K053250_info.chip[0].regs[4] & 2)) K053250_dma(0, 1);
@@ -7453,7 +7410,7 @@ public class konamiic
 	
 	WRITE16_HANDLER( K053250_1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// start LVC DMA transfer at the falling edge of control register's bit1
 			if (offset == 4 && !(data & 2) && (K053250_info.chip[1].regs[4] & 2)) K053250_dma(1, 1);
@@ -7488,12 +7445,12 @@ public class konamiic
 	
 	// old code (for reference; do not remove)
 	#define ADJUST_FOR_ORIENTATION(type, orientation, bitmapi, bitmapp, x, y)	\
-		int dy = ((type *)bitmap.line[1]) - ((type *)bitmap.line[0]);			\
-		int dyp = ((UINT8 *)bitmapp.line[1]) - ((UINT8 *)bitmapp.line[0]);	\
-		type *dsti = (type *)bitmapi.line[0] + y * dy + x;						\
-		UINT8 *dstp = (UINT8 *)bitmapp.line[0] + y * dyp + x;					\
+		int dy = ((type *)bitmap->line[1]) - ((type *)bitmap->line[0]);			\
+		int dyp = ((UINT8 *)bitmapp->line[1]) - ((UINT8 *)bitmapp->line[0]);	\
+		type *dsti = (type *)bitmapi->line[0] + y * dy + x;						\
+		UINT8 *dstp = (UINT8 *)bitmapp->line[0] + y * dyp + x;					\
 		int xadv = 1;															\
-		if (orientation != 0)														\
+		if (orientation)														\
 		{																		\
 			int tx = x, ty = y, temp;											\
 			if ((orientation) & ORIENTATION_SWAP_XY)							\
@@ -7503,17 +7460,17 @@ public class konamiic
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_X)								\
 			{																	\
-				tx = bitmap.width - 1 - tx;									\
+				tx = bitmap->width - 1 - tx;									\
 				if (!((orientation) & ORIENTATION_SWAP_XY)) xadv = -xadv;		\
 			}																	\
 			if ((orientation) & ORIENTATION_FLIP_Y)								\
 			{																	\
-				ty = bitmap.height - 1 - ty;									\
+				ty = bitmap->height - 1 - ty;									\
 				if ((orientation) & ORIENTATION_SWAP_XY) xadv = -xadv;			\
 			}																	\
 			/* can't lookup line because it may be negative! */					\
-			dsti = ((type *)bitmapi.line[0]) + dy * ty + tx;					\
-			dstp = ((UINT8 *)bitmapp.line[0]) + dyp * ty + tx;					\
+			dsti = ((type *)bitmapi->line[0]) + dy * ty + tx;					\
+			dstp = ((UINT8 *)bitmapp->line[0]) + dyp * ty + tx;					\
 		}
 	
 	static void K053250_pdraw_scanline8(
@@ -7521,13 +7478,13 @@ public class konamiic
 			const UINT8 *src,pen_t *pens,int transparent_pen,UINT32 orient,int pri)
 	{
 		/* 8bpp destination */
-		if (bitmap.depth == 8)
+		if (bitmap->depth == 8)
 		{
 			/* adjust in case we're oddly oriented */
 			ADJUST_FOR_ORIENTATION(UINT8, orient, bitmap, priority_bitmap, x, y);
 	
 			/* with pen lookups */
-			if (pens != 0)
+			if (pens)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -7578,12 +7535,12 @@ public class konamiic
 		}
 	
 		/* 16bpp destination */
-		else if(bitmap.depth == 15 || bitmap.depth == 16)
+		else if(bitmap->depth == 15 || bitmap->depth == 16)
 		{
 			/* adjust in case we're oddly oriented */
 			ADJUST_FOR_ORIENTATION(UINT16, orient, bitmap, priority_bitmap, x, y);
 			/* with pen lookups */
-			if (pens != 0)
+			if (pens)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -7639,7 +7596,7 @@ public class konamiic
 			/* adjust in case we're oddly oriented */
 			ADJUST_FOR_ORIENTATION(UINT32, orient, bitmap, priority_bitmap, x, y);
 			/* with pen lookups */
-			if (pens != 0)
+			if (pens)
 			{
 				if (transparent_pen == -1)
 					while (length--)
@@ -7695,7 +7652,7 @@ public class konamiic
 		static int pmode[2] = {-1,-1};
 		static int kc=-1, kk=0, kxx=-105, kyy=0;
 	
-		const struct rectangle area = Machine.visible_area;
+		const struct rectangle area = Machine->visible_area;
 		data16_t *line;
 		int delta, dim1, dim1_max, dim2_max;
 		UINT32 mask1, mask2;
@@ -7729,11 +7686,11 @@ public class konamiic
 	
 		colorbase <<= 4;
 	
-		if ((orientation & ORIENTATION_SWAP_XY) != 0) {
+		if(orientation & ORIENTATION_SWAP_XY) {
 			dim1_max = area.max_x - area.min_x + 1;
 			dim2_max = area.max_y - area.min_y + 1;
 			// -358 for level 1 boss, huh? -495
-			if ((orientation & ORIENTATION_FLIP_Y) != 0)
+			if(orientation & ORIENTATION_FLIP_Y)
 				delta = 238 - cur_y;
 			else
 				delta = kyy + cur_y;
@@ -7778,7 +7735,7 @@ public class konamiic
 				kxx++;
 			}
 	#if 0
-			if (kx != 0) {
+			if(kx) {
 				UINT16 *l1 = line + ((4*kc) & 0x7ff);
 				usrintf_showmessage("Line %d [%02x] (%04x %04x %04x %04x)", kc,
 									K053250_info.chip[chip].regs[4],
@@ -7788,7 +7745,7 @@ public class konamiic
 									l1[3]);
 			}
 	
-			if (kkc != 0)
+			if(kkc)
 				usrintf_showmessage("(%d, %d)", kxx, kyy);
 	#endif
 		}
@@ -7863,7 +7820,7 @@ public class konamiic
 				if(sp && (rcpos & mask1))
 					rcpos += inc << 9;
 	
-				if ((rcpos & mask1) != 0) {
+				if(rcpos & mask1) {
 					*pixel++ = 0;
 					cpos += inc;
 					continue;
@@ -7871,20 +7828,20 @@ public class konamiic
 	
 				romp = gbase[(((rcpos & mask2)>>7) + start) & 0x7fff];
 	
-				if ((rcpos & 0x40) != 0)
+				if(rcpos & 0x40)
 					romp &= 0xf;
 				else
 					romp >>= 4;
 				*pixel++ = romp;
 				cpos += inc;
 			}
-			if ((orientation & ORIENTATION_SWAP_XY) != 0)
+			if(orientation & ORIENTATION_SWAP_XY)
 				K053250_pdraw_scanline8(bitmap, area.min_y, area.min_x+dim1, dim2_max, scanline,
-								Machine.pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
+								Machine->pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
 								0, orientation, pri);
 			else
 				K053250_pdraw_scanline8(bitmap, area.min_x, area.min_y+dim1, dim2_max, scanline,
-								Machine.pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
+								Machine->pens + ((dim1 == kc ? 0x200 : colorbase) | ((color & 0x0f) << 4)),
 								0, orientation, pri);
 		}
 	}
@@ -7917,17 +7874,17 @@ public class konamiic
 		if (!(orientation & ORIENTATION_SWAP_XY))
 		{
 			flip = orientation & ORIENTATION_FLIP_X;
-			dst_min = cliprect.min_x;
-			dst_max = cliprect.max_x;
+			dst_min = cliprect->min_x;
+			dst_max = cliprect->max_x;
 		}
 		else
 		{
 			flip = orientation & ORIENTATION_FLIP_Y;
-			dst_min = cliprect.min_y;
-			dst_max = cliprect.max_y;
+			dst_min = cliprect->min_y;
+			dst_max = cliprect->max_y;
 		}
 	
-		if (clipmask != 0)
+		if (clipmask)
 		{
 			// reject scanlines that are outside of the target bitmap's right(bottom) clip boundary
 			dst_start = -scroll;
@@ -7935,7 +7892,7 @@ public class konamiic
 	
 			// calculate target length
 			dst_length = clipmask + 1;
-			if (zoom != 0) dst_length = (dst_length << 6) / zoom;
+			if (zoom) dst_length = (dst_length << 6) / zoom;
 	
 			// reject scanlines that are outside of the target bitmap's left(top) clip boundary
 			end_pixel = dst_start + dst_length - 1;
@@ -7966,7 +7923,7 @@ public class konamiic
 				src_fx = FIXPOINT_PRECISION_HALF;
 	
 			// adjust flipped source
-			if (flip != 0)
+			if (flip)
 			{
 				// start from the target's clipped end if the scanline is flipped
 				dst_start = dst_max + dst_min - dst_start - (dst_length-1);
@@ -7984,7 +7941,7 @@ public class konamiic
 			src_fdx = zoom << (FIXPOINT_PRECISION-6);
 	
 			// pre-advance source for the clipped region
-			if (flip == 0)
+			if (!flip)
 				src_fx = (scroll + dst_min) * src_fdx + FIXPOINT_PRECISION_HALF;
 			else
 			{
@@ -7998,16 +7955,16 @@ public class konamiic
 			// calculate target increment for horizontal scanlines which is exactly one
 			dst_adv = 1;
 			dst_offset = dst_length;
-			pri_base = (UINT8 *)priority_bitmap.line[linepos] + dst_start + dst_offset;
-			dst_base = (UINT32 *)bitmap.line[linepos] + dst_start + dst_length;
+			pri_base = (UINT8 *)priority_bitmap->line[linepos] + dst_start + dst_offset;
+			dst_base = (UINT32 *)bitmap->line[linepos] + dst_start + dst_length;
 		}
 		else
 		{
 			// calculate target increment for vertical scanlines which is the bitmap's pitch value
-			dst_adv = bitmap.rowpixels;
+			dst_adv = bitmap->rowpixels;
 			dst_offset= dst_length * dst_adv;
-			pri_base = (UINT8 *)priority_bitmap.line[dst_start] + linepos + dst_offset;
-			dst_base = (UINT32 *)bitmap.line[dst_start] + linepos + dst_offset;
+			pri_base = (UINT8 *)priority_bitmap->line[dst_start] + linepos + dst_offset;
+			dst_base = (UINT32 *)bitmap->line[dst_start] + linepos + dst_offset;
 		}
 	
 	#if 0
@@ -8023,7 +7980,7 @@ public class konamiic
 		pri = (UINT8)priority;
 		dst_offset = -dst_offset; // negate target offset in order to terminated draw loop at zero condition
 	
-		if (pri != 0)
+		if (pri)
 		{
 			// draw scanline and update priority bitmap
 			do
@@ -8031,7 +7988,7 @@ public class konamiic
 				pix_data = src_base[(src_fx>>FIXPOINT_PRECISION) & src_wrapmask];
 				src_fx += src_fdx;
 	
-				if (pix_data != 0)
+				if (pix_data)
 				{
 					pix_data = pal_base[pix_data];
 					pri_base[dst_offset] = pri;
@@ -8048,7 +8005,7 @@ public class konamiic
 				pix_data = src_base[(src_fx>>FIXPOINT_PRECISION) & src_wrapmask];
 				src_fx += src_fdx;
 	
-				if (pix_data != 0)
+				if (pix_data)
 				{
 					dst_base[dst_offset] = pal_base[pix_data];
 				}
@@ -8065,26 +8022,26 @@ public class konamiic
 	#define ADVANCE_SOURCE_OFFSET { src_x = src_fx; src_fx += src_fdx; src_x >>= FIXPOINT_PRECISION; }
 	
 	// draw non-zero pens and update priority bitmap
-	#define DRAWPIXEL_PRIORITY { if (pix_data != 0) { pix_data = pal_base[pix_data]; pri_base[dst_offset] = pri; dst_base[dst_offset] = pix_data; } }
+	#define DRAWPIXEL_PRIORITY { if (pix_data) { pix_data = pal_base[pix_data]; pri_base[dst_offset] = pri; dst_base[dst_offset] = pix_data; } }
 	
 	// draw non-zero pens but do not update priority bitmap
-	#define DRAWPIXEL_NOPRIORITY { if (pix_data != 0) dst_base[dst_offset] = pal_base[pix_data]; }
+	#define DRAWPIXEL_NOPRIORITY { if (pix_data) dst_base[dst_offset] = pal_base[pix_data]; }
 	
-		if (clipmask != 0)
+		if (clipmask)
 		{
 			ADVANCE_SOURCE_OFFSET
 			src_base = source;
 	
 			if (dst_adv == 1)
 			{
-				if (pri != 0)
+				if (pri)
 					do { pix_data= src_base[src_x]; ADVANCE_SOURCE_OFFSET DRAWPIXEL_PRIORITY } while (++dst_offset);
 				else
 					do { pix_data= src_base[src_x]; ADVANCE_SOURCE_OFFSET DRAWPIXEL_NOPRIORITY } while (++dst_offset);
 			}
 			else
 			{
-				if (pri != 0)
+				if (pri)
 					do { pix_data= src_base[src_x]; ADVANCE_SOURCE_OFFSET DRAWPIXEL_PRIORITY } while (dst_offset += (512+32));
 				else
 					do { pix_data= src_base[src_x]; ADVANCE_SOURCE_OFFSET DRAWPIXEL_NOPRIORITY } while (dst_offset += (512+32));
@@ -8100,14 +8057,14 @@ public class konamiic
 	
 			if (dst_adv == 1)
 			{
-				if (pri != 0)
+				if (pri)
 					do { pix_data = src_base[src_x]; ADVANCE_SOURCE_OFFSET src_fx &= src_wrapmask; DRAWPIXEL_PRIORITY } while (++dst_offset);
 				else
 					do { pix_data = src_base[src_x]; ADVANCE_SOURCE_OFFSET src_fx &= src_wrapmask; DRAWPIXEL_NOPRIORITY } while (++dst_offset);
 			}
 			else
 			{
-				if (pri != 0)
+				if (pri)
 					do { pix_data = src_base[src_x]; ADVANCE_SOURCE_OFFSET src_fx &= src_wrapmask; DRAWPIXEL_PRIORITY } while (dst_offset += (512+32));
 				else
 					do { pix_data = src_base[src_x]; ADVANCE_SOURCE_OFFSET src_fx &= src_wrapmask; DRAWPIXEL_NOPRIORITY } while (dst_offset += (512+32));
@@ -8132,22 +8089,22 @@ public class konamiic
 		int color, offset, zoom, scroll, passes, i, dst_height;
 	
 		chip_ptr = &K053250_info.chip[chip];				// pointer to chip parameters
-		line_ram = chip_ptr.buffer[chip_ptr.page[chip]];	// pointer to physical line RAM
-		pix_base = chip_ptr.base;							// pointer to source pixel ROM
-		rommask  = chip_ptr.rommask;						// source ROM limit
-		regs     = chip_ptr.regs;							// pointer to registers group
+		line_ram = chip_ptr->buffer[chip_ptr->page[chip]];	// pointer to physical line RAM
+		pix_base = chip_ptr->base;							// pointer to source pixel ROM
+		rommask  = chip_ptr->rommask;						// source ROM limit
+		regs     = chip_ptr->regs;							// pointer to registers group
 	
 		map_scrollx = (short)(regs[0]<<8 | regs[1]);		// signed horizontal scroll value
 		map_scrolly = (short)(regs[2]<<8 | regs[3]);		// signed vertical scroll value
-		map_scrollx -= chip_ptr.offsx;						// add user X offset to horizontal scroll
-		map_scrolly -= chip_ptr.offsy;						// add user Y offset to vertical scroll
+		map_scrollx -= chip_ptr->offsx;						// add user X offset to horizontal scroll
+		map_scrolly -= chip_ptr->offsy;						// add user Y offset to vertical scroll
 		ctrl = regs[4];										// register four is the main control register
 	
 		// copy visible boundary values to more accessible locations
-		dst_minx  = cliprect.min_x;
-		dst_maxx  = cliprect.max_x;
-		dst_miny  = cliprect.min_y;
-		dst_maxy  = cliprect.max_y;
+		dst_minx  = cliprect->min_x;
+		dst_maxx  = cliprect->max_x;
+		dst_miny  = cliprect->min_y;
+		dst_maxy  = cliprect->max_y;
 	
 		orientation  = 0;	// orientation defaults to no swapping and no flipping
 		dst_height   = 512;	// virtual bitmap height defaults to five hundred and twelve pixels
@@ -8158,10 +8115,10 @@ public class konamiic
 			if (!(ctrl & 0x01)) orientation |= ORIENTATION_SWAP_XY;
 	
 			// invert X parameters when the forth bit of the control register is set
-			if ((ctrl & 0x08) != 0)  orientation |= ORIENTATION_FLIP_X;
+			if   (ctrl & 0x08)  orientation |= ORIENTATION_FLIP_X;
 	
 			// invert Y parameters when the fifth bit of the control register is set
-			if ((ctrl & 0x10) != 0)  orientation |= ORIENTATION_FLIP_Y;
+			if   (ctrl & 0x10)  orientation |= ORIENTATION_FLIP_Y;
 	
 			switch (ctrl>>5) // the upper four bits of the control register select source and target dimensions
 			{
@@ -8200,7 +8157,7 @@ public class konamiic
 			}
 	
 			// disable source clipping when the third bit of the control register is set
-			if ((ctrl & 0x04) != 0) src_clipmask = 0;
+			if (ctrl & 0x04) src_clipmask = 0;
 	
 			if (!(orientation & ORIENTATION_SWAP_XY))	// normal orientaion with no X Y switching
 			{
@@ -8209,15 +8166,15 @@ public class konamiic
 				scroll_corr = map_scrollx;		// concentrate global X scroll
 				linedata_offs = map_scrolly;	// determine where to get info for the first line
 	
-				if ((orientation & ORIENTATION_FLIP_X) != 0)
+				if (orientation & ORIENTATION_FLIP_X)
 				{
 					scroll_corr = -scroll_corr;	// X scroll adjustment should be negated in X flipped scenarioes
 				}
 	
-				if ((orientation & ORIENTATION_FLIP_Y) != 0)
+				if (orientation & ORIENTATION_FLIP_Y)
 				{
 					linedata_adv = -linedata_adv;			// traverse line RAM backward in Y flipped scenarioes
-					linedata_offs += bitmap.height - 1;	// and get info for the first line from the bottom
+					linedata_offs += bitmap->height - 1;	// and get info for the first line from the bottom
 				}
 	
 				dst_wrapmask = ~0;	// scanlines don't seem to wrap horizontally in normal orientation
@@ -8230,7 +8187,7 @@ public class konamiic
 				scroll_corr = map_scrolly;		// concentrate global Y scroll
 				linedata_offs = map_scrollx;	// determine where to get info for the first line
 	
-				if ((orientation & ORIENTATION_FLIP_Y) != 0)
+				if (orientation & ORIENTATION_FLIP_Y)
 				{
 					scroll_corr = 0x100 - scroll_corr;	// apply common vertical correction
 	
@@ -8241,13 +8198,13 @@ public class konamiic
 					linedata_offs -= 5;	// apply unique horizontal correction
 				}
 	
-				if ((orientation & ORIENTATION_FLIP_X) != 0)
+				if (orientation & ORIENTATION_FLIP_X)
 				{
 					linedata_adv = -linedata_adv;		// traverse line RAM backward in X flipped scenarioes
-					linedata_offs += bitmap.width - 1;	// and get info for the first line from the bottom
+					linedata_offs += bitmap->width - 1;	// and get info for the first line from the bottom
 				}
 	
-				if (src_clipmask != 0)
+				if (src_clipmask)
 				{
 					// determine target wrap boundary and draw scanline in two passes if the source is clipped
 					dst_wrapmask = dst_height - 1;
@@ -8267,7 +8224,7 @@ public class konamiic
 		linedata_offs += line_start * linedata_adv;		// pre-advance line info offset for the clipped region
 	
 		// load physical palette base
-		pal_base = Machine.remapped_colortable + (colorbase << 4) % Machine.drv.total_colors;
+		pal_base = Machine->remapped_colortable + (colorbase << 4) % Machine->drv->total_colors;
 	
 		// walk the target bitmap within the visible area vertically or horizontally, one line at a time
 		for (line_pos=line_start; line_pos<=line_end; linedata_offs+=linedata_adv, line_pos++)

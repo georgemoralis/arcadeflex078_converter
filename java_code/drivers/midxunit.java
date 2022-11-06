@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -75,7 +75,7 @@ public class midxunit
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_revx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_revx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( revx )
 		PORT_START(); 
 		PORT_BIT( 0x000f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
@@ -212,8 +212,7 @@ public class midxunit
 		revx:     0014-0112 / 0120 (254)     0065-001F5 / 01F9 (400)
 	*/
 	
-	public static MachineHandlerPtr machine_driver_midxunit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( midxunit )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34020, 40000000/TMS34020_CLOCK_DIVIDER)
@@ -236,9 +235,7 @@ public class midxunit
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(dcs_audio_uart)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -317,5 +314,5 @@ public class midxunit
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_revx	   = new GameDriver("1994"	,"revx"	,"midxunit.java"	,rom_revx,null	,machine_driver_midxunit	,input_ports_revx	,init_revx	,ROT0	,	"Midway",   "Revolution X (Rev. 1.0 6/16/94)" )
+	GAME( 1994, revx,   0,         midxunit, revx, revx, ROT0, "Midway",   "Revolution X (Rev. 1.0 6/16/94)" )
 }

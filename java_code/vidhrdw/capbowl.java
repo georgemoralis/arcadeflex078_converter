@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_capbowl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_capbowl  = new VideoStartHandlerPtr() { public int handler(){
 		/* initialize TMS34061 emulation */
 	    if (tms34061_start(&tms34061intf))
 			return 1;
@@ -60,8 +59,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr capbowl_tms34061_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr capbowl_tms34061_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int func = (offset >> 8) & 3;
 		int col = offset & 0xff;
 	
@@ -75,8 +73,7 @@ public class capbowl
 	} };
 	
 	
-	public static ReadHandlerPtr capbowl_tms34061_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr capbowl_tms34061_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int func = (offset >> 8) & 3;
 		int col = offset & 0xff;
 	
@@ -97,8 +94,7 @@ public class capbowl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_capbowl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int halfwidth = (cliprect.max_x - cliprect.min_x + 1) / 2;
 		struct tms34061_display state;
 		int x, y;

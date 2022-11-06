@@ -43,15 +43,13 @@ Bucky:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class moo
 {
 	
-	VIDEO_START(moo);
-	VIDEO_UPDATE(moo);
 	void moo_set_alpha(int on);
 	
 	static int init_eeprom_count, init_nosound_count, game_type;
@@ -71,15 +69,14 @@ public class moo
 		"0100110000000" 	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_moo  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_moo  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -99,7 +96,7 @@ public class moo
 		/* bits 4-7 are DIP switches */
 		res = EEPROM_read_bit() | input_port_1_r(0);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -129,7 +126,7 @@ public class moo
 		EEPROM_set_cs_line((cur_control2 & 0x02) ? CLEAR_LINE : ASSERT_LINE);
 		EEPROM_set_clock_line((cur_control2 & 0x04) ? ASSERT_LINE : CLEAR_LINE);
 	
-		if ((data & 0x100) != 0)
+		if (data & 0x100)
 		{
 			K053246_set_OBJCHA_line(ASSERT_LINE);
 		}
@@ -162,18 +159,17 @@ public class moo
 		}
 		while (--counter);
 	
-		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static void dmaend_callback(int data)
 	{
-		if ((cur_control2 & 0x800) != 0)
+		if (cur_control2 & 0x800)
 			cpu_set_irq_line(0, 4, HOLD_LINE);
 	}
 	
-	static INTERRUPT_GEN(moo_interrupt)
-	{
-		if (K053246_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr moo_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K053246_is_IRQ_enabled())
 		{
 			moo_objdma(game_type);
 	
@@ -182,12 +178,11 @@ public class moo
 		}
 	
 		// trigger V-blank interrupt
-		if ((cur_control2 & 0x20) != 0)
+		if (cur_control2 & 0x20)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
-	static INTERRUPT_GEN(moobl_interrupt)
-	{
+	public static InterruptHandlerPtr moobl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		moo_objdma(game_type);
 	
 		// schedule DMA end interrupt (delay shortened to catch up with V-blank)
@@ -195,7 +190,7 @@ public class moo
 	
 		// trigger V-blank interrupt
 		cpu_set_irq_line(0, 5, HOLD_LINE);
-	}
+	} };
 	
 	static WRITE16_HANDLER( sound_cmd1_w )
 	{
@@ -225,10 +220,10 @@ public class moo
 		   these games are trickier than your usual konami stuff, they expect to
 		   read 0xff (meaning the z80 booted properly) then 0x80 (z80 busy) then
 		   the self-test result */
-		if (!Machine.sample_rate) {
+		if (!Machine->sample_rate) {
 			if (init_nosound_count < 10)
 			{
-				if (init_nosound_count == 0)
+				if (!init_nosound_count)
 					latch = 0xff;
 				else
 					latch = 0x80;
@@ -243,8 +238,7 @@ public class moo
 		return latch;
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + (data&0xf)*0x4000);
 	} };
 	
@@ -255,7 +249,7 @@ public class moo
 	/* of RAM, but they put 0x10000 there. The CPU can access them all. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if ((offset & 0x0078) != 0)
+		if (offset & 0x0078)
 			return spriteram16[offset];
 		else
 		{
@@ -266,7 +260,7 @@ public class moo
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if ((offset & 0x0078) != 0)
+		if (offset & 0x0078)
 			COMBINE_DATA(spriteram16+offset);
 		else
 		{
@@ -493,7 +487,7 @@ public class moo
 	};
 	
 	
-	static InputPortPtr input_ports_moo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moo )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -562,7 +556,7 @@ public class moo
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'moo', but additional "Button 3" for all players */
-	static InputPortPtr input_ports_bucky = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bucky = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bucky )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -655,14 +649,12 @@ public class moo
 		{ 100 }
 	};
 	
-	public static MachineInitHandlerPtr machine_init_moo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_moo  = new MachineInitHandlerPtr() { public void handler(){
 		init_nosound_count = 0;
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_moo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)
@@ -694,12 +686,9 @@ public class moo
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_moobl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moobl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16100000)
@@ -725,12 +714,9 @@ public class moo
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bucky = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bucky )
 		MDRV_IMPORT_FROM(moo)
 	
 		MDRV_CPU_MODIFY("main")
@@ -738,9 +724,7 @@ public class moo
 	
 		/* video hardware */
 		MDRV_PALETTE_LENGTH(4096)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -875,15 +859,14 @@ public class moo
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_moo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_moo  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
 	
 		state_save_register_INT32("Moo", 0, "control2", (INT32 *)&cur_control2, 1);
 		state_save_register_UINT16("Moo", 0, "protram", (UINT16 *)protram, 1);
 	
-		game_type = (!strcmp(Machine.gamedrv.name, "bucky") || !strcmp(Machine.gamedrv.name, "buckyua"));
+		game_type = (!strcmp(Machine->gamedrv->name, "bucky") || !strcmp(Machine->gamedrv->name, "buckyua"));
 	} };
 	
 	static RomLoadPtr rom_moobl = new RomLoadPtr(){ public void handler(){ 
@@ -937,9 +920,9 @@ public class moo
 		ROM_CONTINUE(          0x300000+0x30000, 0x010000)//bank c hi
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_moo	   = new GameDriver("1992"	,"moo"	,"moo.java"	,rom_moo,null	,machine_driver_moo	,input_ports_moo	,init_moo	,ROT0	,	"Konami", "Wild West C.O.W.-Boys of Moo Mesa (World version EA)")
-	public static GameDriver driver_mooua	   = new GameDriver("1992"	,"mooua"	,"moo.java"	,rom_mooua,driver_moo	,machine_driver_moo	,input_ports_moo	,init_moo	,ROT0	,	"Konami", "Wild West C.O.W.-Boys of Moo Mesa (US version UA)")
-	public static GameDriver driver_moobl	   = new GameDriver("1992"	,"moobl"	,"moo.java"	,rom_moobl,driver_moo	,machine_driver_moobl	,input_ports_moo	,init_moo	,ROT0	,	"<unknown>", "Wild West C.O.W.-Boys of Moo Mesa (bootleg version AA)", GAME_NOT_WORKING)
-	public static GameDriver driver_bucky	   = new GameDriver("1992"	,"bucky"	,"moo.java"	,rom_bucky,null	,machine_driver_bucky	,input_ports_bucky	,init_moo	,ROT0	,	"Konami", "Bucky O'Hare (World version EA)")
-	public static GameDriver driver_buckyua	   = new GameDriver("1992"	,"buckyua"	,"moo.java"	,rom_buckyua,driver_bucky	,machine_driver_bucky	,input_ports_bucky	,init_moo	,ROT0	,	"Konami", "Bucky O'Hare (US version UA)")
+	GAME( 1992, moo,     0,       moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (World version EA)")
+	GAME( 1992, mooua,   moo,     moo,     moo,     moo,      ROT0, "Konami", "Wild West C.O.W.-Boys of Moo Mesa (US version UA)")
+	GAMEX( 1992, moobl,   moo,     moobl,   moo,     moo,      ROT0, "<unknown>", "Wild West C.O.W.-Boys of Moo Mesa (bootleg version AA)", GAME_NOT_WORKING)
+	GAME( 1992, bucky,   0,       bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (World version EA)")
+	GAME( 1992, buckyua, bucky,   bucky,   bucky,   moo,      ROT0, "Konami", "Bucky O'Hare (US version UA)")
 }

@@ -43,7 +43,7 @@ Shisensho II                            1993  Rev 3.34 M81  Yes
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -110,8 +110,7 @@ public class m72
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_m72_sound  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_m72_sound  = new MachineInitHandlerPtr() { public void handler(){
 		setvector_callback(VECTOR_INIT);
 	
 		state_save_register_int("sound", 0, "irqvector", &irqvector);
@@ -120,14 +119,13 @@ public class m72
 	
 	void m72_ym2151_irq_handler(int irq)
 	{
-		if (irq != 0)
+		if (irq)
 			timer_set(TIME_NOW,YM2151_ASSERT,setvector_callback);
 		else
 			timer_set(TIME_NOW,YM2151_CLEAR,setvector_callback);
 	}
 	
-	public static WriteHandlerPtr m72_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m72_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 		{
 			soundlatch_w.handler(offset,data);
@@ -135,8 +133,7 @@ public class m72
 		}
 	} };
 	
-	public static WriteHandlerPtr m72_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m72_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW,Z80_CLEAR,setvector_callback);
 	} };
 	
@@ -147,16 +144,14 @@ public class m72
 		sample_addr = start;
 	}
 	
-	public static WriteHandlerPtr vigilant_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 1)
 			sample_addr = (sample_addr & 0x00ff) | ((data << 8) & 0xff00);
 		else
 			sample_addr = (sample_addr & 0xff00) | ((data << 0) & 0x00ff);
 	} };
 	
-	public static WriteHandlerPtr shisen_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shisen_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sample_addr >>= 2;
 	
 		if (offset == 1)
@@ -167,8 +162,7 @@ public class m72
 		sample_addr <<= 2;
 	} };
 	
-	public static WriteHandlerPtr rtype2_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rtype2_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sample_addr >>= 5;
 	
 		if (offset == 1)
@@ -179,8 +173,7 @@ public class m72
 		sample_addr <<= 5;
 	} };
 	
-	public static WriteHandlerPtr poundfor_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr poundfor_sample_addr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* poundfor writes both sample start and sample END - a first for Irem...
 		   we don't handle the end written here, 00 marks the sample end as usual. */
 		if (offset > 1) return;
@@ -195,13 +188,11 @@ public class m72
 		sample_addr <<= 4;
 	} };
 	
-	public static ReadHandlerPtr m72_sample_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m72_sample_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_SOUND1)[sample_addr];
 	} };
 	
-	public static WriteHandlerPtr m72_sample_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m72_sample_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(0,data);
 		sample_addr = (sample_addr + 1) & (memory_region_length(REGION_SOUND1) - 1);
 	} };

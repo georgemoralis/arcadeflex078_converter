@@ -30,7 +30,7 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/12/17 -
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,21 +41,18 @@ public class galivan
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_galivan  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_galivan  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1,&RAM[0x10000]);
 	//	layers = 0x60;
 	} };
 	
-	public static WriteHandlerPtr galivan_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,(data << 1) | 1);
 	} };
 	
-	public static ReadHandlerPtr galivan_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr galivan_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data;
 	
 		data = soundlatch_r(offset);
@@ -63,15 +60,13 @@ public class galivan
 		return data;
 	} };
 	
-	public static ReadHandlerPtr IO_port_c0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr IO_port_c0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	  return (0x58); /* To Avoid Reset on Ufo Robot dangar */
 	} };
 	
 	
 	/* the scroll registers are memory mapped in ninjemak, I/O ports in the others */
-	public static WriteHandlerPtr ninjemak_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjemak_videoreg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case	0x0b:
@@ -268,7 +263,7 @@ public class galivan
 		PORT_DIPSETTING(    0x01, "5" );\
 		PORT_DIPSETTING(    0x00, "6" );
 	
-	static InputPortPtr input_ports_galivan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galivan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galivan )
 		NIHON_JOYSTICK(1)
 		NIHON_JOYSTICK(2)
 		NIHON_SYSTEM
@@ -306,7 +301,7 @@ public class galivan
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dangar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dangar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dangar )
 		NIHON_JOYSTICK(1)
 		NIHON_JOYSTICK(2)
 		NIHON_SYSTEM
@@ -346,7 +341,7 @@ public class galivan
 	INPUT_PORTS_END(); }}; 
 	
 	/* different Lives values and last different the last two dips */
-	static InputPortPtr input_ports_dangar2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dangar2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dangar2 )
 		NIHON_JOYSTICK(1)
 		NIHON_JOYSTICK(2)
 		NIHON_SYSTEM
@@ -390,7 +385,7 @@ public class galivan
 	INPUT_PORTS_END(); }}; 
 	
 	/* the last two dip switches are different */
-	static InputPortPtr input_ports_dangarb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dangarb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dangarb )
 		NIHON_JOYSTICK(1)
 		NIHON_JOYSTICK(2)
 		NIHON_SYSTEM
@@ -429,7 +424,7 @@ public class galivan
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ninjemak = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjemak = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjemak )
 		NIHON_JOYSTICK(1)
 		NIHON_JOYSTICK(2)
 		NIHON_SYSTEM
@@ -575,8 +570,7 @@ public class galivan
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_galivan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galivan )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6 MHz? */
@@ -610,12 +604,9 @@ public class galivan
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, YM3526_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ninjemak = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjemak )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6 MHz? */
@@ -649,9 +640,7 @@ public class galivan
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, YM3526_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -918,12 +907,12 @@ public class galivan
 	
 	
 	
-	public static GameDriver driver_galivan	   = new GameDriver("1985"	,"galivan"	,"galivan.java"	,rom_galivan,null	,machine_driver_galivan	,input_ports_galivan	,null	,ROT270	,	"Nichibutsu", "Galivan - Cosmo Police (12/16/1985)" )
-	public static GameDriver driver_galivan2	   = new GameDriver("1985"	,"galivan2"	,"galivan.java"	,rom_galivan2,driver_galivan	,machine_driver_galivan	,input_ports_galivan	,null	,ROT270	,	"Nichibutsu", "Galivan - Cosmo Police (12/11/1985)" )
-	public static GameDriver driver_dangar	   = new GameDriver("1986"	,"dangar"	,"galivan.java"	,rom_dangar,null	,machine_driver_galivan	,input_ports_dangar	,null	,ROT270	,	"Nichibutsu", "Dangar - Ufo Robo (12/1/1986)" )
-	public static GameDriver driver_dangar2	   = new GameDriver("1986"	,"dangar2"	,"galivan.java"	,rom_dangar2,driver_dangar	,machine_driver_galivan	,input_ports_dangar2	,null	,ROT270	,	"Nichibutsu", "Dangar - Ufo Robo (9/26/1986)" )
-	public static GameDriver driver_dangarb	   = new GameDriver("1986"	,"dangarb"	,"galivan.java"	,rom_dangarb,driver_dangar	,machine_driver_galivan	,input_ports_dangarb	,null	,ROT270	,	"bootleg", "Dangar - Ufo Robo (bootleg)" )
-	public static GameDriver driver_ninjemak	   = new GameDriver("1986"	,"ninjemak"	,"galivan.java"	,rom_ninjemak,null	,machine_driver_ninjemak	,input_ports_ninjemak	,null	,ROT270	,	"Nichibutsu", "Ninja Emaki (US)" )
-	public static GameDriver driver_youma	   = new GameDriver("1986"	,"youma"	,"galivan.java"	,rom_youma,driver_ninjemak	,machine_driver_ninjemak	,input_ports_ninjemak	,null	,ROT270	,	"Nichibutsu", "Youma Ninpou Chou (Japan)" )
+	GAME( 1985, galivan,  0,        galivan,  galivan,  0, ROT270, "Nichibutsu", "Galivan - Cosmo Police (12/16/1985)" )
+	GAME( 1985, galivan2, galivan,  galivan,  galivan,  0, ROT270, "Nichibutsu", "Galivan - Cosmo Police (12/11/1985)" )
+	GAME( 1986, dangar,   0,        galivan,  dangar,   0, ROT270, "Nichibutsu", "Dangar - Ufo Robo (12/1/1986)" )
+	GAME( 1986, dangar2,  dangar,   galivan,  dangar2,  0, ROT270, "Nichibutsu", "Dangar - Ufo Robo (9/26/1986)" )
+	GAME( 1986, dangarb,  dangar,   galivan,  dangarb,  0, ROT270, "bootleg", "Dangar - Ufo Robo (bootleg)" )
+	GAME( 1986, ninjemak, 0,        ninjemak, ninjemak, 0, ROT270, "Nichibutsu", "Ninja Emaki (US)" )
+	GAME( 1986, youma,    ninjemak, ninjemak, ninjemak, 0, ROT270, "Nichibutsu", "Youma Ninpou Chou (Japan)" )
 	
 }

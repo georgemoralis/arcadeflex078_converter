@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class crshrace
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_crshrace  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_crshrace  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap1 = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,64);
 		tilemap2 = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 	
@@ -86,7 +85,7 @@ public class crshrace
 	
 	WRITE16_HANDLER( crshrace_roz_bank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (roz_bank != (data & 0xff))
 			{
@@ -99,7 +98,7 @@ public class crshrace
 	
 	WRITE16_HANDLER( crshrace_gfxctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			gfxctrl = data & 0xdf;
 			flipscreen = data & 0x20;
@@ -150,21 +149,21 @@ public class crshrace
 			{
 				int sx,sy;
 	
-				if (flipy != 0) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
+				if (flipy) sy = ((oy + zoomy * (ysize - y) + 16) & 0x1ff) - 16;
 				else sy = ((oy + zoomy * y + 16) & 0x1ff) - 16;
 	
 				for (x = 0;x <= xsize;x++)
 				{
 					int code;
 	
-					if (flipx != 0) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
+					if (flipx) sx = ((ox + zoomx * (xsize - x) + 16) & 0x1ff) - 16;
 					else sx = ((ox + zoomx * x + 16) & 0x1ff) - 16;
 	
 					code = buffered_spriteram16_2[map_start & 0x7fff];
 					map_start++;
 	
-					if (flipscreen != 0)
-						drawgfxzoom(bitmap,Machine.gfx[2],
+					if (flipscreen)
+						drawgfxzoom(bitmap,Machine->gfx[2],
 								code,
 								color,
 								NOT(flipx),NOT(flipy),
@@ -172,7 +171,7 @@ public class crshrace
 								cliprect,TRANSPARENCY_PEN,15,
 								0x1000 * zoomx,0x1000 * zoomy);
 					else
-						drawgfxzoom(bitmap,Machine.gfx[2],
+						drawgfxzoom(bitmap,Machine->gfx[2],
 								code,
 								color,
 								flipx,flipy,
@@ -197,9 +196,8 @@ public class crshrace
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if ((gfxctrl & 0x04) != 0)	/* display disable? */
+	public static VideoUpdateHandlerPtr video_update_crshrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (gfxctrl & 0x04)	/* display disable? */
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 			return;
@@ -226,8 +224,7 @@ public class crshrace
 		}
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_crshrace  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_crshrace  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram16_w(0,0,0);
 		buffer_spriteram16_2_w(0,0,0);
 	} };

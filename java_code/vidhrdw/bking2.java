@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class bking2
 	  bit 0 -- 220 ohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_bking2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_bking2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -113,39 +112,32 @@ public class bking2
 	} };
 	
 	
-	public static WriteHandlerPtr bking2_xld1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_xld1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xld1 = -data;
 	} };
 	
-	public static WriteHandlerPtr bking2_yld1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_yld1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		yld1 = -data;
 	} };
 	
-	public static WriteHandlerPtr bking2_xld2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_xld2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xld2 = -data;
 	} };
 	
-	public static WriteHandlerPtr bking2_yld2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_yld2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		yld2 = -data;
 	} };
 	
-	public static WriteHandlerPtr bking2_xld3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_xld3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		xld3 = -data;
 	} };
 	
-	public static WriteHandlerPtr bking2_yld3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_yld3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		yld3 = -data;
 	} };
 	
 	
-	public static WriteHandlerPtr bking2_cont1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_cont1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 = COIN LOCK */
 		/* D1 = BALL 5 (Controller selection) */
 		/* D2 = VINV (flip screen) */
@@ -163,8 +155,7 @@ public class bking2
 		crow_pic = (data >> 4) & 0x0f;
 	} };
 	
-	public static WriteHandlerPtr bking2_cont2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_cont2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0-D2 = BALL10 - BALL12 (Selects player 1 ball picture) */
 		/* D3-D5 = BALL20 - BALL22 (Selects player 2 ball picture) */
 		/* D6 = HIT1 */
@@ -176,8 +167,7 @@ public class bking2
 		hit = data >> 6;
 	} };
 	
-	public static WriteHandlerPtr bking2_cont3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_cont3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 = CROW INV (inverts Crow picture and coordinates) */
 		/* D1-D2 = COLOR 0 - COLOR 1 (switches 4 color palettes, global across all graphics) */
 		/* D3 = SOUND STOP */
@@ -195,14 +185,12 @@ public class bking2
 	} };
 	
 	
-	public static WriteHandlerPtr bking2_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_msk_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pc3259_mask++;
 	} };
 	
 	
-	public static WriteHandlerPtr bking2_hitclr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_hitclr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pc3259_mask = 0;
 	
 		pc3259_output[0] = 0;
@@ -212,8 +200,7 @@ public class bking2
 	} };
 	
 	
-	public static WriteHandlerPtr bking2_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bking2_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (bking2_playfield_ram[offset] != data)
 		{
 			tilemap_mark_tile_dirty(tilemap, offset / 2);
@@ -223,18 +210,15 @@ public class bking2
 	} };
 	
 	
-	public static ReadHandlerPtr bking2_input_port_5_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bking2_input_port_5_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(controller ? 7 : 5);
 	} };
 	
-	public static ReadHandlerPtr bking2_input_port_6_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bking2_input_port_6_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(controller ? 8 : 6);
 	} };
 	
-	public static ReadHandlerPtr bking2_pos_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bking2_pos_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pc3259_output[offset / 8] << 4;
 	} };
 	
@@ -252,15 +236,14 @@ public class bking2
 	
 		int flags = 0;
 	
-		if ((code1 & 4) != 0) flags |= TILE_FLIPX;
-		if ((code1 & 8) != 0) flags |= TILE_FLIPY;
+		if (code1 & 4) flags |= TILE_FLIPX;
+		if (code1 & 8) flags |= TILE_FLIPY;
 	
 		SET_TILE_INFO(0, code0 + 256 * code1, palette_bank, flags)
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_bking2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bking2  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 8, 8, 32, 32)) == NULL)
 		{
 			return 1;
@@ -278,8 +261,7 @@ public class bking2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bking2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
 	
 		/* draw the balls */
@@ -309,8 +291,7 @@ public class bking2
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_bking2  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_bking2  = new VideoEofHandlerPtr() { public void handler(){
 		static struct rectangle rect = { 0, 7, 0, 15 };
 	
 		int xld = 0;
@@ -323,7 +304,7 @@ public class bking2
 			xld = xld1;
 			yld = yld1;
 	
-			drawgfx(helper1, Machine.gfx[2],
+			drawgfx(helper1, Machine->gfx[2],
 				ball1_pic,
 				0,
 				0, 0,
@@ -338,7 +319,7 @@ public class bking2
 			xld = xld2;
 			yld = yld2;
 	
-			drawgfx(helper1, Machine.gfx[3],
+			drawgfx(helper1, Machine->gfx[3],
 				ball2_pic,
 				0,
 				0, 0,
@@ -365,8 +346,8 @@ public class bking2
 	
 			for (y = rect.min_y; y <= rect.max_y; y++)
 			{
-				const UINT16* p0 = helper0.line[y];
-				const UINT16* p1 = helper1.line[y];
+				const UINT16* p0 = helper0->line[y];
+				const UINT16* p1 = helper1->line[y];
 	
 				for (x = rect.min_x; x <= rect.max_x; x++)
 				{

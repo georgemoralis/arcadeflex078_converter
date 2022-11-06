@@ -53,7 +53,7 @@ Press one of the start buttons to exit.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,18 +69,15 @@ public class wc90
 	
 	static data8_t *wc90_shared;
 	
-	public static ReadHandlerPtr wc90_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wc90_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return wc90_shared[offset];
 	} };
 	
-	public static WriteHandlerPtr wc90_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		wc90_shared[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr wc90_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		data8_t *RAM = memory_region(REGION_CPU1);
 	
@@ -89,8 +86,7 @@ public class wc90
 		cpu_setbank( 1,&RAM[bankaddress] );
 	} };
 	
-	public static WriteHandlerPtr wc90_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_bankswitch1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		data8_t *RAM = memory_region(REGION_CPU2);
 	
@@ -99,8 +95,7 @@ public class wc90
 		cpu_setbank( 2,&RAM[bankaddress] );
 	} };
 	
-	public static WriteHandlerPtr wc90_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line(2,IRQ_LINE_NMI,PULSE_LINE);
 	} };
@@ -205,7 +200,7 @@ public class wc90
 	
 	
 	
-	static InputPortPtr input_ports_wc90 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wc90 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wc90 )
 		PORT_START(); 	/* IN0 bit 0-5 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -358,8 +353,7 @@ public class wc90
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineHandlerPtr machine_driver_wc90 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wc90 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6.0 MHz ??? */
@@ -389,18 +383,13 @@ public class wc90
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_wc90t = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wc90t )
 	
 		MDRV_IMPORT_FROM( wc90 )
 		MDRV_VIDEO_START( wc90t )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_wc90 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x20000, REGION_CPU1, 0 )	/* 128k for code */
@@ -503,7 +492,7 @@ public class wc90
 	
 	
 	
-	public static GameDriver driver_wc90	   = new GameDriver("1989"	,"wc90"	,"wc90.java"	,rom_wc90,null	,machine_driver_wc90	,input_ports_wc90	,null	,ROT0	,	"Tecmo", "Tecmo World Cup '90 (set 1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_wc90a	   = new GameDriver("1989"	,"wc90a"	,"wc90.java"	,rom_wc90a,driver_wc90	,machine_driver_wc90	,input_ports_wc90	,null	,ROT0	,	"Tecmo", "Tecmo World Cup '90 (set 2)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_wc90t	   = new GameDriver("1989"	,"wc90t"	,"wc90.java"	,rom_wc90t,driver_wc90	,machine_driver_wc90t	,input_ports_wc90	,null	,ROT0	,	"Tecmo", "Tecmo World Cup '90 (trackball)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1989, wc90,  0,    wc90, wc90, 0, ROT0, "Tecmo", "Tecmo World Cup '90 (set 1)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1989, wc90a, wc90, wc90, wc90, 0, ROT0, "Tecmo", "Tecmo World Cup '90 (set 2)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1989, wc90t, wc90, wc90t,wc90, 0, ROT0, "Tecmo", "Tecmo World Cup '90 (trackball)", GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

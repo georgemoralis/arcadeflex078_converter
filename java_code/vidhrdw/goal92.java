@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,7 +28,7 @@ public class goal92
 	{
 		COMBINE_DATA(&fg_bank);
 	
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 		{
 			tilemap_mark_all_tiles_dirty(foreground_layer);
 		}
@@ -88,7 +88,7 @@ public class goal92
 	
 		tile &= 0xfff;
 	
-		if ((fg_bank & 0xff) != 0)
+		if(fg_bank & 0xff)
 		{
 			region = 3;
 			tile |= 0x1000;
@@ -112,7 +112,7 @@ public class goal92
 	
 			y = spriteram16[offs+0];
 	
-			if ((y & 0x8000) != 0)
+			if (y & 0x8000)
 				break;
 	
 			if (!(data & 0x8000))
@@ -138,7 +138,7 @@ public class goal92
 	
 			y = 256-(y+7);
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);
@@ -146,8 +146,7 @@ public class goal92
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_goal92  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_goal92  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		foreground_layer = tilemap_create(get_fore_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		text_layer =       tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,64,32);
@@ -162,12 +161,11 @@ public class goal92
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_goal92  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( background_layer, 0, goal92_scrollram16[0] + 60);
 		tilemap_set_scrolly( background_layer, 0, goal92_scrollram16[1] + 8);
 	
-		if ((fg_bank & 0xff) != 0)
+		if(fg_bank & 0xff)
 		{
 			tilemap_set_scrollx( foreground_layer, 0, goal92_scrollram16[0] + 60);
 			tilemap_set_scrolly( foreground_layer, 0, goal92_scrollram16[1] + 8);
@@ -188,7 +186,7 @@ public class goal92
 	
 		tilemap_draw(bitmap,cliprect,foreground_layer,0,0);
 	
-		if ((fg_bank & 0xff) != 0)
+		if(fg_bank & 0xff)
 			draw_sprites(bitmap,cliprect,1);
 	
 		draw_sprites(bitmap,cliprect,0);

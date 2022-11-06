@@ -8,15 +8,14 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class truco
 {
 	
-	public static PaletteInitHandlerPtr palette_init_truco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_truco  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -27,7 +26,7 @@ public class truco
 	
 			int dim = ( i & 0x1 );
 	
-			if (dim != 0) {
+			if ( dim ) {
 				r >>= 1;
 				g >>= 1;
 				b >>= 1;
@@ -37,8 +36,7 @@ public class truco
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_truco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_truco  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		data8_t		*vid = memory_region( REGION_CPU1 ) + 0x1800;
 		int x, y;
 	
@@ -46,13 +44,13 @@ public class truco
 			for( x = 0; x < 256; x++ ) {
 				int		pixel;
 	
-				if ((x & 1) != 0) {
+				if ( x & 1 ) {
 					pixel = vid[x>>1] & 0x0f;
 				} else {
 					pixel = ( vid[x>>1] >> 4 ) & 0x0f;
 				}
 	
-				plot_pixel.handler(bitmap,x,y,Machine.pens[pixel]);
+				plot_pixel(bitmap,x,y,Machine.pens[pixel]);
 			}
 	
 			vid += 0x80;

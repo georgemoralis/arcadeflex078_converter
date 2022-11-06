@@ -88,7 +88,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -123,8 +123,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr dotron_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dotron_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static char lastfake = 0;
 		static int mask = 0x00FF;
 		static int count = 0;
@@ -167,8 +166,7 @@ public class mcr3
 	} };
 	
 	
-	public static WriteHandlerPtr dotron_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dotron_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* light control is in the top 2 bits */
 		set_led_status(0, data & 0x40);		/* background light */
 		set_led_status(1, data & 0x80);		/* strobe */
@@ -186,16 +184,14 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr demoderb_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x40) != 0) input_mux = 1;
-		if ((data & 0x80) != 0) input_mux = 0;
+	public static WriteHandlerPtr demoderb_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x40) input_mux = 1;
+		if (data & 0x80) input_mux = 0;
 		turbocs_data_w(offset, data);
 	} };
 	
 	
-	public static ReadHandlerPtr demoderb_port12_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr demoderb_port12_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(input_mux ? (6 + offset) : (1 + offset));
 	} };
 	
@@ -207,14 +203,12 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr sarge_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sarge_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(1) & ~one_joy_trans[readinputport(6) & 0x0f];
 	} };
 	
 	
-	public static ReadHandlerPtr sarge_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sarge_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2) & ~one_joy_trans[(readinputport(6) >> 4) & 0x0f];
 	} };
 	
@@ -226,22 +220,19 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr maxrpm_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maxrpm_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		input_mux = (data >> 1) & 3;
 		mcrmono_control_port_w(offset, data);
 	} };
 	
 	
-	public static ReadHandlerPtr maxrpm_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maxrpm_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* multiplexed steering wheel/gas pedal */
 		return readinputport(6 + input_mux);
 	} };
 	
 	
-	public static ReadHandlerPtr maxrpm_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maxrpm_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static const UINT8 shift_bits[5] = { 0x00, 0x05, 0x06, 0x01, 0x02 };
 		UINT8 start = readinputport(0);
 		UINT8 shift = readinputport(10);
@@ -291,15 +282,13 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr powerdrv_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr powerdrv_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = readinputport(2) & 0x7f;
 		return result | (input_mux & 0x80);
 	} };
 	
 	
-	public static WriteHandlerPtr powerdrv_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr powerdrv_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 controls led 0 */
 		/* bit 2 controls led 1 */
 		/* bit 3 controls led 2 */
@@ -310,8 +299,7 @@ public class mcr3
 	} };
 	
 	
-	public static WriteHandlerPtr powerdrv_port_7_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr powerdrv_port_7_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* use input_mux for scratch */
 		input_mux = ~input_mux & 0x80;
 	} };
@@ -324,8 +312,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr stargrds_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stargrds_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = readinputport(input_mux ? 6 : 0);
 	
 		/* kludge for now: Star Guards will fail the self-test if bit 0x10 doesn't */
@@ -336,8 +323,7 @@ public class mcr3
 	} };
 	
 	
-	public static WriteHandlerPtr stargrds_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stargrds_port_5_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 controls input muxing on port 0 */
 		/* bit 2 controls led 0 */
 		/* bit 3 controls led 1 */
@@ -350,8 +336,7 @@ public class mcr3
 	} };
 	
 	
-	public static WriteHandlerPtr stargrds_soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stargrds_soundsgood_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundsgood_data_w(offset, (data << 1) | (data >> 7));
 	} };
 	
@@ -363,15 +348,13 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr spyhunt_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spyhunt_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* multiplexed steering wheel/gas pedal */
 		return readinputport(6 + input_mux);
 	} };
 	
 	
-	public static WriteHandlerPtr spyhunt_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spyhunt_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 lastport4;
 	
 		/* Spy Hunter uses port 4 for talking to the Chip Squeak Deluxe */
@@ -406,8 +389,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr turbotag_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr turbotag_kludge_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* The checksum on the ttprog1.bin ROM seems to be bad by 1 bit */
 		/* The checksum should come out to $82 but it should be $92     */
 		/* Unfortunately, the game refuses to start if any bad ROM is   */
@@ -427,11 +409,10 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_mcr3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_mcr3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, videoram, videoram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, videoram, videoram_size);
 		else
 			memset(videoram, 0, videoram_size);
@@ -553,7 +534,7 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_tapper = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tapper = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tapper )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -601,7 +582,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_timber = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timber = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timber )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -651,7 +632,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dotron = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dotron = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dotron )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -695,7 +676,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_demoderb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_demoderb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( demoderb )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -761,7 +742,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sarge = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sarge = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sarge )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -817,7 +798,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_maxrpm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maxrpm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maxrpm )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -872,7 +853,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rampage = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rampage = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rampage )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -938,7 +919,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_powerdrv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_powerdrv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( powerdrv )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -993,7 +974,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stargrds = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stargrds = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stargrds )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1066,7 +1047,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_spyhunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spyhunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spyhunt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1113,7 +1094,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_crater = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crater = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crater )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1147,7 +1128,7 @@ public class mcr3
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_turbotag = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_turbotag = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( turbotag )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1254,8 +1235,7 @@ public class mcr3
 	 *************************************/
 	
 	/* Core MCR3 system with no sound */
-	public static MachineHandlerPtr machine_driver_mcr3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcr3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 5000000)
@@ -1278,53 +1258,41 @@ public class mcr3
 	
 		MDRV_VIDEO_START(mcr3)
 		MDRV_VIDEO_UPDATE(mcr3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* General MCR3 system with SSIO */
-	public static MachineHandlerPtr machine_driver_mcr3_ssio = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcr3_ssio )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Discs of Tron = General MCR3 with Squawk & Talk */
-	public static MachineHandlerPtr machine_driver_dotron = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dotron )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3_ssio)
 		MDRV_IMPORT_FROM(squawk_n_talk)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Demolition Derby = General MCR3 with Turbo Chip Squeak instead of SSIO */
-	public static MachineHandlerPtr machine_driver_demoderb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( demoderb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
 		MDRV_IMPORT_FROM(turbo_chip_squeak)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************/
 	
 	
 	/* Core MCR monoboard system with no sound */
-	public static MachineHandlerPtr machine_driver_mcrmono = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcrmono )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
@@ -1335,42 +1303,33 @@ public class mcr3
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mcrmono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Sarge/Demolition Derby Mono/Max RPM = MCR monoboardmonoboard = MCR3 with no SSIO */
 	/* in this case, Turbo Chip Squeak is used for sound */
-	public static MachineHandlerPtr machine_driver_mono_tcs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mono_tcs )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrmono)
 		MDRV_IMPORT_FROM(turbo_chip_squeak)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Rampage/Power Drive/Star Guards = MCR monoboard with Sounds Good */
-	public static MachineHandlerPtr machine_driver_mono_sg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mono_sg )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrmono)
 		MDRV_IMPORT_FROM(sounds_good)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************/
 	
 	
 	/* Core scrolling system with no sound */
-	public static MachineHandlerPtr machine_driver_mcrscroll = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcrscroll )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcr3)
@@ -1387,46 +1346,35 @@ public class mcr3
 		MDRV_PALETTE_INIT(spyhunt)
 		MDRV_VIDEO_START(spyhunt)
 		MDRV_VIDEO_UPDATE(spyhunt)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Spy Hunter = scrolling system with an SSIO and a chip squeak deluxe */
-	public static MachineHandlerPtr machine_driver_spyhunt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spyhunt )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(mcr_ssio)
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Crater Raider = scrolling system with SSIO only */
-	public static MachineHandlerPtr machine_driver_crater = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crater )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(mcr_ssio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Turbo Tag = scrolling system with CSD only */
-	public static MachineHandlerPtr machine_driver_turbotag = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( turbotag )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcrscroll)
 		MDRV_IMPORT_FROM(chip_squeak_deluxe)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2016,14 +1964,12 @@ public class mcr3
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_tapper  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tapper  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_timber  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_timber  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 	
 		/* Timber uses a modified SSIO with RAM in place of one of the ROMs */
@@ -2032,32 +1978,28 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_dotron  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dotron  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO | MCR_SQUAWK_N_TALK);
 		install_port_read_handler(0, 0x02, 0x02, dotron_port_2_r);
 		install_port_write_handler(0, 0x04, 0x04, dotron_port_4_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_demoderb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_demoderb  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK);
 		install_port_read_handler(0, 0x01, 0x02, demoderb_port12_r);
 		install_port_write_handler(0, 0x04, 0x04, demoderb_port_4_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_demoderm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_demoderm  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK);
 		install_port_read_handler(0, 0x01, 0x02, demoderb_port12_r);
 		install_port_write_handler(0, 0x06, 0x06, demoderb_port_4_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sarge  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sarge  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK);
 		install_port_read_handler(0, 0x01, 0x01, sarge_port_1_r);
 		install_port_read_handler(0, 0x02, 0x02, sarge_port_2_r);
@@ -2065,8 +2007,7 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_maxrpm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_maxrpm  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_TURBO_CHIP_SQUEAK);
 		install_port_read_handler(0, 0x01, 0x01, maxrpm_port_1_r);
 		install_port_read_handler(0, 0x02, 0x02, maxrpm_port_2_r);
@@ -2075,15 +2016,13 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_rampage  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rampage  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 		install_port_write_handler(0, 0x06, 0x06, soundsgood_data_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_powerdrv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_powerdrv  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 		install_port_read_handler(0, 0x02, 0x02, powerdrv_port_2_r);
 		install_port_write_handler(0, 0x05, 0x05, powerdrv_port_5_w);
@@ -2092,8 +2031,7 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_stargrds  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stargrds  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SOUNDS_GOOD);
 		install_port_read_handler(0, 0x00, 0x00, stargrds_port_0_r);
 		install_port_write_handler(0, 0x05, 0x05, stargrds_port_5_w);
@@ -2101,8 +2039,7 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_spyhunt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spyhunt  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO | MCR_CHIP_SQUEAK_DELUXE);
 		install_port_read_handler(0, 0x02, 0x02, spyhunt_port_2_r);
 		install_port_write_handler(0, 0x04, 0x04, spyhunt_port_4_w);
@@ -2112,8 +2049,7 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_crater  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crater  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_SSIO);
 	
 		spyhunt_sprite_color_mask = 0x03;
@@ -2121,8 +2057,7 @@ public class mcr3
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_turbotag  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_turbotag  = new DriverInitHandlerPtr() { public void handler(){
 		MCR_CONFIGURE_SOUND(MCR_CHIP_SQUEAK_DELUXE);
 		install_port_read_handler(0, 0x02, 0x02, spyhunt_port_2_r);
 		install_port_write_handler(0, 0x04, 0x04, spyhunt_port_4_w);
@@ -2143,27 +2078,27 @@ public class mcr3
 	 *************************************/
 	
 	/* MCR3 games */
-	public static GameDriver driver_tapper	   = new GameDriver("1983"	,"tapper"	,"mcr3.java"	,rom_tapper,null	,machine_driver_mcr3_ssio	,input_ports_tapper	,init_tapper	,ROT0	,	"Bally Midway", "Tapper (Budweiser)" )
-	public static GameDriver driver_tappera	   = new GameDriver("1983"	,"tappera"	,"mcr3.java"	,rom_tappera,driver_tapper	,machine_driver_mcr3_ssio	,input_ports_tapper	,init_tapper	,ROT0	,	"Bally Midway", "Tapper (alternate)" )
-	public static GameDriver driver_sutapper	   = new GameDriver("1983"	,"sutapper"	,"mcr3.java"	,rom_sutapper,driver_tapper	,machine_driver_mcr3_ssio	,input_ports_tapper	,init_tapper	,ROT0	,	"Bally Midway", "Tapper (Suntory)" )
-	public static GameDriver driver_rbtapper	   = new GameDriver("1984"	,"rbtapper"	,"mcr3.java"	,rom_rbtapper,driver_tapper	,machine_driver_mcr3_ssio	,input_ports_tapper	,init_tapper	,ROT0	,	"Bally Midway", "Tapper (Root Beer)" )
-	public static GameDriver driver_timber	   = new GameDriver("1984"	,"timber"	,"mcr3.java"	,rom_timber,null	,machine_driver_mcr3_ssio	,input_ports_timber	,init_timber	,ROT0	,	"Bally Midway", "Timber" )
-	public static GameDriver driver_dotron	   = new GameDriver("1983"	,"dotron"	,"mcr3.java"	,rom_dotron,null	,machine_driver_dotron	,input_ports_dotron	,init_dotron	,ORIENTATION_FLIP_X	,	"Bally Midway", "Discs of Tron (Upright)" )
-	public static GameDriver driver_dotrona	   = new GameDriver("1983"	,"dotrona"	,"mcr3.java"	,rom_dotrona,driver_dotron	,machine_driver_dotron	,input_ports_dotron	,init_dotron	,ORIENTATION_FLIP_X	,	"Bally Midway", "Discs of Tron (Upright alternate)" )
-	public static GameDriver driver_dotrone	   = new GameDriver("1983"	,"dotrone"	,"mcr3.java"	,rom_dotrone,driver_dotron	,machine_driver_dotron	,input_ports_dotron	,init_dotron	,ORIENTATION_FLIP_X	,	"Bally Midway", "Discs of Tron (Environmental)" )
-	public static GameDriver driver_demoderb	   = new GameDriver("1984"	,"demoderb"	,"mcr3.java"	,rom_demoderb,null	,machine_driver_demoderb	,input_ports_demoderb	,init_demoderb	,ROT0	,	"Bally Midway", "Demolition Derby" )
+	GAME( 1983, tapper,   0,        mcr3_ssio,tapper,   tapper,   ROT0,  "Bally Midway", "Tapper (Budweiser)" )
+	GAME( 1983, tappera,  tapper,   mcr3_ssio,tapper,   tapper,   ROT0,  "Bally Midway", "Tapper (alternate)" )
+	GAME( 1983, sutapper, tapper,   mcr3_ssio,tapper,   tapper,   ROT0,  "Bally Midway", "Tapper (Suntory)" )
+	GAME( 1984, rbtapper, tapper,   mcr3_ssio,tapper,   tapper,   ROT0,  "Bally Midway", "Tapper (Root Beer)" )
+	GAME( 1984, timber,   0,        mcr3_ssio,timber,   timber,   ROT0,  "Bally Midway", "Timber" )
+	GAME( 1983, dotron,   0,        dotron,   dotron,   dotron,   ORIENTATION_FLIP_X, "Bally Midway", "Discs of Tron (Upright)" )
+	GAME( 1983, dotrona,  dotron,   dotron,   dotron,   dotron,   ORIENTATION_FLIP_X, "Bally Midway", "Discs of Tron (Upright alternate)" )
+	GAME( 1983, dotrone,  dotron,   dotron,   dotron,   dotron,   ORIENTATION_FLIP_X, "Bally Midway", "Discs of Tron (Environmental)" )
+	GAME( 1984, demoderb, 0,        demoderb, demoderb, demoderb, ROT0,  "Bally Midway", "Demolition Derby" )
 	
 	/* MCR monoboard games */
-	public static GameDriver driver_demoderm	   = new GameDriver("1984"	,"demoderm"	,"mcr3.java"	,rom_demoderm,driver_demoderb	,machine_driver_mono_tcs	,input_ports_demoderb	,init_demoderm	,ROT0	,	"Bally Midway", "Demolition Derby (2-Player Mono Board Version)" )
-	public static GameDriver driver_sarge	   = new GameDriver("1985"	,"sarge"	,"mcr3.java"	,rom_sarge,null	,machine_driver_mono_tcs	,input_ports_sarge	,init_sarge	,ROT0	,	"Bally Midway", "Sarge" )
-	public static GameDriver driver_maxrpm	   = new GameDriver("1986"	,"maxrpm"	,"mcr3.java"	,rom_maxrpm,null	,machine_driver_mono_tcs	,input_ports_maxrpm	,init_maxrpm	,ROT0	,	"Bally Midway", "Max RPM" )
-	public static GameDriver driver_rampage	   = new GameDriver("1986"	,"rampage"	,"mcr3.java"	,rom_rampage,null	,machine_driver_mono_sg	,input_ports_rampage	,init_rampage	,ROT0	,	"Bally Midway", "Rampage (revision 3)" )
-	public static GameDriver driver_rampage2	   = new GameDriver("1986"	,"rampage2"	,"mcr3.java"	,rom_rampage2,driver_rampage	,machine_driver_mono_sg	,input_ports_rampage	,init_rampage	,ROT0	,	"Bally Midway", "Rampage (revision 2)" )
-	public static GameDriver driver_powerdrv	   = new GameDriver("1986"	,"powerdrv"	,"mcr3.java"	,rom_powerdrv,null	,machine_driver_mono_sg	,input_ports_powerdrv	,init_powerdrv	,ROT0	,	"Bally Midway", "Power Drive" )
-	public static GameDriver driver_stargrds	   = new GameDriver("1987"	,"stargrds"	,"mcr3.java"	,rom_stargrds,null	,machine_driver_mono_sg	,input_ports_stargrds	,init_stargrds	,ROT0	,	"Bally Midway", "Star Guards" )
+	GAME( 1984, demoderm, demoderb, mono_tcs, demoderb, demoderm, ROT0,  "Bally Midway", "Demolition Derby (2-Player Mono Board Version)" )
+	GAME( 1985, sarge,    0,        mono_tcs, sarge,    sarge,    ROT0,  "Bally Midway", "Sarge" )
+	GAME( 1986, maxrpm,   0,        mono_tcs, maxrpm,   maxrpm,   ROT0,  "Bally Midway", "Max RPM" )
+	GAME( 1986, rampage,  0,        mono_sg,  rampage,  rampage,  ROT0,  "Bally Midway", "Rampage (revision 3)" )
+	GAME( 1986, rampage2, rampage,  mono_sg,  rampage,  rampage,  ROT0,  "Bally Midway", "Rampage (revision 2)" )
+	GAME( 1986, powerdrv, 0,        mono_sg,  powerdrv, powerdrv, ROT0,  "Bally Midway", "Power Drive" )
+	GAME( 1987, stargrds, 0,        mono_sg,  stargrds, stargrds, ROT0,  "Bally Midway", "Star Guards" )
 	
 	/* MCR scrolling games */
-	public static GameDriver driver_spyhunt	   = new GameDriver("1983"	,"spyhunt"	,"mcr3.java"	,rom_spyhunt,null	,machine_driver_spyhunt	,input_ports_spyhunt	,init_spyhunt	,ROT90	,	"Bally Midway", "Spy Hunter" )
-	public static GameDriver driver_crater	   = new GameDriver("1984"	,"crater"	,"mcr3.java"	,rom_crater,null	,machine_driver_crater	,input_ports_crater	,init_crater	,ORIENTATION_FLIP_X	,	"Bally Midway", "Crater Raider" )
-	public static GameDriver driver_turbotag	   = new GameDriver("1985"	,"turbotag"	,"mcr3.java"	,rom_turbotag,null	,machine_driver_turbotag	,input_ports_turbotag	,init_turbotag	,ROT90	,	"Bally Midway", "Turbo Tag (prototype)", GAME_NO_SOUND )
+	GAME( 1983, spyhunt,  0,        spyhunt,  spyhunt,  spyhunt,  ROT90, "Bally Midway", "Spy Hunter" )
+	GAME( 1984, crater,   0,        crater,   crater,   crater,   ORIENTATION_FLIP_X, "Bally Midway", "Crater Raider" )
+	GAMEX(1985, turbotag, 0,        turbotag, turbotag, turbotag, ROT90, "Bally Midway", "Turbo Tag (prototype)", GAME_NO_SOUND )
 }

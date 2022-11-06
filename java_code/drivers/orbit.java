@@ -19,7 +19,7 @@ Atari Orbit Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,9 +34,8 @@ public class orbit
 	static UINT8 orbit_misc_flags;
 	
 	
-	public static InterruptHandlerPtr orbit_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (orbit_nmi_enable != 0)
+	public static InterruptHandlerPtr orbit_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (orbit_nmi_enable)
 		{
 			cpu_set_nmi_line(0, PULSE_LINE);
 		}
@@ -67,40 +66,34 @@ public class orbit
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_orbit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_orbit  = new MachineInitHandlerPtr() { public void handler(){
 		update_misc_flags(0);
 	} };
 	
 	
-	public static WriteHandlerPtr orbit_note_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_note_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(0, (~data) & 0xff);
 	} };
 	
-	public static WriteHandlerPtr orbit_note_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_note_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(1, data & 0x0f);
 		discrete_sound_w(2, (data >> 4) & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr orbit_noise_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_noise_amp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(3, data & 0x0f);
 		discrete_sound_w(4, (data & 0xf0) >> 4);
 	} };
 	
-	public static WriteHandlerPtr orbit_noise_rst_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_noise_rst_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(6, 0);
 	} };
 	
 	
-	public static WriteHandlerPtr orbit_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 bit = offset >> 1;
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 		{
 			update_misc_flags(orbit_misc_flags | (1 << bit));
 		}
@@ -111,14 +104,12 @@ public class orbit
 	} };
 	
 	
-	public static WriteHandlerPtr orbit_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr orbit_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr orbit_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
@@ -157,7 +148,7 @@ public class orbit
 	};
 	
 	
-	static InputPortPtr input_ports_orbit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_orbit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( orbit )
 		PORT_START();  /* 0800 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -311,8 +302,7 @@ public class orbit
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_orbit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_orbit  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0xFF, 0xFF, 0xFF);
 	} };
@@ -418,8 +408,7 @@ public class orbit
 	DISCRETE_SOUND_END
 	
 	
-	public static MachineHandlerPtr machine_driver_orbit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( orbit )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 12096000 / 16)
@@ -444,9 +433,7 @@ public class orbit
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, orbit_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_orbit = new RomLoadPtr(){ public void handler(){ 
@@ -478,5 +465,5 @@ public class orbit
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_orbit	   = new GameDriver("1978"	,"orbit"	,"orbit.java"	,rom_orbit,null	,machine_driver_orbit	,input_ports_orbit	,null	,0	,	"Atari", "Orbit" )
+	GAME( 1978, orbit, 0, orbit, orbit, 0, 0, "Atari", "Orbit" )
 }

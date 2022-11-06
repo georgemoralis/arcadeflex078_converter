@@ -222,7 +222,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -252,8 +252,7 @@ public class lazercmd
 	 * Fake something toggling the sense input line of the S2650
 	 * The rate should be at about 1 Hz
 	 *************************************************************/
-	public static InterruptHandlerPtr lazercmd_timer = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr lazercmd_timer = new InterruptHandlerPtr() {public void handler(){
 		static int sense_state = 0;
 	
 		if( ++timer_count >= 64*128 ) {
@@ -263,8 +262,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static InterruptHandlerPtr bbonk_timer = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bbonk_timer = new InterruptHandlerPtr() {public void handler(){
 		if( ++timer_count >= 64*128 )
 			timer_count = 0;
 	} };
@@ -276,39 +274,34 @@ public class lazercmd
 	 *************************************************************/
 	
 	/* triggered by WRTC,r opcode */
-	public static WriteHandlerPtr lazercmd_ctrl_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lazercmd_ctrl_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	/* triggered by REDC,r opcode */
-	public static ReadHandlerPtr lazercmd_ctrl_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lazercmd_ctrl_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 		return data;
 	} };
 	
 	/* triggered by WRTD,r opcode */
-	public static WriteHandlerPtr lazercmd_data_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lazercmd_data_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	/* triggered by REDD,r opcode */
-	public static ReadHandlerPtr lazercmd_data_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lazercmd_data_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data;
 		data = input_port_2_r.handler(0) & 0x0f;
 		return data;
 	} };
 	
-	public static WriteHandlerPtr lazercmd_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lazercmd_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int DAC_data = 0;
 	
 		switch (offset)
 		{
 			case 0: /* audio channels */
 				DAC_data=(data&0x80)^((data&0x40)<<1)^((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data != 0)
+				if (DAC_data)
 				{
 					DAC_data_w(0, 0xff);
 				}
@@ -330,8 +323,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static WriteHandlerPtr medlanes_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr medlanes_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int DAC_data = 0;
 	
 		switch (offset)
@@ -341,7 +333,7 @@ public class lazercmd
 				/* these could be used to control sound samples */
 				/* at the moment they are routed through the dac */
 				DAC_data=((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data != 0)
+				if (DAC_data)
 				{
 					DAC_data_w(0, 0xff);
 				}
@@ -363,8 +355,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static WriteHandlerPtr bbonk_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bbonk_hardware_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int DAC_data = 0;
 	
 		switch (offset)
@@ -374,7 +365,7 @@ public class lazercmd
 				/* these could be used to control sound samples */
 				/* at the moment they are routed through the dac */
 				DAC_data=((data&0x20)<<2)^((data&0x10)<<3);
-				if (DAC_data != 0)
+				if (DAC_data)
 				{
 					DAC_data_w(0, 0xff);
 				}
@@ -388,8 +379,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static ReadHandlerPtr lazercmd_hardware_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lazercmd_hardware_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (offset)
@@ -514,7 +504,7 @@ public class lazercmd
 	};
 	
 	
-	static InputPortPtr input_ports_lazercmd = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lazercmd = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lazercmd )
 		PORT_START(); 					   /* IN0 player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
@@ -563,7 +553,7 @@ public class lazercmd
 		PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_medlanes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_medlanes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( medlanes )
 		PORT_START(); 					   /* IN0 player 1 controls */
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -606,7 +596,7 @@ public class lazercmd
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bbonk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bbonk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bbonk )
 		PORT_START(); 					   /* IN0 player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
@@ -671,8 +661,7 @@ public class lazercmd
 		 1, 0,
 		 0, 1
 	};
-	static public static PaletteInitHandlerPtr palette_init_lazercmd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_lazercmd  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); 	/* black */
 		palette_set_color(1,0xb0,0xb0,0xb0); 	/* white */
 		palette_set_color(2,0xff,0xff,0xff);	/* bright white */
@@ -685,8 +674,7 @@ public class lazercmd
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_lazercmd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lazercmd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -716,13 +704,10 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_medlanes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( medlanes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -751,13 +736,10 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bbonk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bbonk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650,8064000/12/3)				/* 672 kHz? */
@@ -787,9 +769,7 @@ public class lazercmd
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, lazercmd_DAC_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -840,8 +820,7 @@ public class lazercmd
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_lazercmd  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lazercmd  = new DriverInitHandlerPtr() { public void handler(){
 	int i, y;
 	
 		artwork_set_overlay(lazercmd_overlay);
@@ -880,8 +859,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_medlanes  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_medlanes  = new DriverInitHandlerPtr() { public void handler(){
 	int i, y;
 	
 	/******************************************************************
@@ -918,8 +896,7 @@ public class lazercmd
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_bbonk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bbonk  = new DriverInitHandlerPtr() { public void handler(){
 	int i, y;
 	
 	/******************************************************************
@@ -958,7 +935,7 @@ public class lazercmd
 	
 	
 	
-	public static GameDriver driver_lazercmd	   = new GameDriver("1976"	,"lazercmd"	,"lazercmd.java"	,rom_lazercmd,null	,machine_driver_lazercmd	,input_ports_lazercmd	,init_lazercmd	,ROT0	,	"Meadows Games, Inc.", "Lazer Command" )
-	public static GameDriver driver_medlanes	   = new GameDriver("1977"	,"medlanes"	,"lazercmd.java"	,rom_medlanes,null	,machine_driver_medlanes	,input_ports_medlanes	,init_medlanes	,ROT0	,	"Meadows Games, Inc.", "Meadows Lanes", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_bbonk	   = new GameDriver("1976"	,"bbonk"	,"lazercmd.java"	,rom_bbonk,null	,machine_driver_bbonk	,input_ports_bbonk	,init_bbonk	,ROT0	,	"Meadows Games, Inc.", "Bigfoot Bonkers" )
+	GAME( 1976, lazercmd, 0, lazercmd, lazercmd, lazercmd, ROT0, "Meadows Games, Inc.", "Lazer Command" )
+	GAMEX(1977, medlanes, 0, medlanes, medlanes, medlanes, ROT0, "Meadows Games, Inc.", "Meadows Lanes", GAME_IMPERFECT_SOUND )
+	GAME( 1976, bbonk,	  0, bbonk,    bbonk,	 bbonk,    ROT0, "Meadows Games, Inc.", "Bigfoot Bonkers" )
 }

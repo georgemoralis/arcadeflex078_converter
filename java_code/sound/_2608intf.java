@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -36,7 +36,7 @@ public class _2608intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf.handler[n]) intf.handler[n](irq);
+		if(intf->handler[n]) intf->handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -83,7 +83,7 @@ public class _2608intf
 	int YM2608_sh_start(const struct MachineSound *msound)
 	{
 		int i,j;
-		int rate = Machine.sample_rate;
+		int rate = Machine->sample_rate;
 		char buf[YM2608_NUMBUF][40];
 		const char *name[YM2608_NUMBUF];
 		int mixed_vol,vol[YM2608_NUMBUF];
@@ -91,8 +91,8 @@ public class _2608intf
 		int  pcmsizea[YM2608_NUMBUF];
 	
 	
-		intf = msound.sound_interface;
-		if( intf.num > MAX_2608 ) return 1;
+		intf = msound->sound_interface;
+		if( intf->num > MAX_2608 ) return 1;
 	
 		if (AY8910_sh_start_ym(msound)) return 1;
 	
@@ -100,10 +100,10 @@ public class _2608intf
 		FMTimerInit();
 	
 		/* stream system initialize */
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 		{
 			/* stream setup */
-			mixed_vol = intf.volumeFM[i];
+			mixed_vol = intf->volumeFM[i];
 			/* stream setup */
 			for (j = 0 ; j < YM2608_NUMBUF ; j++)
 			{
@@ -114,13 +114,13 @@ public class _2608intf
 			}
 			stream[i] = stream_init_multi(YM2608_NUMBUF,name,vol,rate,i,YM2608UpdateOne);
 			/* setup adpcm buffers */
-			pcmbufa[i]  = (void *)(memory_region(intf.pcmrom[i]));
-			pcmsizea[i] = memory_region_length(intf.pcmrom[i]);
+			pcmbufa[i]  = (void *)(memory_region(intf->pcmrom[i]));
+			pcmsizea[i] = memory_region_length(intf->pcmrom[i]);
 		}
 	
 	
 		/* initialize YM2608 */
-		if (YM2608Init(intf.num,intf.baseclock,rate,
+		if (YM2608Init(intf->num,intf->baseclock,rate,
 			           pcmbufa,pcmsizea,
 			           TimerHandler,IRQHandler) == 0)
 			return 0;
@@ -142,21 +142,19 @@ public class _2608intf
 	{
 		int i;
 	
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 			YM2608ResetChip(i);
 	}
 	
 	/************************************************/
 	/* Status Read for YM2608 - Chip 0				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2608_status_port_0_A_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YM2608_status_port_0_A_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("PC %04x: 2608 S0A=%02X\n",activecpu_get_pc(),YM2608Read(0,0));
 		return YM2608Read(0,0);
 	} };
 	
-	public static ReadHandlerPtr YM2608_status_port_0_B_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr YM2608_status_port_0_B_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("PC %04x: 2608 S0B=%02X\n",activecpu_get_pc(),YM2608Read(0,2));
 		return YM2608Read(0,2);
 	} };
@@ -164,39 +162,37 @@ public class _2608intf
 	/************************************************/
 	/* Status Read for YM2608 - Chip 1				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2608_status_port_1_A_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YM2608_status_port_1_A_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YM2608Read(1,0);
-	} };
+	}
 	
-	public static ReadHandlerPtr YM2608_status_port_1_B_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr YM2608_status_port_1_B_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YM2608Read(1,2);
-	} };
+	}
 	
 	/************************************************/
 	/* Port Read for YM2608 - Chip 0				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2608_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr YM2608_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YM2608Read(0,1);
-	} };
+	}
 	
 	/************************************************/
 	/* Port Read for YM2608 - Chip 1				*/
 	/************************************************/
-	public static ReadHandlerPtr YM2608_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr YM2608_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return YM2608Read(1,1);
-	} };
+	}
 	
 	/************************************************/
 	/* Control Write for YM2608 - Chip 0			*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2608_control_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2608_control_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2608Write(0,0,data);
 	} };
 	
-	public static WriteHandlerPtr YM2608_control_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2608_control_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2608Write(0,2,data);
 	} };
 	
@@ -204,25 +200,23 @@ public class _2608intf
 	/* Control Write for YM2608 - Chip 1			*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2608_control_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2608_control_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YM2608Write(1,0,data);
-	} };
+	}
 	
-	public static WriteHandlerPtr YM2608_control_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2608_control_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YM2608Write(1,2,data);
-	} };
+	}
 	
 	/************************************************/
 	/* Data Write for YM2608 - Chip 0				*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2608_data_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2608_data_port_0_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2608Write(0,1,data);
 	} };
 	
-	public static WriteHandlerPtr YM2608_data_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2608_data_port_0_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2608Write(0,3,data);
 	} };
 	
@@ -230,12 +224,12 @@ public class _2608intf
 	/* Data Write for YM2608 - Chip 1				*/
 	/* Consists of 2 addresses						*/
 	/************************************************/
-	public static WriteHandlerPtr YM2608_data_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr YM2608_data_port_1_A_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YM2608Write(1,1,data);
-	} };
-	public static WriteHandlerPtr YM2608_data_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	}
+	public static WriteHandlerPtr YM2608_data_port_1_B_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		YM2608Write(1,3,data);
-	} };
+	}
 	
 	/**************** end of file ****************/
 	

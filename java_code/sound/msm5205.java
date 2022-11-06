@@ -8,7 +8,7 @@
  *
  *	 HJB 08/31/98
  *	 modified to use an automatically selected oversampling factor
- *	 for the current Machine.sample_rate
+ *	 for the current Machine->sample_rate
  *
  *	 01/06/99
  *	separate MSM5205 emulator form adpcm.c and some fix
@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -101,9 +101,9 @@ public class msm5205
 		struct MSM5205Voice *voice = &msm5205[chip];
 	
 		/* if this voice is active */
-		if(voice.signal)
+		if(voice->signal)
 		{
-			short val = voice.signal * 16;
+			short val = voice->signal * 16;
 			while (length)
 			{
 				*buffer++ = val;
@@ -121,31 +121,31 @@ public class msm5205
 		int val;
 		int new_signal;
 		/* callback user handler and latch next data */
-		if(msm5205_intf.vclk_callback[num]) (*msm5205_intf.vclk_callback[num])(num);
+		if(msm5205_intf->vclk_callback[num]) (*msm5205_intf->vclk_callback[num])(num);
 	
 		/* reset check at last hieddge of VCLK */
-		if(voice.reset)
+		if(voice->reset)
 		{
 			new_signal = 0;
-			voice.step = 0;
+			voice->step = 0;
 		}
 		else
 		{
 			/* update signal */
 			/* !! MSM5205 has internal 12bit decoding, signal width is 0 to 8191 !! */
-			val = voice.data;
-			new_signal = voice.signal + diff_lookup[voice.step * 16 + (val & 15)];
+			val = voice->data;
+			new_signal = voice->signal + diff_lookup[voice->step * 16 + (val & 15)];
 			if (new_signal > 2047) new_signal = 2047;
 			else if (new_signal < -2048) new_signal = -2048;
-			voice.step += index_shift[val & 7];
-			if (voice.step > 48) voice.step = 48;
-			else if (voice.step < 0) voice.step = 0;
+			voice->step += index_shift[val & 7];
+			if (voice->step > 48) voice->step = 48;
+			else if (voice->step < 0) voice->step = 0;
 		}
 		/* update when signal changed */
-		if( voice.signal != new_signal)
+		if( voice->signal != new_signal)
 		{
-			stream_update(voice.stream,0);
-			voice.signal = new_signal;
+			stream_update(voice->stream,0);
+			voice->signal = new_signal;
 		}
 	}
 	/*
@@ -157,7 +157,7 @@ public class msm5205
 		int i;
 	
 		/* save a global pointer to our interface */
-		msm5205_intf = msound.sound_interface;
+		msm5205_intf = msound->sound_interface;
 	
 		/* compute the difference tables */
 		ComputeTables ();
@@ -166,15 +166,15 @@ public class msm5205
 		memset (msm5205, 0, sizeof (msm5205));
 	
 		/* stream system initialize */
-		for (i = 0;i < msm5205_intf.num;i++)
+		for (i = 0;i < msm5205_intf->num;i++)
 		{
 			struct MSM5205Voice *voice = &msm5205[i];
 			char name[20];
 			sprintf(name,"MSM5205 #%d",i);
-			voice.stream = stream_init(name,msm5205_intf.mixing_level[i],
-	                                Machine.sample_rate,i,
+			voice->stream = stream_init(name,msm5205_intf->mixing_level[i],
+	                                Machine->sample_rate,i,
 			                        MSM5205_update);
-			voice.timer = timer_alloc(MSM5205_vclk_callback);
+			voice->timer = timer_alloc(MSM5205_vclk_callback);
 		}
 		/* initialize */
 		MSM5205_sh_reset();
@@ -207,20 +207,20 @@ public class msm5205
 		int i;
 	
 		/* bail if we're not emulating sound */
-		if (Machine.sample_rate == 0)
+		if (Machine->sample_rate == 0)
 			return;
 	
-		for (i = 0; i < msm5205_intf.num; i++)
+		for (i = 0; i < msm5205_intf->num; i++)
 		{
 			struct MSM5205Voice *voice = &msm5205[i];
 			/* initialize work */
-			voice.data    = 0;
-			voice.vclk    = 0;
-			voice.reset   = 0;
-			voice.signal  = 0;
-			voice.step    = 0;
+			voice->data    = 0;
+			voice->vclk    = 0;
+			voice->reset   = 0;
+			voice->signal  = 0;
+			voice->step    = 0;
 			/* timer and bitwidth set */
-			MSM5205_playmode_w(i,msm5205_intf.select[i]);
+			MSM5205_playmode_w(i,msm5205_intf->select[i]);
 		}
 	}
 	
@@ -231,9 +231,9 @@ public class msm5205
 	void MSM5205_vclk_w (int num, int vclk)
 	{
 		/* range check the numbers */
-		if (num >= msm5205_intf.num)
+		if (num >= msm5205_intf->num)
 		{
-			logerror("error: MSM5205_vclk_w() called with chip = %d, but only %d chips allocated\n", num, msm5205_intf.num);
+			logerror("error: MSM5205_vclk_w() called with chip = %d, but only %d chips allocated\n", num, msm5205_intf->num);
 			return;
 		}
 		if( msm5205[num].prescaler != 0 )
@@ -245,7 +245,7 @@ public class msm5205
 			if( msm5205[num].vclk != vclk)
 			{
 				msm5205[num].vclk = vclk;
-				if (vclk == 0) MSM5205_vclk_callback(num);
+				if( !vclk ) MSM5205_vclk_callback(num);
 			}
 		}
 	}
@@ -257,9 +257,9 @@ public class msm5205
 	void MSM5205_reset_w (int num, int reset)
 	{
 		/* range check the numbers */
-		if (num >= msm5205_intf.num)
+		if (num >= msm5205_intf->num)
 		{
-			logerror("error: MSM5205_reset_w() called with chip = %d, but only %d chips allocated\n", num, msm5205_intf.num);
+			logerror("error: MSM5205_reset_w() called with chip = %d, but only %d chips allocated\n", num, msm5205_intf->num);
 			return;
 		}
 		msm5205[num].reset = reset;
@@ -289,26 +289,26 @@ public class msm5205
 		int bitwidth = (select & 4) ? 4 : 3;
 	
 	
-		if( voice.prescaler != prescaler )
+		if( voice->prescaler != prescaler )
 		{
-			stream_update(voice.stream,0);
+			stream_update(voice->stream,0);
 	
-			voice.prescaler = prescaler;
+			voice->prescaler = prescaler;
 			/* timer set */
-			if (prescaler != 0)
+			if( prescaler )
 			{
-				double period = TIME_IN_HZ(msm5205_intf.baseclock / prescaler);
-				timer_adjust(voice.timer, period, num, period);
+				double period = TIME_IN_HZ(msm5205_intf->baseclock / prescaler);
+				timer_adjust(voice->timer, period, num, period);
 			}
 			else
-				timer_adjust(voice.timer, TIME_NEVER, 0, 0);
+				timer_adjust(voice->timer, TIME_NEVER, 0, 0);
 		}
 	
-		if( voice.bitwidth != bitwidth )
+		if( voice->bitwidth != bitwidth )
 		{
-			stream_update(voice.stream,0);
+			stream_update(voice->stream,0);
 	
-			voice.bitwidth = bitwidth;
+			voice->bitwidth = bitwidth;
 		}
 	}
 	
@@ -317,6 +317,6 @@ public class msm5205
 	{
 		struct MSM5205Voice *voice = &msm5205[num];
 	
-		mixer_set_volume(voice.stream,volume);
+		mixer_set_volume(voice->stream,volume);
 	}
 }

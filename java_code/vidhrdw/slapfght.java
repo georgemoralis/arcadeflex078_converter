@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -63,8 +63,8 @@ public class slapfght
 	{
 		int tile,color;
 	
-		tile=slapfight_videoram.read(tile_index)+ ((slapfight_colorram.read(tile_index)& 0x03) << 8);
-		color=(slapfight_colorram.read(tile_index)& 0xfc) >> 2;
+		tile=slapfight_videoram[tile_index] + ((slapfight_colorram[tile_index] & 0x03) << 8);
+		color=(slapfight_colorram[tile_index] & 0xfc) >> 2;
 	
 		SET_TILE_INFO(
 				0,
@@ -80,11 +80,10 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_perfrman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_perfrman  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
-		if (pf1_tilemap == 0)
+		if (!pf1_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(pf1_tilemap,0);
@@ -92,8 +91,7 @@ public class slapfght
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_slapfight  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_slapfight  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -112,32 +110,27 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr slapfight_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slapfight_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(pf1_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr slapfight_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slapfight_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		colorram.write(offset,data);
 		tilemap_mark_tile_dirty(pf1_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr slapfight_fixram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		slapfight_videoram.write(data,data);
+	public static WriteHandlerPtr slapfight_fixram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		slapfight_videoram[offset]=data;
 		tilemap_mark_tile_dirty(fix_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr slapfight_fixcol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		slapfight_colorram.write(data,data);
+	public static WriteHandlerPtr slapfight_fixcol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		slapfight_colorram[offset]=data;
 		tilemap_mark_tile_dirty(fix_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr slapfight_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slapfight_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("Writing %02x to flipscreen\n",offset);
 		if (offset==0) flipscreen=1; /* Port 0x2 is flipscreen */
 		else flipscreen=0; /* Port 0x3 is normal */
@@ -172,7 +165,7 @@ public class slapfght
 	
 			if ((buffered_spriteram[offs+2] & 0x80) == priority_to_display)
 			{
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 265 - buffered_spriteram[offs+1];
 					sy = 239 - buffered_spriteram[offs+3];
@@ -183,7 +176,7 @@ public class slapfght
 					sx = buffered_spriteram[offs+1] + 3;
 					sy = buffered_spriteram[offs+3] - 1;
 				}
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 					buffered_spriteram[offs],
 					((buffered_spriteram[offs+2] >> 1) & 3)
 						+ ((buffered_spriteram[offs+2] << 2) & 4)
@@ -204,11 +197,10 @@ public class slapfght
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_perfrman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_flip( pf1_tilemap, flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		tilemap_set_scrolly( pf1_tilemap ,0 , 0 );
-		if (flipscreen != 0) {
+		if (flipscreen) {
 			tilemap_set_scrollx( pf1_tilemap ,0 , 264 );
 		}
 		else {
@@ -227,12 +219,11 @@ public class slapfght
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_slapfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_slapfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
-		if (flipscreen != 0) {
+		if (flipscreen) {
 			tilemap_set_scrollx( fix_tilemap,0,296);
 			tilemap_set_scrollx( pf1_tilemap,0,(*slapfight_scrollx_lo + 256 * *slapfight_scrollx_hi)+296 );
 			tilemap_set_scrolly( pf1_tilemap,0, (*slapfight_scrolly)+15 );
@@ -250,7 +241,7 @@ public class slapfght
 		/* Draw the sprites */
 		for (offs = 0;offs < spriteram_size[0];offs += 4)
 		{
-			if (flipscreen != 0)
+			if (flipscreen)
 				drawgfx(bitmap,Machine.gfx[2],
 					buffered_spriteram[offs] + ((buffered_spriteram[offs+2] & 0xc0) << 2),
 					(buffered_spriteram[offs+2] & 0x1e) >> 1,

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,12 +40,12 @@ public class ninjakid
 				0)
 	}
 	
-	public static WriteHandlerPtr ninjakid_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr ninjakid_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(fg_tilemap,offset&0x3ff);
-	} };
+	}
 	
-	public static WriteHandlerPtr ninjakid_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr ninjakid_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	
 		int y = (offset + ((ninjakun_yscroll & 0xf8) << 2) ) & 0x3e0;
 		int x = (offset + (ninjakun_xscroll >> 3) ) & 0x1f;
@@ -53,10 +53,9 @@ public class ninjakid
 	
 		videoram.write(0x800+offs,data);
 		tilemap_mark_tile_dirty(bg_tilemap,x+y);
-	} };
+	}
 	
-	public static ReadHandlerPtr ninjakid_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ninjakid_bg_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int y = (offset + ((ninjakun_yscroll & 0xf8) << 2) ) & 0x3e0;
 		int x = (offset + (ninjakun_xscroll >> 3) ) & 0x1f;
 		int offs = x+y+(offset & 0x400);
@@ -66,12 +65,12 @@ public class ninjakid
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr ninjakun_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr ninjakun_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		flipscreen = data?(TILEMAP_FLIPX|TILEMAP_FLIPY):0;
 		tilemap_set_flip( ALL_TILEMAPS,flipscreen );
-	} };
+	}
 	
-	public static ReadHandlerPtr ninjakun_io_8000_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr ninjakun_io_8000_r  = new ReadHandlerPtr() { public int handler(int offset)
 		switch( offset ){
 		case 0: /* control */
 			return AY8910_read_port_0_r.handler( 0 );
@@ -92,11 +91,11 @@ public class ninjakid
 	
 		case 3: /* data */
 			return ninjakun_io_8000_ctrl[3];
-		}
+		} };
 	
 	//	logerror("PC=%04x; RAM[0x800%d]\n",activecpu_get_pc(),offset);
 		return 0xFF;
-	} };
+	}
 	
 	/* static void handle_scrolly( UINT8 new_scroll ){ */
 	
@@ -135,7 +134,7 @@ public class ninjakid
 	*/
 	
 	
-	public static WriteHandlerPtr ninjakun_io_8000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr ninjakun_io_8000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		switch( offset ){
 		case 0x0: /* control#1 */
 			ninjakun_io_8000_ctrl[0] = data;
@@ -174,11 +173,10 @@ public class ninjakid
 				AY8910_write_port_1_w.handler( 0,data );
 			}
 			break;
-		}
-	} };
+		} };
+	}
 	
-	public static WriteHandlerPtr ninjakun_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakun_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		paletteram_BBGGRRII_w(offset,data);
@@ -202,7 +200,7 @@ public class ninjakid
 	 vh_start / vh_refresh
 	*******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ninjakid  = new VideoStartHandlerPtr() { public int handler(){
+	public static VideoStartHandlerPtr video_start_ninjakid  = new VideoStartHandlerPtr() { public int handler()
 	    fg_tilemap = tilemap_create( get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32 );
 		bg_tilemap = tilemap_create( get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		tilemap_set_transparent_pen( fg_tilemap,0 );
@@ -214,7 +212,7 @@ public class ninjakid
 	//	state_save_register_UINT8 ("NK_Video", 0, "old_scroll", &old_scroll, 1);
 	
 		return 0;
-	} };
+	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const UINT8 *source = spriteram;
@@ -231,7 +229,7 @@ public class ninjakid
 			int flipy = attr&0x20;
 			int color = attr&0x0f;
 	
-			if (flipscreen != 0){
+			if( flipscreen ){
 				sx = 240-sx;
 				sy = 240-sy;
 				flipx = NOT(flipx);
@@ -261,11 +259,10 @@ public class ninjakid
 				);
 	
 			source+=0x20;
-		}
+		} };
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ninjakid  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,chr,col,px,py,x,y;
 	
 		tilemap_draw( bitmap,cliprect,bg_tilemap,0,0 );

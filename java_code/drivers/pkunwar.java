@@ -9,7 +9,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,7 +54,7 @@ public class pkunwar
 	
 	
 	
-	static InputPortPtr input_ports_pkunwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pkunwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pkunwar )
 		PORT_START(); 	/* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_2WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -173,8 +173,7 @@ public class pkunwar
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_pkunwar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pkunwar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 12000000/4)	/* 3 MHz */
@@ -199,9 +198,7 @@ public class pkunwar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -253,6 +250,6 @@ public class pkunwar
 	
 	
 	
-	public static GameDriver driver_pkunwar	   = new GameDriver("1985?"	,"pkunwar"	,"pkunwar.java"	,rom_pkunwar,null	,machine_driver_pkunwar	,input_ports_pkunwar	,null	,ROT0	,	"UPL", "Penguin-Kun Wars (US)" )
-	public static GameDriver driver_pkunwarj	   = new GameDriver("1985?"	,"pkunwarj"	,"pkunwar.java"	,rom_pkunwarj,driver_pkunwar	,machine_driver_pkunwar	,input_ports_pkunwar	,null	,ROT0	,	"UPL", "Penguin-Kun Wars (Japan)" )
+	GAME( 1985?, pkunwar,  0,       pkunwar, pkunwar, 0, ROT0, "UPL", "Penguin-Kun Wars (US)" )
+	GAME( 1985?, pkunwarj, pkunwar, pkunwar, pkunwar, 0, ROT0, "UPL", "Penguin-Kun Wars (Japan)" )
 }

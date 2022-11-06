@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -102,16 +102,16 @@ public class wecleman
 	
 	static void sprite_init(void)
 	{
-		struct rectangle *clip = Machine.visible_area;
-		struct mame_bitmap *bitmap = Machine.scrbitmap;
+		struct rectangle *clip = Machine->visible_area;
+		struct mame_bitmap *bitmap = Machine->scrbitmap;
 	
-		screen_clip_left   = clip.min_x;
-		screen_clip_top    = clip.min_y;
-		screen_clip_right  = clip.max_x+1;
-		screen_clip_bottom = clip.max_y+1;
+		screen_clip_left   = clip->min_x;
+		screen_clip_top    = clip->min_y;
+		screen_clip_right  = clip->max_x+1;
+		screen_clip_bottom = clip->max_y+1;
 	
-		screen_baseaddr = bitmap.base;
-		screen_line_offset = bitmap.rowbytes;
+		screen_baseaddr = bitmap->base;
+		screen_line_offset = bitmap->rowbytes;
 	}
 	
 	static struct sprite *sprite_list_create(int num_sprites)
@@ -127,7 +127,7 @@ public class wecleman
 	
 	static void get_sprite_info(void)
 	{
-		pen_t *base_pal = Machine.remapped_colortable;
+		pen_t *base_pal = Machine->remapped_colortable;
 		UINT8 *base_gfx = memory_region(REGION_GFX1);
 		int gfx_max     = memory_region_length(REGION_GFX1);
 	
@@ -142,42 +142,42 @@ public class wecleman
 		{
 			if (source[0x00/2] == 0xffff) break;
 	
-			sprite.y = source[0x00/2] & 0xff;
-			sprite.total_height = (source[0x00/2] >> 8) - sprite.y;
-			if (sprite.total_height < 1) continue;
+			sprite->y = source[0x00/2] & 0xff;
+			sprite->total_height = (source[0x00/2] >> 8) - sprite->y;
+			if (sprite->total_height < 1) continue;
 	
-			sprite.x = source[0x02/2] & 0x1ff;
+			sprite->x = source[0x02/2] & 0x1ff;
 			bank = source[0x02/2] >> 10;
 			if (bank == 0x3f) continue;
 	
-			sprite.tile_width = source[0x04/2] & 0xff;
-			if (sprite.tile_width < 1) continue;
+			sprite->tile_width = source[0x04/2] & 0xff;
+			if (sprite->tile_width < 1) continue;
 	
-			sprite.shadow_mode = source[0x04/2] & 0x4000;
+			sprite->shadow_mode = source[0x04/2] & 0x4000;
 	
 			code = source[0x06/2];
 			zoom = source[0x08/2];
 	
-			sprite.pal_data = base_pal + ((source[0x0e/2] & 0xff) << 4);
+			sprite->pal_data = base_pal + ((source[0x0e/2] & 0xff) << 4);
 	
 			gfx = (wecleman_gfx_bank[bank] << 15) + (code & 0x7fff);
 	
-			sprite.flags = 0;
-			if ((code & 0x8000) != 0) { sprite.flags |= SPRITE_FLIPX; gfx += 1-sprite.tile_width; }
-			if (source[0x02/2] & 0x0200) sprite.flags |= SPRITE_FLIPY;
+			sprite->flags = 0;
+			if (code & 0x8000) { sprite->flags |= SPRITE_FLIPX; gfx += 1-sprite->tile_width; }
+			if (source[0x02/2] & 0x0200) sprite->flags |= SPRITE_FLIPY;
 	
 			gfx <<= 3;
-			sprite.tile_width <<= 3;
-			sprite.tile_height = (sprite.total_height * 0x80) / (0x80 - (zoom >> 8));	// needs work
+			sprite->tile_width <<= 3;
+			sprite->tile_height = (sprite->total_height * 0x80) / (0x80 - (zoom >> 8));	// needs work
 	
-			if ((gfx + sprite.tile_width * sprite.tile_height - 1) >= gfx_max) continue;
+			if ((gfx + sprite->tile_width * sprite->tile_height - 1) >= gfx_max) continue;
 	
-			sprite.pen_data = base_gfx + gfx;
-			sprite.line_offset = sprite.tile_width;
-			sprite.total_width = sprite.tile_width - (sprite.tile_width * (zoom & 0xff)) / 0x80;
-			sprite.total_height += 1;
-			sprite.x += spr_offsx;
-			sprite.y += spr_offsy;
+			sprite->pen_data = base_gfx + gfx;
+			sprite->line_offset = sprite->tile_width;
+			sprite->total_width = sprite->tile_width - (sprite->tile_width * (zoom & 0xff)) / 0x80;
+			sprite->total_height += 1;
+			sprite->x += spr_offsx;
+			sprite->y += spr_offsy;
 	
 			if (gameid == 0)
 			{
@@ -233,10 +233,10 @@ public class wecleman
 		int x1, x2, y1, y2, dx, dy;
 		int xcount0=0, ycount0=0;
 	
-		if (sprite.flags & SPRITE_FLIPX)
+		if (sprite->flags & SPRITE_FLIPX)
 		{
-			x2 = sprite.x;
-			x1 = x2 + sprite.total_width;
+			x2 = sprite->x;
+			x1 = x2 + sprite->total_width;
 			dx = -1;
 			if (x2 < screen_clip_left) x2 = screen_clip_left;
 			if (x1 > screen_clip_right )
@@ -249,8 +249,8 @@ public class wecleman
 		}
 		else
 		{
-			x1 = sprite.x;
-			x2 = x1 + sprite.total_width;
+			x1 = sprite->x;
+			x2 = x1 + sprite->total_width;
 			dx = 1;
 			if (x1 < screen_clip_left )
 			{
@@ -261,10 +261,10 @@ public class wecleman
 			if (x1 >= x2) return;
 		}
 	
-		if (sprite.flags & SPRITE_FLIPY)
+		if (sprite->flags & SPRITE_FLIPY)
 		{
-			y2 = sprite.y;
-			y1 = y2 + sprite.total_height;
+			y2 = sprite->y;
+			y1 = y2 + sprite->total_height;
 			dy = -1;
 			if (y2 < screen_clip_top ) y2 = screen_clip_top;
 			if (y1 > screen_clip_bottom )
@@ -277,8 +277,8 @@ public class wecleman
 		}
 		else
 		{
-			y1 = sprite.y;
-			y2 = y1 + sprite.total_height;
+			y1 = sprite->y;
+			y2 = y1 + sprite->total_height;
 			dy = 1;
 			if (y1 < screen_clip_top )
 			{
@@ -289,27 +289,27 @@ public class wecleman
 			if (y1 >= y2) return;
 		}
 	
-		src_pitch = sprite.line_offset;
+		src_pitch = sprite->line_offset;
 		dst_pitch = (screen_line_offset * dy) >> 1;
 		dst_end = (UINT16 *)(screen_baseaddr + screen_line_offset * y2);
 	
 		// calculate entry point decimals
-		ebx = sprite.tile_height;
-		ecx = sprite.total_height;
+		ebx = sprite->tile_height;
+		ecx = sprite->total_height;
 		eax = (ebx<<PRECISION_Y) / ecx;
 		src_fdy = eax;
 		src_f0y = eax * ycount0 + FPY_HALF;
 	
-		ebx = sprite.tile_width;
-		ecx = sprite.total_width;
+		ebx = sprite->tile_width;
+		ecx = sprite->total_width;
 		eax = (ebx<<PRECISION_X) / ecx;
 		src_fdx = eax;
 		src_f0x = eax * xcount0;
 	
 		// pre-loop assignments and adjustments
 		dst_ptr = (UINT16 *)(screen_baseaddr + screen_line_offset * y1);
-		pal_base = sprite.pal_data;
-		src_base = sprite.pen_data;
+		pal_base = sprite->pal_data;
+		src_base = sprite->pen_data;
 		rgb_base = rgb_half;
 	
 		ebx = (src_f0y>>PRECISION_Y) * src_pitch;
@@ -318,7 +318,7 @@ public class wecleman
 		x2 -= dx;
 		ecx = x1;
 	
-		if (!sprite.shadow_mode)
+		if (!sprite->shadow_mode)
 		{
 			do
 			{
@@ -332,7 +332,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax != 0)
+					if (eax)
 					{
 						eax = pal_base[eax];
 						dst_ptr[ecx] = eax;
@@ -363,7 +363,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax != 0)
+					if (eax)
 					{
 						if (eax != 0xa)
 							eax = pal_base[eax];
@@ -400,7 +400,7 @@ public class wecleman
 					eax = *((char *)ebx + eax);
 					ecx += dx;
 					if (eax < 0) break;
-					if (eax != 0)
+					if (eax)
 					{
 						if (eax != 0xa)
 							eax = pal_base[eax];
@@ -664,14 +664,14 @@ public class wecleman
 		int dst_pitch, scrollx, sy;
 		int mdy, tdy, edx, ebx, eax;
 	
-		dst_line = (UINT16**)bitmap.line;
-		rgb_ptr = Machine.remapped_colortable;
+		dst_line = (UINT16**)bitmap->line;
+		rgb_ptr = Machine->remapped_colortable;
 	
 		if (priority == 0x02)
 		{
 	
 		// draw sky; each scanline is assumed to be dword aligned
-		for (sy=cliprect.min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
+		for (sy=cliprect->min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
 		{
 			eax = wecleman_roadram[sy];
 			if ((eax>>8) != 0x02) continue;
@@ -705,16 +705,16 @@ public class wecleman
 			ebx = road_color[eax];
 			road_rgb[eax] = (ebx) ? rgb_ptr[ebx] : -1;
 		}
-		src_base = Machine.gfx[1].gfxdata;
-		dst_pitch = bitmap.rowpixels;
+		src_base = Machine->gfx[1]->gfxdata;
+		dst_pitch = bitmap->rowpixels;
 	
-		for (sy=cliprect.min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
+		for (sy=cliprect->min_y-BMP_PAD; sy<DST_HEIGHT; sy++)
 		{
 			eax = wecleman_roadram[sy];
 			if ((eax>>8) != 0x04) continue;
 	
 			eax &= YMASK;
-			dst_base = bitmap.line[sy+BMP_PAD];
+			dst_base = bitmap->line[sy+BMP_PAD];
 			ebx = eax;
 			dst_base += BMP_PAD;
 			ebx <<= 9;
@@ -820,8 +820,8 @@ public class wecleman
 		tmmaskx = (1<<tmw_l2) - 1;
 		tmmasky = (1<<tmh_l2) - 1;
 	
-		tilew = gfx.width;
-		tileh = gfx.height;
+		tilew = gfx->width;
+		tileh = gfx->height;
 	
 		scrollx &= ((tilew<<tmw_l2) - 1);
 		scrolly &= ((tileh<<tmh_l2) - 1);
@@ -831,19 +831,19 @@ public class wecleman
 		tmskipy = scrolly / tileh;
 		dy = -(scrolly & (tileh-1));
 	
-		src_base = gfx.gfxdata;
-		src_advance = gfx.char_modulo;
+		src_base = gfx->gfxdata;
+		src_advance = gfx->char_modulo;
 		//src_advance_l2 = log2(src_advance);
 		src_advance_l2 = 6;	// hack to speed up multiplication
-		pal_advance = gfx.color_granularity;
+		pal_advance = gfx->color_granularity;
 		//pal_advance_l2 = log2(pal_advance);
 		pal_advance_l2 = 3;	// hack to speed up multiplication
 	
-		dst_pitch = bitmap.rowpixels;
-		dst_base = (UINT16 *)bitmap.base + (y0+dy)*dst_pitch + (x0+dx);
+		dst_pitch = bitmap->rowpixels;
+		dst_base = (UINT16 *)bitmap->base + (y0+dy)*dst_pitch + (x0+dx);
 		dst_advance = dst_pitch * tileh;
 	
-		pal_base = Machine.remapped_colortable;
+		pal_base = Machine->remapped_colortable;
 		alpha <<= 6;
 		pal_base += pal_offset << pal_advance_l2;
 	
@@ -1038,7 +1038,7 @@ public class wecleman
 		int sx, sy;
 	
 		/* Let's draw from the top to the bottom of the visible screen */
-		for (sy = Machine.visible_area.min_y;sy <= Machine.visible_area.max_y;sy++)
+		for (sy = Machine->visible_area.min_y;sy <= Machine->visible_area.max_y;sy++)
 		{
 			int code    = wecleman_roadram[sy*4/2+2/2] + (wecleman_roadram[sy*4/2+0/2] << 16);
 			int color   = ((code & 0x00f00000) >> 20) + 0x70;
@@ -1051,7 +1051,7 @@ public class wecleman
 	
 			for (sx=0; sx<2*XSIZE; sx+=64)
 			{
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 						code++,
 						color,
 						0,0,
@@ -1076,7 +1076,7 @@ public class wecleman
 	
 		// bit0-6: background transition, 0=off, 1=on
 		// bit7: palette being changed, 0=no, 1=yes
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if ((data & 0x7f) == 0 && !cloud_ds)
 				cloud_ds = BLEND_INC;
@@ -1112,7 +1112,7 @@ public class wecleman
 		newword = COMBINE_DATA(&paletteram16[offset]);
 	
 		// the highest nibble has some unknown functions
-	//	if ((newword & 0xf000) != 0) logerror("MSN set on color %03x: %1x\n", offset, newword>>12);
+	//	if (newword & 0xf000) logerror("MSN set on color %03x: %1x\n", offset, newword>>12);
 	
 		r0 = newword; g0 = newword; b0 = newword;
 		g0 >>=4;      b0 >>=8;
@@ -1129,8 +1129,7 @@ public class wecleman
 								Initializations
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_wecleman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wecleman  = new VideoStartHandlerPtr() { public int handler(){
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
 			This game has ROMs for 16 banks
@@ -1238,8 +1237,7 @@ public class wecleman
 		*color = ((*color & 0x3f) << 1) | ((*code & 0x80) >> 7);
 	}
 	
-	public static VideoStartHandlerPtr video_start_hotchase  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hotchase  = new VideoStartHandlerPtr() { public int handler(){
 		/*
 			Sprite banking - each bank is 0x20000 bytes (we support 0x40 bank codes)
 			This game has ROMs for 0x30 banks
@@ -1284,8 +1282,7 @@ public class wecleman
 								Video Updates
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wecleman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		pen_t *mrct;
 		int video_on;
 		int fg_x, bg_x, fg_y, bg_y;
@@ -1328,17 +1325,17 @@ public class wecleman
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Draw the road (lines which have priority 0x02) */
-		if (video_on != 0) wecleman_draw_road(bitmap, cliprect, 0x02);
+		if (video_on) wecleman_draw_road(bitmap, cliprect, 0x02);
 	
 		/* Draw the background */
-		if (video_on != 0) tilemap_draw(bitmap,cliprect, bg_tilemap, 0, 0);
+		if (video_on) tilemap_draw(bitmap,cliprect, bg_tilemap, 0, 0);
 	
 		// draws the cloud layer; needs work
-		if (cloud_visible != 0)
+		if (cloud_visible)
 		{
 			mrct[0] = mrct[0x40] = mrct[0x200] = mrct[0x205];
 	
-			if (video_on != 0) wecleman_draw_cloud(
+			if (video_on) wecleman_draw_cloud(
 				bitmap,
 				Machine.gfx[0],
 				wecleman_pageram+0x1800,
@@ -1357,24 +1354,23 @@ public class wecleman
 		}
 	
 		/* Draw the foreground */
-		if (video_on != 0) tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
+		if (video_on) tilemap_draw(bitmap,cliprect, fg_tilemap, 0, 0);
 	
 		/* Draw the road (lines which have priority 0x04) */
-		if (video_on != 0) wecleman_draw_road(bitmap,cliprect, 0x04);
+		if (video_on) wecleman_draw_road(bitmap,cliprect, 0x04);
 	
 		/* Draw the sprites */
-		if (video_on != 0) sprite_draw();
+		if (video_on) sprite_draw();
 	
 		/* Draw the text layer */
-		if (video_on != 0) tilemap_draw(bitmap,cliprect, txt_tilemap, 0, 0);
+		if (video_on) tilemap_draw(bitmap,cliprect, txt_tilemap, 0, 0);
 	} };
 	
 	/***************************************************************************
 									Hot Chase
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_hotchase  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int video_on;
 	
 		video_on = wecleman_irqctrl & 0x40;
@@ -1386,15 +1382,15 @@ public class wecleman
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		/* Draw the background */
-		if (video_on != 0) K051316_zoom_draw_0(bitmap,cliprect, 0, 0);
+		if (video_on) K051316_zoom_draw_0(bitmap,cliprect, 0, 0);
 	
 		/* Draw the road */
-		if (video_on != 0) hotchase_draw_road(bitmap, cliprect);
+		if (video_on) hotchase_draw_road(bitmap, cliprect);
 	
 		/* Draw the sprites */
-		if (video_on != 0) sprite_draw();
+		if (video_on) sprite_draw();
 	
 		/* Draw the foreground (text) */
-		if (video_on != 0) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
+		if (video_on) K051316_zoom_draw_1(bitmap,cliprect, 0, 0);
 	} };
 }

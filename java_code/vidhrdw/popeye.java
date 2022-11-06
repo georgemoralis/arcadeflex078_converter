@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,7 +23,7 @@ public class popeye
 	static struct mame_bitmap *tmpbitmap2;
 	static int invertmask;
 	static int bitmap_type;
-	static final int TYPE_SKYSKIPR = 0, TYPE_POPEYE = 1;
+	enum { TYPE_SKYSKIPR, TYPE_POPEYE };
 	
 	#define BGRAM_SIZE 0x2000
 	
@@ -143,15 +143,13 @@ public class popeye
 		}
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_popeye  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_popeye  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		invertmask = 0xff;
 	
 		convert_color_prom(colortable,color_prom);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_popeyebl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_popeyebl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		invertmask = 0x00;
 	
 		convert_color_prom(colortable,color_prom);
@@ -195,8 +193,7 @@ public class popeye
 		}
 	}
 	
-	public static WriteHandlerPtr popeye_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popeye_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -204,8 +201,7 @@ public class popeye
 		}
 	} };
 	
-	public static WriteHandlerPtr popeye_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popeye_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -213,8 +209,7 @@ public class popeye
 		}
 	} };
 	
-	public static WriteHandlerPtr popeye_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr popeye_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sx,sy,x,y,colour;
 	
 		popeye_bitmapram[offset] = data;
@@ -224,15 +219,15 @@ public class popeye
 			sx = 8 * (offset % 128);
 			sy = 8 * (offset / 128);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 				sy = 512-8 - sy;
 	
-			colour = Machine.pens[data & 0x0f];
+			colour = Machine->pens[data & 0x0f];
 			for (y = 0; y < 8; y++)
 			{
 				for (x = 0; x < 8; x++)
 				{
-					plot_pixel.handler(tmpbitmap2, sx+x, sy+y, colour);
+					plot_pixel(tmpbitmap2, sx+x, sy+y, colour);
 				}
 			}
 		}
@@ -241,24 +236,23 @@ public class popeye
 			sx = 8 * (offset % 64);
 			sy = 4 * (offset / 64);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 				sy = 512-4 - sy;
 	
-			colour = Machine.pens[data & 0x0f];
+			colour = Machine->pens[data & 0x0f];
 			for (y = 0; y < 4; y++)
 			{
 				for (x = 0; x < 8; x++)
 				{
-					plot_pixel.handler(tmpbitmap2, sx+x, sy+y, colour);
+					plot_pixel(tmpbitmap2, sx+x, sy+y, colour);
 				}
 			}
 		}
 	} };
 	
-	public static WriteHandlerPtr skyskipr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skyskipr_bitmap_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = ((offset & 0xfc0) << 1) | (offset & 0x03f);
-		if ((data & 0x80) != 0)
+		if (data & 0x80)
 			offset |= 0x40;
 	
 		popeye_bitmap_w(offset,data);
@@ -272,8 +266,7 @@ public class popeye
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_skyskipr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_skyskipr  = new VideoStartHandlerPtr() { public int handler(){
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
 	
@@ -285,7 +278,7 @@ public class popeye
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 16, 16, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -293,8 +286,7 @@ public class popeye
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_popeye  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_popeye  = new VideoStartHandlerPtr() { public int handler(){
 		if ((popeye_bitmapram = auto_malloc(popeye_bitmapram_size)) == 0)
 			return 1;
 	
@@ -306,7 +298,7 @@ public class popeye
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 16, 16, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -331,7 +323,7 @@ public class popeye
 	
 		if (popeye_background_pos[1] == 0)	/* no background */
 		{
-			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
+			fillbitmap(bitmap,Machine->pens[0],Machine->visible_area);
 		}
 		else
 		{
@@ -342,14 +334,14 @@ public class popeye
 			if (bitmap_type == TYPE_SKYSKIPR)
 				scrollx = 2*scrollx - 512;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				if (bitmap_type == TYPE_POPEYE)
 					scrollx = -scrollx;
 				scrolly = -scrolly;
 			}
 	
-			copyscrollbitmap(bitmap,tmpbitmap2,1,&scrollx,1,&scrolly,Machine.visible_area,TRANSPARENCY_NONE,0);
+			copyscrollbitmap(bitmap,tmpbitmap2,1,&scrollx,1,&scrolly,Machine->visible_area,TRANSPARENCY_NONE,0);
 		}
 	}
 	
@@ -388,7 +380,7 @@ public class popeye
 			sx = 2*(spriteram.read(offs))-8;
 			sy = 2*(256-spriteram.read(offs + 1));
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -397,17 +389,16 @@ public class popeye
 			}
 	
 			if (spriteram.read(offs)!= 0)
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code ^ 0x1ff,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_popeye  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		popeye_draw_background(bitmap);
 		popeye_draw_sprites(bitmap);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);

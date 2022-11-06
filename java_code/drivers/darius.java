@@ -128,7 +128,7 @@ sounds.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -321,23 +321,20 @@ public class darius
 	
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			banknum = data &0x03;
 			reset_sound_region();
 	//		banknum = data;
 	//		reset_sound_region();
 	} };
 	
-	public static WriteHandlerPtr adpcm_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		adpcm_command = data;
 		/* logerror("#ADPCM command write =%2x\n",data); */
 	} };
 	
 	#if 0
-	public static WriteHandlerPtr display_value = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr display_value = new WriteHandlerPtr() {public void handler(int offset, int data){
 		usrintf_showmessage("d800=%x",data);
 	} };
 	#endif
@@ -394,44 +391,38 @@ public class darius
 		mixer_set_stereo_volume( 8, left, right );
 	}
 	
-	public static WriteHandlerPtr darius_fm0_pan = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_fm0_pan = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darius_pan[0] = data&0xff;  /* data 0x00:right 0xff:left */
 		update_fm0();
 	} };
 	
-	public static WriteHandlerPtr darius_fm1_pan = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_fm1_pan = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darius_pan[1] = data&0xff;
 		update_fm1();
 	} };
 	
-	public static WriteHandlerPtr darius_psg0_pan = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_psg0_pan = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darius_pan[2] = data&0xff;
 		update_psg0( 0 );
 		update_psg0( 1 );
 		update_psg0( 2 );
 	} };
 	
-	public static WriteHandlerPtr darius_psg1_pan = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_psg1_pan = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darius_pan[3] = data&0xff;
 		update_psg1( 0 );
 		update_psg1( 1 );
 		update_psg1( 2 );
 	} };
 	
-	public static WriteHandlerPtr darius_da_pan = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_da_pan = new WriteHandlerPtr() {public void handler(int offset, int data){
 		darius_pan[4] = data&0xff;
 		update_da();
 	} };
 	
 	/**** Mixer Control ****/
 	
-	public static WriteHandlerPtr darius_write_portA0 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_write_portA0 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// volume control FM #0 PSG #0 A
 		//usrintf_showmessage(" pan %02x %02x %02x %02x %02x", darius_pan[0], darius_pan[1], darius_pan[2], darius_pan[3], darius_pan[4] );
 		//usrintf_showmessage(" A0 %02x A1 %02x B0 %02x B1 %02x", port[0], port[1], port[2], port[3] );
@@ -441,8 +432,7 @@ public class darius
 		update_psg0( 0 );
 	} };
 	
-	public static WriteHandlerPtr darius_write_portA1 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_write_portA1 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// volume control FM #1 PSG #1 A
 		//usrintf_showmessage(" pan %02x %02x %02x %02x %02x", darius_pan[0], darius_pan[1], darius_pan[2], darius_pan[3], darius_pan[4] );
 		darius_vol[3] = darius_def_vol[(data>>4)&0x0f];
@@ -451,8 +441,7 @@ public class darius
 		update_psg1( 0 );
 	} };
 	
-	public static WriteHandlerPtr darius_write_portB0 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_write_portB0 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// volume control PSG #0 B/C
 		//usrintf_showmessage(" pan %02x %02x %02x %02x %02x", darius_pan[0], darius_pan[1], darius_pan[2], darius_pan[3], darius_pan[4] );
 		darius_vol[1] = darius_def_vol[(data>>4)&0x0f];
@@ -461,8 +450,7 @@ public class darius
 		update_psg0( 2 );
 	} };
 	
-	public static WriteHandlerPtr darius_write_portB1 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr darius_write_portB1 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// volume control PSG #1 B/C
 		//usrintf_showmessage(" pan %02x %02x %02x %02x %02x", darius_pan[0], darius_pan[1], darius_pan[2], darius_pan[3], darius_pan[4] );
 		darius_vol[4] = darius_def_vol[(data>>4)&0x0f];
@@ -527,7 +515,7 @@ public class darius
 	
 	static void darius_adpcm_int (int data)
 	{
-		if (nmi_enable != 0)
+		if (nmi_enable)
 		{
 			cpu_set_nmi_line(3, PULSE_LINE);
 		}
@@ -542,36 +530,30 @@ public class darius
 		{ 50 }			/* volume */
 	};
 	
-	public static ReadHandlerPtr adpcm_command_read  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr adpcm_command_read  = new ReadHandlerPtr() { public int handler(int offset){
 		/* logerror("read port 0: %02x  PC=%4x\n",adpcm_command, activecpu_get_pc() ); */
 		return adpcm_command;
 	} };
 	
-	public static ReadHandlerPtr readport2  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readport2  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr readport3  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readport3  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
-	static public static WriteHandlerPtr adpcm_nmi_disable = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_nmi_disable = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enable = 0;
 		/* logerror("write port 0: NMI DISABLE  PC=%4x\n", data, activecpu_get_pc() ); */
 	} };
 	
-	static public static WriteHandlerPtr adpcm_nmi_enable = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_nmi_enable = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enable = 1;
 		/* logerror("write port 1: NMI ENABLE   PC=%4x\n", activecpu_get_pc() ); */
 	} };
 	
-	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w (0,   data         );
 		MSM5205_reset_w(0, !(data & 0x20) );	/* my best guess, but it could be output enable as well */
 	} };
@@ -652,7 +634,7 @@ public class darius
 		PORT_BIT( 0x80, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 	
 	
-	static InputPortPtr input_ports_darius = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darius = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darius )
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER1 )
 	
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER2 )
@@ -690,7 +672,7 @@ public class darius
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dariuse = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dariuse = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dariuse )
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER1 )
 	
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER2 )
@@ -728,7 +710,7 @@ public class darius
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dariusj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dariusj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dariusj )
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER1 )
 	
 		DARIUS_PLAYERS_INPUT( IPF_PLAYER2 )
@@ -842,8 +824,7 @@ public class darius
 	                       MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_darius = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darius )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,16000000/2)	/* 8 MHz ? */
@@ -884,9 +865,7 @@ public class darius
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1118,8 +1097,7 @@ public class darius
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_darius  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_darius  = new DriverInitHandlerPtr() { public void handler(){
 	//	taitosnd_setz80_soundcpu( 2 );
 	
 		cpua_ctrl = 0xff;
@@ -1135,8 +1113,7 @@ public class darius
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_darius  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_darius  = new MachineInitHandlerPtr() { public void handler(){
 		int  i;
 	
 		/**** setup sound bank image ****/
@@ -1162,8 +1139,8 @@ public class darius
 	} };
 	
 	
-	public static GameDriver driver_darius	   = new GameDriver("1986"	,"darius"	,"darius.java"	,rom_darius,null	,machine_driver_darius	,input_ports_darius	,init_darius	,ROT0	,	"Taito Corporation Japan", "Darius (World)" )
-	public static GameDriver driver_dariusj	   = new GameDriver("1986"	,"dariusj"	,"darius.java"	,rom_dariusj,driver_darius	,machine_driver_darius	,input_ports_dariusj	,init_darius	,ROT0	,	"Taito Corporation", "Darius (Japan)" )
-	public static GameDriver driver_dariuso	   = new GameDriver("1986"	,"dariuso"	,"darius.java"	,rom_dariuso,driver_darius	,machine_driver_darius	,input_ports_dariusj	,init_darius	,ROT0	,	"Taito Corporation", "Darius (Japan old version)" )
-	public static GameDriver driver_dariuse	   = new GameDriver("1986"	,"dariuse"	,"darius.java"	,rom_dariuse,driver_darius	,machine_driver_darius	,input_ports_dariuse	,init_darius	,ROT0	,	"Taito Corporation", "Darius (Extra) (Japan)" )
+	GAME( 1986, darius,   0,        darius,   darius,   darius,   ROT0, "Taito Corporation Japan", "Darius (World)" )
+	GAME( 1986, dariusj,  darius,   darius,   dariusj,  darius,   ROT0, "Taito Corporation", "Darius (Japan)" )
+	GAME( 1986, dariuso,  darius,   darius,   dariusj,  darius,   ROT0, "Taito Corporation", "Darius (Japan old version)" )
+	GAME( 1986, dariuse,  darius,   darius,   dariuse,  darius,   ROT0, "Taito Corporation", "Darius (Extra) (Japan)" )
 }

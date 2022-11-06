@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -39,7 +39,7 @@ public class streams
 	/*
 	signal >--R1--+--R2--+
 	              |      |
-	              C      R3--. amp
+	              C      R3---> amp
 	              |      |
 	             GND    GND
 	*/
@@ -118,7 +118,7 @@ public class streams
 		int channel,i;
 	
 	
-		if (Machine.sample_rate == 0) return;
+		if (Machine->sample_rate == 0) return;
 	
 		/* update all the output buffers */
 		for (channel = 0;channel < MIXER_MAX_CHANNELS;channel += stream_joined_channels[channel])
@@ -202,7 +202,7 @@ public class streams
 	
 		stream_sample_rate[channel] = sample_rate;
 		stream_buffer_pos[channel] = 0;
-		if (sample_rate != 0)
+		if (sample_rate)
 			stream_sample_length[channel] = 1000000 / sample_rate;
 		else
 			stream_sample_length[channel] = 0;
@@ -234,7 +234,7 @@ public class streams
 	
 			stream_sample_rate[channel+i] = sample_rate;
 			stream_buffer_pos[channel+i] = 0;
-			if (sample_rate != 0)
+			if (sample_rate)
 				stream_sample_length[channel+i] = 1000000 / sample_rate;
 			else
 				stream_sample_length[channel+i] = 0;
@@ -255,7 +255,7 @@ public class streams
 		int buflen;
 	
 	
-		if (Machine.sample_rate == 0 || stream_buffer[channel] == 0)
+		if (Machine->sample_rate == 0 || stream_buffer[channel] == 0)
 			return;
 	
 		/* get current position based on the timer */

@@ -44,7 +44,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -81,8 +81,8 @@ public class statriv2
 	
 	static void get_statriv2_tile_info(int tile_index)
 	{
-		int code = statriv2_videoram.read(0x400+tile_index);
-		int attr = statriv2_videoram.read(tile_index);
+		int code = statriv2_videoram[0x400+tile_index];
+		int attr = statriv2_videoram[tile_index];
 	
 		SET_TILE_INFO(
 				0,
@@ -92,28 +92,24 @@ public class statriv2
 	}
 	
 	
-	public static WriteHandlerPtr statriv2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		statriv2_videoram.write(data,data);
+	public static WriteHandlerPtr statriv2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		statriv2_videoram[offset] = data;
 		tilemap_mark_tile_dirty(statriv2_tilemap,offset & 0x3ff);
 	} };
 	
 	
-	VIDEO_START (statriv2)
-	{
+	public static VideoStartHandlerPtr video_start_statriv2  = new VideoStartHandlerPtr() { public int handler(){
 		statriv2_tilemap = tilemap_create(get_statriv2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,16,64, 16);
-		if (statriv2_tilemap == 0)
+		if(!statriv2_tilemap)
 			return 1;
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE (statriv2)
-	{
+	public static VideoUpdateHandlerPtr video_update_statriv2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,statriv2_tilemap,0,0);
-	}
+	} };
 	
-	PALETTE_INIT(statriv2)
-	{
+	public static PaletteInitHandlerPtr palette_init_statriv2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int j;
 	
 		for (j = 0;j < 16;j++)
@@ -136,49 +132,44 @@ public class statriv2
 			colortable[2*j+1] = j >> 4;
 		}
 	        palette_set_color(8,0xFF,0xFF,0xFF);
-	}
+	} };
 	
 	/* end video related */
 	
-	static NVRAM_HANDLER (statriv2)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_statriv2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, generic_nvram, generic_nvram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, generic_nvram, generic_nvram_size);
 		else
 			memcpy ( generic_nvram, statriv2_default_eeprom, 0x100 );
-	}
+	} };
 	
 	
 	static data8_t  question_offset_low;
 	static data8_t  question_offset_med;
 	static data8_t  question_offset_high;
 	
-	static public static WriteHandlerPtr question_offset_low_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr question_offset_low_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		question_offset_low = data;
 	} };
 	
-	static public static WriteHandlerPtr question_offset_med_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr question_offset_med_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		question_offset_med = data;
 	} };
 	
-	static public static WriteHandlerPtr question_offset_high_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr question_offset_high_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		question_offset_high = data;
 	} };
 	
-	static READ_HANDLER (statriv2_questions_read)
-	{
+	public static ReadHandlerPtr statriv2_questions_read  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *question_data    = memory_region       ( REGION_USER1 );
 		int offs;
 	
 		question_offset_low++;
 		offs = (question_offset_high << 8) | question_offset_low;
 		return question_data[offs];
-	}
+	} };
 	
 	/***************************************************\
 	*                                                   *
@@ -242,8 +233,7 @@ public class statriv2
 	*                                                   *
 	\***************************************************/
 	
-	static READ_HANDLER (supertr2_questions_read)
-	{
+	public static ReadHandlerPtr supertr2_questions_read  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t *question_data = memory_region( REGION_USER1 );
 		int offs;
 		int XORval;
@@ -257,7 +247,7 @@ public class statriv2
 		offs = (question_offset_high << 16) | (question_offset_med << 8) | question_offset_low;
 	
 		return (question_data[offs] ^ 0xFF) ^ XORval;
-	}
+	} };
 	
 	public static Memory_ReadAddress statriv2_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -362,7 +352,7 @@ public class statriv2
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_statriv2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_statriv2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( statriv2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_SERVICE3, "Play All",   IP_KEY_DEFAULT, IP_JOY_DEFAULT );
@@ -386,7 +376,7 @@ public class statriv2
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_supertr2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_supertr2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( supertr2 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_SERVICE3, "Play All",   IP_KEY_DEFAULT, IP_JOY_DEFAULT );
@@ -438,13 +428,11 @@ public class statriv2
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static InterruptHandlerPtr statriv2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr statriv2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, I8085_RST75_LINE, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_statriv2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( statriv2 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A,12400000)              /* 12.4MHz / 4? */
 		MDRV_CPU_MEMORY(statriv2_readmem,statriv2_writemem)
@@ -470,12 +458,9 @@ public class statriv2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_supertr2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( supertr2 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A,12400000)              /* 12.4MHz / 4? */
 		MDRV_CPU_MEMORY(supertr2_readmem,supertr2_writemem)
@@ -501,12 +486,9 @@ public class statriv2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_trivquiz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( trivquiz )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A,12400000)              /* 12.4MHz / 4? */
 		MDRV_CPU_MEMORY(supertr2_readmem,supertr2_writemem)
@@ -532,9 +514,7 @@ public class statriv2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_statriv2 = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 )
@@ -597,7 +577,7 @@ public class statriv2
 		ROM_LOAD( "astq2-8.rom", 0x38000, 0x08000, CRC(cd2674d5) SHA1(7fb6513172ffe8e3b9e0f4dc9ecdb42d954b1ff0) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_trivquiz	   = new GameDriver("1984"	,"trivquiz"	,"statriv2.java"	,rom_trivquiz,null	,machine_driver_trivquiz	,input_ports_statriv2	,null	,ROT0	,	"Status Games", "Triv Quiz", GAME_WRONG_COLORS )
-	public static GameDriver driver_statriv2	   = new GameDriver("1984"	,"statriv2"	,"statriv2.java"	,rom_statriv2,null	,machine_driver_statriv2	,input_ports_statriv2	,null	,ROT0	,	"Status Games", "(Status) Triv Two", GAME_WRONG_COLORS )
-	public static GameDriver driver_supertr2	   = new GameDriver("1986"	,"supertr2"	,"statriv2.java"	,rom_supertr2,null	,machine_driver_supertr2	,input_ports_supertr2	,null	,ROT0	,	"Status Games", "Super Triv II", GAME_WRONG_COLORS )
+	GAMEX( 1984, trivquiz, 0, trivquiz, statriv2, 0, ROT0, "Status Games", "Triv Quiz", GAME_WRONG_COLORS )
+	GAMEX( 1984, statriv2, 0, statriv2, statriv2, 0, ROT0, "Status Games", "(Status) Triv Two", GAME_WRONG_COLORS )
+	GAMEX( 1986, supertr2, 0, supertr2, supertr2, 0, ROT0, "Status Games", "Super Triv II", GAME_WRONG_COLORS )
 }

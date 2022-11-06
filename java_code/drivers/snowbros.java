@@ -59,7 +59,7 @@ example, the protection data for that game was extracted from the bootleg.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -71,8 +71,7 @@ public class snowbros
 	
 	static data16_t *hyperpac_ram;
 	
-	public static InterruptHandlerPtr snowbros_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr snowbros_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, cpu_getiloops() + 2, HOLD_LINE);	/* IRQs 4, 3, and 2 */
 	} };
 	
@@ -85,7 +84,7 @@ public class snowbros
 	
 		/* If the sound CPU is running, read the YM3812 status, otherwise
 		   just make it pass the test */
-		if (Machine.sample_rate != 0)
+		if (Machine->sample_rate != 0)
 		{
 			ret = soundlatch_r(offset);
 		}
@@ -100,7 +99,7 @@ public class snowbros
 	
 	static WRITE16_HANDLER( snowbros_68000_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -109,7 +108,7 @@ public class snowbros
 	
 	static WRITE16_HANDLER( semicom_soundcmd_w )
 	{
-		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);
+		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);
 	}
 	
 	
@@ -220,7 +219,7 @@ public class snowbros
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_snowbros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snowbros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snowbros )
 		PORT_START(); 	/* 500001 */
 		PORT_DIPNAME( 0x01, 0x00, "Country (Affects Coinage"));
 		PORT_DIPSETTING(    0x00, "Europe" );
@@ -295,7 +294,7 @@ public class snowbros
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_snowbroj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snowbroj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snowbroj )
 		PORT_START(); 	/* 500001 */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -369,7 +368,7 @@ public class snowbros
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hyperpac = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyperpac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyperpac )
 		PORT_START(); 	/* 500000.w */
 		PORT_DIPNAME( 0x0001, 0x0000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -446,7 +445,7 @@ public class snowbros
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cookbib2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cookbib2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cookbib2 )
 		PORT_START(); 	/* 500000.w */
 		PORT_DIPNAME( 0x0001, 0x0000, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -617,8 +616,7 @@ public class snowbros
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_snowbros = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( snowbros )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 8000000) /* 8 Mhz - confirmed */
@@ -644,13 +642,10 @@ public class snowbros
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("3812", YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_wintbob = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wintbob )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(snowbros)
 		MDRV_CPU_REPLACE("main", M68000, 10000000) /* faster cpu on bootleg? otherwise the gfx break up */
@@ -658,13 +653,10 @@ public class snowbros
 		/* video hardware */
 		MDRV_GFXDECODE(gfxdecodeinfo_wb)
 		MDRV_VIDEO_UPDATE(wintbob)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hyperpac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyperpac )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(snowbros)
@@ -680,18 +672,13 @@ public class snowbros
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("3812",YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver__4in1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( _4in1 )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(hyperpac)
 		MDRV_GFXDECODE(gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -888,8 +875,7 @@ public class snowbros
 		ROM_LOAD( "cookbib2.03", 0x100000, 0x40000, CRC(e1604821) SHA1(bede6bdd8331128b9f2b229d718133470bf407c9) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_cookbib2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cookbib2  = new DriverInitHandlerPtr() { public void handler(){
 	//	data16_t *HCROM = (data16_t*)memory_region(REGION_CPU1);
 		data16_t *PROTDATA = (data16_t*)memory_region(REGION_USER1);
 		int i;
@@ -1156,7 +1142,7 @@ public class snowbros
 		HCROM[0x048610/2] = 0x0004;
 		HCROM[0x048612/2] = 0x8800;
 	
-		HCROM[0x048614/2] = 0x3004; // d4 . d0
+		HCROM[0x048614/2] = 0x3004; // d4 -> d0
 		HCROM[0x048616/2] = 0xe348;
 	
 		HCROM[0x048618/2] = 0x3173;
@@ -1221,7 +1207,7 @@ public class snowbros
 			FILE *fp;
 	
 			fp=fopen("cookie", "w+b");
-			if (fp != 0)
+			if (fp)
 			{
 				fwrite(HCROM, 0x80000, 1, fp);
 				fclose(fp);
@@ -1231,8 +1217,7 @@ public class snowbros
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_hyperpac  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyperpac  = new DriverInitHandlerPtr() { public void handler(){
 		/* simulate RAM initialization done by the protection MCU */
 		/* not verified on real hardware */
 		hyperpac_ram[0xe000/2] = 0x4ef9;
@@ -1250,8 +1235,7 @@ public class snowbros
 		return 0x0202;
 	}
 	
-	static DRIVER_INIT(4in1boot)
-	{
+	public static DriverInitHandlerPtr init_4in1boot  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *buffer;
 		data8_t *src = memory_region(REGION_CPU1);
 		int len = memory_region_length(REGION_CPU1);
@@ -1261,7 +1245,7 @@ public class snowbros
 		{
 			int i;
 			for (i = 0;i < len; i++)
-				if ((i & 1) != 0) buffer[i] = BITSWAP8(src[i],6,7,5,4,3,2,1,0);
+				if (i&1) buffer[i] = BITSWAP8(src[i],6,7,5,4,3,2,1,0);
 				else buffer[i] = src[i];
 	
 			memcpy(src,buffer,len);
@@ -1284,21 +1268,21 @@ public class snowbros
 		install_mem_read16_handler (0, 0x200000, 0x200001, _4in1_02_read );
 	
 	
-	}
+	} };
 	
-	public static GameDriver driver_snowbros	   = new GameDriver("1990"	,"snowbros"	,"snowbros.java"	,rom_snowbros,null	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 1)" )
-	public static GameDriver driver_snowbroa	   = new GameDriver("1990"	,"snowbroa"	,"snowbros.java"	,rom_snowbroa,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 2)" )
-	public static GameDriver driver_snowbrob	   = new GameDriver("1990"	,"snowbrob"	,"snowbros.java"	,rom_snowbrob,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbros	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (set 3)" )
-	public static GameDriver driver_snowbroj	   = new GameDriver("1990"	,"snowbroj"	,"snowbros.java"	,rom_snowbroj,driver_snowbros	,machine_driver_snowbros	,input_ports_snowbroj	,null	,ROT0	,	"Toaplan", "Snow Bros. - Nick & Tom (Japan)" )
-	public static GameDriver driver_wintbob	   = new GameDriver("1990"	,"wintbob"	,"snowbros.java"	,rom_wintbob,driver_snowbros	,machine_driver_wintbob	,input_ports_snowbros	,null	,ROT0	,	"bootleg", "The Winter Bobble" )
+	GAME( 1990, snowbros, 0,        snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 1)" )
+	GAME( 1990, snowbroa, snowbros, snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 2)" )
+	GAME( 1990, snowbrob, snowbros, snowbros, snowbros, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (set 3)" )
+	GAME( 1990, snowbroj, snowbros, snowbros, snowbroj, 0, ROT0, "Toaplan", "Snow Bros. - Nick & Tom (Japan)" )
+	GAME( 1990, wintbob,  snowbros, wintbob,  snowbros, 0, ROT0, "bootleg", "The Winter Bobble" )
 	/* SemiCom Games */
-	public static GameDriver driver_hyperpac	   = new GameDriver("1995"	,"hyperpac"	,"snowbros.java"	,rom_hyperpac,null	,machine_driver_hyperpac	,input_ports_hyperpac	,init_hyperpac	,ROT0	,	"SemiCom", "Hyper Pacman" )
-	public static GameDriver driver_hyperpcb	   = new GameDriver("1995"	,"hyperpcb"	,"snowbros.java"	,rom_hyperpcb,driver_hyperpac	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"bootleg", "Hyper Pacman (bootleg)" )
-	public static GameDriver driver_cookbib2	   = new GameDriver("1996"	,"cookbib2"	,"snowbros.java"	,rom_cookbib2,null	,machine_driver_hyperpac	,input_ports_cookbib2	,init_cookbib2	,ROT0	,	"SemiCom", "Cookie and Bibi 2" ) // sound cuts out in later levels? (investigate)
+	GAME( 1995, hyperpac, 0,        hyperpac, hyperpac, hyperpac, ROT0, "SemiCom", "Hyper Pacman" )
+	GAME( 1995, hyperpcb, hyperpac, hyperpac, hyperpac, 0,        ROT0, "bootleg", "Hyper Pacman (bootleg)" )
+	GAME (1996, cookbib2, 0,        hyperpac, cookbib2, cookbib2, ROT0, "SemiCom", "Cookie and Bibi 2" ) // sound cuts out in later levels? (investigate)
 	/* the following don't work, they either point the interrupts at an area of ram probably shared by
 	   some kind of mcu which puts 68k code there, or jump to the area in the interrupts */
-	public static GameDriver driver_moremorp	   = new GameDriver("199?"	,"moremorp"	,"snowbros.java"	,rom_moremorp,null	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"SemiCom", "More More +", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_3in1semi	   = new GameDriver("1997"	,"3in1semi"	,"snowbros.java"	,rom_3in1semi,null	,machine_driver_hyperpac	,input_ports_hyperpac	,null	,ROT0	,	"SemiCom", "3-in-1 (SemiCom)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(199?, moremorp, 0,        hyperpac, hyperpac, 0,        ROT0, "SemiCom", "More More +", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(1997, 3in1semi, 0,        hyperpac, hyperpac, 0,        ROT0, "SemiCom", "3-in-1 (SemiCom)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 	/* bad dump */
-	public static GameDriver driver_4in1boot	   = new GameDriver("199?"	,"4in1boot"	,"snowbros.java"	,rom_4in1boot,null	,machine_driver__4in1	,input_ports_snowbros	,init_4in1boot	,ROT0	,	"bootleg", "4-in-1 bootleg", GAME_NOT_WORKING ) // gfx rom is half the size it should be, pacman 2 and snowbros are playable tho
+	GAMEX(199?, 4in1boot, 0,        _4in1,    snowbros, 4in1boot, ROT0, "bootleg", "4-in-1 bootleg", GAME_NOT_WORKING ) // gfx rom is half the size it should be, pacman 2 and snowbros are playable tho
 }

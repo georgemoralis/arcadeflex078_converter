@@ -32,7 +32,7 @@ Year + Game         Board#
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -60,7 +60,7 @@ public class yunsun16
 	static WRITE16_HANDLER( yunsun16_sound_bank_w )
 	{
 		/* To avoid crash if running the game without sound */
-		if ((Machine.sample_rate != 0) && (ACCESSING_LSB))
+		if ((Machine->sample_rate != 0) && (ACCESSING_LSB))
 		{
 			int bank = data & 3;
 			unsigned char *dst	= memory_region(REGION_SOUND1);
@@ -106,7 +106,7 @@ public class yunsun16
 	
 	static WRITE16_HANDLER( magicbub_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 	/*
 	HACK: the game continuously sends this. It'll play the oki sample
@@ -120,8 +120,7 @@ public class yunsun16
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_magicbub  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_magicbub  = new DriverInitHandlerPtr() { public void handler(){
 	//	remove_mem_write16_handler (0, 0x800180, 0x800181 );
 		install_mem_write16_handler(0, 0x800188, 0x800189, magicbub_sound_command_w);
 	} };
@@ -178,7 +177,7 @@ public class yunsun16
 									Magic Bubble
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_magicbub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_magicbub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( magicbub )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -264,7 +263,7 @@ public class yunsun16
 									Shocking
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_shocking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shocking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shocking )
 	
 		PORT_START(); 	// IN0 - $800000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 );
@@ -424,8 +423,7 @@ public class yunsun16
 		{ 80 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_magicbub = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( magicbub )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -454,9 +452,7 @@ public class yunsun16
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, magicbub_ym3812_intf)
 		MDRV_SOUND_ADD(OKIM6295, magicbub_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -471,8 +467,7 @@ public class yunsun16
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_shocking = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shocking )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -495,9 +490,7 @@ public class yunsun16
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, shocking_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -531,7 +524,7 @@ public class yunsun16
 	
 	16.000000 MHz
 	
-	Sound section uses "KS8001" and "KS8002" and SMD -. Z80
+	Sound section uses "KS8001" and "KS8002" and SMD --> Z80
 	and SMD "AD-65"
 	
 	***************************************************************************/
@@ -602,6 +595,6 @@ public class yunsun16
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_magicbub	   = new GameDriver("19??"	,"magicbub"	,"yunsun16.java"	,rom_magicbub,null	,machine_driver_magicbub	,input_ports_magicbub	,init_magicbub	,ROT0	,	"Yun Sung", "Magic Bubble", GAME_NO_COCKTAIL )
-	public static GameDriver driver_shocking	   = new GameDriver("1997"	,"shocking"	,"yunsun16.java"	,rom_shocking,null	,machine_driver_shocking	,input_ports_shocking	,null	,ROT0	,	"Yun Sung", "Shocking",     GAME_NO_COCKTAIL )
+	GAMEX( 19??, magicbub, 0, magicbub, magicbub, magicbub, ROT0, "Yun Sung", "Magic Bubble", GAME_NO_COCKTAIL )
+	GAMEX( 1997, shocking, 0, shocking, shocking, 0,        ROT0, "Yun Sung", "Shocking",     GAME_NO_COCKTAIL )
 }

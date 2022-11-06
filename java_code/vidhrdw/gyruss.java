@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class gyruss
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_gyruss  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_gyruss  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -89,11 +88,10 @@ public class gyruss
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_gyruss  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gyruss  = new VideoStartHandlerPtr() { public int handler(){
 		sprite_mux_buffer = auto_malloc(256 * spriteram_size[0]);
 	
-		if (sprite_mux_buffer == 0)
+		if (!sprite_mux_buffer)
 			return 1;
 	
 		return video_start_generic.handler();
@@ -101,8 +99,7 @@ public class gyruss
 	
 	
 	
-	public static WriteHandlerPtr gyruss_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -113,8 +110,7 @@ public class gyruss
 	
 	
 	/* Return the current video scan line */
-	public static ReadHandlerPtr gyruss_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gyruss_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return scanline;
 	} };
 	
@@ -130,14 +126,14 @@ public class gyruss
 	
 	static void draw_sprites(struct mame_bitmap *bitmap)
 	{
-		struct rectangle clip = Machine.visible_area;
+		struct rectangle clip = Machine->visible_area;
 		int offs;
 		int line;
 	
 	
 		for (line = 0;line < 256;line++)
 		{
-			if (line >= Machine.visible_area.min_y && line <= Machine.visible_area.max_y)
+			if (line >= Machine->visible_area.min_y && line <= Machine->visible_area.max_y)
 			{
 				unsigned char *sr;
 	
@@ -152,7 +148,7 @@ public class gyruss
 					sy = 241 - sr[offs + 3];
 					if (sy > line-16 && sy <= line)
 					{
-						drawgfx(bitmap,Machine.gfx[1 + (sr[offs + 1] & 1)],
+						drawgfx(bitmap,Machine->gfx[1 + (sr[offs + 1] & 1)],
 								sr[offs + 1]/2 + 4*(sr[offs + 2] & 0x20),
 								sr[offs + 2] & 0x0f,
 								!(sr[offs + 2] & 0x40),sr[offs + 2] & 0x80,
@@ -165,8 +161,7 @@ public class gyruss
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gyruss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -185,7 +180,7 @@ public class gyruss
 				sy = offs / 32;
 				flipx = colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -220,7 +215,7 @@ public class gyruss
 			sy = offs / 32;
 			flipx = colorram.read(offs)& 0x40;
 			flipy = colorram.read(offs)& 0x80;
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
@@ -239,8 +234,7 @@ public class gyruss
 	} };
 	
 	
-	public static InterruptHandlerPtr gyruss_6809_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gyruss_6809_interrupt = new InterruptHandlerPtr() {public void handler(){
 		scanline = 255 - cpu_getiloops();
 	
 		memcpy(sprite_mux_buffer + scanline * spriteram_size,spriteram,spriteram_size);

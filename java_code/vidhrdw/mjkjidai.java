@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,11 +37,10 @@ public class mjkjidai
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mjkjidai  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mjkjidai  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (bg_tilemap == 0) return 1;
+		if (!bg_tilemap) return 1;
 	
 		return 0;
 	} };
@@ -54,8 +53,7 @@ public class mjkjidai
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr mjkjidai_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjkjidai_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (mjkjidai_videoram[offset] != data)
 		{
 			mjkjidai_videoram[offset] = data;
@@ -63,8 +61,7 @@ public class mjkjidai
 		}
 	} };
 	
-	public static WriteHandlerPtr mjkjidai_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mjkjidai_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU1);
 	
 	//	logerror("%04x: port c0 = %02x\n",activecpu_get_pc(),data);
@@ -82,7 +79,7 @@ public class mjkjidai
 		coin_counter_w(0,data & 0x20);
 	
 		/* bits 6-7 select ROM bank */
-		if ((data & 0xc0) != 0)
+		if (data & 0xc0)
 		{
 			cpu_setbank(1,rom + 0x10000-0x4000 + ((data & 0xc0) << 8));
 		}
@@ -118,7 +115,7 @@ public class mjkjidai
 	
 			sx += (spriteram_2.read(offs)& 0x20) >> 5;	// not sure about this
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 496 - sx;
 				sy = 240 - sy;
@@ -129,7 +126,7 @@ public class mjkjidai
 			sx += 16;
 			sy += 1;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -140,9 +137,8 @@ public class mjkjidai
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mjkjidai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (display_enable == 0)
+	public static VideoUpdateHandlerPtr video_update_mjkjidai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (!display_enable)
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 		}

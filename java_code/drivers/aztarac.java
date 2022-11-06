@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,8 +36,7 @@ public class aztarac
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_aztarac  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_aztarac  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_set_irq_callback(0, aztarac_irq_callback);
 	} };
 	
@@ -144,7 +143,7 @@ public class aztarac
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_aztarac = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aztarac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aztarac )
 		PORT_START();  /* IN0 */
 		PORT_ANALOG( 0x1f, 0xf, IPT_AD_STICK_Z | IPF_CENTER, 100, 1, 0, 0x1e );
 	
@@ -192,8 +191,7 @@ public class aztarac
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_aztarac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aztarac )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -220,9 +218,7 @@ public class aztarac
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -260,5 +256,5 @@ public class aztarac
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_aztarac	   = new GameDriver("1983"	,"aztarac"	,"aztarac.java"	,rom_aztarac,null	,machine_driver_aztarac	,input_ports_aztarac	,null	,ROT0	,	"Centuri", "Aztarac" )
+	GAME( 1983, aztarac, 0, aztarac, aztarac, 0, ROT0, "Centuri", "Aztarac" )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -17,7 +17,7 @@ public class _2203intf
 	/* IRQ Handler */
 	static void IRQHandler(int n,int irq)
 	{
-		if(intf.handler[n]) intf.handler[n](irq);
+		if(intf->handler[n]) intf->handler[n](irq);
 	}
 	
 	/* Timer overflow callback from timer.c */
@@ -75,21 +75,21 @@ public class _2203intf
 	
 		if (AY8910_sh_start_ym(msound)) return 1;
 	
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
 		/* Timer Handler set */
 		FMTimerInit();
 		/* stream system initialize */
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 		{
 			int volume;
 			char name[20];
 			sprintf(name,"%s #%d FM",sound_name(msound),i);
-			volume = intf.mixing_level[i]>>16; /* high 16 bit */
-			stream[i] = stream_init(name,volume,Machine.sample_rate,i,YM2203UpdateOne/*YM2203UpdateCallback*/);
+			volume = intf->mixing_level[i]>>16; /* high 16 bit */
+			stream[i] = stream_init(name,volume,Machine->sample_rate,i,YM2203UpdateOne/*YM2203UpdateCallback*/);
 		}
 		/* Initialize FM emurator */
-		if (YM2203Init(intf.num,intf.baseclock,Machine.sample_rate,TimerHandler,IRQHandler) == 0)
+		if (YM2203Init(intf->num,intf->baseclock,Machine->sample_rate,TimerHandler,IRQHandler) == 0)
 		{
 			/* Ready */
 			return 0;
@@ -109,77 +109,65 @@ public class _2203intf
 	{
 		int i;
 	
-		for (i = 0;i < intf.num;i++)
+		for (i = 0;i < intf->num;i++)
 			YM2203ResetChip(i);
 	}
 	
 	
 	
-	public static ReadHandlerPtr YM2203_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(0,0); } };
-	public static ReadHandlerPtr YM2203_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(1,0); } };
-	public static ReadHandlerPtr YM2203_status_port_2_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(2,0); } };
-	public static ReadHandlerPtr YM2203_status_port_3_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(3,0); } };
-	public static ReadHandlerPtr YM2203_status_port_4_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(4,0); } };
+	public static ReadHandlerPtr YM2203_status_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(0,0); }
+	public static ReadHandlerPtr YM2203_status_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(1,0); }
+	public static ReadHandlerPtr YM2203_status_port_2_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(2,0); }
+	public static ReadHandlerPtr YM2203_status_port_3_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(3,0); }
+	public static ReadHandlerPtr YM2203_status_port_4_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(4,0); }
 	
-	public static ReadHandlerPtr YM2203_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(0,1); } };
-	public static ReadHandlerPtr YM2203_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(1,1); } };
-	public static ReadHandlerPtr YM2203_read_port_2_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(2,1); } };
-	public static ReadHandlerPtr YM2203_read_port_3_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(3,1); } };
-	public static ReadHandlerPtr YM2203_read_port_4_r  = new ReadHandlerPtr() { public int handler(int offset) { return YM2203Read(4,1); } };
+	public static ReadHandlerPtr YM2203_read_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(0,1); }
+	public static ReadHandlerPtr YM2203_read_port_1_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(1,1); }
+	public static ReadHandlerPtr YM2203_read_port_2_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(2,1); }
+	public static ReadHandlerPtr YM2203_read_port_3_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(3,1); }
+	public static ReadHandlerPtr YM2203_read_port_4_r  = new ReadHandlerPtr() { public int handler(int offset) return YM2203Read(4,1); }
 	
-	public static WriteHandlerPtr YM2203_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(0,0,data);
 	} };
-	public static WriteHandlerPtr YM2203_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(1,0,data);
 	} };
-	public static WriteHandlerPtr YM2203_control_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_control_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(2,0,data);
 	} };
-	public static WriteHandlerPtr YM2203_control_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_control_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(3,0,data);
 	} };
-	public static WriteHandlerPtr YM2203_control_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_control_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(4,0,data);
 	} };
 	
-	public static WriteHandlerPtr YM2203_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(0,1,data);
 	} };
-	public static WriteHandlerPtr YM2203_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_write_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(1,1,data);
 	} };
-	public static WriteHandlerPtr YM2203_write_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_write_port_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(2,1,data);
 	} };
-	public static WriteHandlerPtr YM2203_write_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_write_port_3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(3,1,data);
 	} };
-	public static WriteHandlerPtr YM2203_write_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_write_port_4_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		YM2203Write(4,1,data);
 	} };
 	
-	public static WriteHandlerPtr YM2203_word_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0)
+	public static WriteHandlerPtr YM2203_word_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset)
 			YM2203_write_port_0_w(0,data);
 		else
 			YM2203_control_port_0_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr YM2203_word_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0)
+	public static WriteHandlerPtr YM2203_word_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset)
 			YM2203_write_port_1_w(0,data);
 		else
 			YM2203_control_port_1_w(0,data);

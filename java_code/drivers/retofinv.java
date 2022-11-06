@@ -10,7 +10,7 @@ the game was developed by UPL for Taito.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,53 +25,44 @@ public class retofinv
 	static unsigned char cpu2_m6000=0;
 	
 	#if 0
-	public static MachineInitHandlerPtr machine_init_retofinv  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_retofinv  = new MachineInitHandlerPtr() { public void handler(){
 		cpu2_m6000 = 0;
 	} };
 	#endif
 	
 	static unsigned char *sharedram;
 	
-	public static ReadHandlerPtr retofinv_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr retofinv_shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr retofinv_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr retofinv_shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr reset_cpu2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	     if (data != 0)
+	public static WriteHandlerPtr reset_cpu2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	     if (data)
 		    cpu_set_reset_line(2,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr reset_cpu1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if (data != 0)
+	public static WriteHandlerPtr reset_cpu1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if (data)
 		    cpu_set_reset_line(1,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr cpu1_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu1_halt_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_halt_line(1, data ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr cpu2_m6000_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu2_m6000_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu2_m6000 = data;
 	} };
 	
-	public static ReadHandlerPtr cpu0_mf800_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cpu0_mf800_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu2_m6000;
 	} };
 	
-	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	      soundlatch_w.handler(0, data);
 	      cpu_set_irq_line(2, 0, HOLD_LINE);
 	} };
@@ -195,7 +186,7 @@ public class retofinv
 	
 	
 	
-	static InputPortPtr input_ports_retofinv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_retofinv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( retofinv )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -368,8 +359,7 @@ public class retofinv
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_retofinv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( retofinv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)
@@ -405,14 +395,11 @@ public class retofinv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* bootleg has no mcu */
-	public static MachineHandlerPtr machine_driver_retofinb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( retofinb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)
@@ -445,9 +432,7 @@ public class retofinv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -557,7 +542,7 @@ public class retofinv
 	
 	
 	
-	public static GameDriver driver_retofinv	   = new GameDriver("1985"	,"retofinv"	,"retofinv.java"	,rom_retofinv,null	,machine_driver_retofinv	,input_ports_retofinv	,null	,ROT270	,	"Taito Corporation", "Return of the Invaders" )
-	public static GameDriver driver_retofin1	   = new GameDriver("1985"	,"retofin1"	,"retofinv.java"	,rom_retofin1,driver_retofinv	,machine_driver_retofinb	,input_ports_retofinv	,null	,ROT270	,	"bootleg", "Return of the Invaders (bootleg set 1)" )
-	public static GameDriver driver_retofin2	   = new GameDriver("1985"	,"retofin2"	,"retofinv.java"	,rom_retofin2,driver_retofinv	,machine_driver_retofinb	,input_ports_retofinv	,null	,ROT270	,	"bootleg", "Return of the Invaders (bootleg set 2)" )
+	GAME( 1985, retofinv, 0,        retofinv, retofinv, 0, ROT270, "Taito Corporation", "Return of the Invaders" )
+	GAME( 1985, retofin1, retofinv, retofinb, retofinv, 0, ROT270, "bootleg", "Return of the Invaders (bootleg set 1)" )
+	GAME( 1985, retofin2, retofinv, retofinb, retofinv, 0, ROT270, "bootleg", "Return of the Invaders (bootleg set 2)" )
 }

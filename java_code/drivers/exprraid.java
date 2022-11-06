@@ -62,7 +62,7 @@ sign is intact, however Credit is spelt incorrectly.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -77,32 +77,29 @@ public class exprraid
 	/* Emulate Protection ( only for original express raider, code is cracked on the bootleg */
 	/*****************************************************************************************/
 	
-	public static ReadHandlerPtr exprraid_prot_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exprraid_prot_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		return RAM[0x02a9];
 	} };
 	
-	public static ReadHandlerPtr exprraid_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr exprraid_prot_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x02;
 	} };
 	
-	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_cpu_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    soundlatch_w.handler(0,data);
 	    cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr vblank_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr vblank_r  = new ReadHandlerPtr() { public int handler(int offset)
 		int val = readinputport( 0 );
 	
 		if ( ( val & 0x02 ) )
 			cpu_spin();
 	
 		return val;
-	} };
+	}
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -159,7 +156,7 @@ public class exprraid
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_exprraid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exprraid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exprraid )
 		PORT_START();  /* IN 0 - 0x3800 */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_VBLANK );
 	
@@ -325,8 +322,7 @@ public class exprraid
 		{ irqhandler }
 	};
 	
-	public static InterruptHandlerPtr exprraid_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr exprraid_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int coin = 0;
 	
 		if ( ( ~readinputport( 3 ) ) & 0xc0 ) {
@@ -338,8 +334,7 @@ public class exprraid
 			coin = 0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_exprraid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exprraid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 4000000)        /* 4 MHz ??? */
@@ -366,9 +361,7 @@ public class exprraid
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -541,8 +534,7 @@ public class exprraid
 	}
 	
 	
-	public static DriverInitHandlerPtr init_wexpress  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wexpress  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -563,8 +555,7 @@ public class exprraid
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_exprraid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_exprraid  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 	
 	
@@ -582,21 +573,19 @@ public class exprraid
 		init_wexpress();
 	} };
 	
-	public static DriverInitHandlerPtr init_wexpresb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wexpresb  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x3800, 0x3800, vblank_r);
 		exprraid_gfx_expand();
 	} };
 	
-	public static DriverInitHandlerPtr init_wexpresc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wexpresc  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xFFC0, 0xFFC0, vblank_r);
 		exprraid_gfx_expand();
 	} };
 	
 	
-	public static GameDriver driver_exprraid	   = new GameDriver("1986"	,"exprraid"	,"exprraid.java"	,rom_exprraid,null	,machine_driver_exprraid	,input_ports_exprraid	,init_exprraid	,ROT0	,	"Data East USA", "Express Raider (US)" )
-	public static GameDriver driver_wexpress	   = new GameDriver("1986"	,"wexpress"	,"exprraid.java"	,rom_wexpress,driver_exprraid	,machine_driver_exprraid	,input_ports_exprraid	,init_wexpress	,ROT0	,	"Data East Corporation", "Western Express (World?)" )
-	public static GameDriver driver_wexpresb	   = new GameDriver("1986"	,"wexpresb"	,"exprraid.java"	,rom_wexpresb,driver_exprraid	,machine_driver_exprraid	,input_ports_exprraid	,init_wexpresb	,ROT0	,	"bootleg", "Western Express (bootleg set 1)" )
-	public static GameDriver driver_wexpresc	   = new GameDriver("1986"	,"wexpresc"	,"exprraid.java"	,rom_wexpresc,driver_exprraid	,machine_driver_exprraid	,input_ports_exprraid	,init_wexpresc	,ROT0	,	"bootleg", "Western Express (bootleg set 2)" )
+	GAME( 1986, exprraid, 0,        exprraid, exprraid, exprraid, ROT0, "Data East USA", "Express Raider (US)" )
+	GAME( 1986, wexpress, exprraid, exprraid, exprraid, wexpress, ROT0, "Data East Corporation", "Western Express (World?)" )
+	GAME( 1986, wexpresb, exprraid, exprraid, exprraid, wexpresb, ROT0, "bootleg", "Western Express (bootleg set 1)" )
+	GAME( 1986, wexpresc, exprraid, exprraid, exprraid, wexpresc, ROT0, "bootleg", "Western Express (bootleg set 2)" )
 }

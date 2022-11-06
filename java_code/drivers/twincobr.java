@@ -189,7 +189,7 @@ Shark	Zame
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -199,12 +199,10 @@ public class twincobr
 	
 	
 	/**************** Machine stuff ******************/
-	INTERRUPT_GEN  ( twincobr_interrupt );
 	READ16_HANDLER ( fsharkbt_dsp_r );
 	READ16_HANDLER ( twincobr_dsp_r );
 	WRITE16_HANDLER( twincobr_dsp_w );
 	READ16_HANDLER ( twincobr_BIO_r );
-	WRITE_HANDLER  ( twincobr_coin_w );
 	WRITE16_HANDLER( fshark_coin_dsp_w );
 	READ16_HANDLER ( twincobr_68k_dsp_r );
 	WRITE16_HANDLER( twincobr_68k_dsp_w );
@@ -453,7 +451,7 @@ public class twincobr
 	
 	
 	
-	static InputPortPtr input_ports_twincobr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twincobr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twincobr )
 		TWINCOBR_VBLANK_INPUT( IP_ACTIVE_HIGH )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -486,7 +484,7 @@ public class twincobr
 		TWINCOBR_SYSTEM_INPUTS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_twincobu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twincobu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twincobu )
 		TWINCOBR_VBLANK_INPUT( IP_ACTIVE_HIGH )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -519,7 +517,7 @@ public class twincobr
 		TWINCOBR_SYSTEM_INPUTS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ktiger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ktiger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ktiger )
 		TWINCOBR_VBLANK_INPUT( IP_ACTIVE_HIGH )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -551,7 +549,7 @@ public class twincobr
 		TWINCOBR_SYSTEM_INPUTS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fshark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fshark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fshark )
 		FSHARK_SYSTEM_INPUTS
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -583,7 +581,7 @@ public class twincobr
 		FSHARK_DSW_B
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skyshark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyshark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyshark )
 		FSHARK_SYSTEM_INPUTS
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -615,7 +613,7 @@ public class twincobr
 		FSHARK_DSW_B
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hishouza = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hishouza = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hishouza )
 		FSHARK_SYSTEM_INPUTS
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -623,7 +621,7 @@ public class twincobr
 		FSHARK_DSW_B
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gulfwar2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gulfwar2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gulfwar2 )
 		TWINCOBR_VBLANK_INPUT( IP_ACTIVE_LOW )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER1 )
 		TOAPLAN_PLAYER_INPUT( IPF_PLAYER2 )
@@ -719,8 +717,7 @@ public class twincobr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_twincobr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( twincobr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,28000000/4)			/* 7.0MHz - Main board Crystal is 28MHz */
@@ -754,9 +751,7 @@ public class twincobr
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1145,8 +1140,7 @@ public class twincobr
 		ROM_LOAD( "82s123.b24",	0x240, 0x020, CRC(4fb5df2a) SHA1(506ef2c8e4cf45c256d6831a0a5760732f2de422) )	/* tile to sprite priority ?? */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_fshark  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fshark  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *source = memory_region(REGION_USER1);
 		data16_t *dest = (data16_t *)&memory_region(REGION_CPU3)[TMS32010_PGM_OFFSET];
 		int A;
@@ -1158,12 +1152,12 @@ public class twincobr
 	
 	
 	
-	public static GameDriver driver_twincobr	   = new GameDriver("1987"	,"twincobr"	,"twincobr.java"	,rom_twincobr,null	,machine_driver_twincobr	,input_ports_twincobr	,null	,ROT270	,	"[Toaplan] Taito Corporation", "Twin Cobra (World)" )
-	public static GameDriver driver_twincobu	   = new GameDriver("1987"	,"twincobu"	,"twincobr.java"	,rom_twincobu,driver_twincobr	,machine_driver_twincobr	,input_ports_twincobu	,null	,ROT270	,	"[Toaplan] Taito America Corporation (Romstar license)", "Twin Cobra (US)" )
-	public static GameDriver driver_ktiger	   = new GameDriver("1987"	,"ktiger"	,"twincobr.java"	,rom_ktiger,driver_twincobr	,machine_driver_twincobr	,input_ports_ktiger	,null	,ROT270	,	"[Toaplan] Taito Corporation", "Kyukyoku Tiger (Japan)" )
-	public static GameDriver driver_fshark	   = new GameDriver("1987"	,"fshark"	,"twincobr.java"	,rom_fshark,null	,machine_driver_twincobr	,input_ports_fshark	,init_fshark	,ROT270	,	"[Toaplan] Taito Corporation", "Flying Shark (World)" )
-	public static GameDriver driver_skyshark	   = new GameDriver("1987"	,"skyshark"	,"twincobr.java"	,rom_skyshark,driver_fshark	,machine_driver_twincobr	,input_ports_skyshark	,init_fshark	,ROT270	,	"[Toaplan] Taito America Corporation (Romstar license)", "Sky Shark (US)" )
-	public static GameDriver driver_hishouza	   = new GameDriver("1987"	,"hishouza"	,"twincobr.java"	,rom_hishouza,driver_fshark	,machine_driver_twincobr	,input_ports_hishouza	,init_fshark	,ROT270	,	"[Toaplan] Taito Corporation", "Hishou Zame (Japan)" )
-	public static GameDriver driver_fsharkbt	   = new GameDriver("1987"	,"fsharkbt"	,"twincobr.java"	,rom_fsharkbt,driver_fshark	,machine_driver_twincobr	,input_ports_skyshark	,init_fshark	,ROT270	,	"bootleg", "Flying Shark (bootleg)" )
-	public static GameDriver driver_gulfwar2	   = new GameDriver("1991"	,"gulfwar2"	,"twincobr.java"	,rom_gulfwar2,null	,machine_driver_twincobr	,input_ports_gulfwar2	,null	,ROT270	,	"Comad", "Gulf War II" )
+	GAME( 1987, twincobr, 0,        twincobr, twincobr, 0,      ROT270, "[Toaplan] Taito Corporation", "Twin Cobra (World)" )
+	GAME( 1987, twincobu, twincobr, twincobr, twincobu, 0,      ROT270, "[Toaplan] Taito America Corporation (Romstar license)", "Twin Cobra (US)" )
+	GAME( 1987, ktiger,   twincobr, twincobr, ktiger,   0,      ROT270, "[Toaplan] Taito Corporation", "Kyukyoku Tiger (Japan)" )
+	GAME( 1987, fshark,   0,        twincobr, fshark,   fshark, ROT270, "[Toaplan] Taito Corporation", "Flying Shark (World)" )
+	GAME( 1987, skyshark, fshark,   twincobr, skyshark, fshark, ROT270, "[Toaplan] Taito America Corporation (Romstar license)", "Sky Shark (US)" )
+	GAME( 1987, hishouza, fshark,   twincobr, hishouza, fshark, ROT270, "[Toaplan] Taito Corporation", "Hishou Zame (Japan)" )
+	GAME( 1987, fsharkbt, fshark,   twincobr, skyshark, fshark, ROT270, "bootleg", "Flying Shark (bootleg)" )
+	GAME( 1991, gulfwar2, 0,        twincobr, gulfwar2, 0,      ROT270, "Comad", "Gulf War II" )
 }

@@ -16,7 +16,7 @@ Tilemap flip flags were reversed
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,7 +40,7 @@ public class suprnova
 		while(size>0) {
 			UINT8 code = *src++;
 			size -= (code & 0x7f) + 1;
-			if ((code & 0x80) != 0) {
+			if(code & 0x80) {
 				code &= 0x7f;
 				do {
 					*dst++ = *src++;
@@ -76,10 +76,10 @@ public class suprnova
 		int bxs = 0, bys = 0;				\
 		struct rectangle clip;					\
 							\
-		clip.min_x = cliprect.min_x<<6;					\
-		clip.max_x = (cliprect.max_x+1)<<6;					\
-		clip.min_y = cliprect.min_y<<6;					\
-		clip.max_y = (cliprect.max_y+1)<<6;					\
+		clip.min_x = cliprect->min_x<<6;					\
+		clip.max_x = (cliprect->max_x+1)<<6;					\
+		clip.min_y = cliprect->min_y<<6;					\
+		clip.max_y = (cliprect->max_y+1)<<6;					\
 		sx <<= 6;					\
 		sy <<= 6;					\
 		x <<= 6;					\
@@ -141,7 +141,7 @@ public class suprnova
 	
 	#define z_draw_pixel()				\
 		UINT8 val = src[xs >> 6];			\
-		if (val != 0)					\
+		if(val)					\
 			plot_pixel( bitmap, xd>>6, yd>>6, val + colour*256 );
 	
 	#define z_x_dst(op)			\
@@ -285,8 +285,8 @@ public class suprnova
 	
 		sprite_y_scroll = ((skns_spc_regs[0x08/4] & 0x7fc0) >> 6); // RWR2
 		sprite_x_scroll = ((skns_spc_regs[0x10/4] & 0x7fc0) >> 6); // RWR4
-		if ((sprite_y_scroll & 0x100) != 0) sprite_y_scroll -= 0x200; // Signed
-		if ((sprite_x_scroll & 0x100) != 0) sprite_x_scroll -= 0x200; // Signed
+		if (sprite_y_scroll&0x100) sprite_y_scroll -= 0x200; // Signed
+		if (sprite_x_scroll&0x100) sprite_x_scroll -= 0x200; // Signed
 	
 		group_x_offset[0] = (skns_spc_regs[0x18/4] & 0xffc0) >> 6; // RWR6
 		group_y_offset[0] = (skns_spc_regs[0x1c/4] & 0xffc0) >> 6; // RWR7
@@ -323,7 +323,7 @@ public class suprnova
 		sprite_x_scroll += sprite_kludge_x;
 		sprite_y_scroll += sprite_kludge_y;
 	
-		if (disabled == 0){
+		if (!disabled){
 			while( source<finish )
 			{
 				xflip = (source[0] & 0x00000200) >> 9;
@@ -349,7 +349,7 @@ public class suprnova
 					xpos += sprite_x_scroll; // Global offset
 					ypos += sprite_y_scroll;
 	
-					if (group_enable != 0)
+					if (group_enable)
 					{
 						group_number = (source[0] & 0x00001800) >> 11;
 	
@@ -382,15 +382,15 @@ public class suprnova
 				sy = ypos;
 	
 				/* Global Sprite Flip (sengekis) */
-				if ((sprite_flip & 2) != 0)
+				if (sprite_flip&2)
 				{
 					xflip ^= 1;
-					sx = Machine.visible_area.max_x+1 - sx;
+					sx = Machine->visible_area.max_x+1 - sx;
 				}
-				if ((sprite_flip & 1) != 0)
+				if (sprite_flip&1)
 				{
 					yflip ^= 1;
-					sy = Machine.visible_area.max_y+1 - sy;
+					sy = Machine->visible_area.max_y+1 - sy;
 				}
 	
 				/* Palette linking */
@@ -432,11 +432,11 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+xx < (cliprect.max_x+1)) && (sx+xx >= cliprect.min_x) && (sy+yy < (cliprect.max_y+1)) && (sy+yy >= cliprect.min_y))
+									if ((sx+xx < (cliprect->max_x+1)) && (sx+xx >= cliprect->min_x) && (sy+yy < (cliprect->max_y+1)) && (sy+yy >= cliprect->min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix != 0) plot_pixel( bitmap, sx+xx, sy+yy, pix+ colour*256 ); // change later
+										if (pix) plot_pixel( bitmap, sx+xx, sy+yy, pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -448,11 +448,11 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+xx < (cliprect.max_x+1)) && (sx+xx >= cliprect.min_x) && (sy+(ysize-1-yy) < (cliprect.max_y+1)) && (sy+(ysize-1-yy) >= cliprect.min_y))
+									if ((sx+xx < (cliprect->max_x+1)) && (sx+xx >= cliprect->min_x) && (sy+(ysize-1-yy) < (cliprect->max_y+1)) && (sy+(ysize-1-yy) >= cliprect->min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix != 0) plot_pixel( bitmap, sx+xx, sy+(ysize-1-yy), pix+ colour*256 ); // change later
+										if (pix) plot_pixel( bitmap, sx+xx, sy+(ysize-1-yy), pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -464,11 +464,11 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+(xsize-1-xx) < (cliprect.max_x+1)) && (sx+(xsize-1-xx) >= cliprect.min_x) && (sy+yy < (cliprect.max_y+1)) && (sy+yy >= cliprect.min_y))
+									if ((sx+(xsize-1-xx) < (cliprect->max_x+1)) && (sx+(xsize-1-xx) >= cliprect->min_x) && (sy+yy < (cliprect->max_y+1)) && (sy+yy >= cliprect->min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix != 0) plot_pixel( bitmap, sx+(xsize-1-xx), sy+yy, pix+ colour*256 ); // change later
+										if (pix) plot_pixel( bitmap, sx+(xsize-1-xx), sy+yy, pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -481,11 +481,11 @@ public class suprnova
 							{
 								for (yy = 0; yy<ysize; yy++)
 								{
-									if ((sx+(xsize-1-xx) < (cliprect.max_x+1)) && (sx+(xsize-1-xx) >= cliprect.min_x) && (sy+(ysize-1-yy) < (cliprect.max_y+1)) && (sy+(ysize-1-yy) >= cliprect.min_y))
+									if ((sx+(xsize-1-xx) < (cliprect->max_x+1)) && (sx+(xsize-1-xx) >= cliprect->min_x) && (sy+(ysize-1-yy) < (cliprect->max_y+1)) && (sy+(ysize-1-yy) >= cliprect->min_y))
 									{
 										int pix;
 										pix = decodebuffer[xsize*yy+xx];
-										if (pix != 0) plot_pixel( bitmap, sx+(xsize-1-xx), sy+(ysize-1-yy), pix+ colour*256 ); // change later
+										if (pix) plot_pixel( bitmap, sx+(xsize-1-xx), sy+(ysize-1-yy), pix+ colour*256 ); // change later
 									}
 								}
 							}
@@ -571,8 +571,7 @@ public class suprnova
 	}
 	
 	
-	VIDEO_START(skns)
-	{
+	public static VideoStartHandlerPtr video_start_skns  = new VideoStartHandlerPtr() { public int handler(){
 		skns_tilemap_A = tilemap_create(get_tilemap_A_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64, 64);
 			tilemap_set_transparent_pen(skns_tilemap_A,0);
 	
@@ -583,7 +582,7 @@ public class suprnova
 		Machine.gfx[3].color_granularity=256;
 	
 		return 0;
-	}
+	} };
 	
 	static void supernova_draw_a( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int tran )
 	{
@@ -591,7 +590,7 @@ public class suprnova
 		UINT32 startx,starty;
 		int incxx,incxy,incyx,incyy;
 	
-		if (enable_a != 0)
+		if (enable_a)
 		{
 			startx = skns_v3_regs[0x1c/4];
 				incyy  = skns_v3_regs[0x30/4]; // was xx, changed for sarukani
@@ -608,7 +607,7 @@ public class suprnova
 				startx >>= 8; // Lose Floating point
 				starty >>= 8;
 	
-				if (columnscroll_a != 0) {
+				if(columnscroll_a) {
 					tilemap_set_scroll_rows(skns_tilemap_A,1);
 					tilemap_set_scroll_cols(skns_tilemap_A,0x400);
 	
@@ -643,7 +642,7 @@ public class suprnova
 		UINT32 startx,starty;
 		int incxx,incxy,incyx,incyy;
 	
-		if (enable_b != 0)
+		if (enable_b)
 		{
 			startx = skns_v3_regs[0x40/4];
 				incyy  = skns_v3_regs[0x54/4];
@@ -660,7 +659,7 @@ public class suprnova
 				startx >>= 8;
 				starty >>= 8;
 	
-				if (columnscroll_b != 0) {
+				if(columnscroll_b) {
 					tilemap_set_scroll_rows(skns_tilemap_B,1);
 					tilemap_set_scroll_cols(skns_tilemap_B,0x400);
 	
@@ -689,8 +688,7 @@ public class suprnova
 		}
 	}
 	
-	VIDEO_UPDATE(skns)
-	{
+	public static VideoUpdateHandlerPtr video_update_skns  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, offset;
 	
 		data8_t *btiles;
@@ -702,7 +700,7 @@ public class suprnova
 	
 		if (!(skns_v3_regs[0x0c/4] & 0x0100)); // if tilemap b is in 8bpp mode
 		{
-			if (skns_v3t_somedirty != 0)
+			if (skns_v3t_somedirty)
 			{
 				skns_v3t_somedirty = 0;
 	
@@ -728,7 +726,7 @@ public class suprnova
 	
 		if (skns_v3_regs[0x0c/4] & 0x0100); // if tilemap b is in 4bpp mode
 		{
-			if (skns_v3t_4bpp_somedirty != 0)
+			if (skns_v3t_4bpp_somedirty)
 			{
 				skns_v3t_4bpp_somedirty = 0;
 	
@@ -774,20 +772,19 @@ public class suprnova
 			}
 	
 	
-			if (supernova_pri_a == 0) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
-			if (supernova_pri_b == 0) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
-			if (supernova_pri_a != 0) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
-			if (supernova_pri_b != 0) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
+			if (!supernova_pri_a) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
+			if (!supernova_pri_b) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
+			if (supernova_pri_a) { supernova_draw_a(bitmap,cliprect,tran); tran = 1;}
+			if (supernova_pri_b) { supernova_draw_b(bitmap,cliprect,tran); tran = 1;}
 	
 	
 		}
 	
 	
 		skns_drawsprites(bitmap, cliprect);
-	}
+	} };
 	
-	VIDEO_EOF(skns)
-	{
+	public static VideoEofHandlerPtr video_eof_skns  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram32_w(0,0,0);
-	}
+	} };
 }

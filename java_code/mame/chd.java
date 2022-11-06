@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -232,32 +232,32 @@ public class chd
 	
 	INLINE void extract_map_entry(const UINT8 *base, struct map_entry *entry)
 	{
-		entry.offset = get_bigendian_uint64(&base[0]);
-		entry.crc = get_bigendian_uint32(&base[8]);
-		entry.length = get_bigendian_uint16(&base[12]);
-		entry.flags = get_bigendian_uint16(&base[14]);
+		entry->offset = get_bigendian_uint64(&base[0]);
+		entry->crc = get_bigendian_uint32(&base[8]);
+		entry->length = get_bigendian_uint16(&base[12]);
+		entry->flags = get_bigendian_uint16(&base[14]);
 	}
 	
 	INLINE void assemble_map_entry(UINT8 *base, struct map_entry *entry)
 	{
-		put_bigendian_uint64(&base[0], entry.offset);
-		put_bigendian_uint32(&base[8], entry.crc);
-		put_bigendian_uint16(&base[12], entry.length);
-		put_bigendian_uint16(&base[14], entry.flags);
+		put_bigendian_uint64(&base[0], entry->offset);
+		put_bigendian_uint32(&base[8], entry->crc);
+		put_bigendian_uint16(&base[12], entry->length);
+		put_bigendian_uint16(&base[14], entry->flags);
 	}
 	
 	INLINE void extract_old_map_entry(const UINT8 *base, struct map_entry *entry, UINT32 hunkbytes)
 	{
-		entry.offset = get_bigendian_uint64(&base[0]);
-		entry.crc = 0;
-		entry.length = entry.offset >> 44;
-		entry.flags = MAP_ENTRY_FLAG_NO_CRC | ((entry.length == hunkbytes) ? MAP_ENTRY_TYPE_UNCOMPRESSED : MAP_ENTRY_TYPE_COMPRESSED);
-		entry.offset = (entry.offset << 20) >> 20;
+		entry->offset = get_bigendian_uint64(&base[0]);
+		entry->crc = 0;
+		entry->length = entry->offset >> 44;
+		entry->flags = MAP_ENTRY_FLAG_NO_CRC | ((entry->length == hunkbytes) ? MAP_ENTRY_TYPE_UNCOMPRESSED : MAP_ENTRY_TYPE_COMPRESSED);
+		entry->offset = (entry->offset << 20) >> 20;
 	}
 	
 	INLINE void assemble_old_map_entry(UINT8 *base, struct map_entry *entry)
 	{
-		UINT64 data = entry.offset | ((UINT64)entry.length << 44);
+		UINT64 data = entry->offset | ((UINT64)entry->length << 44);
 		put_bigendian_uint64(&base[0], data);
 	}
 	
@@ -271,7 +271,7 @@ public class chd
 	
 	void chd_set_interface(struct chd_interface *new_interface)
 	{
-		if (new_interface != 0)
+		if (new_interface)
 			interface = *new_interface;
 		else
 			memset(&interface, 0, sizeof(interface));
@@ -315,7 +315,7 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (filename == 0)
+		if (!filename)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 		if (compression >= CHDCOMPRESSION_MAX)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
@@ -323,14 +323,14 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 		
 		/* if we have a parent, the sizes come from there */
-		if (parent != 0)
+		if (parent)
 		{
-			logicalbytes = parent.header.logicalbytes;
-			hunkbytes = parent.header.hunkbytes;
+			logicalbytes = parent->header.logicalbytes;
+			hunkbytes = parent->header.hunkbytes;
 		}
 		
 		/* if we have a parent, it must be V3 or later */
-		if (parent && parent.header.version < 3)
+		if (parent && parent->header.version < 3)
 			SET_ERROR_AND_CLEANUP(CHDERR_UNSUPPORTED_VERSION);
 	
 		/* build the header */
@@ -352,11 +352,11 @@ public class chd
 		header.obsolete_hunksize = 0;
 	
 		/* tweaks if there is a parent */
-		if (parent != 0)
+		if (parent)
 		{
 			header.flags |= CHDFLAGS_HAS_PARENT;
-			memcpy(&header.parentmd5[0], &parent.header.md5[0], sizeof(header.parentmd5));
-			memcpy(&header.parentsha1[0], &parent.header.sha1[0], sizeof(header.parentsha1));
+			memcpy(&header.parentmd5[0], &parent->header.md5[0], sizeof(header.parentmd5));
+			memcpy(&header.parentsha1[0], &parent->header.sha1[0], sizeof(header.parentsha1));
 		}
 		
 		/* validate it */
@@ -366,7 +366,7 @@ public class chd
 		
 		/* attempt to create the file */
 		file = multi_open(filename, "wb");
-		if (file == 0)
+		if (!file)
 			SET_ERROR_AND_CLEANUP(CHDERR_CANT_CREATE_FILE);
 	
 		/* write the resulting header */
@@ -391,11 +391,11 @@ public class chd
 		for (i = 0; i < fullchunks; i++)
 		{
 			/* parent drives need to be mapped through */
-			if (parent != 0)
+			if (parent)
 				for (j = 0; j < MAP_STACK_ENTRIES; j++)
 				{
 					mapentry.offset = i * MAP_STACK_ENTRIES + j;
-					mapentry.crc = parent.map[i * MAP_STACK_ENTRIES + j].crc;
+					mapentry.crc = parent->map[i * MAP_STACK_ENTRIES + j].crc;
 					mapentry.flags = MAP_ENTRY_TYPE_PARENT_HUNK;
 					assemble_map_entry(&blank_map_entries[j * MAP_ENTRY_SIZE], &mapentry);
 				}
@@ -408,14 +408,14 @@ public class chd
 		}
 	
 		/* then write the remainder */
-		if (remainder != 0)
+		if (remainder)
 		{
 			/* parent drives need to be mapped through */
-			if (parent != 0)
+			if (parent)
 				for (j = 0; j < remainder; j++)
 				{
 					mapentry.offset = i * MAP_STACK_ENTRIES + j;
-					mapentry.crc = parent.map[i * MAP_STACK_ENTRIES + j].crc;
+					mapentry.crc = parent->map[i * MAP_STACK_ENTRIES + j].crc;
 					mapentry.flags = MAP_ENTRY_TYPE_PARENT_HUNK;
 					assemble_map_entry(&blank_map_entries[j * MAP_ENTRY_SIZE], &mapentry);
 				}
@@ -437,7 +437,7 @@ public class chd
 		multi_close(file);
 		
 		/* if we have a parent, clone the metadata */
-		if (parent != 0)
+		if (parent)
 		{
 			UINT8 metadata[CHD_MAX_METADATA_SIZE];
 			UINT32 metatag, metasize, metaindex;
@@ -466,7 +466,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (file != 0)
+		if (file)
 			multi_close(file);
 		return last_error;
 	}
@@ -492,12 +492,12 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (filename == 0)
+		if (!filename)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* punt if invalid parent */
 		chd.parent = parent;
-		if (chd.parent && chd.parent.cookie != COOKIE_VALUE)
+		if (chd.parent && chd.parent->cookie != COOKIE_VALUE)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* first attempt to open the file */
@@ -528,18 +528,18 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_REQUIRES_PARENT);
 	
 		/* make sure we have a valid parent */
-		if (parent != 0)
+		if (parent)
 		{
 			/* check MD5 if it isn't empty */
 			if (memcmp(nullmd5, chd.header.parentmd5, sizeof(chd.header.parentmd5)) && 
-				memcmp(nullmd5, chd.parent.header.md5, sizeof(chd.parent.header.md5)) && 
-				memcmp(chd.parent.header.md5, chd.header.parentmd5, sizeof(chd.header.parentmd5)))
+				memcmp(nullmd5, chd.parent->header.md5, sizeof(chd.parent->header.md5)) && 
+				memcmp(chd.parent->header.md5, chd.header.parentmd5, sizeof(chd.header.parentmd5)))
 				SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARENT);
 	
 			/* check SHA1 if it isn't empty */
 			if (memcmp(nullsha1, chd.header.parentsha1, sizeof(chd.header.parentsha1)) && 
-				memcmp(nullsha1, chd.parent.header.sha1, sizeof(chd.parent.header.sha1)) && 
-				memcmp(chd.parent.header.sha1, chd.header.parentsha1, sizeof(chd.header.parentsha1)))
+				memcmp(nullsha1, chd.parent->header.sha1, sizeof(chd.parent->header.sha1)) && 
+				memcmp(chd.parent->header.sha1, chd.header.parentsha1, sizeof(chd.header.parentsha1)))
 				SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARENT);
 		}
 	
@@ -568,13 +568,13 @@ public class chd
 	
 		/* okay, now allocate our entry and copy it */
 		finalchd = malloc(sizeof(chd));
-		if (finalchd == 0)
+		if (!finalchd)
 			SET_ERROR_AND_CLEANUP(CHDERR_OUT_OF_MEMORY);
 		*finalchd = chd;
 	
 		/* hook us into the global list */
-		finalchd.cookie = COOKIE_VALUE;
-		finalchd.next = first_file;
+		finalchd->cookie = COOKIE_VALUE;
+		finalchd->next = first_file;
 		first_file = finalchd;
 	
 		/* all done */
@@ -609,48 +609,48 @@ public class chd
 		struct chd_file *curr, *prev;
 	
 		/* punt if NULL or invalid */
-		if (!chd || chd.cookie != COOKIE_VALUE)
+		if (!chd || chd->cookie != COOKIE_VALUE)
 			return;
 	
 		/* deinit the codec */
-		if (chd.codecdata)
+		if (chd->codecdata)
 			free_codec(chd);
 	
 		/* free the compressed data buffer */
-		if (chd.compressed)
-			free(chd.compressed);
+		if (chd->compressed)
+			free(chd->compressed);
 	
 		/* free the hunk cache and compare data */
-		if (chd.compare)
-			free(chd.compare);
-		if (chd.cache)
-			free(chd.cache);
+		if (chd->compare)
+			free(chd->compare);
+		if (chd->cache)
+			free(chd->cache);
 	
 		/* free the hunk map */
-		if (chd.map)
-			free(chd.map);
+		if (chd->map)
+			free(chd->map);
 	
 		/* free the CRC map */
-		if (chd.crcmap)
-			free(chd.crcmap);
+		if (chd->crcmap)
+			free(chd->crcmap);
 	
 		/* close the file */
-		if (chd.file)
-			multi_close(chd.file);
+		if (chd->file)
+			multi_close(chd->file);
 	
 		/* unlink ourselves */
-		for (prev = NULL, curr = first_file; curr; prev = curr, curr = curr.next)
+		for (prev = NULL, curr = first_file; curr; prev = curr, curr = curr->next)
 			if (curr == chd)
 			{
-				if (prev != 0)
-					prev.next = curr.next;
+				if (prev)
+					prev->next = curr->next;
 				else
-					first_file = curr.next;
+					first_file = curr->next;
 				break;
 			}
 	
 	#if PRINTF_MAX_HUNK
-		printf("Max hunk = %d/%d\n", chd.maxhunk, chd.header.totalhunks);
+		printf("Max hunk = %d/%d\n", chd->maxhunk, chd->header.totalhunks);
 	#endif
 	
 		/* free our memory */
@@ -689,11 +689,11 @@ public class chd
 		if (last_error != CHDERR_NONE)
 		{
 			/* unless we're an old version and they are requesting hard disk metadata */
-			if (chd.header.version < 3 && (*metatag == HARD_DISK_STANDARD_METADATA || *metatag == CHDMETATAG_WILDCARD) && metaindex == 0)
+			if (chd->header.version < 3 && (*metatag == HARD_DISK_STANDARD_METADATA || *metatag == CHDMETATAG_WILDCARD) && metaindex == 0)
 			{
 				/* fill in the faux metadata */
 				char		faux_metadata[256];
-				sprintf(faux_metadata, HARD_DISK_METADATA_FORMAT, chd.header.obsolete_cylinders, chd.header.obsolete_heads, chd.header.obsolete_sectors, chd.header.hunkbytes / chd.header.obsolete_hunksize);
+				sprintf(faux_metadata, HARD_DISK_METADATA_FORMAT, chd->header.obsolete_cylinders, chd->header.obsolete_heads, chd->header.obsolete_sectors, chd->header.hunkbytes / chd->header.obsolete_hunksize);
 				
 				/* fake it */
 				metaentry.length = strlen(faux_metadata) + 1;
@@ -714,7 +714,7 @@ public class chd
 			outputlen = metaentry.length;
 		
 		/* read the metadata */
-		count = multi_read(chd.file, metaentry.offset + METADATA_HEADER_SIZE, outputlen, outputbuf);
+		count = multi_read(chd->file, metaentry.offset + METADATA_HEADER_SIZE, outputlen, outputbuf);
 		if (count != outputlen)
 			return count;
 	
@@ -738,11 +738,11 @@ public class chd
 		UINT32 count;
 	
 		/* if the disk is an old version, punt */
-		if (chd.header.version < 3)
+		if (chd->header.version < 3)
 			return CHDERR_NOT_SUPPORTED;
 		
 		/* if the disk isn't writeable, punt */
-		if (!(chd.header.flags & CHDFLAGS_IS_WRITEABLE))
+		if (!(chd->header.flags & CHDFLAGS_IS_WRITEABLE))
 			return CHDERR_FILE_NOT_WRITEABLE;
 		
 		/* must be at least 1 byte */
@@ -753,19 +753,19 @@ public class chd
 		last_error = (metaindex != CHD_METAINDEX_APPEND) ? find_metadata_entry(chd, metatag, metaindex, &metaentry) : CHDERR_METADATA_NOT_FOUND;
 		if (last_error == CHDERR_NONE && inputlen <= metaentry.length)
 		{
-			count = multi_write(chd.file, metaentry.offset + METADATA_HEADER_SIZE, inputlen, inputbuf);
+			count = multi_write(chd->file, metaentry.offset + METADATA_HEADER_SIZE, inputlen, inputbuf);
 			if (count != inputlen)
 				return last_error = CHDERR_WRITE_ERROR;
 	
 			/* if the lengths don't match, we need to update the length in our header */
 			if (inputlen != metaentry.length)
 			{
-				count = multi_read(chd.file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
+				count = multi_read(chd->file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
 				if (count != sizeof(raw_meta_header))
 					return last_error = CHDERR_READ_ERROR;
 				
 				put_bigendian_uint32(&raw_meta_header[4], inputlen);
-				count = multi_write(chd.file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
+				count = multi_write(chd->file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
 				if (count != sizeof(raw_meta_header))
 					return last_error = CHDERR_WRITE_ERROR;
 			}
@@ -780,8 +780,8 @@ public class chd
 				/* if we were the first entry, make the next entry the first */
 				if (metaentry.prev == 0)
 				{
-					chd.header.metaoffset = metaentry.next;
-					last_error = write_header(chd.file, &chd.header);
+					chd->header.metaoffset = metaentry.next;
+					last_error = write_header(chd->file, &chd->header);
 					if (last_error != CHDERR_NONE)
 						return last_error;
 				}
@@ -789,12 +789,12 @@ public class chd
 				/* otherwise, update the link in the previous pointer */
 				else
 				{
-					count = multi_read(chd.file, metaentry.prev, sizeof(raw_meta_header), raw_meta_header);
+					count = multi_read(chd->file, metaentry.prev, sizeof(raw_meta_header), raw_meta_header);
 					if (count != sizeof(raw_meta_header))
 						return last_error = CHDERR_READ_ERROR;
 					
 					put_bigendian_uint64(&raw_meta_header[8], metaentry.next);
-					count = multi_write(chd.file, metaentry.prev, sizeof(raw_meta_header), raw_meta_header);
+					count = multi_write(chd->file, metaentry.prev, sizeof(raw_meta_header), raw_meta_header);
 					if (count != sizeof(raw_meta_header))
 						return last_error = CHDERR_WRITE_ERROR;
 				}
@@ -803,22 +803,22 @@ public class chd
 			/* now build us a new entry */
 			put_bigendian_uint32(&raw_meta_header[0], metatag);
 			put_bigendian_uint32(&raw_meta_header[4], inputlen);
-			put_bigendian_uint64(&raw_meta_header[8], chd.header.metaoffset);
+			put_bigendian_uint64(&raw_meta_header[8], chd->header.metaoffset);
 			
 			/* write out the new header */
-			metaentry.offset = multi_length(chd.file);
-			count = multi_write(chd.file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
+			metaentry.offset = multi_length(chd->file);
+			count = multi_write(chd->file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
 			if (count != sizeof(raw_meta_header))
 				return last_error = CHDERR_WRITE_ERROR;
 			
 			/* follow that with the data */
-			count = multi_write(chd.file, metaentry.offset + METADATA_HEADER_SIZE, inputlen, inputbuf);
+			count = multi_write(chd->file, metaentry.offset + METADATA_HEADER_SIZE, inputlen, inputbuf);
 			if (count != inputlen)
 				return last_error = CHDERR_WRITE_ERROR;
 	
 			/* finally, update the header */
-			chd.header.metaoffset = metaentry.offset;
-			last_error = write_header(chd.file, &chd.header);
+			chd->header.metaoffset = metaentry.offset;
+			last_error = write_header(chd->file, &chd->header);
 			if (last_error != CHDERR_NONE)
 				return last_error;
 		}
@@ -845,24 +845,24 @@ public class chd
 		{
 			UINT32 total = 0;
 			while (hunkcount-- && last_error == CHDERR_NONE)
-				total += chd_read(chd, hunknum++, 1, (UINT8 *)buffer + total * chd.header.hunkbytes);
+				total += chd_read(chd, hunknum++, 1, (UINT8 *)buffer + total * chd->header.hunkbytes);
 			return total;
 		}
 	
 		/* punt if NULL or invalid */
-		if (!chd || chd.cookie != COOKIE_VALUE)
+		if (!chd || chd->cookie != COOKIE_VALUE)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* if we're past the end, fail */
-		if (hunknum >= chd.header.totalhunks)
+		if (hunknum >= chd->header.totalhunks)
 			SET_ERROR_AND_CLEANUP(CHDERR_HUNK_OUT_OF_RANGE);
 			
 		/* track the max */
-		if (hunknum > chd.maxhunk)
-			chd.maxhunk = hunknum;
+		if (hunknum > chd->maxhunk)
+			chd->maxhunk = hunknum;
 	
 		/* if the hunk is not cached, load and decompress it */
-		if (chd.cachehunk != hunknum)
+		if (chd->cachehunk != hunknum)
 		{
 			err = read_hunk_into_cache(chd, hunknum);
 			if (err != CHDERR_NONE)
@@ -870,7 +870,7 @@ public class chd
 		}
 	
 		/* now copy the data from the cache */
-		memcpy(buffer, chd.cache, chd.header.hunkbytes);
+		memcpy(buffer, chd->cache, chd->header.hunkbytes);
 		return 1;
 	
 	cleanup:
@@ -896,21 +896,21 @@ public class chd
 		{
 			UINT32 total = 0;
 			while (hunkcount-- && last_error == CHDERR_NONE)
-				total += chd_write(chd, hunknum++, 1, (const UINT8 *)buffer + total * chd.header.hunkbytes);
+				total += chd_write(chd, hunknum++, 1, (const UINT8 *)buffer + total * chd->header.hunkbytes);
 			return total;
 		}
 	
 		/* punt if NULL or invalid */
-		if (!chd || chd.cookie != COOKIE_VALUE)
+		if (!chd || chd->cookie != COOKIE_VALUE)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* if we're past the end, fail */
-		if (hunknum >= chd.header.totalhunks)
+		if (hunknum >= chd->header.totalhunks)
 			SET_ERROR_AND_CLEANUP(CHDERR_HUNK_OUT_OF_RANGE);
 	
 		/* track the max */
-		if (hunknum > chd.maxhunk)
-			chd.maxhunk = hunknum;
+		if (hunknum > chd->maxhunk)
+			chd->maxhunk = hunknum;
 	
 		/* then write out the hunk */
 		err = write_hunk_from_memory(chd, hunknum, buffer);
@@ -946,10 +946,10 @@ public class chd
 	const struct chd_header *chd_get_header(struct chd_file *chd)
 	{
 		/* punt if NULL or invalid */
-		if (!chd || chd.cookie != COOKIE_VALUE)
+		if (!chd || chd->cookie != COOKIE_VALUE)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
-		return &chd.header;
+		return &chd->header;
 	
 	cleanup:
 		return NULL;
@@ -984,7 +984,7 @@ public class chd
 	
 		/* attempt to open the file */
 		file = multi_open(filename, "rb+");
-		if (file == 0)
+		if (!file)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* read the old header */
@@ -993,19 +993,19 @@ public class chd
 			SET_ERROR_AND_CLEANUP(err);
 	
 		/* make sure we're only making valid changes */
-		if (header.length != oldheader.length)
+		if (header->length != oldheader.length)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.version != oldheader.version)
+		if (header->version != oldheader.version)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.compression != oldheader.compression)
+		if (header->compression != oldheader.compression)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.hunkbytes != oldheader.hunkbytes)
+		if (header->hunkbytes != oldheader.hunkbytes)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.totalhunks != oldheader.totalhunks)
+		if (header->totalhunks != oldheader.totalhunks)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.metaoffset != oldheader.metaoffset)
+		if (header->metaoffset != oldheader.metaoffset)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
-		if (header.obsolete_hunksize != oldheader.obsolete_hunksize)
+		if (header->obsolete_hunksize != oldheader.obsolete_hunksize)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* write the new header */
@@ -1018,7 +1018,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (file != 0)
+		if (file)
 			multi_close(file);
 		return last_error;
 	}
@@ -1050,19 +1050,19 @@ public class chd
 		
 		/* open the raw file */
 		sourcefile = multi_open(rawfile, "rb");
-		if (sourcefile == 0)
+		if (!sourcefile)
 			SET_ERROR_AND_CLEANUP(CHDERR_FILE_NOT_FOUND);
 	
 		/* mark the CHD writeable and write the updated header */
-		chd.header.flags |= CHDFLAGS_IS_WRITEABLE;
-		err = write_header(chd.file, &chd.header);
+		chd->header.flags |= CHDFLAGS_IS_WRITEABLE;
+		err = write_header(chd->file, &chd->header);
 		if (err != CHDERR_NONE)
 			SET_ERROR_AND_CLEANUP(err);
 		
 		/* create CRC maps for the new CHD and the parent */
 		init_crcmap(chd, 0);
-		if (chd.parent)
-			init_crcmap(chd.parent, 1);
+		if (chd->parent)
+			init_crcmap(chd->parent, 1);
 	
 		/* init the MD5/SHA1 computations */
 		MD5Init(&md5);
@@ -1070,72 +1070,72 @@ public class chd
 	
 		/* loop over source hunks until we run out */
 		lastupdate = 0;
-		for (hunknum = 0; hunknum < chd.header.totalhunks; hunknum++)
+		for (hunknum = 0; hunknum < chd->header.totalhunks; hunknum++)
 		{
 			clock_t curtime = clock();
 			UINT32 bytestochecksum;
 			UINT32 bytesread;
 	
 			/* read the data */
-			bytesread = multi_read(sourcefile, sourceoffset + offset, chd.header.hunkbytes, chd.cache);
-			if (bytesread < chd.header.hunkbytes)
-				memset(&chd.cache[bytesread], 0, chd.header.hunkbytes - bytesread);
+			bytesread = multi_read(sourcefile, sourceoffset + offset, chd->header.hunkbytes, chd->cache);
+			if (bytesread < chd->header.hunkbytes)
+				memset(&chd->cache[bytesread], 0, chd->header.hunkbytes - bytesread);
 	
 			/* progress */
 			if (curtime - lastupdate > CLOCKS_PER_SEC / 2)
 			{
-				UINT64 sourcepos = (UINT64)hunknum * chd.header.hunkbytes;
+				UINT64 sourcepos = (UINT64)hunknum * chd->header.hunkbytes;
 				if (progress && sourcepos)
-					(*progress)("Compressing hunk %d/%d... (ratio=%d%%)  \r", hunknum, chd.header.totalhunks, 100 - multi_length(chd.file) * 100 / sourcepos);
+					(*progress)("Compressing hunk %d/%d... (ratio=%d%%)  \r", hunknum, chd->header.totalhunks, 100 - multi_length(chd->file) * 100 / sourcepos);
 				lastupdate = curtime;
 			}
 	
 			/* update the MD5/SHA1 */
-			bytestochecksum = chd.header.hunkbytes;
-			if (sourceoffset + chd.header.hunkbytes > chd.header.logicalbytes)
+			bytestochecksum = chd->header.hunkbytes;
+			if (sourceoffset + chd->header.hunkbytes > chd->header.logicalbytes)
 			{
-				if (sourceoffset >= chd.header.logicalbytes)
+				if (sourceoffset >= chd->header.logicalbytes)
 					bytestochecksum = 0;
 				else
-					bytestochecksum = chd.header.logicalbytes - sourceoffset;
+					bytestochecksum = chd->header.logicalbytes - sourceoffset;
 			}
-			if (bytestochecksum != 0)
+			if (bytestochecksum)
 			{
-				MD5Update(&md5, chd.cache, bytestochecksum);
-				sha1_update(&sha, bytestochecksum, chd.cache);
+				MD5Update(&md5, chd->cache, bytestochecksum);
+				sha1_update(&sha, bytestochecksum, chd->cache);
 			}
 	
 			/* write out the hunk */
-			err = write_hunk_from_memory(chd, hunknum, chd.cache);
+			err = write_hunk_from_memory(chd, hunknum, chd->cache);
 			if (err != CHDERR_NONE)
 				SET_ERROR_AND_CLEANUP(err);
 			
 			/* update our CRC map */
-			if ((chd.map[hunknum].flags & MAP_ENTRY_FLAG_TYPE_MASK) != MAP_ENTRY_TYPE_SELF_HUNK &&
-				(chd.map[hunknum].flags & MAP_ENTRY_FLAG_TYPE_MASK) != MAP_ENTRY_TYPE_PARENT_HUNK)
+			if ((chd->map[hunknum].flags & MAP_ENTRY_FLAG_TYPE_MASK) != MAP_ENTRY_TYPE_SELF_HUNK &&
+				(chd->map[hunknum].flags & MAP_ENTRY_FLAG_TYPE_MASK) != MAP_ENTRY_TYPE_PARENT_HUNK)
 				add_to_crcmap(chd, hunknum);
 	
 			/* prepare for the next hunk */
-			sourceoffset += chd.header.hunkbytes;
+			sourceoffset += chd->header.hunkbytes;
 		}
 	
 		/* compute the final MD5/SHA1 values */
-		MD5Final(chd.header.md5, &md5);
+		MD5Final(chd->header.md5, &md5);
 		sha1_final(&sha);
-		sha1_digest(&sha, SHA1_DIGEST_SIZE, chd.header.sha1);
+		sha1_digest(&sha, SHA1_DIGEST_SIZE, chd->header.sha1);
 	
 		/* turn off the writeable flag and re-write the header */
-		chd.header.flags &= ~CHDFLAGS_IS_WRITEABLE;
-		err = write_header(chd.file, &chd.header);
+		chd->header.flags &= ~CHDFLAGS_IS_WRITEABLE;
+		err = write_header(chd->file, &chd->header);
 		if (err != CHDERR_NONE)
 			SET_ERROR_AND_CLEANUP(err);
 	
 		/* final progress update */
-		if (progress != 0)
+		if (progress)
 		{
-			UINT64 sourcepos = (UINT64)hunknum * chd.header.hunkbytes;
-			if (sourcepos != 0)
-				(*progress)("Compression complete ... final ratio = %d%%            \n", 100 - multi_length(chd.file) * 100 / sourcepos);
+			UINT64 sourcepos = (UINT64)hunknum * chd->header.hunkbytes;
+			if (sourcepos)
+				(*progress)("Compression complete ... final ratio = %d%%            \n", 100 - multi_length(chd->file) * 100 / sourcepos);
 		}
 	
 		/* close the file */
@@ -1143,7 +1143,7 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (sourcefile != 0)
+		if (sourcefile)
 			multi_close(sourcefile);
 		return last_error;
 	}
@@ -1169,11 +1169,11 @@ public class chd
 			SET_ERROR_AND_CLEANUP(CHDERR_NO_INTERFACE);
 	
 		/* verify parameters */
-		if (chd == 0)
+		if (!chd)
 			SET_ERROR_AND_CLEANUP(CHDERR_INVALID_PARAMETER);
 	
 		/* if this is a writeable file image, we can't verify */
-		if (chd.header.flags & CHDFLAGS_IS_WRITEABLE)
+		if (chd->header.flags & CHDFLAGS_IS_WRITEABLE)
 			SET_ERROR_AND_CLEANUP(CHDERR_CANT_VERIFY);
 	
 		/* init the MD5/SHA1 computations */
@@ -1182,7 +1182,7 @@ public class chd
 	
 		/* loop over source hunks until we run out */
 		lastupdate = 0;
-		for (hunknum = 0; hunknum < chd.header.totalhunks; hunknum++)
+		for (hunknum = 0; hunknum < chd->header.totalhunks; hunknum++)
 		{
 			clock_t curtime = clock();
 			UINT32 bytestochecksum;
@@ -1190,8 +1190,8 @@ public class chd
 			/* progress */
 			if (curtime - lastupdate > CLOCKS_PER_SEC / 2)
 			{
-				if (progress != 0)
-					(*progress)("Verifying hunk %d/%d...\r", hunknum, chd.header.totalhunks);
+				if (progress)
+					(*progress)("Verifying hunk %d/%d...\r", hunknum, chd->header.totalhunks);
 				lastupdate = curtime;
 			}
 	
@@ -1201,22 +1201,22 @@ public class chd
 				SET_ERROR_AND_CLEANUP(err);
 	
 			/* update the MD5/SHA1 */
-			bytestochecksum = chd.header.hunkbytes;
-			if (sourceoffset + chd.header.hunkbytes > chd.header.logicalbytes)
+			bytestochecksum = chd->header.hunkbytes;
+			if (sourceoffset + chd->header.hunkbytes > chd->header.logicalbytes)
 			{
-				if (sourceoffset >= chd.header.logicalbytes)
+				if (sourceoffset >= chd->header.logicalbytes)
 					bytestochecksum = 0;
 				else
-					bytestochecksum = chd.header.logicalbytes - sourceoffset;
+					bytestochecksum = chd->header.logicalbytes - sourceoffset;
 			}
-			if (bytestochecksum != 0)
+			if (bytestochecksum)
 			{
-				MD5Update(&md5, chd.cache, bytestochecksum);
-				sha1_update(&sha, bytestochecksum, chd.cache);
+				MD5Update(&md5, chd->cache, bytestochecksum);
+				sha1_update(&sha, bytestochecksum, chd->cache);
 			}
 			
 			/* prepare for the next hunk */
-			sourceoffset += chd.header.hunkbytes;
+			sourceoffset += chd->header.hunkbytes;
 		}
 	
 		/* compute the final MD5 */
@@ -1225,7 +1225,7 @@ public class chd
 		sha1_digest(&sha, SHA1_DIGEST_SIZE, actualsha1);
 	
 		/* final progress update */
-		if (progress != 0)
+		if (progress)
 			(*progress)("Verification complete                                  \n");
 		return CHDERR_NONE;
 	
@@ -1244,45 +1244,45 @@ public class chd
 	static int validate_header(const struct chd_header *header)
 	{
 		/* require a valid version */
-		if (header.version == 0 || header.version > CHD_HEADER_VERSION)
+		if (header->version == 0 || header->version > CHD_HEADER_VERSION)
 			return CHDERR_UNSUPPORTED_VERSION;
 	
 		/* require a valid length */
-		if ((header.version == 1 && header.length != CHD_V1_HEADER_SIZE) ||
-			(header.version == 2 && header.length != CHD_V2_HEADER_SIZE) ||
-			(header.version == 3 && header.length != CHD_V3_HEADER_SIZE))
+		if ((header->version == 1 && header->length != CHD_V1_HEADER_SIZE) ||
+			(header->version == 2 && header->length != CHD_V2_HEADER_SIZE) ||
+			(header->version == 3 && header->length != CHD_V3_HEADER_SIZE))
 			return CHDERR_INVALID_PARAMETER;
 		
 		/* require valid flags */
-		if (header.flags & CHDFLAGS_UNDEFINED)
+		if (header->flags & CHDFLAGS_UNDEFINED)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* require a valid compression mechanism */
-		if (header.compression >= CHDCOMPRESSION_MAX)
+		if (header->compression >= CHDCOMPRESSION_MAX)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* require a valid hunksize */
-		if (header.hunkbytes == 0 || header.hunkbytes >= 65536)
+		if (header->hunkbytes == 0 || header->hunkbytes >= 65536)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* require a valid hunk count */
-		if (header.totalhunks == 0)
+		if (header->totalhunks == 0)
 			return CHDERR_INVALID_PARAMETER;
 		
 		/* require a valid MD5 and/or SHA1 if we're using a parent */
-		if ((header.flags & CHDFLAGS_HAS_PARENT) && !memcmp(header.parentmd5, nullmd5, sizeof(nullmd5)) && !memcmp(header.parentsha1, nullsha1, sizeof(nullsha1)))
+		if ((header->flags & CHDFLAGS_HAS_PARENT) && !memcmp(header->parentmd5, nullmd5, sizeof(nullmd5)) && !memcmp(header->parentsha1, nullsha1, sizeof(nullsha1)))
 			return CHDERR_INVALID_PARAMETER;
 		
 		/* if we're V3 or later, the obsolete fields must be 0 */
-		if (header.version >= 3 && 
-			(header.obsolete_cylinders != 0 || header.obsolete_sectors != 0 ||
-			 header.obsolete_heads != 0 || header.obsolete_hunksize != 0))
+		if (header->version >= 3 && 
+			(header->obsolete_cylinders != 0 || header->obsolete_sectors != 0 ||
+			 header->obsolete_heads != 0 || header->obsolete_hunksize != 0))
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* if we're pre-V3, the obsolete fields must NOT be 0 */
-		if (header.version < 3 && 
-			(header.obsolete_cylinders == 0 || header.obsolete_sectors == 0 ||
-			 header.obsolete_heads == 0 || header.obsolete_hunksize == 0))
+		if (header->version < 3 && 
+			(header->obsolete_cylinders == 0 || header->obsolete_sectors == 0 ||
+			 header->obsolete_heads == 0 || header->obsolete_hunksize == 0))
 			return CHDERR_INVALID_PARAMETER;
 	
 		return CHDERR_NONE;
@@ -1299,43 +1299,43 @@ public class chd
 	
 	static int read_hunk_into_memory(struct chd_file *chd, UINT32 hunknum, UINT8 *dest)
 	{
-		struct map_entry *entry = &chd.map[hunknum];
+		struct map_entry *entry = &chd->map[hunknum];
 		UINT32 bytes;
 		int err;
 	
 		/* switch off the entry type */
-		switch (entry.flags & MAP_ENTRY_FLAG_TYPE_MASK)
+		switch (entry->flags & MAP_ENTRY_FLAG_TYPE_MASK)
 		{
 			/* compressed data */
 			case MAP_ENTRY_TYPE_COMPRESSED:
 			
 				/* read it into the decompression buffer */
-				bytes = multi_read(chd.file, entry.offset, entry.length, chd.compressed);
-				if (bytes != entry.length)
+				bytes = multi_read(chd->file, entry->offset, entry->length, chd->compressed);
+				if (bytes != entry->length)
 					return CHDERR_READ_ERROR;
 	
 				/* now decompress based on the compression method */
-				switch (chd.header.compression)
+				switch (chd->header.compression)
 				{
 					case CHDCOMPRESSION_ZLIB:
 					case CHDCOMPRESSION_ZLIB_PLUS:
 					{
-						struct zlib_codec_data *codec = chd.codecdata;
+						struct zlib_codec_data *codec = chd->codecdata;
 	
 						/* reset the decompressor */
-						codec.inflater.next_in = chd.compressed;
-						codec.inflater.avail_in = entry.length;
-						codec.inflater.total_in = 0;
-						codec.inflater.next_out = dest;
-						codec.inflater.avail_out = chd.header.hunkbytes;
-						codec.inflater.total_out = 0;
-						err = inflateReset(&codec.inflater);
+						codec->inflater.next_in = chd->compressed;
+						codec->inflater.avail_in = entry->length;
+						codec->inflater.total_in = 0;
+						codec->inflater.next_out = dest;
+						codec->inflater.avail_out = chd->header.hunkbytes;
+						codec->inflater.total_out = 0;
+						err = inflateReset(&codec->inflater);
 						if (err != Z_OK)
 							return CHDERR_DECOMPRESSION_ERROR;
 	
 						/* do it */
-						err = inflate(&codec.inflater, Z_FINISH);
-						if (codec.inflater.total_out != chd.header.hunkbytes)
+						err = inflate(&codec->inflater, Z_FINISH);
+						if (codec->inflater.total_out != chd->header.hunkbytes)
 							return CHDERR_DECOMPRESSION_ERROR;
 						break;
 					}
@@ -1344,34 +1344,34 @@ public class chd
 			
 			/* uncompressed data */
 			case MAP_ENTRY_TYPE_UNCOMPRESSED:
-				bytes = multi_read(chd.file, entry.offset, chd.header.hunkbytes, dest);
-				if (bytes != chd.header.hunkbytes)
+				bytes = multi_read(chd->file, entry->offset, chd->header.hunkbytes, dest);
+				if (bytes != chd->header.hunkbytes)
 					return CHDERR_READ_ERROR;
 				break;
 	
 			/* mini-compressed data */
 			case MAP_ENTRY_TYPE_MINI:
-				put_bigendian_uint64(&dest[0], entry.offset);
-				for (bytes = 8; bytes < chd.header.hunkbytes; bytes++)
+				put_bigendian_uint64(&dest[0], entry->offset);
+				for (bytes = 8; bytes < chd->header.hunkbytes; bytes++)
 					dest[bytes] = dest[bytes - 8];
 				break;
 	
 			/* self-referenced data */
 			case MAP_ENTRY_TYPE_SELF_HUNK:
-				if (chd.cachehunk == entry.offset && dest == chd.cache)
+				if (chd->cachehunk == entry->offset && dest == chd->cache)
 					break;
-				return read_hunk_into_memory(chd, entry.offset, dest);
+				return read_hunk_into_memory(chd, entry->offset, dest);
 	
 			/* parent-referenced data */
 			case MAP_ENTRY_TYPE_PARENT_HUNK:
-				err = read_hunk_into_memory(chd.parent, entry.offset, dest);
+				err = read_hunk_into_memory(chd->parent, entry->offset, dest);
 				if (err != CHDERR_NONE)
 					return err;
 				break;
 		}
 	
 		/* validate the CRC if we have one */
-		if (!(entry.flags & MAP_ENTRY_FLAG_NO_CRC) && entry.crc != crc32(0, &dest[0], chd.header.hunkbytes))
+		if (!(entry->flags & MAP_ENTRY_FLAG_NO_CRC) && entry->crc != crc32(0, &dest[0], chd->header.hunkbytes))
 			return CHDERR_DECOMPRESSION_ERROR;
 		return CHDERR_NONE;
 	}
@@ -1382,17 +1382,17 @@ public class chd
 		int err;
 	
 		/* if we're already in the cache, we're done */
-		if (chd.cachehunk == hunknum)
+		if (chd->cachehunk == hunknum)
 			return CHDERR_NONE;
-		chd.cachehunk = ~0;
+		chd->cachehunk = ~0;
 		
 		/* otherwise, read the data */
-		err = read_hunk_into_memory(chd, hunknum, chd.cache);
+		err = read_hunk_into_memory(chd, hunknum, chd->cache);
 		if (err != CHDERR_NONE)
 			return err;
 		
 		/* mark the hunk successfully cached in */
-		chd.cachehunk = hunknum;
+		chd->cachehunk = hunknum;
 		return CHDERR_NONE;
 	}
 	
@@ -1406,25 +1406,25 @@ public class chd
 	
 	static int write_hunk_from_memory(struct chd_file *chd, UINT32 hunknum, const UINT8 *src)
 	{
-		struct map_entry *entry = &chd.map[hunknum];
+		struct map_entry *entry = &chd->map[hunknum];
 		struct map_entry newentry;
 		UINT8 fileentry[MAP_ENTRY_SIZE];
 		const void *data = src;
 		UINT32 bytes, match;
 		
 		/* first compute the CRC */
-		newentry.crc = crc32(0, &src[0], chd.header.hunkbytes);
+		newentry.crc = crc32(0, &src[0], chd->header.hunkbytes);
 		
 		/* some extra stuff for zlib+ compression */
-		if (chd.header.compression == CHDCOMPRESSION_ZLIB_PLUS)
+		if (chd->header.compression == CHDCOMPRESSION_ZLIB_PLUS)
 		{
 			/* see if we can mini-compress first */
-			for (bytes = 8; bytes < chd.header.hunkbytes; bytes++)
+			for (bytes = 8; bytes < chd->header.hunkbytes; bytes++)
 				if (src[bytes] != src[bytes - 8])
 					break;
 			
 			/* if so, we don't need to write any data */
-			if (bytes == chd.header.hunkbytes)
+			if (bytes == chd->header.hunkbytes)
 			{
 				newentry.offset = get_bigendian_uint64(&src[0]);
 				newentry.length = 0;
@@ -1443,9 +1443,9 @@ public class chd
 			}
 	
 			/* if we have a parent, see if we can find a match in there */
-			if (chd.header.flags & CHDFLAGS_HAS_PARENT)
+			if (chd->header.flags & CHDFLAGS_HAS_PARENT)
 			{
-				match = find_matching_hunk(chd.parent, ~0, newentry.crc, &src[0]);
+				match = find_matching_hunk(chd->parent, ~0, newentry.crc, &src[0]);
 				if (match != NO_MATCH)
 				{
 					newentry.offset = match;
@@ -1458,37 +1458,37 @@ public class chd
 	
 		/* if we get here, we need to compress the data */
 		/* first, fill in an uncompressed entry */
-		newentry.length = chd.header.hunkbytes;
+		newentry.length = chd->header.hunkbytes;
 		newentry.flags = MAP_ENTRY_TYPE_UNCOMPRESSED;
 		
 		/* now try compressing the data */
-		switch (chd.header.compression)
+		switch (chd->header.compression)
 		{
 			case CHDCOMPRESSION_ZLIB:
 			case CHDCOMPRESSION_ZLIB_PLUS:
 			{
-				struct zlib_codec_data *codec = chd.codecdata;
+				struct zlib_codec_data *codec = chd->codecdata;
 				int err;
 	
 				/* reset the decompressor */
-				codec.deflater.next_in = (void *)src;
-				codec.deflater.avail_in = chd.header.hunkbytes;
-				codec.deflater.total_in = 0;
-				codec.deflater.next_out = chd.compressed;
-				codec.deflater.avail_out = chd.header.hunkbytes;
-				codec.deflater.total_out = 0;
-				err = deflateReset(&codec.deflater);
+				codec->deflater.next_in = (void *)src;
+				codec->deflater.avail_in = chd->header.hunkbytes;
+				codec->deflater.total_in = 0;
+				codec->deflater.next_out = chd->compressed;
+				codec->deflater.avail_out = chd->header.hunkbytes;
+				codec->deflater.total_out = 0;
+				err = deflateReset(&codec->deflater);
 				if (err != Z_OK)
 					return CHDERR_COMPRESSION_ERROR;
 	
 				/* do it */
-				err = deflate(&codec.deflater, Z_FINISH);
+				err = deflate(&codec->deflater, Z_FINISH);
 	
 				/* if we didn't run out of space, override the raw data with compressed */
-				if (err == Z_STREAM_END && codec.deflater.total_out < newentry.length)
+				if (err == Z_STREAM_END && codec->deflater.total_out < newentry.length)
 				{
-					data = chd.compressed;
-					newentry.length = codec.deflater.total_out;
+					data = chd->compressed;
+					newentry.length = codec->deflater.total_out;
 					newentry.flags = MAP_ENTRY_TYPE_COMPRESSED;
 				}
 				break;
@@ -1496,12 +1496,12 @@ public class chd
 		}
 	
 		/* if the data doesn't fit into the previous entry, make a new one at the eof */
-		newentry.offset = entry.offset;
-		if (newentry.offset == 0 || newentry.length > entry.length)
-			newentry.offset = multi_length(chd.file);
+		newentry.offset = entry->offset;
+		if (newentry.offset == 0 || newentry.length > entry->length)
+			newentry.offset = multi_length(chd->file);
 	
 		/* write the data */
-		bytes = multi_write(chd.file, newentry.offset, newentry.length, data);
+		bytes = multi_write(chd->file, newentry.offset, newentry.length, data);
 		if (bytes != newentry.length)
 			return CHDERR_WRITE_ERROR;
 	
@@ -1510,8 +1510,8 @@ public class chd
 		*entry = newentry;
 	
 		/* update the map on file */
-		assemble_map_entry(&fileentry[0], &chd.map[hunknum]);
-		bytes = multi_write(chd.file, chd.header.length + hunknum * sizeof(fileentry), sizeof(fileentry), &fileentry[0]);
+		assemble_map_entry(&fileentry[0], &chd->map[hunknum]);
+		bytes = multi_write(chd->file, chd->header.length + hunknum * sizeof(fileentry), sizeof(fileentry), &fileentry[0]);
 		if (bytes != sizeof(fileentry))
 			return CHDERR_WRITE_ERROR;
 	
@@ -1532,11 +1532,11 @@ public class chd
 		UINT32 count;
 	
 		/* punt if NULL */
-		if (header == 0)
+		if (!header)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* punt if invalid file */
-		if (file == 0)
+		if (!file)
 			return CHDERR_INVALID_FILE;
 	
 		/* punt if no interface */
@@ -1554,48 +1554,48 @@ public class chd
 	
 		/* extract the direct data */
 		memset(header, 0, sizeof(*header));
-		header.length        = get_bigendian_uint32(&rawheader[8]);
-		header.version       = get_bigendian_uint32(&rawheader[12]);
+		header->length        = get_bigendian_uint32(&rawheader[8]);
+		header->version       = get_bigendian_uint32(&rawheader[12]);
 	
 		/* make sure it's a version we understand */
-		if (header.version == 0 || header.version > CHD_HEADER_VERSION)
+		if (header->version == 0 || header->version > CHD_HEADER_VERSION)
 			return CHDERR_UNSUPPORTED_VERSION;
 	
 		/* make sure the length is expected */
-		if ((header.version == 1 && header.length != CHD_V1_HEADER_SIZE) ||
-			(header.version == 2 && header.length != CHD_V2_HEADER_SIZE) ||
-			(header.version == 3 && header.length != CHD_V3_HEADER_SIZE))
+		if ((header->version == 1 && header->length != CHD_V1_HEADER_SIZE) ||
+			(header->version == 2 && header->length != CHD_V2_HEADER_SIZE) ||
+			(header->version == 3 && header->length != CHD_V3_HEADER_SIZE))
 			return CHDERR_INVALID_DATA;
 	
 		/* extract the common data */
-		header.flags         = get_bigendian_uint32(&rawheader[16]);
-		header.compression   = get_bigendian_uint32(&rawheader[20]);
-		memcpy(header.md5, &rawheader[44], CHD_MD5_BYTES);
-		memcpy(header.parentmd5, &rawheader[60], CHD_MD5_BYTES);
+		header->flags         = get_bigendian_uint32(&rawheader[16]);
+		header->compression   = get_bigendian_uint32(&rawheader[20]);
+		memcpy(header->md5, &rawheader[44], CHD_MD5_BYTES);
+		memcpy(header->parentmd5, &rawheader[60], CHD_MD5_BYTES);
 	
 		/* extract the V1/V2-specific data */
-		if (header.version < 3)
+		if (header->version < 3)
 		{
-			int seclen = (header.version == 1) ? CHD_V1_SECTOR_SIZE : get_bigendian_uint32(&rawheader[76]);
-			header.obsolete_hunksize  = get_bigendian_uint32(&rawheader[24]);
-			header.totalhunks         = get_bigendian_uint32(&rawheader[28]);
-			header.obsolete_cylinders = get_bigendian_uint32(&rawheader[32]);
-			header.obsolete_heads     = get_bigendian_uint32(&rawheader[36]);
-			header.obsolete_sectors   = get_bigendian_uint32(&rawheader[40]);
-			header.logicalbytes = (UINT64)header.obsolete_cylinders * (UINT64)header.obsolete_heads * (UINT64)header.obsolete_sectors * (UINT64)seclen;
-			header.hunkbytes = seclen * header.obsolete_hunksize;
-			header.metaoffset = 0;
+			int seclen = (header->version == 1) ? CHD_V1_SECTOR_SIZE : get_bigendian_uint32(&rawheader[76]);
+			header->obsolete_hunksize  = get_bigendian_uint32(&rawheader[24]);
+			header->totalhunks         = get_bigendian_uint32(&rawheader[28]);
+			header->obsolete_cylinders = get_bigendian_uint32(&rawheader[32]);
+			header->obsolete_heads     = get_bigendian_uint32(&rawheader[36]);
+			header->obsolete_sectors   = get_bigendian_uint32(&rawheader[40]);
+			header->logicalbytes = (UINT64)header->obsolete_cylinders * (UINT64)header->obsolete_heads * (UINT64)header->obsolete_sectors * (UINT64)seclen;
+			header->hunkbytes = seclen * header->obsolete_hunksize;
+			header->metaoffset = 0;
 		}
 		
 		/* extract the V3-specific data */
 		else
 		{
-			header.totalhunks   = get_bigendian_uint32(&rawheader[24]);
-			header.logicalbytes = get_bigendian_uint64(&rawheader[28]);
-			header.metaoffset   = get_bigendian_uint64(&rawheader[36]);
-			header.hunkbytes    = get_bigendian_uint32(&rawheader[76]);
-			memcpy(header.sha1, &rawheader[80], CHD_SHA1_BYTES);
-			memcpy(header.parentsha1, &rawheader[100], CHD_SHA1_BYTES);
+			header->totalhunks   = get_bigendian_uint32(&rawheader[24]);
+			header->logicalbytes = get_bigendian_uint64(&rawheader[28]);
+			header->metaoffset   = get_bigendian_uint64(&rawheader[36]);
+			header->hunkbytes    = get_bigendian_uint32(&rawheader[76]);
+			memcpy(header->sha1, &rawheader[80], CHD_SHA1_BYTES);
+			memcpy(header->parentsha1, &rawheader[100], CHD_SHA1_BYTES);
 		}
 		
 		/* guess it worked */
@@ -1616,11 +1616,11 @@ public class chd
 		UINT32 count;
 	
 		/* punt if NULL */
-		if (header == 0)
+		if (!header)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* punt if invalid file */
-		if (file == 0)
+		if (!file)
 			return CHDERR_INVALID_FILE;
 	
 		/* punt if no interface */
@@ -1628,7 +1628,7 @@ public class chd
 			return CHDERR_NO_INTERFACE;
 		
 		/* only support writing modern headers */
-		if (header.version != 3)
+		if (header->version != 3)
 			return CHDERR_INVALID_PARAMETER;
 	
 		/* assemble the data */
@@ -1636,17 +1636,17 @@ public class chd
 		memcpy(rawheader, "MComprHD", 8);
 	
 		put_bigendian_uint32(&rawheader[8],  CHD_V3_HEADER_SIZE);
-		put_bigendian_uint32(&rawheader[12], header.version);
-		put_bigendian_uint32(&rawheader[16], header.flags);
-		put_bigendian_uint32(&rawheader[20], header.compression);
-		put_bigendian_uint32(&rawheader[24], header.totalhunks);
-		put_bigendian_uint64(&rawheader[28], header.logicalbytes);
-		put_bigendian_uint64(&rawheader[36], header.metaoffset);
-		memcpy(&rawheader[44], header.md5, CHD_MD5_BYTES);
-		memcpy(&rawheader[60], header.parentmd5, CHD_MD5_BYTES);
-		put_bigendian_uint32(&rawheader[76], header.hunkbytes);
-		memcpy(&rawheader[80], header.sha1, CHD_SHA1_BYTES);
-		memcpy(&rawheader[100], header.parentsha1, CHD_SHA1_BYTES);
+		put_bigendian_uint32(&rawheader[12], header->version);
+		put_bigendian_uint32(&rawheader[16], header->flags);
+		put_bigendian_uint32(&rawheader[20], header->compression);
+		put_bigendian_uint32(&rawheader[24], header->totalhunks);
+		put_bigendian_uint64(&rawheader[28], header->logicalbytes);
+		put_bigendian_uint64(&rawheader[36], header->metaoffset);
+		memcpy(&rawheader[44], header->md5, CHD_MD5_BYTES);
+		memcpy(&rawheader[60], header->parentmd5, CHD_MD5_BYTES);
+		put_bigendian_uint32(&rawheader[76], header->hunkbytes);
+		memcpy(&rawheader[80], header->sha1, CHD_SHA1_BYTES);
+		memcpy(&rawheader[100], header->parentsha1, CHD_SHA1_BYTES);
 	
 		/* seek and write */
 		count = multi_write(file, 0, CHD_V3_HEADER_SIZE, rawheader);
@@ -1666,7 +1666,7 @@ public class chd
 	
 	static int read_hunk_map(struct chd_file *chd)
 	{
-		UINT32 entrysize = (chd.header.version < 3) ? OLD_MAP_ENTRY_SIZE : MAP_ENTRY_SIZE;
+		UINT32 entrysize = (chd->header.version < 3) ? OLD_MAP_ENTRY_SIZE : MAP_ENTRY_SIZE;
 		UINT8 raw_map_entries[MAP_STACK_ENTRIES * MAP_ENTRY_SIZE];
 		UINT8 cookie[MAP_ENTRY_SIZE];
 		UINT64 fileoffset;
@@ -1674,21 +1674,21 @@ public class chd
 		int i, err;
 	
 		/* first allocate memory */
-		chd.map = malloc(sizeof(chd.map[0]) * chd.header.totalhunks);
-		if (!chd.map)
+		chd->map = malloc(sizeof(chd->map[0]) * chd->header.totalhunks);
+		if (!chd->map)
 			return CHDERR_OUT_OF_MEMORY;
 	
 		/* read the map entries in in chunks and extract to the map list */
-		fileoffset = chd.header.length;
-		for (i = 0; i < chd.header.totalhunks; i += MAP_STACK_ENTRIES)
+		fileoffset = chd->header.length;
+		for (i = 0; i < chd->header.totalhunks; i += MAP_STACK_ENTRIES)
 		{
 			/* compute how many entries this time */
-			int entries = chd.header.totalhunks - i, j;
+			int entries = chd->header.totalhunks - i, j;
 			if (entries > MAP_STACK_ENTRIES)
 				entries = MAP_STACK_ENTRIES;
 	
 			/* read that many */
-			count = multi_read(chd.file, fileoffset, entries * entrysize, raw_map_entries);
+			count = multi_read(chd->file, fileoffset, entries * entrysize, raw_map_entries);
 			if (count != entries * entrysize)
 			{
 				err = CHDERR_READ_ERROR;
@@ -1700,17 +1700,17 @@ public class chd
 			if (entrysize == MAP_ENTRY_SIZE)
 			{
 				for (j = 0; j < entries; j++)
-					extract_map_entry(&raw_map_entries[j * MAP_ENTRY_SIZE], &chd.map[i + j]);
+					extract_map_entry(&raw_map_entries[j * MAP_ENTRY_SIZE], &chd->map[i + j]);
 			}
 			else
 			{
 				for (j = 0; j < entries; j++)
-					extract_old_map_entry(&raw_map_entries[j * OLD_MAP_ENTRY_SIZE], &chd.map[i + j], chd.header.hunkbytes);
+					extract_old_map_entry(&raw_map_entries[j * OLD_MAP_ENTRY_SIZE], &chd->map[i + j], chd->header.hunkbytes);
 			}
 		}
 	
 		/* verify the cookie */
-		count = multi_read(chd.file, fileoffset, entrysize, &cookie);
+		count = multi_read(chd->file, fileoffset, entrysize, &cookie);
 		if (count != entrysize || memcmp(&cookie, END_OF_LIST_COOKIE, entrysize))
 		{
 			err = CHDERR_INVALID_FILE;
@@ -1719,9 +1719,9 @@ public class chd
 		return CHDERR_NONE;
 	
 	cleanup:
-		if (chd.map)
-			free(chd.map);
-		chd.map = NULL;
+		if (chd->map)
+			free(chd->map);
+		chd->map = NULL;
 		return err;
 	}
 	
@@ -1738,41 +1738,41 @@ public class chd
 		int i;
 	
 		/* if we already have one, bail */
-		if (chd.crcmap)
+		if (chd->crcmap)
 			return;
 		
 		/* reset all pointers */
-		chd.crcmap = NULL;
-		chd.crcfree = NULL;
-		chd.crctable = NULL;
+		chd->crcmap = NULL;
+		chd->crcfree = NULL;
+		chd->crctable = NULL;
 		
 		/* allocate a list; one for each hunk */
-		chd.crcmap = malloc(chd.header.totalhunks * sizeof(chd.crcmap[0]));
-		if (!chd.crcmap)
+		chd->crcmap = malloc(chd->header.totalhunks * sizeof(chd->crcmap[0]));
+		if (!chd->crcmap)
 			return;
 		
 		/* allocate a CRC map table */
-		chd.crctable = malloc(CRCMAP_HASH_SIZE * sizeof(chd.crctable[0]));
-		if (!chd.crctable)
+		chd->crctable = malloc(CRCMAP_HASH_SIZE * sizeof(chd->crctable[0]));
+		if (!chd->crctable)
 		{
-			free(chd.crcmap);
-			chd.crcmap = NULL;
+			free(chd->crcmap);
+			chd->crcmap = NULL;
 			return;
 		}
 		
 		/* initialize the free list */
-		for (i = 0; i < chd.header.totalhunks; i++)
+		for (i = 0; i < chd->header.totalhunks; i++)
 		{
-			chd.crcmap[i].next = chd.crcfree;
-			chd.crcfree = &chd.crcmap[i];
+			chd->crcmap[i].next = chd->crcfree;
+			chd->crcfree = &chd->crcmap[i];
 		}
 		
 		/* initialize the table */
-		memset(chd.crctable, 0, CRCMAP_HASH_SIZE * sizeof(chd.crctable[0]));
+		memset(chd->crctable, 0, CRCMAP_HASH_SIZE * sizeof(chd->crctable[0]));
 		
 		/* if we're to prepopulate, go for it */
-		if (prepopulate != 0)
-			for (i = 0; i < chd.header.totalhunks; i++)
+		if (prepopulate)
+			for (i = 0; i < chd->header.totalhunks; i++)
 				add_to_crcmap(chd, i);
 	}
 	
@@ -1786,17 +1786,17 @@ public class chd
 	
 	static void add_to_crcmap(struct chd_file *chd, UINT32 hunknum)
 	{
-		UINT32 hash = chd.map[hunknum].crc % CRCMAP_HASH_SIZE;
+		UINT32 hash = chd->map[hunknum].crc % CRCMAP_HASH_SIZE;
 		struct crcmap_entry *crcmap;
 		
 		/* pull a free entry off the list */
-		crcmap = chd.crcfree;
-		chd.crcfree = crcmap.next;
+		crcmap = chd->crcfree;
+		chd->crcfree = crcmap->next;
 		
 		/* set up the entry and link it into the hash table */
-		crcmap.hunknum = hunknum;
-		crcmap.next = chd.crctable[hash];
-		chd.crctable[hash] = crcmap;
+		crcmap->hunknum = hunknum;
+		crcmap->next = chd->crctable[hash];
+		chd->crctable[hash] = crcmap;
 	}
 	
 	
@@ -1811,13 +1811,13 @@ public class chd
 	{
 		/* we have a potential match -- better be sure */
 		/* read the hunk from disk and compare byte-for-byte */
-		if (hunknum != chd.comparehunk)
+		if (hunknum != chd->comparehunk)
 		{
-			chd.comparehunk = ~0;
-			if (read_hunk_into_memory(chd, hunknum, chd.compare) == CHDERR_NONE)
-				chd.comparehunk = hunknum;
+			chd->comparehunk = ~0;
+			if (read_hunk_into_memory(chd, hunknum, chd->compare) == CHDERR_NONE)
+				chd->comparehunk = hunknum;
 		}
-		return (hunknum == chd.comparehunk && !memcmp(rawdata, chd.compare, chd.header.hunkbytes));
+		return (hunknum == chd->comparehunk && !memcmp(rawdata, chd->compare, chd->header.hunkbytes));
 	}
 	
 	
@@ -1830,30 +1830,30 @@ public class chd
 	
 	static UINT32 find_matching_hunk(struct chd_file *chd, UINT32 hunknum, UINT32 crc, const UINT8 *rawdata)
 	{
-		UINT32 lasthunk = (hunknum < chd.header.totalhunks) ? hunknum : chd.header.totalhunks;
+		UINT32 lasthunk = (hunknum < chd->header.totalhunks) ? hunknum : chd->header.totalhunks;
 		int curhunk;
 		
 		/* if we have a CRC map, use that */
-		if (chd.crctable)
+		if (chd->crctable)
 		{
 			struct crcmap_entry *curentry;
-			for (curentry = chd.crctable[crc % CRCMAP_HASH_SIZE]; curentry; curentry = curentry.next)
+			for (curentry = chd->crctable[crc % CRCMAP_HASH_SIZE]; curentry; curentry = curentry->next)
 			{
-				curhunk = curentry.hunknum;
-				if (chd.map[curhunk].crc == crc && !(chd.map[curhunk].flags & MAP_ENTRY_FLAG_NO_CRC) && is_really_matching_hunk(chd, curhunk, rawdata))
+				curhunk = curentry->hunknum;
+				if (chd->map[curhunk].crc == crc && !(chd->map[curhunk].flags & MAP_ENTRY_FLAG_NO_CRC) && is_really_matching_hunk(chd, curhunk, rawdata))
 					return curhunk;
 			}
 			return NO_MATCH;
 		}
 		
 		/* first see if the last match is a valid one */
-		if (chd.comparehunk < chd.header.totalhunks && chd.map[chd.comparehunk].crc == crc && !(chd.map[chd.comparehunk].flags & MAP_ENTRY_FLAG_NO_CRC) &&
-			!memcmp(rawdata, chd.compare, chd.header.hunkbytes))
-			return chd.comparehunk;
+		if (chd->comparehunk < chd->header.totalhunks && chd->map[chd->comparehunk].crc == crc && !(chd->map[chd->comparehunk].flags & MAP_ENTRY_FLAG_NO_CRC) &&
+			!memcmp(rawdata, chd->compare, chd->header.hunkbytes))
+			return chd->comparehunk;
 		
 		/* scan through the CHD's hunk map looking for a match */
 		for (curhunk = 0; curhunk < lasthunk; curhunk++)
-			if (chd.map[curhunk].crc == crc && !(chd.map[curhunk].flags & MAP_ENTRY_FLAG_NO_CRC) && is_really_matching_hunk(chd, curhunk, rawdata))
+			if (chd->map[curhunk].crc == crc && !(chd->map[curhunk].flags & MAP_ENTRY_FLAG_NO_CRC) && is_really_matching_hunk(chd, curhunk, rawdata))
 				return curhunk;
 	
 		return NO_MATCH;
@@ -1870,33 +1870,33 @@ public class chd
 	static int find_metadata_entry(struct chd_file *chd, UINT32 metatag, UINT32 metaindex, struct metadata_entry *metaentry)
 	{
 		/* start at the beginning */
-		metaentry.offset = chd.header.metaoffset;
-		metaentry.prev = 0;
+		metaentry->offset = chd->header.metaoffset;
+		metaentry->prev = 0;
 		
 		/* loop until we run out of options */
-		while (metaentry.offset != 0)
+		while (metaentry->offset != 0)
 		{
 			UINT8	raw_meta_header[METADATA_HEADER_SIZE];
 			UINT32	count;
 	
 			/* read the raw header */
-			count = multi_read(chd.file, metaentry.offset, sizeof(raw_meta_header), raw_meta_header);
+			count = multi_read(chd->file, metaentry->offset, sizeof(raw_meta_header), raw_meta_header);
 			if (count != sizeof(raw_meta_header))
 				break;
 			
 			/* extract the data */
-			metaentry.metatag = get_bigendian_uint32(&raw_meta_header[0]);
-			metaentry.length = get_bigendian_uint32(&raw_meta_header[4]);
-			metaentry.next = get_bigendian_uint64(&raw_meta_header[8]);
+			metaentry->metatag = get_bigendian_uint32(&raw_meta_header[0]);
+			metaentry->length = get_bigendian_uint32(&raw_meta_header[4]);
+			metaentry->next = get_bigendian_uint64(&raw_meta_header[8]);
 			
 			/* if we got a match, proceed */
-			if (metatag == CHDMETATAG_WILDCARD || metaentry.metatag == metatag)
+			if (metatag == CHDMETATAG_WILDCARD || metaentry->metatag == metatag)
 				if (metaindex-- == 0)
 					return CHDERR_NONE;
 			
 			/* no match, fetch the next link */
-			metaentry.prev = metaentry.offset;
-			metaentry.offset = metaentry.next;
+			metaentry->prev = metaentry->offset;
+			metaentry->offset = metaentry->next;
 		}
 		
 		/* if we get here, we didn't find it */
@@ -1928,7 +1928,7 @@ public class chd
 		/* reuse a hunk if we can */
 		for (i = 0; i < MAX_ZLIB_ALLOCS; i++)
 		{
-			ptr = data.allocptr[i];
+			ptr = data->allocptr[i];
 			if (ptr && size == *ptr)
 			{
 				/* set the low bit of the size so we don't match next time */
@@ -1939,14 +1939,14 @@ public class chd
 	
 		/* alloc a new one */
 		ptr = malloc(size + sizeof(UINT32));
-		if (ptr == 0)
+		if (!ptr)
 			return NULL;
 	
 		/* put it into the list */
 		for (i = 0; i < MAX_ZLIB_ALLOCS; i++)
-			if (!data.allocptr[i])
+			if (!data->allocptr[i])
 			{
-				data.allocptr[i] = ptr;
+				data->allocptr[i] = ptr;
 				break;
 			}
 	
@@ -1964,7 +1964,7 @@ public class chd
 	
 		/* find the hunk */
 		for (i = 0; i < MAX_ZLIB_ALLOCS; i++)
-			if (ptr == data.allocptr[i])
+			if (ptr == data->allocptr[i])
 			{
 				/* clear the low bit of the size to allow matches */
 				*ptr &= ~1;
@@ -1985,7 +1985,7 @@ public class chd
 		int err = CHDERR_NONE;
 	
 		/* now decompress based on the compression method */
-		switch (chd.header.compression)
+		switch (chd->header.compression)
 		{
 			case CHDCOMPRESSION_NONE:
 				/* nothing to do */
@@ -1997,29 +1997,29 @@ public class chd
 				struct zlib_codec_data *data;
 	
 				/* allocate memory for the 2 stream buffers */
-				chd.codecdata = malloc(sizeof(struct zlib_codec_data));
-				if (!chd.codecdata)
+				chd->codecdata = malloc(sizeof(struct zlib_codec_data));
+				if (!chd->codecdata)
 					return CHDERR_OUT_OF_MEMORY;
 	
 				/* clear the buffers */
-				data = chd.codecdata;
+				data = chd->codecdata;
 				memset(data, 0, sizeof(struct zlib_codec_data));
 	
 				/* init the first for decompression and the second for compression */
-				data.inflater.next_in = chd.compressed;
-				data.inflater.avail_in = 0;
-				data.inflater.zalloc = fast_alloc;
-				data.inflater.zfree = fast_free;
-				data.inflater.opaque = data;
-				err = inflateInit2(&data.inflater, -MAX_WBITS);
+				data->inflater.next_in = chd->compressed;
+				data->inflater.avail_in = 0;
+				data->inflater.zalloc = fast_alloc;
+				data->inflater.zfree = fast_free;
+				data->inflater.opaque = data;
+				err = inflateInit2(&data->inflater, -MAX_WBITS);
 				if (err == Z_OK)
 				{
-					data.deflater.next_in = chd.compressed;
-					data.deflater.avail_in = 0;
-					data.deflater.zalloc = fast_alloc;
-					data.deflater.zfree = fast_free;
-					data.deflater.opaque = data;
-					err = deflateInit2(&data.deflater, Z_BEST_COMPRESSION, Z_DEFLATED, -MAX_WBITS, 8, Z_DEFAULT_STRATEGY);
+					data->deflater.next_in = chd->compressed;
+					data->deflater.avail_in = 0;
+					data->deflater.zalloc = fast_alloc;
+					data->deflater.zfree = fast_free;
+					data->deflater.opaque = data;
+					err = deflateInit2(&data->deflater, Z_BEST_COMPRESSION, Z_DEFLATED, -MAX_WBITS, 8, Z_DEFAULT_STRATEGY);
 				}
 	
 				/* convert errors */
@@ -2032,7 +2032,7 @@ public class chd
 	
 				/* handle an error */
 				if (err != CHDERR_NONE)
-					free(chd.codecdata);
+					free(chd->codecdata);
 				break;
 			}
 		}
@@ -2052,7 +2052,7 @@ public class chd
 	static void free_codec(struct chd_file *chd)
 	{
 		/* now decompress based on the compression method */
-		switch (chd.header.compression)
+		switch (chd->header.compression)
 		{
 			case CHDCOMPRESSION_NONE:
 				/* nothing to do */
@@ -2061,20 +2061,20 @@ public class chd
 			case CHDCOMPRESSION_ZLIB:
 			case CHDCOMPRESSION_ZLIB_PLUS:
 			{
-				struct zlib_codec_data *data = chd.codecdata;
+				struct zlib_codec_data *data = chd->codecdata;
 	
 				/* deinit the streams */
-				if (data != 0)
+				if (data)
 				{
 					int i;
 	
-					inflateEnd(&data.inflater);
-					deflateEnd(&data.deflater);
+					inflateEnd(&data->inflater);
+					deflateEnd(&data->deflater);
 	
 					/* free our fast memory */
 					for (i = 0; i < MAX_ZLIB_ALLOCS; i++)
-						if (data.allocptr[i])
-							free(data.allocptr[i]);
+						if (data->allocptr[i])
+							free(data->allocptr[i]);
 					free(data);
 				}
 				break;

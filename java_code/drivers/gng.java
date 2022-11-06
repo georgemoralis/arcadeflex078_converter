@@ -19,7 +19,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,8 +31,7 @@ public class gng
 	
 	
 	
-	public static WriteHandlerPtr gng_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gng_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
 	
@@ -46,8 +45,7 @@ public class gng
 		}
 	} };
 	
-	public static WriteHandlerPtr gng_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gng_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -108,7 +106,7 @@ public class gng
 	
 	
 	
-	static InputPortPtr input_ports_gng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gng )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -193,7 +191,7 @@ public class gng
 	INPUT_PORTS_END(); }}; 
 	
 	/* identical to gng, but the "unknown" dip switch is Invulnerability */
-	static InputPortPtr input_ports_makaimur = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_makaimur = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( makaimur )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -277,7 +275,7 @@ public class gng
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_diamond = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_diamond = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( diamond )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -419,8 +417,7 @@ public class gng
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gng = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gng )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1500000)			/* 1.5 MHz ? */
@@ -448,9 +445,7 @@ public class gng
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -692,24 +687,22 @@ public class gng
 	
 	
 	
-	public static ReadHandlerPtr diamond_hack_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr diamond_hack_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_diamond  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_diamond  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0,0x6000,0x6000,diamond_hack_r);
 	} };
 	
 	
 	
-	public static GameDriver driver_gng	   = new GameDriver("1985"	,"gng"	,"gng.java"	,rom_gng,null	,machine_driver_gng	,input_ports_gng	,null	,ROT0	,	"Capcom", "Ghosts'n Goblins (World? set 1)" )
-	public static GameDriver driver_gnga	   = new GameDriver("1985"	,"gnga"	,"gng.java"	,rom_gnga,driver_gng	,machine_driver_gng	,input_ports_gng	,null	,ROT0	,	"Capcom", "Ghosts'n Goblins (World? set 2)" )
-	public static GameDriver driver_gngt	   = new GameDriver("1985"	,"gngt"	,"gng.java"	,rom_gngt,driver_gng	,machine_driver_gng	,input_ports_gng	,null	,ROT0	,	"Capcom (Taito America license)", "Ghosts'n Goblins (US)" )
-	public static GameDriver driver_makaimur	   = new GameDriver("1985"	,"makaimur"	,"gng.java"	,rom_makaimur,driver_gng	,machine_driver_gng	,input_ports_makaimur	,null	,ROT0	,	"Capcom", "Makai-Mura (Japan)" )
-	public static GameDriver driver_makaimuc	   = new GameDriver("1985"	,"makaimuc"	,"gng.java"	,rom_makaimuc,driver_gng	,machine_driver_gng	,input_ports_makaimur	,null	,ROT0	,	"Capcom", "Makai-Mura (Japan Revision C)" )
-	public static GameDriver driver_makaimug	   = new GameDriver("1985"	,"makaimug"	,"gng.java"	,rom_makaimug,driver_gng	,machine_driver_gng	,input_ports_makaimur	,null	,ROT0	,	"Capcom", "Makai-Mura (Japan Revision G)" )
-	public static GameDriver driver_diamond	   = new GameDriver("1989"	,"diamond"	,"gng.java"	,rom_diamond,null	,machine_driver_gng	,input_ports_diamond	,init_diamond	,ROT0	,	"KH Video", "Diamond Run" )
+	GAME( 1985, gng,	  0,   gng, gng,	  0,	   ROT0, "Capcom", "Ghosts'n Goblins (World? set 1)" )
+	GAME( 1985, gnga,	  gng, gng, gng,	  0,	   ROT0, "Capcom", "Ghosts'n Goblins (World? set 2)" )
+	GAME( 1985, gngt,	  gng, gng, gng,	  0,	   ROT0, "Capcom (Taito America license)", "Ghosts'n Goblins (US)" )
+	GAME( 1985, makaimur, gng, gng, makaimur, 0,	   ROT0, "Capcom", "Makai-Mura (Japan)" )
+	GAME( 1985, makaimuc, gng, gng, makaimur, 0,	   ROT0, "Capcom", "Makai-Mura (Japan Revision C)" )
+	GAME( 1985, makaimug, gng, gng, makaimur, 0,	   ROT0, "Capcom", "Makai-Mura (Japan Revision G)" )
+	GAME( 1989, diamond,  0,   gng, diamond,  diamond, ROT0, "KH Video", "Diamond Run" )
 	
 }

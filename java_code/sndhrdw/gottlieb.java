@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -9,17 +9,16 @@ public class gottlieb
 	
 	
 	
-	public static WriteHandlerPtr gottlieb_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_sh_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int score_sample=7;
 		static int random_offset=0;
 		data &= 0x3f;
 	
 		if ((data&0x0f) != 0xf) /* interrupt trigered by four low bits (not all 1's) */
 		{
-			if (Machine.samples)
+			if (Machine->samples)
 			{
-				if (!strcmp(Machine.gamedrv.name,"reactor"))	/* reactor */
+				if (!strcmp(Machine->gamedrv->name,"reactor"))	/* reactor */
 				{
 					switch (data ^ 0x3f)
 					{
@@ -91,9 +90,9 @@ public class gottlieb
 	
 	void gottlieb_knocker(void)
 	{
-		if (Machine.samples)
+		if (Machine->samples)
 		{
-			if (!strcmp(Machine.gamedrv.name,"reactor"))	/* reactor */
+			if (!strcmp(Machine->gamedrv->name,"reactor"))	/* reactor */
 			{
 			}
 			else	/* qbert */
@@ -121,8 +120,7 @@ public class gottlieb
 	};
 	
 	
-	public static WriteHandlerPtr gottlieb_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_speech_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int queue[100],pos;
 	
 		data ^= 255;
@@ -157,8 +155,7 @@ public class gottlieb
 		timer_set(TIME_IN_USEC(50),0,gottlieb_nmi_generate);
 	} };
 	
-	public static WriteHandlerPtr gottlieb_speech_clock_DAC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{} };
+	public static WriteHandlerPtr gottlieb_speech_clock_DAC_w = new WriteHandlerPtr() {public void handler(int offset, int data){} };
 	
 	
 	
@@ -169,21 +166,18 @@ public class gottlieb
 	
 	unsigned char *riot_ram;
 	
-	public static ReadHandlerPtr riot_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr riot_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return riot_ram[offset&0x7f];
 	} };
 	
-	public static WriteHandlerPtr riot_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr riot_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		riot_ram[offset&0x7f]=data;
 	} };
 	
 	static unsigned char riot_regs[32];
 	    /* lazy handling of the 6532's I/O, and no handling of timers at all */
 	
-	public static ReadHandlerPtr gottlieb_riot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gottlieb_riot_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    switch (offset&0x1f) {
 		case 0: /* port A */
 			return soundlatch_r(offset) ^ 0xff;	/* invert command */
@@ -196,8 +190,7 @@ public class gottlieb
 	    }
 	} };
 	
-	public static WriteHandlerPtr gottlieb_riot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_riot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    riot_regs[offset&0x1f]=data;
 	} };
 	
@@ -215,8 +208,7 @@ public class gottlieb
 		nmi_timer = timer_alloc(nmi_callback);
 	}
 	
-	public static ReadHandlerPtr stooges_sound_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stooges_sound_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bits 0-3 are probably unused (future expansion) */
 	
 		/* bits 4 & 5 are two dip switches. Unused? */
@@ -228,8 +220,7 @@ public class gottlieb
 		return 0xc0;
 	} };
 	
-	public static WriteHandlerPtr stooges_8910_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stooges_8910_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		psg_latch = data;
 	} };
 	
@@ -239,10 +230,9 @@ public class gottlieb
 		cpu_set_irq_line(cpu_gettotalcpu()-1, IRQ_LINE_NMI, PULSE_LINE);
 	}
 	
-	public static WriteHandlerPtr common_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr common_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bit 0 enables and starts NMI timer */
-		if ((data & 0x01) != 0)
+		if (data & 0x01)
 		{
 			/* base clock is 250kHz divided by 256 */
 			double interval = TIME_IN_HZ(250000.0/256/(256-nmi_rate));
@@ -254,8 +244,7 @@ public class gottlieb
 		/* Bit 1 controls a LED on the sound board. I'm not emulating it */
 	} };
 	
-	public static WriteHandlerPtr stooges_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stooges_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 		common_sound_control_w(offset, data);
@@ -264,10 +253,10 @@ public class gottlieb
 		if ((last & 0x04) == 0x04 && (data & 0x04) == 0x00)
 		{
 			/* bit 3 selects which of the two 8913 to enable */
-			if ((data & 0x08) != 0)
+			if (data & 0x08)
 			{
 				/* bit 4 goes to the 8913 BC1 pin */
-				if ((data & 0x10) != 0)
+				if (data & 0x10)
 					AY8910_control_port_0_w.handler(0,psg_latch);
 				else
 					AY8910_write_port_0_w.handler(0,psg_latch);
@@ -275,7 +264,7 @@ public class gottlieb
 			else
 			{
 				/* bit 4 goes to the 8913 BC1 pin */
-				if ((data & 0x10) != 0)
+				if (data & 0x10)
 					AY8910_control_port_1_w.handler(0,psg_latch);
 				else
 					AY8910_write_port_1_w.handler(0,psg_latch);
@@ -294,33 +283,28 @@ public class gottlieb
 		last = data & 0x44;
 	} };
 	
-	public static WriteHandlerPtr exterm_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exterm_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		common_sound_control_w(offset, data);
 	
 		/* Bit 7 selects YM2151 register or data port */
 		ym2151_port = data & 0x80;
 	} };
 	
-	public static WriteHandlerPtr gottlieb_nmi_rate_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_nmi_rate_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_rate = data;
 	} };
 	
-	public static WriteHandlerPtr gottlieb_cause_dac_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gottlieb_cause_dac_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(cpu_gettotalcpu()-2, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static ReadHandlerPtr gottlieb_cause_dac_nmi_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gottlieb_cause_dac_nmi_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    gottlieb_cause_dac_nmi_w(offset, 0);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr exterm_ym2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (ym2151_port != 0)
+	public static WriteHandlerPtr exterm_ym2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (ym2151_port)
 		{
 			YM2151_data_port_0_w(offset, data);
 		}
@@ -333,14 +317,12 @@ public class gottlieb
 	static UINT8 exterm_dac_volume;
 	static UINT8 exterm_dac_data;
 	
-	public static WriteHandlerPtr exterm_dac_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exterm_dac_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exterm_dac_volume = data ^ 0xff;
 		DAC_data_16_w(0, exterm_dac_volume * exterm_dac_data);
 	} };
 	
-	public static WriteHandlerPtr exterm_dac_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr exterm_dac_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		exterm_dac_data = data;
 		DAC_data_16_w(0, exterm_dac_volume * exterm_dac_data);
 	} };
@@ -348,7 +330,7 @@ public class gottlieb
 	
 	WRITE16_HANDLER( gottlieb_sh_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			gottlieb_sh_w(offset, data);
 	}
 	

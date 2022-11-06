@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_dribling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dribling  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		const UINT8 *prom = memory_region(REGION_PROMS) + 0x400;
 		int i;
 	
@@ -48,8 +47,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr dribling_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dribling_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* it is very important that we mask off the two bits here */
 		colorram.write(offset & 0x1f9f,data);
 	} };
@@ -62,8 +60,7 @@ public class dribling
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_dribling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dribling  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 *prombase = memory_region(REGION_PROMS);
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
 		int x, y;

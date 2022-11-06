@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -136,7 +136,7 @@ public class inufuku
 				for (y = 0; y <= ysize; y++) {
 					int sx, sy;
 	
-					if (flipy != 0)
+					if (flipy)
 						sy = (oy + zoomy * (ysize - y) / 2 + 16) & 0x1ff;
 					else
 						sy = (oy + zoomy * y / 2 + 16) & 0x1ff;
@@ -144,14 +144,14 @@ public class inufuku
 					for (x = 0; x <= xsize; x++) {
 						int code;
 	
-						if (flipx != 0)
+						if (flipx)
 							sx = (ox + zoomx * (xsize - x) / 2 + 16) & 0x1ff;
 						else
 							sx = (ox + zoomx * x / 2 + 16) & 0x1ff;
 	
 						code  = ((inufuku_spriteram2[map_start] & 0x0007) << 16) + inufuku_spriteram2[map_start + 1];
 	
-						pdrawgfxzoom(bitmap, Machine.gfx[2],
+						pdrawgfxzoom(bitmap, Machine->gfx[2],
 								code,
 								color,
 								flipx, flipy,
@@ -187,7 +187,7 @@ public class inufuku
 	{
 		SET_TILE_INFO(
 				1,
-				inufuku_text_videoram.read(tile_index),
+				inufuku_text_videoram[tile_index],
 				inufuku_text_palettebank,
 				0)
 	}
@@ -207,14 +207,14 @@ public class inufuku
 	
 	READ16_HANDLER( inufuku_text_videoram_r )
 	{
-		return inufuku_text_videoram.read(offset);
+		return inufuku_text_videoram[offset];
 	}
 	
 	WRITE16_HANDLER( inufuku_text_videoram_w )
 	{
-		int oldword = inufuku_text_videoram.read(offset);
-		COMBINE_DATA(&inufuku_text_videoram.read(offset));
-		if (oldword != inufuku_text_videoram.read(offset))
+		int oldword = inufuku_text_videoram[offset];
+		COMBINE_DATA(&inufuku_text_videoram[offset]);
+		if (oldword != inufuku_text_videoram[offset])
 			tilemap_mark_tile_dirty(inufuku_text_tilemap, offset);
 	}
 	
@@ -225,8 +225,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_inufuku  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_inufuku  = new VideoStartHandlerPtr() { public int handler(){
 		inufuku_bg_tilemap = tilemap_create(get_inufuku_bg_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 		inufuku_text_tilemap = tilemap_create(get_inufuku_text_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 64);
 	
@@ -245,14 +244,13 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_inufuku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_inufuku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		fillbitmap(priority_bitmap, 0, NULL);
 	
-		if (inufuku_bg_raster != 0) {
+		if (inufuku_bg_raster) {
 			tilemap_set_scroll_rows(inufuku_bg_tilemap, 512);
 			for (i = 0; i < 256; i++) tilemap_set_scrollx(inufuku_bg_tilemap, (inufuku_bg_scrolly + i) & 0x1ff, inufuku_bg_rasterram[i]);
 		}

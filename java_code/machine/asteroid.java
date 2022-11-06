@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -17,30 +17,26 @@ public class asteroid
 {
 	
 	
-	public static InterruptHandlerPtr asteroid_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr asteroid_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Turn off interrupts if self-test is enabled */
 		if (!(readinputport(0) & 0x80))
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static InterruptHandlerPtr asterock_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr asterock_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Turn off interrupts if self-test is enabled */
 		if ((readinputport(0) & 0x80))
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static InterruptHandlerPtr llander_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr llander_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Turn off interrupts if self-test is enabled */
 		if (readinputport(0) & 0x02)
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
 	
-	public static ReadHandlerPtr asteroid_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr asteroid_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 		int res;
 		int bitmask;
@@ -51,10 +47,10 @@ public class asteroid
 	
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x02;
-		if (avgdvg_done() == 0)
+		if (!avgdvg_done())
 			res |= 0x04;
 	
-		if ((res & bitmask) != 0)
+		if (res & bitmask)
 			res = 0x80;
 		else
 			res = ~0x80;
@@ -63,22 +59,20 @@ public class asteroid
 	} };
 	
 	
-	public static ReadHandlerPtr asteroib_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr asteroib_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res=readinputport(0);
 	
 	//	if (activecpu_gettotalcycles() & 0x100)
 	//		res |= 0x02;
-		if (avgdvg_done() == 0)
+		if (!avgdvg_done())
 			res |= 0x80;
 	
 		return res;
 	} };
 	
-	public static ReadHandlerPtr asterock_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr asterock_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		int bitmask;
 	
@@ -88,10 +82,10 @@ public class asteroid
 	
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x04;
-		if (avgdvg_done() == 0)
+		if (!avgdvg_done())
 			res |= 0x01;
 	
-		if ((res & bitmask) != 0)
+		if (res & bitmask)
 			res = ~0x80;
 		else
 			res = 0x80;
@@ -104,15 +98,14 @@ public class asteroid
 	 * Typically, only the high bit is used. This is handled by one input port.
 	 */
 	
-	public static ReadHandlerPtr asteroid_IN1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr asteroid_IN1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		int bitmask;
 	
 		res=readinputport(1);
 		bitmask = (1 << offset);
 	
-		if ((res & bitmask) != 0)
+		if (res & bitmask)
 			res = 0x80;
 		else
 		 	res = ~0x80;
@@ -120,8 +113,7 @@ public class asteroid
 	} };
 	
 	
-	public static ReadHandlerPtr asteroid_DSW1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr asteroid_DSW1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		int res1;
 	
@@ -132,8 +124,7 @@ public class asteroid
 	} };
 	
 	
-	public static WriteHandlerPtr asteroid_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr asteroid_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int asteroid_bank = 0;
 		int asteroid_newbank;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -157,8 +148,7 @@ public class asteroid
 	} };
 	
 	
-	public static WriteHandlerPtr astdelux_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astdelux_bank_switch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int astdelux_bank = 0;
 		int astdelux_newbank;
 		unsigned char *RAM = memory_region(REGION_CPU1);
@@ -180,14 +170,12 @@ public class asteroid
 	} };
 	
 	
-	public static WriteHandlerPtr astdelux_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astdelux_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,(data&0x80)?0:1);
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_asteroid  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_asteroid  = new MachineInitHandlerPtr() { public void handler(){
 		asteroid_bank_switch_w (0,0);
 	} };
 	
@@ -195,13 +183,12 @@ public class asteroid
 	/*
 	 * This is Lunar Lander's Inputport 0.
 	 */
-	public static ReadHandlerPtr llander_IN0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr llander_IN0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = readinputport(0);
 	
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			res |= 0x01;
 		if (activecpu_gettotalcycles() & 0x100)
 			res |= 0x40;

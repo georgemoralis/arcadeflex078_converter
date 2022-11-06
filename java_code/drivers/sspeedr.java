@@ -6,7 +6,7 @@ Taito Super Speed Race driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,8 +21,7 @@ public class sspeedr
 	static UINT8 led_SCORE[24];
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_sspeedr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sspeedr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 16; i++)
@@ -31,7 +30,7 @@ public class sspeedr
 			int g = (i & 2) ? 0xb0 : 0x20;
 			int b = (i & 4) ? 0xb0 : 0x20;
 	
-			if ((i & 8) != 0)
+			if (i & 8)
 			{
 				r += 0x4f;
 				g += 0x4f;
@@ -43,22 +42,19 @@ public class sspeedr
 	} };
 	
 	
-	public static ReadHandlerPtr sspeedr_steering_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sspeedr_steering_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(0);
 	
 		return 0x3f ^ (val >> 2) ^ (val >> 3);
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_int_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_int_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_lamp_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		artwork_show("lampGO",
 			data & 1);
 		artwork_show("lampEP",
@@ -68,8 +64,7 @@ public class sspeedr
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_time_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_time_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 prev = led_TIME[offset];
 	
 		char buf_old[8];
@@ -87,8 +82,7 @@ public class sspeedr
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_score_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_score_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 prev = led_SCORE[offset];
 	
 		char buf_old[8];
@@ -106,8 +100,7 @@ public class sspeedr
 	} };
 	
 	
-	public static WriteHandlerPtr sspeedr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sspeedr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* not implemented */
 	} };
 	
@@ -162,7 +155,7 @@ public class sspeedr
 	};
 	
 	
-	static InputPortPtr input_ports_sspeedr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sspeedr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sspeedr )
 	
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x80, IPT_DIAL, 25, 10, 0x00, 0xff );
@@ -226,8 +219,7 @@ public class sspeedr
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_sspeedr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sspeedr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 19968000 / 8)
@@ -251,9 +243,7 @@ public class sspeedr
 		MDRV_VIDEO_EOF(sspeedr)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_sspeedr = new RomLoadPtr(){ public void handler(){ 
@@ -272,5 +262,5 @@ public class sspeedr
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_sspeedr	   = new GameDriver("1979"	,"sspeedr"	,"sspeedr.java"	,rom_sspeedr,null	,machine_driver_sspeedr	,input_ports_sspeedr	,null	,ROT270	,	"Midway", "Super Speed Race", GAME_NO_SOUND )
+	GAMEX( 1979, sspeedr, 0, sspeedr, sspeedr, 0, ROT270, "Midway", "Super Speed Race", GAME_NO_SOUND )
 }

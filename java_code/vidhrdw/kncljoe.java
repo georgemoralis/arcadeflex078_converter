@@ -6,7 +6,7 @@ Knuckle Joe - (c) 1985 Taito Corporation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,8 +25,7 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_kncljoe  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_kncljoe  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -119,11 +118,10 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_kncljoe  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kncljoe  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap,4);
@@ -141,8 +139,7 @@ public class kncljoe
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr kncljoe_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kncljoe_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -150,8 +147,7 @@ public class kncljoe
 		}
 	} };
 	
-	public static WriteHandlerPtr kncljoe_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kncljoe_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 		switch(offset)
@@ -196,8 +192,7 @@ public class kncljoe
 		}
 	} };
 	
-	public static WriteHandlerPtr kncljoe_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kncljoe_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int scrollx;
 	
 		kncljoe_scrollregs[offset] = data;
@@ -219,19 +214,19 @@ public class kncljoe
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		struct rectangle clip = *cliprect;
-		const struct GfxElement *gfx = Machine.gfx[1 + sprite_bank];
+		const struct GfxElement *gfx = Machine->gfx[1 + sprite_bank];
 		int i, j, pribase[4]={0x0180, 0x0080, 0x0100, 0x0000};
 	
 		/* score covers sprites */
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
-			if (clip.max_y > Machine.visible_area.max_y - 64)
-				clip.max_y = Machine.visible_area.max_y - 64;
+			if (clip.max_y > Machine->visible_area.max_y - 64)
+				clip.max_y = Machine->visible_area.max_y - 64;
 		}
 		else
 		{
-			if (clip.min_y < Machine.visible_area.min_y + 64)
-				clip.min_y = Machine.visible_area.min_y + 64;
+			if (clip.min_y < Machine->visible_area.min_y + 64)
+				clip.min_y = Machine->visible_area.min_y + 64;
 		}
 	
 		for (i=0; i<4; i++)
@@ -246,10 +241,10 @@ public class kncljoe
 			int flipy = !(attr & 0x80);
 			int color = attr & 0x0f;
 	
-			if ((attr & 0x10) != 0) code += 512;
-			if ((attr & 0x20) != 0) code += 256;
+			if (attr & 0x10) code += 512;
+			if (attr & 0x20) code += 256;
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -268,8 +263,7 @@ public class kncljoe
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kncljoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kncljoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 	} };

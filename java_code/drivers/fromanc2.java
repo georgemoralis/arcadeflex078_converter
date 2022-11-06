@@ -23,7 +23,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -83,24 +83,20 @@ public class fromanc2
 	// 	MACHINE INITIALYZE
 	// ----------------------------------------------------------------------------
 	
-	public static MachineInitHandlerPtr machine_init_fromanc2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fromanc2  = new MachineInitHandlerPtr() { public void handler(){
 		//
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_fromancr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fromancr  = new MachineInitHandlerPtr() { public void handler(){
 		//
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_fromanc4  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fromanc4  = new MachineInitHandlerPtr() { public void handler(){
 		//
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_fromanc2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fromanc2  = new DriverInitHandlerPtr() { public void handler(){
 		fromanc2_subcpu_nmi_flag = 1;
 		fromanc2_subcpu_int_flag = 1;
 		fromanc2_sndcpu_nmi_flag = 1;
@@ -108,8 +104,7 @@ public class fromanc2
 		fromanc2_playerside = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_fromancr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fromancr  = new DriverInitHandlerPtr() { public void handler(){
 		fromanc2_subcpu_nmi_flag = 1;
 		fromanc2_subcpu_int_flag = 1;
 		fromanc2_sndcpu_nmi_flag = 1;
@@ -117,8 +112,7 @@ public class fromanc2
 		fromanc2_playerside = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_fromanc4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fromanc4  = new DriverInitHandlerPtr() { public void handler(){
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		fromanc2_playerside = 0;
@@ -129,8 +123,7 @@ public class fromanc2
 	// 	MAIN CPU Interrupt (fromanc2, fromancr, fromanc4)	TEST ROUTINE
 	// ----------------------------------------------------------------------------
 	
-	public static InterruptHandlerPtr fromanc2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fromanc2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int fromanc2_playerside_old = -1;
 		static int key_F1_old = 0;
 	
@@ -146,7 +139,7 @@ public class fromanc2
 	
 			usrintf_showmessage("PLAYER-%01X SIDE", fromanc2_playerside + 1);
 	
-			if (fromanc2_playerside == 0) {
+			if (!fromanc2_playerside) {
 				mixer_set_stereo_volume(3, 75, 75);	// 1P (LEFT)
 				mixer_set_stereo_volume(4,  0,  0);	// 2P (RIGHT)
 			}
@@ -198,7 +191,7 @@ public class fromanc2
 						break;
 		}
 	
-		if (fromanc2_playerside != 0) ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
+		if (fromanc2_playerside) ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
 	
 		return ret;
 	}
@@ -229,7 +222,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromanc2_eeprom_w )
 	{
-		if (ACCESSING_MSB != 0) {
+		if (ACCESSING_MSB) {
 			// latch the bit
 			EEPROM_write_bit(data & 0x0100);
 	
@@ -243,7 +236,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromancr_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 			fromancr_gfxbank_w(data & 0xfff8);
 	
 			// latch the bit
@@ -259,7 +252,7 @@ public class fromanc2
 	
 	static WRITE16_HANDLER( fromanc4_eeprom_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 			// latch the bit
 			EEPROM_write_bit(data & 0x0004);
 	
@@ -291,42 +284,35 @@ public class fromanc2
 		return (fromanc2_datalatch_2h << 8) | fromanc2_datalatch_2l;
 	}
 	
-	public static ReadHandlerPtr fromanc2_maincpu_r_l  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromanc2_maincpu_r_l  = new ReadHandlerPtr() { public int handler(int offset){
 		return fromanc2_datalatch1 & 0x00ff;
 	} };
 	
-	public static ReadHandlerPtr fromanc2_maincpu_r_h  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromanc2_maincpu_r_h  = new ReadHandlerPtr() { public int handler(int offset){
 		fromanc2_subcpu_int_flag = 1;
 	
 		return (fromanc2_datalatch1 & 0xff00) >> 8;
 	} };
 	
-	public static WriteHandlerPtr fromanc2_maincpu_w_l = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromanc2_maincpu_w_l = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromanc2_datalatch_2l = data;
 	} };
 	
-	public static WriteHandlerPtr fromanc2_maincpu_w_h = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromanc2_maincpu_w_h = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromanc2_datalatch_2h = data;
 	} };
 	
-	public static WriteHandlerPtr fromanc2_subcpu_nmi_clr = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromanc2_subcpu_nmi_clr = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromanc2_subcpu_nmi_flag = 1;
 	} };
 	
-	public static ReadHandlerPtr fromanc2_sndcpu_nmi_clr  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromanc2_sndcpu_nmi_clr  = new ReadHandlerPtr() { public int handler(int offset){
 		fromanc2_sndcpu_nmi_flag = 1;
 	
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr fromanc2_subcpu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromanc2_subcpu_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU3);
 		int rombank = data & 0x03;
 		int rambank = (data & 0x0c) >> 2;
@@ -635,7 +621,7 @@ public class fromanc2
 		PORT_BIT ( 0x4000, IP_ACTIVE_LOW, IPT_UNKNOWN );\
 		PORT_BIT ( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-	static InputPortPtr input_ports_fromanc2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fromanc2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fromanc2 )
 		PORT_START(); 	/* (0) COIN SW, TEST SW, EEPROM DATA, etc */
 		PORT_BIT ( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );	// COIN1 (1P)
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );	// COIN2 (1P)
@@ -660,7 +646,7 @@ public class fromanc2
 		VSYSMJCTRL_PORT4	/* (4) PORT 1-3 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fromanc4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fromanc4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fromanc4 )
 		PORT_START(); 	/* (0) COIN SW, TEST SW, EEPROM DATA, etc */
 		PORT_BITX( 0x0001, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )	// TEST (1P)
 		PORT_BIT ( 0x0002, IP_ACTIVE_LOW, IPT_COIN1 );	// COIN1 (1P)
@@ -759,8 +745,7 @@ public class fromanc2
 	//
 	// ----------------------------------------------------------------------------
 	
-	public static MachineHandlerPtr machine_driver_fromanc2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fromanc2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -794,12 +779,9 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fromancr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fromancr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -833,12 +815,9 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fromanc4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fromanc4 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,32000000/2)		/* 16.00 MHz */
@@ -868,9 +847,7 @@ public class fromanc2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	// ----------------------------------------------------------------------------
@@ -978,7 +955,7 @@ public class fromanc2
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_fromanc2	   = new GameDriver("1995"	,"fromanc2"	,"fromanc2.java"	,rom_fromanc2,null	,machine_driver_fromanc2	,input_ports_fromanc2	,init_fromanc2	,ROT0	,	"Video System Co.", "Taisen Idol-Mahjong Final Romance 2 (Japan)" )
-	public static GameDriver driver_fromancr	   = new GameDriver("1995"	,"fromancr"	,"fromanc2.java"	,rom_fromancr,null	,machine_driver_fromancr	,input_ports_fromanc2	,init_fromancr	,ROT0	,	"Video System Co.", "Taisen Mahjong FinalRomance R (Japan)" )
-	public static GameDriver driver_fromanc4	   = new GameDriver("1998"	,"fromanc4"	,"fromanc2.java"	,rom_fromanc4,null	,machine_driver_fromanc4	,input_ports_fromanc4	,init_fromanc4	,ROT0	,	"Video System Co.", "Taisen Mahjong FinalRomance 4 (Japan)" )
+	GAME( 1995, fromanc2, 0, fromanc2, fromanc2, fromanc2, ROT0, "Video System Co.", "Taisen Idol-Mahjong Final Romance 2 (Japan)" )
+	GAME( 1995, fromancr, 0, fromancr, fromanc2, fromancr, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance R (Japan)" )
+	GAME( 1998, fromanc4, 0, fromanc4, fromanc4, fromanc4, ROT0, "Video System Co.", "Taisen Mahjong FinalRomance 4 (Japan)" )
 }

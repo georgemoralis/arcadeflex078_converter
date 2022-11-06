@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -76,14 +76,13 @@ public class lazercmd
 				if (x+xbit < 0 || x+xbit >= HORZ_RES * HORZ_CHR)
 					continue;
 	
-				plot_pixel(bitmap, x+xbit, y+ybit, Machine.pens[2]);
+				plot_pixel(bitmap, x+xbit, y+ybit, Machine->pens[2]);
 			}
 		}
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_lazercmd  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lazercmd  = new VideoStartHandlerPtr() { public int handler(){
 		if( video_start_generic.handler() )
 			return 1;
 	
@@ -94,8 +93,7 @@ public class lazercmd
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_lazercmd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lazercmd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i,x,y;
 	
 		if (video_inverted != (input_port_2_r(0) & 0x20))
@@ -104,7 +102,7 @@ public class lazercmd
 			memset(dirtybuffer, 1, videoram_size[0]);
 		}
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 	        memset(dirtybuffer, 1, videoram_size[0]);
 	
 		/* The first row of characters are invisible */

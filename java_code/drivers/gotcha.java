@@ -19,7 +19,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -58,7 +58,7 @@ public class gotcha
 	
 	static WRITE16_HANDLER( gotcha_oki_bank_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			OKIM6295_set_bank_base(0,(((~data & 0x0100) >> 8) * 0x40000));
 		}
@@ -114,7 +114,7 @@ public class gotcha
 	
 	
 	
-	static InputPortPtr input_ports_gotcha = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gotcha = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gotcha )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -250,8 +250,7 @@ public class gotcha
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gotcha = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gotcha )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,12000000)	/* 12 MHz ? */
@@ -279,9 +278,7 @@ public class gotcha
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -329,5 +326,5 @@ public class gotcha
 	
 	
 	
-	public static GameDriver driver_gotcha	   = new GameDriver("1997"	,"gotcha"	,"gotcha.java"	,rom_gotcha,null	,machine_driver_gotcha	,input_ports_gotcha	,null	,ROT0	,	"Dongsung", "Got-cha" )
+	GAME( 1997, gotcha, 0, gotcha, gotcha, 0, ROT0, "Dongsung", "Got-cha" )
 }

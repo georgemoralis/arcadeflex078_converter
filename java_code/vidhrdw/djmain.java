@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -23,7 +23,7 @@ public class djmain
 		int offs, pri_code;
 		int sortedlist[NUM_SPRITES];
 	
-		Machine.gfx[0].colortable = Machine.remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
+		Machine->gfx[0]->colortable = Machine->remapped_colortable[K055555_read_register(K55_PALBASE_SUB2) * 0x400];
 	
 		for (offs = 0; offs < NUM_SPRITES; offs++)
 			sortedlist[offs] = -1;
@@ -83,12 +83,12 @@ public class djmain
 				{
 					int c = code;
 	
-					if (flipx != 0)
+					if (flipx)
 						c += xoffset[size - x - 1];
 					else
 						c += xoffset[x];
 	
-					if (flipy != 0)
+					if (flipy)
 						c += yoffset[size - y - 1];
 					else
 						c += yoffset[y];
@@ -101,7 +101,7 @@ public class djmain
 						int zh = oy + (((y + 1) * yscale + (1 << 11)) >> 12) - sy;
 	
 						drawgfxzoom(bitmap,
-						            Machine.gfx[0],
+						            Machine->gfx[0],
 						            c,
 						            color,
 						            flipx,
@@ -120,7 +120,7 @@ public class djmain
 						int sy = oy + (y << 4);
 	
 						drawgfx(bitmap,
-						        Machine.gfx[0],
+						        Machine->gfx[0],
 						        c,
 						        color,
 						        flipx,
@@ -140,8 +140,7 @@ public class djmain
 	{
 	}
 	
-	public static VideoStartHandlerPtr video_start_djmain  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_djmain  = new VideoStartHandlerPtr() { public int handler(){
 		static int scrolld[NUM_LAYERS][4][2] = {
 		 	{{ 0, 0}, {0, 0}, {0, 0}, {0, 0}},
 		 	{{ 0, 0}, {0, 0}, {0, 0}, {0, 0}}
@@ -159,8 +158,7 @@ public class djmain
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_djmain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_djmain  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int enables = K055555_read_register(K55_INPUT_ENABLES);
 		int pri[NUM_LAYERS + 1];
 		int order[NUM_LAYERS + 1];
@@ -191,7 +189,7 @@ public class djmain
 	
 			if (layer == NUM_LAYERS)
 			{
-				if ((enables & K55_INP_SUB2) != 0)
+				if (enables & K55_INP_SUB2)
 					djmain_draw_sprites(bitmap, cliprect);
 			}
 			else

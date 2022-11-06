@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,13 +17,12 @@ public class snowbros
 	
 	WRITE16_HANDLER( snowbros_flipscreen_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			flip_screen_set(~data & 0x8000);
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_snowbros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_snowbros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int sx=0, sy=0, x=0, y=0, offs;
 	
 	
@@ -63,9 +62,9 @@ public class snowbros
 			int flipy =  (attr & 0x40) << 1;
 			int tile  = ((attr & 0x3f) << 8) + (spriteram16[offs+6] & 0xff);
 	
-			if ((tilecolour & 1) != 0) dx = -1 - (dx ^ 0xff);
-			if ((tilecolour & 2) != 0) dy = -1 - (dy ^ 0xff);
-			if ((tilecolour & 4) != 0)
+			if (tilecolour & 1) dx = -1 - (dx ^ 0xff);
+			if (tilecolour & 2) dy = -1 - (dy ^ 0xff);
+			if (tilecolour & 4)
 			{
 				x += dx;
 				y += dy;
@@ -79,7 +78,7 @@ public class snowbros
 			if (x > 511) x &= 0x1ff;
 			if (y > 511) y &= 0x1ff;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - x;
 				sy = 240 - y;
@@ -101,8 +100,7 @@ public class snowbros
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wintbob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wintbob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		fillbitmap(bitmap,get_black_pen(),Machine.visible_area);
@@ -122,7 +120,7 @@ public class snowbros
 	
 			if (wrapr == 8) xpos -= 256;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				xpos = 240 - xpos;
 				ypos = 240 - ypos;

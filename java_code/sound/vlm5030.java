@@ -75,7 +75,7 @@ chirp 12-..: vokume   0   : silent
 */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -247,13 +247,13 @@ public class vlm5030
 	
 		/* command byte check */
 		cmd = VLM5030_rom[VLM5030_address&VLM5030_address_mask];
-		if ((cmd & 0x01) != 0)
+		if( cmd & 0x01 )
 		{	/* extend frame */
 			new_energy = new_pitch = 0;
 			for(i=0;i<=9;i++)
 				new_k[i] = 0;
 			VLM5030_address++;
-			if ((cmd & 0x02) != 0)
+			if( cmd & 0x02 )
 			{	/* end of speech */
 	
 				/* logerror("VLM5030 %04X end \n",VLM5030_address ); */
@@ -322,7 +322,7 @@ public class vlm5030
 						if ( interp_count == 0 )
 						{	/* end mark found */
 							interp_count = FR_SIZE;
-							sample_count = VLM5030_frame_size; /* end . stop time */
+							sample_count = VLM5030_frame_size; /* end -> stop time */
 							VLM5030_phase = PH_STOP;
 						}
 						/* Set old target as new start of frame */
@@ -353,7 +353,7 @@ public class vlm5030
 					/* next interpolator */
 					/* Update values based on step values 25% , 50% , 75% , 100% */
 					interp_count -= interp_step;
-					/* 3,2,1,0 . 1,2,3,4 */
+					/* 3,2,1,0 -> 1,2,3,4 */
 					interp_effect = FR_SIZE - (interp_count%FR_SIZE);
 					current_energy = old_energy + (target_energy - old_energy) * interp_effect / FR_SIZE;
 					if (old_pitch > 1)
@@ -456,9 +456,9 @@ public class vlm5030
 		VLM5030_parameter = param;
 	
 		/* bit 0,1 : 4800bps / 9600bps , interporator step */
-		if ((param & 2) != 0) /* bit 1 = 1 , 9600bps */
+		if(param&2) /* bit 1 = 1 , 9600bps */
 			interp_step = 4; /* 9600bps : no interporator */
-		else if ((param & 1) != 0) /* bit1 = 0 & bit0 = 1 , 4800bps */
+		else if(param&1) /* bit1 = 0 & bit0 = 1 , 4800bps */
 			interp_step = 2; /* 4800bps : 2 interporator */
 		else	/* bit1 = bit0 = 0 : 2400bps */
 			interp_step = 1; /* 2400bps : 4 interporator */
@@ -467,9 +467,9 @@ public class vlm5030
 		VLM5030_frame_size = VLM5030_speed_table[(param>>3) &7];
 	
 		/* bit 6,7 : low / high pitch */
-		if ((param & 0x80) != 0)	/* bit7=1 , high pitch */
+		if(param&0x80)	/* bit7=1 , high pitch */
 			pitch_offset = -8;
-		else if ((param & 0x40) != 0)	/* bit6=1 , low pitch */
+		else if(param&0x40)	/* bit6=1 , low pitch */
 			pitch_offset = 8;
 		else
 			pitch_offset = 0;
@@ -528,28 +528,27 @@ public class vlm5030
 	}
 	
 	/* latch contoll data */
-	public static WriteHandlerPtr VLM5030_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr VLM5030_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		latch_data = (UINT8)data;
 	} };
 	
 	/* set RST pin level : reset / set table address A8-A15 */
 	void VLM5030_RST (int pin )
 	{
-		if (pin_RST != 0)
+		if( pin_RST )
 		{
-			if (pin == 0)
-			{	/* H . L : latch parameters */
+			if( !pin )
+			{	/* H -> L : latch parameters */
 				pin_RST = 0;
 				VLM5030_setup_parameter(latch_data);
 			}
 		}
 		else
 		{
-			if (pin != 0)
-			{	/* L . H : reset chip */
+			if( pin )
+			{	/* L -> H : reset chip */
 				pin_RST = 1;
-				if (pin_BSY != 0)
+				if( pin_BSY )
 				{
 					VLM5030_reset();
 				}
@@ -573,24 +572,24 @@ public class vlm5030
 		if( pin_ST != pin )
 		{
 			/* pin level is change */
-			if (pin == 0)
-			{	/* H . L */
+			if( !pin )
+			{	/* H -> L */
 				pin_ST = 0;
 	
-				if (pin_VCU != 0)
+				if( pin_VCU )
 				{	/* direct access mode & address High */
 					vcu_addr_h = ((int)latch_data<<8) + 0x01;
 				}
 				else
 				{
 					/* start speech */
-					if (Machine.sample_rate == 0)
+					if (Machine->sample_rate == 0)
 					{
 						pin_BSY = 0;
 						return;
 					}
 					/* check access mode */
-					if (vcu_addr_h != 0)
+					if( vcu_addr_h )
 					{	/* direct access mode */
 						VLM5030_address = (vcu_addr_h&0xff00) + latch_data;
 						vcu_addr_h = 0;
@@ -617,7 +616,7 @@ public class vlm5030
 				}
 			}
 			else
-			{	/* L . H */
+			{	/* L -> H */
 				pin_ST = 1;
 				/* setup speech , BSY on after 30ms? */
 				VLM5030_phase = PH_SETUP;
@@ -628,14 +627,14 @@ public class vlm5030
 	}
 	
 	/* start VLM5030 with sound rom              */
-	/* speech_rom == 0 . use sampling data mode */
+	/* speech_rom == 0 -> use sampling data mode */
 	int VLM5030_sh_start(const struct MachineSound *msound)
 	{
 		int emulation_rate;
 	
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
-		emulation_rate = intf.baseclock / 440;
+		emulation_rate = intf->baseclock / 440;
 	
 		/* reset input pins */
 		pin_RST = pin_ST = pin_VCU= 0;
@@ -644,17 +643,17 @@ public class vlm5030
 		VLM5030_reset();
 		VLM5030_phase = PH_IDLE;
 	
-		VLM5030_rom = memory_region(intf.memory_region);
+		VLM5030_rom = memory_region(intf->memory_region);
 		/* memory size */
-		if( intf.memory_size == 0)
-			VLM5030_address_mask = memory_region_length(intf.memory_region)-1;
+		if( intf->memory_size == 0)
+			VLM5030_address_mask = memory_region_length(intf->memory_region)-1;
 		else
-			VLM5030_address_mask = intf.memory_size-1;
+			VLM5030_address_mask = intf->memory_size-1;
 	
-		channel = stream_init(VLM_NAME,intf.volume,emulation_rate,0,vlm5030_update_callback);
+		channel = stream_init(VLM_NAME,intf->volume,emulation_rate,0,vlm5030_update_callback);
 		if (channel == -1) return 1;
 	
-		schannel = mixer_allocate_channel(intf.volume);
+		schannel = mixer_allocate_channel(intf->volume);
 	
 	#ifdef _STATE_H
 		/* don't restore "UINT8 *VLM5030_rom" when use VLM5030_set_rom() */

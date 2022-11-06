@@ -10,7 +10,7 @@ The DS5002FP has 32KB undumped gameplay code making the game unplayable :_(
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,8 +40,7 @@ public class targeth
 	};
 	
 	
-	static INTERRUPT_GEN(targeth_interrupt )
-	{
+	public static InterruptHandlerPtr targeth_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch(cpu_getiloops()){
 			case 0: /* IRQ 2: drives the game */
 				cpu_set_irq_line(0, 2, HOLD_LINE);
@@ -53,7 +52,7 @@ public class targeth
 				cpu_set_irq_line(0, 6, HOLD_LINE);
 				break;
 		}
-	}
+	} };
 	
 	
 	static MEMORY_READ16_START( targeth_readmem )
@@ -77,7 +76,7 @@ public class targeth
 	{
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 	
-		if (ACCESSING_LSB != 0){
+		if (ACCESSING_LSB){
 			memcpy(&RAM[0x30000], &RAM[0x40000 + (data & 0x0f)*0x10000], 0x10000);
 		}
 	}
@@ -102,7 +101,7 @@ public class targeth
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_targeth = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_targeth = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( targeth )
 	PORT_START(); 	/* Gun 1 X */
 		PORT_ANALOG( 0x01ff, 200, IPT_LIGHTGUN_X | IPF_PLAYER1, 100, 20, 0, 400 + 4);
 		PORT_BIT( 0xfe00, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -195,8 +194,7 @@ public class targeth
 		{ 100 }				/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_targeth = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( targeth )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,24000000/2)			/* 12 MHz */
@@ -218,9 +216,7 @@ public class targeth
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, targeth_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_targeth = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x100000, REGION_CPU1, 0 )	/* 68000 code */
@@ -240,5 +236,5 @@ public class targeth
 		ROM_LOAD( "targeth.c3",		0x0c0000, 0x080000, CRC(d4c771df) SHA1(7cc0a86ef6aa3d26ab8f19d198f62112bf012870) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_targeth	   = new GameDriver("1994"	,"targeth"	,"targeth.java"	,rom_targeth,null	,machine_driver_targeth	,input_ports_targeth	,null	,ROT0	,	"Gaelco", "Target Hits", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1994, targeth, 0, targeth,targeth, 0, ROT0, "Gaelco", "Target Hits", GAME_UNEMULATED_PROTECTION )
 }

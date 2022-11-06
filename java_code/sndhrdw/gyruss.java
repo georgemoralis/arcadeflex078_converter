@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -31,8 +31,7 @@ public class gyruss
 		0x00, 0x01, 0x02, 0x03, 0x04, 0x09, 0x0a, 0x0b, 0x0a, 0x0d
 	};
 	
-	public static ReadHandlerPtr gyruss_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gyruss_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* need to protect from totalcycles overflow */
 		static int last_totalcycles = 0;
 	
@@ -62,32 +61,28 @@ public class gyruss
 	
 	
 			C = 0;
-			if ((data & 1) != 0) C += 47000;	/* 47000pF = 0.047uF */
-			if ((data & 2) != 0) C += 220000;	/* 220000pF = 0.22uF */
+			if (data & 1) C += 47000;	/* 47000pF = 0.047uF */
+			if (data & 2) C += 220000;	/* 220000pF = 0.22uF */
 			data >>= 2;
 			set_RC_filter(3*chip + i,1000,2200,200,C);
 		}
 	}
 	
-	public static WriteHandlerPtr gyruss_filter0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_filter0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		filter_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr gyruss_filter1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_filter1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		filter_w(1,data);
 	} };
 	
 	
-	public static WriteHandlerPtr gyruss_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* writing to this register triggers IRQ on the sound CPU */
 		cpu_set_irq_line_and_vector(2,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr gyruss_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gyruss_i8039_irq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(3, 0, PULSE_LINE);
 	} };
 }

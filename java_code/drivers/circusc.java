@@ -8,7 +8,7 @@ To enter service mode, keep 1&2 pressed on reset
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,8 +23,7 @@ public class circusc
 	
 	
 	
-	public static ReadHandlerPtr circusc_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr circusc_sh_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int clock;
 	#define CIRCUSCHALIE_TIMER_RATE (14318180/6144)
 	
@@ -33,18 +32,15 @@ public class circusc
 		return clock & 0xF;
 	} };
 	
-	public static WriteHandlerPtr circusc_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr circusc_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0,data);
 	} };
 	
-	public static WriteHandlerPtr circusc_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr circusc_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -109,7 +105,7 @@ public class circusc
 	
 	
 	
-	static InputPortPtr input_ports_circusc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_circusc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( circusc )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -251,8 +247,7 @@ public class circusc
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_circusc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( circusc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2048000)        /* 2 MHz */
@@ -281,9 +276,7 @@ public class circusc
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -414,14 +407,13 @@ public class circusc
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_circusc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_circusc  = new DriverInitHandlerPtr() { public void handler(){
 		konami1_decode();
 	} };
 	
 	
-	public static GameDriver driver_circusc	   = new GameDriver("1984"	,"circusc"	,"circusc.java"	,rom_circusc,null	,machine_driver_circusc	,input_ports_circusc	,init_circusc	,ROT90	,	"Konami", "Circus Charlie" )
-	public static GameDriver driver_circusc2	   = new GameDriver("1984"	,"circusc2"	,"circusc.java"	,rom_circusc2,driver_circusc	,machine_driver_circusc	,input_ports_circusc	,init_circusc	,ROT90	,	"Konami", "Circus Charlie (no level select)" )
-	public static GameDriver driver_circuscc	   = new GameDriver("1984"	,"circuscc"	,"circusc.java"	,rom_circuscc,driver_circusc	,machine_driver_circusc	,input_ports_circusc	,init_circusc	,ROT90	,	"Konami (Centuri license)", "Circus Charlie (Centuri)" )
-	public static GameDriver driver_circusce	   = new GameDriver("1984"	,"circusce"	,"circusc.java"	,rom_circusce,driver_circusc	,machine_driver_circusc	,input_ports_circusc	,init_circusc	,ROT90	,	"Konami (Centuri license)", "Circus Charlie (Centuri, earlier)" )
+	GAME( 1984, circusc,  0,       circusc, circusc, circusc, ROT90, "Konami", "Circus Charlie" )
+	GAME( 1984, circusc2, circusc, circusc, circusc, circusc, ROT90, "Konami", "Circus Charlie (no level select)" )
+	GAME( 1984, circuscc, circusc, circusc, circusc, circusc, ROT90, "Konami (Centuri license)", "Circus Charlie (Centuri)" )
+	GAME( 1984, circusce, circusc, circusc, circusc, circusc, ROT90, "Konami (Centuri license)", "Circus Charlie (Centuri, earlier)" )
 }

@@ -22,7 +22,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -36,8 +36,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr battlera_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlera_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0) {
 			soundlatch_w.handler(0,data);
 			cpu_set_irq_line(1, 0, HOLD_LINE);
@@ -46,13 +45,11 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr control_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr control_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		control_port_select=data;
 	} };
 	
-	public static ReadHandlerPtr control_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr control_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (control_port_select) {
 			case 0xfe: return readinputport(0); /* Player 1 */
 			case 0xfd: return readinputport(1); /* Player 2 */
@@ -99,8 +96,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0: YM2203_control_port_0_w(0,data); break;
 		case 1: YM2203_write_port_0_w(0,data); break;
@@ -117,17 +113,15 @@ public class battlera
 		msm5205next<<=4;
 	
 		toggle = 1 - toggle;
-		if (toggle != 0)
+		if (toggle)
 			cpu_set_irq_line(1, 1, HOLD_LINE);
 	}
 	
-	public static WriteHandlerPtr battlera_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlera_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next=data;
 	} };
 	
-	public static WriteHandlerPtr battlera_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlera_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(0,0);
 	} };
 	
@@ -153,7 +147,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_battlera = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlera = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlera )
 		PORT_START();   /* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -295,8 +289,7 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_battlera = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battlera )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3)
@@ -326,9 +319,7 @@ public class battlera
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
 		MDRV_SOUND_ADD(C6280, c6280_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -376,6 +367,6 @@ public class battlera
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_battlera	   = new GameDriver("1988"	,"battlera"	,"battlera.java"	,rom_battlera,null	,machine_driver_battlera	,input_ports_battlera	,null	,ROT0	,	"Data East Corporation", "Battle Rangers (World)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_bldwolf	   = new GameDriver("1988"	,"bldwolf"	,"battlera.java"	,rom_bldwolf,driver_battlera	,machine_driver_battlera	,input_ports_battlera	,null	,ROT0	,	"Data East USA", "Bloody Wolf (US)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1988, battlera, 0,        battlera, battlera,  0,   ROT0, "Data East Corporation", "Battle Rangers (World)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1988, bldwolf,  battlera, battlera, battlera,  0,   ROT0, "Data East USA", "Bloody Wolf (US)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS )
 }

@@ -21,7 +21,7 @@ I'm not sure it's working correctly:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,8 +34,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr paradise_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank = data;
 		int bank_n = memory_region_length(REGION_CPU1)/0x4000 - 1;
 		if (bank >= bank_n)
@@ -48,8 +47,7 @@ public class paradise
 		cpu_setbank(1, memory_region(REGION_CPU1) + bank * 0x4000);
 	} };
 	
-	public static WriteHandlerPtr paradise_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr paradise_okibank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data & ~0x02)	logerror("CPU #0 - PC %04X: unknown oki bank bits %02X\n",activecpu_get_pc(),data);
 		OKIM6295_set_bank_base(1, (data & 0x02) ? 0x40000 : 0);
 	} };
@@ -117,7 +115,7 @@ public class paradise
 									Paradise
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_paradise = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_paradise = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( paradise )
 		PORT_START(); 	// IN0 - port $2020 - DSW 1
 		PORT_DIPNAME( 0x03, 0x02, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "Easy" );
@@ -261,8 +259,7 @@ public class paradise
 		{ 50,50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_paradise = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( paradise )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)			/* Z8400B */
@@ -286,9 +283,7 @@ public class paradise
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, paradise_okim6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -344,15 +339,13 @@ public class paradise
 	
 	looks like its probably similar hardware ... */
 	
-	public static ReadHandlerPtr tgt_ball_unk  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tgt_ball_unk  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand();
 	} };
 	
-	DRIVER_INIT (tgtball)
-	{
+	public static DriverInitHandlerPtr init_tgtball  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler(0, 0x2000, 0x2fff, tgt_ball_unk);
-	}
+	} };
 	
 	static RomLoadPtr rom_tgtball = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x44000, REGION_CPU1, 0 )		/* Z80 Code */
@@ -387,7 +380,7 @@ public class paradise
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_	   = new GameDriver("1994"	,""	,"paradise.java"	,rom_,driver_paradise	,machine_driver_0	,input_ports_paradise	,init_paradise	,0	,	ROT90, "Yun Sung", "Paradise" )
-	public static GameDriver driver_tgtball	   = new GameDriver("199?"	,"tgtball"	,"paradise.java"	,rom_tgtball,null	,machine_driver_paradise	,input_ports_paradise	,init_tgtball	,ROT0	,	"Yun Sung", "Target Ball", GAME_NOT_WORKING )
+	GAME( 1994+, paradise, 0, paradise, paradise, 0, ROT90, "Yun Sung", "Paradise" )
+	GAMEX(199?,  tgtball,  0, paradise, paradise, tgtball, ROT0,  "Yun Sung", "Target Ball", GAME_NOT_WORKING )
 	
 }

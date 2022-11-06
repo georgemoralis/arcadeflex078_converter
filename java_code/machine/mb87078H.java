@@ -18,7 +18,7 @@
   Group 1 is 5-bit control latch (2-bits are channel select and 3-bits are volume control)
 
   Digital I/O Setting:
-  /TC   DSEL    D0      D1      D2      D3      D4      D5      I/O MODES (when /TC==H .write)
+  /TC   DSEL    D0      D1      D2      D3      D4      D5      I/O MODES (when /TC==H ->write)
   H     H       DSC1    DSC2    EN      C0      C32     X       Input mode
   H     L       GD0     GD1     GD2     GD3     GD4     GD5     (set)
   L     H       DSC1    DSC2    EN      C0      C32     L       Output mode

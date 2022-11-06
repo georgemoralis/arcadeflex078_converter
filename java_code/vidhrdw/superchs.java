@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,10 +20,9 @@ public class superchs
 	};
 	static struct tempsprite *spritelist;
 	
-	public static VideoStartHandlerPtr video_start_superchs  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_superchs  = new VideoStartHandlerPtr() { public int handler(){
 		spritelist = auto_malloc(0x4000 * sizeof(*spritelist));
-		if (spritelist == 0)
+		if (!spritelist)
 			return 1;
 	
 		if (TC0480SCP_vh_start(TC0480SCP_GFX_NUM,0,0x20,0x08,-1,0,0,0,0))
@@ -112,7 +111,7 @@ public class superchs
 	
 			color |= 0x100;
 	
-			if (tilenum == 0) continue;
+			if (!tilenum) continue;
 	
 			flipy = NOT(flipy);
 			zoomx += 1;
@@ -140,8 +139,8 @@ public class superchs
 					px = k;
 					py = j;
 					/* pick tiles back to front for x and y flips */
-					if (flipx != 0)  px = dimension-1-k;
-					if (flipy != 0)  py = dimension-1-j;
+					if (flipx)  px = dimension-1-k;
+					if (flipy)  py = dimension-1-j;
 	
 					code = spritemap[map_offset + px + (py<<(dblsize+1))];
 	
@@ -157,7 +156,7 @@ public class superchs
 					zx= x + (((k+1)*zoomx)/dimension) - curx;
 					zy= y + (((j+1)*zoomy)/dimension) - cury;
 	
-					if (sprites_flipscreen != 0)
+					if (sprites_flipscreen)
 					{
 						/* -zx/y is there to fix zoomed sprite coords in screenflip.
 						   drawgfxzoom does not know to draw from flip-side of sprites when
@@ -169,36 +168,36 @@ public class superchs
 						flipy = NOT(flipy);
 					}
 	
-					sprite_ptr.gfx = 0;
-					sprite_ptr.code = code;
-					sprite_ptr.color = color;
-					sprite_ptr.flipx = NOT(flipx);
-					sprite_ptr.flipy = flipy;
-					sprite_ptr.x = curx;
-					sprite_ptr.y = cury;
-					sprite_ptr.zoomx = zx << 12;
-					sprite_ptr.zoomy = zy << 12;
+					sprite_ptr->gfx = 0;
+					sprite_ptr->code = code;
+					sprite_ptr->color = color;
+					sprite_ptr->flipx = NOT(flipx);
+					sprite_ptr->flipy = flipy;
+					sprite_ptr->x = curx;
+					sprite_ptr->y = cury;
+					sprite_ptr->zoomx = zx << 12;
+					sprite_ptr->zoomy = zy << 12;
 	
-					if (primasks != 0)
+					if (primasks)
 					{
-						sprite_ptr.primask = primasks[priority];
+						sprite_ptr->primask = primasks[priority];
 	
 						sprite_ptr++;
 					}
 					else
 					{
-						drawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
-								sprite_ptr.code,
-								sprite_ptr.color,
-								sprite_ptr.flipx,sprite_ptr.flipy,
-								sprite_ptr.x,sprite_ptr.y,
+						drawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
+								sprite_ptr->code,
+								sprite_ptr->color,
+								sprite_ptr->flipx,sprite_ptr->flipy,
+								sprite_ptr->x,sprite_ptr->y,
 								cliprect,TRANSPARENCY_PEN,0,
-								sprite_ptr.zoomx,sprite_ptr.zoomy);
+								sprite_ptr->zoomx,sprite_ptr->zoomy);
 					}
 				}
 			}
 	
-			if (bad_chunks != 0)
+			if (bad_chunks)
 	logerror("Sprite number %04x had %02x invalid chunks\n",tilenum,bad_chunks);
 		}
 	
@@ -207,14 +206,14 @@ public class superchs
 		{
 			sprite_ptr--;
 	
-			pdrawgfxzoom(bitmap,Machine.gfx[sprite_ptr.gfx],
-					sprite_ptr.code,
-					sprite_ptr.color,
-					sprite_ptr.flipx,sprite_ptr.flipy,
-					sprite_ptr.x,sprite_ptr.y,
+			pdrawgfxzoom(bitmap,Machine->gfx[sprite_ptr->gfx],
+					sprite_ptr->code,
+					sprite_ptr->color,
+					sprite_ptr->flipx,sprite_ptr->flipy,
+					sprite_ptr->x,sprite_ptr->y,
 					cliprect,TRANSPARENCY_PEN,0,
-					sprite_ptr.zoomx,sprite_ptr.zoomy,
-					sprite_ptr.primask);
+					sprite_ptr->zoomx,sprite_ptr->zoomy,
+					sprite_ptr->primask);
 		}
 	}
 	
@@ -223,8 +222,7 @@ public class superchs
 					SCREEN REFRESH
 	**************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_superchs  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 layer[5];
 		UINT16 priority;
 		int primasks[4] = {0xfffc, 0xfff0, 0xff00, 0x0};

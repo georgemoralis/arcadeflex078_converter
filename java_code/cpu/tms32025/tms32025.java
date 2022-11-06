@@ -120,7 +120,7 @@ Table 3-2.  TMS32025/26 Memory Blocks
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms32025;
 
@@ -218,7 +218,7 @@ public class tms32025
 	/****************************************************************************
 	 *******  The following is the Status (Flag) register 0 definition.  ********
 	| 15 | 14 | 13 | 12 |  11 | 10 |   9  | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
-	| <----ARP--. | OV | OVM |  1 | INTM | <--------------DP--------------. | */
+	| <----ARP---> | OV | OVM |  1 | INTM | <--------------DP---------------> | */
 	
 	#define ARP_REG		0xe000	/* ARP	(Auxiliary Register Pointer) */
 	#define OV_FLAG		0x1000	/* OV	(Overflow flag) 1 indicates an overflow */
@@ -230,11 +230,11 @@ public class tms32025
 	/***********************************************************************************
 	 *** The following is the Status (Flag) register 1 definition for TMS32025. ********
 	| 15 | 14 | 13 |  12  | 11 |  10 | 9 | 8 | 7 |  6 |  5  |  4 |  3 |  2  | 1 | 0  |
-	| <----ARB--. | CNF0 | TC | SXM | C | 1 | 1 | HM | FSM | XF | FO | TXM | <-PM. | */
+	| <----ARB---> | CNF0 | TC | SXM | C | 1 | 1 | HM | FSM | XF | FO | TXM | <-PM-> | */
 	
 	/*** The following is the Status (Flag) register 1 definition for TMS32026. ***********
 	| 15 | 14 | 13 |  12  | 11 |  10 | 9 | 8 |   7  |  6 |  5  |  4 |  3 |  2  | 1 | 0  |
-	| <----ARB--. | CNF0 | TC | SXM | C | 1 | CNF1 | HM | FSM | XF | FO | TXM | <-PM. | */
+	| <----ARB---> | CNF0 | TC | SXM | C | 1 | CNF1 | HM | FSM | XF | FO | TXM | <-PM-> | */
 	
 	#define ARB_REG		0xe000	/* ARB	(Auxiliary Register pointer Backup) */
 	#define CNF0_REG	0x1000	/* CNF0	(Onchip RAM CoNFiguration) 0 means B0=data memory, 1means B0=program memory */
@@ -328,7 +328,7 @@ public class tms32025
 	{
 		if ((INT32)(~(oldacc.d ^ addval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET0(OV_FLAG);
-			if (OVM != 0)
+			if (OVM)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -336,7 +336,7 @@ public class tms32025
 	{
 		if ((INT32)((oldacc.d ^ subval) & (oldacc.d ^ R.ACC.d)) < 0) {
 			SET0(OV_FLAG);
-			if (OVM != 0)
+			if (OVM)
 				R.ACC.d = ((INT32)oldacc.d < 0) ? 0x80000000 : 0x7fffffff;
 		}
 	}
@@ -389,7 +389,7 @@ public class tms32025
 		else R.external_mem_access = 0;
 	
 		R.ALU.d = (UINT16)M_RDRAM(memaccess);
-		if (signext != 0) R.ALU.d = (INT16)R.ALU.d;
+		if (signext) R.ALU.d = (INT16)R.ALU.d;
 		R.ALU.d <<= shift;
 	
 		if (R.opcode.b.l & 0x80) MODIFY_AR_ARP();
@@ -442,7 +442,7 @@ public class tms32025
 	{
 			if ( (INT32)(R.ACC.d) < 0 ) {
 				R.ACC.d = -R.ACC.d;
-				if (OVM != 0) {
+				if (OVM) {
 					SET0(OV_FLAG);
 					if (R.ACC.d == 0x80000000) R.ACC.d-- ;
 				}
@@ -461,7 +461,7 @@ public class tms32025
 	{
 			oldacc.d = R.ACC.d;
 			GETDATA(0,0);
-			if (CARRY != 0) R.ALU.d++;
+			if (CARRY) R.ALU.d++;
 			R.ACC.d += R.ALU.d;
 			CALCULATE_ADD_OVERFLOW(R.ALU.d);
 			CALCULATE_ADD_CARRY();
@@ -473,7 +473,7 @@ public class tms32025
 			R.ACC.w.h += R.ALU.w.l;
 			if ((INT16)(~(oldacc.w.h ^ R.ALU.w.l) & (oldacc.w.h ^ R.ACC.w.h)) < 0) {
 				SET0(OV_FLAG);
-				if (OVM != 0)
+				if (OVM)
 					R.ACC.w.h = ((INT16)oldacc.w.h < 0) ? 0x8000 : 0x7fff;
 			}
 			if ( ((INT16)(oldacc.w.h) < 0) && ((INT16)(R.ACC.w.h) >= 0) ) {
@@ -508,7 +508,7 @@ public class tms32025
 	static void adlk(void)
 	{
 			oldacc.d = R.ACC.d;
-			if (SXM != 0) R.ALU.d =  (INT16)M_RDOP_ARG(R.PC);
+			if (SXM) R.ALU.d =  (INT16)M_RDOP_ARG(R.PC);
 			else     R.ALU.d = (UINT16)M_RDOP_ARG(R.PC);
 			R.PC++;
 			R.ALU.d <<= (R.opcode.b.h & 0xf);
@@ -559,7 +559,7 @@ public class tms32025
 	}
 	static void bbnz(void)
 	{
-			if (TC != 0) R.PC = M_RDOP_ARG(R.PC);
+			if (TC) R.PC = M_RDOP_ARG(R.PC);
 			else R.PC++ ;
 			MODIFY_AR_ARP();
 	}
@@ -571,7 +571,7 @@ public class tms32025
 	}
 	static void bc(void)
 	{
-			if (CARRY != 0) R.PC = M_RDOP_ARG(R.PC);
+			if (CARRY) R.PC = M_RDOP_ARG(R.PC);
 			else R.PC++ ;
 			MODIFY_AR_ARP();
 	}
@@ -662,7 +662,7 @@ public class tms32025
 	}
 	static void bv(void)
 	{
-			if (OV != 0) {
+			if (OV) {
 				R.PC = M_RDOP_ARG(R.PC);
 				CLR0(OV_FLAG);
 			}
@@ -821,7 +821,7 @@ public class tms32025
 	}
 	static void lalk(void)
 	{
-			if (SXM != 0) {
+			if (SXM) {
 				R.ALU.d = (INT16)M_RDOP_ARG(R.PC);
 				R.ACC.d = R.ALU.d << (R.opcode.b.h & 0xf);
 			}
@@ -1009,7 +1009,7 @@ public class tms32025
 	{
 			if (R.ACC.d == 0x80000000) {
 				SET0(OV_FLAG);
-				if (OVM != 0) R.ACC.d = 0x7fffffff;
+				if (OVM) R.ACC.d = 0x7fffffff;
 			}
 			else R.ACC.d = -R.ACC.d;
 			if (R.ACC.d) CLR0(C_FLAG);
@@ -1094,7 +1094,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d <<= 1;
-			if (CARRY != 0) R.ACC.d |= 1;
+			if (CARRY) R.ACC.d |= 1;
 			if (R.ALU.d & 0x80000000) SET1(C_FLAG);
 			else CLR1(C_FLAG);
 	}
@@ -1102,7 +1102,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d >>= 1;
-			if (CARRY != 0) R.ACC.d |= 0x80000000;
+			if (CARRY) R.ACC.d |= 0x80000000;
 			if (R.ALU.d & 1) SET1(C_FLAG);
 			else CLR1(C_FLAG);
 	}
@@ -1185,7 +1185,7 @@ public class tms32025
 	{
 			R.ALU.d = R.ACC.d;
 			R.ACC.d >>= 1;
-			if (SXM != 0) {
+			if (SXM) {
 				if (R.ALU.d & 0x80000000) R.ACC.d |= 0x80000000;
 			}
 			if (R.ALU.d & 1) SET1(C_FLAG);
@@ -1307,7 +1307,7 @@ public class tms32025
 			R.ACC.w.h -= R.ALU.w.l;
 			if ((INT16)((oldacc.w.h ^ R.ALU.w.l) & (oldacc.w.h ^ R.ACC.w.h)) < 0) {
 				SET0(OV_FLAG);
-				if (OVM != 0)
+				if (OVM)
 					R.ACC.w.h = ((INT16)oldacc.w.h < 0) ? 0x8000 : 0x7fff;
 			}
 			if ( ((INT16)(oldacc.w.h) >= 0) && ((INT16)(R.ACC.w.h) < 0) ) {
@@ -1822,7 +1822,7 @@ public class tms32025
 				S_OUT(TMS32025_HOLDA,ASSERT_LINE);	/* Hold-Ack (active low) */
 			}
 			R.hold = 1;
-			if (HM != 0) {
+			if (HM) {
 				tms32025_icount = 0;		/* Exit */
 			}
 			else {
@@ -1972,7 +1972,7 @@ public class tms32025
 	 ****************************************************************************/
 	unsigned tms32025_get_context (void *dst)
 	{
-		if (dst != 0)
+		if (dst)
 			*(tms32025_Regs*)dst = R;
 		return sizeof(tms32025_Regs);
 	}
@@ -1982,7 +1982,7 @@ public class tms32025
 	 ****************************************************************************/
 	void tms32025_set_context (void *src)
 	{
-		if (src != 0)
+		if (src)
 			R = *(tms32025_Regs*)src;
 	}
 	
@@ -2123,35 +2123,35 @@ public class tms32025
 	
 		which = (which+1) % 32;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if (!context)
 			r = &R;
 	
 		switch (regnum)
 		{
-			case CPU_INFO_REG+TMS32025_PC: sprintf(buffer[which], "PC:%04X",  r.PC); break;
-			case CPU_INFO_REG+TMS32025_STR0: sprintf(buffer[which], "STR0:%04X", r.STR0); break;
-			case CPU_INFO_REG+TMS32025_STR1: sprintf(buffer[which], "STR1:%04X", r.STR1); break;
-			case CPU_INFO_REG+TMS32025_IFR: sprintf(buffer[which], "IFR:%04X", r.IFR); break;
-			case CPU_INFO_REG+TMS32025_RPTC: sprintf(buffer[which], "RPTC:%02X", r.RPTC); break;
-			case CPU_INFO_REG+TMS32025_STK7: sprintf(buffer[which], "STK7:%04X", r.STACK[7]); break;
-			case CPU_INFO_REG+TMS32025_STK6: sprintf(buffer[which], "STK6:%04X", r.STACK[6]); break;
-			case CPU_INFO_REG+TMS32025_STK5: sprintf(buffer[which], "STK5:%04X", r.STACK[5]); break;
-			case CPU_INFO_REG+TMS32025_STK4: sprintf(buffer[which], "STK4:%04X", r.STACK[4]); break;
-			case CPU_INFO_REG+TMS32025_STK3: sprintf(buffer[which], "STK3:%04X", r.STACK[3]); break;
-			case CPU_INFO_REG+TMS32025_STK2: sprintf(buffer[which], "STK2:%04X", r.STACK[2]); break;
-			case CPU_INFO_REG+TMS32025_STK1: sprintf(buffer[which], "STK1:%04X", r.STACK[1]); break;
-			case CPU_INFO_REG+TMS32025_STK0: sprintf(buffer[which], "STK0:%04X", r.STACK[0]); break;
-			case CPU_INFO_REG+TMS32025_ACC: sprintf(buffer[which], "ACC:%08X", r.ACC.d); break;
-			case CPU_INFO_REG+TMS32025_PREG: sprintf(buffer[which], "P:%08X", r.Preg.d); break;
-			case CPU_INFO_REG+TMS32025_TREG: sprintf(buffer[which], "T:%04X", r.Treg); break;
-			case CPU_INFO_REG+TMS32025_AR0: sprintf(buffer[which], "AR0:%04X", r.AR[0]); break;
-			case CPU_INFO_REG+TMS32025_AR1: sprintf(buffer[which], "AR1:%04X", r.AR[1]); break;
-			case CPU_INFO_REG+TMS32025_AR2: sprintf(buffer[which], "AR2:%04X", r.AR[2]); break;
-			case CPU_INFO_REG+TMS32025_AR3: sprintf(buffer[which], "AR3:%04X", r.AR[3]); break;
-			case CPU_INFO_REG+TMS32025_AR4: sprintf(buffer[which], "AR4:%04X", r.AR[4]); break;
-			case CPU_INFO_REG+TMS32025_AR5: sprintf(buffer[which], "AR5:%04X", r.AR[5]); break;
-			case CPU_INFO_REG+TMS32025_AR6: sprintf(buffer[which], "AR6:%04X", r.AR[6]); break;
-			case CPU_INFO_REG+TMS32025_AR7: sprintf(buffer[which], "AR7:%04X", r.AR[7]); break;
+			case CPU_INFO_REG+TMS32025_PC: sprintf(buffer[which], "PC:%04X",  r->PC); break;
+			case CPU_INFO_REG+TMS32025_STR0: sprintf(buffer[which], "STR0:%04X", r->STR0); break;
+			case CPU_INFO_REG+TMS32025_STR1: sprintf(buffer[which], "STR1:%04X", r->STR1); break;
+			case CPU_INFO_REG+TMS32025_IFR: sprintf(buffer[which], "IFR:%04X", r->IFR); break;
+			case CPU_INFO_REG+TMS32025_RPTC: sprintf(buffer[which], "RPTC:%02X", r->RPTC); break;
+			case CPU_INFO_REG+TMS32025_STK7: sprintf(buffer[which], "STK7:%04X", r->STACK[7]); break;
+			case CPU_INFO_REG+TMS32025_STK6: sprintf(buffer[which], "STK6:%04X", r->STACK[6]); break;
+			case CPU_INFO_REG+TMS32025_STK5: sprintf(buffer[which], "STK5:%04X", r->STACK[5]); break;
+			case CPU_INFO_REG+TMS32025_STK4: sprintf(buffer[which], "STK4:%04X", r->STACK[4]); break;
+			case CPU_INFO_REG+TMS32025_STK3: sprintf(buffer[which], "STK3:%04X", r->STACK[3]); break;
+			case CPU_INFO_REG+TMS32025_STK2: sprintf(buffer[which], "STK2:%04X", r->STACK[2]); break;
+			case CPU_INFO_REG+TMS32025_STK1: sprintf(buffer[which], "STK1:%04X", r->STACK[1]); break;
+			case CPU_INFO_REG+TMS32025_STK0: sprintf(buffer[which], "STK0:%04X", r->STACK[0]); break;
+			case CPU_INFO_REG+TMS32025_ACC: sprintf(buffer[which], "ACC:%08X", r->ACC.d); break;
+			case CPU_INFO_REG+TMS32025_PREG: sprintf(buffer[which], "P:%08X", r->Preg.d); break;
+			case CPU_INFO_REG+TMS32025_TREG: sprintf(buffer[which], "T:%04X", r->Treg); break;
+			case CPU_INFO_REG+TMS32025_AR0: sprintf(buffer[which], "AR0:%04X", r->AR[0]); break;
+			case CPU_INFO_REG+TMS32025_AR1: sprintf(buffer[which], "AR1:%04X", r->AR[1]); break;
+			case CPU_INFO_REG+TMS32025_AR2: sprintf(buffer[which], "AR2:%04X", r->AR[2]); break;
+			case CPU_INFO_REG+TMS32025_AR3: sprintf(buffer[which], "AR3:%04X", r->AR[3]); break;
+			case CPU_INFO_REG+TMS32025_AR4: sprintf(buffer[which], "AR4:%04X", r->AR[4]); break;
+			case CPU_INFO_REG+TMS32025_AR5: sprintf(buffer[which], "AR5:%04X", r->AR[5]); break;
+			case CPU_INFO_REG+TMS32025_AR6: sprintf(buffer[which], "AR6:%04X", r->AR[6]); break;
+			case CPU_INFO_REG+TMS32025_AR7: sprintf(buffer[which], "AR7:%04X", r->AR[7]); break;
 			case CPU_INFO_REG+TMS32025_DRR: sprintf(buffer[which], "DRR:%04X", M_RDRAM(0)); break;
 			case CPU_INFO_REG+TMS32025_DXR: sprintf(buffer[which], "DXR:%04X", M_RDRAM(1)); break;
 			case CPU_INFO_REG+TMS32025_TIM: sprintf(buffer[which], "TIM:%04X", M_RDRAM(2)); break;
@@ -2160,26 +2160,26 @@ public class tms32025
 			case CPU_INFO_REG+TMS32025_GREG: sprintf(buffer[which], "GREG:%04X", M_RDRAM(5)); break;
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "arp%d%c%c%c%cdp%03x  arb%d%c%c%c%c%c%c%c%c%c%c%cpm%d",
-					(r.STR0 & 0xe000) >> 13,
-					r.STR0 & 0x1000 ? 'O':'.',
-					r.STR0 & 0x0800 ? 'M':'.',
-					r.STR0 & 0x0400 ? '.':'?',
-					r.STR0 & 0x0200 ? 'I':'.',
-					(r.STR0 & 0x01ff),
+					(r->STR0 & 0xe000) >> 13,
+					r->STR0 & 0x1000 ? 'O':'.',
+					r->STR0 & 0x0800 ? 'M':'.',
+					r->STR0 & 0x0400 ? '.':'?',
+					r->STR0 & 0x0200 ? 'I':'.',
+					(r->STR0 & 0x01ff),
 	
-					(r.STR1 & 0xe000) >> 13,
-					r.STR1 & 0x1000 ? 'P':'D',
-					r.STR1 & 0x0800 ? 'T':'.',
-					r.STR1 & 0x0400 ? 'S':'.',
-					r.STR1 & 0x0200 ? 'C':'?',
-					r.STR0 & 0x0100 ? '.':'?',
-					r.STR1 & 0x0080 ? '.':'?',
-					r.STR1 & 0x0040 ? 'H':'.',
-					r.STR1 & 0x0020 ? 'F':'.',
-					r.STR1 & 0x0010 ? 'X':'.',
-					r.STR1 & 0x0008 ? 'f':'.',
-					r.STR1 & 0x0004 ? 'o':'i',
-					(r.STR1 & 0x0003) );
+					(r->STR1 & 0xe000) >> 13,
+					r->STR1 & 0x1000 ? 'P':'D',
+					r->STR1 & 0x0800 ? 'T':'.',
+					r->STR1 & 0x0400 ? 'S':'.',
+					r->STR1 & 0x0200 ? 'C':'?',
+					r->STR0 & 0x0100 ? '.':'?',
+					r->STR1 & 0x0080 ? '.':'?',
+					r->STR1 & 0x0040 ? 'H':'.',
+					r->STR1 & 0x0020 ? 'F':'.',
+					r->STR1 & 0x0010 ? 'X':'.',
+					r->STR1 & 0x0008 ? 'f':'.',
+					r->STR1 & 0x0004 ? 'o':'i',
+					(r->STR1 & 0x0003) );
 				break;
 			case CPU_INFO_NAME: return "TMS32025";
 			case CPU_INFO_FAMILY: return "Texas Instruments TMS320x25";

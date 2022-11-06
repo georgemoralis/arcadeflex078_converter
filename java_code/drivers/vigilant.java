@@ -9,7 +9,7 @@ ask.  - Mike Balfour (mab22@po.cwru.edu)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -19,8 +19,7 @@ public class vigilant
 	/* vidhrdw/vigilant.c */
 	
 	
-	public static WriteHandlerPtr vigilant_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_bank_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -31,8 +30,7 @@ public class vigilant
 	/***************************************************************************
 	 vigilant_out2_w
 	 **************************************************************************/
-	public static WriteHandlerPtr vigilant_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vigilant_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* D0 = FILP = Flip screen? */
 		/* D1 = COA1 = Coin Counter A? */
 		/* D2 = COB1 = Coin Counter B? */
@@ -42,8 +40,7 @@ public class vigilant
 		coin_counter_w(1,data & 0x04);
 	} };
 	
-	public static WriteHandlerPtr kikcubic_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kikcubic_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 is flip screen */
 	
 		/* bit 1 is used but unknown */
@@ -170,7 +167,7 @@ public class vigilant
 	};
 	
 	
-	static InputPortPtr input_ports_vigilant = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vigilant = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vigilant )
 		PORT_START(); 
 		PORT_BIT(0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT(0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -258,7 +255,7 @@ public class vigilant
 		PORT_DIPSETTING(	0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kikcubic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kikcubic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kikcubic )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -428,8 +425,7 @@ public class vigilant
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_vigilant = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vigilant )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3579645)		   /* 3.579645 MHz */
@@ -461,13 +457,10 @@ public class vigilant
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kikcubic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kikcubic )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3579645)		   /* 3.579645 MHz */
@@ -499,9 +492,7 @@ public class vigilant
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -635,8 +626,8 @@ public class vigilant
 	
 	
 	
-	public static GameDriver driver_vigilant	   = new GameDriver("1988"	,"vigilant"	,"vigilant.java"	,rom_vigilant,null	,machine_driver_vigilant	,input_ports_vigilant	,null	,ROT0	,	"Irem", "Vigilante (World)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_vigilntu	   = new GameDriver("1988"	,"vigilntu"	,"vigilant.java"	,rom_vigilntu,driver_vigilant	,machine_driver_vigilant	,input_ports_vigilant	,null	,ROT0	,	"Irem (Data East USA license)", "Vigilante (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_vigilntj	   = new GameDriver("1988"	,"vigilntj"	,"vigilant.java"	,rom_vigilntj,driver_vigilant	,machine_driver_vigilant	,input_ports_vigilant	,null	,ROT0	,	"Irem", "Vigilante (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_kikcubic	   = new GameDriver("1988"	,"kikcubic"	,"vigilant.java"	,rom_kikcubic,null	,machine_driver_kikcubic	,input_ports_kikcubic	,null	,ROT0	,	"Irem", "Meikyu Jima (Japan)", GAME_NO_COCKTAIL )	/* English title is Kickle Cubicle */
+	GAMEX( 1988, vigilant, 0,        vigilant, vigilant, 0, ROT0, "Irem", "Vigilante (World)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, vigilntu, vigilant, vigilant, vigilant, 0, ROT0, "Irem (Data East USA license)", "Vigilante (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, vigilntj, vigilant, vigilant, vigilant, 0, ROT0, "Irem", "Vigilante (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1988, kikcubic, 0,        kikcubic, kikcubic, 0, ROT0, "Irem", "Meikyu Jima (Japan)", GAME_NO_COCKTAIL )	/* English title is Kickle Cubicle */
 }

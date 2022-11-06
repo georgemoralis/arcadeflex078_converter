@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,8 +42,7 @@ public class digdug
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_digdug  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_digdug  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -86,8 +85,7 @@ public class digdug
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_digdug  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_digdug  = new VideoStartHandlerPtr() { public int handler(){
 		if (video_start_generic.handler() != 0)
 			return 1;
 	
@@ -98,8 +96,7 @@ public class digdug
 	} };
 	
 	
-	public static WriteHandlerPtr digdug_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0:
@@ -132,14 +129,13 @@ public class digdug
 	void digdug_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,Machine.visible_area,
+		drawgfx(dest,Machine->gfx[1],code,color,flipx,flipy,sx,sy,Machine->visible_area,
 			TRANSPARENCY_PEN,0);
 	}
 	
 	
 	
-	public static WriteHandlerPtr digdug_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr digdug_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -154,8 +150,7 @@ public class digdug
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_digdug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_digdug  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,pfindex,pfcolor;
 		unsigned char *pf;
 	
@@ -218,14 +213,14 @@ public class digdug
 					sy = my - 2;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
 				}
 	
 				vrval = videoram.read(offs);
-				if (pf != 0)
+				if (pf)
 				{
 					/* first draw the playfield */
 					pfval = pf[offs];
@@ -274,7 +269,7 @@ public class digdug
 				int flipx = spriteram_3.read(offs)& 1;
 				int flipy = spriteram_3.read(offs)& 2;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -304,7 +299,7 @@ public class digdug
 						digdug_draw_sprite(bitmap,3+sprite,color,flipx,flipy,x,y-16);
 						digdug_draw_sprite(bitmap,2+sprite,color,flipx,flipy,x+16,y-16);
 					}
-					else if (flipy != 0)
+					else if (flipy)
 					{
 						digdug_draw_sprite(bitmap,sprite,color,flipx,flipy,x,y);
 						digdug_draw_sprite(bitmap,1+sprite,color,flipx,flipy,x+16,y);

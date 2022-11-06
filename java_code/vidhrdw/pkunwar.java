@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class pkunwar
 	static int flipscreen[2];
 	
 	
-	public static WriteHandlerPtr pkunwar_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pkunwar_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen[0] != (data & 1))
 		{
 			flipscreen[0] = data & 1;
@@ -35,8 +34,7 @@ public class pkunwar
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_pkunwar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pkunwar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	

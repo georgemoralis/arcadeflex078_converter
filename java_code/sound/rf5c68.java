@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -57,7 +57,7 @@ public class rf5c68
 	
 	int RF5C68_sh_start( const struct MachineSound *msound )
 	{
-		struct RF5C68interface *intf = msound.sound_interface;
+		struct RF5C68interface *intf = msound->sound_interface;
 		const char *name[2];
 		int vol[2];
 	
@@ -66,17 +66,17 @@ public class rf5c68
 		if(!rpcm.ram)
 			return 1;
 	
-		rpcm.clock = intf.clock;
-		rpcm.ratio = (double)rpcm.clock/(8*Machine.sample_rate);
+		rpcm.clock = intf->clock;
+		rpcm.ratio = (double)rpcm.clock/(8*Machine->sample_rate);
 		memset(rpcm.regs, 0, sizeof(rpcm.regs));
 		rpcm.sel = 0;
 		rpcm.keyon = 0xff;
 	
 		name[0] = "RF5C58 L";
 		name[1] = "RF5C68 R";
-		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf.volume & 0xff);
-		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf.volume & 0xff);
-		rpcm.stream = stream_init_multi(2, name, vol, Machine.sample_rate, 0, RF5C68_update );
+		vol[0] = (MIXER_PAN_LEFT<<8)  | (intf->volume & 0xff);
+		vol[1] = (MIXER_PAN_RIGHT<<8) | (intf->volume & 0xff);
+		rpcm.stream = stream_init_multi(2, name, vol, Machine->sample_rate, 0, RF5C68_update );
 	
 		return 0;
 	
@@ -86,8 +86,7 @@ public class rf5c68
 	{
 	}
 	
-	public static WriteHandlerPtr RF5C68_reg_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RF5C68_reg_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(offset) {
 		case 7:
 			rpcm.sel = data;
@@ -117,13 +116,11 @@ public class rf5c68
 			return (rpcm.sel & 15) << 12;
 	}
 	
-	public static ReadHandlerPtr RF5C68_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr RF5C68_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rpcm.ram[(RF5C68_pcm_bank() + offset) & 0xffff];
 	} };
 	
-	public static WriteHandlerPtr RF5C68_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr RF5C68_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rpcm.ram[(RF5C68_pcm_bank() + offset) & 0xffff] = data;
 	} };
 }

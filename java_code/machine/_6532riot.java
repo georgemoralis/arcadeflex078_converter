@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -35,21 +35,21 @@ public class _6532riot
 	
 	static UINT8 r6532_combineA(int n, UINT8 val)
 	{
-		return (r6532[n].DDRA & r6532[n].DRA) | (~r6532[n].DDRA & val);
+		return (r6532[n]->DDRA & r6532[n]->DRA) | (~r6532[n]->DDRA & val);
 	}
 	
 	
 	static UINT8 r6532_combineB(int n, UINT8 val)
 	{
-		return (r6532[n].DDRB & r6532[n].DRB) | (~r6532[n].DDRB & val);
+		return (r6532[n]->DDRB & r6532[n]->DRB) | (~r6532[n]->DDRB & val);
 	}
 	
 	
 	static UINT8 r6532_read_portA(int n)
 	{
-		if (r6532[n].intf.portA_r != NULL)
+		if (r6532[n]->intf.portA_r != NULL)
 		{
-			return r6532_combineA(n, r6532[n].intf.portA_r(0));
+			return r6532_combineA(n, r6532[n]->intf.portA_r(0));
 		}
 	
 		logerror("Read from unhandled 6532 #%d port A\n", n);
@@ -60,9 +60,9 @@ public class _6532riot
 	
 	static UINT8 r6532_read_portB(int n)
 	{
-		if (r6532[n].intf.portB_r != NULL)
+		if (r6532[n]->intf.portB_r != NULL)
 		{
-			return r6532_combineB(n, r6532[n].intf.portB_r(2));
+			return r6532_combineB(n, r6532[n]->intf.portB_r(2));
 		}
 	
 		logerror("Read from unhandled 6532 #%d port B\n", n);
@@ -73,51 +73,51 @@ public class _6532riot
 	
 	static void r6532_write_portA(int n, UINT8 data)
 	{
-		r6532[n].DRA = data;
+		r6532[n]->DRA = data;
 	
-		if (r6532[n].intf.portA_w != NULL)
+		if (r6532[n]->intf.portA_w != NULL)
 		{
-			r6532[n].intf.portA_w(0, r6532_combineA(n, 0xFF));
+			r6532[n]->intf.portA_w(0, r6532_combineA(n, 0xFF));
 		}
 	}
 	
 	
 	static void r6532_write_portB(int n, UINT8 data)
 	{
-		r6532[n].DRB = data;
+		r6532[n]->DRB = data;
 	
-		if (r6532[n].intf.portB_w != NULL)
+		if (r6532[n]->intf.portB_w != NULL)
 		{
-			r6532[n].intf.portB_w(0, r6532_combineB(n, 0xFF));
+			r6532[n]->intf.portB_w(0, r6532_combineB(n, 0xFF));
 		}
 	}
 	
 	
 	static void r6532_write(int n, offs_t offset, UINT8 data)
 	{
-		if ((offset & 4) != 0)
+		if (offset & 4)
 		{
-			if ((offset & 16) != 0)
+			if (offset & 16)
 			{
-				r6532[n].cleared = 0;
+				r6532[n]->cleared = 0;
 	
 				switch (offset & 3)
 				{
 				case 0:
-					r6532[n].shift = 0;
+					r6532[n]->shift = 0;
 					break;
 				case 1:
-					r6532[n].shift = 3;
+					r6532[n]->shift = 3;
 					break;
 				case 2:
-					r6532[n].shift = 6;
+					r6532[n]->shift = 6;
 					break;
 				case 3:
-					r6532[n].shift = 10;
+					r6532[n]->shift = 10;
 					break;
 				}
 	
-				r6532[n].target = activecpu_gettotalcycles() + (data << r6532[n].shift);
+				r6532[n]->target = activecpu_gettotalcycles() + (data << r6532[n]->shift);
 			}
 			else
 			{
@@ -134,13 +134,13 @@ public class _6532riot
 				r6532_write_portA(n, data);
 				break;
 			case 1:
-				r6532[n].DDRA = data;
+				r6532[n]->DDRA = data;
 				break;
 			case 2:
 				r6532_write_portB(n, data);
 				break;
 			case 3:
-				r6532[n].DDRB = data;
+				r6532[n]->DDRB = data;
 				break;
 			}
 		}
@@ -149,17 +149,17 @@ public class _6532riot
 	
 	static UINT8 r6532_read_timer(int n, int enable)
 	{
-		int count = r6532[n].target - activecpu_gettotalcycles();
+		int count = r6532[n]->target - activecpu_gettotalcycles();
 	
 		if (count >= 0)
 		{
-			return count >> r6532[n].shift;
+			return count >> r6532[n]->shift;
 		}
 		else
 		{
 			if (count != -1)
 			{
-				r6532[n].cleared = 1;
+				r6532[n]->cleared = 1;
 			}
 	
 			return (count >= -256) ? count : 0;
@@ -169,9 +169,9 @@ public class _6532riot
 	
 	static UINT8 r6532_read_flags(int n)
 	{
-		int count = r6532[n].target - activecpu_gettotalcycles();
+		int count = r6532[n]->target - activecpu_gettotalcycles();
 	
-		if (count >= 0 || r6532[n].cleared)
+		if (count >= 0 || r6532[n]->cleared)
 		{
 			return 0x00;
 		}
@@ -192,13 +192,13 @@ public class _6532riot
 			val = r6532_read_portA(n);
 			break;
 		case 1:
-			val = r6532[n].DDRA;
+			val = r6532[n]->DDRA;
 			break;
 		case 2:
 			val = r6532_read_portB(n);
 			break;
 		case 3:
-			val = r6532[n].DDRB;
+			val = r6532[n]->DDRB;
 			break;
 		case 4:
 			val = r6532_read_timer(n, 0);
@@ -218,28 +218,28 @@ public class _6532riot
 	}
 	
 	
-	public static WriteHandlerPtr r6532_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { r6532_write(0, offset, data); } };
-	public static WriteHandlerPtr r6532_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { r6532_write(1, offset, data); } };
+	public static WriteHandlerPtr r6532_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) r6532_write(0, offset, data); }
+	public static WriteHandlerPtr r6532_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) r6532_write(1, offset, data); }
 	
 	
-	public static ReadHandlerPtr r6532_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return r6532_read(0, offset); } };
-	public static ReadHandlerPtr r6532_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return r6532_read(1, offset); } };
+	public static ReadHandlerPtr r6532_0_r  = new ReadHandlerPtr() { public int handler(int offset) return r6532_read(0, offset); }
+	public static ReadHandlerPtr r6532_1_r  = new ReadHandlerPtr() { public int handler(int offset) return r6532_read(1, offset); }
 	
 	
 	void r6532_init(int n, const struct R6532interface* intf)
 	{
 		r6532[n] = auto_malloc(sizeof(struct R6532));
 	
-		r6532[n].intf = *intf;
+		r6532[n]->intf = *intf;
 	
-		r6532[n].DRA = 0;
-		r6532[n].DRB = 0;
-		r6532[n].DDRA = 0;
-		r6532[n].DDRB = 0;
+		r6532[n]->DRA = 0;
+		r6532[n]->DRB = 0;
+		r6532[n]->DDRA = 0;
+		r6532[n]->DDRB = 0;
 	
-		r6532[n].shift = 0;
-		r6532[n].cleared = 0;
+		r6532[n]->shift = 0;
+		r6532[n]->cleared = 0;
 	
-		r6532[n].target = 0;
+		r6532[n]->target = 0;
 	}
 }

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,8 +31,7 @@ public class spiders
 	void spiders_irq3a(int state) { logerror("PIA3 irqA %d\n",state); }
 	void spiders_irq3b(int state) { logerror("PIA3 irqB %d\n",state); }
 	
-	public static WriteHandlerPtr soundcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr soundcmd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,M6802_IRQ_LINE,(~data & 0x80) ? CLEAR_LINE : ASSERT_LINE);
 	} };
@@ -82,8 +81,7 @@ public class spiders
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_spiders  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_spiders  = new MachineInitHandlerPtr() { public void handler(){
 		pia_unconfig();
 		pia_config(0, PIA_STANDARD_ORDERING, &pia_0_intf);
 		pia_config(1, PIA_ALTERNATE_ORDERING, &pia_1_intf);
@@ -100,8 +98,7 @@ public class spiders
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr spiders_timed_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr spiders_timed_irq = new InterruptHandlerPtr() {public void handler(){
 		/* Update CA1 on PIA1 - copy of PA0 (COIN1?) */
 		pia_0_ca1_w(0 , input_port_0_r(0)&0x01);
 	
@@ -141,24 +138,21 @@ public class spiders
 	
 	int spiders_video_flip=0;
 	
-	public static WriteHandlerPtr spiders_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spiders_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spiders_video_flip=data;
 	} };
 	
-	public static WriteHandlerPtr spiders_vrif_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr spiders_vrif_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vrom_ctrl_mode=(data&0x80)>>7;
 		vrom_ctrl_latch=(data&0x30)>>4;
 		vrom_ctrl_data=15-(data&0x0f);
 	} };
 	
-	public static ReadHandlerPtr spiders_vrom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr spiders_vrom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int retval;
 		unsigned char *RAM = memory_region(REGION_GFX1);
 	
-		if (vrom_ctrl_mode != 0)
+		if(vrom_ctrl_mode)
 		{
 			retval=RAM[vrom_address];
 	//	        logerror("VIDEO : Read data %02x from Port address %04x\n",retval,vrom_address);

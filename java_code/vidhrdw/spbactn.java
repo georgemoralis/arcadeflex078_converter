@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -26,33 +26,33 @@ public class spbactn
 		ox = sx;
 		oy = sy;
 	
-		ex = sx + src1.width - 1;
+		ex = sx + src1->width - 1;
 		if (sx < 0) sx = 0;
-		if (sx < clip.min_x) sx = clip.min_x;
-		if (ex >= dest.width) ex = dest.width - 1;
-		if (ex > clip.max_x) ex = clip.max_x;
+		if (sx < clip->min_x) sx = clip->min_x;
+		if (ex >= dest->width) ex = dest->width - 1;
+		if (ex > clip->max_x) ex = clip->max_x;
 		if (sx > ex) return;
 	
-		ey = sy + src1.height - 1;
+		ey = sy + src1->height - 1;
 		if (sy < 0) sy = 0;
-		if (sy < clip.min_y) sy = clip.min_y;
-		if (ey >= dest.height) ey = dest.height - 1;
-		if (ey > clip.max_y) ey = clip.max_y;
+		if (sy < clip->min_y) sy = clip->min_y;
+		if (ey >= dest->height) ey = dest->height - 1;
+		if (ey > clip->max_y) ey = clip->max_y;
 		if (sy > ey) return;
 	
 		{
-			pen_t *paldata = Machine.pens;
+			pen_t *paldata = Machine->pens;
 			UINT32 *end;
 	
-			UINT16 *sd1 = ((UINT16 *)src1.line[0]);								/* source data   */
-			UINT16 *sd2 = ((UINT16 *)src2.line[0]);
+			UINT16 *sd1 = ((UINT16 *)src1->line[0]);								/* source data   */
+			UINT16 *sd2 = ((UINT16 *)src2->line[0]);
 	
 			int sw = ex-sx+1;														/* source width  */
 			int sh = ey-sy+1;														/* source height */
-			int sm = ((UINT16 *)src1.line[1]) - ((UINT16 *)src1.line[0]);			/* source modulo */
+			int sm = ((UINT16 *)src1->line[1]) - ((UINT16 *)src1->line[0]);			/* source modulo */
 	
-			UINT32 *dd = ((UINT32 *)dest.line[sy]) + sx;							/* dest data     */
-			int dm = ((UINT32 *)dest.line[1]) - ((UINT32 *)dest.line[0]);			/* dest modulo   */
+			UINT32 *dd = ((UINT32 *)dest->line[sy]) + sx;							/* dest data     */
+			int dm = ((UINT32 *)dest->line[1]) - ((UINT32 *)dest->line[0]);			/* dest modulo   */
 	
 			sd1 += (sx-ox);
 			sd1 += sm * (sy-oy);
@@ -150,7 +150,7 @@ public class spbactn
 	
 				attr &= ~0x0040;							/* !!! */
 	
-				if ((attr & 0x0040) != 0)
+				if (attr & 0x0040)
 					color |= 0x0180;
 				else
 					color |= 0x0080;
@@ -163,12 +163,12 @@ public class spbactn
 						int x = sx + 8 * (flipx ? (size - 1 - col) : col);
 						int y = sy + 8 * (flipy ? (size - 1 - row) : row);
 	
-						drawgfx(bitmap, Machine.gfx[2],
+						drawgfx(bitmap, Machine->gfx[2],
 							code + layout[row][col],
 							color,
 							flipx, flipy,
 							x, y,
-							Machine.visible_area, TRANSPARENCY_PEN, 0);
+							Machine->visible_area, TRANSPARENCY_PEN, 0);
 					}
 				}
 	
@@ -180,8 +180,7 @@ public class spbactn
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_spbactn  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spbactn  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate bitmaps */
 		tile_bitmap_bg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
 		tile_bitmap_fg = auto_bitmap_alloc_depth(Machine.drv.screen_width, Machine.drv.screen_height, 16);
@@ -192,8 +191,7 @@ public class spbactn
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spbactn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs, sx, sy;
 	
 		fillbitmap(tile_bitmap_fg,      0, cliprect);
@@ -203,8 +201,8 @@ public class spbactn
 		{
 			int attr, code, colour;
 	
-			code = spbactn_bgvideoram.read(offs + 0x4000 / 2);
-			attr = spbactn_bgvideoram.read(offs + 0x0000 / 2);
+			code = spbactn_bgvideoram[offs + 0x4000 / 2];
+			attr = spbactn_bgvideoram[offs + 0x0000 / 2];
 	
 			colour = ((attr & 0x00f0) >> 4) | 0x80;
 	
@@ -230,8 +228,8 @@ public class spbactn
 			{
 				int attr, code, colour;
 	
-				code = spbactn_bgvideoram.read(offs + 0x4000 / 2);
-				attr = spbactn_bgvideoram.read(offs + 0x0000 / 2);
+				code = spbactn_bgvideoram[offs + 0x4000 / 2];
+				attr = spbactn_bgvideoram[offs + 0x0000 / 2];
 	
 				colour = ((attr & 0x00f0) >> 4) | 0x80;
 	
@@ -258,13 +256,13 @@ public class spbactn
 		{
 			int attr, code, colour;
 	
-			code = spbactn_fgvideoram.read(offs + 0x4000 / 2);
-			attr = spbactn_fgvideoram.read(offs + 0x0000 / 2);
+			code = spbactn_fgvideoram[offs + 0x4000 / 2];
+			attr = spbactn_fgvideoram[offs + 0x0000 / 2];
 	
 			colour = ((attr & 0x00f0) >> 4);
 	
 			/* blending */
-			if ((attr & 0x0008) != 0)
+			if (attr & 0x0008)
 				colour += 0x00f0;
 			else
 				colour |= 0x0080;

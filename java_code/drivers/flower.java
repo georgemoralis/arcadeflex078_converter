@@ -39,7 +39,7 @@ CHIP #  POSITION   TYPE
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,36 +56,31 @@ public class flower
 	
 	
 	
-	public static WriteHandlerPtr flower_irq_ack = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flower_irq_ack = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
 	
 	static int sn_irq_enable,sn_nmi_enable;
 	
-	public static WriteHandlerPtr sn_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sn_irq_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sn_irq_enable = data & 1;
 	
 		cpu_set_irq_line(2, 0, CLEAR_LINE);
 	} };
 	
-	public static InterruptHandlerPtr sn_irq = new InterruptHandlerPtr() {public void handler()
-	{
-		if (sn_irq_enable != 0)
+	public static InterruptHandlerPtr sn_irq = new InterruptHandlerPtr() {public void handler(){
+		if (sn_irq_enable)
 			cpu_set_irq_line(2, 0, ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr sn_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sn_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sn_nmi_enable = data & 1;
 	} };
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
-		if (sn_nmi_enable != 0)
+		if (sn_nmi_enable)
 			cpu_set_nmi_line(2, PULSE_LINE);
 	} };
 	
@@ -150,7 +145,7 @@ public class flower
 	
 	
 	
-	static InputPortPtr input_ports_flower = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_flower = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( flower )
 		PORT_START(); 	/* IN0 (CPU0) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1  );
@@ -260,8 +255,7 @@ public class flower
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_flower = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( flower )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000)
@@ -294,9 +288,7 @@ public class flower
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_flower = new RomLoadPtr(){ public void handler(){ 
@@ -335,5 +327,5 @@ public class flower
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_flower	   = new GameDriver("1986"	,"flower"	,"flower.java"	,rom_flower,null	,machine_driver_flower	,input_ports_flower	,null	,ROT0	,	"Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1986, flower, 0, flower, flower, 0, ROT0, "Komax", "Flower", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND | GAME_NO_COCKTAIL )
 }

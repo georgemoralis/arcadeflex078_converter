@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -42,8 +42,7 @@ public class blockhl
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_blockhl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_blockhl  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 16;
 		layer_colorbase[2] = 32;
@@ -58,8 +57,7 @@ public class blockhl
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_blockhl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_blockhl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[2],TILEMAP_IGNORE_TRANSPARENCY,0);

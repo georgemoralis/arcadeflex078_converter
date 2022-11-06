@@ -25,7 +25,7 @@ A3-1J
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -35,8 +35,7 @@ public class supdrapo
 	static struct tilemap *fg_tilemap;
 	static unsigned char *char_bank;
 	
-	public static WriteHandlerPtr supdrapo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supdrapo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data )
 		{
 			videoram.write(offset,data);
@@ -44,8 +43,7 @@ public class supdrapo
 		}
 	} };
 	
-	public static WriteHandlerPtr supdrapo_char_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr supdrapo_char_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( char_bank[offset] != data )
 		{
 			char_bank[offset] = data;
@@ -95,7 +93,7 @@ public class supdrapo
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_supdrapo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_supdrapo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( supdrapo )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );//win
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );//cancel
@@ -265,18 +263,16 @@ public class supdrapo
 		SET_TILE_INFO( 0, code, 0, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_supdrapo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_supdrapo  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (fg_tilemap == 0)
+		if( !fg_tilemap )
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_supdrapo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_supdrapo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	
 	} };
@@ -292,8 +288,7 @@ public class supdrapo
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_supdrapo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( supdrapo )
 		MDRV_CPU_ADD(Z80,8000000/2)		 /* ??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_pulse,1)
@@ -313,9 +308,7 @@ public class supdrapo
 		MDRV_VIDEO_UPDATE(supdrapo)
 	
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_supdrapo = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x010000, REGION_CPU1, 0 )
@@ -338,5 +331,5 @@ public class supdrapo
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_supdrapo	   = new GameDriver("1983"	,"supdrapo"	,"supdrapo.java"	,rom_supdrapo,null	,machine_driver_supdrapo	,input_ports_supdrapo	,null	,ROT90	,	"Stern", "Super Draw Poker", GAME_NOT_WORKING )
+	GAMEX( 1983, supdrapo, 0, supdrapo, supdrapo, 0, ROT90, "Stern", "Super Draw Poker", GAME_NOT_WORKING )
 }

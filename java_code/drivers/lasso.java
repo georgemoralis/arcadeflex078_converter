@@ -22,7 +22,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -32,8 +32,7 @@ public class lasso
 	
 	/* IRQ = VBlank, NMI = Coin Insertion */
 	
-	public static InterruptHandlerPtr lasso_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr lasso_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int old;
 		int new;
 	
@@ -59,39 +58,33 @@ public class lasso
 	
 	static data8_t *lasso_sharedram;
 	
-	public static ReadHandlerPtr lasso_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lasso_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return lasso_sharedram[offset];
 	} };
-	public static WriteHandlerPtr lasso_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lasso_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lasso_sharedram[offset] = data;
 	} };
 	
 	
 	/* Write to the sound latch and generate an IRQ on the sound CPU */
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line( 1, 0, PULSE_LINE );
 	} };
 	
-	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/*	0x01: chip#0 ready; 0x02: chip#1 ready */
 		return 0x03;
 	} };
 	
 	static data8_t lasso_chip_data;
 	
-	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		lasso_chip_data = BITSWAP8(data,0,1,2,3,4,5,6,7);
 	} };
 	
-	public static WriteHandlerPtr sound_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (~data & 0x01)	/* chip #0 */
 			SN76496_0_w(0,lasso_chip_data);
 	
@@ -308,7 +301,7 @@ public class lasso
 	
 	
 	
-	static InputPortPtr input_ports_lasso = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lasso = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lasso )
 		PORT_START();  /* 1804 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -373,7 +366,7 @@ public class lasso
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1  );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_chameleo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_chameleo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( chameleo )
 		PORT_START();  /* 1804 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -438,7 +431,7 @@ public class lasso
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1  );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wwjgtin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wwjgtin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wwjgtin )
 		PORT_START();  /* 1804 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -504,7 +497,7 @@ public class lasso
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START2  );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pinbo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pinbo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pinbo )
 		PORT_START();   /* 1804 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -569,7 +562,7 @@ public class lasso
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_START1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pinbos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pinbos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pinbos )
 		PORT_START();   /* 1804 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -741,8 +734,7 @@ public class lasso
 		new WriteHandlerPtr[] { 0, 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_lasso = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lasso )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 2000000)	/* 2 MHz (?) */
@@ -773,12 +765,9 @@ public class lasso
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("sn76496", SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_chameleo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( chameleo )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(lasso)
@@ -792,12 +781,9 @@ public class lasso
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(chameleo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_wwjgtin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wwjgtin )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(lasso)
@@ -821,12 +807,9 @@ public class lasso
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_pinbo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pinbo )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(lasso)
@@ -850,9 +833,7 @@ public class lasso
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("sn76496")
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_lasso = new RomLoadPtr(){ public void handler(){ 
@@ -1050,9 +1031,9 @@ public class lasso
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_lasso	   = new GameDriver("1982"	,"lasso"	,"lasso.java"	,rom_lasso,null	,machine_driver_lasso	,input_ports_lasso	,null	,ROT90	,	"SNK", "Lasso"                   )
-	public static GameDriver driver_chameleo	   = new GameDriver("1983"	,"chameleo"	,"lasso.java"	,rom_chameleo,null	,machine_driver_chameleo	,input_ports_chameleo	,null	,ROT0	,	"Jaleco", "Chameleon"               )
-	public static GameDriver driver_wwjgtin	   = new GameDriver("1984"	,"wwjgtin"	,"lasso.java"	,rom_wwjgtin,null	,machine_driver_wwjgtin	,input_ports_wwjgtin	,null	,ROT0	,	"Jaleco / Casio", "Wai Wai Jockey Gate-In!" )
-	public static GameDriver driver_pinbo	   = new GameDriver("1984"	,"pinbo"	,"lasso.java"	,rom_pinbo,null	,machine_driver_pinbo	,input_ports_pinbo	,null	,ROT90	,	"Jaleco", "Pinbo" )
-	public static GameDriver driver_pinbos	   = new GameDriver("1984"	,"pinbos"	,"lasso.java"	,rom_pinbos,driver_pinbo	,machine_driver_pinbo	,input_ports_pinbos	,null	,ROT90	,	"bootleg?", "Pinbo (Strike)" )
+	GAME( 1982, lasso,    0,     lasso,    lasso,    0, ROT90, "SNK", "Lasso"                   )
+	GAME( 1983, chameleo, 0,     chameleo, chameleo, 0, ROT0,  "Jaleco", "Chameleon"               )
+	GAME( 1984, wwjgtin,  0,     wwjgtin,  wwjgtin,  0, ROT0,  "Jaleco / Casio", "Wai Wai Jockey Gate-In!" )
+	GAME( 1984, pinbo,    0,     pinbo,    pinbo,    0, ROT90, "Jaleco", "Pinbo" )
+	GAME( 1984, pinbos,   pinbo, pinbo,    pinbos,   0, ROT90, "bootleg?", "Pinbo (Strike)" )
 }

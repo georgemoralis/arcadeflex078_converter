@@ -46,7 +46,7 @@ starfira has one less rom in total than starfire but everything passes as
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,14 +80,13 @@ public class starfire
 		/* update the previous chunk of scanlines */
 		starfire_video_update(scanline, SCANLINE_UPDATE_CHUNK);
 		scanline += SCANLINE_UPDATE_CHUNK;
-		if (scanline >= Machine.drv.screen_height)
+		if (scanline >= Machine->drv->screen_height)
 			scanline = 32;
 		timer_set(cpu_getscanlinetime(scanline + SCANLINE_UPDATE_CHUNK - 1), scanline, update_callback);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_starfire  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_starfire  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime(32 + SCANLINE_UPDATE_CHUNK - 1), 32, update_callback);
 	} };
 	
@@ -99,8 +98,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr starfire_scratch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfire_scratch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* A12 and A3 select video control registers */
 		if ((offset & 0x1008) == 0x1000)
 		{
@@ -117,19 +115,18 @@ public class starfire
 	
 		/* convert to a videoram offset */
 		offset = (offset & 0x31f) | ((offset & 0xe0) << 5);
-	    starfire_videoram.write(data,data);
+	    starfire_videoram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr starfire_scratch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starfire_scratch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* A11 selects input ports */
-		if ((offset & 0x800) != 0)
+		if (offset & 0x800)
 			return (*input_read)(offset);
 	
 		/* convert to a videoram offset */
 		offset = (offset & 0x31f) | ((offset & 0xe0) << 5);
-	    return starfire_videoram.read(offset);
+	    return starfire_videoram[offset];
 	} };
 	
 	
@@ -140,8 +137,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr starfire_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starfire_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset & 15)
 		{
 			case 0:	return input_port_0_r.handler(0);
@@ -154,8 +150,7 @@ public class starfire
 	} };
 	
 	
-	public static ReadHandlerPtr fireone_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fireone_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static const UINT8 fireone_paddle_map[64] =
 		{
 			0x00,0x01,0x03,0x02,0x06,0x07,0x05,0x04,
@@ -215,7 +210,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_starfire = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starfire = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starfire )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, "Time" );
 		PORT_DIPSETTING(    0x00, "90 Sec" );
@@ -259,7 +254,7 @@ public class starfire
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_fireone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fireone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fireone )
 		PORT_START();       /* DSW0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x03, "2 Coins/1 Player" );
@@ -310,8 +305,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_starfire = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starfire )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2500000)
@@ -333,9 +327,7 @@ public class starfire
 		MDRV_VIDEO_UPDATE(starfire)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -400,13 +392,11 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_starfire  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starfire  = new DriverInitHandlerPtr() { public void handler(){
 		input_read = starfire_input_r;
 	} };
 	
-	public static DriverInitHandlerPtr init_fireone  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fireone  = new DriverInitHandlerPtr() { public void handler(){
 		input_read = fireone_input_r;
 	} };
 	
@@ -418,7 +408,7 @@ public class starfire
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_starfire	   = new GameDriver("1979"	,"starfire"	,"starfire.java"	,rom_starfire,null	,machine_driver_starfire	,input_ports_starfire	,init_starfire	,ROT0	,	"Exidy", "Star Fire (set 1)", GAME_NO_SOUND )
-	public static GameDriver driver_starfira	   = new GameDriver("1979"	,"starfira"	,"starfire.java"	,rom_starfira,driver_starfire	,machine_driver_starfire	,input_ports_starfire	,init_starfire	,ROT0	,	"Exidy", "Star Fire (set 2)", GAME_NO_SOUND )
-	public static GameDriver driver_fireone	   = new GameDriver("1979"	,"fireone"	,"starfire.java"	,rom_fireone,null	,machine_driver_starfire	,input_ports_fireone	,init_fireone	,ROT0	,	"Exidy", "Fire One", GAME_NO_SOUND )
+	GAMEX( 1979, starfire, 0,        starfire, starfire, starfire, ROT0, "Exidy", "Star Fire (set 1)", GAME_NO_SOUND )
+	GAMEX( 1979, starfira, starfire, starfire, starfire, starfire, ROT0, "Exidy", "Star Fire (set 2)", GAME_NO_SOUND )
+	GAMEX( 1979, fireone,  0,        starfire, fireone,  fireone,  ROT0, "Exidy", "Fire One", GAME_NO_SOUND )
 }

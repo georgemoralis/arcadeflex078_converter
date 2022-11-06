@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -30,13 +30,11 @@ public class beezer
 		/*irq                  */ b_via_1_irq
 	};
 	
-	public static ReadHandlerPtr b_via_0_ca2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr b_via_0_ca2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr b_via_0_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b_via_0_ca2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	static void b_via_0_irq (int level)
@@ -44,13 +42,11 @@ public class beezer
 		cpu_set_irq_line(0, M6809_IRQ_LINE, level);
 	}
 	
-	public static ReadHandlerPtr b_via_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr b_via_0_pb_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pbus;
 	} };
 	
-	public static WriteHandlerPtr b_via_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b_via_0_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x08) == 0)
 			cpu_set_reset_line(1, ASSERT_LINE);
 		else
@@ -76,8 +72,7 @@ public class beezer
 		}
 	} };
 	
-	public static WriteHandlerPtr b_via_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b_via_0_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pbus = data;
 	} };
 	
@@ -86,35 +81,29 @@ public class beezer
 		cpu_set_irq_line(1, M6809_IRQ_LINE, level);
 	}
 	
-	public static ReadHandlerPtr b_via_1_pa_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr b_via_1_pa_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pbus;
 	} };
 	
-	public static ReadHandlerPtr b_via_1_pb_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr b_via_1_pb_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr b_via_1_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b_via_1_pa_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pbus = data;
 	} };
 	
-	public static WriteHandlerPtr b_via_1_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr b_via_1_pb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
-	public static DriverInitHandlerPtr init_beezer  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_beezer  = new DriverInitHandlerPtr() { public void handler(){
 		via_config(0, &b_via_0_interface);
 		via_config(1, &b_via_1_interface);
 		via_reset();
 		pbus = 0;
 	} };
 	
-	public static WriteHandlerPtr beezer_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr beezer_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x07) == 0)
 		{
 			install_mem_write_handler(0, 0xc600, 0xc7ff, watchdog_reset_w);

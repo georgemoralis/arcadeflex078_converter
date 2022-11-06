@@ -132,7 +132,7 @@ SNK/Eastern  1985 (ACT) Gekisoh          Œƒ‘–
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -223,18 +223,16 @@ public class equites
 	// Interrupt Handlers
 	
 	// Equites Hardware
-	public static InterruptHandlerPtr equites_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr equites_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 1, HOLD_LINE);
 	} };
 	
 	// Splendor Blast Hareware
-	public static InterruptHandlerPtr splndrbt_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr splndrbt_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, 1, HOLD_LINE);
@@ -249,21 +247,21 @@ public class equites
 		int data;
 	
 		data = readinputport(0);
-		if (disablejoyport2 != 0) data = (data & 0x80ff) | (data<<8 & 0x7f00);
+		if (disablejoyport2) data = (data & 0x80ff) | (data<<8 & 0x7f00);
 	
 		return (data);
 	}
 	
 	static WRITE16_HANDLER(equites_flip0_w)
 	{
-		if (ACCESSING_LSB != 0) disablejoyport2 = 1;
-		if (ACCESSING_MSB != 0) equites_flip = 0;
+		if (ACCESSING_LSB) disablejoyport2 = 1;
+		if (ACCESSING_MSB) equites_flip = 0;
 	}
 	
 	static WRITE16_HANDLER(equites_flip1_w)
 	{
-		if (ACCESSING_LSB != 0) disablejoyport2 = 0;
-		if (ACCESSING_MSB != 0) equites_flip = 1;
+		if (ACCESSING_LSB) disablejoyport2 = 0;
+		if (ACCESSING_MSB) equites_flip = 1;
 	}
 	
 	// Splendor Blast Hardware
@@ -276,13 +274,13 @@ public class equites
 	
 	static WRITE16_HANDLER(splndrbt_flip0_w)
 	{
-		if (ACCESSING_LSB != 0) splndrbt_flip = 0;
-		if (ACCESSING_MSB != 0) equites_bgcolor_w(offset, data, 0x00ff);
+		if (ACCESSING_LSB) splndrbt_flip = 0;
+		if (ACCESSING_MSB) equites_bgcolor_w(offset, data, 0x00ff);
 	}
 	
 	static WRITE16_HANDLER(splndrbt_flip1_w)
 	{
-		if (ACCESSING_LSB != 0) splndrbt_flip = 1;
+		if (ACCESSING_LSB) splndrbt_flip = 1;
 	}
 	#if 0
 	static WRITE16_HANDLER(log16_w)
@@ -389,7 +387,7 @@ public class equites
 	/******************************************************************************/
 	// Equites Port Map
 	
-	static InputPortPtr input_ports_equites = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_equites = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( equites )
 		PORT_START(); 
 		EQUITES_PLAYER_INPUT_LSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START1 )
 		EQUITES_PLAYER_INPUT_MSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START2 )
@@ -422,7 +420,7 @@ public class equites
 	/******************************************************************************/
 	// Bull Fighter Port Map
 	
-	static InputPortPtr input_ports_bullfgtr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bullfgtr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bullfgtr )
 		PORT_START(); 
 		EQUITES_PLAYER_INPUT_LSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START1 )
 		EQUITES_PLAYER_INPUT_MSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START2 )
@@ -454,7 +452,7 @@ public class equites
 	/******************************************************************************/
 	// Koukouyakyuh Port Map
 	
-	static InputPortPtr input_ports_kouyakyu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kouyakyu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kouyakyu )
 		PORT_START(); 
 		EQUITES_PLAYER_INPUT_LSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START1 )
 		EQUITES_PLAYER_INPUT_MSB( IPT_BUTTON1, IPT_BUTTON2, IPT_BUTTON3, IPT_START2 )
@@ -487,7 +485,7 @@ public class equites
 	/******************************************************************************/
 	// Splendor Blast Port Map
 	
-	static InputPortPtr input_ports_splndrbt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_splndrbt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( splndrbt )
 		PORT_START(); 
 		EQUITES_PLAYER_INPUT_LSB( IPT_BUTTON1, IPT_BUTTON2, IPT_UNKNOWN, IPT_START1 )
 		EQUITES_PLAYER_INPUT_MSB( IPT_BUTTON1, IPT_BUTTON2, IPT_UNKNOWN, IPT_START2 )
@@ -519,7 +517,7 @@ public class equites
 	/******************************************************************************/
 	// High Voltage Port Map
 	
-	static InputPortPtr input_ports_hvoltage = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hvoltage = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hvoltage )
 		PORT_START(); 
 		EQUITES_PLAYER_INPUT_LSB( IPT_BUTTON1, IPT_BUTTON2, IPT_UNKNOWN, IPT_START1 )
 		EQUITES_PLAYER_INPUT_MSB( IPT_BUTTON1, IPT_BUTTON2, IPT_UNKNOWN, IPT_START2 )
@@ -683,8 +681,7 @@ public class equites
 	/******************************************************************************/
 	// Hardware Definitions
 	
-	public static MachineHandlerPtr machine_driver_equites = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( equites )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000/2) // OSC: 12Mhz
@@ -709,12 +706,9 @@ public class equites
 		/* sound hardware */
 		EQUITES_ADD_SOUNDBOARD7
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_splndrbt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( splndrbt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000/2) // OSC: 12Mhz
@@ -740,9 +734,7 @@ public class equites
 		/* sound hardware */
 		EQUITES_ADD_SOUNDBOARD7
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	// Equites ROM Map
@@ -1108,8 +1100,7 @@ public class equites
 		equites_8404init();
 	}
 	
-	public static DriverInitHandlerPtr init_equites  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_equites  = new DriverInitHandlerPtr() { public void handler(){
 		equites_id = 0x8400;
 	
 		equites_init_common();
@@ -1140,8 +1131,7 @@ public class equites
 		equites_8404rule(0x9176, 0x483,-0x03); // exit location lo
 	} };
 	
-	public static DriverInitHandlerPtr init_bullfgtr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bullfgtr  = new DriverInitHandlerPtr() { public void handler(){
 		equites_id = 0x8401;
 	
 		equites_init_common();
@@ -1150,8 +1140,7 @@ public class equites
 		equites_8404rule(0x3da4, 0x201, 0x0c); // goal in
 	} };
 	
-	public static DriverInitHandlerPtr init_kouyakyu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kouyakyu  = new DriverInitHandlerPtr() { public void handler(){
 		equites_id = 0x8500;
 	
 		equites_init_common();
@@ -1159,8 +1148,7 @@ public class equites
 		equites_8404rule(0x5582, 0x603, 0x05); // home run
 	} };
 	
-	public static DriverInitHandlerPtr init_splndrbt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_splndrbt  = new DriverInitHandlerPtr() { public void handler(){
 		equites_id = 0x8510;
 	
 		splndrbt_init_common();
@@ -1180,7 +1168,7 @@ public class equites
 	
 		equites_8404rule(0x1298, 0x25f,-0x0c); // stage number?
 	
-		// game params. (180261-18027f).(40060-4006f)
+		// game params. (180261-18027f)->(40060-4006f)
 		equites_8404rule(0x12a0, 0x261, 0x0a); // max speed hi
 		equites_8404rule(0x12a0, 0x263, 0x00); // max speed lo
 		equites_8404rule(0x12a0, 0x265, 0x00); // accel hi
@@ -1226,8 +1214,7 @@ public class equites
 		equites_8404rule(0x0c12, 0x5f9,-0x07); // game over/respawn addr lo
 	} };
 	
-	public static DriverInitHandlerPtr init_hvoltage  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hvoltage  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 	#if HVOLTAGE_HACK
@@ -1272,14 +1259,14 @@ public class equites
 	// Game Entries
 	
 	// Equites Hardware
-	public static GameDriver driver_equites	   = new GameDriver("1984"	,"equites"	,"equites.java"	,rom_equites,null	,machine_driver_equites	,input_ports_equites	,init_equites	,ROT90	,	"Alpha Denshi Co.",                "Equites", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	public static GameDriver driver_equitess	   = new GameDriver("1984"	,"equitess"	,"equites.java"	,rom_equitess,driver_equites	,machine_driver_equites	,input_ports_equites	,init_equites	,ROT90	,	"Alpha Denshi Co. (Sega license)", "Equites (Sega)", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	public static GameDriver driver_bullfgtr	   = new GameDriver("1984"	,"bullfgtr"	,"equites.java"	,rom_bullfgtr,null	,machine_driver_equites	,input_ports_bullfgtr	,init_bullfgtr	,ROT90	,	"Alpha Denshi Co. (Sega license)", "Bull Fighter", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS )
-	public static GameDriver driver_kouyakyu	   = new GameDriver("1985"	,"kouyakyu"	,"equites.java"	,rom_kouyakyu,null	,machine_driver_equites	,input_ports_kouyakyu	,init_kouyakyu	,ROT0	,	"Alpha Denshi Co.",                "The Koukouyakyuh", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1984, equites,  0,        equites,  equites,  equites,  ROT90, "Alpha Denshi Co.",                "Equites", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	GAMEX( 1984, equitess, equites,  equites,  equites,  equites,  ROT90, "Alpha Denshi Co. (Sega license)", "Equites (Sega)", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	GAMEX( 1984, bullfgtr, 0,        equites,  bullfgtr, bullfgtr, ROT90, "Alpha Denshi Co. (Sega license)", "Bull Fighter", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS )
+	GAMEX( 1985, kouyakyu, 0,        equites,  kouyakyu, kouyakyu, ROT0,  "Alpha Denshi Co.",                "The Koukouyakyuh", GAME_UNEMULATED_PROTECTION )
 	
 	// Splendor Blast Hardware
-	public static GameDriver driver_splndrbt	   = new GameDriver("1985"	,"splndrbt"	,"equites.java"	,rom_splndrbt,null	,machine_driver_splndrbt	,input_ports_splndrbt	,init_splndrbt	,ROT0	,	"Alpha Denshi Co.", "Splendor Blast", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
-	public static GameDriver driver_hvoltage	   = new GameDriver("1985"	,"hvoltage"	,"equites.java"	,rom_hvoltage,null	,machine_driver_splndrbt	,input_ports_hvoltage	,init_hvoltage	,ROT0	,	"Alpha Denshi Co.", "High Voltage", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1985, splndrbt, 0,        splndrbt, splndrbt, splndrbt, ROT0,  "Alpha Denshi Co.", "Splendor Blast", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL )
+	GAMEX( 1985, hvoltage, 0,        splndrbt, hvoltage, hvoltage, ROT0,  "Alpha Denshi Co.", "High Voltage", GAME_UNEMULATED_PROTECTION )
 	
 	/******************************************************************************/
 }

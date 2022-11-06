@@ -6,7 +6,7 @@ Atari Drag Race video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class dragrace
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_dragrace  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dragrace  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(
 			get_tile_info, get_memory_offset, TILEMAP_OPAQUE, 16, 16, 16, 16);
 	
@@ -68,8 +67,7 @@ public class dragrace
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_dragrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dragrace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int y;
 	
 		tilemap_mark_all_tiles_dirty(tilemap);

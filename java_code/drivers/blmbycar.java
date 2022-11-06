@@ -18,7 +18,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -49,7 +49,7 @@ public class blmbycar
 	
 	WRITE16_HANDLER( blmbycar_okibank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			unsigned char *RAM = memory_region(REGION_SOUND1);
 			memcpy(&RAM[0x30000],&RAM[0x40000 + 0x10000*(data & 0xf)],0x10000);
@@ -70,13 +70,13 @@ public class blmbycar
 	
 	static WRITE16_HANDLER( blmbycar_pot_wheel_reset_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			pot_wheel = ~readinputport(2) & 0xff;
 	}
 	
 	static WRITE16_HANDLER( blmbycar_pot_wheel_shift_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			static int old;
 			if ( ((old & 0xff) == 0xff) && ((data & 0xff) == 0) )
@@ -158,7 +158,7 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blmbycar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blmbycar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blmbycar )
 	
 		PORT_START(); 	// IN0 - $700000.w
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
@@ -281,8 +281,7 @@ public class blmbycar
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_blmbycar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blmbycar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* ? */
@@ -305,9 +304,7 @@ public class blmbycar
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, blmbycar_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -368,8 +365,7 @@ public class blmbycar
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_blmbycar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blmbycar  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM  = (data16_t *) memory_region(REGION_CPU1);
 		size_t    size = memory_region_length(REGION_CPU1) / 2;
 		int i;
@@ -390,6 +386,6 @@ public class blmbycar
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_blmbycar	   = new GameDriver("1994"	,"blmbycar"	,"blmbycar.java"	,rom_blmbycar,null	,machine_driver_blmbycar	,input_ports_blmbycar	,init_blmbycar	,ROT0	,	"ABM & Gecas", "Blomby Car" )
-	public static GameDriver driver_blmbycau	   = new GameDriver("1994"	,"blmbycau"	,"blmbycar.java"	,rom_blmbycau,driver_blmbycar	,machine_driver_blmbycar	,input_ports_blmbycar	,null	,ROT0	,	"ABM & Gecas", "Blomby Car (not encrypted)" )
+	GAME( 1994, blmbycar, 0,        blmbycar, blmbycar, blmbycar, ROT0, "ABM & Gecas", "Blomby Car" )
+	GAME( 1994, blmbycau, blmbycar, blmbycar, blmbycar, 0,        ROT0, "ABM & Gecas", "Blomby Car (not encrypted)" )
 }

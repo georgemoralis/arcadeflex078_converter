@@ -10,7 +10,7 @@ Additional tweaking by Jarek Burczynski
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,26 +26,23 @@ public class magmax
 	
 	static WRITE16_HANDLER( magmax_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			sound_latch = (data & 0xff) << 1;
 			cpu_set_irq_line(1, 0, ASSERT_LINE);
 		}
 	}
 	
-	public static ReadHandlerPtr magmax_sound_irq_ack  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr magmax_sound_irq_ack  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, 0, CLEAR_LINE);
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr magmax_sound_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr magmax_sound_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (sound_latch | LS74_q);
 	} };
 	
-	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*bit 0 is input to CLR line of the LS74*/
 		LS74_clr = data & 1;
 		if (LS74_clr == 0)
@@ -54,7 +51,7 @@ public class magmax
 	
 	static void scanline_callback(int scanline)
 	{
-		/* bit 0 goes hi whenever line V6 from video part goes lo.hi */
+		/* bit 0 goes hi whenever line V6 from video part goes lo->hi */
 		/* that is when scanline is 64 and 192 accordingly */
 		if (LS74_clr != 0)
 			LS74_q = 1;
@@ -65,8 +62,7 @@ public class magmax
 		timer_set( cpu_getscanlinetime( scanline ), scanline, scanline_callback );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_magmax  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_magmax  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime( 64 ), 64, scanline_callback );
 	#if 0
 		{
@@ -80,8 +76,7 @@ public class magmax
 	
 	static int gain_control = 0;
 	
-	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	int percent;
 	
 	/*There are three AY8910 chips and four(!) separate amplifiers on the board
@@ -229,7 +224,7 @@ public class magmax
 	};
 	
 	
-	static InputPortPtr input_ports_magmax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_magmax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( magmax )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -352,8 +347,7 @@ public class magmax
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_magmax = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( magmax )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)	/* 8 MHz */
@@ -385,9 +379,7 @@ public class magmax
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_magmax = new RomLoadPtr(){ public void handler(){ 
@@ -439,5 +431,5 @@ public class magmax
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_magmax	   = new GameDriver("1985"	,"magmax"	,"magmax.java"	,rom_magmax,null	,machine_driver_magmax	,input_ports_magmax	,null	,ROT0	,	"Nichibutsu", "Mag Max" )
+	GAME( 1985, magmax, 0, magmax, magmax, 0, ROT0, "Nichibutsu", "Mag Max" )
 }

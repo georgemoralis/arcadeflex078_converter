@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,7 +19,7 @@ public class pushman
 	
 	static UINT32 background_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col & 0x7)) + ((7-(row & 0x7)) << 3) + ((col & 0x78) <<3) + ((0x38-(row&0x38))<<7);
 	}
 	
@@ -54,8 +54,7 @@ public class pushman
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_pushman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pushman  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_back_tile_info,background_scan_rows,TILEMAP_OPAQUE,     32,32,128,64);
 		tx_tilemap = tilemap_create(get_text_tile_info,tilemap_scan_rows,   TILEMAP_TRANSPARENT, 8, 8, 32,32);
 	
@@ -114,15 +113,14 @@ public class pushman
 			flipx=spriteram16[offs+1]&2;
 			flipy=spriteram16[offs+1]&1;	/* flip y untested */
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sprite,
 	                color,flipx,flipy,x,y,
 					cliprect,TRANSPARENCY_PEN,15);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pushman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pushman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Setup the tilemaps */
 		tilemap_set_scrollx( bg_tilemap,0, control[0] );
 		tilemap_set_scrolly( bg_tilemap,0, 0xf00-control[1] );

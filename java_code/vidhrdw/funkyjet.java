@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -15,9 +15,8 @@ public class funkyjet
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_funkyjet  = new VideoStartHandlerPtr() { public int handler()
-	{
-		if (deco16_1_video_init() != 0)
+	public static VideoStartHandlerPtr video_start_funkyjet  = new VideoStartHandlerPtr() { public int handler(){
+		if (deco16_1_video_init())
 			return 1;
 	
 		return 0;
@@ -32,7 +31,7 @@ public class funkyjet
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult;
 	
 			sprite = spriteram16[offs+1] & 0x3fff;
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			y = spriteram16[offs];
 			flash=y&0x1000;
@@ -55,7 +54,7 @@ public class funkyjet
 			if (x>320) continue;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -63,19 +62,19 @@ public class funkyjet
 				inc = 1;
 			}
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				y=240-y;
 				x=304-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -87,8 +86,7 @@ public class funkyjet
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_funkyjet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_funkyjet  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);
 	

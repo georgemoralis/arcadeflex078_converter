@@ -16,21 +16,21 @@
 
 ***************************************************************************/
 
-#define DRIVER_INIT(name)		void init_##name(void)
+#define public static DriverInitHandlerPtr init_name  = new DriverInitHandlerPtr() { public void handler()void init_##name(void)
 
-#define INTERRUPT_GEN(func)		void func(void)
+#define public static InterruptHandlerPtr func = new InterruptHandlerPtr() {public void handler()void func(void)
 
-#define MACHINE_INIT(name)		void machine_init_##name(void)
-#define MACHINE_STOP(name)		void machine_stop_##name(void)
+#define public static MachineInitHandlerPtr machine_init_name  = new MachineInitHandlerPtr() { public void handler()void machine_init_##name(void)
+#define public static MachineStopHandlerPtr machine_stop_name  = new MachineStopHandlerPtr() { public void handler()void machine_stop_##name(void)
 
-#define NVRAM_HANDLER(name)		void nvram_handler_##name(mame_file *file, int read_or_write)
+#define public static NVRAMHandlerPtr nvram_handler_name  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)void nvram_handler_##name(mame_file *file, int read_or_write)
 
-#define PALETTE_INIT(name)		void palette_init_##name(UINT16 *colortable, const UINT8 *color_prom)
+#define public static PaletteInitHandlerPtr palette_init_name  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)void palette_init_##name(UINT16 *colortable, const UINT8 color_prom.read()
 
-#define VIDEO_START(name)		int video_start_##name(void)
-#define VIDEO_STOP(name)		void video_stop_##name(void)
-#define VIDEO_EOF(name)			void video_eof_##name(void)
-#define VIDEO_UPDATE(name)		void video_update_##name(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
+#define public static VideoStartHandlerPtr video_start_name  = new VideoStartHandlerPtr() { public int handler()int video_start_##name(void)
+#define public static VideoStopHandlerPtr video_stop_name  = new VideoStopHandlerPtr() { public void handler()void video_stop_##name(void)
+#define public static VideoEofHandlerPtr video_eof_name  = new VideoEofHandlerPtr() { public void handler()	void video_eof_##name(void)
+#define public static VideoUpdateHandlerPtr video_update_name  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)void video_update_##name(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 
 /* NULL versions */
 #define init_NULL				NULL
@@ -52,7 +52,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -87,10 +87,8 @@ public class driverH
 			struct MachineCPU *cpu = NULL;									\
 			(void)cpu;														\
 	
-	#define MACHINE_DRIVER_END();
- }
-}; 												\
-		}																	\
+	#define MACHINE_DRIVER_END 												\
+		} };																	\
 	
 	
 	/* importing data from other machine drivers */
@@ -114,121 +112,121 @@ public class driverH
 	
 	#define MDRV_CPU_REPLACE(tag, type, clock)								\
 		cpu = machine_find_cpu(machine, tag);								\
-		if (cpu != 0)															\
+		if (cpu)															\
 		{																	\
-			cpu.cpu_type = (CPU_##type);									\
-			cpu.cpu_clock = (clock);										\
+			cpu->cpu_type = (CPU_##type);									\
+			cpu->cpu_clock = (clock);										\
 		}																	\
 	
 	
 	/* CPU parameters */
 	#define MDRV_CPU_FLAGS(flags)											\
-		if (cpu != 0)															\
-			cpu.cpu_flags = (flags);										\
+		if (cpu)															\
+			cpu->cpu_flags = (flags);										\
 	
 	#define MDRV_CPU_CONFIG(config)											\
-		if (cpu != 0)															\
-			cpu.reset_param = &(config);									\
+		if (cpu)															\
+			cpu->reset_param = &(config);									\
 	
 	#define MDRV_CPU_MEMORY(readmem, writemem)								\
-		if (cpu != 0)															\
+		if (cpu)															\
 		{																	\
-			cpu.memory_read = (readmem);									\
-			cpu.memory_write = (writemem);									\
+			cpu->memory_read = (readmem);									\
+			cpu->memory_write = (writemem);									\
 		}																	\
 	
 	#define MDRV_CPU_PORTS(readport, writeport)								\
-		if (cpu != 0)															\
+		if (cpu)															\
 		{																	\
-			cpu.port_read = (readport);									\
-			cpu.port_write = (writeport);									\
+			cpu->port_read = (readport);									\
+			cpu->port_write = (writeport);									\
 		}																	\
 	
 	#define MDRV_CPU_VBLANK_INT(func, rate)									\
-		if (cpu != 0)															\
+		if (cpu)															\
 		{																	\
-			cpu.vblank_interrupt = func;									\
-			cpu.vblank_interrupts_per_frame = (rate);						\
+			cpu->vblank_interrupt = func;									\
+			cpu->vblank_interrupts_per_frame = (rate);						\
 		}																	\
 	
 	#define MDRV_CPU_PERIODIC_INT(func, rate)								\
-		if (cpu != 0)															\
+		if (cpu)															\
 		{																	\
-			cpu.timed_interrupt = func;									\
-			cpu.timed_interrupts_per_second = (rate);						\
+			cpu->timed_interrupt = func;									\
+			cpu->timed_interrupts_per_second = (rate);						\
 		}																	\
 	
 	
 	/* core parameters */
 	#define MDRV_FRAMES_PER_SECOND(rate)									\
-		machine.frames_per_second = (rate);								\
+		machine->frames_per_second = (rate);								\
 	
 	#define MDRV_VBLANK_DURATION(duration)									\
-		machine.vblank_duration = (duration);								\
+		machine->vblank_duration = (duration);								\
 	
 	#define MDRV_INTERLEAVE(interleave)										\
-		machine.cpu_slices_per_frame = (interleave);						\
+		machine->cpu_slices_per_frame = (interleave);						\
 	
 	
 	/* core functions */
 	#define MDRV_MACHINE_INIT(name)											\
-		machine.machine_init = machine_init_##name;						\
+		machine->machine_init = machine_init_##name;						\
 	
 	#define MDRV_MACHINE_STOP(name)											\
-		machine.machine_stop = machine_stop_##name;						\
+		machine->machine_stop = machine_stop_##name;						\
 	
 	#define MDRV_NVRAM_HANDLER(name)										\
-		machine.nvram_handler = nvram_handler_##name;						\
+		machine->nvram_handler = nvram_handler_##name;						\
 	
 	
 	/* core video parameters */
 	#define MDRV_VIDEO_ATTRIBUTES(flags)									\
-		machine.video_attributes = (flags);								\
+		machine->video_attributes = (flags);								\
 	
 	#define MDRV_ASPECT_RATIO(num, den)										\
-		machine.aspect_x = (num);											\
-		machine.aspect_y = (den);											\
+		machine->aspect_x = (num);											\
+		machine->aspect_y = (den);											\
 	
 	#define MDRV_SCREEN_SIZE(width, height)									\
-		machine.screen_width = (width);									\
-		machine.screen_height = (height);									\
+		machine->screen_width = (width);									\
+		machine->screen_height = (height);									\
 	
 	#define MDRV_VISIBLE_AREA(minx, maxx, miny, maxy)						\
-		machine.default_visible_area.min_x = (minx);						\
-		machine.default_visible_area.max_x = (maxx);						\
-		machine.default_visible_area.min_y = (miny);						\
-		machine.default_visible_area.max_y = (maxy);						\
+		machine->default_visible_area.min_x = (minx);						\
+		machine->default_visible_area.max_x = (maxx);						\
+		machine->default_visible_area.min_y = (miny);						\
+		machine->default_visible_area.max_y = (maxy);						\
 	
 	#define MDRV_GFXDECODE(gfx)												\
-		machine.gfxdecodeinfo = (gfx);										\
+		machine->gfxdecodeinfo = (gfx);										\
 	
 	#define MDRV_PALETTE_LENGTH(length)										\
-		machine.total_colors = (length);									\
+		machine->total_colors = (length);									\
 	
 	#define MDRV_COLORTABLE_LENGTH(length)									\
-		machine.color_table_len = (length);								\
+		machine->color_table_len = (length);								\
 	
 	
 	/* core video functions */
 	#define MDRV_PALETTE_INIT(name)											\
-		machine.init_palette = palette_init_##name;						\
+		machine->init_palette = palette_init_##name;						\
 	
 	#define MDRV_VIDEO_START(name)											\
-		machine.video_start = video_start_##name;							\
+		machine->video_start = video_start_##name;							\
 	
 	#define MDRV_VIDEO_STOP(name)											\
-		machine.video_stop = video_stop_##name;							\
+		machine->video_stop = video_stop_##name;							\
 	
 	#define MDRV_VIDEO_EOF(name)											\
-		machine.video_eof = video_eof_##name;								\
+		machine->video_eof = video_eof_##name;								\
 	
 	#define MDRV_VIDEO_UPDATE(name)											\
-		machine.video_update = video_update_##name;						\
+		machine->video_update = video_update_##name;						\
 	
 	
 	/* core sound parameters */
 	#define MDRV_SOUND_ATTRIBUTES(flags)									\
-		machine.sound_attributes = (flags);								\
+		machine->sound_attributes = (flags);								\
 	
 	
 	/* add/remove/replace sounds */
@@ -244,10 +242,10 @@ public class driverH
 	#define MDRV_SOUND_REPLACE(tag, type, interface)						\
 		{																	\
 			struct MachineSound *sound = machine_find_sound(machine, tag);	\
-			if (sound != 0)														\
+			if (sound)														\
 			{																\
-				sound.sound_type = SOUND_##type;							\
-				sound.sound_interface = &(interface);						\
+				sound->sound_type = SOUND_##type;							\
+				sound->sound_interface = &(interface);						\
 			}																\
 		}																	\
 	
@@ -396,7 +394,7 @@ public class driverH
 		void (*drv)(struct InternalMachineDriver *);
 		const struct InputPortTiny *input_ports;
 		void (*driver_init)(void);	/* optional function to be called during initialization */
-									/* This is called ONCE, unlike Machine.init_machine */
+									/* This is called ONCE, unlike Machine->init_machine */
 									/* which is called every time the game is reset. */
 	
 		const struct RomModule *rom;
@@ -446,7 +444,7 @@ public class driverH
 	
 	***************************************************************************/
 	
-	#define public static GameDriver driver_NAME	   = new GameDriver("YEAR"	,"NAME"	,"driverH.java"	,rom_NAME,driver_PARENT	,machine_driver_MACHINE	,input_ports_INPUT	,init_INIT	,MONITOR	,	COMPANY,FULLNAME)	\
+	#define GAME(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME)	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\
@@ -463,7 +461,7 @@ public class driverH
 		MONITOR									\
 	};
 	
-	#define public static GameDriver driver_NAME	   = new GameDriver("YEAR"	,"NAME"	,"driverH.java"	,rom_NAME,driver_PARENT	,machine_driver_MACHINE	,input_ports_INPUT	,init_INIT	,MONITOR	,	COMPANY,FULLNAME,FLAGS)	\
+	#define GAMEX(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME,FLAGS)	\
 	const struct GameDriver driver_##NAME =		\
 	{											\
 		__FILE__,								\

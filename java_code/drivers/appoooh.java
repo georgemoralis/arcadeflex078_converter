@@ -47,7 +47,7 @@ Credits:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -59,7 +59,7 @@ public class appoooh
 	
 	static void appoooh_adpcm_int(int num)
 	{
-		if (adpcmptr != 0)
+		if( adpcmptr )
 		{
 			if( appoooh_adpcm_data==-1)
 			{
@@ -77,8 +77,7 @@ public class appoooh
 		}
 	}
 	/* adpcm address write */
-	public static WriteHandlerPtr appoooh_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_SOUND1);
 		adpcmptr  = &RAM[data*256];
 		MSM5205_reset_w(0,0);
@@ -133,7 +132,7 @@ public class appoooh
 	
 	
 	
-	static InputPortPtr input_ports_appoooh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_appoooh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( appoooh )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -241,8 +240,7 @@ public class appoooh
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_appoooh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( appoooh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* ??? the main xtal is 18.432 MHz */
@@ -268,9 +266,7 @@ public class appoooh
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -317,5 +313,5 @@ public class appoooh
 	
 	
 	
-	public static GameDriver driver_appoooh	   = new GameDriver("1984"	,"appoooh"	,"appoooh.java"	,rom_appoooh,null	,machine_driver_appoooh	,input_ports_appoooh	,null	,ROT0	,	"[Sanritsu] Sega", "Appoooh" )
+	GAME( 1984, appoooh, 0, appoooh, appoooh, 0, ROT0, "[Sanritsu] Sega", "Appoooh" )
 }

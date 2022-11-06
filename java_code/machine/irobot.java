@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -61,8 +61,7 @@ public class irobot
 	
 	
 	
-	public static ReadHandlerPtr irobot_sharedmem_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irobot_sharedmem_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (irobot_outx == 3)
 			return mbRAM[BYTE_XOR_BE(offset)];
 	
@@ -79,8 +78,7 @@ public class irobot
 	} };
 	
 	/* Comment out the mbRAM =, comRAM2 = or comRAM1 = and it will start working */
-	public static WriteHandlerPtr irobot_sharedmem_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_sharedmem_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (irobot_outx == 3)
 			mbRAM[BYTE_XOR_BE(offset)] = data;
 	
@@ -95,8 +93,7 @@ public class irobot
 		irvg_running = 0;
 	}
 	
-	public static WriteHandlerPtr irobot_statwr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_statwr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("write %2x ", data);
 		IR_CPU_STATE;
 	
@@ -126,8 +123,7 @@ public class irobot
 		irobot_statwr = data;
 	} };
 	
-	public static WriteHandlerPtr irobot_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		irobot_out0 = data;
@@ -148,8 +144,7 @@ public class irobot
 		irobot_alphamap = (data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr irobot_rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
 		switch ((data & 0x0E) >> 1)
@@ -192,8 +187,7 @@ public class irobot
 	}
 	
 	static void irmb_done_callback (int param);
-	public static MachineInitHandlerPtr machine_init_irobot  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_irobot  = new MachineInitHandlerPtr() { public void handler(){
 		UINT8 *MB = memory_region(REGION_CPU2);
 	
 		/* initialize the memory regions */
@@ -218,14 +212,12 @@ public class irobot
 		irobot_outx = 0;
 	} };
 	
-	public static WriteHandlerPtr irobot_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		irobot_control_num = offset & 0x03;
 	} };
 	
-	public static ReadHandlerPtr irobot_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irobot_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 		if (irobot_control_num == 0)
 			return readinputport (5);
@@ -237,18 +229,17 @@ public class irobot
 	
 	/*  we allow irmb_running and irvg_running to appear running before clearing
 		them to simulate the mathbox and vector generator running in real time */
-	public static ReadHandlerPtr irobot_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr irobot_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int d=0;
 	
 		logerror("status read. ");
 		IR_CPU_STATE;
 	
-		if (irmb_running == 0) d |= 0x20;
-		if (irvg_running != 0) d |= 0x40;
+		if (!irmb_running) d |= 0x20;
+		if (irvg_running) d |= 0x40;
 	
 		//        d = (irmb_running * 0x20) | (irvg_running * 0x40);
-		if (irvg_vblank != 0) d = d | 0x80;
+		if (irvg_vblank) d = d | 0x80;
 	#if IR_TIMING
 		/* flags are cleared by callbacks */
 	#else
@@ -339,13 +330,13 @@ public class irobot
 	{
 		UINT32 d = 0;
 	
-		if (!(curop.flags & FL_MBMEMDEC) && (curop.flags & FL_MBRW))
+		if (!(curop->flags & FL_MBMEMDEC) && (curop->flags & FL_MBRW))
 		{
-			UINT32 ad = curop.diradd | (irmb_latch & curop.latchmask);
+			UINT32 ad = curop->diradd | (irmb_latch & curop->latchmask);
 	
-			if (curop.diren || (irmb_latch & 0x6000) == 0)
+			if (curop->diren || (irmb_latch & 0x6000) == 0)
 				d = ((UINT16 *)mbRAM)[ad & 0xfff];				/* MB RAM read */
-			else if ((irmb_latch & 0x4000) != 0)
+			else if (irmb_latch & 0x4000)
 				d = ((UINT16 *)mbROM)[ad + 0x2000];				/* MB ROM read, CEMATH = 1 */
 			else
 				d = ((UINT16 *)mbROM)[ad & 0x1fff];				/* MB ROM read, CEMATH = 0 */
@@ -357,15 +348,15 @@ public class irobot
 	void irmb_dout(const irmb_ops *curop, UINT32 d)
 	{
 		/* Write to video com ram */
-		if (curop.ramsel == 3)
+		if (curop->ramsel == 3)
 			((UINT16 *)irobot_combase_mb)[irmb_latch & 0x7ff] = d;
 	
 	    /* Write to mathox ram */
-		if (!(curop.flags & FL_MBMEMDEC))
+		if (!(curop->flags & FL_MBMEMDEC))
 		{
-			UINT32 ad = curop.diradd | (irmb_latch & curop.latchmask);
+			UINT32 ad = curop->diradd | (irmb_latch & curop->latchmask);
 	
-			if (curop.diren || (irmb_latch & 0x6000) == 0)
+			if (curop->diren || (irmb_latch & 0x6000) == 0)
 				((UINT16 *)mbRAM)[ad & 0xfff] = d;				/* MB RAM write */
 		}
 	}
@@ -379,7 +370,7 @@ public class irobot
 	
 		/* allocate RAM */
 		mbops = auto_malloc(sizeof(irmb_ops) * 1024);
-		if (mbops == 0) return;
+		if (!mbops) return;
 	
 		for (i = 0; i < 1024; i++)
 		{
@@ -427,7 +418,7 @@ public class irobot
 				dirmask = 0x0000;
 				latchmask = 0x3FFC;
 			}
-			if ((ramsel & 2) != 0)
+			if (ramsel & 2)
 				latchmask |= 0x0003;
 			else
 				dirmask |= 0x0003;
@@ -445,8 +436,7 @@ public class irobot
 	
 	
 	/* Init mathbox (only called once) */
-	public static DriverInitHandlerPtr init_irobot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_irobot  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		for (i = 0; i < 16; i++)
 		{
@@ -468,13 +458,13 @@ public class irobot
 	
 	#define COMPUTE_CI \
 		CI = 0;\
-		if (curop.flags & FL_DPSEL)\
+		if (curop->flags & FL_DPSEL)\
 			CI = cflag;\
 		else\
 		{\
-			if (curop.flags & FL_carry)\
+			if (curop->flags & FL_carry)\
 				CI = 1;\
-			if (!(prevop.flags & FL_DIV) && !nflag)\
+			if (!(prevop->flags & FL_DIV) && !nflag)\
 				CI = 1;\
 		}
 	
@@ -524,57 +514,57 @@ public class irobot
 		Y = zresult
 	
 	#define DEST2 \
-		Y = *curop.areg;\
-		*curop.breg = zresult
+		Y = *curop->areg;\
+		*curop->breg = zresult
 	
 	#define DEST3 \
-		*curop.breg = zresult;\
+		*curop->breg = zresult;\
 		Y = zresult
 	
 	#define DEST4_NOSHIFT \
-		*curop.breg = (zresult >> 1) | ((curop.flags & 0x20) << 10);\
-		Q = (Q >> 1) | ((curop.flags & 0x20) << 10);\
+		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);\
+		Q = (Q >> 1) | ((curop->flags & 0x20) << 10);\
 		Y = zresult
 	
 	#define DEST4_SHIFT \
-		*curop.breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
+		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
 		Q = (Q >> 1) | ((zresult & 0x01) << 15);\
 		Y = zresult
 	
 	#define DEST5_NOSHIFT \
-		*curop.breg = (zresult >> 1) | ((curop.flags & 0x20) << 10);\
+		*curop->breg = (zresult >> 1) | ((curop->flags & 0x20) << 10);\
 		Y = zresult
 	
 	#define DEST5_SHIFT \
-		*curop.breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
+		*curop->breg = (zresult >> 1) | ((nflag ^ vflag) << 15);\
 		Y = zresult
 	
 	#define DEST6_NOSHIFT \
-		*curop.breg = zresult << 1;\
+		*curop->breg = zresult << 1;\
 		Q = ((Q << 1) & 0xffff) | (nflag ^ 1);\
 		Y = zresult
 	
 	#define DEST6_SHIFT \
-		*curop.breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
+		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
 		Q = (Q << 1) & 0xffff;\
 		Y = zresult
 	
 	#define DEST7_NOSHIFT \
-		*curop.breg = zresult << 1;\
+		*curop->breg = zresult << 1;\
 		Y = zresult
 	
 	#define DEST7_SHIFT \
-		*curop.breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
+		*curop->breg = (zresult << 1) | ((Q & 0x8000) >> 15);\
 		Y = zresult
 	
 	
 	#define JUMP0 	curop++;
-	#define JUMP1	if (cflag != 0) curop = curop.nxtop; else curop++;
-	#define JUMP2	if (zresult == 0) curop = curop.nxtop; else curop++;
-	#define JUMP3	if (nflag == 0) curop = curop.nxtop; else curop++;
-	#define JUMP4	if (nflag != 0) curop = curop.nxtop; else curop++;
-	#define JUMP5	curop = curop.nxtop;
-	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop.nxtop;
+	#define JUMP1	if (cflag) curop = curop->nxtop; else curop++;
+	#define JUMP2	if (!zresult) curop = curop->nxtop; else curop++;
+	#define JUMP3	if (!nflag) curop = curop->nxtop; else curop++;
+	#define JUMP4	if (nflag) curop = curop->nxtop; else curop++;
+	#define JUMP5	curop = curop->nxtop;
+	#define JUMP6	irmb_stack[SP] = curop + 1; SP = (SP + 1) & 15; curop = curop->nxtop;
 	#define JUMP7	SP = (SP - 1) & 15; curop = irmb_stack[SP];
 	
 	
@@ -596,25 +586,25 @@ public class irobot
 	
 		profiler_mark(PROFILER_USER1);
 	
-		while ((prevop.flags & (FL_DPSEL | FL_carry)) != (FL_DPSEL | FL_carry))
+		while ((prevop->flags & (FL_DPSEL | FL_carry)) != (FL_DPSEL | FL_carry))
 		{
 			UINT32 result;
 			UINT32 fu;
 			UINT32 tmp;
 	
-			icount += curop.cycles;
+			icount += curop->cycles;
 	
 			/* Get function code */
-			fu = curop.func;
+			fu = curop->func;
 	
 			/* Modify function for MULT */
-			if (!(prevop.flags & FL_MULT) || (Q & 1))
+			if (!(prevop->flags & FL_MULT) || (Q & 1))
 				fu = fu ^ 0x02;
 			else
 				fu = fu | 0x02;
 	
 			/* Modify function for DIV */
-			if ((prevop.flags & FL_DIV) || nflag)
+			if ((prevop->flags & FL_DIV) || nflag)
 				fu = fu ^ 0x08;
 			else
 				fu = fu | 0x08;
@@ -622,68 +612,68 @@ public class irobot
 			/* Do source and operation */
 			switch (fu & 0x03f)
 			{
-				case 0x00:	ADD(*curop.areg, Q);								break;
-				case 0x01:	ADD(*curop.areg, *curop.breg);					break;
+				case 0x00:	ADD(*curop->areg, Q);								break;
+				case 0x01:	ADD(*curop->areg, *curop->breg);					break;
 				case 0x02:	ADD(0, Q);											break;
-				case 0x03:	ADD(0, *curop.breg);								break;
-				case 0x04:	ADD(0, *curop.areg);								break;
-				case 0x05:	tmp = irmb_din(curop); ADD(tmp, *curop.areg);		break;
+				case 0x03:	ADD(0, *curop->breg);								break;
+				case 0x04:	ADD(0, *curop->areg);								break;
+				case 0x05:	tmp = irmb_din(curop); ADD(tmp, *curop->areg);		break;
 				case 0x06:	tmp = irmb_din(curop); ADD(tmp, Q);					break;
 				case 0x07:	tmp = irmb_din(curop); ADD(tmp, 0);					break;
-				case 0x08:	SUBR(*curop.areg, Q);								break;
-				case 0x09:	SUBR(*curop.areg, *curop.breg);					break;
+				case 0x08:	SUBR(*curop->areg, Q);								break;
+				case 0x09:	SUBR(*curop->areg, *curop->breg);					break;
 				case 0x0a:	SUBR(0, Q);											break;
-				case 0x0b:	SUBR(0, *curop.breg);								break;
-				case 0x0c:	SUBR(0, *curop.areg);								break;
-				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, *curop.areg);		break;
+				case 0x0b:	SUBR(0, *curop->breg);								break;
+				case 0x0c:	SUBR(0, *curop->areg);								break;
+				case 0x0d:	tmp = irmb_din(curop); SUBR(tmp, *curop->areg);		break;
 				case 0x0e:	tmp = irmb_din(curop); SUBR(tmp, Q);				break;
 				case 0x0f:	tmp = irmb_din(curop); SUBR(tmp, 0);				break;
-				case 0x10:	SUB(*curop.areg, Q);								break;
-				case 0x11:	SUB(*curop.areg, *curop.breg);					break;
+				case 0x10:	SUB(*curop->areg, Q);								break;
+				case 0x11:	SUB(*curop->areg, *curop->breg);					break;
 				case 0x12:	SUB(0, Q);											break;
-				case 0x13:	SUB(0, *curop.breg);								break;
-				case 0x14:	SUB(0, *curop.areg);								break;
-				case 0x15:	tmp = irmb_din(curop); SUB(tmp, *curop.areg);		break;
+				case 0x13:	SUB(0, *curop->breg);								break;
+				case 0x14:	SUB(0, *curop->areg);								break;
+				case 0x15:	tmp = irmb_din(curop); SUB(tmp, *curop->areg);		break;
 				case 0x16:	tmp = irmb_din(curop); SUB(tmp, Q);					break;
 				case 0x17:	tmp = irmb_din(curop); SUB(tmp, 0);					break;
-				case 0x18:	OR(*curop.areg, Q);								break;
-				case 0x19:	OR(*curop.areg, *curop.breg);						break;
+				case 0x18:	OR(*curop->areg, Q);								break;
+				case 0x19:	OR(*curop->areg, *curop->breg);						break;
 				case 0x1a:	OR(0, Q);											break;
-				case 0x1b:	OR(0, *curop.breg);								break;
-				case 0x1c:	OR(0, *curop.areg);								break;
-				case 0x1d:	OR(irmb_din(curop), *curop.areg);					break;
+				case 0x1b:	OR(0, *curop->breg);								break;
+				case 0x1c:	OR(0, *curop->areg);								break;
+				case 0x1d:	OR(irmb_din(curop), *curop->areg);					break;
 				case 0x1e:	OR(irmb_din(curop), Q);								break;
 				case 0x1f:	OR(irmb_din(curop), 0);								break;
-				case 0x20:	AND(*curop.areg, Q);								break;
-				case 0x21:	AND(*curop.areg, *curop.breg);					break;
+				case 0x20:	AND(*curop->areg, Q);								break;
+				case 0x21:	AND(*curop->areg, *curop->breg);					break;
 				case 0x22:	AND(0, Q);											break;
-				case 0x23:	AND(0, *curop.breg);								break;
-				case 0x24:	AND(0, *curop.areg);								break;
-				case 0x25:	AND(irmb_din(curop), *curop.areg);					break;
+				case 0x23:	AND(0, *curop->breg);								break;
+				case 0x24:	AND(0, *curop->areg);								break;
+				case 0x25:	AND(irmb_din(curop), *curop->areg);					break;
 				case 0x26:	AND(irmb_din(curop), Q);							break;
 				case 0x27:	AND(irmb_din(curop), 0);							break;
-				case 0x28:	IAND(*curop.areg, Q);								break;
-				case 0x29:	IAND(*curop.areg, *curop.breg);					break;
+				case 0x28:	IAND(*curop->areg, Q);								break;
+				case 0x29:	IAND(*curop->areg, *curop->breg);					break;
 				case 0x2a:	IAND(0, Q);											break;
-				case 0x2b:	IAND(0, *curop.breg);								break;
-				case 0x2c:	IAND(0, *curop.areg);								break;
-				case 0x2d:	IAND(irmb_din(curop), *curop.areg);				break;
+				case 0x2b:	IAND(0, *curop->breg);								break;
+				case 0x2c:	IAND(0, *curop->areg);								break;
+				case 0x2d:	IAND(irmb_din(curop), *curop->areg);				break;
 				case 0x2e:	IAND(irmb_din(curop), Q);							break;
 				case 0x2f:	IAND(irmb_din(curop), 0);							break;
-				case 0x30:	XOR(*curop.areg, Q);								break;
-				case 0x31:	XOR(*curop.areg, *curop.breg);					break;
+				case 0x30:	XOR(*curop->areg, Q);								break;
+				case 0x31:	XOR(*curop->areg, *curop->breg);					break;
 				case 0x32:	XOR(0, Q);											break;
-				case 0x33:	XOR(0, *curop.breg);								break;
-				case 0x34:	XOR(0, *curop.areg);								break;
-				case 0x35:	XOR(irmb_din(curop), *curop.areg);					break;
+				case 0x33:	XOR(0, *curop->breg);								break;
+				case 0x34:	XOR(0, *curop->areg);								break;
+				case 0x35:	XOR(irmb_din(curop), *curop->areg);					break;
 				case 0x36:	XOR(irmb_din(curop), Q);							break;
 				case 0x37:	XOR(irmb_din(curop), 0);							break;
-				case 0x38:	IXOR(*curop.areg, Q);								break;
-				case 0x39:	IXOR(*curop.areg, *curop.breg);					break;
+				case 0x38:	IXOR(*curop->areg, Q);								break;
+				case 0x39:	IXOR(*curop->areg, *curop->breg);					break;
 				case 0x3a:	IXOR(0, Q);											break;
-				case 0x3b:	IXOR(0, *curop.breg);								break;
-				case 0x3c:	IXOR(0, *curop.areg);								break;
-				case 0x3d:	IXOR(irmb_din(curop), *curop.areg);				break;
+				case 0x3b:	IXOR(0, *curop->breg);								break;
+				case 0x3c:	IXOR(0, *curop->areg);								break;
+				case 0x3d:	IXOR(irmb_din(curop), *curop->areg);				break;
 				case 0x3e:	IXOR(irmb_din(curop), Q);							break;
 	default:	case 0x3f:	IXOR(irmb_din(curop), 0);							break;
 			}
@@ -835,13 +825,13 @@ public class irobot
 			}
 	
 			/* Do write */
-			if (!(prevop.flags & FL_MBRW))
+			if (!(prevop->flags & FL_MBRW))
 				irmb_dout(prevop, Y);
 	
 			/* ADDEN */
-			if (!(prevop.flags & FL_ADDEN))
+			if (!(prevop->flags & FL_ADDEN))
 			{
-				if (prevop.flags & FL_MBRW)
+				if (prevop->flags & FL_MBRW)
 					irmb_latch = irmb_din(prevop);
 				else
 					irmb_latch = Y;
@@ -882,13 +872,13 @@ public class irobot
 		if (i==0)
 			logerror(" Address  a b func stor: Q :Y, R, S RDCSAESM da m rs\n");
 		logerror("%04X    : ",i);
-		logerror("%X ",op.areg);
-		logerror("%X ",op.breg);
+		logerror("%X ",op->areg);
+		logerror("%X ",op->breg);
 	
-		lp=(op.func & 0x38)>>3;
+		lp=(op->func & 0x38)>>3;
 		if ((lp&1)==0)
 			lp|=1;
-		else if((op.flags & FL_DIV) != 0)
+		else if((op->flags & FL_DIV) != 0)
 			lp&=6;
 		else
 			logerror("*");
@@ -921,7 +911,7 @@ public class irobot
 				break;
 		}
 	
-		switch ((op.func & 0x1c0)>>6)
+		switch ((op->func & 0x1c0)>>6)
 		{
 			case 0:
 				logerror("  - : Q :F,");
@@ -930,29 +920,29 @@ public class irobot
 				logerror("  - : - :F,");
 				break;
 			case 2:
-				logerror("  R%x: - :A,",op.breg);
+				logerror("  R%x: - :A,",op->breg);
 				break;
 			case 3:
-				logerror("  R%x: - :F,",op.breg);
+				logerror("  R%x: - :F,",op->breg);
 				break;
 			case 4:
-				logerror(">>R%x:>>Q:F,",op.breg);
+				logerror(">>R%x:>>Q:F,",op->breg);
 				break;
 			case 5:
-				logerror(">>R%x: - :F,",op.breg);
+				logerror(">>R%x: - :F,",op->breg);
 				break;
 			case 6:
-				logerror("<<R%x:<<Q:F,",op.breg);
+				logerror("<<R%x:<<Q:F,",op->breg);
 				break;
 			case 7:
-				logerror("<<R%x: - :F,",op.breg);
+				logerror("<<R%x: - :F,",op->breg);
 				break;
 		}
 	
-		lp=(op.func & 0x7);
+		lp=(op->func & 0x7);
 		if ((lp&2)==0)
 			lp|=2;
-		else if((op.flags & FL_MULT) == 0)
+		else if((op->flags & FL_MULT) == 0)
 			lp&=5;
 		else
 			logerror("*");
@@ -960,22 +950,22 @@ public class irobot
 		switch (lp)
 		{
 			case 0:
-				logerror("R%x, Q ",op.areg);
+				logerror("R%x, Q ",op->areg);
 				break;
 			case 1:
-				logerror("R%x,R%x ",op.areg,op.breg);
+				logerror("R%x,R%x ",op->areg,op->breg);
 				break;
 			case 2:
 				logerror("00, Q ");
 				break;
 			case 3:
-				logerror("00,R%x ",op.breg);
+				logerror("00,R%x ",op->breg);
 				break;
 			case 4:
-				logerror("00,R%x ",op.areg);
+				logerror("00,R%x ",op->areg);
 				break;
 			case 5:
-				logerror(" D,R%x ",op.areg);
+				logerror(" D,R%x ",op->areg);
 				break;
 			case 6:
 				logerror(" D, Q ");
@@ -986,17 +976,17 @@ public class irobot
 		}
 	
 		for (lp=0;lp<8;lp++)
-			if (op.flags & (0x80>>lp))
+			if (op->flags & (0x80>>lp))
 				logerror("1");
 			else
 				logerror("0");
 	
-		logerror(" %02X ",op.diradd);
-		logerror("%X\n",op.ramsel);
-		if (op.jtype)
+		logerror(" %02X ",op->diradd);
+		logerror("%X\n",op->ramsel);
+		if (op->jtype)
 		{
 			logerror("              ");
-			switch (op.jtype)
+			switch (op->jtype)
 			{
 				case 1:
 					logerror("BO ");
@@ -1020,8 +1010,8 @@ public class irobot
 					logerror("Return\n\n");
 					break;
 			}
-			if (op.jtype != 7) logerror("  %04X    \n",op.nxtadd);
-			if (op.jtype == 5) logerror("\n");
+			if (op->jtype != 7) logerror("  %04X    \n",op->nxtadd);
+			if (op->jtype == 5) logerror("\n");
 			}
 		}
 	}

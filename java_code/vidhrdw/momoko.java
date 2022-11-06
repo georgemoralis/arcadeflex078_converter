@@ -10,7 +10,7 @@ Video hardware driver by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -32,46 +32,36 @@ public class momoko
 	
 	/****************************************************************************/
 	
-	public static WriteHandlerPtr momoko_fg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_fg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_fg_scrollx = data;
 	} };
-	public static WriteHandlerPtr momoko_fg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_fg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_fg_scrolly = data;
 	} };
-	public static WriteHandlerPtr momoko_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_fg_select = data & 0x0f;
 		momoko_fg_mask = data & 0x10;
 	} };
-	public static WriteHandlerPtr momoko_text_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_text_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_text_scrolly = data;
 	} };
-	public static WriteHandlerPtr momoko_text_mode_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_text_mode_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_text_mode = data;
 	} };
-	public static WriteHandlerPtr momoko_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_bg_scrollx[ offset ] = data;
 	} };
-	public static WriteHandlerPtr momoko_bg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_bg_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_bg_scrolly[ offset ] = data;
 	} };
-	public static WriteHandlerPtr momoko_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_bg_select = data & 0x0f;
 		momoko_bg_mask = data & 0x10;
 	} };
-	public static WriteHandlerPtr momoko_bg_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_bg_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_bg_priority = data & 0x01;
 	} };
-	public static WriteHandlerPtr momoko_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		momoko_flipscreen = data & 0x01;
 	} };
 	/****************************************************************************/
@@ -98,7 +88,7 @@ public class momoko
 						else  py=7-sy + y;
 	
 					if (dot>=pri)
-						plot_pixel(bitmap, px, py, Machine.pens[col*16+dot+256]);
+						plot_pixel(bitmap, px, py, Machine->pens[col*16+dot+256]);
 					d0 = d0 << 1;
 					d1 = d1 << 1;
 				}
@@ -108,8 +98,7 @@ public class momoko
 	
 	/****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_momoko  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_momoko  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y, dx, dy, rx, ry, radr, chr, sy, fx, fy, px, py, offs, col, pri, flip ;
 	
 		data8_t *BG_MAP     = memory_region( REGION_USER1 );

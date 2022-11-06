@@ -53,11 +53,11 @@ NS(XmlInitEncoding)(INIT_ENCODING *p, const ENCODING **encPtr,
   if (i == UNKNOWN_ENC)
     return 0;
   SET_INIT_ENC_INDEX(p, i);
-  p.initEnc.scanners[XML_PROLOG_STATE] = NS(initScanProlog);
-  p.initEnc.scanners[XML_CONTENT_STATE] = NS(initScanContent);
-  p.initEnc.updatePosition = initUpdatePosition;
-  p.encPtr = encPtr;
-  *encPtr = &(p.initEnc);
+  p->initEnc.scanners[XML_PROLOG_STATE] = NS(initScanProlog);
+  p->initEnc.scanners[XML_CONTENT_STATE] = NS(initScanContent);
+  p->initEnc.updatePosition = initUpdatePosition;
+  p->encPtr = encPtr;
+  *encPtr = &(p->initEnc);
   return 1;
 }
 
@@ -72,7 +72,7 @@ NS(findEncoding)(const ENCODING *enc, const char *ptr, const char *end)
   if (ptr != end)
     return 0;
   *p = 0;
-  if (streqci(buf, KW_UTF_16) && enc.minBytesPerChar == 2)
+  if (streqci(buf, KW_UTF_16) && enc->minBytesPerChar == 2)
     return enc;
   i = getEncodingIndex(buf);
   if (i == UNKNOWN_ENC)

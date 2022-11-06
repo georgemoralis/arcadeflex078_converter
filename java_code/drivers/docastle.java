@@ -118,7 +118,7 @@ not currently hooked up
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -177,11 +177,10 @@ public class docastle
 	};
 	
 	/* what is this really, sound related? */
-	static READ_HANDLER(idsoccer_c000_r)
-	{
+	public static ReadHandlerPtr idsoccer_c000_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int i = 0x00;
 		i ^= 0x80; return i;
-	}
+	} };
 	
 	public static Memory_ReadAddress idsoccer_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -343,7 +342,7 @@ public class docastle
 		/* 0x10, 0x20, 0x30, 0x40, 0x50 all give 1 Coin/1 Credit */
 	
 	
-	static InputPortPtr input_ports_docastle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_docastle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( docastle )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
@@ -403,7 +402,7 @@ public class docastle
 		COINAGE_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dorunrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dorunrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dorunrun )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
@@ -464,7 +463,7 @@ public class docastle
 		COINAGE_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dowild = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dowild = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dowild )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
@@ -526,7 +525,7 @@ public class docastle
 		COINAGE_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jjack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jjack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jjack )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
@@ -586,7 +585,7 @@ public class docastle
 		COINAGE_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kickridr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kickridr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kickridr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
@@ -647,7 +646,7 @@ public class docastle
 		COINAGE_PORT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_idsoccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_idsoccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( idsoccer )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP | IPF_8WAY );
@@ -764,8 +763,7 @@ public class docastle
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_docastle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( docastle )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -796,12 +794,9 @@ public class docastle
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dorunrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dorunrun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -832,12 +827,9 @@ public class docastle
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_idsoccer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( idsoccer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -869,9 +861,7 @@ public class docastle
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		/* also an MSM5205 */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1201,16 +1191,16 @@ public class docastle
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_docastle	   = new GameDriver("1983"	,"docastle"	,"docastle.java"	,rom_docastle,null	,machine_driver_docastle	,input_ports_docastle	,null	,ROT270	,	"Universal", "Mr. Do's Castle (set 1)" )
-	public static GameDriver driver_docastl2	   = new GameDriver("1983"	,"docastl2"	,"docastle.java"	,rom_docastl2,driver_docastle	,machine_driver_docastle	,input_ports_docastle	,null	,ROT270	,	"Universal", "Mr. Do's Castle (set 2)" )
-	public static GameDriver driver_docastlo	   = new GameDriver("1983"	,"docastlo"	,"docastle.java"	,rom_docastlo,driver_docastle	,machine_driver_docastle	,input_ports_docastle	,null	,ROT270	,	"Universal", "Mr. Do's Castle (older)" )
-	public static GameDriver driver_douni	   = new GameDriver("1983"	,"douni"	,"docastle.java"	,rom_douni,driver_docastle	,machine_driver_docastle	,input_ports_docastle	,null	,ROT270	,	"Universal", "Mr. Do vs. Unicorns" )
-	public static GameDriver driver_dorunrun	   = new GameDriver("1984"	,"dorunrun"	,"docastle.java"	,rom_dorunrun,null	,machine_driver_dorunrun	,input_ports_dorunrun	,null	,ROT0	,	"Universal", "Do! Run Run (set 1)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dorunru2	   = new GameDriver("1984"	,"dorunru2"	,"docastle.java"	,rom_dorunru2,driver_dorunrun	,machine_driver_dorunrun	,input_ports_dorunrun	,null	,ROT0	,	"Universal", "Do! Run Run (set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dorunruc	   = new GameDriver("1984"	,"dorunruc"	,"docastle.java"	,rom_dorunruc,driver_dorunrun	,machine_driver_docastle	,input_ports_dorunrun	,null	,ROT0	,	"Universal", "Do! Run Run (Do's Castle hardware)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_spiero	   = new GameDriver("1987"	,"spiero"	,"docastle.java"	,rom_spiero,driver_dorunrun	,machine_driver_dorunrun	,input_ports_dorunrun	,null	,ROT0	,	"Universal", "Super Pierrot (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_dowild	   = new GameDriver("1984"	,"dowild"	,"docastle.java"	,rom_dowild,null	,machine_driver_dorunrun	,input_ports_dowild	,null	,ROT0	,	"Universal", "Mr. Do's Wild Ride" )
-	public static GameDriver driver_jjack	   = new GameDriver("1984"	,"jjack"	,"docastle.java"	,rom_jjack,null	,machine_driver_dorunrun	,input_ports_jjack	,null	,ROT270	,	"Universal", "Jumping Jack" )
-	public static GameDriver driver_kickridr	   = new GameDriver("1984"	,"kickridr"	,"docastle.java"	,rom_kickridr,null	,machine_driver_dorunrun	,input_ports_kickridr	,null	,ROT0	,	"Universal", "Kick Rider" )
-	public static GameDriver driver_idsoccer	   = new GameDriver("1985"	,"idsoccer"	,"docastle.java"	,rom_idsoccer,null	,machine_driver_idsoccer	,input_ports_idsoccer	,null	,ROT0	,	"Universal", "Indoor Soccer", GAME_IMPERFECT_SOUND )
+	GAME( 1983, docastle, 0,        docastle, docastle, 0, ROT270, "Universal", "Mr. Do's Castle (set 1)" )
+	GAME( 1983, docastl2, docastle, docastle, docastle, 0, ROT270, "Universal", "Mr. Do's Castle (set 2)" )
+	GAME( 1983, docastlo, docastle, docastle, docastle, 0, ROT270, "Universal", "Mr. Do's Castle (older)" )
+	GAME( 1983, douni,    docastle, docastle, docastle, 0, ROT270, "Universal", "Mr. Do vs. Unicorns" )
+	GAMEX(1984, dorunrun, 0,        dorunrun, dorunrun, 0, ROT0,   "Universal", "Do! Run Run (set 1)", GAME_NO_COCKTAIL )
+	GAMEX(1984, dorunru2, dorunrun, dorunrun, dorunrun, 0, ROT0,   "Universal", "Do! Run Run (set 2)", GAME_NO_COCKTAIL )
+	GAMEX(1984, dorunruc, dorunrun, docastle, dorunrun, 0, ROT0,   "Universal", "Do! Run Run (Do's Castle hardware)", GAME_NO_COCKTAIL )
+	GAMEX(1987, spiero,   dorunrun, dorunrun, dorunrun, 0, ROT0,   "Universal", "Super Pierrot (Japan)", GAME_NO_COCKTAIL )
+	GAME( 1984, dowild,   0,        dorunrun, dowild,   0, ROT0,   "Universal", "Mr. Do's Wild Ride" )
+	GAME( 1984, jjack,    0,        dorunrun, jjack,    0, ROT270, "Universal", "Jumping Jack" )
+	GAME( 1984, kickridr, 0,        dorunrun, kickridr, 0, ROT0,   "Universal", "Kick Rider" )
+	GAMEX(1985, idsoccer, 0,        idsoccer, idsoccer, 0, ROT0,   "Universal", "Indoor Soccer", GAME_IMPERFECT_SOUND )
 }

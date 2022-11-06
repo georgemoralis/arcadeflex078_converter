@@ -33,7 +33,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.dsp32;
 
@@ -240,7 +240,7 @@ public class dsp32
 	INLINE data16_t RWORD(offs_t addr)
 	{
 		data16_t data;
-		if ((addr & 1) != 0) fprintf(stderr, "Unaligned word read @ %06X, PC=%06X\n", addr, dsp32.PC);
+		if (addr & 1) fprintf(stderr, "Unaligned word read @ %06X, PC=%06X\n", addr, dsp32.PC);
 		data = cpu_readmem24ledw_word(addr);
 		return data;
 	}
@@ -248,20 +248,20 @@ public class dsp32
 	INLINE data32_t RLONG(offs_t addr)
 	{
 		data32_t data;
-		if ((addr & 3) != 0) fprintf(stderr, "Unaligned long read @ %06X, PC=%06X\n", addr, dsp32.PC);
+		if (addr & 3) fprintf(stderr, "Unaligned long read @ %06X, PC=%06X\n", addr, dsp32.PC);
 		data = cpu_readmem24ledw_dword(addr);
 		return data;
 	}
 	
 	INLINE void WWORD(offs_t addr, data16_t data)
 	{
-		if ((addr & 1) != 0) fprintf(stderr, "Unaligned word write @ %06X, PC=%06X\n", addr, dsp32.PC);
+		if (addr & 1) fprintf(stderr, "Unaligned word write @ %06X, PC=%06X\n", addr, dsp32.PC);
 		cpu_writemem24ledw_word((addr), data);
 	}
 	
 	INLINE void WLONG(offs_t addr, data32_t data)
 	{
-		if ((addr & 3) != 0) fprintf(stderr, "Unaligned long write @ %06X, PC=%06X\n", addr, dsp32.PC);
+		if (addr & 3) fprintf(stderr, "Unaligned long write @ %06X, PC=%06X\n", addr, dsp32.PC);
 		cpu_writemem24ledw_dword((addr), data);
 	}
 	
@@ -341,7 +341,7 @@ public class dsp32
 	unsigned dsp32c_get_context(void *dst)
 	{
 		/* copy the context */
-		if (dst != 0)
+		if (dst)
 			*(dsp32_regs *)dst = dsp32;
 	
 		/* return the context size */
@@ -352,7 +352,7 @@ public class dsp32
 	void dsp32c_set_context(void *src)
 	{
 		/* copy the context */
-		if (src != 0)
+		if (src)
 			dsp32 = *(dsp32_regs *)src;
 		cpu_setopbase24ledw(dsp32.PC);
 	
@@ -376,8 +376,8 @@ public class dsp32
 		struct dsp32_config *config = param;
 	
 		/* copy in config data */
-		if (config != 0)
-			dsp32.output_pins_changed = config.output_pins_changed;
+		if (config)
+			dsp32.output_pins_changed = config->output_pins_changed;
 	
 		/* reset goes to 0 */
 		dsp32.PC = 0;
@@ -655,7 +655,7 @@ public class dsp32
 		which = ( which + 1 ) % 16;
 	    buffer[which][0] = '\0';
 	
-		if (context == 0)
+		if (!context)
 			r = &dsp32;
 	
 	    switch (regnum)
@@ -765,7 +765,7 @@ public class dsp32
 	INLINE dsp32_regs *FINDCONTEXT(int cpu)
 	{
 		dsp32_regs *context = cpunum_get_context_ptr(cpu);
-		if (context == 0)
+		if (!context)
 			context = &dsp32;
 		return context;
 	}

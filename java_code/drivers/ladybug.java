@@ -40,7 +40,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -86,15 +86,14 @@ public class ladybug
 	  slots. Left slot generates a NMI, Right slot an IRQ.
 	
 	***************************************************************************/
-	public static InterruptHandlerPtr ladybug_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ladybug_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(5) & 1)	/* Left Coin */
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else if (readinputport(5) & 2)	/* Right Coin */
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static InputPortPtr input_ports_ladybug = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ladybug = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ladybug )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -185,7 +184,7 @@ public class ladybug
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_snapjack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snapjack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snapjack )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -278,7 +277,7 @@ public class ladybug
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cavenger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cavenger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cavenger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -367,7 +366,7 @@ public class ladybug
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dorodon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dorodon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dorodon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -510,8 +509,7 @@ public class ladybug
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ladybug = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ladybug )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -535,9 +533,7 @@ public class ladybug
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -695,8 +691,7 @@ public class ladybug
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_dorodon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dorodon  = new DriverInitHandlerPtr() { public void handler(){
 		/* Decode the opcodes */
 	
 		offs_t i;
@@ -712,10 +707,10 @@ public class ladybug
 		}
 	} };
 	
-	public static GameDriver driver_cavenger	   = new GameDriver("1981"	,"cavenger"	,"ladybug.java"	,rom_cavenger,null	,machine_driver_ladybug	,input_ports_cavenger	,null	,ROT0	,	"Universal", "Cosmic Avenger" )
-	public static GameDriver driver_ladybug	   = new GameDriver("1981"	,"ladybug"	,"ladybug.java"	,rom_ladybug,null	,machine_driver_ladybug	,input_ports_ladybug	,null	,ROT270	,	"Universal", "Lady Bug" )
-	public static GameDriver driver_ladybugb	   = new GameDriver("1981"	,"ladybugb"	,"ladybug.java"	,rom_ladybugb,driver_ladybug	,machine_driver_ladybug	,input_ports_ladybug	,null	,ROT270	,	"bootleg",   "Lady Bug (bootleg)" )
-	public static GameDriver driver_dorodon	   = new GameDriver("1982"	,"dorodon"	,"ladybug.java"	,rom_dorodon,null	,machine_driver_ladybug	,input_ports_dorodon	,init_dorodon	,ROT270	,	"Falcon",    "Dorodon (set 1)" )
-	public static GameDriver driver_dorodon2	   = new GameDriver("1982"	,"dorodon2"	,"ladybug.java"	,rom_dorodon2,driver_dorodon	,machine_driver_ladybug	,input_ports_dorodon	,init_dorodon	,ROT270	,	"Falcon",    "Dorodon (set 2)" )
-	public static GameDriver driver_snapjack	   = new GameDriver("1982"	,"snapjack"	,"ladybug.java"	,rom_snapjack,null	,machine_driver_ladybug	,input_ports_snapjack	,null	,ROT0	,	"Universal", "Snap Jack" )
+	GAME( 1981, cavenger, 0,       ladybug, cavenger, 0,       ROT0,   "Universal", "Cosmic Avenger" )
+	GAME( 1981, ladybug,  0,       ladybug, ladybug,  0,       ROT270, "Universal", "Lady Bug" )
+	GAME( 1981, ladybugb, ladybug, ladybug, ladybug,  0,       ROT270, "bootleg",   "Lady Bug (bootleg)" )
+	GAME( 1982, dorodon,  0,       ladybug, dorodon,  dorodon, ROT270, "Falcon",    "Dorodon (set 1)" )
+	GAME( 1982, dorodon2, dorodon, ladybug, dorodon,  dorodon, ROT270, "Falcon",    "Dorodon (set 2)" )
+	GAME( 1982, snapjack, 0,       ladybug, snapjack, 0,       ROT0,   "Universal", "Snap Jack" )
 }

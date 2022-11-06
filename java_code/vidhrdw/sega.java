@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,7 +59,7 @@ public class sega
 		do {
 			draw = vectorram[symbolIndex++];
 	
-			if ((draw & 1) != 0)	/* if symbol active */
+			if (draw & 1)	/* if symbol active */
 			{
 				currentX    = vectorram[symbolIndex + 0] | (vectorram[symbolIndex + 1] << 8);
 				currentY    = vectorram[symbolIndex + 2] | (vectorram[symbolIndex + 3] << 8);
@@ -95,7 +95,7 @@ public class sega
 					color = VECTOR_COLOR222((attrib >> 1) & 0x3f);
 					if ((attrib & 1) && color)
 					{
-						if (translucency != 0)
+						if (translucency)
 							intensity = 0xa0; /* leave room for translucency */
 						else
 							intensity = 0xff;
@@ -121,8 +121,7 @@ public class sega
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_sega  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sega  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		if (vectorram_size == 0)
@@ -138,10 +137,10 @@ public class sega
 	
 		/* allocate memory for the sine and cosine lookup tables ASG 080697 */
 		sinTable = auto_malloc (0x400 * sizeof (long));
-		if (sinTable == 0)
+		if (!sinTable)
 			return 1;
 		cosTable = auto_malloc (0x400 * sizeof (long));
-		if (cosTable == 0)
+		if (!cosTable)
 			return 1;
 	
 		/* generate the sine/cosine lookup tables */
@@ -176,8 +175,7 @@ public class sega
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		sega_generate_vector_list();
 		video_update_vector(bitmap,0);
 	} };

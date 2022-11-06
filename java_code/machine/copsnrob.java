@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -21,8 +21,7 @@ public class copsnrob
 	// I read out the current gun position via the sprite image locations,
 	// and then decrement/increment it if the up/down keys are pressed.
 	
-	public static ReadHandlerPtr copsnrob_gun_position_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr copsnrob_gun_position_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int keys, current_car_image, current_gun_pos = 0;
 	
 	    // Determine which player we need

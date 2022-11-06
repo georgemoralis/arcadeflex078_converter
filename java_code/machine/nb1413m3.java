@@ -12,7 +12,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -43,8 +43,7 @@ public class nb1413m3
 	static int nb1413m3_outcoin_flag;
 	
 	
-	public static MachineInitHandlerPtr machine_init_nb1413m3  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_nb1413m3  = new MachineInitHandlerPtr() { public void handler(){
 		nb1413m3_nmi_clock = 0;
 		nb1413m3_nmi_enable = 0;
 		nb1413m3_counter = 0;
@@ -60,13 +59,11 @@ public class nb1413m3
 		nb1413m3_outcoin_flag = 1;
 	} };
 	
-	public static WriteHandlerPtr nb1413m3_nmi_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nb1413m3_nmi_clock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nb1413m3_nmi_clock = ((data & 0xf0) >> 4);
 	} };
 	
-	public static InterruptHandlerPtr nb1413m3_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr nb1413m3_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			nb1413m3_busyflag = 1;
@@ -74,19 +71,18 @@ public class nb1413m3
 			cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 	
-		else if (nb1413m3_nmi_enable != 0)
+		else if (nb1413m3_nmi_enable)
 		{
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
 	
-	public static NVRAMHandlerPtr nvram_handler_nb1413m3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_nb1413m3  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			mame_fwrite(file, nb1413m3_nvram, nb1413m3_nvram_size);
 		else
 		{
-			if (file != 0)
+			if (file)
 				mame_fread(file, nb1413m3_nvram, nb1413m3_nvram_size);
 			else
 				memset(nb1413m3_nvram, 0, nb1413m3_nvram_size);
@@ -171,15 +167,13 @@ public class nb1413m3
 		}
 	}
 	
-	public static WriteHandlerPtr nb1413m3_sndrombank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		// if ((data & 0x02) != 0) coin counter ?
+	public static WriteHandlerPtr nb1413m3_sndrombank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		// if (data & 0x02) coin counter ?
 		nb1413m3_nmi_enable = ((data & 0x20) >> 5);
 		nb1413m3_sndrombank1 = (((data & 0xc0) >> 5) | ((data & 0x10) >> 4));
 	} };
 	
-	public static WriteHandlerPtr nb1413m3_sndrombank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nb1413m3_sndrombank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nb1413m3_sndrombank2 = (data & 0x03);
 	} };
 	
@@ -205,13 +199,11 @@ public class nb1413m3
 		nb1413m3_gfxradr_h = data;
 	}
 	
-	public static WriteHandlerPtr nb1413m3_inputportsel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nb1413m3_inputportsel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nb1413m3_inputport = data;
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_inputport0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_inputport0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_PASTELGL:
@@ -226,8 +218,7 @@ public class nb1413m3
 		}
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_inputport1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_inputport1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_PASTELGL:
@@ -282,8 +273,7 @@ public class nb1413m3
 		}
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_inputport2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_inputport2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_PASTELGL:
@@ -338,8 +328,7 @@ public class nb1413m3
 		}
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_inputport3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_inputport3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_TAIWANMB:
@@ -364,8 +353,7 @@ public class nb1413m3
 		}
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_dipsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_dipsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_TAIWANMB:
@@ -408,8 +396,7 @@ public class nb1413m3
 		}
 	} };
 	
-	public static ReadHandlerPtr nb1413m3_dipsw2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr nb1413m3_dipsw2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_TAIWANMB:
@@ -462,8 +449,7 @@ public class nb1413m3
 		return ((readinputport(2) & 0x0f) >> 0);
 	}
 	
-	public static WriteHandlerPtr nb1413m3_outcoin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nb1413m3_outcoin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (nb1413m3_type)
 		{
 			case	NB1413M3_TAIWANMB:
@@ -477,7 +463,7 @@ public class nb1413m3
 			case	NB1413M3_FINALBNY:
 	case	NB1413M3_KORINAI:	// verify
 	case	NB1413M3_PAIRSTEN:	// verify
-				if ((data & 0x04) != 0) nb1413m3_outcoin_flag ^= 1;
+				if (data & 0x04) nb1413m3_outcoin_flag ^= 1;
 				else nb1413m3_outcoin_flag = 1;
 				break;
 			default:
@@ -491,7 +477,7 @@ public class nb1413m3
 	
 	void nb1413m3_vcrctrl_w(int data)
 	{
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 		{
 			usrintf_showmessage(" ** VCR CONTROL ** ");
 			set_led_status(2, 1);

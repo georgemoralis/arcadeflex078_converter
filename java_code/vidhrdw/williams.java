@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -120,16 +120,16 @@ public class williams
 	
 	static void copy_pixels(struct mame_bitmap *bitmap, const struct rectangle *clip, int transparent_pen)
 	{
-		int pairs = (clip.max_x - clip.min_x + 1) / 2;
-		int xoffset = clip.min_x;
+		int pairs = (clip->max_x - clip->min_x + 1) / 2;
+		int xoffset = clip->min_x;
 		int x, y;
 	
 		/* determine an accurate state for the Blaster background color */
-		if (williams_blitter_remap && clip.min_y == Machine.visible_area.min_y)
+		if (williams_blitter_remap && clip->min_y == Machine->visible_area.min_y)
 			blaster_back_color = 0;
 	
 		/* loop over rows */
-		for (y = clip.min_y; y <= clip.max_y; y++)
+		for (y = clip->min_y; y <= clip->max_y; y++)
 		{
 			UINT8 *source = &williams_videoram[y + 256 * (xoffset / 2)];
 			UINT8 scanline[400];
@@ -143,14 +143,14 @@ public class williams
 			for (x = 0; x < pairs; x++, source += 256)
 			{
 				int pix = *source;
-				if (erase_behind != 0) *source = 0;
+				if (erase_behind) *source = 0;
 				*dest++ = pix >> 4;
 				*dest++ = pix & 0x0f;
 			}
 	
 			/* handle general case */
-			if (williams_blitter_remap == 0)
-				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine.pens, transparent_pen);
+			if (!williams_blitter_remap)
+				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine->pens, transparent_pen);
 	
 			/* handle Blaster special case */
 			else
@@ -161,16 +161,16 @@ public class williams
 				if (*blaster_video_bits & 1)
 				{
 					if (blaster_color_zero_flags[y] & 1)
-						blaster_back_color = 16 + y - Machine.visible_area.min_y;
+						blaster_back_color = 16 + y - Machine->visible_area.min_y;
 				}
 				else
 					blaster_back_color = 0;
 	
 				/* draw the scanline, temporarily remapping pen 0 */
-				saved_pen0 = Machine.pens[0];
-				Machine.pens[0] = Machine.pens[blaster_back_color];
-				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine.pens, transparent_pen);
-				Machine.pens[0] = saved_pen0;
+				saved_pen0 = Machine->pens[0];
+				Machine->pens[0] = Machine->pens[blaster_back_color];
+				draw_scanline8(bitmap, xoffset, y, pairs * 2, scanline, Machine->pens, transparent_pen);
+				Machine->pens[0] = saved_pen0;
 			}
 		}
 	}
@@ -183,11 +183,10 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_williams  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_williams  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate space for video RAM and dirty scanlines */
 		williams_videoram = auto_malloc(VIDEORAM_SIZE);
-		if (williams_videoram == 0)
+		if (!williams_videoram)
 			return 1;
 	
 		/* reset everything */
@@ -195,8 +194,8 @@ public class williams
 	
 		/* pick the blitters */
 		blitter_table = williams_blitters;
-		if (williams_blitter_remap != 0) blitter_table = blaster_blitters;
-		if (williams_blitter_clip != 0) blitter_table = sinistar_blitters;
+		if (williams_blitter_remap) blitter_table = blaster_blitters;
+		if (williams_blitter_clip) blitter_table = sinistar_blitters;
 	
 		/* reset special-purpose flags */
 		blaster_remap_lookup = 0;
@@ -213,8 +212,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_williams  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* copy the pixels into the final result */
 		copy_pixels(bitmap, cliprect, -1);
 	} };
@@ -227,14 +225,12 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		williams_videoram[offset] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr williams_video_counter_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr williams_video_counter_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_getscanline() & 0xfc;
 	} };
 	
@@ -246,10 +242,9 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_williams2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_williams2  = new VideoStartHandlerPtr() { public int handler(){
 		/* standard initialization */
-		if (video_start_williams() != 0)
+		if (video_start_williams())
 			return 1;
 	
 		/* override the blitters */
@@ -257,7 +252,7 @@ public class williams
 	
 		/* allocate a buffer for palette RAM */
 		williams2_paletteram = auto_malloc(4 * 1024 * 4 / 8);
-		if (williams2_paletteram == 0)
+		if (!williams2_paletteram)
 			return 1;
 	
 		/* clear it */
@@ -278,8 +273,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_williams2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 *tileram = &memory_region(REGION_CPU1)[0xc000];
 		int xpixeloffset, xtileoffset;
 		int color, col, y;
@@ -354,10 +348,10 @@ public class williams
 		unsigned int page_offset = williams2_bg_color * 16;
 	
 		/* non-Mystic Marathon variant */
-		if (williams2_special_bg_color == 0)
+		if (!williams2_special_bg_color)
 		{
 			/* only modify the palette if we're talking to the current page */
-			if (offset >= page_offset && offset < page_offset + Machine.drv.total_colors - 16)
+			if (offset >= page_offset && offset < page_offset + Machine->drv->total_colors - 16)
 				williams2_modify_color(offset - page_offset + 16, offset);
 		}
 	
@@ -376,8 +370,7 @@ public class williams
 	}
 	
 	
-	public static WriteHandlerPtr williams2_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int i, palindex;
 	
 		/* if we're already mapped, leave it alone */
@@ -392,8 +385,7 @@ public class williams
 	} };
 	
 	
-	public static WriteHandlerPtr williams2_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned int i, palindex;
 	
 		/* if we're already mapped, leave it alone */
@@ -402,11 +394,11 @@ public class williams
 		williams2_bg_color = data & 0x3f;
 	
 		/* non-Mystic Marathon variant */
-		if (williams2_special_bg_color == 0)
+		if (!williams2_special_bg_color)
 		{
 			/* remap the background colors */
 			palindex = williams2_bg_color * 16;
-			for (i = 16; i < Machine.drv.total_colors; i++)
+			for (i = 16; i < Machine->drv->total_colors; i++)
 				williams2_modify_color(i, palindex++);
 		}
 	
@@ -433,8 +425,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams2_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bank 3 doesn't touch the screen */
 		if ((williams2_bank & 0x03) == 0x03)
 		{
@@ -464,17 +455,16 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_blaster  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_blaster  = new VideoStartHandlerPtr() { public int handler(){
 		int i, j;
 	
 		/* standard startup first */
-		if (video_start_williams() != 0)
+		if (video_start_williams())
 			return 1;
 	
 		/* expand the lookup table so that we do one lookup per byte */
 		blaster_remap_lookup = auto_malloc(256 * 256);
-		if (blaster_remap_lookup != 0)
+		if (blaster_remap_lookup)
 			for (i = 0; i < 256; i++)
 			{
 				const UINT8 *table = memory_region(REGION_PROMS) + (i & 0x7f) * 16;
@@ -493,17 +483,15 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr blaster_remap_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blaster_remap_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blaster_remap = blaster_remap_lookup + data * 256;
 	} };
 	
 	
-	public static WriteHandlerPtr blaster_palette_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blaster_palette_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		blaster_color_zero_table[offset] = data;
 		data ^= 0xff;
-		if (offset >= Machine.visible_area.min_y && offset <= Machine.visible_area.max_y)
+		if (offset >= Machine->visible_area.min_y && offset <= Machine->visible_area.max_y)
 		{
 			int r = data & 7;
 			int g = (data >> 3) & 7;
@@ -512,7 +500,7 @@ public class williams
 			r = (r << 5) | (r << 2) | (r >> 1);
 			g = (g << 5) | (g << 2) | (g >> 1);
 			b = (b << 6) | (b << 4) | (b << 2) | b;
-			palette_set_color(16 + offset - Machine.visible_area.min_y, r, g, b);
+			palette_set_color(16 + offset - Machine->visible_area.min_y, r, g, b);
 		}
 	} };
 	
@@ -582,8 +570,7 @@ public class williams
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr williams_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr williams_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sstart, dstart, w, h, count;
 	
 		/* store the data */
@@ -611,7 +598,7 @@ public class williams
 		(*blitter_table[(data >> 3) & 3])(sstart, dstart, w, h, data);
 	
 		/* compute the ending address */
-		if ((data & 0x02) != 0)
+		if (data & 0x02)
 			count = h;
 		else
 			count = w + w * h;
@@ -637,7 +624,7 @@ public class williams
 	#define BLIT_TRANSPARENT(offset, data, keepmask)		\
 	{														\
 		data = REMAP(data);									\
-		if (data != 0)											\
+		if (data)											\
 		{													\
 			int pix = BLITTER_DEST_READ(offset);			\
 			int tempmask = keepmask;						\
@@ -654,7 +641,7 @@ public class williams
 	#define BLIT_TRANSPARENT_SOLID(offset, data, keepmask)	\
 	{														\
 		data = REMAP(data);									\
-		if (data != 0)											\
+		if (data)											\
 		{													\
 			int pix = BLITTER_DEST_READ(offset);			\
 			int tempmask = keepmask;						\
@@ -853,8 +840,8 @@ public class williams
 	
 		/* determine the common mask */
 		keepmask = 0x00;
-		if ((data & 0x80) != 0) keepmask |= 0xf0;
-		if ((data & 0x40) != 0) keepmask |= 0x0f;
+		if (data & 0x80) keepmask |= 0xf0;
+		if (data & 0x40) keepmask |= 0x0f;
 		if (keepmask == 0xff)
 			return;
 	
@@ -883,7 +870,7 @@ public class williams
 				sstart += syadv;
 	
 				/* note that PlayBall! indicates the X coordinate doesn't wrap */
-				if ((data & 0x02) != 0)
+				if (data & 0x02)
 					dstart = (dstart & 0xff00) | ((dstart + dyadv) & 0xff);
 				else
 					dstart += dyadv;
@@ -933,7 +920,7 @@ public class williams
 				sstart += syadv;
 	
 				/* note that PlayBall! indicates the X coordinate doesn't wrap */
-				if ((data & 0x02) != 0)
+				if (data & 0x02)
 					dstart = (dstart & 0xff00) | ((dstart + dyadv) & 0xff);
 				else
 					dstart += dyadv;

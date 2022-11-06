@@ -43,7 +43,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,21 +69,17 @@ public class grchamp
 	**	1 digit for rank (?)
 	*/
 	
-	public static WriteHandlerPtr grchamp_led_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_led_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_led_data0 = data;
 	} };
-	public static WriteHandlerPtr grchamp_led_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_led_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_led_data1 = data;
 	} };
-	public static WriteHandlerPtr grchamp_led_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_led_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_led_data2 = data;
 	} };
-	public static WriteHandlerPtr grchamp_led_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (data != 0)
+	public static WriteHandlerPtr grchamp_led_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if( data )
 		{
 			int which = data&0x7;
 			grchamp_led_reg[which][0] = grchamp_led_data0; /* digit */
@@ -96,37 +92,32 @@ public class grchamp
 	
 	static int PC3259_data;
 	
-	public static WriteHandlerPtr PC3259_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr PC3259_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		PC3259_data = data;
 	} };
 	
-	public static ReadHandlerPtr PC3259_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{ /* 0x01 (401a)*/
+	public static ReadHandlerPtr PC3259_0_r  = new ReadHandlerPtr() { public int handler(int offset){ /* 0x01 (401a)*/
 		return 0xff; /* unknown */
 	} };
 	
-	public static ReadHandlerPtr PC3259_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{ /* 0x09 (401b)*/
+	public static ReadHandlerPtr PC3259_1_r  = new ReadHandlerPtr() { public int handler(int offset){ /* 0x09 (401b)*/
 		return 0xff; /* unknown */
 	} };
 	
-	public static ReadHandlerPtr PC3259_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{ /* 0x11 (401c)*/
+	public static ReadHandlerPtr PC3259_2_r  = new ReadHandlerPtr() { public int handler(int offset){ /* 0x11 (401c)*/
 		int result = 0;
 		if( grchamp_player_ypos<128 )
 		{
 			result |= 0x4; // crash on bottom half of screen
 		}
-		if ((grchamp_collision & 2) != 0)
+		if( grchamp_collision&2 )
 		{
 			result = rand()&0xff; // OBJECT crash
 		}
 		return result;
 	} };
 	
-	public static ReadHandlerPtr PC3259_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{ /* 0x19 (401d)*/
+	public static ReadHandlerPtr PC3259_3_r  = new ReadHandlerPtr() { public int handler(int offset){ /* 0x19 (401d)*/
 		int result = grchamp_collision?1:0; /* crash */
 		return result;
 	} };
@@ -226,12 +217,10 @@ public class grchamp
 	/***************************************************************************/
 	#if 0
 	static UINT8 *shareram;
-	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shareram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		shareram[offset] = data;
 	} };
-	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr shareram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return shareram[offset];
 	} };
 	#endif
@@ -366,8 +355,7 @@ public class grchamp
 	);
 	
 	
-	public static InterruptHandlerPtr grchamp_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr grchamp_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int cpu = cpu_getactivecpu();
 	
 		if ( grchamp_cpu_irq_enable[cpu] )
@@ -377,8 +365,7 @@ public class grchamp
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_grchamp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( grchamp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000) /* ? */
@@ -414,11 +401,9 @@ public class grchamp
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_grchamp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grchamp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grchamp )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x0f, 0x00, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x0f, DEF_STR( "9C_1C") );
@@ -540,5 +525,5 @@ public class grchamp
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_grchamp	   = new GameDriver("1981"	,"grchamp"	,"grchamp.java"	,rom_grchamp,null	,machine_driver_grchamp	,input_ports_grchamp	,init_grchamp	,ROT90	,	"Taito", "Grand Champion", GAME_IMPERFECT_SOUND )
+	GAMEX( 1981, grchamp, 0, grchamp, grchamp, grchamp, ROT90, "Taito", "Grand Champion", GAME_IMPERFECT_SOUND )
 }

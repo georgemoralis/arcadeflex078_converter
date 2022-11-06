@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -88,8 +88,7 @@ public class tecmo
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_tecmo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tecmo  = new VideoStartHandlerPtr() { public int handler(){
 		if (tecmo_video_type == 2)	/* gemini */
 		{
 			bg_tilemap = tilemap_create(gemini_get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
@@ -123,8 +122,7 @@ public class tecmo
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr tecmo_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tecmo_txvideoram[offset] != data)
 		{
 			tecmo_txvideoram[offset] = data;
@@ -132,8 +130,7 @@ public class tecmo
 		}
 	} };
 	
-	public static WriteHandlerPtr tecmo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tecmo_fgvideoram[offset] != data)
 		{
 			tecmo_fgvideoram[offset] = data;
@@ -141,8 +138,7 @@ public class tecmo
 		}
 	} };
 	
-	public static WriteHandlerPtr tecmo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tecmo_bgvideoram[offset] != data)
 		{
 			tecmo_bgvideoram[offset] = data;
@@ -150,8 +146,7 @@ public class tecmo
 		}
 	} };
 	
-	public static WriteHandlerPtr tecmo_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_fgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 scroll[3];
 	
 		scroll[offset] = data;
@@ -160,8 +155,7 @@ public class tecmo
 		tilemap_set_scrolly(fg_tilemap,0,scroll[2]);
 	} };
 	
-	public static WriteHandlerPtr tecmo_bgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_bgscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static UINT8 scroll[3];
 	
 		scroll[offset] = data;
@@ -170,8 +164,7 @@ public class tecmo
 		tilemap_set_scrolly(bg_tilemap,0,scroll[2]);
 	} };
 	
-	public static WriteHandlerPtr tecmo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tecmo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 1);
 	} };
 	
@@ -203,7 +196,7 @@ public class tecmo
 			int flags = spriteram.read(offs+3);
 			int priority = flags>>6;
 			int bank = spriteram.read(offs+0);
-			if ((bank & 4) != 0)
+			if (bank & 4)
 			{ /* visible */
 				int which = spriteram.read(offs+1);
 				int code,xpos,ypos,flipx,flipy,priority_mask,x,y;
@@ -222,7 +215,7 @@ public class tecmo
 				flipx = bank & 1;
 				flipy = bank & 2;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					xpos = 256 - (8 * size) - xpos;
 					ypos = 256 - (8 * size) - ypos;
@@ -246,7 +239,7 @@ public class tecmo
 					{
 						int sx = xpos + 8*(flipx?(size-1-x):x);
 						int sy = ypos + 8*(flipy?(size-1-y):y);
-						pdrawgfx(bitmap,Machine.gfx[1],
+						pdrawgfx(bitmap,Machine->gfx[1],
 								code + layout[y][x],
 								flags & 0xf,
 								flipx,flipy,
@@ -260,8 +253,7 @@ public class tecmo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tecmo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 		fillbitmap(bitmap,Machine.pens[0x100],cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,1);

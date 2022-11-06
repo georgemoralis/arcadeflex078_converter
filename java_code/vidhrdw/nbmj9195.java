@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -63,18 +63,16 @@ public class nbmj9195
 	
 	
 	******************************************************************************/
-	public static ReadHandlerPtr sailorws_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sailorws_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sailorws_palette[offset];
 	} };
 	
-	public static WriteHandlerPtr sailorws_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailorws_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
 		sailorws_palette[offset] = data;
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 		{
 			offset &= 0x1fe;
 	
@@ -90,13 +88,11 @@ public class nbmj9195
 		}
 	} };
 	
-	public static ReadHandlerPtr mscoutm_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mscoutm_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mscoutm_palette[offset];
 	} };
 	
-	public static WriteHandlerPtr mscoutm_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mscoutm_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 		int offs_h, offs_l;
 	
@@ -128,7 +124,7 @@ public class nbmj9195
 	
 		sailorws_scrollx_tmp[vram][offset] = data;
 	
-		if (offset != 0)
+		if (offset)
 		{
 			sailorws_scrollx[vram] = -((((sailorws_scrollx_tmp[vram][0] + (sailorws_scrollx_tmp[vram][1] << 8)) & 0x1ff) + 0x4e) << 1);
 	
@@ -158,7 +154,7 @@ public class nbmj9195
 	#else
 		sailorws_scrollx_tmp[vram][offset] = data;
 	
-		if (offset != 0)
+		if (offset)
 		{
 			sailorws_scrollx[vram] = -((((sailorws_scrollx_tmp[vram][0] + (sailorws_scrollx_tmp[vram][1] << 8)) & 0x1ff) + 0x4e) << 1);
 		}
@@ -169,7 +165,7 @@ public class nbmj9195
 	{
 		sailorws_scrolly_tmp[vram][offset] = data;
 	
-		if (offset != 0)
+		if (offset)
 		{
 			if (sailorws_flipscreen[vram]) sailorws_scrolly[vram] = ((sailorws_scrolly_tmp[vram][0] + (sailorws_scrolly_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 			else sailorws_scrolly[vram] = (sailorws_scrolly_tmp[vram][0] + (sailorws_scrolly_tmp[vram][1] << 8) + 1) & 0x1ff;
@@ -180,7 +176,7 @@ public class nbmj9195
 	{
 		sailorws_radr_tmp[vram][offset] = data;
 	
-		if (offset == 0)
+		if (!offset)
 		{
 			sailorws_radr[vram] = (sailorws_radr_tmp[vram][0] + (sailorws_radr_tmp[vram][1] << 8) + (sailorws_radr_tmp[vram][2] << 16));
 		}
@@ -195,9 +191,9 @@ public class nbmj9195
 		sailorws_flipx[vram] = (data & 0x01) ? 1 : 0;
 		sailorws_flipy[vram] = (data & 0x02) ? 1 : 0;
 		sailorws_highcolor[vram] = (data & 0x04) ? 1 : 0;
-	//	if ((data & 0x08) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
+	//	if (data & 0x08) usrintf_showmessage("Unknown GFX Flag!! (0x08)");
 		sailorws_transparency[vram] = (data & 0x10) ? 1 : 0;
-	//	if ((data & 0x20) != 0) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
+	//	if (data & 0x20) usrintf_showmessage("Unknown GFX Flag!! (0x20)");
 		sailorws_flipscreen[vram] = (data & 0x40) ? 0 : 1;
 		sailorws_dispflag[vram] = (data & 0x80) ? 1 : 0;
 	
@@ -223,7 +219,7 @@ public class nbmj9195
 	{
 		sailorws_drawx_tmp[vram][offset] = data;
 	
-		if (offset != 0)
+		if (offset)
 		{
 			sailorws_drawx[vram] = ((sailorws_drawx_tmp[vram][0] + (sailorws_drawx_tmp[vram][1] << 8)) ^ 0x3ff) & 0x3ff;
 		}
@@ -233,7 +229,7 @@ public class nbmj9195
 	{
 		sailorws_drawy_tmp[vram][offset] = data;
 	
-		if (offset != 0)
+		if (offset)
 		{
 			sailorws_drawy[vram] = ((sailorws_drawy_tmp[vram][0] + (sailorws_drawy_tmp[vram][1] << 8)) ^ 0x1ff) & 0x1ff;
 	
@@ -247,13 +243,11 @@ public class nbmj9195
 		sailorws_paltblnum = data;
 	}
 	
-	public static WriteHandlerPtr sailorws_paltbl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailorws_paltbl_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sailorws_paltbl0[((sailorws_paltblnum & 0xff) * 0x10) + (offset & 0x0f)] = data;
 	} };
 	
-	public static WriteHandlerPtr sailorws_paltbl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sailorws_paltbl_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sailorws_paltbl1[((sailorws_paltblnum & 0xff) * 0x10) + (offset & 0x0f)] = data;
 	} };
 	
@@ -281,14 +275,14 @@ public class nbmj9195
 	
 		vidram = vram ? sailorws_videoram1 : sailorws_videoram0;
 	
-		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
+		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine.drv.screen_width; x++)
+			for (x = 0; x < Machine->drv->screen_width; x++)
 			{
-				color1 = vidram[(y * Machine.drv.screen_width) + x];
-				color2 = vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)];
-				vidram[(y * Machine.drv.screen_width) + x] = color2;
-				vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)] = color1;
+				color1 = vidram[(y * Machine->drv->screen_width) + x];
+				color2 = vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)];
+				vidram[(y * Machine->drv->screen_width) + x] = color2;
+				vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)] = color1;
 			}
 		}
 	
@@ -296,14 +290,14 @@ public class nbmj9195
 		{
 			vidram = vram ? sailorws_videoworkram1 : sailorws_videoworkram0;
 	
-			for (y = 0; y < (Machine.drv.screen_height / 2); y++)
+			for (y = 0; y < (Machine->drv->screen_height / 2); y++)
 			{
-				for (x = 0; x < Machine.drv.screen_width; x++)
+				for (x = 0; x < Machine->drv->screen_width; x++)
 				{
-					color1 = vidram[(y * Machine.drv.screen_width) + x];
-					color2 = vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)];
-					vidram[(y * Machine.drv.screen_width) + x] = color2;
-					vidram[((y ^ 0x1ff) * Machine.drv.screen_width) + (x ^ 0x3ff)] = color1;
+					color1 = vidram[(y * Machine->drv->screen_width) + x];
+					color2 = vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)];
+					vidram[(y * Machine->drv->screen_width) + x] = color2;
+					vidram[((y ^ 0x1ff) * Machine->drv->screen_width) + (x ^ 0x3ff)] = color1;
 				}
 			}
 		}
@@ -356,7 +350,7 @@ public class nbmj9195
 	
 		gfxaddr = ((sailorws_radr[vram] + 2) & 0x00ffffff);
 	
-		Machine.pens[0xff] = 0;	/* palette_transparent_pen */
+		Machine->pens[0xff] = 0;	/* palette_transparent_pen */
 	
 		for (y = starty, ctry = sizey; ctry > 0; y += skipy, ctry--)
 		{
@@ -398,7 +392,7 @@ public class nbmj9195
 					color2 = (color & 0xf0) >> 4;
 				}
 	
-				if (vram == 0)
+				if (!vram)
 				{
 					drawcolor1 = sailorws_paltbl0[(sailorws_paltblnum * 0x10) + color1];
 					drawcolor2 = sailorws_paltbl0[(sailorws_paltblnum * 0x10) + color2];
@@ -420,30 +414,30 @@ public class nbmj9195
 					tflag2 = 1;
 				}
 	
-				if (vram == 0)
+				if (!vram)
 				{
-					if (tflag1 != 0)
+					if (tflag1)
 					{
-						sailorws_videoram0[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine.pens[drawcolor1]);
+						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2 != 0)
+					if (tflag2)
 					{
-						sailorws_videoram0[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
-						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine.pens[drawcolor2]);
+						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
 					}
 				}
 				else
 				{
-					if (tflag1 != 0)
+					if (tflag1)
 					{
-						sailorws_videoram1[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine.pens[drawcolor1]);
+						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2 != 0)
+					if (tflag2)
 					{
-						sailorws_videoram1[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
-						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine.pens[drawcolor2]);
+						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
 					}
 				}
 			}
@@ -504,8 +498,8 @@ public class nbmj9195
 	
 		gfxaddr = ((sailorws_radr[vram] + 2) & 0x00ffffff);
 	
-		Machine.pens[0x0ff] = 0;	/* palette_transparent_pen */
-		Machine.pens[0x1ff] = 0;	/* palette_transparent_pen */
+		Machine->pens[0x0ff] = 0;	/* palette_transparent_pen */
+		Machine->pens[0x1ff] = 0;	/* palette_transparent_pen */
 	
 		for (y = starty, ctry = sizey; ctry > 0; y += skipy, ctry--)
 		{
@@ -551,22 +545,22 @@ public class nbmj9195
 				{
 					// high color mode
 	
-					if ((sailorws_gfxflag2 & 0xc0) != 0)
+					if (sailorws_gfxflag2 & 0xc0)
 					{
 						// high color mode 1st draw
 	
 						drawcolor1 = ((color1 & 0x0f) << 0);
 						drawcolor2 = ((color2 & 0x0f) << 0);
 	
-						if (vram == 0)
+						if (!vram)
 						{
-							sailorws_videoworkram0[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-							sailorws_videoworkram0[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+							sailorws_videoworkram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+							sailorws_videoworkram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						}
 						else
 						{
-							sailorws_videoworkram1[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-							sailorws_videoworkram1[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
+							sailorws_videoworkram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+							sailorws_videoworkram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
 						}
 						continue;
 					}
@@ -577,18 +571,18 @@ public class nbmj9195
 						drawcolor1 = ((color1 & 0x0f) << 4);
 						drawcolor2 = ((color2 & 0x0f) << 4);
 	
-						if (vram == 0)
+						if (!vram)
 						{
-							drawcolor1 |= sailorws_videoworkram0[(dy * Machine.drv.screen_width) + dx1];
-							drawcolor2 |= sailorws_videoworkram0[(dy * Machine.drv.screen_width) + dx2];
+							drawcolor1 |= sailorws_videoworkram0[(dy * Machine->drv->screen_width) + dx1];
+							drawcolor2 |= sailorws_videoworkram0[(dy * Machine->drv->screen_width) + dx2];
 	
 							drawcolor1 += sailorws_paltbl0[(sailorws_paltblnum * 0x10)];
 							drawcolor2 += sailorws_paltbl0[(sailorws_paltblnum * 0x10)];
 						}
 						else
 						{
-							drawcolor1 |= sailorws_videoworkram1[(dy * Machine.drv.screen_width) + dx1];
-							drawcolor2 |= sailorws_videoworkram1[(dy * Machine.drv.screen_width) + dx2];
+							drawcolor1 |= sailorws_videoworkram1[(dy * Machine->drv->screen_width) + dx1];
+							drawcolor2 |= sailorws_videoworkram1[(dy * Machine->drv->screen_width) + dx2];
 	
 							drawcolor1 += sailorws_paltbl1[(sailorws_paltblnum * 0x10)];
 							drawcolor2 += sailorws_paltbl1[(sailorws_paltblnum * 0x10)];
@@ -599,7 +593,7 @@ public class nbmj9195
 				{
 					// normal color mode
 	
-					if (vram == 0)
+					if (!vram)
 					{
 						drawcolor1 = sailorws_paltbl0[(sailorws_paltblnum * 0x10) + color1];
 						drawcolor2 = sailorws_paltbl0[(sailorws_paltblnum * 0x10) + color2];
@@ -625,30 +619,30 @@ public class nbmj9195
 				drawcolor1 |= (0x100 * vram);
 				drawcolor2 |= (0x100 * vram);
 	
-				if (vram == 0)
+				if (!vram)
 				{
-					if (tflag1 != 0)
+					if (tflag1)
 					{
-						sailorws_videoram0[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine.pens[drawcolor1]);
+						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+						plot_pixel(sailorws_tmpbitmap0, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2 != 0)
+					if (tflag2)
 					{
-						sailorws_videoram0[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
-						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine.pens[drawcolor2]);
+						sailorws_videoram0[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+						plot_pixel(sailorws_tmpbitmap0, dx2, dy, Machine->pens[drawcolor2]);
 					}
 				}
 				else
 				{
-					if (tflag1 != 0)
+					if (tflag1)
 					{
-						sailorws_videoram1[(dy * Machine.drv.screen_width) + dx1] = drawcolor1;
-						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine.pens[drawcolor1]);
+						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx1] = drawcolor1;
+						plot_pixel(sailorws_tmpbitmap1, dx1, dy, Machine->pens[drawcolor1]);
 					}
-					if (tflag2 != 0)
+					if (tflag2)
 					{
-						sailorws_videoram1[(dy * Machine.drv.screen_width) + dx2] = drawcolor2;
-						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine.pens[drawcolor2]);
+						sailorws_videoram1[(dy * Machine->drv->screen_width) + dx2] = drawcolor2;
+						plot_pixel(sailorws_tmpbitmap1, dx2, dy, Machine->pens[drawcolor2]);
 					}
 				}
 			}
@@ -665,35 +659,34 @@ public class nbmj9195
 	
 	
 	******************************************************************************/
-	public static WriteHandlerPtr sailorws_gfxflag_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_gfxflag_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_scrollx_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_scrollx_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_scrolly_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_scrolly_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_radr_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_radr_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_sizex_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_sizex_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_sizey_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_sizey_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_drawx_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_drawx_w(0, offset, data); } };
-	public static WriteHandlerPtr sailorws_drawy_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_drawy_w(0, offset, data); } };
+	public static WriteHandlerPtr sailorws_gfxflag_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_gfxflag_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_scrollx_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_scrollx_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_scrolly_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_scrolly_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_radr_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_radr_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_sizex_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_sizex_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_sizey_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_sizey_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_drawx_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_drawx_w(0, offset, data); }
+	public static WriteHandlerPtr sailorws_drawy_0_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_drawy_w(0, offset, data); }
 	
-	public static WriteHandlerPtr sailorws_gfxflag_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_gfxflag_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_scrollx_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_scrollx_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_scrolly_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_scrolly_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_radr_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_radr_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_sizex_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_sizex_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_sizey_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_sizey_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_drawx_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_drawx_w(1, offset, data); } };
-	public static WriteHandlerPtr sailorws_drawy_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { sailorws_drawy_w(1, offset, data); } };
+	public static WriteHandlerPtr sailorws_gfxflag_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_gfxflag_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_scrollx_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_scrollx_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_scrolly_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_scrolly_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_radr_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_radr_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_sizex_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_sizex_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_sizey_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_sizey_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_drawx_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_drawx_w(1, offset, data); }
+	public static WriteHandlerPtr sailorws_drawy_1_w = new WriteHandlerPtr() {public void handler(int offset, int data) sailorws_drawy_w(1, offset, data); }
 	
-	public static ReadHandlerPtr sailorws_gfxbusy_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return sailorws_gfxbusy_r(0, offset); } };
-	public static ReadHandlerPtr sailorws_gfxbusy_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return sailorws_gfxbusy_r(1, offset); } };
-	public static ReadHandlerPtr sailorws_gfxrom_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return sailorws_gfxrom_r(0, offset); } };
-	public static ReadHandlerPtr sailorws_gfxrom_1_r  = new ReadHandlerPtr() { public int handler(int offset) { return sailorws_gfxrom_r(1, offset); } };
+	public static ReadHandlerPtr sailorws_gfxbusy_0_r  = new ReadHandlerPtr() { public int handler(int offset) return sailorws_gfxbusy_r(0, offset); }
+	public static ReadHandlerPtr sailorws_gfxbusy_1_r  = new ReadHandlerPtr() { public int handler(int offset) return sailorws_gfxbusy_r(1, offset); }
+	public static ReadHandlerPtr sailorws_gfxrom_0_r  = new ReadHandlerPtr() { public int handler(int offset) return sailorws_gfxrom_r(0, offset); }
+	public static ReadHandlerPtr sailorws_gfxrom_1_r  = new ReadHandlerPtr() { public int handler(int offset) return sailorws_gfxrom_r(1, offset); }
 	
 	/******************************************************************************
 	
 	
 	******************************************************************************/
-	public static VideoStartHandlerPtr video_start_sailorws  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sailorws  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
@@ -710,8 +703,7 @@ public class nbmj9195
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mjkoiura  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mjkoiura  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
 		if ((sailorws_palette = auto_malloc(0x200 * sizeof(char))) == 0) return 1;
@@ -724,8 +716,7 @@ public class nbmj9195
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_mscoutm  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mscoutm  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sailorws_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((sailorws_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(short))) == 0) return 1;
@@ -747,8 +738,7 @@ public class nbmj9195
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_sailorws  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sailorws  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		unsigned short color;
 	
@@ -763,17 +753,17 @@ public class nbmj9195
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = sailorws_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel.handler(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
-			if (gfxdraw_mode != 0)
+			if (gfxdraw_mode)
 			{
 				for (y = 0; y < Machine.drv.screen_height; y++)
 				{
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = sailorws_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel.handler(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}
@@ -818,7 +808,7 @@ public class nbmj9195
 			fillbitmap(bitmap, Machine.pens[0x0ff], 0);
 		}
 	
-		if (gfxdraw_mode != 0)
+		if (gfxdraw_mode)
 		{
 			if (sailorws_dispflag[1])
 			{
@@ -831,8 +821,7 @@ public class nbmj9195
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mscoutm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mscoutm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		unsigned short color;
 	
@@ -848,17 +837,17 @@ public class nbmj9195
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = sailorws_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel.handler(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel(sailorws_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
-			if (gfxdraw_mode != 0)
+			if (gfxdraw_mode)
 			{
 				for (y = 0; y < Machine.drv.screen_height; y++)
 				{
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = sailorws_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel.handler(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel(sailorws_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}
@@ -873,7 +862,7 @@ public class nbmj9195
 			fillbitmap(bitmap, Machine.pens[0x0ff], 0);
 		}
 	
-		if (gfxdraw_mode != 0)
+		if (gfxdraw_mode)
 		{
 			if (sailorws_dispflag[1])
 			{

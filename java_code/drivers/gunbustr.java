@@ -46,7 +46,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -75,8 +75,7 @@ public class gunbustr
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr gunbustr_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gunbustr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, gunbustr_interrupt5);
 		cpu_set_irq_line(0, 4, HOLD_LINE);
 	} };
@@ -143,12 +142,12 @@ public class gunbustr
 		{
 			case 0x00:
 			{
-				if (ACCESSING_MSB32 != 0)	/* $400000 is watchdog */
+				if (ACCESSING_MSB32)	/* $400000 is watchdog */
 				{
 					watchdog_reset_w(0,data >> 24);
 				}
 	
-				if (ACCESSING_LSB32 != 0)
+				if (ACCESSING_LSB32)
 				{
 					EEPROM_set_clock_line((data & 0x20) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x40);
@@ -160,7 +159,7 @@ public class gunbustr
 	
 			case 0x01:
 			{
-				if (ACCESSING_MSB32 != 0)
+				if (ACCESSING_MSB32)
 				{
 					/* game does not write a separate counter for coin 2!
 					   It should disable both coins when 9 credits reached
@@ -264,7 +263,7 @@ public class gunbustr
 				 INPUT PORTS (dips in eprom)
 	***********************************************************/
 	
-	static InputPortPtr input_ports_gunbustr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunbustr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunbustr )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW,  IPT_UNKNOWN );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW,  IPT_UNKNOWN );
@@ -374,8 +373,7 @@ public class gunbustr
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_gunbustr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gunbustr  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1,&RAM[0x80000]);
@@ -420,21 +418,19 @@ public class gunbustr
 		"0100110000",	/* lock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_gunbustr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_gunbustr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else {
 			EEPROM_init(&gunbustr_eeprom_interface);
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_gunbustr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunbustr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)	/* 16 MHz */
@@ -464,9 +460,7 @@ public class gunbustr
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -509,11 +503,10 @@ public class gunbustr
 		return gunbustr_ram[0x3acc/4];
 	}
 	
-	public static DriverInitHandlerPtr init_gunbustr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunbustr  = new DriverInitHandlerPtr() { public void handler(){
 		/* Speedup handler */
 		install_mem_read32_handler(0, 0x203acc, 0x203acf, main_cycle_r);
 	} };
 	
-	public static GameDriver driver_gunbustr	   = new GameDriver("1992"	,"gunbustr"	,"gunbustr.java"	,rom_gunbustr,null	,machine_driver_gunbustr	,input_ports_gunbustr	,init_gunbustr	,ORIENTATION_FLIP_X	,	"Taito Corporation", "Gunbuster (Japan)" )
+	GAME( 1992, gunbustr, 0,      gunbustr, gunbustr, gunbustr, ORIENTATION_FLIP_X, "Taito Corporation", "Gunbuster (Japan)" )
 }

@@ -5,7 +5,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -16,13 +16,11 @@ public class ttmahjng
 	
 	
 	static int psel;
-	public static WriteHandlerPtr input_port_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr input_port_matrix_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		psel = data;
 	} };
 	
-	public static ReadHandlerPtr input_port_matrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_port_matrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int	cdata;
 	
 		cdata = 0;
@@ -91,7 +89,7 @@ public class ttmahjng
 	};
 	
 	
-	static InputPortPtr input_ports_ttmahjng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ttmahjng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ttmahjng )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, "Unknown 01" );
 		PORT_DIPSETTING(    0x00, "00" );
@@ -182,8 +180,7 @@ public class ttmahjng
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_ttmahjng = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ttmahjng )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,2500000)
@@ -209,9 +206,7 @@ public class ttmahjng
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -238,5 +233,5 @@ public class ttmahjng
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_ttmahjng	   = new GameDriver("1981"	,"ttmahjng"	,"ttmahjng.java"	,rom_ttmahjng,null	,machine_driver_ttmahjng	,input_ports_ttmahjng	,null	,ROT0	,	"Taito", "Mahjong" )
+	GAME( 1981, ttmahjng, 0, ttmahjng, ttmahjng, 0, ROT0, "Taito", "Mahjong" )
 }

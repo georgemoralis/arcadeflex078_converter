@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,12 +31,11 @@ public class geebee
 	#ifdef MAME_DEBUG
 	#endif
 	
-	public static ReadHandlerPtr geebee_in_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr geebee_in_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = readinputport(offset & 3);
 		if ((offset & 3) == 2)	/* combine with Bonus Life settings ? */
 		{
-			if ((data & 0x02) != 0)	/* 5 lives? */
+			if (data & 0x02)	/* 5 lives? */
 				data |= readinputport(5);
 			else				/* 3 lives */
 				data |= readinputport(4);
@@ -45,22 +44,20 @@ public class geebee
 		return data;
 	} };
 	
-	public static ReadHandlerPtr navalone_in_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr navalone_in_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int data = readinputport(offset & 3);
 		if ((offset & 3) == 3)
 		{
 			int joy = readinputport(4);
 			/* map digital two-way joystick to two fixed VOLIN values */
-			if ((joy & 1) != 0) data = 0xa0;
-			if ((joy & 2) != 0) data = 0x10;
+			if( joy & 1 ) data = 0xa0;
+			if( joy & 2 ) data = 0x10;
 		}
 	    logerror("in_r %d $%02X\n", offset & 3, data);
 	    return data;
 	} };
 	
-	public static WriteHandlerPtr geebee_out6_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr geebee_out6_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    switch (offset & 3)
 	    {
 		case 0:
@@ -85,8 +82,7 @@ public class geebee
 	    }
 	} };
 	
-	public static WriteHandlerPtr geebee_out7_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr geebee_out7_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 7)
 		{
 		case 0:

@@ -72,7 +72,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -224,7 +224,7 @@ public class seta2
 	
 	// "tilemap" sprite
 	
-				if ((sprite & 0x8000) != 0)
+				if (sprite & 0x8000)
 				{
 					struct rectangle clip;
 					int dx,x,y;
@@ -246,14 +246,14 @@ public class seta2
 					clip.min_y = (sy + yoffs) & 0x1ff;
 					clip.max_y = clip.min_y + height * 0x10 - 1;
 	
-					if (clip.min_y > cliprect.max_y)	continue;
-					if (clip.max_y < cliprect.min_y)	continue;
+					if (clip.min_y > cliprect->max_y)	continue;
+					if (clip.max_y < cliprect->min_y)	continue;
 	
-					clip.min_x = cliprect.min_x;
-					clip.max_x = cliprect.max_x;
+					clip.min_x = cliprect->min_x;
+					clip.max_x = cliprect->max_x;
 	
-					if (clip.min_y < cliprect.min_y)	clip.min_y = cliprect.min_y;
-					if (clip.max_y > cliprect.max_y)	clip.max_y = cliprect.max_y;
+					if (clip.min_y < cliprect->min_y)	clip.min_y = cliprect->min_y;
+					if (clip.max_y > cliprect->max_y)	clip.max_y = cliprect->max_y;
 	
 					dx = sx + (scrollx & 0x3ff) + xoffs + 0x10;
 	
@@ -286,13 +286,13 @@ public class seta2
 							flipy = (attr & 0x0008);
 							color = (attr & 0xffe0) >> 5;
 	
-							if (tilesize != 0) code &= ~3;
+							if (tilesize) code &= ~3;
 	
 							for (ty = 0; ty <= tilesize; ty++)
 							{
 								for (tx = 0; tx <= tilesize; tx++)
 								{
-									drawgfx(bitmap, Machine.gfx[gfx],
+									drawgfx(bitmap, Machine->gfx[gfx],
 											code ^ tx ^ (ty<<1),
 											color,
 											flipx, flipy,
@@ -335,7 +335,7 @@ public class seta2
 					{
 						for (x = 0; x <= sizex; x++)
 						{
-							drawgfx(bitmap, Machine.gfx[gfx],
+							drawgfx(bitmap, Machine->gfx[gfx],
 									code++,
 									color,
 									flipx, flipy,
@@ -359,8 +359,7 @@ public class seta2
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_seta2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seta2  = new VideoStartHandlerPtr() { public int handler(){
 		Machine.gfx[2].color_granularity = 16;
 		Machine.gfx[3].color_granularity = 16;
 		Machine.gfx[4].color_granularity = 16;
@@ -372,16 +371,14 @@ public class seta2
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_seta2_offset  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_seta2_offset  = new VideoStartHandlerPtr() { public int handler(){
 		video_start_seta2();
 	
 		yoffset = 0x10;
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_seta2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Black or pens[0]? */
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
@@ -390,8 +387,7 @@ public class seta2
 		seta2_draw_sprites(bitmap,cliprect);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_seta2  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_seta2  = new VideoEofHandlerPtr() { public void handler(){
 		/* Buffer sprites by 1 frame */
 		memcpy(buffered_spriteram16,spriteram16,spriteram_size[0]);
 	} };

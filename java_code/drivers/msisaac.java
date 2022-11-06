@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -38,25 +38,22 @@ public class msisaac
 	
 	static void nmi_callback(int param)
 	{
-		if (sound_nmi_enable != 0) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
+		if (sound_nmi_enable) cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 		else pending_nmi = 1;
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		timer_set(TIME_NOW,data,nmi_callback);
 	} };
 	
-	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_disable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_nmi_enable = 1;
-		if (pending_nmi != 0)
+		if (pending_nmi)
 		{
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
 			pending_nmi = 0;
@@ -64,18 +61,15 @@ public class msisaac
 	} };
 	
 	#if 0
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
-	public static WriteHandlerPtr msisaac_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	#endif
-	public static WriteHandlerPtr ms_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ms_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data!=0x08)
 			usrintf_showmessage("CPU #0 write to 0xf0a3 data=%2x",data);
 	} };
@@ -96,8 +90,7 @@ public class msisaac
 	#endif
 	
 	
-	public static ReadHandlerPtr msisaac_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr msisaac_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef USE_MCU
 		return buggychl_mcu_r(offset);
 	#else
@@ -172,8 +165,7 @@ public class msisaac
 	#endif
 	} };
 	
-	public static ReadHandlerPtr msisaac_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr msisaac_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef USE_MCU
 		return buggychl_mcu_status_r(offset);
 	#else
@@ -181,8 +173,7 @@ public class msisaac
 	#endif
 	} };
 	
-	public static WriteHandlerPtr msisaac_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msisaac_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#ifdef USE_MCU
 		buggychl_mcu_w(offset,data);
 	#else
@@ -261,8 +252,7 @@ public class msisaac
 	
 	static int vol_ctrl[16];
 	
-	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_ta7630  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		double db			= 0.0;
@@ -289,8 +279,7 @@ public class msisaac
 	static UINT8 snd_ctrl0=0;
 	static UINT8 snd_ctrl1=0;
 	
-	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl0 = data & 0xff;
 		//usrintf_showmessage("SND0 0=%2x 1=%2x", snd_ctrl0, snd_ctrl1);
 	
@@ -298,8 +287,7 @@ public class msisaac
 		mixer_set_volume (7, vol_ctrl[ (snd_ctrl0>>4) & 15 ]);	/* group2 from msm5232 */
 	
 	} };
-	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_control_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snd_ctrl1 = data & 0xff;
 		//usrintf_showmessage("SND1 0=%2x 1=%2x", snd_ctrl0, snd_ctrl1);
 	} };
@@ -350,7 +338,7 @@ public class msisaac
 	};
 	
 	
-	static InputPortPtr input_ports_msisaac = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_msisaac = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( msisaac )
 		PORT_START();  /* DSW1 */
 		PORT_DIPNAME( 0x01, 0x00, "DSW1 Unknown 0" );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Off") );
@@ -523,8 +511,7 @@ public class msisaac
 	
 	/*******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_msisaac = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( msisaac )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -559,9 +546,7 @@ public class msisaac
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5232, msm5232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*******************************************************************************/
@@ -599,5 +584,5 @@ public class msisaac
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_msisaac	   = new GameDriver("1985"	,"msisaac"	,"msisaac.java"	,rom_msisaac,null	,machine_driver_msisaac	,input_ports_msisaac	,null	,ROT270	,	"Taito Corporation", "Metal Soldier Isaac II", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL)
+	GAMEX( 1985, msisaac, 0,        msisaac, msisaac, 0, ROT270, "Taito Corporation", "Metal Soldier Isaac II", GAME_UNEMULATED_PROTECTION | GAME_NO_COCKTAIL)
 }

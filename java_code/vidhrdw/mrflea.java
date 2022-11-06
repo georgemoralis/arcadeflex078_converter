@@ -7,7 +7,7 @@ Mr. F. Lea
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,14 +16,14 @@ public class mrflea
 	
 	static int mrflea_gfx_bank;
 	
-	public static WriteHandlerPtr mrflea_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_gfx_bank = data;
 		if( data & ~0x14 ){
 			logerror( "unknown gfx bank: 0x%02x\n", data );
-		}
-	} };
+		} };
+	}
 	
-	public static WriteHandlerPtr mrflea_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		int bank = offset/0x400;
 		offset &= 0x3ff;
 		videoram.write(offset,data);
@@ -31,21 +31,21 @@ public class mrflea
 		/*	the address range that tile data is written to sets one bit of
 		**	the bank select.  The remaining bits are from a video register.
 		*/
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		if ((offset & 2) != 0){ /* tile_number */
+	public static WriteHandlerPtr mrflea_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+		if( offset&2 ){ /* tile_number */
 			spriteram.write(offset|1,offset&1);
 			offset &= ~1;
-		}
+		} };
 		spriteram.write(offset,data);
-	} };
+	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap ){
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		const UINT8 *source = spriteram;
 		const UINT8 *finish = source+0x100;
-		struct rectangle clip = Machine.visible_area;
+		struct rectangle clip = Machine->visible_area;
 		clip.max_x -= 24;
 		clip.min_x += 16;
 		while( source<finish ){
@@ -71,11 +71,11 @@ public class mrflea
 	
 	static void draw_background( struct mame_bitmap *bitmap ){
 		const UINT8 *source = videoram;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		int sx,sy;
 		int base = 0;
-		if ((mrflea_gfx_bank & 0x04) != 0) base |= 0x400;
-		if ((mrflea_gfx_bank & 0x10) != 0) base |= 0x200;
+		if( mrflea_gfx_bank&0x04 ) base |= 0x400;
+		if( mrflea_gfx_bank&0x10 ) base |= 0x200;
 		for( sy=0; sy<256; sy+=8 ){
 			for( sx=0; sx<256; sx+=8 ){
 				int tile_number = base+source[0]+source[0x400]*0x100;
@@ -91,12 +91,11 @@ public class mrflea
 		}
 	}
 	
-	public static VideoStartHandlerPtr video_start_mrflea  = new VideoStartHandlerPtr() { public int handler(){
+	public static VideoStartHandlerPtr video_start_mrflea  = new VideoStartHandlerPtr() { public int handler()
 		return 0;
-	} };
+	}
 	
-	public static VideoUpdateHandlerPtr video_update_mrflea  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mrflea  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_background( bitmap );
 		draw_sprites( bitmap );
 	} };

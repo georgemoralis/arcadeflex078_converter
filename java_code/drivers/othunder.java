@@ -51,7 +51,7 @@ DIPs
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -104,15 +104,14 @@ public class othunder
 		"0100111111" 	/* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_othunder  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_othunder  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 				EEPROM_load(file);
 			else
 				EEPROM_set_data(default_eeprom,128);  /* Default the gun setup values */
@@ -215,8 +214,7 @@ public class othunder
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		banknum = (data - 1) & 7;
 		reset_sound_region();
 	} };
@@ -339,7 +337,7 @@ public class othunder
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_othunder = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_othunder = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( othunder )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -411,7 +409,7 @@ public class othunder
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y | IPF_PLAYER2, 25, 13, 0, 0xff);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_othundu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_othundu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( othundu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -548,8 +546,7 @@ public class othunder
 				     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_othunder = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( othunder )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000 )	/* 12 MHz ??? */
@@ -578,9 +575,7 @@ public class othunder
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -654,13 +649,12 @@ public class othunder
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_othunder  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_othunder  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int("sound1", 0, "sound region", &banknum);
 		state_save_register_func_postload(reset_sound_region);
 	} };
 	
 	
-	public static GameDriver driver_othunder	   = new GameDriver("1988"	,"othunder"	,"othunder.java"	,rom_othunder,null	,machine_driver_othunder	,input_ports_othunder	,init_othunder	,ORIENTATION_FLIP_X	,	"Taito Corporation Japan", "Operation Thunderbolt (World)" )
-	public static GameDriver driver_othundu	   = new GameDriver("1988"	,"othundu"	,"othunder.java"	,rom_othundu,driver_othunder	,machine_driver_othunder	,input_ports_othundu	,init_othunder	,ORIENTATION_FLIP_X	,	"Taito America Corporation", "Operation Thunderbolt (US)" )
+	GAME( 1988, othunder, 0,        othunder, othunder, othunder, ORIENTATION_FLIP_X, "Taito Corporation Japan", "Operation Thunderbolt (World)" )
+	GAME( 1988, othundu,  othunder, othunder, othundu,  othunder, ORIENTATION_FLIP_X, "Taito America Corporation", "Operation Thunderbolt (US)" )
 }

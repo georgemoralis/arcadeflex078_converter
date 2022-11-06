@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -99,7 +99,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( sndram_bank_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			sndram_bank = (data >> 16) & 0x1f;
 			sndram_set_bank();
@@ -147,9 +147,9 @@ public class djmain
 	{
 		data16_t ret = 0;
 	
-		if (ACCESSING_LSB16 != 0)
+		if (ACCESSING_LSB16)
 			ret |= K054539_1_r(offset);
-		if (ACCESSING_MSB16 != 0)
+		if (ACCESSING_MSB16)
 			ret |= K054539_0_r(offset)<<8;
 	
 		return ret;
@@ -157,9 +157,9 @@ public class djmain
 	
 	static WRITE16_HANDLER( dual539_16_w )
 	{
-		if (ACCESSING_LSB16 != 0)
+		if (ACCESSING_LSB16)
 			K054539_1_w(offset, data);
-		if (ACCESSING_MSB16 != 0)
+		if (ACCESSING_MSB16)
 			K054539_0_w(offset, data>>8);
 	}
 	
@@ -223,7 +223,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( v_ctrl_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			data >>= 16;
 			mem_mask >>= 16;
@@ -244,12 +244,12 @@ public class djmain
 	
 		offset *= 2;
 	
-		if (ACCESSING_MSB32 == 0)
+		if (!ACCESSING_MSB32)
 			offset += 1;
 	
 		offset += bank * 0x800 * 4;
 	
-		if ((v_ctrl & 0x020) != 0)
+		if (v_ctrl & 0x020)
 			offset += 0x800 * 2;
 	
 		return mem8[offset] * 0x01010000;
@@ -301,7 +301,7 @@ public class djmain
 	
 	static READ32_HANDLER( ide_std_r )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 			return ide_controller16_0_r(IDE_STD_OFFSET + offset, 0x00ff) >> 8;
 		else
 			return ide_controller16_0_r(IDE_STD_OFFSET + offset, 0x0000) << 16;
@@ -309,7 +309,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( ide_std_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 			ide_controller16_0_w(IDE_STD_OFFSET + offset, data << 8, 0x00ff);
 		else
 			ide_controller16_0_w(IDE_STD_OFFSET + offset, data >> 16, 0x0000);
@@ -422,7 +422,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( light_ctrl_1_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			switch (game_type)
 			{
@@ -449,7 +449,7 @@ public class djmain
 	
 	static WRITE32_HANDLER( light_ctrl_2_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			switch (game_type)
 			{
@@ -503,11 +503,10 @@ public class djmain
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr vb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vb_interrupt = new InterruptHandlerPtr() {public void handler(){
 		pending_vb_int = 0;
 	
-		if (DISABLE_VB_INT != 0)
+		if (DISABLE_VB_INT)
 		{
 			pending_vb_int = 1;
 			return;
@@ -839,7 +838,7 @@ public class djmain
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );	/* DSW 3-6 */
 	
 	
-	static InputPortPtr input_ports_beatmania = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_beatmania = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( beatmania )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
@@ -847,7 +846,7 @@ public class djmain
 		BEATMANIA_SCRATCH		/* IN 6 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bm1stmix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bm1stmix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bm1stmix )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2_OLD_LEVEL	/* IN 4 */
@@ -855,7 +854,7 @@ public class djmain
 		BEATMANIA_SCRATCH		/* IN 6 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bmcompmx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bmcompmx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bmcompmx )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x80, 0x3f)	/* IN 3 */
 		BMCOMPMX_DSW2			/* IN 4 */
@@ -863,7 +862,7 @@ public class djmain
 		BEATMANIA_SCRATCH		/* IN 6 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bm4thmix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bm4thmix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bm4thmix )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x40, 0x3f)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
@@ -871,7 +870,7 @@ public class djmain
 		BEATMANIA_SCRATCH		/* IN 6 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hmcompm2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hmcompm2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hmcompm2 )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
@@ -879,7 +878,7 @@ public class djmain
 		BEATMANIA_SCRATCH		/* IN 6 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bmdct = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bmdct = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bmdct )
 		BEATMANIA_INPUT			/* IN 0-2 */
 		BEATMANIA_DSW1(0x00, 0xff)	/* IN 3 */
 		BEATMANIA_DSW2			/* IN 4 */
@@ -952,8 +951,7 @@ public class djmain
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_djmain  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_djmain  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset sound ram bank */
 		sndram_bank = 0;
 		sndram_set_bank();
@@ -975,8 +973,7 @@ public class djmain
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_djmain = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( djmain )
 	
 		/* basic machine hardware */
 		// popn3 works 9.6 MHz or slower in some songs */
@@ -1002,9 +999,7 @@ public class djmain
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1229,8 +1224,7 @@ public class djmain
 		state_save_register_func_postload(sndram_set_bank);
 	}
 	
-	public static DriverInitHandlerPtr init_beatmania  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_beatmania  = new DriverInitHandlerPtr() { public void handler(){
 		init_djmain_common();
 	
 		game_type = BEATMANIA;
@@ -1245,8 +1239,7 @@ public class djmain
 		0x53, 0x45, 0x52, 0x45, 0x45, 0x56, 0x2e, 0x44
 	};
 	
-	public static DriverInitHandlerPtr init_hmcompmx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hmcompmx  = new DriverInitHandlerPtr() { public void handler(){
 		static UINT8 hmcompmx_user_password[2 + 32] =
 		{
 			0x00, 0x00,
@@ -1262,8 +1255,7 @@ public class djmain
 		ide_set_user_password(0, hmcompmx_user_password);
 	} };
 	
-	public static DriverInitHandlerPtr init_bm4thmix  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bm4thmix  = new DriverInitHandlerPtr() { public void handler(){
 		static UINT8 bm4thmix_user_password[2 + 32] =
 		{
 			0x00, 0x00,
@@ -1278,8 +1270,7 @@ public class djmain
 		ide_set_user_password(0, bm4thmix_user_password);
 	} };
 	
-	public static DriverInitHandlerPtr init_hmcompm2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hmcompm2  = new DriverInitHandlerPtr() { public void handler(){
 		static UINT8 hmcompm2_user_password[2 + 32] =
 		{
 			0x00, 0x00,
@@ -1295,8 +1286,7 @@ public class djmain
 		ide_set_user_password(0, hmcompm2_user_password);
 	} };
 	
-	public static DriverInitHandlerPtr init_bmdct  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bmdct  = new DriverInitHandlerPtr() { public void handler(){
 		static UINT8 bmdct_user_password[2 + 32] =
 		{
 			0x00, 0x00,
@@ -1312,8 +1302,7 @@ public class djmain
 		ide_set_user_password(0, bmdct_user_password);
 	} };
 	
-	public static DriverInitHandlerPtr init_bmcorerm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bmcorerm  = new DriverInitHandlerPtr() { public void handler(){
 		static UINT8 bmcorerm_user_password[2 + 32] =
 		{
 			0x00, 0x00,
@@ -1337,13 +1326,13 @@ public class djmain
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_bm1stmix	   = new GameDriver("1997"	,"bm1stmix"	,"djmain.java"	,rom_bm1stmix,null	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania (ver JA-B)" )
-	public static GameDriver driver_bm2ndmix	   = new GameDriver("1998"	,"bm2ndmix"	,"djmain.java"	,rom_bm2ndmix,null	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania 2nd MIX (ver JA-B)" )
-	public static GameDriver driver_bm2ndmxa	   = new GameDriver("1998"	,"bm2ndmxa"	,"djmain.java"	,rom_bm2ndmxa,driver_bm2ndmix	,machine_driver_djmain	,input_ports_bm1stmix	,init_beatmania	,ROT0	,	"Konami", "beatmania 2nd MIX (ver JA-A)" )
-	public static GameDriver driver_bmcompmx	   = new GameDriver("1999"	,"bmcompmx"	,"djmain.java"	,rom_bmcompmx,null	,machine_driver_djmain	,input_ports_bmcompmx	,init_beatmania	,ROT0	,	"Konami", "beatmania complete MIX (ver JA-B)" )
-	public static GameDriver driver_hmcompmx	   = new GameDriver("1999"	,"hmcompmx"	,"djmain.java"	,rom_hmcompmx,driver_bmcompmx	,machine_driver_djmain	,input_ports_bmcompmx	,init_hmcompmx	,ROT0	,	"Konami", "hiphopmania complete MIX (ver UA-B)" )
-	public static GameDriver driver_bm4thmix	   = new GameDriver("1999"	,"bm4thmix"	,"djmain.java"	,rom_bm4thmix,null	,machine_driver_djmain	,input_ports_bm4thmix	,init_bm4thmix	,ROT0	,	"Konami", "beatmania 4th MIX (ver JA-A)" )
-	public static GameDriver driver_hmcompm2	   = new GameDriver("2000"	,"hmcompm2"	,"djmain.java"	,rom_hmcompm2,null	,machine_driver_djmain	,input_ports_hmcompm2	,init_hmcompm2	,ROT0	,	"Konami", "hiphopmania complete MIX 2 (ver UA-A)" )
-	public static GameDriver driver_bmdct	   = new GameDriver("2000"	,"bmdct"	,"djmain.java"	,rom_bmdct,null	,machine_driver_djmain	,input_ports_bmdct	,init_bmdct	,ROT0	,	"Konami", "beatmania f. Dreams Come True (ver JA-A)" )
-	public static GameDriver driver_bmcorerm	   = new GameDriver("2000"	,"bmcorerm"	,"djmain.java"	,rom_bmcorerm,null	,machine_driver_djmain	,input_ports_beatmania	,init_bmcorerm	,ROT0	,	"Konami", "beatmania CORE REMIX (ver JA-A)" )
+	GAME( 1997, bm1stmix, 0,        djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania (ver JA-B)" )
+	GAME( 1998, bm2ndmix, 0,        djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania 2nd MIX (ver JA-B)" )
+	GAME( 1998, bm2ndmxa, bm2ndmix, djmain,   bm1stmix,  beatmania, ROT0, "Konami", "beatmania 2nd MIX (ver JA-A)" )
+	GAME( 1999, bmcompmx, 0,        djmain,   bmcompmx,  beatmania, ROT0, "Konami", "beatmania complete MIX (ver JA-B)" )
+	GAME( 1999, hmcompmx, bmcompmx, djmain,   bmcompmx,  hmcompmx,  ROT0, "Konami", "hiphopmania complete MIX (ver UA-B)" )
+	GAME( 1999, bm4thmix, 0,        djmain,   bm4thmix,  bm4thmix,  ROT0, "Konami", "beatmania 4th MIX (ver JA-A)" )
+	GAME( 2000, hmcompm2, 0,        djmain,   hmcompm2,  hmcompm2,  ROT0, "Konami", "hiphopmania complete MIX 2 (ver UA-A)" )
+	GAME( 2000, bmdct,    0,        djmain,   bmdct,     bmdct,     ROT0, "Konami", "beatmania f. Dreams Come True (ver JA-A)" )
+	GAME( 2000, bmcorerm, 0,        djmain,   beatmania, bmcorerm,  ROT0, "Konami", "beatmania CORE REMIX (ver JA-A)" )
 }

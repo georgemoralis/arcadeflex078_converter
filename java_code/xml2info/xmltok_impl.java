@@ -208,7 +208,7 @@ PREFIX(checkPiTarget)(const ENCODING *enc, const char *ptr,
   default:
     return 1;
   }
-  if (upper != 0)
+  if (upper)
     return 0;
   *tokPtr = XML_TOK_XML_DECL;
   return 1;
@@ -531,7 +531,7 @@ PREFIX(scanAtts)(const ENCODING *enc, const char *ptr, const char *end,
     CHECK_NAME_CASES(enc, ptr, end, nextTokPtr)
 #ifdef XML_NS
     case BT_COLON:
-      if (hadColon != 0) {
+      if (hadColon) {
         *nextTokPtr = ptr;
         return XML_TOK_INVALID;
       }
@@ -718,7 +718,7 @@ PREFIX(scanLt)(const ENCODING *enc, const char *ptr, const char *end,
     CHECK_NAME_CASES(enc, ptr, end, nextTokPtr)
 #ifdef XML_NS
     case BT_COLON:
-      if (hadColon != 0) {
+      if (hadColon) {
         *nextTokPtr = ptr;
         return XML_TOK_INVALID;
       }
@@ -1750,22 +1750,22 @@ PREFIX(updatePosition)(const ENCODING *enc,
     LEAD_CASE(2) LEAD_CASE(3) LEAD_CASE(4)
 #undef LEAD_CASE
     case BT_LF:
-      pos.columnNumber = (unsigned)-1;
-      pos.lineNumber++;
+      pos->columnNumber = (unsigned)-1;
+      pos->lineNumber++;
       ptr += MINBPC(enc);
       break;
     case BT_CR:
-      pos.lineNumber++;
+      pos->lineNumber++;
       ptr += MINBPC(enc);
       if (ptr != end && BYTE_TYPE(enc, ptr) == BT_LF)
         ptr += MINBPC(enc);
-      pos.columnNumber = (unsigned)-1;
+      pos->columnNumber = (unsigned)-1;
       break;
     default:
       ptr += MINBPC(enc);
       break;
     }
-    pos.columnNumber++;
+    pos->columnNumber++;
   }
 }
 

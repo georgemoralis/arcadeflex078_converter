@@ -15,7 +15,7 @@ tilemap.h,tilemap.c
 - added tilemap_get_transparency_data() for transparency cache manipulation
 
 vidhrdw\konamiic.c
-- added preliminary K056832 tilemap<.linemap switching and tileline code
+- added preliminary K056832 tilemap<->linemap switching and tileline code
 
 drivers\gijoe.c
 - updated video settings, memory map and irq handler
@@ -38,7 +38,7 @@ Known Issues
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -71,15 +71,14 @@ public class gijoe
 	}
 	#endif
 	
-	public static NVRAMHandlerPtr nvram_handler_gijoe  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_gijoe  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -98,7 +97,7 @@ public class gijoe
 		/* bit 11 is service button */
 		res = (EEPROM_read_bit()<<8) | input_port_0_word_r(0,0);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7ff;
@@ -114,7 +113,7 @@ public class gijoe
 	
 	static WRITE16_HANDLER( control2_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			/* bit 0  is data */
 			/* bit 1  is cs (active low) */
 			/* bit 2  is clock (active high) */
@@ -160,16 +159,15 @@ public class gijoe
 	
 	static void dmaend_callback(int data)
 	{
-		if ((cur_control2 & 0x0020) != 0)
+		if (cur_control2 & 0x0020)
 			cpu_set_irq_line(0, 6, HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr gijoe_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gijoe_interrupt = new InterruptHandlerPtr() {public void handler(){
 		// global interrupt masking (*this game only)
 		if (!K056832_is_IRQ_enabled(0)) return;
 	
-		if (K053246_is_IRQ_enabled() != 0)
+		if (K053246_is_IRQ_enabled())
 		{
 			gijoe_objdma();
 	
@@ -178,16 +176,16 @@ public class gijoe
 		}
 	
 		// trigger V-blank interrupt
-		if ((cur_control2 & 0x0080) != 0)
+		if (cur_control2 & 0x0080)
 			cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
 	
 	static WRITE16_HANDLER( sound_cmd_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if(ACCESSING_LSB) {
 			data &= 0xff;
 			soundlatch_w(0, data);
-			if(!Machine.sample_rate)
+			if(!Machine->sample_rate)
 				if(data == 0xfc || data == 0xfe)
 					soundlatch2_w(0, 0x7f);
 		}
@@ -269,7 +267,7 @@ public class gijoe
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_gijoe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gijoe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gijoe )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW,  IPT_START1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW,  IPT_START2 );
@@ -352,8 +350,7 @@ public class gijoe
 		{ sound_nmi }
 	};
 	
-	public static MachineHandlerPtr machine_driver_gijoe = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gijoe )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	/* Confirmed */
@@ -382,9 +379,7 @@ public class gijoe
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_gijoe = new RomLoadPtr(){ public void handler(){ 
@@ -459,8 +454,7 @@ public class gijoe
 		ROM_LOAD( "069a04", 0x000000, 0x200000, CRC(11d6dcd6) SHA1(04cbff9f61cd8641db538db809ddf20da29fd5ac) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_gijoe  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gijoe  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
 	
@@ -469,7 +463,7 @@ public class gijoe
 		dmadelay_timer = timer_alloc(dmaend_callback);
 	} };
 	
-	public static GameDriver driver_gijoe	   = new GameDriver("1992"	,"gijoe"	,"gijoe.java"	,rom_gijoe,null	,machine_driver_gijoe	,input_ports_gijoe	,init_gijoe	,ROT0	,	"Konami", "GI Joe (World)")
-	public static GameDriver driver_gijoeu	   = new GameDriver("1992"	,"gijoeu"	,"gijoe.java"	,rom_gijoeu,driver_gijoe	,machine_driver_gijoe	,input_ports_gijoe	,init_gijoe	,ROT0	,	"Konami", "GI Joe (US)")
-	public static GameDriver driver_gijoej	   = new GameDriver("1992"	,"gijoej"	,"gijoe.java"	,rom_gijoej,driver_gijoe	,machine_driver_gijoe	,input_ports_gijoe	,init_gijoe	,ROT0	,	"Konami", "GI Joe (Japan)")
+	GAME( 1992, gijoe,  0,     gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (World)")
+	GAME( 1992, gijoeu, gijoe, gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (US)")
+	GAME( 1992, gijoej, gijoe, gijoe, gijoe, gijoe, ROT0, "Konami", "GI Joe (Japan)")
 }

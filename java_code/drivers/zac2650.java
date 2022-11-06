@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,7 +65,7 @@ public class zac2650
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_tinvader = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tinvader = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tinvader )
 	
 		PORT_START();  /* 1E80 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
@@ -117,7 +117,7 @@ public class zac2650
 	
 	/* Almost identical, no number of bases selection */
 	
-	static InputPortPtr input_ports_sinvader = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sinvader = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sinvader )
 	
 		PORT_START();  /* 1E80 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
@@ -165,7 +165,7 @@ public class zac2650
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dodgem = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dodgem = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dodgem )
 	
 		PORT_START();  /* 1E80 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
@@ -249,8 +249,7 @@ public class zac2650
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_zac2650  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_zac2650  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x00,0x00,0x00); /* BLACK */
 		palette_set_color(1,0xff,0xff,0xff); /* WHITE */
 		colortable[0] = 0;
@@ -322,8 +321,7 @@ public class zac2650
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_tinvader = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tinvader )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 3800000/4/3)
@@ -346,12 +344,9 @@ public class zac2650
 		MDRV_VIDEO_UPDATE(tinvader)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static WriteHandlerPtr tinvader_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tinvader_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    /* sounds are NOT the same as space invaders */
 	
 		logerror("Register %x = Data %d\n",data & 0xfe,data & 0x01);
@@ -402,13 +397,12 @@ public class zac2650
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_tinvader  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tinvader  = new DriverInitHandlerPtr() { public void handler(){
 		artwork_set_overlay(tinv2650_overlay);
 	} };
 	
 	
-	public static GameDriver driver_sia2650	   = new GameDriver("1978"	,"sia2650"	,"zac2650.java"	,rom_sia2650,null	,machine_driver_tinvader	,input_ports_sinvader	,null	,ROT270	,	"Zaccaria/Zelco", "Super Invader Attack", GAME_NO_SOUND )
-	public static GameDriver driver_tinv2650	   = new GameDriver("1978"	,"tinv2650"	,"zac2650.java"	,rom_tinv2650,driver_sia2650	,machine_driver_tinvader	,input_ports_tinvader	,init_tinvader	,ROT270	,	"Zaccaria/Zelco", "The Invaders",			GAME_NO_SOUND )
-	public static GameDriver driver_dodgem	   = new GameDriver("1979"	,"dodgem"	,"zac2650.java"	,rom_dodgem,null	,machine_driver_tinvader	,input_ports_dodgem	,null	,ROT0	,	"Zaccaria",		"Dodgem",				GAME_NO_SOUND )
+	GAMEX( 1978, sia2650,  0,       tinvader, sinvader, 0,        ROT270, "Zaccaria/Zelco", "Super Invader Attack", GAME_NO_SOUND )
+	GAMEX( 1978, tinv2650, sia2650, tinvader, tinvader, tinvader, ROT270, "Zaccaria/Zelco", "The Invaders",			GAME_NO_SOUND )
+	GAMEX( 1979, dodgem,   0,       tinvader, dodgem,   0,        ROT0,   "Zaccaria",		"Dodgem",				GAME_NO_SOUND )
 }

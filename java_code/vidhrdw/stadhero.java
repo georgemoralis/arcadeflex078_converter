@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -60,7 +60,7 @@ public class stadhero
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -68,18 +68,18 @@ public class stadhero
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[2],
+				drawgfx(bitmap,Machine->gfx[2],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -92,8 +92,7 @@ public class stadhero
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_stadhero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_stadhero  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flipscreen=stadhero_pf2_control_0[0]&0x80;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 		tilemap_set_scrollx( pf2_tilemap,0, stadhero_pf2_control_1[0] );
@@ -136,7 +135,7 @@ public class stadhero
 	
 	static UINT32 stadhero_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0xf) + ((row & 0xf) << 4) + ((row & 0x30) << 4) + ((col & 0x30) << 6);
 	}
 	
@@ -168,8 +167,7 @@ public class stadhero
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_stadhero  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_stadhero  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap =     tilemap_create(get_pf1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		pf2_tilemap =     tilemap_create(get_pf2_tile_info,stadhero_scan,TILEMAP_OPAQUE,     16,16,64,64);
 	

@@ -35,7 +35,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -89,7 +89,7 @@ public class bankp
 	
 	
 	
-	static InputPortPtr input_ports_bankp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bankp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bankp )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_2WAY );
@@ -183,8 +183,7 @@ public class bankp
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_bankp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bankp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3867120)	/* ?? the main oscillator is 15.46848 MHz */
@@ -209,9 +208,7 @@ public class bankp
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -247,5 +244,5 @@ public class bankp
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_bankp	   = new GameDriver("1984"	,"bankp"	,"bankp.java"	,rom_bankp,null	,machine_driver_bankp	,input_ports_bankp	,null	,ROT0	,	"[Sanritsu] Sega", "Bank Panic" )
+	GAME( 1984, bankp, 0, bankp, bankp, 0, ROT0, "[Sanritsu] Sega", "Bank Panic" )
 }

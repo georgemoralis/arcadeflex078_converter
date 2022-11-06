@@ -41,7 +41,7 @@ Video Board
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -137,54 +137,54 @@ public class mrflea
 	
 	/*******************************************************/
 	
-	public static WriteHandlerPtr mrflea_main_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_main_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_status |= 0x01; // pending command to main CPU
 		mrflea_main = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_status |= 0x08; // pending command to IO CPU
 		mrflea_io = data;
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_main_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_main_r  = new ReadHandlerPtr() { public int handler(int offset)
 		mrflea_status &= ~0x01; // main CPU command read
 		return mrflea_main;
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_io_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_io_r  = new ReadHandlerPtr() { public int handler(int offset)
 		mrflea_status &= ~0x08; // IO CPU command read
 		return mrflea_io;
-	} };
+	}
 	
 	/*******************************************************/
 	
-	public static ReadHandlerPtr mrflea_main_status_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_main_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 		/*	0x01: main CPU command pending
 			0x08: io cpu ready */
 		return mrflea_status^0x08;
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_io_status_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_io_status_r  = new ReadHandlerPtr() { public int handler(int offset)
 		/*	0x08: IO CPU command pending
 			0x01: main cpu ready */
 		return mrflea_status^0x01;
-	} };
+	}
 	
-	public static InterruptHandlerPtr mrflea_io_interrupt = new InterruptHandlerPtr() {public void handler(){
+	public static InterruptHandlerPtr mrflea_io_interrupt = new InterruptHandlerPtr() {public void handler()
 		if( cpu_getiloops()==0 || (mrflea_status&0x08) ) 
 			cpu_set_irq_line(1, 0, HOLD_LINE);
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_interrupt_type_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_interrupt_type_r  = new ReadHandlerPtr() { public int handler(int offset)
 	/* there are two interrupt types:
 		1. triggered (in response to sound command)
 		2. heartbeat (for music timing)
 	*/
-		if ((mrflea_status & 0x08) != 0) return 0x00; /* process command */
+		if( mrflea_status&0x08 ) return 0x00; /* process command */
 		return 0x01; /* music/sound update? */
-	} };
+	}
 	
 	/*******************************************************/
 	
@@ -206,43 +206,43 @@ public class mrflea
 	
 	/*******************************************************/
 	
-	public static WriteHandlerPtr mrflea_select0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_select0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_select0 = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_select1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_select1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_select1 = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_select2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_select2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_select2 = data;
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_select3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_select3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		mrflea_select3 = data;
-	} };
+	}
 	
 	/*******************************************************/
 	
-	public static ReadHandlerPtr mrflea_input0_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_input0_r  = new ReadHandlerPtr() { public int handler(int offset)
 		if( mrflea_select0 == 0x0f ) return readinputport(0);
 		if( mrflea_select0 == 0x0e ) return readinputport(1);
 		return 0x00;
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_input1_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_input1_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return 0x00;
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_input2_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_input2_r  = new ReadHandlerPtr() { public int handler(int offset)
 		if( mrflea_select2 == 0x0f ) return readinputport(2);
 		if( mrflea_select2 == 0x0e ) return readinputport(3);
 		return 0x00;
-	} };
+	}
 	
-	public static ReadHandlerPtr mrflea_input3_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr mrflea_input3_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return 0x00;
-	} };
+	}
 	
 	/*******************************************************/
 	
@@ -258,23 +258,23 @@ public class mrflea
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr mrflea_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_data0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		AY8910_control_port_0_w.handler( offset, mrflea_select0 );
 		AY8910_write_port_0_w.handler( offset, data );
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-	} };
+	public static WriteHandlerPtr mrflea_data1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+	}
 	
-	public static WriteHandlerPtr mrflea_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_data2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		AY8910_control_port_1_w.handler( offset, mrflea_select2 );
 		AY8910_write_port_1_w.handler( offset, data );
-	} };
+	}
 	
-	public static WriteHandlerPtr mrflea_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr mrflea_data3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		AY8910_control_port_2_w.handler( offset, mrflea_select3 );
 		AY8910_write_port_2_w.handler( offset, data );
-	} };
+	}
 	
 	public static IO_WritePort writeport_io[]={
 		new IO_WritePort(MEMPORT_MARKER, MEMPORT_DIRECTION_WRITE | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -294,8 +294,7 @@ public class mrflea
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static MachineHandlerPtr machine_driver_mrflea = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mrflea )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz? */
@@ -324,9 +323,7 @@ public class mrflea
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_mrflea = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) /* Z80 code; main CPU */
@@ -363,7 +360,7 @@ public class mrflea
 		ROM_LOAD( "vd_l4",	0xe000, 0x2000, CRC(423735a5) SHA1(4ee93f93cd2b08560e148525e08880d64c64fcd2) )
 	ROM_END(); }}; 
 	
-	static InputPortPtr input_ports_mrflea = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrflea = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrflea )
 		PORT_START(); 
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
@@ -434,5 +431,5 @@ public class mrflea
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static GameDriver driver_mrflea	   = new GameDriver("1982"	,"mrflea"	,"mrflea.java"	,rom_mrflea,null	,machine_driver_mrflea	,input_ports_mrflea	,null	,ROT270	,	"Pacific Novelty", "The Amazing Adventures of Mr. F. Lea"  )
+	GAME(1982, mrflea,   0,        mrflea,   mrflea,   0,        ROT270, "Pacific Novelty", "The Amazing Adventures of Mr. F. Lea"  )
 }

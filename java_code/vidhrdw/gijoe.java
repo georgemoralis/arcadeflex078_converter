@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class gijoe
 		*color = (*color>>2 & 0x0f) | layer_colorbase[layer];
 	}
 	
-	public static VideoStartHandlerPtr video_start_gijoe  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gijoe  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		K053251_vh_start();
@@ -80,8 +79,7 @@ public class gijoe
 		SWAP(2, 3)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gijoe  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		const int K053251_CI[4] = { K053251_CI1, K053251_CI2, K053251_CI3, K053251_CI4 };
 		int layer[4];
 		int vrc_mode, vrc_new, colorbase_new, primode, dirty, i;
@@ -90,7 +88,7 @@ public class gijoe
 		// update tile offsets
 		K056832_read_AVAC(&vrc_mode, &vrc_new);
 	
-		if (vrc_mode != 0)
+		if (vrc_mode)
 		{
 			for (dirty=0xf000; dirty; dirty>>=4) if ((AVAC_vrc & dirty) != (vrc_new & dirty)) mask |= dirty;
 	
@@ -114,7 +112,7 @@ public class gijoe
 			if (layer_colorbase[i] != colorbase_new) { layer_colorbase[i] = colorbase_new; dirty = 1; }
 			if (AVAC_occupancy[i] & mask) dirty = 1;
 	
-			if (dirty != 0) { AVAC_occupancy[i] = 0; K056832_mark_plane_dirty(i); }
+			if (dirty) { AVAC_occupancy[i] = 0; K056832_mark_plane_dirty(i); }
 		}
 	
 		/*

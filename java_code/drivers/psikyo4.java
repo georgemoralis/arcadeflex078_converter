@@ -62,7 +62,7 @@ Or use these cheats:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -110,16 +110,15 @@ public class psikyo4
 	//	"*10010xxxx"	// erase all	1 00 10xxxx
 	};
 	
-	static NVRAM_HANDLER(93C56)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_93C56  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 		{
 			EEPROM_save(file);
 		}
 		else
 		{
 			EEPROM_init(&eeprom_interface_93C56);
-			if (file != 0)
+			if (file)
 			{
 				EEPROM_load(file);
 			}
@@ -132,11 +131,11 @@ public class psikyo4
 				memset(dat, 0, length);
 			}
 		}
-	}
+	} };
 	
 	static WRITE32_HANDLER( ps4_eeprom_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			EEPROM_write_bit((data & 0x00200000) ? 1 : 0);
 			EEPROM_set_cs_line((data & 0x00800000) ? CLEAR_LINE : ASSERT_LINE);
@@ -150,7 +149,7 @@ public class psikyo4
 	
 	static READ32_HANDLER( ps4_eeprom_r )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			return ((EEPROM_read_bit() << 20)); /* EEPROM */
 		}
@@ -160,20 +159,19 @@ public class psikyo4
 		return 0;
 	}
 	
-	static INTERRUPT_GEN(psikyosh_interrupt)
-	{
+	public static InterruptHandlerPtr psikyosh_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line(0, 4, HOLD_LINE);
-	}
+	} };
 	
 	static READ32_HANDLER(hotgmck_io32_r) /* used by hotgmck/hgkairak */
 	{
 		int ret = 0xff;
 		int sel = (ps4_io_select[0] & 0x0000ff00) >> 8;
 	
-		if ((sel & 1) != 0) ret &= readinputport(0+4*offset);
-		if ((sel & 2) != 0) ret &= readinputport(1+4*offset);
-		if ((sel & 4) != 0) ret &= readinputport(2+4*offset);
-		if ((sel & 8) != 0) ret &= readinputport(3+4*offset);
+		if (sel & 1) ret &= readinputport(0+4*offset);
+		if (sel & 2) ret &= readinputport(1+4*offset);
+		if (sel & 4) ret &= readinputport(2+4*offset);
+		if (sel & 8) ret &= readinputport(3+4*offset);
 	
 		return ret<<24 | readinputport(8);
 	}
@@ -222,7 +220,7 @@ public class psikyo4
 	
 	static WRITE32_HANDLER( ps4_screen1_brt_w )
 	{
-		if (ACCESSING_LSB32 != 0) {
+		if(ACCESSING_LSB32) {
 			/* Need seperate brightness for both screens if displaying together */
 			double brt1 = data & 0xff;
 			static double oldbrt1;
@@ -248,7 +246,7 @@ public class psikyo4
 	
 	static WRITE32_HANDLER( ps4_screen2_brt_w )
 	{
-		if (ACCESSING_LSB32 != 0) {
+		if(ACCESSING_LSB32) {
 			/* Need seperate brightness for both screens if displaying together */
 			double brt2 = data & 0xff;
 			static double oldbrt2;
@@ -385,7 +383,7 @@ public class psikyo4
 	
 	static void irqhandler(int linestate)
 	{
-		if (linestate != 0)
+		if (linestate)
 			cpu_set_irq_line(0, 12, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 12, CLEAR_LINE);
@@ -400,8 +398,7 @@ public class psikyo4
 		{ irqhandler }
 	};
 	
-	public static MachineHandlerPtr machine_driver_ps4big = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ps4big )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", SH2, MASTER_CLOCK/2)
 		MDRV_CPU_MEMORY(ps4_readmem,ps4_writemem)
@@ -433,12 +430,9 @@ public class psikyo4
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YMF278B, ymf278b_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ps4small = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ps4small )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(ps4big)
 	
@@ -447,9 +441,7 @@ public class psikyo4
 	#else
 		MDRV_VISIBLE_AREA(0, 40*8-1, 0, 30*8-1)
 	#endif
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -464,7 +456,7 @@ public class psikyo4
 		PORT_BIT(  0x40, IP_ACTIVE_LOW, IPT_UNKNOWN );\
 		PORT_BIT(  0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
-	static InputPortPtr input_ports_hotgmck = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotgmck = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotgmck )
 		PORT_START(); 	/* IN0 fake player 1 controls 1st bank */
 		PORT_BITX( 0x01, IP_ACTIVE_LOW, 0, "P1 A",     KEYCODE_A,        IP_JOY_NONE );
 		PORT_BITX( 0x02, IP_ACTIVE_LOW, 0, "P1 E",     KEYCODE_E,        IP_JOY_NONE );
@@ -569,7 +561,7 @@ public class psikyo4
 	#endif
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_loderndf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_loderndf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( loderndf )
 		PORT_START(); 	/* IN0 player 1 controls */
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -642,7 +634,7 @@ public class psikyo4
 	INPUT_PORTS_END(); }}; 
 	
 	/* unused inputs also act as duplicate buttons */
-	static InputPortPtr input_ports_hotdebut = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotdebut = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotdebut )
 		PORT_START(); 	/* IN0 player 1 controls */
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -897,35 +889,31 @@ public class psikyo4
 		return ps4_ram[0x00001c/4];
 	}
 	
-	public static DriverInitHandlerPtr init_hotgmck  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hotgmck  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank(1,&RAM[0x100000]);
 		install_mem_read32_handler (0, 0x5800000, 0x5800007, hotgmck_io32_r ); // Different Inputs
 	} };
 	
-	public static DriverInitHandlerPtr init_loderndf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_loderndf  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x6000020, 0x6000023, loderndf_speedup_r );
 	} };
 	
-	public static DriverInitHandlerPtr init_loderdfa  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_loderdfa  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x6000020, 0x6000023, loderdfa_speedup_r );
 	} };
 	
-	public static DriverInitHandlerPtr init_hotdebut  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hotdebut  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x600001c, 0x600001f, hotdebut_speedup_r );
 	} };
 	
 	
 	/*     YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME FLAGS */
 	
-	public static GameDriver driver_hotgmck	   = new GameDriver("1997"	,"hotgmck"	,"psikyo4.java"	,rom_hotgmck,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_hgkairak	   = new GameDriver("1998"	,"hgkairak"	,"psikyo4.java"	,rom_hgkairak,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_hotgmck3	   = new GameDriver("1999"	,"hotgmck3"	,"psikyo4.java"	,rom_hotgmck3,null	,machine_driver_ps4big	,input_ports_hotgmck	,init_hotgmck	,ROT0	,	"Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_loderndf	   = new GameDriver("2000"	,"loderndf"	,"psikyo4.java"	,rom_loderndf,null	,machine_driver_ps4small	,input_ports_loderndf	,init_loderndf	,ROT0	,	"Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan)" )
-	public static GameDriver driver_loderdfa	   = new GameDriver("2000"	,"loderdfa"	,"psikyo4.java"	,rom_loderdfa,driver_loderndf	,machine_driver_ps4small	,input_ports_loderndf	,init_loderdfa	,ROT0	,	"Psikyo", "Lode Runner - The Dig Fight (ver. A) (Japan)" )
-	public static GameDriver driver_hotdebut	   = new GameDriver("2000"	,"hotdebut"	,"psikyo4.java"	,rom_hotdebut,null	,machine_driver_ps4small	,input_ports_hotdebut	,init_hotdebut	,ROT0	,	"Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)" )
+	GAMEX( 1997, hotgmck,  0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1998, hgkairak, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1999, hotgmck3, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", GAME_IMPERFECT_SOUND )
+	GAME ( 2000, loderndf, 0,        ps4small,  loderndf, loderndf, ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan)" )
+	GAME ( 2000, loderdfa, loderndf, ps4small,  loderndf, loderdfa, ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. A) (Japan)" )
+	GAME ( 2000, hotdebut, 0,        ps4small,  hotdebut, hotdebut, ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)" )
 }

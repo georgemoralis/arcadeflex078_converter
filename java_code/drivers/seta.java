@@ -1082,7 +1082,7 @@ X1-010                           5168-10       68000-16
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -1120,7 +1120,7 @@ public class seta
 		max = (int)uPD71054.max[no]&0xffff;
 	
 		if( max != 0 ) {
-			duration = (double)Machine.drv.cpu[0].cpu_clock/16/max;
+			duration = (double)Machine->drv->cpu[0].cpu_clock/16/max;
 		}
 		if( duration != 0 ) {
 			timer_adjust( uPD71054.timer[no], TIME_IN_HZ(duration), no, 0 );
@@ -1299,7 +1299,7 @@ public class seta
 	
 	static WRITE16_HANDLER( sharedram_68000_w )
 	{
-		if (ACCESSING_LSB != 0)	sharedram[offset] = data & 0xff;
+		if (ACCESSING_LSB)	sharedram[offset] = data & 0xff;
 	}
 	
 	
@@ -1318,7 +1318,7 @@ public class seta
 		switch(offset)
 		{
 			case 0/2:	// bit 0: reset sub cpu?
-				if (ACCESSING_LSB != 0)
+				if (ACCESSING_LSB)
 				{
 					if ( !(old_data&1) && (data&1) )
 						cpu_set_reset_line(1,PULSE_LINE);
@@ -1330,11 +1330,11 @@ public class seta
 				break;
 	
 			case 4/2:	// not sure
-				if (ACCESSING_LSB != 0)	soundlatch_w(0, data & 0xff);
+				if (ACCESSING_LSB)	soundlatch_w(0, data & 0xff);
 				break;
 	
 			case 6/2:	// not sure
-				if (ACCESSING_LSB != 0)	soundlatch2_w(0, data & 0xff);
+				if (ACCESSING_LSB)	soundlatch2_w(0, data & 0xff);
 				break;
 		}
 	
@@ -1357,17 +1357,17 @@ public class seta
 		coin_counter_w		(1, (( data) >> 1) & 1 );
 	
 		/* blandia, gundhara, kamenrid & zingzip haven't the coin lockout device */
-		if (Machine.gamedrv			==	&driver_blandia  ||
-			Machine.gamedrv.clone_of	==	&driver_blandia  ||
+		if (Machine->gamedrv			==	&driver_blandia  ||
+			Machine->gamedrv->clone_of	==	&driver_blandia  ||
 	
-			Machine.gamedrv			==	&driver_gundhara ||
-			Machine.gamedrv.clone_of	==	&driver_gundhara ||
+			Machine->gamedrv			==	&driver_gundhara ||
+			Machine->gamedrv->clone_of	==	&driver_gundhara ||
 	
-			Machine.gamedrv			==	&driver_kamenrid ||
-			Machine.gamedrv.clone_of	==	&driver_kamenrid ||
+			Machine->gamedrv			==	&driver_kamenrid ||
+			Machine->gamedrv->clone_of	==	&driver_kamenrid ||
 	
-			Machine.gamedrv			==	&driver_zingzip  ||
-			Machine.gamedrv.clone_of	==	&driver_zingzip     )
+			Machine->gamedrv			==	&driver_zingzip  ||
+			Machine->gamedrv->clone_of	==	&driver_zingzip     )
 			return;
 		coin_lockout_w		(0, ((~data) >> 2) & 1 );
 		coin_lockout_w		(1, ((~data) >> 3) & 1 );
@@ -1385,13 +1385,11 @@ public class seta
 	
 	/* DSW reading for 8 bit CPUs */
 	
-	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3) >> 8) & 0xff;
 	} };
 	
-	public static ReadHandlerPtr dsw2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsw2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(3) >> 0) & 0xff;
 	} };
 	
@@ -1401,12 +1399,11 @@ public class seta
 	 Sprites Buffering
 	
 	*/
-	public static VideoEofHandlerPtr video_eof_seta_buffer_sprites  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_seta_buffer_sprites  = new VideoEofHandlerPtr() { public void handler(){
 		int ctrl2	=	spriteram16[ 0x602/2 ];
 		if (~ctrl2 & 0x20)
 		{
-			if ((ctrl2 & 0x40) != 0)
+			if (ctrl2 & 0x40)
 				memcpy(&spriteram16_2[0x0000/2],&spriteram16_2[0x2000/2],0x2000/2);
 			else
 				memcpy(&spriteram16_2[0x2000/2],&spriteram16_2[0x0000/2],0x2000/2);
@@ -1534,7 +1531,7 @@ public class seta
 	
 	WRITE16_HANDLER( calibr50_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_word_w(0,data,mem_mask);
 			cpu_set_nmi_line(1,PULSE_LINE);
@@ -1619,7 +1616,7 @@ public class seta
 	{
 		static int old_tiles_offset = 0;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			seta_tiles_offset = (data & 0x10) ? 0x4000: 0;
 			if (old_tiles_offset != seta_tiles_offset)	tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
@@ -1826,7 +1823,7 @@ public class seta
 	{
 		static int bit_count = 0, old_clock = 0;
 	
-		if ((data & 4) != 0) { bit_count = 0; return; } // Reset
+		if(data&4) { bit_count = 0; return; } // Reset
 	
 		if((data&1) == old_clock) return; // No change
 	
@@ -2413,7 +2410,7 @@ public class seta
 	
 	WRITE16_HANDLER( kiwame_nvram_w )
 	{
-		if (ACCESSING_LSB != 0)	COMBINE_DATA( &kiwame_nvram[offset] );
+		if (ACCESSING_LSB)	COMBINE_DATA( &kiwame_nvram[offset] );
 	}
 	
 	READ16_HANDLER( kiwame_input_r )
@@ -2554,7 +2551,7 @@ public class seta
 	
 	static WRITE16_HANDLER( utoukond_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			cpu_set_irq_line(1,0,HOLD_LINE);
 			soundlatch_w(0,data & 0xff);
@@ -2602,16 +2599,14 @@ public class seta
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sub_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2);
 		int bank = data >> 4;
 	
 		cpu_setbank(1, &rom[bank * 0x4000 + 0xc000]);
 	} };
 	
-	public static WriteHandlerPtr sub_bankswitch_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sub_bankswitch_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sub_bankswitch_w(offset,data);
 		seta_coin_lockout_w(data);
 	} };
@@ -2621,12 +2616,12 @@ public class seta
 									Thundercade
 	***************************************************************************/
 	
-	public static ReadHandlerPtr ff_r  = new ReadHandlerPtr() { public int handler(int offset)	{return 0xff;} };
+	public static ReadHandlerPtr ff_r  = new ReadHandlerPtr() { public int handler(int offset)return 0xff;}
 	
 	public static Memory_ReadAddress tndrcade_sub_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
 		new Memory_ReadAddress( 0x0000, 0x01ff, MRA_RAM				),	// RAM
-		new Memory_ReadAddress( 0x0800, 0x0800, ff_r					),	// ? (bits 0/1/2/3: 1 . do test 0-ff/100-1e0/5001-57ff/banked rom)
+		new Memory_ReadAddress( 0x0800, 0x0800, ff_r					),	// ? (bits 0/1/2/3: 1 -> do test 0-ff/100-1e0/5001-57ff/banked rom)
 	//	new Memory_ReadAddress( 0x0800, 0x0800, soundlatch_r			),	//
 	//	new Memory_ReadAddress( 0x0801, 0x0801, soundlatch2_r			),	//
 		new Memory_ReadAddress( 0x1000, 0x1000, input_port_0_r		),	// P1
@@ -2687,8 +2682,7 @@ public class seta
 									DownTown
 	***************************************************************************/
 	
-	public static ReadHandlerPtr downtown_ip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr downtown_ip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int dir1 = readinputport(4);	// analog port
 		int dir2 = readinputport(5);	// analog port
 	
@@ -2736,8 +2730,7 @@ public class seta
 							Caliber 50 / U.S. Classic
 	***************************************************************************/
 	
-	public static WriteHandlerPtr calibr50_soundlatch2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr calibr50_soundlatch2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch2_w.handler(0,data);
 		cpu_spinuntil_time(TIME_IN_USEC(50));	// Allow the other cpu to reply
 	} };
@@ -2911,7 +2904,7 @@ public class seta
 									Arbalester
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_arbalest = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arbalest = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arbalest )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE2_2BUTTONS(1)
 	
@@ -2978,7 +2971,7 @@ public class seta
 									Athena no Hatena?
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_atehate = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atehate = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atehate )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_BUTTON3  |  IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_BUTTON4  |  IPF_PLAYER1 );
@@ -3061,7 +3054,7 @@ public class seta
 									Blandia
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blandia = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blandia = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blandia )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -3132,7 +3125,7 @@ public class seta
 									Block Carnival
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blockcar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockcar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockcar )
 		PORT_START(); 	// IN0 - Player 1 - $500001.b
 		JOY_TYPE1_2BUTTONS(1)	// button2 = speed up
 	
@@ -3201,7 +3194,7 @@ public class seta
 									Caliber 50
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_calibr50 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_calibr50 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( calibr50 )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE2_2BUTTONS(1)
 	
@@ -3275,7 +3268,7 @@ public class seta
 									Daioh
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_daioh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_daioh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( daioh )
 		PORT_START(); 
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -3362,7 +3355,7 @@ public class seta
 									Dragon Unit
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_drgnunit = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drgnunit = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drgnunit )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -3437,7 +3430,7 @@ public class seta
 									DownTown
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_downtown = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_downtown = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( downtown )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE2_2BUTTONS(1)
 	
@@ -3524,7 +3517,7 @@ public class seta
 									Eight Force
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_eightfrc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eightfrc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eightfrc )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -3595,7 +3588,7 @@ public class seta
 									Extreme Downhill
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_extdwnhl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_extdwnhl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( extdwnhl )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_PLAYER1 | IPF_2WAY );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_PLAYER1 | IPF_2WAY );
@@ -3689,7 +3682,7 @@ public class seta
 									Gundhara
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gundhara = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gundhara = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gundhara )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -3758,7 +3751,7 @@ public class seta
 									Zombie Raid
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_zombraid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zombraid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zombraid )
 		PORT_START(); 	// IN0 - Player 1
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_UNKNOWN  );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_UNKNOWN  );
@@ -3853,7 +3846,7 @@ public class seta
 									J.J.Squawkers
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_jjsquawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jjsquawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jjsquawk )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -3921,7 +3914,7 @@ public class seta
 					(Kamen) Masked Riders Club Battle Race
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_kamenrid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kamenrid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kamenrid )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)	// BUTTON3 in "test mode" only
 	
@@ -4007,7 +4000,7 @@ public class seta
 	#define KRZYBOWL_TRACKBALL(_dir_, _n_ ) \
 		PORT_ANALOG( 0x0fff, 0x0000, IPT_TRACKBALL_##_dir_ | IPF_PLAYER##_n_ | IPF_REVERSE, 70, 30, 0, 0 );
 	
-	static InputPortPtr input_ports_krzybowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_krzybowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( krzybowl )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -4090,7 +4083,7 @@ public class seta
 									Mad Shark
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_madshark = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_madshark = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( madshark )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -4168,7 +4161,7 @@ public class seta
 									Meta Fox
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_metafox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metafox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metafox )
 		PORT_START(); 	// IN0
 		JOY_TYPE2_2BUTTONS(1)
 	
@@ -4238,7 +4231,7 @@ public class seta
 	***************************************************************************/
 	
 	
-	static InputPortPtr input_ports_msgundam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_msgundam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( msgundam )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -4306,7 +4299,7 @@ public class seta
 		PORT_SERVICE( 0x8000, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_msgunda1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_msgunda1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( msgunda1 )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -4380,7 +4373,7 @@ public class seta
 								Oishii Puzzle
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_oisipuzl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_oisipuzl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( oisipuzl )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -4449,7 +4442,7 @@ public class seta
 								Pro Mahjong Kiwame
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_kiwame = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kiwame = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kiwame )
 		PORT_START(); 	// IN0 - Unused
 		PORT_START(); 	// IN1 - Unused
 	
@@ -4564,7 +4557,7 @@ public class seta
 									Quiz Kokology
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_qzkklogy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qzkklogy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qzkklogy )
 		PORT_START(); 	// IN0 - Player 1 - $b00001.b
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER1 );
@@ -4644,7 +4637,7 @@ public class seta
 									Quiz Kokology 2
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_qzkklgy2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qzkklgy2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qzkklgy2 )
 		PORT_START(); 	// IN0 - Player 1 - $b00001.b
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER1 );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER1 );
@@ -4723,7 +4716,7 @@ public class seta
 										Rezon
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_rezon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rezon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rezon )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_3BUTTONS(1)	// 1 used??
 	
@@ -4801,7 +4794,7 @@ public class seta
 		When the "Stage Select" dip switch is on and button1 is pressed during boot,
 		pressing P1's button3 freezes the game (pressing P2's button3 resumes it).
 	*/
-	static InputPortPtr input_ports_neobattl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_neobattl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( neobattl )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_1BUTTON(1)	// bump to 3 buttons for freezing to work
 	
@@ -4877,7 +4870,7 @@ public class seta
 									Sokonuke
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_sokonuke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sokonuke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sokonuke )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_1BUTTON(1)
 	
@@ -4949,7 +4942,7 @@ public class seta
 									Strike Gunner
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_stg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stg )
 		PORT_START(); 	// IN0 - Player 1 - $b00001.b
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5018,7 +5011,7 @@ public class seta
 								Thunder & Lightning
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_thunderl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thunderl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thunderl )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)	// button2 = speed up
 	
@@ -5108,7 +5101,7 @@ public class seta
 									Thundercade (US)
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_tndrcade = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tndrcade = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tndrcade )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5175,7 +5168,7 @@ public class seta
 									Thundercade (Japan)
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_tndrcadj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tndrcadj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tndrcadj )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5243,7 +5236,7 @@ public class seta
 									Twin Eagle
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_twineagl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twineagl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twineagl )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5309,7 +5302,7 @@ public class seta
 									Ultraman Club
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_umanclub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_umanclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( umanclub )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5384,7 +5377,7 @@ public class seta
 								Ultra Toukon Densetsu
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_utoukond = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_utoukond = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( utoukond )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_3BUTTONS(1)
 	
@@ -5475,7 +5468,7 @@ public class seta
 	#define TRACKBALL(_dir_) \
 		PORT_ANALOG( 0x0fff, 0x0000, IPT_TRACKBALL_##_dir_ | IPF_CENTER, 70, 30, 0, 0 );
 	
-	static InputPortPtr input_ports_usclssic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_usclssic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( usclssic )
 		PORT_START(); 	// IN0
 		TRACKBALL(X)
 		PORT_BIT   ( 0x1000, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -5552,7 +5545,7 @@ public class seta
 									War of Aero
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_wrofaero = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wrofaero = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wrofaero )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_3BUTTONS(1)	// 3rd button selects the weapon
 								// when the dsw for cheating is on
@@ -5629,7 +5622,7 @@ public class seta
 										Wit's
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_wits = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wits = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wits )
 		PORT_START(); 	// IN0 - Player 1
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5709,7 +5702,7 @@ public class seta
 									Zing Zing Zip
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_zingzip = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zingzip = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zingzip )
 		PORT_START(); 	// IN0 - Player 1 - $400000.w
 		JOY_TYPE1_2BUTTONS(1)
 	
@@ -5990,8 +5983,7 @@ public class seta
 	
 	#define SETA_INTERRUPTS_NUM 2
 	
-	public static InterruptHandlerPtr seta_interrupt_1_and_2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr seta_interrupt_1_and_2 = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 1, HOLD_LINE);	break;
@@ -5999,8 +5991,7 @@ public class seta
 		}
 	} };
 	
-	public static InterruptHandlerPtr seta_interrupt_2_and_4 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr seta_interrupt_2_and_4 = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(0, 2, HOLD_LINE);	break;
@@ -6011,8 +6002,7 @@ public class seta
 	
 	#define SETA_SUB_INTERRUPTS_NUM 2
 	
-	public static InterruptHandlerPtr seta_sub_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr seta_sub_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);	break;
@@ -6047,16 +6037,14 @@ public class seta
 	
 	
 	#define TNDRCADE_SUB_INTERRUPTS_NUM	32	/* 16 IRQ, 1 NMI */
-	public static InterruptHandlerPtr tndrcade_sub_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tndrcade_sub_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(1, 0, HOLD_LINE);
 		else if (cpu_getiloops() == 0)
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_tndrcade = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tndrcade )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6084,9 +6072,7 @@ public class seta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, tndrcade_ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -6100,8 +6086,7 @@ public class seta
 	
 	/* twineagl lev 3 = lev 2 + lev 1 ! */
 	
-	public static MachineHandlerPtr machine_driver_twineagl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( twineagl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6128,9 +6113,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -6140,8 +6123,7 @@ public class seta
 	
 	/* downtown lev 3 = lev 2 + lev 1 ! */
 	
-	public static MachineHandlerPtr machine_driver_downtown = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( downtown )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6168,9 +6150,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_8MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -6185,8 +6165,7 @@ public class seta
 	*/
 	
 	#define calibr50_INTERRUPTS_NUM (4+1)
-	public static InterruptHandlerPtr calibr50_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr calibr50_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch (cpu_getiloops())
 		{
 			case 0:
@@ -6198,8 +6177,7 @@ public class seta
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_usclssic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( usclssic )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6228,9 +6206,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD( X1_010, seta_sound_intf_16MHz2 )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6242,8 +6218,7 @@ public class seta
 		Test mode shows a 16ms and 4ms counters. I wonder if every game has
 		5 ints per frame */
 	
-	public static MachineHandlerPtr machine_driver_calibr50 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( calibr50 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6270,9 +6245,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6281,8 +6254,7 @@ public class seta
 	
 	/* metafox lev 3 = lev 2 + lev 1 ! */
 	
-	public static MachineHandlerPtr machine_driver_metafox = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metafox )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000/2)
@@ -6309,9 +6281,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -6322,8 +6292,7 @@ public class seta
 									Athena no Hatena?
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_atehate = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atehate )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6346,9 +6315,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6361,8 +6328,7 @@ public class seta
 		samples are bankswitched
 	*/
 	
-	public static MachineHandlerPtr machine_driver_blandia = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blandia )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6389,12 +6355,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_blandiap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blandiap )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6420,17 +6383,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Block Carnival
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_blockcar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blockcar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -6453,17 +6413,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Daioh
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_daioh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( daioh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6486,9 +6443,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 					Dragon Unit, Quiz Kokology, Strike Gunner
@@ -6496,12 +6451,11 @@ public class seta
 	
 	/*
 		drgnunit,qzkklogy,stg:
-		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
 		lev 2 drives the game
 	*/
 	
-	public static MachineHandlerPtr machine_driver_drgnunit = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drgnunit )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -6525,15 +6479,12 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*	Same as qzkklogy, but with a 16MHz CPU and different
 		layout for the layer's tiles	*/
 	
-	public static MachineHandlerPtr machine_driver_qzkklgy2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qzkklgy2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6557,17 +6508,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Eight Force
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_eightfrc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( eightfrc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6590,9 +6538,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6601,11 +6547,10 @@ public class seta
 	
 	/*
 		extdwnhl:
-		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
 		lev 2 drives the game
 	*/
-	public static MachineHandlerPtr machine_driver_extdwnhl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( extdwnhl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6630,22 +6575,19 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Gundhara
 	***************************************************************************/
 	#if __uPD71054_TIMER
-	public static InterruptHandlerPtr wrofaero_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr wrofaero_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line( 0, 2, HOLD_LINE );
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_wrofaero  = new MachineInitHandlerPtr() { public void handler() { uPD71054_timer_init(); } };
-	public static MachineStopHandlerPtr machine_stop_wrofaero  = new MachineStopHandlerPtr() { public void handler() { uPD71054_timer_stop(); } };
+	public static MachineInitHandlerPtr machine_init_wrofaero  = new MachineInitHandlerPtr() { public void handler() uPD71054_timer_init(); }
+	public static MachineStopHandlerPtr machine_stop_wrofaero  = new MachineStopHandlerPtr() { public void handler() uPD71054_timer_stop(); }
 	#endif	// __uPD71054_TIMER
 	
 	
@@ -6656,8 +6598,7 @@ public class seta
 		lev 2: VBlank
 		lev 4: Sound (generated by a timer mapped at $d00000-6 ?)
 	*/
-	public static MachineHandlerPtr machine_driver_gundhara = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gundhara )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6692,9 +6633,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6702,11 +6641,10 @@ public class seta
 	***************************************************************************/
 	
 	/*
-		lev 1 == lev 3 (writes to $500000, bit 4 . 1 then 0)
+		lev 1 == lev 3 (writes to $500000, bit 4 -> 1 then 0)
 		lev 2 drives the game
 	*/
-	public static MachineHandlerPtr machine_driver_jjsquawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jjsquawk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6731,17 +6669,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 					(Kamen) Masked Riders Club Battle Race
 	***************************************************************************/
 	
 	/*	kamenrid: lev 2 by vblank, lev 4 by timer */
-	public static MachineHandlerPtr machine_driver_kamenrid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kamenrid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6769,17 +6704,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz) // ?
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Krazy Bowl
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_krzybowl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( krzybowl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6802,9 +6734,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -6812,8 +6742,7 @@ public class seta
 	***************************************************************************/
 	
 	/*	madshark: lev 2 by vblank, lev 4 by timer */
-	public static MachineHandlerPtr machine_driver_madshark = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( madshark )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6845,9 +6774,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 								Mobile Suit Gundam
@@ -6855,8 +6782,7 @@ public class seta
 	
 	/* msgundam lev 2 == lev 6 ! */
 	
-	public static MachineHandlerPtr machine_driver_msgundam = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( msgundam )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6889,9 +6815,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -6899,8 +6823,7 @@ public class seta
 								Oishii Puzzle
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_oisipuzl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( oisipuzl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6923,9 +6846,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 								Triple Fun
@@ -6936,13 +6857,12 @@ public class seta
 	static struct OKIM6295interface okim6295_interface =
 	{
 		1,						/* 1 chip */
-		{ 6000 },	/* ???? */
+		{ 6000 } };,	/* ???? */
 		{ REGION_SOUND1 },		/* memory region */
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_triplfun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triplfun )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6965,16 +6885,13 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 								Pro Mahjong Kiwame
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_kiwame = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kiwame )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -6997,9 +6914,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -7009,8 +6924,7 @@ public class seta
 	
 	/* pretty much like wrofaero, but ints are 1&2, not 2&4 */
 	
-	public static MachineHandlerPtr machine_driver_rezon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rezon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7033,9 +6947,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -7045,8 +6957,7 @@ public class seta
 	
 	/*	thunderl lev 2 = lev 3 - other levels lead to an error */
 	
-	public static MachineHandlerPtr machine_driver_thunderl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thunderl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -7069,12 +6980,9 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_wits = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wits )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -7097,9 +7005,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -7107,8 +7013,7 @@ public class seta
 						Ultraman Club / SD Gundam Neo Battling
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_umanclub = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( umanclub )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7131,17 +7036,14 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 								Ultra Toukond Densetsu
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_utoukond = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( utoukond )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7171,17 +7073,14 @@ public class seta
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
 		MDRV_SOUND_ADD(YM2612, utoukond_ym3438_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									War of Aero
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_wrofaero = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wrofaero )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7213,9 +7112,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -7225,12 +7122,11 @@ public class seta
 	***************************************************************************/
 	
 	/* zingzip lev 3 = lev 2 + lev 1 !
-	   SR = 2100 . lev1 is ignored so we must supply int 3, since the routine
+	   SR = 2100 -> lev1 is ignored so we must supply int 3, since the routine
 	   at int 1 is necessary: it plays the background music.
 	*/
 	
-	public static MachineHandlerPtr machine_driver_zingzip = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zingzip )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -7255,9 +7151,7 @@ public class seta
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, seta_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -8196,12 +8090,11 @@ public class seta
 	WRITE16_HANDLER( twineagl_200100_w )
 	{
 	logerror("%04x: twineagl_200100_w %d = %02x\n",activecpu_get_pc(),offset,data);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			xram[offset] = data & 0xff;
 	}
 	
-	public static DriverInitHandlerPtr init_twineagl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_twineagl  = new DriverInitHandlerPtr() { public void handler(){
 		/* debug? */
 		install_mem_read16_handler (0, 0x800000, 0x8000ff, twineagl_debug_r);
 	
@@ -8235,8 +8128,7 @@ public class seta
 		COMBINE_DATA(&downtown_protection[offset]);
 	}
 	
-	public static DriverInitHandlerPtr init_downtown  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_downtown  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler (0, 0x200000, 0x2001ff, downtown_protection_r);
 		install_mem_write16_handler(0, 0x200000, 0x2001ff, downtown_protection_w);
 	} };
@@ -8256,14 +8148,12 @@ public class seta
 		return 0;
 	}
 	
-	public static DriverInitHandlerPtr init_arbalest  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arbalest  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x80000, 0x8000f, arbalest_debug_r);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_metafox  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_metafox  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
 		/* This game uses the 21c000-21ffff area for protection? */
@@ -8276,8 +8166,7 @@ public class seta
 	} };
 	
 	
-	DRIVER_INIT ( blandia )
-	{
+	public static DriverInitHandlerPtr init_blandia  = new DriverInitHandlerPtr() { public void handler(){
 		/* rearrange the gfx data so it can be decoded in the same way as the other set */
 	
 		int rom_size;
@@ -8288,7 +8177,7 @@ public class seta
 		rom_size = 0x80000;
 		buf = malloc(rom_size);
 	
-		if (buf == 0) return;
+		if (!buf) return;
 	
 		rom = memory_region(REGION_GFX2) + 0x40000;
 	
@@ -8309,24 +8198,21 @@ public class seta
 		memcpy( rom, buf, rom_size );
 	
 		free(buf);
-	}
+	} };
 	
 	
-	public static DriverInitHandlerPtr init_eightfrc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_eightfrc  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x500004, 0x500005, MRA16_NOP);	// watchdog??
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_zombraid  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zombraid  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler (0, 0xf00002, 0xf00003, zombraid_gun_r);
 		install_mem_write16_handler(0, 0xf00000, 0xf00001, zombraid_gun_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_kiwame  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kiwame  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *) memory_region(REGION_CPU1);
 	
 		/* WARNING: This game writes to the interrupt vector
@@ -8337,8 +8223,7 @@ public class seta
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_rezon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rezon  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x500006, 0x500007, MRA16_NOP);	// irq ack?
 	} };
 	
@@ -8353,46 +8238,46 @@ public class seta
 	/* Working Games: */
 	
 	/* 68000 + 65C02 */
-	public static GameDriver driver_tndrcade	   = new GameDriver("1987"	,"tndrcade"	,"seta.java"	,rom_tndrcade,null	,machine_driver_tndrcade	,input_ports_tndrcade	,null	,ROT270	,	"[Seta] (Taito license)", "Thundercade / Twin Formation" ) // Title/License: DSW
-	public static GameDriver driver_tndrcadj	   = new GameDriver("1987"	,"tndrcadj"	,"seta.java"	,rom_tndrcadj,driver_tndrcade	,machine_driver_tndrcade	,input_ports_tndrcadj	,null	,ROT270	,	"[Seta] (Taito license)", "Tokusyu Butai U.A.G. (Japan)" ) // License: DSW
-	public static GameDriver driver_twineagl	   = new GameDriver("1988"	,"twineagl"	,"seta.java"	,rom_twineagl,null	,machine_driver_twineagl	,input_ports_twineagl	,init_twineagl	,ROT270	,	"Seta (Taito license)",   "Twin Eagle - Revenge Joe's Brother" ) // Country/License: DSW
-	public static GameDriver driver_downtown	   = new GameDriver("1989"	,"downtown"	,"seta.java"	,rom_downtown,null	,machine_driver_downtown	,input_ports_downtown	,init_downtown	,ROT270	,	"Seta",                   "DownTown" ) // Country/License: DSW
-	public static GameDriver driver_usclssic	   = new GameDriver("1989"	,"usclssic"	,"seta.java"	,rom_usclssic,null	,machine_driver_usclssic	,input_ports_usclssic	,null	,ROT270	,	"Seta",                   "U.S. Classic", GAME_WRONG_COLORS ) // Country/License: DSW
-	public static GameDriver driver_calibr50	   = new GameDriver("1989"	,"calibr50"	,"seta.java"	,rom_calibr50,null	,machine_driver_calibr50	,input_ports_calibr50	,null	,ROT270	,	"Athena / Seta",          "Caliber 50" ) // Country/License: DSW
-	public static GameDriver driver_arbalest	   = new GameDriver("1989"	,"arbalest"	,"seta.java"	,rom_arbalest,null	,machine_driver_metafox	,input_ports_arbalest	,init_arbalest	,ROT270	,	"Seta",                   "Arbalester" ) // Country/License: DSW
-	public static GameDriver driver_metafox	   = new GameDriver("1989"	,"metafox"	,"seta.java"	,rom_metafox,null	,machine_driver_metafox	,input_ports_metafox	,init_metafox	,ROT270	,	"Seta",                   "Meta Fox" ) // Country/License: DSW
+	GAME( 1987, tndrcade, 0,        tndrcade, tndrcade, 0,        ROT270, "[Seta] (Taito license)", "Thundercade / Twin Formation" ) // Title/License: DSW
+	GAME( 1987, tndrcadj, tndrcade, tndrcade, tndrcadj, 0,        ROT270, "[Seta] (Taito license)", "Tokusyu Butai U.A.G. (Japan)" ) // License: DSW
+	GAME( 1988, twineagl, 0,        twineagl, twineagl, twineagl, ROT270, "Seta (Taito license)",   "Twin Eagle - Revenge Joe's Brother" ) // Country/License: DSW
+	GAME( 1989, downtown, 0,        downtown, downtown, downtown, ROT270, "Seta",                   "DownTown" ) // Country/License: DSW
+	GAMEX(1989, usclssic, 0,        usclssic, usclssic, 0,        ROT270, "Seta",                   "U.S. Classic", GAME_WRONG_COLORS ) // Country/License: DSW
+	GAME( 1989, calibr50, 0,        calibr50, calibr50, 0,        ROT270, "Athena / Seta",          "Caliber 50" ) // Country/License: DSW
+	GAME( 1989, arbalest, 0,        metafox,  arbalest, arbalest, ROT270, "Seta",                   "Arbalester" ) // Country/License: DSW
+	GAME( 1989, metafox,  0,        metafox,  metafox,  metafox,  ROT270, "Seta",                   "Meta Fox" ) // Country/License: DSW
 	
 	/* 68000 */
-	public static GameDriver driver_drgnunit	   = new GameDriver("1989"	,"drgnunit"	,"seta.java"	,rom_drgnunit,null	,machine_driver_drgnunit	,input_ports_drgnunit	,null	,ROT0	,	"Seta",                   "Dragon Unit / Castle of Dragon" )
-	public static GameDriver driver_wits	   = new GameDriver("1989"	,"wits"	,"seta.java"	,rom_wits,null	,machine_driver_wits	,input_ports_wits	,null	,ROT0	,	"Athena (Visco license)", "Wit's (Japan)" ) // Country/License: DSW
-	public static GameDriver driver_thunderl	   = new GameDriver("1990"	,"thunderl"	,"seta.java"	,rom_thunderl,null	,machine_driver_thunderl	,input_ports_thunderl	,null	,ROT270	,	"Seta",                   "Thunder & Lightning" ) // Country/License: DSW
-	public static GameDriver driver_rezon	   = new GameDriver("1991"	,"rezon"	,"seta.java"	,rom_rezon,null	,machine_driver_rezon	,input_ports_rezon	,init_rezon	,ROT0	,	"Allumer",                "Rezon" )
-	public static GameDriver driver_stg	   = new GameDriver("1991"	,"stg"	,"seta.java"	,rom_stg,null	,machine_driver_drgnunit	,input_ports_stg	,null	,ROT270	,	"Athena / Tecmo",         "Strike Gunner S.T.G" )
-	public static GameDriver driver_blandia	   = new GameDriver("1992"	,"blandia"	,"seta.java"	,rom_blandia,null	,machine_driver_blandia	,input_ports_blandia	,init_blandia	,ROT0	,	"Allumer",                "Blandia" )
-	public static GameDriver driver_blandiap	   = new GameDriver("1992"	,"blandiap"	,"seta.java"	,rom_blandiap,driver_blandia	,machine_driver_blandiap	,input_ports_blandia	,null	,ROT0	,	"Allumer",                "Blandia (prototype)" )
-	public static GameDriver driver_blockcar	   = new GameDriver("1992"	,"blockcar"	,"seta.java"	,rom_blockcar,null	,machine_driver_blockcar	,input_ports_blockcar	,null	,ROT90	,	"Visco",                  "Block Carnival / Thunder & Lightning 2" ) // Title: DSW
-	public static GameDriver driver_qzkklogy	   = new GameDriver("1992"	,"qzkklogy"	,"seta.java"	,rom_qzkklogy,null	,machine_driver_drgnunit	,input_ports_qzkklogy	,null	,ROT0	,	"Tecmo",                  "Quiz Kokology" )
-	public static GameDriver driver_neobattl	   = new GameDriver("1992"	,"neobattl"	,"seta.java"	,rom_neobattl,null	,machine_driver_umanclub	,input_ports_neobattl	,null	,ROT270	,	"Banpresto / Sotsu Agency. Sunrise", "SD Gundam Neo Battling (Japan)" )
-	public static GameDriver driver_umanclub	   = new GameDriver("1992"	,"umanclub"	,"seta.java"	,rom_umanclub,null	,machine_driver_umanclub	,input_ports_umanclub	,null	,ROT0	,	"Tsuburaya Prod. / Banpresto", "Ultraman Club - Tatakae! Ultraman Kyoudai!!" )
-	public static GameDriver driver_zingzip	   = new GameDriver("1992"	,"zingzip"	,"seta.java"	,rom_zingzip,null	,machine_driver_zingzip	,input_ports_zingzip	,null	,ROT270	,	"Allumer + Tecmo",        "Zing Zing Zip" )
-	public static GameDriver driver_atehate	   = new GameDriver("1993"	,"atehate"	,"seta.java"	,rom_atehate,null	,machine_driver_atehate	,input_ports_atehate	,null	,ROT0	,	"Athena",                 "Athena no Hatena ?" )
-	public static GameDriver driver_daioh	   = new GameDriver("1993"	,"daioh"	,"seta.java"	,rom_daioh,null	,machine_driver_daioh	,input_ports_daioh	,null	,ROT270	,	"Athena",                 "Daioh" )
-	public static GameDriver driver_jjsquawk	   = new GameDriver("1993"	,"jjsquawk"	,"seta.java"	,rom_jjsquawk,null	,machine_driver_jjsquawk	,input_ports_jjsquawk	,null	,ROT0	,	"Athena / Able",          "J. J. Squawkers" )
-	public static GameDriver driver_kamenrid	   = new GameDriver("1993"	,"kamenrid"	,"seta.java"	,rom_kamenrid,null	,machine_driver_kamenrid	,input_ports_kamenrid	,null	,ROT0	,	"Toei / Banpresto",       "Masked Riders Club Battle Race" )
-	public static GameDriver driver_madshark	   = new GameDriver("1993"	,"madshark"	,"seta.java"	,rom_madshark,null	,machine_driver_madshark	,input_ports_madshark	,null	,ROT270	,	"Allumer",                "Mad Shark" )
-	public static GameDriver driver_msgundam	   = new GameDriver("1993"	,"msgundam"	,"seta.java"	,rom_msgundam,null	,machine_driver_msgundam	,input_ports_msgundam	,null	,ROT0	,	"Banpresto",              "Mobile Suit Gundam" )
-	public static GameDriver driver_msgunda1	   = new GameDriver("1993"	,"msgunda1"	,"seta.java"	,rom_msgunda1,driver_msgundam	,machine_driver_msgundam	,input_ports_msgunda1	,null	,ROT0	,	"Banpresto",              "Mobile Suit Gundam (Japan)" )
-	public static GameDriver driver_oisipuzl	   = new GameDriver("1993"	,"oisipuzl"	,"seta.java"	,rom_oisipuzl,null	,machine_driver_oisipuzl	,input_ports_oisipuzl	,null	,ROT0	,	"Sunsoft + Atlus",        "Oishii Puzzle Ha Irimasenka" )
-	public static GameDriver driver_qzkklgy2	   = new GameDriver("1993"	,"qzkklgy2"	,"seta.java"	,rom_qzkklgy2,null	,machine_driver_qzkklgy2	,input_ports_qzkklgy2	,null	,ROT0	,	"Tecmo",                  "Quiz Kokology 2" )
-	public static GameDriver driver_triplfun	   = new GameDriver("1993"	,"triplfun"	,"seta.java"	,rom_triplfun,driver_oisipuzl	,machine_driver_triplfun	,input_ports_oisipuzl	,null	,ROT0	,	"bootleg",                "Triple Fun" )
-	public static GameDriver driver_utoukond	   = new GameDriver("1993"	,"utoukond"	,"seta.java"	,rom_utoukond,null	,machine_driver_utoukond	,input_ports_utoukond	,null	,ROT0	,	"Banpresto + Tsuburaya Prod.", "Ultra Toukon Densetsu (Japan)" )
-	public static GameDriver driver_wrofaero	   = new GameDriver("1993"	,"wrofaero"	,"seta.java"	,rom_wrofaero,null	,machine_driver_wrofaero	,input_ports_wrofaero	,null	,ROT270	,	"Yang Cheng",             "War of Aero - Project MEIOU" )
-	public static GameDriver driver_eightfrc	   = new GameDriver("1994"	,"eightfrc"	,"seta.java"	,rom_eightfrc,null	,machine_driver_eightfrc	,input_ports_eightfrc	,init_eightfrc	,ROT90	,	"Tecmo",                  "Eight Forces" )
-	public static GameDriver driver_kiwame	   = new GameDriver("1994"	,"kiwame"	,"seta.java"	,rom_kiwame,null	,machine_driver_kiwame	,input_ports_kiwame	,init_kiwame	,ROT0	,	"Athena",                 "Pro Mahjong Kiwame" )
-	public static GameDriver driver_krzybowl	   = new GameDriver("1994"	,"krzybowl"	,"seta.java"	,rom_krzybowl,null	,machine_driver_krzybowl	,input_ports_krzybowl	,null	,ROT270	,	"American Sammy",   "Krazy Bowl" )
-	public static GameDriver driver_extdwnhl	   = new GameDriver("1995"	,"extdwnhl"	,"seta.java"	,rom_extdwnhl,null	,machine_driver_extdwnhl	,input_ports_extdwnhl	,null	,ROT0	,	"Sammy Industries Japan", "Extreme Downhill (v1.5)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gundhara	   = new GameDriver("1995"	,"gundhara"	,"seta.java"	,rom_gundhara,null	,machine_driver_gundhara	,input_ports_gundhara	,null	,ROT270	,	"Banpresto",              "Gundhara" )
-	public static GameDriver driver_sokonuke	   = new GameDriver("1995"	,"sokonuke"	,"seta.java"	,rom_sokonuke,null	,machine_driver_extdwnhl	,input_ports_sokonuke	,null	,ROT0	,	"Sammy Industries",       "Sokonuke Taisen Game (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_zombraid	   = new GameDriver("1995"	,"zombraid"	,"seta.java"	,rom_zombraid,null	,machine_driver_gundhara	,input_ports_zombraid	,init_zombraid	,ROT0	,	"American Sammy",   "Zombie Raid (US)", GAME_NO_COCKTAIL )
+	GAME( 1989, drgnunit, 0,        drgnunit, drgnunit, 0,        ROT0,   "Seta",                   "Dragon Unit / Castle of Dragon" )
+	GAME( 1989, wits,     0,        wits,     wits,     0,        ROT0,   "Athena (Visco license)", "Wit's (Japan)" ) // Country/License: DSW
+	GAME( 1990, thunderl, 0,        thunderl, thunderl, 0,        ROT270, "Seta",                   "Thunder & Lightning" ) // Country/License: DSW
+	GAME( 1991, rezon,    0,        rezon,    rezon,    rezon,    ROT0,   "Allumer",                "Rezon" )
+	GAME( 1991, stg,      0,        drgnunit, stg,      0,        ROT270, "Athena / Tecmo",         "Strike Gunner S.T.G" )
+	GAME( 1992, blandia,  0,        blandia,  blandia,  blandia,  ROT0,   "Allumer",                "Blandia" )
+	GAME( 1992, blandiap, blandia,  blandiap, blandia,  0,        ROT0,   "Allumer",                "Blandia (prototype)" )
+	GAME( 1992, blockcar, 0,        blockcar, blockcar, 0,        ROT90,  "Visco",                  "Block Carnival / Thunder & Lightning 2" ) // Title: DSW
+	GAME( 1992, qzkklogy, 0,        drgnunit, qzkklogy, 0,        ROT0,   "Tecmo",                  "Quiz Kokology" )
+	GAME( 1992, neobattl, 0,        umanclub, neobattl, 0,        ROT270, "Banpresto / Sotsu Agency. Sunrise", "SD Gundam Neo Battling (Japan)" )
+	GAME( 1992, umanclub, 0,        umanclub, umanclub, 0,        ROT0,   "Tsuburaya Prod. / Banpresto", "Ultraman Club - Tatakae! Ultraman Kyoudai!!" )
+	GAME( 1992, zingzip,  0,        zingzip,  zingzip,  0,        ROT270, "Allumer + Tecmo",        "Zing Zing Zip" )
+	GAME( 1993, atehate,  0,        atehate,  atehate,  0,        ROT0,   "Athena",                 "Athena no Hatena ?" )
+	GAME( 1993, daioh,    0,        daioh,    daioh,    0,        ROT270, "Athena",                 "Daioh" )
+	GAME( 1993, jjsquawk, 0,        jjsquawk, jjsquawk, 0,        ROT0,   "Athena / Able",          "J. J. Squawkers" )
+	GAME( 1993, kamenrid, 0,        kamenrid, kamenrid, 0,        ROT0,   "Toei / Banpresto",       "Masked Riders Club Battle Race" )
+	GAME( 1993, madshark, 0,        madshark, madshark, 0,        ROT270, "Allumer",                "Mad Shark" )
+	GAME( 1993, msgundam, 0,        msgundam, msgundam, 0,        ROT0,   "Banpresto",              "Mobile Suit Gundam" )
+	GAME( 1993, msgunda1, msgundam, msgundam, msgunda1, 0,        ROT0,   "Banpresto",              "Mobile Suit Gundam (Japan)" )
+	GAME( 1993, oisipuzl, 0,        oisipuzl, oisipuzl, 0,        ROT0,   "Sunsoft + Atlus",        "Oishii Puzzle Ha Irimasenka" )
+	GAME( 1993, qzkklgy2, 0,        qzkklgy2, qzkklgy2, 0,        ROT0,   "Tecmo",                  "Quiz Kokology 2" )
+	GAME( 1993, triplfun, oisipuzl, triplfun, oisipuzl, 0,        ROT0,   "bootleg",                "Triple Fun" )
+	GAME( 1993, utoukond, 0,        utoukond, utoukond, 0,        ROT0,   "Banpresto + Tsuburaya Prod.", "Ultra Toukon Densetsu (Japan)" )
+	GAME( 1993, wrofaero, 0,        wrofaero, wrofaero, 0,        ROT270, "Yang Cheng",             "War of Aero - Project MEIOU" )
+	GAME( 1994, eightfrc, 0,        eightfrc, eightfrc, eightfrc, ROT90,  "Tecmo",                  "Eight Forces" )
+	GAME( 1994, kiwame,   0,        kiwame,   kiwame,   kiwame,   ROT0,   "Athena",                 "Pro Mahjong Kiwame" )
+	GAME( 1994, krzybowl, 0,        krzybowl, krzybowl, 0,        ROT270, "American Sammy",   "Krazy Bowl" )
+	GAMEX(1995, extdwnhl, 0,        extdwnhl, extdwnhl, 0,        ROT0,   "Sammy Industries Japan", "Extreme Downhill (v1.5)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1995, gundhara, 0,        gundhara, gundhara, 0,        ROT270, "Banpresto",              "Gundhara" )
+	GAMEX(1995, sokonuke, 0,        extdwnhl, sokonuke, 0,        ROT0,   "Sammy Industries",       "Sokonuke Taisen Game (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX(1995, zombraid, 0,        gundhara, zombraid, zombraid, ROT0,   "American Sammy",   "Zombie Raid (US)", GAME_NO_COCKTAIL )
 	
 }

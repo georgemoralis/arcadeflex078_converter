@@ -35,7 +35,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,8 +48,7 @@ public class zaccaria
 	
 	static int dsw;
 	
-	public static WriteHandlerPtr zaccaria_dsw_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_dsw_sel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (data & 0xf0)
 		{
 			case 0xe0:
@@ -70,19 +69,17 @@ public class zaccaria
 		}
 	} };
 	
-	public static ReadHandlerPtr zaccaria_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(dsw);
 	} };
 	
 	
 	
-	public static WriteHandlerPtr ay8910_port0a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_port0a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// bits 0-2 go to a weird kind of DAC ??
 		// bits 3-4 control the analog drum emulation on 8910 #0 ch. A
 	
-		if ((data & 1) != 0)	/* DAC enable */
+		if (data & 1)	/* DAC enable */
 		{
 			/* TODO: is this right? it sound awful */
 			static int table[4] = { 0x05, 0x1b, 0x0b, 0x55 };
@@ -98,21 +95,18 @@ public class zaccaria
 	
 	static int active_8910,port0a,acs;
 	
-	public static ReadHandlerPtr zaccaria_port0a_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_port0a_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (active_8910 == 0)
 			return AY8910_read_port_0_r.handler(0);
 		else
 			return AY8910_read_port_1_r.handler(0);
 	} };
 	
-	public static WriteHandlerPtr zaccaria_port0a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_port0a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port0a = data;
 	} };
 	
-	public static WriteHandlerPtr zaccaria_port0b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_port0b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -120,7 +114,7 @@ public class zaccaria
 		if ((last & 0x02) == 0x02 && (data & 0x02) == 0x00)
 		{
 			/* bit 0 goes to the 8910 #0 BC1 pin */
-			if ((last & 0x01) != 0)
+			if (last & 0x01)
 				AY8910_control_port_0_w.handler(0,port0a);
 			else
 				AY8910_write_port_0_w.handler(0,port0a);
@@ -128,14 +122,14 @@ public class zaccaria
 		else if ((last & 0x02) == 0x00 && (data & 0x02) == 0x02)
 		{
 			/* bit 0 goes to the 8910 #0 BC1 pin */
-			if ((last & 0x01) != 0)
+			if (last & 0x01)
 				active_8910 = 0;
 		}
 		/* bit 3 goes to 8910 #1 BDIR pin  */
 		if ((last & 0x08) == 0x08 && (data & 0x08) == 0x00)
 		{
 			/* bit 2 goes to the 8910 #1 BC1 pin */
-			if ((last & 0x04) != 0)
+			if (last & 0x04)
 				AY8910_control_port_1_w.handler(0,port0a);
 			else
 				AY8910_write_port_1_w.handler(0,port0a);
@@ -143,15 +137,14 @@ public class zaccaria
 		else if ((last & 0x08) == 0x00 && (data & 0x08) == 0x08)
 		{
 			/* bit 2 goes to the 8910 #1 BC1 pin */
-			if ((last & 0x04) != 0)
+			if (last & 0x04)
 				active_8910 = 1;
 		}
 	
 		last = data;
 	} };
 	
-	public static InterruptHandlerPtr zaccaria_cb1_toggle = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr zaccaria_cb1_toggle = new InterruptHandlerPtr() {public void handler(){
 		static int toggle;
 	
 		pia_0_cb1_w(0,toggle & 1);
@@ -162,19 +155,16 @@ public class zaccaria
 	
 	static int port1a,port1b;
 	
-	public static ReadHandlerPtr zaccaria_port1a_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_port1a_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (~port1b & 1) return tms5220_status_r(0);
 		else return port1a;
 	} };
 	
-	public static WriteHandlerPtr zaccaria_port1a_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_port1a_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port1a = data;
 	} };
 	
-	public static WriteHandlerPtr zaccaria_port1b_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr zaccaria_port1b_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		port1b = data;
 	
 		// bit 0 = /RS
@@ -189,8 +179,7 @@ public class zaccaria
 		set_led_status(0,~data & 0x10);
 	} };
 	
-	public static ReadHandlerPtr zaccaria_ca2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_ca2_r  = new ReadHandlerPtr() { public int handler(int offset){
 	// TODO: this doesn't work, why?
 	//	return !tms5220_ready_r();
 	
@@ -235,8 +224,7 @@ public class zaccaria
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_zaccaria  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_zaccaria  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	
 		pia_unconfig();
@@ -246,28 +234,24 @@ public class zaccaria
 	} };
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(2,0,(data & 0x80) ? CLEAR_LINE : ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr sound1_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound1_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pia_0_ca1_w(0,data & 0x80);
 		soundlatch2_w.handler(0,data);
 	} };
 	
-	public static WriteHandlerPtr mc1408_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mc1408_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(1,data);
 	} };
 	
 	
 	struct GameDriver monymony_driver;
 	
-	public static ReadHandlerPtr zaccaria_prot1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_prot1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:
@@ -277,7 +261,7 @@ public class zaccaria
 				return 0x40;    /* Jack Rabbit */
 	
 			case 6:
-				if (Machine.gamedrv == &monymony_driver)
+				if (Machine->gamedrv == &monymony_driver)
 					return 0x70;    /* Money Money */
 				return 0xa0;    /* Jack Rabbit */
 	
@@ -286,8 +270,7 @@ public class zaccaria
 		}
 	} };
 	
-	public static ReadHandlerPtr zaccaria_prot2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr zaccaria_prot2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 			case 0:
@@ -308,13 +291,11 @@ public class zaccaria
 	} };
 	
 	
-	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 1);
 	} };
 	
-	public static WriteHandlerPtr nmienable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmienable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		interrupt_enable_w(0,data & 1);
 	} };
 	
@@ -394,7 +375,7 @@ public class zaccaria
 	
 	
 	
-	static InputPortPtr input_ports_monymony = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_monymony = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( monymony )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "2" );
@@ -503,7 +484,7 @@ public class zaccaria
 		/* other bits come from a protection device */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jackrabt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jackrabt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jackrabt )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "2" );
@@ -673,8 +654,7 @@ public class zaccaria
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_zaccaria = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zaccaria )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz */
@@ -711,9 +691,7 @@ public class zaccaria
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -865,8 +843,8 @@ public class zaccaria
 	
 	
 	
-	public static GameDriver driver_monymony	   = new GameDriver("1983"	,"monymony"	,"zaccaria.java"	,rom_monymony,null	,machine_driver_zaccaria	,input_ports_monymony	,null	,ROT90	,	"Zaccaria", "Money Money", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_jackrabt	   = new GameDriver("1984"	,"jackrabt"	,"zaccaria.java"	,rom_jackrabt,null	,machine_driver_zaccaria	,input_ports_jackrabt	,null	,ROT90	,	"Zaccaria", "Jack Rabbit (set 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_jackrab2	   = new GameDriver("1984"	,"jackrab2"	,"zaccaria.java"	,rom_jackrab2,driver_jackrabt	,machine_driver_zaccaria	,input_ports_jackrabt	,null	,ROT90	,	"Zaccaria", "Jack Rabbit (set 2)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_jackrabs	   = new GameDriver("1984"	,"jackrabs"	,"zaccaria.java"	,rom_jackrabs,driver_jackrabt	,machine_driver_zaccaria	,input_ports_jackrabt	,null	,ROT90	,	"Zaccaria", "Jack Rabbit (special)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1983, monymony, 0,        zaccaria, monymony, 0, ROT90, "Zaccaria", "Money Money", GAME_IMPERFECT_SOUND )
+	GAMEX( 1984, jackrabt, 0,        zaccaria, jackrabt, 0, ROT90, "Zaccaria", "Jack Rabbit (set 1)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1984, jackrab2, jackrabt, zaccaria, jackrabt, 0, ROT90, "Zaccaria", "Jack Rabbit (set 2)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1984, jackrabs, jackrabt, zaccaria, jackrabt, 0, ROT90, "Zaccaria", "Jack Rabbit (special)", GAME_IMPERFECT_SOUND )
 }

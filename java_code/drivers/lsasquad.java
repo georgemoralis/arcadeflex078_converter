@@ -26,7 +26,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,8 +41,7 @@ public class lsasquad
 	
 	
 	
-	public static WriteHandlerPtr lsasquad_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lsasquad_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 	
 		/* bits 0-2 select ROM bank */
@@ -140,7 +139,7 @@ public class lsasquad
 	
 	
 	
-	static InputPortPtr input_ports_lsasquad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lsasquad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lsasquad )
 		PORT_START(); 	/* DSWA */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -304,8 +303,7 @@ public class lsasquad
 		cpu_set_irq_line(1,0,irq ? ASSERT_LINE : CLEAR_LINE);
 	}
 	
-	public static WriteHandlerPtr unk = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr unk = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	} };
 	
@@ -335,8 +333,7 @@ public class lsasquad
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_lsasquad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lsasquad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)	/* 6 MHz? */
@@ -354,7 +351,7 @@ public class lsasquad
 		MDRV_VBLANK_DURATION(DEFAULT_60HZ_VBLANK_DURATION)
 		MDRV_INTERLEAVE(500)	/* 500 CPU slices per frame - an high value to ensure proper */
 								/* synchronization of the CPUs */
-								/* main<.sound synchronization depends on this */
+								/* main<->sound synchronization depends on this */
 	
 		/* video hardware */
 		MDRV_VIDEO_ATTRIBUTES(VIDEO_TYPE_RASTER)
@@ -369,9 +366,7 @@ public class lsasquad
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -457,10 +452,10 @@ public class lsasquad
 	}
 	
 	/* coin inputs are inverted in storming */
-	public static DriverInitHandlerPtr init_lsasquad  = new DriverInitHandlerPtr() { public void handler() { lsasquad_invertcoin = 0x00; init_common(); } };
-	public static DriverInitHandlerPtr init_storming  = new DriverInitHandlerPtr() { public void handler() { lsasquad_invertcoin = 0x0c; init_common(); } };
+	public static DriverInitHandlerPtr init_lsasquad  = new DriverInitHandlerPtr() { public void handler() lsasquad_invertcoin = 0x00; init_common(); }
+	public static DriverInitHandlerPtr init_storming  = new DriverInitHandlerPtr() { public void handler() lsasquad_invertcoin = 0x0c; init_common(); }
 	
 	
-	public static GameDriver driver_lsasquad	   = new GameDriver("1986"	,"lsasquad"	,"lsasquad.java"	,rom_lsasquad,null	,machine_driver_lsasquad	,input_ports_lsasquad	,init_lsasquad	,ROT270	,	"Taito", "Land Sea Air Squad / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_storming	   = new GameDriver("1986"	,"storming"	,"lsasquad.java"	,rom_storming,driver_lsasquad	,machine_driver_lsasquad	,input_ports_lsasquad	,init_storming	,ROT270	,	"Taito", "Storming Party / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1986, lsasquad, 0,        lsasquad, lsasquad, lsasquad, ROT270, "Taito", "Land Sea Air Squad / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1986, storming, lsasquad, lsasquad, lsasquad, storming, ROT270, "Taito", "Storming Party / Riku Kai Kuu Saizensen", GAME_IMPERFECT_GRAPHICS )
 }

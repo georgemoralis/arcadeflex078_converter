@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -90,7 +90,7 @@ public class quizpani
 		{ 0x200000, 0x33ffff, MWA16_ROM },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_quizpani = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_quizpani = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( quizpani )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -265,8 +265,7 @@ public class quizpani
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_quizpani = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( quizpani )
 		MDRV_CPU_ADD(M68000, 10000000)
 		MDRV_CPU_MEMORY(quizpani_readmem,quizpani_writemem)
 		MDRV_CPU_VBLANK_INT(irq4_line_hold,1)
@@ -286,9 +285,7 @@ public class quizpani
 		MDRV_VIDEO_UPDATE(quizpani)
 	
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_quizpani = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x340000, REGION_CPU1, 0 ) /* 68000 Code */
@@ -317,5 +314,5 @@ public class quizpani
 		ROM_LOAD( "qz8.121", 0x200, 0x100, CRC(b4c19741) SHA1(a6d3686bad6ef2336463b89bc2d249003d9b4bcc) ) /* unknown */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_quizpani	   = new GameDriver("1993"	,"quizpani"	,"quizpani.java"	,rom_quizpani,null	,machine_driver_quizpani	,input_ports_quizpani	,null	,ROT0	,	"NMK", "Quiz Panicuru Fantasy" )
+	GAME( 1993, quizpani, 0, quizpani, quizpani, 0, ROT0, "NMK", "Quiz Panicuru Fantasy" )
 }

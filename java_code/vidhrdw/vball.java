@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,7 +37,7 @@ public class vball
 	
 	static UINT32 background_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) <<6);
 	}
 	
@@ -53,10 +53,9 @@ public class vball
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_vb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,background_scan,TILEMAP_OPAQUE, 8, 8,64,64);
-		if (bg_tilemap == 0)
+		if( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap,32);
@@ -64,8 +63,7 @@ public class vball
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr vb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (vb_videoram[offset] != data)
 		{
 			vb_videoram[offset] = data;
@@ -73,13 +71,11 @@ public class vball
 		}
 	} };
 	
-	public static ReadHandlerPtr vb_attrib_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vb_attrib_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vb_attribram[offset];
 	} };
 	
-	public static WriteHandlerPtr vb_attrib_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vb_attrib_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( vb_attribram[offset] != data ){
 			vb_attribram[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap,offset);
@@ -128,7 +124,7 @@ public class vball
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		unsigned char *src = spriteram;
 		int i;
 	
@@ -147,7 +143,7 @@ public class vball
 			int flipy = 0;
 			int dy = -16;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -172,8 +168,7 @@ public class vball
 	
 	#undef DRAW_SPRITE
 	
-	public static VideoUpdateHandlerPtr video_update_vb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_set_scrolly(bg_tilemap,0,vb_scrolly_hi + *vb_scrolly_lo);
@@ -191,8 +186,7 @@ public class vball
 	/*I don't really understand what the proper timing of this should be,
 	  but after TONS of testing, the tilemap individual line scrolling works as long as flip screen is not set -SJE
 	*/
-	public static InterruptHandlerPtr vball_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr vball_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int line = 31 - cpu_getiloops();
 		if (line < 13)
 			cpu_set_irq_line(0, M6502_IRQ_LINE, HOLD_LINE);

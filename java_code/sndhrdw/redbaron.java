@@ -16,7 +16,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -47,8 +47,7 @@ public class redbaron
 	static int squeal_on_counter;
 	static int squeal_out;
 	
-	public static WriteHandlerPtr redbaron_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr redbaron_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* If sound is off, don't bother playing samples */
 		if( data == latch )
 			return;
@@ -58,9 +57,8 @@ public class redbaron
 	    rb_input_select = data & 1;
 	} };
 	
-	public static WriteHandlerPtr redbaron_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	    if ((latch & 0x20) != 0)
+	public static WriteHandlerPtr redbaron_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	    if( latch & 0x20 )
 	        pokey1_w (offset, data);
 	} };
 	
@@ -74,7 +72,7 @@ public class redbaron
 			poly_counter -= 12000;
 			while( poly_counter <= 0 )
 			{
-				poly_counter += Machine.sample_rate;
+				poly_counter += Machine->sample_rate;
 				if( ((poly_shift & 0x0001) == 0) == ((poly_shift & 0x4000) == 0) )
 					poly_shift = (poly_shift << 1) | 1;
 				else
@@ -85,7 +83,7 @@ public class redbaron
 			filter_counter -= 330;
 			while( filter_counter <= 0 )
 			{
-				filter_counter += Machine.sample_rate;
+				filter_counter += Machine->sample_rate;
 				crash_amp = (poly_shift & 1) ? latch >> 4 : 0;
 			}
 			/* mix crash sound at 35% */
@@ -108,7 +106,7 @@ public class redbaron
 					shot_amp_counter -= C32_DISCHARGE_TIME;
 					while( shot_amp_counter <= 0 )
 					{
-						shot_amp_counter += Machine.sample_rate;
+						shot_amp_counter += Machine->sample_rate;
 						if( --shot_amp == 0 )
 							break;
 					}
@@ -131,13 +129,13 @@ public class redbaron
 					squeal_amp_counter -= C5_CHARGE_TIME;
 					while( squeal_amp_counter <= 0 )
 					{
-						squeal_amp_counter += Machine.sample_rate;
+						squeal_amp_counter += Machine->sample_rate;
 						if( ++squeal_amp == 32767 )
 							break;
 					}
 				}
 	
-				if (squeal_out != 0)
+				if( squeal_out )
 				{
 					/* NE555 setup as pulse position modulator
 					 * C = 0.01u, Ra = 33k, Rb = 47k
@@ -147,7 +145,7 @@ public class redbaron
 					squeal_off_counter -= (1134 + 1134 * squeal_amp / 32767) / 3;
 					while( squeal_off_counter <= 0 )
 					{
-						squeal_off_counter += Machine.sample_rate;
+						squeal_off_counter += Machine->sample_rate;
 						squeal_out = 0;
 					}
 				}
@@ -156,14 +154,14 @@ public class redbaron
 					squeal_on_counter -= 1134;
 					while( squeal_on_counter <= 0 )
 					{
-						squeal_on_counter += Machine.sample_rate;
+						squeal_on_counter += Machine->sample_rate;
 						squeal_out = 1;
 	                }
 	            }
 			}
 	
 			/* mix sequal sound at 40% */
-	        if (squeal_out != 0)
+	        if( squeal_out )
 				sum += 32767 * 40 / 100;
 	
 			*buffer++ = sum;
@@ -175,7 +173,7 @@ public class redbaron
 	    int i;
 	
 		vol_lookup = (INT16 *)auto_malloc(32768 * sizeof(INT16));
-		if (vol_lookup == 0)
+		if( !vol_lookup )
 	        return 1;
 	
 	    for( i = 0; i < 0x8000; i++ )
@@ -187,22 +185,22 @@ public class redbaron
 	        double r0 = 1.0/(5600 + 680), r1 = 1/6e12;
 	
 			/* R14 */
-	        if ((i & 1) != 0)
+	        if( i & 1 )
 				r1 += 1.0/8200;
 			else
 				r0 += 1.0/8200;
 			/* R15 */
-	        if ((i & 2) != 0)
+	        if( i & 2 )
 				r1 += 1.0/3900;
 			else
 				r0 += 1.0/3900;
 			/* R16 */
-	        if ((i & 4) != 0)
+	        if( i & 4 )
 				r1 += 1.0/2200;
 			else
 				r0 += 1.0/2200;
 			/* R17 */
-	        if ((i & 8) != 0)
+	        if( i & 8 )
 				r1 += 1.0/1000;
 			else
 				r0 += 1.0/1000;
@@ -211,7 +209,7 @@ public class redbaron
 			vol_crash[i] = 32767 * r0 / (r0 + r1);
 	    }
 	
-		channel = stream_init("Custom", 50, Machine.sample_rate, 0, redbaron_sound_update);
+		channel = stream_init("Custom", 50, Machine->sample_rate, 0, redbaron_sound_update);
 	    if( channel == -1 )
 	        return 1;
 	

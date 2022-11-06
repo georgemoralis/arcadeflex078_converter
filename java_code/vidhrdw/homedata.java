@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -99,7 +99,7 @@ public class homedata
 			}
 			data  = pBlitData[SourceAddr++];
 	
-			if ((opcode & 0x80) != 0)
+			if (opcode&0x80)
 				NumTiles = 0x80-(opcode&0x7f);
 			else
 				NumTiles = 0x40-(opcode&0x3f);
@@ -120,7 +120,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data != 0)	/* 00 is a nop */
+				if (data)	/* 00 is a nop */
 					mrokumei_videoram_w( BaseAddr + DestAddr, data );
 	
 				if (homedata_vreg[1] & 0x80)	/* flip screen */
@@ -210,7 +210,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data != 0)	/* 00 is a nop */
+				if (data)	/* 00 is a nop */
 				{
 					int addr = BaseAddr + (DestAddr & 0x3fff);
 					int dat = data;
@@ -219,7 +219,7 @@ public class homedata
 					{
 						addr = ((addr & 0xc000) >> 2) | ((addr & 0x1f00) >> 1) | (addr & 0x7f);
 	
-						if (flipx != 0)
+						if( flipx )
 						{
 							if ((BaseAddr & 0x4000) == 0) dat |= 0x80;
 							addr ^= 0x007c;
@@ -264,7 +264,7 @@ public class homedata
 		BaseAddr= (DestParam&0x4000);
 		DestAddr= (DestParam&0x3fff);
 	
-	//	logerror( "[blit %02x %04x %04x].%d\n",blitter_bank,SourceAddr,DestParam,homedata_visible_page);
+	//	logerror( "[blit %02x %04x %04x]->%d\n",blitter_bank,SourceAddr,DestParam,homedata_visible_page);
 	
 		if( homedata_visible_page == 0 )
 		{
@@ -285,7 +285,7 @@ public class homedata
 			}
 			data  = pBlitData[SourceAddr++];
 	
-			if ((opcode & 0x80) != 0)
+			if (opcode & 0x80)
 				NumTiles = 0x80-(opcode&0x7f);
 			else
 				NumTiles = 0x40-(opcode&0x3f);
@@ -306,7 +306,7 @@ public class homedata
 					}
 				} /* i!=0 */
 	
-				if (data != 0)	/* 00 is a nop */
+				if (data)	/* 00 is a nop */
 				{
 					int addr = BaseAddr + (DestAddr & 0x3fff);
 	
@@ -337,8 +337,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_mrokumei  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mrokumei  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 555 RGB palette */
@@ -363,8 +362,7 @@ public class homedata
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_reikaids  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_reikaids  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 555 RGB palette */
@@ -389,8 +387,7 @@ public class homedata
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_pteacher  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pteacher  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* initialize 555 RGB palette */
@@ -456,7 +453,7 @@ public class homedata
 		int color = (attr & 0x7c) >> 2;
 		int flags = homedata_flipscreen;
 	
-		if ((attr & 0x80) != 0) flags ^= TILE_FLIPX;
+		if (attr & 0x80) flags ^= TILE_FLIPX;
 	
 		SET_TILE_INFO( layer, code, color, flags );
 	}
@@ -517,8 +514,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mrokumei  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mrokumei  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0][0] = tilemap_create( mrokumei_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( mrokumei_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
 		tilemap[1][0] = tilemap_create( mrokumei_get_info1_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
@@ -533,8 +529,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_reikaids  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_reikaids  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0][0] = tilemap_create( reikaids_get_info0_0, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
 		tilemap[0][1] = tilemap_create( reikaids_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
 		tilemap[0][2] = tilemap_create( reikaids_get_info0_2, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 32, 32 );
@@ -560,8 +555,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_pteacher  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pteacher  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0][0] = tilemap_create( pteacher_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( pteacher_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
 		tilemap[1][0] = tilemap_create( pteacher_get_info1_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
@@ -576,8 +570,7 @@ public class homedata
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_lemnangl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lemnangl  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0][0] = tilemap_create( lemnangl_get_info0_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
 		tilemap[0][1] = tilemap_create( lemnangl_get_info0_1, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64,32 );
 		tilemap[1][0] = tilemap_create( lemnangl_get_info1_0, tilemap_scan_rows, TILEMAP_OPAQUE,      8, 8, 64,32 );
@@ -600,8 +593,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr mrokumei_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data )
 		{
 			videoram.write(offset,data);
@@ -609,8 +601,7 @@ public class homedata
 		}
 	} };
 	
-	public static WriteHandlerPtr reikaids_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -618,8 +609,7 @@ public class homedata
 		}
 	} };
 	
-	public static WriteHandlerPtr pteacher_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data )
 		{
 			videoram.write(offset,data);
@@ -627,8 +617,7 @@ public class homedata
 		}
 	} };
 	
-	public static WriteHandlerPtr reikaids_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 	//logerror( "%04x: [setbank %02x]\n",activecpu_get_pc(),data);
 	
@@ -641,8 +630,7 @@ public class homedata
 		reikaids_which ^= 1;
 	} };
 	
-	public static WriteHandlerPtr pteacher_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_gfx_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror( "%04x: gfxbank:=%02x\n", activecpu_get_pc(), data );
 		if (pteacher_gfx_bank != data)
 		{
@@ -651,16 +639,14 @@ public class homedata
 		}
 	} };
 	
-	public static WriteHandlerPtr homedata_blitter_param_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr homedata_blitter_param_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: blitter_param_w %02x\n",activecpu_get_pc(),data);
 		blitter_param[blitter_param_count] = data;
 		blitter_param_count++;
 		blitter_param_count&=3;
 	} };
 	
-	public static WriteHandlerPtr mrokumei_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mrokumei_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* --xxx--- layer 1 gfx bank
 		   -----x-- blitter ROM bank
 		   ------xx layer 0 gfx bank
@@ -672,8 +658,7 @@ public class homedata
 		blitter_bank = data;
 	} };
 	
-	public static WriteHandlerPtr reikaids_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* xxx----- priority control
 		   ----x--- target page? what's this for?
 		   ------xx blitter ROM bank
@@ -681,8 +666,7 @@ public class homedata
 		blitter_bank = data;
 	} };
 	
-	public static WriteHandlerPtr pteacher_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_blitter_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* xxx----- blitter ROM bank
 		   -----x-- pixel clock (normal/slow)
 		   ------x- layer #1 gfx charset (lemnangl only)
@@ -695,21 +679,18 @@ public class homedata
 		blitter_bank = data;
 	} };
 	
-	public static WriteHandlerPtr mrokumei_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x80) != 0) mrokumei_handleblit(((blitter_bank & 0x04) >> 2) * 0x10000);
+	public static WriteHandlerPtr mrokumei_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x80) mrokumei_handleblit(((blitter_bank & 0x04) >> 2) * 0x10000);
 	
 		/* bit 0 = bank switch; used by hourouki to access the
 		   optional service mode ROM (not available in current dump) */
 	} };
 	
-	public static WriteHandlerPtr reikaids_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr reikaids_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		reikaids_handleblit((blitter_bank & 3) * 0x10000);
 	} };
 	
-	public static WriteHandlerPtr pteacher_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pteacher_blitter_start_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pteacher_handleblit((blitter_bank >> 5) * 0x10000 & (memory_region_length(REGION_USER1) - 1));
 	} };
 	
@@ -721,8 +702,7 @@ public class homedata
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mrokumei  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int flags,width;
 	
 		/* blank screen */
@@ -763,8 +743,7 @@ public class homedata
 		tilemap_draw(bitmap, cliprect, tilemap[homedata_visible_page][1], 0, 0);
 	} };
 	/*
-	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int flags;
 		static int pritable[8][4] =
 		{
@@ -796,8 +775,7 @@ public class homedata
 	} };
 	
 	*/
-	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_reikaids  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int flags;
 		static int pritable[2][8][4] =	/* table of priorities derived from the PROM */
 		{
@@ -841,8 +819,7 @@ public class homedata
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pteacher  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int flags,scroll_low,scroll_high;
 	
 	
@@ -884,7 +861,7 @@ public class homedata
 		   blanked = c1 c0 ff --
 		  */
 	
-		if ((blitter_bank & 0x04) != 0)
+		if (blitter_bank & 0x04)
 		{
 			if (homedata_vreg[0x4] == 0xae || homedata_vreg[0x4] == 0xb8)
 			{
@@ -919,8 +896,7 @@ public class homedata
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_homedata  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_homedata  = new VideoEofHandlerPtr() { public void handler(){
 		homedata_visible_page ^= 1;
 	} };
 }

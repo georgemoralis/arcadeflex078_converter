@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,7 +30,7 @@ public class flower
 				sy=tt-2;
 			}
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					vr[0xe000+offs],
 					0,
 					0,0,
@@ -44,7 +44,7 @@ public class flower
 	{
 		unsigned char *floweram = memory_region(REGION_CPU1);
 	
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data8_t *source = &floweram[0xde00]+0x200;
 		data8_t *finish = source - 0x200;
 	
@@ -117,8 +117,7 @@ public class flower
 				0)
 	}
 	
-	VIDEO_START(flower)
-	{
+	public static VideoStartHandlerPtr video_start_flower  = new VideoStartHandlerPtr() { public int handler(){
 		flower_bg0_tilemap = tilemap_create(get_bg0_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16, 16);
 		flower_bg1_tilemap = tilemap_create(get_bg1_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16, 16);
 	
@@ -127,10 +126,9 @@ public class flower
 	
 		return 0;
 	
-	}
+	} };
 	
-	public static VideoUpdateHandlerPtr video_update_flower  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_flower  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 	
 		tilemap_set_scrolly(flower_bg0_tilemap,0, flower_sharedram[0x3200]+16);
@@ -146,10 +144,9 @@ public class flower
 	} };
 	
 	
-	public static ReadHandlerPtr flower_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) { return flower_sharedram[offset]; } };
+	public static ReadHandlerPtr flower_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset) return flower_sharedram[offset]; }
 	
-	public static WriteHandlerPtr flower_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flower_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flower_sharedram[offset]=data;
 	
 		if ((offset >= 0x3000) && (offset <= 0x31ff)) // bg0 layer

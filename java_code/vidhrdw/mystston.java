@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,8 +37,7 @@ public class mystston
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_mystston  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mystston  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 32; i++)
@@ -75,8 +74,7 @@ public class mystston
 		}
 	} };
 	
-	public static WriteHandlerPtr mystston_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -84,22 +82,19 @@ public class mystston
 		}
 	} };
 	
-	public static WriteHandlerPtr mystston_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
-			mystston_videoram2.write(data,data);
+			mystston_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(bg_tilemap, offset & 0x1ff);
 		}
 	} };
 	
-	public static WriteHandlerPtr mystston_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr mystston_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mystston_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// bits 0 and 1 are foreground text color
 		if (mystston_fgcolor != ((data & 0x01) << 1) + ((data & 0x02) >> 1))
 		{
@@ -120,7 +115,7 @@ public class mystston
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		int code = mystston_videoram2.read(tile_index)+ ((mystston_videoram2.read(tile_index + 0x200)& 0x01) << 8);
+		int code = mystston_videoram2[tile_index] + ((mystston_videoram2[tile_index + 0x200] & 0x01) << 8);
 		int flags = (tile_index & 0x10) ? TILE_FLIPY : 0;
 	
 		SET_TILE_INFO(1, code, 0, flags)
@@ -134,18 +129,17 @@ public class mystston
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mystston  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mystston  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_OPAQUE, 16, 16, 16, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols_flip_x, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -161,7 +155,7 @@ public class mystston
 		{
 			int attr = spriteram.read(offs);
 	
-			if ((attr & 0x01) != 0)
+			if (attr & 0x01)
 			{
 				int code = spriteram.read(offs + 1)+ ((attr & 0x10) << 4);
 				int color = (attr & 0x08) >> 3;
@@ -170,7 +164,7 @@ public class mystston
 				int sx = 240 - spriteram.read(offs + 3);
 				int sy = (240 - spriteram.read(offs + 2)) & 0xff;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -178,14 +172,13 @@ public class mystston
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[2],	code, color, flipx, flipy,
+				drawgfx(bitmap,Machine->gfx[2],	code, color, flipx, flipy,
 					sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mystston  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mystston  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		draw_sprites(bitmap, cliprect);
 		tilemap_draw(bitmap, cliprect, fg_tilemap, 0, 0);

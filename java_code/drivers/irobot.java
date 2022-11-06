@@ -76,7 +76,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -91,8 +91,7 @@ public class irobot
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr irobot_nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		generic_nvram[offset] = data & 0x0f;
 	} };
 	
@@ -104,14 +103,12 @@ public class irobot
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr irobot_clearirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_clearirq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    cpu_set_irq_line(0, M6809_IRQ_LINE ,CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr irobot_clearfirq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irobot_clearfirq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    cpu_set_irq_line(0, M6809_FIRQ_LINE ,CLEAR_LINE);
 	} };
 	
@@ -170,7 +167,7 @@ public class irobot
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_irobot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_irobot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( irobot )
 		PORT_START(); 	/* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -316,8 +313,7 @@ public class irobot
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_irobot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( irobot )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,1500000)
@@ -343,9 +339,7 @@ public class irobot
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -403,5 +397,5 @@ public class irobot
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_irobot	   = new GameDriver("1983"	,"irobot"	,"irobot.java"	,rom_irobot,null	,machine_driver_irobot	,input_ports_irobot	,init_irobot	,ROT0	,	"Atari", "I, Robot" )
+	GAME( 1983, irobot, 0, irobot, irobot, irobot, ROT0, "Atari", "I, Robot" )
 }

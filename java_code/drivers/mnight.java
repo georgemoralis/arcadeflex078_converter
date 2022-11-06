@@ -10,7 +10,7 @@ TODO:
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,23 +21,19 @@ public class mnight
 	
 	static int mnight_bank_latch = 255, main_cpu_num;
 	
-	public static MachineInitHandlerPtr machine_init_mnight  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mnight  = new MachineInitHandlerPtr() { public void handler(){
 		main_cpu_num = 0;
 	} };
 	
-	public static InterruptHandlerPtr mnight_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mnight_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);	/* RST 10h */
 	} };
 	
-	public static ReadHandlerPtr mnight_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mnight_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return mnight_bank_latch;
 	} };
 	
-	public static WriteHandlerPtr mnight_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mnight_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1+main_cpu_num);
 		int bankaddress;
 	
@@ -122,7 +118,7 @@ public class mnight
 	
 	
 	
-	static InputPortPtr input_ports_mnight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mnight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mnight )
 		PORT_START();  /* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -203,7 +199,7 @@ public class mnight
 		PORT_DIPSETTING(    0x80, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_arkarea = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arkarea = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arkarea )
 		PORT_START();  /* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
@@ -344,7 +340,7 @@ public class mnight
 	static struct YM2203interface ym2203_interface =
 	{
 		2,	 /* 2 chips */
-		12000000/8, // lax 11/03/1999  (1250000 . 1500000 ???)
+		12000000/8, // lax 11/03/1999  (1250000 -> 1500000 ???)
 		{ YM2203_VOL(25,25), YM2203_VOL(25,25)},
 		{ 0 },
 		{ 0 },
@@ -353,8 +349,7 @@ public class mnight
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_mnight = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mnight )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -385,9 +380,7 @@ public class mnight
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_mnight = new RomLoadPtr(){ public void handler(){ 
@@ -484,6 +477,6 @@ public class mnight
 	
 	
 	
-	public static GameDriver driver_mnight	   = new GameDriver("1987"	,"mnight"	,"mnight.java"	,rom_mnight,null	,machine_driver_mnight	,input_ports_mnight	,null	,ROT0	,	"UPL (Kawakus license)", "Mutant Night" )
-	public static GameDriver driver_arkarea	   = new GameDriver("1988?"	,"arkarea"	,"mnight.java"	,rom_arkarea,null	,machine_driver_mnight	,input_ports_arkarea	,null	,ROT0	,	"UPL", "Ark Area" )
+	GAME( 1987, mnight,  0, mnight, mnight,  0, ROT0, "UPL (Kawakus license)", "Mutant Night" )
+	GAME( 1988?,arkarea, 0, mnight, arkarea, 0, ROT0, "UPL", "Ark Area" )
 }

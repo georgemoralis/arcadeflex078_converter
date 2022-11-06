@@ -26,7 +26,7 @@ Notes:
     at location 0x770-0x789.
 
 \-To enter into various Service Mode items,press button F2,reset and then toggle it(i.e
-  on.off).
+  on->off).
 \-To bypass the startup msg,toggle the "Reset" dip-sw or press F3.
 
 ******************************************************************************************/
@@ -72,7 +72,7 @@ Dumped by Uki
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -83,8 +83,7 @@ public class sengokmj
 	
 	
 	/*Multiplexer device for the mahjong panel*/
-	public static ReadHandlerPtr mahjong_panel_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mahjong_panel_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(sengokumj_mux_data)
 		{
 			case 1:    return readinputport(3);
@@ -98,13 +97,11 @@ public class sengokmj
 		return readinputport(3);
 	} };
 	
-	public static ReadHandlerPtr mahjong_panel_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mahjong_panel_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(9);
 	} };
 	
-	public static WriteHandlerPtr mahjong_panel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mahjong_panel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(offset == 1)	{ sengokumj_mux_data = data; }
 	} };
 	
@@ -206,14 +203,12 @@ public class sengokmj
 	
 	/***************************************************************************************/
 	
-	public static InterruptHandlerPtr sengokmj_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sengokmj_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcb/4);
 	} };
 	
 	/***************************************************************************************/
-	public static MachineHandlerPtr machine_driver_sengokmj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sengokmj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30, 16000000/2) /* V30-8 */
@@ -240,13 +235,11 @@ public class sengokmj
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************************/
 	
-	static InputPortPtr input_ports_sengokmj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sengokmj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sengokmj )
 		/* Must be port 0: coin inputs read through sound cpu */
 		SEIBU_COIN_INPUTS
 	
@@ -389,5 +382,5 @@ public class sengokmj
 		ROM_LOAD( "rs006.89", 0x000, 0x200, CRC(96f7646e) SHA1(400a831b83d6ac4d2a46ef95b97b1ee237099e44)) /* Priority */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_sengokmj	   = new GameDriver("1991"	,"sengokmj"	,"sengokmj.java"	,rom_sengokmj,null	,machine_driver_sengokmj	,input_ports_sengokmj	,null	,ROT0	,	"Sigma", "Sengoku Mahjong (Japan)" ,GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	GAMEX( 1991, sengokmj, 0, sengokmj, sengokmj, 0,	ROT0, "Sigma", "Sengoku Mahjong (Japan)" ,GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
 }

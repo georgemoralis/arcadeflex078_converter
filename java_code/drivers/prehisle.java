@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,8 +55,7 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr D7759_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr D7759_write_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UPD7759_port_w(offset,data);
 		UPD7759_start_w (0,0);
 		UPD7759_start_w (0,1);
@@ -95,7 +94,7 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_prehisle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_prehisle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( prehisle )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -244,8 +243,7 @@ public class prehisle
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_prehisle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( prehisle )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
@@ -273,9 +271,7 @@ public class prehisle
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -377,8 +373,7 @@ public class prehisle
 		return ret;
 	}
 	
-	public static DriverInitHandlerPtr init_prehisle  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_prehisle  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x70024, 0x70025, world_cycle_r);
 	} };
 	
@@ -394,8 +389,7 @@ public class prehisle
 		return ret;
 	}
 	
-	public static DriverInitHandlerPtr init_prehislu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_prehislu  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x70024, 0x70025, usa_cycle_r);
 	} };
 	
@@ -411,14 +405,13 @@ public class prehisle
 		return ret;
 	}
 	
-	public static DriverInitHandlerPtr init_gensitou  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gensitou  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x70024, 0x70025, jap_cycle_r);
 	} };
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_prehisle	   = new GameDriver("1989"	,"prehisle"	,"prehisle.java"	,rom_prehisle,null	,machine_driver_prehisle	,input_ports_prehisle	,init_prehisle	,ROT0	,	"SNK", "Prehistoric Isle in 1930 (World)" )
-	public static GameDriver driver_prehislu	   = new GameDriver("1989"	,"prehislu"	,"prehisle.java"	,rom_prehislu,driver_prehisle	,machine_driver_prehisle	,input_ports_prehisle	,init_prehislu	,ROT0	,	"SNK of America", "Prehistoric Isle in 1930 (US)" )
-	public static GameDriver driver_gensitou	   = new GameDriver("1989"	,"gensitou"	,"prehisle.java"	,rom_gensitou,driver_prehisle	,machine_driver_prehisle	,input_ports_prehisle	,init_gensitou	,ROT0	,	"SNK", "Genshi-Tou 1930's" )
+	GAME( 1989, prehisle, 0,		prehisle, prehisle, prehisle, ROT0, "SNK", "Prehistoric Isle in 1930 (World)" )
+	GAME( 1989, prehislu, prehisle, prehisle, prehisle, prehislu, ROT0, "SNK of America", "Prehistoric Isle in 1930 (US)" )
+	GAME( 1989, gensitou, prehisle, prehisle, prehisle, gensitou, ROT0, "SNK", "Genshi-Tou 1930's" )
 }

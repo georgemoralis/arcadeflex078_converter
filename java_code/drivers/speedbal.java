@@ -45,7 +45,7 @@ out:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,15 +65,13 @@ public class speedbal
 	
 	unsigned char *speedbal_sharedram;
 	
-	public static ReadHandlerPtr speedbal_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedbal_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//  if (offset==0x0) speedbal_sharedram[offset]+=1;
 	  return speedbal_sharedram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr speedbal_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedbal_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    speedbal_sharedram[offset] = data;
 	} };
 	
@@ -140,7 +138,7 @@ public class speedbal
 	
 	
 	
-	static InputPortPtr input_ports_speedbal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_speedbal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( speedbal )
 		PORT_START();       /* DSW2 */
 		PORT_DIPNAME( 0x07, 0x07, DEF_STR( "Bonus_Life") );
 		PORT_DIPSETTING(    0x06, "70000 200000 1M" );
@@ -267,8 +265,7 @@ public class speedbal
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_speedbal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( speedbal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ??? */
@@ -296,9 +293,7 @@ public class speedbal
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -331,8 +326,7 @@ public class speedbal
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_speedbal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_speedbal  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/* invert the graphics bits on the sprites */
@@ -342,5 +336,5 @@ public class speedbal
 	
 	
 	
-	public static GameDriver driver_speedbal	   = new GameDriver("1987"	,"speedbal"	,"speedbal.java"	,rom_speedbal,null	,machine_driver_speedbal	,input_ports_speedbal	,init_speedbal	,ROT270	,	"Tecfri", "Speed Ball" )
+	GAME( 1987, speedbal, 0, speedbal, speedbal, speedbal, ROT270, "Tecfri", "Speed Ball" )
 }

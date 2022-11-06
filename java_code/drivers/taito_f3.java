@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -108,7 +108,7 @@ public class taito_f3
 				watchdog_reset_w(0,0);
 				return;
 			case 0x01: /* Coin counters & lockouts */
-				if (ACCESSING_MSB32 != 0) {
+				if (ACCESSING_MSB32) {
 					coin_lockout_w(0,~data & 0x01000000);
 					coin_lockout_w(1,~data & 0x02000000);
 					coin_counter_w(0, data & 0x04000000);
@@ -117,14 +117,14 @@ public class taito_f3
 				}
 				return;
 			case 0x04: /* Eeprom */
-				if (ACCESSING_LSB32 != 0) {
+				if (ACCESSING_LSB32) {
 					EEPROM_set_clock_line((data & 0x08) ? ASSERT_LINE : CLEAR_LINE);
 					EEPROM_write_bit(data & 0x04);
 					EEPROM_set_cs_line((data & 0x10) ? CLEAR_LINE : ASSERT_LINE);
 				}
 				return;
 			case 0x05:	/* Player 3 & 4 coin counters */
-				if (ACCESSING_MSB32 != 0) {
+				if (ACCESSING_MSB32) {
 					coin_lockout_w(2,~data & 0x01000000);
 					coin_lockout_w(3,~data & 0x02000000);
 					coin_counter_w(2, data & 0x04000000);
@@ -153,7 +153,7 @@ public class taito_f3
 			unsigned int idx;
 	
 			idx = (offset << 1) & 0x1e;
-			if (ACCESSING_LSW32 != 0)
+			if (ACCESSING_LSW32)
 				idx += 1;
 	
 			if (idx >= 8)
@@ -231,7 +231,7 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_f3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f3 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -297,7 +297,7 @@ public class taito_f3
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kn )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -431,14 +431,12 @@ public class taito_f3
 	
 	/******************************************************************************/
 	
-	public static InterruptHandlerPtr f3_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0) cpu_set_irq_line(0, 3, HOLD_LINE);
+	public static InterruptHandlerPtr f3_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops()) cpu_set_irq_line(0, 3, HOLD_LINE);
 		else cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_f3  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_f3  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sound cpu program loads to 0xc00000 so we use a bank */
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU2);
 		cpu_setbank(1,&RAM[0x80000]);
@@ -463,8 +461,7 @@ public class taito_f3
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) },		/* master volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_f3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -496,38 +493,27 @@ public class taito_f3
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(ES5505, es5505_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* These games reprogram the video output registers to display different scanlines,
 	 we can't change our screen display at runtime, so we do it here instead.  None
 	 of the games change the registers during the game (to do so would probably require
 	 monitor recalibration.)
 	*/
-	public static MachineHandlerPtr machine_driver_f3_224a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f3_224a )
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 31, 31+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_f3_224b = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f3_224b )
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 32, 32+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_f3_224c = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( f3_224c )
 		MDRV_IMPORT_FROM(f3)
 		MDRV_VISIBLE_AREA(46, 40*8-1+46, 24, 24+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -2834,7 +2820,7 @@ public class taito_f3
 			indices are always related to 4 bpp data, even in 6 bpp games.
 	
 		*/
-		if (uses_5bpp_tiles != 0)
+		if (uses_5bpp_tiles)
 			for (i=half; i<size; i+=2)
 				gfx[i+1]=0;
 	
@@ -2933,61 +2919,52 @@ public class taito_f3
 	F3_IRQ_SPEEDUP_1_R(twinqix,  0xe9a52,  0x0134/4, 0x000000ff )
 	F3_IRQ_SPEEDUP_2_R(kirameki, 0x12fc6,  0x0414/4, 0x0000ff00 )
 	
-	public static DriverInitHandlerPtr init_ringrage  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ringrage  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=RINGRAGE;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_arabianm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arabianm  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408124, 0x408127, irq_speedup_r_arabianm );
 		f3_game=ARABIANM;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_ridingf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ridingf  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=RIDINGF;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_gseeker  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gseeker  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x40ad94, 0x40ad97, irq_speedup_r_gseeker );
 		f3_game=GSEEKER;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_gunlock  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunlock  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400004, 0x400007, irq_speedup_r_gunlock );
 		f3_game=GUNLOCK;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_elvactr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_elvactr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x4007a0, 0x4007a3, irq_speedup_r_eaction2 );
 		f3_game=EACTION2;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_cupfinal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cupfinal  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_cupfinal );
 		f3_game=SCFINALS;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_trstaroj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_trstaroj  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=TRSTAR;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_scfinals  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_scfinals  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *RAM = (UINT32 *)memory_region(REGION_CPU1);
 	
 		/* Doesn't boot without this - eprom related? */
@@ -3001,98 +2978,84 @@ public class taito_f3
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_lightbr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lightbr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400130, 0x400133, irq_speedup_r_lightbr );
 		f3_game=LIGHTBR;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_kaiserkn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kaiserkn  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408110, 0x408113, irq_speedup_r_kaiserkn );
 		f3_game=KAISERKN;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_dariusg  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dariusg  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x406ba8, 0x406bab, irq_speedup_r_dariusg );
 		f3_game=DARIUSG;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_spcinvdj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spcinvdj  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400230, 0x400233, irq_speedup_r_spcinvdj );
 		f3_game=SPCINVDX;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_qtheater  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_qtheater  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=QTHEATER;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_spcinv95  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spcinv95  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_spcinv95 );
 		f3_game=SPCINV95;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_gekirido  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gekirido  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x406bb0, 0x406bb3, irq_speedup_r_gekirido );
 		f3_game=GEKIRIDO;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_ktiger2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ktiger2  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400570, 0x400573, irq_speedup_r_ktiger2 );
 		f3_game=KTIGER2;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_bubsymph  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bubsymph  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_bubsymph );
 		f3_game=BUBSYMPH;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_bubblem  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bubblem  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_bubblem );
 		f3_game=BUBBLEM;
 		tile_decode(1);
 	} };
 	
-	public static DriverInitHandlerPtr init_cleopatr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cleopatr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_cleopatr );
 		f3_game=CLEOPATR;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_popnpop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_popnpop  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x401cf8, 0x401cfb, irq_speedup_r_popnpop );
 		f3_game=POPNPOP;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_landmakr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_landmakr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400824, 0x400827, irq_speedup_r_landmakr );
 		f3_game=LANDMAKR;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_landmkrp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_landmkrp  = new DriverInitHandlerPtr() { public void handler(){
 		data32_t *RAM = (UINT32 *)memory_region(REGION_CPU1);
 	
 		/* For some reason the least significant byte in the last 2 long words of
@@ -3107,160 +3070,149 @@ public class taito_f3
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_pbobble3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pbobble3  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x405af4, 0x405af7, irq_speedup_r_pbobble3 );
 		f3_game=PBOBBLE3;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_pbobble4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pbobble4  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x4058f4, 0x4058f7, irq_speedup_r_pbobble4 );
 		f3_game=PBOBBLE4;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_quizhuhu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_quizhuhu  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=QUIZHUHU;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_pbobble2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pbobble2  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x404a50, 0x404a53, irq_speedup_r_pbobble2 );
 		f3_game=PBOBBLE2;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_pbobbl2x  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pbobbl2x  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x405c58, 0x405c5b, irq_speedup_r_pbobbl2x );
 		f3_game=PBOBBLE2;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_hthero95  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hthero95  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x408114, 0x408117, irq_speedup_r_pwrgoal );
 		f3_game=HTHERO95;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_kirameki  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kirameki  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400414, 0x400417, irq_speedup_r_kirameki );
 		f3_game=KIRAMEKI;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_puchicar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_puchicar  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x4024d8, 0x4024db, irq_speedup_r_puchicar );
 		f3_game=PUCHICAR;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_twinqix  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_twinqix  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x400134, 0x400137, irq_speedup_r_twinqix );
 		f3_game=TWINQIX;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_arkretrn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arkretrn  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read32_handler(0, 0x402154, 0x402157, irq_speedup_r_arkretrn );
 		f3_game=ARKRETRN;
 		tile_decode(0);
 	} };
 	
-	public static DriverInitHandlerPtr init_intcup94  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_intcup94  = new DriverInitHandlerPtr() { public void handler(){
 		f3_game=SCFINALS;
 		tile_decode(1);
 	} };
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_ringrage	   = new GameDriver("1992"	,"ringrage"	,"taito_f3.java"	,rom_ringrage,null	,machine_driver_f3_224a	,input_ports_f3	,init_ringrage	,ROT0	,	"Taito Corporation Japan",   "Ring Rage (World)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_ringragj	   = new GameDriver("1992"	,"ringragj"	,"taito_f3.java"	,rom_ringragj,driver_ringrage	,machine_driver_f3_224a	,input_ports_f3	,init_ringrage	,ROT0	,	"Taito Corporation",         "Ring Rage (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_ringragu	   = new GameDriver("1992"	,"ringragu"	,"taito_f3.java"	,rom_ringragu,driver_ringrage	,machine_driver_f3_224a	,input_ports_f3	,init_ringrage	,ROT0	,	"Taito America Corporation", "Ring Rage (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_arabianm	   = new GameDriver("1992"	,"arabianm"	,"taito_f3.java"	,rom_arabianm,null	,machine_driver_f3_224a	,input_ports_f3	,init_arabianm	,ROT0	,	"Taito Corporation Japan",   "Arabian Magic (World)" )
-	public static GameDriver driver_arabiamj	   = new GameDriver("1992"	,"arabiamj"	,"taito_f3.java"	,rom_arabiamj,driver_arabianm	,machine_driver_f3_224a	,input_ports_f3	,init_arabianm	,ROT0	,	"Taito Corporation",         "Arabian Magic (Japan)" )
-	public static GameDriver driver_arabiamu	   = new GameDriver("1992"	,"arabiamu"	,"taito_f3.java"	,rom_arabiamu,driver_arabianm	,machine_driver_f3_224a	,input_ports_f3	,init_arabianm	,ROT0	,	"Taito America Corporation", "Arabian Magic (US)" )
-	public static GameDriver driver_ridingf	   = new GameDriver("1992"	,"ridingf"	,"taito_f3.java"	,rom_ridingf,null	,machine_driver_f3_224b	,input_ports_f3	,init_ridingf	,ROT0	,	"Taito Corporation Japan",   "Riding Fight (World)", GAME_NO_SOUND )
-	public static GameDriver driver_ridefgtj	   = new GameDriver("1992"	,"ridefgtj"	,"taito_f3.java"	,rom_ridefgtj,driver_ridingf	,machine_driver_f3_224b	,input_ports_f3	,init_ridingf	,ROT0	,	"Taito Corporation",         "Riding Fight (Japan)", GAME_NO_SOUND )
-	public static GameDriver driver_ridefgtu	   = new GameDriver("1992"	,"ridefgtu"	,"taito_f3.java"	,rom_ridefgtu,driver_ridingf	,machine_driver_f3_224b	,input_ports_f3	,init_ridingf	,ROT0	,	"Taito America Corporation", "Riding Fight (US)", GAME_NO_SOUND )
-	public static GameDriver driver_gseeker	   = new GameDriver("1992"	,"gseeker"	,"taito_f3.java"	,rom_gseeker,null	,machine_driver_f3_224b	,input_ports_f3	,init_gseeker	,ROT90	,	"Taito Corporation Japan",   "Grid Seeker: Project Stormhammer (World)" )
-	public static GameDriver driver_gseekerj	   = new GameDriver("1992"	,"gseekerj"	,"taito_f3.java"	,rom_gseekerj,driver_gseeker	,machine_driver_f3_224b	,input_ports_f3	,init_gseeker	,ROT90	,	"Taito Corporation",         "Grid Seeker: Project Stormhammer (Japan)" )
-	public static GameDriver driver_gseekeru	   = new GameDriver("1992"	,"gseekeru"	,"taito_f3.java"	,rom_gseekeru,driver_gseeker	,machine_driver_f3_224b	,input_ports_f3	,init_gseeker	,ROT90	,	"Taito America Corporation", "Grid Seeker: Project Stormhammer (US)" )
-	public static GameDriver driver_gunlock	   = new GameDriver("1993"	,"gunlock"	,"taito_f3.java"	,rom_gunlock,null	,machine_driver_f3_224a	,input_ports_f3	,init_gunlock	,ROT90	,	"Taito Corporation Japan",   "Gunlock (World)" )
-	public static GameDriver driver_rayforcj	   = new GameDriver("1993"	,"rayforcj"	,"taito_f3.java"	,rom_rayforcj,driver_gunlock	,machine_driver_f3_224a	,input_ports_f3	,init_gunlock	,ROT90	,	"Taito Corporation",         "Rayforce (Japan)" )
-	public static GameDriver driver_rayforce	   = new GameDriver("1993"	,"rayforce"	,"taito_f3.java"	,rom_rayforce,driver_gunlock	,machine_driver_f3_224a	,input_ports_f3	,init_gunlock	,ROT90	,	"Taito America Corporation", "Rayforce (US)" )
-	public static GameDriver driver_scfinals	   = new GameDriver("1993"	,"scfinals"	,"taito_f3.java"	,rom_scfinals,null	,machine_driver_f3_224a	,input_ports_f3	,init_scfinals	,ROT0	,	"Taito Corporation Japan",   "Super Cup Finals (World)" )
+	GAMEX(1992, ringrage, 0,        f3_224a, f3, ringrage, ROT0,   "Taito Corporation Japan",   "Ring Rage (World)", GAME_IMPERFECT_SOUND )
+	GAMEX(1992, ringragj, ringrage, f3_224a, f3, ringrage, ROT0,   "Taito Corporation",         "Ring Rage (Japan)", GAME_IMPERFECT_SOUND )
+	GAMEX(1992, ringragu, ringrage, f3_224a, f3, ringrage, ROT0,   "Taito America Corporation", "Ring Rage (US)", GAME_IMPERFECT_SOUND )
+	GAME( 1992, arabianm, 0,        f3_224a, f3, arabianm, ROT0,   "Taito Corporation Japan",   "Arabian Magic (World)" )
+	GAME( 1992, arabiamj, arabianm, f3_224a, f3, arabianm, ROT0,   "Taito Corporation",         "Arabian Magic (Japan)" )
+	GAME( 1992, arabiamu, arabianm, f3_224a, f3, arabianm, ROT0,   "Taito America Corporation", "Arabian Magic (US)" )
+	GAMEX(1992, ridingf,  0,        f3_224b, f3, ridingf,  ROT0,   "Taito Corporation Japan",   "Riding Fight (World)", GAME_NO_SOUND )
+	GAMEX(1992, ridefgtj, ridingf,  f3_224b, f3, ridingf,  ROT0,   "Taito Corporation",         "Riding Fight (Japan)", GAME_NO_SOUND )
+	GAMEX(1992, ridefgtu, ridingf,  f3_224b, f3, ridingf,  ROT0,   "Taito America Corporation", "Riding Fight (US)", GAME_NO_SOUND )
+	GAME( 1992, gseeker,  0,        f3_224b, f3, gseeker,  ROT90,  "Taito Corporation Japan",   "Grid Seeker: Project Stormhammer (World)" )
+	GAME( 1992, gseekerj, gseeker,  f3_224b, f3, gseeker,  ROT90,  "Taito Corporation",         "Grid Seeker: Project Stormhammer (Japan)" )
+	GAME( 1992, gseekeru, gseeker,  f3_224b, f3, gseeker,  ROT90,  "Taito America Corporation", "Grid Seeker: Project Stormhammer (US)" )
+	GAME( 1993, gunlock,  0,        f3_224a, f3, gunlock,  ROT90,  "Taito Corporation Japan",   "Gunlock (World)" )
+	GAME( 1993, rayforcj, gunlock,  f3_224a, f3, gunlock,  ROT90,  "Taito Corporation",         "Rayforce (Japan)" )
+	GAME( 1993, rayforce, gunlock,  f3_224a, f3, gunlock,  ROT90,  "Taito America Corporation", "Rayforce (US)" )
+	GAME( 1993, scfinals, 0,        f3_224a, f3, scfinals, ROT0,   "Taito Corporation Japan",   "Super Cup Finals (World)" )
 	/* I don't think these really are clones of SCFinals - SCFinals may be a sequel that just shares graphics roms (Different Taito ROM code) */
-	public static GameDriver driver_hthero93	   = new GameDriver("1992"	,"hthero93"	,"taito_f3.java"	,rom_hthero93,driver_scfinals	,machine_driver_f3_224a	,input_ports_f3	,init_cupfinal	,ROT0	,	"Taito Corporation",         "Hat Trick Hero '93 (Japan)" )
-	public static GameDriver driver_cupfinal	   = new GameDriver("1993"	,"cupfinal"	,"taito_f3.java"	,rom_cupfinal,driver_scfinals	,machine_driver_f3_224a	,input_ports_f3	,init_cupfinal	,ROT0	,	"Taito Corporation Japan",   "Taito Cup Finals (World)" )
-	public static GameDriver driver_intcup94	   = new GameDriver("1994"	,"intcup94"	,"taito_f3.java"	,rom_intcup94,driver_scfinals	,machine_driver_f3_224a	,input_ports_f3	,init_intcup94	,ROT0	,	"Taito Corporation Japan",   "International Cup '94" )
-	public static GameDriver driver_trstar	   = new GameDriver("1993"	,"trstar"	,"taito_f3.java"	,rom_trstar,null	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito Corporation Japan",   "Top Ranking Stars (World new version)" )
-	public static GameDriver driver_trstarj	   = new GameDriver("1993"	,"trstarj"	,"taito_f3.java"	,rom_trstarj,driver_trstar	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito Corporation",         "Top Ranking Stars (Japan new version)" )
-	public static GameDriver driver_prmtmfgt	   = new GameDriver("1993"	,"prmtmfgt"	,"taito_f3.java"	,rom_prmtmfgt,driver_trstar	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito America Corporation", "Prime Time Fighter (US new version)" )
-	public static GameDriver driver_trstaro	   = new GameDriver("1993"	,"trstaro"	,"taito_f3.java"	,rom_trstaro,driver_trstar	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito Corporation Japan",   "Top Ranking Stars (World old version)" )
-	public static GameDriver driver_trstaroj	   = new GameDriver("1993"	,"trstaroj"	,"taito_f3.java"	,rom_trstaroj,driver_trstar	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito Corporation",         "Top Ranking Stars (Japan old version)" )
-	public static GameDriver driver_prmtmfgo	   = new GameDriver("1993"	,"prmtmfgo"	,"taito_f3.java"	,rom_prmtmfgo,driver_trstar	,machine_driver_f3	,input_ports_f3	,init_trstaroj	,ROT0	,	"Taito America Corporation", "Prime Time Fighter (US old version)" )
-	public static GameDriver driver_dungeonm	   = new GameDriver("1993"	,"dungeonm"	,"taito_f3.java"	,rom_dungeonm,null	,machine_driver_f3_224a	,input_ports_f3	,init_lightbr	,ROT0	,	"Taito Corporation Japan",   "Dungeon Magic (World)" )
-	public static GameDriver driver_lightbr	   = new GameDriver("1993"	,"lightbr"	,"taito_f3.java"	,rom_lightbr,driver_dungeonm	,machine_driver_f3_224a	,input_ports_f3	,init_lightbr	,ROT0	,	"Taito Corporation",         "Light Bringer (Japan)" )
-	public static GameDriver driver_dungenmu	   = new GameDriver("1993"	,"dungenmu"	,"taito_f3.java"	,rom_dungenmu,driver_dungeonm	,machine_driver_f3_224a	,input_ports_f3	,init_lightbr	,ROT0	,	"Taito America Corporation", "Dungeon Magic (US)" )
-	public static GameDriver driver_kaiserkn	   = new GameDriver("1994"	,"kaiserkn"	,"taito_f3.java"	,rom_kaiserkn,null	,machine_driver_f3_224a	,input_ports_kn	,init_kaiserkn	,ROT0	,	"Taito Corporation Japan",   "Kaiser Knuckle (World)" )
-	public static GameDriver driver_kaiserkj	   = new GameDriver("1994"	,"kaiserkj"	,"taito_f3.java"	,rom_kaiserkj,driver_kaiserkn	,machine_driver_f3_224a	,input_ports_kn	,init_kaiserkn	,ROT0	,	"Taito Corporation",         "Kaiser Knuckle (Japan)" )
-	public static GameDriver driver_gblchmp	   = new GameDriver("1994"	,"gblchmp"	,"taito_f3.java"	,rom_gblchmp,driver_kaiserkn	,machine_driver_f3_224a	,input_ports_kn	,init_kaiserkn	,ROT0	,	"Taito America Corporation", "Global Champion (US)" )
-	public static GameDriver driver_dankuga	   = new GameDriver("1994"	,"dankuga"	,"taito_f3.java"	,rom_dankuga,driver_kaiserkn	,machine_driver_f3_224a	,input_ports_kn	,init_kaiserkn	,ROT0	,	"Taito Corporation",         "Dan-Ku-Ga (Prototype)" )
-	public static GameDriver driver_dariusg	   = new GameDriver("1994"	,"dariusg"	,"taito_f3.java"	,rom_dariusg,null	,machine_driver_f3	,input_ports_f3	,init_dariusg	,ROT0	,	"Taito Corporation Japan",   "Darius Gaiden - Silver Hawk (World)" )
-	public static GameDriver driver_dariusgj	   = new GameDriver("1994"	,"dariusgj"	,"taito_f3.java"	,rom_dariusgj,driver_dariusg	,machine_driver_f3	,input_ports_f3	,init_dariusg	,ROT0	,	"Taito Corporation",         "Darius Gaiden - Silver Hawk (Japan)" )
-	public static GameDriver driver_dariusgu	   = new GameDriver("1994"	,"dariusgu"	,"taito_f3.java"	,rom_dariusgu,driver_dariusg	,machine_driver_f3	,input_ports_f3	,init_dariusg	,ROT0	,	"Taito America Corporation", "Darius Gaiden - Silver Hawk (US)" )
-	public static GameDriver driver_dariusgx	   = new GameDriver("1994"	,"dariusgx"	,"taito_f3.java"	,rom_dariusgx,driver_dariusg	,machine_driver_f3	,input_ports_f3	,init_dariusg	,ROT0	,	"Taito Corporation",         "Darius Gaiden - Silver Hawk (Extra Version) [Official Hack]" )
-	public static GameDriver driver_bublbob2	   = new GameDriver("1994"	,"bublbob2"	,"taito_f3.java"	,rom_bublbob2,null	,machine_driver_f3_224a	,input_ports_f3	,init_bubsymph	,ROT0	,	"Taito Corporation Japan",   "Bubble Bobble 2 (World)" )
-	public static GameDriver driver_bubsympe	   = new GameDriver("1994"	,"bubsympe"	,"taito_f3.java"	,rom_bubsympe,driver_bublbob2	,machine_driver_f3_224a	,input_ports_f3	,init_bubsymph	,ROT0	,	"Taito Corporation Japan",   "Bubble Symphony (Europe)" )
-	public static GameDriver driver_bubsympu	   = new GameDriver("1994"	,"bubsympu"	,"taito_f3.java"	,rom_bubsympu,driver_bublbob2	,machine_driver_f3_224a	,input_ports_f3	,init_bubsymph	,ROT0	,	"Taito America Corporation", "Bubble Symphony (US)" )
-	public static GameDriver driver_bubsymph	   = new GameDriver("1994"	,"bubsymph"	,"taito_f3.java"	,rom_bubsymph,driver_bublbob2	,machine_driver_f3_224a	,input_ports_f3	,init_bubsymph	,ROT0	,	"Taito Corporation",         "Bubble Symphony (Japan)" )
-	public static GameDriver driver_spcinvdj	   = new GameDriver("1994"	,"spcinvdj"	,"taito_f3.java"	,rom_spcinvdj,driver_spacedx	,machine_driver_f3	,input_ports_f3	,init_spcinvdj	,ROT0	,	"Taito Corporation",         "Space Invaders DX (Japan F3 version)" )
-	public static GameDriver driver_pwrgoal	   = new GameDriver("1994"	,"pwrgoal"	,"taito_f3.java"	,rom_pwrgoal,null	,machine_driver_f3_224a	,input_ports_f3	,init_hthero95	,ROT0	,	"Taito Corporation Japan",   "Taito Power Goal (World)" )
-	public static GameDriver driver_hthero95	   = new GameDriver("1994"	,"hthero95"	,"taito_f3.java"	,rom_hthero95,driver_pwrgoal	,machine_driver_f3_224a	,input_ports_f3	,init_hthero95	,ROT0	,	"Taito Corporation",         "Hat Trick Hero '95 (Japan)" )
-	public static GameDriver driver_hthro95u	   = new GameDriver("1994"	,"hthro95u"	,"taito_f3.java"	,rom_hthro95u,driver_pwrgoal	,machine_driver_f3_224a	,input_ports_f3	,init_hthero95	,ROT0	,	"Taito America Corporation", "Hat Trick Hero '95 (US)" )
-	public static GameDriver driver_qtheater	   = new GameDriver("1994"	,"qtheater"	,"taito_f3.java"	,rom_qtheater,null	,machine_driver_f3_224c	,input_ports_f3	,init_qtheater	,ROT0	,	"Taito Corporation",         "Quiz Theater - 3tsu no Monogatari (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_elvactr	   = new GameDriver("1994"	,"elvactr"	,"taito_f3.java"	,rom_elvactr,null	,machine_driver_f3	,input_ports_f3	,init_elvactr	,ROT0	,	"Taito Corporation Japan",   "Elevator Action Returns (World)" )
-	public static GameDriver driver_elvactrj	   = new GameDriver("1994"	,"elvactrj"	,"taito_f3.java"	,rom_elvactrj,driver_elvactr	,machine_driver_f3	,input_ports_f3	,init_elvactr	,ROT0	,	"Taito Corporation",         "Elevator Action Returns (Japan)" )
-	public static GameDriver driver_elvact2u	   = new GameDriver("1994"	,"elvact2u"	,"taito_f3.java"	,rom_elvact2u,driver_elvactr	,machine_driver_f3	,input_ports_f3	,init_elvactr	,ROT0	,	"Taito America Corporation", "Elevator Action 2 (US)" )
+	GAME( 1992, hthero93, scfinals, f3_224a, f3, cupfinal, ROT0,   "Taito Corporation",         "Hat Trick Hero '93 (Japan)" )
+	GAME( 1993, cupfinal, scfinals, f3_224a, f3, cupfinal, ROT0,   "Taito Corporation Japan",   "Taito Cup Finals (World)" )
+	GAME( 1994, intcup94, scfinals, f3_224a, f3, intcup94, ROT0,   "Taito Corporation Japan",   "International Cup '94" )
+	GAME( 1993, trstar,   0,        f3,      f3, trstaroj, ROT0,   "Taito Corporation Japan",   "Top Ranking Stars (World new version)" )
+	GAME( 1993, trstarj,  trstar,   f3,      f3, trstaroj, ROT0,   "Taito Corporation",         "Top Ranking Stars (Japan new version)" )
+	GAME( 1993, prmtmfgt, trstar,   f3,      f3, trstaroj, ROT0,   "Taito America Corporation", "Prime Time Fighter (US new version)" )
+	GAME( 1993, trstaro,  trstar,   f3,      f3, trstaroj, ROT0,   "Taito Corporation Japan",   "Top Ranking Stars (World old version)" )
+	GAME( 1993, trstaroj, trstar,   f3,      f3, trstaroj, ROT0,   "Taito Corporation",         "Top Ranking Stars (Japan old version)" )
+	GAME( 1993, prmtmfgo, trstar,   f3,      f3, trstaroj, ROT0,   "Taito America Corporation", "Prime Time Fighter (US old version)" )
+	GAME( 1993, dungeonm, 0,        f3_224a, f3, lightbr,  ROT0,   "Taito Corporation Japan",   "Dungeon Magic (World)" )
+	GAME( 1993, lightbr,  dungeonm, f3_224a, f3, lightbr,  ROT0,   "Taito Corporation",         "Light Bringer (Japan)" )
+	GAME( 1993, dungenmu, dungeonm, f3_224a, f3, lightbr,  ROT0,   "Taito America Corporation", "Dungeon Magic (US)" )
+	GAME( 1994, kaiserkn, 0,        f3_224a, kn, kaiserkn, ROT0,   "Taito Corporation Japan",   "Kaiser Knuckle (World)" )
+	GAME( 1994, kaiserkj, kaiserkn, f3_224a, kn, kaiserkn, ROT0,   "Taito Corporation",         "Kaiser Knuckle (Japan)" )
+	GAME( 1994, gblchmp,  kaiserkn, f3_224a, kn, kaiserkn, ROT0,   "Taito America Corporation", "Global Champion (US)" )
+	GAME( 1994, dankuga,  kaiserkn, f3_224a, kn, kaiserkn, ROT0,   "Taito Corporation",         "Dan-Ku-Ga (Prototype)" )
+	GAME( 1994, dariusg,  0,        f3,      f3, dariusg,  ROT0,   "Taito Corporation Japan",   "Darius Gaiden - Silver Hawk (World)" )
+	GAME( 1994, dariusgj, dariusg,  f3,      f3, dariusg,  ROT0,   "Taito Corporation",         "Darius Gaiden - Silver Hawk (Japan)" )
+	GAME( 1994, dariusgu, dariusg,  f3,      f3, dariusg,  ROT0,   "Taito America Corporation", "Darius Gaiden - Silver Hawk (US)" )
+	GAME( 1994, dariusgx, dariusg,  f3,      f3, dariusg,  ROT0,   "Taito Corporation",         "Darius Gaiden - Silver Hawk (Extra Version) [Official Hack]" )
+	GAME( 1994, bublbob2, 0,        f3_224a, f3, bubsymph, ROT0,   "Taito Corporation Japan",   "Bubble Bobble 2 (World)" )
+	GAME( 1994, bubsympe, bublbob2, f3_224a, f3, bubsymph, ROT0,   "Taito Corporation Japan",   "Bubble Symphony (Europe)" )
+	GAME( 1994, bubsympu, bublbob2, f3_224a, f3, bubsymph, ROT0,   "Taito America Corporation", "Bubble Symphony (US)" )
+	GAME( 1994, bubsymph, bublbob2, f3_224a, f3, bubsymph, ROT0,   "Taito Corporation",         "Bubble Symphony (Japan)" )
+	GAME( 1994, spcinvdj, spacedx,  f3,      f3, spcinvdj, ROT0,   "Taito Corporation",         "Space Invaders DX (Japan F3 version)" )
+	GAME( 1994, pwrgoal,  0,        f3_224a, f3, hthero95, ROT0,   "Taito Corporation Japan",   "Taito Power Goal (World)" )
+	GAME( 1994, hthero95, pwrgoal,  f3_224a, f3, hthero95, ROT0,   "Taito Corporation",         "Hat Trick Hero '95 (Japan)" )
+	GAME( 1994, hthro95u, pwrgoal,  f3_224a, f3, hthero95, ROT0,   "Taito America Corporation", "Hat Trick Hero '95 (US)" )
+	GAMEX(1994, qtheater, 0,        f3_224c, f3, qtheater, ROT0,   "Taito Corporation",         "Quiz Theater - 3tsu no Monogatari (Japan)", GAME_IMPERFECT_SOUND )
+	GAME( 1994, elvactr,  0,        f3,      f3, elvactr,  ROT0,   "Taito Corporation Japan",   "Elevator Action Returns (World)" )
+	GAME( 1994, elvactrj, elvactr,  f3,      f3, elvactr,  ROT0,   "Taito Corporation",         "Elevator Action Returns (Japan)" )
+	GAME( 1994, elvact2u, elvactr,  f3,      f3, elvactr,  ROT0,   "Taito America Corporation", "Elevator Action 2 (US)" )
 	/* There is also a prototype Elevator Action 2 (US) pcb with the graphics in a different rom format (same program code) */
-	public static GameDriver driver_spcinv95	   = new GameDriver("1995"	,"spcinv95"	,"taito_f3.java"	,rom_spcinv95,null	,machine_driver_f3_224a	,input_ports_f3	,init_spcinv95	,ROT270	,	"Taito Corporation Japan",   "Space Invaders '95 - Attack Of The Lunar Loonies (World)" )
-	public static GameDriver driver_spcnv95u	   = new GameDriver("1995"	,"spcnv95u"	,"taito_f3.java"	,rom_spcnv95u,driver_spcinv95	,machine_driver_f3_224a	,input_ports_f3	,init_spcinv95	,ROT270	,	"Taito America Corporation", "Space Invaders '95 - Attack Of The Lunar Loonies (US)" )
-	public static GameDriver driver_akkanvdr	   = new GameDriver("1995"	,"akkanvdr"	,"taito_f3.java"	,rom_akkanvdr,driver_spcinv95	,machine_driver_f3_224a	,input_ports_f3	,init_spcinv95	,ROT270	,	"Taito Corporation",         "Akkanvader (Japan)" )
-	public static GameDriver driver_twinqix	   = new GameDriver("1995"	,"twinqix"	,"taito_f3.java"	,rom_twinqix,null	,machine_driver_f3_224a	,input_ports_f3	,init_twinqix	,ROT0	,	"Taito America Corporation", "Twin Qix (US Prototype)" )
-	public static GameDriver driver_gekirido	   = new GameDriver("1995"	,"gekirido"	,"taito_f3.java"	,rom_gekirido,null	,machine_driver_f3	,input_ports_f3	,init_gekirido	,ROT270	,	"Taito Corporation",         "Gekirindan (Japan)" )
-	public static GameDriver driver_quizhuhu	   = new GameDriver("1995"	,"quizhuhu"	,"taito_f3.java"	,rom_quizhuhu,null	,machine_driver_f3	,input_ports_f3	,init_quizhuhu	,ROT0	,	"Taito Corporation",         "Moriguchi Hiroko no Quiz de Hyuu!Hyuu! (Japan)" )
-	public static GameDriver driver_pbobble2	   = new GameDriver("1995"	,"pbobble2"	,"taito_f3.java"	,rom_pbobble2,null	,machine_driver_f3	,input_ports_f3	,init_pbobble2	,ROT0	,	"Taito Corporation Japan",   "Puzzle Bobble 2 (World)" )
-	public static GameDriver driver_pbobbl2j	   = new GameDriver("1995"	,"pbobbl2j"	,"taito_f3.java"	,rom_pbobbl2j,driver_pbobble2	,machine_driver_f3	,input_ports_f3	,init_pbobble2	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 2 (Japan)" )
-	public static GameDriver driver_pbobbl2u	   = new GameDriver("1995"	,"pbobbl2u"	,"taito_f3.java"	,rom_pbobbl2u,driver_pbobble2	,machine_driver_f3	,input_ports_f3	,init_pbobble2	,ROT0	,	"Taito America Corporation", "Bust-A-Move Again (US)" )
-	public static GameDriver driver_pbobbl2x	   = new GameDriver("1995"	,"pbobbl2x"	,"taito_f3.java"	,rom_pbobbl2x,driver_pbobble2	,machine_driver_f3	,input_ports_f3	,init_pbobbl2x	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 2X (Japan)" )
-	public static GameDriver driver_ktiger2	   = new GameDriver("1995"	,"ktiger2"	,"taito_f3.java"	,rom_ktiger2,null	,machine_driver_f3	,input_ports_f3	,init_ktiger2	,ROT270	,	"Taito Corporation",         "Kyukyoku Tiger 2 (Japan)" )
+	GAME( 1995, spcinv95, 0,        f3_224a, f3, spcinv95, ROT270, "Taito Corporation Japan",   "Space Invaders '95 - Attack Of The Lunar Loonies (World)" )
+	GAME( 1995, spcnv95u, spcinv95, f3_224a, f3, spcinv95, ROT270, "Taito America Corporation", "Space Invaders '95 - Attack Of The Lunar Loonies (US)" )
+	GAME( 1995, akkanvdr, spcinv95, f3_224a, f3, spcinv95, ROT270, "Taito Corporation",         "Akkanvader (Japan)" )
+	GAME( 1995, twinqix,  0,        f3_224a, f3, twinqix,  ROT0,   "Taito America Corporation", "Twin Qix (US Prototype)" )
+	GAME( 1995, gekirido, 0,        f3,      f3, gekirido, ROT270, "Taito Corporation",         "Gekirindan (Japan)" )
+	GAME( 1995, quizhuhu, 0,        f3,      f3, quizhuhu, ROT0,   "Taito Corporation",         "Moriguchi Hiroko no Quiz de Hyuu!Hyuu! (Japan)" )
+	GAME( 1995, pbobble2, 0,        f3,      f3, pbobble2, ROT0,   "Taito Corporation Japan",   "Puzzle Bobble 2 (World)" )
+	GAME( 1995, pbobbl2j, pbobble2, f3,      f3, pbobble2, ROT0,   "Taito Corporation",         "Puzzle Bobble 2 (Japan)" )
+	GAME( 1995, pbobbl2u, pbobble2, f3,      f3, pbobble2, ROT0,   "Taito America Corporation", "Bust-A-Move Again (US)" )
+	GAME( 1995, pbobbl2x, pbobble2, f3,      f3, pbobbl2x, ROT0,   "Taito Corporation",         "Puzzle Bobble 2X (Japan)" )
+	GAME( 1995, ktiger2,  0,        f3,      f3, ktiger2,  ROT270, "Taito Corporation",         "Kyukyoku Tiger 2 (Japan)" )
 	/* Twin Cobra 2 (US & World) is known to exist */
-	public static GameDriver driver_bubblem	   = new GameDriver("1995"	,"bubblem"	,"taito_f3.java"	,rom_bubblem,null	,machine_driver_f3_224a	,input_ports_f3	,init_bubblem	,ROT0	,	"Taito Corporation Japan",   "Bubble Memories - The Story Of Bubble Bobble 3 (World)" )
-	public static GameDriver driver_bubblemj	   = new GameDriver("1995"	,"bubblemj"	,"taito_f3.java"	,rom_bubblemj,driver_bubblem	,machine_driver_f3_224a	,input_ports_f3	,init_bubblem	,ROT0	,	"Taito Corporation",         "Bubble Memories - The Story Of Bubble Bobble 3 (Japan)" )
-	public static GameDriver driver_cleopatr	   = new GameDriver("1996"	,"cleopatr"	,"taito_f3.java"	,rom_cleopatr,null	,machine_driver_f3_224a	,input_ports_f3	,init_cleopatr	,ROT0	,	"Taito Corporation",         "Cleopatra Fortune (Japan)" )
-	public static GameDriver driver_pbobble3	   = new GameDriver("1996"	,"pbobble3"	,"taito_f3.java"	,rom_pbobble3,null	,machine_driver_f3	,input_ports_f3	,init_pbobble3	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 3 (World)" )
-	public static GameDriver driver_pbobbl3u	   = new GameDriver("1996"	,"pbobbl3u"	,"taito_f3.java"	,rom_pbobbl3u,driver_pbobble3	,machine_driver_f3	,input_ports_f3	,init_pbobble3	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 3 (US)" )
-	public static GameDriver driver_pbobbl3j	   = new GameDriver("1996"	,"pbobbl3j"	,"taito_f3.java"	,rom_pbobbl3j,driver_pbobble3	,machine_driver_f3	,input_ports_f3	,init_pbobble3	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 3 (Japan)" )
-	public static GameDriver driver_arkretrn	   = new GameDriver("1997"	,"arkretrn"	,"taito_f3.java"	,rom_arkretrn,null	,machine_driver_f3	,input_ports_f3	,init_arkretrn	,ROT0	,	"Taito Corporation",         "Arkanoid Returns (Japan)" )
-	public static GameDriver driver_kirameki	   = new GameDriver("1997"	,"kirameki"	,"taito_f3.java"	,rom_kirameki,null	,machine_driver_f3_224a	,input_ports_f3	,init_kirameki	,ROT0	,	"Taito Corporation",         "Kirameki Star Road (Japan)" )
-	public static GameDriver driver_puchicar	   = new GameDriver("1997"	,"puchicar"	,"taito_f3.java"	,rom_puchicar,null	,machine_driver_f3	,input_ports_f3	,init_puchicar	,ROT0	,	"Taito Corporation",         "Puchi Carat (Japan)" )
-	public static GameDriver driver_pbobble4	   = new GameDriver("1997"	,"pbobble4"	,"taito_f3.java"	,rom_pbobble4,null	,machine_driver_f3	,input_ports_f3	,init_pbobble4	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 4 (World)" )
-	public static GameDriver driver_pbobbl4j	   = new GameDriver("1997"	,"pbobbl4j"	,"taito_f3.java"	,rom_pbobbl4j,driver_pbobble4	,machine_driver_f3	,input_ports_f3	,init_pbobble4	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 4 (Japan)" )
-	public static GameDriver driver_pbobbl4u	   = new GameDriver("1997"	,"pbobbl4u"	,"taito_f3.java"	,rom_pbobbl4u,driver_pbobble4	,machine_driver_f3	,input_ports_f3	,init_pbobble4	,ROT0	,	"Taito Corporation",         "Puzzle Bobble 4 (US)" )
-	public static GameDriver driver_popnpop	   = new GameDriver("1997"	,"popnpop"	,"taito_f3.java"	,rom_popnpop,null	,machine_driver_f3	,input_ports_f3	,init_popnpop	,ROT0	,	"Taito Corporation",         "Pop 'N Pop (World)" )
-	public static GameDriver driver_popnpopj	   = new GameDriver("1997"	,"popnpopj"	,"taito_f3.java"	,rom_popnpopj,driver_popnpop	,machine_driver_f3	,input_ports_f3	,init_popnpop	,ROT0	,	"Taito Corporation",         "Pop 'N Pop (Japan)" )
-	public static GameDriver driver_popnpopu	   = new GameDriver("1997"	,"popnpopu"	,"taito_f3.java"	,rom_popnpopu,driver_popnpop	,machine_driver_f3	,input_ports_f3	,init_popnpop	,ROT0	,	"Taito Corporation",         "Pop 'N Pop (US)" )
-	public static GameDriver driver_landmakr	   = new GameDriver("1998"	,"landmakr"	,"taito_f3.java"	,rom_landmakr,null	,machine_driver_f3	,input_ports_f3	,init_landmakr	,ROT0	,	"Taito Corporation",         "Land Maker (Japan)" )
-	public static GameDriver driver_landmkrp	   = new GameDriver("1998"	,"landmkrp"	,"taito_f3.java"	,rom_landmkrp,driver_landmakr	,machine_driver_f3	,input_ports_f3	,init_landmkrp	,ROT0	,	"Taito Corporation",         "Land Maker (World Prototype)" )
+	GAME( 1995, bubblem,  0,        f3_224a, f3, bubblem,  ROT0,   "Taito Corporation Japan",   "Bubble Memories - The Story Of Bubble Bobble 3 (World)" )
+	GAME( 1995, bubblemj, bubblem,  f3_224a, f3, bubblem,  ROT0,   "Taito Corporation",         "Bubble Memories - The Story Of Bubble Bobble 3 (Japan)" )
+	GAME( 1996, cleopatr, 0,        f3_224a, f3, cleopatr, ROT0,   "Taito Corporation",         "Cleopatra Fortune (Japan)" )
+	GAME( 1996, pbobble3, 0,        f3,      f3, pbobble3, ROT0,   "Taito Corporation",         "Puzzle Bobble 3 (World)" )
+	GAME( 1996, pbobbl3u, pbobble3, f3,      f3, pbobble3, ROT0,   "Taito Corporation",         "Puzzle Bobble 3 (US)" )
+	GAME( 1996, pbobbl3j, pbobble3, f3,      f3, pbobble3, ROT0,   "Taito Corporation",         "Puzzle Bobble 3 (Japan)" )
+	GAME( 1997, arkretrn, 0,        f3,      f3, arkretrn, ROT0,   "Taito Corporation",         "Arkanoid Returns (Japan)" )
+	GAME( 1997, kirameki, 0,        f3_224a, f3, kirameki, ROT0,   "Taito Corporation",         "Kirameki Star Road (Japan)" )
+	GAME( 1997, puchicar, 0,        f3,      f3, puchicar, ROT0,   "Taito Corporation",         "Puchi Carat (Japan)" )
+	GAME( 1997, pbobble4, 0,        f3,      f3, pbobble4, ROT0,   "Taito Corporation",         "Puzzle Bobble 4 (World)" )
+	GAME( 1997, pbobbl4j, pbobble4, f3,      f3, pbobble4, ROT0,   "Taito Corporation",         "Puzzle Bobble 4 (Japan)" )
+	GAME( 1997, pbobbl4u, pbobble4, f3,      f3, pbobble4, ROT0,   "Taito Corporation",         "Puzzle Bobble 4 (US)" )
+	GAME( 1997, popnpop,  0,        f3,      f3, popnpop,  ROT0,   "Taito Corporation",         "Pop 'N Pop (World)" )
+	GAME( 1997, popnpopj, popnpop,  f3,      f3, popnpop,  ROT0,   "Taito Corporation",         "Pop 'N Pop (Japan)" )
+	GAME( 1997, popnpopu, popnpop,  f3,      f3, popnpop,  ROT0,   "Taito Corporation",         "Pop 'N Pop (US)" )
+	GAME( 1998, landmakr, 0,        f3,      f3, landmakr, ROT0,   "Taito Corporation",         "Land Maker (Japan)" )
+	GAME( 1998, landmkrp, landmakr, f3,      f3, landmkrp, ROT0,   "Taito Corporation",         "Land Maker (World Prototype)" )
 }

@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,27 +28,27 @@ public class liberate
 		int i,j;
 		char buf[20];
 		int trueorientation;
-		trueorientation = Machine.orientation;
-		Machine.orientation = 0;
+		trueorientation = Machine->orientation;
+		Machine->orientation = 0;
 		for (i = 0;i < 16;i+=2)
 		{
 			sprintf(buf,"%04X",deco16_io_ram[i+1]|(deco16_io_ram[i]<<8));
 			for (j = 0;j < 4;j++)
-				drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,10+3*6*i+6*j,6*6,0,TRANSPARENCY_NONE,0);
+				drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,10+3*6*i+6*j,6*6,0,TRANSPARENCY_NONE,0);
 		}
-		Machine.orientation = trueorientation;
+		Machine->orientation = trueorientation;
 	}
 	#endif
 	
 	static UINT32 back_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((row & 0xf)) + ((15-(col &0xf))<<4) + ((row&0x10)<<5) + ((col&0x10)<<4);
 	}
 	
 	static UINT32 fix_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (row & 0x1f) + ((31-(col &0x1f))<<5);
 	}
 	
@@ -58,13 +58,13 @@ public class liberate
 		int tile,bank;
 	
 		/* Convert tile index of 512x512 to paged format */
-		if ((tile_index & 0x100) != 0) {
-			if ((tile_index & 0x200) != 0)
+		if (tile_index&0x100) {
+			if (tile_index&0x200)
 				tile_index=(tile_index&0xff)+(deco16_io_ram[5]<<8); /* Bottom right */
 			else
 				tile_index=(tile_index&0xff)+(deco16_io_ram[4]<<8); /* Bottom left */
 		} else {
-				if ((tile_index & 0x200) != 0)
+				if (tile_index&0x200)
 				tile_index=(tile_index&0xff)+(deco16_io_ram[3]<<8); /* Top right */
 			else
 				tile_index=(tile_index&0xff)+(deco16_io_ram[2]<<8); /* Top left */
@@ -82,9 +82,9 @@ public class liberate
 		tile=videoram.read(tile_index+0x400)+((videoram.read(tile_index)&0x7)<<8);
 		color=(videoram.read(tile_index)&0x70)>>4;
 	
-	//if ((tile & 0x300) != 0) tile-=0x000;
-	//else if ((tile & 0x200) != 0) tile-=0x100;
-	//else if ((tile & 0x100) != 0) tile-=0x100;
+	//if (tile&0x300) tile-=0x000;
+	//else if(tile&0x200) tile-=0x100;
+	//else if (tile&0x100) tile-=0x100;
 	//else tile+=0x200;
 	
 		SET_TILE_INFO(0,tile,color,0)
@@ -92,8 +92,7 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static WriteHandlerPtr deco16_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr deco16_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		deco16_io_ram[offset]=data;
 		if (offset>1 && offset<6)
 			tilemap_mark_all_tiles_dirty(background_tilemap);
@@ -120,16 +119,14 @@ public class liberate
 		}
 	} };
 	
-	public static WriteHandlerPtr liberate_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr liberate_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(fix_tilemap,offset&0x3ff);
 	} };
 	
 	/***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_prosoccr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_prosoccr  = new VideoStartHandlerPtr() { public int handler(){
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -141,8 +138,7 @@ public class liberate
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_boomrang  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_boomrang  = new VideoStartHandlerPtr() { public int handler(){
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_SPLIT,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -155,8 +151,7 @@ public class liberate
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_liberate  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_liberate  = new VideoStartHandlerPtr() { public int handler(){
 		background_tilemap = tilemap_create(get_back_tile_info,back_scan,TILEMAP_OPAQUE,16,16,32,32);
 		fix_tilemap = tilemap_create(get_fix_tile_info,fix_scan,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -170,14 +165,12 @@ public class liberate
 	
 	/***************************************************************************/
 	
-	public static WriteHandlerPtr prosport_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prosport_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* RGB output is inverted */
 		paletteram_BBGGGRRR_w(offset,~data);
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_liberate  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_liberate  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,bit0,bit1,bit2,g,r,b;
 	
 		for (i = 0;i < 32;i++)
@@ -229,33 +222,33 @@ public class liberate
 	
 			fx = spriteram.read(offs+0)& 0x04;
 			fy = spriteram.read(offs+0)& 0x08;//2;//8;
-	//if (fy != 0) fy=0; else fy=1;
+	//if (fy) fy=0; else fy=1;
 			multi = spriteram.read(offs+0)& 0x10;
 	
 	
-			if (multi != 0) sy-=16;
+			if (multi) sy-=16;
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx != 0) fx=0; else fx=1;
+				if (fx) fx=0; else fx=1;
 				sy2=sy-16;
 			}
 			else sy2=sy+16;
 	
-	    	drawgfx(bitmap,Machine.gfx[1],
+	    	drawgfx(bitmap,Machine->gfx[1],
 	        		code,
 					color,
 					fx,fy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
-	        if (multi != 0)
-	    		drawgfx(bitmap,Machine.gfx[1],
+					Machine->visible_area,TRANSPARENCY_PEN,0);
+	        if (multi)
+	    		drawgfx(bitmap,Machine->gfx[1],
 					code+1,
 					color,
 					fx,fy,
 					sx,sy2,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -273,7 +266,7 @@ public class liberate
 			multi = spriteram.read(offs+0)& 0x10;
 	
 			sy=spriteram.read(offs+2);
-			if (multi != 0) sy+=16;
+			if (multi) sy+=16;
 			sx = (240 - spriteram.read(offs+3));
 	//		sy = (240-spriteram.read(offs+2));//-16;
 			sy = 240-sy;
@@ -284,33 +277,33 @@ public class liberate
 			fy = spriteram.read(offs+0)& 0x04;
 			multi = 0;// spriteram.read(offs+0)& 0x10;
 	
-	//		if (multi != 0) sy-=16;
+	//		if (multi) sy-=16;
 			if (fy && multi) { code2=code; code++; }
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				sy2=sy-16;
 			}
 			else {
 				sy2=sy+16;
 			}
 	
-	    	drawgfx(bitmap,Machine.gfx[1],
+	    	drawgfx(bitmap,Machine->gfx[1],
 	        		code,
 					color,
 					fx,fy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
-	        if (multi != 0)
-	    		drawgfx(bitmap,Machine.gfx[1],
+					Machine->visible_area,TRANSPARENCY_PEN,0);
+	        if (multi)
+	    		drawgfx(bitmap,Machine->gfx[1],
 					code2,
 					color,
 					fx,fy,
 					sx,sy2,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
@@ -329,7 +322,7 @@ public class liberate
 			multi = spriteram.read(offs+0)& 0x10;
 	
 			sy=spriteram.read(offs+2);
-			if (multi != 0) sy+=16;
+			if (multi) sy+=16;
 			sx = (240 - spriteram.read(offs+3));
 	//		sy = (240-spriteram.read(offs+2));//-16;
 			sy = 240-sy;
@@ -340,44 +333,43 @@ public class liberate
 			fy = spriteram.read(offs+0)& 0x02;
 			multi = spriteram.read(offs+0)& 0x10;
 	
-	//		if (multi != 0) sy-=16;
+	//		if (multi) sy-=16;
 			if (fy && multi) { code2=code; code++; }
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				sy2=sy-16;
 			}
 			else {
 				sy2=sy+16;
 			}
 	
-	    	drawgfx(bitmap,Machine.gfx[1],
+	    	drawgfx(bitmap,Machine->gfx[1],
 	        		code,
 					color,
 					fx,fy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
-	        if (multi != 0)
-	    		drawgfx(bitmap,Machine.gfx[1],
+					Machine->visible_area,TRANSPARENCY_PEN,0);
+	        if (multi)
+	    		drawgfx(bitmap,Machine->gfx[1],
 					code2,
 					color,
 					fx,fy,
 					sx,sy2,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
 	/***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_prosoccr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(background_tilemap,0,deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable != 0)
+		if (background_disable)
 			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);
@@ -385,8 +377,7 @@ public class liberate
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_prosport  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_prosport  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int mx,my,tile,color,offs;
 	
 		fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
@@ -398,7 +389,7 @@ public class liberate
 	
 			tile+=((deco16_io_ram[0]&0x30)<<6);
 	
-			if (tile == 0) continue;
+			if (!tile) continue;
 	
 			color=1;//(videoram.read(offs)&0x70)>>4;
 			my = (offs) % 32;
@@ -410,29 +401,27 @@ public class liberate
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_boomrang  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable != 0)
+		if (background_disable)
 			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_BACK,0);
 	
 		boomrang_drawsprites(bitmap,8);
-		if (background_disable == 0)
+		if (!background_disable)
 			tilemap_draw(bitmap,cliprect,background_tilemap,TILEMAP_FRONT,0);
 		boomrang_drawsprites(bitmap,0);
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_liberate  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(background_tilemap,0, deco16_io_ram[1]);
 		tilemap_set_scrollx(background_tilemap,0,-deco16_io_ram[0]);
 	
-		if (background_disable != 0)
+		if (background_disable)
 			fillbitmap(bitmap,Machine.pens[32],Machine.visible_area);
 		else
 			tilemap_draw(bitmap,cliprect,background_tilemap,0,0);

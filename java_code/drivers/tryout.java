@@ -18,7 +18,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,8 +41,7 @@ public class tryout
 		SET_TILE_INFO(0, code, attr >> 4, 0)
 	}
 	
-	public static WriteHandlerPtr tryout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tryout_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!= data )
 		{
 			videoram.write(offset,data);
@@ -50,13 +49,11 @@ public class tryout
 		}
 	} };
 	
-	public static WriteHandlerPtr tryout_nmi_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tryout_nmi_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_nmi_line( 0, CLEAR_LINE );
 	} };
 	
-	public static WriteHandlerPtr tryout_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tryout_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		
 		cpu_set_irq_line(1, 0, PULSE_LINE );
@@ -109,7 +106,7 @@ public class tryout
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_tryout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tryout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tryout )
 	
 		PORT_START(); 
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_BUTTON1 );
@@ -164,8 +161,7 @@ public class tryout
 		return (row ^ 0x1f) + (col << 5);
 	}
 	
-	public static VideoStartHandlerPtr video_start_tryout  = new VideoStartHandlerPtr() { public int handler()
-	{	
+	public static VideoStartHandlerPtr video_start_tryout  = new VideoStartHandlerPtr() { public int handler(){	
 		fg_tilemap = tilemap_create(get_tile_info,get_fg_memory_offset_tryout,TILEMAP_OPAQUE,8,8,32,32);
 	
 	//	tilemap_set_transparent_pen(fg_tilemap,0);
@@ -173,8 +169,7 @@ public class tryout
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tryout  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };
 	
@@ -195,15 +190,13 @@ public class tryout
 		{ tryout_snd_irq },
 	};
 	
-	public static InterruptHandlerPtr tryout_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr tryout_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (input_port_3_r(0) & 0xc0)
 			cpu_set_nmi_line(0, ASSERT_LINE);
 	//		nmi_line_pulse();
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_tryout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tryout  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -230,8 +223,7 @@ public class tryout
 		}
 	} };
 	
-	public static MachineHandlerPtr machine_driver_tryout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tryout )
 		MDRV_CPU_ADD(M6502, 2000000)		 /* ?? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(tryout_interrupt,1)
@@ -257,9 +249,7 @@ public class tryout
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_tryout = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x10000, REGION_CPU1, 0 ) 
@@ -288,8 +278,7 @@ public class tryout
 		ROM_LOAD( "ch14.bpr",     0x00000, 0x0020, CRC(8ce19925) SHA1(12f8f6022f1148b6ba1d019a34247452637063a7) ) 
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_tryout  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tryout  = new DriverInitHandlerPtr() { public void handler(){
 		// ?
 		install_mem_write_handler( 0, 0xc800, 0xcfff, MWA_NOP );
 	
@@ -297,5 +286,5 @@ public class tryout
 		install_mem_write_handler( 1, 0xd000, 0xd000, MWA_NOP );
 	} };
 	
-	public static GameDriver driver_tryout	   = new GameDriver("1985"	,"tryout"	,"tryout.java"	,rom_tryout,null	,machine_driver_tryout	,input_ports_tryout	,init_tryout	,ROT90	,	"Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
+	GAMEX( 1985, tryout, 0, tryout, tryout, tryout, ROT90, "Data East", "Pro Yakyuu Nyuudan Test Tryout (JPN Ver.)", GAME_NOT_WORKING | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS | GAME_NO_SOUND )
 }

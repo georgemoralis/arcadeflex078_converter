@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -46,8 +46,7 @@ public class depthch
 	};
 	
 	
-	public static WriteHandlerPtr depthch_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr depthch_sh_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int port1State = 0;
 		int bitsChanged;
 		int bitsGoneHigh;
@@ -60,26 +59,26 @@ public class depthch
 	
 		port1State = data;
 	
-		if ((bitsGoneHigh & OUT_PORT_1_LONGEXPL) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_LONGEXPL )
 		{
 			PLAY( SND_LONGEXPL, 0 );
 		}
 	
-		if ((bitsGoneHigh & OUT_PORT_1_SHRTEXPL) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_SHRTEXPL )
 		{
 			PLAY( SND_SHRTEXPL, 0 );
 		}
 	
-		if ((bitsGoneHigh & OUT_PORT_1_SPRAY) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_SPRAY )
 		{
 			PLAY( SND_SPRAY, 0 );
 		}
 	
-		if ((bitsGoneHigh & OUT_PORT_1_SONAR) != 0)
+		if ( bitsGoneHigh & OUT_PORT_1_SONAR )
 		{
 			PLAY( SND_SONAR, 1 );
 		}
-		if ((bitsGoneLow & OUT_PORT_1_SONAR) != 0)
+		if ( bitsGoneLow & OUT_PORT_1_SONAR )
 		{
 			STOP( SND_SONAR );
 		}

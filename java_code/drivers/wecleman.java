@@ -77,21 +77,21 @@ b-d                             *** score/10 (BCD 3 bytes) ***
 3a,3b,3c,3d             <-140021.b
 3a = accelerator   3b = ??   3c = steering   3d = table
 
-d2.w                    . 108f24 fg y scroll
-112.w                   . 108f26 bg y scroll
+d2.w                    -> 108f24 fg y scroll
+112.w                   -> 108f26 bg y scroll
 
 16c                             influences 140031.b
 174                             screen address
-180                             input port selection (.140003.b .140021.b)
-181                     .140005.b
-185                             bit 7 high . must copy sprite data to 130000
-1dc+(1da).w             .140001.b
+180                             input port selection (->140003.b ->140021.b)
+181                     ->140005.b
+185                             bit 7 high -> must copy sprite data to 130000
+1dc+(1da).w             ->140001.b
 
 40a.w,c.w               *** time (BCD) ***
 411                             EF if brake, 0 otherwise
 416                             ?
 419                             gear: 0=lo,1=hi
-41e.w                   speed related .127880
+41e.w                   speed related ->127880
 424.w                   speed BCD
 43c.w                   accel?
 440.w                   level?
@@ -133,19 +133,19 @@ c1a                     prints string (a1)
 6640                    print input port values ( 6698 = scr_disp.w,ip.b,bit.b[+/-] )
 
 819c                    prepares sprite data
-8526                    blitter: 42400.130000
+8526                    blitter: 42400->130000
 800c                    8580    sprites setup on map screen
 
 1833a                   cycle cols on hi-scores
 18514                   hiscores: main loop
 185e8                   hiscores: wheel selects letter
 
-TRAP#0                  prints string: A0. addr.l, attr.w, (char.b)*, 0
+TRAP#0                  prints string: A0-> addr.l, attr.w, (char.b)*, 0
 
 IRQs                    [1,3,6]  602
-IRQs                    [2,7]    1008.12dc      ORI.W    #$2700,(A7) RTE
-IRQs                    [4]      1004.124c
-IRQs                    [5]      106c.1222      calls sequence: $3d24 $1984 $28ca $36d2 $3e78
+IRQs                    [2,7]    1008->12dc      ORI.W    #$2700,(A7) RTE
+IRQs                    [4]      1004->124c
+IRQs                    [5]      106c->1222      calls sequence: $3d24 $1984 $28ca $36d2 $3e78
 
 
 					Interesting locations (sub cpu)
@@ -156,7 +156,7 @@ IRQs                    [5]      106c.1222      calls sequence: $3d24 $1984 $28c
 
 1028    'wait for command' loop.
 1138    lev4 irq
-1192    copies E0*4 bytes: (a1)+ . (a0)+
+1192    copies E0*4 bytes: (a1)+ -> (a0)+
 
 
 ---------------------------------------------------------------------------
@@ -176,7 +176,7 @@ Self Test:
  0] pause,120002==55,pause,120002==AA,pause,120002==CC, (on error set bit d7.0)
  6] 60000-63fff(d7.1),40000-41fff(d7.2)
  8] 40000/2<-chksum 0-20000(e/o);40004/6<-chksum 20000-2ffff(e/o) (d7.3456)
- 9] chksums from sub cpu: even.40004   odd.(40006)    (d7.78)
+ 9] chksums from sub cpu: even->40004   odd->(40006)    (d7.78)
  A] 110000-111fff(even)(d7.9),102000-102fff(odd)(d7.a)
  C] 100000-100fff(odd)(d7.b),pause,pause,pause
 10] 120004==0(d7.c),120006==0(d7.d),130000-1307ff(first $A of every $10 bytes only)(d7.e),pause
@@ -271,7 +271,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -334,7 +334,7 @@ public class wecleman
 		static int state = 0;
 	
 		if (offset == 2) state = data & 0x2000;
-		if (state == 0) COMBINE_DATA(wecleman_protection_ram + offset);
+		if (!state) COMBINE_DATA(wecleman_protection_ram + offset);
 	}
 	
 	
@@ -364,16 +364,16 @@ public class wecleman
 	*/
 	static WRITE16_HANDLER( irqctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// logerror("CPU #0 - PC = %06X - $140005 <- %02X (old value: %02X)\n",activecpu_get_pc(), data&0xFF, old_data&0xFF);
 	
 			// Bit 0 : SUBINT
-			if ( (wecleman_irqctrl & 1) && (!(data & 1)) )	// 1.0 transition
+			if ( (wecleman_irqctrl & 1) && (!(data & 1)) )	// 1->0 transition
 				cpu_set_irq_line(1,4,HOLD_LINE);
 	
 			// Bit 1 : NSUBRST
-			if ((data & 2) != 0)   cpu_set_reset_line(1, CLEAR_LINE  );
+			if (data & 2)   cpu_set_reset_line(1, CLEAR_LINE  );
 			else                    cpu_set_reset_line(1, ASSERT_LINE );
 	
 			// Bit 2 : SOUND-ON
@@ -398,7 +398,7 @@ public class wecleman
 	*/
 	static WRITE16_HANDLER( selected_ip_w )
 	{
-		if (ACCESSING_LSB != 0) wecleman_selected_ip = data & 0xff;	// latch the value
+		if (ACCESSING_LSB) wecleman_selected_ip = data & 0xff;	// latch the value
 	}
 	
 	/* $140021.b - Return the previously selected input port's value */
@@ -583,22 +583,22 @@ public class wecleman
 	
 	static WRITE16_HANDLER( hotchase_K051316_0_w )
 	{
-		if (ACCESSING_LSB != 0)      K051316_0_w(offset, data & 0xff);
+		if (ACCESSING_LSB)      K051316_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_1_w )
 	{
-		if (ACCESSING_LSB != 0)      K051316_1_w(offset, data & 0xff);
+		if (ACCESSING_LSB)      K051316_1_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_ctrl_0_w )
 	{
-		if (ACCESSING_LSB != 0)      K051316_ctrl_0_w(offset, data & 0xff);
+		if (ACCESSING_LSB)      K051316_ctrl_0_w(offset, data & 0xff);
 	}
 	
 	static WRITE16_HANDLER( hotchase_K051316_ctrl_1_w )
 	{
-		if (ACCESSING_LSB != 0)      K051316_ctrl_1_w(offset, data & 0xff);
+		if (ACCESSING_LSB)      K051316_ctrl_1_w(offset, data & 0xff);
 	}
 	
 	WRITE16_HANDLER( hotchase_soundlatch_w );
@@ -685,7 +685,7 @@ public class wecleman
 	/* 140001.b */
 	WRITE16_HANDLER( wecleman_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xFF);
 			cpu_set_irq_line(2,0, HOLD_LINE);
@@ -693,13 +693,11 @@ public class wecleman
 	}
 	
 	/* Protection - an external multiplyer connected to the sound CPU */
-	public static ReadHandlerPtr multiply_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr multiply_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (multiply_reg[0] * multiply_reg[1]) & 0xFF;
 	} };
 	
-	public static WriteHandlerPtr multiply_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr multiply_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		multiply_reg[offset] = data;
 	} };
 	
@@ -710,17 +708,16 @@ public class wecleman
 	01      07      address step    (high byte, max 1)
 	02      08      sample address  (low  byte)
 	03      09      sample address  (mid  byte)
-	04      0a      sample address  (high byte, max 1 . max rom size: $20000)
+	04      0a      sample address  (high byte, max 1 -> max rom size: $20000)
 	05      0b      Reading this byte triggers the sample
 	
 	[Ch A & B]
 	0c              volume
-	0d              play sample once or looped (2 channels . 2 bits (0&1))
+	0d              play sample once or looped (2 channels -> 2 bits (0&1))
 	
 	** sample playing ends when a byte with bit 7 set is reached **/
 	
-	public static WriteHandlerPtr wecleman_K00723216_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wecleman_K00723216_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		K007232_set_bank( 0, 0, ~data&1 );	//* (wecleman062gre)
 	} };
 	
@@ -757,7 +754,7 @@ public class wecleman
 	/* 140001.b */
 	WRITE16_HANDLER( hotchase_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xFF);
 			cpu_set_irq_line(2,M6809_IRQ_LINE, HOLD_LINE);
@@ -775,8 +772,7 @@ public class wecleman
 		{ 0,0,0 }
 	};
 	
-	public static WriteHandlerPtr hotchase_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hotchase_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int reg[8];
 	
 		reg[offset] = data;
@@ -825,11 +821,11 @@ public class wecleman
 	/* Read and write handlers for one K007232 chip:
 	   even and odd register are mapped swapped */
 	#define HOTCHASE_K007232_RW(_chip_) \
-	public static ReadHandlerPtr hotchase_K007232_##_chip_##_r  = new ReadHandlerPtr() { public int handler(int offset) \
+	public static ReadHandlerPtr hotchase_K007232_##_chip_##_r  = new ReadHandlerPtr() { public int handler(int offset)
 	{ \
 		return K007232_read_port_##_chip_##_r(offset ^ 1); \
 	} }; \
-	public static WriteHandlerPtr hotchase_K007232_##_chip_##_w = new WriteHandlerPtr() {public void handler(int offset, int data) \
+	public static WriteHandlerPtr hotchase_K007232_##_chip_##_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	{ \
 		K007232_write_port_##_chip_##_w(offset ^ 1, data); \
 	} }; \
@@ -868,7 +864,7 @@ public class wecleman
 							WEC Le Mans 24 Input Ports
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_wecleman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wecleman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wecleman )
 		PORT_START(); 	/* IN0 - Controls and Coins - $140011.b */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -958,7 +954,7 @@ public class wecleman
 								Hot Chase Input Ports
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_hotchase = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hotchase = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hotchase )
 		PORT_START(); 	/* IN0 - Controls and Coins - $140011.b */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -994,8 +990,8 @@ public class wecleman
 		PORT_DIPNAME( 0x20, 0x20, "Unknown 2-5" );// single
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
-		/* wheel <. brake ; accel . start */
-		PORT_DIPNAME( 0x40, 0x40, "Unknown 2-6" );// single (wheel<.brake)
+		/* wheel <-> brake ; accel -> start */
+		PORT_DIPNAME( 0x40, 0x40, "Unknown 2-6" );// single (wheel<->brake)
 		PORT_DIPSETTING(    0x40, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x80, 0x80, "Unknown 2-7" );// single
@@ -1122,8 +1118,7 @@ public class wecleman
 							WEC Le Mans 24 Hardware Definitions
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr wecleman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr wecleman_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 4, HOLD_LINE);	/* once */
 		else
@@ -1147,13 +1142,11 @@ public class wecleman
 		{0}
 	};
 	
-	public static MachineInitHandlerPtr machine_init_wecleman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_wecleman  = new MachineInitHandlerPtr() { public void handler(){
 		K007232_set_bank( 0, 0, 1 );
 	} };
 	
-	public static MachineHandlerPtr machine_driver_wecleman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wecleman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* Schems show 10MHz */
@@ -1188,22 +1181,18 @@ public class wecleman
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, wecleman_k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 							Hot Chase Hardware Definitions
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr hotchase_sound_timer = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hotchase_sound_timer = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line( 2, M6809_FIRQ_LINE, PULSE_LINE );
 	} };
 	
-	public static MachineHandlerPtr machine_driver_hotchase = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hotchase )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)	/* 10 MHz - PCB is drawn in one set's readme */
@@ -1235,9 +1224,7 @@ public class wecleman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(K007232, hotchase_k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1316,7 +1303,7 @@ public class wecleman
 	{
 		data8_t *buffer = malloc(len);
 	
-		if (buffer != 0)
+		if (buffer)
 		{
 			int i;
 	
@@ -1331,8 +1318,7 @@ public class wecleman
 	}
 	
 	/* Unpack sprites data and do some patching */
-	public static DriverInitHandlerPtr init_wecleman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wecleman  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char *RAM;
 	//	data16_t *RAM1 = (data16_t *) memory_region(REGION_CPU1);	/* Main CPU patches */
@@ -1432,7 +1418,7 @@ public class wecleman
 	
 		base = memory_region(REGION_GFX1);	// sprites
 		temp = malloc( bank_size );
-		if (temp == 0) return;
+		if( !temp ) return;
 	
 		for( i = num16_banks; i >0; i-- ){
 			unsigned char *finish   = base + 2*bank_size*i;
@@ -1474,8 +1460,7 @@ public class wecleman
 	}
 	
 	/* Unpack sprites data and do some patching */
-	public static DriverInitHandlerPtr init_hotchase  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hotchase  = new DriverInitHandlerPtr() { public void handler(){
 	//	data16_t *RAM1 = (data16_t) memory_region(REGION_CPU1);	/* Main CPU patches */
 	//	RAM[0x1140/2] = 0x0015; RAM[0x195c/2] = 0x601A;	// faster self test
 	
@@ -1501,6 +1486,6 @@ public class wecleman
 									Game driver(s)
 	***************************************************************************/
 	
-	public static GameDriver driver_wecleman	   = new GameDriver("1986"	,"wecleman"	,"wecleman.java"	,rom_wecleman,null	,machine_driver_wecleman	,input_ports_wecleman	,init_wecleman	,ROT0	,	"Konami", "WEC Le Mans 24" )
-	public static GameDriver driver_hotchase	   = new GameDriver("1988"	,"hotchase"	,"wecleman.java"	,rom_hotchase,null	,machine_driver_hotchase	,input_ports_hotchase	,init_hotchase	,ROT0	,	"Konami", "Hot Chase" )
+	GAME( 1986, wecleman, 0, wecleman, wecleman, wecleman, ROT0, "Konami", "WEC Le Mans 24" )
+	GAME( 1988, hotchase, 0, hotchase, hotchase, hotchase, ROT0, "Konami", "Hot Chase" )
 }

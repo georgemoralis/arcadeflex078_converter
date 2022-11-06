@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -25,50 +25,44 @@ public class speedspn
 		SET_TILE_INFO(0,code,attr & 0x3f,(attr & 0x80) ? TILE_FLIPX : 0)
 	}
 	
-	VIDEO_START(speedspn)
-	{
+	public static VideoStartHandlerPtr video_start_speedspn  = new VideoStartHandlerPtr() { public int handler(){
 		speedspn_vidram = auto_malloc(0x1000 * 2);
 		speedspn_tilemap = tilemap_create(get_speedspn_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE, 8, 8,64,32);
 		return 0;
-	}
+	} };
 	
-	public static WriteHandlerPtr speedspn_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedspn_vidram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speedspn_vidram[offset + speedspn_bank_vidram] = data;
 	
 		if (speedspn_bank_vidram == 0)
 			tilemap_mark_tile_dirty(speedspn_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr speedspn_attram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr speedspn_attram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		speedspn_attram[offset] = data;
 	
 		tilemap_mark_tile_dirty(speedspn_tilemap,offset^0x400);
 	} };
 	
-	public static ReadHandlerPtr speedspn_vidram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedspn_vidram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return speedspn_vidram[offset + speedspn_bank_vidram];
 	} };
 	
-	WRITE_HANDLER(speedspn_banked_vidram_change)
-	{
+	public static WriteHandlerPtr speedspn_banked_vidram_change = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("VidRam Bank: %04x\n", data);
 		speedspn_bank_vidram = data & 1;
 		speedspn_bank_vidram *= 0x1000;
-	}
+	} };
 	
-	WRITE_HANDLER(speedspn_global_display_w)
-	{
+	public static WriteHandlerPtr speedspn_global_display_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Global display: %u\n", data);
 		speedspn_display_disable = data & 1;
-	}
+	} };
 	
 	
 	static void speedspn_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data8_t *source = speedspn_vidram+ 0x1000;
 		data8_t *finish = source + 0x1000;
 	
@@ -80,7 +74,7 @@ public class speedspn
 			int ypos = source[3];
 			int color;
 	
-			if ((attr & 0x10) != 0) xpos +=0x100;
+			if (attr&0x10) xpos +=0x100;
 	
 			xpos = 0x1f8-xpos;
 			tileno += ((attr & 0xe0) >> 5) * 0x100;
@@ -98,9 +92,8 @@ public class speedspn
 	}
 	
 	
-	VIDEO_UPDATE(speedspn)
-	{
-		if (speedspn_display_disable != 0)
+	public static VideoUpdateHandlerPtr video_update_speedspn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (speedspn_display_disable)
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 			return;
@@ -117,5 +110,5 @@ public class speedspn
 		tilemap_set_scrollx(speedspn_tilemap,0, 0x100); // verify
 		tilemap_draw(bitmap,cliprect,speedspn_tilemap,0,0);
 		speedspn_drawsprites(bitmap,cliprect);
-	}
+	} };
 }

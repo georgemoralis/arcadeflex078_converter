@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,8 +24,7 @@ public class superqix
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr superqix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -33,8 +32,7 @@ public class superqix
 		}
 	} };
 	
-	public static WriteHandlerPtr superqix_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -42,13 +40,11 @@ public class superqix
 		}
 	} };
 	
-	public static ReadHandlerPtr superqix_bitmapram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr superqix_bitmapram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return superqix_bitmapram[offset];
 	} };
 	
-	public static WriteHandlerPtr superqix_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_bitmapram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != superqix_bitmapram[offset])
 		{
 			int x,y;
@@ -63,13 +59,11 @@ public class superqix
 		}
 	} };
 	
-	public static ReadHandlerPtr superqix_bitmapram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr superqix_bitmapram2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return superqix_bitmapram2[offset];
 	} };
 	
-	public static WriteHandlerPtr superqix_bitmapram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_bitmapram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != superqix_bitmapram2[offset])
 		{
 			int x,y;
@@ -84,8 +78,7 @@ public class superqix
 		}
 	} };
 	
-	public static WriteHandlerPtr superqix_0410_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_0410_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		UINT8 *RAM = memory_region(REGION_CPU1);
 	
@@ -114,8 +107,7 @@ public class superqix
 		cpu_setbank(1,&RAM[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr superqix_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr superqix_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(!data);
 	} };
 	
@@ -131,8 +123,7 @@ public class superqix
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_superqix  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_superqix  = new VideoStartHandlerPtr() { public int handler(){
 		/* palette RAM is accessed thorough I/O ports, so we have to */
 		/* allocate it ourselves */
 		if ((paletteram = auto_malloc(256 * sizeof(UINT8))) == 0)
@@ -163,7 +154,7 @@ public class superqix
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 		
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap, 0);
@@ -179,7 +170,7 @@ public class superqix
 		pens[0]=0;
 	
 		for (i=1; i<16; i++)
-			pens[i]=Machine.pens[i];
+			pens[i]=Machine->pens[i];
 	
 		if (sqix_current_bitmap==0)		/* Bitmap 1 */
 		{
@@ -230,7 +221,7 @@ public class superqix
 			}
 		}
 	
-		copybitmap(bitmap,tmpbitmap2,flip_screen(),flip_screen(),0,0,Machine.visible_area,TRANSPARENCY_PEN,0);
+		copybitmap(bitmap,tmpbitmap2,flip_screen(),flip_screen(),0,0,Machine->visible_area,TRANSPARENCY_PEN,0);
 	}
 	
 	static void superqix_draw_sprites( struct mame_bitmap *bitmap )
@@ -247,7 +238,7 @@ public class superqix
 			int sx = spriteram.read(offs + 1);
 			int sy = spriteram.read(offs + 2);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -255,13 +246,12 @@ public class superqix
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[5],	code, color, flipx, flipy, sx, sy,
-					Machine.visible_area, TRANSPARENCY_PEN, 0);
+			drawgfx(bitmap,Machine->gfx[5],	code, color, flipx, flipy, sx, sy,
+					Machine->visible_area, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_superqix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), cliprect);
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		superqix_draw_bitmap(bitmap);

@@ -177,7 +177,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -192,8 +192,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr dual_pokey_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dual_pokey_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pokey_num = (offset >> 3) & 0x01;
 		int control = (offset & 0x10) >> 1;
 		int pokey_reg = (offset % 8) | control;
@@ -205,8 +204,7 @@ public class mhavoc
 	} };
 	
 	
-	public static WriteHandlerPtr dual_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dual_pokey_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int pokey_num = (offset >> 3) & 0x01;
 		int control = (offset & 0x10) >> 1;
 		int pokey_reg = (offset % 8) | control;
@@ -227,13 +225,11 @@ public class mhavoc
 	
 	static data8_t *gammaram;
 	
-	public static ReadHandlerPtr mhavoc_gammaram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mhavoc_gammaram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gammaram[offset & 0x7ff];
 	} };
 	
-	public static WriteHandlerPtr mhavoc_gammaram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_gammaram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gammaram[offset & 0x7ff] = data;
 	} };
 	
@@ -376,7 +372,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_mhavoc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mhavoc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mhavoc )
 		PORT_START(); 	/* IN0 - alpha (player_1 = 0) */
 		PORT_BIT ( 0x03, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT ( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -445,7 +441,7 @@ public class mhavoc
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mhavocp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mhavocp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mhavocp )
 		PORT_START(); 	/* IN0 - alpha (player_1 = 0) */
 		PORT_BIT ( 0x0f, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT ( 0x10, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -511,7 +507,7 @@ public class mhavoc
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_alphaone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alphaone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alphaone )
 		PORT_START(); 	/* IN0 - alpha (player_1 = 0) */
 		PORT_BIT ( 0x03, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT ( 0x7c, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -581,8 +577,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_mhavoc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mhavoc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("alpha", M6502, MHAVOC_CLOCK_2_5M)		/* 2.5 MHz */
@@ -607,13 +602,10 @@ public class mhavoc
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("pokey", POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_alphaone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alphaone )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mhavoc)
@@ -627,9 +619,7 @@ public class mhavoc
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("pokey", POKEY, pokey_interface_alphaone)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -806,10 +796,10 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_mhavoc	   = new GameDriver("1983"	,"mhavoc"	,"mhavoc.java"	,rom_mhavoc,null	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"Atari", "Major Havoc (rev 3)" )
-	public static GameDriver driver_mhavoc2	   = new GameDriver("1983"	,"mhavoc2"	,"mhavoc.java"	,rom_mhavoc2,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"Atari", "Major Havoc (rev 2)" )
-	public static GameDriver driver_mhavocrv	   = new GameDriver("1983"	,"mhavocrv"	,"mhavoc.java"	,rom_mhavocrv,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavoc	,null	,ROT0	,	"hack",  "Major Havoc (Return to Vax)" )
-	public static GameDriver driver_mhavocp	   = new GameDriver("1983"	,"mhavocp"	,"mhavoc.java"	,rom_mhavocp,driver_mhavoc	,machine_driver_mhavoc	,input_ports_mhavocp	,null	,ROT0	,	"Atari", "Major Havoc (prototype)" )
-	public static GameDriver driver_alphaone	   = new GameDriver("1983"	,"alphaone"	,"mhavoc.java"	,rom_alphaone,driver_mhavoc	,machine_driver_alphaone	,input_ports_alphaone	,null	,ROT0	,	"Atari", "Alpha One (prototype, 3 lives)" )
-	public static GameDriver driver_alphaona	   = new GameDriver("1983"	,"alphaona"	,"mhavoc.java"	,rom_alphaona,driver_mhavoc	,machine_driver_alphaone	,input_ports_alphaone	,null	,ROT0	,	"Atari", "Alpha One (prototype, 5 lives)" )
+	GAME( 1983, mhavoc,   0,      mhavoc,   mhavoc,   0, ROT0, "Atari", "Major Havoc (rev 3)" )
+	GAME( 1983, mhavoc2,  mhavoc, mhavoc,   mhavoc,   0, ROT0, "Atari", "Major Havoc (rev 2)" )
+	GAME( 1983, mhavocrv, mhavoc, mhavoc,   mhavoc,   0, ROT0, "hack",  "Major Havoc (Return to Vax)" )
+	GAME( 1983, mhavocp,  mhavoc, mhavoc,   mhavocp,  0, ROT0, "Atari", "Major Havoc (prototype)" )
+	GAME( 1983, alphaone, mhavoc, alphaone, alphaone, 0, ROT0, "Atari", "Alpha One (prototype, 3 lives)" )
+	GAME( 1983, alphaona, mhavoc, alphaone, alphaone, 0, ROT0, "Atari", "Alpha One (prototype, 5 lives)" )
 }

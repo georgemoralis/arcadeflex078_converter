@@ -35,7 +35,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -63,8 +63,7 @@ public class suna8
 									Hard Head
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_hardhead  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hardhead  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -88,8 +87,7 @@ public class suna8
 	} };
 	
 	/* Non encrypted bootleg */
-	public static DriverInitHandlerPtr init_hardhedb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hardhedb  = new DriverInitHandlerPtr() { public void handler(){
 		/* patch ROM checksum (ROM1 fails self test) */
 		memory_region( REGION_CPU1 )[0x1e5b] = 0xAF;
 	} };
@@ -102,7 +100,7 @@ public class suna8
 	
 	static int is_special(int i)
 	{
-		if ((i & 0x400) != 0)
+		if (i & 0x400)
 		{
 			switch ( i & 0xf )
 			{
@@ -124,8 +122,7 @@ public class suna8
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_brickzn3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_brickzn3  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
 		int i;
@@ -145,8 +142,8 @@ public class suna8
 		{
 			switch ( i & 0xf )
 			{
-	//825b  .  see 715a!
-	//8280  .  see 7192!
+	//825b  ->  see 715a!
+	//8280  ->  see 7192!
 	//8280:	e=2 m=90
 	//8281:	e=2 m=90
 	//8283:	e=2 m=90
@@ -159,7 +156,7 @@ public class suna8
 				case 0x1:
 				case 0x2:
 				case 0x3:
-					if ((i & 0x40) != 0)	encry = 0;
+					if (i & 0x40)	encry = 0;
 					else			encry = 2;
 					break;
 	//828c:	e=0
@@ -275,19 +272,19 @@ public class suna8
 	//045: e=1 m=90
 	//5b5: e=2 m=90
 	//5d5: e=2 m=90
-					if ((i & 0x400) != 0)	encry = 2;
+					if (i & 0x400)	encry = 2;
 					else			encry = 1;
 					break;
 	
 	
 				case 0x7:
 				case 0x8:
-					if ((i & 0x400) != 0)	{	encry = 1;	mask = 0x90;	}
+					if (i & 0x400)	{	encry = 1;	mask = 0x90;	}
 					else			{	encry = 2;	}
 					break;
 	
 				case 0xc:
-					if ((i & 0x400) != 0)	{	encry = 1;	mask = 0x10;	}
+					if (i & 0x400)	{	encry = 1;	mask = 0x10;	}
 					else			{	encry = 0;	}
 					break;
 	
@@ -358,14 +355,14 @@ public class suna8
 	
 	/* !!!!!! PATCHES !!!!!! */
 	
-	RAM[0x3337+size] = 0xc9;	// RET Z . RET (to avoid: jp $C800)
-	//RAM[0x3338+size] = 0x00;	// jp $C800 . NOP
-	//RAM[0x3339+size] = 0x00;	// jp $C800 . NOP
-	//RAM[0x333a+size] = 0x00;	// jp $C800 . NOP
+	RAM[0x3337+size] = 0xc9;	// RET Z -> RET (to avoid: jp $C800)
+	//RAM[0x3338+size] = 0x00;	// jp $C800 -> NOP
+	//RAM[0x3339+size] = 0x00;	// jp $C800 -> NOP
+	//RAM[0x333a+size] = 0x00;	// jp $C800 -> NOP
 	
-	RAM[0x1406+size] = 0x00;	// HALT . NOP (NMI source??)
-	RAM[0x2487+size] = 0x00;	// HALT . NOP
-	RAM[0x256c+size] = 0x00;	// HALT . NOP
+	RAM[0x1406+size] = 0x00;	// HALT -> NOP (NMI source??)
+	RAM[0x2487+size] = 0x00;	// HALT -> NOP
+	RAM[0x256c+size] = 0x00;	// HALT -> NOP
 	} };
 	
 	
@@ -414,8 +411,7 @@ public class suna8
 			}
 	}
 	
-	public static DriverInitHandlerPtr init_hardhea2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hardhea2  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
 		data8_t x;
@@ -609,8 +605,7 @@ public class suna8
 			}
 	}
 	
-	public static DriverInitHandlerPtr init_starfigh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_starfigh  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
 		data8_t x;
@@ -703,8 +698,7 @@ public class suna8
 									Spark Man
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_sparkman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sparkman  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t	*RAM	=	memory_region(REGION_CPU1);
 		size_t	size	=	memory_region_length(REGION_CPU1)/2;
 		int i;
@@ -822,9 +816,8 @@ public class suna8
 	
 	static data8_t protection_val;
 	
-	public static ReadHandlerPtr hardhead_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((protection_val & 0x80) != 0)
+	public static ReadHandlerPtr hardhead_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (protection_val & 0x80)
 			return	((~offset & 0x20)			?	0x20 : 0) |
 					((protection_val & 0x04)	?	0x80 : 0) |
 					((protection_val & 0x01)	?	0x04 : 0);
@@ -833,9 +826,8 @@ public class suna8
 					(((offset ^ protection_val) & 0x01)	?	0x84 : 0);
 	} };
 	
-	public static WriteHandlerPtr hardhead_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 0x80) != 0)	protection_val = data;
+	public static WriteHandlerPtr hardhead_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 0x80)	protection_val = data;
 		else				protection_val = offset & 1;
 	} };
 	
@@ -854,8 +846,7 @@ public class suna8
 	
 	static data8_t *hardhead_ip;
 	
-	public static ReadHandlerPtr hardhead_ip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hardhead_ip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (*hardhead_ip)
 		{
 			case 0:	return readinputport(0);
@@ -873,8 +864,7 @@ public class suna8
 		---4 ----
 		---- 3210	ROM Bank
 	*/
-	public static WriteHandlerPtr hardhead_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhead_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x0f;
 	
@@ -891,8 +881,7 @@ public class suna8
 		---- -2--	Flip Screen
 		---- --10
 	*/
-	public static WriteHandlerPtr hardhead_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhead_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(    data & 0x04);
 		coin_lockout_w ( 0,	data & 0x08);
 		coin_lockout_w ( 1,	data & 0x10);
@@ -952,8 +941,7 @@ public class suna8
 		---- 3---
 		---- -210	ROM Bank
 	*/
-	public static WriteHandlerPtr rranger_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rranger_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x07;
 		if ((~data & 0x10) && (bank >= 4))	bank += 4;
@@ -970,15 +958,14 @@ public class suna8
 	} };
 	
 	/*
-		7--- ----	1 . Garbled title (another romset?)
+		7--- ----	1 -> Garbled title (another romset?)
 		-654 ----
-		---- 3---	1 . No sound (soundlatch full?)
+		---- 3---	1 -> No sound (soundlatch full?)
 		---- -2--
-		---- --1-	1 . Interlude screens
+		---- --1-	1 -> Interlude screens
 		---- ---0
 	*/
-	public static ReadHandlerPtr rranger_soundstatus_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rranger_soundstatus_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x02;
 	} };
 	
@@ -1032,15 +1019,13 @@ public class suna8
 	/*
 	?
 	*/
-	public static ReadHandlerPtr brickzn_c140_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr brickzn_c140_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
 	/*
 	*/
-	public static WriteHandlerPtr brickzn_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_palettebank = (data >> 1) & 1;
 		if (data & ~0x02) 	logerror("CPU #0 - PC %04X: unknown palettebank bits: %02X\n",activecpu_get_pc(),data);
 	
@@ -1053,15 +1038,13 @@ public class suna8
 		---- --1-	Ram Bank
 		---- ---0	Flip Screen
 	*/
-	public static WriteHandlerPtr brickzn_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_spritebank = (data >> 1) & 1;
 		if (data & ~0x03) 	logerror("CPU #0 - PC %04X: unknown spritebank bits: %02X\n",activecpu_get_pc(),data);
 		flip_screen_set( data & 0x01 );
 	} };
 	
-	public static WriteHandlerPtr brickzn_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_unknown = data;
 	} };
 	
@@ -1069,8 +1052,7 @@ public class suna8
 		7654 ----
 		---- 3210	ROM Bank
 	*/
-	public static WriteHandlerPtr brickzn_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x0f;
 	
@@ -1131,8 +1113,7 @@ public class suna8
 	static data8_t suna8_nmi_enable;
 	
 	/* Probably wrong: */
-	public static WriteHandlerPtr hardhea2_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhea2_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_nmi_enable = data & 0x01;
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown nmi bits: %02X\n",activecpu_get_pc(),data);
 	} };
@@ -1141,14 +1122,12 @@ public class suna8
 		7654 321-
 		---- ---0	Flip Screen
 	*/
-	public static WriteHandlerPtr hardhea2_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhea2_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown flipscreen bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	public static WriteHandlerPtr hardhea2_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhea2_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, data & 0x01);
 		set_led_status(1, data & 0x02);
 		coin_counter_w(0, data & 0x04);
@@ -1160,14 +1139,12 @@ public class suna8
 		---- --1-	Ram Bank
 		---- ---0	Ram Bank?
 	*/
-	public static WriteHandlerPtr hardhea2_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhea2_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_spritebank = (data >> 1) & 1;
 		if (data & ~0x02) 	logerror("CPU #0 - PC %04X: unknown spritebank bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	public static ReadHandlerPtr hardhea2_c080_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hardhea2_c080_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -1175,8 +1152,7 @@ public class suna8
 		7654 ----
 		---- 3210	ROM Bank
 	*/
-	public static WriteHandlerPtr hardhea2_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hardhea2_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x0f;
 	
@@ -1236,14 +1212,12 @@ public class suna8
 	***************************************************************************/
 	
 	static data8_t spritebank_latch;
-	public static WriteHandlerPtr starfigh_spritebank_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfigh_spritebank_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spritebank_latch = (data >> 2) & 1;
 		if (data & ~0x04) 	logerror("CPU #0 - PC %04X: unknown spritebank bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	public static WriteHandlerPtr starfigh_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starfigh_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_spritebank = spritebank_latch;
 	} };
 	
@@ -1293,8 +1267,7 @@ public class suna8
 	***************************************************************************/
 	
 	/* Probably wrong: */
-	public static WriteHandlerPtr sparkman_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sparkman_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_nmi_enable = data & 0x01;
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown nmi bits: %02X\n",activecpu_get_pc(),data);
 	} };
@@ -1303,14 +1276,12 @@ public class suna8
 		7654 321-
 		---- ---0	Flip Screen
 	*/
-	public static WriteHandlerPtr sparkman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sparkman_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 0x01);
 		if (data & ~0x01) 	logerror("CPU #0 - PC %04X: unknown flipscreen bits: %02X\n",activecpu_get_pc(),data);
 	} };
 	
-	public static WriteHandlerPtr sparkman_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sparkman_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, data & 0x01);
 		set_led_status(1, data & 0x02);
 		coin_counter_w(0, data & 0x04);
@@ -1322,8 +1293,7 @@ public class suna8
 		---- --1-	Ram Bank
 		---- ---0	Ram Bank?
 	*/
-	public static WriteHandlerPtr sparkman_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sparkman_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		suna8_spritebank = (data >> 1) & 1;
 		if (data & ~0x02) 	logerror("CPU #0 - PC %04X: unknown spritebank bits: %02X\n",activecpu_get_pc(),data);
 	} };
@@ -1332,8 +1302,7 @@ public class suna8
 		7654 ----
 		---- 3210	ROM Bank
 	*/
-	public static WriteHandlerPtr sparkman_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sparkman_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *RAM = memory_region(REGION_CPU1);
 		int bank = data & 0x0f;
 	
@@ -1345,8 +1314,7 @@ public class suna8
 		suna8_rombank = data;
 	} };
 	
-	public static ReadHandlerPtr sparkman_c0a3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sparkman_c0a3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (cpu_getcurrentframe() & 1) ? 0x80 : 0;
 	} };
 	
@@ -1513,8 +1481,7 @@ public class suna8
 	};
 	
 	
-	public static WriteHandlerPtr brickzn_pcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr brickzn_pcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w( offset & 3, (data & 0xf) * 0x11 );
 	} };
 	
@@ -1553,7 +1520,7 @@ public class suna8
 									Hard Head
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_hardhead = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hardhead = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hardhead )
 	
 		PORT_START(); 	// IN0 - Player 1 - $da00 (ip = 0)
 		JOY(1)
@@ -1617,7 +1584,7 @@ public class suna8
 									Rough Ranger
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_rranger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rranger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rranger )
 	
 		PORT_START(); 	// IN0 - Player 1 - $c002
 		JOY(1)
@@ -1682,7 +1649,7 @@ public class suna8
 									Brick Zone
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_brickzn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brickzn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brickzn )
 	
 		PORT_START(); 	// IN0 - Player 1 - $c100
 		JOY(1)
@@ -1755,7 +1722,7 @@ public class suna8
 							Hard Head 2 / Star Fighter
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_hardhea2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hardhea2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hardhea2 )
 	
 		PORT_START(); 	// IN0 - Player 1 - $c000
 		JOY(1)
@@ -1819,7 +1786,7 @@ public class suna8
 									Spark Man
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_sparkman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sparkman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sparkman )
 	
 		PORT_START(); 	// IN0 - Player 1 - $c000
 		JOY(1)
@@ -1959,8 +1926,7 @@ public class suna8
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_hardhead = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hardhead )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -1991,9 +1957,7 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, hardhead_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, hardhead_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2016,8 +1980,7 @@ public class suna8
 		{ 0,0 }		/* IRQ handler  */
 	};
 	
-	public static MachineHandlerPtr machine_driver_rranger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rranger )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2047,9 +2010,7 @@ public class suna8
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2203, rranger_ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2084,14 +2045,12 @@ public class suna8
 			MIXER(17,MIXER_PAN_LEFT), MIXER(17,MIXER_PAN_RIGHT)	}
 	};
 	
-	public static InterruptHandlerPtr brickzn_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+	public static InterruptHandlerPtr brickzn_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops()) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		else				 cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_brickzn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( brickzn )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2128,9 +2087,7 @@ public class suna8
 		MDRV_SOUND_ADD(YM3812, brickzn_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, brickzn_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, brickzn_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2139,17 +2096,15 @@ public class suna8
 	
 	/* 1 x 24 MHz crystal */
 	
-	public static InterruptHandlerPtr hardhea2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr hardhea2_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 		{
-			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_hardhea2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hardhea2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* SUNA T568009 */
@@ -2186,9 +2141,7 @@ public class suna8
 		MDRV_SOUND_ADD(YM3812, brickzn_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, brickzn_ay8910_interface)
 		MDRV_SOUND_ADD(DAC, brickzn_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2214,8 +2167,7 @@ public class suna8
 		{  0 },
 	};
 	
-	public static MachineHandlerPtr machine_driver_starfigh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( starfigh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2247,26 +2199,22 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, starfigh_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, starfigh_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									Spark Man
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr sparkman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr sparkman_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 		{
-			if (suna8_nmi_enable != 0)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (suna8_nmi_enable)	cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 		else cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_sparkman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sparkman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)					/* ? */
@@ -2296,9 +2244,7 @@ public class suna8
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM3812, hardhead_ym3812_interface)
 		MDRV_SOUND_ADD(AY8910, hardhead_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -2826,18 +2772,18 @@ public class suna8
 	***************************************************************************/
 	
 	/* Working Games */
-	public static GameDriver driver_rranger	   = new GameDriver("1988"	,"rranger"	,"suna8.java"	,rom_rranger,null	,machine_driver_rranger	,input_ports_rranger	,null	,ROT0	,	"SunA (Sharp Image license)", "Rough Ranger (v2.0)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_hardhead	   = new GameDriver("1988"	,"hardhead"	,"suna8.java"	,rom_hardhead,null	,machine_driver_hardhead	,input_ports_hardhead	,init_hardhead	,ROT0	,	"SunA", "Hard Head",           GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_hardhedb	   = new GameDriver("1988"	,"hardhedb"	,"suna8.java"	,rom_hardhedb,driver_hardhead	,machine_driver_hardhead	,input_ports_hardhead	,init_hardhedb	,ROT0	,	"bootleg", "Hard Head (bootleg)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1988, rranger,  0,        rranger,  rranger,  0,        ROT0,  "SunA (Sharp Image license)", "Rough Ranger (v2.0)", GAME_IMPERFECT_SOUND )
+	GAMEX( 1988, hardhead, 0,        hardhead, hardhead, hardhead, ROT0,  "SunA", "Hard Head",           GAME_IMPERFECT_SOUND )
+	GAMEX( 1988, hardhedb, hardhead, hardhead, hardhead, hardhedb, ROT0,  "bootleg", "Hard Head (bootleg)", GAME_IMPERFECT_SOUND )
 	
 	/* Non Working Games */
-	public static GameDriver driver_sranger	   = new GameDriver("1988"	,"sranger"	,"suna8.java"	,rom_sranger,driver_rranger	,machine_driver_rranger	,input_ports_rranger	,null	,ROT0	,	"SunA",    "Super Ranger (v2.0)",           GAME_NOT_WORKING )
-	public static GameDriver driver_srangerb	   = new GameDriver("1988"	,"srangerb"	,"suna8.java"	,rom_srangerb,driver_rranger	,machine_driver_rranger	,input_ports_rranger	,null	,ROT0	,	"bootleg", "Super Ranger (bootleg)",        GAME_NOT_WORKING )
-	public static GameDriver driver_srangerw	   = new GameDriver("1988"	,"srangerw"	,"suna8.java"	,rom_srangerw,driver_rranger	,machine_driver_rranger	,input_ports_rranger	,null	,ROT0	,	"SunA (WDK license)", "Super Ranger (WDK)", GAME_NOT_WORKING )
-	public static GameDriver driver_sparkman	   = new GameDriver("1989"	,"sparkman"	,"suna8.java"	,rom_sparkman,null	,machine_driver_sparkman	,input_ports_sparkman	,init_sparkman	,ROT0	,	"SunA",    "Spark Man (v 2.0)",             GAME_NOT_WORKING )
-	public static GameDriver driver_starfigh	   = new GameDriver("1990"	,"starfigh"	,"suna8.java"	,rom_starfigh,null	,machine_driver_starfigh	,input_ports_hardhea2	,init_starfigh	,ROT90	,	"SunA",    "Star Fighter (v1)",             GAME_NOT_WORKING )
-	public static GameDriver driver_hardhea2	   = new GameDriver("1991"	,"hardhea2"	,"suna8.java"	,rom_hardhea2,null	,machine_driver_hardhea2	,input_ports_hardhea2	,init_hardhea2	,ROT0	,	"SunA",    "Hard Head 2 (v2.0)",            GAME_NOT_WORKING )
-	public static GameDriver driver_brickzn	   = new GameDriver("1992"	,"brickzn"	,"suna8.java"	,rom_brickzn,null	,machine_driver_brickzn	,input_ports_brickzn	,init_brickzn3	,ROT90	,	"SunA",    "Brick Zone (v5.0)",             GAME_NOT_WORKING )
-	public static GameDriver driver_brickzn3	   = new GameDriver("1992"	,"brickzn3"	,"suna8.java"	,rom_brickzn3,driver_brickzn	,machine_driver_brickzn	,input_ports_brickzn	,init_brickzn3	,ROT90	,	"SunA",    "Brick Zone (v3.0)",             GAME_NOT_WORKING )
+	GAMEX( 1988, sranger,  rranger, rranger,  rranger,	0,        ROT0,  "SunA",    "Super Ranger (v2.0)",           GAME_NOT_WORKING )
+	GAMEX( 1988, srangerb, rranger, rranger,  rranger,	0,        ROT0,  "bootleg", "Super Ranger (bootleg)",        GAME_NOT_WORKING )
+	GAMEX( 1988, srangerw, rranger, rranger,  rranger,	0,        ROT0,  "SunA (WDK license)", "Super Ranger (WDK)", GAME_NOT_WORKING )
+	GAMEX( 1989, sparkman, 0,       sparkman, sparkman, sparkman, ROT0,  "SunA",    "Spark Man (v 2.0)",             GAME_NOT_WORKING )
+	GAMEX( 1990, starfigh, 0,       starfigh, hardhea2, starfigh, ROT90, "SunA",    "Star Fighter (v1)",             GAME_NOT_WORKING )
+	GAMEX( 1991, hardhea2, 0,       hardhea2, hardhea2, hardhea2, ROT0,  "SunA",    "Hard Head 2 (v2.0)",            GAME_NOT_WORKING )
+	GAMEX( 1992, brickzn,  0,       brickzn,  brickzn,  brickzn3, ROT90, "SunA",    "Brick Zone (v5.0)",             GAME_NOT_WORKING )
+	GAMEX( 1992, brickzn3, brickzn, brickzn,  brickzn,  brickzn3, ROT90, "SunA",    "Brick Zone (v3.0)",             GAME_NOT_WORKING )
 	
 }

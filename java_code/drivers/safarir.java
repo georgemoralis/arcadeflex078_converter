@@ -40,7 +40,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,8 +56,7 @@ public class safarir
 	static struct tilemap *bg_tilemap, *fg_tilemap;
 	
 	
-	public static WriteHandlerPtr safarir_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr safarir_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (safarir_ram[offset] != data)
 		{
 			safarir_ram[offset] = data;
@@ -73,18 +72,15 @@ public class safarir
 		}
 	} };
 	
-	public static ReadHandlerPtr safarir_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr safarir_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return safarir_ram[offset];
 	} };
 	
-	public static WriteHandlerPtr safarir_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr safarir_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr safarir_ram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr safarir_ram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		safarir_ram = data ? safarir_ram1 : safarir_ram2;
 		tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 	} };
@@ -104,18 +100,17 @@ public class safarir
 		SET_TILE_INFO(1, code & 0x7f, code >> 7, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_safarir  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_safarir  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if (!fg_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -123,8 +118,7 @@ public class safarir
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_safarir  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_safarir  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
@@ -141,8 +135,7 @@ public class safarir
 		0x00, 0x07,
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_safarir  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_safarir  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0x80, 0x80, 0x80);
 		palette_set_color(2, 0xff, 0xff, 0xff);
@@ -179,7 +172,7 @@ public class safarir
 	};
 	
 	
-	static InputPortPtr input_ports_safarir = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_safarir = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( safarir )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -256,8 +249,7 @@ public class safarir
 		{ 0	/* N/C */}		/* 24  oneshot_res		 */
 	};
 	
-	public static MachineHandlerPtr machine_driver_safarir = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( safarir )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 3072000)	/* 3 MHz ? */
@@ -280,9 +272,7 @@ public class safarir
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76477, safarir_sn76477_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -307,11 +297,10 @@ public class safarir
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_safarir  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_safarir  = new DriverInitHandlerPtr() { public void handler(){
 		safarir_ram = safarir_ram1;
 	} };
 	
 	
-	public static GameDriver driver_safarir	   = new GameDriver("1979"	,"safarir"	,"safarir.java"	,rom_safarir,null	,machine_driver_safarir	,input_ports_safarir	,init_safarir	,ROT90	,	"SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )
+	GAMEX( 1979, safarir, 0, safarir, safarir, safarir, ROT90, "SNK", "Safari Rally (Japan)", GAME_NO_SOUND | GAME_WRONG_COLORS )
 }

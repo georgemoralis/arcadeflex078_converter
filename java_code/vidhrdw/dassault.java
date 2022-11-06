@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -41,7 +41,7 @@ public class dassault
 				}
 	
 				sprite = spritebase[offs+1] & 0x7fff;
-				if (sprite == 0) continue;
+				if (!sprite) continue;
 	
 				x = spritebase[offs+2];
 	
@@ -53,7 +53,7 @@ public class dassault
 				flash=y&0x1000;
 				if (flash && (cpu_getcurrentframe() & 1)) continue;
 				colour = (x >> 9) &0x1f;
-				if ((y & 0x8000) != 0) colour+=32;
+				if (y&0x8000) colour+=32;
 	
 				fx = y & 0x2000;
 				fy = y & 0x4000;
@@ -69,7 +69,7 @@ public class dassault
 				if (x>320) continue; /* Speedup */
 	
 				sprite &= ~multi;
-				if (fy != 0)
+				if (fy)
 					inc = -1;
 				else
 				{
@@ -77,11 +77,11 @@ public class dassault
 					inc = 1;
 				}
 	
-				if (flip_screen != 0) {
+				if (flip_screen()) {
 					y=240-y;
 					x=304-x;
-					if (fx != 0) fx=0; else fx=1;
-					if (fy != 0) fy=0; else fy=1;
+					if (fx) fx=0; else fx=1;
+					if (fy) fy=0; else fy=1;
 					mult=16;
 				}
 				else mult=-16;
@@ -134,12 +134,12 @@ public class dassault
 	
 				while (multi >= 0)
 				{
-					deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
+					deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
 							sprite - multi * inc,
 							colour,
 							fx,fy,
 							x,y + mult * multi,
-							Machine.visible_area,trans,0,pmask,1<<bank);
+							Machine->visible_area,trans,0,pmask,1<<bank);
 	
 					multi--;
 				}
@@ -154,8 +154,7 @@ public class dassault
 		return ((bank>>4)&0xf)<<12;
 	}
 	
-	public static VideoStartHandlerPtr video_start_dassault  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dassault  = new VideoStartHandlerPtr() { public int handler(){
 		if (deco16_2_video_init(0))
 			return 1;
 	
@@ -171,8 +170,7 @@ public class dassault
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dassault  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Update tilemaps */
 		flip_screen_set( deco16_pf12_control[0]&0x80 );
 		deco16_pf12_update(deco16_pf1_rowscroll,deco16_pf2_rowscroll);

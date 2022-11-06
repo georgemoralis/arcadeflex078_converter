@@ -19,7 +19,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -51,7 +51,7 @@ public class news
 	};
 	
 	
-	static InputPortPtr input_ports_news = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_news = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( news )
 		PORT_START(); 	/* DSW */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "3C_1C") );
@@ -118,8 +118,7 @@ public class news
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_news = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( news )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -140,9 +139,7 @@ public class news
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -159,5 +156,5 @@ public class news
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_news	   = new GameDriver("1993"	,"news"	,"news.java"	,rom_news,null	,machine_driver_news	,input_ports_news	,null	,ROT0	,	"Poby / Virus", "News" )
+	GAME( 1993, news, 0, news, news, 0, ROT0, "Poby / Virus", "News" )
 }

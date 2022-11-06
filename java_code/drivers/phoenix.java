@@ -35,7 +35,7 @@ Pleiads:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -118,7 +118,7 @@ public class phoenix
 	
 	
 	
-	static InputPortPtr input_ports_phoenix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phoenix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phoenix )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -165,7 +165,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_phoenixa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phoenixa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phoenixa )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -213,7 +213,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_phoenixt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phoenixt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phoenixt )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -260,7 +260,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_phoenix3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_phoenix3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( phoenix3 )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -307,7 +307,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_condor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_condor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( condor )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -355,7 +355,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pleiads = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pleiads = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pleiads )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -402,7 +402,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pleiadce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pleiadce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pleiadce )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -449,7 +449,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_capitol = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_capitol = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( capitol )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -496,7 +496,7 @@ public class phoenix
 		PORT_DIPSETTING(    0x01, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_survival = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_survival = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( survival )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -622,8 +622,7 @@ public class phoenix
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_phoenix = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( phoenix )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", 8085A, 11000000/4)	/* 2.75 MHz */
@@ -647,13 +646,10 @@ public class phoenix
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("tms",  TMS36XX, phoenix_tms36xx_interface)
 		MDRV_SOUND_ADD_TAG("cust", CUSTOM, phoenix_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pleiads = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pleiads )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(phoenix)
@@ -669,15 +665,12 @@ public class phoenix
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("tms",  TMS36XX, pleiads_tms36xx_interface)
 		MDRV_SOUND_REPLACE("cust", CUSTOM, pleiads_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Same as Phoenix, but uses an AY8910 and an extra visible line (column) */
 	
-	public static MachineHandlerPtr machine_driver_survival = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( survival )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8085A,11000000/4)	/* 2.75 MHz */
@@ -700,21 +693,16 @@ public class phoenix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, survival_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Uses a Z80 */
-	public static MachineHandlerPtr machine_driver_condor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( condor )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(phoenix)
 		MDRV_CPU_REPLACE("main", Z80, 11000000/4)	/* 2.75 MHz??? */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1036,8 +1024,7 @@ public class phoenix
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_survival  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_survival  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
 		rom[0x0157] = 0x21;	/* ROM check */
@@ -1046,18 +1033,18 @@ public class phoenix
 	
 	
 	
-	public static GameDriver driver_phoenix	   = new GameDriver("1980"	,"phoenix"	,"phoenix.java"	,rom_phoenix,null	,machine_driver_phoenix	,input_ports_phoenix	,null	,ROT90	,	"Amstar", "Phoenix (Amstar)" )
-	public static GameDriver driver_phoenixa	   = new GameDriver("1980"	,"phoenixa"	,"phoenix.java"	,rom_phoenixa,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenixa	,null	,ROT90	,	"Amstar (Centuri license)", "Phoenix (Centuri)" )
-	public static GameDriver driver_phoenixt	   = new GameDriver("1980"	,"phoenixt"	,"phoenix.java"	,rom_phoenixt,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenixt	,null	,ROT90	,	"Taito", "Phoenix (Taito)" )
-	public static GameDriver driver_phoenix3	   = new GameDriver("1980"	,"phoenix3"	,"phoenix.java"	,rom_phoenix3,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenix3	,null	,ROT90	,	"bootleg", "Phoenix (T.P.N.)" )
-	public static GameDriver driver_phoenixc	   = new GameDriver("1981"	,"phoenixc"	,"phoenix.java"	,rom_phoenixc,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenixt	,null	,ROT90	,	"bootleg?", "Phoenix (IRECSA, G.G.I Corp)" )
-	public static GameDriver driver_condor	   = new GameDriver("1981"	,"condor"	,"phoenix.java"	,rom_condor,driver_phoenix	,machine_driver_condor	,input_ports_condor	,null	,ROT90	,	"Sidam", "Condor" )
+	GAME ( 1980, phoenix,  0,       phoenix,  phoenix,  0,        ROT90, "Amstar", "Phoenix (Amstar)" )
+	GAME ( 1980, phoenixa, phoenix, phoenix,  phoenixa, 0,        ROT90, "Amstar (Centuri license)", "Phoenix (Centuri)" )
+	GAME ( 1980, phoenixt, phoenix, phoenix,  phoenixt, 0,        ROT90, "Taito", "Phoenix (Taito)" )
+	GAME ( 1980, phoenix3, phoenix, phoenix,  phoenix3, 0,        ROT90, "bootleg", "Phoenix (T.P.N.)" )
+	GAME ( 1981, phoenixc, phoenix, phoenix,  phoenixt, 0,        ROT90, "bootleg?", "Phoenix (IRECSA, G.G.I Corp)" )
+	GAME ( 1981, condor,   phoenix, condor,   condor,   0,        ROT90, "Sidam", "Condor" )
 	// the following 2 were common bootlegs in england & france respectively
-	public static GameDriver driver_falcon	   = new GameDriver("1980"	,"falcon"	,"phoenix.java"	,rom_falcon,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenixt	,null	,ROT90	,	"bootleg", "Falcon" )
-	public static GameDriver driver_vautour	   = new GameDriver("1980"	,"vautour"	,"phoenix.java"	,rom_vautour,driver_phoenix	,machine_driver_phoenix	,input_ports_phoenixt	,null	,ROT90	,	"bootleg", "Vautour (Jeutel France)" )
-	public static GameDriver driver_pleiads	   = new GameDriver("1981"	,"pleiads"	,"phoenix.java"	,rom_pleiads,null	,machine_driver_pleiads	,input_ports_pleiads	,null	,ROT90	,	"Tehkan", "Pleiads (Tehkan)", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_pleiadbl	   = new GameDriver("1981"	,"pleiadbl"	,"phoenix.java"	,rom_pleiadbl,driver_pleiads	,machine_driver_pleiads	,input_ports_pleiads	,null	,ROT90	,	"bootleg", "Pleiads (bootleg)", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_pleiadce	   = new GameDriver("1981"	,"pleiadce"	,"phoenix.java"	,rom_pleiadce,driver_pleiads	,machine_driver_pleiads	,input_ports_pleiadce	,null	,ROT90	,	"Tehkan (Centuri license)", "Pleiads (Centuri)", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_capitol	   = new GameDriver("1981"	,"capitol"	,"phoenix.java"	,rom_capitol,driver_pleiads	,machine_driver_phoenix	,input_ports_capitol	,null	,ROT90	,	"Universal Video Spiel", "Capitol", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_survival	   = new GameDriver("1982"	,"survival"	,"phoenix.java"	,rom_survival,null	,machine_driver_survival	,input_ports_survival	,init_survival	,ROT90	,	"Rock-ola", "Survival", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAME ( 1980, falcon,   phoenix, phoenix,  phoenixt, 0,        ROT90, "bootleg", "Falcon" )
+	GAME ( 1980, vautour,  phoenix, phoenix,  phoenixt, 0,        ROT90, "bootleg", "Vautour (Jeutel France)" )
+	GAMEX( 1981, pleiads,  0,       pleiads,  pleiads,  0,        ROT90, "Tehkan", "Pleiads (Tehkan)", GAME_IMPERFECT_COLORS )
+	GAMEX( 1981, pleiadbl, pleiads, pleiads,  pleiads,  0,        ROT90, "bootleg", "Pleiads (bootleg)", GAME_IMPERFECT_COLORS )
+	GAMEX( 1981, pleiadce, pleiads, pleiads,  pleiadce, 0,        ROT90, "Tehkan (Centuri license)", "Pleiads (Centuri)", GAME_IMPERFECT_COLORS )
+	GAMEX( 1981, capitol,  pleiads, phoenix,  capitol,  0,        ROT90, "Universal Video Spiel", "Capitol", GAME_IMPERFECT_COLORS )
+	GAMEX( 1982, survival, 0,       survival, survival, survival, ROT90, "Rock-ola", "Survival", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

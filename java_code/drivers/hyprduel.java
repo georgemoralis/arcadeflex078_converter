@@ -22,7 +22,7 @@ sub68k is performing not only processing of sound but assistance of main68k.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -92,7 +92,7 @@ public class hyprduel
 	
 	static WRITE16_HANDLER( hyprduel_irq_cause_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			if (data == 0x02)
 				requested_int &= ~(0x02 & ~*hypr_irq_enable);
@@ -107,9 +107,9 @@ public class hyprduel
 	{
 		int pc = activecpu_get_pc();
 	
-		if ((data & 0x01) != 0)
+		if (data & 0x01)
 		{
-			if (subcpu_resetline == 0)
+			if (!subcpu_resetline)
 			{
 				if (pc != 0x95f2)
 				{
@@ -140,7 +140,7 @@ public class hyprduel
 	{
 		int i;
 	
-		if ((offset & 0x01) != 0)
+		if (offset & 0x01)
 		{
 			for (i = rastersplit; i < RASTER_LINES; i++)
 				hyprduel_scrollx[offset>>1][i] = data;
@@ -171,8 +171,7 @@ public class hyprduel
 		cpu_set_irq_line(1, 2, HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr hyprduel_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hyprduel_interrupt = new InterruptHandlerPtr() {public void handler(){
 		int line = RASTER_LINES - cpu_getiloops();
 	
 		if (line == RASTER_LINES)
@@ -191,8 +190,7 @@ public class hyprduel
 		update_irq_state();
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_hyprduel  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_hyprduel  = new MachineInitHandlerPtr() { public void handler(){
 		/* start with cpu2 halted */
 		cpu_set_reset_line(1, ASSERT_LINE);
 		subcpu_resetline = 1;
@@ -524,7 +522,7 @@ public class hyprduel
 		PORT_BIT(  0x8000, IP_ACTIVE_LOW, IPT_##_b4_         | IPF_PLAYER##_n_ );\
 	
 	
-	static InputPortPtr input_ports_hyprduel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hyprduel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hyprduel )
 		PORT_START(); 
 		PORT_BITX(    0x8000, IP_ACTIVE_LOW, IPT_SERVICE, DEF_STR( "Service_Mode") ); KEYCODE_F2, IP_JOY_NONE )
 		PORT_DIPNAME( 0x4000, 0x0000, "Show Warning" );
@@ -652,8 +650,7 @@ public class hyprduel
 									Machine Drivers
 	***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_hyprduel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hyprduel )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2)		/* 10MHz */
@@ -682,17 +679,14 @@ public class hyprduel
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
 									ROMs Loading
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_hyprduel  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hyprduel  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		/*
@@ -752,7 +746,7 @@ public class hyprduel
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_hyprduel	   = new GameDriver("1993"	,"hyprduel"	,"hyprduel.java"	,rom_hyprduel,null	,machine_driver_hyprduel	,input_ports_hyprduel	,init_hyprduel	,ROT0	,	"Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )
-	public static GameDriver driver_hyprdelj	   = new GameDriver("1993"	,"hyprdelj"	,"hyprduel.java"	,rom_hyprdelj,driver_hyprduel	,machine_driver_hyprduel	,input_ports_hyprduel	,init_hyprduel	,ROT0	,	"Technosoft", "Hyper Duel (Japan)" )
+	GAMEX( 1993, hyprduel, 0,        hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (World)", GAME_NOT_WORKING )
+	GAME ( 1993, hyprdelj, hyprduel, hyprduel, hyprduel, hyprduel, ROT0, "Technosoft", "Hyper Duel (Japan)" )
 	
 }

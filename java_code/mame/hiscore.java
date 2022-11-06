@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -68,7 +68,7 @@ public class hiscore
 	{
 		const char *string = *pString;
 		UINT32 result = 0;
-		if (string != 0)
+		if (string)
 		{
 			for(;;)
 			{
@@ -91,7 +91,7 @@ public class hiscore
 				{
 					/* not a hexadecimal digit */
 					/* safety check for premature EOL */
-					if (c == 0) string = NULL;
+					if (!c) string = NULL;
 					break;
 				}
 				result = result*16 + digit;
@@ -140,17 +140,17 @@ public class hiscore
 		struct mem_range *mem_range = state.mem_range;
 		while (mem_range)
 		{
-			if (cpunum_read_byte (mem_range.cpu, mem_range.addr) !=
-				mem_range.start_value)
+			if (cpunum_read_byte (mem_range->cpu, mem_range->addr) !=
+				mem_range->start_value)
 			{
 				return 0;
 			}
-			if (cpunum_read_byte (mem_range.cpu, mem_range.addr + mem_range.num_bytes - 1) !=
-				mem_range.end_value)
+			if (cpunum_read_byte (mem_range->cpu, mem_range->addr + mem_range->num_bytes - 1) !=
+				mem_range->end_value)
 			{
 				return 0;
 			}
-			mem_range = mem_range.next;
+			mem_range = mem_range->next;
 		}
 		return 1;
 	}
@@ -161,7 +161,7 @@ public class hiscore
 		struct mem_range *mem_range = state.mem_range;
 		while (mem_range)
 		{
-			struct mem_range *next = mem_range.next;
+			struct mem_range *next = mem_range->next;
 			free (mem_range);
 			mem_range = next;
 		}
@@ -170,27 +170,27 @@ public class hiscore
 	
 	static void hs_load (void)
 	{
-		mame_file *f = mame_fopen (Machine.gamedrv.name, 0, FILETYPE_HIGHSCORE, 0);
+		mame_file *f = mame_fopen (Machine->gamedrv->name, 0, FILETYPE_HIGHSCORE, 0);
 		state.hiscores_have_been_loaded = 1;
 		LOG(("hs_load\n"));
-		if (f != 0)
+		if (f)
 		{
 			struct mem_range *mem_range = state.mem_range;
 			LOG(("loading...\n"));
 			while (mem_range)
 			{
-				UINT8 *data = malloc (mem_range.num_bytes);
-				if (data != 0)
+				UINT8 *data = malloc (mem_range->num_bytes);
+				if (data)
 				{
 					/*	this buffer will almost certainly be small
 						enough to be dynamically allocated, but let's
 						avoid memory trashing just in case
 					*/
-					mame_fread (f, data, mem_range.num_bytes);
-					copy_to_memory (mem_range.cpu, mem_range.addr, data, mem_range.num_bytes);
+					mame_fread (f, data, mem_range->num_bytes);
+					copy_to_memory (mem_range->cpu, mem_range->addr, data, mem_range->num_bytes);
 					free (data);
 				}
-				mem_range = mem_range.next;
+				mem_range = mem_range->next;
 			}
 			mame_fclose (f);
 		}
@@ -198,25 +198,25 @@ public class hiscore
 	
 	static void hs_save (void)
 	{
-		mame_file *f = mame_fopen (Machine.gamedrv.name, 0, FILETYPE_HIGHSCORE, 1);
+		mame_file *f = mame_fopen (Machine->gamedrv->name, 0, FILETYPE_HIGHSCORE, 1);
 		LOG(("hs_save\n"));
-		if (f != 0)
+		if (f)
 		{
 			struct mem_range *mem_range = state.mem_range;
 			LOG(("saving...\n"));
 			while (mem_range)
 			{
-				UINT8 *data = malloc (mem_range.num_bytes);
-				if (data != 0)
+				UINT8 *data = malloc (mem_range->num_bytes);
+				if (data)
 				{
 					/*	this buffer will almost certainly be small
 						enough to be dynamically allocated, but let's
 						avoid memory trashing just in case
 					*/
-					copy_from_memory (mem_range.cpu, mem_range.addr, data, mem_range.num_bytes);
-					mame_fwrite(f, data, mem_range.num_bytes);
+					copy_from_memory (mem_range->cpu, mem_range->addr, data, mem_range->num_bytes);
+					mame_fwrite(f, data, mem_range->num_bytes);
 				}
-				mem_range = mem_range.next;
+				mem_range = mem_range->next;
 			}
 			mame_fclose(f);
 		}
@@ -233,7 +233,7 @@ public class hiscore
 	
 		LOG(("hs_open: '%s'\n", name));
 	
-		if (f != 0)
+		if (f)
 		{
 			char buffer[MAX_CONFIG_LINE_SIZE];
 			enum { FIND_NAME, FIND_DATA, FETCH_DATA } mode;
@@ -253,25 +253,25 @@ public class hiscore
 				{
 					const char *pBuf = buffer;
 					struct mem_range *mem_range = malloc(sizeof(struct mem_range));
-					if (mem_range != 0)
+					if (mem_range)
 					{
-						mem_range.cpu = hexstr2num (&pBuf);
-						mem_range.addr = hexstr2num (&pBuf);
-						mem_range.num_bytes = hexstr2num (&pBuf);
-						mem_range.start_value = hexstr2num (&pBuf);
-						mem_range.end_value = hexstr2num (&pBuf);
+						mem_range->cpu = hexstr2num (&pBuf);
+						mem_range->addr = hexstr2num (&pBuf);
+						mem_range->num_bytes = hexstr2num (&pBuf);
+						mem_range->start_value = hexstr2num (&pBuf);
+						mem_range->end_value = hexstr2num (&pBuf);
 	
-						mem_range.next = NULL;
+						mem_range->next = NULL;
 						{
 							struct mem_range *last = state.mem_range;
-							while (last && last.next) last = last.next;
+							while (last && last->next) last = last->next;
 							if (last == NULL)
 							{
 								state.mem_range = mem_range;
 							}
 							else
 							{
-								last.next = mem_range;
+								last->next = mem_range;
 							}
 						}
 	
@@ -302,17 +302,17 @@ public class hiscore
 		while (mem_range)
 		{
 			cpunum_write_byte(
-				mem_range.cpu,
-				mem_range.addr,
-				~mem_range.start_value
+				mem_range->cpu,
+				mem_range->addr,
+				~mem_range->start_value
 			);
 	
 			cpunum_write_byte(
-				mem_range.cpu,
-				mem_range.addr + mem_range.num_bytes-1,
-				~mem_range.end_value
+				mem_range->cpu,
+				mem_range->addr + mem_range->num_bytes-1,
+				~mem_range->end_value
 			);
-			mem_range = mem_range.next;
+			mem_range = mem_range->next;
 		}
 	}
 	
@@ -323,7 +323,7 @@ public class hiscore
 		{
 			if (!state.hiscores_have_been_loaded)
 			{
-				if (safe_to_load() != 0) hs_load();
+				if (safe_to_load()) hs_load();
 			}
 		}
 	}

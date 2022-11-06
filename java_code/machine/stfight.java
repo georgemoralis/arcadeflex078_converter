@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -38,8 +38,7 @@ public class stfight
 	
 	*/
 	
-	public static DriverInitHandlerPtr init_empcity  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_empcity  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 		int A;
@@ -69,8 +68,7 @@ public class stfight
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_stfight  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stfight  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 	
@@ -86,23 +84,20 @@ public class stfight
 		rom[0xb5 + diff] = 0x00;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_stfight  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_stfight  = new MachineInitHandlerPtr() { public void handler(){
 	    // initialise rom bank
 	    stfight_bank_w( 0, 0 );
 	} };
 	
 	// It's entirely possible that this bank is never switched out
 	// - in fact I don't even know how/where it's switched in!
-	public static WriteHandlerPtr stfight_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char   *ROM2 = memory_region(REGION_CPU1) + 0x10000;
 	
 		cpu_setbank( 1, &ROM2[data<<14] );
 	} };
 	
-	public static InterruptHandlerPtr stfight_vb_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr stfight_vb_interrupt = new InterruptHandlerPtr() {public void handler(){
 	    // Do a RST10
 	    cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xd7);
 	} };
@@ -111,8 +106,7 @@ public class stfight
 	 *      CPU 1 timed interrupt - 30Hz???
 	 */
 	
-	public static InterruptHandlerPtr stfight_interrupt_1 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr stfight_interrupt_1 = new InterruptHandlerPtr() {public void handler(){
 	    // Do a RST08
 	    cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);
 	} };
@@ -122,23 +116,21 @@ public class stfight
 	 */
 	
 	// Perhaps define dipswitches as active low?
-	public static ReadHandlerPtr stfight_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stfight_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return( ~readinputport( 3+offset ) );
 	} };
 	
 	static int stfight_coin_mech_query_active = 0;
 	static int stfight_coin_mech_query;
 	
-	public static ReadHandlerPtr stfight_coin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stfight_coin_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    static int coin_mech_latch[2] = { 0x02, 0x01 };
 	
 	    int coin_mech_data;
 	    int i;
 	
 	    // Was the coin mech queried by software?
-	    if (stfight_coin_mech_query_active != 0)
+	    if( stfight_coin_mech_query_active )
 	    {
 	        stfight_coin_mech_query_active = 0;
 	        return( (~stfight_coin_mech_query) & 0x03 );
@@ -165,8 +157,7 @@ public class stfight
 	    return( coin_mech_data );
 	} };
 	
-	public static WriteHandlerPtr stfight_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // interrogate coin mech
 	    stfight_coin_mech_query_active = 1;
 	    stfight_coin_mech_query = data;
@@ -212,8 +203,7 @@ public class stfight
 		toggle ^= 1;
 	}
 	
-	public static WriteHandlerPtr stfight_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    if( data < 0x08 )
 	    {
 	        adpcm_data_offs = sampleLimits[data];
@@ -223,8 +213,7 @@ public class stfight
 	    MSM5205_reset_w( 0, data & 0x08 ? 1 : 0 );
 	} };
 	
-	public static WriteHandlerPtr stfight_e800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_e800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	/*
@@ -233,14 +222,12 @@ public class stfight
 	
 	static unsigned char fm_data;
 	
-	public static WriteHandlerPtr stfight_fm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr stfight_fm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    // the sound cpu ignores any fm data without bit 7 set
 	    fm_data = 0x80 | data;
 	} };
 	
-	public static ReadHandlerPtr stfight_fm_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr stfight_fm_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int data = fm_data;
 	
 	    // clear the latch?!?

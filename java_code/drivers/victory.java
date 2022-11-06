@@ -97,7 +97,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -129,17 +129,15 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr sound_response_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound response read = %02X\n", activecpu_get_previouspc(), sound_response);
+	public static ReadHandlerPtr sound_response_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (LOG_SOUND) logerror("%04X:!!!! Sound response read = %02X\n", activecpu_get_previouspc(), sound_response);
 		pia_0_cb1_w(0, 0);
 		return sound_response;
 	} };
 	
 	
-	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound status read = %02X\n", activecpu_get_previouspc(), (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6));
+	public static ReadHandlerPtr sound_status_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (LOG_SOUND) logerror("%04X:!!!! Sound status read = %02X\n", activecpu_get_previouspc(), (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6));
 		return (pia_0_ca1_r(0) << 7) | (pia_0_cb1_r(0) << 6);
 	} };
 	
@@ -148,32 +146,28 @@ public class victory
 	{
 		pia_0_porta_w(0, data);
 		pia_0_ca1_w(0, 0);
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound command = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND) logerror("%04X:!!!! Sound command = %02X\n", activecpu_get_previouspc(), data);
 	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, delayed_command_w);
 	} };
 	
 	
-	public static WriteHandlerPtr victory_sound_response_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr victory_sound_response_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_response = data;
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound response = %02X\n", activecpu_get_previouspc(), data);
+		if (LOG_SOUND) logerror("%04X:!!!! Sound response = %02X\n", activecpu_get_previouspc(), data);
 	} };
 	
 	
-	public static WriteHandlerPtr victory_sound_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
-		if (data == 0) pia_0_ca1_w(0, 1);
+	public static WriteHandlerPtr victory_sound_irq_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (LOG_SOUND) logerror("%04X:!!!! Sound IRQ clear = %02X\n", activecpu_get_previouspc(), data);
+		if (!data) pia_0_ca1_w(0, 1);
 	} };
 	
 	
-	public static WriteHandlerPtr victory_main_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (LOG_SOUND != 0) logerror("%04X:!!!! Sound ack = %02X\n", activecpu_get_previouspc(), data);
+	public static WriteHandlerPtr victory_main_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (LOG_SOUND) logerror("%04X:!!!! Sound ack = %02X\n", activecpu_get_previouspc(), data);
 		if (sound_response_ack_clk && !data)
 			pia_0_cb1_w(0, 1);
 		sound_response_ack_clk = data;
@@ -187,8 +181,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr lamp_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lamp_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x80);
 		set_led_status(1,data & 0x40);
 		set_led_status(2,data & 0x20);
@@ -289,7 +282,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_victory = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_victory = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( victory )
 		PORT_START(); 	/* $00-$03 = SW2 */
 		PORT_DIPNAME( 0x07, 0x00, "????" );
 		PORT_DIPSETTING(    0x00, "0" );
@@ -362,8 +355,7 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_victory = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( victory )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -393,9 +385,7 @@ public class victory
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -478,6 +468,6 @@ public class victory
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_victory	   = new GameDriver("1982"	,"victory"	,"victory.java"	,rom_victory,null	,machine_driver_victory	,input_ports_victory	,null	,ROT0	,	"Exidy", "Victory" )
-	public static GameDriver driver_victorba	   = new GameDriver("1982"	,"victorba"	,"victory.java"	,rom_victorba,driver_victory	,machine_driver_victory	,input_ports_victory	,null	,ROT0	,	"Exidy", "Victor Banana" )
+	GAME( 1982, victory,  0,        victory, victory, 0,     ROT0, "Exidy", "Victory" )
+	GAME( 1982, victorba, victory,  victory, victory, 0,     ROT0, "Exidy", "Victor Banana" )
 }

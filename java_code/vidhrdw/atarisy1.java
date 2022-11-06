@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -132,8 +132,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_atarisy1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_atarisy1  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -182,7 +181,7 @@ public class atarisy1
 	
 		/* initialize the playfield */
 		atarigen_playfield_tilemap = tilemap_create(get_playfield_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE, 8,8, 64,64);
-		if (atarigen_playfield_tilemap == 0)
+		if (!atarigen_playfield_tilemap)
 			return 1;
 	
 		/* initialize the motion objects */
@@ -191,7 +190,7 @@ public class atarisy1
 	
 		/* initialize the alphanumerics */
 		atarigen_alpha_tilemap = tilemap_create(get_alpha_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8,8, 64,32);
-		if (atarigen_alpha_tilemap == 0)
+		if (!atarigen_alpha_tilemap)
 			return 1;
 		tilemap_set_transparent_pen(atarigen_alpha_tilemap, 0);
 	
@@ -237,14 +236,14 @@ public class atarisy1
 		diff = oldselect ^ newselect;
 	
 		/* sound CPU reset */
-		if ((diff & 0x0080) != 0)
+		if (diff & 0x0080)
 		{
 			cpu_set_reset_line(1, (newselect & 0x0080) ? CLEAR_LINE : ASSERT_LINE);
 			if (!(newselect & 0x0080)) atarigen_sound_reset();
 		}
 	
 		/* if MO or playfield banks change, force a partial update */
-		if ((diff & 0x003c) != 0)
+		if (diff & 0x003c)
 			force_partial_update(scanline);
 	
 		/* motion object bank select */
@@ -252,7 +251,7 @@ public class atarisy1
 		update_timers(scanline);
 	
 		/* playfield bank select */
-		if ((diff & 0x0004) != 0)
+		if (diff & 0x0004)
 		{
 			playfield_tile_bank = (newselect >> 2) & 1;
 			tilemap_mark_all_tiles_dirty(atarigen_playfield_tilemap);
@@ -335,7 +334,7 @@ public class atarisy1
 		/* because this latches a new value into the scroll base,
 		   we need to adjust for the scanline */
 		adjusted_scroll = newscroll;
-		if (scanline <= Machine.visible_area.max_y)
+		if (scanline <= Machine->visible_area.max_y)
 			adjusted_scroll -= (scanline + 1);
 		tilemap_set_scrolly(atarigen_playfield_tilemap, 0, adjusted_scroll);
 	
@@ -476,7 +475,7 @@ public class atarisy1
 		}
 	
 		/* if nothing was found, use scanline -1 */
-		if (found == 0)
+		if (!found)
 			best = -1;
 	
 		/* update the timer */
@@ -500,8 +499,7 @@ public class atarisy1
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_atarisy1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_atarisy1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct atarimo_rect_list rectlist;
 		struct mame_bitmap *mobitmap;
 		int x, y, r;
@@ -653,7 +651,7 @@ public class atarisy1
 	
 		/* don't have one? let's make it ... first find any empty slot */
 		for (gfx_index = 0; gfx_index < MAX_GFX_ELEMENTS; gfx_index++)
-			if (Machine.gfx[gfx_index] == NULL)
+			if (Machine->gfx[gfx_index] == NULL)
 				break;
 		if (gfx_index == MAX_GFX_ELEMENTS)
 			return -1;
@@ -664,14 +662,14 @@ public class atarisy1
 			objlayout.planeoffset[i] = (bpp - i - 1) * 0x8000 * 8;
 	
 		/* decode the graphics */
-		Machine.gfx[gfx_index] = decodegfx(&memory_region(REGION_GFX2)[bank_offset[bank_index]], &objlayout);
-		if (!Machine.gfx[gfx_index])
+		Machine->gfx[gfx_index] = decodegfx(&memory_region(REGION_GFX2)[bank_offset[bank_index]], &objlayout);
+		if (!Machine->gfx[gfx_index])
 			return -1;
 	
 		/* set the color information */
-		Machine.gfx[gfx_index].colortable = Machine.remapped_colortable[256];
-		Machine.gfx[gfx_index].color_granularity = 8;
-		Machine.gfx[gfx_index].total_colors = 0x40;
+		Machine->gfx[gfx_index]->colortable = Machine->remapped_colortable[256];
+		Machine->gfx[gfx_index]->color_granularity = 8;
+		Machine->gfx[gfx_index]->total_colors = 0x40;
 		bank_color_shift[gfx_index] = bpp - 3;
 	
 		/* set the entry and return it */

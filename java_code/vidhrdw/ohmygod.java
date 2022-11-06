@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -40,11 +40,10 @@ public class ohmygod
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ohmygod  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ohmygod  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,64);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		return 0;
@@ -68,7 +67,7 @@ public class ohmygod
 	
 	WRITE16_HANDLER( ohmygod_spritebank_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			spritebank = data & 0x8000;
 	}
 	
@@ -111,7 +110,7 @@ public class ohmygod
 			if (sy >= 32768) sy -= 65536;
 			flipx = sr[offs+3] & 0x8000;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,0,
@@ -120,8 +119,7 @@ public class ohmygod
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ohmygod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ohmygod  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 	} };

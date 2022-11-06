@@ -19,7 +19,7 @@ D0	explosion enable		gates a noise generator
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -57,8 +57,7 @@ public class bzone
 	static int motor_amp_step;
 	static int motor_amp_counter;
 	
-	public static WriteHandlerPtr bzone_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bzone_sounds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data == latch )
 			return;
 	
@@ -81,7 +80,7 @@ public class bzone
 			{
 				int clock;
 	
-				poly_counter += Machine.sample_rate;
+				poly_counter += Machine->sample_rate;
 				if( ((poly_shift & 0x0008) == 0) == ((poly_shift & 0x4000) == 0) )
 					poly_shift = (poly_shift << 1) | 1;
 				else
@@ -109,11 +108,11 @@ public class bzone
 			}
 	
 			/* explosion enable: charge C14 */
-			if ((latch & 0x01) != 0)
+			if( latch & 0x01 )
 				explosion_amp = 32767;
 	
 			/* explosion output? */
-			if (explosion_out != 0)
+			if( explosion_out )
 			{
 				if( explosion_amp > 0 )
 				{
@@ -125,8 +124,8 @@ public class bzone
 					explosion_amp_counter -= (int)(32767 / (0.23*4));
 					if( explosion_amp_counter < 0 )
 					{
-						int n = (-explosion_amp_counter / Machine.sample_rate) + 1;
-						explosion_amp_counter += n * Machine.sample_rate;
+						int n = (-explosion_amp_counter / Machine->sample_rate) + 1;
+						explosion_amp_counter += n * Machine->sample_rate;
 						if( (explosion_amp -= n) < 0 )
 							explosion_amp = 0;
 					}
@@ -135,18 +134,18 @@ public class bzone
 				 * I don't know the amplification of the op-amp
 				 * and feedback, so the loud/soft values are arbitrary
 				 */
-				if ((latch & 0x02) != 0)	/* explosion loud ? */
+				if( latch & 0x02 )	/* explosion loud ? */
 					sum += EXP(0,explosion_amp)/3;
 				else
 					sum += EXP(0,explosion_amp)/4;
 			}
 	
 			/* shell enable: charge C9 */
-			if ((latch & 0x04) != 0)
+			if( latch & 0x04 )
 				shell_amp = 32767;
 	
 			/* shell output? */
-			if (shell_out != 0)
+			if( shell_out )
 			{
 				if( shell_amp > 0 )
 				{
@@ -158,8 +157,8 @@ public class bzone
 					shell_amp_counter -= (int)(32767 / (0.1081*4));
 					if( shell_amp_counter < 0 )
 					{
-						int n = (-shell_amp_counter / Machine.sample_rate) + 1;
-						shell_amp_counter += n * Machine.sample_rate;
+						int n = (-shell_amp_counter / Machine->sample_rate) + 1;
+						shell_amp_counter += n * Machine->sample_rate;
 						if( (shell_amp -= n) < 0 )
 							shell_amp = 0;
 					}
@@ -168,13 +167,13 @@ public class bzone
 				 * I don't know the amplification of the op-amp
 				 * and feedback, so the loud/soft values are arbitrary
 				 */
-				if ((latch & 0x08) != 0)	/* shell loud ? */
+				if( latch & 0x08 )	/* shell loud ? */
 					sum += EXP(0,shell_amp)/3;
 				else
 					sum += EXP(0,shell_amp)/4;
 			}
 	
-			if ((latch & 0x80) != 0)
+			if( latch & 0x80 )
 			{
 				static double r0 = 1.0/1e12, r1 = 1.0/1e12;
 	
@@ -194,14 +193,14 @@ public class bzone
 					motor_rate_counter -= (int)((240 - 184) / 0.25);
 					while( motor_rate_counter <= 0 )
 					{
-						motor_rate_counter += Machine.sample_rate;
+						motor_rate_counter += Machine->sample_rate;
 						motor_rate += (motor_rate < motor_rate_new) ? +1 : -1;
 					}
 				}
 				motor_counter -= motor_rate;
 				while( motor_counter <= 0 )
 				{
-					motor_counter += Machine.sample_rate;
+					motor_counter += Machine->sample_rate;
 	
 					r0 = 1.0/1e12;
 					r1 = 1.0/1e12;
@@ -211,7 +210,7 @@ public class bzone
 					if( ++motor_counter_b == 16 )
 						motor_counter_b = 4;
 	
-					if ((motor_counter_a & 8) != 0)	/* bit 3 */
+					if( motor_counter_a & 8 )	/* bit 3 */
 						r1 += 1.0/33000;
 					else
 						r0 += 1.0/33000;
@@ -220,7 +219,7 @@ public class bzone
 					else
 						r0 += 1.0/33000;
 	
-					if ((motor_counter_b & 8) != 0)	/* bit 3 */
+					if( motor_counter_b & 8 )	/* bit 3 */
 						r1 += 1.0/33000;
 					else
 						r0 += 1.0/33000;
@@ -245,8 +244,8 @@ public class bzone
 					motor_amp_counter -= motor_amp_step;
 					if( motor_amp_counter < 0 )
 					{
-						int n = (-motor_amp_counter / Machine.sample_rate) + 1;
-						motor_amp_counter += n * Machine.sample_rate;
+						int n = (-motor_amp_counter / Machine->sample_rate) + 1;
+						motor_amp_counter += n * Machine->sample_rate;
 						if( motor_amp > motor_amp_new )
 						{
 							motor_amp -= n;
@@ -276,13 +275,13 @@ public class bzone
 	    int i;
 	
 		discharge = (INT16 *)auto_malloc(32768 * sizeof(INT16));
-		if (discharge == 0)
+		if( !discharge )
 	        return 1;
 	
 	    for( i = 0; i < 0x8000; i++ )
 			discharge[0x7fff-i] = (INT16) (0x7fff/exp(1.0*i/4096));
 	
-		channel = stream_init("Custom", 50, Machine.sample_rate, 0, bzone_sound_update);
+		channel = stream_init("Custom", 50, Machine->sample_rate, 0, bzone_sound_update);
 	    if( channel == -1 )
 	        return 1;
 	

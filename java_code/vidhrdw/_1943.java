@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class _1943
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_1943  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_1943  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -116,15 +115,14 @@ public class _1943
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_1943  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_1943  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sc2bitmap = auto_bitmap_alloc(9*32,8*32)) == 0)
 			return 1;
 	
 		if ((sc1bitmap = auto_bitmap_alloc(9*32,9*32)) == 0)
 			return 1;
 	
-		if (video_start_generic() != 0)
+		if (video_start_generic.handler())
 			return 1;
 	
 		memset (sc2map, 0xff, sizeof (sc2map));
@@ -135,8 +133,7 @@ public class _1943
 	
 	
 	
-	public static WriteHandlerPtr c1943_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1943_c804_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -164,8 +161,7 @@ public class _1943
 	
 	
 	
-	public static WriteHandlerPtr c1943_d806_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr c1943_d806_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 4 enables bg 1 */
 		sc1on = data & 0x10;
 	
@@ -185,15 +181,14 @@ public class _1943
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_1943  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_1943  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 		int bg_scrolly, bg_scrollx;
 		unsigned char *p;
 		int top,left,xscroll,yscroll;
 	
 	/* TODO: support flipscreen */
-		if (sc2on != 0)
+		if (sc2on)
 		{
 			p=memory_region(REGION_GFX5)+0x8000;
 			bg_scrolly = c1943_bgscrolly[0] + 256 * c1943_bgscrolly[1];
@@ -245,7 +240,7 @@ public class _1943
 		else fillbitmap(bitmap,get_black_pen(),cliprect);
 	
 	
-		if (objon != 0)
+		if (objon)
 		{
 			/* Draw the sprites which don't have priority over the foreground. */
 			for (offs = spriteram_size[0] - 32;offs >= 0;offs -= 32)
@@ -259,7 +254,7 @@ public class _1943
 				{
 					sx = spriteram.read(offs + 3)- ((spriteram.read(offs + 1)& 0x10) << 4);
 					sy = spriteram.read(offs + 2);
-					if (flipscreen != 0)
+					if (flipscreen)
 					{
 						sx = 240 - sx;
 						sy = 240 - sy;
@@ -277,14 +272,14 @@ public class _1943
 	
 	
 	/* TODO: support flipscreen */
-		if (sc1on != 0)
+		if (sc1on)
 		{
 			p=memory_region(REGION_GFX5);
 	
 			bg_scrolly = c1943_scrolly[0] + 256 * c1943_scrolly[1];
 			bg_scrollx = c1943_scrollx[0];
 			offs = 16 * ((bg_scrolly>>5)+8)+2*(bg_scrollx>>5) ;
-			if ((bg_scrollx & 0x80) != 0) offs -= 0x10;
+			if (bg_scrollx & 0x80) offs -= 0x10;
 	
 			top = 8 - (bg_scrolly>>5) % 9;
 			left = (bg_scrollx>>5) % 9;
@@ -334,7 +329,7 @@ public class _1943
 		}
 	
 	
-		if (objon != 0)
+		if (objon)
 		{
 			/* Draw the sprites which have priority over the foreground. */
 			for (offs = spriteram_size[0] - 32;offs >= 0;offs -= 32)
@@ -348,7 +343,7 @@ public class _1943
 				{
 					sx = spriteram.read(offs + 3)- ((spriteram.read(offs + 1)& 0x10) << 4);
 					sy = spriteram.read(offs + 2);
-					if (flipscreen != 0)
+					if (flipscreen)
 					{
 						sx = 240 - sx;
 						sy = 240 - sy;
@@ -365,14 +360,14 @@ public class _1943
 		}
 	
 	
-		if (chon != 0)
+		if (chon)
 		{
 			/* draw the frontmost playfield. They are characters, but draw them as sprites */
 			for (offs = videoram_size[0] - 1;offs >= 0;offs--)
 			{
 				sx = offs % 32;
 				sy = offs / 32;
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;

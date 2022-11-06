@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -52,12 +52,12 @@ public class artmagic
 	{
 		int irq_lines = 0;
 	
-		if (tms_irq != 0)
+		if (tms_irq)
 			irq_lines |= 4;
-		if (hack_irq != 0)
+		if (hack_irq)
 			irq_lines |= 5;
 	
-		if (irq_lines != 0)
+		if (irq_lines)
 			cpu_set_irq_line(0, irq_lines, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -78,8 +78,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_artmagic  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_artmagic  = new MachineInitHandlerPtr() { public void handler(){
 		tms_irq = hack_irq = 0;
 		update_irq_state();
 		tlc34076_reset(6);
@@ -188,12 +187,12 @@ public class artmagic
 					Ultimate Tennis -- actual values from a board:
 	
 						hex								decimal
-						0041 0084 00c8 . 00044142		 65 132 200 . 278850 = 65*65*66
-						001e 0084 00fc . 0000e808		 30 132 252 .  59400 = 30*30*66
-						0030 007c 005f . 00022e00		 48 124  95 . 142848 = 48*48*62
-						0024 00dd 0061 . 00022ce0		 36 221  97 . 142560 = 36*36*110
-						0025 0096 005b . 00019113		 37 150  91 . 102675 = 37*37*75
-						0044 00c9 004c . 00070e40		 68 201  76 . 462400 = 68*68*100
+						0041 0084 00c8 -> 00044142		 65 132 200 -> 278850 = 65*65*66
+						001e 0084 00fc -> 0000e808		 30 132 252 ->  59400 = 30*30*66
+						0030 007c 005f -> 00022e00		 48 124  95 -> 142848 = 48*48*62
+						0024 00dd 0061 -> 00022ce0		 36 221  97 -> 142560 = 36*36*110
+						0025 0096 005b -> 00019113		 37 150  91 -> 102675 = 37*37*75
+						0044 00c9 004c -> 00070e40		 68 201  76 -> 462400 = 68*68*100
 	
 					question is: what is the 3rd value doing there?
 				*/
@@ -524,7 +523,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_cheesech = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cheesech = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cheesech )
 		PORT_START(); 	/* 300000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -612,7 +611,7 @@ public class artmagic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ultennis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ultennis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ultennis )
 		PORT_START(); 	/* 300000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -701,7 +700,7 @@ public class artmagic
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stonebal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stonebal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stonebal )
 		PORT_START(); 	/* 300000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -871,9 +870,7 @@ public class artmagic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( stonebal )
@@ -884,9 +881,7 @@ public class artmagic
 	
 		MDRV_CPU_MODIFY("tms")
 		MDRV_CPU_MEMORY(stonebal_tms_readmem,stonebal_tms_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -974,10 +969,10 @@ public class artmagic
 		for (i = 0;i < 16;i++)
 		{
 			artmagic_xor[i] = 0x0462;
-			if ((i & 1) != 0) artmagic_xor[i] ^= 0x0011;
-			if ((i & 2) != 0) artmagic_xor[i] ^= 0x2200;
-			if ((i & 4) != 0) artmagic_xor[i] ^= 0x4004;
-			if ((i & 8) != 0) artmagic_xor[i] ^= 0x0880;
+			if (i & 1) artmagic_xor[i] ^= 0x0011;
+			if (i & 2) artmagic_xor[i] ^= 0x2200;
+			if (i & 4) artmagic_xor[i] ^= 0x4004;
+			if (i & 8) artmagic_xor[i] ^= 0x0880;
 		}
 	}
 	
@@ -990,16 +985,15 @@ public class artmagic
 		for (i = 0;i < 16;i++)
 		{
 			artmagic_xor[i] = 0x0891;
-			if ((i & 1) != 0) artmagic_xor[i] ^= 0x1100;
-			if ((i & 2) != 0) artmagic_xor[i] ^= 0x0022;
-			if ((i & 4) != 0) artmagic_xor[i] ^= 0x0440;
-			if ((i & 8) != 0) artmagic_xor[i] ^= 0x8008;
+			if (i & 1) artmagic_xor[i] ^= 0x1100;
+			if (i & 2) artmagic_xor[i] ^= 0x0022;
+			if (i & 4) artmagic_xor[i] ^= 0x0440;
+			if (i & 8) artmagic_xor[i] ^= 0x8008;
 		}
 	}
 	
 	
-	public static DriverInitHandlerPtr init_ultennis  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ultennis  = new DriverInitHandlerPtr() { public void handler(){
 		decrypt_ultennis();
 		artmagic_is_stoneball = 0;
 		protection_handler = ultennis_protection;
@@ -1009,16 +1003,14 @@ public class artmagic
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_cheesech  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cheesech  = new DriverInitHandlerPtr() { public void handler(){
 		decrypt_cheesech();
 		artmagic_is_stoneball = 0;
 		protection_handler = cheesech_protection;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_stonebal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stonebal  = new DriverInitHandlerPtr() { public void handler(){
 		decrypt_ultennis();
 		artmagic_is_stoneball = 1;	/* blits 1 line high are NOT encrypted, also different first pixel decrypt */
 		protection_handler = stonebal_protection;
@@ -1032,8 +1024,8 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_ultennis	   = new GameDriver("1993"	,"ultennis"	,"artmagic.java"	,rom_ultennis,null	,machine_driver_artmagic	,input_ports_ultennis	,init_ultennis	,ROT0	,	"Art & Magic", "Ultimate Tennis" )
-	public static GameDriver driver_cheesech	   = new GameDriver("1994"	,"cheesech"	,"artmagic.java"	,rom_cheesech,null	,machine_driver_artmagic	,input_ports_cheesech	,init_cheesech	,ROT0	,	"Art & Magic", "Cheese Chase" )
-	public static GameDriver driver_stonebal	   = new GameDriver("1994"	,"stonebal"	,"artmagic.java"	,rom_stonebal,null	,machine_driver_stonebal	,input_ports_stonebal	,init_stonebal	,ROT0	,	"Art & Magic", "Stone Ball (4 Players)" )
-	public static GameDriver driver_stoneba2	   = new GameDriver("1994"	,"stoneba2"	,"artmagic.java"	,rom_stoneba2,driver_stonebal	,machine_driver_stonebal	,input_ports_stonebal	,init_stonebal	,ROT0	,	"Art & Magic", "Stone Ball (2 Players)" )
+	GAME( 1993, ultennis, 0,        artmagic, ultennis, ultennis, ROT0, "Art & Magic", "Ultimate Tennis" )
+	GAME( 1994, cheesech, 0,        artmagic, cheesech, cheesech, ROT0, "Art & Magic", "Cheese Chase" )
+	GAME( 1994, stonebal, 0,        stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (4 Players)" )
+	GAME( 1994, stoneba2, stonebal, stonebal, stonebal, stonebal, ROT0, "Art & Magic", "Stone Ball (2 Players)" )
 }

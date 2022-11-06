@@ -100,7 +100,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -120,8 +120,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_jrpacman  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* check if the loaded set of ROMs allows the Pac Man speed hack */
@@ -138,12 +137,11 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr jrpacman_interrupt = new InterruptHandlerPtr() {public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat != 0)
+		if (speedcheat)
 		{
 			if (readinputport(3) & 1)	/* check status of the fake dip switch */
 			{
@@ -223,7 +221,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_jrpacman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jrpacman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jrpacman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
@@ -344,8 +342,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_jrpacman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jrpacman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/6)	/* 3.072 MHz */
@@ -372,9 +369,7 @@ public class jrpacman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -416,8 +411,7 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_jrpacman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jrpacman  = new DriverInitHandlerPtr() { public void handler(){
 		/* The encryption PALs garble bits 0, 2 and 7 of the ROMs. The encryption */
 		/* scheme is complex (basically it's a state machine) and can only be */
 		/* faithfully emulated at run time. To avoid the performance hit that would */
@@ -477,5 +471,5 @@ public class jrpacman
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_jrpacman	   = new GameDriver("1983"	,"jrpacman"	,"jrpacman.java"	,rom_jrpacman,null	,machine_driver_jrpacman	,input_ports_jrpacman	,init_jrpacman	,ROT90	,	"Bally Midway", "Jr. Pac-Man" )
+	GAME( 1983, jrpacman, 0, jrpacman, jrpacman, jrpacman, ROT90, "Bally Midway", "Jr. Pac-Man" )
 }

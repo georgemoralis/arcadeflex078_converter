@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class chqflag
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_chqflag  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_chqflag  = new VideoStartHandlerPtr() { public int handler(){
 		sprite_colorbase = 0;
 		zoom_colorbase[0] = 0x10;
 		zoom_colorbase[1] = 0x02;
@@ -86,8 +85,7 @@ public class chqflag
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_chqflag  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
 		K051316_zoom_draw_1(bitmap,cliprect,TILEMAP_BACK,0);

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -79,8 +79,7 @@ public class carpolo
 	 *
 	 **************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_carpolo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_carpolo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* thanks to Jarek Burczynski for analyzing the circuit */
 	//	const static float MAX_VOLTAGE = 6.9620;
 		const static float MIN_VOLTAGE = 1.7434;
@@ -178,8 +177,7 @@ public class carpolo
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_carpolo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_carpolo  = new VideoStartHandlerPtr() { public int handler(){
 		if ((sprite_sprite_collision_bitmap1 = auto_bitmap_alloc(SPRITE_WIDTH*2,SPRITE_HEIGHT*2)) == 0)
 			return 1;
 	
@@ -218,7 +216,7 @@ public class carpolo
 			code = carpolo_alpharam[alpha_line * 32 + x] >> 2;
 			col  = carpolo_alpharam[alpha_line * 32 + x] & 0x03;
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					code,col,
 					0,0,
 					x*8,video_line*8,
@@ -251,14 +249,14 @@ public class carpolo
 		x = 240 - x;
 		y = 240 - y;
 	
-		drawgfx(bitmap,Machine.gfx[0],
+		drawgfx(bitmap,Machine->gfx[0],
 				remapped_code, col,
 				0, flipy,
 				x, y,
 				cliprect,TRANSPARENCY_PEN,0);
 	
 		/* draw with wrap around */
-		drawgfx(bitmap,Machine.gfx[0],
+		drawgfx(bitmap,Machine->gfx[0],
 				remapped_code, col,
 				0, flipy,
 				(INT16)x - 256, y,
@@ -266,8 +264,7 @@ public class carpolo
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_carpolo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the playfield elements, in the correct priority order */
 	
 		/* score area - position determined by bit 4 of the vertical timing PROM */
@@ -278,8 +275,8 @@ public class carpolo
 	
 		/* car 1 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram.read(0x00), carpolo_spriteram.read(0x01),
-					0, carpolo_spriteram.read(0x0c)& 0x0f, CAR1_COLOR);
+					carpolo_spriteram[0x00], carpolo_spriteram[0x01],
+					0, carpolo_spriteram[0x0c] & 0x0f, CAR1_COLOR);
 	
 		/* border - position determined by bit 4 and 7 of the vertical timing PROM */
 		plot_box(bitmap,0,TOP_BORDER,   RIGHT_BORDER+1,1,Machine.pens[LINE_COLOR]);
@@ -289,23 +286,23 @@ public class carpolo
 	
 		/* car 4 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram.read(0x06), carpolo_spriteram.read(0x07),
-					0, carpolo_spriteram.read(0x0d)>> 4, CAR4_COLOR);
+					carpolo_spriteram[0x06], carpolo_spriteram[0x07],
+					0, carpolo_spriteram[0x0d] >> 4, CAR4_COLOR);
 	
 		/* car 3 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram.read(0x04), carpolo_spriteram.read(0x05),
-					0, carpolo_spriteram.read(0x0d)& 0x0f, CAR3_COLOR);
+					carpolo_spriteram[0x04], carpolo_spriteram[0x05],
+					0, carpolo_spriteram[0x0d] & 0x0f, CAR3_COLOR);
 	
 		/* car 2 */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram.read(0x02), carpolo_spriteram.read(0x03),
-					0, carpolo_spriteram.read(0x0c)>> 4, CAR2_COLOR);
+					carpolo_spriteram[0x02], carpolo_spriteram[0x03],
+					0, carpolo_spriteram[0x0c] >> 4, CAR2_COLOR);
 	
 		/* ball */
 		draw_sprite(bitmap, cliprect,
-					carpolo_spriteram.read(0x08), carpolo_spriteram.read(0x09),
-					1, carpolo_spriteram.read(0x0e)& 0x0f, BALL_COLOR);
+					carpolo_spriteram[0x08], carpolo_spriteram[0x09],
+					1, carpolo_spriteram[0x0e] & 0x0f, BALL_COLOR);
 	
 		/* left goal - position determined by bit 6 of the
 		   horizontal and vertical timing PROMs */
@@ -326,16 +323,16 @@ public class carpolo
 	
 		/* special char - bit 0 of 0x0f enables it,
 						  bit 1 marked as WIDE, but never appears to be set */
-		if (carpolo_spriteram.read(0x0f)& 0x02)
+		if (carpolo_spriteram[0x0f] & 0x02)
 		{
 			logerror("WIDE!\n");
 		}
 	
-		if (carpolo_spriteram.read(0x0f)& 0x01)
+		if (carpolo_spriteram[0x0f] & 0x01)
 		{
 			draw_sprite(bitmap, cliprect,
-						carpolo_spriteram.read(0x0a), carpolo_spriteram.read(0x0b),
-						1, carpolo_spriteram.read(0x0e)>> 4, SPECIAL_CHAR_COLOR);
+						carpolo_spriteram[0x0a], carpolo_spriteram[0x0b],
+						1, carpolo_spriteram[0x0e] >> 4, SPECIAL_CHAR_COLOR);
 		}
 	
 	
@@ -409,16 +406,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_sprite_collision_bitmap1, Machine.pens[0], 0);
-			fillbitmap(sprite_sprite_collision_bitmap2, Machine.pens[0], 0);
+			fillbitmap(sprite_sprite_collision_bitmap1, Machine->pens[0], 0);
+			fillbitmap(sprite_sprite_collision_bitmap2, Machine->pens[0], 0);
 	
-			drawgfx(sprite_sprite_collision_bitmap1,Machine.gfx[0],
+			drawgfx(sprite_sprite_collision_bitmap1,Machine->gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfx(sprite_sprite_collision_bitmap2,Machine.gfx[0],
+			drawgfx(sprite_sprite_collision_bitmap2,Machine->gfx[0],
 					code2,1,
 					0,flipy2,
 					x2,y2,
@@ -429,8 +426,8 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_sprite_collision_bitmap1, x, y) == Machine.pens[1]) &&
-					    (read_pixel(sprite_sprite_collision_bitmap2, x, y) == Machine.pens[1]))
+					if ((read_pixel(sprite_sprite_collision_bitmap1, x, y) == Machine->pens[1]) &&
+					    (read_pixel(sprite_sprite_collision_bitmap2, x, y) == Machine->pens[1]))
 					{
 						*col_x = (x1 + x) & 0x0f;
 						*col_y = (y1 + y) & 0x0f;
@@ -471,16 +468,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_goal_collision_bitmap1, Machine.pens[0], 0);
-			fillbitmap(sprite_goal_collision_bitmap2, Machine.pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap1, Machine->pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap2, Machine->pens[0], 0);
 	
-			drawgfx(sprite_goal_collision_bitmap1,Machine.gfx[0],
+			drawgfx(sprite_goal_collision_bitmap1,Machine->gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfxzoom(sprite_goal_collision_bitmap2,Machine.gfx[1],
+			drawgfxzoom(sprite_goal_collision_bitmap2,Machine->gfx[1],
 						0,0,
 						0,0,
 						x2,y2,
@@ -491,17 +488,17 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine.pens[1]))
+					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine->pens[1]))
 					{
 						pen_t pix = read_pixel(sprite_goal_collision_bitmap2, x, y);
 	
-						if (pix == Machine.pens[LEFT_GOAL_COLOR])
+						if (pix == Machine->pens[LEFT_GOAL_COLOR])
 						{
 							collided = 1;
 							break;
 						}
 	
-						if (!goalpost_only && (pix == Machine.pens[SCORE_COLOR]))
+						if (!goalpost_only && (pix == Machine->pens[SCORE_COLOR]))
 						{
 							collided = 2;
 							break;
@@ -537,16 +534,16 @@ public class carpolo
 	
 			normalize_coordinates(&x1, &y1, &x2, &y2);
 	
-			fillbitmap(sprite_goal_collision_bitmap1, Machine.pens[0], 0);
-			fillbitmap(sprite_goal_collision_bitmap2, Machine.pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap1, Machine->pens[0], 0);
+			fillbitmap(sprite_goal_collision_bitmap2, Machine->pens[0], 0);
 	
-			drawgfx(sprite_goal_collision_bitmap1,Machine.gfx[0],
+			drawgfx(sprite_goal_collision_bitmap1,Machine->gfx[0],
 					code1,1,
 					0,flipy1,
 					x1,y1,
 					0,TRANSPARENCY_PEN,0);
 	
-			drawgfxzoom(sprite_goal_collision_bitmap2,Machine.gfx[1],
+			drawgfxzoom(sprite_goal_collision_bitmap2,Machine->gfx[1],
 						0,1,
 						1,0,
 						x2,y2,
@@ -557,17 +554,17 @@ public class carpolo
 			{
 				for (y = y1; y < y1 + SPRITE_HEIGHT; y++)
 				{
-					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine.pens[1]))
+					if ((read_pixel(sprite_goal_collision_bitmap1, x, y) == Machine->pens[1]))
 					{
 						pen_t pix = read_pixel(sprite_goal_collision_bitmap2, x, y);
 	
-						if (pix == Machine.pens[RIGHT_GOAL_COLOR])
+						if (pix == Machine->pens[RIGHT_GOAL_COLOR])
 						{
 							collided = 1;
 							break;
 						}
 	
-						if (!goalpost_only && (pix == Machine.pens[SCORE_COLOR]))
+						if (!goalpost_only && (pix == Machine->pens[SCORE_COLOR]))
 						{
 							collided = 2;
 							break;
@@ -593,9 +590,9 @@ public class carpolo
 		y1 = 240 - y1;
 	
 	
-		fillbitmap(sprite_border_collision_bitmap, Machine.pens[0], 0);
+		fillbitmap(sprite_border_collision_bitmap, Machine->pens[0], 0);
 	
-		drawgfx(sprite_border_collision_bitmap,Machine.gfx[0],
+		drawgfx(sprite_border_collision_bitmap,Machine->gfx[0],
 				code1,1,
 				0,flipy1,
 				0,0,
@@ -605,7 +602,7 @@ public class carpolo
 		{
 			for (y = 0; y < SPRITE_HEIGHT; y++)
 			{
-				if ((read_pixel(sprite_border_collision_bitmap, x, y) == Machine.pens[1]))
+				if ((read_pixel(sprite_border_collision_bitmap, x, y) == Machine->pens[1]))
 				{
 					if (((data8_t)(x1 + x) == LEFT_BORDER) ||
 						((data8_t)(x1 + x) == RIGHT_BORDER))
@@ -628,8 +625,7 @@ public class carpolo
 	}
 	
 	
-	public static VideoEofHandlerPtr video_eof_carpolo  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_carpolo  = new VideoEofHandlerPtr() { public void handler(){
 		int col_x, col_y;
 		int car1_x, car2_x, car3_x, car4_x, ball_x;
 		int car1_y, car2_y, car3_y, car4_y, ball_y;
@@ -639,25 +635,25 @@ public class carpolo
 	
 		// check car-car collision first
 	
-		car1_x = carpolo_spriteram.read(0x00);
-		car1_y = carpolo_spriteram.read(0x01);
-		remap_sprite_code(0, carpolo_spriteram.read(0x0c)& 0x0f, &car1_code, &car1_flipy);
+		car1_x = carpolo_spriteram[0x00];
+		car1_y = carpolo_spriteram[0x01];
+		remap_sprite_code(0, carpolo_spriteram[0x0c] & 0x0f, &car1_code, &car1_flipy);
 	
-		car2_x = carpolo_spriteram.read(0x02);
-		car2_y = carpolo_spriteram.read(0x03);
-		remap_sprite_code(0, carpolo_spriteram.read(0x0c)>> 4,   &car2_code, &car2_flipy);
+		car2_x = carpolo_spriteram[0x02];
+		car2_y = carpolo_spriteram[0x03];
+		remap_sprite_code(0, carpolo_spriteram[0x0c] >> 4,   &car2_code, &car2_flipy);
 	
-		car3_x = carpolo_spriteram.read(0x04);
-		car3_y = carpolo_spriteram.read(0x05);
-		remap_sprite_code(0, carpolo_spriteram.read(0x0d)& 0x0f, &car3_code, &car3_flipy);
+		car3_x = carpolo_spriteram[0x04];
+		car3_y = carpolo_spriteram[0x05];
+		remap_sprite_code(0, carpolo_spriteram[0x0d] & 0x0f, &car3_code, &car3_flipy);
 	
-		car4_x = carpolo_spriteram.read(0x06);
-		car4_y = carpolo_spriteram.read(0x07);
-		remap_sprite_code(0, carpolo_spriteram.read(0x0d)>> 4,   &car4_code, &car4_flipy);
+		car4_x = carpolo_spriteram[0x06];
+		car4_y = carpolo_spriteram[0x07];
+		remap_sprite_code(0, carpolo_spriteram[0x0d] >> 4,   &car4_code, &car4_flipy);
 	
-		ball_x = carpolo_spriteram.read(0x08);
-		ball_y = carpolo_spriteram.read(0x09);
-		remap_sprite_code(1, carpolo_spriteram.read(0x0e)& 0x0f, &ball_code, &ball_flipy);
+		ball_x = carpolo_spriteram[0x08];
+		ball_y = carpolo_spriteram[0x09];
+		remap_sprite_code(1, carpolo_spriteram[0x0e] & 0x0f, &ball_code, &ball_flipy);
 	
 	
 		// cars 1 and 2
@@ -801,7 +797,7 @@ public class carpolo
 	
 		col = check_sprite_border_collision(car1_x, car1_y, car1_code, car1_flipy);
 	
-		if (col != 0)
+		if (col)
 		{
 			carpolo_generate_car_border_interrupt(0, (col == 2));
 		}
@@ -809,7 +805,7 @@ public class carpolo
 		{
 			col = check_sprite_border_collision(car2_x, car2_y, car2_code, car2_flipy);
 	
-			if (col != 0)
+			if (col)
 			{
 				carpolo_generate_car_border_interrupt(1, (col == 2));
 			}
@@ -817,7 +813,7 @@ public class carpolo
 			{
 				col = check_sprite_border_collision(car3_x, car3_y, car3_code, car3_flipy);
 	
-				if (col != 0)
+				if (col)
 				{
 					carpolo_generate_car_border_interrupt(2, (col == 2));
 				}
@@ -825,7 +821,7 @@ public class carpolo
 				{
 					col = check_sprite_border_collision(car4_x, car4_y, car4_code, car4_flipy);
 	
-					if (col != 0)
+					if (col)
 					{
 						carpolo_generate_car_border_interrupt(3, (col == 2));
 					}

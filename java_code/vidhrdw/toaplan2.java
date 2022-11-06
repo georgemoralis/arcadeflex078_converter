@@ -146,7 +146,7 @@ Pipi & Bibis	 | Fix Eight		| V-Five		   | Snow Bros. 2	  |
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -509,26 +509,23 @@ public class toaplan2
 		return error_level;
 	}
 	
-	public static VideoStartHandlerPtr video_start_toaplan2_0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_toaplan2_0  = new VideoStartHandlerPtr() { public int handler(){
 		return toaplan2_vh_start(0);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_toaplan2_1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_toaplan2_1  = new VideoStartHandlerPtr() { public int handler(){
 		int error_level = 0;
 		error_level |= toaplan2_vh_start(0);
 		error_level |= toaplan2_vh_start(1);
 		return error_level;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_truxton2_0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_truxton2_0  = new VideoStartHandlerPtr() { public int handler(){
 		if (toaplan2_vram_alloc(0))
 		{
 			return 1;
 		}
-		if (truxton2_create_tilemaps_0() != 0)
+		if (truxton2_create_tilemaps_0())
 		{
 			return 1;
 		}
@@ -536,13 +533,12 @@ public class toaplan2
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_battleg_0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battleg_0  = new VideoStartHandlerPtr() { public int handler(){
 		if (toaplan2_vram_alloc(0))
 		{
 			return 1;
 		}
-		if (truxton2_create_tilemaps_0() != 0)
+		if (truxton2_create_tilemaps_0())
 		{
 			return 1;
 		}
@@ -550,8 +546,7 @@ public class toaplan2
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_batrider_0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_batrider_0  = new VideoStartHandlerPtr() { public int handler(){
 		if ((raizing_tx_gfxram16 = (data16_t *)auto_malloc(RAIZING_TX_GFXRAM_SIZE)) == 0)
 			return 1;
 		memset(raizing_tx_gfxram16,0,RAIZING_TX_GFXRAM_SIZE);
@@ -560,7 +555,7 @@ public class toaplan2
 			return 1;
 		spriteram16_n[0] = spriteram16_new[0];
 	
-		if (batrider_create_tilemaps_0() != 0)
+		if (batrider_create_tilemaps_0())
 			return 1;
 	
 		tilemap_set_scrolldx(tx_tilemap, 0x1d4, 0x2a);
@@ -625,7 +620,7 @@ public class toaplan2
 		{
 			if (offset == 0)			/* Wrong ! */
 			{
-				if ((data & 0x8000) != 0)		/* Flip off */
+				if (data & 0x8000)		/* Flip off */
 				{
 					tx_flip = 0;
 					tilemap_set_flip(tx_tilemap, tx_flip);
@@ -675,8 +670,8 @@ public class toaplan2
 		{
 			int code = offset/32;
 			COMBINE_DATA(&toaplan2_tx_gfxram16[offset]);
-			decodechar(Machine.gfx[2], code, toaplan2_tx_gfxram,
-						Machine.drv.gfxdecodeinfo[2].gfxlayout);
+			decodechar(Machine->gfx[2], code, toaplan2_tx_gfxram,
+						Machine->drv->gfxdecodeinfo[2].gfxlayout);
 	
 			tilemap_mark_all_tiles_dirty(tx_tilemap);
 		}
@@ -719,13 +714,13 @@ public class toaplan2
 	
 		/* Decode text characters */
 		for (code = 0; code < 1024; code++)
-			decodechar (Machine.gfx[2], code, raizing_tx_gfxram, Machine.drv.gfxdecodeinfo[2].gfxlayout);
+			decodechar (Machine->gfx[2], code, raizing_tx_gfxram, Machine->drv->gfxdecodeinfo[2].gfxlayout);
 		tilemap_mark_all_tiles_dirty(tx_tilemap);
 	}
 	
 	WRITE16_HANDLER( batrider_objectbank_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			data &= 0xf;
 			if (batrider_object_bank[offset] != data)
@@ -846,10 +841,10 @@ public class toaplan2
 	
 	void toaplan2_scroll_reg_select_w(offs_t offset, data16_t data, UINT32 mem_mask, int controller)
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			toaplan2_scroll_reg[controller] = data & 0x8f;
-			if ((data & 0x70) != 0)
+			if (data & 0x70)
 				logerror("Hmmm, selecting unknown LSB video control register (%04x)  Video controller %01x  \n",toaplan2_scroll_reg[controller],controller);
 		}
 		else
@@ -984,7 +979,7 @@ public class toaplan2
 						if ((toaplan2_sub_cpu == CPU_2_Z80) && (data == 3))
 						{
 							/* HACK! When tilted, sound CPU needs to be reset. */
-							if (Machine.drv.sound[0].sound_type == SOUND_YM3812)
+							if (Machine->drv->sound[0].sound_type == SOUND_YM3812)
 							{
 								cpu_set_reset_line(1,PULSE_LINE);
 								YM3812_sh_reset();
@@ -1152,10 +1147,10 @@ public class toaplan2
 			}
 	
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( sprite_voffs = 0; sprite_voffs < (TOAPLAN2_SPRITERAM_SIZE/2); sprite_voffs += 4 )
 			{
@@ -1191,10 +1186,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_TOP_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1216,10 +1211,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_FG_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1241,10 +1236,10 @@ public class toaplan2
 		{
 			int tchar[2], tattr[2];
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 			for ( tile_voffs = 0; tile_voffs < (TOAPLAN2_BG_VRAM_SIZE/2); tile_voffs += 2 )
 			{
@@ -1271,13 +1266,13 @@ public class toaplan2
 			displog += 1;
 			displog &= 1;
 		}
-		if (displog != 0)
+		if (displog)
 		{
 			logerror("Scrolls   BG-X  BG-Y   FG-X  FG-Y   TOP-X  TOP-Y   Sprite-X  Sprite-Y\n");
-			logerror("---0-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
+			logerror("---0-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[0],bg_scrolly[0],fg_scrollx[0],fg_scrolly[0],top_scrollx[0],top_scrolly[0],sprite_scrollx[0], sprite_scrolly[0]);
 			if (vid_controllers == 2)
 			{
-				logerror("---1-.   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
+				logerror("---1-->   %04x  %04x   %04x  %04x    %04x  %04x       %04x    %04x\n", bg_scrollx[1],bg_scrolly[1],fg_scrollx[1],fg_scrolly[1],top_scrollx[1],top_scrolly[1],sprite_scrollx[1], sprite_scrolly[1]);
 			}
 		}
 	}
@@ -1291,7 +1286,7 @@ public class toaplan2
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int controller, int priority_to_display, int bank_sel )
 	{
-		const struct GfxElement *gfx = Machine.gfx[ ((controller*2)+1) ];
+		const struct GfxElement *gfx = Machine->gfx[ ((controller*2)+1) ];
 	
 		int offs;
 	
@@ -1311,7 +1306,7 @@ public class toaplan2
 	
 			if ((priority == priority_to_display) && (attrib & 0x8000))
 			{
-				if (bank_sel == 0)	/* No Sprite select bank switching needed */
+				if (!bank_sel)	/* No Sprite select bank switching needed */
 				{
 					sprite = ((attrib & 3) << 16) | source[offs + 1];	/* 18 bit */
 				}
@@ -1334,7 +1329,7 @@ public class toaplan2
 				flipx = attrib & TOAPLAN2_SPRITE_FLIPX;
 				flipy = attrib & TOAPLAN2_SPRITE_FLIPY;
 	
-				if (flipx != 0)
+				if (flipx)
 				{
 					/***** Wrap sprite position around *****/
 					sx_base -= 7;
@@ -1345,7 +1340,7 @@ public class toaplan2
 					if (sx_base >= 0x180) sx_base -= 0x200;
 				}
 	
-				if (flipy != 0)
+				if (flipy)
 				{
 					sy_base -= 7;
 					if (sy_base >= 0x1c0) sy_base -= 0x200;
@@ -1371,11 +1366,11 @@ public class toaplan2
 				/***** Draw the complete sprites using the dimension info *****/
 				for (dim_y = 0; dim_y < sprite_sizey; dim_y += 8)
 				{
-					if (flipy != 0) sy = sy_base - dim_y;
+					if (flipy) sy = sy_base - dim_y;
 					else       sy = sy_base + dim_y;
 					for (dim_x = 0; dim_x < sprite_sizex; dim_x += 8)
 					{
-						if (flipx != 0) sx = sx_base - dim_x;
+						if (flipx) sx = sx_base - dim_x;
 						else       sx = sx_base + dim_x;
 	
 						drawgfx(bitmap,gfx,sprite,
@@ -1452,8 +1447,7 @@ public class toaplan2
 		Draw the game screen in the given mame_bitmap.
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_toaplan2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toaplan2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 	
@@ -1476,8 +1470,7 @@ public class toaplan2
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_dogyuun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dogyuun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 	
@@ -1510,8 +1503,7 @@ public class toaplan2
 		}
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_batsugun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_batsugun_1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 	
@@ -1546,14 +1538,12 @@ public class toaplan2
 	
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_truxton2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_truxton2_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		video_update_toaplan2_0(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_batrider_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_batrider_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 		int line;
@@ -1568,7 +1558,7 @@ public class toaplan2
 	
 		/* If object bank is changed, all tile must be redrawn to blow off glitches. */
 		/* This causes serious slow down. Is there better algorithm ?                */
-		if (objectbank_dirty != 0)
+		if (objectbank_dirty)
 		{
 			tilemap_mark_all_tiles_dirty(bg_tilemap[0]);
 			tilemap_mark_all_tiles_dirty(fg_tilemap[0]);
@@ -1601,8 +1591,7 @@ public class toaplan2
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mahoudai_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mahoudai_0  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int priority;
 	
 	
@@ -1632,21 +1621,18 @@ public class toaplan2
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_toaplan2_0  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_toaplan2_0  = new VideoEofHandlerPtr() { public void handler(){
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_toaplan2_1  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_toaplan2_1  = new VideoEofHandlerPtr() { public void handler(){
 		/** Shift sprite RAM buffers  ***  Used to fix sprite lag **/
 		memcpy(spriteram16_now[0],spriteram16_new[0],TOAPLAN2_SPRITERAM_SIZE);
 		memcpy(spriteram16_now[1],spriteram16_new[1],TOAPLAN2_SPRITERAM_SIZE);
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_batrider_0  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_batrider_0  = new VideoEofHandlerPtr() { public void handler(){
 		cpu_set_irq_line(0, MC68000_IRQ_4, HOLD_LINE);  /* Frame done */
 	} };
 }

@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class dday
 	
 	  Thanks Zwaxy for the timer info. */
 	
-	public static ReadHandlerPtr dday_countdown_timer_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dday_countdown_timer_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return ((timer_value / 10) << 4) | (timer_value % 10);
 	} };
 	
@@ -65,8 +64,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_dday  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_dday  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -225,7 +223,7 @@ public class dday
 	
 		if (sl_flipx != flipx)
 		{
-			if ((code & 0x80) != 0)
+			if (code & 0x80)
 			{
 				/* no mirroring, draw dark spot */
 				code = 1;
@@ -242,8 +240,7 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_dday  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dday  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap   = tilemap_create(get_bg_tile_info,  tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32);
 		fg_tilemap   = tilemap_create(get_fg_tile_info,  tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		text_tilemap = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -269,27 +266,23 @@ public class dday
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr dday_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dday_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dday_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap, offset);
 	} };
 	
-	public static WriteHandlerPtr dday_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dday_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dday_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap, offset);
 		tilemap_mark_tile_dirty(fg_tilemap, offset ^ 0x1f);  /* for flipx case */
 	} };
 	
-	public static WriteHandlerPtr dday_textvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dday_textvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dday_textvideoram[offset] = data;
 		tilemap_mark_tile_dirty(text_tilemap, offset);
 	} };
 	
-	public static WriteHandlerPtr dday_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dday_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 	
 	
@@ -303,14 +296,12 @@ public class dday
 		}
 	} };
 	
-	public static ReadHandlerPtr dday_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dday_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    return dday_colorram[offset & 0x03e0];
 	} };
 	
 	
-	public static WriteHandlerPtr dday_sl_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dday_sl_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (sl_image != data)
 		{
 			sl_image = data;
@@ -320,9 +311,8 @@ public class dday
 	} };
 	
 	
-	public static WriteHandlerPtr dday_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		//if ((data & 0xac) != 0)  logerror("Control = %02X\n", data & 0xac);
+	public static WriteHandlerPtr dday_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		//if (data & 0xac)  logerror("Control = %02X\n", data & 0xac);
 	
 		/* bit 0 is coin counter 1 */
 		coin_counter_w(0, data & 0x01);
@@ -351,14 +341,13 @@ public class dday
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dday  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(main_bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		tilemap_draw(main_bitmap,cliprect,fg_tilemap,0,0);
 		tilemap_draw(main_bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);
 		tilemap_draw(main_bitmap,cliprect,text_tilemap,0,0);
 	
-		if (sl_enable != 0)
+		if (sl_enable)
 		{
 			/* apply shadow */
 	
@@ -382,7 +371,7 @@ public class dday
 						src_pixel += Machine.drv.total_colors;
 					}
 	
-					plot_pixel.handler(bitmap, x, y, src_pixel);
+					plot_pixel(bitmap, x, y, src_pixel);
 				}
 			}
 		}

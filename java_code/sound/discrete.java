@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -95,7 +95,7 @@ public class discrete
 	    va_list arg;
 	    va_start(arg,text);
 	
-	    if (disclogfile != 0)
+	    if(disclogfile)
 		{
 			vfprintf(disclogfile, text, arg);
 			fprintf(disclogfile,"\n");
@@ -113,8 +113,8 @@ public class discrete
 	
 	int dss_default_kill(struct node_description *node)
 	{
-		if(node.context) free(node.context);
-		node.context=NULL;
+		if(node->context) free(node->context);
+		node->context=NULL;
 		return 0;
 	}
 	
@@ -204,17 +204,17 @@ public class discrete
 	
 				/* Work out what nodes/inputs are required, dont process NO CONNECT nodes */
 				/* these are ones that are connected to NODE_LIST[0]                      */
-				for(loop3=0;loop3<node.active_inputs;loop3++)
+				for(loop3=0;loop3<node->active_inputs;loop3++)
 				{
-					if(node.input_node[loop3] && (node.input_node[loop3]).node!=NODE_NC) node.input[loop3]=(node.input_node[loop3]).output;
+					if(node->input_node[loop3] && (node->input_node[loop3])->node!=NODE_NC) node->input[loop3]=(node->input_node[loop3])->output;
 				}
 				/* Now step the node */
-				if(module_list[node.module].step) (*module_list[node.module].step)(node);
+				if(module_list[node->module].step) (*module_list[node->module].step)(node);
 			}
 	
 			/* Now put the output into the buffers */
-			buffer[0][loop]=((struct dso_output_context*)(output_node.context)).left;
-			buffer[1][loop]=((struct dso_output_context*)(output_node.context)).right;
+			buffer[0][loop]=((struct dso_output_context*)(output_node->context))->left;
+			buffer[1][loop]=((struct dso_output_context*)(output_node->context))->right;
 		}
 	#ifdef DISCRETE_WAVELOG
 		wav_add_data_16lr(wav_file, buffer[0],buffer[1], length);
@@ -236,17 +236,17 @@ public class discrete
 	
 				/* Work out what nodes/inputs are required, dont process NO CONNECT nodes */
 				/* these are ones that are connected to NODE_LIST[0]                      */
-				for(loop3=0;loop3<node.active_inputs;loop3++)
+				for(loop3=0;loop3<node->active_inputs;loop3++)
 				{
-					if(node.input_node[loop3] && (node.input_node[loop3]).node!=NODE_NC) node.input[loop3]=(node.input_node[loop3]).output;
+					if(node->input_node[loop3] && (node->input_node[loop3])->node!=NODE_NC) node->input[loop3]=(node->input_node[loop3])->output;
 				}
 	
 				/* Now step the node */
-				if(module_list[node.module].step) (*module_list[node.module].step)(node);
+				if(module_list[node->module].step) (*module_list[node->module].step)(node);
 			}
 	
 			/* Now put the output into the buffer */
-			buffer[loop]=(((struct dso_output_context*)(output_node.context)).left+((struct dso_output_context*)(output_node.context)).right)/2;
+			buffer[loop]=(((struct dso_output_context*)(output_node->context))->left+((struct dso_output_context*)(output_node->context))->right)/2;
 		}
 	#ifdef DISCRETE_WAVELOG
 		wav_add_data_16(wav_file, buffer, length);
@@ -260,7 +260,7 @@ public class discrete
 		/* Reset all of the objects */
 		int loop=0,loop2=0;
 	
-		if (init_ok == 0) return;
+		if(!init_ok) return;
 	
 		for(loop=0;loop<node_count;loop++)
 		{
@@ -269,9 +269,9 @@ public class discrete
 	
 			/* Work out what nodes/inputs are required, dont process NO CONNECT nodes */
 			/* these are ones that are connected to NODE_LIST[0]                      */
-			for(loop2=0;loop2<node.active_inputs;loop2++)
+			for(loop2=0;loop2<node->active_inputs;loop2++)
 			{
-				if(node.input_node[loop2] && (node.input_node[loop2]).node!=NODE_NC) node.input[loop2]=(node.input_node[loop2]).output;
+				if(node->input_node[loop2] && (node->input_node[loop2])->node!=NODE_NC) node->input[loop2]=(node->input_node[loop2])->output;
 			}
 	
 			/* Now that the inputs have been setup then we should call the reset function */
@@ -296,14 +296,14 @@ public class discrete
 		int loop=0,loop2=0,search=0,failed=0;
 	
 	#ifdef DISCRETE_WAVELOG
-		wav_file = wav_open("discrete.wav", Machine.sample_rate, ((Machine.drv.sound_attributes&SOUND_SUPPORTS_STEREO) == SOUND_SUPPORTS_STEREO) ? 2: 1);
+		wav_file = wav_open("discrete.wav", Machine->sample_rate, ((Machine->drv->sound_attributes&SOUND_SUPPORTS_STEREO) == SOUND_SUPPORTS_STEREO) ? 2: 1);
 	#endif
 	#ifdef DISCRETE_DEBUGLOG
-		if (disclogfile == 0) disclogfile=fopen("discrete.log", "w");
+		if(!disclogfile) disclogfile=fopen("discrete.log", "w");
 	#endif
 	
 		/* Initialise */
-		intf=msound.sound_interface;
+		intf=msound->sound_interface;
 		node_count=0;
 	
 		/* Sanity check and node count */
@@ -461,23 +461,23 @@ public class discrete
 		discrete_log("discrete_sh_start() - Nodes initialised", node_count);
 	
 		/* Different setup for Mono/Stereo systems */
-		if ((Machine.drv.sound_attributes&SOUND_SUPPORTS_STEREO) == SOUND_SUPPORTS_STEREO)
+		if ((Machine->drv->sound_attributes&SOUND_SUPPORTS_STEREO) == SOUND_SUPPORTS_STEREO)
 		{
 			int vol[2];
 			const char *stereo_names[2] = { "Discrete Left", "Discrete Right" };
-			vol[0] = MIXER((int)output_node.input[2],MIXER_PAN_LEFT);
-			vol[1] = MIXER((int)output_node.input[2],MIXER_PAN_RIGHT);
+			vol[0] = MIXER((int)output_node->input[2],MIXER_PAN_LEFT);
+			vol[1] = MIXER((int)output_node->input[2],MIXER_PAN_RIGHT);
 			/* Initialise a stereo, stream, we always use stereo even if only a mono system */
-			discrete_stream=stream_init_multi(2,stereo_names,vol,Machine.sample_rate,0,discrete_stream_update_stereo);
+			discrete_stream=stream_init_multi(2,stereo_names,vol,Machine->sample_rate,0,discrete_stream_update_stereo);
 			discrete_log("discrete_sh_start() - Stereo Audio Stream Initialised", node_count);
 			discrete_stereo=1;
 		}
 		else
 		{
 			int vol;
-			vol = output_node.input[2];
+			vol = output_node->input[2];
 			/* Initialise a stereo, stream, we always use stereo even if only a mono system */
-			discrete_stream=stream_init("Discrete Sound",vol,Machine.sample_rate,0,discrete_stream_update_mono);
+			discrete_stream=stream_init("Discrete Sound",vol,Machine->sample_rate,0,discrete_stream_update_mono);
 			discrete_log("discrete_sh_start() - Mono Audio Stream Initialised", node_count);
 		}
 	
@@ -488,7 +488,7 @@ public class discrete
 		}
 	
 		/* Report success or fail */
-		if (failed == 0) init_ok=1;
+		if(!failed) init_ok=1;
 	
 		/* Now reset the system to a sensible state */
 		discrete_sh_reset();
@@ -500,7 +500,7 @@ public class discrete
 	void discrete_sh_stop (void)
 	{
 		int loop=0;
-		if (init_ok == 0) return;
+		if(!init_ok) return;
 	
 	#ifdef DISCRETE_WAVELOG
 		wav_close(wav_file);
@@ -512,21 +512,21 @@ public class discrete
 			discrete_log("discrete_sh_stop() - Calling stop for %s",module_list[node_list[loop].module].name);
 			if(module_list[node_list[loop].module].kill) (*module_list[node_list[loop].module].kill)(&node_list[loop]);
 		}
-		if (node_list != 0) free(node_list);
-		if (running_order != 0) free(running_order);
+		if(node_list) free(node_list);
+		if(running_order) free(running_order);
 		node_count=0;
 		node_list=NULL;
 		running_order=NULL;
 	
 	#ifdef DISCRETE_DEBUGLOG
-	    if (disclogfile != 0) fclose(disclogfile);
+	    if(disclogfile) fclose(disclogfile);
 		disclogfile=NULL;
 	#endif
 	}
 	
 	void discrete_sh_update(void)
 	{
-		if (init_ok == 0) return;
+		if(!init_ok) return;
 	
 		/* Bring stream upto the present time */
 		stream_update(discrete_stream, 0);

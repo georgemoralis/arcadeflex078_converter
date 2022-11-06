@@ -43,7 +43,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -80,64 +80,54 @@ public class tsamurai
 	static int nmi_enabled;
 	static int sound_command1, sound_command2, sound_command3;
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		nmi_enabled = data;
-	} };
+	}
 	
-	public static InterruptHandlerPtr samurai_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (nmi_enabled != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	public static InterruptHandlerPtr samurai_interrupt = new InterruptHandlerPtr() {public void handler()
+		if (nmi_enabled) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+	}
 	
-	public static ReadHandlerPtr unknown_d803_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unknown_d803_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x6b;
 	} };
 	
-	public static ReadHandlerPtr unknown_d803_m660_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unknown_d803_m660_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x53;     // this is what the bootleg patches in.
 	} };
 	
-	public static ReadHandlerPtr unknown_d806_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unknown_d806_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x40;
 	} };
 	
-	public static ReadHandlerPtr unknown_d900_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unknown_d900_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0x6a;
 	} };
 	
-	public static ReadHandlerPtr unknown_d938_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unknown_d938_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xfb;
 	} };
 	
-	public static WriteHandlerPtr sound_command1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_command1 = data;
 		cpu_set_irq_line( 1, 0, HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr sound_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_command2 = data;
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr sound_command3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_command3 = data;
 		cpu_set_irq_line( 3, 0, HOLD_LINE );
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
-	public static WriteHandlerPtr tsamurai_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -265,28 +255,25 @@ public class tsamurai
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr sound_command1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_command1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_command1;
 	} };
 	
-	public static WriteHandlerPtr sound_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0,data);
 	} };
 	
-	public static ReadHandlerPtr sound_command2_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr sound_command2_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return sound_command2;
-	} };
+	}
 	
-	public static WriteHandlerPtr sound_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(1,data);
 	} };
 	
-	public static ReadHandlerPtr sound_command3_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr sound_command3_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return sound_command3;
-	} };
+	}
 	
 	/*******************************************************************************/
 	public static Memory_ReadAddress readmem_sound1[]={
@@ -396,40 +383,40 @@ public class tsamurai
 	/*******************************************************************************/
 	
 	static int vsgongf_sound_nmi_enabled;
-	public static WriteHandlerPtr vsgongf_sound_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr vsgongf_sound_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		vsgongf_sound_nmi_enabled = data;
-	} };
+	}
 	
-	public static InterruptHandlerPtr vsgongf_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
-		if (vsgongf_sound_nmi_enabled != 0) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	public static InterruptHandlerPtr vsgongf_sound_interrupt = new InterruptHandlerPtr() {public void handler()
+		if (vsgongf_sound_nmi_enabled) cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
+	}
 	
 	/* what are these, protection of some kind? */
 	
-	public static ReadHandlerPtr vsgongf_a006_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr vsgongf_a006_r  = new ReadHandlerPtr() { public int handler(int offset)
 		/* sound CPU busy? */
-		if (!strcmp(Machine.gamedrv.name,"vsgongf"))  return 0x80;
-		if (!strcmp(Machine.gamedrv.name,"ringfgt"))  return 0x80;
-		if (!strcmp(Machine.gamedrv.name,"ringfgt2")) return 0xc0;
+		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0x80;
+		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x80;
+		if (!strcmp(Machine->gamedrv->name,"ringfgt2")) return 0xc0;
 	
 		logerror ("unhandled read from a006\n");
 		return 0x00;
-	} };
+	}
 	
-	public static ReadHandlerPtr vsgongf_a100_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr vsgongf_a100_r  = new ReadHandlerPtr() { public int handler(int offset)
 		/* protection? */
-		if (!strcmp(Machine.gamedrv.name,"vsgongf"))  return 0xaa;
-		if (!strcmp(Machine.gamedrv.name,"ringfgt"))  return 0x63;
-		if (!strcmp(Machine.gamedrv.name,"ringfgt2")) return 0x6a;
+		if (!strcmp(Machine->gamedrv->name,"vsgongf"))  return 0xaa;
+		if (!strcmp(Machine->gamedrv->name,"ringfgt"))  return 0x63;
+		if (!strcmp(Machine->gamedrv->name,"ringfgt2")) return 0x6a;
 	
 		logerror ("unhandled read from a100\n");
 		return 0x00;
-	} };
+	}
 	
-	public static WriteHandlerPtr vsgongf_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	public static WriteHandlerPtr vsgongf_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
-	} };
+	}
 	
 	public static Memory_ReadAddress readmem_vsgongf[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -488,7 +475,7 @@ public class tsamurai
 	
 	/*******************************************************************************/
 	
-	static InputPortPtr input_ports_tsamurai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tsamurai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tsamurai )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -569,7 +556,7 @@ public class tsamurai
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nunchaku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nunchaku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nunchaku )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -650,7 +637,7 @@ public class tsamurai
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsgongf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsgongf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsgongf )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -734,7 +721,7 @@ public class tsamurai
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_yamagchi = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yamagchi = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yamagchi )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -816,7 +803,7 @@ public class tsamurai
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_m660 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_m660 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( m660 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -953,8 +940,7 @@ public class tsamurai
 	
 	/*******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_tsamurai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tsamurai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -987,13 +973,10 @@ public class tsamurai
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_m660 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( m660 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1032,13 +1015,10 @@ public class tsamurai
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vsgongf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vsgongf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -1067,9 +1047,7 @@ public class tsamurai
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, vsgongf_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*******************************************************************************/
 	
@@ -1438,16 +1416,16 @@ public class tsamurai
 		ROM_LOAD( "clr.6p",  0x200, 0x0100, CRC(0e4fd17a) SHA1(d4e32bd9dd903177af61f77976a25c5db1467bba) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_vsgongf	   = new GameDriver("1984"	,"vsgongf"	,"tsamurai.java"	,rom_vsgongf,null	,machine_driver_vsgongf	,input_ports_vsgongf	,null	,ROT90	,	"Kaneko", "VS Gong Fight", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_ringfgt	   = new GameDriver("1984"	,"ringfgt"	,"tsamurai.java"	,rom_ringfgt,driver_vsgongf	,machine_driver_vsgongf	,input_ports_vsgongf	,null	,ROT90	,	"Taito", "Ring Fighter (set 1)" )
-	public static GameDriver driver_ringfgt2	   = new GameDriver("1984"	,"ringfgt2"	,"tsamurai.java"	,rom_ringfgt2,driver_vsgongf	,machine_driver_vsgongf	,input_ports_vsgongf	,null	,ROT90	,	"Taito", "Ring Fighter (set 2)" )
-	public static GameDriver driver_tsamurai	   = new GameDriver("1985"	,"tsamurai"	,"tsamurai.java"	,rom_tsamurai,null	,machine_driver_tsamurai	,input_ports_tsamurai	,null	,ROT90	,	"Taito", "Samurai Nihon-ichi (set 1)" )
-	public static GameDriver driver_tsamura2	   = new GameDriver("1985"	,"tsamura2"	,"tsamurai.java"	,rom_tsamura2,driver_tsamurai	,machine_driver_tsamurai	,input_ports_tsamurai	,null	,ROT90	,	"Taito", "Samurai Nihon-ichi (set 2)" )
-	public static GameDriver driver_nunchaku	   = new GameDriver("1985"	,"nunchaku"	,"tsamurai.java"	,rom_nunchaku,null	,machine_driver_tsamurai	,input_ports_nunchaku	,null	,ROT90	,	"Taito", "Nunchackun", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_yamagchi	   = new GameDriver("1985"	,"yamagchi"	,"tsamurai.java"	,rom_yamagchi,null	,machine_driver_tsamurai	,input_ports_yamagchi	,null	,ROT90	,	"Taito", "Go Go Mr. Yamaguchi / Yuke Yuke Yamaguchi-kun", GAME_IMPERFECT_COLORS )
+	GAMEX(1984, vsgongf,  0,        vsgongf,  vsgongf,  0, ROT90, "Kaneko", "VS Gong Fight", GAME_IMPERFECT_COLORS )
+	GAME( 1984, ringfgt,  vsgongf,  vsgongf,  vsgongf,  0, ROT90, "Taito", "Ring Fighter (set 1)" )
+	GAME( 1984, ringfgt2, vsgongf,  vsgongf,  vsgongf,  0, ROT90, "Taito", "Ring Fighter (set 2)" )
+	GAME( 1985, tsamurai, 0,        tsamurai, tsamurai, 0, ROT90, "Taito", "Samurai Nihon-ichi (set 1)" )
+	GAME( 1985, tsamura2, tsamurai, tsamurai, tsamurai, 0, ROT90, "Taito", "Samurai Nihon-ichi (set 2)" )
+	GAMEX(1985, nunchaku, 0,        tsamurai, nunchaku, 0, ROT90, "Taito", "Nunchackun", GAME_IMPERFECT_COLORS )
+	GAMEX(1985, yamagchi, 0,        tsamurai, yamagchi, 0, ROT90, "Taito", "Go Go Mr. Yamaguchi / Yuke Yuke Yamaguchi-kun", GAME_IMPERFECT_COLORS )
 	
-	public static GameDriver driver_m660	   = new GameDriver("1986"	,"m660"	,"tsamurai.java"	,rom_m660,null	,machine_driver_m660	,input_ports_m660	,null	,ROT90	,	"[Woodplace Inc.] Taito America Corporation", "Mission 660 (US)" )
-	public static GameDriver driver_m660j	   = new GameDriver("1986"	,"m660j"	,"tsamurai.java"	,rom_m660j,driver_m660	,machine_driver_m660	,input_ports_m660	,null	,ROT90	,	"[Woodplace Inc.] Taito Corporation", "Mission 660 (Japan)" )
-	public static GameDriver driver_m660b	   = new GameDriver("1986"	,"m660b"	,"tsamurai.java"	,rom_m660b,driver_m660	,machine_driver_m660	,input_ports_m660	,null	,ROT90	,	"bootleg", "Mission 660 (bootleg)" )
-	public static GameDriver driver_alphaxz	   = new GameDriver("1986"	,"alphaxz"	,"tsamurai.java"	,rom_alphaxz,driver_m660	,machine_driver_m660	,input_ports_m660	,null	,ROT90	,	"Ed / Woodplace Inc.", "The Alphax Z (Japan)" )
+	GAME( 1986, m660,     0,        m660,     m660,     0, ROT90, "[Woodplace Inc.] Taito America Corporation", "Mission 660 (US)" )
+	GAME( 1986, m660j,    m660,     m660,     m660,     0, ROT90, "[Woodplace Inc.] Taito Corporation", "Mission 660 (Japan)" )
+	GAME( 1986, m660b,    m660,     m660,     m660,     0, ROT90, "bootleg", "Mission 660 (bootleg)" )
+	GAME( 1986, alphaxz,  m660,     m660,     m660,     0, ROT90, "Ed / Woodplace Inc.", "The Alphax Z (Japan)" )
 }

@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,8 +21,7 @@ public class jackal
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_jackal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_jackal  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -32,7 +31,7 @@ public class jackal
 		{
 			COLOR(0,i) = (i & 0xff) + 256;
 			/* this is surely wrong - is there a PROM missing? */
-			if ((i & 0x0f) != 0)
+			if (i & 0x0f)
 				COLOR(0,i) |= i/256;
 		}
 		for (i = 0;i < TOTAL_COLORS(1);i++)
@@ -49,8 +48,7 @@ public class jackal
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_jackal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_jackal  = new VideoStartHandlerPtr() { public int handler(){
 		videoram_size[0] = 0x400;
 	
 		dirtybuffer = 0;
@@ -90,13 +88,13 @@ public class jackal
 			sp  = sram[offs+4];
 	
 			if (sy > 0xF0) sy = sy - 256;
-			if ((sp & 0x01) != 0) sx = sx - 256;
+			if (sp & 0x01) sx = sx - 256;
 	
 			flipx = sp & 0x20;
 			flipy = sp & 0x40;
 			color = ((sn2 & 0xf0)>>4);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -104,97 +102,96 @@ public class jackal
 				sy = 240 - sy;
 			}
 	
-			if ((sp & 0xC) != 0)    /* half sized sprite */
+			if (sp & 0xC)    /* half sized sprite */
 			{
 				spritenum = sn1*4 + ((sn2 & (8+4)) >> 2) + ((sn2 & (2+1)) << 10);
 	
 				if ((sp & 0x0C) == 0x0C)
 				{
-					drawgfx(bitmap,Machine.gfx[bank+1],
+					drawgfx(bitmap,Machine->gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x08)
 				{
-					drawgfx(bitmap,Machine.gfx[bank+1],
+					drawgfx(bitmap,Machine->gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[bank+1],
+						Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[bank+1],
 						spritenum - 2,
 						color,
 						flipx,flipy,
 						sx,sy+8,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				if ((sp & 0x0C) == 0x04)
 				{
-					drawgfx(bitmap,Machine.gfx[bank+1],
+					drawgfx(bitmap,Machine->gfx[bank+1],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[bank+1],
+						Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[bank+1],
 						spritenum + 1,
 						color,
 						flipx,flipy,
 						sx+8,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 			else
 			{
 				spritenum = sn1 + ((sn2 & 0x3) << 8);
 	
-				if ((sp & 0x10) != 0)
+				if (sp & 0x10)
 				{
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum,
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy+16:sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[bank],
+						Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum+1,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy+16:sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[bank],
+						Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum+2,
 						color,
 						flipx,flipy,
 						flipx?sx+16:sx, flipy?sy:sy+16,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
-					drawgfx(bitmap,Machine.gfx[bank],
+						Machine->visible_area,TRANSPARENCY_PEN,0);
+					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum+3,
 						color,
 						flipx,flipy,
 						flipx?sx:sx+16, flipy?sy:sy+16,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 				else
 				{
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 						spritenum,
 						color,
 						flipx,flipy,
 						sx,sy,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_jackal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jackal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		unsigned char *sr, *ss;
 		int offs,i;
 		unsigned char *RAM = (memory_region(REGION_CPU1));

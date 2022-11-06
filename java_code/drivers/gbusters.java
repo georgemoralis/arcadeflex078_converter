@@ -9,7 +9,7 @@ Preliminary driver by:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,30 +25,26 @@ public class gbusters
 	static int palette_selected;
 	static unsigned char *ram;
 	
-	public static InterruptHandlerPtr gbusters_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr gbusters_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (palette_selected != 0)
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (palette_selected)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (palette_selected != 0)
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (palette_selected)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr gbusters_1f98_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gbusters_1f98_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
 		/* bit 0 = enable char ROM reading through the video RAM */
 		K052109_set_RMRD_line((data & 0x01) ? ASSERT_LINE : CLEAR_LINE);
@@ -56,14 +52,13 @@ public class gbusters
 		/* bit 7 used (during gfx rom tests), but unknown */
 	
 		/* other bits unused/unknown */
-		if ((data & 0xfe) != 0){
+		if (data & 0xfe){
 			//logerror("%04x: (1f98) write %02x\n",activecpu_get_pc(), data);
 			//usrintf_showmessage("$1f98 = %02x", data);
 		}
 	} };
 	
-	public static WriteHandlerPtr gbusters_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gbusters_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 select palette RAM  or work RAM at 5800-5fff */
 		palette_selected = ~data & 0x01;
 	
@@ -77,7 +72,7 @@ public class gbusters
 		/* bit 7 is used but unknown */
 	
 		/* other bits unused/unknown */
-		if ((data & 0xf8) != 0)
+		if (data & 0xf8)
 		{
 			char baf[40];
 			logerror("%04x: (ccount) write %02x\n",activecpu_get_pc(), data);
@@ -86,8 +81,7 @@ public class gbusters
 		}
 	} };
 	
-	public static WriteHandlerPtr gbusters_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gbusters_unknown_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%04x: write %02x to 0x1f9c\n",activecpu_get_pc(), data);
 	
 	{
@@ -97,13 +91,11 @@ public class gbusters
 	}
 	} };
 	
-	public static WriteHandlerPtr gbusters_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gbusters_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr gbusters_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gbusters_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank_B = ((data >> 2) & 0x01);	/* ?? */
 		int bank_A = ((data) & 0x01);		/* ?? */
 		K007232_set_bank( 0, bank_A, bank_B );
@@ -176,7 +168,7 @@ public class gbusters
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gbusters = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gbusters = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gbusters )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -312,8 +304,7 @@ public class gbusters
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_gbusters = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gbusters )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* Konami custom 052526 */
@@ -341,9 +332,7 @@ public class gbusters
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -410,7 +399,7 @@ public class gbusters
 		offs += (lines & 0x0f)*0x2000;
 		cpu_setbank( 1, &RAM[offs] );
 	
-		if ((lines & 0xf0) != 0){
+		if (lines & 0xf0){
 			//logerror("%04x: (lines) write %02x\n",activecpu_get_pc(), lines);
 			//usrintf_showmessage("lines = %02x", lines);
 		}
@@ -418,8 +407,7 @@ public class gbusters
 		/* other bits unknown */
 	}
 	
-	public static MachineInitHandlerPtr machine_init_gbusters  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gbusters  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = gbusters_banking;
@@ -431,14 +419,13 @@ public class gbusters
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_gbusters  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gbusters  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_gbusters	   = new GameDriver("1988"	,"gbusters"	,"gbusters.java"	,rom_gbusters,null	,machine_driver_gbusters	,input_ports_gbusters	,init_gbusters	,ROT90	,	"Konami", "Gang Busters" )
-	public static GameDriver driver_crazycop	   = new GameDriver("1988"	,"crazycop"	,"gbusters.java"	,rom_crazycop,driver_gbusters	,machine_driver_gbusters	,input_ports_gbusters	,init_gbusters	,ROT90	,	"Konami", "Crazy Cop (Japan)" )
+	GAME( 1988, gbusters, 0,        gbusters, gbusters, gbusters, ROT90, "Konami", "Gang Busters" )
+	GAME( 1988, crazycop, gbusters, gbusters, gbusters, gbusters, ROT90, "Konami", "Crazy Cop (Japan)" )
 }

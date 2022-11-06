@@ -49,7 +49,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -88,8 +88,7 @@ public class atetris
 	}
 	
 	
-	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
@@ -101,8 +100,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_atetris  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atetris  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset the slapstic */
 		slapstic_reset();
 		current_bank = slapstic_bank() & 1;
@@ -120,8 +118,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr atetris_slapstic_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr atetris_slapstic_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = slapstic_base[0x2000 + offset];
 		int new_bank = slapstic_tweak(offset) & 1;
 	
@@ -142,8 +139,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr coincount_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coincount_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, (data >> 5) & 1);
 		coin_counter_w(1, (data >> 4) & 1);
 	} };
@@ -156,16 +152,14 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (nvram_write_enable != 0)
+	public static WriteHandlerPtr nvram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (nvram_write_enable)
 			generic_nvram[offset] = data;
 		nvram_write_enable = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nvram_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nvram_write_enable = 1;
 	} };
 	
@@ -214,7 +208,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_atetris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atetris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atetris )
 		// These ports are read via the Pokeys
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -240,7 +234,7 @@ public class atetris
 	
 	
 	// Same as the regular one except they added a Flip Controls switch
-	static InputPortPtr input_ports_atetcktl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_atetcktl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( atetcktl )
 		// These ports are read via the Pokeys
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -327,8 +321,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atetris = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atetris )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,ATARI_CLOCK_14MHz/8)
@@ -352,9 +345,7 @@ public class atetris
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -426,8 +417,7 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_atetris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_atetris  = new DriverInitHandlerPtr() { public void handler(){
 		slapstic_init(101);
 		slapstic_source = &memory_region(REGION_CPU1)[0x10000];
 		slapstic_base = &memory_region(REGION_CPU1)[0x04000];
@@ -441,9 +431,9 @@ public class atetris
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_atetris	   = new GameDriver("1988"	,"atetris"	,"atetris.java"	,rom_atetris,null	,machine_driver_atetris	,input_ports_atetris	,init_atetris	,ROT0	,	"Atari Games", "Tetris (set 1)" )
-	public static GameDriver driver_atetrisa	   = new GameDriver("1988"	,"atetrisa"	,"atetris.java"	,rom_atetrisa,driver_atetris	,machine_driver_atetris	,input_ports_atetris	,init_atetris	,ROT0	,	"Atari Games", "Tetris (set 2)" )
-	public static GameDriver driver_atetrisb	   = new GameDriver("1988"	,"atetrisb"	,"atetris.java"	,rom_atetrisb,driver_atetris	,machine_driver_atetris	,input_ports_atetris	,init_atetris	,ROT0	,	"bootleg",     "Tetris (bootleg)" )
-	public static GameDriver driver_atetcktl	   = new GameDriver("1989"	,"atetcktl"	,"atetris.java"	,rom_atetcktl,driver_atetris	,machine_driver_atetris	,input_ports_atetcktl	,init_atetris	,ROT270	,	"Atari Games", "Tetris (Cocktail set 1)" )
-	public static GameDriver driver_atetckt2	   = new GameDriver("1989"	,"atetckt2"	,"atetris.java"	,rom_atetckt2,driver_atetris	,machine_driver_atetris	,input_ports_atetcktl	,init_atetris	,ROT270	,	"Atari Games", "Tetris (Cocktail set 2)" )
+	GAME( 1988, atetris,  0,       atetris, atetris,  atetris, ROT0,   "Atari Games", "Tetris (set 1)" )
+	GAME( 1988, atetrisa, atetris, atetris, atetris,  atetris, ROT0,   "Atari Games", "Tetris (set 2)" )
+	GAME( 1988, atetrisb, atetris, atetris, atetris,  atetris, ROT0,   "bootleg",     "Tetris (bootleg)" )
+	GAME( 1989, atetcktl, atetris, atetris, atetcktl, atetris, ROT270, "Atari Games", "Tetris (Cocktail set 1)" )
+	GAME( 1989, atetckt2, atetris, atetris, atetcktl, atetris, ROT270, "Atari Games", "Tetris (Cocktail set 2)" )
 }

@@ -7,7 +7,7 @@ architecture.  Really, it's not so bad!
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.ccpu;
 
@@ -98,22 +98,22 @@ public class ccpu
 	
 	unsigned ccpu_get_context(void *dst)
 	{
-	    if (dst != 0)
+	    if( dst )
 	    {
 	        CONTEXTCCPU context;
 	        ccpuRegs *Regs = dst;
 	        cGetContext (&context);
-	        Regs.accVal = context.accVal;
-	        Regs.cmpVal = context.cmpVal;
-	        Regs.pa0 = context.pa0;
-	        Regs.cFlag = context.cFlag;
-	        Regs.eRegPC = context.eRegPC;
-	        Regs.eRegA = context.eRegA;
-	        Regs.eRegB = context.eRegB;
-	        Regs.eRegI = context.eRegI;
-	        Regs.eRegJ = context.eRegJ;
-	        Regs.eRegP = context.eRegP;
-	        Regs.eCState = context.eCState;
+	        Regs->accVal = context.accVal;
+	        Regs->cmpVal = context.cmpVal;
+	        Regs->pa0 = context.pa0;
+	        Regs->cFlag = context.cFlag;
+	        Regs->eRegPC = context.eRegPC;
+	        Regs->eRegA = context.eRegA;
+	        Regs->eRegB = context.eRegB;
+	        Regs->eRegI = context.eRegI;
+	        Regs->eRegJ = context.eRegJ;
+	        Regs->eRegP = context.eRegP;
+	        Regs->eCState = context.eCState;
 	    }
 	    return sizeof(ccpuRegs);
 	}
@@ -121,21 +121,21 @@ public class ccpu
 	
 	void ccpu_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 		{
 			CONTEXTCCPU context;
 			ccpuRegs *Regs = src;
-			context.accVal = Regs.accVal;
-			context.cmpVal = Regs.cmpVal;
-			context.pa0 = Regs.pa0;
-			context.cFlag = Regs.cFlag;
-			context.eRegPC = Regs.eRegPC;
-			context.eRegA = Regs.eRegA;
-			context.eRegB = Regs.eRegB;
-			context.eRegI = Regs.eRegI;
-			context.eRegJ = Regs.eRegJ;
-			context.eRegP = Regs.eRegP;
-			context.eCState = (CINESTATE)Regs.eCState;
+			context.accVal = Regs->accVal;
+			context.cmpVal = Regs->cmpVal;
+			context.pa0 = Regs->pa0;
+			context.cFlag = Regs->cFlag;
+			context.eRegPC = Regs->eRegPC;
+			context.eRegA = Regs->eRegA;
+			context.eRegB = Regs->eRegB;
+			context.eRegI = Regs->eRegI;
+			context.eRegJ = Regs->eRegJ;
+			context.eRegP = Regs->eRegP;
+			context.eCState = (CINESTATE)Regs->eCState;
 			cSetContext (&context);
 		}
 	}
@@ -219,7 +219,7 @@ public class ccpu
 	
 		which = (which+1) % 16;
 	    buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 		{
 	        static CONTEXTCCPU tmp;
 			cGetContext(&tmp);
@@ -228,26 +228,26 @@ public class ccpu
 	
 	    switch( regnum )
 		{
-	        case CPU_INFO_REG+CCPU_PC: sprintf(buffer[which], "PC:%04X", r.eRegPC); break;
-			case CPU_INFO_REG+CCPU_CFLAG: sprintf(buffer[which], "C:%02X", r.cFlag); break;
-	        case CPU_INFO_REG+CCPU_CSTATE: sprintf(buffer[which], "S:%X", r.eCState); break;
-			case CPU_INFO_REG+CCPU_A: sprintf(buffer[which], "A:%03X", r.eRegA); break;
-			case CPU_INFO_REG+CCPU_B: sprintf(buffer[which], "B:%03X", r.eRegB); break;
-			case CPU_INFO_REG+CCPU_I: sprintf(buffer[which], "I:%03X", r.eRegI); break;
-	        case CPU_INFO_REG+CCPU_P: sprintf(buffer[which], "P:%X", r.eRegP); break;
-			case CPU_INFO_REG+CCPU_J: sprintf(buffer[which], "J:%03X", r.eRegJ); break;
-			case CPU_INFO_REG+CCPU_ACC: sprintf(buffer[which], "ACC:%03X", r.accVal); break;
-	        case CPU_INFO_REG+CCPU_CMP: sprintf(buffer[which], "CMP:%03X", r.cmpVal); break;
-	        case CPU_INFO_REG+CCPU_PA0: sprintf(buffer[which], "PA0:%02X", r.pa0); break;
+	        case CPU_INFO_REG+CCPU_PC: sprintf(buffer[which], "PC:%04X", r->eRegPC); break;
+			case CPU_INFO_REG+CCPU_CFLAG: sprintf(buffer[which], "C:%02X", r->cFlag); break;
+	        case CPU_INFO_REG+CCPU_CSTATE: sprintf(buffer[which], "S:%X", r->eCState); break;
+			case CPU_INFO_REG+CCPU_A: sprintf(buffer[which], "A:%03X", r->eRegA); break;
+			case CPU_INFO_REG+CCPU_B: sprintf(buffer[which], "B:%03X", r->eRegB); break;
+			case CPU_INFO_REG+CCPU_I: sprintf(buffer[which], "I:%03X", r->eRegI); break;
+	        case CPU_INFO_REG+CCPU_P: sprintf(buffer[which], "P:%X", r->eRegP); break;
+			case CPU_INFO_REG+CCPU_J: sprintf(buffer[which], "J:%03X", r->eRegJ); break;
+			case CPU_INFO_REG+CCPU_ACC: sprintf(buffer[which], "ACC:%03X", r->accVal); break;
+	        case CPU_INFO_REG+CCPU_CMP: sprintf(buffer[which], "CMP:%03X", r->cmpVal); break;
+	        case CPU_INFO_REG+CCPU_PA0: sprintf(buffer[which], "PA0:%02X", r->pa0); break;
 				break;
 			case CPU_INFO_FLAGS:
 				/* TODO: no idea how the flags should look like */
 				sprintf(buffer[which], "%c-%c%c%c%c",
-					(r.cFlag) ? 'C' : 'c',
-	                (r.eCState == state_A || r.eCState == state_AA) ? 'A':' ',
-	                (r.eCState == state_A) ? 'A':' ',
-	                (r.eCState == state_B || r.eCState == state_BB) ? 'B':' ',
-	                (r.eCState == state_B) ? 'B':' ');
+					(r->cFlag) ? 'C' : 'c',
+	                (r->eCState == state_A || r->eCState == state_AA) ? 'A':' ',
+	                (r->eCState == state_A) ? 'A':' ',
+	                (r->eCState == state_B || r->eCState == state_BB) ? 'B':' ',
+	                (r->eCState == state_B) ? 'B':' ');
 	            break;
 			case CPU_INFO_NAME: return "CCPU";
 			case CPU_INFO_FAMILY: return "Cinematronics CPU";
@@ -534,7 +534,7 @@ public class ccpu
 			 * the program counter; now jump back to the top and run through another
 			 * opcode.
 			 */
-			if (bailOut != 0)
+			if (bailOut)
 	/*			ccpu_ICount = 0; */
 				ccpu_icount -= 100;
 		}
@@ -624,7 +624,7 @@ public class ccpu
 		{
 			vgColour = FromX & 0x0F;
 	
-			if (vgColour == 0)
+			if (!vgColour)
 				vgColour = 1;
 		}
 	
@@ -644,14 +644,14 @@ public class ccpu
 		if ((register_A & 0x1) == 1)
 		{
 			CINEWORD temp_word = ~FromX & 0x0FFF;
-			if (temp_word == 0)   /* black */
+			if (!temp_word)   /* black */
 				vgColour = 0;
 			else
 			{   /* non-black */
-				if ((temp_word & 0x0888) != 0)
+				if (temp_word & 0x0888)
 					/* bright */
 					vgColour = ((temp_word >> 1) & 0x04) | ((temp_word >> 6) & 0x02) | ((temp_word >> 11) & 0x01) | 0x08;
-				else if ((temp_word & 0x0444) != 0)
+				else if (temp_word & 0x0444)
 					/* dim bits */
 					vgColour = (temp_word & 0x04) | ((temp_word >> 5) & 0x02) | ((temp_word >> 10) & 0x01);
 			}
@@ -688,7 +688,7 @@ public class ccpu
 		{
 			vgColour = FromX & 0x0F;
 	
-			if (vgColour == 0)
+			if (!vgColour)
 				vgColour = 1;
 		}
 	
@@ -1297,7 +1297,7 @@ public class ccpu
 		register_A = ((register_A & 0xFF) << 8) | /* shift over 8 bits */
 		          temp_byte;  /* pick up opcode */
 	
-		if ((register_A & 0x100) != 0)
+		if (register_A & 0x100)
 		{        				   /* 1bit shifted out? */
 			register_A = (register_A >> 8) |
 			             ((register_B & 0xFF) << 8);
@@ -1354,7 +1354,7 @@ public class ccpu
 	
 		register_B = SAR(register_B,5);
 	
-		if ((register_A & 0x01) != 0)
+		if (register_A & 0x01)
 		{
 			register_B += temp_word;
 			SETFC (register_B);
@@ -1512,7 +1512,7 @@ public class ccpu
 	{
 		/*
 		 * Arithmetic shift right of D (A+B) .. B is high (sign bits).
-		 * divide by 2, but leave the sign bit the same. (ie: 1010 . 1001)
+		 * divide by 2, but leave the sign bit the same. (ie: 1010 -> 1001)
 		 */
 		CINEWORD temp_word = 0x0EEE;
 		CINEWORD temp_word_2;
@@ -1616,7 +1616,7 @@ public class ccpu
 	
 	CINESTATE opLSLDf_B_AA (int opcode)
 	{
-		/* not 'the same' as the A.AA version above */
+		/* not 'the same' as the A->AA version above */
 	
 		CINEWORD temp_word = 0x0FFF;
 	
@@ -1651,7 +1651,7 @@ public class ccpu
 	
 	CINESTATE opJEI_A_A (int opcode)
 	{
-		if ((FromX & 0x800) != 0)
+		if (FromX & 0x800)
 			FromX |= 0xF000;
 		if (!(CCPU_READPORT (CCPU_PORT_IOOUTPUTS) & 0x80))
 		{
@@ -1669,7 +1669,7 @@ public class ccpu
 	
 	CINESTATE opJEI_B_BB (int opcode)
 	{
-		if ((FromX & 0x800) != 0)
+		if (FromX & 0x800)
 			FromX |= 0xF000;
 		if (!(CCPU_READPORT (CCPU_PORT_IOOUTPUTS) & 0x80))
 		{
@@ -1687,7 +1687,7 @@ public class ccpu
 	
 	CINESTATE opJEI_A_B (int opcode)
 	{
-		if ((FromX & 0x800) != 0)
+		if (FromX & 0x800)
 			FromX |= 0xF000;
 		if (!(CCPU_READPORT (CCPU_PORT_IOOUTPUTS) & 0x80))
 		{
@@ -1712,7 +1712,7 @@ public class ccpu
 		 */
 	
 		/* negative acc? */
-		if ((register_A & 0x800) != 0)
+		if (register_A & 0x800)
 			JMP();	  /* yes -- do jump */
 	
 		return state_A;
@@ -1721,7 +1721,7 @@ public class ccpu
 	CINESTATE opJMI_AA_A (int opcode)
 	{
 		/* previous acc negative? Jump if so... */
-		if ((cmp_old & 0x800) != 0)
+		if (cmp_old & 0x800)
 			JMP();
 	
 		return state_A;
@@ -1729,7 +1729,7 @@ public class ccpu
 	
 	CINESTATE opJMI_BB_A (int opcode)
 	{
-		if ((register_B & 0x800) != 0)
+		if (register_B & 0x800)
 			JMP();
 	
 		return state_A;
@@ -1737,7 +1737,7 @@ public class ccpu
 	
 	CINESTATE opJMI_B_BB (int opcode)
 	{
-		if ((register_A & 0x800) != 0)
+		if (register_A & 0x800)
 			JMP();
 	
 		return state_BB;
@@ -1781,7 +1781,7 @@ public class ccpu
 	
 	CINESTATE opJA0_A_A (int opcode)
 	{
-		if ((acc_a0 & 0x01) != 0)
+		if (acc_a0 & 0x01)
 			JMP();
 	
 		return state_A;
@@ -1789,7 +1789,7 @@ public class ccpu
 	
 	CINESTATE opJA0_B_BB (int opcode)
 	{
-		if ((acc_a0 & 0x01) != 0)
+		if (acc_a0 & 0x01)
 			JMP();
 	
 		return state_BB;
@@ -1912,7 +1912,7 @@ public class ccpu
 	
 	CINESTATE opJMI_A_B (int opcode)
 	{
-		if ((register_A & 0x800) != 0)
+		if (register_A & 0x800)
 			JMP();
 	
 		return state_B;
@@ -1984,22 +1984,22 @@ public class ccpu
 			CINEWORD temp_word = register_A >> 8;  /* register_A's high bits */
 			temp_word &= 0x0A;                   /* only want PA11 and PA9 */
 	
-			if (temp_word != 0)
+			if (temp_word)
 			{
 				temp_word ^= 0x0A;                   /* flip the bits */
 	
-				if (temp_word != 0)
+				if (temp_word)
 					break;                	        /* if not zero, mismatch found */
 			}
 	
 			temp_word = register_B >> 8;         /* regB's top bits */
 			temp_word &= 0x0A;                   /* only want SA11 and SA9 */
 	
-			if (temp_word != 0)
+			if (temp_word)
 			{
 				temp_word ^= 0x0A;                   /* flip bits */
 	
-				if (temp_word != 0)
+				if (temp_word)
 					break;                          /* if not zero, mismatch found */
 			}
 	
@@ -2007,7 +2007,7 @@ public class ccpu
 			register_B <<= 1;                    /* shift regB */
 	
 			temp_byte ++;
-			if (temp_byte == 0)
+			if (!temp_byte)
 				return state_AA;
 	        /* try again */
 		}
@@ -2067,13 +2067,13 @@ public class ccpu
 		 * shl 20, sar 20; this means that if the CCPU reg should be -ve,
 		 * we should be negative as well.. sign extended.
 		 */
-		if ((FromX & 0x800) != 0)
+		if (FromX & 0x800)
 			FromX |= 0xFFFFF000;
-		if ((ToX & 0x800) != 0)
+		if (ToX & 0x800)
 			ToX |= 0xFFFFF000;
-		if ((FromY & 0x800) != 0)
+		if (FromY & 0x800)
 			FromY |= 0xFFFFF000;
-		if ((ToY & 0x800) != 0)
+		if (ToY & 0x800)
 			ToY |= 0xFFFFF000;
 	
 		/* figure out the vector */
@@ -2088,13 +2088,13 @@ public class ccpu
 		/* do orientation flipping, etc. */
 		/* NOTE: this has been removed on the assumption that the vector draw routine can do it all */
 	#if !RAW_VECTORS
-		if (bFlipX != 0)
+		if (bFlipX)
 		{
 			ToX = sdwGameXSize - ToX;
 			FromX = sdwGameXSize - FromX;
 		}
 	
-		if (bFlipY != 0)
+		if (bFlipY)
 		{
 			ToY = sdwGameYSize - ToY;
 			FromY = sdwGameYSize - FromY;
@@ -2107,7 +2107,7 @@ public class ccpu
 		ToY += sdwYOffset;
 	
 		/* check real coords */
-		if (bSwapXY != 0)
+		if (bSwapXY)
 		{
 			CINEWORD temp_word;
 	
@@ -2281,7 +2281,7 @@ public class ccpu
 	{
 		ccpu_jmi_dip = j;
 	/*
-		if (ccpu_jmi_dip != 0)
+		if (ccpu_jmi_dip)
 			fprintf (stderr, "CCPU JMI Set: Yes.\n");
 		else
 			fprintf (stderr, "CCPU JMI Set: No.\n");
@@ -2337,31 +2337,31 @@ public class ccpu
 	
 	void cSetContext(CONTEXTCCPU *c)
 	{
-		cmp_old = c . accVal;
-		cmp_new = c . cmpVal;
-		SETA0 (c . pa0);
-		flag_C = c . cFlag;
-		register_PC = c . eRegPC;
-		register_A = c . eRegA;
-		register_B = c . eRegB;
-		register_I = c . eRegI;
-		register_J = c . eRegJ;
-		register_P = c . eRegP;
-		state = (CINESTATE)c . eCState;
+		cmp_old = c -> accVal;
+		cmp_new = c -> cmpVal;
+		SETA0 (c -> pa0);
+		flag_C = c -> cFlag;
+		register_PC = c -> eRegPC;
+		register_A = c -> eRegA;
+		register_B = c -> eRegB;
+		register_I = c -> eRegI;
+		register_J = c -> eRegJ;
+		register_P = c -> eRegP;
+		state = (CINESTATE)c -> eCState;
 	}
 	
 	void cGetContext(CONTEXTCCPU *c)
 	{
-		c . accVal = cmp_old;
-		c . cmpVal = cmp_new;
-		c . pa0 = GETA0();
-		c . cFlag = GETFC();
-		c . eRegPC = register_PC;
-		c . eRegA = register_A;
-		c . eRegB = register_B;
-		c . eRegI = register_I;
-		c . eRegJ = register_J;
-		c . eRegP = register_P;
-		c . eCState = state;
+		c -> accVal = cmp_old;
+		c -> cmpVal = cmp_new;
+		c -> pa0 = GETA0();
+		c -> cFlag = GETFC();
+		c -> eRegPC = register_PC;
+		c -> eRegA = register_A;
+		c -> eRegB = register_B;
+		c -> eRegI = register_I;
+		c -> eRegJ = register_J;
+		c -> eRegP = register_P;
+		c -> eCState = state;
 	}
 }

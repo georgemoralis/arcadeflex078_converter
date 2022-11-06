@@ -6,7 +6,7 @@ Cinematronics Embargo driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,14 +20,12 @@ public class embargo
 	
 	
 	
-	static public static VideoUpdateHandlerPtr video_update_embargo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	static public static VideoUpdateHandlerPtr video_update_embargo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		copybitmap(bitmap, tmpbitmap, 0, 0, 0, 0, cliprect, TRANSPARENCY_NONE, 0);
 	} };
 	
 	
-	public static WriteHandlerPtr embargo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr embargo_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int col = offset % 32;
 		int row = offset / 32;
 	
@@ -35,21 +33,19 @@ public class embargo
 	
 		for (i = 0; i < 8; i++)
 		{
-			plot_pixel.handler(tmpbitmap, 8 * col + i, row, (data >> i) & 1);
+			plot_pixel(tmpbitmap, 8 * col + i, row, (data >> i) & 1);
 		}
 	
 		videoram.write(offset,data);
 	} };
 	
 	
-	public static ReadHandlerPtr embargo_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr embargo_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) << (7 - input_select)) & 0x80;
 	} };
 	
 	
-	public static ReadHandlerPtr embargo_dial_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr embargo_dial_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 lo = 0;
 		UINT8 hi = 0;
 	
@@ -96,18 +92,15 @@ public class embargo
 	} };
 	
 	
-	public static WriteHandlerPtr embargo_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr embargo_port1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dial_enable_1 = data & 1; /* other bits unknown */
 	} };
-	public static WriteHandlerPtr embargo_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr embargo_port2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dial_enable_2 = data & 1; /* other bits unknown */
 	} };
 	
 	
-	public static WriteHandlerPtr embargo_input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr embargo_input_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		input_select = data & 7;
 	} };
 	
@@ -149,7 +142,7 @@ public class embargo
 	};
 	
 	
-	static InputPortPtr input_ports_embargo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_embargo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( embargo )
 	
 		PORT_START();  /* port 0x01 */
 		PORT_DIPNAME( 0x03, 0x00, "Rounds" );
@@ -183,8 +176,7 @@ public class embargo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static MachineHandlerPtr machine_driver_embargo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( embargo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(S2650, 625000)
@@ -204,9 +196,7 @@ public class embargo
 		MDRV_VIDEO_UPDATE(embargo)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_embargo = new RomLoadPtr(){ public void handler(){ 
@@ -222,5 +212,5 @@ public class embargo
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_embargo	   = new GameDriver("1977"	,"embargo"	,"embargo.java"	,rom_embargo,null	,machine_driver_embargo	,input_ports_embargo	,null	,ROT0	,	"Cinematronics", "Embargo", GAME_NO_SOUND )
+	GAMEX( 1977, embargo, 0, embargo, embargo, 0, ROT0, "Cinematronics", "Embargo", GAME_NO_SOUND )
 }

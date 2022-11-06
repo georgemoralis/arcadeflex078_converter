@@ -18,17 +18,17 @@ Nichibutsu 1984
 CPU
 84P0100B
 
-tp-b 6.1          19.968MHz
+tp-b 6->1          19.968MHz
 
                   tp-2 tp-1  2147 2147 2147 2147 2147 2147 2147 2147
 
                +------ daughter board ------+
-               tp-p 5.8 6116  6116 tp-p 4.1
+               tp-p 5->8 6116  6116 tp-p 4->1
                +----------------------------+
 
    z80a              z80a                     z80a
 
-                8910 8910 8910     6116  - tp-s 2.1
+                8910 8910 8910     6116  - tp-s 2->1
 
        16MHz
 
@@ -104,7 +104,7 @@ TP-S.1 TP-S.2 TP-S.3 TP-B.1  8212 TP-B.2 TP-B.3          TP-B.4
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -122,35 +122,28 @@ public class tubep
 	/*************************** Main CPU on main PCB **************************/
 	
 	
-	static public static WriteHandlerPtr cpu_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cpu_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_sharedram[offset] = data;
 	} };
-	static public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cpu_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_sharedram[offset];
 	} };
 	
-	static public static WriteHandlerPtr tubep_sprite_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_sprite_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tubep_sprite_sharedram[offset] = data;
 	} };
-	static public static ReadHandlerPtr tubep_sprite_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tubep_sprite_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tubep_sprite_sharedram[offset];
 	} };
-	static public static WriteHandlerPtr tubep_sprite_colorsharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_sprite_colorsharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tubep_sprite_colorsharedram[offset] = data;
 	} };
-	static public static ReadHandlerPtr tubep_sprite_colorsharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tubep_sprite_colorsharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tubep_sprite_colorsharedram[offset];
 	} };
 	
 	
-	public static WriteHandlerPtr tubep_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(offset)
 		{
 			case 0:
@@ -168,7 +161,7 @@ public class tubep
 					//screen_flip_w(offset,data&1);	/* bit 0 = screen flip, active high */
 					break;
 			case 6:
-					tubep_background_romselect_w(offset,data);	/* bit0 = 0.select roms: B1,B3,B5; bit0 = 1.select roms: B2,B4,B6 */
+					tubep_background_romselect_w(offset,data);	/* bit0 = 0->select roms: B1,B3,B5; bit0 = 1->select roms: B2,B4,B6 */
 					break;
 			case 7:
 					tubep_colorproms_A4_line_w(offset,data);	/* bit0 = line A4 (color proms address) state */
@@ -179,8 +172,7 @@ public class tubep
 	} };
 	
 	
-	public static WriteHandlerPtr tubep_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_backgroundram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tubep_backgroundram[offset] = data;
 	} };
 	
@@ -215,15 +207,13 @@ public class tubep
 	
 	
 	
-	public static WriteHandlerPtr main_cpu_irq_line_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr main_cpu_irq_line_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	cpu_set_irq_line(0,CLEAR_LINE);
 	//not used - handled by MAME anyway (because it is usual Vblank int)
 		return;
 	} };
 	
-	public static WriteHandlerPtr tubep_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_latch = (data&0x7f) | 0x80;
 	} };
 	
@@ -261,8 +251,7 @@ public class tubep
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr tubep_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tubep_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 	 	int res;
 	
 		res = sound_latch;
@@ -273,14 +262,12 @@ public class tubep
 		return res;
 	} };
 	
-	public static ReadHandlerPtr tubep_sound_irq_ack  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tubep_sound_irq_ack  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(2, 0, CLEAR_LINE);
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr tubep_sound_unknown = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tubep_sound_unknown = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*logerror("Sound CPU writes to port 0x07 - unknown function\n");*/
 		return;
 	} };
@@ -321,7 +308,7 @@ public class tubep
 	
 	static void scanline_callback(int scanline)
 	{
-		/* interrupt is generated whenever line V6 from video part goes lo.hi */
+		/* interrupt is generated whenever line V6 from video part goes lo->hi */
 		/* that is when scanline is 64 and 192 accordingly */
 	
 		cpu_set_irq_line(2,0,ASSERT_LINE);	/* sound cpu interrupt (music tempo) */
@@ -332,8 +319,7 @@ public class tubep
 		timer_set( cpu_getscanlinetime( scanline ), scanline, scanline_callback );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_tubep  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tubep  = new MachineInitHandlerPtr() { public void handler(){
 		timer_set(cpu_getscanlinetime( 64 ), 64, scanline_callback );
 	} };
 	
@@ -349,8 +335,7 @@ public class tubep
 	
 	/****************************************************************/
 	
-	public static WriteHandlerPtr rjammer_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_LS259_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(offset)
 		{
 			case 0:
@@ -365,8 +350,7 @@ public class tubep
 		}
 	} };
 	
-	public static WriteHandlerPtr rjammer_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sound_latch = data;
 		cpu_set_nmi_line(2, PULSE_LINE);
 	} };
@@ -466,25 +450,22 @@ public class tubep
 	
 	
 	
-	public static ReadHandlerPtr rjammer_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rjammer_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 	 	int res = sound_latch;
 		return res;
 	} };
 	
-	public static WriteHandlerPtr rjammer_voice_startstop_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_voice_startstop_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 of data selects voice start/stop (reset pin on MSM5205)*/
 		// 0 -stop; 1-start
 		MSM5205_reset_w (0, (data&1)^1 );
 	
 		return;
 	} };
-	public static WriteHandlerPtr rjammer_voice_frequency_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_voice_frequency_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 of data selects voice frequency on MSM5205 */
 		// 0 -4 KHz; 1- 8KHz
-		if ((data & 1) != 0)
+		if (data&1)
 			MSM5205_playmode_w(0,MSM5205_S48_4B);	/* 8 KHz */
 		else
 			MSM5205_playmode_w(0,MSM5205_S96_4B);	/* 4 KHz */
@@ -511,8 +492,7 @@ public class tubep
 	
 	}
 	
-	public static WriteHandlerPtr rjammer_voice_input_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_voice_input_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 8 bits of adpcm data for MSM5205 */
 		/* need to buffer the data, and switch two nibbles on two following interrupts*/
 	
@@ -527,8 +507,7 @@ public class tubep
 		return;
 	} };
 	
-	public static WriteHandlerPtr rjammer_voice_intensity_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rjammer_voice_intensity_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 4 LSB bits select the intensity (analog circuit that alters the output from MSM5205) */
 		// need to buffer the data
 		return;
@@ -570,34 +549,28 @@ public class tubep
 	};
 	
 	
-	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portA_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
-	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portB_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
-	public static WriteHandlerPtr ay8910_portA_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portA_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
-	public static WriteHandlerPtr ay8910_portB_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portB_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
-	public static WriteHandlerPtr ay8910_portA_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portA_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
-	public static WriteHandlerPtr ay8910_portB_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portB_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 			//analog sound control
 	} };
 	
 	
 	
-	static InputPortPtr input_ports_tubep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tubep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tubep )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_8WAY );
@@ -706,7 +679,7 @@ public class tubep
 	
 	
 	
-	static InputPortPtr input_ports_rjammer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rjammer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rjammer )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -832,8 +805,7 @@ public class tubep
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tubep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tubep )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)	/* 4 MHz */
@@ -874,13 +846,10 @@ public class tubep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rjammer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rjammer )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000 / 4)	/* 4 MHz */
@@ -922,9 +891,7 @@ public class tubep
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1039,7 +1006,7 @@ public class tubep
 	ROM_END(); }}; 
 	
 	/*     year  rom      parent  machine  inp   init */
-	public static GameDriver driver_tubep	   = new GameDriver("1984"	,"tubep"	,"tubep.java"	,rom_tubep,null	,machine_driver_tubep	,input_ports_tubep	,null	,ROT0	,	"Nichibutsu + Fujitek", "Tube Panic" )
-	public static GameDriver driver_rjammer	   = new GameDriver("1984"	,"rjammer"	,"tubep.java"	,rom_rjammer,null	,machine_driver_rjammer	,input_ports_rjammer	,null	,ROT0	,	"Nichibutsu + Alice", "Roller Jammer" )
+	GAME( 1984, tubep,   0,      tubep,   tubep,   0, ROT0, "Nichibutsu + Fujitek", "Tube Panic" )
+	GAME( 1984, rjammer, 0,      rjammer, rjammer, 0, ROT0, "Nichibutsu + Alice", "Roller Jammer" )
 	
 }

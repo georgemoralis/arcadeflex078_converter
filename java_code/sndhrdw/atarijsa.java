@@ -32,7 +32,7 @@ Static Program ROM (48K bytes)            4000-FFFF   R    D0-D7
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -91,7 +91,7 @@ public class atarijsa
 		has_tms5220 = has_oki6295 = has_pokey = has_ym2151 = 0;
 		for (i = 0; i < MAX_SOUND; i++)
 		{
-			switch (Machine.drv.sound[i].sound_type)
+			switch (Machine->drv->sound[i].sound_type)
 			{
 				case SOUND_TMS5220:
 					has_tms5220 = 1;
@@ -109,7 +109,7 @@ public class atarijsa
 		}
 	
 		/* install POKEY memory handlers */
-		if (has_pokey != 0)
+		if (has_pokey)
 		{
 			install_mem_read_handler(cpunum, 0x2c00, 0x2c0f, pokey1_r);
 			install_mem_write_handler(cpunum, 0x2c00, 0x2c0f, pokey1_w);
@@ -164,8 +164,7 @@ public class atarijsa
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr jsa1_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jsa1_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0x206)
@@ -191,8 +190,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x80;
-				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
 				if (!has_tms5220 || tms5220_ready_r()) result ^= 0x10;
 				break;
 	
@@ -212,8 +211,7 @@ public class atarijsa
 	} };
 	
 	
-	public static WriteHandlerPtr jsa1_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jsa1_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* n/c */
@@ -246,7 +244,7 @@ public class atarijsa
 				*/
 	
 				/* handle TMS5220 I/O */
-				if (has_tms5220 != 0)
+				if (has_tms5220)
 				{
 					int count;
 	
@@ -288,14 +286,13 @@ public class atarijsa
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr jsa2_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jsa2_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 					result = OKIM6295_status_0_r(offset);
 				else
 					logerror("atarijsa: Unknown read at %04X\n", offset & 0x206);
@@ -318,8 +315,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x80;
-				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -338,8 +335,7 @@ public class atarijsa
 	} };
 	
 	
-	public static WriteHandlerPtr jsa2_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jsa2_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
@@ -353,7 +349,7 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 					OKIM6295_data_0_w(offset, data);
 				else
 					logerror("atarijsa: Unknown write (%02X) at %04X\n", data & 0xff, offset & 0x206);
@@ -409,14 +405,13 @@ public class atarijsa
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr jsa3_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jsa3_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 					result = OKIM6295_status_0_r(offset);
 				break;
 	
@@ -437,8 +432,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -457,8 +452,7 @@ public class atarijsa
 	} };
 	
 	
-	public static WriteHandlerPtr jsa3_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jsa3_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
@@ -476,7 +470,7 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 					OKIM6295_data_0_w(offset, data);
 				break;
 	
@@ -540,16 +534,15 @@ public class atarijsa
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr jsa3s_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jsa3s_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0xff;
 	
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 				{
-					if ((offset & 1) != 0)
+					if (offset & 1)
 						result = OKIM6295_status_1_r(offset);
 					else
 						result = OKIM6295_status_0_r(offset);
@@ -573,8 +566,8 @@ public class atarijsa
 				*/
 				result = readinputport(input_port);
 				if (!(readinputport(test_port) & test_mask)) result ^= 0x90;
-				if (atarigen_cpu_to_sound_ready != 0) result ^= 0x40;
-				if (atarigen_sound_to_cpu_ready != 0) result ^= 0x20;
+				if (atarigen_cpu_to_sound_ready) result ^= 0x40;
+				if (atarigen_sound_to_cpu_ready) result ^= 0x20;
 				break;
 	
 			case 0x006:		/* /IRQACK */
@@ -593,8 +586,7 @@ public class atarijsa
 	} };
 	
 	
-	public static WriteHandlerPtr jsa3s_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jsa3s_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset & 0x206)
 		{
 			case 0x000:		/* /RDV */
@@ -612,9 +604,9 @@ public class atarijsa
 				break;
 	
 			case 0x200:		/* /WRV */
-				if (has_oki6295 != 0)
+				if (has_oki6295)
 				{
-					if ((offset & 1) != 0)
+					if (offset & 1)
 						OKIM6295_data_1_w(offset, data);
 					else
 						OKIM6295_data_0_w(offset, data);
@@ -685,10 +677,10 @@ public class atarijsa
 	
 	static void update_all_volumes(void)
 	{
-		if (has_pokey != 0) atarigen_set_pokey_vol(overall_volume * pokey_volume / 100);
-		if (has_ym2151 != 0) atarigen_set_ym2151_vol(overall_volume * ym2151_volume / 100);
-		if (has_tms5220 != 0) atarigen_set_tms5220_vol(overall_volume * tms5220_volume / 100);
-		if (has_oki6295 != 0) atarigen_set_oki6295_vol(overall_volume * oki6295_volume / 100);
+		if (has_pokey) atarigen_set_pokey_vol(overall_volume * pokey_volume / 100);
+		if (has_ym2151) atarigen_set_ym2151_vol(overall_volume * ym2151_volume / 100);
+		if (has_tms5220) atarigen_set_tms5220_vol(overall_volume * tms5220_volume / 100);
+		if (has_oki6295) atarigen_set_oki6295_vol(overall_volume * oki6295_volume / 100);
 	}
 	
 	
@@ -860,9 +852,7 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("ym", YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Xybots */
@@ -873,9 +863,7 @@ public class atarijsa
 		
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("ym", YM2151, ym2151_interface_swapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Toobin', Vindicators */
@@ -886,9 +874,7 @@ public class atarijsa
 		
 		/* sound hardware */
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Escape from the Planet of the Robot Monsters */
@@ -900,9 +886,7 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_ADD(TMS5220, tms5220_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Cyberball 2072, STUN Runner, Skull & Crossbones, ThunderJaws, Hydra, Pit Fighter */
@@ -916,9 +900,7 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_ADD_TAG("adpcm", OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Batman, Guardians of the 'Hood, Road Riot 4WD */
@@ -928,9 +910,7 @@ public class atarijsa
 		MDRV_IMPORT_FROM(jsa_ii_mono)
 		MDRV_CPU_MODIFY("jsa")
 		MDRV_CPU_MEMORY(atarijsa3_readmem,atarijsa3_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Off the Wall */
@@ -941,9 +921,7 @@ public class atarijsa
 	
 		/* sound hardware */
 		MDRV_SOUND_REMOVE("adpcm")
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Used by Space Lords, Moto Frenzy, Steel Talons, Road Riot's Revenge Rally */
@@ -957,7 +935,5 @@ public class atarijsa
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_REPLACE("adpcm", OKIM6295, okim6295s_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 }

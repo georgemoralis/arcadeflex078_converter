@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,22 +37,18 @@ public class sprint2
 	static int game;
 	
 	
-	public static DriverInitHandlerPtr init_sprint1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sprint1  = new DriverInitHandlerPtr() { public void handler(){
 		game = 1;
 	} };
-	public static DriverInitHandlerPtr init_sprint2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sprint2  = new DriverInitHandlerPtr() { public void handler(){
 		game = 2;
 	} };
-	public static DriverInitHandlerPtr init_dominos  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dominos  = new DriverInitHandlerPtr() { public void handler(){
 		game = 3;
 	} };
 	
 	
-	public static InterruptHandlerPtr sprint2 = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr sprint2 = new InterruptHandlerPtr() {public void handler(){
 		static UINT8 dial[2];
 	
 		/* handle steering wheels */
@@ -94,8 +90,7 @@ public class sprint2
 	} };
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_sprint2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sprint2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00);
 		palette_set_color(1, 0x5b, 0x5b, 0x5b);
 		palette_set_color(2, 0xa4, 0xa4, 0xa4);
@@ -117,20 +112,17 @@ public class sprint2
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_wram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_wram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sprint2_video_ram[0x380 + offset % 0x80];
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_dip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(0) << (2 * ((offset & 3) ^ 3))) & 0xc0;
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_input_A_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_input_A_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(1);
 	
 		if (game == 2)
@@ -147,8 +139,7 @@ public class sprint2
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_input_B_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_input_B_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = readinputport(2);
 	
 		if (game == 1)
@@ -162,8 +153,7 @@ public class sprint2
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_sync_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_sync_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		if (attract != 0)
@@ -187,62 +177,51 @@ public class sprint2
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_steering1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_steering1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return steering[0];
 	} };
-	public static ReadHandlerPtr sprint2_steering2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_steering2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return steering[1];
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_steering_reset1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_steering_reset1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		steering[0] |= 0x80;
 	} };
-	public static WriteHandlerPtr sprint2_steering_reset2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_steering_reset2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		steering[1] |= 0x80;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_wram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sprint2_video_ram[0x380 + offset % 0x80] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_attract_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		attract = offset & 1;
 	
 		discrete_sound_w(5, !attract);
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_noise_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(6, 0);
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_skid1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_skid1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(0, offset & 1);
 	} };
-	public static WriteHandlerPtr sprint2_skid2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_skid2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(1, offset & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_lamp1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_lamp1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, offset & 1);
 	} };
-	public static WriteHandlerPtr sprint2_lamp2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_lamp2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1, offset & 1);
 	} };
 	
@@ -289,7 +268,7 @@ public class sprint2
 	};
 	
 	
-	static InputPortPtr input_ports_sprint2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprint2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprint2 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, "Tracks on Demo" );
 		PORT_DIPSETTING(    0x00, "Easy Track Only" );
@@ -355,7 +334,7 @@ public class sprint2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sprint1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sprint1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sprint1 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x01, 0x00, "Change Track" );
 		PORT_DIPSETTING(    0x01, "Every Lap" );
@@ -410,7 +389,7 @@ public class sprint2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dominos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dominos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dominos )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x01, "Points to Win" );
 		PORT_DIPSETTING(	0x03, "6" );
@@ -851,8 +830,7 @@ public class sprint2
 	DISCRETE_SOUND_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sprint2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprint2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 12096000 / 16)
@@ -878,35 +856,27 @@ public class sprint2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, sprint2_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sprint1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sprint1 )
 	
 		MDRV_IMPORT_FROM(sprint2)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, sprint1_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dominos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dominos )
 	
 		MDRV_IMPORT_FROM(sprint2)
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(0)
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, dominos_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_sprint1 = new RomLoadPtr(){ public void handler(){ 
@@ -1004,8 +974,8 @@ public class sprint2
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_sprint1	   = new GameDriver("1978"	,"sprint1"	,"sprint2.java"	,rom_sprint1,null	,machine_driver_sprint1	,input_ports_sprint1	,init_sprint1	,ROT0	,	"Atari", "Sprint 1" )
-	public static GameDriver driver_sprint2	   = new GameDriver("1976"	,"sprint2"	,"sprint2.java"	,rom_sprint2,driver_sprint1	,machine_driver_sprint2	,input_ports_sprint2	,init_sprint2	,ROT0	,	"Atari", "Sprint 2 (set 1)" )
-	public static GameDriver driver_sprint2a	   = new GameDriver("1976"	,"sprint2a"	,"sprint2.java"	,rom_sprint2a,driver_sprint1	,machine_driver_sprint2	,input_ports_sprint2	,init_sprint2	,ROT0	,	"Atari", "Sprint 2 (set 2)" )
-	public static GameDriver driver_dominos	   = new GameDriver("1977"	,"dominos"	,"sprint2.java"	,rom_dominos,null	,machine_driver_dominos	,input_ports_dominos	,init_dominos	,ROT0	,	"Atari", "Dominos" )
+	GAME( 1978, sprint1,  0,       sprint1, sprint1, sprint1, ROT0, "Atari", "Sprint 1" )
+	GAME( 1976, sprint2,  sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 1)" )
+	GAME( 1976, sprint2a, sprint1, sprint2, sprint2, sprint2, ROT0, "Atari", "Sprint 2 (set 2)" )
+	GAME( 1977, dominos,  0,       dominos, dominos, dominos, ROT0, "Atari", "Dominos" )
 }

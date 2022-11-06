@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class appoooh
 	  Because these hardware is similar.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_appoooh  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_appoooh  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -116,8 +115,7 @@ public class appoooh
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_appoooh  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_appoooh  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,32,32);
 	
@@ -131,14 +129,12 @@ public class appoooh
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr appoooh_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_x = data;
 	} };
 	
 	
-	public static WriteHandlerPtr appoooh_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (appoooh_fg_videoram[offset] != data)
 		{
 			appoooh_fg_videoram[offset] = data;
@@ -146,8 +142,7 @@ public class appoooh
 		}
 	} };
 	
-	public static WriteHandlerPtr appoooh_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (appoooh_fg_colorram[offset] != data)
 		{
 			appoooh_fg_colorram[offset] = data;
@@ -155,8 +150,7 @@ public class appoooh
 		}
 	} };
 	
-	public static WriteHandlerPtr appoooh_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (appoooh_bg_videoram[offset] != data)
 		{
 			appoooh_bg_videoram[offset] = data;
@@ -164,8 +158,7 @@ public class appoooh
 		}
 	} };
 	
-	public static WriteHandlerPtr appoooh_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (appoooh_bg_colorram[offset] != data)
 		{
 			appoooh_bg_colorram[offset] = data;
@@ -173,8 +166,7 @@ public class appoooh
 		}
 	} };
 	
-	public static WriteHandlerPtr appoooh_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr appoooh_out_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 controls NMI */
 		interrupt_enable_w(0,data & 0x01);
 	
@@ -216,7 +208,7 @@ public class appoooh
 	
 			if(sx>=248) sx -= 256;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 239 - sx;
 				sy = 239 - sy;
@@ -239,8 +231,7 @@ public class appoooh
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_appoooh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_appoooh  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 	
 		if (priority == 0)	/* fg behind sprites */

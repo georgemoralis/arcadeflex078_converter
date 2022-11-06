@@ -31,7 +31,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -42,8 +42,7 @@ public class hanaawas
 	
 	
 	
-	public static ReadHandlerPtr hanaawas_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hanaawas_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int i,ordinal = 0;
 		UINT16 buttons;
 	
@@ -102,7 +101,7 @@ public class hanaawas
 	};
 	
 	
-	static InputPortPtr input_ports_hanaawas = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hanaawas = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hanaawas )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x0f, IP_ACTIVE_HIGH, IPT_SPECIAL );
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_HIGH, IPT_COIN1, 1 );
@@ -183,8 +182,7 @@ public class hanaawas
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_hanaawas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hanaawas )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)	/* 3.072 MHz ??? */
@@ -209,9 +207,7 @@ public class hanaawas
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -241,5 +237,5 @@ public class hanaawas
 	
 	
 	
-	public static GameDriver driver_hanaawas	   = new GameDriver("1982"	,"hanaawas"	,"hanaawas.java"	,rom_hanaawas,null	,machine_driver_hanaawas	,input_ports_hanaawas	,null	,ROT0	,	"Seta", "Hana Awase (Flower Matching)" )
+	GAME(1982, hanaawas, 0, hanaawas, hanaawas, 0, ROT0, "Seta", "Hana Awase (Flower Matching)" )
 }

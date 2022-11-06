@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -76,7 +76,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_mk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mk )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -174,7 +174,7 @@ public class midtunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mk2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mk2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mk2 )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -281,7 +281,7 @@ public class midtunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_jdreddp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jdreddp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jdreddp )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -377,7 +377,7 @@ public class midtunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nbajam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nbajam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nbajam )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -480,7 +480,7 @@ public class midtunit
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nbajamte = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nbajamte = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nbajamte )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 | IPF_8WAY );
@@ -618,8 +618,7 @@ public class midtunit
 		nbajam:   0014-0112 / 0120 (254)     0032-00FA / 00FC (400)
 	*/
 	
-	public static MachineHandlerPtr machine_driver_tunit_core = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tunit_core )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
@@ -639,31 +638,23 @@ public class midtunit
 	
 		MDRV_VIDEO_START(midtunit)
 		MDRV_VIDEO_UPDATE(midtunit)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tunit_adpcm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tunit_adpcm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tunit_core)
 		MDRV_IMPORT_FROM(williams_adpcm_sound)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tunit_dcs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tunit_dcs )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tunit_core)
 		MDRV_IMPORT_FROM(dcs_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1332,23 +1323,23 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_mk	   = new GameDriver("1992"	,"mk"	,"midtunit.java"	,rom_mk,null	,machine_driver_tunit_adpcm	,input_ports_mk	,init_mk	,ROT0	,	"Midway",   "Mortal Kombat (rev 5.0 T-Unit 03/19/93)" )
-	public static GameDriver driver_mkr4	   = new GameDriver("1992"	,"mkr4"	,"midtunit.java"	,rom_mkr4,driver_mk	,machine_driver_tunit_adpcm	,input_ports_mk	,init_mkr4	,ROT0	,	"Midway",   "Mortal Kombat (rev 4.0 T-Unit 02/11/93)" )
+	GAME( 1992, mk,       0,       tunit_adpcm, mk,      mk,       ROT0, "Midway",   "Mortal Kombat (rev 5.0 T-Unit 03/19/93)" )
+	GAME( 1992, mkr4,     mk,      tunit_adpcm, mk,      mkr4,     ROT0, "Midway",   "Mortal Kombat (rev 4.0 T-Unit 02/11/93)" )
 	
-	public static GameDriver driver_mk2	   = new GameDriver("1993"	,"mk2"	,"midtunit.java"	,rom_mk2,null	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2	,ROT0	,	"Midway",   "Mortal Kombat II (rev L3.1)" )
-	public static GameDriver driver_mk2r32	   = new GameDriver("1993"	,"mk2r32"	,"midtunit.java"	,rom_mk2r32,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2	,ROT0	,	"Midway",   "Mortal Kombat II (rev L3.2 (European))" )
-	public static GameDriver driver_mk2r21	   = new GameDriver("1993"	,"mk2r21"	,"midtunit.java"	,rom_mk2r21,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2r21	,ROT0	,	"Midway",   "Mortal Kombat II (rev L2.1)" )
-	public static GameDriver driver_mk2r14	   = new GameDriver("1993"	,"mk2r14"	,"midtunit.java"	,rom_mk2r14,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2r14	,ROT0	,	"Midway",   "Mortal Kombat II (rev L1.4)" )
-	public static GameDriver driver_mk2r42	   = new GameDriver("1993"	,"mk2r42"	,"midtunit.java"	,rom_mk2r42,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2	,ROT0	,	"hack",     "Mortal Kombat II (rev L4.2, hack)" )
-	public static GameDriver driver_mk2r91	   = new GameDriver("1993"	,"mk2r91"	,"midtunit.java"	,rom_mk2r91,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2	,ROT0	,	"hack",     "Mortal Kombat II (rev L9.1, hack)" )
-	public static GameDriver driver_mk2chal	   = new GameDriver("1993"	,"mk2chal"	,"midtunit.java"	,rom_mk2chal,driver_mk2	,machine_driver_tunit_dcs	,input_ports_mk2	,init_mk2	,ROT0	,	"hack",     "Mortal Kombat II Challenger (hack)" )
+	GAME( 1993, mk2,      0,       tunit_dcs,   mk2,     mk2,      ROT0, "Midway",   "Mortal Kombat II (rev L3.1)" )
+	GAME( 1993, mk2r32,   mk2,     tunit_dcs,   mk2,     mk2,      ROT0, "Midway",   "Mortal Kombat II (rev L3.2 (European))" )
+	GAME( 1993, mk2r21,   mk2,     tunit_dcs,   mk2,     mk2r21,   ROT0, "Midway",   "Mortal Kombat II (rev L2.1)" )
+	GAME( 1993, mk2r14,   mk2,     tunit_dcs,   mk2,     mk2r14,   ROT0, "Midway",   "Mortal Kombat II (rev L1.4)" )
+	GAME( 1993, mk2r42,   mk2,     tunit_dcs,   mk2,     mk2,      ROT0, "hack",     "Mortal Kombat II (rev L4.2, hack)" )
+	GAME( 1993, mk2r91,   mk2,     tunit_dcs,   mk2,     mk2,      ROT0, "hack",     "Mortal Kombat II (rev L9.1, hack)" )
+	GAME( 1993, mk2chal,  mk2,     tunit_dcs,   mk2,     mk2,      ROT0, "hack",     "Mortal Kombat II Challenger (hack)" )
 	
-	public static GameDriver driver_jdreddp	   = new GameDriver("1993"	,"jdreddp"	,"midtunit.java"	,rom_jdreddp,null	,machine_driver_tunit_adpcm	,input_ports_jdreddp	,init_jdreddp	,ROT0	,	"Midway",   "Judge Dredd (rev LA1, prototype)" )
+	GAME( 1993, jdreddp,  0,       tunit_adpcm, jdreddp, jdreddp,  ROT0, "Midway",   "Judge Dredd (rev LA1, prototype)" )
 	
-	public static GameDriver driver_nbajam	   = new GameDriver("1993"	,"nbajam"	,"midtunit.java"	,rom_nbajam,null	,machine_driver_tunit_adpcm	,input_ports_nbajam	,init_nbajam	,ROT0	,	"Midway",   "NBA Jam (rev 3.01 04/07/93)" )
-	public static GameDriver driver_nbajamr2	   = new GameDriver("1993"	,"nbajamr2"	,"midtunit.java"	,rom_nbajamr2,driver_nbajam	,machine_driver_tunit_adpcm	,input_ports_nbajam	,init_nbajam20	,ROT0	,	"Midway",   "NBA Jam (rev 2.00 02/10/93)" )
-	public static GameDriver driver_nbajamte	   = new GameDriver("1994"	,"nbajamte"	,"midtunit.java"	,rom_nbajamte,driver_nbajam	,machine_driver_tunit_adpcm	,input_ports_nbajamte	,init_nbajamte	,ROT0	,	"Midway",   "NBA Jam TE (rev 4.0 03/23/94)" )
-	public static GameDriver driver_nbajamt1	   = new GameDriver("1994"	,"nbajamt1"	,"midtunit.java"	,rom_nbajamt1,driver_nbajam	,machine_driver_tunit_adpcm	,input_ports_nbajamte	,init_nbajamte	,ROT0	,	"Midway",   "NBA Jam TE (rev 1.0 01/17/94)" )
-	public static GameDriver driver_nbajamt2	   = new GameDriver("1994"	,"nbajamt2"	,"midtunit.java"	,rom_nbajamt2,driver_nbajam	,machine_driver_tunit_adpcm	,input_ports_nbajamte	,init_nbajamte	,ROT0	,	"Midway",   "NBA Jam TE (rev 2.0 01/28/94)" )
-	public static GameDriver driver_nbajamt3	   = new GameDriver("1994"	,"nbajamt3"	,"midtunit.java"	,rom_nbajamt3,driver_nbajam	,machine_driver_tunit_adpcm	,input_ports_nbajamte	,init_nbajamte	,ROT0	,	"Midway",   "NBA Jam TE (rev 3.0 03/04/94)" )
+	GAME( 1993, nbajam,   0,       tunit_adpcm, nbajam,  nbajam,   ROT0, "Midway",   "NBA Jam (rev 3.01 04/07/93)" )
+	GAME( 1993, nbajamr2, nbajam,  tunit_adpcm, nbajam,  nbajam20, ROT0, "Midway",   "NBA Jam (rev 2.00 02/10/93)" )
+	GAME( 1994, nbajamte, nbajam,  tunit_adpcm, nbajamte,  nbajamte, ROT0, "Midway",   "NBA Jam TE (rev 4.0 03/23/94)" )
+	GAME( 1994, nbajamt1, nbajam,  tunit_adpcm, nbajamte,  nbajamte, ROT0, "Midway",   "NBA Jam TE (rev 1.0 01/17/94)" )
+	GAME( 1994, nbajamt2, nbajam,  tunit_adpcm, nbajamte,  nbajamte, ROT0, "Midway",   "NBA Jam TE (rev 2.0 01/28/94)" )
+	GAME( 1994, nbajamt3, nbajam,  tunit_adpcm, nbajamte,  nbajamte, ROT0, "Midway",   "NBA Jam TE (rev 3.0 03/04/94)" )
 }

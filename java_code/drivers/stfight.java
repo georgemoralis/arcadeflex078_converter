@@ -230,7 +230,7 @@ DONE? (check on real board)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -305,7 +305,7 @@ public class stfight
 	};
 	
 	
-	static InputPortPtr input_ports_stfight = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stfight = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stfight )
 		PORT_START(); 	/* PLAYER 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -487,8 +487,7 @@ public class stfight
 		{ 50 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_stfight = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stfight )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 3 MHz */
@@ -522,9 +521,7 @@ public class stfight
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -688,7 +685,7 @@ public class stfight
 	
 	
 	
-	public static GameDriver driver_empcity	   = new GameDriver("1986"	,"empcity"	,"stfight.java"	,rom_empcity,null	,machine_driver_stfight	,input_ports_stfight	,init_empcity	,ROT0	,	"Seibu Kaihatsu", "Empire City: 1931 (bootleg?)" )
-	public static GameDriver driver_empcityj	   = new GameDriver("1986"	,"empcityj"	,"stfight.java"	,rom_empcityj,driver_empcity	,machine_driver_stfight	,input_ports_stfight	,init_stfight	,ROT0	,	"[Seibu Kaihatsu] (Taito license)", "Empire City: 1931 (Japan)" )
-	public static GameDriver driver_stfight	   = new GameDriver("1986"	,"stfight"	,"stfight.java"	,rom_stfight,driver_empcity	,machine_driver_stfight	,input_ports_stfight	,init_stfight	,ROT0	,	"Seibu Kaihatsu", "Street Fight (Germany)" )
+	GAME( 1986, empcity,  0,       stfight, stfight, empcity, ROT0, "Seibu Kaihatsu", "Empire City: 1931 (bootleg?)" )
+	GAME( 1986, empcityj, empcity, stfight, stfight, stfight, ROT0, "[Seibu Kaihatsu] (Taito license)", "Empire City: 1931 (Japan)" )
+	GAME( 1986, stfight,  empcity, stfight, stfight, stfight, ROT0, "Seibu Kaihatsu", "Street Fight (Germany)" )
 }

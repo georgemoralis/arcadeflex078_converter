@@ -9,7 +9,7 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/10/04
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -20,8 +20,7 @@ public class ssozumo
 	
 	
 	
-	public static InterruptHandlerPtr ssozumo_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ssozumo_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int coin;
 	
 		if ((readinputport(0) & 0xc0) != 0xc0)
@@ -39,8 +38,7 @@ public class ssozumo
 	} };
 	
 	
-	public static WriteHandlerPtr ssozumo_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssozumo_sh_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset, data);
 		cpu_set_irq_line(1, M6502_IRQ_LINE, HOLD_LINE);
 	} };
@@ -109,7 +107,7 @@ public class ssozumo
 	};
 	
 	
-	static InputPortPtr input_ports_ssozumo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssozumo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssozumo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -249,8 +247,7 @@ public class ssozumo
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ssozumo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssozumo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502, 1200000)	/* 1.2 MHz ???? */
@@ -280,9 +277,7 @@ public class ssozumo
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -343,5 +338,5 @@ public class ssozumo
 	
 	
 	
-	public static GameDriver driver_ssozumo	   = new GameDriver("1984"	,"ssozumo"	,"ssozumo.java"	,rom_ssozumo,null	,machine_driver_ssozumo	,input_ports_ssozumo	,null	,ROT270	,	"Technos", "Syusse Oozumou (Japan)" )
+	GAME( 1984, ssozumo, 0, ssozumo, ssozumo, 0, ROT270, "Technos", "Syusse Oozumou (Japan)" )
 }

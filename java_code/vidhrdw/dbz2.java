@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -92,8 +92,7 @@ public class dbz2
 		SET_TILE_INFO(1,tileno,colour,TILE_FLIPYX(flipx))
 	}
 	
-	VIDEO_START(dbz2)
-	{
+	public static VideoStartHandlerPtr video_start_dbz2  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K054157_vh_start(REGION_GFX1, 0, scrolld, NORMAL_PLANE_ORDER, dbz2_tile_callback))
@@ -113,18 +112,17 @@ public class dbz2
 		K053936_set_offset(1, -46, -16);
 	
 		dbz2_bg_tilemap = tilemap_create(get_dbz2_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,64,32);
-		if (dbz2_bg_tilemap == 0) return 1;
+		if (!dbz2_bg_tilemap) return 1;
 	
 		tilemap_set_transparent_pen(dbz2_bg_tilemap,0);
 	
 		dbz2_bg2_tilemap = tilemap_create(get_dbz2_bg2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,32);
-		if (dbz2_bg2_tilemap == 0) return 1;
+		if (!dbz2_bg2_tilemap) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(dbz)
-	{
+	public static VideoStartHandlerPtr video_start_dbz  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K054157_vh_start(REGION_GFX1, 0, scrolld, NORMAL_PLANE_ORDER, dbz2_tile_callback))
@@ -144,18 +142,17 @@ public class dbz2
 		K053936_set_offset(1, -46+34, -16);
 	
 		dbz2_bg_tilemap = tilemap_create(get_dbz2_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 16, 16,64,32);
-		if (dbz2_bg_tilemap == 0) return 1;
+		if (!dbz2_bg_tilemap) return 1;
 	
 		tilemap_set_transparent_pen(dbz2_bg_tilemap,0);
 	
 		dbz2_bg2_tilemap = tilemap_create(get_dbz2_bg2_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 16, 16,64,32);
-		if (dbz2_bg2_tilemap == 0) return 1;
+		if (!dbz2_bg2_tilemap) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(dbz2)
-	{
+	public static VideoUpdateHandlerPtr video_update_dbz2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap, 0, NULL);
 		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 	
@@ -167,10 +164,9 @@ public class dbz2
 		K053247_sprites_draw(bitmap, cliprect);
 	
 		K054157_tilemap_draw(bitmap, cliprect, 3, 0, 1<<0);
-	}
+	} };
 	
-	VIDEO_UPDATE(dbz)
-	{
+	public static VideoUpdateHandlerPtr video_update_dbz  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap, 0, NULL);
 		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 	
@@ -183,6 +179,6 @@ public class dbz2
 		K054157_tilemap_draw(bitmap, cliprect, 0, 0, 1<<0);
 	
 		K053247_sprites_draw(bitmap, cliprect);
-	}
+	} };
 	
 }

@@ -24,7 +24,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -32,16 +32,6 @@ public class mystwarr
 {
 	
 	
-	VIDEO_START(gaiapols);
-	VIDEO_START(dadandrn);
-	VIDEO_START(viostorm);
-	VIDEO_START(metamrph);
-	VIDEO_START(martchmp);
-	VIDEO_START(mystwarr);
-	VIDEO_UPDATE(dadandrn);
-	VIDEO_UPDATE(mystwarr);
-	VIDEO_UPDATE(metamrph);
-	VIDEO_UPDATE(martchmp);
 	
 	WRITE16_HANDLER(ddd_053936_enable_w);
 	WRITE16_HANDLER(ddd_053936_clip_w);
@@ -80,15 +70,14 @@ public class mystwarr
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER(mystwarr)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_mystwarr  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -96,17 +85,16 @@ public class mystwarr
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
-	static NVRAM_HANDLER(gaiapols)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_gaiapols  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface_gaia);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -114,15 +102,15 @@ public class mystwarr
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ16_HANDLER( mweeprom_r )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int res = readinputport(1) | EEPROM_read_bit();
 	
-			if (init_eeprom_count != 0)
+			if (init_eeprom_count)
 			{
 				init_eeprom_count--;
 				res &= ~0x04;
@@ -138,11 +126,11 @@ public class mystwarr
 	
 	static READ16_HANDLER( vseeprom_r )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int res = readinputport(1) | EEPROM_read_bit();
 	
-			if (init_eeprom_count != 0)
+			if (init_eeprom_count)
 			{
 				init_eeprom_count--;
 				res &= ~0x08;
@@ -158,7 +146,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mweeprom_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			EEPROM_write_bit((data&0x0100) ? 1 : 0);
 			EEPROM_set_cs_line((data&0x0200) ? CLEAR_LINE : ASSERT_LINE);
@@ -172,7 +160,7 @@ public class mystwarr
 	
 	static READ16_HANDLER( dddeeprom_r )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			return (readinputport(1) | EEPROM_read_bit())<<8;
 		}
@@ -182,7 +170,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mmeeprom_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			EEPROM_write_bit((data&0x01) ? 1 : 0);
 			EEPROM_set_cs_line((data&0x02) ? CLEAR_LINE : ASSERT_LINE);
@@ -222,8 +210,7 @@ public class mystwarr
 	}
 	
 	
-	static INTERRUPT_GEN(mystwarr_interrupt)
-	{
+	public static InterruptHandlerPtr mystwarr_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (resume_trigger && suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		if (!(mw_irq_control & 0x01)) return;
@@ -242,10 +229,9 @@ public class mystwarr
 				cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
 			break;
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN(metamrph_interrupt)
-	{
+	public static InterruptHandlerPtr metamrph_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (resume_trigger && suspension_active) { cpu_trigger(resume_trigger); suspension_active = 0; }
 	
 		switch (cpu_getiloops())
@@ -259,13 +245,12 @@ public class mystwarr
 			break;
 	
 			case 39:
-				if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
+				if (K053246_is_IRQ_enabled()) cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
 			break;
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN(mchamp_interrupt)
-	{
+	public static InterruptHandlerPtr mchamp_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (resume_trigger && suspension_active) { cpu_trigger(resume_trigger); suspension_active = 0; }
 	
 		if (!(mw_irq_control & 0x02)) return;
@@ -273,21 +258,20 @@ public class mystwarr
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (K053246_is_IRQ_enabled() != 0) cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
+				if (K053246_is_IRQ_enabled()) cpu_set_irq_line(0, MC68000_IRQ_6, HOLD_LINE);
 			break;
 	
 			case 1:
 				cpu_set_irq_line(0, MC68000_IRQ_2, HOLD_LINE);
 			break;
 		}
-	}
+	} };
 	
-	static INTERRUPT_GEN(ddd_interrupt)
-	{
+	public static InterruptHandlerPtr ddd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (resume_trigger && suspension_active) { cpu_trigger(resume_trigger); suspension_active = 0; }
 	
 		cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
-	}
+	} };
 	
 	
 	/**********************************************************************************/
@@ -374,7 +358,7 @@ public class mystwarr
 	{
 		int res = readinputport(0);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= ~0x10;
@@ -387,7 +371,7 @@ public class mystwarr
 	{
 		int res = (readinputport(0)<<8) | readinputport(2);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= ~0x0800;
@@ -400,7 +384,7 @@ public class mystwarr
 	/* of RAM, but they put 0x10000 there. The CPU can access them all. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if ((offset & 0x0078) != 0)
+		if (offset & 0x0078)
 			return spriteram16[offset];
 		else
 		{
@@ -411,7 +395,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if ((offset & 0x0078) != 0)
+		if (offset & 0x0078)
 		{
 	//		printf("spr write %x to %x (PC=%x)\n", data, offset, activecpu_get_pc());
 			COMBINE_DATA(spriteram16+offset);
@@ -588,7 +572,7 @@ public class mystwarr
 	// Martial Champion specific interfaces
 	static READ16_HANDLER( K053247_martchmp_word_r )
 	{
-		if ((offset & 0x0018) != 0)
+		if (offset & 0x0018)
 			return spriteram16[offset];
 		else
 		{
@@ -599,7 +583,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( K053247_martchmp_word_w )
 	{
-		if ((offset & 0x0018) != 0)
+		if (offset & 0x0018)
 		{
 			COMBINE_DATA(spriteram16+offset);
 		}
@@ -618,7 +602,7 @@ public class mystwarr
 	
 	static WRITE16_HANDLER( mccontrol_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			mw_irq_control = data>>8;
 			// bit 0 = watchdog
@@ -627,7 +611,7 @@ public class mystwarr
 	
 			K053246_set_OBJCHA_line((data&0x04) ? ASSERT_LINE : CLEAR_LINE);
 	
-	//		if ((data & 0xf8) != 0) logerror("Unk write %x to mccontrol\n", data);
+	//		if (data & 0xf8) logerror("Unk write %x to mccontrol\n", data);
 	
 		}
 	
@@ -811,16 +795,14 @@ public class mystwarr
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + cur_sound_region*0x4000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cur_sound_region = (data & 0xf);
 		reset_sound_region();
 	} };
 	
-	static INTERRUPT_GEN(audio_interrupt)
-	{
+	public static InterruptHandlerPtr audio_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_nmi_line(1, PULSE_LINE);
-	}
+	} };
 	
 	/* sound memory maps
 	
@@ -903,8 +885,7 @@ public class mystwarr
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	public static MachineHandlerPtr machine_driver_mystwarr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mystwarr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 16000000)	/* 16 MHz (confirmed) */
@@ -934,12 +915,9 @@ public class mystwarr
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD_TAG("539", K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_viostorm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( viostorm )
 		MDRV_IMPORT_FROM(mystwarr)
 	
 		/* basic machine hardware */
@@ -953,12 +931,9 @@ public class mystwarr
 		MDRV_VIDEO_UPDATE(metamrph)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 		MDRV_VISIBLE_AREA(40, 40+384-1, 16, 16+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_metamrph = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metamrph )
 		MDRV_IMPORT_FROM(mystwarr)
 	
 		/* basic machine hardware */
@@ -972,12 +947,9 @@ public class mystwarr
 		MDRV_VIDEO_UPDATE(metamrph)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 		MDRV_VISIBLE_AREA(24, 24+288-1, 17, 17+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_dadandrn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dadandrn )
 		MDRV_IMPORT_FROM(mystwarr)
 	
 		/* basic machine hardware */
@@ -993,12 +965,9 @@ public class mystwarr
 		MDRV_VIDEO_UPDATE(dadandrn)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 		MDRV_VISIBLE_AREA(24, 24+288-1, 17, 17+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gaiapols = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gaiapols )
 		MDRV_IMPORT_FROM(mystwarr)
 	
 		/* basic machine hardware */
@@ -1016,12 +985,9 @@ public class mystwarr
 		MDRV_VIDEO_UPDATE(dadandrn)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 		MDRV_VISIBLE_AREA(40, 40+376-1, 16, 16+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_martchmp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( martchmp )
 		MDRV_IMPORT_FROM(mystwarr)
 	
 		/* basic machine hardware */
@@ -1036,13 +1002,11 @@ public class mystwarr
 		MDRV_VIDEO_UPDATE(martchmp)
 		MDRV_SCREEN_SIZE(64*8, 32*8)
 		MDRV_VISIBLE_AREA(32, 32+384-1, 16, 16+224-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
-	static InputPortPtr input_ports_mystwarr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mystwarr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mystwarr )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1110,7 +1074,7 @@ public class mystwarr
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_metamrph = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metamrph = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metamrph )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1180,7 +1144,7 @@ public class mystwarr
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_viostorm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_viostorm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( viostorm )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1250,7 +1214,7 @@ public class mystwarr
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dadandrn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dadandrn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dadandrn )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1328,7 +1292,7 @@ public class mystwarr
 		PORT_DIPSETTING(    0x02, "High" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_martchmp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_martchmp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( martchmp )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1872,8 +1836,7 @@ public class mystwarr
 		state_save_register_func_postload(reset_sound_region);
 	}
 	
-	static DRIVER_INIT(mystwarr)
-	{
+	public static DriverInitHandlerPtr init_mystwarr  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1891,10 +1854,9 @@ public class mystwarr
 	
 		// soften percussions(chip 1 channel 0-7)
 		for (i=0; i<=7; i++) K054539_set_gain(1, i, 0.5);
-	}
+	} };
 	
-	static DRIVER_INIT(dadandrn)
-	{
+	public static DriverInitHandlerPtr init_dadandrn  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1905,10 +1867,9 @@ public class mystwarr
 	
 		// boost voice(chip 0 channel 4-7)
 		for (i=4; i<=7; i++) K054539_set_gain(0, i, 2.0);
-	}
+	} };
 	
-	static DRIVER_INIT(viostorm)
-	{
+	public static DriverInitHandlerPtr init_viostorm  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1919,10 +1880,9 @@ public class mystwarr
 	
 		// boost voice(chip 0 channel 4-7)
 		for (i=4; i<=7; i++) K054539_set_gain(0, i, 2.0);
-	}
+	} };
 	
-	static DRIVER_INIT(metamrph)
-	{
+	public static DriverInitHandlerPtr init_metamrph  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1937,10 +1897,9 @@ public class mystwarr
 			K054539_set_gain(1, i,   0.8);
 			K054539_set_gain(1, i+4, 0.8);
 		}
-	}
+	} };
 	
-	static DRIVER_INIT(martchmp)
-	{
+	public static DriverInitHandlerPtr init_martchmp  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1949,10 +1908,9 @@ public class mystwarr
 	
 		// boost voice(chip 0 channel 4-7)
 		for (i=4; i<=7; i++) K054539_set_gain(0, i, 1.4);
-	}
+	} };
 	
-	static DRIVER_INIT(gaiapols)
-	{
+	public static DriverInitHandlerPtr init_gaiapols  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 	
 		init_common();
@@ -1963,20 +1921,20 @@ public class mystwarr
 	
 		// boost voice(chip 0 channel 5-7)
 		for (i=5; i<=7; i++) K054539_set_gain(0, i, 2.0);
-	}
+	} };
 	
 	
 	/*           ROM       parent    machine   inp       init */
-	public static GameDriver driver_mystwarr	   = new GameDriver("1993"	,"mystwarr"	,"mystwarr.java"	,rom_mystwarr,null	,machine_driver_mystwarr	,input_ports_mystwarr	,init_mystwarr	,ROT0	,	"Konami", "Mystic Warriors (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mystwaru	   = new GameDriver("1993"	,"mystwaru"	,"mystwarr.java"	,rom_mystwaru,driver_mystwarr	,machine_driver_mystwarr	,input_ports_mystwarr	,init_mystwarr	,ROT0	,	"Konami", "Mystic Warriors (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_dadandrn	   = new GameDriver("1993"	,"dadandrn"	,"mystwarr.java"	,rom_dadandrn,null	,machine_driver_dadandrn	,input_ports_dadandrn	,init_dadandrn	,ROT0	,	"Konami", "Kyukyoku Sentai Dadandarn (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_viostorm	   = new GameDriver("1993"	,"viostorm"	,"mystwarr.java"	,rom_viostorm,null	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Europe ver EAB)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_viostrmu	   = new GameDriver("1993"	,"viostrmu"	,"mystwarr.java"	,rom_viostrmu,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (US ver UAB)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_viostrmj	   = new GameDriver("1993"	,"viostrmj"	,"mystwarr.java"	,rom_viostrmj,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Japan ver JAC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_viostrma	   = new GameDriver("1993"	,"viostrma"	,"mystwarr.java"	,rom_viostrma,driver_viostorm	,machine_driver_viostorm	,input_ports_viostorm	,init_viostorm	,ROT0	,	"Konami", "Violent Storm (Asia ver AAC)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_metamrph	   = new GameDriver("1993"	,"metamrph"	,"mystwarr.java"	,rom_metamrph,null	,machine_driver_metamrph	,input_ports_metamrph	,init_metamrph	,ROT0	,	"Konami", "Metamorphic Force (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_metamrpj	   = new GameDriver("1993"	,"metamrpj"	,"mystwarr.java"	,rom_metamrpj,driver_metamrph	,machine_driver_metamrph	,input_ports_metamrph	,init_metamrph	,ROT0	,	"Konami", "Metamorphic Force (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mtlchamp	   = new GameDriver("1993"	,"mtlchamp"	,"mystwarr.java"	,rom_mtlchamp,null	,machine_driver_martchmp	,input_ports_martchmp	,init_martchmp	,ROT0	,	"Konami", "Martial Champion (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_mtlchmpj	   = new GameDriver("1993"	,"mtlchmpj"	,"mystwarr.java"	,rom_mtlchmpj,driver_mtlchamp	,machine_driver_martchmp	,input_ports_martchmp	,init_martchmp	,ROT0	,	"Konami", "Martial Champion (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_gaiapols	   = new GameDriver("1993"	,"gaiapols"	,"mystwarr.java"	,rom_gaiapols,null	,machine_driver_gaiapols	,input_ports_dadandrn	,init_gaiapols	,ROT90	,	"Konami", "Gaiapolis (Japan ver JAF)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, mystwarr, 0,        mystwarr, mystwarr, mystwarr, ROT0,  "Konami", "Mystic Warriors (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, mystwaru, mystwarr, mystwarr, mystwarr, mystwarr, ROT0,  "Konami", "Mystic Warriors (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, dadandrn, 0,        dadandrn, dadandrn, dadandrn, ROT0,  "Konami", "Kyukyoku Sentai Dadandarn (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, viostorm, 0,        viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Europe ver EAB)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, viostrmu, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (US ver UAB)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, viostrmj, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Japan ver JAC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, viostrma, viostorm, viostorm, viostorm, viostorm, ROT0,  "Konami", "Violent Storm (Asia ver AAC)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, metamrph, 0,        metamrph, metamrph, metamrph, ROT0,  "Konami", "Metamorphic Force (US ver UAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, metamrpj, metamrph, metamrph, metamrph, metamrph, ROT0,  "Konami", "Metamorphic Force (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, mtlchamp, 0,        martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Europe ver EAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, mtlchmpj, mtlchamp, martchmp, martchmp, martchmp, ROT0,  "Konami", "Martial Champion (Japan ver JAA)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1993, gaiapols, 0,        gaiapols, dadandrn, gaiapols, ROT90, "Konami", "Gaiapolis (Japan ver JAF)", GAME_IMPERFECT_GRAPHICS )
 }

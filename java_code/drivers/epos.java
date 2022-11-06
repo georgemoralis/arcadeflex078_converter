@@ -30,7 +30,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,11 +41,10 @@ public class epos
 	static int counter = 0;
 	
 	
-	public static WriteHandlerPtr dealer_decrypt_rom = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dealer_decrypt_rom = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
-		if ((offset & 0x04) != 0)
+		if (offset & 0x04)
 		{
 			counter = counter + 1;
 			if (counter < 0)
@@ -172,7 +171,7 @@ public class epos
 	   so that ROMs couldn't be simply swapped.  Each game checks these bits and halts
 	   the processor if an unexpected value is read. */
 	
-	static InputPortPtr input_ports_megadon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_megadon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( megadon )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -220,7 +219,7 @@ public class epos
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_suprglob = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprglob = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprglob )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -271,7 +270,7 @@ public class epos
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_igmo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_igmo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( igmo )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -320,7 +319,7 @@ public class epos
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dealer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dealer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dealer )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Demo_Sounds") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -394,8 +393,7 @@ public class epos
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_epos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( epos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 11000000/4)	/* 2.75 MHz (see notes) */
@@ -418,13 +416,10 @@ public class epos
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dealer = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dealer )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 11000000/4)	/* 2.75 MHz (see notes) */
 		MDRV_CPU_MEMORY(dealer_readmem,dealer_writemem)
@@ -447,9 +442,7 @@ public class epos
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8912_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -581,15 +574,13 @@ public class epos
 		ROM_LOAD( "82s123.u66",		0x0000, 0x0020, NO_DUMP )	/* missing */
 	ROM_END(); }}; 
 	
-	public static MachineInitHandlerPtr machine_init_dealer  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_dealer  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1, memory_region(REGION_CPU1) + 0x10000);
 	
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
-	public static DriverInitHandlerPtr init_dealer  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dealer  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		int A;
 		int oldbyte,newbyte;
@@ -750,12 +741,12 @@ public class epos
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_megadon	   = new GameDriver("1982"	,"megadon"	,"epos.java"	,rom_megadon,null	,machine_driver_epos	,input_ports_megadon	,null	,ROT270	,	"Epos Corporation (Photar Industries license)", "Megadon" )
-	public static GameDriver driver_catapult	   = new GameDriver("1982"	,"catapult"	,"epos.java"	,rom_catapult,null	,machine_driver_epos	,input_ports_igmo	,null	,ROT270	,	"Epos Corporation", "Catapult", GAME_NOT_WORKING) /* bad rom, hold f2 for test mode */
-	public static GameDriver driver_suprglob	   = new GameDriver("1983"	,"suprglob"	,"epos.java"	,rom_suprglob,null	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "Super Glob" )
-	public static GameDriver driver_theglob	   = new GameDriver("1983"	,"theglob"	,"epos.java"	,rom_theglob,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob" )
-	public static GameDriver driver_theglob2	   = new GameDriver("1983"	,"theglob2"	,"epos.java"	,rom_theglob2,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob (earlier)" )
-	public static GameDriver driver_theglob3	   = new GameDriver("1983"	,"theglob3"	,"epos.java"	,rom_theglob3,driver_suprglob	,machine_driver_epos	,input_ports_suprglob	,null	,ROT270	,	"Epos Corporation", "The Glob (set 3)" )
-	public static GameDriver driver_igmo	   = new GameDriver("1984"	,"igmo"	,"epos.java"	,rom_igmo,null	,machine_driver_epos	,input_ports_igmo	,null	,ROT270	,	"Epos Corporation", "IGMO", GAME_WRONG_COLORS )
-	public static GameDriver driver_dealer	   = new GameDriver("19??"	,"dealer"	,"epos.java"	,rom_dealer,null	,machine_driver_dealer	,input_ports_dealer	,init_dealer	,ROT270	,	"Epos Corporation", "The Dealer", GAME_NOT_WORKING)
+	GAME ( 1982, megadon,  0,        epos,  megadon,  0,	  ROT270, "Epos Corporation (Photar Industries license)", "Megadon" )
+	GAMEX( 1982, catapult, 0,        epos,  igmo,     0,	  ROT270, "Epos Corporation", "Catapult", GAME_NOT_WORKING) /* bad rom, hold f2 for test mode */
+	GAME ( 1983, suprglob, 0,        epos,  suprglob, 0,	  ROT270, "Epos Corporation", "Super Glob" )
+	GAME ( 1983, theglob,  suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob" )
+	GAME ( 1983, theglob2, suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob (earlier)" )
+	GAME ( 1983, theglob3, suprglob, epos,  suprglob, 0,	  ROT270, "Epos Corporation", "The Glob (set 3)" )
+	GAMEX( 1984, igmo,     0,        epos,  igmo,     0,	  ROT270, "Epos Corporation", "IGMO", GAME_WRONG_COLORS )
+	GAMEX( 19??, dealer,   0,        dealer, dealer,  dealer, ROT270, "Epos Corporation", "The Dealer", GAME_NOT_WORKING)
 }

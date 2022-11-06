@@ -8,7 +8,7 @@ driver by Mirko Buffoni
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,8 +21,7 @@ public class ironhors
 	
 	
 	
-	public static InterruptHandlerPtr ironhors_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ironhors_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
 			if (*ironhors_interrupt_enable & 4)
@@ -35,13 +34,11 @@ public class ironhors
 		}
 	} };
 	
-	public static WriteHandlerPtr ironhors_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr ironhors_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ironhors_filter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_RC_filter(0,1000,2200,1000,data & 0x04 ? 220000 : 0); /* YM2203-SSG-A */
 		set_RC_filter(1,1000,2200,1000,data & 0x02 ? 220000 : 0); /* YM2203-SSG-B */
 		set_RC_filter(2,1000,2200,1000,data & 0x01 ? 220000 : 0); /* YM2203-SSG-C */
@@ -131,7 +128,7 @@ public class ironhors
 	
 	
 	
-	static InputPortPtr input_ports_ironhors = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ironhors = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ironhors )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -235,7 +232,7 @@ public class ironhors
 		PORT_BIT( 0xf8, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dairesya = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dairesya = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dairesya )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -429,8 +426,7 @@ public class ironhors
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ironhors = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ironhors )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,18432000/6)        /* 3.072 MHz??? mod by Shingo Suzuki 1999/10/15 */
@@ -459,22 +455,17 @@ public class ironhors
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_farwest = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( farwest )
 		MDRV_IMPORT_FROM(ironhors)
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(farwest_sound_readmem, farwest_sound_writemem)
 	
 		MDRV_GFXDECODE(farwest_gfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -557,7 +548,7 @@ public class ironhors
 	
 	
 	
-	public static GameDriver driver_ironhors	   = new GameDriver("1986"	,"ironhors"	,"ironhors.java"	,rom_ironhors,null	,machine_driver_ironhors	,input_ports_ironhors	,null	,ROT0	,	"Konami", "Iron Horse" )
-	public static GameDriver driver_dairesya	   = new GameDriver("1986"	,"dairesya"	,"ironhors.java"	,rom_dairesya,driver_ironhors	,machine_driver_ironhors	,input_ports_dairesya	,null	,ROT0	,	"[Konami] (Kawakusu license)", "Dai Ressya Goutou (Japan)" )
-	public static GameDriver driver_farwest	   = new GameDriver("1986"	,"farwest"	,"ironhors.java"	,rom_farwest,driver_ironhors	,machine_driver_farwest	,input_ports_ironhors	,null	,ROT0	,	"bootleg?", "Far West", GAME_NOT_WORKING )
+	GAME( 1986, ironhors, 0,        ironhors, ironhors, 0, ROT0, "Konami", "Iron Horse" )
+	GAME( 1986, dairesya, ironhors, ironhors, dairesya, 0, ROT0, "[Konami] (Kawakusu license)", "Dai Ressya Goutou (Japan)" )
+	GAMEX(1986, farwest,  ironhors, farwest,  ironhors, 0, ROT0, "bootleg?", "Far West", GAME_NOT_WORKING )
 }

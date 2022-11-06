@@ -87,7 +87,7 @@ Sprites - Data East custom chip 52
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -108,7 +108,7 @@ public class darkseal
 	/* Function for all 16x16 1024x1024 layers */
 	static UINT32 darkseal_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5) + ((row & 0x20) << 6);
 	}
 	
@@ -179,7 +179,7 @@ public class darkseal
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult;
 	
 			sprite = buffered_spriteram16[offs+1] & 0x1fff;
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			y = buffered_spriteram16[offs];
 			x = buffered_spriteram16[offs+2];
@@ -203,7 +203,7 @@ public class darkseal
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -211,19 +211,19 @@ public class darkseal
 				inc = 1;
 			}
 	
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -278,8 +278,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_darkseal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_darkseal  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,64);
 		pf2_tilemap = tilemap_create(get_bg_tile_info2,darkseal_scan,    TILEMAP_TRANSPARENT,16,16,64,64);
 		pf3_tilemap = tilemap_create(get_bg_tile_info3,darkseal_scan,    TILEMAP_OPAQUE,     16,16,64,64);
@@ -295,8 +294,7 @@ public class darkseal
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_darkseal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_darkseal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		flipscreen=!(darkseal_control_0[0]&0x80);
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	

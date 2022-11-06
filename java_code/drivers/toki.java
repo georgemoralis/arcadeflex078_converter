@@ -20,7 +20,7 @@ for now. Even at 12 this slowdown still happens a little.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -56,12 +56,11 @@ public class toki
 		msm5205next>>=4;
 	
 		toggle ^= 1;
-		if (toggle != 0)
+		if (toggle)
 			cpu_set_nmi_line(1, PULSE_LINE);
 	}
 	
-	public static WriteHandlerPtr toki_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toki_adpcm_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -73,8 +72,7 @@ public class toki
 		MSM5205_reset_w(0,data & 0x08);
 	} };
 	
-	public static WriteHandlerPtr toki_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr toki_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		msm5205next = data;
 	} };
 	
@@ -166,7 +164,7 @@ public class toki
 	
 	/*****************************************************************************/
 	
-	static InputPortPtr input_ports_toki = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toki = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toki )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 
@@ -251,7 +249,7 @@ public class toki
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tokib = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tokib = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tokib )
 		PORT_START(); 
 		PORT_DIPNAME( 0x001f, 0x001f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(      0x0015, DEF_STR( "6C_1C") );
@@ -455,8 +453,7 @@ public class toki
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_toki = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toki )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,20000000/2) 	/* Accurate?  There is a 20MHz near the cpu, but a 12MHz elsewhere */
@@ -482,13 +479,10 @@ public class toki
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tokib = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tokib )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 10MHz causes bad slowdowns with monkey machine rd1 */
@@ -516,9 +510,7 @@ public class toki
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_tokib_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -693,14 +685,12 @@ public class toki
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_toki  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_toki  = new DriverInitHandlerPtr() { public void handler(){
 		seibu_sound_decrypt(REGION_CPU2,0x2000);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tokib  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tokib  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *temp = malloc (65536 * 2);
 		int i, offs;
 	
@@ -709,7 +699,7 @@ public class toki
 			memory_region(REGION_GFX2)[i] ^= 0xff;
 	
 		/* merge background tile graphics together */
-		if (temp != 0)
+		if (temp)
 		{
 			for (offs = 0; offs < memory_region_length(REGION_GFX3); offs += 0x20000)
 			{
@@ -742,9 +732,9 @@ public class toki
 	
 	
 	
-	public static GameDriver driver_toki	   = new GameDriver("1989"	,"toki"	,"toki.java"	,rom_toki,null	,machine_driver_toki	,input_ports_toki	,init_toki	,ROT0	,	"Tad", "Toki (World set 1)" )
-	public static GameDriver driver_tokia	   = new GameDriver("1989"	,"tokia"	,"toki.java"	,rom_tokia,driver_toki	,machine_driver_toki	,input_ports_toki	,init_toki	,ROT0	,	"Tad", "Toki (World set 2)" )
-	public static GameDriver driver_tokij	   = new GameDriver("1989"	,"tokij"	,"toki.java"	,rom_tokij,driver_toki	,machine_driver_toki	,input_ports_toki	,init_toki	,ROT0	,	"Tad", "JuJu Densetsu (Japan)" )
-	public static GameDriver driver_tokiu	   = new GameDriver("1989"	,"tokiu"	,"toki.java"	,rom_tokiu,driver_toki	,machine_driver_toki	,input_ports_toki	,init_toki	,ROT0	,	"Tad (Fabtek license)", "Toki (US)" )
-	public static GameDriver driver_tokib	   = new GameDriver("1989"	,"tokib"	,"toki.java"	,rom_tokib,driver_toki	,machine_driver_tokib	,input_ports_tokib	,init_tokib	,ROT0	,	"bootleg", "Toki (bootleg)" )
+	GAME( 1989, toki,  0,    toki,  toki,  toki,  ROT0, "Tad", "Toki (World set 1)" )
+	GAME( 1989, tokia, toki, toki,  toki,  toki,  ROT0, "Tad", "Toki (World set 2)" )
+	GAME( 1989, tokij, toki, toki,  toki,  toki,  ROT0, "Tad", "JuJu Densetsu (Japan)" )
+	GAME( 1989, tokiu, toki, toki,  toki,  toki,  ROT0, "Tad (Fabtek license)", "Toki (US)" )
+	GAME( 1989, tokib, toki, tokib, tokib, tokib, ROT0, "bootleg", "Toki (bootleg)" )
 }

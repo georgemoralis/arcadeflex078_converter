@@ -34,7 +34,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -186,8 +186,7 @@ public class vector
 	 * Initializes vector game video emulation
 	 */
 	
-	public static VideoStartHandlerPtr video_start_vector  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vector  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		/* Grab the settings for this session */
@@ -255,12 +254,12 @@ public class vector
 		vector_pixel_t coords;
 		int i;
 	
-		if (Machine.color_depth == 32)
+		if (Machine->color_depth == 32)
 		{
 			for (i=p_index-1; i>=0; i--)
 			{
 				coords = pixel[i];
-				((UINT32 *)vecbitmap.line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
+				((UINT32 *)vecbitmap->line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
 			}
 		}
 		else
@@ -268,7 +267,7 @@ public class vector
 			for (i=p_index-1; i>=0; i--)
 			{
 				coords = pixel[i];
-				((UINT16 *)vecbitmap.line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
+				((UINT16 *)vecbitmap->line[VECTOR_PIXEL_Y(coords)])[VECTOR_PIXEL_X(coords)] = 0;
 			}
 		}
 		p_index=0;
@@ -290,8 +289,8 @@ public class vector
 		if (y < ymin || y >= ymax)
 			return;
 	
-		dst = ((UINT16 *)vecbitmap.line[y])[x];
-		((UINT16 *)vecbitmap.line[y])[x] = LIMIT5((RGB_BLUE(col) >> 3) + (dst & 0x1f))
+		dst = ((UINT16 *)vecbitmap->line[y])[x];
+		((UINT16 *)vecbitmap->line[y])[x] = LIMIT5((RGB_BLUE(col) >> 3) + (dst & 0x1f))
 			| (LIMIT5((RGB_GREEN(col) >> 3) + ((dst >> 5) & 0x1f)) << 5)
 			| (LIMIT5((RGB_RED(col) >> 3) + (dst >> 10)) << 10);
 	
@@ -314,8 +313,8 @@ public class vector
 		if (y < ymin || y >= ymax)
 			return;
 	
-		dst = ((UINT32 *)vecbitmap.line[y])[x];
-		((UINT32 *)vecbitmap.line[y])[x] = LIMIT8(RGB_BLUE(col) + (dst & 0xff))
+		dst = ((UINT32 *)vecbitmap->line[y])[x];
+		((UINT32 *)vecbitmap->line[y])[x] = LIMIT8(RGB_BLUE(col) + (dst & 0xff))
 			| (LIMIT8(RGB_GREEN(col) + ((dst >> 8) & 0xff)) << 8)
 			| (LIMIT8(RGB_RED(col) + (dst >> 16)) << 16);
 	
@@ -353,9 +352,9 @@ public class vector
 	
 		/* [2] adjust cords if needed */
 	
-		if (antialias != 0)
+		if (antialias)
 		{
-			if (beam_diameter_is_one != 0)
+			if(beam_diameter_is_one)
 			{
 				x2 = (x2+0x8000)&0xffff0000;
 				y2 = (y2+0x8000)&0xffff0000;
@@ -375,7 +374,7 @@ public class vector
 	
 		/* [4] draw line */
 	
-		if (antialias != 0)
+		if (antialias)
 		{
 			/* draw an anti-aliased line */
 			dx = abs(x1 - x2);
@@ -390,11 +389,11 @@ public class vector
 				x1 >>= 16;
 				xx = x2 >> 16;
 				width = vec_mult(beam << 4, Tcosin(abs(sy) >> 5));
-				if (beam_diameter_is_one == 0)
+				if (!beam_diameter_is_one)
 					yy1 -= width >> 1; /* start back half the diameter */
 				for (;;)
 				{
-					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
+					if (color_callback) col = Tinten(intensity, (*color_callback)());
 					dx = width;    /* init diameter of beam */
 					dy = yy1 >> 16;
 					vector_draw_aa_pixel(x1, dy++, Tinten(Tgammar[0xff & (yy1 >> 8)], col), dirty);
@@ -418,11 +417,11 @@ public class vector
 				yy1 >>= 16;
 				yy = y2 >> 16;
 				width = vec_mult(beam << 4,Tcosin(abs(sx) >> 5));
-				if (beam_diameter_is_one == 0)
+				if (!beam_diameter_is_one)
 					x1 -= width >> 1; /* start back half the width */
 				for (;;)
 				{
-					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
+					if (color_callback) col = Tinten(intensity, (*color_callback)());
 					dy = width;    /* calc diameter of beam */
 					dx = x1 >> 16;
 					vector_draw_aa_pixel(dx++, yy1, Tinten(Tgammar[0xff & (x1 >> 8)], col), dirty);
@@ -451,7 +450,7 @@ public class vector
 			{
 				for (;;)
 				{
-					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
+					if (color_callback) col = Tinten(intensity, (*color_callback)());
 					vector_draw_aa_pixel(x1, yy1, col, dirty);
 					if (x1 == x2) break;
 					x1 += sx;
@@ -467,7 +466,7 @@ public class vector
 			{
 				for (;;)
 				{
-					if (color_callback != 0) col = Tinten(intensity, (*color_callback)());
+					if (color_callback) col = Tinten(intensity, (*color_callback)());
 					vector_draw_aa_pixel(x1, yy1, col, dirty);
 					if (yy1 == y2) break;
 					yy1 += sy;
@@ -510,12 +509,12 @@ public class vector
 				intensity = 0xff;
 		}
 		newpoint = &new_list[new_index];
-		newpoint.x = x;
-		newpoint.y = y;
-		newpoint.col = color;
-		newpoint.intensity = intensity;
-		newpoint.callback = 0;
-		newpoint.status = VDIRTY; /* mark identical lines as clean later */
+		newpoint->x = x;
+		newpoint->y = y;
+		newpoint->col = color;
+		newpoint->intensity = intensity;
+		newpoint->callback = 0;
+		newpoint->status = VDIRTY; /* mark identical lines as clean later */
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -542,12 +541,12 @@ public class vector
 				intensity = 0xff;
 		}
 		newpoint = &new_list[new_index];
-		newpoint.x = x;
-		newpoint.y = y;
-		newpoint.col = 1;
-		newpoint.intensity = intensity;
-		newpoint.callback = color_callback;
-		newpoint.status = VDIRTY; /* mark identical lines as clean later */
+		newpoint->x = x;
+		newpoint->y = y;
+		newpoint->col = 1;
+		newpoint->intensity = intensity;
+		newpoint->callback = color_callback;
+		newpoint->status = VDIRTY; /* mark identical lines as clean later */
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -565,11 +564,11 @@ public class vector
 		point *newpoint;
 	
 		newpoint = &new_list[new_index];
-		newpoint.x = x1;
-		newpoint.y = yy1;
-		newpoint.arg1 = x2;
-		newpoint.arg2 = y2;
-		newpoint.status = VCLIP;
+		newpoint->x = x1;
+		newpoint->y = yy1;
+		newpoint->arg1 = x2;
+		newpoint->arg2 = y2;
+		newpoint->status = VCLIP;
 	
 		new_index++;
 		if (new_index >= MAX_POINTS)
@@ -660,29 +659,29 @@ public class vector
 		for (i = min_index; i > 0; i--, old++, new++)
 		{
 			/* If this is a clip, we need to determine if the clip regions still match */
-			if (old.status == VCLIP || new.status == VCLIP)
+			if (old->status == VCLIP || new->status == VCLIP)
 			{
-				if (old.status == VCLIP)
+				if (old->status == VCLIP)
 					oldclip = *old;
-				if (new.status == VCLIP)
+				if (new->status == VCLIP)
 					newclip = *new;
 				clips_match = (newclip.x == oldclip.x) && (newclip.y == oldclip.y) && (newclip.arg1 == oldclip.arg1) && (newclip.arg2 == oldclip.arg2);
-				if (clips_match == 0)
+				if (!clips_match)
 					last_match = 0;
 	
 				/* fall through to erase the old line if this is not a clip */
-				if (old.status == VCLIP)
+				if (old->status == VCLIP)
 					continue;
 			}
 	
 			/* If the clips match and the vectors match, update */
-			else if (clips_match && (new.x == old.x) && (new.y == old.y) &&
-				(new.col == old.col) && (new.intensity == old.intensity) &&
-				(!new.callback && !old.callback))
+			else if (clips_match && (new->x == old->x) && (new->y == old->y) &&
+				(new->col == old->col) && (new->intensity == old->intensity) &&
+				(!new->callback && !old->callback))
 			{
-				if (last_match != 0)
+				if (last_match)
 				{
-					new.status = VCLEAN;
+					new->status = VCLEAN;
 					continue;
 				}
 				last_match = 1;
@@ -693,10 +692,10 @@ public class vector
 				last_match = 0;
 	
 			/* mark the pixels of the old vector dirty */
-			if (dirty_index + old.arg2 - old.arg1 < MAX_DIRTY_PIXELS)
+			if (dirty_index + old->arg2 - old->arg1 < MAX_DIRTY_PIXELS)
 			{
-				memcpy(&vector_dirty_list[dirty_index], &pixel[old.arg1], (old.arg2 - old.arg1) * sizeof(pixel[0]));
-				dirty_index += old.arg2 - old.arg1;
+				memcpy(&vector_dirty_list[dirty_index], &pixel[old->arg1], (old->arg2 - old->arg1) * sizeof(pixel[0]));
+				dirty_index += old->arg2 - old->arg1;
 			}
 		}
 	
@@ -705,31 +704,30 @@ public class vector
 		for (i = (old_index-min_index); i > 0; i--, old++)
 		{
 			/* skip old clips */
-			if (old.status == VCLIP)
+			if (old->status == VCLIP)
 				continue;
 	
 			/* mark the pixels of the old vector dirty */
-			if (dirty_index + old.arg2 - old.arg1 < MAX_DIRTY_PIXELS)
+			if (dirty_index + old->arg2 - old->arg1 < MAX_DIRTY_PIXELS)
 			{
-				memcpy(&vector_dirty_list[dirty_index], &pixel[old.arg1], (old.arg2 - old.arg1) * sizeof(pixel[0]));
-				dirty_index += old.arg2 - old.arg1;
+				memcpy(&vector_dirty_list[dirty_index], &pixel[old->arg1], (old->arg2 - old->arg1) * sizeof(pixel[0]));
+				dirty_index += old->arg2 - old->arg1;
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vector  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 		point *curpoint;
 	
 		int rv = 1;
 	
 		/* if there is an auxiliary renderer set, let it run */
-		if (vector_aux_renderer != 0)
+		if (vector_aux_renderer)
 			rv = vector_aux_renderer(new_list, new_index);
 	
 		/* if the aux renderer chooses, it can override the bitmap */
-		if (rv == 0)
+		if (!rv)
 		{
 			/* This prevents a crash in the artwork system */
 			vector_dirty_list[0] = VECTOR_PIXEL_END;

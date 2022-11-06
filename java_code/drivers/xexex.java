@@ -63,7 +63,7 @@ Unresolved Issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -93,15 +93,14 @@ public class xexex
 		"0100110000000" /* unlock command */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_xexex  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_xexex  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -119,7 +118,7 @@ public class xexex
 	/* A1, A5 and A6 don't go to the 053247. */
 	static READ16_HANDLER( K053247_scattered_word_r )
 	{
-		if ((offset & 0x0031) != 0)
+		if (offset & 0x0031)
 			return spriteram16[offset];
 		else
 		{
@@ -130,7 +129,7 @@ public class xexex
 	
 	static WRITE16_HANDLER( K053247_scattered_word_w )
 	{
-		if ((offset & 0x0031) != 0)
+		if (offset & 0x0031)
 			COMBINE_DATA(spriteram16+offset);
 		else
 		{
@@ -172,7 +171,7 @@ public class xexex
 		}
 		while (--counter);
 	
-		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static READ16_HANDLER( spriteram16_mirror_r )
@@ -206,7 +205,7 @@ public class xexex
 		/* bit 3 is service button */
 		res = EEPROM_read_bit() | input_port_1_r(0);
 	
-		if (init_eeprom_count != 0)
+		if (init_eeprom_count)
 		{
 			init_eeprom_count--;
 			res &= 0xf7;
@@ -249,10 +248,10 @@ public class xexex
 	
 	static WRITE16_HANDLER( sound_cmd1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 		{
 			// anyone knows why 0x1a keeps lurking the sound queue in the world version???
-			if (xexex_strip0x1a != 0)
+			if (xexex_strip0x1a)
 				if (soundlatch2_r(0)==1 && data==0x1a) return;
 	
 			soundlatch_w(0, data & 0xff);
@@ -261,7 +260,7 @@ public class xexex
 	
 	static WRITE16_HANDLER( sound_cmd2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch2_w(0, data & 0xff);
 		}
@@ -282,15 +281,14 @@ public class xexex
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + cur_sound_region*0x4000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cur_sound_region = data & 7;
 		reset_sound_region();
 	} };
 	
 	static void ym_set_mixing(double left, double right)
 	{
-		if(Machine.sample_rate) {
+		if(Machine->sample_rate) {
 			int l = 71*left;
 			int r = 71*right;
 			int ch;
@@ -304,10 +302,10 @@ public class xexex
 	
 	static void dmaend_callback(int data)
 	{
-		if ((cur_control2 & 0x0040) != 0)
+		if (cur_control2 & 0x0040)
 		{
 			// foul-proof (CPU0 could be deactivated while we wait)
-			if (suspension_active != 0) { suspension_active = 0; cpu_trigger(resume_trigger); }
+			if (suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 			// IRQ 5 is the "object DMA end interrupt" and shouldn't be triggered
 			// if object data isn't ready for DMA within the frame.
@@ -315,20 +313,19 @@ public class xexex
 		}
 	}
 	
-	public static InterruptHandlerPtr xexex_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (suspension_active != 0) { suspension_active = 0; cpu_trigger(resume_trigger); }
+	public static InterruptHandlerPtr xexex_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (suspension_active) { suspension_active = 0; cpu_trigger(resume_trigger); }
 	
 		switch (cpu_getiloops())
 		{
 			case 0:
 				// IRQ 6 is for test mode only
-				if ((cur_control2 & 0x0020) != 0)
+				if (cur_control2 & 0x0020)
 					cpu_set_irq_line(0, 6, HOLD_LINE);
 			break;
 	
 			case 1:
-				if (K053246_is_IRQ_enabled() != 0)
+				if (K053246_is_IRQ_enabled())
 				{
 					// OBJDMA starts at the beginning of V-blank
 					xexex_objdma(0);
@@ -339,7 +336,7 @@ public class xexex
 	
 				// IRQ 4 is the V-blank interrupt. It controls color, sound and
 				// vital game logics that shouldn't be interfered by frame-drop.
-				if ((cur_control2 & 0x0800) != 0)
+				if (cur_control2 & 0x0800)
 					cpu_set_irq_line(0, 4, HOLD_LINE);
 			break;
 		}
@@ -430,7 +427,7 @@ public class xexex
 	};
 	
 	
-	static InputPortPtr input_ports_xexex = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_xexex = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( xexex )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -486,8 +483,7 @@ public class xexex
 		{ ym_set_mixing }
 	};
 	
-	public static MachineHandlerPtr machine_driver_xexex = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( xexex )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)	// 16MHz (32MHz xtal)
@@ -522,9 +518,7 @@ public class xexex
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_xexex = new RomLoadPtr(){ public void handler(){ 
@@ -585,15 +579,13 @@ public class xexex
 		ROM_LOAD( "xex_b07.rom", 0x200000, 0x100000, CRC(ec87fe1b) SHA1(ec9823aea5a1fc5c47c8262e15e10b28be87231c) )
 	ROM_END(); }}; 
 	
-	public static MachineInitHandlerPtr machine_init_xexex  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_xexex  = new MachineInitHandlerPtr() { public void handler(){
 		cur_sound_region = 0;
 		suspension_active = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_xexex  = new DriverInitHandlerPtr() { public void handler()
-	{
-		if (!strcmp(Machine.gamedrv.name, "xexex"))
+	public static DriverInitHandlerPtr init_xexex  = new DriverInitHandlerPtr() { public void handler(){
+		if (!strcmp(Machine->gamedrv->name, "xexex"))
 		{
 			// Invulnerability
 	//		*(data16_t *)(memory_region(REGION_CPU1) + 0x648d4) = 0x4a79;
@@ -618,6 +610,6 @@ public class xexex
 	} };
 	
 	
-	public static GameDriver driver_xexex	   = new GameDriver("1991"	,"xexex"	,"xexex.java"	,rom_xexex,null	,machine_driver_xexex	,input_ports_xexex	,init_xexex	,ROT0	,	"Konami", "Xexex (World)" )
-	public static GameDriver driver_xexexj	   = new GameDriver("1991"	,"xexexj"	,"xexex.java"	,rom_xexexj,driver_xexex	,machine_driver_xexex	,input_ports_xexex	,init_xexex	,ROT0	,	"Konami", "Xexex (Japan)" )
+	GAME( 1991, xexex,  0,     xexex, xexex, xexex, ROT0, "Konami", "Xexex (World)" )
+	GAME( 1991, xexexj, xexex, xexex, xexex, xexex, ROT0, "Konami", "Xexex (Japan)" )
 }

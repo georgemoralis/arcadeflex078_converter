@@ -9,7 +9,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,8 +22,7 @@ public class mosaic
 	
 	static int prot_val;
 	
-	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0x80) == 0)
 		{
 			/* simply increment given value */
@@ -46,8 +45,7 @@ public class mosaic
 		}
 	} };
 	
-	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = (prot_val >> 8) & 0xff;
 	
 		logerror("%06x: protection_r %02x\n",activecpu_get_pc(),res);
@@ -57,8 +55,7 @@ public class mosaic
 		return res;
 	} };
 	
-	public static WriteHandlerPtr gfire2_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gfire2_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("%06x: protection_w %02x\n",activecpu_get_pc(),data);
 	
 		switch(data)
@@ -84,8 +81,7 @@ public class mosaic
 		}
 	} };
 	
-	public static ReadHandlerPtr gfire2_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gfire2_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = prot_val & 0xff;
 	
 		prot_val >>= 8;
@@ -175,7 +171,7 @@ public class mosaic
 	
 	
 	
-	static InputPortPtr input_ports_mosaic = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mosaic = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mosaic )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -220,7 +216,7 @@ public class mosaic
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gfire2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gfire2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gfire2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -301,8 +297,7 @@ public class mosaic
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_mosaic = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mosaic )
 		MDRV_CPU_ADD_TAG("main", Z180, 7000000)	/* ??? */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_PORTS(readport,writeport)
@@ -323,19 +318,14 @@ public class mosaic
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gfire2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gfire2 )
 		MDRV_IMPORT_FROM(mosaic)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gfire2_readmem,gfire2_writemem)
 		MDRV_CPU_PORTS(gfire2_readport,gfire2_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -398,7 +388,7 @@ public class mosaic
 	
 	
 	
-	public static GameDriver driver_mosaic	   = new GameDriver("1990"	,"mosaic"	,"mosaic.java"	,rom_mosaic,null	,machine_driver_mosaic	,input_ports_mosaic	,null	,ROT0	,	"Space", "Mosaic" )
-	public static GameDriver driver_mosaica	   = new GameDriver("1990"	,"mosaica"	,"mosaic.java"	,rom_mosaica,driver_mosaic	,machine_driver_mosaic	,input_ports_mosaic	,null	,ROT0	,	"Space (Fuuki license)", "Mosaic (Fuuki)" )
-	public static GameDriver driver_gfire2	   = new GameDriver("1992"	,"gfire2"	,"mosaic.java"	,rom_gfire2,null	,machine_driver_gfire2	,input_ports_gfire2	,null	,ROT0	,	"Topis Corp", "Golden Fire II" )
+	GAME( 1990, mosaic,  0,      mosaic, mosaic, 0, ROT0, "Space", "Mosaic" )
+	GAME( 1990, mosaica, mosaic, mosaic, mosaic, 0, ROT0, "Space (Fuuki license)", "Mosaic (Fuuki)" )
+	GAME( 1992, gfire2,  0,      gfire2, gfire2, 0, ROT0, "Topis Corp", "Golden Fire II" )
 }

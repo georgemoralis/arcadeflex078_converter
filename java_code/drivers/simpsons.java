@@ -10,7 +10,7 @@ someone@secureshell.com
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -66,8 +66,7 @@ public class simpsons
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr z80_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		offset = 0x10000 + ( ( ( data & 7 ) - 2 ) * 0x4000 );
@@ -91,8 +90,7 @@ public class simpsons
 		cpu_set_nmi_line(1,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr z80_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr z80_arm_nmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	sound_nmi_enabled = 1;
 		cpu_set_nmi_line(1,CLEAR_LINE);
 		timer_set(TIME_IN_USEC(50),0,nmi_callback);	/* kludge until the K053260 is emulated correctly */
@@ -127,7 +125,7 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_simpsons = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_simpsons = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( simpsons )
 		PORT_START();  /* IN0 - Player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
@@ -183,7 +181,7 @@ public class simpsons
 		PORT_BIT( 0xfe, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_simpsn2p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_simpsn2p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( simpsn2p )
 		PORT_START();  /* IN0 - Player 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
@@ -284,18 +282,17 @@ public class simpsons
 		}
 		while (--counter);
 	
-		if (num_inactive != 0) do { *dst = 0; dst += 8; } while (--num_inactive);
+		if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 	}
 	
 	static void dmaend_callback(int data)
 	{
-		if (simpsons_firq_enabled != 0)
+		if (simpsons_firq_enabled)
 			cpu_set_irq_line(0, KONAMI_FIRQ_LINE, HOLD_LINE);
 	}
 	
-	public static InterruptHandlerPtr simpsons_irq = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K053246_is_IRQ_enabled() != 0)
+	public static InterruptHandlerPtr simpsons_irq = new InterruptHandlerPtr() {public void handler(){
+		if (K053246_is_IRQ_enabled())
 		{
 			simpsons_objdma();
 	
@@ -303,12 +300,11 @@ public class simpsons
 			timer_set(TIME_IN_USEC(30), 0, dmaend_callback);
 		}
 	
-		if (K052109_is_IRQ_enabled() != 0)
+		if (K052109_is_IRQ_enabled())
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_simpsons = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( simpsons )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000) /* ? */
@@ -338,9 +334,7 @@ public class simpsons
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K053260, k053260_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -465,14 +459,13 @@ public class simpsons
 	
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_simpsons  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_simpsons  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_4(REGION_GFX2);
 	} };
 	
-	public static GameDriver driver_simpsons	   = new GameDriver("1991"	,"simpsons"	,"simpsons.java"	,rom_simpsons,null	,machine_driver_simpsons	,input_ports_simpsons	,init_simpsons	,ROT0	,	"Konami", "The Simpsons (4 Players)" )
-	public static GameDriver driver_simpsn2p	   = new GameDriver("1991"	,"simpsn2p"	,"simpsons.java"	,rom_simpsn2p,driver_simpsons	,machine_driver_simpsons	,input_ports_simpsn2p	,init_simpsons	,ROT0	,	"Konami", "The Simpsons (2 Players)" )
-	public static GameDriver driver_simps2pa	   = new GameDriver("1991"	,"simps2pa"	,"simpsons.java"	,rom_simps2pa,driver_simpsons	,machine_driver_simpsons	,input_ports_simpsons	,init_simpsons	,ROT0	,	"Konami", "The Simpsons (2 Players alt)" )
-	public static GameDriver driver_simps2pj	   = new GameDriver("1991"	,"simps2pj"	,"simpsons.java"	,rom_simps2pj,driver_simpsons	,machine_driver_simpsons	,input_ports_simpsn2p	,init_simpsons	,ROT0	,	"Konami", "The Simpsons (2 Players Japan)" )
+	GAME( 1991, simpsons, 0,        simpsons, simpsons, simpsons, ROT0, "Konami", "The Simpsons (4 Players)" )
+	GAME( 1991, simpsn2p, simpsons, simpsons, simpsn2p, simpsons, ROT0, "Konami", "The Simpsons (2 Players)" )
+	GAME( 1991, simps2pa, simpsons, simpsons, simpsons, simpsons, ROT0, "Konami", "The Simpsons (2 Players alt)" )
+	GAME( 1991, simps2pj, simpsons, simpsons, simpsn2p, simpsons, ROT0, "Konami", "The Simpsons (2 Players Japan)" )
 }

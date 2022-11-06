@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,13 +21,13 @@ public class actfancr
 	
 	static UINT32 actfancr_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((col & 0xf0) << 4);
 	}
 	
 	static UINT32 actfancr_scan2(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((row & 0x10) << 4) + ((col & 0x70) << 5);
 	}
 	
@@ -48,7 +48,7 @@ public class actfancr
 	
 	static UINT32 triothep_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x0f) + ((row & 0x0f) << 4) + ((row & 0x10) << 4) + ((col & 0x10) << 5);
 	}
 	
@@ -91,8 +91,7 @@ public class actfancr
 		state_save_register_UINT8("video", 0, "control_2", actfancr_control_2, 0x20);
 	}
 	
-	public static VideoStartHandlerPtr video_start_actfancr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_actfancr  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_tile_info,actfancr_scan,TILEMAP_OPAQUE,16,16,256,16);
 		pf1_alt_tilemap = tilemap_create(get_tile_info,actfancr_scan2,TILEMAP_OPAQUE,16,16,128,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -107,8 +106,7 @@ public class actfancr
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_triothep  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_triothep  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_trio_tile_info,triothep_scan,TILEMAP_OPAQUE,16,16,32,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -126,43 +124,36 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr actfancr_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr actfancr_pf1_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		actfancr_control_1[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr actfancr_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr actfancr_pf2_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		actfancr_control_2[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr actfancr_pf1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr actfancr_pf1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		actfancr_pf1_data[offset]=data;
 		tilemap_mark_tile_dirty(pf1_tilemap,offset/2);
-		if (pf1_alt_tilemap != 0) tilemap_mark_tile_dirty(pf1_alt_tilemap,offset/2);
+		if (pf1_alt_tilemap) tilemap_mark_tile_dirty(pf1_alt_tilemap,offset/2);
 	} };
 	
-	public static ReadHandlerPtr actfancr_pf1_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr actfancr_pf1_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return actfancr_pf1_data[offset];
 	} };
 	
-	public static WriteHandlerPtr actfancr_pf2_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr actfancr_pf2_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		actfancr_pf2_data[offset]=data;
 		tilemap_mark_tile_dirty(pf2_tilemap,offset/2);
 	} };
 	
-	public static ReadHandlerPtr actfancr_pf2_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr actfancr_pf2_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return actfancr_pf2_data[offset];
 	} };
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_actfancr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_actfancr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,mult;
 		int scrollx=(actfancr_control_1[0x10]+(actfancr_control_1[0x11]<<8));
 		int scrolly=(actfancr_control_1[0x12]+(actfancr_control_1[0x13]<<8));
@@ -209,7 +200,7 @@ public class actfancr
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -217,11 +208,11 @@ public class actfancr
 				inc = 1;
 			}
 	
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
@@ -241,8 +232,7 @@ public class actfancr
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_triothep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_triothep  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,i,mult;
 		int scrollx=(actfancr_control_1[0x10]+(actfancr_control_1[0x11]<<8));
 		int scrolly=(actfancr_control_1[0x12]+(actfancr_control_1[0x13]<<8));
@@ -293,7 +283,7 @@ public class actfancr
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -301,11 +291,11 @@ public class actfancr
 				inc = 1;
 			}
 	
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;

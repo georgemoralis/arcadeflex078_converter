@@ -26,7 +26,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -60,8 +60,7 @@ public class m90
 	static void get_pf2w_tile_info(int tile_index) { get_tile_info(tile_index,1,2); }
 	
 	
-	public static VideoStartHandlerPtr video_start_m90  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_m90  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_layer =      tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,64);
 		pf1_wide_layer = tilemap_create(get_pf1w_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,128,64);
 		pf2_layer =      tilemap_create(get_pf2_tile_info, tilemap_scan_rows,TILEMAP_OPAQUE,8,8,64,64);
@@ -102,7 +101,7 @@ public class m90
 			y -= 16 * y_multi;
 	
 			for (i = 0;i < y_multi;i++)
-				pdrawgfx(bitmap,Machine.gfx[1],
+				pdrawgfx(bitmap,Machine->gfx[1],
 						sprite + (fy ? y_multi-1 - i : i),
 						colour,
 						fx,fy,
@@ -134,7 +133,7 @@ public class m90
 			fx=spriteram.read(offs+5)&1;
 			fy=0;//spriteram.read(offs+5)&2;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sprite&0x1fff,
 					colour,
 					fx,fy,
@@ -144,8 +143,7 @@ public class m90
 	}
 	#endif
 	
-	public static WriteHandlerPtr m90_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m90_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m90_video_control_data[offset]=data;
 	} };
 	
@@ -159,8 +157,7 @@ public class m90
 	}
 	
 	
-	public static WriteHandlerPtr m90_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m90_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		m90_video_data[offset] = data;
 	
 		markdirty(pf1_layer,     m90_video_control_data[0xa] & 0x3,offset);
@@ -169,8 +166,7 @@ public class m90
 		markdirty(pf2_wide_layer,m90_video_control_data[0xc] & 0x2,offset);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_m90  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_pf1,last_pf2;
 		int pf1_base = m90_video_control_data[0xa] & 0x3;
 		int pf2_base = m90_video_control_data[0xc] & 0x3;
@@ -239,10 +235,10 @@ public class m90
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 	
-		if (pf2_enable == 0)
+		if (!pf2_enable)
 			fillbitmap(bitmap,Machine.pens[0],cliprect);
 	
-		if (pf2_enable != 0)
+		if (pf2_enable)
 		{
 			if (m90_video_control_data[0xc] & 0x4)
 				tilemap_draw(bitmap,cliprect,pf2_wide_layer,0,0);
@@ -255,7 +251,7 @@ public class m90
 				tilemap_draw(bitmap,cliprect,pf2_layer,1,1);
 		}
 	
-		if (pf1_enable != 0)
+		if (pf1_enable)
 		{
 			if (m90_video_control_data[0xa] & 0x4)
 				tilemap_draw(bitmap,cliprect,pf1_wide_layer,0,0);

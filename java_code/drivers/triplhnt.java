@@ -8,7 +8,7 @@ Atari Triple Hunt Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,8 +25,7 @@ public class triplhnt
 	static UINT8 triplhnt_hit_code;
 	
 	
-	public static DriverInitHandlerPtr init_triplhnt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_triplhnt  = new DriverInitHandlerPtr() { public void handler(){
 		generic_nvram = triplhnt_cmos;
 		generic_nvram_size = sizeof triplhnt_cmos;
 	} };
@@ -53,7 +52,7 @@ public class triplhnt
 		/* BIT6 => TAPE CTRL   */
 		/* BIT7 => SPRITE BANK */
 	
-		if ((offset & 1) != 0)
+		if (offset & 1)
 		{
 			triplhnt_misc_flags |= 1 << bit;
 	
@@ -77,50 +76,43 @@ public class triplhnt
 	}
 	
 	
-	public static WriteHandlerPtr triplhnt_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr triplhnt_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		triplhnt_update_misc(offset);
 	} };
 	
 	
-	public static WriteHandlerPtr triplhnt_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr triplhnt_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
 	
-	public static ReadHandlerPtr triplhnt_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triplhnt_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr triplhnt_cmos_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triplhnt_cmos_r  = new ReadHandlerPtr() { public int handler(int offset){
 		triplhnt_cmos_latch = offset;
 	
 		return triplhnt_cmos[triplhnt_cmos_latch] ^ 15;
 	} };
 	
 	
-	public static ReadHandlerPtr triplhnt_input_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triplhnt_input_port_4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		watchdog_reset_w(0, 0);
 	
 		return readinputport(4);
 	} };
 	
 	
-	public static ReadHandlerPtr triplhnt_misc_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triplhnt_misc_r  = new ReadHandlerPtr() { public int handler(int offset){
 		triplhnt_update_misc(offset);
 	
 		return readinputport(7) | triplhnt_hit_code;
 	} };
 	
 	
-	public static ReadHandlerPtr triplhnt_da_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triplhnt_da_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int cross_x = readinputport(8);
 		int cross_y = readinputport(9);
 	
@@ -167,7 +159,7 @@ public class triplhnt
 	};
 	
 	
-	static InputPortPtr input_ports_triplhnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_triplhnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( triplhnt )
 		PORT_START();  /* 0C00 */
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -299,8 +291,7 @@ public class triplhnt
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_triplhnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_triplhnt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0xAF, 0xAF, 0xAF);  /* sprites */
 		palette_set_color(1, 0x00, 0x00, 0x00);
 		palette_set_color(2, 0xFF, 0xFF, 0xFF);
@@ -312,8 +303,7 @@ public class triplhnt
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_triplhnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triplhnt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 800000)
@@ -336,9 +326,7 @@ public class triplhnt
 		MDRV_VIDEO_UPDATE(triplhnt)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_triplhnt = new RomLoadPtr(){ public void handler(){ 
@@ -364,5 +352,5 @@ public class triplhnt
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_triplhnt	   = new GameDriver("1977"	,"triplhnt"	,"triplhnt.java"	,rom_triplhnt,null	,machine_driver_triplhnt	,input_ports_triplhnt	,init_triplhnt	,0	,	"Atari", "Triple Hunt", GAME_NO_SOUND )
+	GAMEX( 1977, triplhnt, 0, triplhnt, triplhnt, triplhnt, 0, "Atari", "Triple Hunt", GAME_NO_SOUND )
 }

@@ -3,7 +3,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -142,18 +142,18 @@ public class osdependH
 	  the output stream, then osd_update_audio_stream() is called every frame to
 	  feed new data. osd_stop_audio_stream() is called when the emulation is stopped.
 	
-	  The sample rate is fixed at Machine.sample_rate. Samples are 16-bit, signed.
+	  The sample rate is fixed at Machine->sample_rate. Samples are 16-bit, signed.
 	  When the stream is stereo, left and right samples are alternated in the
 	  stream.
 	
 	  osd_start_audio_stream() and osd_update_audio_stream() must return the number
 	  of samples (or couples of samples, when using stereo) required for next frame.
-	  This will be around Machine.sample_rate / Machine.drv.frames_per_second,
+	  This will be around Machine->sample_rate / Machine->drv->frames_per_second,
 	  the code may adjust it by SMALL AMOUNTS to keep timing accurate and to
 	  maintain audio and video in sync when using vsync. Note that sound emulation,
 	  especially when DACs are involved, greatly depends on the number of samples
 	  per frame to be roughly constant, so the returned value must always stay close
-	  to the reference value of Machine.sample_rate / Machine.drv.frames_per_second.
+	  to the reference value of Machine->sample_rate / Machine->drv->frames_per_second.
 	  Of course that value is not necessarily an integer so at least a +/- 1
 	  adjustment is necessary to avoid drifting over time.
 	*/
@@ -277,7 +277,7 @@ public class osdependH
 	/* inp header */
 	typedef struct
 	{
-		char name[9];      /* 8 bytes for game.name + NUL */
+		char name[9];      /* 8 bytes for game->name + NUL */
 		char version[3];   /* byte[0] = 0, byte[1] = version byte[2] = beta_version */
 		char reserved[20]; /* for future use, possible store game options? */
 	} INP_HEADER;

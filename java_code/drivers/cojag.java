@@ -53,7 +53,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -102,10 +102,9 @@ public class cojag
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_cojag  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cojag  = new MachineInitHandlerPtr() { public void handler(){
 		/* 68020 only: copy the interrupt vectors into RAM */
-		if (cojag_is_r3000 == 0)
+		if (!cojag_is_r3000)
 			memcpy(jaguar_shared_ram, rom_base, 0x10);
 	
 		/* set up main CPU RAM/ROM banks */
@@ -264,7 +263,7 @@ public class cojag
 	
 	static READ32_HANDLER( eeprom_data_r )
 	{
-		if (cojag_is_r3000 != 0)
+		if (cojag_is_r3000)
 			return ((UINT32 *)generic_nvram)[offset] | 0xffffff00;
 		else
 			return ((UINT32 *)generic_nvram)[offset] | 0x00ffffff;
@@ -279,9 +278,9 @@ public class cojag
 	
 	static WRITE32_HANDLER( eeprom_data_w )
 	{
-	//	if (eeprom_enable != 0)
+	//	if (eeprom_enable)
 		{
-			if (cojag_is_r3000 != 0)
+			if (cojag_is_r3000)
 				((UINT32 *)generic_nvram)[offset] = data & 0x000000ff;
 			else
 				((UINT32 *)generic_nvram)[offset] = data & 0xff000000;
@@ -669,7 +668,7 @@ public class cojag
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_area51 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_area51 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( area51 )
 		PORT_START(); 
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START2 );
@@ -712,7 +711,7 @@ public class cojag
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_vcircle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vcircle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vcircle )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_BUTTON4 | IPF_PLAYER2 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );
@@ -834,9 +833,7 @@ public class cojag
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( r3knarrow )
@@ -844,9 +841,7 @@ public class cojag
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 40*8-1, 0*8, 30*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	MACHINE_DRIVER_START( cojag68k )
@@ -882,9 +877,7 @@ public class cojag
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -993,11 +986,11 @@ public class cojag
 	{
 		/* copy over the ROM */
 		memcpy(rom_base, memory_region(REGION_USER1), rom_size);
-		cojag_is_r3000 = (Machine.drv.cpu[0].cpu_type == CPU_R3000BE);
+		cojag_is_r3000 = (Machine->drv->cpu[0].cpu_type == CPU_R3000BE);
 		cojag_draw_crosshair = crosshair;
 	
 		/* install synchronization hooks for GPU */
-		if (cojag_is_r3000 != 0)
+		if (cojag_is_r3000)
 			install_mem_write32_handler(0, 0x04f0b000 + gpu_jump_offs, 0x04f0b003 + gpu_jump_offs, gpu_jump_w);
 		else
 			install_mem_write32_handler(0, 0xf0b000 + gpu_jump_offs, 0xf0b003 + gpu_jump_offs, gpu_jump_w);
@@ -1013,8 +1006,7 @@ public class cojag
 	}
 	
 	
-	public static DriverInitHandlerPtr init_area51  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_area51  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(1, 0x5c4, 0x5a0);
 	
 	#if ENABLE_SPEEDUP_HACKS
@@ -1024,8 +1016,7 @@ public class cojag
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_maxforce  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_maxforce  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(1, 0x0c0, 0x09e);
 	
 		/* patch the protection */
@@ -1039,8 +1030,7 @@ public class cojag
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_area51mx  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_area51mx  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(1, 0x0c0, 0x09e);
 	
 		/* patch the protection */
@@ -1053,8 +1043,7 @@ public class cojag
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_a51mxr3k  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_a51mxr3k  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(1, 0x0c0, 0x09e);
 	
 		/* patch the protection */
@@ -1068,8 +1057,7 @@ public class cojag
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_vcircle  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_vcircle  = new DriverInitHandlerPtr() { public void handler(){
 		common_init(0, 0x5c0, 0x5a0);
 	
 	#if ENABLE_SPEEDUP_HACKS
@@ -1087,10 +1075,10 @@ public class cojag
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_area51	   = new GameDriver("1995"	,"area51"	,"cojag.java"	,rom_area51,null	,machine_driver_cojag68k	,input_ports_area51	,init_area51	,ROT0	,	"Atari Games", "Area 51" )
-	public static GameDriver driver_maxforce	   = new GameDriver("1996"	,"maxforce"	,"cojag.java"	,rom_maxforce,null	,machine_driver_r3knarrow	,input_ports_area51	,init_maxforce	,ROT0	,	"Atari Games", "Maximum Force v1.05" )
-	public static GameDriver driver_maxf_102	   = new GameDriver("1996"	,"maxf_102"	,"cojag.java"	,rom_maxf_102,driver_maxforce	,machine_driver_r3knarrow	,input_ports_area51	,init_maxforce	,ROT0	,	"Atari Games", "Maximum Force v1.02" )
-	public static GameDriver driver_area51mx	   = new GameDriver("1998"	,"area51mx"	,"cojag.java"	,rom_area51mx,null	,machine_driver_cojag68k	,input_ports_area51	,init_area51mx	,ROT0	,	"Atari Games", "Area 51 / Maximum Force Duo v2.0" )
-	public static GameDriver driver_a51mxr3k	   = new GameDriver("1998"	,"a51mxr3k"	,"cojag.java"	,rom_a51mxr3k,driver_area51mx	,machine_driver_r3knarrow	,input_ports_area51	,init_a51mxr3k	,ROT0	,	"Atari Games", "Area 51 / Maximum Force Duo (R3000)" )
-	public static GameDriver driver_vcircle	   = new GameDriver("1996"	,"vcircle"	,"cojag.java"	,rom_vcircle,null	,machine_driver_cojagr3k	,input_ports_vcircle	,init_vcircle	,ROT0	,	"Atari Games", "Vicious Circle (prototype)" )
+	GAME( 1995, area51,   0,        cojag68k,  area51,   area51,   ROT0, "Atari Games", "Area 51" )
+	GAME( 1996, maxforce, 0,        r3knarrow, area51,   maxforce, ROT0, "Atari Games", "Maximum Force v1.05" )
+	GAME( 1996, maxf_102, maxforce, r3knarrow, area51,   maxforce, ROT0, "Atari Games", "Maximum Force v1.02" )
+	GAME( 1998, area51mx, 0,        cojag68k,  area51,   area51mx, ROT0, "Atari Games", "Area 51 / Maximum Force Duo v2.0" )
+	GAME( 1998, a51mxr3k, area51mx, r3knarrow, area51,   a51mxr3k, ROT0, "Atari Games", "Area 51 / Maximum Force Duo (R3000)" )
+	GAME( 1996, vcircle,  0,        cojagr3k,  vcircle,  vcircle,  ROT0, "Atari Games", "Vicious Circle (prototype)" )
 }

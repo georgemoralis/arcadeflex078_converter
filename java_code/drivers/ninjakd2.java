@@ -100,8 +100,8 @@ c003    "DIPSW1"
         76543210
         ||||||||
         |||||||^-UNUSED?
-        ||||||^-.EXTRA
-        |||||^--.LIVES
+        ||||||^-->EXTRA
+        |||||^--->LIVES
         ||||^----CONTINUE MODE
         |||^-----DEMO SOUND
         ||^------NORMAL/HARD
@@ -116,11 +116,11 @@ c004    "DIPSW2"
         |||||||^-TEST MODE
         ||||||^--TABLE/UPRIGHT
         |||||^---"CREDIT SERVICE"
-        ||||^---.
-        |||^----.>
-        ||^-----.>> coin/credit configurations
-        |^------.>
-        ^-------.
+        ||||^---->
+        |||^----->>
+        ||^------>>> coin/credit configurations
+        |^------->>
+        ^-------->
 
 c200	Sound command?
 	This byte is written when game plays sound effects...
@@ -223,7 +223,7 @@ The first sprite data is located at fa0b,then fa1b and so on.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -244,22 +244,22 @@ public class ninjakd2
 		int sample_info [9][2] = { {0x0000,0x0A00},{0x0A00,0x1D00},{0x2700,0x1700},
 		{0x3E00,0x1500},{0x5300,0x0B00},{0x5E00,0x0A00},{0x6800,0x0E00},{0x7600,0x1E00},{0xF000,0x0400} };
 	
-		if ((Machine.samples = auto_malloc(sizeof(struct GameSamples) + 9 * sizeof(struct GameSample *))) == NULL)
+		if ((Machine->samples = auto_malloc(sizeof(struct GameSamples) + 9 * sizeof(struct GameSample *))) == NULL)
 			return 1;
 	
-		samples = Machine.samples;
-		samples.total = 8;
+		samples = Machine->samples;
+		samples->total = 8;
 	
 		for (i=0;i<8;i++)
 		{
-			if ((samples.sample[i] = auto_malloc(sizeof(struct GameSample) + (sample_info[i][1]))) == NULL)
+			if ((samples->sample[i] = auto_malloc(sizeof(struct GameSample) + (sample_info[i][1]))) == NULL)
 				return 1;
 	
-			samples.sample[i].length = sample_info[i][1];
-			samples.sample[i].smpfreq = 16000;	/* 16 kHz */
-			samples.sample[i].resolution = 8;
+			samples->sample[i]->length = sample_info[i][1];
+			samples->sample[i]->smpfreq = 16000;	/* 16 kHz */
+			samples->sample[i]->resolution = 8;
 			for (n=0; n<sample_info[i][1]; n++)
-				samples.sample[i].data[n] = source[sample_info[i][0]+n] ^ 0x80;
+				samples->sample[i]->data[n] = source[sample_info[i][0]+n] ^ 0x80;
 		}
 	
 		/*	The samples are now ready to be used.  They are a 8 bit, 16 kHz samples. 	 */
@@ -268,18 +268,15 @@ public class ninjakd2
 	}
 	
 	
-	public static InterruptHandlerPtr ninjakd2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr ninjakd2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xd7);	/* RST 10h */
 	} };
 	
-	public static ReadHandlerPtr ninjakd2_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ninjakd2_bankselect_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ninjakd2_bank_latch;
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -292,8 +289,7 @@ public class ninjakd2
 		}
 	} };
 	
-	public static WriteHandlerPtr ninjakd2_pcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjakd2_pcm_play_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		int sample_no[9] = { 0x00,0x0A,0x27,0x3E,0x53,0x5E,0x68,0x76,0xF0 };
 	
@@ -377,7 +373,7 @@ public class ninjakd2
 	
 	
 	
-	static InputPortPtr input_ports_ninjakd2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninjakd2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninjakd2 )
 	    PORT_START(); 
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT );
@@ -523,8 +519,7 @@ public class ninjakd2
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_ninjakd2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjakd2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -546,13 +541,10 @@ public class ninjakd2
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ninjak2a = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninjak2a )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)		/* 12000000/2 ??? */
@@ -582,9 +574,7 @@ public class ninjakd2
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -757,8 +747,7 @@ public class ninjakd2
 	
 	
 	
-	public static DriverInitHandlerPtr init_ninjak2a  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ninjak2a  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU2);
 		int diff = memory_region_length(REGION_CPU2) / 2;
 	
@@ -767,8 +756,8 @@ public class ninjakd2
 	
 	
 	
-	public static GameDriver driver_ninjakd2	   = new GameDriver("1987"	,"ninjakd2"	,"ninjakd2.java"	,rom_ninjakd2,null	,machine_driver_ninjakd2	,input_ports_ninjakd2	,null	,ROT0	,	"UPL", "Ninja-Kid II (set 1)", GAME_NO_SOUND )	/* sound program is encrypted */
-	public static GameDriver driver_ninjak2a	   = new GameDriver("1987"	,"ninjak2a"	,"ninjakd2.java"	,rom_ninjak2a,driver_ninjakd2	,machine_driver_ninjak2a	,input_ports_ninjakd2	,init_ninjak2a	,ROT0	,	"UPL", "Ninja-Kid II (set 2)" )
-	public static GameDriver driver_ninjak2b	   = new GameDriver("1987"	,"ninjak2b"	,"ninjakd2.java"	,rom_ninjak2b,driver_ninjakd2	,machine_driver_ninjak2a	,input_ports_ninjakd2	,init_ninjak2a	,ROT0	,	"UPL", "Ninja-Kid II (set 3)" )
-	public static GameDriver driver_rdaction	   = new GameDriver("1987"	,"rdaction"	,"ninjakd2.java"	,rom_rdaction,driver_ninjakd2	,machine_driver_ninjak2a	,input_ports_ninjakd2	,init_ninjak2a	,ROT0	,	"UPL (World Games license)", "Rad Action" )
+	GAMEX(1987, ninjakd2, 0,        ninjakd2, ninjakd2, 0,        ROT0, "UPL", "Ninja-Kid II (set 1)", GAME_NO_SOUND )	/* sound program is encrypted */
+	GAME( 1987, ninjak2a, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL", "Ninja-Kid II (set 2)" )
+	GAME( 1987, ninjak2b, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL", "Ninja-Kid II (set 3)" )
+	GAME( 1987, rdaction, ninjakd2, ninjak2a, ninjakd2, ninjak2a, ROT0, "UPL (World Games license)", "Rad Action" )
 }

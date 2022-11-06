@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -44,8 +44,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_policetr  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_policetr  = new VideoStartHandlerPtr() { public int handler(){
 		/* the source bitmap is in ROM */
 		srcbitmap = memory_region(REGION_GFX1);
 	
@@ -54,7 +53,7 @@ public class policetr
 	
 		/* the destination bitmap is not directly accessible to the CPU */
 		dstbitmap = auto_malloc(DSTBITMAP_WIDTH * DSTBITMAP_HEIGHT);
-		if (dstbitmap == 0)
+		if (!dstbitmap)
 			return 1;
 	
 		return 0;
@@ -138,7 +137,7 @@ public class policetr
 					for (x = 0, curx = srcx; x < dstw; x++, curx += srcxstep)
 					{
 						UINT8 pixel = src[(curx >> 16) % SRCBITMAP_WIDTH];
-						if (pixel != 0)
+						if (pixel)
 							dst[x] = color | (pixel & mask);
 					}
 				}
@@ -160,7 +159,7 @@ public class policetr
 	WRITE32_HANDLER( policetr_video_w )
 	{
 		/* we assume 4-byte accesses */
-		if (mem_mask != 0)
+		if (mem_mask)
 			logerror("%08X: policetr_video_w access with mask %08X\n", activecpu_get_previouspc(), ~mem_mask);
 	
 		/* 4 offsets */
@@ -283,25 +282,25 @@ public class policetr
 		{
 			/* latch 0x00 is player 1's gun X coordinate */
 			case 0x00:
-				inputval = ((readinputport(3) & 0xff) * Machine.drv.screen_width) >> 8;
+				inputval = ((readinputport(3) & 0xff) * Machine->drv->screen_width) >> 8;
 				inputval += 0x50;
 				return (inputval << 20) | 0x20000000;
 	
 			/* latch 0x01 is player 1's gun Y coordinate */
 			case 0x01:
-				inputval = ((readinputport(4) & 0xff) * Machine.drv.screen_height) >> 8;
+				inputval = ((readinputport(4) & 0xff) * Machine->drv->screen_height) >> 8;
 				inputval += 0x17;
 				return (inputval << 20);
 	
 			/* latch 0x02 is player 2's gun X coordinate */
 			case 0x02:
-				inputval = ((readinputport(5) & 0xff) * Machine.drv.screen_width) >> 8;
+				inputval = ((readinputport(5) & 0xff) * Machine->drv->screen_width) >> 8;
 				inputval += 0x50;
 				return (inputval << 20) | 0x20000000;
 	
 			/* latch 0x03 is player 2's gun Y coordinate */
 			case 0x03:
-				inputval = ((readinputport(6) & 0xff) * Machine.drv.screen_height) >> 8;
+				inputval = ((readinputport(6) & 0xff) * Machine->drv->screen_height) >> 8;
 				inputval += 0x17;
 				return (inputval << 20);
 	
@@ -360,8 +359,7 @@ public class policetr
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_policetr  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int width = cliprect.max_x - cliprect.min_x + 1;
 		int beamx, beamy;
 		int y;

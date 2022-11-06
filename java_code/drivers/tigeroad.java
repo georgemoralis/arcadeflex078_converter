@@ -21,7 +21,7 @@ Memory Overview:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -155,12 +155,11 @@ public class tigeroad
 	
 	static WRITE16_HANDLER( tigeroad_soundcmd_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			soundlatch_w(offset,data >> 8);
 	}
 	
-	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(offset,(data>>7)&1);
 		MSM5205_data_w(offset,data);
 		MSM5205_vclk_w(offset,1);
@@ -249,7 +248,7 @@ public class tigeroad
 	
 	
 	
-	static InputPortPtr input_ports_tigeroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tigeroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tigeroad )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -325,7 +324,7 @@ public class tigeroad
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_toramich = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toramich = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toramich )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -402,7 +401,7 @@ public class tigeroad
 		PORT_DIPSETTING(      0x8000, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_f1dream = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_f1dream = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( f1dream )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -564,8 +563,7 @@ public class tigeroad
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_tigeroad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tigeroad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000) /* ? Main clock is 24MHz */
@@ -593,14 +591,11 @@ public class tigeroad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* same as above but with additional Z80 for samples playback */
-	public static MachineHandlerPtr machine_driver_toramich = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toramich )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tigeroad)
@@ -613,9 +608,7 @@ public class tigeroad
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -766,22 +759,20 @@ public class tigeroad
 	
 	
 	
-	public static DriverInitHandlerPtr init_tigeroad  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tigeroad  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write16_handler(0, 0xfe4002, 0xfe4003, tigeroad_soundcmd_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_f1dream  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_f1dream  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write16_handler(0, 0xfe4002, 0xfe4003, f1dream_control_w);
 	} };
 	
 	
 	
-	public static GameDriver driver_tigeroad	   = new GameDriver("1987"	,"tigeroad"	,"tigeroad.java"	,rom_tigeroad,null	,machine_driver_tigeroad	,input_ports_tigeroad	,init_tigeroad	,ROT0	,	"Capcom (Romstar license)", "Tiger Road (US)" )
-	public static GameDriver driver_toramich	   = new GameDriver("1987"	,"toramich"	,"tigeroad.java"	,rom_toramich,driver_tigeroad	,machine_driver_toramich	,input_ports_toramich	,init_tigeroad	,ROT0	,	"Capcom", "Tora-he no Michi (Japan)" )
+	GAME ( 1987, tigeroad, 0,        tigeroad, tigeroad, tigeroad, ROT0, "Capcom (Romstar license)", "Tiger Road (US)" )
+	GAME ( 1987, toramich, tigeroad, toramich, toramich, tigeroad, ROT0, "Capcom", "Tora-he no Michi (Japan)" )
 	
 	/* F1 Dream has an Intel 8751 microcontroller for protection */
-	public static GameDriver driver_f1dream	   = new GameDriver("1988"	,"f1dream"	,"tigeroad.java"	,rom_f1dream,null	,machine_driver_tigeroad	,input_ports_f1dream	,init_f1dream	,ROT0	,	"Capcom (Romstar license)", "F-1 Dream" )
-	public static GameDriver driver_f1dreamb	   = new GameDriver("1988"	,"f1dreamb"	,"tigeroad.java"	,rom_f1dreamb,driver_f1dream	,machine_driver_tigeroad	,input_ports_f1dream	,init_tigeroad	,ROT0	,	"bootleg", "F-1 Dream (bootleg)" )
+	GAME ( 1988, f1dream,  0,        tigeroad, f1dream,  f1dream,  ROT0, "Capcom (Romstar license)", "F-1 Dream" )
+	GAME ( 1988, f1dreamb, f1dream,  tigeroad, f1dream,  tigeroad, ROT0, "bootleg", "F-1 Dream (bootleg)" )
 }

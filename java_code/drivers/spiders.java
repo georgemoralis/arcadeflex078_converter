@@ -163,7 +163,7 @@ $F987 - Addresses table at $f98d containing four structs:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -224,7 +224,7 @@ public class spiders
 	
 	
 	
-	static InputPortPtr input_ports_spiders = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spiders = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spiders )
 	    PORT_START();       /* IN0 */
 	    PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_SERVICE1 );/* PIA0 PA1 */
@@ -308,8 +308,7 @@ public class spiders
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_spiders = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spiders )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 2800000)
@@ -336,9 +335,7 @@ public class spiders
 		MDRV_VIDEO_UPDATE(spiders)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_spiders = new RomLoadPtr(){ public void handler(){ 
@@ -384,6 +381,6 @@ public class spiders
 	
 	
 	/* this is a newer version with just one bug fix */
-	public static GameDriver driver_spiders	   = new GameDriver("1981"	,"spiders"	,"spiders.java"	,rom_spiders,null	,machine_driver_spiders	,input_ports_spiders	,null	,ROT270	,	"Sigma Enterprises Inc.", "Spiders (set 1)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
-	public static GameDriver driver_spiders2	   = new GameDriver("1981"	,"spiders2"	,"spiders.java"	,rom_spiders2,driver_spiders	,machine_driver_spiders	,input_ports_spiders	,null	,ROT270	,	"Sigma Enterprises Inc.", "Spiders (set 2)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1981, spiders,  0,       spiders, spiders, 0, ROT270, "Sigma Enterprises Inc.", "Spiders (set 1)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
+	GAMEX( 1981, spiders2, spiders, spiders, spiders, 0, ROT270, "Sigma Enterprises Inc.", "Spiders (set 2)", GAME_NO_SOUND | GAME_NO_COCKTAIL )
 }

@@ -68,7 +68,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -87,10 +87,10 @@ public class arcadecl
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -112,8 +112,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_arcadecl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_arcadecl  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
@@ -135,7 +134,7 @@ public class arcadecl
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			OKIM6295_data_0_w(offset, (data >> 8) & 0xff);
 	}
 	
@@ -156,7 +155,7 @@ public class arcadecl
 		*/
 	
 		/* lower byte being modified? */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			OKIM6295_set_bank_base(0, (data & 0x80) ? 0x40000 : 0x00000);
 			atarigen_set_oki6295_vol((data & 0x001f) * 100 / 0x1f);
@@ -212,7 +211,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_arcadecl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arcadecl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arcadecl )
 		PORT_START(); 	/* 640000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -266,7 +265,7 @@ public class arcadecl
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sparkz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sparkz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sparkz )
 		PORT_START(); 	/* 640000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -371,8 +370,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_arcadecl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( arcadecl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000,	ATARI_CLOCK_14MHz)
@@ -397,9 +395,7 @@ public class arcadecl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -442,14 +438,12 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_arcadecl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arcadecl  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sparkz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sparkz  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		memset(memory_region(REGION_GFX1), 0, memory_region_length(REGION_GFX1));
 	} };
@@ -462,6 +456,6 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_arcadecl	   = new GameDriver("1992"	,"arcadecl"	,"arcadecl.java"	,rom_arcadecl,null	,machine_driver_arcadecl	,input_ports_arcadecl	,init_arcadecl	,ROT0	,	"Atari Games", "Arcade Classics (prototype)" )
-	public static GameDriver driver_sparkz	   = new GameDriver("1992"	,"sparkz"	,"arcadecl.java"	,rom_sparkz,null	,machine_driver_arcadecl	,input_ports_sparkz	,init_sparkz	,ROT0	,	"Atari Games", "Sparkz (prototype)" )
+	GAME( 1992, arcadecl, 0, arcadecl, arcadecl, arcadecl, ROT0, "Atari Games", "Arcade Classics (prototype)" )
+	GAME( 1992, sparkz,   0, arcadecl, sparkz,   sparkz,   ROT0, "Atari Games", "Sparkz (prototype)" )
 }

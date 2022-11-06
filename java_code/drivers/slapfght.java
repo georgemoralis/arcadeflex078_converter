@@ -130,10 +130,10 @@ $c800-$cfff  RAM(2K)
 Strangely the RAM hardware registers seem to be overlaid at $c800
 $00a6 routine here reads I/O ports and stores in, its not a straight
 copy, the data is mangled before storage:
-PSG1-E . $c808
-PSG1-F . $c80b
-PSG2-E . $c809
-PSG2-F . $c80a - DIP Switch Bank 2 (Test mode is here)
+PSG1-E -> $c808
+PSG1-F -> $c80b
+PSG2-E -> $c809
+PSG2-F -> $c80a - DIP Switch Bank 2 (Test mode is here)
 
 -------------------------------GET STAR------------------------------------
 		following info by Luca Elia (l.elia@tin.it)
@@ -186,7 +186,7 @@ $8609 - $860f    High score characters to display to screen for highest score
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -297,10 +297,9 @@ public class slapfght
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	static READ_HANDLER(tigerh_status_r)
-	{
+	public static ReadHandlerPtr tigerh_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (slapfight_port_00_r(0)&0xf9)| ((tigerh_mcu_status_r(0)));
-	}
+	} };
 	
 	public static IO_ReadPort tigerh_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -404,7 +403,7 @@ public class slapfght
 	
 	
 	
-	static InputPortPtr input_ports_perfrman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_perfrman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( perfrman )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -479,7 +478,7 @@ public class slapfght
 		PORT_DIPSETTING(    0x02, "5" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tigerh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tigerh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tigerh )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -551,7 +550,7 @@ public class slapfght
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_slapfigh = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_slapfigh = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( slapfigh )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -621,7 +620,7 @@ public class slapfght
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_getstar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_getstar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( getstar )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -793,13 +792,11 @@ public class slapfght
 		{ 0, 0 }
 	);
 	
-	static public static VideoEofHandlerPtr video_eof_perfrman  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_perfrman  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0);
 	} };
 	
-	public static MachineHandlerPtr machine_driver_perfrman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( perfrman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,16000000/4)			/* 4MHz ???, 16MHz Oscillator */
@@ -831,13 +828,10 @@ public class slapfght
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, perfrman_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tigerhb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tigerhb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)
@@ -869,12 +863,9 @@ public class slapfght
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tigerh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tigerh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000)
@@ -910,12 +901,9 @@ public class slapfght
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_slapfigh = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slapfigh )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",Z80, 6000000)
@@ -947,22 +935,17 @@ public class slapfght
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* identical to slapfigh_ but writemem has different scroll registers */
-	public static MachineHandlerPtr machine_driver_slapbtuk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slapbtuk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(slapfigh)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmem,slapbtuk_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_perfrman = new RomLoadPtr(){ public void handler(){ 
@@ -1415,8 +1398,7 @@ public class slapfght
 		ROM_LOAD( "rom19",        0x0200, 0x0100, CRC(513224f0) SHA1(15b34612206138f6fc5f7478925b1fff2ed56aa8) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_tigerh  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tigerh  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0,  0xe803, 0xe803, tigerh_mcu_r );
 		install_mem_write_handler(0, 0xe803, 0xe803, tigerh_mcu_w  );
 	
@@ -1425,18 +1407,18 @@ public class slapfght
 	
 	
 	/*   ( YEAR  NAME      PARENT    MACHINE   INPUT     INIT    MONITOR COMPANY    FULLNAME     FLAGS ) */
-	public static GameDriver driver_perfrman	   = new GameDriver("1985"	,"perfrman"	,"slapfght.java"	,rom_perfrman,null	,machine_driver_perfrman	,input_ports_perfrman	,null	,ROT270	,	"[Toaplan] Data East Corporation","Performan (Japan)" )
-	public static GameDriver driver_perfrmau	   = new GameDriver("1985"	,"perfrmau"	,"slapfght.java"	,rom_perfrmau,driver_perfrman	,machine_driver_perfrman	,input_ports_perfrman	,null	,ROT270	,	"[Toaplan] Data East USA",        "Performan (US)" )
-	public static GameDriver driver_tigerh	   = new GameDriver("1985"	,"tigerh"	,"slapfght.java"	,rom_tigerh,null	,machine_driver_tigerh	,input_ports_tigerh	,init_tigerh	,ROT270	,	"Taito America Corp.", "Tiger Heli (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tigerh2	   = new GameDriver("1985"	,"tigerh2"	,"slapfght.java"	,rom_tigerh2,driver_tigerh	,machine_driver_tigerh	,input_ports_tigerh	,init_tigerh	,ROT270	,	"Taito Corp.",         "Tiger Heli (Japan set 1)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_tigerhj	   = new GameDriver("1985"	,"tigerhj"	,"slapfght.java"	,rom_tigerhj,driver_tigerh	,machine_driver_tigerh	,input_ports_tigerh	,init_tigerh	,ROT270	,	"Taito Corp.",         "Tiger Heli (Japan set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tigerhb1	   = new GameDriver("1985"	,"tigerhb1"	,"slapfght.java"	,rom_tigerhb1,driver_tigerh	,machine_driver_tigerhb	,input_ports_tigerh	,null	,ROT270	,	"bootleg",             "Tiger Heli (bootleg set 1)" )
-	public static GameDriver driver_tigerhb2	   = new GameDriver("1985"	,"tigerhb2"	,"slapfght.java"	,rom_tigerhb2,driver_tigerh	,machine_driver_tigerhb	,input_ports_tigerh	,null	,ROT270	,	"bootleg",             "Tiger Heli (bootleg set 2)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_slapfigh	   = new GameDriver("1986"	,"slapfigh"	,"slapfght.java"	,rom_slapfigh,null	,machine_driver_slapfigh	,input_ports_slapfigh	,null	,ROT270	,	"Taito",    "Slap Fight", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_slapbtjp	   = new GameDriver("1986"	,"slapbtjp"	,"slapfght.java"	,rom_slapbtjp,driver_slapfigh	,machine_driver_slapfigh	,input_ports_slapfigh	,null	,ROT270	,	"bootleg",  "Slap Fight (Japan bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_slapbtuk	   = new GameDriver("1986"	,"slapbtuk"	,"slapfght.java"	,rom_slapbtuk,driver_slapfigh	,machine_driver_slapbtuk	,input_ports_slapfigh	,null	,ROT270	,	"bootleg",  "Slap Fight (English bootleg)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_alcon	   = new GameDriver("1986"	,"alcon"	,"slapfght.java"	,rom_alcon,driver_slapfigh	,machine_driver_slapfigh	,input_ports_slapfigh	,null	,ROT270	,	"<unknown>","Alcon", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_getstar	   = new GameDriver("1986"	,"getstar"	,"slapfght.java"	,rom_getstar,null	,machine_driver_slapfigh	,input_ports_getstar	,null	,ROT0	,	"Taito",  "Guardian", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_getstarj	   = new GameDriver("1986"	,"getstarj"	,"slapfght.java"	,rom_getstarj,driver_getstar	,machine_driver_slapfigh	,input_ports_getstar	,null	,ROT0	,	"Taito",  "Get Star (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
-	public static GameDriver driver_getstarb	   = new GameDriver("1986"	,"getstarb"	,"slapfght.java"	,rom_getstarb,driver_getstar	,machine_driver_slapfigh	,input_ports_getstar	,null	,ROT0	,	"bootleg","Get Star (bootleg)", GAME_NO_COCKTAIL )
+	GAME ( 1985, perfrman, 0,        perfrman, perfrman, 0,      ROT270, "[Toaplan] Data East Corporation","Performan (Japan)" )
+	GAME ( 1985, perfrmau, perfrman, perfrman, perfrman, 0,      ROT270, "[Toaplan] Data East USA",        "Performan (US)" )
+	GAMEX( 1985, tigerh,   0,        tigerh,   tigerh,   tigerh, ROT270, "Taito America Corp.", "Tiger Heli (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1985, tigerh2,  tigerh,   tigerh,   tigerh,   tigerh, ROT270, "Taito Corp.",         "Tiger Heli (Japan set 1)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1985, tigerhj,  tigerh,   tigerh,   tigerh,   tigerh, ROT270, "Taito Corp.",         "Tiger Heli (Japan set 2)", GAME_NO_COCKTAIL )
+	GAME ( 1985, tigerhb1, tigerh,	 tigerhb,  tigerh,   0,      ROT270, "bootleg",             "Tiger Heli (bootleg set 1)" )
+	GAMEX( 1985, tigerhb2, tigerh, 	 tigerhb,  tigerh,   0,      ROT270, "bootleg",             "Tiger Heli (bootleg set 2)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, slapfigh, 0,        slapfigh, slapfigh, 0,      ROT270, "Taito",    "Slap Fight", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1986, slapbtjp, slapfigh, slapfigh, slapfigh, 0,      ROT270, "bootleg",  "Slap Fight (Japan bootleg)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, slapbtuk, slapfigh, slapbtuk, slapfigh, 0,      ROT270, "bootleg",  "Slap Fight (English bootleg)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, alcon,    slapfigh, slapfigh, slapfigh, 0,      ROT270, "<unknown>","Alcon", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1986, getstar,  0,        slapfigh, getstar,  0,      ROT0,   "Taito",  "Guardian", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1986, getstarj, getstar,  slapfigh, getstar,  0,      ROT0,   "Taito",  "Get Star (Japan)", GAME_NOT_WORKING | GAME_NO_COCKTAIL )
+	GAMEX( 1986, getstarb, getstar,  slapfigh, getstar,  0,      ROT0,   "bootleg","Get Star (bootleg)", GAME_NO_COCKTAIL )
 }

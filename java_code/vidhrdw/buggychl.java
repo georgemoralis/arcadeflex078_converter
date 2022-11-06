@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -20,8 +20,7 @@ public class buggychl
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_buggychl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_buggychl  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* arbitrary blue shading for the sky */
@@ -32,8 +31,7 @@ public class buggychl
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_buggychl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_buggychl  = new VideoStartHandlerPtr() { public int handler(){
 		dirtybuffer = auto_malloc(videoram_size[0]);
 		dirtychar = auto_malloc(256 * sizeof(*dirtychar));
 		tmpbitmap1 = auto_bitmap_alloc(256,256);
@@ -50,8 +48,7 @@ public class buggychl
 	
 	
 	
-	public static WriteHandlerPtr buggychl_chargen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buggychl_chargen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (buggychl_character_ram[offset] != data)
 		{
 			buggychl_character_ram[offset] = data;
@@ -60,18 +57,15 @@ public class buggychl
 		}
 	} };
 	
-	public static WriteHandlerPtr buggychl_sprite_lookup_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buggychl_sprite_lookup_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sl_bank = (data & 0x10) << 8;
 	} };
 	
-	public static WriteHandlerPtr buggychl_sprite_lookup_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buggychl_sprite_lookup_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		buggychl_sprite_lookup[offset + sl_bank] = data;
 	} };
 	
-	public static WriteHandlerPtr buggychl_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buggychl_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*
 		bit7 = lamp
 		bit6 = lockout
@@ -94,8 +88,7 @@ public class buggychl
 		set_led_status(0,~data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr buggychl_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr buggychl_bg_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bg_scrollx = -(data - 0x12);
 	} };
 	
@@ -110,7 +103,7 @@ public class buggychl
 		{
 			for (x = 0;x < 256;x++)
 			{
-				plot_pixel(bitmap,x,y,Machine.pens[128 + x/2]);
+				plot_pixel(bitmap,x,y,Machine->pens[128 + x/2]);
 			}
 		}
 	}
@@ -132,10 +125,10 @@ public class buggychl
 	
 				dirtybuffer[0x400+offs] = 0;
 	
-				if (flip_screen_x != 0) sx = 31 - sx;
-				if (flip_screen_y != 0) sy = 31 - sy;
+				if (flip_screen_x) sx = 31 - sx;
+				if (flip_screen_y) sy = 31 - sy;
 	
-				drawgfx(tmpbitmap1,Machine.gfx[0],
+				drawgfx(tmpbitmap1,Machine->gfx[0],
 						code,
 						2,
 						flip_screen_x,flip_screen_y,
@@ -154,7 +147,7 @@ public class buggychl
 		for (offs = 0;offs < 256;offs++)
 			scroll[offs] = -buggychl_scrollh[offs];
 	
-		copyscrollbitmap(bitmap,tmpbitmap2,256,scroll,0,0,Machine.visible_area,TRANSPARENCY_COLOR,32);
+		copyscrollbitmap(bitmap,tmpbitmap2,256,scroll,0,0,Machine->visible_area,TRANSPARENCY_COLOR,32);
 	}
 	
 	
@@ -172,15 +165,15 @@ public class buggychl
 	
 			int code = videoram.read(offs);
 	
-			if (flip_screen_x != 0) sx = 31 - sx;
-			if (flip_screen_y != 0) sy = 31 - sy;
+			if (flip_screen_x) sx = 31 - sx;
+			if (flip_screen_y) sy = 31 - sy;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					0,
 					flip_screen_x,flip_screen_y,
 					8*sx,8*sy,
-					Machine.visible_area,transp,0);
+					Machine->visible_area,transp,0);
 		}
 	}
 	
@@ -217,7 +210,7 @@ public class buggychl
 	
 					charline = zoomy_rom[y] & 0x07;
 					base_pos = zoomy_rom[y] & 0x38;
-					if (flipy != 0) base_pos ^= 0x38;
+					if (flipy) base_pos ^= 0x38;
 	
 					px = 0;
 					for (ch = 0;ch < 4;ch++)
@@ -229,18 +222,18 @@ public class buggychl
 						code = 8 * (lookup[pos] | ((lookup[pos+1] & 0x07) << 8));
 						realflipy = (lookup[pos+1] & 0x80) ? NOT(flipy) : flipy;
 						code += (realflipy ? (charline ^ 7) : charline);
-						pendata = Machine.gfx[1].gfxdata + code*16;
+						pendata = Machine->gfx[1]->gfxdata + code*16;
 	
 						for (x = 0;x < 16;x++)
 						{
 							int col;
 	
 							col = pendata[x];
-							if (col != 0)
+							if (col)
 							{
 								int dx = flip_screen_x ? (255 - sx - px) : (sx + px);
 								if ((dx & ~0xff) == 0)
-									plot_pixel(bitmap,dx,dy,Machine.pens[sprite_color_base+col]);
+									plot_pixel(bitmap,dx,dy,Machine->pens[sprite_color_base+col]);
 							}
 	
 							/* the following line is almost certainly wrong */
@@ -256,12 +249,11 @@ public class buggychl
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_buggychl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int code;
 	
 	
-		if (sky_on != 0)
+		if (sky_on)
 			draw_sky(bitmap);
 		else
 			fillbitmap(bitmap,Machine.pens[0],Machine.visible_area);
@@ -273,7 +265,7 @@ public class buggychl
 				decodechar(Machine.gfx[0],code,buggychl_character_ram,Machine.drv.gfxdecodeinfo[0].gfxlayout);
 		}
 	
-		if (bg_on != 0)
+		if (bg_on)
 			draw_bg(bitmap);
 	
 		draw_sprites(bitmap);

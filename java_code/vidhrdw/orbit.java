@@ -6,7 +6,7 @@ Atari Orbit video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -21,16 +21,14 @@ public class orbit
 	static int orbit_flip_screen;
 	
 	
-	public static WriteHandlerPtr orbit_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_mark_tile_dirty(tilemap, offset);
 	
 		orbit_playfield_ram[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr orbit_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr orbit_sprite_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		orbit_sprite_ram[offset] = data;
 	} };
 	
@@ -47,11 +45,11 @@ public class orbit
 	
 		int flags = 0;
 	
-		if ((code & 0x40) != 0)
+		if (code & 0x40)
 		{
 			flags |= TILE_FLIPX;
 		}
-		if (orbit_flip_screen != 0)
+		if (orbit_flip_screen)
 		{
 			flags |= TILE_FLIPY;
 		}
@@ -60,8 +58,7 @@ public class orbit
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_orbit  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_orbit  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap = tilemap_create(get_tile_info, get_memory_offset, 0, 16, 16, 32, 30);
 	
 		if (tilemap == NULL)
@@ -96,11 +93,11 @@ public class orbit
 	
 			code &= 0x3f;
 	
-			if ((flag & 1) != 0)
+			if (flag & 1)
 			{
 				code |= 0x40;
 			}
-			if ((flag & 2) != 0)
+			if (flag & 2)
 			{
 				zoom_x *= 2;
 			}
@@ -110,14 +107,13 @@ public class orbit
 			hpos <<= 1;
 			vpos <<= 1;
 	
-			drawgfxzoom(bitmap, Machine.gfx[layout], code, 0, flip_x, flip_y,
+			drawgfxzoom(bitmap, Machine->gfx[layout], code, 0, flip_x, flip_y,
 				hpos, vpos, cliprect, TRANSPARENCY_PEN, 0, zoom_x, zoom_y);
 		}
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_orbit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_orbit  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		orbit_flip_screen = readinputport(3) & 8;
 	
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);

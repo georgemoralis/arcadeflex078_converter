@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,8 +29,7 @@ public class copsnrob
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_copsnrob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_copsnrob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs, x, y;
 	
 	    /* redrawing the entire display is faster in this case */
@@ -154,13 +153,13 @@ public class copsnrob
 	        // Check each bullet
 	        for (bullet = 0; bullet < 4; bullet++)
 	        {
-	            if ((val & mask1) != 0)
+	            if (val & mask1)
 	            {
 	                for (y = 0; y <= Machine.visible_area.max_y; y++)
 	                {
 	                    if (copsnrob_bulletsram[y] & mask2)
 	                    {
-	                        plot_pixel.handler(bitmap, 256-x, y, Machine.pens[1]);
+	                        plot_pixel(bitmap, 256-x, y, Machine.pens[1]);
 	                    }
 	                }
 	            }

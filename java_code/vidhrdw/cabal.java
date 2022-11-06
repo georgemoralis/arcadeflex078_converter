@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -47,8 +47,7 @@ public class cabal
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_cabal  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cabal  = new VideoStartHandlerPtr() { public int handler(){
 		background_layer = tilemap_create(get_back_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,16,16);
 		text_layer       = tilemap_create(get_text_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,  8,8,32,32);
 	
@@ -65,7 +64,7 @@ public class cabal
 	
 	WRITE16_HANDLER( cabal_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int flip = (data & 0x20) ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0;
 			tilemap_set_flip(background_layer,flip);
@@ -123,7 +122,7 @@ public class cabal
 			data1 = spriteram16[offs+1];
 			data2 = spriteram16[offs+2];
 	
-			if ((data0 & 0x100) != 0)
+			if( data0 & 0x100 )
 			{
 				int tile_number = data1 & 0xfff;
 				int color   = ( data2 & 0x7800 ) >> 11;
@@ -134,7 +133,7 @@ public class cabal
 	
 				if ( sx>256 )   sx -= 512;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
@@ -142,7 +141,7 @@ public class cabal
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx( bitmap,Machine.gfx[2],
+				drawgfx( bitmap,Machine->gfx[2],
 					tile_number,
 					color,
 					flipx,flipy,
@@ -153,8 +152,7 @@ public class cabal
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_cabal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cabal  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,background_layer,TILEMAP_IGNORE_TRANSPARENCY,0);
 		cabal_draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,text_layer,0,0);

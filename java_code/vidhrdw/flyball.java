@@ -6,7 +6,7 @@ Atari Flyball video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,8 +54,7 @@ public class flyball
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_flyball  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_flyball  = new VideoStartHandlerPtr() { public int handler(){
 		flyball_tilemap = tilemap_create(flyball_get_tile_info,
 			flyball_get_memory_offset, TILEMAP_OPAQUE, 8, 16, 32, 16);
 	
@@ -63,8 +62,7 @@ public class flyball
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_flyball  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pitcherx = flyball_pitcher_horz;
 		int pitchery = flyball_pitcher_vert - 31;
 	
@@ -96,7 +94,7 @@ public class flyball
 				    y >= Machine.visible_area.min_y &&
 				    y <= Machine.visible_area.max_y)
 				{
-					plot_pixel.handler(bitmap, x, y, Machine.pens[1]);
+					plot_pixel(bitmap, x, y, Machine.pens[1]);
 				}
 			}
 		}

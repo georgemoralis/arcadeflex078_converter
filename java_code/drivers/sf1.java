@@ -11,7 +11,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -34,7 +34,7 @@ public class sf1
 	
 	static WRITE16_HANDLER( sf1_coin_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
@@ -47,7 +47,7 @@ public class sf1
 	
 	static WRITE16_HANDLER( soundcmd_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1,IRQ_LINE_NMI,PULSE_LINE);
@@ -128,7 +128,7 @@ public class sf1
 				int pos = cpu_readmem24bew(0xffc010);
 				pos = (pos+1) & 3;
 				cpu_writemem24bew(0xffc010, pos);
-				if (pos == 0) {
+				if(!pos) {
 					int d1 = cpu_readmem24bew_word(0xffc682);
 					int off = cpu_readmem24bew_word(0xffc00e);
 					if(off!=512) {
@@ -171,14 +171,12 @@ public class sf1
 	}
 	
 	
-	public static WriteHandlerPtr sound2_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound2_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_setbank(1,memory_region(REGION_CPU3)+0x8000*(data+1));
 	} };
 	
 	
-	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr msm5205_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_reset_w(offset,(data>>7)&1);
 		/* ?? bit 6?? */
 		MSM5205_data_w(offset,data);
@@ -297,7 +295,7 @@ public class sf1
 	
 	
 	
-	static InputPortPtr input_ports_sf1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sf1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sf1 )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
@@ -475,7 +473,7 @@ public class sf1
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sf1us = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sf1us = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sf1us )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
@@ -613,7 +611,7 @@ public class sf1
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_BUTTON5 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sf1jp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sf1jp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sf1jp )
 		PORT_START(); 
 		PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "4C_1C") );
@@ -829,8 +827,7 @@ public class sf1
 		{ 100, 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_sf1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sf1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68000, 8000000)	/* 8 MHz ? (xtal is 16MHz) */
@@ -864,45 +861,34 @@ public class sf1
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sf1us = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sf1us )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmemus,writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sf1jp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sf1jp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(readmemjp,writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sf1p = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sf1p )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(sf1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_sf1 = new RomLoadPtr(){ public void handler(){ 
@@ -1156,8 +1142,8 @@ public class sf1
 	
 	
 	
-	public static GameDriver driver_sf1	   = new GameDriver("1987"	,"sf1"	,"sf1.java"	,rom_sf1,null	,machine_driver_sf1	,input_ports_sf1	,null	,ROT0	,	"Capcom", "Street Fighter (World)" )
-	public static GameDriver driver_sf1us	   = new GameDriver("1987"	,"sf1us"	,"sf1.java"	,rom_sf1us,driver_sf1	,machine_driver_sf1us	,input_ports_sf1us	,null	,ROT0	,	"Capcom", "Street Fighter (US)" )
-	public static GameDriver driver_sf1jp	   = new GameDriver("1987"	,"sf1jp"	,"sf1.java"	,rom_sf1jp,driver_sf1	,machine_driver_sf1jp	,input_ports_sf1jp	,null	,ROT0	,	"Capcom", "Street Fighter (Japan)" )
-	public static GameDriver driver_sf1p	   = new GameDriver("1987"	,"sf1p"	,"sf1.java"	,rom_sf1p,driver_sf1	,machine_driver_sf1p	,input_ports_sf1	,null	,ROT0	,	"Capcom", "Street Fighter (prototype)" )
+	GAME( 1987, sf1,   0,   sf1,   sf1,   0, ROT0, "Capcom", "Street Fighter (World)" )
+	GAME( 1987, sf1us, sf1, sf1us, sf1us, 0, ROT0, "Capcom", "Street Fighter (US)" )
+	GAME( 1987, sf1jp, sf1, sf1jp, sf1jp, 0, ROT0, "Capcom", "Street Fighter (Japan)" )
+	GAME( 1987, sf1p,  sf1, sf1p,  sf1,   0, ROT0, "Capcom", "Street Fighter (prototype)" )
 }

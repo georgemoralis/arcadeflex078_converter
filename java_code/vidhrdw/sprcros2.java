@@ -5,7 +5,7 @@ Super Cross II (JPN Ver.)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -16,8 +16,7 @@ public class sprcros2
 	data8_t *sprcros2_fgvideoram, *sprcros2_spriteram, *sprcros2_bgvideoram;
 	size_t sprcros2_spriteram_size;
 	
-	public static PaletteInitHandlerPtr palette_init_sprcros2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sprcros2  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,bit0,bit1,bit2,r,g,b;
 	
 		for (i = 0;i < Machine.drv.total_colors; i++)
@@ -48,41 +47,37 @@ public class sprcros2
 		}
 	} };
 	
-	public static WriteHandlerPtr sprcros2_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (sprcros2_fgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr sprcros2_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (sprcros2_fgvideoram[offset] != data)
 		{
-			sprcros2_fgvideoram.write(data,data);
+			sprcros2_fgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(sprcros2_fgtilemap,offset&0x3ff);
 		}
 	} };
 	
-	public static WriteHandlerPtr sprcros2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (sprcros2_bgvideoram.read(offset)!= data)
+	public static WriteHandlerPtr sprcros2_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (sprcros2_bgvideoram[offset] != data)
 		{
-			sprcros2_bgvideoram.write(data,data);
+			sprcros2_bgvideoram[offset] = data;
 			tilemap_mark_tile_dirty(sprcros2_bgtilemap,offset&0x3ff);
 		}
 	} };
 	
-	public static WriteHandlerPtr sprcros2_bgscrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((sprcros2_m_port7 & 0x02) != 0)
+	public static WriteHandlerPtr sprcros2_bgscrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if(sprcros2_m_port7&0x02)
 			tilemap_set_scrollx(sprcros2_bgtilemap,0,0x100-data);
 		else
 			tilemap_set_scrollx(sprcros2_bgtilemap,0,data);
 	} };
 	
-	public static WriteHandlerPtr sprcros2_bgscrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprcros2_bgscrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(sprcros2_bgtilemap,0,data);
 	} };
 	
 	static void get_sprcros2_bgtile_info(int tile_index)
 	{
-		unsigned int tile_number = sprcros2_bgvideoram.read(tile_index);
-		unsigned char attr = sprcros2_bgvideoram.read(tile_index+0x400);
+		unsigned int tile_number = sprcros2_bgvideoram[tile_index];
+		unsigned char attr = sprcros2_bgvideoram[tile_index+0x400];
 	
 		//attr
 		//76543210
@@ -101,8 +96,8 @@ public class sprcros2
 	
 	static void get_sprcros2_fgtile_info(int tile_index)
 	{
-		unsigned int tile_number = sprcros2_fgvideoram.read(tile_index);
-		unsigned char attr = sprcros2_fgvideoram.read(tile_index+0x400);
+		unsigned int tile_number = sprcros2_fgvideoram[tile_index];
+		unsigned char attr = sprcros2_fgvideoram[tile_index+0x400];
 	
 		//attr
 		//76543210
@@ -118,8 +113,7 @@ public class sprcros2
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_sprcros2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sprcros2  = new VideoStartHandlerPtr() { public int handler(){
 		sprcros2_bgtilemap = tilemap_create( get_sprcros2_bgtile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 		sprcros2_fgtilemap = tilemap_create( get_sprcros2_fgtile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT_COLOR,8,8,32,32 );
 	
@@ -137,7 +131,7 @@ public class sprcros2
 	
 		for (offs = sprcros2_spriteram_size-4; offs >= 0; offs -= 4)
 		{
-			if(sprcros2_spriteram.read(offs))
+			if(sprcros2_spriteram[offs])
 			{
 	
 				//offs
@@ -154,12 +148,12 @@ public class sprcros2
 				//offs+2   y pos
 				//offs+3   x pos
 	
-				sx = ((sprcros2_spriteram.read(offs+3)+0x10)%0x100)-0x10;
-				sy = 225-(((sprcros2_spriteram.read(offs+2)+0x10)%0x100)-0x10);
-				flipx = sprcros2_spriteram.read(offs+1)&0x02;
+				sx = ((sprcros2_spriteram[offs+3]+0x10)%0x100)-0x10;
+				sy = 225-(((sprcros2_spriteram[offs+2]+0x10)%0x100)-0x10);
+				flipx = sprcros2_spriteram[offs+1]&0x02;
 				flipy = 0;
 	
-				if ((sprcros2_m_port7 & 0x02) != 0)
+				if (sprcros2_m_port7&0x02)
 				{
 					sx = 224-sx;
 					sy = 224-sy;
@@ -167,9 +161,9 @@ public class sprcros2
 					flipy = NOT(flipy);
 				}
 	
-				drawgfx(bitmap,Machine.gfx[1],
-					sprcros2_spriteram.read(offs),
-					(sprcros2_spriteram.read(offs+1)&0x38)>>3,
+				drawgfx(bitmap,Machine->gfx[1],
+					sprcros2_spriteram[offs],
+					(sprcros2_spriteram[offs+1]&0x38)>>3,
 					flipx,flipy,
 					sx,sy,
 					cliprect,TRANSPARENCY_COLOR,0);
@@ -177,8 +171,7 @@ public class sprcros2
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sprcros2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw( bitmap,cliprect,sprcros2_bgtilemap,0,0 );
 		sprcros2_draw_sprites(bitmap,cliprect);
 		tilemap_draw( bitmap,cliprect,sprcros2_fgtilemap,0,0 );

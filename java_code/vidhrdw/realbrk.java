@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,7 +34,7 @@ public class realbrk
 	
 	WRITE16_HANDLER( realbrk_flipscreen_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0,	data & 0x0001);
 			coin_counter_w(1,	data & 0x0004);
@@ -42,7 +42,7 @@ public class realbrk
 			flip_screen_set(	data & 0x0080);
 		}
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			disable_video	=	data & 0x8000;
 		}
@@ -151,8 +151,7 @@ public class realbrk
 	
 	***************************************************************************/
 	
-	VIDEO_START(realbrk)
-	{
+	public static VideoStartHandlerPtr video_start_realbrk  = new VideoStartHandlerPtr() { public int handler(){
 		/* Backgrounds */
 		tilemap_0 = tilemap_create(	get_tile_info_0, tilemap_scan_rows,
 									TILEMAP_TRANSPARENT,
@@ -178,7 +177,7 @@ public class realbrk
 		tilemap_set_transparent_pen(tilemap_2,0);
 	
 		return 0;
-	}
+	} };
 	
 	/***************************************************************************
 	
@@ -228,8 +227,8 @@ public class realbrk
 	{
 		int offs;
 	
-		int max_x		=	Machine.drv.screen_width;
-		int max_y		=	Machine.drv.screen_height;
+		int max_x		=	Machine->drv->screen_width;
+		int max_y		=	Machine->drv->screen_height;
 	
 		for ( offs = 0x3000/2; offs < 0x3600/2; offs += 2/2 )
 		{
@@ -267,13 +266,13 @@ public class realbrk
 			xdim	=		((zoom & 0x00ff) >> 0) << (16-6+4);
 			ydim	=		((zoom & 0xff00) >> 8) << (16-6+4);
 	
-			if (flip_screen_x != 0)	{	flipx = NOT(flipx);		sx = (max_x << 16) - sx - xnum * xdim;	}
-			if (flip_screen_y != 0)	{	flipy = NOT(flipy);		sy = (max_y << 16) - sy - ynum * ydim;	}
+			if (flip_screen_x)	{	flipx = NOT(flipx);		sx = (max_x << 16) - sx - xnum * xdim;	}
+			if (flip_screen_y)	{	flipy = NOT(flipy);		sy = (max_y << 16) - sy - ynum * ydim;	}
 	
-			if (flipx != 0)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
+			if (flipx)	{ xstart = xnum-1;  xend = -1;    xinc = -1; }
 			else		{ xstart = 0;       xend = xnum;  xinc = +1; }
 	
-			if (flipy != 0)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
+			if (flipy)	{ ystart = ynum-1;  yend = -1;    yinc = -1; }
 			else		{ ystart = 0;       yend = ynum;  yinc = +1; }
 	
 			for (y = ystart; y != yend; y += yinc)
@@ -286,7 +285,7 @@ public class realbrk
 					int scalex = (sx + (x + 1) * xdim) / 0x10000 - currx;
 					int scaley = (sy + (y + 1) * ydim) / 0x10000 - curry;
 	
-					drawgfxzoom(	bitmap,Machine.gfx[gfx],
+					drawgfxzoom(	bitmap,Machine->gfx[gfx],
 									code++,
 									color,
 									flipx, flipy,
@@ -337,8 +336,7 @@ public class realbrk
 		}
 	}
 	
-	VIDEO_UPDATE(realbrk)
-	{
+	public static VideoUpdateHandlerPtr video_update_realbrk  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layers_ctrl = -1;
 	
 		tilemap_set_scrolly(tilemap_0, 0, realbrk_vregs[0x0/2]);
@@ -357,7 +355,7 @@ public class realbrk
 		if (msk != 0) layers_ctrl &= msk;	}
 	#endif
 	
-		if (disable_video != 0)
+		if (disable_video)
 		{
 			fillbitmap(bitmap,get_black_pen(),cliprect);
 			return;
@@ -365,13 +363,13 @@ public class realbrk
 		else
 			fillbitmap(bitmap,Machine.pens[realbrk_vregs[0xc/2] & 0x7fff],cliprect);
 	
-		if ((layers_ctrl & 2) != 0)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
-		if ((layers_ctrl & 1) != 0)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
+		if (layers_ctrl & 2)	tilemap_draw(bitmap,cliprect,tilemap_1,0,0);
+		if (layers_ctrl & 1)	tilemap_draw(bitmap,cliprect,tilemap_0,0,0);
 	
-		if ((layers_ctrl & 8) != 0)	realbrk_draw_sprites(bitmap,cliprect);
+		if (layers_ctrl & 8)	realbrk_draw_sprites(bitmap,cliprect);
 	
-		if ((layers_ctrl & 4) != 0)	tilemap_draw(bitmap,cliprect,tilemap_2,0,0);
+		if (layers_ctrl & 4)	tilemap_draw(bitmap,cliprect,tilemap_2,0,0);
 	
 	//	usrintf_showmessage("%04x",realbrk_vregs[0x8/2]);
-	}
+	} };
 }

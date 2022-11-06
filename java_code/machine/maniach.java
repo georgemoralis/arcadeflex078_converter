@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -31,20 +31,17 @@ public class maniach
 	
 	static unsigned char portA_in,portA_out,ddrA;
 	
-	public static ReadHandlerPtr maniach_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maniach_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: 68705 port A read %02x\n",activecpu_get_pc(),portA_in);
 		return (portA_out & ddrA) | (portA_in & ~ddrA);
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 68705 port A write %02x\n",activecpu_get_pc(),data);
 		portA_out = data;
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrA = data;
 	} };
 	
@@ -55,19 +52,17 @@ public class maniach
 	 *
 	 *  all bits are logical 1 when read (+5V pullup)
 	 *
-	 *  1   W  when 1.0, enables latch which brings the command from main CPU (read from port A)
-	 *  2   W  when 0.1, copies port A to the latch for the main CPU
+	 *  1   W  when 1->0, enables latch which brings the command from main CPU (read from port A)
+	 *  2   W  when 0->1, copies port A to the latch for the main CPU
 	 */
 	
 	static unsigned char portB_in,portB_out,ddrB;
 	
-	public static ReadHandlerPtr maniach_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maniach_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (portB_out & ddrB) | (portB_in & ~ddrB);
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 68705 port B write %02x\n",activecpu_get_pc(),data);
 	
 		if ((ddrB & 0x02) && (~data & 0x02) && (portB_out & 0x02))
@@ -86,58 +81,51 @@ public class maniach
 		portB_out = data;
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_ddrB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_ddrB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrB = data;
 	} };
 	
 	
 	static unsigned char portC_in,portC_out,ddrC;
 	
-	public static ReadHandlerPtr maniach_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maniach_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		portC_in = 0;
-		if (main_sent != 0) portC_in |= 0x01;
-		if (mcu_sent == 0) portC_in |= 0x02;
+		if (main_sent) portC_in |= 0x01;
+		if (!mcu_sent) portC_in |= 0x02;
 	//logerror("%04x: 68705 port C read %02x\n",activecpu_get_pc(),portC_in);
 		return (portC_out & ddrC) | (portC_in & ~ddrC);
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_portC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 68705 port C write %02x\n",activecpu_get_pc(),data);
 		portC_out = data;
 	} };
 	
-	public static WriteHandlerPtr maniach_68705_ddrC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_68705_ddrC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrC = data;
 	} };
 	
 	
-	public static WriteHandlerPtr maniach_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maniach_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 3040_w %02x\n",activecpu_get_pc(),data);
 		from_main = data;
 		main_sent = 1;
 	} };
 	
-	public static ReadHandlerPtr maniach_mcu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maniach_mcu_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: 3040_r %02x\n",activecpu_get_pc(),from_mcu);
 		mcu_sent = 0;
 		return from_mcu;
 	} };
 	
-	public static ReadHandlerPtr maniach_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maniach_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res = 0;
 	
 		/* bit 0 = when 0, mcu has sent data to the main cpu */
 		/* bit 1 = when 1, mcu is ready to receive data from main cpu */
 	//logerror("%04x: 3041_r\n",activecpu_get_pc());
-		if (mcu_sent == 0) res |= 0x01;
-		if (main_sent == 0) res |= 0x02;
+		if (!mcu_sent) res |= 0x01;
+		if (!main_sent) res |= 0x02;
 	
 		return res;
 	} };

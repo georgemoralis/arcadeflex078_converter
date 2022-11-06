@@ -31,7 +31,7 @@ background:	0x4000 bytes of ROM:	76543210	tile code low bits
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,8 +61,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_galivan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_galivan  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -105,7 +104,7 @@ public class galivan
 		/* pens 0-7; the top two bits for pens 8-15. */
 		for (i = 0;i < TOTAL_COLORS(1);i++)
 		{
-			if ((i & 8) != 0) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
+			if (i & 8) COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0xc0) >> 2);
 			else COLOR(1,i) = 192 + (i & 0x0f) + ((i & 0x30) >> 0);
 		}
 	
@@ -121,7 +120,7 @@ public class galivan
 	
 			for (j = 0;j < 16;j++)
 			{
-				if ((i & 8) != 0)
+				if (i & 8)
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x0c) << 2) + (color_prom.read()& 0x0f);
 				else
 					COLOR(2,i + j * (TOTAL_COLORS(2)/16)) = 128 + ((j & 0x03) << 4) + (color_prom.read()& 0x0f);
@@ -197,8 +196,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_galivan  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_galivan  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,128,128);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -210,8 +208,7 @@ public class galivan
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_ninjemak  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ninjemak  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(ninjemak_get_bg_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,   16,16,512,32);
 		tx_tilemap = tilemap_create(ninjemak_get_tx_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -231,8 +228,7 @@ public class galivan
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr galivan_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -240,8 +236,7 @@ public class galivan
 		}
 	} };
 	
-	public static WriteHandlerPtr galivan_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -250,8 +245,7 @@ public class galivan
 	} };
 	
 	/* Written through port 40 */
-	public static WriteHandlerPtr galivan_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 coin counters */
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
@@ -272,8 +266,7 @@ public class galivan
 	/*	logerror("Address: %04X - port 40 = %02x\n",activecpu_get_pc(),data); */
 	} };
 	
-	public static WriteHandlerPtr ninjemak_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjemak_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 and 1 coin counters */
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
@@ -284,7 +277,7 @@ public class galivan
 		tilemap_set_flip (tx_tilemap, flipscreen ? TILEMAP_FLIPX|TILEMAP_FLIPY : 0);
 	
 		/* bit 3 text bank flag ??? */
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 		{
 			/* This is a temporary condition specification. */
 	
@@ -332,13 +325,12 @@ public class galivan
 	
 	
 	/* Written through port 41-42 */
-	public static WriteHandlerPtr galivan_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int up = 0;
 		if (offset == 1) {
-			if ((data & 0x80) != 0)
+			if (data & 0x80)
 				up = 1;
-			else if (up != 0) {
+			else if (up) {
 				layers = data & 0x60;
 				up = 0;
 			}
@@ -347,19 +339,16 @@ public class galivan
 	} };
 	
 	/* Written through port 43-44 */
-	public static WriteHandlerPtr galivan_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galivan_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrolly[offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr ninjemak_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjemak_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrollx[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr ninjemak_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ninjemak_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scrolly[offset] = data;
 	} };
 	
@@ -387,7 +376,7 @@ public class galivan
 	
 			sx = (spriteram.read(offs+3)- 0x80) + 256 * (attr & 0x01);
 			sy = 240 - spriteram.read(offs);
-			if (flipscreen != 0)
+			if (flipscreen)
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -398,7 +387,7 @@ public class galivan
 	//		code = spriteram.read(offs+1)+ ((attr & 0x02) << 7);
 			code = spriteram.read(offs+1)+ ((attr & 0x06) << 7);	// for ninjemak, not sure ?
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					code,
 					color + 16 * (spritepalettebank[code >> 2] & 0x0f),
 					flipx,flipy,
@@ -408,12 +397,11 @@ public class galivan
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_galivan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_galivan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x07));
 		tilemap_set_scrolly(bg_tilemap,0,scrolly[0] + 256 * (scrolly[1] & 0x07));
 	
-		if ((layers & 0x40) != 0)
+		if (layers & 0x40)
 			fillbitmap(bitmap,Machine.pens[0],cliprect);
 		else
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -425,13 +413,12 @@ public class galivan
 		tilemap_draw(bitmap,cliprect,tx_tilemap,1,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_ninjemak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ninjemak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* (scrollx[1] & 0x40) does something */
 		tilemap_set_scrollx(bg_tilemap,0,scrollx[0] + 256 * (scrollx[1] & 0x1f));
 		tilemap_set_scrolly(bg_tilemap,0,scrolly[0] + 256 * (scrolly[1] & 0xff));
 	
-		if (ninjemak_dispdisable != 0)
+		if (ninjemak_dispdisable)
 			fillbitmap(bitmap,Machine.pens[0],cliprect);
 		else
 			tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,8 +18,7 @@ public class renegade
 	static struct tilemap *bg_tilemap;
 	static struct tilemap *fg_tilemap;
 	
-	public static WriteHandlerPtr renegade_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
@@ -28,8 +27,7 @@ public class renegade
 		}
 	} };
 	
-	public static WriteHandlerPtr renegade_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( renegade_videoram2[offset]!=data )
 		{
 			renegade_videoram2[offset] = data;
@@ -38,18 +36,15 @@ public class renegade
 		}
 	} };
 	
-	public static WriteHandlerPtr renegade_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data & 0x01);
 	} };
 	
-	public static WriteHandlerPtr renegade_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		renegade_scrollx = (renegade_scrollx&0xff00)|data;
 	} };
 	
-	public static WriteHandlerPtr renegade_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr renegade_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		renegade_scrollx = (renegade_scrollx&0xFF)|(data<<8);
 	} };
 	
@@ -75,8 +70,7 @@ public class renegade
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_renegade  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_renegade  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tilemap_info,tilemap_scan_rows,TILEMAP_OPAQUE,   16,16,64,16);
 		fg_tilemap = tilemap_create(get_fg_tilemap_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -107,15 +101,15 @@ public class renegade
 	
 			    if( sx>248 ) sx -= 256;
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
 					xflip = !xflip;
 				}
 	
-			    if ((attributes & 0x80) != 0){ /* big sprite */
-			        drawgfx(bitmap,Machine.gfx[sprite_bank],
+			    if( attributes&0x80 ){ /* big sprite */
+			        drawgfx(bitmap,Machine->gfx[sprite_bank],
 			            sprite_number+1,
 			            color,
 			            xflip,flip_screen(),
@@ -126,7 +120,7 @@ public class renegade
 				{
 					sy += (flip_screen() ? -16 : 16);
 			    }
-			    drawgfx(bitmap,Machine.gfx[sprite_bank],
+			    drawgfx(bitmap,Machine->gfx[sprite_bank],
 			        sprite_number,
 			        color,
 			        xflip,flip_screen(),
@@ -137,8 +131,7 @@ public class renegade
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_renegade  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( bg_tilemap, 0, renegade_scrollx );
 		tilemap_draw( bitmap,cliprect,bg_tilemap,0 ,0);
 		draw_sprites( bitmap,cliprect );

@@ -24,12 +24,12 @@ C005	  Test Mode
 C006	  Cabinet type
 C007	  Coin Slot 2
 C010	  Joystick (read like an analog one, but it's digital)
-		  0.23 = DOWN
-		  24.63 = UP
-		  64.111 = LEFT
-		  112.167 = RIGHT
-		  168.255 = NEUTRAL
-C020-C027 Dipswitch 1.8 in bit 0
+		  0->23 = DOWN
+		  24->63 = UP
+		  64->111 = LEFT
+		  112->167 = RIGHT
+		  168->255 = NEUTRAL
+C020-C027 Dipswitch 1->8 in bit 0
 
 write:
 C000-C001 bullet x/y pos
@@ -59,7 +59,7 @@ Stephh's notes :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -71,8 +71,7 @@ public class warpwarp
 	/* from sndhrdw/warpwarp.c */
 	
 	/* Read System Inputs */
-	public static ReadHandlerPtr bombbee_sys_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bombbee_sys_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 4)	// to return BUTTON1 status
 		{
 			return (readinputport(4) >> (flip_screen() & 1)) & 1;
@@ -81,42 +80,36 @@ public class warpwarp
 			return (readinputport(0) >> offset) & 1;
 	} };
 	
-	public static ReadHandlerPtr warpwarp_sys_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr warpwarp_sys_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(0) >> offset) & 1;
 	} };
 	
 	/* Read Dipswitches */
-	public static ReadHandlerPtr warpwarp_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr warpwarp_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (readinputport(1) >> offset) & 1;
 	} };
 	
 	/* Read mux Controller Inputs */
-	public static ReadHandlerPtr bombbee_mux_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bombbee_mux_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2 + (flip_screen() & 1));
 	} };
 	
-	public static ReadHandlerPtr warpwarp_mux_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr warpwarp_mux_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = readinputport(2 + (flip_screen() & 1));
-		if ((res & 1) != 0) return 23;
-		if ((res & 2) != 0) return 63;
-		if ((res & 4) != 0) return 111;
-		if ((res & 8) != 0) return 167;
+		if (res & 1) return 23;
+		if (res & 2) return 63;
+		if (res & 4) return 111;
+		if (res & 8) return 167;
 		return 255;
 	} };
 	
-	public static WriteHandlerPtr warpwarp_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr warpwarp_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,data & 1);
 	} };
 	
-	public static WriteHandlerPtr warpwarp_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr warpwarp_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -184,7 +177,7 @@ public class warpwarp
 	
 	
 	
-	static InputPortPtr input_ports_bombbee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bombbee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bombbee )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -232,7 +225,7 @@ public class warpwarp
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cutieq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cutieq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cutieq )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -280,7 +273,7 @@ public class warpwarp
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_warpwarp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warpwarp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warpwarp )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -339,7 +332,7 @@ public class warpwarp
 	INPUT_PORTS_END(); }}; 
 	
 	/* has High Score Initials dip switch instead of rack test */
-	static InputPortPtr input_ports_warpwarr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_warpwarr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( warpwarr )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -440,8 +433,7 @@ public class warpwarp
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_bombbee = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bombbee )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", 8080, 2048000)	/* 3 MHz? */
@@ -465,21 +457,16 @@ public class warpwarp
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_warpwarp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( warpwarp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(bombbee)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(warpwarp_readmem,warpwarp_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -529,9 +516,9 @@ public class warpwarp
 	
 	
 	
-	public static GameDriver driver_bombbee	   = new GameDriver("1979"	,"bombbee"	,"warpwarp.java"	,rom_bombbee,null	,machine_driver_bombbee	,input_ports_bombbee	,null	,ROT90	,	"Namco", "Bomb Bee" )
-	public static GameDriver driver_cutieq	   = new GameDriver("1979"	,"cutieq"	,"warpwarp.java"	,rom_cutieq,null	,machine_driver_bombbee	,input_ports_cutieq	,null	,ROT90	,	"Namco", "Cutie Q" )
-	public static GameDriver driver_warpwarp	   = new GameDriver("1981"	,"warpwarp"	,"warpwarp.java"	,rom_warpwarp,null	,machine_driver_warpwarp	,input_ports_warpwarp	,null	,ROT90	,	"Namco", "Warp & Warp" )
-	public static GameDriver driver_warpwarr	   = new GameDriver("1981"	,"warpwarr"	,"warpwarp.java"	,rom_warpwarr,driver_warpwarp	,machine_driver_warpwarp	,input_ports_warpwarr	,null	,ROT90	,	"[Namco] (Rock-ola license)", "Warp Warp (Rock-ola set 1)" )
-	public static GameDriver driver_warpwar2	   = new GameDriver("1981"	,"warpwar2"	,"warpwarp.java"	,rom_warpwar2,driver_warpwarp	,machine_driver_warpwarp	,input_ports_warpwarr	,null	,ROT90	,	"[Namco] (Rock-ola license)", "Warp Warp (Rock-ola set 2)" )
+	GAME( 1979, bombbee,  0,        bombbee,  bombbee,  0, ROT90, "Namco", "Bomb Bee" )
+	GAME( 1979, cutieq,   0,        bombbee,  cutieq,   0, ROT90, "Namco", "Cutie Q" )
+	GAME( 1981, warpwarp, 0,        warpwarp, warpwarp, 0, ROT90, "Namco", "Warp & Warp" )
+	GAME( 1981, warpwarr, warpwarp, warpwarp, warpwarr, 0, ROT90, "[Namco] (Rock-ola license)", "Warp Warp (Rock-ola set 1)" )
+	GAME( 1981, warpwar2, warpwarp, warpwarp, warpwarr, 0, ROT90, "[Namco] (Rock-ola license)", "Warp Warp (Rock-ola set 2)" )
 }

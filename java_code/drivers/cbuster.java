@@ -15,7 +15,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -161,8 +161,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -173,8 +172,7 @@ public class cbuster
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -212,7 +210,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_twocrude = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_twocrude = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( twocrude )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -378,8 +376,7 @@ public class cbuster
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_twocrude = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( twocrude )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* Accurate */
@@ -407,9 +404,7 @@ public class cbuster
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -575,8 +570,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_twocrude  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_twocrude  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		unsigned char *PTR;
 		int i,j;
@@ -620,8 +614,8 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_cbuster	   = new GameDriver("1990"	,"cbuster"	,"cbuster.java"	,rom_cbuster,null	,machine_driver_twocrude	,input_ports_twocrude	,init_twocrude	,ROT0	,	"Data East Corporation", "Crude Buster (World FX version)" )
-	public static GameDriver driver_cbusterw	   = new GameDriver("1990"	,"cbusterw"	,"cbuster.java"	,rom_cbusterw,driver_cbuster	,machine_driver_twocrude	,input_ports_twocrude	,init_twocrude	,ROT0	,	"Data East Corporation", "Crude Buster (World FU version)" )
-	public static GameDriver driver_cbusterj	   = new GameDriver("1990"	,"cbusterj"	,"cbuster.java"	,rom_cbusterj,driver_cbuster	,machine_driver_twocrude	,input_ports_twocrude	,init_twocrude	,ROT0	,	"Data East Corporation", "Crude Buster (Japan)" )
-	public static GameDriver driver_twocrude	   = new GameDriver("1990"	,"twocrude"	,"cbuster.java"	,rom_twocrude,driver_cbuster	,machine_driver_twocrude	,input_ports_twocrude	,init_twocrude	,ROT0	,	"Data East USA", "Two Crude (US)" )
+	GAME( 1990, cbuster,  0,       twocrude, twocrude, twocrude, ROT0, "Data East Corporation", "Crude Buster (World FX version)" )
+	GAME( 1990, cbusterw, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East Corporation", "Crude Buster (World FU version)" )
+	GAME( 1990, cbusterj, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East Corporation", "Crude Buster (Japan)" )
+	GAME( 1990, twocrude, cbuster, twocrude, twocrude, twocrude, ROT0, "Data East USA", "Two Crude (US)" )
 }

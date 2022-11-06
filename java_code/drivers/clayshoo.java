@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -72,7 +72,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_clayshoo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_clayshoo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( clayshoo )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "1C_1C") );
@@ -136,8 +136,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_clayshoo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( clayshoo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,5068000/4)		/* 5.068/4 Mhz (divider is a guess) */
@@ -159,9 +158,7 @@ public class clayshoo
 		MDRV_PALETTE_INIT(clayshoo)
 		MDRV_VIDEO_START(generic_bitmapped)
 		MDRV_VIDEO_UPDATE(generic_bitmapped)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -188,5 +185,5 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_clayshoo	   = new GameDriver("1979"	,"clayshoo"	,"clayshoo.java"	,rom_clayshoo,null	,machine_driver_clayshoo	,input_ports_clayshoo	,null	,ROT0	,	"Allied Leisure", "Clay Shoot", GAME_NO_SOUND )
+	GAMEX( 1979, clayshoo, 0, clayshoo, clayshoo, 0, ROT0, "Allied Leisure", "Clay Shoot", GAME_NO_SOUND )
 }

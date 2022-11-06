@@ -19,7 +19,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,8 +31,7 @@ public class skychut
 	static UINT8 *memory;
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_skychut  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_skychut  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		palette_set_color(0,0xff,0xff,0xff);
@@ -108,15 +107,14 @@ public class skychut
 	};
 	
 	
-	public static InterruptHandlerPtr skychut_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr skychut_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(2) & 1)	/* Left Coin */
 	        cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 	    else
 	    	cpu_set_irq_line(0, 0, HOLD_LINE);
 	} };
 	
-	static InputPortPtr input_ports_skychut = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skychut = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skychut )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -137,7 +135,7 @@ public class skychut
 		PORT_BIT_IMPULSE( 0x01, IP_ACTIVE_HIGH, IPT_COIN1, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacebeam = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacebeam = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacebeam )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -189,8 +187,7 @@ public class skychut
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_skychut = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skychut )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,20000000/8)
@@ -213,13 +210,10 @@ public class skychut
 		MDRV_VIDEO_UPDATE(skychut)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_greenberet = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( greenberet )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6502,20000000/8)
@@ -241,9 +235,7 @@ public class skychut
 		MDRV_VIDEO_UPDATE(iremm15)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -328,9 +320,9 @@ public class skychut
 		ROM_LOAD( "gb9", 0x3000, 0x0400, CRC(c27b9ba3) SHA1(a2f4f0c4b61eb03bba13ae5d25dc01009a4f86ee) ) // ok ?
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_andromed	   = new GameDriver("1979"	,"andromed"	,"skychut.java"	,rom_andromed,null	,machine_driver_skychut	,input_ports_skychut	,null	,ROT270	,	"Irem", "Andromeda (Japan?)", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NOT_WORKING )
-	public static GameDriver driver_ipminvad	   = new GameDriver("1979?"	,"ipminvad"	,"skychut.java"	,rom_ipminvad,null	,machine_driver_skychut	,input_ports_skychut	,null	,ROT270	,	"Irem", "IPM Invader", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_skychut	   = new GameDriver("1980"	,"skychut"	,"skychut.java"	,rom_skychut,null	,machine_driver_skychut	,input_ports_skychut	,null	,ROT270	,	"Irem", "Sky Chuter", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_spacbeam	   = new GameDriver("1979"	,"spacbeam"	,"skychut.java"	,rom_spacbeam,null	,machine_driver_greenberet	,input_ports_spacebeam	,null	,ROT270	,	"Irem", "Space Beam", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_greenber	   = new GameDriver("1980"	,"greenber"	,"skychut.java"	,rom_greenber,null	,machine_driver_greenberet	,input_ports_spacebeam	,null	,ROT270	,	"Irem", "Green Beret (Irem)", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NOT_WORKING )
+	GAMEX( 1979, andromed, 0, skychut,    skychut,   0, ROT270, "Irem", "Andromeda (Japan?)", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NOT_WORKING )
+	GAMEX( 1979?,ipminvad, 0, skychut,    skychut,   0, ROT270, "Irem", "IPM Invader", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX( 1980, skychut,  0, skychut,    skychut,   0, ROT270, "Irem", "Sky Chuter", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX( 1979, spacbeam, 0, greenberet, spacebeam, 0, ROT270, "Irem", "Space Beam", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX( 1980, greenber, 0, greenberet, spacebeam, 0, ROT270, "Irem", "Green Beret (Irem)", GAME_NO_COCKTAIL | GAME_NO_SOUND | GAME_IMPERFECT_COLORS | GAME_NOT_WORKING )
 }

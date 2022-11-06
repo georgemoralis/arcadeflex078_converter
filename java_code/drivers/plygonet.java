@@ -30,7 +30,7 @@
 	- Palettes
 	- Controls
 	- Priorities.  From the original board it appears they're fixed, in front to back order:
-	  (all the way in front) TTL text layer . polygons . PSAC2 (all the way in back)
+	  (all the way in front) TTL text layer -> polygons -> PSAC2 (all the way in back)
 
 Notes:
 
@@ -42,7 +42,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,8 +50,6 @@ public class plygonet
 {
 	
 	
-	VIDEO_START(polygonet_vh_start);
-	VIDEO_UPDATE(polygonet_vh_screenrefresh);
 	
 	READ32_HANDLER( polygonet_ttl_ram_r );
 	WRITE32_HANDLER( polygonet_ttl_ram_w );
@@ -70,15 +68,14 @@ public class plygonet
 		"0100110000000" /* unlock command */
 	};
 	
-	static NVRAM_HANDLER(nvram_handler)
-	{
-		if (read_or_write != 0)
+	public static NVRAMHandlerPtr nvram_handler_nvram_handler  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write)
 			EEPROM_save(file);
 		else
 		{
 			EEPROM_init(&eeprom_interface);
 	
-			if (file != 0)
+			if (file)
 			{
 				init_eeprom_count = 0;
 				EEPROM_load(file);
@@ -86,11 +83,11 @@ public class plygonet
 			else
 				init_eeprom_count = 10;
 		}
-	}
+	} };
 	
 	static READ32_HANDLER( polygonet_eeprom_r )
 	{
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 		{
 			return 0x0200 | (EEPROM_read_bit()<<8);
 		}
@@ -106,7 +103,7 @@ public class plygonet
 	
 	static WRITE32_HANDLER( polygonet_eeprom_w )
 	{
-		if (ACCESSING_MSB32 != 0)
+		if (ACCESSING_MSB32)
 		{
 			EEPROM_write_bit((data & 0x01000000) ? ASSERT_LINE : CLEAR_LINE);
 			EEPROM_set_cs_line((data & 0x02000000) ? CLEAR_LINE : ASSERT_LINE);
@@ -142,13 +139,12 @@ public class plygonet
 	// irq 5 does ??? (polygon end of draw?)
 	// irq 7 does nothing (it jsrs to a rts and then rte)
 	
-	static INTERRUPT_GEN(polygonet_interrupt)
-	{
-		if (cpu_getiloops() != 0)
+	public static InterruptHandlerPtr polygonet_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (cpu_getiloops())
 			cpu_set_irq_line(0, MC68000_IRQ_5, HOLD_LINE);
 		else
 			cpu_set_irq_line(0, MC68000_IRQ_3, HOLD_LINE);
-	}
+	} };
 	
 	/* sound CPU communications */
 	
@@ -163,7 +159,7 @@ public class plygonet
 	
 	static WRITE32_HANDLER( sound_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			soundlatch_w(0, (data>>8)&0xff);
 		}
@@ -317,17 +313,15 @@ public class plygonet
 		cpu_setbank(2, memory_region(REGION_CPU2) + 0x10000 + cur_sound_region*0x4000);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cur_sound_region = (data & 0x1f);
 	
 		reset_sound_region();
 	} };
 	
-	static INTERRUPT_GEN(audio_interrupt)
-	{
+	public static InterruptHandlerPtr audio_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_nmi_line(1, PULSE_LINE);
-	}
+	} };
 	
 	public static Memory_ReadAddress sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -416,11 +410,9 @@ public class plygonet
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(K054539, k054539_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_polygonet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_polygonet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( polygonet )
 		PORT_START(); 
 	
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1);
@@ -475,12 +467,11 @@ public class plygonet
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static DRIVER_INIT(polygonet)
-	{
+	public static DriverInitHandlerPtr init_polygonet  = new DriverInitHandlerPtr() { public void handler(){
 		/* set default bankswitch */
 		cur_sound_region = 2;
 		reset_sound_region();
-	}
+	} };
 	
 	static RomLoadPtr rom_plygonet = new RomLoadPtr(){ public void handler(){ 
 		/* main program */
@@ -509,5 +500,5 @@ public class plygonet
 	ROM_END(); }}; 
 	
 	/*          ROM        parent   machine    inp        init */
-	public static GameDriver driver_plygonet	   = new GameDriver("1993"	,"plygonet"	,"plygonet.java"	,rom_plygonet,null	,machine_driver_plygonet	,input_ports_polygonet	,init_polygonet	,ROT90	,	"Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )
+	GAMEX( 1993, plygonet, 0,       plygonet, polygonet, polygonet, ROT90, "Konami", "Polygonet Commanders (ver UAA)", GAME_NOT_WORKING )
 }

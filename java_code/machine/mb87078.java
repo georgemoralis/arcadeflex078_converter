@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -92,11 +92,11 @@ public class mb87078
 	
 		for (i=0; i<4; i++)
 		{
-			int old_index = c.gain[i];
-			c.gain[i] = calc_gain_index(c.latch[i], c.latch[4+i]);
-			if (old_index != c.gain[i])
+			int old_index = c->gain[i];
+			c->gain[i] = calc_gain_index(c->latch[i], c->latch[4+i]);
+			if (old_index != c->gain[i])
 			{
-				(*c.intf.gain_changed_cb)(i, MB87078_gain_percent[c.gain[i]] );
+				(*c->intf->gain_changed_cb)(i, MB87078_gain_percent[c->gain[i]] );
 			}
 		}
 	}
@@ -125,19 +125,19 @@ public class mb87078
 	{
 		struct MB87078 *c = chip + which;
 	
-		c.reset_comp = level;
+		c->reset_comp = level;
 	
 		/*this seems to be true, according to the datasheets*/
 		if (level==0)
 		{
-			c.latch[0] = 0x3f;
-			c.latch[1] = 0x3f;
-			c.latch[2] = 0x3f;
-			c.latch[3] = 0x3f;
-			c.latch[4] = 0x0 | 0x4;
-			c.latch[5] = 0x1 | 0x4;
-			c.latch[6] = 0x2 | 0x4;
-			c.latch[7] = 0x3 | 0x4;
+			c->latch[0] = 0x3f;
+			c->latch[1] = 0x3f;
+			c->latch[2] = 0x3f;
+			c->latch[3] = 0x3f;
+			c->latch[4] = 0x0 | 0x4;
+			c->latch[5] = 0x1 | 0x4;
+			c->latch[6] = 0x2 | 0x4;
+			c->latch[7] = 0x3 | 0x4;
 		}
 		gain_recalc(which);
 	}
@@ -147,16 +147,16 @@ public class mb87078
 	{
 		struct MB87078 *c = chip + which;
 	
-		if (c.reset_comp==0) return;
+		if (c->reset_comp==0) return;
 	
 		if (dsel==0)
 		{/*gd0-gd5*/
-			c.latch[0+c.channel_latch] = data & 0x3f;
+			c->latch[0+c->channel_latch] = data & 0x3f;
 		}
 		else
 		{/*dcs1,dsc2,en,c0,c32,X*/
-			c.channel_latch = data & 3;
-			c.latch[4+c.channel_latch] = data & 0x1f; //always zero bit 5
+			c->channel_latch = data & 3;
+			c->latch[4+c->channel_latch] = data & 0x1f; //always zero bit 5
 		}
 		gain_recalc(which);
 	}

@@ -63,7 +63,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -78,33 +78,28 @@ public class vastar
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_vastar  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_vastar  = new MachineInitHandlerPtr() { public void handler(){
 		/* we must start with the second CPU halted */
 		cpu_set_reset_line(1,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr vastar_hold_cpu2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vastar_hold_cpu2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* I'm not sure that this works exactly like this */
-		if ((data & 1) != 0)
+		if (data & 1)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
 	} };
 	
-	public static ReadHandlerPtr vastar_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vastar_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vastar_sharedram[offset];
 	} };
 	
-	public static WriteHandlerPtr vastar_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vastar_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vastar_sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -186,7 +181,7 @@ public class vastar
 	
 	
 	
-	static InputPortPtr input_ports_vastar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vastar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vastar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -335,8 +330,7 @@ public class vastar
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_vastar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vastar )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ???? */
@@ -368,9 +362,7 @@ public class vastar
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -452,6 +444,6 @@ public class vastar
 	
 	
 	
-	public static GameDriver driver_vastar	   = new GameDriver("1983"	,"vastar"	,"vastar.java"	,rom_vastar,null	,machine_driver_vastar	,input_ports_vastar	,null	,ROT90	,	"Sesame Japan", "Vastar (set 1)" )
-	public static GameDriver driver_vastar2	   = new GameDriver("1983"	,"vastar2"	,"vastar.java"	,rom_vastar2,driver_vastar	,machine_driver_vastar	,input_ports_vastar	,null	,ROT90	,	"Sesame Japan", "Vastar (set 2)" )
+	GAME( 1983, vastar,  0,      vastar, vastar, 0, ROT90, "Sesame Japan", "Vastar (set 1)" )
+	GAME( 1983, vastar2, vastar, vastar, vastar, 0, ROT90, "Sesame Japan", "Vastar (set 2)" )
 }

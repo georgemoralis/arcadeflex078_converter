@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class pandoras
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_pandoras  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pandoras  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -94,11 +93,10 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_pandoras  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pandoras  = new VideoStartHandlerPtr() { public int handler(){
 		layer0 = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (layer0 == 0)
+		if (!layer0)
 			return 1;
 	
 		return 0;
@@ -110,18 +108,15 @@ public class pandoras
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr pandoras_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pandoras_vram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static ReadHandlerPtr pandoras_cram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pandoras_cram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return colorram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr pandoras_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			tilemap_mark_tile_dirty(layer0,offset);
@@ -129,8 +124,7 @@ public class pandoras
 		}
 	} };
 	
-	public static WriteHandlerPtr pandoras_cram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_cram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			tilemap_mark_tile_dirty(layer0,offset);
@@ -138,13 +132,11 @@ public class pandoras
 		}
 	} };
 	
-	public static WriteHandlerPtr pandoras_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(layer0,0,data);
 	} };
 	
-	public static WriteHandlerPtr pandoras_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pandoras_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data;
 		tilemap_set_flip(ALL_TILEMAPS, flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 	} };
@@ -166,7 +158,7 @@ public class pandoras
 			int nflipx = sr[offs + 3] & 0x40;
 			int nflipy = sr[offs + 3] & 0x80;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 				sr[offs + 2],
 				sr[offs + 3] & 0x0f,
 				!nflipx,!nflipy,
@@ -175,8 +167,7 @@ public class pandoras
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_pandoras  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pandoras  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw( bitmap,cliprect, layer0, 1 ,0);
 		draw_sprites( bitmap,cliprect, &pandoras_sharedram[0x800] );
 		tilemap_draw( bitmap,cliprect, layer0, 0 ,0);

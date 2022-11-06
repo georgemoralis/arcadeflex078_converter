@@ -13,7 +13,7 @@ J Clegg
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -66,8 +66,7 @@ public class yard
 	  bit 0 -- 1  kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_yard  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_yard  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -177,8 +176,7 @@ public class yard
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_yard  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_yard  = new VideoStartHandlerPtr() { public int handler(){
 		if ((dirtybuffer = auto_malloc(videoram_size[0])) == 0)
 			return 1;
 		memset(dirtybuffer,1,videoram_size[0]);
@@ -195,8 +193,7 @@ public class yard
 	
 	
 	
-	public static WriteHandlerPtr yard_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yard_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* screen flip is handled both by software and hardware */
 		data ^= ~readinputport(4) & 1;
 	
@@ -207,8 +204,7 @@ public class yard
 	} };
 	
 	
-	public static WriteHandlerPtr yard_scroll_panel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yard_scroll_panel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int sx,sy,i;
 	
 		sx = ( offset % 16 );
@@ -225,7 +221,7 @@ public class yard
 			col = (data >> i) & 0x11;
 			col = ((col >> 3) | col) & 3;
 	
-			plot_pixel.handler(scroll_panel_bitmap, sx + i, sy, Machine.pens[RADAR_PALETTE_BASE + (sy & 0xfc) + col]);
+			plot_pixel(scroll_panel_bitmap, sx + i, sy, Machine->pens[RADAR_PALETTE_BASE + (sy & 0xfc) + col]);
 		}
 	} };
 	
@@ -237,12 +233,11 @@ public class yard
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_yard  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yard  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 		{
 			memset(dirtybuffer,1,videoram_size[0]);
 		}
@@ -270,7 +265,7 @@ public class yard
 					sx += 32;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 63 - sx;
 					sy = 31 - sy;
@@ -292,7 +287,7 @@ public class yard
 	
 			scroll_x = (*yard_scroll_x_high * 0x100) + *yard_scroll_x_low;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				scroll_x += 256;
 				scroll_y = *yard_scroll_y_low ;
@@ -319,7 +314,7 @@ public class yard
 			flipx =  spriteram.read(offs + 1)& 0x40;
 			flipy =  spriteram.read(offs + 1)& 0x80;
 	
-			if (flipy != 0)
+			if (flipy)
 			{
 				code2 = code1;
 				code1 += 0x40;
@@ -329,7 +324,7 @@ public class yard
 				code2 = code1 + 0x40;
 			}
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);

@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,20 +48,19 @@ public class toobin
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate |= 1;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 2;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_toobin  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_toobin  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarijsa_reset();
@@ -100,8 +99,8 @@ public class toobin
 	static READ16_HANDLER( special_port1_r )
 	{
 		int result = readinputport(1);
-		if (atarigen_get_hblank() != 0) result ^= 0x8000;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x2000;
+		if (atarigen_get_hblank()) result ^= 0x8000;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x2000;
 		return result;
 	}
 	
@@ -154,7 +153,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_toobin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_toobin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( toobin )
 		PORT_START(); 	/* ff8800 */
 		PORT_BITX(0x0001, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER2, "P2 R Paddle Forward", KEYCODE_L, IP_JOY_DEFAULT );
 		PORT_BITX(0x0002, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2, "P2 L Paddle Forward", KEYCODE_J, IP_JOY_DEFAULT );
@@ -242,8 +241,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_toobin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( toobin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68010, ATARI_CLOCK_32MHz/4)
@@ -267,9 +265,7 @@ public class toobin
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_stereo_pokey)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -622,8 +618,7 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_toobin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_toobin  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 2, 1, 0x1000);
 	} };
@@ -636,10 +631,10 @@ public class toobin
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_toobin	   = new GameDriver("1988"	,"toobin"	,"toobin.java"	,rom_toobin,null	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 3)" )
-	public static GameDriver driver_toobine	   = new GameDriver("1988"	,"toobine"	,"toobin.java"	,rom_toobine,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (Europe, rev 3)" )
-	public static GameDriver driver_toobing	   = new GameDriver("1988"	,"toobing"	,"toobin.java"	,rom_toobing,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (German, rev 3)" )
-	public static GameDriver driver_toobin2	   = new GameDriver("1988"	,"toobin2"	,"toobin.java"	,rom_toobin2,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 2)" )
-	public static GameDriver driver_toobin2e	   = new GameDriver("1988"	,"toobin2e"	,"toobin.java"	,rom_toobin2e,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (Europe, rev 2)" )
-	public static GameDriver driver_toobin1	   = new GameDriver("1988"	,"toobin1"	,"toobin.java"	,rom_toobin1,driver_toobin	,machine_driver_toobin	,input_ports_toobin	,init_toobin	,ROT270	,	"Atari Games", "Toobin' (rev 1)" )
+	GAME( 1988, toobin,   0,      toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 3)" )
+	GAME( 1988, toobine,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (Europe, rev 3)" )
+	GAME( 1988, toobing,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (German, rev 3)" )
+	GAME( 1988, toobin2,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 2)" )
+	GAME( 1988, toobin2e, toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (Europe, rev 2)" )
+	GAME( 1988, toobin1,  toobin, toobin, toobin, toobin, ROT270, "Atari Games", "Toobin' (rev 1)" )
 }

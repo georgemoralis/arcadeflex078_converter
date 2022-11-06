@@ -118,7 +118,7 @@ interrupts:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -133,8 +133,7 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_kangaroo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_kangaroo  = new MachineInitHandlerPtr() { public void handler(){
 		/* I think there is a bug in the startup checks of the game. At the very */
 		/* beginning, during the RAM check, it goes one byte too far, and ends up */
 		/* trying to write, and re-read, location dfff. To the best of my knowledge, */
@@ -164,15 +163,13 @@ public class kangaroo
 	   this just seems to do the trick -V-
 	*/
 	
-	public static ReadHandlerPtr kangaroo_sec_chip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr kangaroo_sec_chip_r  = new ReadHandlerPtr() { public int handler(int offset){
 	/*  kangaroo_clock = (kangaroo_clock << 1) + 1; */
 	  kangaroo_clock++;
 	  return (kangaroo_clock & 0x0f);
 	} };
 	
-	public static WriteHandlerPtr kangaroo_sec_chip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_sec_chip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/*  kangaroo_clock = val & 0x0f; */
 	} };
 	
@@ -184,8 +181,7 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr kangaroo_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kangaroo_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 1);
 		coin_counter_w(1, data & 2);
 	} };
@@ -269,7 +265,7 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_fnkyfish = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fnkyfish = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fnkyfish )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SERVICE1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -328,7 +324,7 @@ public class kangaroo
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_kangaroo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kangaroo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kangaroo )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SERVICE1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START1 );
@@ -424,8 +420,7 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_kangaroo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kangaroo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 10000000/4)	/* 2.5 MHz */
@@ -455,9 +450,7 @@ public class kangaroo
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -558,8 +551,8 @@ public class kangaroo
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_fnkyfish	   = new GameDriver("1981"	,"fnkyfish"	,"kangaroo.java"	,rom_fnkyfish,null	,machine_driver_kangaroo	,input_ports_fnkyfish	,null	,ROT90	,	"Sun Electronics", "Funky Fish" )
-	public static GameDriver driver_kangaroo	   = new GameDriver("1982"	,"kangaroo"	,"kangaroo.java"	,rom_kangaroo,null	,machine_driver_kangaroo	,input_ports_kangaroo	,null	,ROT90	,	"Sun Electronics", "Kangaroo" )
-	public static GameDriver driver_kangaroa	   = new GameDriver("1982"	,"kangaroa"	,"kangaroo.java"	,rom_kangaroa,driver_kangaroo	,machine_driver_kangaroo	,input_ports_kangaroo	,null	,ROT90	,	"[Sun Electronics] (Atari license)", "Kangaroo (Atari)" )
-	public static GameDriver driver_kangarob	   = new GameDriver("1982"	,"kangarob"	,"kangaroo.java"	,rom_kangarob,driver_kangaroo	,machine_driver_kangaroo	,input_ports_kangaroo	,null	,ROT90	,	"bootleg", "Kangaroo (bootleg)" )
+	GAME( 1981, fnkyfish, 0,        kangaroo, fnkyfish, 0, ROT90, "Sun Electronics", "Funky Fish" )
+	GAME( 1982, kangaroo, 0,        kangaroo, kangaroo, 0, ROT90, "Sun Electronics", "Kangaroo" )
+	GAME( 1982, kangaroa, kangaroo, kangaroo, kangaroo, 0, ROT90, "[Sun Electronics] (Atari license)", "Kangaroo (Atari)" )
+	GAME( 1982, kangarob, kangaroo, kangaroo, kangaroo, 0, ROT90, "bootleg", "Kangaroo (bootleg)" )
 }

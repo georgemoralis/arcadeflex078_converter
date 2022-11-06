@@ -6,7 +6,7 @@ Atari Starship 1 video emulation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class starshp1
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_starshp1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_starshp1  = new VideoStartHandlerPtr() { public int handler(){
 		UINT16 val = 0;
 	
 		int i;
@@ -100,22 +99,20 @@ public class starshp1
 	} };
 	
 	
-	public static ReadHandlerPtr starshp1_rng_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr starshp1_rng_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int x = cpu_gethorzbeampos();
 		int y = cpu_getscanline();
 	
-		if (x > Machine.drv.screen_width - 1)
-			x = Machine.drv.screen_width - 1;
-		if (y > Machine.drv.screen_height - 1)
-			y = Machine.drv.screen_height - 1;
+		if (x > Machine->drv->screen_width - 1)
+			x = Machine->drv->screen_width - 1;
+		if (y > Machine->drv->screen_height - 1)
+			y = Machine->drv->screen_height - 1;
 	
 		return LSFR[x + (UINT16) (512 * y)];
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_ssadd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_ssadd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 		 * The range of sprite position values doesn't suffice to
 		 * move the zoomed spaceship sprite over the top and left
@@ -130,8 +127,7 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_sspic_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_sspic_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 		 * Some mysterious game code at address $2CCE is causing
 		 * erratic images in the target explosion sequence. The
@@ -145,8 +141,7 @@ public class starshp1
 	} };
 	
 	
-	public static WriteHandlerPtr starshp1_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr starshp1_playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (starshp1_mux != 0)
 		{
 			offset ^= 0x1f;
@@ -172,13 +167,13 @@ public class starshp1
 		int x;
 		int y;
 	
-		for (y = 0; y < bitmap.height; y++)
+		for (y = 0; y < bitmap->height; y++)
 		{
 			const UINT16* p = LSFR + (UINT16) (512 * y);
 	
-			UINT16* pLine = bitmap.line[y];
+			UINT16* pLine = bitmap->line[y];
 	
-			for (x = 0; x < bitmap.width; x++)
+			for (x = 0; x < bitmap->width; x++)
 			{
 				if ((p[x] & 0x5b56) == 0x5b44)
 				{
@@ -207,7 +202,7 @@ public class starshp1
 		{
 			int code = (starshp1_obj_ram[i] & 0xf) ^ 0xf;
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code % 8,
 				code / 8,
 				0, 0,
@@ -237,7 +232,7 @@ public class starshp1
 			y -= (yzoom * starshp1_ship_voffset) >> 16;
 		}
 	
-		drawgfxzoom(bitmap, Machine.gfx[2],
+		drawgfxzoom(bitmap, Machine->gfx[2],
 			starshp1_ship_picture & 0x03,
 			starshp1_ship_explode,
 			starshp1_ship_picture & 0x80, 0,
@@ -280,23 +275,23 @@ public class starshp1
 	
 	static void draw_circle_line(struct mame_bitmap *bitmap, int x, int y, int l)
 	{
-		if (y >= 0 && y <= bitmap.height - 1)
+		if (y >= 0 && y <= bitmap->height - 1)
 		{
 			const UINT16* p = LSFR + (UINT16) (512 * y);
 	
-			UINT16* pLine = bitmap.line[y];
+			UINT16* pLine = bitmap->line[y];
 	
 			int h1 = x - 2 * l;
 			int h2 = x + 2 * l;
 	
 			if (h1 < 0)
 				h1 = 0;
-			if (h2 > bitmap.width - 1)
-				h2 = bitmap.width - 1;
+			if (h2 > bitmap->width - 1)
+				h2 = bitmap->width - 1;
 	
 			for (x = h1; x <= h2; x++)
 			{
-				if (starshp1_circle_mod != 0)
+				if (starshp1_circle_mod)
 				{
 					if (p[x] & 1)
 					{
@@ -350,11 +345,11 @@ public class starshp1
 		int x;
 		int y;
 	
-		for (y = rect.min_y; y <= rect.max_y; y++)
+		for (y = rect->min_y; y <= rect->max_y; y++)
 		{
-			const UINT16* pLine = helper.line[y];
+			const UINT16* pLine = helper->line[y];
 	
-			for (x = rect.min_x; x <= rect.max_x; x++)
+			for (x = rect->min_x; x <= rect->max_x; x++)
 			{
 				if (pLine[x] != 0)
 				{
@@ -384,15 +379,14 @@ public class starshp1
 		int r = get_radius();
 	
 		return
-			point_in_circle(rect.min_x, rect.min_y, center_x, center_y, r) ||
-			point_in_circle(rect.min_x, rect.max_y, center_x, center_y, r) ||
-			point_in_circle(rect.max_x, rect.min_y, center_x, center_y, r) ||
-			point_in_circle(rect.max_x, rect.max_y, center_x, center_y, r);
+			point_in_circle(rect->min_x, rect->min_y, center_x, center_y, r) ||
+			point_in_circle(rect->min_x, rect->max_y, center_x, center_y, r) ||
+			point_in_circle(rect->max_x, rect->min_y, center_x, center_y, r) ||
+			point_in_circle(rect->max_x, rect->max_y, center_x, center_y, r);
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_starshp1  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		if (starshp1_starfield_kill == 0)
@@ -416,30 +410,29 @@ public class starshp1
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_starshp1  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_starshp1  = new VideoEofHandlerPtr() { public void handler(){
 		struct rectangle rect;
 	
 		rect.min_x = get_sprite_hpos(13);
 		rect.min_y = get_sprite_vpos(13);
-		rect.max_x = rect.min_x + Machine.gfx[1].width - 1;
-		rect.max_y = rect.min_y + Machine.gfx[1].height - 1;
+		rect.max_x = rect.min_x + Machine->gfx[1]->width - 1;
+		rect.max_y = rect.min_y + Machine->gfx[1]->height - 1;
 	
 		if (rect.min_x < 0)
 			rect.min_x = 0;
 		if (rect.min_y < 0)
 			rect.min_y = 0;
-		if (rect.max_x > helper.width - 1)
-			rect.max_x = helper.width - 1;
-		if (rect.max_y > helper.height - 1)
-			rect.max_y = helper.height - 1;
+		if (rect.max_x > helper->width - 1)
+			rect.max_x = helper->width - 1;
+		if (rect.max_y > helper->height - 1)
+			rect.max_y = helper->height - 1;
 	
-		fillbitmap(helper, Machine.pens[0], Machine.visible_area);
+		fillbitmap(helper, Machine->pens[0], Machine->visible_area);
 	
 		if (starshp1_attract == 0)
-			draw_spaceship(helper, Machine.visible_area);
+			draw_spaceship(helper, Machine->visible_area);
 	
-		if (circle_collision(Machine.visible_area))
+		if (circle_collision(Machine->visible_area))
 		{
 			starshp1_collision_latch |= 1;
 		}
@@ -451,7 +444,7 @@ public class starshp1
 		{
 			starshp1_collision_latch |= 4;
 		}
-		if (spaceship_collision(helper, Machine.visible_area))
+		if (spaceship_collision(helper, Machine->visible_area))
 		{
 			starshp1_collision_latch |= 8;
 		}

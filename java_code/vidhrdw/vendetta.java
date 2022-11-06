@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -58,8 +58,7 @@ public class vendetta
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_vendetta  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vendetta  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,vendetta_tile_callback))
@@ -69,8 +68,7 @@ public class vendetta
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_esckids  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_esckids  = new VideoStartHandlerPtr() { public int handler(){
 	    K053251_vh_start();
 	
 	    if (K052109_vh_start(REGION_GFX1,NORMAL_PLANE_ORDER,esckids_tile_callback))
@@ -104,8 +102,7 @@ public class vendetta
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vendetta  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[3];
 	
 	

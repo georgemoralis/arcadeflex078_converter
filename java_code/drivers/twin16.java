@@ -54,7 +54,7 @@ Known Issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -152,8 +152,8 @@ public class twin16
 			7	6	5	4	3	2	1	0
 				?							sprite protection disable
 					X						IRQ5 enable (CPUA)
-						X					0.1 trigger IRQ6 on CPUB
-							X				0.1 trigger IRQ on sound CPU
+						X					0->1 trigger IRQ6 on CPUB
+							X				0->1 trigger IRQ on sound CPU
 								x	x	x	coin counters
 		*/
 		UINT16 old = twin16_CPUA_register;
@@ -186,7 +186,7 @@ public class twin16
 			7	6	5	4	3	2	1	0
 								X			gfx bank select
 									X		IRQ5 enable
-										X	0.1 trigger IRQ6 on CPUA
+										X	0->1 trigger IRQ6 on CPUA
 		*/
 		UINT16 old = twin16_CPUB_register;
 		COMBINE_DATA(&twin16_CPUB_register);
@@ -225,13 +225,11 @@ public class twin16
 		return 0;
 	}
 	
-	public static ReadHandlerPtr twin16_sres_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr twin16_sres_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return twin16_soundlatch;
 	} };
 	
-	public static WriteHandlerPtr twin16_sres_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr twin16_sres_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 1 resets the UPD7795C sound chip */
 		UPD7759_reset_w(0, data & 0x02);
 		twin16_soundlatch = data;
@@ -406,7 +404,7 @@ public class twin16
 		PORT_DIPSETTING(    0x90, DEF_STR( "1C_7C") ); \
 		PORT_DIPSETTING(    0x00, "Disabled" );
 	
-	static InputPortPtr input_ports_devilw = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_devilw = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( devilw )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -467,7 +465,7 @@ public class twin16
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_darkadv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darkadv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darkadv )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -553,7 +551,7 @@ public class twin16
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vulcan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vulcan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vulcan )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -624,7 +622,7 @@ public class twin16
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gradius2 = new InputPortPtr(){ public void handler() { 	// same as vulcan, different bonus
+	static InputPortPtr input_ports_gradius2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gradius2 )	// same as vulcan, different bonus
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -694,7 +692,7 @@ public class twin16
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED);
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fround = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fround = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fround )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -755,7 +753,7 @@ public class twin16
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_miaj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_miaj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( miaj )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -823,7 +821,7 @@ public class twin16
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cuebrick = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cuebrick = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cuebrick )
 		PORT_START();       /* 0xa0001 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -952,20 +950,17 @@ public class twin16
 	
 	/* Interrupt Generators */
 	
-	public static InterruptHandlerPtr CPUA_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (CPUA_IRQ_ENABLE != 0) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
+	public static InterruptHandlerPtr CPUA_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (CPUA_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr CPUB_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (CPUB_IRQ_ENABLE != 0) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
+	public static InterruptHandlerPtr CPUB_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (CPUB_IRQ_ENABLE) cpu_set_irq_line(cpu_getactivecpu(), 5, HOLD_LINE);
 	} };
 	
 	/* Machine Drivers */
 	
-	public static MachineHandlerPtr machine_driver_twin16 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( twin16 )
 		// basic machine hardware
 		MDRV_CPU_ADD(Z80, 3579545)
 		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
@@ -999,20 +994,14 @@ public class twin16
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_heavysync = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( heavysync )
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_INTERLEAVE(1000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fround = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fround )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3579545)
 		MDRV_CPU_FLAGS(CPU_AUDIO_CPU)
@@ -1042,36 +1031,25 @@ public class twin16
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
 		MDRV_SOUND_ADD(UPD7759, upd7759_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hpuncher = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hpuncher )
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VIDEO_START(fround)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mia = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mia )
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VISIBLE_AREA(1*8, 39*8-1, 2*8, 30*8-1)
 		MDRV_VIDEO_START(fround)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_cuebrick = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cuebrick )
 		MDRV_IMPORT_FROM(twin16)
 		MDRV_VISIBLE_AREA(1*8, 39*8-1, 2*8, 30*8-1)
 		MDRV_VIDEO_START(fround)
 		MDRV_NVRAM_HANDLER(generic_0fill)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/* ROMs */
 	
@@ -1470,7 +1448,7 @@ public class twin16
 		int i;
 		UINT16 *temp = malloc(0x200000);
 	
-		if (temp != 0)
+		if ( temp )
 		{
 			twin16_gfx_rom = (UINT16 *)memory_region(REGION_GFX2);
 			memcpy( temp, twin16_gfx_rom, 0x200000 );
@@ -1484,26 +1462,22 @@ public class twin16
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_twin16  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_twin16  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_untangle();
 		twin16_custom_vidhrdw = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_fround  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fround  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_untangle();
 		twin16_custom_vidhrdw = 1;
 	} };
 	
-	public static DriverInitHandlerPtr init_hpuncher  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hpuncher  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_untangle();
 		twin16_custom_vidhrdw = 2;
 	} };
 	
-	public static DriverInitHandlerPtr init_cuebrick  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cuebrick  = new DriverInitHandlerPtr() { public void handler(){
 		gfx_untangle();
 		twin16_custom_vidhrdw = 2;
 	
@@ -1513,17 +1487,17 @@ public class twin16
 	
 	/* Game Drivers */
 	
-	public static GameDriver driver_devilw	   = new GameDriver("1987"	,"devilw"	,"twin16.java"	,rom_devilw,null	,machine_driver_heavysync	,input_ports_devilw	,init_twin16	,ROT0	,	"Konami", "Devil World" )
-	public static GameDriver driver_majuu	   = new GameDriver("1987"	,"majuu"	,"twin16.java"	,rom_majuu,driver_devilw	,machine_driver_heavysync	,input_ports_devilw	,init_twin16	,ROT0	,	"Konami", "Majuu no Ohkoku" )
-	public static GameDriver driver_darkadv	   = new GameDriver("1987"	,"darkadv"	,"twin16.java"	,rom_darkadv,driver_devilw	,machine_driver_heavysync	,input_ports_darkadv	,init_twin16	,ROT0	,	"Konami", "Dark Adventure" )
-	public static GameDriver driver_vulcan	   = new GameDriver("1988"	,"vulcan"	,"twin16.java"	,rom_vulcan,null	,machine_driver_twin16	,input_ports_vulcan	,init_twin16	,ROT0	,	"Konami", "Vulcan Venture" )
-	public static GameDriver driver_gradius2	   = new GameDriver("1988"	,"gradius2"	,"twin16.java"	,rom_gradius2,driver_vulcan	,machine_driver_twin16	,input_ports_gradius2	,init_twin16	,ROT0	,	"Konami", "Gradius II - GOFER no Yabou (Japan New Ver.)" )
-	public static GameDriver driver_grdius2a	   = new GameDriver("1988"	,"grdius2a"	,"twin16.java"	,rom_grdius2a,driver_vulcan	,machine_driver_twin16	,input_ports_vulcan	,init_twin16	,ROT0	,	"Konami", "Gradius II - GOFER no Yabou (Japan Old Ver.)" )
-	public static GameDriver driver_grdius2b	   = new GameDriver("1988"	,"grdius2b"	,"twin16.java"	,rom_grdius2b,driver_vulcan	,machine_driver_twin16	,input_ports_vulcan	,init_twin16	,ROT0	,	"Konami", "Gradius II - GOFER no Yabou (Japan Older Ver.)" )
+	GAME( 1987, devilw,   0,      heavysync, devilw,   twin16,   ROT0, "Konami", "Devil World" )
+	GAME( 1987, majuu,    devilw, heavysync, devilw,   twin16,   ROT0, "Konami", "Majuu no Ohkoku" )
+	GAME( 1987, darkadv,  devilw, heavysync, darkadv,  twin16,   ROT0, "Konami", "Dark Adventure" )
+	GAME( 1988, vulcan,   0,      twin16,    vulcan,   twin16,   ROT0, "Konami", "Vulcan Venture" )
+	GAME( 1988, gradius2, vulcan, twin16,    gradius2, twin16,   ROT0, "Konami", "Gradius II - GOFER no Yabou (Japan New Ver.)" )
+	GAME( 1988, grdius2a, vulcan, twin16,    vulcan,   twin16,   ROT0, "Konami", "Gradius II - GOFER no Yabou (Japan Old Ver.)" )
+	GAME( 1988, grdius2b, vulcan, twin16,    vulcan,   twin16,   ROT0, "Konami", "Gradius II - GOFER no Yabou (Japan Older Ver.)" )
 	
-	public static GameDriver driver_fround	   = new GameDriver("1988"	,"fround"	,"twin16.java"	,rom_fround,null	,machine_driver_fround	,input_ports_fround	,init_fround	,ROT0	,	"Konami", "The Final Round (version M)" )
-	public static GameDriver driver_froundl	   = new GameDriver("1988"	,"froundl"	,"twin16.java"	,rom_froundl,driver_fround	,machine_driver_fround	,input_ports_fround	,init_fround	,ROT0	,	"Konami", "The Final Round (version L)" )
-	public static GameDriver driver_hpuncher	   = new GameDriver("1988"	,"hpuncher"	,"twin16.java"	,rom_hpuncher,driver_fround	,machine_driver_hpuncher	,input_ports_fround	,init_hpuncher	,ROT0	,	"Konami", "Hard Puncher (Japan)" )
-	public static GameDriver driver_miaj	   = new GameDriver("1989"	,"miaj"	,"twin16.java"	,rom_miaj,driver_mia	,machine_driver_mia	,input_ports_miaj	,init_hpuncher	,ROT0	,	"Konami", "M.I.A. - Missing in Action (Japan)" )
-	public static GameDriver driver_cuebrick	   = new GameDriver("1989"	,"cuebrick"	,"twin16.java"	,rom_cuebrick,null	,machine_driver_cuebrick	,input_ports_cuebrick	,init_cuebrick	,ROT0	,	"Konami", "Cue Brick (Japan)" )
+	GAME( 1988, fround,   0,      fround,    fround,   fround,   ROT0, "Konami", "The Final Round (version M)" )
+	GAME( 1988, froundl,  fround, fround,    fround,   fround,   ROT0, "Konami", "The Final Round (version L)" )
+	GAME( 1988, hpuncher, fround, hpuncher,  fround,   hpuncher, ROT0, "Konami", "Hard Puncher (Japan)" )
+	GAME( 1989, miaj,     mia,    mia,       miaj,     hpuncher, ROT0, "Konami", "M.I.A. - Missing in Action (Japan)" )
+	GAME( 1989, cuebrick, 0,      cuebrick,  cuebrick, cuebrick, ROT0, "Konami", "Cue Brick (Japan)" )
 }

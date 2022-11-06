@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,7 @@ public class rockola
 	  Zarzon has a different PROM layout from the others.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_rockola  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rockola  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -84,8 +83,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -93,8 +91,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rockola_videoram2[offset] != data)
 		{
 			rockola_videoram2[offset] = data;
@@ -102,8 +99,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -112,8 +108,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_charram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rockola_charram[offset] != data)
 		{
 			rockola_charram[offset] = data;
@@ -121,8 +116,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bank;
 	
 		/* bits 0-2 select background color */
@@ -134,7 +128,7 @@ public class rockola
 			backcolor = data & 7;
 	
 			for (i = 0;i < 32;i += 4)
-				Machine.gfx[1].colortable[i] = Machine.pens[4 * backcolor + 0x20];
+				Machine->gfx[1]->colortable[i] = Machine->pens[4 * backcolor + 0x20];
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
@@ -158,13 +152,11 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr rockola_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data);
 	} };
 	
-	public static WriteHandlerPtr rockola_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rockola_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(bg_tilemap, 0, data);
 	} };
 	
@@ -188,24 +180,23 @@ public class rockola
 		int code = rockola_videoram2[tile_index];
 		int color = colorram.read(tile_index)& 0x07;
 	
-		decodechar(Machine.gfx[0], code, rockola_charram, 
-			Machine.drv.gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine->gfx[0], code, rockola_charram, 
+			Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_rockola  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rockola  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -213,16 +204,14 @@ public class rockola
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_rockola  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rockola  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 	} };
 	
 	/* Satan of Saturn */
 	
-	public static PaletteInitHandlerPtr palette_init_satansat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_satansat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
@@ -275,8 +264,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr satansat_b002_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr satansat_b002_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 flips screen */
 	
 		if (flip_screen() != (data & 0x01))
@@ -294,8 +282,7 @@ public class rockola
 		/* other bits unused */
 	} };
 	
-	public static WriteHandlerPtr satansat_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr satansat_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0-1 select background color. Other bits unused. */
 	
 		if (backcolor != (data & 0x03))
@@ -305,7 +292,7 @@ public class rockola
 			backcolor = data & 0x03;
 	
 			for (i = 0; i < 16; i += 4)
-				Machine.gfx[1].colortable[i] = Machine.pens[backcolor + 0x10];
+				Machine->gfx[1]->colortable[i] = Machine->pens[backcolor + 0x10];
 	
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
@@ -324,24 +311,23 @@ public class rockola
 		int code = rockola_videoram2[tile_index];
 		int color = colorram.read(tile_index)& 0x03;
 	
-		decodechar(Machine.gfx[0], code, rockola_charram, 
-			Machine.drv.gfxdecodeinfo[0].gfxlayout);
+		decodechar(Machine->gfx[0], code, rockola_charram, 
+			Machine->drv->gfxdecodeinfo[0].gfxlayout);
 	
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_satansat  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_satansat  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(satansat_get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(satansat_get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);

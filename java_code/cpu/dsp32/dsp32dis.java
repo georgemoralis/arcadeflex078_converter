@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.dsp32;
 
@@ -127,7 +127,7 @@ public class dsp32dis
 	INLINE char *unsigned_16bit_size(INT16 val, UINT8 size)
 	{
 		static char temp[10];
-		if (size != 0)
+		if (size)
 			sprintf(temp, "$%06x", (INT32)val & 0xffffff);
 		else
 			sprintf(temp, "$%04x", val & 0xffff);
@@ -140,7 +140,7 @@ public class dsp32dis
 		UINT8 p = bits >> 3;
 		UINT8 i = bits & 7;
 		
-		if (p != 0)
+		if (p)
 		{
 			if (p == 15) p = lastp;		/* P=15 means Z inherits from Y, Y inherits from X */
 			lastp = p;
@@ -179,7 +179,7 @@ public class dsp32dis
 		UINT8 p = bits >> 5;
 		UINT8 i = bits & 0x1f;
 		
-		if (p != 0)
+		if (p)
 		{
 			switch (i)
 			{
@@ -348,7 +348,7 @@ public class dsp32dis
 						sprintf(buffer, "goto %s%s [%x]", rH, signed_16bit_sep_nospace(N), (pc + 8 + N) & 0xffffff);
 					else if (N && rH[0] != '0')
 						sprintf(buffer, "goto %s%s", rH, signed_16bit_sep_nospace(N));
-					else if (N != 0)
+					else if (N)
 						sprintf(buffer, "goto $%x", ((INT32)N & 0xffffff));
 					else
 						sprintf(buffer, "goto %s", rH);
@@ -359,7 +359,7 @@ public class dsp32dis
 						sprintf(buffer, "if (%s) goto %s%s [%x]", condtable[C], rH, signed_16bit_sep_nospace(N), (pc + 8 + N) & 0xffffff);
 					else if (N && rH[0] != '0')
 						sprintf(buffer, "if (%s) goto %s%s", condtable[C], rH, signed_16bit_sep_nospace(N));
-					else if (N != 0)
+					else if (N)
 						sprintf(buffer, "if (%s) goto $%x", condtable[C], ((INT32)N & 0xffffff));
 					else
 						sprintf(buffer, "if (%s) goto %s", condtable[C], rH);
@@ -378,7 +378,7 @@ public class dsp32dis
 					sprintf(buffer, "if (%s-- >= 0) goto %s%s [%x]", rM, rH, signed_16bit_sep_nospace(N), (pc + 8 + N) & 0xffffff);
 				else if (N && rH[0] != '0')
 					sprintf(buffer, "if (%s-- >= 0) goto %s%s", rM, rH, signed_16bit_sep_nospace(N));
-				else if (N != 0)
+				else if (N)
 					sprintf(buffer, "if (%s-- >= 0) goto $%x", rM, ((INT32)N & 0xffffff));
 				else
 					sprintf(buffer, "if (%s-- >= 0) goto %s", rM, rH);
@@ -404,7 +404,7 @@ public class dsp32dis
 					sprintf(buffer, "call %s%s (%s) [%x]", rH, signed_16bit_sep_nospace(N), rM, (pc + 8 + N) & 0xffffff);
 				else if (N && rH[0] != '0')
 					sprintf(buffer, "call %s%s (%s)", rH, signed_16bit_sep_nospace(N), rM);
-				else if (N != 0)
+				else if (N)
 					sprintf(buffer, "call $%x (%s)", ((INT32)N & 0xffffff), rM);
 				else
 					sprintf(buffer, "call %s (%s)", rH, rM);
@@ -445,7 +445,7 @@ public class dsp32dis
 				{
 					/* add */
 					case 0:
-						if (threeop != 0)
+						if (threeop)
 						{
 							if (rS1[0] == '0' && rS2[0] == '0')
 								sprintf(buffer, "%s%s%s = 0", condbuf, rD, s);
@@ -470,21 +470,21 @@ public class dsp32dis
 						break;
 	
 					case 2:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s - %s%s", condbuf, rD, s, rS1, s, rS2, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s - %s%s", condbuf, rD, s, rS1, s, rD, s);
 						break;
 					
 					case 3:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s # %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s # %s%s", condbuf, rD, s, rD, s, rS1, s);
 						break;
 					
 					case 4:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s - %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s - %s%s", condbuf, rD, s, rD, s, rS1, s);
@@ -495,21 +495,21 @@ public class dsp32dis
 						break;
 	
 					case 6:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s &~ %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s &~ %s%s", condbuf, rD, s, rD, s, rS1, s);
 						break;
 					
 					case 7:
-	//					if (threeop != 0)
+	//					if (threeop)
 	//						sprintf(buffer, "%s%s%s - %s%s", condbuf, rS2, s, rS1, s);
 	//					else
 							sprintf(buffer, "%s%s%s - %s%s", condbuf, rD, s, rS1, s);
 						break;
 					
 					case 8:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s ^ %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s ^ %s%s", condbuf, rD, s, rD, s, rS1, s);
@@ -520,7 +520,7 @@ public class dsp32dis
 						break;
 					
 					case 10:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s | %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s | %s%s", condbuf, rD, s, rD, s, rS1, s);
@@ -539,14 +539,14 @@ public class dsp32dis
 						break;
 					
 					case 14:
-						if (threeop != 0)
+						if (threeop)
 							sprintf(buffer, "%s%s%s = %s%s & %s%s", condbuf, rD, s, rS2, s, rS1, s);
 						else
 							sprintf(buffer, "%s%s%s = %s%s & %s%s", condbuf, rD, s, rD, s, rS1, s);
 						break;
 					
 					case 15:
-	//					if (threeop != 0)
+	//					if (threeop)
 	//						sprintf(buffer, "%s%s%s & %s%s", condbuf, rS1, s, rS2, s);
 	//					else
 							sprintf(buffer, "%s%s%s & %s%s", condbuf, rD, s, rS1, s);
@@ -642,7 +642,7 @@ public class dsp32dis
 					sprintf(buffer, "goto %s%s [%x]", rH, signed_16bit_sep_nospace(N), (pc + 8 + N) & 0xffffff);
 				else if (N && rH[0] != '0')
 					sprintf(buffer, "goto %s%s", rH, signed_16bit_sep_nospace(N));
-				else if (N != 0)
+				else if (N)
 					sprintf(buffer, "goto $%x", ((INT32)N & 0xffffff));
 				else
 					sprintf(buffer, "goto %s", rH);

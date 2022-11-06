@@ -178,7 +178,7 @@ Dave Widel
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -198,8 +198,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_pacman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pacman  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* check if the loaded set of ROMs allows the Pac Man speed hack */
@@ -211,8 +210,7 @@ public class pacman
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_pacplus  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pacplus  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* check if the loaded set of ROMs allows the Pac Man speed hack */
@@ -224,8 +222,7 @@ public class pacman
 	} };
 	
 	
-	public static MachineInitHandlerPtr machine_init_mschamp  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mschamp  = new MachineInitHandlerPtr() { public void handler(){
 		data8_t *rom = memory_region(REGION_CPU1) + 0x10000;
 		int bankaddr = ((readinputport(3) & 1) * 0x8000);
 	
@@ -233,8 +230,7 @@ public class pacman
 		cpu_setbank(2,&rom[bankaddr+0x4000]);
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_piranha  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_piranha  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* check if the loaded set of ROMs allows the Pac Man speed hack */
@@ -251,12 +247,11 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr pacman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr pacman_interrupt = new InterruptHandlerPtr() {public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat != 0)
+		if (speedcheat)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{
@@ -276,12 +271,11 @@ public class pacman
 	} };
 	
 	
-	public static InterruptHandlerPtr pacplus_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr pacplus_interrupt = new InterruptHandlerPtr() {public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat != 0)
+		if (speedcheat)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{
@@ -301,12 +295,11 @@ public class pacman
 	} };
 	
 	
-	public static InterruptHandlerPtr mspacman_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mspacman_interrupt = new InterruptHandlerPtr() {public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/* speed up cheat */
-		if (speedcheat != 0)
+		if (speedcheat)
 		{
 			if (readinputport(4) & 1)	/* check status of the fake dip switch */
 			{
@@ -382,16 +375,14 @@ public class pacman
 	to be the same as well.
 	*/
 	
-	public static WriteHandlerPtr piranha_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr piranha_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data==0xfa) data=0x78;
 		if (data==0xfc) data=0xfc;
 		cpu_irq_line_vector_w( 0, 0, data );
 	} };
 	
 	
-	public static WriteHandlerPtr nmouse_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmouse_interrupt_vector_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data==0xbf) data=0x3c;
 		if (data==0xc6) data=0x40;
 		if (data==0xfc) data=0xfc;
@@ -405,20 +396,17 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr pacman_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacman_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,data & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr pacman_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacman_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data & 1);
 	} };
 	
 	
-	public static WriteHandlerPtr pacman_coin_lockout_global_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pacman_coin_lockout_global_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_global_w(~data & 0x01);
 	} };
 	
@@ -430,8 +418,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr alibaba_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr alibaba_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* since the sound region in Ali Baba is not contiguous, translate the
 		   offset into the 0-0x1f range */
 	 	if (offset < 0x10)
@@ -443,8 +430,7 @@ public class pacman
 	} };
 	
 	
-	public static ReadHandlerPtr alibaba_mystery_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr alibaba_mystery_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		// The return value determines what the mystery item is.  Each bit corresponds
 		// to a question mark
 	
@@ -452,8 +438,7 @@ public class pacman
 	} };
 	
 	
-	public static ReadHandlerPtr alibaba_mystery_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr alibaba_mystery_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static int mystery = 0;
 	
 		// The single bit return value determines when the mystery is lit up.
@@ -471,8 +456,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr maketrax_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maketrax_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = input_port_2_r.handler(offset);
 		int pc = activecpu_get_previouspc();
 	
@@ -493,8 +477,7 @@ public class pacman
 	} };
 	
 	
-	public static ReadHandlerPtr maketrax_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maketrax_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc = activecpu_get_previouspc();
 	
 		if (pc == 0x040e) return 0x20;
@@ -514,8 +497,7 @@ public class pacman
 		}
 	} };
 	
-	public static ReadHandlerPtr korosuke_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr korosuke_special_port2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = input_port_2_r.handler(offset);
 		int pc = activecpu_get_previouspc();
 	
@@ -535,8 +517,7 @@ public class pacman
 		return data;
 	} };
 	
-	public static ReadHandlerPtr korosuke_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr korosuke_special_port3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc = activecpu_get_previouspc();
 	
 		if (pc == 0x0445) return 0x20;
@@ -562,8 +543,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr mschamp_kludge_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mschamp_kludge_r  = new ReadHandlerPtr() { public int handler(int offset){
 		static UINT8 counter;
 		return counter++;
 	} };
@@ -576,13 +556,11 @@ public class pacman
 	
 	static int bigbucks_bank = 0;
 	
-	public static WriteHandlerPtr bigbucks_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bigbucks_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bigbucks_bank = data;
 	} };
 	
-	public static ReadHandlerPtr bigbucks_question_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bigbucks_question_r  = new ReadHandlerPtr() { public int handler(int offset){
 	
 		UINT8 *question = memory_region(REGION_USER1);
 		UINT8 ret;
@@ -598,23 +576,19 @@ public class pacman
 	 *
 	 ************************************/
 	
-	public static InterruptHandlerPtr s2650_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr s2650_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x03);
 	} };
 	
-	public static ReadHandlerPtr s2650_mirror_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr s2650_mirror_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_readmem16(0x1000 + offset);
 	} };
 	
-	public static WriteHandlerPtr s2650_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650_mirror_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_writemem16(0x1000 + offset, data);
 	} };
 	
-	public static ReadHandlerPtr drivfrcp_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr drivfrcp_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x0030:
@@ -625,8 +599,7 @@ public class pacman
 	    return 0;
 	} };
 	
-	public static ReadHandlerPtr _8bpm_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr _8bpm_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x0030:
@@ -637,8 +610,7 @@ public class pacman
 	    return 0;
 	} };
 	
-	public static ReadHandlerPtr porky_port1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr porky_port1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (activecpu_get_pc())
 		{
 			case 0x0034:
@@ -1019,7 +991,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_pacman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pacman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pacman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1081,7 +1053,7 @@ public class pacman
 	
 	/* Ms. Pac-Man input ports are identical to Pac-Man, the only difference is */
 	/* the missing Ghost Names dip switch. */
-	static InputPortPtr input_ports_mspacman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mspacman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mspacman )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1140,7 +1112,7 @@ public class pacman
 	
 	
 	/* Same as 'mspacman', but no fake input port */
-	static InputPortPtr input_ports_mspacpls = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mspacpls = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mspacpls )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1191,7 +1163,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mschamp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mschamp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mschamp )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1253,7 +1225,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_maketrax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maketrax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maketrax )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1299,7 +1271,7 @@ public class pacman
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_korosuke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_korosuke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( korosuke )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1345,7 +1317,7 @@ public class pacman
 		PORT_BIT( 0xff, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mbrush = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mbrush = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mbrush )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1392,7 +1364,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_paintrlr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_paintrlr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( paintrlr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1439,7 +1411,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ponpoko = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ponpoko = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ponpoko )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1517,7 +1489,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_eyes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eyes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eyes )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1566,7 +1538,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mrtnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mrtnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mrtnt )
 		PORT_START();   /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1615,7 +1587,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_lizwiz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lizwiz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lizwiz )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -1664,7 +1636,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_theglobp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_theglobp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( theglobp )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1719,7 +1691,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_vanvan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vanvan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vanvan )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1792,7 +1764,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_vanvank = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vanvank = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vanvank )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1866,7 +1838,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dremshpr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dremshpr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dremshpr )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1919,7 +1891,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_alibaba = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alibaba = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alibaba )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -1969,7 +1941,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_jumpshot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jumpshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jumpshot )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
@@ -2025,7 +1997,7 @@ public class pacman
 	
 	
 	
-	static InputPortPtr input_ports_shootbul = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shootbul = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shootbul )
 		PORT_START();  /* IN0 */
 		PORT_ANALOG( 0x0f, 0x0f, IPT_TRACKBALL_X , 50, 25, 0, 0);
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_COIN1 );
@@ -2072,7 +2044,7 @@ public class pacman
 	// the dipswitches, and enter test mode. Now select cocktail mode and you
 	// can test everything. Wierd.
 	
-	static InputPortPtr input_ports_bwcasino = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bwcasino = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bwcasino )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -2134,7 +2106,7 @@ public class pacman
 	// Unlike "Boardwalk Casino", "Atlantic City Action" does not appear to
 	// have a cocktail mode, and uses service button connected differently to
 	// "Boardwalk"
-	static InputPortPtr input_ports_acitya = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_acitya = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( acitya )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -2191,7 +2163,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nmouse = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nmouse = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nmouse )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -2245,7 +2217,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_bigbucks = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bigbucks = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bigbucks )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP	  | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -2299,7 +2271,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_drivfrcp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drivfrcp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drivfrcp )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -2351,7 +2323,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_8bpm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_8bpm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 8bpm )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_4WAY );
@@ -2403,7 +2375,7 @@ public class pacman
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_porky = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_porky = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( porky )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_2WAY );
@@ -2560,8 +2532,7 @@ public class pacman
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_pacman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pacman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)
@@ -2587,13 +2558,10 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("namco", NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pacplus = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pacplus )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2602,13 +2570,10 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(pacplus_interrupt,1)
 	
 		MDRV_MACHINE_INIT(pacplus)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mspacman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mspacman )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2618,13 +2583,10 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(mspacman_interrupt,1)
 	
 		MDRV_MACHINE_INIT(mspacman)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mspacpls = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mspacpls )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2633,13 +2595,10 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mschamp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mschamp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2653,13 +2612,10 @@ public class pacman
 	
 		/* video hardware */
 		MDRV_GFXDECODE(mschampgfxdecodeinfo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_theglobp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( theglobp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2669,13 +2625,10 @@ public class pacman
 		MDRV_CPU_PORTS(theglobp_readport,writeport)
 	
 		MDRV_MACHINE_INIT(theglobp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vanvan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vanvan )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2693,13 +2646,10 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_dremshpr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dremshpr )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2712,13 +2662,10 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", AY8910, dremshpr_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_alibaba = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alibaba )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2728,12 +2675,9 @@ public class pacman
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_piranha = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( piranha )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2743,13 +2687,10 @@ public class pacman
 		MDRV_CPU_PORTS(0,piranha_writeport)
 	
 		MDRV_MACHINE_INIT(piranha)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nmouse = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nmouse )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2759,13 +2700,10 @@ public class pacman
 		MDRV_CPU_PORTS(0,nmouse_writeport)
 	
 		MDRV_MACHINE_INIT(NULL)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_acitya = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( acitya )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2775,13 +2713,10 @@ public class pacman
 		MDRV_CPU_PORTS(acitya_readport,writeport)
 	
 		MDRV_MACHINE_INIT(acitya)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bigbucks = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bigbucks )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2795,13 +2730,10 @@ public class pacman
 		MDRV_MACHINE_INIT(NULL)
 	
 		MDRV_VISIBLE_AREA(0*8, 36*8-1, 0*8-1, 28*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_s2650games = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( s2650games )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(pacman)
@@ -2822,48 +2754,37 @@ public class pacman
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("namco", SN76496, sn76489_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_drivfrcp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( drivfrcp )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(drivfrcp_readport,s2650games_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_8bpm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 8bpm )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(_8bpm_readport,s2650games_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_porky = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( porky )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(s2650games)
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(porky_readport,s2650games_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************
@@ -4267,8 +4188,7 @@ public class pacman
 		rom[0x3aef + diff] = 0xb0;
 	}
 	
-	public static DriverInitHandlerPtr init_maketrax  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_maketrax  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up protection handlers */
 		install_mem_read_handler(0, 0x5080, 0x50bf, maketrax_special_port2_r);
 		install_mem_read_handler(0, 0x50c0, 0x50ff, maketrax_special_port3_r);
@@ -4299,8 +4219,7 @@ public class pacman
 		rom[0x3af3 + diff] = 0xb0;
 	}
 	
-	public static DriverInitHandlerPtr init_korosuke  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_korosuke  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up protection handlers */
 		install_mem_read_handler(0, 0x5080, 0x5080, korosuke_special_port2_r);
 		install_mem_read_handler(0, 0x50c0, 0x50ff, korosuke_special_port3_r);
@@ -4308,8 +4227,7 @@ public class pacman
 		korosuke_rom_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_ponpoko  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ponpoko  = new DriverInitHandlerPtr() { public void handler(){
 		int i, j;
 		unsigned char *RAM, temp;
 	
@@ -4362,8 +4280,7 @@ public class pacman
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_eyes  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_eyes  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		unsigned char *RAM;
 	
@@ -4390,18 +4307,15 @@ public class pacman
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_pacplus  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pacplus  = new DriverInitHandlerPtr() { public void handler(){
 		pacplus_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_jumpshot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jumpshot  = new DriverInitHandlerPtr() { public void handler(){
 		jumpshot_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_8bpm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_8bpm  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -4412,8 +4326,7 @@ public class pacman
 		}
 	} };
 	
-	public static DriverInitHandlerPtr init_porky  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_porky  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *RAM = memory_region(REGION_CPU1);
 		int i;
 	
@@ -4433,59 +4346,59 @@ public class pacman
 	 *************************************/
 	
 	/*          rom       parent    machine   inp       init */
-	public static GameDriver driver_puckman	   = new GameDriver("1980"	,"puckman"	,"pacman.java"	,rom_puckman,null	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"Namco", "PuckMan (Japan set 1)" )
-	public static GameDriver driver_puckmana	   = new GameDriver("1980"	,"puckmana"	,"pacman.java"	,rom_puckmana,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"Namco", "PuckMan (Japan set 2)" )
-	public static GameDriver driver_pacman	   = new GameDriver("1980"	,"pacman"	,"pacman.java"	,rom_pacman,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"[Namco] (Midway license)", "Pac-Man (Midway)" )
-	public static GameDriver driver_puckmod	   = new GameDriver("1981"	,"puckmod"	,"pacman.java"	,rom_puckmod,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"Namco", "PuckMan (harder?)" )
-	public static GameDriver driver_pacmod	   = new GameDriver("1981"	,"pacmod"	,"pacman.java"	,rom_pacmod,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"[Namco] (Midway license)", "Pac-Man (Midway, harder)" )
-	public static GameDriver driver_hangly	   = new GameDriver("1981"	,"hangly"	,"pacman.java"	,rom_hangly,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Hangly-Man (set 1)" )
-	public static GameDriver driver_hangly2	   = new GameDriver("1981"	,"hangly2"	,"pacman.java"	,rom_hangly2,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Hangly-Man (set 2)" )
-	public static GameDriver driver_hangly3	   = new GameDriver("1981"	,"hangly3"	,"pacman.java"	,rom_hangly3,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Hangly-Man (set 3)" )
-	public static GameDriver driver_newpuckx	   = new GameDriver("1980"	,"newpuckx"	,"pacman.java"	,rom_newpuckx,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "New Puck-X" )
-	public static GameDriver driver_pacheart	   = new GameDriver("1981"	,"pacheart"	,"pacman.java"	,rom_pacheart,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Pac-Man (Hearts)" )
-	public static GameDriver driver_joyman	   = new GameDriver("1982"	,"joyman"	,"pacman.java"	,rom_joyman,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Joyman" )
-	public static GameDriver driver_newpuc2	   = new GameDriver("1980"	,"newpuc2"	,"pacman.java"	,rom_newpuc2,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Newpuc2" )
-	public static GameDriver driver_newpuc2b	   = new GameDriver("1980"	,"newpuc2b"	,"pacman.java"	,rom_newpuc2b,driver_puckman	,machine_driver_pacman	,input_ports_pacman	,null	,ROT90	,	"hack", "Newpuc2 (set 2)" )
-	public static GameDriver driver_piranha	   = new GameDriver("1981"	,"piranha"	,"pacman.java"	,rom_piranha,driver_puckman	,machine_driver_piranha	,input_ports_mspacman	,init_eyes	,ROT90	,	"GL (US Billiards License)", "Piranha" )
-	public static GameDriver driver_piranhao	   = new GameDriver("1981"	,"piranhao"	,"pacman.java"	,rom_piranhao,driver_puckman	,machine_driver_piranha	,input_ports_mspacman	,init_eyes	,ROT90	,	"GL (US Billiards License)", "Piranha (older)" )
-	public static GameDriver driver_piranhah	   = new GameDriver("1981"	,"piranhah"	,"pacman.java"	,rom_piranhah,driver_puckman	,machine_driver_pacman	,input_ports_mspacman	,null	,ROT90	,	"hack", "Piranha (hack)" )
-	public static GameDriver driver_nmouse	   = new GameDriver("1981"	,"nmouse"	,"pacman.java"	,rom_nmouse,null	,machine_driver_	,input_ports_nmouse	,init_	,nmouse	,	eyes,     ROT90,  "Amenip (Palcom Queen River)", "Naughty Mouse (set 1)" )
-	public static GameDriver driver_nmouseb	   = new GameDriver("1981"	,"nmouseb"	,"pacman.java"	,rom_nmouseb,driver_nmouse	,machine_driver_	,input_ports_nmouse	,init_	,nmouse	,	eyes,     ROT90,  "Amenip Nova Games Ltd.", "Naughty Mouse (set 2)" )
-	public static GameDriver driver_pacplus	   = new GameDriver("1982"	,"pacplus"	,"pacman.java"	,rom_pacplus,null	,machine_driver_pacplus	,input_ports_pacman	,init_pacplus	,ROT90	,	"[Namco] (Midway license)", "Pac-Man Plus" )
-	public static GameDriver driver_mspacman	   = new GameDriver("1981"	,"mspacman"	,"pacman.java"	,rom_mspacman,null	,machine_driver_mspacman	,input_ports_mspacman	,null	,ROT90	,	"Midway", "Ms. Pac-Man" )
-	public static GameDriver driver_mspacmab	   = new GameDriver("1981"	,"mspacmab"	,"pacman.java"	,rom_mspacmab,driver_mspacman	,machine_driver_pacman	,input_ports_mspacman	,null	,ROT90	,	"bootleg", "Ms. Pac-Man (bootleg)" )
-	public static GameDriver driver_mspacmat	   = new GameDriver("1981"	,"mspacmat"	,"pacman.java"	,rom_mspacmat,driver_mspacman	,machine_driver_mspacman	,input_ports_mspacman	,null	,ROT90	,	"hack", "Ms. Pac Attack" )
-	public static GameDriver driver_mspacpls	   = new GameDriver("1981"	,"mspacpls"	,"pacman.java"	,rom_mspacpls,driver_mspacman	,machine_driver_mspacpls	,input_ports_mspacpls	,null	,ROT90	,	"hack", "Ms. Pac-Man Plus" )
-	public static GameDriver driver_pacgal	   = new GameDriver("1981"	,"pacgal"	,"pacman.java"	,rom_pacgal,driver_mspacman	,machine_driver_pacman	,input_ports_mspacman	,null	,ROT90	,	"hack", "Pac-Gal" )
-	public static GameDriver driver_mschamp	   = new GameDriver("1995"	,"mschamp"	,"pacman.java"	,rom_mschamp,driver_mspacman	,machine_driver_mschamp	,input_ports_mschamp	,null	,ROT90	,	"hack", "Ms. Pacman Champion Edition / Super Zola Pac Gal" )
-	public static GameDriver driver_crush	   = new GameDriver("1981"	,"crush"	,"pacman.java"	,rom_crush,null	,machine_driver_pacman	,input_ports_maketrax	,init_maketrax	,ROT90	,	"Kural Samno Electric", "Crush Roller (Kural Samno)" )
-	public static GameDriver driver_crush2	   = new GameDriver("1981"	,"crush2"	,"pacman.java"	,rom_crush2,driver_crush	,machine_driver_pacman	,input_ports_maketrax	,null	,ROT90	,	"Kural Esco Electric", "Crush Roller (Kural Esco - bootleg?)" )
-	public static GameDriver driver_crush3	   = new GameDriver("1981"	,"crush3"	,"pacman.java"	,rom_crush3,driver_crush	,machine_driver_pacman	,input_ports_maketrax	,init_eyes	,ROT90	,	"Kural Electric", "Crush Roller (Kural - bootleg?)" )
-	public static GameDriver driver_maketrax	   = new GameDriver("1981"	,"maketrax"	,"pacman.java"	,rom_maketrax,driver_crush	,machine_driver_pacman	,input_ports_maketrax	,init_maketrax	,ROT270	,	"[Kural] (Williams license)", "Make Trax (set 1)" )
-	public static GameDriver driver_maketrxb	   = new GameDriver("1981"	,"maketrxb"	,"pacman.java"	,rom_maketrxb,driver_crush	,machine_driver_pacman	,input_ports_maketrax	,init_maketrax	,ROT270	,	"[Kural] (Williams license)", "Make Trax (set 2)" )
-	public static GameDriver driver_korosuke	   = new GameDriver("1981"	,"korosuke"	,"pacman.java"	,rom_korosuke,driver_crush	,machine_driver_pacman	,input_ports_korosuke	,init_korosuke	,ROT90	,	"Kural Electric", "Korosuke Roller" )
-	public static GameDriver driver_mbrush	   = new GameDriver("1981"	,"mbrush"	,"pacman.java"	,rom_mbrush,driver_crush	,machine_driver_pacman	,input_ports_mbrush	,null	,ROT90	,	"bootleg", "Magic Brush" )
-	public static GameDriver driver_paintrlr	   = new GameDriver("1981"	,"paintrlr"	,"pacman.java"	,rom_paintrlr,driver_crush	,machine_driver_pacman	,input_ports_paintrlr	,null	,ROT90	,	"bootleg", "Paint Roller" )
-	public static GameDriver driver_ponpoko	   = new GameDriver("1982"	,"ponpoko"	,"pacman.java"	,rom_ponpoko,null	,machine_driver_pacman	,input_ports_ponpoko	,init_ponpoko	,ROT0	,	"Sigma Enterprises Inc.", "Ponpoko" )
-	public static GameDriver driver_ponpokov	   = new GameDriver("1982"	,"ponpokov"	,"pacman.java"	,rom_ponpokov,driver_ponpoko	,machine_driver_pacman	,input_ports_ponpoko	,init_ponpoko	,ROT0	,	"Sigma Enterprises Inc. (Venture Line license)", "Ponpoko (Venture Line)" )
-	public static GameDriver driver_eyes	   = new GameDriver("1982"	,"eyes"	,"pacman.java"	,rom_eyes,null	,machine_driver_pacman	,input_ports_eyes	,init_eyes	,ROT90	,	"Digitrex Techstar (Rock-ola license)", "Eyes (Digitrex Techstar)" )
-	public static GameDriver driver_eyes2	   = new GameDriver("1982"	,"eyes2"	,"pacman.java"	,rom_eyes2,driver_eyes	,machine_driver_pacman	,input_ports_eyes	,init_eyes	,ROT90	,	"Techstar (Rock-ola license)", "Eyes (Techstar)" )
-	public static GameDriver driver_mrtnt	   = new GameDriver("1983"	,"mrtnt"	,"pacman.java"	,rom_mrtnt,null	,machine_driver_pacman	,input_ports_mrtnt	,init_eyes	,ROT90	,	"Telko", "Mr. TNT", GAME_WRONG_COLORS )
-	public static GameDriver driver_gorkans	   = new GameDriver("1983"	,"gorkans"	,"pacman.java"	,rom_gorkans,driver_mrtnt	,machine_driver_pacman	,input_ports_mrtnt	,null	,ROT90	,	"Techstar", "Gorkans" )
-	public static GameDriver driver_eggor	   = new GameDriver("1983"	,"eggor"	,"pacman.java"	,rom_eggor,null	,machine_driver_pacman	,input_ports_mrtnt	,init_eyes	,ROT90	,	"Telko", "Eggor", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND  )
-	public static GameDriver driver_lizwiz	   = new GameDriver("1985"	,"lizwiz"	,"pacman.java"	,rom_lizwiz,null	,machine_driver_pacman	,input_ports_lizwiz	,null	,ROT90	,	"Techstar (Sunn license)", "Lizard Wizard" )
-	public static GameDriver driver_theglobp	   = new GameDriver("1983"	,"theglobp"	,"pacman.java"	,rom_theglobp,driver_suprglob	,machine_driver_theglobp	,input_ports_theglobp	,null	,ROT90	,	"Epos Corporation", "The Glob (Pac-Man hardware)" )
-	public static GameDriver driver_beastf	   = new GameDriver("1984"	,"beastf"	,"pacman.java"	,rom_beastf,driver_suprglob	,machine_driver_theglobp	,input_ports_theglobp	,null	,ROT90	,	"Epos Corporation", "Beastie Feastie" )
-	public static GameDriver driver_bwcasino	   = new GameDriver("1983"	,"bwcasino"	,"pacman.java"	,rom_bwcasino,null	,machine_driver_acitya	,input_ports_bwcasino	,null	,ROT90	,	"Epos Corporation", "Boardwalk Casino" )
-	public static GameDriver driver_dremshpr	   = new GameDriver("1982"	,"dremshpr"	,"pacman.java"	,rom_dremshpr,null	,machine_driver_dremshpr	,input_ports_dremshpr	,null	,ROT270	,	"Sanritsu", "Dream Shopper" )
-	public static GameDriver driver_acitya	   = new GameDriver("1983"	,"acitya"	,"pacman.java"	,rom_acitya,driver_bwcasino	,machine_driver_acitya	,input_ports_acitya	,null	,ROT90	,	"Epos Corporation", "Atlantic City Action" )
-	public static GameDriver driver_vanvan	   = new GameDriver("1983"	,"vanvan"	,"pacman.java"	,rom_vanvan,null	,machine_driver_vanvan	,input_ports_vanvan	,null	,ROT270	,	"Sanritsu", "Van-Van Car" )
-	public static GameDriver driver_vanvank	   = new GameDriver("1983"	,"vanvank"	,"pacman.java"	,rom_vanvank,driver_vanvan	,machine_driver_vanvan	,input_ports_vanvank	,null	,ROT270	,	"Karateco", "Van-Van Car (Karateco)" )
-	public static GameDriver driver_alibaba	   = new GameDriver("1982"	,"alibaba"	,"pacman.java"	,rom_alibaba,null	,machine_driver_alibaba	,input_ports_alibaba	,null	,ROT90	,	"Sega", "Ali Baba and 40 Thieves", GAME_WRONG_COLORS | GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_jumpshot	   = new GameDriver("1985"	,"jumpshot"	,"pacman.java"	,rom_jumpshot,null	,machine_driver_pacman	,input_ports_jumpshot	,init_jumpshot	,ROT90	,	"Bally Midway", "Jump Shot" )
-	public static GameDriver driver_shootbul	   = new GameDriver("1985"	,"shootbul"	,"pacman.java"	,rom_shootbul,null	,machine_driver_pacman	,input_ports_shootbul	,init_jumpshot	,ROT90	,	"Bally Midway", "Shoot the Bull" )
-	public static GameDriver driver_bigbucks	   = new GameDriver("1986"	,"bigbucks"	,"pacman.java"	,rom_bigbucks,null	,machine_driver_bigbucks	,input_ports_bigbucks	,null	,ROT90	,	"Dynasoft Inc.", "Big Bucks" )
-	public static GameDriver driver_drivfrcp	   = new GameDriver("1984"	,"drivfrcp"	,"pacman.java"	,rom_drivfrcp,null	,machine_driver_drivfrcp	,input_ports_drivfrcp	,null	,ROT90	,	"Shinkai Inc. (Magic Eletronics Inc. licence)", "Driving Force (Pac-Man conversion)" )
-	public static GameDriver driver_8bpm	   = new GameDriver("1985"	,"8bpm"	,"pacman.java"	,rom_8bpm,driver_8ballact	,machine_driver_8bpm	,input_ports_8bpm	,init_8bpm	,ROT90	,	"Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (Pac-Man conversion)", GAME_WRONG_COLORS )
-	public static GameDriver driver_porky	   = new GameDriver("1985"	,"porky"	,"pacman.java"	,rom_porky,null	,machine_driver_porky	,input_ports_porky	,init_porky	,ROT90	,	"Shinkai Inc. (Magic Eletronics Inc. licence)", "Porky", GAME_NO_SOUND )
+	GAME( 1980, puckman,  0,        pacman,   pacman,   0,        ROT90,  "Namco", "PuckMan (Japan set 1)" )
+	GAME( 1980, puckmana, puckman,  pacman,   pacman,   0,        ROT90,  "Namco", "PuckMan (Japan set 2)" )
+	GAME( 1980, pacman,   puckman,  pacman,   pacman,   0,        ROT90,  "[Namco] (Midway license)", "Pac-Man (Midway)" )
+	GAME( 1981, puckmod,  puckman,  pacman,   pacman,   0,        ROT90,  "Namco", "PuckMan (harder?)" )
+	GAME( 1981, pacmod,   puckman,  pacman,   pacman,   0,        ROT90,  "[Namco] (Midway license)", "Pac-Man (Midway, harder)" )
+	GAME( 1981, hangly,   puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Hangly-Man (set 1)" )
+	GAME( 1981, hangly2,  puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Hangly-Man (set 2)" )
+	GAME( 1981, hangly3,  puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Hangly-Man (set 3)" )
+	GAME( 1980, newpuckx, puckman,  pacman,   pacman,   0,        ROT90,  "hack", "New Puck-X" )
+	GAME( 1981, pacheart, puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Pac-Man (Hearts)" )
+	GAME( 1982, joyman,   puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Joyman" )
+	GAME( 1980, newpuc2,  puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Newpuc2" )
+	GAME( 1980, newpuc2b, puckman,  pacman,   pacman,   0,        ROT90,  "hack", "Newpuc2 (set 2)" )
+	GAME( 1981, piranha,  puckman,  piranha,  mspacman, eyes,     ROT90,  "GL (US Billiards License)", "Piranha" )
+	GAME( 1981, piranhao, puckman,  piranha,  mspacman, eyes,     ROT90,  "GL (US Billiards License)", "Piranha (older)" )
+	GAME( 1981, piranhah, puckman,  pacman,   mspacman, 0,        ROT90,  "hack", "Piranha (hack)" )
+	GAME( 1981, nmouse,   0	     ,  nmouse ,  nmouse,   eyes,     ROT90,  "Amenip (Palcom Queen River)", "Naughty Mouse (set 1)" )
+	GAME( 1981, nmouseb,  nmouse ,  nmouse ,  nmouse,   eyes,     ROT90,  "Amenip Nova Games Ltd.", "Naughty Mouse (set 2)" )
+	GAME( 1982, pacplus,  0,        pacplus,  pacman,   pacplus,  ROT90,  "[Namco] (Midway license)", "Pac-Man Plus" )
+	GAME( 1981, mspacman, 0,        mspacman, mspacman, 0,        ROT90,  "Midway", "Ms. Pac-Man" )
+	GAME( 1981, mspacmab, mspacman, pacman,   mspacman, 0,        ROT90,  "bootleg", "Ms. Pac-Man (bootleg)" )
+	GAME( 1981, mspacmat, mspacman, mspacman, mspacman, 0,        ROT90,  "hack", "Ms. Pac Attack" )
+	GAME( 1981, mspacpls, mspacman, mspacpls, mspacpls, 0,        ROT90,  "hack", "Ms. Pac-Man Plus" )
+	GAME( 1981, pacgal,   mspacman, pacman,   mspacman, 0,        ROT90,  "hack", "Pac-Gal" )
+	GAME( 1995, mschamp,  mspacman, mschamp,  mschamp,  0,        ROT90,  "hack", "Ms. Pacman Champion Edition / Super Zola Pac Gal" )
+	GAME( 1981, crush,    0,        pacman,   maketrax, maketrax, ROT90,  "Kural Samno Electric", "Crush Roller (Kural Samno)" )
+	GAME( 1981, crush2,   crush,    pacman,   maketrax, 0,        ROT90,  "Kural Esco Electric", "Crush Roller (Kural Esco - bootleg?)" )
+	GAME( 1981, crush3,   crush,    pacman,   maketrax, eyes,     ROT90,  "Kural Electric", "Crush Roller (Kural - bootleg?)" )
+	GAME( 1981, maketrax, crush,    pacman,   maketrax, maketrax, ROT270, "[Kural] (Williams license)", "Make Trax (set 1)" )
+	GAME( 1981, maketrxb, crush,    pacman,   maketrax, maketrax, ROT270, "[Kural] (Williams license)", "Make Trax (set 2)" )
+	GAME( 1981, korosuke, crush,    pacman,   korosuke, korosuke, ROT90,  "Kural Electric", "Korosuke Roller" )
+	GAME( 1981, mbrush,   crush,    pacman,   mbrush,   0,        ROT90,  "bootleg", "Magic Brush" )
+	GAME( 1981, paintrlr, crush,    pacman,   paintrlr, 0,        ROT90,  "bootleg", "Paint Roller" )
+	GAME( 1982, ponpoko,  0,        pacman,   ponpoko,  ponpoko,  ROT0,   "Sigma Enterprises Inc.", "Ponpoko" )
+	GAME( 1982, ponpokov, ponpoko,  pacman,   ponpoko,  ponpoko,  ROT0,   "Sigma Enterprises Inc. (Venture Line license)", "Ponpoko (Venture Line)" )
+	GAME( 1982, eyes,     0,        pacman,   eyes,     eyes,     ROT90,  "Digitrex Techstar (Rock-ola license)", "Eyes (Digitrex Techstar)" )
+	GAME( 1982, eyes2,    eyes,     pacman,   eyes,     eyes,     ROT90,  "Techstar (Rock-ola license)", "Eyes (Techstar)" )
+	GAMEX(1983, mrtnt,    0,        pacman,   mrtnt,    eyes,     ROT90,  "Telko", "Mr. TNT", GAME_WRONG_COLORS )
+	GAME( 1983, gorkans,  mrtnt,    pacman,   mrtnt,    0,        ROT90,  "Techstar", "Gorkans" )
+	GAMEX(1983, eggor,    0,        pacman,   mrtnt,    eyes,     ROT90,  "Telko", "Eggor", GAME_WRONG_COLORS | GAME_IMPERFECT_SOUND  )
+	GAME( 1985, lizwiz,   0,        pacman,   lizwiz,   0,        ROT90,  "Techstar (Sunn license)", "Lizard Wizard" )
+	GAME( 1983, theglobp, suprglob, theglobp, theglobp, 0,        ROT90,  "Epos Corporation", "The Glob (Pac-Man hardware)" )
+	GAME( 1984, beastf,   suprglob, theglobp, theglobp, 0,        ROT90,  "Epos Corporation", "Beastie Feastie" )
+	GAME( 1983, bwcasino, 0,        acitya,   bwcasino, 0,        ROT90,  "Epos Corporation", "Boardwalk Casino" )
+	GAME( 1982, dremshpr, 0,        dremshpr, dremshpr, 0,        ROT270, "Sanritsu", "Dream Shopper" )
+	GAME( 1983, acitya,   bwcasino, acitya,   acitya,   0,        ROT90,  "Epos Corporation", "Atlantic City Action" )
+	GAME( 1983, vanvan,   0,        vanvan,   vanvan,   0,        ROT270, "Sanritsu", "Van-Van Car" )
+	GAME( 1983, vanvank,  vanvan,   vanvan,   vanvank,  0,        ROT270, "Karateco", "Van-Van Car (Karateco)" )
+	GAMEX(1982, alibaba,  0,        alibaba,  alibaba,  0,        ROT90,  "Sega", "Ali Baba and 40 Thieves", GAME_WRONG_COLORS | GAME_UNEMULATED_PROTECTION )
+	GAME( 1985, jumpshot, 0,        pacman,   jumpshot, jumpshot, ROT90,  "Bally Midway", "Jump Shot" )
+	GAME( 1985, shootbul, 0,        pacman,   shootbul, jumpshot, ROT90,  "Bally Midway", "Shoot the Bull" )
+	GAME( 1986, bigbucks, 0,		bigbucks, bigbucks, 0,        ROT90,  "Dynasoft Inc.", "Big Bucks" )
+	GAME( 1984, drivfrcp, 0,        drivfrcp, drivfrcp, 0,        ROT90,  "Shinkai Inc. (Magic Eletronics Inc. licence)", "Driving Force (Pac-Man conversion)" )
+	GAMEX(1985, 8bpm,	  8ballact,	8bpm,	  8bpm,		8bpm,     ROT90,  "Seatongrove Ltd (Magic Eletronics USA licence)", "Eight Ball Action (Pac-Man conversion)", GAME_WRONG_COLORS )
+	GAMEX(1985, porky,	  0,        porky,	  porky,	porky,    ROT90,  "Shinkai Inc. (Magic Eletronics Inc. licence)", "Porky", GAME_NO_SOUND )
 }

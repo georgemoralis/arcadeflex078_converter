@@ -8,7 +8,7 @@ Driver by Manuel Abadia <manu@teleline.es>
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -25,14 +25,12 @@ public class grobda
 	/* video functions */
 	
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
 	
-	public static WriteHandlerPtr grobda_DAC_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grobda_DAC_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_data_w(0, (data << 4) | data);
 	} };
 	
@@ -86,7 +84,7 @@ public class grobda
 	};
 	
 	/* The dipswitches and player inputs are not memory mapped, they are handled by an I/O chip. */
-	static InputPortPtr input_ports_grobda = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grobda = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grobda )
 		PORT_START();   /* DSW0 */
 		PORT_DIPNAME( 0x07, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x07, DEF_STR( "4C_1C") );
@@ -206,8 +204,7 @@ public class grobda
 		{ 55 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_grobda = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( grobda )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 18432000/12)	/* 1.536 MHz */
@@ -239,9 +236,7 @@ public class grobda
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -321,7 +316,7 @@ public class grobda
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_grobda	   = new GameDriver("1984"	,"grobda"	,"grobda.java"	,rom_grobda,null	,machine_driver_grobda	,input_ports_grobda	,null	,ROT90	,	"Namco", "Grobda (New version)" )
-	public static GameDriver driver_grobda2	   = new GameDriver("1984"	,"grobda2"	,"grobda.java"	,rom_grobda2,driver_grobda	,machine_driver_grobda	,input_ports_grobda	,null	,ROT90	,	"Namco", "Grobda (Old version set 1)" )
-	public static GameDriver driver_grobda3	   = new GameDriver("1984"	,"grobda3"	,"grobda.java"	,rom_grobda3,driver_grobda	,machine_driver_grobda	,input_ports_grobda	,null	,ROT90	,	"Namco", "Grobda (Old version set 2)" )
+	GAME( 1984, grobda,  0,      grobda, grobda, 0, ROT90, "Namco", "Grobda (New version)" )
+	GAME( 1984, grobda2, grobda, grobda, grobda, 0, ROT90, "Namco", "Grobda (Old version set 1)" )
+	GAME( 1984, grobda3, grobda, grobda, grobda, 0, ROT90, "Namco", "Grobda (Old version set 2)" )
 }

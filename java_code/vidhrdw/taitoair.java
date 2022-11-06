@@ -47,7 +47,7 @@ sprite RAM
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -79,8 +79,7 @@ public class taitoair
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_taitoair  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitoair  = new VideoStartHandlerPtr() { public int handler(){
 		if ( TC0080VCO_vh_start(0,0,1,1,-2))
 			return 1;
 	
@@ -117,7 +116,7 @@ public class taitoair
 			tile_offs = (TC0080VCO_spriteram[offs + 3] & 0x1fff) << 2;
 			ysize     = size[ ( TC0080VCO_spriteram[ offs ] & 0x0c00 ) >> 10 ];
 	
-			if (tile_offs != 0)
+			if (tile_offs)
 			{
 				/* Convert zoomy value to real value as zoomx */
 				zoomy = zoomy_conv_table[zoomy];
@@ -151,7 +150,7 @@ public class taitoair
 				if (x0 >= 0x200) x0 -= 0x400;
 				if (y0 >= 0x200) y0 -= 0x400;
 	
-				if (TC0080VCO_flipscreen != 0)
+				if (TC0080VCO_flipscreen)
 				{
 					x0 = 497 - x0;
 					y0 = 498 - y0;
@@ -179,13 +178,13 @@ public class taitoair
 							flipx = TC0080VCO_chain_ram_1[tile_offs] & 0x0040;
 							flipy = TC0080VCO_chain_ram_1[tile_offs] & 0x0080;
 	
-							if (TC0080VCO_flipscreen != 0)
+							if (TC0080VCO_flipscreen)
 							{
 								flipx ^= 0x0040;
 								flipy ^= 0x0080;
 							}
 	
-							drawgfxzoom( bitmap, Machine . gfx[0],
+							drawgfxzoom( bitmap, Machine -> gfx[0],
 									 tile,
 									 color,
 									 flipx, flipy,
@@ -270,7 +269,7 @@ public class taitoair
 					xx2 = view.x2;
 	
 				while(xx1 <= xx2) {
-					((UINT16 *)(bitmap.line[y1]))[xx1] = color;
+					((UINT16 *)(bitmap->line[y1]))[xx1] = color;
 					xx1++;
 				}
 			}
@@ -289,12 +288,12 @@ public class taitoair
 		INT32 sl1, sl2, cury, limy, x1, x2;
 		int pmin, pmax, i, ps1, ps2;
 		struct spoint p[POLY_MAX_PT*2];
-		int color = q.col;
-		int pcount = q.pcount;
+		int color = q->col;
+		int pcount = q->pcount;
 	
 		for(i=0; i<pcount; i++) {
-			p[i].x = p[i+pcount].x = q.p[i].x << FRAC_SHIFT;
-			p[i].y = p[i+pcount].y = q.p[i].y;
+			p[i].x = p[i+pcount].x = q->p[i].x << FRAC_SHIFT;
+			p[i].y = p[i+pcount].y = q->p[i].y;
 		}
 	
 		pmin = pmax = 0;
@@ -366,8 +365,7 @@ public class taitoair
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitoair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitoair  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		TC0080VCO_tilemap_update();
 	
 		fillbitmap(bitmap, Machine.pens[0x41], cliprect);

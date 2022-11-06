@@ -55,7 +55,7 @@ IM 2 and IM 0)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -67,23 +67,19 @@ public class rallyx
 	
 	
 	
-	public static WriteHandlerPtr rallyx_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_coin_lockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(offset, data ^ 1);
 	} };
 	
-	public static WriteHandlerPtr rallyx_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr rallyx_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_leds_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(offset,data & 1);
 	} };
 	
-	public static WriteHandlerPtr rallyx_play_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_play_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last;
 	
 	
@@ -139,7 +135,7 @@ public class rallyx
 	
 	
 	
-	static InputPortPtr input_ports_rallyx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rallyx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rallyx )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -186,7 +182,7 @@ public class rallyx
 		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nrallyx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nrallyx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nrallyx )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -233,7 +229,7 @@ public class rallyx
 		PORT_DIPSETTING(	0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nrallyv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nrallyv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nrallyv )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN3 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -351,8 +347,7 @@ public class rallyx
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rallyx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rallyx )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz ? */
@@ -378,9 +373,7 @@ public class rallyx
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -479,8 +472,8 @@ public class rallyx
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_rallyx	   = new GameDriver("1980"	,"rallyx"	,"rallyx.java"	,rom_rallyx,null	,machine_driver_rallyx	,input_ports_rallyx	,null	,ROT0	,	"Namco", "Rally X" )
-	public static GameDriver driver_rallyxm	   = new GameDriver("1980"	,"rallyxm"	,"rallyx.java"	,rom_rallyxm,driver_rallyx	,machine_driver_rallyx	,input_ports_rallyx	,null	,ROT0	,	"[Namco] (Midway license)", "Rally X (Midway)" )
-	public static GameDriver driver_nrallyx	   = new GameDriver("1981"	,"nrallyx"	,"rallyx.java"	,rom_nrallyx,null	,machine_driver_rallyx	,input_ports_nrallyx	,null	,ROT0	,	"Namco", "New Rally X" )
-	public static GameDriver driver_nrallyv	   = new GameDriver("1981"	,"nrallyv"	,"rallyx.java"	,rom_nrallyv,driver_nrallyx	,machine_driver_rallyx	,input_ports_nrallyv	,null	,ROT90	,	"hack", "New Rally X (Vertical Screen)" )
+	GAME( 1980, rallyx,  0,       rallyx, rallyx,  0, ROT0, "Namco", "Rally X" )
+	GAME( 1980, rallyxm, rallyx,  rallyx, rallyx,  0, ROT0, "[Namco] (Midway license)", "Rally X (Midway)" )
+	GAME( 1981, nrallyx, 0,       rallyx, nrallyx, 0, ROT0, "Namco", "New Rally X" )
+	GAME( 1981, nrallyv, nrallyx, rallyx, nrallyv, 0, ROT90, "hack", "New Rally X (Vertical Screen)" )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,13 +43,11 @@ public class nbmj8891
 	
 	
 	******************************************************************************/
-	public static ReadHandlerPtr gionbana_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gionbana_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gionbana_palette[offset];
 	} };
 	
-	public static WriteHandlerPtr gionbana_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gionbana_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
 		gionbana_palette[offset] = data;
@@ -69,13 +67,11 @@ public class nbmj8891
 		palette_set_color((offset >> 1), r, g, b);
 	} };
 	
-	public static ReadHandlerPtr maiko_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr maiko_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gionbana_palette[offset];
 	} };
 	
-	public static WriteHandlerPtr maiko_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr maiko_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int r, g, b;
 	
 		gionbana_palette[offset] = data;
@@ -132,7 +128,7 @@ public class nbmj8891
 	
 		if (gionbana_flipscreen != gionbana_flipscreen_old)
 		{
-			if (gfxdraw_mode != 0) gionbana_vramflip(1);
+			if (gfxdraw_mode) gionbana_vramflip(1);
 			gionbana_vramflip(0);
 			gionbana_screen_refresh = 1;
 			gionbana_flipscreen_old = gionbana_flipscreen;
@@ -151,10 +147,10 @@ public class nbmj8891
 	
 	void gionbana_scrolly_w(int data)
 	{
-		if (gionbana_flipscreen != 0) gionbana_scrolly1 = -2;
+		if (gionbana_flipscreen) gionbana_scrolly1 = -2;
 		else gionbana_scrolly1 = 0;
 	
-		if (gionbana_flipscreen != 0) gionbana_scrolly2 = (data ^ 0xff) & 0xff;
+		if (gionbana_flipscreen) gionbana_scrolly2 = (data ^ 0xff) & 0xff;
 		else gionbana_scrolly2 = (data - 1) & 0xff;
 	}
 	
@@ -184,13 +180,11 @@ public class nbmj8891
 		gionbana_paltblnum = data;
 	}
 	
-	public static ReadHandlerPtr gionbana_paltbl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gionbana_paltbl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return gionbana_paltbl[offset];
 	} };
 	
-	public static WriteHandlerPtr gionbana_paltbl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gionbana_paltbl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		gionbana_paltbl[((gionbana_paltblnum & 0x7f) * 0x10) + (offset & 0x0f)] = data;
 	} };
 	
@@ -206,14 +200,14 @@ public class nbmj8891
 	
 		vidram = vram ? gionbana_videoram1 : gionbana_videoram0;
 	
-		for (y = 0; y < (Machine.drv.screen_height / 2); y++)
+		for (y = 0; y < (Machine->drv->screen_height / 2); y++)
 		{
-			for (x = 0; x < Machine.drv.screen_width; x++)
+			for (x = 0; x < Machine->drv->screen_width; x++)
 			{
-				color1 = vidram[(y * Machine.drv.screen_width) + x];
-				color2 = vidram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)];
-				vidram[(y * Machine.drv.screen_width) + x] = color2;
-				vidram[((y ^ 0xff) * Machine.drv.screen_width) + (x ^ 0x1ff)] = color1;
+				color1 = vidram[(y * Machine->drv->screen_width) + x];
+				color2 = vidram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)];
+				vidram[(y * Machine->drv->screen_width) + x] = color2;
+				vidram[((y ^ 0xff) * Machine->drv->screen_width) + (x ^ 0x1ff)] = color1;
 			}
 		}
 	}
@@ -233,7 +227,7 @@ public class nbmj8891
 		unsigned char drawcolor1, drawcolor2;
 		int gfxaddr;
 	
-		if (gionbana_flipx != 0)
+		if (gionbana_flipx)
 		{
 			gionbana_drawx -= (gionbana_sizex << 1);
 			startx = gionbana_sizex;
@@ -248,7 +242,7 @@ public class nbmj8891
 			skipx = 1;
 		}
 	
-		if (gionbana_flipy != 0)
+		if (gionbana_flipy)
 		{
 			gionbana_drawy -= ((gionbana_sizey << 1) + 1);
 			starty = gionbana_sizey;
@@ -263,7 +257,7 @@ public class nbmj8891
 			skipy = 1;
 		}
 	
-		Machine.pens[0xff] = 0;	/* palette_transparent_pen */
+		Machine->pens[0xff] = 0;	/* palette_transparent_pen */
 	
 		gfxaddr = ((gionbana_gfxrom << 17) + (gionbana_radry << 9) + (gionbana_radrx << 1));
 	
@@ -281,7 +275,7 @@ public class nbmj8891
 	
 				color = GFX[gfxaddr++];
 	
-				if (gionbana_flipscreen != 0)
+				if (gionbana_flipscreen)
 				{
 					dx1 = (((((gionbana_drawx + x) * 2) + 0) ^ 0x1ff) & 0x1ff);
 					dx2 = (((((gionbana_drawx + x) * 2) + 1) ^ 0x1ff) & 0x1ff);
@@ -296,7 +290,7 @@ public class nbmj8891
 					dy2 = ((gionbana_drawy + y + (-gionbana_scrolly2 & 0xff)) & 0xff);
 				}
 	
-				if (gionbana_flipx != 0)
+				if (gionbana_flipx)
 				{
 					// flip
 					color1 = (color & 0xf0) >> 4;
@@ -312,16 +306,16 @@ public class nbmj8891
 				drawcolor1 = gionbana_paltbl[((gionbana_paltblnum & 0x7f) << 4) + color1];
 				drawcolor2 = gionbana_paltbl[((gionbana_paltblnum & 0x7f) << 4) + color2];
 	
-				if (gfxdraw_mode != 0)
+				if (gfxdraw_mode)
 				{
-					if ((gionbana_vram & 0x01) != 0)
+					if (gionbana_vram & 0x01)
 					{
 						tflag1 = (drawcolor1 != 0xff) ? 1 : 0;
 						tflag2 = (drawcolor2 != 0xff) ? 1 : 0;
 					}
 					else
 					{
-						if ((gionbana_vram & 0x08) != 0)
+						if (gionbana_vram & 0x08)
 						{
 							tflag1 = (drawcolor1 != 0xff) ? 1 : 0;
 							tflag2 = (drawcolor2 != 0xff) ? 1 : 0;
@@ -344,46 +338,46 @@ public class nbmj8891
 	
 				nb1413m3_busyctr++;
 	
-				if (gfxdraw_mode != 0)
+				if (gfxdraw_mode)
 				{
-					if ((gionbana_vram & 0x01) != 0)
+					if (gionbana_vram & 0x01)
 					{
-						if (tflag1 != 0)
+						if (tflag1)
 						{
-							gionbana_videoram0[(dy1 * Machine.drv.screen_width) + dx1] = drawcolor1;
-							plot_pixel(gionbana_tmpbitmap0, dx1, dy1, Machine.pens[drawcolor1]);
+							gionbana_videoram0[(dy1 * Machine->drv->screen_width) + dx1] = drawcolor1;
+							plot_pixel(gionbana_tmpbitmap0, dx1, dy1, Machine->pens[drawcolor1]);
 						}
-						if (tflag2 != 0)
+						if (tflag2)
 						{
-							gionbana_videoram0[(dy1 * Machine.drv.screen_width) + dx2] = drawcolor2;
-							plot_pixel(gionbana_tmpbitmap0, dx2, dy1, Machine.pens[drawcolor2]);
+							gionbana_videoram0[(dy1 * Machine->drv->screen_width) + dx2] = drawcolor2;
+							plot_pixel(gionbana_tmpbitmap0, dx2, dy1, Machine->pens[drawcolor2]);
 						}
 					}
-					if ((gionbana_vram & 0x02) != 0)
+					if (gionbana_vram & 0x02)
 					{
-						if (tflag1 != 0)
+						if (tflag1)
 						{
-							gionbana_videoram1[(dy2 * Machine.drv.screen_width) + dx1] = drawcolor1;
-							plot_pixel(gionbana_tmpbitmap1, dx1, dy2, Machine.pens[drawcolor1]);
+							gionbana_videoram1[(dy2 * Machine->drv->screen_width) + dx1] = drawcolor1;
+							plot_pixel(gionbana_tmpbitmap1, dx1, dy2, Machine->pens[drawcolor1]);
 						}
-						if (tflag2 != 0)
+						if (tflag2)
 						{
-							gionbana_videoram1[(dy2 * Machine.drv.screen_width) + dx2] = drawcolor2;
-							plot_pixel(gionbana_tmpbitmap1, dx2, dy2, Machine.pens[drawcolor2]);
+							gionbana_videoram1[(dy2 * Machine->drv->screen_width) + dx2] = drawcolor2;
+							plot_pixel(gionbana_tmpbitmap1, dx2, dy2, Machine->pens[drawcolor2]);
 						}
 					}
 				}
 				else
 				{
-					if (tflag1 != 0)
+					if (tflag1)
 					{
-						gionbana_videoram0[(dy2 * Machine.drv.screen_width) + dx1] = drawcolor1;
-						plot_pixel(gionbana_tmpbitmap0, dx1, dy2, Machine.pens[drawcolor1]);
+						gionbana_videoram0[(dy2 * Machine->drv->screen_width) + dx1] = drawcolor1;
+						plot_pixel(gionbana_tmpbitmap0, dx1, dy2, Machine->pens[drawcolor1]);
 					}
-					if (tflag2 != 0)
+					if (tflag2)
 					{
-						gionbana_videoram0[(dy2 * Machine.drv.screen_width) + dx2] = drawcolor2;
-						plot_pixel(gionbana_tmpbitmap0, dx2, dy2, Machine.pens[drawcolor2]);
+						gionbana_videoram0[(dy2 * Machine->drv->screen_width) + dx2] = drawcolor2;
+						plot_pixel(gionbana_tmpbitmap0, dx2, dy2, Machine->pens[drawcolor2]);
 					}
 				}
 			}
@@ -396,8 +390,7 @@ public class nbmj8891
 	
 	
 	******************************************************************************/
-	public static VideoStartHandlerPtr video_start_gionbana  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gionbana  = new VideoStartHandlerPtr() { public int handler(){
 		if ((gionbana_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((gionbana_tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((gionbana_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
@@ -410,8 +403,7 @@ public class nbmj8891
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_hanamomo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_hanamomo  = new VideoStartHandlerPtr() { public int handler(){
 		if ((gionbana_tmpbitmap0 = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height)) == 0) return 1;
 		if ((gionbana_videoram0 = auto_malloc(Machine.drv.screen_width * Machine.drv.screen_height * sizeof(char))) == 0) return 1;
 		if ((gionbana_palette = auto_malloc(0x200 * sizeof(char))) == 0) return 1;
@@ -425,8 +417,7 @@ public class nbmj8891
 	
 	
 	******************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_gionbana  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gionbana  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x, y;
 		unsigned char color;
 	
@@ -441,25 +432,25 @@ public class nbmj8891
 				for (x = 0; x < Machine.drv.screen_width; x++)
 				{
 					color = gionbana_videoram0[(y * Machine.drv.screen_width) + x];
-					plot_pixel.handler(gionbana_tmpbitmap0, x, y, Machine.pens[color]);
+					plot_pixel(gionbana_tmpbitmap0, x, y, Machine.pens[color]);
 				}
 			}
-			if (gfxdraw_mode != 0)
+			if (gfxdraw_mode)
 			{
 				for (y = 0; y < Machine.drv.screen_height; y++)
 				{
 					for (x = 0; x < Machine.drv.screen_width; x++)
 					{
 						color = gionbana_videoram1[(y * Machine.drv.screen_width) + x];
-						plot_pixel.handler(gionbana_tmpbitmap1, x, y, Machine.pens[color]);
+						plot_pixel(gionbana_tmpbitmap1, x, y, Machine.pens[color]);
 					}
 				}
 			}
 		}
 	
-		if (gionbana_dispflag != 0)
+		if (gionbana_dispflag)
 		{
-			if (gfxdraw_mode != 0)
+			if (gfxdraw_mode)
 			{
 				copyscrollbitmap(bitmap, gionbana_tmpbitmap0, 0, 0, 1, &gionbana_scrolly1, Machine.visible_area, TRANSPARENCY_NONE, 0);
 				copyscrollbitmap(bitmap, gionbana_tmpbitmap1, 0, 0, 1, &gionbana_scrolly2, Machine.visible_area, TRANSPARENCY_PEN, Machine.pens[0xff]);

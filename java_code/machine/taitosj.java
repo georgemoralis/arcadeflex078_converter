@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -25,8 +25,7 @@ public class taitosj
 	
 	
 	
-	public static MachineInitHandlerPtr machine_init_taitosj  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_taitosj  = new MachineInitHandlerPtr() { public void handler(){
 		/* set the default ROM bank (many games only have one bank and */
 		/* never write to the bank selector register) */
 	    taitosj_bankswitch_w(0, 0);
@@ -34,13 +33,12 @@ public class taitosj
 	
 		zaccept = 1;
 		zready = 0;
-	 	if (Machine.drv.cpu[2].cpu_type != CPU_DUMMY)
+	 	if (Machine->drv->cpu[2].cpu_type != CPU_DUMMY)
 		cpu_set_irq_line(2,0,CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr taitosj_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		cpu_setbank(1,&RAM[(data & 0x80) ? 0x10000 : 0x6000]);
@@ -61,23 +59,20 @@ public class taitosj
 	 direct access to the Z80 memory space. It can also trigger IRQs on the Z80.
 	
 	***************************************************************************/
-	public static ReadHandlerPtr taitosj_fake_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_fake_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if DEBUG_MCU
 	logerror("%04x: protection read\n",activecpu_get_pc());
 	#endif
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr taitosj_fake_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_fake_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if DEBUG_MCU
 	logerror("%04x: protection write %02x\n",activecpu_get_pc(),data);
 	#endif
 	} };
 	
-	public static ReadHandlerPtr taitosj_fake_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_fake_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if DEBUG_MCU
 	logerror("%04x: protection status read\n",activecpu_get_pc());
 	#endif
@@ -86,8 +81,7 @@ public class taitosj
 	
 	
 	/* timer callback : */
-	public static ReadHandlerPtr taitosj_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_mcu_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if DEBUG_MCU
 	logerror("%04x: protection read %02x\n",activecpu_get_pc(),toz80);
 	#endif
@@ -103,8 +97,7 @@ public class taitosj
 		fromz80 = data;
 	}
 	
-	public static WriteHandlerPtr taitosj_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_mcu_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if DEBUG_MCU
 	logerror("%04x: protection write %02x\n",activecpu_get_pc(),data);
 	#endif
@@ -113,8 +106,7 @@ public class taitosj
 		cpu_boost_interleave(0, TIME_IN_USEC(10));
 	} };
 	
-	public static ReadHandlerPtr taitosj_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_mcu_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* temporarily boost the interleave to sync things up */
 		cpu_boost_interleave(0, TIME_IN_USEC(10));
 	
@@ -125,16 +117,14 @@ public class taitosj
 	
 	static unsigned char portA_in,portA_out;
 	
-	public static ReadHandlerPtr taitosj_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port A read %02x\n",activecpu_get_pc(),portA_in);
 	#endif
 		return portA_in;
 	} };
 	
-	public static WriteHandlerPtr taitosj_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port A write %02x\n",activecpu_get_pc(),data);
 	#endif
@@ -163,8 +153,7 @@ public class taitosj
 	 *               the main Z80 memory location to access)
 	 */
 	
-	public static ReadHandlerPtr taitosj_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -183,8 +172,7 @@ public class taitosj
 		zaccept = 0;
 	}
 	
-	public static WriteHandlerPtr taitosj_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr taitosj_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if DEBUG_MCU
 	logerror("%04x: 68705 port B write %02x\n",activecpu_get_pc(),data);
 	#endif
@@ -208,7 +196,7 @@ public class taitosj
 		if (~data & 0x04)
 		{
 	#if DEBUG_MCU
-	logerror("%04x: 68705 . Z80 %02x\n",activecpu_get_pc(),portA_out);
+	logerror("%04x: 68705 -> Z80 %02x\n",activecpu_get_pc(),portA_out);
 	#endif
 			/* 68705 is writing data for the Z80 */
 			timer_set(TIME_NOW,portA_out,taitosj_mcu_status_real_w);
@@ -260,8 +248,7 @@ public class taitosj
 	 *                  passes through)
 	 */
 	
-	public static ReadHandlerPtr taitosj_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr taitosj_68705_portC_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 		res = (zready << 0) | (zaccept << 1);
@@ -277,8 +264,7 @@ public class taitosj
 	
 	static int protection_value;
 	
-	public static WriteHandlerPtr alpine_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr alpine_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (data)
 		{
 		case 0x05:
@@ -301,14 +287,12 @@ public class taitosj
 		}
 	} };
 	
-	public static WriteHandlerPtr alpinea_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr alpinea_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    taitosj_bankswitch_w(offset, data);
 		protection_value = data >> 2;
 	} };
 	
-	public static ReadHandlerPtr alpine_port_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr alpine_port_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_2_r.handler(offset) | protection_value;
 	} };
 }

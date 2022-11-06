@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -19,8 +19,7 @@ public class bombjack
 	
 	static struct tilemap *fg_tilemap, *bg_tilemap;
 	
-	public static WriteHandlerPtr bombjack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bombjack_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -28,8 +27,7 @@ public class bombjack
 		}
 	} };
 	
-	public static WriteHandlerPtr bombjack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bombjack_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -37,8 +35,7 @@ public class bombjack
 		}
 	} };
 	
-	public static WriteHandlerPtr bombjack_background_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bombjack_background_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (background_image != data)
 		{
 			background_image = data;
@@ -46,8 +43,7 @@ public class bombjack
 		}
 	} };
 	
-	public static WriteHandlerPtr bombjack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bombjack_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -76,18 +72,17 @@ public class bombjack
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_bombjack  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bombjack  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -125,7 +120,7 @@ public class bombjack
 				sy = 241-spriteram.read(offs+2);
 			flipx = spriteram.read(offs+1)& 0x40;
 			flipy =	spriteram.read(offs+1)& 0x80;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				if (spriteram.read(offs+1)& 0x20)
 				{
@@ -141,17 +136,16 @@ public class bombjack
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[(spriteram.read(offs)& 0x80) ? 3 : 2],
+			drawgfx(bitmap,Machine->gfx[(spriteram.read(offs)& 0x80) ? 3 : 2],
 					spriteram.read(offs)& 0x7f,
 					spriteram.read(offs+1)& 0x0f,
 					flipx,flipy,
 					sx,sy,
-					Machine.visible_area,TRANSPARENCY_PEN,0);
+					Machine->visible_area,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_bombjack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bombjack  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		tilemap_draw(bitmap, Machine.visible_area, fg_tilemap, 0, 0);
 		bombjack_draw_sprites(bitmap);

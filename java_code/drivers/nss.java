@@ -33,7 +33,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -87,7 +87,7 @@ public class nss
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_snes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snes )
 		PORT_START();   /* IN 0 : Joypad 1 - L */
 		PORT_BIT_NAME( 0x80, IP_ACTIVE_HIGH, IPT_BUTTON3   | IPF_PLAYER1, "P1 Button A" )
 		PORT_BIT_NAME( 0x40, IP_ACTIVE_HIGH, IPT_BUTTON4   | IPF_PLAYER1, "P1 Button X" )
@@ -212,8 +212,7 @@ public class nss
 		new GfxDecodeInfo( -1 ) /* end of array */
 	};
 	
-	static public static PaletteInitHandlerPtr palette_init_snes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_snes  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i, r, g, b;
 	
 		for( i = 0; i < 32768; i++ )
@@ -229,8 +228,7 @@ public class nss
 			colortable[i] = 0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_snes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( snes )
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", G65816, 2680000)	/* 2.68Mhz, also 3.58Mhz */
 		MDRV_CPU_MEMORY(snes_readmem, snes_writemem)
@@ -262,9 +260,7 @@ public class nss
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, snes_sound_interface)
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -418,17 +414,17 @@ public class nss
 		ROM_LOAD( "st.ic3", 0x0000, 0x8000, CRC(8880596e) SHA1(ec6d68fc2f51f7d94f496cd72cf898db65324542) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_nss	   = new GameDriver("199?"	,"nss"	,"nss.java"	,rom_nss,null	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Nintendo",					"Nintendo Super System: BIOS", NOT_A_DRIVER )
-	public static GameDriver driver_nss_actr	   = new GameDriver("1992"	,"nss_actr"	,"nss.java"	,rom_nss_actr,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Enix",						"Nintendo Super System: Act Raiser", GAME_NO_SOUND | GAME_NOT_WORKING ) // time broken
-	public static GameDriver driver_nss_adam	   = new GameDriver("1992"	,"nss_adam"	,"nss.java"	,rom_nss_adam,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Ocean",						"Nintendo Super System: The Addams Family", GAME_NO_SOUND | GAME_NOT_WORKING ) // crashes mame
-	public static GameDriver driver_nss_aten	   = new GameDriver("1992"	,"nss_aten"	,"nss.java"	,rom_nss_aten,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Absolute Entertainment Inc.","Nintendo Super System: David Crane's Amazing Tennis", GAME_NO_SOUND | GAME_NOT_WORKING ) // gfx problems with net
-	public static GameDriver driver_nss_con3	   = new GameDriver("1992"	,"nss_con3"	,"nss.java"	,rom_nss_con3,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Konami",						"Nintendo Super System: Contra 3: The Alien Wars", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_nss_lwep	   = new GameDriver("1992"	,"nss_lwep"	,"nss.java"	,rom_nss_lwep,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Ocean",						"Nintendo Super System: Lethal Weapon", GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_nss_ncaa	   = new GameDriver("1992"	,"nss_ncaa"	,"nss.java"	,rom_nss_ncaa,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Sculptured Software Inc.",	"Nintendo Super System: NCAA Basketball", GAME_NO_SOUND | GAME_NOT_WORKING ) // severe gfx problems, no inputs
-	public static GameDriver driver_nss_rob3	   = new GameDriver("1992"	,"nss_rob3"	,"nss.java"	,rom_nss_rob3,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Ocean",						"Nintendo Super System: Robocop 3", GAME_NO_SOUND | GAME_NOT_WORKING ) // invisible enemy? gameplay prob?
-	public static GameDriver driver_nss_skin	   = new GameDriver("1992"	,"nss_skin"	,"nss.java"	,rom_nss_skin,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Irem",						"Nintendo Super System: Skins Game", GAME_NO_SOUND | GAME_NOT_WORKING ) // uses some gfx modes not implemented
-	public static GameDriver driver_nss_ssoc	   = new GameDriver("1992"	,"nss_ssoc"	,"nss.java"	,rom_nss_ssoc,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Human Inc.",					"Nintendo Super System: Super Soccer", GAME_NO_SOUND | GAME_NOT_WORKING ) // lots of gfx problems
-	public static GameDriver driver_nss_smw	   = new GameDriver("199?"	,"nss_smw"	,"nss.java"	,rom_nss_smw,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Nintendo",					"Nintendo Super System: Super Mario World", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
-	public static GameDriver driver_nss_fzer	   = new GameDriver("199?"	,"nss_fzer"	,"nss.java"	,rom_nss_fzer,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Nintendo",					"Nintendo Super System: F-Zero", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
-	public static GameDriver driver_nss_sten	   = new GameDriver("199?"	,"nss_sten"	,"nss.java"	,rom_nss_sten,driver_nss	,machine_driver_snes	,input_ports_snes	,init_snes	,ROT0	,	"Nintendo",					"Nintendo Super System: Super Tennis", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
+	GAMEX( 199?, nss,       0,		  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: BIOS", NOT_A_DRIVER )
+	GAMEX( 1992, nss_actr,  nss,	  snes,	     snes,    snes,		ROT0, "Enix",						"Nintendo Super System: Act Raiser", GAME_NO_SOUND | GAME_NOT_WORKING ) // time broken
+	GAMEX( 1992, nss_adam,  nss,	  snes,	     snes,    snes,		ROT0, "Ocean",						"Nintendo Super System: The Addams Family", GAME_NO_SOUND | GAME_NOT_WORKING ) // crashes mame
+	GAMEX( 1992, nss_aten,  nss,	  snes,	     snes,    snes,		ROT0, "Absolute Entertainment Inc.","Nintendo Super System: David Crane's Amazing Tennis", GAME_NO_SOUND | GAME_NOT_WORKING ) // gfx problems with net
+	GAMEX( 1992, nss_con3,  nss,	  snes,	     snes,    snes,		ROT0, "Konami",						"Nintendo Super System: Contra 3: The Alien Wars", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1992, nss_lwep,  nss,	  snes,	     snes,    snes,		ROT0, "Ocean",						"Nintendo Super System: Lethal Weapon", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1992, nss_ncaa,  nss,	  snes,	     snes,    snes,		ROT0, "Sculptured Software Inc.",	"Nintendo Super System: NCAA Basketball", GAME_NO_SOUND | GAME_NOT_WORKING ) // severe gfx problems, no inputs
+	GAMEX( 1992, nss_rob3,  nss,	  snes,	     snes,    snes,		ROT0, "Ocean",						"Nintendo Super System: Robocop 3", GAME_NO_SOUND | GAME_NOT_WORKING ) // invisible enemy? gameplay prob?
+	GAMEX( 1992, nss_skin,  nss,	  snes,	     snes,    snes,		ROT0, "Irem",						"Nintendo Super System: Skins Game", GAME_NO_SOUND | GAME_NOT_WORKING ) // uses some gfx modes not implemented
+	GAMEX( 1992, nss_ssoc,  nss,	  snes,	     snes,    snes,		ROT0, "Human Inc.",					"Nintendo Super System: Super Soccer", GAME_NO_SOUND | GAME_NOT_WORKING ) // lots of gfx problems
+	GAMEX( 199?, nss_smw,   nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: Super Mario World", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
+	GAMEX( 199?, nss_fzer,  nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: F-Zero", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
+	GAMEX( 199?, nss_sten,  nss,	  snes,	     snes,    snes,		ROT0, "Nintendo",					"Nintendo Super System: Super Tennis", GAME_NO_SOUND | GAME_NOT_WORKING ) // bad rom
 }

@@ -10,13 +10,13 @@
 	return 2+amLength1+amLength2;
 
 #define F2LOADOPFLOAT(num) \
-	if (f2Flag##num != 0)								\
+	if (f2Flag##num)								\
 		appf = u2f(v60.reg[f2Op##num]);  \
 	else	\
 		appf = u2f(MemRead32(f2Op##num));
 
 #define F2STOREOPFLOAT(num) \
-	if (f2Flag##num != 0)		\
+	if (f2Flag##num)		\
 		v60.reg[f2Op##num] = f2u(appf);  \
 	else	\
 		MemWrite32(f2Op##num, f2u(appf));

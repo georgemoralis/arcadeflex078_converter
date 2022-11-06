@@ -15,7 +15,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -31,15 +31,13 @@ public class blktiger
 	
 	/* this is a protection check. The game crashes (thru a jump to 0x8000) */
 	/* if a read from this address doesn't return the value it expects. */
-	public static ReadHandlerPtr blktiger_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr blktiger_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = activecpu_get_reg(Z80_DE) >> 8;
 		logerror("protection read, PC: %04x Result:%02x\n",activecpu_get_pc(),data);
 		return data;
 	} };
 	
-	public static WriteHandlerPtr blktiger_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
@@ -48,8 +46,7 @@ public class blktiger
 		cpu_setbank(1,&rom[bankaddress]);
 	} };
 	
-	public static WriteHandlerPtr blktiger_coinlockout_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blktiger_coinlockout_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_lockout_w(0,~data & 0x01);
 		coin_lockout_w(1,~data & 0x02);
 	} };
@@ -131,7 +128,7 @@ public class blktiger
 	
 	
 	
-	static InputPortPtr input_ports_blktiger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blktiger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blktiger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -272,8 +269,7 @@ public class blktiger
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_blktiger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blktiger )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -301,9 +297,7 @@ public class blktiger
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -446,8 +440,8 @@ public class blktiger
 	
 	
 	
-	public static GameDriver driver_blktiger	   = new GameDriver("1987"	,"blktiger"	,"blktiger.java"	,rom_blktiger,null	,machine_driver_blktiger	,input_ports_blktiger	,null	,ROT0	,	"Capcom", "Black Tiger" )
-	public static GameDriver driver_bktigerb	   = new GameDriver("1987"	,"bktigerb"	,"blktiger.java"	,rom_bktigerb,driver_blktiger	,machine_driver_blktiger	,input_ports_blktiger	,null	,ROT0	,	"bootleg", "Black Tiger (bootleg)" )
-	public static GameDriver driver_blkdrgon	   = new GameDriver("1987"	,"blkdrgon"	,"blktiger.java"	,rom_blkdrgon,driver_blktiger	,machine_driver_blktiger	,input_ports_blktiger	,null	,ROT0	,	"Capcom", "Black Dragon" )
-	public static GameDriver driver_blkdrgnb	   = new GameDriver("1987"	,"blkdrgnb"	,"blktiger.java"	,rom_blkdrgnb,driver_blktiger	,machine_driver_blktiger	,input_ports_blktiger	,null	,ROT0	,	"bootleg", "Black Dragon (bootleg)" )
+	GAME( 1987, blktiger, 0,        blktiger, blktiger, 0, ROT0, "Capcom", "Black Tiger" )
+	GAME( 1987, bktigerb, blktiger, blktiger, blktiger, 0, ROT0, "bootleg", "Black Tiger (bootleg)" )
+	GAME( 1987, blkdrgon, blktiger, blktiger, blktiger, 0, ROT0, "Capcom", "Black Dragon" )
+	GAME( 1987, blkdrgnb, blktiger, blktiger, blktiger, 0, ROT0, "bootleg", "Black Dragon (bootleg)" )
 }

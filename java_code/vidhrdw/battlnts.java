@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class battlnts
 		*color = 0;
 	}
 	
-	public static WriteHandlerPtr battlnts_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlnts_spritebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		spritebank = 1024 * (data & 1);
 	} };
 	
@@ -47,8 +46,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_battlnts  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_battlnts  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
 	
@@ -67,12 +65,12 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_battlnts  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 	
 		K007342_tilemap_update();
 	
 		K007342_tilemap_draw( bitmap, cliprect, 0, TILEMAP_IGNORE_TRANSPARENCY ,0);
 		K007420_sprites_draw( bitmap, cliprect );
 		K007342_tilemap_draw( bitmap, cliprect, 0, 1 | TILEMAP_IGNORE_TRANSPARENCY ,0);
-	} };
+	}
 }

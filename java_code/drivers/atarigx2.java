@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,20 +54,19 @@ public class atarigx2
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate = 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate = 5;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_atarigx2  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_atarigx2  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(atarigx2_scanline_update, 8);
@@ -85,8 +84,8 @@ public class atarigx2
 	static READ32_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0020;
-		if (atarigen_sound_to_cpu_ready != 0) temp ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready) temp ^= 0x0010;
 		temp ^= 0x0008;		/* A2D.EOC always high for now */
 		return (temp << 16) | temp;
 	}
@@ -101,9 +100,9 @@ public class atarigx2
 	#if 0
 	static WRITE32_HANDLER( a2d_select_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			which_input = offset * 2;
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			which_input = offset * 2 + 1;
 	}
 	#endif
@@ -154,7 +153,7 @@ public class atarigx2
 	static WRITE32_HANDLER( mo_command_w )
 	{
 		COMBINE_DATA(mo_command);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			atarirle_command_w(0, ((data & 0xffff) == 2) ? ATARIRLE_COMMAND_CHECKSUM : ATARIRLE_COMMAND_DRAW);
 	}
 	
@@ -176,7 +175,7 @@ public class atarigx2
 	//		if (pc == 0x11cbe || pc == 0x11c30)
 	//			logerror("%06X:Protection W@%04X = %04X  (result to %06X)\n", pc, offset, data, activecpu_get_reg(M68K_A2));
 	//		else
-			if (ACCESSING_MSW32 != 0)
+			if (ACCESSING_MSW32)
 				logerror("%06X:Protection W@%04X = %04X\n", pc, offset * 4, data >> 16);
 			else
 				logerror("%06X:Protection W@%04X = %04X\n", pc, offset * 4 + 2, data);
@@ -184,12 +183,12 @@ public class atarigx2
 	
 		COMBINE_DATA(&protection_base[offset]);
 	
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 		{
 			last_write = protection_base[offset] >> 16;
 			last_write_offset = offset*2;
 		}
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 		{
 			last_write = protection_base[offset] & 0xffff;
 			last_write_offset = offset*2+1;
@@ -1156,7 +1155,7 @@ public class atarigx2
 			}
 		}
 	
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			logerror("%06X:Protection R@%04X = %04X\n", activecpu_get_previouspc(), offset * 4, result >> 16);
 		else
 			logerror("%06X:Protection R@%04X = %04X\n", activecpu_get_previouspc(), offset * 4 + 2, result);
@@ -1230,7 +1229,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_spclords = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spclords = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spclords )
 		PORT_START(); 		/* 68.SW (A1=0) */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );					/* BLUE button */
@@ -1291,7 +1290,7 @@ public class atarigx2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_motofren = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_motofren = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( motofren )
 		PORT_START(); 		/* 68.SW (A1=0) */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );					/* Start/fire */
@@ -1337,7 +1336,7 @@ public class atarigx2
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rrreveng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rrreveng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rrreveng )
 		PORT_START(); 		/* 68.SW (A1=0) */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -1445,8 +1444,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_atarigx2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( atarigx2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, ATARI_CLOCK_14MHz)
@@ -1472,9 +1470,7 @@ public class atarigx2
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iiis_stereo)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1702,8 +1698,7 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_spclords  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spclords  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
 		atarijsa3_init_adpcm(REGION_SOUND1);
@@ -1716,8 +1711,7 @@ public class atarigx2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_motofren  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_motofren  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
 		atarijsa3_init_adpcm(REGION_SOUND1);
@@ -1756,8 +1750,7 @@ public class atarigx2
 		return 0;
 	}
 	
-	public static DriverInitHandlerPtr init_rrreveng  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rrreveng  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 4, 2, 0x0040);
 		atarijsa3_init_adpcm(REGION_SOUND1);
@@ -1777,9 +1770,9 @@ public class atarigx2
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_spclords	   = new GameDriver("1992"	,"spclords"	,"atarigx2.java"	,rom_spclords,null	,machine_driver_atarigx2	,input_ports_spclords	,init_spclords	,ROT0	,	"Atari Games", "Space Lords", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_spclorda	   = new GameDriver("1992"	,"spclorda"	,"atarigx2.java"	,rom_spclorda,driver_spclords	,machine_driver_atarigx2	,input_ports_spclords	,init_spclords	,ROT0	,	"Atari Games", "Space Lords (alternate)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_motofren	   = new GameDriver("1992"	,"motofren"	,"atarigx2.java"	,rom_motofren,null	,machine_driver_atarigx2	,input_ports_motofren	,init_motofren	,ROT0	,	"Atari Games", "Moto Frenzy", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_rrreveng	   = new GameDriver("1994"	,"rrreveng"	,"atarigx2.java"	,rom_rrreveng,null	,machine_driver_atarigx2	,input_ports_rrreveng	,init_rrreveng	,ROT0	,	"Atari Games", "Road Riot's Revenge (prototype)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_rrrevenp	   = new GameDriver("1994"	,"rrrevenp"	,"atarigx2.java"	,rom_rrrevenp,driver_rrreveng	,machine_driver_atarigx2	,input_ports_rrreveng	,init_rrreveng	,ROT0	,	"Atari Games", "Road Riot's Revenge (prototype alt)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, spclords, 0,        atarigx2, spclords, spclords, ROT0, "Atari Games", "Space Lords", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, spclorda, spclords, atarigx2, spclords, spclords, ROT0, "Atari Games", "Space Lords (alternate)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1992, motofren, 0,        atarigx2, motofren, motofren, ROT0, "Atari Games", "Moto Frenzy", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1994, rrreveng, 0,        atarigx2, rrreveng, rrreveng, ROT0, "Atari Games", "Road Riot's Revenge (prototype)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1994, rrrevenp, rrreveng, atarigx2, rrreveng, rrreveng, ROT0, "Atari Games", "Road Riot's Revenge (prototype alt)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
 }

@@ -51,7 +51,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -106,7 +106,7 @@ public class dday
 	
 	
 	
-	static InputPortPtr input_ports_dday = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dday = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dday )
 		PORT_START();       /* IN 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -180,7 +180,7 @@ public class dday
 		PORT_ANALOG(0xff, 96, IPT_PADDLE, 20, 10, 0, 191 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ddayc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ddayc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ddayc )
 		PORT_START();       /* IN 0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -311,8 +311,7 @@ public class dday
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_dday = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dday )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 2000000)     /* 2 MHz ? */
@@ -335,9 +334,7 @@ public class dday
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -412,6 +409,6 @@ public class dday
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_dday	   = new GameDriver("1982"	,"dday"	,"dday.java"	,rom_dday,null	,machine_driver_dday	,input_ports_dday	,null	,ROT0	,	"Olympia", "D-Day", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_ddayc	   = new GameDriver("1982"	,"ddayc"	,"dday.java"	,rom_ddayc,driver_dday	,machine_driver_dday	,input_ports_ddayc	,null	,ROT0	,	"Olympia (Centuri license)", "D-Day (Centuri)", GAME_IMPERFECT_COLORS )
+	GAMEX( 1982, dday,  0,    dday, dday,  0, ROT0, "Olympia", "D-Day", GAME_IMPERFECT_COLORS )
+	GAMEX( 1982, ddayc, dday, dday, ddayc, 0, ROT0, "Olympia (Centuri license)", "D-Day (Centuri)", GAME_IMPERFECT_COLORS )
 }

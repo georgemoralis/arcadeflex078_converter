@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -53,8 +53,7 @@ public class asterix
 	 	{{-73-112, 0 }, {-73-112, 0}, {-73-112, 0}, {-73-112, 0}}
 	};
 	
-	public static VideoStartHandlerPtr video_start_asterix  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_asterix  = new VideoStartHandlerPtr() { public int handler(){
 		K053251_vh_start();
 	
 		K054157_vh_start(REGION_GFX1, 0, scrolld, NORMAL_PLANE_ORDER, asterix_tile_callback);
@@ -79,8 +78,7 @@ public class asterix
 		SWAP(1,2)
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_asterix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_asterix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer[3];
 	
 		tilebanks[0] = (K054157_get_lookup(0) << 10);

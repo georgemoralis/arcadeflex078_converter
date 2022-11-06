@@ -71,7 +71,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -97,13 +97,11 @@ public class vicdual
 	
 	static int protection_data;
 	
-	public static WriteHandlerPtr samurai_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr samurai_protection_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		protection_data = data;
 	} };
 	
-	public static ReadHandlerPtr samurai_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr samurai_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int answer = 0;
 	
 		if (protection_data == 0xab) answer = 0x02;
@@ -113,19 +111,16 @@ public class vicdual
 	} };
 	
 	
-	public static WriteHandlerPtr vicdual_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vicdual_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vicdual_ram[offset] = data;
 	} };
 	
-	public static ReadHandlerPtr vicdual_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vicdual_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return vicdual_ram[offset];
 	} };
 	
 	
-	public static ReadHandlerPtr depthch_input_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr depthch_input_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* bit 0 is 64V according to the schematics */
 		return (input_port_1_r.handler(0) & 0xfe) | ((cpu_getscanline() >> 6) & 0x01);
 	} };
@@ -281,7 +276,7 @@ public class vicdual
 	
 	
 	
-	static InputPortPtr input_ports_depthch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_depthch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( depthch )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -300,7 +295,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_safari = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_safari = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( safari )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -323,7 +318,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_frogs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_frogs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( frogs )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );/* The original joystick was a 3-way */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );/* stick, of which Mame's 4-way does */
@@ -348,7 +343,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sspacaho = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sspacaho = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sspacaho )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -396,7 +391,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sspaceat = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sspaceat = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sspaceat )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_2WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -435,7 +430,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_headon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_headon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( headon )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Lives") );
 		PORT_DIPSETTING(    0x00, "3" );
@@ -457,7 +452,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_headon2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_headon2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( headon2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -486,7 +481,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_invho2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invho2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invho2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -537,7 +532,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_samurai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_samurai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( samurai )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -587,7 +582,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_invinco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invinco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invinco )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -624,7 +619,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_invds = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_invds = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( invds )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -673,7 +668,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tranqgun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tranqgun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tranqgun )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -721,7 +716,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spacetrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacetrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacetrk )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -769,7 +764,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sptrekct = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sptrekct = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sptrekct )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -817,7 +812,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_carnival = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_carnival = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( carnival )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -867,7 +862,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_carnvckt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_carnvckt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( carnvckt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -917,7 +912,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_brdrline = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_brdrline = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( brdrline )
 		PORT_START(); 	/* IN0 */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Unknown") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -975,7 +970,7 @@ public class vicdual
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_digger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_digger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( digger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -1012,7 +1007,7 @@ public class vicdual
 		PORT_BIT_IMPULSE( 0x80, IP_ACTIVE_LOW, IPT_COIN1 | IPF_RESETCPU, 30 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_pulsar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pulsar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pulsar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* probably unused */
@@ -1060,7 +1055,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_heiankyo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_heiankyo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( heiankyo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -1108,7 +1103,7 @@ public class vicdual
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_alphaho = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alphaho = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alphaho )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -1204,8 +1199,7 @@ public class vicdual
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_2ports = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 2ports )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 15468480/8)
@@ -1227,98 +1221,75 @@ public class vicdual
 		MDRV_VIDEO_UPDATE(vicdual)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_3ports = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 3ports )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_3ports,writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_4ports = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 4ports )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_PORTS(readport_4ports,writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_safari = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( safari )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(safari_readmem,safari_writemem)
 		MDRV_CPU_PORTS(readport_safari,writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_depthch = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( depthch )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(2ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_depthch)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_invinco3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invinco3 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(3ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_invinco3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_invinco4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( invinco4 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(4ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_invinco3)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pulsar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pulsar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(4ports)
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_pulsar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1335,8 +1306,7 @@ public class vicdual
 	
 	/* don't know if any of the other games use the 8048 music board */
 	/* so, we won't burden those drivers with the extra music handling */
-	public static MachineHandlerPtr machine_driver_carnival = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( carnival )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,15468480/8)
@@ -1366,9 +1336,7 @@ public class vicdual
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, carnival_ay8910_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface_carnival)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1922,13 +1890,11 @@ public class vicdual
 	
 	
 	
-	public static DriverInitHandlerPtr init_nosamples  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nosamples  = new DriverInitHandlerPtr() { public void handler(){
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_depthch  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_depthch  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_read_handler(0, 0x08, 0x08, depthch_input_port_1_r);
 	
 		/* install sample trigger */
@@ -1937,8 +1903,7 @@ public class vicdual
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_samurai  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_samurai  = new DriverInitHandlerPtr() { public void handler(){
 		/* install protection handlers */
 		install_mem_write_handler(0, 0x7f00, 0x7f00, samurai_protection_w);
 		install_port_read_handler(0, 0x01, 0x03, samurai_input_r);
@@ -1946,8 +1911,7 @@ public class vicdual
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_carnival  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_carnival  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample triggers */
 		install_port_write_handler(0, 0x01, 0x01, carnival_sh_port1_w);
 		install_port_write_handler(0, 0x02, 0x02, carnival_sh_port2_w);
@@ -1955,32 +1919,28 @@ public class vicdual
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_invinco  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invinco  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample trigger */
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_invho2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invho2  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample trigger */
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_invds  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_invds  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample trigger */
 		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
 	
 		vicdual_decode();
 	} };
 	
-	public static DriverInitHandlerPtr init_pulsar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pulsar  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample triggers */
 		install_port_write_handler(0, 0x01, 0x01, pulsar_sh_port1_w);
 		install_port_write_handler(0, 0x02, 0x02, pulsar_sh_port2_w);
@@ -1989,8 +1949,7 @@ public class vicdual
 	} };
 	
 	#if 0
-	public static DriverInitHandlerPtr init_alphaho  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alphaho  = new DriverInitHandlerPtr() { public void handler(){
 		/* install sample trigger */
 		install_port_write_handler(0, 0x01, 0x01, invinco_sh_port2_w);
 		install_port_write_handler(0, 0x02, 0x02, invinco_sh_port2_w);
@@ -2000,30 +1959,30 @@ public class vicdual
 	#endif
 	
 	
-	public static GameDriver driver_depthch	   = new GameDriver("1977"	,"depthch"	,"vicdual.java"	,rom_depthch,null	,machine_driver_depthch	,input_ports_depthch	,init_depthch	,ROT0	,	"Gremlin", "Depthcharge" )
-	public static GameDriver driver_depthv1	   = new GameDriver("1977"	,"depthv1"	,"vicdual.java"	,rom_depthv1,driver_depthch	,machine_driver_depthch	,input_ports_depthch	,init_depthch	,ROT0	,	"Gremlin", "Depthcharge (older)" )
-	public static GameDriver driver_subhunt	   = new GameDriver("1977"	,"subhunt"	,"vicdual.java"	,rom_subhunt,driver_depthch	,machine_driver_depthch	,input_ports_depthch	,init_depthch	,ROT0	,	"Taito", "Sub Hunter" )
-	public static GameDriver driver_safari	   = new GameDriver("1977"	,"safari"	,"vicdual.java"	,rom_safari,null	,machine_driver_safari	,input_ports_safari	,init_nosamples	,ROT0	,	"Gremlin", "Safari", GAME_NO_SOUND )
-	public static GameDriver driver_frogs	   = new GameDriver("1978"	,"frogs"	,"vicdual.java"	,rom_frogs,null	,machine_driver_2ports	,input_ports_frogs	,init_nosamples	,ROT0	,	"Gremlin", "Frogs", GAME_NO_SOUND )
-	public static GameDriver driver_sspaceat	   = new GameDriver("1979"	,"sspaceat"	,"vicdual.java"	,rom_sspaceat,null	,machine_driver_3ports	,input_ports_sspaceat	,init_nosamples	,ROT270	,	"Sega", "Space Attack (upright)", GAME_NO_SOUND )
-	public static GameDriver driver_sspacat2	   = new GameDriver("1979"	,"sspacat2"	,"vicdual.java"	,rom_sspacat2,driver_sspaceat	,machine_driver_3ports	,input_ports_sspaceat	,init_nosamples	,ROT270	,	"Sega", "Space Attack (upright, older)", GAME_NO_SOUND )
-	public static GameDriver driver_sspacatc	   = new GameDriver("1979"	,"sspacatc"	,"vicdual.java"	,rom_sspacatc,driver_sspaceat	,machine_driver_3ports	,input_ports_sspaceat	,init_nosamples	,ROT270	,	"Sega", "Space Attack (cocktail)", GAME_NO_SOUND )
-	public static GameDriver driver_sspacaho	   = new GameDriver("1979"	,"sspacaho"	,"vicdual.java"	,rom_sspacaho,null	,machine_driver_4ports	,input_ports_sspacaho	,init_nosamples	,ROT270	,	"Sega", "Space Attack / Head On", GAME_NO_SOUND )
-	public static GameDriver driver_headon	   = new GameDriver("1979"	,"headon"	,"vicdual.java"	,rom_headon,null	,machine_driver_2ports	,input_ports_headon	,init_nosamples	,ROT0	,	"Gremlin", "Head On (2 players)", GAME_NO_SOUND )
-	public static GameDriver driver_headonb	   = new GameDriver("1979"	,"headonb"	,"vicdual.java"	,rom_headonb,driver_headon	,machine_driver_2ports	,input_ports_headon	,init_nosamples	,ROT0	,	"Gremlin", "Head On (1 player)", GAME_NO_SOUND )
-	public static GameDriver driver_headon2	   = new GameDriver("1979"	,"headon2"	,"vicdual.java"	,rom_headon2,null	,machine_driver_3ports	,input_ports_headon2	,init_nosamples	,ROT0	,	"Sega", "Head On 2", GAME_NO_SOUND )
-	public static GameDriver driver_invho2	   = new GameDriver("1979"	,"invho2"	,"vicdual.java"	,rom_invho2,null	,machine_driver_invinco4	,input_ports_invho2	,init_invho2	,ROT270	,	"Sega", "Invinco / Head On 2", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_samurai	   = new GameDriver("1980"	,"samurai"	,"vicdual.java"	,rom_samurai,null	,machine_driver_4ports	,input_ports_samurai	,init_samurai	,ROT270	,	"Sega", "Samurai", GAME_NO_SOUND )
-	public static GameDriver driver_invinco	   = new GameDriver("1979"	,"invinco"	,"vicdual.java"	,rom_invinco,null	,machine_driver_invinco3	,input_ports_invinco	,init_invinco	,ROT270	,	"Sega", "Invinco" )
-	public static GameDriver driver_invds	   = new GameDriver("1979"	,"invds"	,"vicdual.java"	,rom_invds,null	,machine_driver_invinco4	,input_ports_invds	,init_invds	,ROT270	,	"Sega", "Invinco / Deep Scan", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tranqgun	   = new GameDriver("1980"	,"tranqgun"	,"vicdual.java"	,rom_tranqgun,null	,machine_driver_4ports	,input_ports_tranqgun	,init_nosamples	,ROT270	,	"Sega", "Tranquilizer Gun", GAME_NO_SOUND )
-	public static GameDriver driver_spacetrk	   = new GameDriver("1980"	,"spacetrk"	,"vicdual.java"	,rom_spacetrk,null	,machine_driver_4ports	,input_ports_spacetrk	,init_nosamples	,ROT270	,	"Sega", "Space Trek (upright)", GAME_NO_SOUND )
-	public static GameDriver driver_sptrekct	   = new GameDriver("1980"	,"sptrekct"	,"vicdual.java"	,rom_sptrekct,driver_spacetrk	,machine_driver_4ports	,input_ports_sptrekct	,init_nosamples	,ROT270	,	"Sega", "Space Trek (cocktail)", GAME_NO_SOUND )
-	public static GameDriver driver_carnival	   = new GameDriver("1980"	,"carnival"	,"vicdual.java"	,rom_carnival,null	,machine_driver_carnival	,input_ports_carnival	,init_carnival	,ROT270	,	"Sega", "Carnival (upright)" )
-	public static GameDriver driver_carnvckt	   = new GameDriver("1980"	,"carnvckt"	,"vicdual.java"	,rom_carnvckt,driver_carnival	,machine_driver_carnival	,input_ports_carnvckt	,init_carnival	,ROT270	,	"Sega", "Carnival (cocktail)" )
-	public static GameDriver driver_brdrlinb	   = new GameDriver("1981"	,"brdrlinb"	,"vicdual.java"	,rom_brdrlinb,null	,machine_driver_4ports	,input_ports_brdrline	,init_carnival	,ROT270	,	"bootleg", "Borderline (bootleg)", GAME_NO_SOUND )
-	public static GameDriver driver_digger	   = new GameDriver("1980"	,"digger"	,"vicdual.java"	,rom_digger,null	,machine_driver_3ports	,input_ports_digger	,init_nosamples	,ROT270	,	"Sega", "Digger", GAME_NO_SOUND )
-	public static GameDriver driver_pulsar	   = new GameDriver("1981"	,"pulsar"	,"vicdual.java"	,rom_pulsar,null	,machine_driver_pulsar	,input_ports_pulsar	,init_pulsar	,ROT270	,	"Sega", "Pulsar" )
-	public static GameDriver driver_heiankyo	   = new GameDriver("1979"	,"heiankyo"	,"vicdual.java"	,rom_heiankyo,null	,machine_driver_4ports	,input_ports_heiankyo	,init_nosamples	,ROT270	,	"Denki Onkyo", "Heiankyo Alien", GAME_NO_SOUND )
-	public static GameDriver driver_alphaho	   = new GameDriver("19??"	,"alphaho"	,"vicdual.java"	,rom_alphaho,null	,machine_driver_invinco4	,input_ports_alphaho	,init_invho2	,ROT270	,	"Data East Corporation", "Alpha Fighter / Head On", GAME_WRONG_COLORS )
+	GAME( 1977, depthch,  0,        depthch,  depthch,  depthch,   ROT0,   "Gremlin", "Depthcharge" )
+	GAME( 1977, depthv1,  depthch,  depthch,  depthch,  depthch,   ROT0,   "Gremlin", "Depthcharge (older)" )
+	GAME( 1977, subhunt,  depthch,  depthch,  depthch,  depthch,   ROT0,   "Taito", "Sub Hunter" )
+	GAMEX(1977, safari,   0,        safari,   safari,   nosamples, ROT0,   "Gremlin", "Safari", GAME_NO_SOUND )
+	GAMEX(1978, frogs,    0,        2ports,   frogs,    nosamples, ROT0,   "Gremlin", "Frogs", GAME_NO_SOUND )
+	GAMEX(1979, sspaceat, 0,        3ports,   sspaceat, nosamples, ROT270, "Sega", "Space Attack (upright)", GAME_NO_SOUND )
+	GAMEX(1979, sspacat2, sspaceat, 3ports,   sspaceat, nosamples, ROT270, "Sega", "Space Attack (upright, older)", GAME_NO_SOUND )
+	GAMEX(1979, sspacatc, sspaceat, 3ports,   sspaceat, nosamples, ROT270, "Sega", "Space Attack (cocktail)", GAME_NO_SOUND )
+	GAMEX(1979, sspacaho, 0,        4ports,   sspacaho, nosamples, ROT270, "Sega", "Space Attack / Head On", GAME_NO_SOUND )
+	GAMEX(1979, headon,   0,        2ports,   headon,   nosamples, ROT0,   "Gremlin", "Head On (2 players)", GAME_NO_SOUND )
+	GAMEX(1979, headonb,  headon,   2ports,   headon,   nosamples, ROT0,   "Gremlin", "Head On (1 player)", GAME_NO_SOUND )
+	GAMEX(1979, headon2,  0,        3ports,   headon2,  nosamples, ROT0,   "Sega", "Head On 2", GAME_NO_SOUND )
+	GAMEX(1979, invho2,   0,        invinco4, invho2,   invho2,    ROT270, "Sega", "Invinco / Head On 2", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, samurai,  0,        4ports,   samurai,  samurai,   ROT270, "Sega", "Samurai", GAME_NO_SOUND )
+	GAME( 1979, invinco,  0,        invinco3, invinco,  invinco,   ROT270, "Sega", "Invinco" )
+	GAMEX(1979, invds,    0,        invinco4, invds,    invds,     ROT270, "Sega", "Invinco / Deep Scan", GAME_IMPERFECT_SOUND )
+	GAMEX(1980, tranqgun, 0,        4ports,   tranqgun, nosamples, ROT270, "Sega", "Tranquilizer Gun", GAME_NO_SOUND )
+	GAMEX(1980, spacetrk, 0,        4ports,   spacetrk, nosamples, ROT270, "Sega", "Space Trek (upright)", GAME_NO_SOUND )
+	GAMEX(1980, sptrekct, spacetrk, 4ports,   sptrekct, nosamples, ROT270, "Sega", "Space Trek (cocktail)", GAME_NO_SOUND )
+	GAME( 1980, carnival, 0,        carnival, carnival, carnival,  ROT270, "Sega", "Carnival (upright)" )
+	GAME( 1980, carnvckt, carnival, carnival, carnvckt, carnival,  ROT270, "Sega", "Carnival (cocktail)" )
+	GAMEX(1981, brdrlinb, 0,        4ports,   brdrline, carnival,  ROT270, "bootleg", "Borderline (bootleg)", GAME_NO_SOUND )
+	GAMEX(1980, digger,   0,        3ports,   digger,   nosamples, ROT270, "Sega", "Digger", GAME_NO_SOUND )
+	GAME( 1981, pulsar,   0,        pulsar,   pulsar,   pulsar,    ROT270, "Sega", "Pulsar" )
+	GAMEX(1979, heiankyo, 0,        4ports,   heiankyo, nosamples, ROT270, "Denki Onkyo", "Heiankyo Alien", GAME_NO_SOUND )
+	GAMEX(19??, alphaho,  0,        invinco4, alphaho,  invho2,    ROT270, "Data East Corporation", "Alpha Fighter / Head On", GAME_WRONG_COLORS )
 }

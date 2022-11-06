@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -15,8 +15,7 @@ public class cchasm
 	
 	static int sound_flags;
 	
-	public static ReadHandlerPtr cchasm_snd_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cchasm_snd_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 	    int coin;
 	
 	    switch (offset & 0x61 )
@@ -45,8 +44,7 @@ public class cchasm
 	    }
 	} };
 	
-	public static WriteHandlerPtr cchasm_snd_io_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cchasm_snd_io_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	    switch (offset & 0x61 )
 	    {
 	    case 0x00:
@@ -88,7 +86,7 @@ public class cchasm
 	{
 	    static int led;
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			data >>= 8;
 			switch (offset & 0xf)
@@ -137,10 +135,9 @@ public class cchasm
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, Z80_VECTOR(0,state));
 	}
 	
-	public static WriteHandlerPtr ctc_timer_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ctc_timer_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
-	    if (data != 0) /* rising edge */
+	    if (data) /* rising edge */
 	    {
 	        output[0] ^= 0x7f;
 	        channel_active[0] = 1;
@@ -148,10 +145,9 @@ public class cchasm
 	    }
 	} };
 	
-	public static WriteHandlerPtr ctc_timer_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ctc_timer_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	
-	    if (data != 0) /* rising edge */
+	    if (data) /* rising edge */
 	    {
 	        output[1] ^= 0x7f;
 	        channel_active[1] = 1;
@@ -186,10 +182,10 @@ public class cchasm
 	    sound_flags = 0;
 	    output[0] = 0; output[1] = 0;
 	
-	    channel[0] = stream_init("CTC sound 1", 50, Machine.sample_rate, 0, tone_update);
-	    channel[1] = stream_init("CTC sound 2", 50, Machine.sample_rate, 1, tone_update);
+	    channel[0] = stream_init("CTC sound 1", 50, Machine->sample_rate, 0, tone_update);
+	    channel[1] = stream_init("CTC sound 2", 50, Machine->sample_rate, 1, tone_update);
 	
-		ctc_intf.baseclock[0] = Machine.drv.cpu[1].cpu_clock;
+		ctc_intf.baseclock[0] = Machine->drv->cpu[1].cpu_clock;
 		z80ctc_init (&ctc_intf);
 	
 		return 0;

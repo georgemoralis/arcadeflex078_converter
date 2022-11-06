@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -25,7 +25,7 @@ public class tms36xx
 		char *subtype;		/* subtype name MM6221AA, TMS3615 or TMS3617 */
 		int channel;		/* returned by stream_init() */
 	
-		int samplerate; 	/* from Machine.sample_rate */
+		int samplerate; 	/* from Machine->sample_rate */
 	
 		int basefreq;		/* chip's base frequency */
 		int octave; 		/* octave select of the TMS3615 */
@@ -310,43 +310,43 @@ public class tms36xx
 	static int *tunes[] = {NULL,tune1,tune2,tune3,tune4};
 	
 	#define DECAY(voice)											\
-		if( tms.vol[voice] > VMIN )								\
+		if( tms->vol[voice] > VMIN )								\
 		{															\
 			/* decay of first voice */								\
-			tms.vol_counter[voice] -= tms.decay[voice];			\
-			while( tms.vol_counter[voice] <= 0 )					\
+			tms->vol_counter[voice] -= tms->decay[voice];			\
+			while( tms->vol_counter[voice] <= 0 )					\
 			{														\
-				tms.vol_counter[voice] += samplerate;				\
-				if( tms.vol[voice]-- <= VMIN ) 					\
+				tms->vol_counter[voice] += samplerate;				\
+				if( tms->vol[voice]-- <= VMIN ) 					\
 				{													\
-					tms.frequency[voice] = 0;						\
-					tms.vol[voice] = VMIN; 						\
+					tms->frequency[voice] = 0;						\
+					tms->vol[voice] = VMIN; 						\
 					break;											\
 				}													\
 			}														\
 		}
 	
 	#define RESTART(voice)											\
-		if( tunes[tms.tune_num][tms.tune_ofs*6+voice] )			\
+		if( tunes[tms->tune_num][tms->tune_ofs*6+voice] )			\
 		{															\
-			tms.frequency[tms.shift+voice] =						\
-				tunes[tms.tune_num][tms.tune_ofs*6+voice] *		\
-				(tms.basefreq << tms.octave) / FSCALE;			\
-			tms.vol[tms.shift+voice] = VMAX;						\
+			tms->frequency[tms->shift+voice] =						\
+				tunes[tms->tune_num][tms->tune_ofs*6+voice] *		\
+				(tms->basefreq << tms->octave) / FSCALE;			\
+			tms->vol[tms->shift+voice] = VMAX;						\
 		}
 	
 	#define TONE(voice)                                             \
-		if( (tms.enable & (1<<voice)) && tms.frequency[voice] )	\
+		if( (tms->enable & (1<<voice)) && tms->frequency[voice] )	\
 		{															\
 			/* first note */										\
-			tms.counter[voice] -= tms.frequency[voice];			\
-			while( tms.counter[voice] <= 0 )						\
+			tms->counter[voice] -= tms->frequency[voice];			\
+			while( tms->counter[voice] <= 0 )						\
 			{														\
-				tms.counter[voice] += samplerate;					\
-				tms.output ^= 1 << voice;							\
+				tms->counter[voice] += samplerate;					\
+				tms->output ^= 1 << voice;							\
 			}														\
-			if (tms.output & tms.enable & (1 << voice))			\
-				sum += tms.vol[voice]; 							\
+			if (tms->output & tms->enable & (1 << voice))			\
+				sum += tms->vol[voice]; 							\
 		}
 	
 	
@@ -354,10 +354,10 @@ public class tms36xx
 	static void tms36xx_sound_update(int param, INT16 *buffer, int length)
 	{
 		struct TMS36XX *tms = tms36xx[param];
-		int samplerate = tms.samplerate;
+		int samplerate = tms->samplerate;
 	
 	    /* no tune played? */
-		if( !tunes[tms.tune_num] || tms.voices == 0 )
+		if( !tunes[tms->tune_num] || tms->voices == 0 )
 		{
 			while (--length >= 0)
 				buffer[length] = 0;
@@ -373,23 +373,23 @@ public class tms36xx
 			DECAY( 6) DECAY( 7) DECAY( 8) DECAY( 9) DECAY(10) DECAY(11)
 	
 			/* musical note timing */
-			tms.tune_counter -= tms.speed;
-			if( tms.tune_counter <= 0 )
+			tms->tune_counter -= tms->speed;
+			if( tms->tune_counter <= 0 )
 			{
-				int n = (-tms.tune_counter / samplerate) + 1;
-				tms.tune_counter += n * samplerate;
+				int n = (-tms->tune_counter / samplerate) + 1;
+				tms->tune_counter += n * samplerate;
 	
-				if( (tms.note_counter -= n) <= 0 )
+				if( (tms->note_counter -= n) <= 0 )
 				{
-					tms.note_counter += VMAX;
-					if (tms.tune_ofs < tms.tune_max)
+					tms->note_counter += VMAX;
+					if (tms->tune_ofs < tms->tune_max)
 					{
 						/* shift to the other 'bank' of voices */
-	                    tms.shift ^= 6;
+	                    tms->shift ^= 6;
 						/* restart one 'bank' of voices */
 						RESTART(0) RESTART(1) RESTART(2)
 						RESTART(3) RESTART(4) RESTART(5)
-						tms.tune_ofs++;
+						tms->tune_ofs++;
 					}
 				}
 			}
@@ -398,17 +398,17 @@ public class tms36xx
 			TONE( 0) TONE( 1) TONE( 2) TONE( 3) TONE( 4) TONE( 5)
 			TONE( 6) TONE( 7) TONE( 8) TONE( 9) TONE(10) TONE(11)
 	
-	        *buffer++ = sum / tms.voices;
+	        *buffer++ = sum / tms->voices;
 		}
 	}
 	
 	static void tms36xx_reset_counters(int chip)
 	{
 	    struct TMS36XX *tms = tms36xx[chip];
-	    tms.tune_counter = 0;
-	    tms.note_counter = 0;
-		memset(tms.vol_counter, 0, sizeof(tms.vol_counter));
-		memset(tms.counter, 0, sizeof(tms.counter));
+	    tms->tune_counter = 0;
+	    tms->note_counter = 0;
+		memset(tms->vol_counter, 0, sizeof(tms->vol_counter));
+		memset(tms->counter, 0, sizeof(tms->counter));
 	}
 	
 	void mm6221aa_tune_w(int chip, int tune)
@@ -417,17 +417,17 @@ public class tms36xx
 	
 	    /* which tune? */
 	    tune &= 3;
-	    if( tune == tms.tune_num )
+	    if( tune == tms->tune_num )
 	        return;
 	
-		LOG(("%s tune:%X\n", tms.subtype, tune));
+		LOG(("%s tune:%X\n", tms->subtype, tune));
 	
 	    /* update the stream before changing the tune */
-	    stream_update(tms.channel,0);
+	    stream_update(tms->channel,0);
 	
-	    tms.tune_num = tune;
-	    tms.tune_ofs = 0;
-	    tms.tune_max = 96; /* fixed for now */
+	    tms->tune_num = tune;
+	    tms->tune_ofs = 0;
+	    tms->tune_max = 96; /* fixed for now */
 	}
 	
 	void tms36xx_note_w(int chip, int octave, int note)
@@ -440,17 +440,17 @@ public class tms36xx
 		if (note > 12)
 	        return;
 	
-		LOG(("%s octave:%X note:%X\n", tms.subtype, octave, note));
+		LOG(("%s octave:%X note:%X\n", tms->subtype, octave, note));
 	
 		/* update the stream before changing the tune */
-	    stream_update(tms.channel,0);
+	    stream_update(tms->channel,0);
 	
 		/* play a single note from 'tune 4', a list of the 13 tones */
 		tms36xx_reset_counters(chip);
-		tms.octave = octave;
-	    tms.tune_num = 4;
-		tms.tune_ofs = note;
-		tms.tune_max = note + 1;
+		tms->octave = octave;
+	    tms->tune_num = 4;
+		tms->tune_ofs = note;
+		tms->tune_max = note + 1;
 	}
 	
 	void tms3617_enable_w(int chip, int enable)
@@ -460,13 +460,13 @@ public class tms36xx
 	
 		/* duplicate the 6 voice enable bits */
 	    enable = (enable & 0x3f) | ((enable & 0x3f) << 6);
-		if (enable == tms.enable)
+		if (enable == tms->enable)
 			return;
 	
 	    /* update the stream before changing the tune */
-	    stream_update(tms.channel,0);
+	    stream_update(tms->channel,0);
 	
-		LOG(("%s enable voices", tms.subtype));
+		LOG(("%s enable voices", tms->subtype));
 	    for (i = 0; i < 6; i++)
 		{
 			if (enable & (1 << i))
@@ -486,26 +486,26 @@ public class tms36xx
 	        }
 	    }
 		/* set the enable mask and number of active voices */
-		tms.enable = enable;
-	    tms.voices = bits;
+		tms->enable = enable;
+	    tms->voices = bits;
 		LOG(("%s\n", bits ? "" : " none"));
 	}
 	
 	int tms36xx_sh_start(const struct MachineSound *msound)
 	{
 		int i, j;
-		intf = msound.sound_interface;
+		intf = msound->sound_interface;
 	
-		for( i = 0; i < intf.num; i++ )
+		for( i = 0; i < intf->num; i++ )
 		{
 			int enable;
 			struct TMS36XX *tms;
 			char name[16];
 	
-			if (intf.subtype[i] == MM6221AA)
+			if (intf->subtype[i] == MM6221AA)
 				sprintf(name, "MM6221AA #%d", i);
 			else
-				sprintf(name, "TMS36%02d #%d", intf.subtype[i], i);
+				sprintf(name, "TMS36%02d #%d", intf->subtype[i], i);
 			tms36xx[i] = malloc(sizeof(struct TMS36XX));
 			if( !tms36xx[i] )
 			{
@@ -515,35 +515,35 @@ public class tms36xx
 			tms = tms36xx[i];
 			memset(tms, 0, sizeof(struct TMS36XX));
 	
-			tms.subtype = malloc(strlen(name) + 1);
-			strcpy(tms.subtype, name);
-	        tms.channel = stream_init(name, intf.mixing_level[i], Machine.sample_rate, i, tms36xx_sound_update);
+			tms->subtype = malloc(strlen(name) + 1);
+			strcpy(tms->subtype, name);
+	        tms->channel = stream_init(name, intf->mixing_level[i], Machine->sample_rate, i, tms36xx_sound_update);
 	
-	        if( tms.channel == -1 )
+	        if( tms->channel == -1 )
 			{
 				logerror("%s stream_init failed\n", name);
 				return 1;
 			}
-			tms.samplerate = Machine.sample_rate ? Machine.sample_rate : 1;
-			tms.basefreq = intf.basefreq[i];
+			tms->samplerate = Machine->sample_rate ? Machine->sample_rate : 1;
+			tms->basefreq = intf->basefreq[i];
 			enable = 0;
 	        for (j = 0; j < 6; j++)
 			{
-				if( intf.decay[i][j] > 0 )
+				if( intf->decay[i][j] > 0 )
 				{
-					tms.decay[j+0] = tms.decay[j+6] = VMAX / intf.decay[i][j];
+					tms->decay[j+0] = tms->decay[j+6] = VMAX / intf->decay[i][j];
 					enable |= 0x41 << j;
 				}
 			}
-			tms.speed = (intf.speed[i] > 0) ? VMAX / intf.speed[i] : VMAX;
+			tms->speed = (intf->speed[i] > 0) ? VMAX / intf->speed[i] : VMAX;
 			tms3617_enable_w(i,enable);
 	
-	        LOG(("%s samplerate    %d\n", name, tms.samplerate));
-			LOG(("%s basefreq      %d\n", name, tms.basefreq));
+	        LOG(("%s samplerate    %d\n", name, tms->samplerate));
+			LOG(("%s basefreq      %d\n", name, tms->basefreq));
 			LOG(("%s decay         %d,%d,%d,%d,%d,%d\n", name,
-				tms.decay[0], tms.decay[1], tms.decay[2],
-				tms.decay[3], tms.decay[4], tms.decay[5]));
-	        LOG(("%s speed         %d\n", name, tms.speed));
+				tms->decay[0], tms->decay[1], tms->decay[2],
+				tms->decay[3], tms->decay[4], tms->decay[5]));
+	        LOG(("%s speed         %d\n", name, tms->speed));
 	    }
 	    return 0;
 	}
@@ -551,12 +551,12 @@ public class tms36xx
 	void tms36xx_sh_stop(void)
 	{
 		int i;
-		for( i = 0; i < intf.num; i++ )
+		for( i = 0; i < intf->num; i++ )
 		{
 			if( tms36xx[i] )
 			{
-				if (tms36xx[i].subtype)
-					free(tms36xx[i].subtype);
+				if (tms36xx[i]->subtype)
+					free(tms36xx[i]->subtype);
 	            free(tms36xx[i]);
 			}
 			tms36xx[i] = NULL;
@@ -566,7 +566,7 @@ public class tms36xx
 	void tms36xx_sh_update(void)
 	{
 		int i;
-	    for( i = 0; i < intf.num; i++ )
+	    for( i = 0; i < intf->num; i++ )
 			stream_update(i,0);
 	}
 	

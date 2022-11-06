@@ -22,7 +22,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -65,8 +65,7 @@ public class pastelgl
 		return ROM[(((0x0100 * voiradr_h) + voiradr_l) & 0x7fff)];
 	}
 	
-	public static DriverInitHandlerPtr init_pastelgl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pastelgl  = new DriverInitHandlerPtr() { public void handler(){
 		nb1413m3_type = NB1413M3_PASTELGL;
 	} };
 	
@@ -86,8 +85,7 @@ public class pastelgl
 	};
 	
 	
-	public static ReadHandlerPtr io_pastelgl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr io_pastelgl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if (offset < 0x8000) return nb1413m3_sndrom_r(offset);
@@ -112,8 +110,7 @@ public class pastelgl
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr io_pastelgl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr io_pastelgl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset = (((offset & 0xff00) >> 8) | ((offset & 0x00ff) << 8));
 	
 		if ((0xc000 <= offset) && (0xd000 > offset))
@@ -156,7 +153,7 @@ public class pastelgl
 	};
 	
 	
-	static InputPortPtr input_ports_pastelgl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pastelgl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pastelgl )
 		PORT_START(); 	/* (0) DIPSW-A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x03, "1 (Easy"));
@@ -267,8 +264,7 @@ public class pastelgl
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_pastelgl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pastelgl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 19968000/8)	/* 2.496 MHz ? */
@@ -295,9 +291,7 @@ public class pastelgl
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_pastelgl = new RomLoadPtr(){ public void handler(){ 
@@ -324,5 +318,5 @@ public class pastelgl
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_pastelgl	   = new GameDriver("1985"	,"pastelgl"	,"pastelgl.java"	,rom_pastelgl,null	,machine_driver_pastelgl	,input_ports_pastelgl	,init_pastelgl	,ROT0	,	"Nichibutsu", "Pastel Gal (Japan 851224)" )
+	GAME( 1985, pastelgl, 0, pastelgl, pastelgl, pastelgl, ROT0, "Nichibutsu", "Pastel Gal (Japan 851224)" )
 }

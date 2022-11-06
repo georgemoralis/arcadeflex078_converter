@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,8 +34,7 @@ public class grobda
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_grobda  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_grobda  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 32;i++)
@@ -86,7 +85,7 @@ public class grobda
 			int flipy = spriteram.read(offs+0x1780)& 2;
 			int width,height;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -118,12 +117,12 @@ public class grobda
 						ex = flipx ? (width-1-x) : x;
 						ey = flipy ? (height-1-y) : y;
 	
-						drawgfx(bitmap,Machine.gfx[1],
+						drawgfx(bitmap,Machine->gfx[1],
 							(number)+x_offset[ex]+y_offset[ey],
 							color,
 							flipx, flipy,
 							sx+x*16,sy+y*16,
-							Machine.visible_area,
+							Machine->visible_area,
 							TRANSPARENCY_PEN,0);
 					}
 				}
@@ -131,12 +130,11 @@ public class grobda
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_grobda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_grobda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
-		if (get_vh_global_attribute_changed() != 0)
+		if (get_vh_global_attribute_changed())
 			memset(dirtybuffer,1,videoram_size[0]);
 	
 	
@@ -168,7 +166,7 @@ public class grobda
 					sy = my - 2;
 				}
 	
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;

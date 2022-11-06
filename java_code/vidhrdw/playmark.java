@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,8 @@ public class playmark
 	
 	static void bigtwin_get_fg_tile_info(int tile_index)
 	{
-		UINT16 code = wbeachvl_videoram2.read(2*tile_index);
-		UINT16 color = wbeachvl_videoram2.read(2*tile_index+1);
+		UINT16 code = wbeachvl_videoram2[2*tile_index];
+		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
 		SET_TILE_INFO(
 				1,
 				code,
@@ -61,8 +61,8 @@ public class playmark
 	
 	static void wbeachvl_get_fg_tile_info(int tile_index)
 	{
-		UINT16 code = wbeachvl_videoram2.read(2*tile_index);
-		UINT16 color = wbeachvl_videoram2.read(2*tile_index+1);
+		UINT16 code = wbeachvl_videoram2[2*tile_index];
+		UINT16 color = wbeachvl_videoram2[2*tile_index+1];
 		SET_TILE_INFO(
 				1,
 				code & 0x7fff,
@@ -89,8 +89,7 @@ public class playmark
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bigtwin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bigtwin  = new VideoStartHandlerPtr() { public int handler(){
 		bgbitmap = auto_bitmap_alloc(512,512);
 	
 		tx_tilemap = tilemap_create(bigtwin_get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -106,8 +105,7 @@ public class playmark
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_wbeachvl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wbeachvl  = new VideoStartHandlerPtr() { public int handler(){
 		tx_tilemap = tilemap_create(wbeachvl_get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		fg_tilemap = tilemap_create(wbeachvl_get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		bg_tilemap = tilemap_create(wbeachvl_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
@@ -139,9 +137,9 @@ public class playmark
 	
 	WRITE16_HANDLER( wbeachvl_fgvideoram_w )
 	{
-		int oldword = wbeachvl_videoram2.read(offset);
-		COMBINE_DATA(&wbeachvl_videoram2.read(offset));
-		if (oldword != wbeachvl_videoram2.read(offset))
+		int oldword = wbeachvl_videoram2[offset];
+		COMBINE_DATA(&wbeachvl_videoram2[offset]);
+		if (oldword != wbeachvl_videoram2[offset])
 			tilemap_mark_tile_dirty(fg_tilemap,offset / 2);
 	}
 	
@@ -189,7 +187,7 @@ public class playmark
 	
 		color = bigtwin_bgvideoram[offset] & 0xff;
 	
-		plot_pixel(bgbitmap,sx,sy,Machine.pens[256 + color]);
+		plot_pixel(bgbitmap,sx,sy,Machine->pens[256 + color]);
 	}
 	
 	
@@ -240,8 +238,8 @@ public class playmark
 	static void draw_sprites(struct mame_bitmap *bitmap,const struct rectangle *cliprect,int codeshift)
 	{
 		int offs;
-		int height = Machine.gfx[0].height;
-		int colordiv = Machine.gfx[0].color_granularity / 16;
+		int height = Machine->gfx[0]->height;
+		int colordiv = Machine->gfx[0]->color_granularity / 16;
 	
 		for (offs = 4;offs < spriteram_size/2;offs += 4)
 		{
@@ -256,7 +254,7 @@ public class playmark
 			code = spriteram16[offs+2] >> codeshift;
 			color = (spriteram16[offs+1] & 0xfe00) >> 9;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					code,
 					color/colordiv,
 					flipx,0,
@@ -266,8 +264,7 @@ public class playmark
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bigtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bigtwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		palette_set_color(256,0,0,0);	/* keep the background black */
 	
 		copyscrollbitmap(bitmap,bgbitmap,1,&bgscrollx,1,&bgscrolly,cliprect,TRANSPARENCY_NONE,0);
@@ -276,8 +273,7 @@ public class playmark
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_wbeachvl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wbeachvl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect,0);

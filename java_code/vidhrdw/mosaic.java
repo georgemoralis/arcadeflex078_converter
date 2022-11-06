@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -57,8 +57,7 @@ public class mosaic
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mosaic  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mosaic  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,32);
 	
@@ -77,22 +76,19 @@ public class mosaic
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr mosaic_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mosaic_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mosaic_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr mosaic_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mosaic_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mosaic_bgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(bg_tilemap,offset/2);
 	} };
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_mosaic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mosaic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);
 	} };

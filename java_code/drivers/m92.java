@@ -100,7 +100,7 @@ Gunforce 2                    1994  Rev 3.53 M92
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -136,22 +136,19 @@ public class m92
 	
 	/*****************************************************************************/
 	
-	public static ReadHandlerPtr m92_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_eeprom_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_USER1);
 	//	logerror("%05x: EEPROM RE %04x\n",activecpu_get_pc(),offset);
 		return RAM[offset/2];
 	} };
 	
-	public static WriteHandlerPtr m92_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_eeprom_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_USER1);
 	//	logerror("%05x: EEPROM WR %04x\n",activecpu_get_pc(),offset);
 		RAM[offset/2]=data;
 	} };
 	
-	public static WriteHandlerPtr m92_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_coincounter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0) {
 			coin_counter_w(0,data & 0x01);
 			coin_counter_w(1,data & 0x02);
@@ -161,21 +158,19 @@ public class m92
 		}
 	} };
 	
-	public static WriteHandlerPtr m92_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==1) return; /* Unused top byte */
 		bankaddress = 0x100000 + ((data&0x7)*0x10000);
 		set_m92_bank();
 	} };
 	
-	public static ReadHandlerPtr m92_port_4_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_port_4_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(4) | m92_sprite_buffer_busy; /* Bit 7 low indicates busy */
 	} };
 	
 	/*****************************************************************************/
 	
-	static final int VECTOR_INIT = 0, YM2151_ASSERT = 1, YM2151_CLEAR = 2, V30_ASSERT = 3, V30_CLEAR = 4;
+	enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, V30_ASSERT, V30_CLEAR };
 	
 	static void setvector_callback(int param)
 	{
@@ -188,9 +183,9 @@ public class m92
 			case V30_CLEAR:		irqvector &= ~0x1;	break;
 		}
 	
-		if ((irqvector & 0x2) != 0)		/* YM2151 has precedence */
+		if (irqvector & 0x2)		/* YM2151 has precedence */
 			cpu_irq_line_vector_w(1,0,0x18);
-		else if ((irqvector & 0x1) != 0)	/* V30 */
+		else if (irqvector & 0x1)	/* V30 */
 			cpu_irq_line_vector_w(1,0,0x19);
 	
 		if (irqvector == 0)	/* no IRQs pending */
@@ -199,8 +194,7 @@ public class m92
 			cpu_set_irq_line(1,0,ASSERT_LINE);
 	}
 	
-	public static WriteHandlerPtr m92_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset==0)
 		{
 			timer_set(TIME_NOW,V30_ASSERT,setvector_callback);
@@ -209,16 +203,14 @@ public class m92
 		}
 	} };
 	
-	public static ReadHandlerPtr m92_sound_status_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_sound_status_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%06x: read sound status\n",activecpu_get_pc());
 		if (offset == 0)
 			return sound_status&0xff;
 		return sound_status>>8;
 	} };
 	
-	public static ReadHandlerPtr m92_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr m92_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0)
 		{
 			int res = soundlatch_r(offset);
@@ -228,14 +220,12 @@ public class m92
 		else return 0xff;
 	} };
 	
-	public static WriteHandlerPtr m92_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_sound_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0)
 			timer_set(TIME_NOW,V30_CLEAR,setvector_callback);
 	} };
 	
-	public static WriteHandlerPtr m92_sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr m92_sound_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0) {
 			sound_status = data | (sound_status&0xff00);
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,M92_IRQ_3);
@@ -352,7 +342,7 @@ public class m92
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_bmaster = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bmaster = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bmaster )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -409,7 +399,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunforce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunforce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunforce )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -442,7 +432,7 @@ public class m92
 		PORT_UNUSED	/* Game manual only mentions 2 dips */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_lethalth = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_lethalth = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( lethalth )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -499,7 +489,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hook = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hook = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hook )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -556,7 +546,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_majtitl2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_majtitl2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( majtitl2 )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -615,7 +605,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mysticri = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mysticri = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mysticri )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -673,7 +663,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_uccops = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_uccops = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( uccops )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -732,7 +722,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rtypeleo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rtypeleo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rtypeleo )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -765,7 +755,7 @@ public class m92
 		PORT_UNUSED	/* Game manual only mentions 2 dips */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_inthunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_inthunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( inthunt )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -822,7 +812,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nbbatman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nbbatman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nbbatman )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -880,7 +870,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_psoldier = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_psoldier = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( psoldier )
 		PORT_START(); 
 		PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -967,7 +957,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dsccr94j = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dsccr94j = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dsccr94j )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		IREM_JOYSTICK_3_4(3)
@@ -1025,7 +1015,7 @@ public class m92
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunforc2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunforc2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunforc2 )
 		IREM_JOYSTICK_1_2(1)
 		IREM_JOYSTICK_1_2(2)
 		PORT_UNUSED
@@ -1114,7 +1104,7 @@ public class m92
 	
 	static void sound_irq(int state)
 	{
-		if (state != 0)
+		if (state)
 			timer_set(TIME_NOW,YM2151_ASSERT,setvector_callback);
 		else
 			timer_set(TIME_NOW,YM2151_CLEAR,setvector_callback);
@@ -1137,23 +1127,21 @@ public class m92
 	
 	/***************************************************************************/
 	
-	public static InterruptHandlerPtr m92_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr m92_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (osd_skip_this_frame()==0)
-			m92_vh_raster_partial_refresh(Machine.scrbitmap,0,249);
+			m92_vh_raster_partial_refresh(Machine->scrbitmap,0,249);
 	
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_0); /* VBL */
 	} };
 	
-	public static InterruptHandlerPtr m92_raster_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr m92_raster_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int last_line=0;
 		int line = M92_SCANLINES - cpu_getiloops();
 	
 		/* Raster interrupt */
 		if (m92_raster_enable && line==m92_raster_irq_position) {
 			if (osd_skip_this_frame()==0)
-				m92_vh_raster_partial_refresh(Machine.scrbitmap,last_line,line+1);
+				m92_vh_raster_partial_refresh(Machine->scrbitmap,last_line,line+1);
 			last_line=line+1;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_2);
 		}
@@ -1161,7 +1149,7 @@ public class m92
 		/* Redraw screen, then set vblank and trigger the VBL interrupt */
 		else if (line==249) { /* 248 is last visible line */
 			if (osd_skip_this_frame()==0)
-				m92_vh_raster_partial_refresh(Machine.scrbitmap,last_line,249);
+				m92_vh_raster_partial_refresh(Machine->scrbitmap,last_line,249);
 			last_line=249;
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, M92_IRQ_0);
 		}
@@ -1177,8 +1165,7 @@ public class m92
 		cpu_set_irq_line_and_vector(0,0,HOLD_LINE,M92_IRQ_1);
 	}
 	
-	public static MachineHandlerPtr machine_driver_raster = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raster )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33,18000000/2)	/* NEC V33, 18 MHz clock */
@@ -1205,13 +1192,10 @@ public class m92
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_nonraster = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nonraster )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 18000000/2)	 /* NEC V33, 18 MHz clock */
@@ -1239,13 +1223,10 @@ public class m92
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_lethalth = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( lethalth )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 18000000/2)	/* NEC V33, 18 MHz clock */
@@ -1273,13 +1254,10 @@ public class m92
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_psoldier = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( psoldier )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V33, 18000000/2)		/* NEC V33, 18 MHz clock */
@@ -1307,9 +1285,7 @@ public class m92
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(IREMGA20, iremGA20_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -2065,24 +2041,21 @@ public class m92
 	
 	/***************************************************************************/
 	
-	public static ReadHandlerPtr lethalth_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr lethalth_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x1f4 && m92_ram[0x1e]==2 && offset==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x1e + offset];
 	} };
 	
-	public static ReadHandlerPtr hook_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hook_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x55ba && m92_ram[0x12]==0 && m92_ram[0x13]==0 && offset==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x12 + offset];
 	} };
 	
-	public static ReadHandlerPtr bmaster_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bmaster_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int d=activecpu_geticount();
 	
 		/* If possible skip this cpu segment - idle loop */
@@ -2101,8 +2074,7 @@ public class m92
 		return m92_ram[0x6fde + offset];
 	} };
 	
-	public static ReadHandlerPtr psoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0]+(m92_ram[1]<<8);
 		int b=m92_ram[0x1aec]+(m92_ram[0x1aed]<<8);
 		int c=m92_ram[0x1aea]+(m92_ram[0x1aeb]<<8);
@@ -2113,8 +2085,7 @@ public class m92
 		return m92_ram[0x1aec + offset];
 	} };
 	
-	public static ReadHandlerPtr ssoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ssoldier_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0]+(m92_ram[1]<<8);
 		int b=m92_ram[0x1aec]+(m92_ram[0x1aed]<<8);
 		int c=m92_ram[0x1aea]+(m92_ram[0x1aeb]<<8);
@@ -2125,8 +2096,7 @@ public class m92
 		return m92_ram[0x1aec + offset];
 	} };
 	
-	public static ReadHandlerPtr psoldier_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr psoldier_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_snd_ram[0xc34];
 	//logerror("%08x: %d %d\n",activecpu_get_pc(),a,offset);
 		if (activecpu_get_pc()==0x8f0 && (a&0x80)!=0x80 && offset==0) {
@@ -2136,8 +2106,7 @@ public class m92
 		return m92_snd_ram[0xc34 + offset];
 	} };
 	
-	public static ReadHandlerPtr inthunt_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inthunt_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int d=activecpu_geticount();
 		int line = 256 - cpu_getiloops();
 	
@@ -2159,8 +2128,7 @@ public class m92
 		return m92_ram[0x25e + offset];
 	} };
 	
-	public static ReadHandlerPtr uccops_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr uccops_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0x3f28]+(m92_ram[0x3f29]<<8);
 		int b=m92_ram[0x3a00]+(m92_ram[0x3a01]<<8);
 		int c=m92_ram[0x3a02]+(m92_ram[0x3a03]<<8);
@@ -2181,24 +2149,21 @@ public class m92
 		return m92_ram[0x3a02 + offset];
 	} };
 	
-	public static ReadHandlerPtr rtypeleo_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rtypeleo_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x30791 && offset==0 && m92_ram[0x32]==2 && m92_ram[0x33]==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x32 + offset];
 	} };
 	
-	public static ReadHandlerPtr rtypelej_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr rtypelej_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (activecpu_get_pc()==0x307a3 && offset==0 && m92_ram[0x32]==2 && m92_ram[0x33]==0)
 			cpu_spinuntil_int();
 	
 		return m92_ram[0x32 + offset];
 	} };
 	
-	public static ReadHandlerPtr gunforce_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunforce_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0x6542]+(m92_ram[0x6543]<<8);
 		int b=m92_ram[0x61d0]+(m92_ram[0x61d1]<<8);
 		int d=activecpu_geticount();
@@ -2218,8 +2183,7 @@ public class m92
 		return m92_ram[0x61d0 + offset];
 	} };
 	
-	public static ReadHandlerPtr dsccr94j_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dsccr94j_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0x965a]+(m92_ram[0x965b]<<8);
 		int d=activecpu_geticount();
 	
@@ -2235,8 +2199,7 @@ public class m92
 		return m92_ram[0x8636 + offset];
 	} };
 	
-	public static ReadHandlerPtr gunforc2_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunforc2_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_ram[0x9fa0]+(m92_ram[0x9fa1]<<8);
 		int b=m92_ram[0x9fa2]+(m92_ram[0x9fa3]<<8);
 		int c=m92_ram[0xa6aa]+(m92_ram[0xa6ab]<<8);
@@ -2254,8 +2217,7 @@ public class m92
 		return m92_ram[0x9fa0 + offset];
 	} };
 	
-	public static ReadHandlerPtr gunforc2_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gunforc2_snd_cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int a=m92_snd_ram[0xc31];
 	
 		if (activecpu_get_pc()==0x8aa && a!=3 && offset==1) {
@@ -2300,53 +2262,45 @@ public class m92
 		state_save_register_func_postload(set_m92_bank);
 	}
 	
-	public static DriverInitHandlerPtr init_bmaster  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bmaster  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe6fde, 0xe6fdf, bmaster_cycle_r);
 		init_m92(bomberman_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_gunforce  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunforce  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe61d0, 0xe61d1, gunforce_cycle_r);
 		init_m92(gunforce_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_hook  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hook  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe0012, 0xe0013, hook_cycle_r);
 		init_m92(hook_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_mysticri  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mysticri  = new DriverInitHandlerPtr() { public void handler(){
 		init_m92(mysticri_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_uccops  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_uccops  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe3a02, 0xe3a03, uccops_cycle_r);
 		init_m92(dynablaster_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_rtypeleo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rtypeleo  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe0032, 0xe0033, rtypeleo_cycle_r);
 		init_m92(rtypeleo_decryption_table);
 		m92_irq_vectorbase=0x20;
 		m92_game_kludge=1;
 	} };
 	
-	public static DriverInitHandlerPtr init_rtypelej  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rtypelej  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe0032, 0xe0033, rtypelej_cycle_r);
 		init_m92(rtypeleo_decryption_table);
 		m92_irq_vectorbase=0x20;
 		m92_game_kludge=1;
 	} };
 	
-	public static DriverInitHandlerPtr init_majtitl2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_majtitl2  = new DriverInitHandlerPtr() { public void handler(){
 		init_m92(majtitl2_decryption_table);
 	
 		/* This game has an eprom on the game board */
@@ -2356,14 +2310,12 @@ public class m92
 		m92_game_kludge=2;
 	} };
 	
-	public static DriverInitHandlerPtr init_inthunt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_inthunt  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe025e, 0xe025f, inthunt_cycle_r);
 		init_m92(inthunt_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_lethalth  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_lethalth  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe001e, 0xe001f, lethalth_cycle_r);
 		init_m92(lethalth_decryption_table);
 		m92_irq_vectorbase=0x20;
@@ -2374,8 +2326,7 @@ public class m92
 		m92_game_kludge=3; /* No upper palette bank? It could be a different motherboard */
 	} };
 	
-	public static DriverInitHandlerPtr init_nbbatman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nbbatman  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		init_m92(leagueman_decryption_table);
@@ -2383,8 +2334,7 @@ public class m92
 		memcpy(RAM+0x80000,RAM+0x100000,0x20000);
 	} };
 	
-	public static DriverInitHandlerPtr init_ssoldier  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ssoldier  = new DriverInitHandlerPtr() { public void handler(){
 	 install_mem_read_handler(0, 0xe1aec, 0xe1aed, ssoldier_cycle_r);
 	 install_mem_read_handler(1, 0xa0c34, 0xa0c35, psoldier_snd_cycle_r);
 	
@@ -2394,8 +2344,7 @@ public class m92
 	 sound_status = 0x80;
 	} };
 	
-	public static DriverInitHandlerPtr init_psoldier  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_psoldier  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe1aec, 0xe1aed, psoldier_cycle_r);
 		install_mem_read_handler(1, 0xa0c34, 0xa0c35, psoldier_snd_cycle_r);
 	
@@ -2405,14 +2354,12 @@ public class m92
 		sound_status = 0x80;
 	} };
 	
-	public static DriverInitHandlerPtr init_dsccr94j  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_dsccr94j  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xe8636, 0xe8637, dsccr94j_cycle_r);
 		init_m92(dsoccr94_decryption_table);
 	} };
 	
-	public static DriverInitHandlerPtr init_gunforc2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gunforc2  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		init_m92(lethalth_decryption_table);
 		memcpy(RAM+0x80000,RAM+0x100000,0x20000);
@@ -2424,31 +2371,31 @@ public class m92
 	/***************************************************************************/
 	
 	/* The 'nonraster' machine is for games that don't use the raster interrupt feature - slightly faster to emulate */
-	public static GameDriver driver_gunforce	   = new GameDriver("1991"	,"gunforce"	,"m92.java"	,rom_gunforce,null	,machine_driver_raster	,input_ports_gunforce	,init_gunforce	,ROT0	,	"Irem",         "Gunforce - Battle Fire Engulfed Terror Island (World)" )
-	public static GameDriver driver_gunforcj	   = new GameDriver("1991"	,"gunforcj"	,"m92.java"	,rom_gunforcj,driver_gunforce	,machine_driver_raster	,input_ports_gunforce	,init_gunforce	,ROT0	,	"Irem",         "Gunforce - Battle Fire Engulfed Terror Island (Japan)" )
-	public static GameDriver driver_gunforcu	   = new GameDriver("1991"	,"gunforcu"	,"m92.java"	,rom_gunforcu,driver_gunforce	,machine_driver_raster	,input_ports_gunforce	,init_gunforce	,ROT0	,	"Irem America", "Gunforce - Battle Fire Engulfed Terror Island (US)" )
-	public static GameDriver driver_bmaster	   = new GameDriver("1991"	,"bmaster"	,"m92.java"	,rom_bmaster,null	,machine_driver_nonraster	,input_ports_bmaster	,init_bmaster	,ROT0	,	"Irem",         "Blade Master (World)" )
-	public static GameDriver driver_lethalth	   = new GameDriver("1991"	,"lethalth"	,"m92.java"	,rom_lethalth,null	,machine_driver_lethalth	,input_ports_lethalth	,init_lethalth	,ROT270	,	"Irem",         "Lethal Thunder (World)" )
-	public static GameDriver driver_thndblst	   = new GameDriver("1991"	,"thndblst"	,"m92.java"	,rom_thndblst,driver_lethalth	,machine_driver_lethalth	,input_ports_lethalth	,init_lethalth	,ROT270	,	"Irem",         "Thunder Blaster (Japan)" )
-	public static GameDriver driver_uccops	   = new GameDriver("1992"	,"uccops"	,"m92.java"	,rom_uccops,null	,machine_driver_raster	,input_ports_uccops	,init_uccops	,ROT0	,	"Irem",         "Undercover Cops (World)" )
-	public static GameDriver driver_uccopsj	   = new GameDriver("1992"	,"uccopsj"	,"m92.java"	,rom_uccopsj,driver_uccops	,machine_driver_raster	,input_ports_uccops	,init_uccops	,ROT0	,	"Irem",         "Undercover Cops (Japan)" )
-	public static GameDriver driver_mysticri	   = new GameDriver("1992"	,"mysticri"	,"m92.java"	,rom_mysticri,null	,machine_driver_nonraster	,input_ports_mysticri	,init_mysticri	,ROT0	,	"Irem",         "Mystic Riders (World)" )
-	public static GameDriver driver_gunhohki	   = new GameDriver("1992"	,"gunhohki"	,"m92.java"	,rom_gunhohki,driver_mysticri	,machine_driver_nonraster	,input_ports_mysticri	,init_mysticri	,ROT0	,	"Irem",         "Gun Hohki (Japan)" )
-	public static GameDriver driver_majtitl2	   = new GameDriver("1992"	,"majtitl2"	,"m92.java"	,rom_majtitl2,null	,machine_driver_raster	,input_ports_majtitl2	,init_majtitl2	,ROT0	,	"Irem",         "Major Title 2 (World)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_skingame	   = new GameDriver("1992"	,"skingame"	,"m92.java"	,rom_skingame,driver_majtitl2	,machine_driver_raster	,input_ports_majtitl2	,init_majtitl2	,ROT0	,	"Irem America", "The Irem Skins Game (US set 1)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_skingam2	   = new GameDriver("1992"	,"skingam2"	,"m92.java"	,rom_skingam2,driver_majtitl2	,machine_driver_raster	,input_ports_majtitl2	,init_majtitl2	,ROT0	,	"Irem America", "The Irem Skins Game (US set 2)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_hook	   = new GameDriver("1992"	,"hook"	,"m92.java"	,rom_hook,null	,machine_driver_nonraster	,input_ports_hook	,init_hook	,ROT0	,	"Irem",         "Hook (World)" )
-	public static GameDriver driver_hooku	   = new GameDriver("1992"	,"hooku"	,"m92.java"	,rom_hooku,driver_hook	,machine_driver_nonraster	,input_ports_hook	,init_hook	,ROT0	,	"Irem America", "Hook (US)" )
-	public static GameDriver driver_rtypeleo	   = new GameDriver("1992"	,"rtypeleo"	,"m92.java"	,rom_rtypeleo,null	,machine_driver_raster	,input_ports_rtypeleo	,init_rtypeleo	,ROT0	,	"Irem",         "R-Type Leo (World rev. C)" )
-	public static GameDriver driver_rtypelej	   = new GameDriver("1992"	,"rtypelej"	,"m92.java"	,rom_rtypelej,driver_rtypeleo	,machine_driver_raster	,input_ports_rtypeleo	,init_rtypelej	,ROT0	,	"Irem",         "R-Type Leo (Japan rev. D)" )
-	public static GameDriver driver_inthunt	   = new GameDriver("1993"	,"inthunt"	,"m92.java"	,rom_inthunt,null	,machine_driver_raster	,input_ports_inthunt	,init_inthunt	,ROT0	,	"Irem",         "In The Hunt (World)" )
-	public static GameDriver driver_inthuntu	   = new GameDriver("1993"	,"inthuntu"	,"m92.java"	,rom_inthuntu,driver_inthunt	,machine_driver_raster	,input_ports_inthunt	,init_inthunt	,ROT0	,	"Irem America", "In The Hunt (US)" )
-	public static GameDriver driver_kaiteids	   = new GameDriver("1993"	,"kaiteids"	,"m92.java"	,rom_kaiteids,driver_inthunt	,machine_driver_raster	,input_ports_inthunt	,init_inthunt	,ROT0	,	"Irem",         "Kaitei Daisensou (Japan)" )
-	public static GameDriver driver_nbbatman	   = new GameDriver("1993"	,"nbbatman"	,"m92.java"	,rom_nbbatman,null	,machine_driver_raster	,input_ports_nbbatman	,init_nbbatman	,ROT0	,	"Irem America", "Ninja Baseball Batman (US)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_leaguemn	   = new GameDriver("1993"	,"leaguemn"	,"m92.java"	,rom_leaguemn,driver_nbbatman	,machine_driver_raster	,input_ports_nbbatman	,init_nbbatman	,ROT0	,	"Irem",         "Yakyuu Kakutou League-Man (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_ssoldier	   = new GameDriver("1993"	,"ssoldier"	,"m92.java"	,rom_ssoldier,null	,machine_driver_psoldier	,input_ports_psoldier	,init_ssoldier	,ROT0	,	"Irem America", "Superior Soldiers (US)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_psoldier	   = new GameDriver("1993"	,"psoldier"	,"m92.java"	,rom_psoldier,driver_ssoldier	,machine_driver_psoldier	,input_ports_psoldier	,init_psoldier	,ROT0	,	"Irem",         "Perfect Soldiers (Japan)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_dsccr94j	   = new GameDriver("1994"	,"dsccr94j"	,"m92.java"	,rom_dsccr94j,driver_dsoccr94	,machine_driver_psoldier	,input_ports_dsccr94j	,init_dsccr94j	,ROT0	,	"Irem",         "Dream Soccer '94 (Japan)" )
-	public static GameDriver driver_gunforc2	   = new GameDriver("1994"	,"gunforc2"	,"m92.java"	,rom_gunforc2,null	,machine_driver_raster	,input_ports_gunforc2	,init_gunforc2	,ROT0	,	"Irem",         "Gunforce 2 (US)" )
-	public static GameDriver driver_geostorm	   = new GameDriver("1994"	,"geostorm"	,"m92.java"	,rom_geostorm,driver_gunforc2	,machine_driver_raster	,input_ports_gunforc2	,init_gunforc2	,ROT0	,	"Irem",         "Geostorm (Japan)" )
+	GAME( 1991, gunforce, 0,        raster,    gunforce, gunforce, ROT0,   "Irem",         "Gunforce - Battle Fire Engulfed Terror Island (World)" )
+	GAME( 1991, gunforcj, gunforce, raster,    gunforce, gunforce, ROT0,   "Irem",         "Gunforce - Battle Fire Engulfed Terror Island (Japan)" )
+	GAME( 1991, gunforcu, gunforce, raster,    gunforce, gunforce, ROT0,   "Irem America", "Gunforce - Battle Fire Engulfed Terror Island (US)" )
+	GAME( 1991, bmaster,  0,        nonraster, bmaster,  bmaster,  ROT0,   "Irem",         "Blade Master (World)" )
+	GAME( 1991, lethalth, 0,        lethalth,  lethalth, lethalth, ROT270, "Irem",         "Lethal Thunder (World)" )
+	GAME( 1991, thndblst, lethalth, lethalth,  lethalth, lethalth, ROT270, "Irem",         "Thunder Blaster (Japan)" )
+	GAME( 1992, uccops,   0,        raster,    uccops,   uccops,   ROT0,   "Irem",         "Undercover Cops (World)" )
+	GAME( 1992, uccopsj,  uccops,   raster,    uccops,   uccops,   ROT0,   "Irem",         "Undercover Cops (Japan)" )
+	GAME( 1992, mysticri, 0,        nonraster, mysticri, mysticri, ROT0,   "Irem",         "Mystic Riders (World)" )
+	GAME( 1992, gunhohki, mysticri, nonraster, mysticri, mysticri, ROT0,   "Irem",         "Gun Hohki (Japan)" )
+	GAMEX(1992, majtitl2, 0,        raster,    majtitl2, majtitl2, ROT0,   "Irem",         "Major Title 2 (World)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, skingame, majtitl2, raster,    majtitl2, majtitl2, ROT0,   "Irem America", "The Irem Skins Game (US set 1)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, skingam2, majtitl2, raster,    majtitl2, majtitl2, ROT0,   "Irem America", "The Irem Skins Game (US set 2)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1992, hook,     0,        nonraster, hook,     hook,     ROT0,   "Irem",         "Hook (World)" )
+	GAME( 1992, hooku,    hook,     nonraster, hook,     hook,     ROT0,   "Irem America", "Hook (US)" )
+	GAME( 1992, rtypeleo, 0,        raster,    rtypeleo, rtypeleo, ROT0,   "Irem",         "R-Type Leo (World rev. C)" )
+	GAME( 1992, rtypelej, rtypeleo, raster,    rtypeleo, rtypelej, ROT0,   "Irem",         "R-Type Leo (Japan rev. D)" )
+	GAME( 1993, inthunt,  0,        raster,    inthunt,  inthunt,  ROT0,   "Irem",         "In The Hunt (World)" )
+	GAME( 1993, inthuntu, inthunt,  raster,    inthunt,  inthunt,  ROT0,   "Irem America", "In The Hunt (US)" )
+	GAME( 1993, kaiteids, inthunt,  raster,    inthunt,  inthunt,  ROT0,   "Irem",         "Kaitei Daisensou (Japan)" )
+	GAMEX(1993, nbbatman, 0,        raster,    nbbatman, nbbatman, ROT0,   "Irem America", "Ninja Baseball Batman (US)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, leaguemn, nbbatman, raster,    nbbatman, nbbatman, ROT0,   "Irem",         "Yakyuu Kakutou League-Man (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1993, ssoldier, 0,  psoldier,  psoldier, ssoldier, ROT0,   "Irem America", "Superior Soldiers (US)", GAME_IMPERFECT_SOUND )
+	GAMEX(1993, psoldier, ssoldier, psoldier,  psoldier, psoldier, ROT0,   "Irem",         "Perfect Soldiers (Japan)", GAME_IMPERFECT_SOUND )
+	GAME( 1994, dsccr94j, dsoccr94, psoldier,  dsccr94j, dsccr94j, ROT0,   "Irem",         "Dream Soccer '94 (Japan)" )
+	GAME( 1994, gunforc2, 0,        raster,    gunforc2, gunforc2, ROT0,   "Irem",         "Gunforce 2 (US)" )
+	GAME( 1994, geostorm, gunforc2, raster,    gunforc2, gunforc2, ROT0,   "Irem",         "Geostorm (Japan)" )
 }

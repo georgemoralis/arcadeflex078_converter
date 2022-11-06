@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -69,7 +69,7 @@ public class midtunit
 	
 	WRITE16_HANDLER( midtunit_cmos_w )
 	{
-		if (1 != 0)/*cmos_write_enable)*/
+		if (1)/*cmos_write_enable)*/
 		{
 			COMBINE_DATA(&((data16_t *)generic_nvram)[offset]);
 			cmos_write_enable = 0;
@@ -137,7 +137,7 @@ public class midtunit
 	
 	static WRITE16_HANDLER( mk_prot_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			int first_val = (data >> 9) & 0x3f;
 			int i;
@@ -483,14 +483,12 @@ public class midtunit
 		install_mem_write_handler(1, 0xfb9c, 0xfbc6, MWA_RAM);
 	}
 	
-	public static DriverInitHandlerPtr init_mk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_tunit_common();
 		INSTALL_SPEEDUP_3(0x01053360, 0xffce2100, 0x104f9d0, 0x104fa10, 0x104fa30);
 	} };
 	
-	public static DriverInitHandlerPtr init_mkr4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mkr4  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk_tunit_common();
 		INSTALL_SPEEDUP_3(0x01053360, 0xffce2190, 0x104f9d0, 0x104fa10, 0x104fa30);
 	} };
@@ -501,7 +499,7 @@ public class midtunit
 		init_tunit_generic(SOUND_ADPCM_LARGE);
 	
 		/* protection */
-		if (te_protection == 0)
+		if (!te_protection)
 		{
 			nbajam_prot_table = nbajam_prot_values;
 			install_mem_read16_handler (0, TOBYTE(0x1b14020), TOBYTE(0x1b2503f), nbajam_prot_r);
@@ -517,32 +515,28 @@ public class midtunit
 		}
 	
 		/* sound chip protection (hidden RAM) */
-		if (te_protection == 0)
+		if (!te_protection)
 			install_mem_write_handler(1, 0xfbaa, 0xfbd4, MWA_RAM);
 		else
 			install_mem_write_handler(1, 0xfbec, 0xfc16, MWA_RAM);
 	}
 	
-	public static DriverInitHandlerPtr init_nbajam  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nbajam  = new DriverInitHandlerPtr() { public void handler(){
 		init_nbajam_common(0);
 		INSTALL_SPEEDUP_1_16BIT(0x010754c0, 0xff833480, 0x1008040, 0xd0, 0xb0);
 	} };
 	
-	public static DriverInitHandlerPtr init_nbajam20  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nbajam20  = new DriverInitHandlerPtr() { public void handler(){
 		init_nbajam_common(0);
 		INSTALL_SPEEDUP_1_16BIT(0x010754c0, 0xff833520, 0x1008040, 0xd0, 0xb0);
 	} };
 	
-	public static DriverInitHandlerPtr init_nbajamte  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nbajamte  = new DriverInitHandlerPtr() { public void handler(){
 		init_nbajam_common(1);
 		INSTALL_SPEEDUP_1_16BIT(0x0106d480, 0xff84e480, 0x1000040, 0xd0, 0xb0);
 	} };
 	
-	public static DriverInitHandlerPtr init_jdreddp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jdreddp  = new DriverInitHandlerPtr() { public void handler(){
 		/* common init */
 		init_tunit_generic(SOUND_ADPCM_LARGE);
 	
@@ -593,20 +587,17 @@ public class midtunit
 		install_mem_read16_handler (0, TOBYTE(0x01def920), TOBYTE(0x01def93f), mk2_prot_const_r);
 	}
 	
-	public static DriverInitHandlerPtr init_mk2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk2  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068e70, 0xff80db70, 0x105d480, 0x105d4a0, 0x105d4c0);
 	} };
 	
-	public static DriverInitHandlerPtr init_mk2r21  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk2r21  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068e40, 0xff80db70, 0x105d480, 0x105d4a0, 0x105d4c0);
 	} };
 	
-	public static DriverInitHandlerPtr init_mk2r14  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mk2r14  = new DriverInitHandlerPtr() { public void handler(){
 		init_mk2_common();
 		INSTALL_SPEEDUP_3(0x01068de0, 0xff80d960, 0x105d480, 0x105d4a0, 0x105d4c0);
 	} };
@@ -619,8 +610,7 @@ public class midtunit
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_midtunit  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_midtunit  = new MachineInitHandlerPtr() { public void handler(){
 		/* reset sound */
 		switch (sound_type)
 		{
@@ -648,10 +638,10 @@ public class midtunit
 	{
 	/*	logerror("%08X:Sound status read\n", activecpu_get_pc());*/
 	
-		if (sound_type == SOUND_DCS && Machine.sample_rate)
+		if (sound_type == SOUND_DCS && Machine->sample_rate)
 			return dcs_control_r() >> 4;
 	
-		if (fake_sound_state != 0)
+		if (fake_sound_state)
 		{
 			fake_sound_state--;
 			return 0;
@@ -663,7 +653,7 @@ public class midtunit
 	{
 		logerror("%08X:Sound data read\n", activecpu_get_pc());
 	
-		if (sound_type == SOUND_DCS && Machine.sample_rate)
+		if (sound_type == SOUND_DCS && Machine->sample_rate)
 			return dcs_data_r() & 0xff;
 	
 		return ~0;
@@ -672,7 +662,7 @@ public class midtunit
 	WRITE16_HANDLER( midtunit_sound_w )
 	{
 		/* check for out-of-bounds accesses */
-		if (offset == 0)
+		if (!offset)
 		{
 			logerror("%08X:Unexpected write to sound (lo) = %04X\n", activecpu_get_pc(), data);
 			return;

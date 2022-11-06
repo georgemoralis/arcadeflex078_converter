@@ -11,7 +11,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,8 +24,7 @@ public class exedexes
 	
 	
 	
-	public static InterruptHandlerPtr exedexes_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr exedexes_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() != 0)
 			cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0xcf);	/* RST 08h */
 		else
@@ -88,7 +87,7 @@ public class exedexes
 	
 	
 	
-	static InputPortPtr input_ports_exedexes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_exedexes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( exedexes )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -243,8 +242,7 @@ public class exedexes
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_exedexes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( exedexes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -275,9 +273,7 @@ public class exedexes
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -367,6 +363,6 @@ public class exedexes
 	
 	
 	
-	public static GameDriver driver_exedexes	   = new GameDriver("1985"	,"exedexes"	,"exedexes.java"	,rom_exedexes,null	,machine_driver_exedexes	,input_ports_exedexes	,null	,ROT270	,	"Capcom", "Exed Exes" )
-	public static GameDriver driver_savgbees	   = new GameDriver("1985"	,"savgbees"	,"exedexes.java"	,rom_savgbees,driver_exedexes	,machine_driver_exedexes	,input_ports_exedexes	,null	,ROT270	,	"Capcom (Memetron license)", "Savage Bees" )
+	GAME( 1985, exedexes, 0,        exedexes, exedexes, 0, ROT270, "Capcom", "Exed Exes" )
+	GAME( 1985, savgbees, exedexes, exedexes, exedexes, 0, ROT270, "Capcom (Memetron license)", "Savage Bees" )
 }

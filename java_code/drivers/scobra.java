@@ -47,7 +47,7 @@ Notes/Tidbits:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -220,15 +220,13 @@ public class scobra
 	
 	static UINT8 *scobra_soundram;
 	
-	static READ_HANDLER(scobra_soundram_r)
-	{
+	public static ReadHandlerPtr scobra_soundram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return scobra_soundram[offset & 0x03ff];
-	}
+	} };
 	
-	static WRITE_HANDLER(scobra_soundram_w)
-	{
+	public static WriteHandlerPtr scobra_soundram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scobra_soundram[offset & 0x03ff] = data;
-	}
+	} };
 	
 	public static Memory_ReadAddress scobra_sound_readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -284,7 +282,7 @@ public class scobra
 	};
 	
 	
-	static InputPortPtr input_ports_scobra = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scobra = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scobra )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -326,7 +324,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* identical to scobra apart from the number of lives */
-	static InputPortPtr input_ports_scobras = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scobras = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scobras )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -367,7 +365,7 @@ public class scobra
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_stratgyx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stratgyx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stratgyx )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -443,7 +441,7 @@ public class scobra
 		PORT_DIPSETTING(    0x00, "A 1/99  B 1/3" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_armorcar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_armorcar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( armorcar )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -490,7 +488,7 @@ public class scobra
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_moonwar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moonwar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moonwar )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x1f, IP_ACTIVE_LOW, IPT_SPECIAL );/* the spinner */
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_COCKTAIL );
@@ -530,7 +528,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* same as above, but coinage is different */
-	static InputPortPtr input_ports_moonwara = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_moonwara = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( moonwara )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x1f, IP_ACTIVE_LOW, IPT_SPECIAL );/* the spinner */
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_COCKTAIL );
@@ -569,7 +567,7 @@ public class scobra
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_CENTER | IPF_COCKTAIL, 25, 10, 0, 0 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_spdcoin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spdcoin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spdcoin )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -604,7 +602,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_darkplnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_darkplnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( darkplnt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -642,7 +640,7 @@ public class scobra
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tazmania = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tazmania = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tazmania )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -690,7 +688,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_calipso = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_calipso = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( calipso )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -732,7 +730,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode not working due to bug in game code */
-	static InputPortPtr input_ports_anteater = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_anteater = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( anteater )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -780,7 +778,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_rescue = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rescue = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rescue )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_DIPNAME( 0x02, 0x02, "Starting Level" );
@@ -834,7 +832,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_minefld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_minefld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( minefld )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_DIPNAME( 0x02, 0x02, "Starting Level" );
@@ -888,7 +886,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_losttomb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_losttomb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( losttomb )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -941,7 +939,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* cocktail mode is N/A */
-	static InputPortPtr input_ports_superbon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superbon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superbon )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1 );
@@ -999,7 +997,7 @@ public class scobra
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hustler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hustler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hustler )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1040,7 +1038,7 @@ public class scobra
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mimonkey = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mimonkey = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mimonkey )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1085,7 +1083,7 @@ public class scobra
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'mimonkey' but different "Lives" Dip Switch */
-	static InputPortPtr input_ports_mimonsco = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mimonsco = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mimonsco )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -1143,8 +1141,7 @@ public class scobra
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_type1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( type1 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1166,14 +1163,11 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, scobra_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* same as regular type 1, the only difference that it has long bullets */
-	public static MachineHandlerPtr machine_driver_armorcar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( armorcar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1183,14 +1177,11 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(galaxian)
 		MDRV_VIDEO_START(theend)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* same as regular type 1, the only difference is that the bullets are less yellow */
-	public static MachineHandlerPtr machine_driver_moonwar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( moonwar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1199,15 +1190,12 @@ public class scobra
 		MDRV_PALETTE_LENGTH(32+64+2)	/* 32 for characters, 64 for stars, 2 for bullets */
 	
 		MDRV_PALETTE_INIT(moonwar)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Rescue, Minefield and Strategy X have extra colors, and custom video initialise */
 	/* routines to set up the graduated color backgound they use */
-	public static MachineHandlerPtr machine_driver_rescue = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rescue )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1218,13 +1206,10 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(rescue)
 		MDRV_VIDEO_START(rescue)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_minefld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( minefld )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1235,28 +1220,22 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(minefld)
 		MDRV_VIDEO_START(minefld)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* same as the others, but no sprite flipping, but instead the bits are used
 	   as extra sprite code bits, giving 256 sprite images */
-	public static MachineHandlerPtr machine_driver_calipso = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( calipso )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
 	
 		/* video hardware */
 		MDRV_VIDEO_START(calipso)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mimonkey = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mimonkey )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
@@ -1265,25 +1244,19 @@ public class scobra
 	
 		/* video hardware */
 		MDRV_VIDEO_START(mimonkey)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_type2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( type2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(type2_readmem,type2_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_stratgyx = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stratgyx )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type2)
@@ -1293,13 +1266,10 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(stratgyx)
 		MDRV_VIDEO_START(stratgyx)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_darkplnt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( darkplnt )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(type2)
@@ -1309,13 +1279,10 @@ public class scobra
 	
 		MDRV_PALETTE_INIT(darkplnt)
 		MDRV_VIDEO_START(darkplnt)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hustler = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hustler )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1336,13 +1303,10 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hustlerb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hustlerb )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(galaxian_base)
@@ -1363,9 +1327,7 @@ public class scobra
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, frogger_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1942,31 +1904,31 @@ public class scobra
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_scobra	   = new GameDriver("1981"	,"scobra"	,"scobra.java"	,rom_scobra,null	,machine_driver_type1	,input_ports_scobra	,init_scobra	,ROT90	,	"Konami", "Super Cobra" )
-	public static GameDriver driver_scobras	   = new GameDriver("1981"	,"scobras"	,"scobra.java"	,rom_scobras,driver_scobra	,machine_driver_type1	,input_ports_scobras	,init_scobra	,ROT90	,	"[Konami] (Stern license)", "Super Cobra (Stern)" )
-	public static GameDriver driver_scobrase	   = new GameDriver("1981"	,"scobrase"	,"scobra.java"	,rom_scobrase,driver_scobra	,machine_driver_type1	,input_ports_scobras	,init_scobra	,ROT90	,	"[Konami] (Sega license)", "Super Cobra (Sega)" )
-	public static GameDriver driver_scobrab	   = new GameDriver("1981"	,"scobrab"	,"scobra.java"	,rom_scobrab,driver_scobra	,machine_driver_type1	,input_ports_scobras	,init_scobra	,ROT90	,	"bootleg", "Super Cobra (bootleg)" )
-	public static GameDriver driver_stratgyx	   = new GameDriver("1981"	,"stratgyx"	,"scobra.java"	,rom_stratgyx,null	,machine_driver_stratgyx	,input_ports_stratgyx	,init_stratgyx	,ROT0	,	"Konami", "Strategy X" )
-	public static GameDriver driver_stratgys	   = new GameDriver("1981"	,"stratgys"	,"scobra.java"	,rom_stratgys,driver_stratgyx	,machine_driver_stratgyx	,input_ports_stratgyx	,init_stratgyx	,ROT0	,	"[Konami] (Stern license)", "Strategy X (Stern)" )
-	public static GameDriver driver_armorcar	   = new GameDriver("1981"	,"armorcar"	,"scobra.java"	,rom_armorcar,null	,machine_driver_armorcar	,input_ports_armorcar	,init_scramble_ppi	,ROT90	,	"Stern", "Armored Car (set 1)" )
-	public static GameDriver driver_armorca2	   = new GameDriver("1981"	,"armorca2"	,"scobra.java"	,rom_armorca2,driver_armorcar	,machine_driver_armorcar	,input_ports_armorcar	,init_scramble_ppi	,ROT90	,	"Stern", "Armored Car (set 2)" )
-	public static GameDriver driver_moonwar	   = new GameDriver("1981"	,"moonwar"	,"scobra.java"	,rom_moonwar,null	,machine_driver_moonwar	,input_ports_moonwar	,init_moonwar	,ROT90	,	"Stern", "Moonwar" )
-	public static GameDriver driver_moonwara	   = new GameDriver("1981"	,"moonwara"	,"scobra.java"	,rom_moonwara,driver_moonwar	,machine_driver_moonwar	,input_ports_moonwara	,init_moonwar	,ROT90	,	"Stern", "Moonwar (older)" )
-	public static GameDriver driver_spdcoin	   = new GameDriver("1984"	,"spdcoin"	,"scobra.java"	,rom_spdcoin,null	,machine_driver_type1	,input_ports_spdcoin	,init_scramble_ppi	,ROT90	,	"Stern", "Speed Coin (prototype)" )
-	public static GameDriver driver_darkplnt	   = new GameDriver("1982"	,"darkplnt"	,"scobra.java"	,rom_darkplnt,null	,machine_driver_darkplnt	,input_ports_darkplnt	,init_darkplnt	,ROT180	,	"Stern", "Dark Planet" )
-	public static GameDriver driver_tazmania	   = new GameDriver("1982"	,"tazmania"	,"scobra.java"	,rom_tazmania,null	,machine_driver_type1	,input_ports_tazmania	,init_scobra	,ROT90	,	"Stern", "Tazz-Mania (set 1)" )
-	public static GameDriver driver_tazmani2	   = new GameDriver("1982"	,"tazmani2"	,"scobra.java"	,rom_tazmani2,driver_tazmania	,machine_driver_type2	,input_ports_tazmania	,init_tazmani2	,ROT90	,	"Stern", "Tazz-Mania (set 2)" )
-	public static GameDriver driver_calipso	   = new GameDriver("1982"	,"calipso"	,"scobra.java"	,rom_calipso,null	,machine_driver_calipso	,input_ports_calipso	,init_scobra	,ROT90	,	"[Stern] (Tago license)", "Calipso" )
-	public static GameDriver driver_anteater	   = new GameDriver("1982"	,"anteater"	,"scobra.java"	,rom_anteater,null	,machine_driver_type1	,input_ports_anteater	,init_anteater	,ROT90	,	"[Stern] (Tago license)", "Anteater" )
-	public static GameDriver driver_rescue	   = new GameDriver("1982"	,"rescue"	,"scobra.java"	,rom_rescue,null	,machine_driver_rescue	,input_ports_rescue	,init_rescue	,ROT90	,	"Stern", "Rescue" )
-	public static GameDriver driver_aponow	   = new GameDriver("1982"	,"aponow"	,"scobra.java"	,rom_aponow,driver_rescue	,machine_driver_rescue	,input_ports_rescue	,init_rescue	,ROT90	,	"bootleg", "Apocaljpse Now" )
-	public static GameDriver driver_minefld	   = new GameDriver("1983"	,"minefld"	,"scobra.java"	,rom_minefld,null	,machine_driver_minefld	,input_ports_minefld	,init_minefld	,ROT90	,	"Stern", "Minefield" )
-	public static GameDriver driver_losttomb	   = new GameDriver("1982"	,"losttomb"	,"scobra.java"	,rom_losttomb,null	,machine_driver_type1	,input_ports_losttomb	,init_losttomb	,ROT90	,	"Stern", "Lost Tomb (easy)" )
-	public static GameDriver driver_losttmbh	   = new GameDriver("1982"	,"losttmbh"	,"scobra.java"	,rom_losttmbh,driver_losttomb	,machine_driver_type1	,input_ports_losttomb	,init_losttomb	,ROT90	,	"Stern", "Lost Tomb (hard)" )
-	public static GameDriver driver_superbon	   = new GameDriver("198?"	,"superbon"	,"scobra.java"	,rom_superbon,null	,machine_driver_type1	,input_ports_superbon	,init_superbon	,ROT90	,	"bootleg", "Super Bond", GAME_WRONG_COLORS )
-	public static GameDriver driver_hustler	   = new GameDriver("1981"	,"hustler"	,"scobra.java"	,rom_hustler,null	,machine_driver_hustler	,input_ports_hustler	,init_hustler	,ROT90	,	"Konami", "Video Hustler" )
-	public static GameDriver driver_billiard	   = new GameDriver("1981"	,"billiard"	,"scobra.java"	,rom_billiard,driver_hustler	,machine_driver_hustler	,input_ports_hustler	,init_billiard	,ROT90	,	"bootleg", "The Billiards" )
-	public static GameDriver driver_hustlerb	   = new GameDriver("1981"	,"hustlerb"	,"scobra.java"	,rom_hustlerb,driver_hustler	,machine_driver_hustlerb	,input_ports_hustler	,init_scramble_ppi	,ROT90	,	"bootleg", "Video Hustler (bootleg)" )
-	public static GameDriver driver_mimonkey	   = new GameDriver("198?"	,"mimonkey"	,"scobra.java"	,rom_mimonkey,null	,machine_driver_mimonkey	,input_ports_mimonkey	,init_mimonkey	,ROT90	,	"Universal Video Games", "Mighty Monkey" )
-	public static GameDriver driver_mimonsco	   = new GameDriver("198?"	,"mimonsco"	,"scobra.java"	,rom_mimonsco,driver_mimonkey	,machine_driver_mimonkey	,input_ports_mimonsco	,init_mimonsco	,ROT90	,	"bootleg", "Mighty Monkey (bootleg on Super Cobra hardware)" )
+	GAME( 1981, scobra,   0,        type1,    scobra,   scobra,       ROT90,  "Konami", "Super Cobra" )
+	GAME( 1981, scobras,  scobra,   type1,    scobras,  scobra,       ROT90,  "[Konami] (Stern license)", "Super Cobra (Stern)" )
+	GAME( 1981, scobrase, scobra,   type1,    scobras,  scobra,       ROT90,  "[Konami] (Sega license)", "Super Cobra (Sega)" )
+	GAME( 1981, scobrab,  scobra,   type1,    scobras,  scobra,       ROT90,  "bootleg", "Super Cobra (bootleg)" )
+	GAME( 1981, stratgyx, 0,        stratgyx, stratgyx, stratgyx,     ROT0,   "Konami", "Strategy X" )
+	GAME( 1981, stratgys, stratgyx, stratgyx, stratgyx, stratgyx,     ROT0,   "[Konami] (Stern license)", "Strategy X (Stern)" )
+	GAME( 1981, armorcar, 0,        armorcar, armorcar, scramble_ppi, ROT90,  "Stern", "Armored Car (set 1)" )
+	GAME( 1981, armorca2, armorcar, armorcar, armorcar, scramble_ppi, ROT90,  "Stern", "Armored Car (set 2)" )
+	GAME( 1981, moonwar,  0,        moonwar,  moonwar,  moonwar,      ROT90,  "Stern", "Moonwar" )
+	GAME( 1981, moonwara, moonwar,  moonwar,  moonwara, moonwar,      ROT90,  "Stern", "Moonwar (older)" )
+	GAME( 1984, spdcoin,  0,        type1,    spdcoin,  scramble_ppi, ROT90,  "Stern", "Speed Coin (prototype)" )
+	GAME( 1982, darkplnt, 0,        darkplnt, darkplnt, darkplnt,     ROT180, "Stern", "Dark Planet" )
+	GAME( 1982, tazmania, 0,        type1,    tazmania, scobra,       ROT90,  "Stern", "Tazz-Mania (set 1)" )
+	GAME( 1982, tazmani2, tazmania, type2,    tazmania, tazmani2,     ROT90,  "Stern", "Tazz-Mania (set 2)" )
+	GAME( 1982, calipso,  0,        calipso,  calipso,  scobra,       ROT90,  "[Stern] (Tago license)", "Calipso" )
+	GAME( 1982, anteater, 0,        type1,    anteater, anteater,     ROT90,  "[Stern] (Tago license)", "Anteater" )
+	GAME( 1982, rescue,   0,        rescue,   rescue,   rescue,       ROT90,  "Stern", "Rescue" )
+	GAME( 1982, aponow,   rescue,   rescue,   rescue,   rescue,       ROT90,  "bootleg", "Apocaljpse Now" )
+	GAME( 1983, minefld,  0,        minefld,  minefld,  minefld,      ROT90,  "Stern", "Minefield" )
+	GAME( 1982, losttomb, 0,        type1,    losttomb, losttomb,     ROT90,  "Stern", "Lost Tomb (easy)" )
+	GAME( 1982, losttmbh, losttomb, type1,    losttomb, losttomb,     ROT90,  "Stern", "Lost Tomb (hard)" )
+	GAMEX(198?, superbon, 0,        type1,    superbon, superbon,     ROT90,  "bootleg", "Super Bond", GAME_WRONG_COLORS )
+	GAME( 1981, hustler,  0,        hustler,  hustler,  hustler,      ROT90,  "Konami", "Video Hustler" )
+	GAME( 1981, billiard, hustler,  hustler,  hustler,  billiard,     ROT90,  "bootleg", "The Billiards" )
+	GAME( 1981, hustlerb, hustler,  hustlerb, hustler,  scramble_ppi, ROT90,  "bootleg", "Video Hustler (bootleg)" )
+	GAME( 198?, mimonkey, 0,		mimonkey, mimonkey,	mimonkey,	  ROT90,  "Universal Video Games", "Mighty Monkey" )
+	GAME( 198?, mimonsco, mimonkey, mimonkey, mimonsco, mimonsco,     ROT90,  "bootleg", "Mighty Monkey (bootleg on Super Cobra hardware)" )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -73,8 +73,7 @@ public class mainevt
 	
 	/*****************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_mainevt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mainevt  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 8;
 		layer_colorbase[2] = 4;
@@ -88,8 +87,7 @@ public class mainevt
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_dv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dv  = new VideoStartHandlerPtr() { public int handler(){
 		layer_colorbase[0] = 0;
 		layer_colorbase[1] = 0;
 		layer_colorbase[2] = 4;
@@ -105,8 +103,7 @@ public class mainevt
 	
 	/*****************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mainevt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		fillbitmap(priority_bitmap,0,cliprect);
@@ -118,8 +115,7 @@ public class mainevt
 		K051960_sprites_draw(bitmap,cliprect,-1,-1);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K052109_tilemap_update();
 	
 		tilemap_draw(bitmap,cliprect,K052109_tilemap[1],TILEMAP_IGNORE_TRANSPARENCY,0);

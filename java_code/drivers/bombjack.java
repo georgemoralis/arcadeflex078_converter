@@ -68,7 +68,7 @@ NMI interrupts for music timing
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -86,14 +86,12 @@ public class bombjack
 		latch = param;
 	}
 	
-	public static WriteHandlerPtr bombjack_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bombjack_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* make all the CPUs synchronize, and only AFTER that write the new command to the latch */
 		timer_set(TIME_NOW,data,soundlatch_callback);
 	} };
 	
-	public static ReadHandlerPtr bombjack_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bombjack_soundlatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 	
 	
@@ -163,7 +161,7 @@ public class bombjack
 	};
 	
 	
-	static InputPortPtr input_ports_bombjack = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bombjack = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bombjack )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -319,8 +317,7 @@ public class bombjack
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_bombjack = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bombjack )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz */
@@ -348,9 +345,7 @@ public class bombjack
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -420,12 +415,11 @@ public class bombjack
 		ROM_LOAD( "02_p04t.bin",  0x0000, 0x1000, CRC(398d4a02) SHA1(ac18a8219f99ba9178b96c9564de3978e39c59fd) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_bombjack  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bombjack  = new DriverInitHandlerPtr() { public void handler(){
 		state_save_register_int ("main", 0, "sound latch", &latch);
 	} };
 	
 	
-	public static GameDriver driver_bombjack	   = new GameDriver("1984"	,"bombjack"	,"bombjack.java"	,rom_bombjack,null	,machine_driver_bombjack	,input_ports_bombjack	,init_bombjack	,ROT90	,	"Tehkan", "Bomb Jack (set 1)" )
-	public static GameDriver driver_bombjac2	   = new GameDriver("1984"	,"bombjac2"	,"bombjack.java"	,rom_bombjac2,driver_bombjack	,machine_driver_bombjack	,input_ports_bombjack	,init_bombjack	,ROT90	,	"Tehkan", "Bomb Jack (set 2)" )
+	GAME( 1984, bombjack, 0,        bombjack, bombjack, bombjack, ROT90, "Tehkan", "Bomb Jack (set 1)" )
+	GAME( 1984, bombjac2, bombjack, bombjack, bombjack, bombjack, ROT90, "Tehkan", "Bomb Jack (set 2)" )
 }

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -110,7 +110,7 @@ public class deco32
 	
 	WRITE32_HANDLER( deco32_palette_dma_w )
 	{
-		const int m=Machine.drv.total_colors;
+		const int m=Machine->drv->total_colors;
 		int r,g,b,i;
 	
 		for (i=0; i<m; i++) {
@@ -176,38 +176,38 @@ public class deco32
 			fx = !(spritedata[offs+0]&0x4000);
 			fy = !(spritedata[offs+0]&0x8000);
 	
-			if (flip_screen == 0) {
+			if (!flip_screen()) {
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
 				if (sx>0x180) sx=-(0x200 - sx);
 				if (sy>0x180) sy=-(0x200 - sy);
 	
-				if (fx != 0) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
-				if (fy != 0) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
+				if (fx) { x_mult=-16; sx+=16*w; } else { x_mult=16; sx-=16; }
+				if (fy) { y_mult=-16; sy+=16*h; } else { y_mult=16; sy-=16; }
 			} else {
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 	
 				sx = sx & 0x01ff;
 				sy = sy & 0x01ff;
-				if ((sx & 0x100) != 0) sx=-(0x100 - (sx&0xff));
-				if ((sy & 0x100) != 0) sy=-(0x100 - (sy&0xff));
+				if (sx&0x100) sx=-(0x100 - (sx&0xff));
+				if (sy&0x100) sy=-(0x100 - (sy&0xff));
 				sx = 304 - sx;
 				sy = 240 - sy;
 				if (sx >= 432) sx -= 512;
 				if (sy >= 384) sy -= 512;
-				if (fx != 0) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
-				if (fy != 0) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
+				if (fx) { x_mult=-16; sx+=16; } else { x_mult=16; sx-=16*w; }
+				if (fy) { y_mult=-16; sy+=16; } else { y_mult=16; sy-=16*h; }
 			}
 	
 			for (x=0; x<w; x++) {
 				for (y=0; y<h; y++) {
-					pdrawgfx(bitmap,Machine.gfx[gfxbank],
+					pdrawgfx(bitmap,Machine->gfx[gfxbank],
 							sprite + y + h * x,
 							colour,
 							fx,fy,
 							sx + x_mult * (w-x),sy + y_mult * (h-y),
-							Machine.visible_area,TRANSPARENCY_PEN,0,prival);
+							Machine->visible_area,TRANSPARENCY_PEN,0,prival);
 				}
 			}
 		}
@@ -236,16 +236,16 @@ public class deco32
 				if ((y&0x8000)!=mask) /* Defer alpha until last (seperate pass) */
 					continue;
 	
-				if ((y & 0x8000) != 0)
+				if (y&0x8000)
 					trans=TRANSPARENCY_ALPHA;
 	
-				if ((x & 0x4000) != 0)
+				if (x&0x4000)
 					pri=32; /* Behind other sprites, above all playfields */
 				else
 					pri=128; /* Above other sprites, above all playfields */
 			}
 			else {
-				if ((x & 0x4000) != 0)
+				if (x&0x4000)
 					pri=64; /* Above top playfield */
 				else
 					pri=8; /* Behind top playfield */
@@ -261,7 +261,7 @@ public class deco32
 			if (y >= 256) y -= 512;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -271,17 +271,17 @@ public class deco32
 	
 			mult=+16;//todo
 	
-			if (fx != 0) fx=0; else fx=1;
-			if (fy != 0) fy=0; else fy=1;
+			if (fx) fx=0; else fx=1;
+			if (fy) fy=0; else fy=1;
 	
 			while (multi >= 0)
 			{
-				deco16_pdrawgfx(bitmap,Machine.gfx[gfxbank],
+				deco16_pdrawgfx(bitmap,Machine->gfx[gfxbank],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
 						x,y + mult * multi,
-						Machine.visible_area,trans,0,pri,1<<gfxbank);
+						Machine->visible_area,trans,0,pri,1<<gfxbank);
 	
 				multi--;
 			}
@@ -305,35 +305,35 @@ public class deco32
 		*/
 	
 		/* KW 991012 -- Added code to force clip to bitmap boundary */
-		if (clip != 0)
+		if(clip)
 		{
-			myclip.min_x = clip.min_x;
-			myclip.max_x = clip.max_x;
-			myclip.min_y = clip.min_y;
-			myclip.max_y = clip.max_y;
+			myclip.min_x = clip->min_x;
+			myclip.max_x = clip->max_x;
+			myclip.min_y = clip->min_y;
+			myclip.max_y = clip->max_y;
 	
 			if (myclip.min_x < 0) myclip.min_x = 0;
-			if (myclip.max_x >= dest_bmp.width) myclip.max_x = dest_bmp.width-1;
+			if (myclip.max_x >= dest_bmp->width) myclip.max_x = dest_bmp->width-1;
 			if (myclip.min_y < 0) myclip.min_y = 0;
-			if (myclip.max_y >= dest_bmp.height) myclip.max_y = dest_bmp.height-1;
+			if (myclip.max_y >= dest_bmp->height) myclip.max_y = dest_bmp->height-1;
 	
 			clip=&myclip;
 		}
 	
 		{
-			if( gfx && gfx.colortable )
+			if( gfx && gfx->colortable )
 			{
-				const pen_t *pal = &gfx.colortable[gfx.color_granularity * (color % gfx.total_colors)]; /* ASG 980209 */
-				int source_base = (code % gfx.total_elements) * gfx.height;
+				const pen_t *pal = &gfx->colortable[gfx->color_granularity * (color % gfx->total_colors)]; /* ASG 980209 */
+				int source_base = (code % gfx->total_elements) * gfx->height;
 	
-	//			int sprite_screen_height = (scaley*gfx.height+0x8000)>>16;
-	//			int sprite_screen_width = (scalex*gfx.width+0x8000)>>16;
+	//			int sprite_screen_height = (scaley*gfx->height+0x8000)>>16;
+	//			int sprite_screen_width = (scalex*gfx->width+0x8000)>>16;
 	
 				if (sprite_screen_width && sprite_screen_height)
 				{
 					/* compute sprite increment per screen pixel */
-					int dx = (gfx.width<<16)/sprite_screen_width;
-					int dy = (gfx.height<<16)/sprite_screen_height;
+					int dx = (gfx->width<<16)/sprite_screen_width;
+					int dy = (gfx->height<<16)/sprite_screen_height;
 	
 					int ex = sx+sprite_screen_width;
 					int ey = sy+sprite_screen_height;
@@ -341,7 +341,7 @@ public class deco32
 					int x_index_base;
 					int y_index;
 	
-					if (flipx != 0)
+					if( flipx )
 					{
 						x_index_base = (sprite_screen_width-1)*dx;
 						dx = -dx;
@@ -351,7 +351,7 @@ public class deco32
 						x_index_base = 0;
 					}
 	
-					if (flipy != 0)
+					if( flipy )
 					{
 						y_index = (sprite_screen_height-1)*dy;
 						dy = -dy;
@@ -361,29 +361,29 @@ public class deco32
 						y_index = 0;
 					}
 	
-					if (clip != 0)
+					if( clip )
 					{
-						if( sx < clip.min_x)
+						if( sx < clip->min_x)
 						{ /* clip left */
-							int pixels = clip.min_x-sx;
+							int pixels = clip->min_x-sx;
 							sx += pixels;
 							x_index_base += pixels*dx;
 						}
-						if( sy < clip.min_y )
+						if( sy < clip->min_y )
 						{ /* clip top */
-							int pixels = clip.min_y-sy;
+							int pixels = clip->min_y-sy;
 							sy += pixels;
 							y_index += pixels*dy;
 						}
 						/* NS 980211 - fixed incorrect clipping */
-						if( ex > clip.max_x+1 )
+						if( ex > clip->max_x+1 )
 						{ /* clip right */
-							int pixels = ex-clip.max_x-1;
+							int pixels = ex-clip->max_x-1;
 							ex -= pixels;
 						}
-						if( ey > clip.max_y+1 )
+						if( ey > clip->max_y+1 )
 						{ /* clip bottom */
-							int pixels = ey-clip.max_y-1;
+							int pixels = ey-clip->max_y-1;
 							ey -= pixels;
 						}
 					}
@@ -395,13 +395,13 @@ public class deco32
 						/* case 1: TRANSPARENCY_PEN */
 						if (transparency == TRANSPARENCY_PEN)
 						{
-							if (pri_buffer != 0)
+							if (pri_buffer)
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
-									UINT8 *pri = pri_buffer.line[y];
+									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *pri = pri_buffer->line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -423,8 +423,8 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -442,13 +442,13 @@ public class deco32
 						/* case 6: TRANSPARENCY_ALPHA */
 						if (transparency == TRANSPARENCY_ALPHA)
 						{
-							if (pri_buffer != 0)
+							if (pri_buffer)
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
-									UINT8 *pri = pri_buffer.line[y];
+									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
+									UINT8 *pri = pri_buffer->line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -470,8 +470,8 @@ public class deco32
 							{
 								for( y=sy; y<ey; y++ )
 								{
-									UINT8 *source = gfx.gfxdata + (source_base+(y_index>>16)) * gfx.line_modulo;
-									UINT32 *dest = (UINT32 *)dest_bmp.line[y];
+									UINT8 *source = gfx->gfxdata + (source_base+(y_index>>16)) * gfx->line_modulo;
+									UINT32 *dest = (UINT32 *)dest_bmp->line[y];
 	
 									int x, x_index = x_index_base;
 									for( x=sx; x<ex; x++ )
@@ -543,7 +543,7 @@ public class deco32
 		*/
 	
 		/* Sprite global disable bit */
-		if ((dragngun_sprite_ctrl & 0x40000000) != 0)
+		if (dragngun_sprite_ctrl&0x40000000)
 			return;
 	
 		for (offs = 0;offs < 0x800;offs += 8)
@@ -570,8 +570,8 @@ public class deco32
 			sy = spritedata[offs+3] & 0x3ff;
 			bx = layout_ram[2] & 0x1ff;
 			by = layout_ram[3] & 0x1ff;
-			if ((bx & 0x100) != 0) bx=1-(bx&0xff);
-			if ((by & 0x100) != 0) by=1-(by&0xff); /* '1 - ' is strange, but correct for Dragongun 'Winners' screen. */
+			if (bx&0x100) bx=1-(bx&0xff);
+			if (by&0x100) by=1-(by&0xff); /* '1 - ' is strange, but correct for Dragongun 'Winners' screen. */
 			if (sx >= 512) sx -= 1024;
 			if (sy >= 512) sy -= 1024;
 	
@@ -594,13 +594,13 @@ public class deco32
 			zoomx=scalex * 0x10000 / (w*16);
 			zoomy=scaley * 0x10000 / (h*16);
 	
-			if (fy == 0)
+			if (!fy)
 				ypos=(sy<<16) - (by*zoomy); /* The block offset scales with zoom, the base position does not */
 			else
 				ypos=(sy<<16) + (by*zoomy) - (16*zoomy);
 	
 			for (y=0; y<h; y++) {
-				if (fx == 0)
+				if (!fx)
 					xpos=(sx<<16) - (bx*zoomx); /* The block offset scales with zoom, the base position does not */
 				else
 					xpos=(sx<<16) + (bx*zoomx) - (16*zoomx);
@@ -633,31 +633,31 @@ public class deco32
 					case 0xf000: sprite=0x3000 | (sprite&0xfff); break;
 					}
 	
-					if ((sprite & 0x8000) != 0) bank=4; else bank=3;
+					if (sprite&0x8000) bank=4; else bank=3;
 					sprite&=0x7fff;
 	
 					if (zoomx!=0x10000 || zoomy!=0x10000)
-						dragngun_drawgfxzoom(bitmap,Machine.gfx[bank],
+						dragngun_drawgfxzoom(bitmap,Machine->gfx[bank],
 							sprite,
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							Machine.visible_area,trans,15,zoomx,zoomy,NULL,0,
+							Machine->visible_area,trans,15,zoomx,zoomy,NULL,0,
 							((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16) );
 					else
-						drawgfx(bitmap,Machine.gfx[bank],
+						drawgfx(bitmap,Machine->gfx[bank],
 							sprite,
 							colour,
 							fx,fy,
 							xpos>>16,ypos>>16,
-							Machine.visible_area,trans,15);
+							Machine->visible_area,trans,15);
 	
-					if (fx != 0)
+					if (fx)
 						xpos-=zoomx<<4;
 					else
 						xpos+=zoomx<<4;
 				}
-				if (fy != 0)
+				if (fy)
 					ypos-=zoomy<<4;
 				else
 					ypos+=zoomy<<4;
@@ -669,7 +669,7 @@ public class deco32
 	
 	static UINT32 deco16_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -692,7 +692,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if ((tile & 0x8000) != 0) {
+		if (tile&0x8000) {
 			if ((deco32_pf12_control[6]>>8)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -712,7 +712,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if ((tile & 0x8000) != 0) {
+		if (tile&0x8000) {
 			if ((deco32_pf34_control[6]>>0)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -732,7 +732,7 @@ public class deco32
 		data8_t	colour=(tile>>12)&0xf;
 		data8_t flags=0;
 	
-		if ((tile & 0x8000) != 0) {
+		if (tile&0x8000) {
 			if ((deco32_pf34_control[6]>>8)&0x01) {
 				flags|=TILE_FLIPX;
 				colour&=0x7;
@@ -758,7 +758,7 @@ public class deco32
 		data32_t tile=deco32_pf3_data[tile_index];
 		data8_t flags=0;
 	
-		if ((tile & 0x8000) != 0) {
+		if (tile&0x8000) {
 			if ((deco32_pf34_control[6]>>0)&0x01)
 				flags|=TILE_FLIPX;
 			if ((deco32_pf34_control[6]>>0)&0x02)
@@ -773,7 +773,7 @@ public class deco32
 		data32_t tile=deco32_pf4_data[tile_index];
 		data8_t flags=0;
 	
-		if ((tile & 0x8000) != 0) {
+		if (tile&0x8000) {
 			if ((deco32_pf34_control[6]>>8)&0x01)
 				flags|=TILE_FLIPX;
 			if ((deco32_pf34_control[6]>>8)&0x02)
@@ -783,8 +783,7 @@ public class deco32
 		SET_TILE_INFO(2,(tile&0x0fff)|deco32_pf4_bank,(tile >> 12)&3,flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_captaven  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_captaven  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf1a_tilemap =tilemap_create(get_pf1a_tile_info,   deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -805,7 +804,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_fghthist  = new VideoStartHandlerPtr() { public int handler() //unused
+	public static VideoStartHandlerPtr video_start_fghthist  = new VideoStartHandlerPtr() { public int handler()/unused
 	{
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -826,8 +825,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_dragngun  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dragngun  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_ll_pf3_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -853,8 +851,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_lockload  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lockload  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info,    tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info,    deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_ll_pf3_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
@@ -880,8 +877,7 @@ public class deco32
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_tattass  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tattass  = new VideoStartHandlerPtr() { public int handler(){
 		pf1_tilemap = tilemap_create(get_pf1_tile_info, tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 		pf2_tilemap = tilemap_create(get_pf2_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_pf3_tile_info, deco16_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
@@ -906,43 +902,41 @@ public class deco32
 	
 	/******************************************************************************/
 	
-	public static VideoEofHandlerPtr video_eof_captaven  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_captaven  = new VideoEofHandlerPtr() { public void handler(){
 		memcpy(buffered_spriteram32,spriteram32,spriteram_size[0]);
 		deco32_raster_display_position=0;
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_dragngun  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_dragngun  = new VideoEofHandlerPtr() { public void handler(){
 		deco32_raster_display_position=0;
 	} };
 	
 	#if 0
 	static void print_debug_info()
 	{
-		struct mame_bitmap *bitmap = Machine.scrbitmap;
+		struct mame_bitmap *bitmap = Machine->scrbitmap;
 		int j,trueorientation;
 		char buf[64];
 	
-		trueorientation = Machine.orientation;
-		Machine.orientation = ROT0;
+		trueorientation = Machine->orientation;
+		Machine->orientation = ROT0;
 	
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf12_control[0]&0xffff,deco32_pf12_control[1]&0xffff,deco32_pf12_control[2]&0xffff,deco32_pf12_control[3]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,40,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf12_control[4]&0xffff,deco32_pf12_control[5]&0xffff,deco32_pf12_control[6]&0xffff,deco32_pf12_control[7]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,48,0,TRANSPARENCY_NONE,0);
 	
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf34_control[0]&0xffff,deco32_pf34_control[1]&0xffff,deco32_pf34_control[2]&0xffff,deco32_pf34_control[3]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,60,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X %04X %04X %04X",deco32_pf34_control[4]&0xffff,deco32_pf34_control[5]&0xffff,deco32_pf34_control[6]&0xffff,deco32_pf34_control[7]&0xffff);
 		for (j = 0;j< 16+3;j++)
-			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,68,0,TRANSPARENCY_NONE,0);
 		sprintf(buf,"%04X",deco32_pri);
 		for (j = 0;j< 4;j++)
-			drawgfx(bitmap,Machine.uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
+			drawgfx(bitmap,Machine->uifont,buf[j],0,0,0,60+6*j,80,0,TRANSPARENCY_NONE,0);
 	}
 	
 	#endif
@@ -953,8 +947,8 @@ public class deco32
 		struct rectangle clip;
 		int overflow=deco32_raster_display_position;
 	
-		clip.min_x = cliprect.min_x;
-		clip.max_x = cliprect.max_x;
+		clip.min_x = cliprect->min_x;
+		clip.max_x = cliprect->max_x;
 	
 		/* Finish list up to end of visible display */
 		deco32_raster_display_list[overflow++]=255;
@@ -1000,9 +994,9 @@ public class deco32
 		for (y=8; y<248; y++) {
 			const int py=(y_src+y)&height_mask;
 	
-			bitmap0_y=bitmap0.line[py];
-			bitmap1_y=bitmap1.line[py];
-			bitmap2_y=bitmap.line[y];
+			bitmap0_y=bitmap0->line[py];
+			bitmap1_y=bitmap1->line[py];
+			bitmap2_y=bitmap->line[y];
 	
 			/* Todo:  Should add row enable, and col scroll, but never used as far as I can see */
 			x_src=(deco32_pf34_control[1] + deco32_pf3_rowscroll[py])&width_mask;
@@ -1012,7 +1006,7 @@ public class deco32
 				/* 0x200 is palette base for this tilemap */
 				p = 0x200 +((bitmap0_y[x_src]&0xf) | ((bitmap0_y[x_src]&0x30)<<4) | ((bitmap1_y[x_src]&0xf)<<4));
 	
-				bitmap2_y[x]=Machine.pens[p];
+				bitmap2_y[x]=Machine->pens[p];
 	
 				x_src=(x_src+1)&width_mask;
 			}
@@ -1063,8 +1057,7 @@ public class deco32
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_captaven  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pf1_enable,pf2_enable,pf3_enable;
 		static int last_pf3_bank;
 	
@@ -1096,18 +1089,18 @@ public class deco32
 	
 		fillbitmap(priority_bitmap,0,cliprect);
 		if ((deco32_pri&1)==0) {
-			if (pf3_enable != 0)
+			if (pf3_enable)
 				tilemap_draw(bitmap,cliprect,pf3_tilemap,TILEMAP_IGNORE_TRANSPARENCY,0);
 			else
 				fillbitmap(bitmap,get_black_pen(),cliprect);
 	
-			if (deco32_raster_display_position != 0)
+			if (deco32_raster_display_position)
 				tilemap_raster_draw(bitmap,cliprect,0,1);
 			else
 				tilemap_draw(bitmap,cliprect,pf2_tilemap,0,1);
 		} else {
-			if (pf2_enable != 0) {
-				if (deco32_raster_display_position != 0)
+			if (pf2_enable) {
+				if (deco32_raster_display_position)
 					tilemap_raster_draw(bitmap,cliprect,TILEMAP_IGNORE_TRANSPARENCY,0);
 				else
 					tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
@@ -1127,8 +1120,7 @@ public class deco32
 			tilemap_draw(bitmap,cliprect,pf1a_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_dragngun  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Tilemap graphics banking */
 		if ((((deco32_pf12_control[7]>> 4)&0x7)<<12)!=deco32_pf1_bank || deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3)) {
 			tilemap_mark_all_tiles_dirty(pf1_tilemap);
@@ -1169,7 +1161,7 @@ public class deco32
 		tilemap_draw(bitmap,cliprect,pf3_tilemap,0,0);
 	
 		/* Raster update */
-		if (deco32_raster_display_position != 0) {
+		if (deco32_raster_display_position) {
 			int ptr=0,start,end=0;
 			struct rectangle clip;
 			int overflow=deco32_raster_display_position;
@@ -1211,8 +1203,7 @@ public class deco32
 			tilemap_draw(bitmap,cliprect,pf1a_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tattass  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Dirty tilemaps if any globals change */
 		if (deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3))
 			tilemap_mark_all_tiles_dirty(pf1_tilemap);
@@ -1248,7 +1239,7 @@ public class deco32
 			fillbitmap(bitmap,Machine.pens[0x200],cliprect);
 	
 		/* Draw playfields & sprites */
-		if ((deco32_pri & 2) != 0) {
+		if (deco32_pri&2) {
 			combined_tilemap_draw(bitmap);
 		} else {
 			tilemap_draw(bitmap,cliprect,pf4_tilemap,0,0);
@@ -1263,8 +1254,7 @@ public class deco32
 		tilemap_draw(bitmap,cliprect,pf1_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_fghthist  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* Dirty tilemaps if any globals change */
 		if (deco32_pf1_flip!=((deco32_pf12_control[6]>>0)&0x3))
 			tilemap_mark_all_tiles_dirty(pf1_tilemap);

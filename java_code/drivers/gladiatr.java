@@ -100,7 +100,7 @@ E0     - Comunication port to 6809
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -113,21 +113,20 @@ public class gladiatr
 	static int banka;
 	
 	/*Rom bankswitching*/
-	public static WriteHandlerPtr gladiatr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
-		static int bank1[2] = { 0x10000, 0x12000 };
+	public static WriteHandlerPtr gladiatr_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
+		static int bank1[2] = { 0x10000, 0x12000 } };;
 		static int bank2[2] = { 0x14000, 0x18000 };
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		banka = data;
 		cpu_setbank(1,&RAM[bank1[(data & 0x03)]]);
 		cpu_setbank(2,&RAM[bank2[(data & 0x03)]]);
-	} };
+	}
 	
-	public static ReadHandlerPtr gladiatr_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset){
+	public static ReadHandlerPtr gladiatr_bankswitch_r  = new ReadHandlerPtr() { public int handler(int offset)
 		return banka;
-	} };
+	}
 	
-	public static ReadHandlerPtr gladiator_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gladiator_dsw1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int orig = readinputport(0); /* DSW1 */
 	/*Reverse all bits for Input Port 0*/
 	/*ie..Bit order is: 0,1,2,3,4,5,6,7*/
@@ -137,8 +136,7 @@ public class gladiatr
 	       | ((orig&0x40)>>5) | ((orig&0x80)>>7);;
 	} };
 	
-	public static ReadHandlerPtr gladiator_dsw2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gladiator_dsw2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int orig = readinputport(1); /* DSW2 */
 	/*Bits 2-7 are reversed for Input Port 1*/
 	/*ie..Bit order is: 2,3,4,5,6,7,1,0*/
@@ -148,8 +146,7 @@ public class gladiatr
 		| ((orig&0x40)>>3) | ((orig&0x80)>>5);
 	} };
 	
-	public static ReadHandlerPtr gladiator_controll_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gladiator_controll_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int coins = 0;
 	
 		if( readinputport(4) & 0xc0 ) coins = 0x80;
@@ -166,8 +163,7 @@ public class gladiatr
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr gladiator_button3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gladiator_button3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch(offset)
 		{
 		case 0x01: /* button 3 */
@@ -185,8 +181,7 @@ public class gladiatr
 		{gladiator_dsw1_r,gladiator_dsw2_r,gladiator_button3_r,gladiator_controll_r}	/* port handler */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_gladiator  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gladiator  = new MachineInitHandlerPtr() { public void handler(){
 		TAITO8741_start(&gsword_8741interface);
 		/* 6809 bank memory set */
 		{
@@ -199,20 +194,17 @@ public class gladiatr
 	
 	#if 1
 	/* !!!!! patch to IRQ timming for 2nd CPU !!!!! */
-	public static WriteHandlerPtr gladiatr_irq_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gladiatr_irq_patch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(1,0,HOLD_LINE);
 	} };
 	#endif
 	
 	/* YM2203 port A handler (input) */
-	public static ReadHandlerPtr gladiator_dsw3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gladiator_dsw3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return input_port_2_r.handler(offset)^0xff;
 	} };
 	/* YM2203 port B handler (output) */
-	public static WriteHandlerPtr gladiator_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gladiator_int_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 7   : SSRST = sound reset ? */
 		/* bit 6-1 : N.C.                  */
 		/* bit 0   : ??                    */
@@ -225,8 +217,7 @@ public class gladiatr
 	}
 	
 	/*Sound Functions*/
-	public static WriteHandlerPtr glad_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr glad_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 		/* bit6 = bank offset */
 		int bankoffset = data&0x40 ? 0x4000 : 0;
@@ -239,14 +230,12 @@ public class gladiatr
 		MSM5205_vclk_w (0,(data>>4)&1); /* bit4     */
 	} };
 	
-	public static WriteHandlerPtr glad_cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr glad_cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(2,ASSERT_LINE);
 	} };
 	
-	public static ReadHandlerPtr glad_cpu_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr glad_cpu_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_nmi_line(2,CLEAR_LINE);
 		return soundlatch_r(0);
 	} };
@@ -352,7 +341,7 @@ public class gladiatr
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_gladiatr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gladiatr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gladiatr )
 		PORT_START(); 		/* DSW1 (8741-0 parallel port)*/
 		PORT_DIPNAME( 0x03, 0x01, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(    0x00, "Easy" );
@@ -559,8 +548,7 @@ public class gladiatr
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_gladiatr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gladiatr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 6000000) /* 6 MHz? */
@@ -596,9 +584,7 @@ public class gladiatr
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -672,6 +658,6 @@ public class gladiatr
 	
 	
 	
-	public static GameDriver driver_gladiatr	   = new GameDriver("1986"	,"gladiatr"	,"gladiatr.java"	,rom_gladiatr,null	,machine_driver_gladiatr	,input_ports_gladiatr	,null	,ROT0	,	"Taito America Corporation", "Gladiator (US)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_ogonsiro	   = new GameDriver("1986"	,"ogonsiro"	,"gladiatr.java"	,rom_ogonsiro,driver_gladiatr	,machine_driver_gladiatr	,input_ports_gladiatr	,null	,ROT0	,	"Taito Corporation", "Ohgon no Siro (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, gladiatr, 0,        gladiatr, gladiatr, 0, ROT0, "Taito America Corporation", "Gladiator (US)", GAME_NO_COCKTAIL )
+	GAMEX( 1986, ogonsiro, gladiatr, gladiatr, gladiatr, 0, ROT0, "Taito Corporation", "Ohgon no Siro (Japan)", GAME_NO_COCKTAIL )
 }

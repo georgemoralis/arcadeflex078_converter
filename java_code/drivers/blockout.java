@@ -8,7 +8,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -23,8 +23,7 @@ public class blockout
 	WRITE16_HANDLER( blockout_frontcolor_w );
 	
 	
-	public static InterruptHandlerPtr blockout_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr blockout_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* interrupt 6 is vblank */
 		/* interrupt 5 reads coin inputs - might have to be triggered only */
 		/* when a coin is inserted */
@@ -33,7 +32,7 @@ public class blockout
 	
 	static WRITE16_HANDLER( blockout_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(offset,data & 0xff);
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
@@ -90,7 +89,7 @@ public class blockout
 	};
 	
 	
-	static InputPortPtr input_ports_blockout = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockout = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockout )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -165,7 +164,7 @@ public class blockout
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blckoutj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blckoutj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blckoutj )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -267,8 +266,7 @@ public class blockout
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_blockout = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blockout )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8760000)       /* MRH - 8.76 makes gfx/adpcm samples sync better */
@@ -295,9 +293,7 @@ public class blockout
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -352,7 +348,7 @@ public class blockout
 		ROM_LOAD( "mb7114h.25",   0x0000, 0x0100, CRC(b25bbda7) SHA1(840f1470886bd0019db3cd29e3d1d80205a65f48) )	/* unknown */
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_blockout	   = new GameDriver("1989"	,"blockout"	,"blockout.java"	,rom_blockout,null	,machine_driver_blockout	,input_ports_blockout	,null	,ROT0	,	"Technos + California Dreams", "Block Out (set 1)" )
-	public static GameDriver driver_blckout2	   = new GameDriver("1989"	,"blckout2"	,"blockout.java"	,rom_blckout2,driver_blockout	,machine_driver_blockout	,input_ports_blockout	,null	,ROT0	,	"Technos + California Dreams", "Block Out (set 2)" )
-	public static GameDriver driver_blckoutj	   = new GameDriver("1989"	,"blckoutj"	,"blockout.java"	,rom_blckoutj,driver_blockout	,machine_driver_blockout	,input_ports_blckoutj	,null	,ROT0	,	"Technos + California Dreams", "Block Out (Japan)" )
+	GAME( 1989, blockout, 0,        blockout, blockout, 0, ROT0, "Technos + California Dreams", "Block Out (set 1)" )
+	GAME( 1989, blckout2, blockout, blockout, blockout, 0, ROT0, "Technos + California Dreams", "Block Out (set 2)" )
+	GAME( 1989, blckoutj, blockout, blockout, blckoutj, 0, ROT0, "Technos + California Dreams", "Block Out (Japan)" )
 }

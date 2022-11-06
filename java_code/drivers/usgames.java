@@ -25,7 +25,7 @@ Sound: AY-3-8912
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -33,15 +33,11 @@ public class usgames
 {
 	
 	/* vidhrdw */
-	VIDEO_START(usg);
-	PALETTE_INIT(usg);
-	VIDEO_UPDATE(usg);
 	
 	
 	
 	
-	public static WriteHandlerPtr usg_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr usg_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	//	logerror ("BANK WRITE? -%02x-\n",data);
@@ -50,8 +46,7 @@ public class usgames
 		cpu_setbank( 1,&RAM[ 0x10000 + 0x4000 * data] );
 	} };
 	
-	public static WriteHandlerPtr lamps1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lamps1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* button lamps */
 		set_led_status(0,data & 0x01);
 		set_led_status(1,data & 0x02);
@@ -62,8 +57,7 @@ public class usgames
 		/* bit 5 toggles all the time - extra lamp? */
 	} };
 	
-	public static WriteHandlerPtr lamps2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lamps2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 5 toggles all the time - extra lamp? */
 	} };
 	
@@ -151,7 +145,7 @@ public class usgames
 	
 	
 	
-	static InputPortPtr input_ports_usg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_usg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( usg )
 		PORT_START(); 
 		PORT_BITX(0x01, IP_ACTIVE_LOW, IPT_BUTTON1, "Button 1", KEYCODE_Z, IP_JOY_DEFAULT );
 		PORT_BITX(0x02, IP_ACTIVE_LOW, IPT_BUTTON2, "Button 2", KEYCODE_X, IP_JOY_DEFAULT );
@@ -273,8 +267,7 @@ public class usgames
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_usg = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( usg )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, 2000000) /* ?? */
@@ -300,18 +293,13 @@ public class usgames
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_usg185 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( usg185 )
 		MDRV_IMPORT_FROM(usg)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(usg185_readmem,usg185_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -394,10 +382,10 @@ public class usgames
 	
 	
 	
-	public static GameDriver driver_usg32	   = new GameDriver("1987"	,"usg32"	,"usgames.java"	,rom_usg32,null	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Duper Casino (California V3.2)" )
-	public static GameDriver driver_usg83	   = new GameDriver("1988"	,"usg83"	,"usgames.java"	,rom_usg83,null	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.3" )
-	public static GameDriver driver_usg83x	   = new GameDriver("1988"	,"usg83x"	,"usgames.java"	,rom_usg83x,driver_usg83	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.3X" )
-	public static GameDriver driver_usg82	   = new GameDriver("1988"	,"usg82"	,"usgames.java"	,rom_usg82,driver_usg83	,machine_driver_usg	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Super Ten V8.2" )	// "Feb.08,1988"
-	public static GameDriver driver_usg185	   = new GameDriver("1991"	,"usg185"	,"usgames.java"	,rom_usg185,null	,machine_driver_usg185	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Games V18.7C" )
-	public static GameDriver driver_usg252	   = new GameDriver("1992"	,"usg252"	,"usgames.java"	,rom_usg252,null	,machine_driver_usg185	,input_ports_usg	,null	,ROT0	,	"U.S. Games", "Games V25.4X" )
+	GAME( 1987, usg32,  0,     usg,    usg, 0, ROT0, "U.S. Games", "Super Duper Casino (California V3.2)" )
+	GAME( 1988, usg83,  0,     usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.3" )
+	GAME( 1988, usg83x, usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.3X" )
+	GAME( 1988, usg82,  usg83, usg,    usg, 0, ROT0, "U.S. Games", "Super Ten V8.2" )	// "Feb.08,1988"
+	GAME( 1991, usg185, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V18.7C" )
+	GAME( 1992, usg252, 0,     usg185, usg, 0, ROT0, "U.S. Games", "Games V25.4X" )
 }

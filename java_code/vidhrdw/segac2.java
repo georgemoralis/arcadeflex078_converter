@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -198,8 +198,7 @@ public class segac2
 	);
 	#endif
 	
-	public static VideoStartHandlerPtr video_start_segac2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_segac2  = new VideoStartHandlerPtr() { public int handler(){
 		static const UINT8 vdp_init[24] =
 		{
 			0x04, 0x44, 0x30, 0x3C, 0x07, 0x6C, 0x00, 0x00,
@@ -227,9 +226,9 @@ public class segac2
 			int orig_color = i & 0x7ff;
 			int half_bright = i & 0x800;
 	
-			if ((orig_color & 0x100) != 0)
+			if (orig_color & 0x100)
 				transparent_lookup[i] = orig_color;
-			else if (half_bright != 0)
+			else if (half_bright)
 				transparent_lookup[i] = orig_color | 0x800;
 			else
 				transparent_lookup[i] = orig_color | 0x1000;
@@ -309,11 +308,10 @@ public class segac2
 	
 	} };
 	
-	public static VideoStartHandlerPtr video_start_puckpkmn  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_puckpkmn  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2() != 0)
+		if (video_start_segac2())
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
@@ -326,29 +324,27 @@ public class segac2
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_megatech  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_megatech  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2() != 0)
+		if (video_start_segac2())
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
 		display_enable = 1;
 	
 	
-		if (start_megatech_video_normal() != 0)
+		if (start_megatech_video_normal())
 			return 1;
 		scanbase = 192;
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_megaplay  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_megaplay  = new VideoStartHandlerPtr() { public int handler(){
 		paletteram16 = auto_malloc(0x800 * sizeof(data16_t));
 	
-		if (video_start_segac2() != 0)
+		if (video_start_segac2())
 			return 1;
 	
 		segac2_sp_palbase = 0x000;	// same palettes for sprites and bg
@@ -356,7 +352,7 @@ public class segac2
 	
 		scanbase = 0;
 	
-		if (start_megatech_video_normal() != 0)
+		if (start_megatech_video_normal())
 			return 1;
 	
 		return 0;
@@ -381,8 +377,7 @@ public class segac2
 	
 	
 	/* end-of-frame callback to mark the start of VBLANK */
-	public static VideoEofHandlerPtr video_eof_segac2  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_segac2  = new VideoEofHandlerPtr() { public void handler(){
 		/* set VBLANK flag */
 		internal_vblank = 1;
 	
@@ -394,7 +389,7 @@ public class segac2
 			int tile;
 	
 			for (tile = 0;tile < 2048;tile++)
-				decodechar(Machine.gfx[0],tile,(UINT8 *)vdp_vram,&genvdp_charlayout);
+				decodechar(Machine->gfx[0],tile,(UINT8 *)vdp_vram,&genvdp_charlayout);
 		}
 	#endif
 	
@@ -418,15 +413,14 @@ public class segac2
 	/* set the display enable bit */
 	void segac2_enable_display(int enable)
 	{
-		if (internal_vblank == 0)
+		if (!internal_vblank)
 			force_partial_update((cpu_getscanline()) + scanbase);
 		display_enable = enable;
 	}
 	
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_segac2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
 	
@@ -463,8 +457,7 @@ public class segac2
 	/* megatech, same but drawing the sms display too */
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr video_update_megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_megatech  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
 	
@@ -507,8 +500,7 @@ public class segac2
 	/* megaplay, draws either Genesis or SMS (single screen display) */
 	
 	/* core refresh: computes the final screen */
-	public static VideoUpdateHandlerPtr video_update_megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_megaplay  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int old_bg = segac2_bg_palbase, old_sp = segac2_sp_palbase;
 		int y;
 	
@@ -614,10 +606,10 @@ public class segac2
 		{
 			case 0x00:	/* Write data */
 			case 0x01:
-				if (mem_mask != 0)
+				if (mem_mask)
 				{
 					data &= ~mem_mask;
-					 if (ACCESSING_MSB != 0)
+					 if (ACCESSING_MSB)
 					 	data |= data >> 8;
 					 else
 					 	data |= data << 8;
@@ -627,10 +619,10 @@ public class segac2
 	
 			case 0x02:	/* Control Write */
 			case 0x03:
-				if (mem_mask != 0)
+				if (mem_mask)
 				{
 					data &= ~mem_mask;
-					 if (ACCESSING_MSB != 0)
+					 if (ACCESSING_MSB)
 					 	data |= data >> 8;
 					 else
 					 	data |= data << 8;
@@ -691,7 +683,7 @@ public class segac2
 		vdp_cmdpart = 0;
 	
 		/* handle the fill case */
-		if (vdp_dmafill != 0)
+		if (vdp_dmafill)
 		{
 			vdp_dma_fill(data);
 			vdp_dmafill = 0;
@@ -710,7 +702,7 @@ public class segac2
 					force_partial_update((cpu_getscanline()) + scanbase);
 	
 				/* write to VRAM */
-				if ((vdp_address & 1) != 0)
+				if (vdp_address & 1)
 					data = ((data & 0xff) << 8) | ((data >> 8) & 0xff);
 				VDP_VRAM_BYTE(vdp_address & ~1) = data >> 8;
 				VDP_VRAM_BYTE(vdp_address |  1) = data;
@@ -725,11 +717,11 @@ public class segac2
 			case 0x05:		/* VSRAM write */
 	
 				/* if the vscroll RAM is changing during screen refresh, force an update */
-				if (internal_vblank == 0)
+				if (!internal_vblank)
 					force_partial_update((cpu_getscanline()) + scanbase);
 	
 				/* write to VSRAM */
-				if ((vdp_address & 1) != 0)
+				if (vdp_address & 1)
 					data = ((data & 0xff) << 8) | ((data >> 8) & 0xff);
 				VDP_VSRAM_BYTE(vdp_address & ~1) = data >> 8;
 				VDP_VSRAM_BYTE(vdp_address |  1) = data;
@@ -789,11 +781,11 @@ public class segac2
 		vdp_cmdpart = 0;
 	
 		/* set the VBLANK bit */
-		if (internal_vblank != 0)
+		if (internal_vblank)
 			status |= 0x0008;
 	
 		/* set the HBLANK bit */
-		if (beampos < Machine.visible_area.min_x || beampos > Machine.visible_area.max_x)
+		if (beampos < Machine->visible_area.min_x || beampos > Machine->visible_area.max_x)
 			status |= 0x0004;
 	
 		return (status);
@@ -803,7 +795,7 @@ public class segac2
 	static void vdp_control_w(int data)
 	{
 		/* case 1: we're not expecting the 2nd half of a command */
-		if (vdp_cmdpart == 0)
+		if (!vdp_cmdpart)
 		{
 			/* if 10xxxxxx xxxxxxxx this is a register setting command */
 			if ((data & 0xc000) == 0x8000)
@@ -848,7 +840,7 @@ public class segac2
 		switch (regnum)
 		{
 			case 0x01: /* video modes */
-				if ((regdat & 8) != 0)
+				if (regdat & 8)
 					usrintf_showmessage("Video height = 240!");
 				break;
 	
@@ -919,7 +911,7 @@ public class segac2
 			switch(segac2_vdp_regs[23] & 0xc0)
 			{
 				case 0x00:
-				case 0x40:		/* 68k . VRAM Tranfser */
+				case 0x40:		/* 68k -> VRAM Tranfser */
 					vdp_dma_68k();
 					break;
 	
@@ -951,7 +943,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (length == 0)
+		if (!length)
 			length = 0xffff;
 	
 		/* handle the DMA */
@@ -970,7 +962,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (length == 0)
+		if (!length)
 			length = 0xffff;
 	
 		/* handle the DMA */
@@ -988,7 +980,7 @@ public class segac2
 		int count;
 	
 		/* length of 0 means 64k likely */
-		if (length == 0)
+		if (!length)
 			length = 0xffff;
 	
 		/* handle the fill */
@@ -1047,7 +1039,7 @@ public class segac2
 	*******************************************************************************
 	
 		These are used by the Screen Refresh functions to do the actual rendering
-		of a screenline to Machine.scrbitmap.
+		of a screenline to Machine->scrbitmap.
 	
 		Draw Planes in Order
 			Scroll B Low
@@ -1095,7 +1087,7 @@ public class segac2
 	
 			/* get the link; if 0, stop processing */
 			link = spritebase[3] & 0x7F;
-			if (link == 0)
+			if (!link)
 				break;
 		}
 	
@@ -1111,7 +1103,7 @@ public class segac2
 		/* compute the windowing for this line */
 		if ((window_down && line >= window_vpos) || (!window_down && line < window_vpos))
 			window_lclip = 0, window_rclip = BITMAP_WIDTH - 1;
-		else if (window_right != 0)
+		else if (window_right)
 			window_lclip = window_hpos, window_rclip = BITMAP_WIDTH - 1;
 		else
 			window_lclip = 0, window_rclip = window_hpos - 1;
@@ -1241,7 +1233,7 @@ public class segac2
 					mytile = tp[(tile >> 16) ^ 7];
 	
 				/* skip if all-transparent */
-				if (mytile == 0)
+				if (!mytile)
 					continue;
 	
 				/* non-clipped */
@@ -1250,27 +1242,27 @@ public class segac2
 					/* non-flipped */
 					if (!(tile & 0x0800))
 					{
-						col = EXTRACT_PIXEL(mytile, 0); if (col != 0) bmap[0] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 1); if (col != 0) bmap[1] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 2); if (col != 0) bmap[2] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 3); if (col != 0) bmap[3] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 4); if (col != 0) bmap[4] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 5); if (col != 0) bmap[5] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 6); if (col != 0) bmap[6] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 7); if (col != 0) bmap[7] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 0); if (col) bmap[0] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 1); if (col) bmap[1] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 2); if (col) bmap[2] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 3); if (col) bmap[3] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 4); if (col) bmap[4] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 5); if (col) bmap[5] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 6); if (col) bmap[6] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 7); if (col) bmap[7] = colbase + col;
 					}
 	
 					/* horizontal flip */
 					else
 					{
-						col = EXTRACT_PIXEL(mytile, 7); if (col != 0) bmap[0] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 6); if (col != 0) bmap[1] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 5); if (col != 0) bmap[2] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 4); if (col != 0) bmap[3] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 3); if (col != 0) bmap[4] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 2); if (col != 0) bmap[5] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 1); if (col != 0) bmap[6] = colbase + col;
-						col = EXTRACT_PIXEL(mytile, 0); if (col != 0) bmap[7] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 7); if (col) bmap[0] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 6); if (col) bmap[1] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 5); if (col) bmap[2] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 4); if (col) bmap[3] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 3); if (col) bmap[4] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 2); if (col) bmap[5] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 1); if (col) bmap[6] = colbase + col;
+						col = EXTRACT_PIXEL(mytile, 0); if (col) bmap[7] = colbase + col;
 					}
 				}
 	
@@ -1324,69 +1316,69 @@ public class segac2
 		int col;
 	
 		/* skip if all-transparent */
-		if (tile == 0)
+		if (!tile)
 			return;
 	
 		/* non-transparent */
 		if ((colbase & 0x30) != 0x30 || !(segac2_vdp_regs[12] & 0x08))
 		{
-			col = EXTRACT_PIXEL(tile, 0); if (col != 0) bmap[0] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 1); if (col != 0) bmap[1] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 2); if (col != 0) bmap[2] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 3); if (col != 0) bmap[3] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 4); if (col != 0) bmap[4] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 5); if (col != 0) bmap[5] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 6); if (col != 0) bmap[6] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 7); if (col != 0) bmap[7] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 0); if (col) bmap[0] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 1); if (col) bmap[1] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 2); if (col) bmap[2] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 3); if (col) bmap[3] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 4); if (col) bmap[4] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 5); if (col) bmap[5] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 6); if (col) bmap[6] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 7); if (col) bmap[7] = colbase + col;
 		}
 	
 		/* transparent */
 		else
 		{
 			col = EXTRACT_PIXEL(tile, 0);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[0] = colbase + col;
 				else bmap[0] = transparent_lookup[((col & 1) << 11) | (bmap[0] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 1);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[1] = colbase + col;
 				else bmap[1] = transparent_lookup[((col & 1) << 11) | (bmap[1] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 2);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[2] = colbase + col;
 				else bmap[2] = transparent_lookup[((col & 1) << 11) | (bmap[2] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 3);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[3] = colbase + col;
 				else bmap[3] = transparent_lookup[((col & 1) << 11) | (bmap[3] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 4);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[4] = colbase + col;
 				else bmap[4] = transparent_lookup[((col & 1) << 11) | (bmap[4] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 5);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[5] = colbase + col;
 				else bmap[5] = transparent_lookup[((col & 1) << 11) | (bmap[5] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 6);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[6] = colbase + col;
 				else bmap[6] = transparent_lookup[((col & 1) << 11) | (bmap[6] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 7);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[7] = colbase + col;
 				else bmap[7] = transparent_lookup[((col & 1) << 11) | (bmap[7] & 0x7ff)];
@@ -1402,69 +1394,69 @@ public class segac2
 		int col;
 	
 		/* skip if all-transparent */
-		if (tile == 0)
+		if (!tile)
 			return;
 	
 		/* non-transparent */
 		if ((colbase & 0x30) != 0x30 || !(segac2_vdp_regs[12] & 0x08))
 		{
-			col = EXTRACT_PIXEL(tile, 7); if (col != 0) bmap[0] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 6); if (col != 0) bmap[1] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 5); if (col != 0) bmap[2] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 4); if (col != 0) bmap[3] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 3); if (col != 0) bmap[4] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 2); if (col != 0) bmap[5] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 1); if (col != 0) bmap[6] = colbase + col;
-			col = EXTRACT_PIXEL(tile, 0); if (col != 0) bmap[7] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 7); if (col) bmap[0] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 6); if (col) bmap[1] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 5); if (col) bmap[2] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 4); if (col) bmap[3] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 3); if (col) bmap[4] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 2); if (col) bmap[5] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 1); if (col) bmap[6] = colbase + col;
+			col = EXTRACT_PIXEL(tile, 0); if (col) bmap[7] = colbase + col;
 		}
 	
 		/* transparent */
 		else
 		{
 			col = EXTRACT_PIXEL(tile, 7);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[0] = colbase + col;
 				else bmap[0] = transparent_lookup[((col & 1) << 11) | (bmap[0] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 6);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[1] = colbase + col;
 				else bmap[1] = transparent_lookup[((col & 1) << 11) | (bmap[1] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 5);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[2] = colbase + col;
 				else bmap[2] = transparent_lookup[((col & 1) << 11) | (bmap[2] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 4);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[3] = colbase + col;
 				else bmap[3] = transparent_lookup[((col & 1) << 11) | (bmap[3] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 3);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[4] = colbase + col;
 				else bmap[4] = transparent_lookup[((col & 1) << 11) | (bmap[4] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 2);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[5] = colbase + col;
 				else bmap[5] = transparent_lookup[((col & 1) << 11) | (bmap[5] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 1);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[6] = colbase + col;
 				else bmap[6] = transparent_lookup[((col & 1) << 11) | (bmap[6] & 0x7ff)];
 			}
 			col = EXTRACT_PIXEL(tile, 0);
-			if (col != 0)
+			if (col)
 			{
 				if (col < 0x0e) bmap[7] = colbase + col;
 				else bmap[7] = transparent_lookup[((col & 1) << 11) | (bmap[7] & 0x7ff)];

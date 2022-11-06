@@ -24,7 +24,7 @@ Known issues:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,15 +53,14 @@ public class bwing
 	//****************************************************************************
 	// Interrupt Handlers
 	
-	INTERRUPT_GEN ( bwp1_interrupt )
-	{
+	public static InterruptHandlerPtr bwp1_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int coin = 0;
 		data8_t latch_data;
 	
 		switch (cpu_getiloops())
 		{
 			case 0:
-				if (ffcount != 0)
+				if (ffcount)
 				{
 					ffcount--;
 					latch_data = sound_fifo[fftail];
@@ -73,7 +72,7 @@ public class bwing
 	
 			case 1:
 				if (~readinputport(4) & 0x03)
-					{ if (coin == 0) { coin = 1; cpu_set_nmi_line(0, ASSERT_LINE); } }
+					{ if (!coin) { coin = 1; cpu_set_nmi_line(0, ASSERT_LINE); } }
 				else
 					coin = 0;
 			break;
@@ -82,22 +81,21 @@ public class bwing
 				if (readinputport(5)) cpu_set_irq_line(0, M6809_FIRQ_LINE, ASSERT_LINE);
 			break;
 		}
-	}
+	} };
 	
 	
-	INTERRUPT_GEN ( bwp3_interrupt ) { if (bwp3_nmimask == 0) cpu_set_nmi_line(2, ASSERT_LINE); }
+	public static InterruptHandlerPtr bwp3_interrupt = new InterruptHandlerPtr() {public void handler() if (!bwp3_nmimask) cpu_set_nmi_line(2, ASSERT_LINE); }
 	
 	//****************************************************************************
 	// Memory and I/O Handlers
 	
-	public static WriteHandlerPtr bwp12_sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp1_sharedram1[offset] = bwp2_sharedram1[offset] = data; } };
-	public static WriteHandlerPtr bwp3_u8F_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp3_u8F_d = data; } }; // prepares custom chip for various operations
-	public static WriteHandlerPtr bwp3_nmiack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { cpu_set_nmi_line(2, CLEAR_LINE); } };
-	public static WriteHandlerPtr bwp3_nmimask_w = new WriteHandlerPtr() {public void handler(int offset, int data) { bwp3_nmimask = data & 0x80; } };
+	public static WriteHandlerPtr bwp12_sharedram1_w = new WriteHandlerPtr() {public void handler(int offset, int data) bwp1_sharedram1[offset] = bwp2_sharedram1[offset] = data; }
+	public static WriteHandlerPtr bwp3_u8F_w = new WriteHandlerPtr() {public void handler(int offset, int data) bwp3_u8F_d = data; } // prepares custom chip for various operations
+	public static WriteHandlerPtr bwp3_nmiack_w = new WriteHandlerPtr() {public void handler(int offset, int data) cpu_set_nmi_line(2, CLEAR_LINE); }
+	public static WriteHandlerPtr bwp3_nmimask_w = new WriteHandlerPtr() {public void handler(int offset, int data) bwp3_nmimask = data & 0x80; }
 	
 	
-	public static ReadHandlerPtr bwp1_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr bwp1_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if (offset == 0) return(readinputport(0));
 		if (offset == 1) return(readinputport(1));
 		if (offset == 2) return(readinputport(2));
@@ -108,8 +106,7 @@ public class bwing
 	} };
 	
 	
-	public static WriteHandlerPtr bwp1_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bwp1_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			// MSSTB
@@ -153,8 +150,7 @@ public class bwing
 	} };
 	
 	
-	public static WriteHandlerPtr bwp2_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bwp2_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset)
 		{
 			case 0: cpu_set_irq_line(0, M6809_IRQ_LINE, ASSERT_LINE); break; // SMSTB
@@ -256,7 +252,7 @@ public class bwing
 	//****************************************************************************
 	// I/O Port Maps
 	
-	static InputPortPtr input_ports_bwing = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bwing = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bwing )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -394,8 +390,7 @@ public class bwing
 	//****************************************************************************
 	// Hardware Definitions
 	
-	public static MachineInitHandlerPtr machine_init_bwing  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_bwing  = new MachineInitHandlerPtr() { public void handler(){
 		bwp3_nmimask = 0;
 		fftail = ffhead = ffcount = 0;
 	} };
@@ -419,8 +414,7 @@ public class bwing
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_bwing = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bwing )
 	
 		// basic machine hardware
 		MDRV_CPU_ADD(M6809, 2000000)
@@ -455,9 +449,7 @@ public class bwing
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	//****************************************************************************
 	// ROM Maps
@@ -635,8 +627,7 @@ public class bwing
 	}
 	
 	
-	public static DriverInitHandlerPtr init_bwing  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bwing  = new DriverInitHandlerPtr() { public void handler(){
 		bwp123_membase[0] = memory_region(REGION_CPU1);
 		bwp123_membase[1] = memory_region(REGION_CPU2);
 		bwp123_membase[2] = memory_region(REGION_CPU3);
@@ -647,10 +638,10 @@ public class bwing
 	//****************************************************************************
 	// Game Entries
 	
-	public static GameDriver driver_bwing	   = new GameDriver("1984"	,"bwing"	,"bwing.java"	,rom_bwing,null	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "B-Wings (Japan)" )
-	public static GameDriver driver_bwings	   = new GameDriver("1984"	,"bwings"	,"bwing.java"	,rom_bwings,driver_bwing	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Battle Wings" )
-	public static GameDriver driver_batwings	   = new GameDriver("1984"	,"batwings"	,"bwing.java"	,rom_batwings,driver_bwing	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Battle Wings (alt)", GAME_NOT_WORKING )
+	GAME ( 1984, bwing,        0, bwing, bwing, bwing, ROT90, "Data East Corporation", "B-Wings (Japan)" )
+	GAME ( 1984, bwings,   bwing, bwing, bwing, bwing, ROT90, "Data East Corporation", "Battle Wings" )
+	GAMEX( 1984, batwings, bwing, bwing, bwing, bwing, ROT90, "Data East Corporation", "Battle Wings (alt)", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_zaviga	   = new GameDriver("1984"	,"zaviga"	,"bwing.java"	,rom_zaviga,null	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Zaviga" )
-	public static GameDriver driver_zavigaj	   = new GameDriver("1984"	,"zavigaj"	,"bwing.java"	,rom_zavigaj,driver_zaviga	,machine_driver_bwing	,input_ports_bwing	,init_bwing	,ROT90	,	"Data East Corporation", "Zaviga (Japan)" )
+	GAME ( 1984, zaviga,       0, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga" )
+	GAME ( 1984, zavigaj, zaviga, bwing, bwing, bwing, ROT90, "Data East Corporation", "Zaviga (Japan)" )
 }

@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -30,8 +30,8 @@ public class tsamurai
 	
 	static void get_bg_tile_info(int tile_index)
 	{
-		unsigned char attributes = tsamurai_videoram.read(2*tile_index+1);
-		int tile_number = tsamurai_videoram.read(2*tile_index);
+		unsigned char attributes = tsamurai_videoram[2*tile_index+1];
+		int tile_number = tsamurai_videoram[2*tile_index];
 		tile_number += (( attributes & 0xc0 ) >> 6 ) * 256;	 /* legacy */
 		tile_number += (( attributes & 0x20 ) >> 5 ) * 1024; /* Mission 660 add-on*/
 		SET_TILE_INFO(
@@ -44,8 +44,8 @@ public class tsamurai
 	static void get_fg_tile_info(int tile_index)
 	{
 		int tile_number = videoram.read(tile_index);
-		if ((textbank1 & 0x01) != 0) tile_number += 256; /* legacy */
-		if ((textbank2 & 0x01) != 0) tile_number += 512; /* Mission 660 add-on */
+		if (textbank1 & 0x01) tile_number += 256; /* legacy */
+		if (textbank2 & 0x01) tile_number += 512; /* Mission 660 add-on */
 		SET_TILE_INFO(
 				1,
 				tile_number,
@@ -60,8 +60,7 @@ public class tsamurai
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_tsamurai  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tsamurai  = new VideoStartHandlerPtr() { public int handler(){
 		background = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		foreground = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -81,23 +80,19 @@ public class tsamurai
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr tsamurai_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly( background, 0, data );
 	} };
 	
-	public static WriteHandlerPtr tsamurai_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx( background, 0, data );
 	} };
 	
-	public static WriteHandlerPtr tsamurai_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		bgcolor = data;
 	} };
 	
-	public static WriteHandlerPtr tsamurai_textbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_textbank1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( textbank1!=data )
 		{
 			textbank1 = data;
@@ -105,8 +100,7 @@ public class tsamurai
 		}
 	} };
 	
-	public static WriteHandlerPtr tsamurai_textbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_textbank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( textbank2!=data )
 		{
 			textbank2 = data;
@@ -114,29 +108,26 @@ public class tsamurai
 		}
 	} };
 	
-	public static WriteHandlerPtr tsamurai_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if( tsamurai_videoram.read(offset)!=data )
+	public static WriteHandlerPtr tsamurai_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if( tsamurai_videoram[offset]!=data )
 		{
-			tsamurai_videoram.write(data,data);
+			tsamurai_videoram[offset]=data;
 			offset = offset/2;
 			tilemap_mark_tile_dirty(background,offset);
 		}
 	} };
-	public static WriteHandlerPtr tsamurai_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(foreground,offset);
 		}
 	} };
-	public static WriteHandlerPtr tsamurai_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tsamurai_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( colorram.read(offset)!=data )
 		{
 			colorram.write(offset,data);
-			if ((offset & 1) != 0)
+			if (offset & 1)
 			{
 				int col = offset/2;
 				int row;
@@ -155,7 +146,7 @@ public class tsamurai
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		struct GfxElement *gfx = Machine.gfx[2];
+		struct GfxElement *gfx = Machine->gfx[2];
 		const unsigned char *source = spriteram+32*4-4;
 		const unsigned char *finish = spriteram; /* ? */
 		static int flicker;
@@ -191,7 +182,7 @@ public class tsamurai
 			/* So I'm using this specific check. -kal 11 jul 2002 */
 	//		if(sprite_type == 1) sy=sy+2;
 	
-			if (flip_screen != 0)
+			if( flip_screen() )
 			{
 				drawgfx( bitmap,gfx,
 					sprite_number&0x7f,
@@ -214,8 +205,7 @@ public class tsamurai
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_tsamurai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tsamurai  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 	/* Do the column scroll used for the "660" logo on the title screen */
@@ -248,8 +238,7 @@ public class tsamurai
 	
 	int vsgongf_color;
 	
-	public static WriteHandlerPtr vsgongf_color_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsgongf_color_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( vsgongf_color != data )
 		{
 			vsgongf_color = data;
@@ -262,7 +251,7 @@ public class tsamurai
 	{
 		int tile_number = videoram.read(tile_index);
 		int color = vsgongf_color&0x1f;
-		if (textbank1 != 0) tile_number += 0x100;
+		if( textbank1 ) tile_number += 0x100;
 		SET_TILE_INFO(
 				1,
 				tile_number,
@@ -270,15 +259,13 @@ public class tsamurai
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_vsgongf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_vsgongf  = new VideoStartHandlerPtr() { public int handler(){
 		foreground = tilemap_create(get_vsgongf_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
-		if (foreground == 0) return 1;
+		if (!foreground) return 1;
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_vsgongf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vsgongf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		#ifdef MAME_DEBUG
 		static int k;
 		if( keyboard_pressed( KEYCODE_Q ) ){

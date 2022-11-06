@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -29,13 +29,11 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr actfan_control_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr actfan_control_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return readinputport(2); /* VBL */
 	} };
 	
-	public static ReadHandlerPtr actfan_control_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr actfan_control_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset) {
 			case 0: return readinputport(0); /* Player 1 */
 			case 1: return readinputport(1); /* Player 2 */
@@ -47,13 +45,11 @@ public class actfancr
 	
 	static int trio_control_select;
 	
-	public static WriteHandlerPtr triothep_control_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr triothep_control_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		trio_control_select=data;
 	} };
 	
-	public static ReadHandlerPtr triothep_control_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr triothep_control_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (trio_control_select) {
 			case 0: return readinputport(0); /* Player 1 */
 			case 1: return readinputport(1); /* Player 2 */
@@ -65,8 +61,7 @@ public class actfancr
 		return 0xff;
 	} };
 	
-	public static WriteHandlerPtr actfancr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr actfancr_sound_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data & 0xff);
 		cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
 	} };
@@ -158,7 +153,7 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_actfancr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_actfancr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( actfancr )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -238,7 +233,7 @@ public class actfancr
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_triothep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_triothep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( triothep )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -409,8 +404,7 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_actfancr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( actfancr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3) /* Should be accurate */
@@ -438,12 +432,9 @@ public class actfancr
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_triothep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( triothep )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(H6280,21477200/3) /* Should be accurate */
@@ -471,9 +462,7 @@ public class actfancr
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -611,8 +600,7 @@ public class actfancr
 	
 	/******************************************************************************/
 	
-	public static ReadHandlerPtr cycle_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cycle_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc=activecpu_get_pc();
 		int ret=actfancr_ram[0x26];
 	
@@ -626,8 +614,7 @@ public class actfancr
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr cyclej_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cyclej_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc=activecpu_get_pc();
 		int ret=actfancr_ram[0x26];
 	
@@ -641,20 +628,18 @@ public class actfancr
 		return ret;
 	} };
 	
-	public static DriverInitHandlerPtr init_actfancr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_actfancr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x1f0026, 0x1f0027, cycle_r);
 	} };
 	
-	public static DriverInitHandlerPtr init_actfancj  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_actfancj  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x1f0026, 0x1f0027, cyclej_r);
 	} };
 	
 	
 	
-	public static GameDriver driver_actfancr	   = new GameDriver("1989"	,"actfancr"	,"actfancr.java"	,rom_actfancr,null	,machine_driver_actfancr	,input_ports_actfancr	,init_actfancr	,ROT0	,	"Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (World revision 2)" )
-	public static GameDriver driver_actfanc1	   = new GameDriver("1989"	,"actfanc1"	,"actfancr.java"	,rom_actfanc1,driver_actfancr	,machine_driver_actfancr	,input_ports_actfancr	,init_actfancr	,ROT0	,	"Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (World revision 1)" )
-	public static GameDriver driver_actfancj	   = new GameDriver("1989"	,"actfancj"	,"actfancr.java"	,rom_actfancj,driver_actfancr	,machine_driver_actfancr	,input_ports_actfancr	,init_actfancj	,ROT0	,	"Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (Japan revision 1)" )
-	public static GameDriver driver_triothep	   = new GameDriver("1989"	,"triothep"	,"actfancr.java"	,rom_triothep,null	,machine_driver_triothep	,input_ports_triothep	,null	,ROT0	,	"Data East Corporation", "Trio The Punch - Never Forget Me... (Japan)" )
+	GAME( 1989, actfancr, 0,        actfancr, actfancr, actfancr, ROT0, "Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (World revision 2)" )
+	GAME( 1989, actfanc1, actfancr, actfancr, actfancr, actfancr, ROT0, "Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (World revision 1)" )
+	GAME( 1989, actfancj, actfancr, actfancr, actfancr, actfancj, ROT0, "Data East Corporation", "Act-Fancer Cybernetick Hyper Weapon (Japan revision 1)" )
+	GAME( 1989, triothep, 0,        triothep, triothep, 0,        ROT0, "Data East Corporation", "Trio The Punch - Never Forget Me... (Japan)" )
 }

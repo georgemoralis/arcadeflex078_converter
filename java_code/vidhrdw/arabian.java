@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_arabian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_arabian  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		/* there are effectively 6 bits of color: 2 red, 2 green, 2 blue */
@@ -166,8 +165,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_arabian  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_arabian  = new VideoStartHandlerPtr() { public int handler(){
 		UINT8 *gfxbase = memory_region(REGION_GFX1);
 		int offs;
 	
@@ -255,7 +253,7 @@ public class arabian
 				base = &main_bitmap[((y + j) & 0xff) * BITMAP_WIDTH + (x & 0xff)];
 	
 				/* bit 0 means write to upper plane (upper 4 bits of our bitmap) */
-				if ((plane & 0x01) != 0)
+				if (plane & 0x01)
 				{
 					if (p4 != 8) base[0] = (base[0] & ~0xf0) | (p4 << 4);
 					if (p3 != 8) base[1] = (base[1] & ~0xf0) | (p3 << 4);
@@ -264,7 +262,7 @@ public class arabian
 				}
 	
 				/* bit 2 means write to lower plane (lower 4 bits of our bitmap) */
-				if ((plane & 0x04) != 0)
+				if (plane & 0x04)
 				{
 					if (p4 != 8) base[0] = (base[0] & ~0x0f) | p4;
 					if (p3 != 8) base[1] = (base[1] & ~0x0f) | p3;
@@ -282,8 +280,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr arabian_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arabian_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* write the data */
 		offset &= 7;
 		spriteram.write(offset,data);
@@ -312,8 +309,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr arabian_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr arabian_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *base;
 		UINT8 x, y;
 	
@@ -381,8 +377,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_arabian  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		pen_t *colortable = Machine.remapped_colortable[(arabian_video_control >> 3) << 8];
 		int y;
 	
@@ -390,7 +385,7 @@ public class arabian
 		for (y = 0; y < BITMAP_HEIGHT; y++)
 		{
 			/* non-flipped case */
-			if (arabian_flip_screen == 0)
+			if (!arabian_flip_screen)
 				draw_scanline8(bitmap, 0, y, BITMAP_WIDTH, &main_bitmap[y * BITMAP_WIDTH], colortable, -1);
 	
 			/* flipped case */

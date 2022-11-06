@@ -71,7 +71,7 @@ TO DO :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -122,7 +122,7 @@ public class stlforce
 		{ 0x410000, 0x410001, OKIM6295_data_0_lsb_w },
 	MEMORY_END
 	
-	static InputPortPtr input_ports_stlforce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stlforce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stlforce )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -202,8 +202,7 @@ public class stlforce
 		{ 47 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_stlforce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stlforce )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* guess ... it might be 15000000 or 12000000/2 ... */
 		MDRV_CPU_MEMORY(stlforce_readmem,stlforce_writemem)
@@ -224,9 +223,7 @@ public class stlforce
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface) // guess
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static RomLoadPtr rom_stlforce = new RomLoadPtr(){ public void handler(){ 
 		ROM_REGION( 0x80000, REGION_CPU1, 0 ) /* 68000 code */
@@ -249,5 +246,5 @@ public class stlforce
 		ROM_LOAD( "stlforce.u36", 0x00000, 0x40000, CRC(037dfa9f) SHA1(224f5cd1a95d55b065aef5c0bd03b50cabcb619b) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_stlforce	   = new GameDriver("1994"	,"stlforce"	,"stlforce.java"	,rom_stlforce,null	,machine_driver_stlforce	,input_ports_stlforce	,null	,ROT0	,	"Electronic Devices Italy / Ecogames S.L. Spain", "Steel Force", GAME_IMPERFECT_SOUND )
+	GAMEX(1994, stlforce, 0, stlforce, stlforce, 0, ROT0, "Electronic Devices Italy / Ecogames S.L. Spain", "Steel Force", GAME_IMPERFECT_SOUND )
 }

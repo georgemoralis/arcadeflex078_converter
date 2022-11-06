@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -62,8 +62,7 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_ultraman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ultraman  = new VideoStartHandlerPtr() { public int handler(){
 		sprite_colorbase = 192;
 		zoom_colorbase[0] = 0;
 		zoom_colorbase[1] = 64;
@@ -98,7 +97,7 @@ public class ultraman
 	
 	WRITE16_HANDLER( ultraman_gfxctrl_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			/*	bit 0: enable wraparound for scr #1
 				bit 1: msb of code for scr #1
@@ -139,8 +138,7 @@ public class ultraman
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ultraman  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		K051316_zoom_draw_2(bitmap,cliprect,0,0);
 		K051316_zoom_draw_1(bitmap,cliprect,0,0);
 		K051960_sprites_draw(bitmap,cliprect,0,0);

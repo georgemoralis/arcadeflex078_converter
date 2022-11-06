@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -12,8 +12,7 @@ public class sidepckt
 	static int flipscreen;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_sidepckt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_sidepckt  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -69,11 +68,10 @@ public class sidepckt
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_sidepckt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sidepckt  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if (!bg_tilemap)
 			return 1;
 	
 		tilemap_set_transmask(bg_tilemap,0,0xff,0x00); /* split type 0 is totally transparent in front half */
@@ -92,8 +90,7 @@ public class sidepckt
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr sidepckt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidepckt_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -101,8 +98,7 @@ public class sidepckt
 		}
 	} };
 	
-	public static WriteHandlerPtr sidepckt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidepckt_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -110,8 +106,7 @@ public class sidepckt
 		}
 	} };
 	
-	public static WriteHandlerPtr sidepckt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sidepckt_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flipscreen = data;
 		tilemap_set_flip(ALL_TILEMAPS,flipscreen ? TILEMAP_FLIPY : TILEMAP_FLIPX);
 	} };
@@ -140,14 +135,14 @@ public class sidepckt
 			flipx = spriteram.read(offs+1)& 0x08;
 			flipy = spriteram.read(offs+1)& 0x04;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
 			/* wraparound */
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -157,8 +152,7 @@ public class sidepckt
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sidepckt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sidepckt  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_BACK,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,bg_tilemap,TILEMAP_FRONT,0);

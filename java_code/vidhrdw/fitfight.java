@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -17,7 +17,7 @@ public class fitfight
 	
 	static void fitfight_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		data16_t *source = fitfight_spriteram;
 		data16_t *finish = source + 0x800/2;
 	
@@ -39,7 +39,7 @@ public class fitfight
 			xpos -=48;
 			ypos -=16;
 	
-			if (end != 0) break;
+			if (end) break;
 	
 			 drawgfx(bitmap,gfx,number,colr,xflip,yflip,xpos,ypos,cliprect,TRANSPARENCY_PEN,0);
 	
@@ -99,8 +99,7 @@ public class fitfight
 	
 	/* video start / update */
 	
-	VIDEO_START(fitfight)
-	{
+	public static VideoStartHandlerPtr video_start_fitfight  = new VideoStartHandlerPtr() { public int handler(){
 		fof_bak_tilemap = tilemap_create(get_fof_bak_tile_info,tilemap_scan_cols,TILEMAP_OPAQUE,8,8,128, 32);
 		/* opaque */
 	
@@ -112,10 +111,9 @@ public class fitfight
 	
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(fitfight)
-	{
+	public static VideoUpdateHandlerPtr video_update_fitfight  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* scroll isn't right */
 	
 		int scrollval;
@@ -151,5 +149,5 @@ public class fitfight
 				fof_800000[0], fof_900000[0],
 				fof_a00000[0] );
 	*/
-	}
+	} };
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -26,8 +26,7 @@ public class clayshoo
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr input_port_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		input_port_select = data;
 	} };
 	
@@ -50,8 +49,7 @@ public class clayshoo
 	}
 	
 	
-	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr input_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t ret = 0;
 	
 	
@@ -84,8 +82,7 @@ public class clayshoo
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_clayshoo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_clayshoo  = new MachineInitHandlerPtr() { public void handler(){
 		ppi8255_init(&ppi8255_intf);
 	} };
 	
@@ -111,8 +108,7 @@ public class clayshoo
 	}
 	
 	
-	public static WriteHandlerPtr clayshoo_analog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr clayshoo_analog_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* reset the analog value, and start two times that will fire
 		   off in a short period proportional to the position of the
 		   analog control and set the appropriate bit. */
@@ -124,8 +120,7 @@ public class clayshoo
 	} };
 	
 	
-	public static ReadHandlerPtr clayshoo_analog_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr clayshoo_analog_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return analog_port_val;
 	} };
 }

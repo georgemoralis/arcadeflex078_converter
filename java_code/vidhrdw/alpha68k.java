@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -67,8 +67,8 @@ public class alpha68k
 	WRITE16_HANDLER( alpha68k_videoram_w )
 	{
 		/* Doh. */
-		if (ACCESSING_LSB != 0)
-			if (ACCESSING_MSB != 0)
+		if(ACCESSING_LSB)
+			if(ACCESSING_MSB)
 				videoram16[offset] = data;
 			else
 				videoram16[offset] = data & 0xff;
@@ -78,11 +78,10 @@ public class alpha68k
 		tilemap_mark_tile_dirty(fix_tilemap,offset/2);
 	}
 	
-	public static VideoStartHandlerPtr video_start_alpha68k  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_alpha68k  = new VideoStartHandlerPtr() { public int handler(){
 		fix_tilemap = tilemap_create(get_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0)
+		if (!fix_tilemap)
 			return 1;
 	
 		tilemap_set_transparent_pen(fix_tilemap,0);
@@ -101,7 +100,7 @@ public class alpha68k
 		{
 			mx = spriteram16[offs+2+(2*j)]<<1;
 			my = spriteram16[offs+3+(2*j)];
-			if ((my & 0x8000) != 0) mx++;
+			if (my&0x8000) mx++;
 	
 			mx=(mx+0x100)&0x1ff;
 			my=(my+0x100)&0x1ff;
@@ -122,7 +121,7 @@ public class alpha68k
 			mx = ((mx + 0x100) & 0x1ff) - 0x100;
 			if (j==0 && s==0x7c0) my++;
 	//ZT
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -135,20 +134,20 @@ public class alpha68k
 				fx=tile&0x4000;
 				tile&=0x3fff;
 	
-				if (flipscreen != 0) {
-					if (fx != 0) fx=0; else fx=1;
-					if (fy != 0) fy=0; else fy=1;
+				if (flipscreen) {
+					if (fx) fx=0; else fx=1;
+					if (fy) fy=0; else fy=1;
 				}
 	
-				if (color != 0)
-					drawgfx(bitmap,Machine.gfx[1],
+				if (color)
+					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
 						fx,fy,
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 					my=(my-16)&0x1ff;
 				else
 					my=(my+16)&0x1ff;
@@ -158,8 +157,7 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_alpha68k_II  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_alpha68k_II  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_bank=0;
 	
 		if (last_bank!=bank_base)
@@ -217,8 +215,8 @@ public class alpha68k
 				buffer_28=1;
 				return;
 			case 0x18:
-				if (buffer_68 != 0) {if (buffer_60 != 0) bank_base=3; else bank_base=2; }
-				if (buffer_28 != 0) {if (buffer_60 != 0) bank_base=1; else bank_base=0; }
+				if (buffer_68) {if (buffer_60) bank_base=3; else bank_base=2; }
+				if (buffer_28) {if (buffer_60) bank_base=1; else bank_base=0; }
 				return;
 			case 0x30:
 				bank_base=buffer_28=buffer_68=0;
@@ -228,8 +226,8 @@ public class alpha68k
 				buffer_68=1;
 				return;
 			case 0x38:
-				if (buffer_68 != 0) {if (buffer_60 != 0) bank_base=7; else bank_base=6; }
-				if (buffer_28 != 0) {if (buffer_60 != 0) bank_base=5; else bank_base=4; }
+				if (buffer_68) {if (buffer_60) bank_base=7; else bank_base=6; }
+				if (buffer_28) {if (buffer_60) bank_base=5; else bank_base=4; }
 				return;
 			case 0x08: /* Graphics flags?  Not related to fix chars anyway */
 			case 0x0c:
@@ -264,7 +262,7 @@ public class alpha68k
 	/*
 			mx = spriteram16[offs+2+(2*j)]<<1;
 			my = spriteram16[offs+3+(2*j)];
-			if ((my & 0x8000) != 0) mx++;
+			if (my&0x8000) mx++;
 	
 			mx=(mx+0x100)&0x1ff;
 			my=(my+0x100)&0x1ff;
@@ -279,7 +277,7 @@ public class alpha68k
 			mx = ((mx + 0x100) & 0x1ff) - 0x100;
 			if (j==0 && s==0x7c0) my++;
 	//ZT
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				mx=240-mx;
 				my=240-my;
 			}
@@ -293,20 +291,20 @@ public class alpha68k
 				tile=tile&sprite_mask;
 				if (tile>0x4fff) continue;
 	
-				if (flipscreen != 0) {
-					if (fx != 0) fx=0; else fx=1;
-					if (fy != 0) fy=0; else fy=1;
+				if (flipscreen) {
+					if (fx) fx=0; else fx=1;
+					if (fy) fy=0; else fy=1;
 				}
 	
-				if (color != 0)
-					drawgfx(bitmap,Machine.gfx[1],
+				if (color)
+					drawgfx(bitmap,Machine->gfx[1],
 						tile,
 						color,
 						fx,fy,
 						mx,my,
 						cliprect,TRANSPARENCY_PEN,0);
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 					my=(my-16)&0x1ff;
 				else
 					my=(my+16)&0x1ff;
@@ -314,8 +312,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_alpha68k_V  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_alpha68k_V  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_bank=0;
 	
 		if (last_bank!=bank_base)
@@ -349,8 +346,7 @@ public class alpha68k
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_alpha68k_V_sb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_alpha68k_V_sb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		static int last_bank=0;
 	
 		if (last_bank!=bank_base)
@@ -396,7 +392,7 @@ public class alpha68k
 				tile&=0x3fff;
 	
 				if (tile && tile!=0x3000 && tile!=0x26)
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 						tile,
 						color,
 						0,0,
@@ -407,7 +403,7 @@ public class alpha68k
 	{
 		int data, offs, mx, my, tile, color, fy, i;
 		UINT8 *color_prom = memory_region(REGION_USER1);
-		struct GfxElement *gfx = Machine.gfx[0];
+		struct GfxElement *gfx = Machine->gfx[0];
 	
 		for (offs=0; offs<0x400; offs+=0x20)
 		{
@@ -430,8 +426,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_alpha68k_I  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_alpha68k_I  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int yshift = (microcontroller_id == 0x890a) ? 1 : 0; // The Next Space is 1 pixel off
 	
 		fillbitmap(bitmap,Machine.pens[0],cliprect);
@@ -444,8 +439,7 @@ public class alpha68k
 	//ZT
 	/******************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_kyros  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_kyros  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	//AT: reconstructed Super Stingry CLUT(bad ic5.5)
 		const UINT8 temp_clut[256] = {
 			0x00,0x01,0x00,0x02,0x03,0xAE,0xAB,0x0C,0x00,0xA1,0xA0,0xA2,0xA3,0xA7,0xA6,0x0F,
@@ -504,8 +498,7 @@ public class alpha68k
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_paddlem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_paddlem  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i,bit0,bit1,bit2,bit3,r,g,b;
 	
 		for (i = 0;i < 256;i++)
@@ -555,7 +548,7 @@ public class alpha68k
 				bank=((tile>>10)&0x3)+((tile&0x8000)?4:0);
 				tile=(tile&0x3ff)+((tile&0x2000)?0x400:0);
 	
-				drawgfx(bitmap,Machine.gfx[bank],
+				drawgfx(bitmap,Machine->gfx[bank],
 						tile,
 						color,
 						0,fy,
@@ -582,7 +575,7 @@ public class alpha68k
 						fy = data & 0x1000;
 						tile = (data>>3 & 0x400) | (data & 0x3ff);
 						bank = (data>>13 & 4) | (data>>10 & 3);
-						drawgfx(bitmap, Machine.gfx[bank], tile, color, 0, fy, mx, my,
+						drawgfx(bitmap, Machine->gfx[bank], tile, color, 0, fy, mx, my,
 								cliprect, TRANSPARENCY_PEN, 0);
 					}
 				}
@@ -592,8 +585,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kyros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kyros  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		//fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT
 	
@@ -624,7 +616,7 @@ public class alpha68k
 				tile=(tile&0xfff);
 				bank=tile/0x400;
 	
-				drawgfx(bitmap,Machine.gfx[bank],
+				drawgfx(bitmap,Machine->gfx[bank],
 						tile&0x3ff,
 						color,
 						fx,fy,
@@ -649,7 +641,7 @@ public class alpha68k
 					color = (data>>7 & 0x18) | (data>>13 & 7); // can't verify(PROMs missing)                        bank = tile>>10 & 3;
 					tile = data & 0x3ff;
 					bank = data>>10 & 3;
-					drawgfx(bitmap, Machine.gfx[bank], tile, color, 0, fy, mx, my,
+					drawgfx(bitmap, Machine->gfx[bank], tile, color, 0, fy, mx, my,
 							cliprect, TRANSPARENCY_PEN, 0);
 				}
 	//ZT
@@ -658,8 +650,7 @@ public class alpha68k
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_sstingry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sstingry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		//fillbitmap(bitmap,Machine.pens[0],cliprect);
 		fillbitmap(bitmap,*videoram16&0xff,cliprect); //AT
 	

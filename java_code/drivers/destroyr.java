@@ -6,7 +6,7 @@ Atari Destroyer Driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,20 +54,17 @@ public class destroyr
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_destroyr  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_destroyr  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(cpu_getscanlinetime(0), 0, destroyr_frame_callback);
 	} };
 	
 	
-	public static WriteHandlerPtr destroyr_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr destroyr_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		destroyr_zero_page[offset & 0xff] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr destroyr_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr destroyr_misc_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bits 0 to 2 connect to the sound circuits */
 	
 		destroyr_attract = data & 1;
@@ -82,22 +79,19 @@ public class destroyr
 	} };
 	
 	
-	public static WriteHandlerPtr destroyr_cursor_load_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr destroyr_cursor_load_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		destroyr_cursor = data;
 	
 		watchdog_reset_w(offset, data);
 	} };
 	
 	
-	public static WriteHandlerPtr destroyr_interrupt_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr destroyr_interrupt_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 	} };
 	
 	
-	public static WriteHandlerPtr destroyr_output_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr destroyr_output_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		offset &= 15;
 	
 		switch (offset)
@@ -136,14 +130,12 @@ public class destroyr
 	} };
 	
 	
-	public static ReadHandlerPtr destroyr_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr destroyr_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return destroyr_zero_page[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr destroyr_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr destroyr_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		offset &= 15;
 	
 		if (offset == 0)
@@ -169,8 +161,7 @@ public class destroyr
 	} };
 	
 	
-	public static ReadHandlerPtr destroyr_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr destroyr_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return cpu_getscanline();
 	} };
 	
@@ -205,7 +196,7 @@ public class destroyr
 	};
 	
 	
-	static InputPortPtr input_ports_destroyr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_destroyr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( destroyr )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_UNUSED );/* call 7400 */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_UNUSED );
@@ -344,8 +335,7 @@ public class destroyr
 	};
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_destroyr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_destroyr  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0, 0x00, 0x00, 0x00);   /* major objects */
 		palette_set_color(1, 0x50, 0x50, 0x50);
 		palette_set_color(2, 0xAF, 0xAF, 0xAF);
@@ -357,8 +347,7 @@ public class destroyr
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_destroyr = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( destroyr )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6800, 12096000 / 16)
@@ -380,9 +369,7 @@ public class destroyr
 		MDRV_VIDEO_UPDATE(destroyr)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_destroyr = new RomLoadPtr(){ public void handler(){ 
@@ -408,5 +395,5 @@ public class destroyr
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_destroyr	   = new GameDriver("1977"	,"destroyr"	,"destroyr.java"	,rom_destroyr,null	,machine_driver_destroyr	,input_ports_destroyr	,null	,ORIENTATION_FLIP_X	,	"Atari", "Destroyer", GAME_NO_SOUND )
+	GAMEX( 1977, destroyr, 0, destroyr, destroyr, 0, ORIENTATION_FLIP_X, "Atari", "Destroyer", GAME_NO_SOUND )
 }

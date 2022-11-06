@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class bublbobl
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_bublbobl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bublbobl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy,xc,yc;
 		int gfx_num,gfx_attr,gfx_offs;
@@ -43,7 +42,7 @@ public class bublbobl
 		/* This clears & redraws the entire screen each pass */
 		fillbitmap(bitmap,Machine.pens[255],Machine.visible_area);
 	
-		if (bublbobl_video_enable == 0) return;
+		if (!bublbobl_video_enable) return;
 	
 		sx = 0;
 	
@@ -72,7 +71,7 @@ public class bublbobl
 				if (!(prom_line[yc/2] & 0x04))	/* next column */
 				{
 					sx = bublbobl_objectram[offs + 2];
-					if ((gfx_attr & 0x40) != 0) sx -= 256;
+					if (gfx_attr & 0x40) sx -= 256;
 				}
 	
 				for (xc = 0;xc < 2;xc++)
@@ -88,7 +87,7 @@ public class bublbobl
 					x = sx + xc * 8;
 					y = (sy + yc * 8) & 0xff;
 	
-					if (flip_screen != 0)
+					if (flip_screen())
 					{
 						x = 248 - x;
 						y = 248 - y;

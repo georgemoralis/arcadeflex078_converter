@@ -1,7 +1,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -72,16 +72,15 @@ public class astrof
 	static int death_playing = 0;
 	static int bosskill_playing = 0;
 	
-	public static WriteHandlerPtr astrof_sample1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astrof_sample1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last = 0;
 	
-		if (death_playing != 0)
+		if (death_playing)
 		{
 			death_playing = sample_playing(CHANNEL_EXPLOSION);
 		}
 	
-		if (bosskill_playing != 0)
+		if (bosskill_playing)
 		{
 			bosskill_playing = sample_playing(CHANNEL_EXPLOSION);
 		}
@@ -97,7 +96,7 @@ public class astrof
 		/* Bit 0/1/3 - Background noise */
 		if ((data & 0x08) != (last & 0x08))
 		{
-			if ((data & 0x08) != 0)
+			if (data & 0x08)
 			{
 				int sample = SAMPLE_WAVE + (data & 3);
 				sample_start(CHANNEL_WAVE,sample,1);
@@ -111,7 +110,7 @@ public class astrof
 		/* Bit 4 - Boss Laser */
 		if ((data & 0x10) && !(last & 0x10))
 		{
-			if (bosskill_playing == 0)
+			if (!bosskill_playing)
 			{
 				sample_start(CHANNEL_BOSSFIRE,SAMPLE_BOSSFIRE,0);
 			}
@@ -120,7 +119,7 @@ public class astrof
 		/* Bit 5 - Fire */
 		if ((data & 0x20) && !(last & 0x20))
 		{
-			if (bosskill_playing == 0)
+			if (!bosskill_playing)
 			{
 				sample_start(CHANNEL_FIRE,SAMPLE_FIRE,0);
 			}
@@ -134,35 +133,34 @@ public class astrof
 	} };
 	
 	
-	public static WriteHandlerPtr astrof_sample2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astrof_sample2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last = 0;
 	
 		/* Bit 0-2 Explosion select (triggered by Bit 2 of the other port */
-		if (start_explosion != 0)
+		if (start_explosion)
 		{
-			if ((data & 0x04) != 0)
+			if (data & 0x04)
 			{
 				/* This is really a compound effect, made up of I believe 3 sound
 				   effects, but since our sample contains them all, disable playing
 				   the other effects while the explosion is playing */
-				if (bosskill_playing == 0)
+				if (!bosskill_playing)
 				{
 					sample_start(CHANNEL_EXPLOSION,SAMPLE_BOSSKILL,0);
 					bosskill_playing = 1;
 				}
 			}
-			else if ((data & 0x02) != 0)
+			else if (data & 0x02)
 			{
 				sample_start(CHANNEL_EXPLOSION,SAMPLE_BOSSHIT,0);
 			}
-			else if ((data & 0x01) != 0)
+			else if (data & 0x01)
 			{
 				sample_start(CHANNEL_EXPLOSION,SAMPLE_EKILLED,0);
 			}
 			else
 			{
-				if (death_playing == 0)
+				if (!death_playing)
 				{
 					sample_start(CHANNEL_EXPLOSION,SAMPLE_DEATH,0);
 					death_playing = 1;

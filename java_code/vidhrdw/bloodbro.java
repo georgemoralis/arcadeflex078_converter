@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -64,8 +64,7 @@ public class bloodbro
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_bloodbro  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_bloodbro  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,32,16);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,32,16);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
@@ -169,7 +168,7 @@ public class bloodbro
 			int sx,sy,x,y,width,height,attributes,tile_number,color,flipx,flipy,pri_mask;
 	
 			attributes = spriteram16[offs+0];
-			if ((attributes & 0x8000) != 0) continue;	/* disabled */
+			if (attributes & 0x8000) continue;	/* disabled */
 	
 			width = ((attributes>>7)&7);
 			height = ((attributes>>4)&7);
@@ -188,7 +187,7 @@ public class bloodbro
 			{
 				for (y = 0;y <= height;y++)
 				{
-					pdrawgfx(bitmap,Machine.gfx[3],
+					pdrawgfx(bitmap,Machine->gfx[3],
 							tile_number++,
 							color,
 							flipx,flipy,
@@ -227,12 +226,12 @@ public class bloodbro
 	
 			if (sx >= 256) sx -= 512;
 	
-			if ((data0 & 0x8000) != 0) continue;	/* disabled */
+			if (data0 & 0x8000) continue;	/* disabled */
 	
-			/* Remap code 0x800 <. 0x1000 */
+			/* Remap code 0x800 <-> 0x1000 */
 			code = (code&0x7ff) | ((code&0x800)<<1) | ((code&0x1000)>>1);
 	
-			pdrawgfx(bitmap,Machine.gfx[3],
+			pdrawgfx(bitmap,Machine->gfx[3],
 					code,
 					color,
 					flipx,flipy,
@@ -244,8 +243,7 @@ public class bloodbro
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_bloodbro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_bloodbro  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x10]);	/* ? */
 		tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x11]);	/* ? */
 		tilemap_set_scrollx(fg_tilemap,0,bloodbro_scroll[0x12]);
@@ -259,8 +257,7 @@ public class bloodbro
 		tilemap_draw(bitmap,cliprect,tx_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_weststry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_weststry  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	//	tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x10]);	/* ? */
 	//	tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x11]);	/* ? */
 	//	tilemap_set_scrollx(fg_tilemap,0,bloodbro_scroll[0x12]);
@@ -275,8 +272,7 @@ public class bloodbro
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_skysmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_skysmash  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,bloodbro_scroll[0x08]);
 		tilemap_set_scrolly(bg_tilemap,0,bloodbro_scroll[0x09]);	/* ? */
 		tilemap_set_scrollx(fg_tilemap,0,bloodbro_scroll[0x0a]);

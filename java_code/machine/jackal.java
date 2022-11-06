@@ -11,7 +11,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -23,8 +23,7 @@ public class jackal
 	unsigned char *jackal_spritebank = 0;
 	
 	
-	public static MachineInitHandlerPtr machine_init_jackal  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_jackal  = new MachineInitHandlerPtr() { public void handler(){
 		cpu_setbank(1,&((memory_region(REGION_CPU1))[0x4000]));
 	 	jackal_rambank = &((memory_region(REGION_CPU1))[0]);
 		jackal_spritebank = &((memory_region(REGION_CPU1))[0]);
@@ -32,39 +31,33 @@ public class jackal
 	
 	
 	
-	public static ReadHandlerPtr jackal_zram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jackal_zram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jackal_rambank[0x0020+offset];
 	} };
 	
 	
-	public static ReadHandlerPtr jackal_commonram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jackal_commonram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jackal_rambank[0x0060+offset];
 	} };
 	
 	
-	public static ReadHandlerPtr jackal_commonram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jackal_commonram1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (memory_region(REGION_CPU1))[0x0060+offset];
 	} };
 	
 	
-	public static ReadHandlerPtr jackal_voram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jackal_voram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jackal_rambank[0x2000+offset];
 	} };
 	
 	
-	public static ReadHandlerPtr jackal_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr jackal_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return jackal_spritebank[0x3000+offset];
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-	if ((data & 0xc4) != 0) usrintf_showmessage("jackal_rambank_w %02x",data);
+	public static WriteHandlerPtr jackal_rambank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+	if (data & 0xc4) usrintf_showmessage("jackal_rambank_w %02x",data);
 		coin_counter_w(0,data & 0x01);
 		coin_counter_w(1,data & 0x02);
 		jackal_rambank = &((memory_region(REGION_CPU1))[((data & 0x10) << 12)]);
@@ -73,27 +66,23 @@ public class jackal
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_zram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jackal_zram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		jackal_rambank[0x0020+offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_commonram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jackal_commonram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		jackal_rambank[0x0060+offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_commonram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jackal_commonram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		(memory_region(REGION_CPU1))[0x0060+offset] = data;
 		(memory_region(REGION_CPU2))[0x6060+offset] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_voram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jackal_voram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((offset & 0xF800) == 0)
 		{
 			dirtybuffer[offset & 0x3FF] = 1;
@@ -102,8 +91,7 @@ public class jackal
 	} };
 	
 	
-	public static WriteHandlerPtr jackal_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr jackal_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		jackal_spritebank[0x3000+offset] = data;
 	} };
 }

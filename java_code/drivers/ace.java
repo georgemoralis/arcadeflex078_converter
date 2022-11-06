@@ -39,7 +39,7 @@ A1                   2101            2101
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -54,20 +54,17 @@ public class ace
 	
 	static int objpos[8];
 	
-	public static WriteHandlerPtr ace_objpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ace_objpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		objpos[offset]=data;
 	} };
 	
 	#if 0
-	public static ReadHandlerPtr ace_objpos_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ace_objpos_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return objpos[offset];
 	} };
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_ace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ace  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		decodechar(Machine.gfx[1], 0, ace_characterram, Machine.drv.gfxdecodeinfo[1].gfxlayout);
@@ -116,20 +113,17 @@ public class ace
 	} };
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_ace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ace  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_color(0,0x10,0x20,0xd0); /* light bluish */
 		palette_set_color(1,0xff,0xff,0xff); /* white */
 	} };
 	
 	
-	public static ReadHandlerPtr ace_characterram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ace_characterram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ace_characterram[offset];
 	} };
 	
-	public static WriteHandlerPtr ace_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ace_characterram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (ace_characterram[offset] != data)
 		{
 			if (data&(~0x07))
@@ -142,8 +136,7 @@ public class ace
 	} };
 	
 	
-	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unk_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand()&0xff;
 	} };
 	
@@ -212,7 +205,7 @@ public class ace
 	};
 	
 	
-	static InputPortPtr input_ports_ace = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ace = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ace )
 	
 		PORT_START(); 	/* player thrust c008 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP | IPF_PLAYER1 );
@@ -326,8 +319,7 @@ public class ace
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_ace = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ace )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(8080, 18000000 / 9)	/* 2 MHz ? */
@@ -350,9 +342,7 @@ public class ace
 		/* sound hardware */
 		/* ???? */
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -374,5 +364,5 @@ public class ace
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ace	   = new GameDriver("1976"	,"ace"	,"ace.java"	,rom_ace,null	,machine_driver_ace	,input_ports_ace	,null	,ROT0	,	"Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX( 1976, ace, 0, ace, ace, 0, ROT0, "Allied Leisure", "Ace", GAME_NO_SOUND | GAME_IMPERFECT_COLORS )
 }

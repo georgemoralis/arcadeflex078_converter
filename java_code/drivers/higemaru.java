@@ -8,7 +8,7 @@ driver by Mirko Buffoni
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -19,8 +19,7 @@ public class higemaru
 	
 	
 	
-	public static InterruptHandlerPtr higemaru_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr higemaru_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) 
 			cpu_set_irq_line_and_vector(0,0,HOLD_LINE,0xcf);	/* RST 08h */
 		else
@@ -57,7 +56,7 @@ public class higemaru
 	};
 	
 	
-	static InputPortPtr input_ports_higemaru = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_higemaru = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( higemaru )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT | IPF_4WAY );
@@ -186,8 +185,7 @@ public class higemaru
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_higemaru = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( higemaru )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz ? Main xtal is 12MHz */
@@ -211,9 +209,7 @@ public class higemaru
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -244,5 +240,5 @@ public class higemaru
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_higemaru	   = new GameDriver("1984"	,"higemaru"	,"higemaru.java"	,rom_higemaru,null	,machine_driver_higemaru	,input_ports_higemaru	,null	,ROT0	,	"Capcom", "Pirate Ship Higemaru" )
+	GAME( 1984, higemaru, 0, higemaru, higemaru, 0, ROT0, "Capcom", "Pirate Ship Higemaru" )
 }

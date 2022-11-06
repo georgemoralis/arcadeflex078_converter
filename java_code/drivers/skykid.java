@@ -25,7 +25,7 @@ Correct behavior or emulation bug ?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,19 +40,16 @@ public class skykid
 	static int irq_disabled = 1;
 	static int inputport_selected;
 	
-	public static InterruptHandlerPtr skykid_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (irq_disabled == 0)
+	public static InterruptHandlerPtr skykid_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (!irq_disabled)
 			cpu_set_irq_line(0, M6809_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr skykid_irq_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_irq_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		irq_disabled = offset;
 	} };
 	
-	public static WriteHandlerPtr inputport_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr inputport_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0xe0) == 0x60)
 			inputport_selected = data & 0x07;
 		else if ((data & 0xe0) == 0xc0)
@@ -66,8 +63,7 @@ public class skykid
 	#define reverse_bitstrm(data) ((data & 0x01) << 4) | ((data & 0x02) << 2) | (data & 0x04) \
 								| ((data & 0x08) >> 2) | ((data & 0x10) >> 4)
 	
-	public static ReadHandlerPtr inputport_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr inputport_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0;
 	
 		switch (inputport_selected){
@@ -92,14 +88,12 @@ public class skykid
 		return data;
 	} };
 	
-	public static WriteHandlerPtr skykid_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0,data & 0x08);
 		set_led_status(1,data & 0x10);
 	} };
 	
-	public static WriteHandlerPtr skykid_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_halt_mcu_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset == 0){
 			cpu_set_reset_line(1,PULSE_LINE);
 			cpu_set_halt_line( 1, CLEAR_LINE );
@@ -109,17 +103,14 @@ public class skykid
 		}
 	} };
 	
-	public static ReadHandlerPtr skykid_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr skykid_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sharedram[offset];
 	} };
-	public static WriteHandlerPtr skykid_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sharedram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr skykid_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr skykid_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -189,8 +180,7 @@ public class skykid
 	};
 	
 	
-	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr readFF  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -208,7 +198,7 @@ public class skykid
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_skykid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skykid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skykid )
 		PORT_START(); 	/* DSW A */
 		PORT_SERVICE( 0x01, IP_ACTIVE_HIGH );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Coin_A") );
@@ -297,7 +287,7 @@ public class skykid
 		PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_drgnbstr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drgnbstr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drgnbstr )
 		PORT_START(); 	/* DSW A */
 		PORT_SERVICE( 0x01, IP_ACTIVE_HIGH );
 		PORT_DIPNAME( 0x06, 0x00, DEF_STR( "Coin_A") );
@@ -469,8 +459,7 @@ public class skykid
 		0					/* stereo */
 	};
 	
-	public static MachineHandlerPtr machine_driver_skykid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( skykid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809,49152000/32)	/* ??? */
@@ -500,9 +489,7 @@ public class skykid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_skykid = new RomLoadPtr(){ public void handler(){ 
@@ -627,8 +614,8 @@ public class skykid
 	
 	
 	
-	public static GameDriver driver_skykid	   = new GameDriver("1985"	,"skykid"	,"skykid.java"	,rom_skykid,null	,machine_driver_skykid	,input_ports_skykid	,null	,ROT0	,	"Namco", "Sky Kid (New Ver.)" )
-	public static GameDriver driver_skykido	   = new GameDriver("1985"	,"skykido"	,"skykid.java"	,rom_skykido,driver_skykid	,machine_driver_skykid	,input_ports_skykid	,null	,ROT0	,	"Namco", "Sky Kid (Old Ver.)" )
-	public static GameDriver driver_skykidd	   = new GameDriver("1985"	,"skykidd"	,"skykid.java"	,rom_skykidd,driver_skykid	,machine_driver_skykid	,input_ports_skykid	,null	,ROT0	,	"Namco", "Sky Kid (60A1 Ver.)", GAME_NOT_WORKING )
-	public static GameDriver driver_drgnbstr	   = new GameDriver("1984"	,"drgnbstr"	,"skykid.java"	,rom_drgnbstr,null	,machine_driver_skykid	,input_ports_drgnbstr	,null	,ROT0	,	"Namco", "Dragon Buster" )
+	GAME( 1985, skykid,   0,      skykid, skykid,   0, ROT0, "Namco", "Sky Kid (New Ver.)" )
+	GAME( 1985, skykido,  skykid, skykid, skykid,   0, ROT0, "Namco", "Sky Kid (Old Ver.)" )
+	GAMEX(1985, skykidd,  skykid, skykid, skykid,   0, ROT0, "Namco", "Sky Kid (60A1 Ver.)", GAME_NOT_WORKING )
+	GAME( 1984, drgnbstr, 0,      skykid, drgnbstr, 0, ROT0, "Namco", "Dragon Buster" )
 }

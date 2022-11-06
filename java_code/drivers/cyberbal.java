@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -42,30 +42,29 @@ public class cyberbal
 		int newstate2 = 0;
 		int temp;
 	
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate1 |= 1;
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate2 |= 1;
 	
-		if (newstate1 != 0)
+		if (newstate1)
 			cpu_set_irq_line(0, newstate1, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	
-		if (newstate2 != 0)
+		if (newstate2)
 			cpu_set_irq_line(2, newstate2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(2, 7, CLEAR_LINE);
 	
 		/* check for screen swapping */
 		temp = readinputport(2);
-		if ((temp & 1) != 0) cyberbal_set_screen(0);
-		else if ((temp & 2) != 0) cyberbal_set_screen(1);
+		if (temp & 1) cyberbal_set_screen(0);
+		else if (temp & 2) cyberbal_set_screen(1);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_cyberbal  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cyberbal  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_slapstic_reset();
 		atarigen_interrupt_reset(update_interrupts);
@@ -86,20 +85,19 @@ public class cyberbal
 	{
 		int newstate = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate |= 1;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 3;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_cyberb2p  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_cyberb2p  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(cyberb2p_update_interrupts);
 		atarigen_scanline_timer_reset(cyberbal_scanline_update, 8);
@@ -120,7 +118,7 @@ public class cyberbal
 	static READ16_HANDLER( special_port0_r )
 	{
 		int temp = readinputport(0);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x0080;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x0080;
 		return temp;
 	}
 	
@@ -128,7 +126,7 @@ public class cyberbal
 	static READ16_HANDLER( special_port2_r )
 	{
 		int temp = readinputport(2);
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0x2000;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0x2000;
 		return temp;
 	}
 	
@@ -136,7 +134,7 @@ public class cyberbal
 	static READ16_HANDLER( sound_state_r )
 	{
 		int temp = 0xffff;
-		if (atarigen_cpu_to_sound_ready != 0) temp ^= 0xffff;
+		if (atarigen_cpu_to_sound_ready) temp ^= 0xffff;
 		return temp;
 	}
 	
@@ -343,7 +341,7 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_cyberbal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cyberbal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cyberbal )
 		PORT_START();       /* fe0000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER4 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER4 );
@@ -399,7 +397,7 @@ public class cyberbal
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_cyberb2p = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cyberb2p = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cyberb2p )
 		PORT_START();       /* fc0000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_PLAYER1 );
@@ -524,8 +522,7 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_cyberbal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cyberbal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -570,13 +567,10 @@ public class cyberbal
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_cyberb2p = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cyberb2p )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -601,9 +595,7 @@ public class cyberbal
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1073,8 +1065,7 @@ public class cyberbal
 	};
 	
 	
-	public static DriverInitHandlerPtr init_cyberbal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cyberbal  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = default_eeprom;
 		atarigen_slapstic_init(0, 0x018000, 0);
 	
@@ -1084,8 +1075,7 @@ public class cyberbal
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_cyberbt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cyberbt  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = default_eeprom;
 		atarigen_slapstic_init(0, 0x018000, 116);
 	
@@ -1095,8 +1085,7 @@ public class cyberbal
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_cyberb2p  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_cyberb2p  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = default_eeprom;
 		atarijsa_init(1, 3, 2, 0x8000);
 	} };
@@ -1109,16 +1098,16 @@ public class cyberbal
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_cyberbal	   = new GameDriver("1988"	,"cyberbal"	,"cyberbal.java"	,rom_cyberbal,null	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (rev 4)" )
-	public static GameDriver driver_cyberba2	   = new GameDriver("1988"	,"cyberba2"	,"cyberbal.java"	,rom_cyberba2,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (rev 2)" )
-	public static GameDriver driver_cyberbap	   = new GameDriver("1988"	,"cyberbap"	,"cyberbal.java"	,rom_cyberbap,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbal	,ROT0	,	"Atari Games", "Cyberball (prototype)" )
+	GAME( 1988, cyberbal, 0,        cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (rev 4)" )
+	GAME( 1988, cyberba2, cyberbal, cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (rev 2)" )
+	GAME( 1988, cyberbap, cyberbal, cyberbal, cyberbal, cyberbal, ROT0, "Atari Games", "Cyberball (prototype)" )
 	
-	public static GameDriver driver_cyberb2p	   = new GameDriver("1989"	,"cyberb2p"	,"cyberbal.java"	,rom_cyberb2p,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 4)" )
-	public static GameDriver driver_cyberb23	   = new GameDriver("1989"	,"cyberb23"	,"cyberbal.java"	,rom_cyberb23,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 3)" )
-	public static GameDriver driver_cyberb22	   = new GameDriver("1989"	,"cyberb22"	,"cyberbal.java"	,rom_cyberb22,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 2)" )
-	public static GameDriver driver_cyberb21	   = new GameDriver("1989"	,"cyberb21"	,"cyberbal.java"	,rom_cyberb21,driver_cyberbal	,machine_driver_cyberb2p	,input_ports_cyberb2p	,init_cyberb2p	,ROT0	,	"Atari Games", "Cyberball 2072 (2 player, rev 1)" )
+	GAME( 1989, cyberb2p, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 4)" )
+	GAME( 1989, cyberb23, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 3)" )
+	GAME( 1989, cyberb22, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 2)" )
+	GAME( 1989, cyberb21, cyberbal, cyberb2p, cyberb2p, cyberb2p, ROT0, "Atari Games", "Cyberball 2072 (2 player, rev 1)" )
 	
-	public static GameDriver driver_cyberbt	   = new GameDriver("1989"	,"cyberbt"	,"cyberbal.java"	,rom_cyberbt,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbt	,ROT0	,	"Atari Games", "Tournament Cyberball 2072 (rev 2)" )
-	public static GameDriver driver_cyberbt1	   = new GameDriver("1989"	,"cyberbt1"	,"cyberbal.java"	,rom_cyberbt1,driver_cyberbal	,machine_driver_cyberbal	,input_ports_cyberbal	,init_cyberbt	,ROT0	,	"Atari Games", "Tournament Cyberball 2072 (rev 1)" )
+	GAME( 1989, cyberbt,  cyberbal, cyberbal, cyberbal, cyberbt,  ROT0, "Atari Games", "Tournament Cyberball 2072 (rev 2)" )
+	GAME( 1989, cyberbt1, cyberbal, cyberbal, cyberbal, cyberbt,  ROT0, "Atari Games", "Tournament Cyberball 2072 (rev 1)" )
 	
 }

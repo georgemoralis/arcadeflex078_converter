@@ -134,7 +134,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -167,8 +167,7 @@ public class sega
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr sega_sh_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sega_sh_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* 0x80 = universal sound board ready */
 		/* 0x01 = speech ready, theorically, but the schematics show it unconnected */
 	
@@ -255,7 +254,7 @@ public class sega
 			PORT_DIPSETTING(	0x10, DEF_STR ( 1C_6C );
 	
 	
-	static InputPortPtr input_ports_spacfury = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_spacfury = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( spacfury )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
 		PORT_BIT_IMPULSE( 0x20, IP_ACTIVE_LOW, IPT_COIN3, 3 );
@@ -319,7 +318,7 @@ public class sega
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_zektor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zektor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zektor )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
 		PORT_BIT_IMPULSE( 0x20, IP_ACTIVE_LOW, IPT_COIN3, 3 );
@@ -378,7 +377,7 @@ public class sega
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_startrek = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_startrek = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( startrek )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
 		PORT_BIT_IMPULSE( 0x20, IP_ACTIVE_LOW, IPT_COIN3, 3 );
@@ -439,7 +438,7 @@ public class sega
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tacscan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tacscan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tacscan )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
 		PORT_BIT_IMPULSE( 0x20, IP_ACTIVE_LOW, IPT_COIN3, 3 );
@@ -498,7 +497,7 @@ public class sega
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_elim2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_elim2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( elim2 )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
 		PORT_BIT_IMPULSE( 0x20, IP_ACTIVE_LOW, IPT_COIN3, 3 );
@@ -557,7 +556,7 @@ public class sega
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_elim4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_elim4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( elim4 )
 		PORT_START(); 	/* IN0 - port 0xf8 */
 		PORT_BIT ( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		/* The next bit is referred to as the Service switch in the self test - it just adds a credit */
@@ -844,8 +843,7 @@ public class sega
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_elim2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( elim2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3867120)
@@ -866,13 +864,10 @@ public class sega
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("samples", SAMPLES, elim2_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_zektor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zektor )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(elim2)
@@ -888,13 +883,10 @@ public class sega
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, zektor_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tacscan = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tacscan )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(elim2)
@@ -905,13 +897,10 @@ public class sega
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, tacscan_samples_interface)
 		MDRV_SOUND_ADD_TAG("custom",  CUSTOM,  tacscan_custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_spacfury = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( spacfury )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(elim2)
@@ -927,13 +916,10 @@ public class sega
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, spacfury_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_startrek = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( startrek )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(elim2)
@@ -949,9 +935,7 @@ public class sega
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("samples", SAMPLES, startrek_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1174,8 +1158,7 @@ public class sega
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_spacfury  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_spacfury  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0064 security chip */
 		sega_security(64);
 	
@@ -1188,8 +1171,7 @@ public class sega
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_zektor  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zektor  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0082 security chip */
 		sega_security(82);
 	
@@ -1201,8 +1183,7 @@ public class sega
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_elim2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_elim2  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0070 security chip */
 		sega_security(70);
 	
@@ -1213,8 +1194,7 @@ public class sega
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_elim4  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_elim4  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0076 security chip */
 		sega_security(76);
 	
@@ -1225,8 +1205,7 @@ public class sega
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_startrek  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_startrek  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0064 security chip */
 		sega_security(64);
 	
@@ -1237,8 +1216,7 @@ public class sega
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_tacscan  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tacscan  = new DriverInitHandlerPtr() { public void handler(){
 		/* This game uses the 315-0076 security chip */
 		sega_security(76);
 	
@@ -1255,13 +1233,13 @@ public class sega
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_spacfury	   = new GameDriver("1981"	,"spacfury"	,"sega.java"	,rom_spacfury,null	,machine_driver_spacfury	,input_ports_spacfury	,init_spacfury	,ROT0	,	"Sega", "Space Fury (revision C)" )
-	public static GameDriver driver_spacfura	   = new GameDriver("1981"	,"spacfura"	,"sega.java"	,rom_spacfura,driver_spacfury	,machine_driver_spacfury	,input_ports_spacfury	,init_spacfury	,ROT0	,	"Sega", "Space Fury (revision A)" )
-	public static GameDriver driver_zektor	   = new GameDriver("1982"	,"zektor"	,"sega.java"	,rom_zektor,null	,machine_driver_zektor	,input_ports_zektor	,init_zektor	,ROT0	,	"Sega", "Zektor (revision B)" )
-	public static GameDriver driver_tacscan	   = new GameDriver("1982"	,"tacscan"	,"sega.java"	,rom_tacscan,null	,machine_driver_tacscan	,input_ports_tacscan	,init_tacscan	,ROT270	,	"Sega", "Tac/Scan" )
-	public static GameDriver driver_elim2	   = new GameDriver("1981"	,"elim2"	,"sega.java"	,rom_elim2,null	,machine_driver_elim2	,input_ports_elim2	,init_elim2	,ROT0	,	"Gremlin", "Eliminator (2 Players, set 1)" )
-	public static GameDriver driver_elim2a	   = new GameDriver("1981"	,"elim2a"	,"sega.java"	,rom_elim2a,driver_elim2	,machine_driver_elim2	,input_ports_elim2	,init_elim2	,ROT0	,	"Gremlin", "Eliminator (2 Players, set 2)" )
-	public static GameDriver driver_elim4	   = new GameDriver("1981"	,"elim4"	,"sega.java"	,rom_elim4,driver_elim2	,machine_driver_elim2	,input_ports_elim4	,init_elim4	,ROT0	,	"Gremlin", "Eliminator (4 Players)" )
-	public static GameDriver driver_startrek	   = new GameDriver("1982"	,"startrek"	,"sega.java"	,rom_startrek,null	,machine_driver_startrek	,input_ports_startrek	,init_startrek	,ROT0	,	"Sega", "Star Trek" )
+	GAME( 1981, spacfury, 0,        spacfury, spacfury, spacfury, ROT0,   "Sega", "Space Fury (revision C)" )
+	GAME( 1981, spacfura, spacfury, spacfury, spacfury, spacfury, ROT0,   "Sega", "Space Fury (revision A)" )
+	GAME( 1982, zektor,   0,        zektor,   zektor,   zektor,   ROT0,   "Sega", "Zektor (revision B)" )
+	GAME( 1982, tacscan,  0,        tacscan,  tacscan,  tacscan,  ROT270, "Sega", "Tac/Scan" )
+	GAME( 1981, elim2,	  0,        elim2,    elim2,    elim2,    ROT0,   "Gremlin", "Eliminator (2 Players, set 1)" )
+	GAME( 1981, elim2a,   elim2,    elim2,    elim2,    elim2,    ROT0,   "Gremlin", "Eliminator (2 Players, set 2)" )
+	GAME( 1981, elim4,	  elim2,    elim2,    elim4,    elim4,    ROT0,   "Gremlin", "Eliminator (4 Players)" )
+	GAME( 1982, startrek, 0,        startrek, startrek, startrek, ROT0,   "Sega", "Star Trek" )
 	
 }

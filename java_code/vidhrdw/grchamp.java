@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,34 +27,28 @@ public class grchamp
 	
 	struct tilemap *tilemap[3];
 	
-	public static WriteHandlerPtr grchamp_player_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_player_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_player_xpos = data;
 	} };
 	
-	public static WriteHandlerPtr grchamp_player_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_player_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_player_ypos = data;
 	} };
 	
-	public static WriteHandlerPtr grchamp_tile_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_tile_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* tile select: bits 4..7:rain; bits 0..3:player car */
 		grchamp_tile_number = data;
 	} };
 	
-	public static WriteHandlerPtr grchamp_rain_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_rain_xpos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_rain_xpos = data;
 	} };
 	
-	public static WriteHandlerPtr grchamp_rain_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_rain_ypos_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		grchamp_rain_ypos = data;
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_grchamp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_grchamp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for( i=0; i<0x20; i++ )
 		{
@@ -97,8 +91,7 @@ public class grchamp
 		palette_set_color(0x43,0,0,0);
 	} };
 	
-	public static WriteHandlerPtr grchamp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr grchamp_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( grchamp_videoram[offset]!=data )
 		{
 			grchamp_videoram[offset] = data;
@@ -144,13 +137,12 @@ public class grchamp
 		return offset;
 	}
 	
-	public static VideoStartHandlerPtr video_start_grchamp  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_grchamp  = new VideoStartHandlerPtr() { public int handler(){
 		headlight_bitmap = auto_bitmap_alloc( 64,128 );
-		if (headlight_bitmap == 0)
+		if( !headlight_bitmap )
 			return 1;
 		work_bitmap = auto_bitmap_alloc( 32,32 );
-		if (work_bitmap == 0)
+		if( !work_bitmap )
 			return 1;
 			
 		tilemap[0] = tilemap_create(get_bg0_tile_info,get_memory_offset,TILEMAP_OPAQUE,8,8,64,32);
@@ -167,7 +159,7 @@ public class grchamp
 	
 	static void draw_text( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 		const UINT8 *source = videoram;
 		int bank = (grchamp_videoreg0&0x20)?256:0;
 		int offs;
@@ -223,7 +215,7 @@ public class grchamp
 	static void draw_player_car( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		drawgfx( bitmap,
-			Machine.gfx[2],
+			Machine->gfx[2],
 			grchamp_tile_number&0xf,
 			1, /* color = red */
 			0,0, /* flip */
@@ -235,9 +227,9 @@ public class grchamp
 	
 	static int collision_check( struct mame_bitmap *bitmap, int which )
 	{
-		int bgcolor = Machine.pens[0];
-		int sprite_transp = Machine.pens[0x24];
-		const struct rectangle *clip = Machine.visible_area;
+		int bgcolor = Machine->pens[0];
+		int sprite_transp = Machine->pens[0x24];
+		const struct rectangle *clip = Machine->visible_area;
 		int y0 = 240-grchamp_player_ypos;
 		int x0 = 256-grchamp_player_xpos;
 		int x,y;
@@ -246,7 +238,7 @@ public class grchamp
 		if( which==0 )
 		{
 			/* draw the current player sprite into a work bitmap */
-			drawgfx( work_bitmap, Machine.gfx[2],
+			drawgfx( work_bitmap, Machine->gfx[2],
 				grchamp_tile_number&0xf,
 				1, /* color */
 				0,0,
@@ -262,8 +254,8 @@ public class grchamp
 				if( read_pixel(work_bitmap,x,y) != sprite_transp ){
 					int sx = x+x0;
 					int sy = y+y0;
-					if( sx >= clip.min_x && sx <= clip.max_x &&
-						sy >= clip.min_y && sy <= clip.max_y )
+					if( sx >= clip->min_x && sx <= clip->max_x &&
+						sy >= clip->min_y && sy <= clip->max_y )
 					{
 						if( read_pixel(bitmap, sx, sy) != bgcolor )
 						{
@@ -281,9 +273,9 @@ public class grchamp
 	}
 	
 	static void draw_rain( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
-		const struct GfxElement *gfx = Machine.gfx[4];
+		const struct GfxElement *gfx = Machine->gfx[4];
 		int tile_number = grchamp_tile_number>>4;
-		if (tile_number != 0){
+		if( tile_number ){
 			int scrollx = grchamp_rain_xpos;
 			int scrolly = grchamp_rain_ypos;
 			int sx,sy;
@@ -303,7 +295,7 @@ public class grchamp
 	static void draw_fog( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bFog ){
 		int x0 = 256-grchamp_player_xpos-64;
 		int y0 = 240-grchamp_player_ypos-64;
-		int color = Machine.pens[bFog?0x40:0x00];
+		int color = Machine->pens[bFog?0x40:0x00];
 	
 		copybitmap(
 			headlight_bitmap, /* dest */
@@ -323,21 +315,21 @@ public class grchamp
 		int y0 = 240-grchamp_player_ypos-64;
 		const UINT8 *source = memory_region( REGION_GFX4 );
 		int x,y,bit;
-		if (bFog == 0) source += 0x400;
+		if( !bFog ) source += 0x400;
 		for( y=0; y<128; y++ )
 		{
 			for( x=0; x<64; x+=8 )
 			{
 				int data = *source++;
-				if (data != 0)
+				if( data )
 				{
 					for( bit=0; bit<8; bit++ )
 					{
-						if ((data & 0x80) != 0){
+						if( data&0x80 ){
 							sx = x0+x+bit;
 							sy = y0+y;
-							if( sx>=cliprect.min_x && sy>=cliprect.min_y && 
-								sx<=cliprect.max_x && sy<=cliprect.max_y )
+							if( sx>=cliprect->min_x && sy>=cliprect->min_y && 
+								sx<=cliprect->max_x && sy<=cliprect->max_y )
 							{
 								color = read_pixel( headlight_bitmap, x+bit, y );
 								plot_pixel( bitmap, sx,sy, color );
@@ -352,18 +344,18 @@ public class grchamp
 	
 	static void draw_radar( struct mame_bitmap *bitmap, const struct rectangle *cliprect ){
 		const UINT8 *source = grchamp_radar;
-		int color = Machine.pens[3];
+		int color = Machine->pens[3];
 		int offs;
 		for( offs=0; offs<0x400; offs++ ){
 			int data = source[offs];
-			if (data != 0){
+			if( data ){
 				int x = (offs%32)*8;
 				int y = (offs/32)+16;
 				int bit;
 				for( bit=0; bit<8; bit++ ){
-					if ((data & 0x80) != 0) 
-						if ((x+bit) >= cliprect.min_x && (x+bit) <= cliprect.max_x &&
-							y >= cliprect.min_y && y <= cliprect.max_y)
+					if( data&0x80 ) 
+						if ((x+bit) >= cliprect->min_x && (x+bit) <= cliprect->max_x &&
+							y >= cliprect->min_y && y <= cliprect->max_y)
 							plot_pixel( bitmap, x+bit, y, color );
 					data <<= 1;
 				}
@@ -376,7 +368,7 @@ public class grchamp
 		int value = grchamp_vreg1[0x03]&0xf;
 		int i;
 		for( i=0; i<value; i++ ){
-			drawgfx( bitmap, Machine.uifont,
+			drawgfx( bitmap, Machine->uifont,
 				'*',
 				0,
 				0,0,
@@ -388,7 +380,7 @@ public class grchamp
 	}
 	
 	static void draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect, int bFog ){
-		const struct GfxElement *gfx = Machine.gfx[3];
+		const struct GfxElement *gfx = Machine->gfx[3];
 		int bank = (grchamp_videoreg0&0x20)?0x40:0x00;
 		const UINT8 *source = spriteram;
 		const UINT8 *finish = source+0x40;
@@ -408,7 +400,7 @@ public class grchamp
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+	public static VideoUpdateHandlerPtr video_update_grchamp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
 		int bFog = grchamp_videoreg0&0x40;
 	
 		draw_background( bitmap,cliprect ); /* 3 layers */
@@ -421,10 +413,10 @@ public class grchamp
 	
 		if( grchamp_videoreg0&(0x10|0x40) ){
 			draw_fog( bitmap,cliprect,bFog ); /* grey fog / black tunnel darkness */
-		}
+		} };
 	
 		/* fog covered sprites look like black shadows */
-		if (bFog != 0) draw_sprites( bitmap,cliprect, bFog );
+		if( bFog ) draw_sprites( bitmap,cliprect, bFog );
 	
 		/* paint the visible area exposed by headlights shape */
 		if( grchamp_videoreg0&(0x10|0x40) ){
@@ -433,7 +425,7 @@ public class grchamp
 	
 		draw_rain( bitmap,cliprect );
 		draw_text( bitmap,cliprect );
-		if ((grchamp_videoreg0 & 0x80) != 0) draw_radar( bitmap,cliprect );
+		if( grchamp_videoreg0&0x80 ) draw_radar( bitmap,cliprect );
 		draw_tachometer( bitmap,cliprect );
-	} };
+	}
 }

@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -31,7 +31,7 @@ public class cinemat
 		if (fromx != lastx || fromx != lasty)
 			vector_add_point (fromx << 16, fromy << 16, 0, 0);
 	
-	    if (color_display != 0)
+	    if (color_display)
 	        vector_add_point (tox << 16, toy << 16, VECTOR_COLOR111(color & 0x07), color & 0x08 ? 0x80: 0x40);
 	    else
 	        vector_add_point (tox << 16, toy << 16, VECTOR_COLOR111(WHITE), color * 12);
@@ -40,14 +40,12 @@ public class cinemat
 		lasty = toy;
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_cinemat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cinemat  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	    color_display = 0;
 	} };
 	
 	
-	public static PaletteInitHandlerPtr palette_init_cinemat_color  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_cinemat_color  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	    color_display = 1;
 	} };
 	
@@ -58,21 +56,18 @@ public class cinemat
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_cinemat  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cinemat  = new VideoStartHandlerPtr() { public int handler(){
 		cinemat_screenh = Machine.visible_area.max_y - Machine.visible_area.min_y;
 		return video_start_vector();
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_cinemat  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_cinemat  = new VideoEofHandlerPtr() { public void handler(){
 		vector_clear_list();
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spacewar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int sw_option = readinputport(1);
 	
 		video_update_vector(bitmap, 0);

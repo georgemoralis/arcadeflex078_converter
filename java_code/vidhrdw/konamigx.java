@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -52,7 +52,7 @@ public class konamigx
 	
 		tileno = map[1]<<8 | map[0];
 	
-	//	if (tileno != 0) printf("1a map: %x\n", tileno);
+	//	if (tileno) printf("1a map: %x\n", tileno);
 	
 		colour = (psac_colorbase << 4);
 	
@@ -70,7 +70,7 @@ public class konamigx
 	
 		tileno = map[5]<<8 | map[4];
 	
-	//	if (tileno != 0) printf("1b map: %x\n", tileno);
+	//	if (tileno) printf("1b map: %x\n", tileno);
 	
 		colour = (psac_colorbase << 4);
 	
@@ -185,8 +185,7 @@ public class konamigx
 	}
 	
 	
-	VIDEO_START(konamigx_5bpp)
-	{
+	public static VideoStartHandlerPtr video_start_konamigx_5bpp  = new VideoStartHandlerPtr() { public int handler(){
 		if (!strcmp(Machine.gamedrv.name,"sexyparo"))
 			game_tile_callback = konamigx_alpha_tile_callback;
 		else
@@ -197,7 +196,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninit() != 0) return 1;
+		if (_gxcommoninit()) return 1;
 	
 		/* here are some hand tuned per game scroll offsets to go with the per game visible areas,
 		   i see no better way of doing this for now... */
@@ -230,10 +229,9 @@ public class konamigx
 		}
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(winspike)
-	{
+	public static VideoStartHandlerPtr video_start_winspike  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_8, 0, NULL, konamigx_alpha_tile_callback))
 		{
 			return 1;
@@ -244,13 +242,12 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites() != 0) return 1;
+		if (_gxcommoninitnosprites()) return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(dragoonj)
-	{
+	public static VideoStartHandlerPtr video_start_dragoonj  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_5, 1, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
@@ -261,7 +258,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites() != 0) return 1;
+		if (_gxcommoninitnosprites()) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);
@@ -269,10 +266,9 @@ public class konamigx
 		K056832_set_LayerOffset(3,  3+1, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(le2)
-	{
+	public static VideoStartHandlerPtr video_start_le2  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_8, 1, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
@@ -283,22 +279,21 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites() != 0) return 1;
+		if (_gxcommoninitnosprites()) return 1;
 	
 		gx_invertlayersBC = 1;
 		konamigx_mixer_primode(-1); // swapped layer B and C priorities?
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(konamigx_6bpp)
-	{
+	public static VideoStartHandlerPtr video_start_konamigx_6bpp  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_6, 0, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
 		}
 	
-		if (_gxcommoninit() != 0) return 1;
+		if (_gxcommoninit()) return 1;
 	
 		if (!strcmp(Machine.gamedrv.name,"tokkae") || !strcmp(Machine.gamedrv.name,"tkmmpzdm"))
 		{
@@ -307,16 +302,15 @@ public class konamigx
 		}
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(konamigx_type3)
-	{
+	public static VideoStartHandlerPtr video_start_konamigx_type3  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_6, 0, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
 		}
 	
-		if (_gxcommoninit() != 0) return 1;
+		if (_gxcommoninit()) return 1;
 	
 		gx_psac_tilemap = tilemap_create(get_gx_psac3_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 256, 1024);
 		gx_rozenable = 1;
@@ -325,16 +319,15 @@ public class konamigx
 		K053936GP_set_offset(0, 0, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(konamigx_type4)
-	{
+	public static VideoStartHandlerPtr video_start_konamigx_type4  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_8, 0, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
 		}
 	
-		if (_gxcommoninit() != 0) return 1;
+		if (_gxcommoninit()) return 1;
 	
 		gx_psac_tilemap = tilemap_create(get_gx_psac_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 16, 16, 128, 128);
 		gx_rozenable = 1;
@@ -343,10 +336,9 @@ public class konamigx
 		K053936GP_set_offset(0, 0, 0);
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(konamigx_6bpp_2)
-	{
+	public static VideoStartHandlerPtr video_start_konamigx_6bpp_2  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_6, 1, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
@@ -359,18 +351,17 @@ public class konamigx
 				return 1;
 			}
 	
-			if (_gxcommoninitnosprites() != 0) return 1;
+			if (_gxcommoninitnosprites()) return 1;
 		}
 		else
 		{
-			if (_gxcommoninit() != 0) return 1;
+			if (_gxcommoninit()) return 1;
 		}
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(opengolf)
-	{
+	public static VideoStartHandlerPtr video_start_opengolf  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_5, 0, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
@@ -381,7 +372,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites() != 0) return 1;
+		if (_gxcommoninitnosprites()) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);
@@ -396,10 +387,9 @@ public class konamigx
 		gx_rozenable = 0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_START(racinfrc)
-	{
+	public static VideoStartHandlerPtr video_start_racinfrc  = new VideoStartHandlerPtr() { public int handler(){
 		if (K056832_vh_start(REGION_GFX1, K056832_BPP_6, 0, NULL, konamigx_type2_tile_callback))
 		{
 			return 1;
@@ -410,7 +400,7 @@ public class konamigx
 			return 1;
 		}
 	
-		if (_gxcommoninitnosprites() != 0) return 1;
+		if (_gxcommoninitnosprites()) return 1;
 	
 		K056832_set_LayerOffset(0, -2+1, 0);
 		K056832_set_LayerOffset(1,  0+1, 0);
@@ -425,10 +415,9 @@ public class konamigx
 		gx_rozenable = 0;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(konamigx)
-	{
+	public static VideoUpdateHandlerPtr video_update_konamigx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i, newbank, newbase, dirty, unchained, blendmode;
 	
 		/* if any banks are different from last render, we need to flush the planes */
@@ -449,7 +438,7 @@ public class konamigx
 				{
 					layer_colorbase[i] = newbase;
 	
-					if (unchained != 0)
+					if (unchained)
 						K056832_mark_plane_dirty(i);
 					else
 						dirty = 1;
@@ -462,7 +451,7 @@ public class konamigx
 		}
 	
 		// sub2 is PSAC colorbase on GX
-		if (gx_rozenable != 0)
+		if (gx_rozenable)
 		{
 			last_psac_colorbase = psac_colorbase;
 			psac_colorbase = K055555_get_palette_index(6);
@@ -477,7 +466,7 @@ public class konamigx
 			}
 		}
 	
-		if (dirty != 0) K056832_MarkAllTilemapsDirty();
+		if (dirty) K056832_MarkAllTilemapsDirty();
 	
 		if (konamigx_cfgport >= 0)
 		{
@@ -509,17 +498,17 @@ public class konamigx
 		}
 		else blendmode = 0;
 	
-		if (gx_rozenable != 0)
+		if (gx_rozenable)
 			konamigx_mixer(bitmap, cliprect, 0, 0, gx_psac_tilemap, GXSUB_8BPP, blendmode);
 		else
 			konamigx_mixer(bitmap, cliprect, 0, 0, 0, 0, blendmode);
 	
-		if (gx_invertlayersBC != 0)
+		if( gx_invertlayersBC )
 		{
 			draw_crosshair( bitmap, readinputport( 9)*287/0xff+24, readinputport(10)*223/0xff+16, cliprect );
 			draw_crosshair( bitmap, readinputport(11)*287/0xff+24, readinputport(12)*223/0xff+16, cliprect );
 		}
-	}
+	} };
 	
 	
 	WRITE32_HANDLER( konamigx_palette_w )
@@ -558,9 +547,9 @@ public class konamigx
 		COMBINE_DATA(&paletteram32[offset]);
 	
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	
@@ -574,9 +563,9 @@ public class konamigx
 		COMBINE_DATA(&paletteram32[offset]);
 		
 		paletteram16 = (data16_t *)paletteram32;
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2, data >> 16, mem_mask >> 16);
-		if (ACCESSING_LSW32 != 0)
+		if (ACCESSING_LSW32)
 			paletteram16_xRRRRRGGGGGBBBBB_word_w(offset*2+1, data, mem_mask);
 	}
 	

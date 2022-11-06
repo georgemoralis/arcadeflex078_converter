@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -38,8 +38,7 @@ public class trackfld
 	  bit 0 -- 1  kohm resistor  -- RED
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_trackfld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_trackfld  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -83,8 +82,7 @@ public class trackfld
 			COLOR(0,i) = (*(color_prom++) & 0x0f) + 0x10;
 	} };
 	
-	public static WriteHandlerPtr trackfld_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trackfld_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -92,8 +90,7 @@ public class trackfld
 		}
 	} };
 	
-	public static WriteHandlerPtr trackfld_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trackfld_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -101,8 +98,7 @@ public class trackfld
 		}
 	} };
 	
-	public static WriteHandlerPtr trackfld_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr trackfld_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != data)
 		{
 			flip_screen_set(data);
@@ -120,12 +116,11 @@ public class trackfld
 		SET_TILE_INFO(0, code, color, flags)
 	}
 	
-	public static VideoStartHandlerPtr video_start_trackfld  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_trackfld  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		tilemap_set_scroll_rows(bg_tilemap, 32);
@@ -147,7 +142,7 @@ public class trackfld
 			int sx = spriteram.read(offs)- 1;
 			int sy = 240 - spriteram_2.read(offs + 1);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 240 - sy;
 				flipy = NOT(flipy);
@@ -157,31 +152,30 @@ public class trackfld
 			/* proving that this is a hardware related "feature" */
 			sy += 1;
 	
-			drawgfx(bitmap, Machine.gfx[1],
+			drawgfx(bitmap, Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				sx, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 	
 			/* redraw with wraparound */
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 				code, color,
 				flipx, flipy,
 				sx - 256, sy,
-				Machine.visible_area,
+				Machine->visible_area,
 				TRANSPARENCY_COLOR, 0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_trackfld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_trackfld  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int row, scrollx;
 	
 		for (row = 0; row < 32; row++)
 		{
 			scrollx = trackfld_scroll[row] + 256 * (trackfld_scroll2[row] & 0x01);
-			if (flip_screen != 0) scrollx = -scrollx;
+			if (flip_screen()) scrollx = -scrollx;
 			tilemap_set_scrollx(bg_tilemap, row, scrollx);
 		}
 	

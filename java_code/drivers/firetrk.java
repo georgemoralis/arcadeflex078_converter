@@ -6,7 +6,7 @@ Atari Fire Truck + Super Bug + Monte Carlo driver
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,35 +21,31 @@ public class firetrk
 	static int gear;
 	
 	
-	public static DriverInitHandlerPtr init_firetrk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_firetrk  = new DriverInitHandlerPtr() { public void handler(){
 		firetrk_game = 1;
 	} };
-	public static DriverInitHandlerPtr init_superbug  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_superbug  = new DriverInitHandlerPtr() { public void handler(){
 		firetrk_game = 2;
 	} };
-	public static DriverInitHandlerPtr init_montecar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_montecar  = new DriverInitHandlerPtr() { public void handler(){
 		firetrk_game = 3;
 	} };
 	
 	
-	public static InterruptHandlerPtr firetrk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr firetrk_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* interrupts are disabled during service mode */
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			if (readinputport(4) & 0x80)
 				return;
 		}
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			if (readinputport(6) & 0x04)
 				return;
 		}
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			discrete_sound_w(7, 0);	/* ASR */
 		}
@@ -102,7 +98,7 @@ public class firetrk
 		}
 	
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			/* watchdog is disabled during service mode */
 			if (readinputport(4) & 0x80)
@@ -131,7 +127,7 @@ public class firetrk
 	
 	static void write_output(UINT8 flags)
 	{
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			/* BIT0 => START1 LAMP */
 			/* BIT1 => START2 LAMP */
@@ -158,7 +154,7 @@ public class firetrk
 			firetrk_set_flash(flags & 0x04);
 		}
 	
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			/* BIT0 => START LAMP */
 			/* BIT1 => ATTRACT    */
@@ -178,7 +174,7 @@ public class firetrk
 			firetrk_set_flash(flags & 0x04);
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			/* BIT0 => START LAMP    */
 			/* BIT1 => TRACK LAMP    */
@@ -201,11 +197,10 @@ public class firetrk
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_firetrk  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_firetrk  = new MachineInitHandlerPtr() { public void handler(){
 		timer_pulse(1. / 60, 0, frame_callback);
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			write_output(0);
 		}
@@ -214,8 +209,7 @@ public class firetrk
 	} };
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_firetrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_firetrk  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		static const UINT16 colortable_source[] =
 		{
 			0, 0, 1, 0,
@@ -245,8 +239,7 @@ public class firetrk
 	}
 	
 	
-	static public static PaletteInitHandlerPtr palette_init_montecar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_montecar  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		static const UINT16 colortable_source[] =
 		{
 			0x00, 0x00, 0x00, 0x01,
@@ -322,20 +315,17 @@ public class firetrk
 	} };
 	
 	
-	public static ReadHandlerPtr firetrk_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrk_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return memory_region(REGION_CPU1)[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr firetrk_playfield_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrk_playfield_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return firetrk_playfield_ram[offset & 0xff];
 	} };
 	
 	
-	public static ReadHandlerPtr firetrk_dip_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrk_dip_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val0 = readinputport(2);
 		UINT8 val1 = readinputport(3);
 	
@@ -344,7 +334,7 @@ public class firetrk
 			if (val1 & (1 << (2 * offset + 0))) val0 |= 1;
 			if (val1 & (1 << (2 * offset + 1))) val0 |= 2;
 		}
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			if (val1 & (1 << (3 - offset))) val0 |= 1;
 			if (val1 & (1 << (7 - offset))) val0 |= 2;
@@ -354,15 +344,14 @@ public class firetrk
 	} };
 	
 	
-	public static ReadHandlerPtr firetrk_input_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr firetrk_input_r  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 val = 0;
 	
 		UINT8 bit0 = readinputport(4);
 		UINT8 bit6 = readinputport(5);
 		UINT8 bit7 = readinputport(6);
 	
-		if (GAME_IS_FIRETRUCK != 0)
+		if (GAME_IS_FIRETRUCK)
 		{
 			if (!steer_dir[0])
 				bit0 |= 0x04;
@@ -378,7 +367,7 @@ public class firetrk
 				bit7 |= 0x08;
 		}
 	
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			if (!steer_dir[0])
 				bit0 |= 0x04;
@@ -396,7 +385,7 @@ public class firetrk
 				bit7 |= 0x01;
 		}
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			if (!steer_dir[0])
 				bit6 |= 0x40;
@@ -426,48 +415,41 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		memory_region(REGION_CPU1)[offset & 0xff] = data;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_arrow_off_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_arrow_off_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrk_set_blink(1);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_car_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_car_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrk_crash[0] = 0;
 		firetrk_skid[0] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_drone_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_drone_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrk_crash[1] = 0;
 		firetrk_skid[1] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_steer_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_steer_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		steer_flag[0] = 0;
 		steer_flag[1] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_crash_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_crash_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrk_crash[0] = 0;
 		firetrk_crash[1] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_skid_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_skid_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (GAME_IS_FIRETRUCK || GAME_IS_SUPERBUG)
 		{
 			firetrk_skid[0] = 0;
@@ -478,21 +460,18 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_crash_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_crash_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* invert data here to make life easier on the sound system */
 		discrete_sound_w(3, ((~data) >> 4)& 0x0f);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_skid_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_skid_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(4, 1);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_motor_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_motor_snd_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (GAME_IS_FIRETRUCK || GAME_IS_MONTECARLO)
 		{
 			discrete_sound_w(2, data / 16);		/* Fire Truck - Siren frequency */
@@ -503,30 +482,27 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_xtndply_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_xtndply_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		discrete_sound_w(7, !(data & 1));
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_out_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_out_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (GAME_IS_FIRETRUCK || GAME_IS_MONTECARLO)
 		{
 			write_output(data);
 		}
-		if (GAME_IS_SUPERBUG != 0)
+		if (GAME_IS_SUPERBUG)
 		{
 			write_output(offset);
 		}
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrk_out2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrk_set_flash(data & 0x80);
 	
-		if (GAME_IS_MONTECARLO != 0)
+		if (GAME_IS_MONTECARLO)
 		{
 			discrete_sound_w(7, !(data & 0x10));	/* Beep */
 			discrete_sound_w(5, data & 0x0f);	/* Drone Motor Volume */
@@ -534,9 +510,8 @@ public class firetrk
 	} };
 	
 	
-	public static WriteHandlerPtr firetrk_asr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (GAME_IS_SUPERBUG != 0)
+	public static WriteHandlerPtr firetrk_asr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (GAME_IS_SUPERBUG)
 		{
 			discrete_sound_w(7, 1);	/* ASR */
 		}
@@ -664,7 +639,7 @@ public class firetrk
 	};
 	
 	
-	static InputPortPtr input_ports_firetrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_firetrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( firetrk )
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER1, 25, 10, 0, 0 );
 	
@@ -740,7 +715,7 @@ public class firetrk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_superbug = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_superbug = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( superbug )
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL, 25, 10, 0, 0 );
 	
@@ -804,7 +779,7 @@ public class firetrk
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_montecar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_montecar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( montecar )
 		PORT_START(); 
 		PORT_ANALOG( 0xff, 0x00, IPT_DIAL | IPF_PLAYER1, 25, 10, 0, 0 );
 	
@@ -1657,8 +1632,7 @@ public class firetrk
 	DISCRETE_SOUND_END
 	
 	
-	public static MachineHandlerPtr machine_driver_firetrk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( firetrk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6800, 12096000 / 12)	/* 750Khz during service mode */
@@ -1686,13 +1660,10 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("discrete", DISCRETE, firetrk_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_superbug = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( superbug )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(firetrk)
@@ -1708,13 +1679,10 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, superbug_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_montecar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( montecar )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(firetrk)
@@ -1730,9 +1698,7 @@ public class firetrk
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("discrete", DISCRETE, montecar_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_firetrk = new RomLoadPtr(){ public void handler(){ 
@@ -1815,7 +1781,7 @@ public class firetrk
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_superbug	   = new GameDriver("1977"	,"superbug"	,"firetrk.java"	,rom_superbug,null	,machine_driver_superbug	,input_ports_superbug	,init_superbug	,ROT270	,	"Atari", "Super Bug" )
-	public static GameDriver driver_firetrk	   = new GameDriver("1978"	,"firetrk"	,"firetrk.java"	,rom_firetrk,null	,machine_driver_firetrk	,input_ports_firetrk	,init_firetrk	,ROT270	,	"Atari", "Fire Truck" )
-	public static GameDriver driver_montecar	   = new GameDriver("1979"	,"montecar"	,"firetrk.java"	,rom_montecar,null	,machine_driver_montecar	,input_ports_montecar	,init_montecar	,ROT270	,	"Atari", "Monte Carlo" )
+	GAME( 1977, superbug, 0, superbug, superbug, superbug, ROT270, "Atari", "Super Bug" )
+	GAME( 1978, firetrk,  0, firetrk,  firetrk,  firetrk,  ROT270, "Atari", "Fire Truck" )
+	GAME( 1979, montecar, 0, montecar, montecar, montecar, ROT270, "Atari", "Monte Carlo" )
 }

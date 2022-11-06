@@ -68,7 +68,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -93,8 +93,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr ay8910_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			bit 7 = ENA
 			bit 6 = ENB
@@ -106,8 +105,7 @@ public class arabian
 	} };
 	
 	
-	public static WriteHandlerPtr ay8910_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ay8910_portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			bit 5 = /IREQ to custom CPU
 			bit 4 = /SRES to custom CPU
@@ -131,8 +129,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr custom_cpu_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr custom_cpu_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* since we don't have a simulator for the Fujitsu 8841 4-bit microprocessor */
 		/* we have to simulate its behavior; it looks like Arabian reads out of the  */
 		/* alternate CPU's RAM space while the CPU is running. If the CPU is not     */
@@ -140,7 +137,7 @@ public class arabian
 		/* the self-tests */
 	
 		/* if the CPU reset line is being held down, just return RAM */
-		if (custom_cpu_reset != 0)
+		if (custom_cpu_reset)
 			return custom_cpu_ram[0x7f0 + offset];
 	
 		/* otherwise, assume the custom CPU is live */
@@ -194,15 +191,13 @@ public class arabian
 	}
 	
 	
-	public static WriteHandlerPtr custom_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr custom_flip_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		custom_cpu_ram[0x34b + offset] = data;
 		update_flip_state();
 	} };
 	
 	
-	public static WriteHandlerPtr custom_cocktail_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr custom_cocktail_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		custom_cpu_ram[0x400 + offset] = data;
 		update_flip_state();
 	} };
@@ -258,7 +253,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_arabian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arabian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arabian )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -367,8 +362,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_arabian = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( arabian )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, MAIN_OSC/4)
@@ -393,9 +387,7 @@ public class arabian
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -442,8 +434,7 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_arabian  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_arabian  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(0, 0xd34b, 0xd34b, custom_flip_w);
 		install_mem_write_handler(0, 0xd400, 0xd401, custom_cocktail_w);
 	} };
@@ -456,6 +447,6 @@ public class arabian
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_arabian	   = new GameDriver("1983"	,"arabian"	,"arabian.java"	,rom_arabian,null	,machine_driver_arabian	,input_ports_arabian	,init_arabian	,ROT270	,	"Sun Electronics", "Arabian" )
-	public static GameDriver driver_arabiana	   = new GameDriver("1983"	,"arabiana"	,"arabian.java"	,rom_arabiana,driver_arabian	,machine_driver_arabian	,input_ports_arabian	,init_arabian	,ROT270	,	"[Sun Electronics] (Atari license)", "Arabian (Atari)" )
+	GAME( 1983, arabian,  0,       arabian, arabian, arabian, ROT270, "Sun Electronics", "Arabian" )
+	GAME( 1983, arabiana, arabian, arabian, arabian, arabian, ROT270, "[Sun Electronics] (Atari license)", "Arabian (Atari)" )
 }

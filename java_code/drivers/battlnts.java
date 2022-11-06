@@ -9,7 +9,7 @@ Preliminary driver by:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -18,19 +18,16 @@ public class battlnts
 	
 	/* from vidhrdw */
 	
-	public static InterruptHandlerPtr battlnts_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K007342_is_INT_enabled() != 0)
+	public static InterruptHandlerPtr battlnts_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K007342_is_INT_enabled())
 			cpu_set_irq_line(0, HD6309_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static WriteHandlerPtr battlnts_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlnts_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
 	} };
 	
-	public static WriteHandlerPtr battlnts_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr battlnts_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		int bankaddress;
 	
@@ -105,7 +102,7 @@ public class battlnts
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_battlnts = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_battlnts = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( battlnts )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x02, DEF_STR( "4C_1C") );
@@ -202,7 +199,7 @@ public class battlnts
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thehustj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thehustj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thehustj )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coin_A") );
 		PORT_DIPSETTING(	0x02, DEF_STR( "4C_1C") );
@@ -345,8 +342,7 @@ public class battlnts
 		{ 0, 0 },
 	};
 	
-	public static MachineHandlerPtr machine_driver_battlnts = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( battlnts )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(HD6309, 3000000)		/* ? */
@@ -372,9 +368,7 @@ public class battlnts
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -487,18 +481,17 @@ public class battlnts
 	}
 	
 	
-	public static DriverInitHandlerPtr init_rackemup  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rackemup  = new DriverInitHandlerPtr() { public void handler(){
 		/* rearrange char ROM */
 		shuffle(memory_region(REGION_GFX1),memory_region_length(REGION_GFX1));
 	} };
 	
 	
 	
-	public static GameDriver driver_battlnts	   = new GameDriver("1987"	,"battlnts"	,"battlnts.java"	,rom_battlnts,null	,machine_driver_battlnts	,input_ports_battlnts	,null	,ROT90	,	"Konami", "Battlantis" )
-	public static GameDriver driver_battlntj	   = new GameDriver("1987"	,"battlntj"	,"battlnts.java"	,rom_battlntj,driver_battlnts	,machine_driver_battlnts	,input_ports_battlnts	,null	,ROT90	,	"Konami", "Battlantis (Japan)" )
-	public static GameDriver driver_thehustl	   = new GameDriver("1987"	,"thehustl"	,"battlnts.java"	,rom_thehustl,null	,machine_driver_battlnts	,input_ports_thehustj	,null	,ROT90	,	"Konami", "The Hustler (Japan version M)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_thehustj	   = new GameDriver("1987"	,"thehustj"	,"battlnts.java"	,rom_thehustj,driver_thehustl	,machine_driver_battlnts	,input_ports_thehustj	,null	,ROT90	,	"Konami", "The Hustler (Japan version J)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_rackemup	   = new GameDriver("1987"	,"rackemup"	,"battlnts.java"	,rom_rackemup,driver_thehustl	,machine_driver_battlnts	,input_ports_thehustj	,init_rackemup	,ROT90	,	"Konami", "Rack 'em Up", GAME_NO_COCKTAIL )
+	GAME( 1987, battlnts, 0,		battlnts, battlnts, 0,		  ROT90, "Konami", "Battlantis" )
+	GAME( 1987, battlntj, battlnts, battlnts, battlnts, 0,		  ROT90, "Konami", "Battlantis (Japan)" )
+	GAMEX(1987, thehustl, 0,		battlnts, thehustj, 0,		  ROT90, "Konami", "The Hustler (Japan version M)", GAME_NO_COCKTAIL )
+	GAMEX(1987, thehustj, thehustl, battlnts, thehustj, 0,		  ROT90, "Konami", "The Hustler (Japan version J)", GAME_NO_COCKTAIL )
+	GAMEX(1987, rackemup, thehustl, battlnts, thehustj, rackemup, ROT90, "Konami", "Rack 'em Up", GAME_NO_COCKTAIL )
 	
 }

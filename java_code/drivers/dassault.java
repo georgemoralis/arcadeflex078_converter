@@ -120,7 +120,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -158,7 +158,7 @@ public class dassault
 	static WRITE16_HANDLER( dassault_control_w )
 	{
 		coin_counter_w(0,data&1);
-		if ((data & 0xfffe) != 0)
+		if (data&0xfffe)
 			logerror("Coin cointrol %04x\n",data);
 	}
 	
@@ -303,7 +303,7 @@ public class dassault
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, start );
 	
 	
-	static InputPortPtr input_ports_thndzone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thndzone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thndzone )
 		PORT_START(); 
 		DASSAULT_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 	
@@ -381,7 +381,7 @@ public class dassault
 		DASSAULT_PLAYER_INPUT( IPF_PLAYER4, IPT_COIN4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dassault = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dassault = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dassault )
 		PORT_START(); 
 		DASSAULT_PLAYER_INPUT( IPF_PLAYER1, IPT_START1 )
 	
@@ -454,7 +454,7 @@ public class dassault
 		DASSAULT_PLAYER_INPUT( IPF_PLAYER4, IPT_COIN4 )
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dassaul4 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dassaul4 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dassaul4 )
 		PORT_START(); 
 		DASSAULT_PLAYER_INPUT( IPF_PLAYER1, IPT_UNUSED )
 	
@@ -584,8 +584,7 @@ public class dassault
 		cpu_set_irq_line(2,1,state);
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* the second OKIM6295 ROM is bank switched */
 		OKIM6295_set_bank_base(1, (data & 1) * 0x40000);
 	} };
@@ -609,8 +608,7 @@ public class dassault
 	
 	/**********************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_dassault = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dassault )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000) /* Accurate */
@@ -644,9 +642,7 @@ public class dassault
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
@@ -882,7 +878,7 @@ public class dassault
 	
 	/**********************************************************************************/
 	
-	public static GameDriver driver_thndzone	   = new GameDriver("1991"	,"thndzone"	,"dassault.java"	,rom_thndzone,null	,machine_driver_dassault	,input_ports_thndzone	,init_thndzone	,ROT0	,	"Data East Corporation", "Thunder Zone (World)" )
-	public static GameDriver driver_dassault	   = new GameDriver("1991"	,"dassault"	,"dassault.java"	,rom_dassault,driver_thndzone	,machine_driver_dassault	,input_ports_dassault	,init_dassault	,ROT0	,	"Data East Corporation", "Desert Assault (US)" )
-	public static GameDriver driver_dassaul4	   = new GameDriver("1991"	,"dassaul4"	,"dassault.java"	,rom_dassaul4,driver_thndzone	,machine_driver_dassault	,input_ports_dassaul4	,init_dassault	,ROT0	,	"Data East Corporation", "Desert Assault (US 4 Players)" )
+	GAME(1991, thndzone, 0,        dassault, thndzone, thndzone, ROT0, "Data East Corporation", "Thunder Zone (World)" )
+	GAME(1991, dassault, thndzone, dassault, dassault, dassault, ROT0, "Data East Corporation", "Desert Assault (US)" )
+	GAME(1991, dassaul4, thndzone, dassault, dassaul4, dassault, ROT0, "Data East Corporation", "Desert Assault (US 4 Players)" )
 }

@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -24,16 +24,14 @@ public class freekick
 	
 	
 	
-	VIDEO_START(freekick)
-	{
+	public static VideoStartHandlerPtr video_start_freekick  = new VideoStartHandlerPtr() { public int handler(){
 		freek_tilemap = tilemap_create(get_freek_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 8,32,32);
 		return 0;
-	}
+	} };
 	
 	
 	
-	public static WriteHandlerPtr freek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr freek_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		freek_videoram[offset] = data;
 		tilemap_mark_tile_dirty(freek_tilemap,offset&0x3ff);
 	} };
@@ -52,18 +50,18 @@ public class freekick
 			int flipy = 0;
 			int color = spriteram.read(offs + 1)& 0x1f;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				xpos = 240 - xpos;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				ypos = 256 - ypos;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -87,18 +85,18 @@ public class freekick
 			int flipy = 0;//spriteram.read(offs + 0)& 0x40;
 			int color = spriteram.read(offs + 1)& 0x0f;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				xpos = 240 - xpos;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				ypos = 256 - ypos;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -123,18 +121,18 @@ public class freekick
 			int flipy = spriteram.read(offs + 2)& 0x40;
 			int color = spriteram.read(offs + 2)& 0x1f;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				xpos = 240 - xpos;
 				flipx = NOT(flipx);
 			}
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				ypos = 256 - ypos;
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					code,
 					color,
 					flipx,flipy,
@@ -143,21 +141,18 @@ public class freekick
 		}
 	}
 	
-	VIDEO_UPDATE(gigas)
-	{
+	public static VideoUpdateHandlerPtr video_update_gigas  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,freek_tilemap,0,0);
 		gigas_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE(pbillrd)
-	{
+	public static VideoUpdateHandlerPtr video_update_pbillrd  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,freek_tilemap,0,0);
 		pbillrd_draw_sprites(bitmap,cliprect);
-	}
+	} };
 	
-	VIDEO_UPDATE(freekick)
-	{
+	public static VideoUpdateHandlerPtr video_update_freekick  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,freek_tilemap,0,0);
 		freekick_draw_sprites(bitmap,cliprect);
-	}
+	} };
 }

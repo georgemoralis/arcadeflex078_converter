@@ -141,7 +141,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -332,8 +332,7 @@ public class tumblep
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -372,7 +371,7 @@ public class tumblep
 	
 	WRITE16_HANDLER( semicom_soundcmd_w )
 	{
-		if (ACCESSING_LSB != 0) soundlatch_w(0,data & 0xff);
+		if (ACCESSING_LSB) soundlatch_w(0,data & 0xff);
 	}
 	
 	public static Memory_ReadAddress semicom_sound_readmem[]={
@@ -397,7 +396,7 @@ public class tumblep
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_tumblep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tumblep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tumblep )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -487,7 +486,7 @@ public class tumblep
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fncywld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fncywld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fncywld )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -577,7 +576,7 @@ public class tumblep
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_htchctch = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_htchctch = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( htchctch )
 		PORT_START(); 	/* Player 1 controls */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -748,8 +747,7 @@ public class tumblep
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_tumblep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tumblep )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -777,13 +775,10 @@ public class tumblep
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tumblepb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tumblepb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -805,12 +800,9 @@ public class tumblep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_jumpkids = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jumpkids )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -834,12 +826,9 @@ public class tumblep
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface2)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_fncywld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fncywld )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(fncywld_readmem,fncywld_writemem)
@@ -862,9 +851,7 @@ public class tumblep
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, fncy_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, fncy_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	static void semicom_irqhandler(int irq)
 	{
@@ -889,8 +876,7 @@ public class tumblep
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_htchctch = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( htchctch )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 15000000) /* verified */
 		MDRV_CPU_MEMORY(htchctch_readmem,htchctch_writemem)
@@ -918,9 +904,7 @@ public class tumblep
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, semicom_ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, semicom_okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -1164,8 +1148,7 @@ public class tumblep
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_tumblep  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tumblep  = new DriverInitHandlerPtr() { public void handler(){
 		deco56_decrypt(REGION_GFX1);
 	
 		#if TUMBLEP_HACK
@@ -1173,8 +1156,7 @@ public class tumblep
 		#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_tumblepb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tumblepb  = new DriverInitHandlerPtr() { public void handler(){
 		tumblepb_gfx1_decrypt();
 	
 		#if TUMBLEP_HACK
@@ -1182,8 +1164,7 @@ public class tumblep
 		#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_jumpkids  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_jumpkids  = new DriverInitHandlerPtr() { public void handler(){
 		tumblepb_gfx1_decrypt();
 	
 		#if TUMBLEP_HACK
@@ -1191,8 +1172,7 @@ public class tumblep
 		#endif
 	} };
 	
-	public static DriverInitHandlerPtr init_fncywld  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_fncywld  = new DriverInitHandlerPtr() { public void handler(){
 		#if FNCYWLD_HACK
 		/* This is a hack to allow you to use the extra features
 	         of the 2 first "Unused" Dip Switch (see notes above). */
@@ -1204,8 +1184,7 @@ public class tumblep
 		tumblepb_gfx1_decrypt();
 	} };
 	
-	public static DriverInitHandlerPtr init_htchctch  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_htchctch  = new DriverInitHandlerPtr() { public void handler(){
 	
 	//	data16_t *HCROM = (data16_t*)memory_region(REGION_CPU1);
 		data16_t *PROTDATA = (data16_t*)memory_region(REGION_USER1);
@@ -1328,7 +1307,7 @@ public class tumblep
 		HCROM[0x1e122/2] = 0x0244; // mask with 0x000f
 		HCROM[0x1e124/2] = 0x000f; //
 	
-		HCROM[0x1e126/2] = 0x3004; // d4 . d0
+		HCROM[0x1e126/2] = 0x3004; // d4 -> d0
 	
 		/* jump to character draw to draw first bit */
 		HCROM[0x1e128/2] = 0x4eb9;
@@ -1347,7 +1326,7 @@ public class tumblep
 		HCROM[0x1e136/2] = 0x0244; // mask with 0x000f
 		HCROM[0x1e138/2] = 0x000f; //
 	
-		HCROM[0x1e13a/2] = 0x3004; // d4 . d0
+		HCROM[0x1e13a/2] = 0x3004; // d4 -> d0
 	
 		/* jump to character draw to draw second bit */
 		HCROM[0x1e13c/2] = 0x4eb9;
@@ -1396,10 +1375,10 @@ public class tumblep
 	
 		/* DRAW CHARACTER SUBROUTINE, note, this won't restore a1,d1, don't other places! */
 	
-		/* move address into A0.A1 for use by this subroutine */
+		/* move address into A0->A1 for use by this subroutine */
 		HCROM[0x1e200/2] = 0x2248;
 	
-		/* move address into D0.D1 for top half of character */
+		/* move address into D0->D1 for top half of character */
 		HCROM[0x1e202/2] = 0x2200;
 	
 		/* add 0x30 to d1 to get the REAL tile code */
@@ -1412,17 +1391,17 @@ public class tumblep
 		HCROM[0x1e20c/2] = 0x0000;
 		HCROM[0x1e20e/2] = 0xf000;
 	
-		/* write d1 . a1 for TOP half */
+		/* write d1 -> a1 for TOP half */
 		HCROM[0x1e210/2] = 0x32c1; // not ideal .. we don't need to increase a1
 	
-		/* move address into A0.A1 for use by this subroutine */
+		/* move address into A0->A1 for use by this subroutine */
 		HCROM[0x1e212/2] = 0x2248;
 	
 		/* add 0x80 to the address so we have the bottom location */
 		HCROM[0x1e214/2] = 0xd2fc;
 		HCROM[0x1e216/2] = 0x0080;
 	
-		/* move address into D0.D1 for bottom  half of character */
+		/* move address into D0->D1 for bottom  half of character */
 		HCROM[0x1e218/2] = 0x2200;
 	
 		/* add 0x54 to d1 to get the REAL tile code for bottom half */
@@ -1435,7 +1414,7 @@ public class tumblep
 		HCROM[0x1e222/2] = 0x0000;
 		HCROM[0x1e224/2] = 0xf000;
 	
-		/* write d1 . a1 for BOTTOM half */
+		/* write d1 -> a1 for BOTTOM half */
 		HCROM[0x1e226/2] = 0x32c1; // not ideal .. we don't need to increase a1
 	
 	
@@ -1448,7 +1427,7 @@ public class tumblep
 			FILE *fp;
 	
 			fp=fopen("hcatch", "w+b");
-			if (fp != 0)
+			if (fp)
 			{
 				fwrite(HCROM, 0x40000, 1, fp);
 				fclose(fp);
@@ -1460,12 +1439,12 @@ public class tumblep
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_tumblep	   = new GameDriver("1991"	,"tumblep"	,"tumblep.java"	,rom_tumblep,null	,machine_driver_tumblep	,input_ports_tumblep	,init_tumblep	,ROT0	,	"Data East Corporation", "Tumble Pop (World)" )
-	public static GameDriver driver_tumblepj	   = new GameDriver("1991"	,"tumblepj"	,"tumblep.java"	,rom_tumblepj,driver_tumblep	,machine_driver_tumblep	,input_ports_tumblep	,init_tumblep	,ROT0	,	"Data East Corporation", "Tumble Pop (Japan)" )
-	public static GameDriver driver_tumblepb	   = new GameDriver("1991"	,"tumblepb"	,"tumblep.java"	,rom_tumblepb,driver_tumblep	,machine_driver_tumblepb	,input_ports_tumblep	,init_tumblepb	,ROT0	,	"bootleg", "Tumble Pop (bootleg set 1)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_tumblep2	   = new GameDriver("1991"	,"tumblep2"	,"tumblep.java"	,rom_tumblep2,driver_tumblep	,machine_driver_tumblepb	,input_ports_tumblep	,init_tumblepb	,ROT0	,	"bootleg", "Tumble Pop (bootleg set 2)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_jumpkids	   = new GameDriver("1993"	,"jumpkids"	,"tumblep.java"	,rom_jumpkids,null	,machine_driver_jumpkids	,input_ports_tumblep	,init_jumpkids	,ROT0	,	"Comad", "Jump Kids", GAME_NO_SOUND )
-	public static GameDriver driver_fncywld	   = new GameDriver("1996"	,"fncywld"	,"tumblep.java"	,rom_fncywld,null	,machine_driver_fncywld	,input_ports_fncywld	,init_fncywld	,ROT0	,	"Unico", "Fancy World - Earth of Crisis" ) // game says 1996, testmode 1995?
-	public static GameDriver driver_htchctch	   = new GameDriver("1995"	,"htchctch"	,"tumblep.java"	,rom_htchctch,null	,machine_driver_htchctch	,input_ports_htchctch	,init_htchctch	,ROT0	,	"SemiCom", "Hatch Catch" )
-	public static GameDriver driver_bcstry	   = new GameDriver("1997"	,"bcstry"	,"tumblep.java"	,rom_bcstry,null	,machine_driver_htchctch	,input_ports_htchctch	,init_htchctch	,ROT0	,	"SemiCom", "BC Story", GAME_NOT_WORKING)
+	GAME( 1991, tumblep,  0,       tumblep,   tumblep,  tumblep,  ROT0, "Data East Corporation", "Tumble Pop (World)" )
+	GAME( 1991, tumblepj, tumblep, tumblep,   tumblep,  tumblep,  ROT0, "Data East Corporation", "Tumble Pop (Japan)" )
+	GAMEX(1991, tumblepb, tumblep, tumblepb,  tumblep,  tumblepb, ROT0, "bootleg", "Tumble Pop (bootleg set 1)", GAME_IMPERFECT_SOUND )
+	GAMEX(1991, tumblep2, tumblep, tumblepb,  tumblep,  tumblepb, ROT0, "bootleg", "Tumble Pop (bootleg set 2)", GAME_IMPERFECT_SOUND )
+	GAMEX(1993, jumpkids, 0,       jumpkids,  tumblep,  jumpkids, ROT0, "Comad", "Jump Kids", GAME_NO_SOUND )
+	GAME (1996, fncywld,  0,       fncywld,   fncywld,  fncywld,  ROT0, "Unico", "Fancy World - Earth of Crisis" ) // game says 1996, testmode 1995?
+	GAME (1995, htchctch, 0,       htchctch,  htchctch, htchctch, ROT0, "SemiCom", "Hatch Catch" )
+	GAMEX(1997, bcstry,   0,       htchctch,  htchctch, htchctch, ROT0, "SemiCom", "BC Story", GAME_NOT_WORKING)
 }

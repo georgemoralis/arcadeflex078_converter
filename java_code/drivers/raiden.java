@@ -39,7 +39,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -51,8 +51,8 @@ public class raiden
 	
 	/***************************************************************************/
 	
-	public static ReadHandlerPtr raiden_shared_r  = new ReadHandlerPtr() { public int handler(int offset) { return raiden_shared_ram[offset]; } };
-	public static WriteHandlerPtr raiden_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) { raiden_shared_ram[offset]=data; } };
+	public static ReadHandlerPtr raiden_shared_r  = new ReadHandlerPtr() { public int handler(int offset) return raiden_shared_ram[offset]; }
+	public static WriteHandlerPtr raiden_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data) raiden_shared_ram[offset]=data; }
 	
 	/******************************************************************************/
 	
@@ -135,7 +135,7 @@ public class raiden
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_raiden = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_raiden = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( raiden )
 		SEIBU_COIN_INPUTS	/* Must be port 0: coin inputs read through sound cpu */
 	
 		PORT_START(); 	/* IN0 */
@@ -272,18 +272,15 @@ public class raiden
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_RAIDEN_YM3812_HARDWARE(14318180/4,8000,REGION_SOUND1);
 	
-	public static InterruptHandlerPtr raiden_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr raiden_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(cpu_getactivecpu(), 0, HOLD_LINE, 0xc8/4);	/* VBL */
 	} };
 	
-	static public static VideoEofHandlerPtr video_eof_raiden  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_raiden  = new VideoEofHandlerPtr() { public void handler(){
 		buffer_spriteram_w(0,0); /* Could be a memory location instead */
 	} };
 	
-	public static MachineHandlerPtr machine_driver_raiden = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raiden )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,20000000/2) /* NEC V30 CPU, 20MHz */
@@ -315,13 +312,10 @@ public class raiden
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_raidena = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raidena )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(V30,20000000/2) /* NEC V30 CPU, 20MHz */
@@ -353,9 +347,7 @@ public class raiden
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -494,8 +486,7 @@ public class raiden
 	/***************************************************************************/
 	
 	/* Spin the sub-cpu if it is waiting on the master cpu */
-	public static ReadHandlerPtr sub_cpu_spin_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sub_cpu_spin_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc=activecpu_get_pc();
 		int ret=raiden_shared_ram[0x8];
 	
@@ -507,8 +498,7 @@ public class raiden
 		return ret;
 	} };
 	
-	public static ReadHandlerPtr sub_cpu_spina_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sub_cpu_spina_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int pc=activecpu_get_pc();
 		int ret=raiden_shared_ram[0x8];
 	
@@ -520,8 +510,7 @@ public class raiden
 		return ret;
 	} };
 	
-	public static DriverInitHandlerPtr init_raiden  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_raiden  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(1, 0x4008, 0x4009, sub_cpu_spin_r);
 	} };
 	
@@ -590,14 +579,12 @@ public class raiden
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_raidenk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_raidenk  = new DriverInitHandlerPtr() { public void handler(){
 		memory_patcha();
 		common_decrypt();
 	} };
 	
-	public static DriverInitHandlerPtr init_raidena  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_raidena  = new DriverInitHandlerPtr() { public void handler(){
 		memory_patcha();
 		common_decrypt();
 		seibu_sound_decrypt(REGION_CPU3,0x20000);
@@ -605,8 +592,8 @@ public class raiden
 	
 	/***************************************************************************/
 	
-	public static GameDriver driver_raiden	   = new GameDriver("1990"	,"raiden"	,"raiden.java"	,rom_raiden,null	,machine_driver_raiden	,input_ports_raiden	,init_raiden	,ROT270	,	"Seibu Kaihatsu", "Raiden" )
-	public static GameDriver driver_raidena	   = new GameDriver("1990"	,"raidena"	,"raiden.java"	,rom_raidena,driver_raiden	,machine_driver_raidena	,input_ports_raiden	,init_raidena	,ROT270	,	"Seibu Kaihatsu", "Raiden (Alternate Hardware)" )
-	public static GameDriver driver_raidenk	   = new GameDriver("1990"	,"raidenk"	,"raiden.java"	,rom_raidenk,driver_raiden	,machine_driver_raidena	,input_ports_raiden	,init_raidenk	,ROT270	,	"Seibu Kaihatsu (IBL Corporation license)", "Raiden (Korea)" )
-	public static GameDriver driver_raident	   = new GameDriver("1990"	,"raident"	,"raiden.java"	,rom_raident,driver_raiden	,machine_driver_raidena	,input_ports_raiden	,init_raidena	,ROT270	,	"Seibu Kaihatsu (Liang HWA Electronics license)", "Raiden (Taiwan)" )
+	GAME( 1990, raiden,  0,      raiden,  raiden, raiden,  ROT270, "Seibu Kaihatsu", "Raiden" )
+	GAME( 1990, raidena, raiden, raidena, raiden, raidena, ROT270, "Seibu Kaihatsu", "Raiden (Alternate Hardware)" )
+	GAME( 1990, raidenk, raiden, raidena, raiden, raidenk, ROT270, "Seibu Kaihatsu (IBL Corporation license)", "Raiden (Korea)" )
+	GAME( 1990, raident, raiden, raidena, raiden, raidena, ROT270, "Seibu Kaihatsu (Liang HWA Electronics license)", "Raiden (Taiwan)" )
 }

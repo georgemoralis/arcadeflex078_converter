@@ -21,7 +21,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.tms9900;
 
@@ -127,7 +127,7 @@ public class _9900dasm
 				break;
 			case 0x2:	/* symbolic|indexed */
 				base = RDWORD(PC); PC+=2;
-				if (arg != 0) 	/* indexed */
+				if (arg) 	/* indexed */
 					sprintf (temp, "@>%04x(R%d)", base, arg);
 				else		/* symbolic (direct) */
 					sprintf (temp, "@>%04x", base);

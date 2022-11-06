@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.adsp2100;
 
@@ -155,7 +155,7 @@ public class _2100dasm
 		int opindex = (op >> 13) & 31;
 		const char *xop, *yop, *dst, *opstring;
 	
-		if ((opindex & 16) != 0)
+		if (opindex & 16)
 		{
 			xop = alu_xop[(op >> 8) & 7];
 			yop = alu_yop[(op >> 11) & 3];
@@ -207,11 +207,11 @@ public class _2100dasm
 				break;
 			case 0x03:
 				/* 00000011 xxxxxxxx xxxxxxxx  call or jump on flag in */
-				if ((op & 2) != 0)
+				if (op & 2)
 					buffer += sprintf(buffer, "%s", "IF FLAG_IN ");
 				else
 					buffer += sprintf(buffer, "%s", "IF NOT FLAG_IN ");
-				if ((op & 1) != 0)
+				if (op & 1)
 					buffer += sprintf(buffer, "%s", "CALL ");
 				else
 					buffer += sprintf(buffer, "%s", "JUMP ");
@@ -222,9 +222,9 @@ public class _2100dasm
 				/* 00000100 00000000 000xxxxx  stack control */
 				if ((op & 0x00ffe0) == 0x000000)
 				{
-					if ((op & 0x000010) != 0) buffer += sprintf(buffer, "%s", "POP PC ");
-					if ((op & 0x000008) != 0) buffer += sprintf(buffer, "%s", "POP LOOP ");
-					if ((op & 0x000004) != 0) buffer += sprintf(buffer, "%s", "POP CNTR ");
+					if (op & 0x000010) buffer += sprintf(buffer, "%s", "POP PC ");
+					if (op & 0x000008) buffer += sprintf(buffer, "%s", "POP LOOP ");
+					if (op & 0x000004) buffer += sprintf(buffer, "%s", "POP CNTR ");
 					if ((op & 0x000003) == 0x000002) buffer += sprintf(buffer, "%s", "PUSH STAT ");
 					else if ((op & 0x000003) == 0x000003) buffer += sprintf(buffer, "%s", "POP STAT ");
 				}
@@ -271,7 +271,7 @@ public class _2100dasm
 				if ((op & 0x00ffe0) == 0x000000)
 				{
 					buffer += sprintf(buffer, "%s", condition[op & 15]);
-					if ((op & 0x000010) != 0)
+					if (op & 0x000010)
 						buffer += sprintf(buffer, "%s", "RTI");
 					else
 						buffer += sprintf(buffer, "%s", "RTS");
@@ -284,7 +284,7 @@ public class _2100dasm
 				if ((op & 0x00ff00) == 0x000000)
 				{
 					buffer += sprintf(buffer, "%s", condition[op & 15]);
-					if ((op & 0x000010) != 0)
+					if (op & 0x000010)
 						buffer += sprintf(buffer, "CALL (I%d)", 4 + ((op >> 6) & 3));
 					else
 						buffer += sprintf(buffer, "JUMP (I%d)", 4 + ((op >> 6) & 3));
@@ -339,7 +339,7 @@ public class _2100dasm
 			case 0x11:
 				/* 00010001 0xxxxxxx xxxxxxxx  shift with pgm memory read/write */
 				buffer += sprintf(buffer, shift_op[(op >> 11) & 15], shift_xop[(op >> 8) & 7]);
-				if ((op & 0x008000) != 0)
+				if (op & 0x008000)
 					buffer += sprintf(buffer, ", PM(I%d,M%d) = %s", 4 + ((op >> 2) & 3), 4 + (op & 3), reg_grp[0][(op >> 4) & 15]);
 				else
 					buffer += sprintf(buffer, ", %s = PM(I%d,M%d)", reg_grp[0][(op >> 4) & 15], 4 + ((op >> 2) & 3), 4 + (op & 3));
@@ -348,7 +348,7 @@ public class _2100dasm
 				/* 0001001x 0xxxxxxx xxxxxxxx  shift with data memory read/write */
 				buffer += sprintf(buffer, shift_op[(op >> 11) & 15], shift_xop[(op >> 8) & 7]);
 				temp = (op >> 14) & 4;
-				if ((op & 0x008000) != 0)
+				if (op & 0x008000)
 					buffer += sprintf(buffer, ", DM(I%d,M%d) = %s", temp + ((op >> 2) & 3), temp + (op & 3), reg_grp[0][(op >> 4) & 15]);
 				else
 					buffer += sprintf(buffer, ", %s = DM(I%d,M%d)", reg_grp[0][(op >> 4) & 15], temp + ((op >> 2) & 3), temp + (op & 3));
@@ -359,7 +359,7 @@ public class _2100dasm
 				break;
 			case 0x18: case 0x19: case 0x1a: case 0x1b: case 0x1c: case 0x1d: case 0x1e: case 0x1f:
 				/* 00011xxx xxxxxxxx xxxxxxxx  conditional jump (immediate addr) */
-				if ((op & 0x040000) != 0)
+				if (op & 0x040000)
 					buffer += sprintf(buffer, "%sCALL $%04X", condition[op & 15], (op >> 4) & 0x3fff);
 				else
 					buffer += sprintf(buffer, "%sJUMP $%04X", condition[op & 15], (op >> 4) & 0x3fff);
@@ -396,7 +396,7 @@ public class _2100dasm
 					buffer += alumac(buffer, (op >> 18) & 1, op);
 					buffer += sprintf(buffer, ", ");
 				}
-				if ((op & 0x080000) != 0)
+				if (op & 0x080000)
 					buffer += sprintf(buffer, "PM(I%d,M%d) = %s", 4 + ((op >> 2) & 3), 4 + (op & 3), reg_grp[0][(op >> 4) & 15]);
 				else
 					buffer += sprintf(buffer, "%s = PM(I%d,M%d)", reg_grp[0][(op >> 4) & 15], 4 + ((op >> 2) & 3), 4 + (op & 3));
@@ -412,7 +412,7 @@ public class _2100dasm
 					buffer += sprintf(buffer, ", ");
 				}
 				temp = (op >> 18) & 4;
-				if ((op & 0x080000) != 0)
+				if (op & 0x080000)
 					buffer += sprintf(buffer, "DM(I%d,M%d) = %s", temp + ((op >> 2) & 3), temp + (op & 3), reg_grp[0][(op >> 4) & 15]);
 				else
 					buffer += sprintf(buffer, "%s = DM(I%d,M%d)", reg_grp[0][(op >> 4) & 15], temp + ((op >> 2) & 3), temp + (op & 3));
@@ -422,7 +422,7 @@ public class _2100dasm
 			case 0x90: case 0x91: case 0x92: case 0x93: case 0x94: case 0x95: case 0x96: case 0x97:
 			case 0x98: case 0x99: case 0x9a: case 0x9b: case 0x9c: case 0x9d: case 0x9e: case 0x9f:
 				/* 100xxxxx xxxxxxxx xxxxxxxx  read/write data memory (immediate addr) */
-				if ((op & 0x100000) != 0)
+				if (op & 0x100000)
 					buffer += sprintf(buffer, "DM($%04X) = %s", (op >> 4) & 0x3fff, reg_grp[(op >> 18) & 3][op & 15]);
 				else
 					buffer += sprintf(buffer, "%s = DM($%04X)", reg_grp[(op >> 18) & 3][op & 15], (op >> 4) & 0x3fff);

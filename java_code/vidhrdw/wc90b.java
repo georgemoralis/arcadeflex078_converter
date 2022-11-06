@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -67,8 +67,7 @@ public class wc90b
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_wc90b  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wc90b  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     16,16,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		tx_tilemap = tilemap_create(get_tx_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
@@ -90,8 +89,7 @@ public class wc90b
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr wc90b_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_bgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90b_bgvideoram[offset] != data)
 		{
 			wc90b_bgvideoram[offset] = data;
@@ -99,8 +97,7 @@ public class wc90b
 		}
 	} };
 	
-	public static WriteHandlerPtr wc90b_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90b_fgvideoram[offset] != data)
 		{
 			wc90b_fgvideoram[offset] = data;
@@ -108,8 +105,7 @@ public class wc90b
 		}
 	} };
 	
-	public static WriteHandlerPtr wc90b_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wc90b_txvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (wc90b_txvideoram[offset] != data)
 		{
 			wc90b_txvideoram[offset] = data;
@@ -142,7 +138,7 @@ public class wc90b
 					code <<= 2;
 					code += ( bank & 0x0f ) >> 2;
 	
-					drawgfx( bitmap,Machine.gfx[ 17 ], code,
+					drawgfx( bitmap,Machine->gfx[ 17 ], code,
 							flags >> 4, /* color */
 							bank&1, /* flipx */
 							bank&2, /* flipy */
@@ -154,8 +150,7 @@ public class wc90b
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_wc90b  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wc90b  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx(bg_tilemap,0,8 * wc90b_scroll2x[0] + 256);
 		tilemap_set_scrolly(bg_tilemap,0,wc90b_scroll2y[0] + ((wc90b_scroll2y[0] < 0x10 || wc90b_scroll2y[0] == 0xff) ? 256 : 0));
 		tilemap_set_scrollx(fg_tilemap,0,8 * wc90b_scroll1x[0] + 256);

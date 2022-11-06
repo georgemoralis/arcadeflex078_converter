@@ -121,7 +121,7 @@ write:
 *************
 I8741 communication data
 
-reg: 0.1 (main.2nd) /     : (1.0) 2nd.main :
+reg: 0->1 (main->2nd) /     : (1->0) 2nd->main :
  0 : DSW.2 (port)           : DSW.1(port)
  1 : DSW.1                  : DSW.2
  2 : IN0 / sound error code :
@@ -136,7 +136,7 @@ reg: 0.1 (main.2nd) /     : (1.0) 2nd.main :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -167,8 +167,7 @@ public class gsword
 	}
 	#endif
 	
-	public static ReadHandlerPtr gsword_8741_2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gsword_8741_2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 		case 0x01: /* start button , coins */
@@ -184,8 +183,7 @@ public class gsword
 		return 0;
 	} };
 	
-	public static ReadHandlerPtr gsword_8741_3_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gsword_8741_3_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (offset)
 		{
 		case 0x01: /* start button  */
@@ -208,8 +206,7 @@ public class gsword
 		{ input_port_7_r,input_port_6_r,gsword_8741_2_r,gsword_8741_3_r }    /* port handler */
 	};
 	
-	public static MachineInitHandlerPtr machine_init_gsword  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gsword  = new MachineInitHandlerPtr() { public void handler(){
 		int i;
 	
 		for(i=0;i<4;i++) TAITO8741_reset(i);
@@ -220,8 +217,7 @@ public class gsword
 		TAITO8741_start(&gsword_8741interface);
 	} };
 	
-	public static InterruptHandlerPtr gsword_snd_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr gsword_snd_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if( (gsword_nmi_count+=gsword_nmi_step) >= 4)
 		{
 			gsword_nmi_count = 0;
@@ -229,8 +225,7 @@ public class gsword
 		}
 	} };
 	
-	public static WriteHandlerPtr gsword_nmi_set_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_nmi_set_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(data)
 		{
 		case 0x02:
@@ -251,35 +246,29 @@ public class gsword
 		logerror("NMI controll %02x\n",data);
 	} };
 	
-	public static WriteHandlerPtr gsword_AY8910_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_AY8910_control_port_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		AY8910_control_port_0_w.handler(offset,data);
 		fake8910_0 = data;
 	} };
-	public static WriteHandlerPtr gsword_AY8910_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_AY8910_control_port_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		AY8910_control_port_1_w.handler(offset,data);
 		fake8910_1 = data;
 	} };
 	
-	public static ReadHandlerPtr gsword_fake_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gsword_fake_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fake8910_0+1;
 	} };
-	public static ReadHandlerPtr gsword_fake_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr gsword_fake_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fake8910_1+1;
 	} };
 	
-	public static WriteHandlerPtr gsword_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gsword_adpcm_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		MSM5205_data_w (0,data & 0x0f); /* bit 0..3 */
 		MSM5205_reset_w(0,(data>>5)&1); /* bit 5    */
 		MSM5205_vclk_w(0,(data>>4)&1);  /* bit 4    */
 	} };
 	
-	public static WriteHandlerPtr adpcm_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr adpcm_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(2, PULSE_LINE);
 	} };
@@ -414,7 +403,7 @@ public class gsword
 	
 	
 	
-	static InputPortPtr input_ports_gsword = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gsword = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gsword )
 		PORT_START(); 	/* IN0 (8741-2 port1?) */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_START2 );
@@ -597,8 +586,7 @@ public class gsword
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_josvolly = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( josvolly )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)
@@ -631,12 +619,9 @@ public class gsword
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gsword = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gsword )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)
@@ -674,9 +659,7 @@ public class gsword
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -758,8 +741,7 @@ public class gsword
 	
 	
 	
-	public static DriverInitHandlerPtr init_gsword  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gsword  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *ROM2 = memory_region(REGION_CPU2);
 	
 		ROM2[0x1da] = 0xc3; /* patch for rom self check */
@@ -768,6 +750,6 @@ public class gsword
 	} };
 	
 	
-	public static GameDriver driver_josvolly	   = new GameDriver("1983"	,"josvolly"	,"gsword.java"	,rom_josvolly,null	,machine_driver_josvolly	,input_ports_gsword	,null	,ROT90	,	"Taito Corporation", "Joshi Volleyball", GAME_NOT_WORKING )
-	public static GameDriver driver_gsword	   = new GameDriver("1984"	,"gsword"	,"gsword.java"	,rom_gsword,null	,machine_driver_gsword	,input_ports_gsword	,init_gsword	,ROT0	,	"Taito Corporation", "Great Swordsman", GAME_IMPERFECT_COLORS )
+	GAMEX( 1983, josvolly, 0, josvolly, gsword, 0,      ROT90, "Taito Corporation", "Joshi Volleyball", GAME_NOT_WORKING )
+	GAMEX( 1984, gsword,   0, gsword,   gsword, gsword, ROT0,  "Taito Corporation", "Great Swordsman", GAME_IMPERFECT_COLORS )
 }

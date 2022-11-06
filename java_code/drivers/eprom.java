@@ -20,7 +20,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -50,25 +50,24 @@ public class eprom
 		int newstate = 0;
 		int newstate2 = 0;
 	
-		if (atarigen_video_int_state != 0)
+		if (atarigen_video_int_state)
 			newstate |= 4, newstate2 |= 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	
-		if (newstate2 != 0)
+		if (newstate2)
 			cpu_set_irq_line(1, newstate2, ASSERT_LINE);
 		else
 			cpu_set_irq_line(1, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_eprom  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_eprom  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(eprom_scanline_update, 8);
@@ -87,8 +86,8 @@ public class eprom
 	{
 		int result = readinputport(1);
 	
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0004;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0008;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x0004;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0008;
 		result ^= 0x0010;
 	
 		return result;
@@ -114,9 +113,9 @@ public class eprom
 	static WRITE16_HANDLER( eprom_latch_w )
 	{
 		/* reset extra CPU */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
-			if ((data & 1) != 0)
+			if (data & 1)
 				cpu_set_reset_line(1, CLEAR_LINE);
 			else
 				cpu_set_reset_line(1, ASSERT_LINE);
@@ -225,7 +224,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_eprom = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_eprom = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( eprom )
 		PORT_START(); 		/* 26000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -269,7 +268,7 @@ public class eprom
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_klaxp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_klaxp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( klaxp )
 		PORT_START(); 		/* 26000 */
 		PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_START1 );
@@ -349,8 +348,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_eprom = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( eprom )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -379,13 +377,10 @@ public class eprom
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_i_mono_speech)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_klaxp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( klaxp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -411,9 +406,7 @@ public class eprom
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_ii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -566,8 +559,7 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_eprom  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_eprom  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(2, 6, 1, 0x0002);
 		atarigen_init_6502_speedup(2, 0x4158, 0x4170);
@@ -580,8 +572,7 @@ public class eprom
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_klaxp  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_klaxp  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 		atarijsa_init(1, 2, 1, 0x0002);
 		atarigen_init_6502_speedup(1, 0x4159, 0x4171);
@@ -595,8 +586,8 @@ public class eprom
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_eprom	   = new GameDriver("1989"	,"eprom"	,"eprom.java"	,rom_eprom,null	,machine_driver_eprom	,input_ports_eprom	,init_eprom	,ROT0	,	"Atari Games", "Escape from the Planet of the Robot Monsters (set 1)" )
-	public static GameDriver driver_eprom2	   = new GameDriver("1989"	,"eprom2"	,"eprom.java"	,rom_eprom2,driver_eprom	,machine_driver_eprom	,input_ports_eprom	,init_eprom	,ROT0	,	"Atari Games", "Escape from the Planet of the Robot Monsters (set 2)" )
-	public static GameDriver driver_klaxp1	   = new GameDriver("1989"	,"klaxp1"	,"eprom.java"	,rom_klaxp1,driver_klax	,machine_driver_klaxp	,input_ports_klaxp	,init_klaxp	,ROT0	,	"Atari Games", "Klax (prototype set 1)" )
-	public static GameDriver driver_klaxp2	   = new GameDriver("1989"	,"klaxp2"	,"eprom.java"	,rom_klaxp2,driver_klax	,machine_driver_klaxp	,input_ports_klaxp	,init_klaxp	,ROT0	,	"Atari Games", "Klax (prototype set 2)" )
+	GAME( 1989, eprom,  0,     eprom, eprom, eprom, ROT0, "Atari Games", "Escape from the Planet of the Robot Monsters (set 1)" )
+	GAME( 1989, eprom2, eprom, eprom, eprom, eprom, ROT0, "Atari Games", "Escape from the Planet of the Robot Monsters (set 2)" )
+	GAME( 1989, klaxp1, klax,  klaxp, klaxp, klaxp, ROT0, "Atari Games", "Klax (prototype set 1)" )
+	GAME( 1989, klaxp2, klax,  klaxp, klaxp, klaxp, ROT0, "Atari Games", "Klax (prototype set 2)" )
 }

@@ -182,7 +182,7 @@ Maybe the second area for each layer contains colscroll ?
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -253,15 +253,13 @@ public class topspeed
 	}
 	
 	
-	public static InterruptHandlerPtr topspeed_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr topspeed_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Unsure how many int6's per frame */
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, topspeed_interrupt6);
 		cpu_set_irq_line(0, 5, HOLD_LINE);
 	} };
 	
-	public static InterruptHandlerPtr topspeed_cpub_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr topspeed_cpub_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Unsure how many int6's per frame */
 		timer_set(TIME_IN_CYCLES(200000-500,0),0, topspeed_cpub_interrupt6);
 		cpu_set_irq_line(2, 5, HOLD_LINE);
@@ -287,19 +285,19 @@ public class topspeed
 		}
 		else	/* Digital steer */
 		{
-			if ((fake & 0x8) != 0)	/* pressing down */
+			if (fake & 0x8)	/* pressing down */
 				steer = 0xff40;
 	
-			if ((fake & 0x2) != 0)	/* pressing right */
+			if (fake & 0x2)	/* pressing right */
 				steer = 0x007f;
 	
-			if ((fake & 0x1) != 0)	/* pressing left */
+			if (fake & 0x1)	/* pressing left */
 				steer = 0xff80;
 	
 			/* To allow hiscore input we must let you return to
 			   continuous input type while you press up */
 	
-			if ((fake & 0x4) != 0)	/* pressing up */
+			if (fake & 0x4)	/* pressing up */
 				steer = analogue_steer;
 		}
 	
@@ -353,7 +351,7 @@ public class topspeed
 		cpu_setbank( 10, memory_region(REGION_CPU2) + (banknum * 0x4000) + 0x10000 );
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)	/* assumes Z80 sandwiched between 68Ks */
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)* assumes Z80 sandwiched between 68Ks */
 	{
 		banknum = (data - 1) & 7;
 		reset_sound_region();
@@ -492,7 +490,7 @@ public class topspeed
 		PORT_DIPSETTING(    0x01, "Hard" );\
 		PORT_DIPSETTING(    0x00, "Hardest" );
 	
-	static InputPortPtr input_ports_topspeed = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topspeed = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topspeed )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
@@ -565,7 +563,7 @@ public class topspeed
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_topspedu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topspedu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topspedu )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
@@ -638,7 +636,7 @@ public class topspeed
 		PORT_DIPSETTING(    0x00, "Analogue" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fullthrl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fullthrl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fullthrl )
 		PORT_START();  /* DSW A */
 		PORT_DIPNAME( 0x03, 0x03, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x03, "Deluxe Motorized Cockpit" );
@@ -780,8 +778,7 @@ public class topspeed
 	                     MACHINE DRIVERS
 	***********************************************************/
 	
-	public static MachineHandlerPtr machine_driver_topspeed = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( topspeed )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000)	/* 12 MHz ??? */
@@ -812,9 +809,7 @@ public class topspeed
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(ADPCM, adpcm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -949,8 +944,7 @@ public class topspeed
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_topspeed  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_topspeed  = new DriverInitHandlerPtr() { public void handler(){
 	//	taitosnd_setz80_soundcpu( 2 );
 	
 		cpua_ctrl = 0xff;
@@ -964,8 +958,8 @@ public class topspeed
 	} };
 	
 	
-	public static GameDriver driver_topspeed	   = new GameDriver("1987"	,"topspeed"	,"topspeed.java"	,rom_topspeed,null	,machine_driver_topspeed	,input_ports_topspeed	,init_topspeed	,ROT0	,	"Taito Corporation Japan", "Top Speed (World)" )
-	public static GameDriver driver_topspedu	   = new GameDriver("1987"	,"topspedu"	,"topspeed.java"	,rom_topspedu,driver_topspeed	,machine_driver_topspeed	,input_ports_topspedu	,init_topspeed	,ROT0	,	"Taito America Corporation (Romstar license)", "Top Speed (US)" )
-	public static GameDriver driver_fullthrl	   = new GameDriver("1987"	,"fullthrl"	,"topspeed.java"	,rom_fullthrl,driver_topspeed	,machine_driver_topspeed	,input_ports_fullthrl	,init_topspeed	,ROT0	,	"Taito Corporation", "Full Throttle (Japan)" )
+	GAME( 1987, topspeed, 0,        topspeed, topspeed, topspeed, ROT0, "Taito Corporation Japan", "Top Speed (World)" )
+	GAME( 1987, topspedu, topspeed, topspeed, topspedu, topspeed, ROT0, "Taito America Corporation (Romstar license)", "Top Speed (US)" )
+	GAME( 1987, fullthrl, topspeed, topspeed, fullthrl, topspeed, ROT0, "Taito Corporation", "Full Throttle (Japan)" )
 	
 }

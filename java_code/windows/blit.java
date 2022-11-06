@@ -8,7 +8,7 @@
 #define WIN32_LEAN_AND_MEAN
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -392,62 +392,62 @@ public class blit
 	
 	int win_perform_blit(const struct win_blit_params *blit, int update)
 	{
-		int srcdepth = (blit.srcdepth + 7) / 8;
-		int dstdepth = (blit.dstdepth + 7) / 8;
+		int srcdepth = (blit->srcdepth + 7) / 8;
+		int dstdepth = (blit->dstdepth + 7) / 8;
 		struct rectangle temprect;
 		blitter_func blitter;
 		int srcx, srcy;
 	
 		// if we have a vector dirty array, alter the plan
-		if (blit.vecdirty && !update)
+		if (blit->vecdirty && !update)
 			if (blit_vectors(blit))
 				return 1;
 	
 		// determine the starting source X/Y
-		temprect.min_x = blit.srcxoffs;
-		temprect.min_y = blit.srcyoffs;
-		temprect.max_x = blit.srcxoffs + blit.srcwidth - 1;
-		temprect.max_y = blit.srcyoffs + blit.srcheight - 1;
+		temprect.min_x = blit->srcxoffs;
+		temprect.min_y = blit->srcyoffs;
+		temprect.max_x = blit->srcxoffs + blit->srcwidth - 1;
+		temprect.max_y = blit->srcyoffs + blit->srcheight - 1;
 	
-		if (blit.swapxy || blit.flipx || blit.flipy)
+		if (blit->swapxy || blit->flipx || blit->flipy)
 			win_disorient_rect(&temprect);
 	
-		if (!blit.swapxy)
+		if (!blit->swapxy)
 		{
-			srcx = blit.flipx ? (temprect.max_x + 1) : temprect.min_x;
-			srcy = blit.flipy ? (temprect.max_y + 1) : temprect.min_y;
+			srcx = blit->flipx ? (temprect.max_x + 1) : temprect.min_x;
+			srcy = blit->flipy ? (temprect.max_y + 1) : temprect.min_y;
 		}
 		else
 		{
-			srcx = blit.flipy ? (temprect.max_x + 1) : temprect.min_x;
-			srcy = blit.flipx ? (temprect.max_y + 1) : temprect.min_y;
+			srcx = blit->flipy ? (temprect.max_x + 1) : temprect.min_x;
+			srcy = blit->flipx ? (temprect.max_y + 1) : temprect.min_y;
 		}
 	
 		// if anything important has changed, fix it
-		if (blit.srcwidth != active_blitter_params.srcwidth ||
-			blit.srcdepth != active_blitter_params.srcdepth ||
-			blit.srcpitch != active_blitter_params.srcpitch ||
-			blit.dstdepth != active_blitter_params.dstdepth ||
-			blit.dstpitch != active_blitter_params.dstpitch ||
-			blit.dstyskip != active_blitter_params.dstyskip ||
-			blit.dstxscale != active_blitter_params.dstxscale ||
-			blit.dstyscale != active_blitter_params.dstyscale ||
-			blit.dsteffect != active_blitter_params.dsteffect ||
-			blit.flipx != active_blitter_params.flipx ||
-			blit.flipy != active_blitter_params.flipy ||
-			blit.swapxy != active_blitter_params.swapxy)
+		if (blit->srcwidth != active_blitter_params.srcwidth ||
+			blit->srcdepth != active_blitter_params.srcdepth ||
+			blit->srcpitch != active_blitter_params.srcpitch ||
+			blit->dstdepth != active_blitter_params.dstdepth ||
+			blit->dstpitch != active_blitter_params.dstpitch ||
+			blit->dstyskip != active_blitter_params.dstyskip ||
+			blit->dstxscale != active_blitter_params.dstxscale ||
+			blit->dstyscale != active_blitter_params.dstyscale ||
+			blit->dsteffect != active_blitter_params.dsteffect ||
+			blit->flipx != active_blitter_params.flipx ||
+			blit->flipy != active_blitter_params.flipy ||
+			blit->swapxy != active_blitter_params.swapxy)
 		{
 			generate_blitter(blit);
 			active_blitter_params = *blit;
 		}
 	
 		// copy data to the globals
-		asmblit_srcdata = (UINT8 *)blit.srcdata + blit.srcpitch * srcy + srcdepth * srcx;
-		asmblit_srcheight = blit.srcheight;
-		asmblit_srclookup = blit.srclookup;
+		asmblit_srcdata = (UINT8 *)blit->srcdata + blit->srcpitch * srcy + srcdepth * srcx;
+		asmblit_srcheight = blit->srcheight;
+		asmblit_srclookup = blit->srclookup;
 	
-		asmblit_dstdata = (UINT8 *)blit.dstdata + blit.dstpitch * blit.dstyoffs + dstdepth * blit.dstxoffs;
-		asmblit_dstpitch = blit.dstpitch;
+		asmblit_dstdata = (UINT8 *)blit->dstdata + blit->dstpitch * blit->dstyoffs + dstdepth * blit->dstxoffs;
+		asmblit_dstpitch = blit->dstpitch;
 	
 		// pick the blitter
 		blitter = update ? (blitter_func)active_update_blitter : (blitter_func)active_fast_blitter;
@@ -463,29 +463,29 @@ public class blit
 	
 	static int blit_vectors(const struct win_blit_params *blit)
 	{
-		int srcdepth = (blit.srcdepth + 7) / 8;
-		int dstdepth = (blit.dstdepth + 7) / 8;
-		void *srcbase = (UINT8 *)blit.srcdata + blit.srcpitch * blit.srcyoffs + srcdepth * blit.srcxoffs;
-		void *dstbase = (UINT8 *)blit.dstdata + blit.dstpitch * blit.dstyoffs + dstdepth * blit.dstxoffs;
-		UINT32 srcpitch = blit.srcpitch;
-		vector_pixel_t *list = blit.vecdirty;
+		int srcdepth = (blit->srcdepth + 7) / 8;
+		int dstdepth = (blit->dstdepth + 7) / 8;
+		void *srcbase = (UINT8 *)blit->srcdata + blit->srcpitch * blit->srcyoffs + srcdepth * blit->srcxoffs;
+		void *dstbase = (UINT8 *)blit->dstdata + blit->dstpitch * blit->dstyoffs + dstdepth * blit->dstxoffs;
+		UINT32 srcpitch = blit->srcpitch;
+		vector_pixel_t *list = blit->vecdirty;
 	
 		// skip if not 1:1
-		if (blit.dstxscale != 1 || blit.dstyscale != 1)
+		if (blit->dstxscale != 1 || blit->dstyscale != 1)
 			return 0;
 	
 		// can't handle anything but 15bpp
-		if (blit.srcdepth != 15)
+		if (blit->srcdepth != 15)
 			return 0;
 	
 		// recompute the lookups
-		if (blit.srcwidth != active_vector_params.srcwidth ||
-			blit.srcpitch != active_vector_params.srcpitch ||
-			blit.dstdepth != active_vector_params.dstdepth ||
-			blit.dstpitch != active_vector_params.dstpitch ||
-			blit.flipx != active_vector_params.flipx ||
-			blit.flipy != active_vector_params.flipy ||
-			blit.swapxy != active_vector_params.swapxy)
+		if (blit->srcwidth != active_vector_params.srcwidth ||
+			blit->srcpitch != active_vector_params.srcpitch ||
+			blit->dstdepth != active_vector_params.dstdepth ||
+			blit->dstpitch != active_vector_params.dstpitch ||
+			blit->flipx != active_vector_params.flipx ||
+			blit->flipy != active_vector_params.flipy ||
+			blit->swapxy != active_vector_params.swapxy)
 		{
 			struct rectangle temprect;
 			int x;
@@ -495,21 +495,21 @@ public class blit
 				temprect.min_x = temprect.max_x = x;
 				temprect.min_y = temprect.max_y = 0;
 				win_orient_rect(&temprect);
-				xtrans[x] = blit.swapxy ? (temprect.max_y * blit.dstpitch) : (temprect.max_x * dstdepth);
+				xtrans[x] = blit->swapxy ? (temprect.max_y * blit->dstpitch) : (temprect.max_x * dstdepth);
 	
 				temprect.min_x = temprect.max_x = 0;
 				temprect.min_y = temprect.max_y = x;
 				win_orient_rect(&temprect);
-				ytrans[x] = blit.swapxy ? (temprect.max_x * dstdepth) : (temprect.max_y * blit.dstpitch);
+				ytrans[x] = blit->swapxy ? (temprect.max_x * dstdepth) : (temprect.max_y * blit->dstpitch);
 			}
 	
 			active_vector_params = *blit;
 		}
 	
 		// 16-bit to 16-bit
-		if (blit.dstdepth == 15)
+		if (blit->dstdepth == 15)
 		{
-			UINT32 *srclookup = blit.srclookup;
+			UINT32 *srclookup = blit->srclookup;
 			while (*list != VECTOR_PIXEL_END)
 			{
 				vector_pixel_t coords = *list++;
@@ -522,9 +522,9 @@ public class blit
 		}
 	
 		// 16-bit to 32-bit
-		else if (blit.dstdepth == 32)
+		else if (blit->dstdepth == 32)
 		{
-			UINT32 *srclookup = blit.srclookup;
+			UINT32 *srclookup = blit->srclookup;
 			while (*list != VECTOR_PIXEL_END)
 			{
 				vector_pixel_t coords = *list++;
@@ -668,7 +668,7 @@ public class blit
 		int shift, i;
 	
 		// do nothing for less than 16bpp
-		if (blit.dstdepth < 16)
+		if (blit->dstdepth < 16)
 			return;
 	
 		// find all the registers we need to tweak
@@ -681,7 +681,7 @@ public class blit
 		}
 	
 		// for 25/75% we need to shift right by 2
-		if (blit.dsteffect == EFFECT_SCANLINE_25 || blit.dsteffect == EFFECT_SCANLINE_75)
+		if (blit->dsteffect == EFFECT_SCANLINE_25 || blit->dsteffect == EFFECT_SCANLINE_75)
 		{
 			for (i = 0; i < 4; i++)
 				if (regsize[i])
@@ -722,7 +722,7 @@ public class blit
 		}
 	
 		// now determine the mask to use
-		if (blit.dstdepth == 16)
+		if (blit->dstdepth == 16)
 		{
 			mask = (0xff >> (win_color16_rsrc_shift + shift)) << win_color16_rdst_shift;
 			mask |= (0xff >> (win_color16_gsrc_shift + shift)) << win_color16_gdst_shift;
@@ -761,7 +761,7 @@ public class blit
 			}
 	
 		// for the 75% case, we need to multiply by 3 (lea reg,[reg+reg*2])
-		if (blit.dsteffect == EFFECT_SCANLINE_75)
+		if (blit->dsteffect == EFFECT_SCANLINE_75)
 		{
 			for (i = 0; i < 4; i++)
 				if (regsize[i] > 1 && regsize[i] < 8)
@@ -793,7 +793,7 @@ public class blit
 		UINT32 mask;
 	
 		// do nothing for less than 16bpp
-		if (blit.dstdepth < 16)
+		if (blit->dstdepth < 16)
 			return;
 	
 		// find all the registers we need to tweak
@@ -822,7 +822,7 @@ public class blit
 				freelist[8 + i] = tempfree[8 + j++];
 	
 		// for 75% (MMX) we need to copy to a free reg temporarily
-		if (blit.dsteffect == EFFECT_SCANLINE_75)
+		if (blit->dsteffect == EFFECT_SCANLINE_75)
 		{
 			for (i = 0; i < 16; i++)
 				if (regsize[i])
@@ -838,7 +838,7 @@ public class blit
 		}
 	
 		// for 25% we need to shift right by 2
-		if (blit.dsteffect == EFFECT_SCANLINE_25)
+		if (blit->dsteffect == EFFECT_SCANLINE_25)
 		{
 			for (i = 0; i < 16; i++)
 				if (regsize[i])
@@ -856,7 +856,7 @@ public class blit
 		}
 	
 		// for 50% we need to shift right by 1
-		else if (blit.dsteffect == EFFECT_SCANLINE_50)
+		else if (blit->dsteffect == EFFECT_SCANLINE_50)
 		{
 			for (i = 0; i < 16; i++)
 				if (regsize[i])
@@ -892,7 +892,7 @@ public class blit
 		}
 	
 		// now determine the masks to use
-		if (blit.dstdepth == 16)
+		if (blit->dstdepth == 16)
 		{
 			mask = (0xff >> (win_color16_rsrc_shift + shift)) << win_color16_rdst_shift;
 			mask |= (0xff >> (win_color16_gsrc_shift + shift)) << win_color16_gdst_shift;
@@ -908,7 +908,7 @@ public class blit
 		asmblit_mmxmask[0] = asmblit_mmxmask[1] = asmblit_mmxmask[2] = asmblit_mmxmask[3] = mask;
 	
 		// generate an AND with that mask
-		if (blit.dsteffect != EFFECT_SCANLINE_75)
+		if (blit->dsteffect != EFFECT_SCANLINE_75)
 		{
 			for (i = 0; i < 16; i++)
 				if (regsize[i])
@@ -975,7 +975,7 @@ public class blit
 		// generate an entry for each row of the destination
 		for (i = 0; i < MAX_VIDEO_HEIGHT * 2; i++)
 		{
-			const UINT8 *src = &desc.data[i % desc.rows][0];
+			const UINT8 *src = &desc->data[i % desc->rows][0];
 			UINT32 *dst = &asmblit_rgbmask[i * 16];
 			int j;
 	
@@ -988,7 +988,7 @@ public class blit
 				UINT32 mask;
 	
 				// now determine the masks to use
-				if (blit.dstdepth == 16)
+				if (blit->dstdepth == 16)
 				{
 					mask = (rmask >> win_color16_rsrc_shift) << win_color16_rdst_shift;
 					mask |= (gmask >> win_color16_gsrc_shift) << win_color16_gdst_shift;
@@ -1023,12 +1023,12 @@ public class blit
 				has_mmx = 1;
 	
 		// loop over copied lines and blit them
-		for (row = 0; row < blit.dstyscale; row++)
+		for (row = 0; row < blit->dstyscale; row++)
 		{
 			// handle dimmed scanlines
-			if (blit.dsteffect >= EFFECT_SCANLINE_25 && blit.dsteffect <= EFFECT_SCANLINE_75 && row != 0 && row == blit.dstyscale - 1)
+			if (blit->dsteffect >= EFFECT_SCANLINE_25 && blit->dsteffect <= EFFECT_SCANLINE_75 && row != 0 && row == blit->dstyscale - 1)
 			{
-				if (has_mmx != 0)
+				if (has_mmx)
 					emit_reduce_brightness_mmx(count, reglist, blit, dest);
 				else
 					emit_reduce_brightness(count, reglist, blit, dest);
@@ -1037,25 +1037,25 @@ public class blit
 			// store the results
 			for (i = 0; i < count; i++)
 				emit_mov_edi_reg(reglist[i], offslist[i] + rowoffs, dest);
-			rowoffs += blit.dstpitch;
+			rowoffs += blit->dstpitch;
 		}
 	
 		// if updating, and generating scanlines, store a 0
-		if (update && blit.dstyskip)
+		if (update && blit->dstyskip)
 		{
 			// if we have any MMX, generate a PXOR MM7,MM7
-			if (has_mmx != 0)
+			if (has_mmx)
 			{
 				*(*dest)++ = 0x0f, *(*dest)++ = 0xef;
 				*(*dest)++ = 0xc0 | (7 << 3) | 7;
 			}
 	
 			// generate the moves
-			for (row = 0; row < blit.dstyskip; row++)
+			for (row = 0; row < blit->dstyskip; row++)
 			{
 				for (i = 0; i < count; i++)
 					emit_mov_edi_0(reglist[i], offslist[i] + rowoffs, dest);
-				rowoffs += blit.dstpitch;
+				rowoffs += blit->dstpitch;
 			}
 		}
 	}
@@ -1079,7 +1079,7 @@ public class blit
 			fprintf(stderr, "SSE supported\n");
 		else if (use_mmx && verbose)
 			fprintf(stderr, "MMX supported\n");
-		else if (verbose != 0)
+		else if (verbose)
 			fprintf(stderr, "MMX not supported\n");
 	}
 	
@@ -1091,14 +1091,14 @@ public class blit
 	
 	static void expand_blitter(int which, const struct win_blit_params *blit, UINT8 **dest, int update)
 	{
-		int srcdepth_index = (blit.srcdepth + 7) / 8 - 1;
-		int dstdepth_index = (blit.dstdepth + 7) / 8 - 1;
-		int xscale_index = blit.dstxscale - 1;
+		int srcdepth_index = (blit->srcdepth + 7) / 8 - 1;
+		int dstdepth_index = (blit->dstdepth + 7) / 8 - 1;
+		int xscale_index = blit->dstxscale - 1;
 		UINT8 *blitter = NULL;
 		int i;
 	
 		// find the blitter -- custom case
-		switch (blit.dsteffect)
+		switch (blit->dsteffect)
 		{
 			case EFFECT_RGB16:
 			case EFFECT_RGB6:
@@ -1107,23 +1107,23 @@ public class blit
 			case EFFECT_RGB3:
 			case EFFECT_RGB_TINY:
 			case EFFECT_SCANLINE_75V:
-				if (use_mmx != 0)
+				if (use_mmx)
 				{
-					if (blit.dsteffect == EFFECT_RGB16)
+					if (blit->dsteffect == EFFECT_RGB16)
 						generate_rgb_masks(&rgb16_desc, blit);
-					else if (blit.dsteffect == EFFECT_RGB6)
+					else if (blit->dsteffect == EFFECT_RGB6)
 						generate_rgb_masks(&rgb6_desc, blit);
-					else if (blit.dsteffect == EFFECT_RGB4)
+					else if (blit->dsteffect == EFFECT_RGB4)
 						generate_rgb_masks(&rgb4_desc, blit);
-					else if (blit.dsteffect == EFFECT_RGB4V)
+					else if (blit->dsteffect == EFFECT_RGB4V)
 						generate_rgb_masks(&rgb4v_desc, blit);
-					else if (blit.dsteffect == EFFECT_RGB3)
+					else if (blit->dsteffect == EFFECT_RGB3)
 						generate_rgb_masks(&rgb3_desc, blit);
-					else if (blit.dsteffect == EFFECT_RGB_TINY)
+					else if (blit->dsteffect == EFFECT_RGB_TINY)
 						generate_rgb_masks(&rgbtiny_desc, blit);
-					else if (blit.dsteffect == EFFECT_SCANLINE_75V)
+					else if (blit->dsteffect == EFFECT_SCANLINE_75V)
 						generate_rgb_masks(&scan75v_desc, blit);
-					else if (blit.dsteffect == EFFECT_SHARP)
+					else if (blit->dsteffect == EFFECT_SHARP)
 						generate_rgb_masks(&sharp_desc, blit);
 	
 					if (which == 1)
@@ -1283,16 +1283,16 @@ public class blit
 	
 	static void compute_source_fixups(const struct win_blit_params *blit, UINT32 valuefixups[])
 	{
-		int srcxsize = (blit.srcdepth + 7) / 8;
-		int srcysize = blit.srcpitch;
+		int srcxsize = (blit->srcdepth + 7) / 8;
+		int srcysize = blit->srcpitch;
 		int pix;
 	
-		if (!blit.swapxy)
+		if (!blit->swapxy)
 		{
-			if (!blit.flipx)
+			if (!blit->flipx)
 			{
 				// no flipping, no swapping
-				if (!blit.flipy)
+				if (!blit->flipy)
 				{
 					valuefixups[FIXUPVAL_SRCBYTES1] = srcxsize;
 					valuefixups[FIXUPVAL_SRCBYTES16] = srcxsize * 16;
@@ -1315,7 +1315,7 @@ public class blit
 			else
 			{
 				// X flipping, no swapping
-				if (!blit.flipy)
+				if (!blit->flipy)
 				{
 					valuefixups[FIXUPVAL_SRCBYTES1] = -srcxsize;
 					valuefixups[FIXUPVAL_SRCBYTES16] = -srcxsize * 16;
@@ -1338,10 +1338,10 @@ public class blit
 	
 		else
 		{
-			if (!blit.flipx)
+			if (!blit->flipx)
 			{
 				// no flipping, swapped
-				if (!blit.flipy)
+				if (!blit->flipy)
 				{
 					valuefixups[FIXUPVAL_SRCBYTES1] = srcysize;
 					valuefixups[FIXUPVAL_SRCBYTES16] = srcysize * 16;
@@ -1364,7 +1364,7 @@ public class blit
 			else
 			{
 				// X flipping, swapped
-				if (!blit.flipy)
+				if (!blit->flipy)
 				{
 					valuefixups[FIXUPVAL_SRCBYTES1] = -srcysize;
 					valuefixups[FIXUPVAL_SRCBYTES16] = -srcysize * 16;
@@ -1426,8 +1426,8 @@ public class blit
 	#endif
 	
 		// determine how many pixels to do at the middle, and end
-		middle = blit.srcwidth / 16;
-		last = blit.srcwidth % 16;
+		middle = blit->srcwidth / 16;
+		last = blit->srcwidth % 16;
 	
 		// generate blitter loop
 	
@@ -1439,12 +1439,12 @@ public class blit
 		EMIT_SNIPPET_PAIR(yloop_top);
 	
 			// top of middle (X) loop
-			if (middle != 0)
+			if (middle)
 			{
 				EMIT_SNIPPET_PAIR(middlexloop_header);
 				SET_FIXUPS(1);
 				EMIT_SNIPPET_PAIR(middlexloop_top);
-				if (use_sse != 0)
+				if (use_sse)
 				{
 					// prefetch instructions
 					EMIT_SNIPPET_PAIR(prefetch_sse);
@@ -1456,7 +1456,7 @@ public class blit
 			}
 	
 			// top of last (X) loop
-			if (last != 0)
+			if (last)
 			{
 				EMIT_SNIPPET_PAIR(lastxloop_header);
 				SET_FIXUPS(3);
@@ -1469,7 +1469,7 @@ public class blit
 		EMIT_SNIPPET_PAIR_REVERSE(yloop_bottom);
 	
 		// function footer
-		if (use_mmx != 0)
+		if (use_mmx)
 		{
 			EMIT_SNIPPET_PAIR(footer_mmx);
 		}
@@ -1480,9 +1480,9 @@ public class blit
 		fixup_addresses(&addrfixups[1][0], active_update_blitter, updateptr);
 	
 		// fixup data values
-		valuefixups[FIXUPVAL_DSTBYTES1] = ((blit.dstdepth + 7) / 8) * blit.dstxscale;
+		valuefixups[FIXUPVAL_DSTBYTES1] = ((blit->dstdepth + 7) / 8) * blit->dstxscale;
 		valuefixups[FIXUPVAL_DSTBYTES16] = valuefixups[0] * 16;
-		valuefixups[FIXUPVAL_DSTADVANCE] = blit.dstpitch * (blit.dstyscale + blit.dstyskip);
+		valuefixups[FIXUPVAL_DSTADVANCE] = blit->dstpitch * (blit->dstyscale + blit->dstyskip);
 		valuefixups[FIXUPVAL_MIDDLEXCOUNT] = middle;
 		valuefixups[FIXUPVAL_LASTXCOUNT] = last;
 	

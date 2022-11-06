@@ -193,7 +193,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -425,7 +425,7 @@ public class qix
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_TILT );
 	
 	
-	static InputPortPtr input_ports_qix = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_qix = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( qix )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -456,7 +456,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sdungeon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sdungeon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sdungeon )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_8WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_RIGHT  | IPF_8WAY );
@@ -490,7 +490,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_elecyoyo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_elecyoyo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( elecyoyo )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -519,7 +519,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_kram = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kram = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kram )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -550,7 +550,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_zookeep = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zookeep = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zookeep )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -581,7 +581,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_slither = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_slither = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( slither )
 		PORT_START(); 	/* PIA 0 Port A (PLAYER 1) */
 	    PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -618,7 +618,7 @@ public class qix
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_complexx = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_complexx = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( complexx )
 		PORT_START(); 	/* PIA 0 Port A (Left Stick) */
 	    PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_UP     | IPF_8WAY );
 	    PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_RIGHT  | IPF_8WAY );
@@ -689,8 +689,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_qix = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( qix )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, MAIN_CLOCK_OSC/4/4)	/* 1.25 MHz */
@@ -721,13 +720,10 @@ public class qix
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("dac", DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_mcu = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcu )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(qix)
@@ -736,13 +732,10 @@ public class qix
 		MDRV_CPU_MEMORY(mcu_readmem,mcu_writemem)
 	
 		MDRV_MACHINE_INIT(qixmcu)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_zookeep = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zookeep )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mcu)
@@ -752,13 +745,10 @@ public class qix
 	
 		MDRV_CPU_MODIFY("video")
 		MDRV_CPU_MEMORY(zoo_readmem_video,zoo_writemem_video)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_slither = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slither )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(qix)
@@ -774,9 +764,7 @@ public class qix
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("dac", SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1191,23 +1179,20 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_kram  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kram  = new DriverInitHandlerPtr() { public void handler(){
 		/* we need to override one PIA handler to prevent controls from getting disabled */
 		install_mem_write_handler(0, 0x9400, 0x97ff, zookeep_pia_0_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_zookeep  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_zookeep  = new DriverInitHandlerPtr() { public void handler(){
 		/* we need to override two PIA handlers to prevent controls from getting disabled */
 		install_mem_write_handler(0, 0x1400, 0x17ff, zookeep_pia_0_w);
 		install_mem_write_handler(0, 0x1c00, 0x1fff, zookeep_pia_2_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_slither  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_slither  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_write_handler(1, 0x9401, 0x9401, slither_vram_mask_w);
 	} };
 	
@@ -1219,20 +1204,20 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_qix	   = new GameDriver("1981"	,"qix"	,"qix.java"	,rom_qix,null	,machine_driver_qix	,input_ports_qix	,null	,ROT270	,	"Taito America Corporation", "Qix (set 1)" )
-	public static GameDriver driver_qixa	   = new GameDriver("1981"	,"qixa"	,"qix.java"	,rom_qixa,driver_qix	,machine_driver_qix	,input_ports_qix	,null	,ROT270	,	"Taito America Corporation", "Qix (set 2)" )
-	public static GameDriver driver_qixb	   = new GameDriver("1981"	,"qixb"	,"qix.java"	,rom_qixb,driver_qix	,machine_driver_qix	,input_ports_qix	,null	,ROT270	,	"Taito America Corporation", "Qix (set 3)" )
-	public static GameDriver driver_qix2	   = new GameDriver("1981"	,"qix2"	,"qix.java"	,rom_qix2,driver_qix	,machine_driver_qix	,input_ports_qix	,null	,ROT270	,	"Taito America Corporation", "Qix II (Tournament)" )
-	public static GameDriver driver_sdungeon	   = new GameDriver("1981"	,"sdungeon"	,"qix.java"	,rom_sdungeon,null	,machine_driver_mcu	,input_ports_sdungeon	,null	,ROT270	,	"Taito America Corporation", "Space Dungeon" )
-	public static GameDriver driver_elecyoyo	   = new GameDriver("1982"	,"elecyoyo"	,"qix.java"	,rom_elecyoyo,null	,machine_driver_mcu	,input_ports_elecyoyo	,null	,ROT270	,	"Taito America Corporation", "The Electric Yo-Yo (set 1)" )
-	public static GameDriver driver_elecyoy2	   = new GameDriver("1982"	,"elecyoy2"	,"qix.java"	,rom_elecyoy2,driver_elecyoyo	,machine_driver_mcu	,input_ports_elecyoyo	,null	,ROT270	,	"Taito America Corporation", "The Electric Yo-Yo (set 2)" )
-	public static GameDriver driver_kram	   = new GameDriver("1982"	,"kram"	,"qix.java"	,rom_kram,null	,machine_driver_mcu	,input_ports_kram	,init_kram	,ROT0	,	"Taito America Corporation", "Kram (set 1)" )
-	public static GameDriver driver_kram2	   = new GameDriver("1982"	,"kram2"	,"qix.java"	,rom_kram2,driver_kram	,machine_driver_mcu	,input_ports_kram	,init_kram	,ROT0	,	"Taito America Corporation", "Kram (set 2)" )
-	public static GameDriver driver_kram3	   = new GameDriver("1982"	,"kram3"	,"qix.java"	,rom_kram3,driver_kram	,machine_driver_qix	,input_ports_kram	,init_kram	,ROT0	,	"Taito America Corporation", "Kram (encrypted)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_zookeep	   = new GameDriver("1982"	,"zookeep"	,"qix.java"	,rom_zookeep,null	,machine_driver_zookeep	,input_ports_zookeep	,init_zookeep	,ROT0	,	"Taito America Corporation", "Zoo Keeper (set 1)" )
-	public static GameDriver driver_zookeep2	   = new GameDriver("1982"	,"zookeep2"	,"qix.java"	,rom_zookeep2,driver_zookeep	,machine_driver_zookeep	,input_ports_zookeep	,init_zookeep	,ROT0	,	"Taito America Corporation", "Zoo Keeper (set 2)" )
-	public static GameDriver driver_zookeep3	   = new GameDriver("1982"	,"zookeep3"	,"qix.java"	,rom_zookeep3,driver_zookeep	,machine_driver_zookeep	,input_ports_zookeep	,init_zookeep	,ROT0	,	"Taito America Corporation", "Zoo Keeper (set 3)" )
-	public static GameDriver driver_slither	   = new GameDriver("1982"	,"slither"	,"qix.java"	,rom_slither,null	,machine_driver_slither	,input_ports_slither	,init_slither	,ROT270	,	"Century II",                "Slither (set 1)" )
-	public static GameDriver driver_slithera	   = new GameDriver("1982"	,"slithera"	,"qix.java"	,rom_slithera,driver_slither	,machine_driver_slither	,input_ports_slither	,init_slither	,ROT270	,	"Century II",                "Slither (set 2)" )
-	public static GameDriver driver_complexx	   = new GameDriver("1984"	,"complexx"	,"qix.java"	,rom_complexx,null	,machine_driver_qix	,input_ports_complexx	,null	,ROT270	,	"Taito America Corporation", "Complex X" )
+	GAME( 1981, qix,      0,        qix,     qix,      0,        ROT270, "Taito America Corporation", "Qix (set 1)" )
+	GAME( 1981, qixa,     qix,      qix,     qix,      0,        ROT270, "Taito America Corporation", "Qix (set 2)" )
+	GAME( 1981, qixb,     qix,      qix,     qix,      0,        ROT270, "Taito America Corporation", "Qix (set 3)" )
+	GAME( 1981, qix2,     qix,      qix,     qix,      0,        ROT270, "Taito America Corporation", "Qix II (Tournament)" )
+	GAME( 1981, sdungeon, 0,        mcu,     sdungeon, 0,        ROT270, "Taito America Corporation", "Space Dungeon" )
+	GAME( 1982, elecyoyo, 0,        mcu,     elecyoyo, 0,        ROT270, "Taito America Corporation", "The Electric Yo-Yo (set 1)" )
+	GAME( 1982, elecyoy2, elecyoyo, mcu,     elecyoyo, 0,        ROT270, "Taito America Corporation", "The Electric Yo-Yo (set 2)" )
+	GAME( 1982, kram,     0,        mcu,     kram,     kram,     ROT0,   "Taito America Corporation", "Kram (set 1)" )
+	GAME( 1982, kram2,    kram,     mcu,     kram,     kram,     ROT0,   "Taito America Corporation", "Kram (set 2)" )
+	GAMEX(1982, kram3,    kram,     qix,     kram,     kram,     ROT0,   "Taito America Corporation", "Kram (encrypted)", GAME_UNEMULATED_PROTECTION )
+	GAME( 1982, zookeep,  0,        zookeep, zookeep,  zookeep,  ROT0,   "Taito America Corporation", "Zoo Keeper (set 1)" )
+	GAME( 1982, zookeep2, zookeep,  zookeep, zookeep,  zookeep,  ROT0,   "Taito America Corporation", "Zoo Keeper (set 2)" )
+	GAME( 1982, zookeep3, zookeep,  zookeep, zookeep,  zookeep,  ROT0,   "Taito America Corporation", "Zoo Keeper (set 3)" )
+	GAME( 1982, slither,  0,        slither, slither,  slither,  ROT270, "Century II",                "Slither (set 1)" )
+	GAME( 1982, slithera, slither,  slither, slither,  slither,  ROT270, "Century II",                "Slither (set 2)" )
+	GAME( 1984, complexx, 0,        qix,     complexx, 0,        ROT270, "Taito America Corporation", "Complex X" )
 }

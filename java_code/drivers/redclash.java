@@ -24,7 +24,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,16 +40,14 @@ public class redclash
 	  Interrupts are still used, but they are related to coin
 	  slots. Left slot generates an IRQ, Right slot a NMI.
 	*/
-	public static InterruptHandlerPtr redclash_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr redclash_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (readinputport(4) & 1)	/* Left Coin */
 			cpu_set_irq_line(0,0,ASSERT_LINE);
 		else if (readinputport(4) & 2)	/* Right Coin */
 			cpu_set_nmi_line(0,PULSE_LINE);
 	} };
 	
-	public static WriteHandlerPtr irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr irqack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line(0,0,CLEAR_LINE);
 	} };
 	
@@ -117,7 +115,7 @@ public class redclash
 	
 	
 	
-	static InputPortPtr input_ports_redclash = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_redclash = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( redclash )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -210,7 +208,7 @@ public class redclash
 		PORT_BIT_IMPULSE( 0x02, IP_ACTIVE_HIGH, IPT_COIN2, 1 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zerohour = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zerohour = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zerohour )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -363,8 +361,7 @@ public class redclash
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_zerohour = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zerohour )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)  /* 4 MHz */
@@ -387,13 +384,10 @@ public class redclash
 		MDRV_VIDEO_UPDATE(redclash)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_redclash = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( redclash )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)  /* 4 MHz */
@@ -416,9 +410,7 @@ public class redclash
 		MDRV_VIDEO_UPDATE(redclash)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -502,8 +494,7 @@ public class redclash
 		ROM_LOAD( "6331-3.11e",   0x0040, 0x0020, CRC(27fa3a50) SHA1(7cf59b7a37c156640d6ea91554d1c4276c1780e0) ) /* 6331.6w */
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_redclash  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_redclash  = new DriverInitHandlerPtr() { public void handler(){
 		int i,j;
 	
 		/* rearrange the sprite graphics */
@@ -516,7 +507,7 @@ public class redclash
 	
 	
 	
-	public static GameDriver driver_zerohour	   = new GameDriver("1980"	,"zerohour"	,"redclash.java"	,rom_zerohour,null	,machine_driver_zerohour	,input_ports_zerohour	,init_redclash	,ROT270	,	"Universal", "Zero Hour",          GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_redclash	   = new GameDriver("1981"	,"redclash"	,"redclash.java"	,rom_redclash,null	,machine_driver_redclash	,input_ports_redclash	,init_redclash	,ROT270	,	"Tehkan",    "Red Clash",          GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_redclask	   = new GameDriver("1981"	,"redclask"	,"redclash.java"	,rom_redclask,driver_redclash	,machine_driver_redclash	,input_ports_redclash	,init_redclash	,ROT270	,	"Kaneko",    "Red Clash (Kaneko)", GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1980, zerohour, 0,        zerohour, zerohour, redclash, ROT270, "Universal", "Zero Hour",          GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, redclash, 0,        redclash, redclash, redclash, ROT270, "Tehkan",    "Red Clash",          GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1981, redclask, redclash, redclash, redclash, redclash, ROT270, "Kaneko",    "Red Clash (Kaneko)", GAME_NO_SOUND | GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
 }

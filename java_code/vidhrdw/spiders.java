@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,8 +27,7 @@ public class spiders
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_spiders  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_spiders  = new VideoStartHandlerPtr() { public int handler(){
 		int loop;
 	
 		if ((tmpbitmap = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0) return 1;
@@ -59,8 +58,7 @@ public class spiders
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_spiders  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_spiders  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int loop,data0,data1,data2,col;
 	
 		size_t crtc6845_mem_size;
@@ -71,7 +69,7 @@ public class spiders
 	
 		crtc6845_mem_size=crtc6845_horiz_disp*crtc6845_vert_disp*8;
 	
-		if (spiders_video_flip != 0)
+		if(spiders_video_flip)
 		{
 			video_addr=crtc6845_start_addr+(crtc6845_mem_size-1);
 			if((video_addr&0xff)==0x80) video_addr-=0x80;	/* Fudge factor!!! */
@@ -87,13 +85,13 @@ public class spiders
 					/* I've no idea how it maps to the hardware but  */
 					/* everything works OK if we do this             */
 	
-		if (crtc6845_page_flip != 0) video_addr+=0x2000;
+		if(crtc6845_page_flip) video_addr+=0x2000;
 	
 		for(loop=0;loop<crtc6845_mem_size;loop++)
 		{
 			int i,x,y,combo;
 	
-			if (spiders_video_flip != 0)
+			if(spiders_video_flip)
 			{
 				data0=bitflip[RAM[0x0000+video_addr]];
 				data1=bitflip[RAM[0x4000+video_addr]];
@@ -118,7 +116,7 @@ public class spiders
 					x=((loop%0x20)<<3)+i;
 					col=((data2&0x01)<<2)+((data1&0x01)<<1)+(data0&0x01);
 	
-					plot_pixel.handler(tmpbitmap, x, y, Machine.pens[col]);
+					plot_pixel(tmpbitmap, x, y, Machine.pens[col]);
 	
 					data0 >>= 1;
 					data1 >>= 1;

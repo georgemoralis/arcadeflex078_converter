@@ -13,7 +13,7 @@ drivers by Acho A. Tang
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -253,25 +253,25 @@ public class equites
 	{
 		struct MRULELIST *listptr;
 	
-		mrulepool.pc = pc;
+		mrulepool->pc = pc;
 	
 		if (data >= 0)
-			mrulepool.data = data & 0xff;
+			mrulepool->data = data & 0xff;
 		else
 		{
 			data = -data;
 			if (data > 0x0f) data = (data>>4 & 0x0f) | MCU_RTNMSB;
-			mrulepool.mode = data;
+			mrulepool->mode = data;
 		}
 	
 		listptr = mrulemap + (offset>>1);
 	
-		if (!listptr.head)
-			listptr.head = mrulepool;
+		if (!listptr->head)
+			listptr->head = mrulepool;
 		else
-			listptr.tail.next = mrulepool;
+			listptr->tail->next = mrulepool;
 	
-		listptr.tail = mrulepool++;
+		listptr->tail = mrulepool++;
 	}
 	
 	/******************************************************************************/
@@ -282,7 +282,7 @@ public class equites
 		int pc, data, mode, col, row;
 		struct MRULE *ruleptr;
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			pc = activecpu_get_pc();
 	
@@ -291,10 +291,10 @@ public class equites
 			ruleptr = mrulemap[offset].head;
 			while (ruleptr)
 			{
-				if (pc == ruleptr.pc)
+				if (pc == ruleptr->pc)
 				{
-					mode = ruleptr.mode;
-					if (mode == 0) return (ruleptr.data);
+					mode = ruleptr->mode;
+					if (!mode) return (ruleptr->data);
 					switch (mode & 0xf)
 					{
 						case 1:
@@ -366,50 +366,43 @@ public class equites
 						default:
 							return (equites_8404ram[offset]);
 					}
-					if ((mode & MCU_RTNMSB) != 0) data >>= 8;
+					if (mode & MCU_RTNMSB) data >>= 8;
 					return (data & 0xff);
 				}
-				ruleptr = ruleptr.next;
+				ruleptr = ruleptr->next;
 			}
 		}
 		return (equites_8404ram[offset]);
 	}
 	
-	WRITE_HANDLER(equites_5232_w)
-	{
+	public static WriteHandlerPtr equites_5232_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (offset < 0x08 && data) data |= 0x80; // gets around a current 5232 emulation restriction
 		MSM5232_0_w(offset, data);
-	}
+	} };
 	
-	WRITE_HANDLER(equites_8910control_w)
-	{
+	public static WriteHandlerPtr equites_8910control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		AY8910Write(0, 0, data);
-	}
+	} };
 	
-	WRITE_HANDLER(equites_8910data_w)
-	{
+	public static WriteHandlerPtr equites_8910data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		AY8910Write(0, 1, data);
-	}
+	} };
 	
-	static WRITE_HANDLER(equites_8910porta_w)
-	{
+	public static WriteHandlerPtr equites_8910porta_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// sync with one or more MSM5232 channels. MIDI out?
-	}
+	} };
 	
-	static WRITE_HANDLER(equites_8910portb_w)
-	{
+	public static WriteHandlerPtr equites_8910portb_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// sync with one or more MSM5232 channels. MIDI out?
-	}
+	} };
 	
-	WRITE_HANDLER(equites_dac0_w)
-	{
+	public static WriteHandlerPtr equites_dac0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(0, data<<2);
-	}
+	} };
 	
-	WRITE_HANDLER(equites_dac1_w)
-	{
+	public static WriteHandlerPtr equites_dac1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(1, data<<2);
-	}
+	} };
 	
 	/******************************************************************************/
 	// Alpha "Soundboard 7" Chip Definitions

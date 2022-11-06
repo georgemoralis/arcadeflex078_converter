@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -171,13 +171,12 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr register_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int regnum = offset >> 2;
 		UINT16 oldval = tms34061.regs[regnum];
 	
 		/* store the hi/lo half */
-		if ((offset & 0x02) != 0)
+		if (offset & 0x02)
 			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0x00ff) | (data << 8);
 		else
 			tms34061.regs[regnum] = (tms34061.regs[regnum] & 0xff00) | data;
@@ -238,13 +237,12 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr register_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr register_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int regnum = offset >> 2;
 		data8_t result;
 	
 		/* extract the correct portion of the register */
-		if ((offset & 0x02) != 0)
+		if (offset & 0x02)
 			result = tms34061.regs[regnum] >> 8;
 		else
 			result = tms34061.regs[regnum];
@@ -260,7 +258,7 @@ public class tms34061
 	
 			/* vertical count register: return the current scanline */
 			case TMS34061_VERCOUNTER:
-				if ((offset & 0x02) != 0)
+				if (offset & 0x02)
 					result = cpu_getscanline() >> 8;
 				else
 					result = cpu_getscanline();
@@ -366,11 +364,10 @@ public class tms34061
 	}
 	
 	
-	public static WriteHandlerPtr xypixel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xypixel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
-		if (offset != 0)
+		if (offset)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */
@@ -389,11 +386,10 @@ public class tms34061
 	} };
 	
 	
-	public static ReadHandlerPtr xypixel_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr xypixel_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* determine the offset, then adjust it */
 		offs_t pixeloffs = tms34061.regs[TMS34061_XYADDRESS];
-		if (offset != 0)
+		if (offset)
 			adjust_xyaddress(offset);
 	
 		/* adjust for the upper bits */
@@ -539,34 +535,32 @@ public class tms34061
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr tms34061_latch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tms34061_latch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return tms34061.latchdata;
 	} };
 	
 	
-	public static WriteHandlerPtr tms34061_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tms34061_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tms34061.latchdata = data;
 	} };
 	
 	
 	void tms34061_get_display_state(struct tms34061_display *state)
 	{
-		state.blanked = (~tms34061.regs[TMS34061_CONTROL2] >> 13) & 1;
-		state.vram = tms34061.vram;
-		state.latchram = tms34061.latchram;
-		state.dirty = tms34061.dirty;
-		state.regs = tms34061.regs;
+		state->blanked = (~tms34061.regs[TMS34061_CONTROL2] >> 13) & 1;
+		state->vram = tms34061.vram;
+		state->latchram = tms34061.latchram;
+		state->dirty = tms34061.dirty;
+		state->regs = tms34061.regs;
 	
 		/* compute the display start */
-		state.dispstart = tms34061.regs[TMS34061_DISPSTART];
+		state->dispstart = tms34061.regs[TMS34061_DISPSTART];
 	
 		/* if B6 of control reg 2 is set, upper bits of display start come from B0-B1 */
 		if (tms34061.regs[TMS34061_CONTROL2] & 0x0040)
-			state.dispstart |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
+			state->dispstart |= (tms34061.regs[TMS34061_CONTROL2] & 3) << 16;
 	
 		/* mask to actual VRAM size */
-		state.dispstart &= tms34061.vrammask;
+		state->dispstart &= tms34061.vrammask;
 	}
 }

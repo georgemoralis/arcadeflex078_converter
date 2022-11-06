@@ -38,7 +38,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -145,7 +145,7 @@ public class avgdvg
 		base = &vectorbank[offset / BANK_SIZE][offset % BANK_SIZE];
 	
 		/* result is based on flipword */
-		if (flipword != 0)
+		if (flipword)
 			return base[1] | (base[0] << 8);
 		else
 			return base[0] | (base[1] << 8);
@@ -200,7 +200,7 @@ public class avgdvg
 			/* special case for Alpha One -- no idea if this is right */
 			if (vector_engine == USE_AVG_ALPHAONE)
 			{
-				if (z != 0)
+				if (z)
 					z ^= 0x15;
 			}
 	
@@ -293,9 +293,9 @@ public class avgdvg
 					/* compute raw X and Y values */
 		  			y = firstwd & 0x03ff;
 					x = secondwd & 0x3ff;
-					if ((firstwd & 0x400) != 0)
+					if (firstwd & 0x400)
 						y = -y;
-					if ((secondwd & 0x400) != 0)
+					if (secondwd & 0x400)
 						x = -x;
 	
 					/* determine the brightness */
@@ -329,9 +329,9 @@ public class avgdvg
 					/* compute raw X and Y values */
 					y = firstwd & 0x0300;
 					x = (firstwd & 0x03) << 8;
-					if ((firstwd & 0x0400) != 0)
+					if (firstwd & 0x0400)
 						y = -y;
-					if ((firstwd & 0x04) != 0)
+					if (firstwd & 0x04)
 						x = -x;
 	
 					/* determine the brightness */
@@ -393,7 +393,7 @@ public class avgdvg
 					pc = stack[sp];
 	
 					/* debugging */
-					if ((firstwd & 0x1fff) != 0)
+					if (firstwd & 0x1fff)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -402,7 +402,7 @@ public class avgdvg
 					done = 1;
 	
 					/* debugging */
-					if ((firstwd & 0x1fff) != 0)
+					if (firstwd & 0x1fff)
 	      				VGLOG(("(%d?)", firstwd & 0x0fff));
 					break;
 	
@@ -412,7 +412,7 @@ public class avgdvg
 					VGLOG(("%4x", a));
 					pc = a;
 	
-					if (pc == 0)
+					if (!pc)
 						done=1;
 					break;
 	
@@ -452,24 +452,24 @@ public class avgdvg
 	
 	void avg_set_flip_x(int flip)
 	{
-		if (flip != 0)
+		if (flip)
 			flip_x = 1;
 	}
 	
 	void avg_set_flip_y(int flip)
 	{
-		if (flip != 0)
+		if (flip)
 			flip_y = 1;
 	}
 	
 	void avg_apply_flipping_and_swapping(int *x, int *y)
 	{
-		if (flip_x != 0)
+		if (flip_x)
 			*x += (xcenter-*x)<<1;
-		if (flip_y != 0)
+		if (flip_y)
 			*y += (ycenter-*y)<<1;
 	
-		if (swap_xy != 0)
+		if (swap_xy)
 		{
 			int temp = *x;
 			*x = *y - ycenter + xcenter;
@@ -646,7 +646,7 @@ public class avgdvg
 					/* compute the deltas */
 					deltax = x * scale;
 					deltay = y * scale;
-					if (xflip != 0) deltax = -deltax;
+					if (xflip) deltax = -deltax;
 	
 					/* adjust the current position and compute timing */
 					currentx += deltax;
@@ -654,7 +654,7 @@ public class avgdvg
 					total_length += vector_timer(deltax, deltay);
 	
 					/* add the new point */
-					if (sparkle != 0)
+					if (sparkle)
 						avg_add_point_callback(currentx, currenty, sparkle_callback, z);
 					else
 						avg_add_point(currentx, currenty, colorram.read(color), z);
@@ -679,7 +679,7 @@ public class avgdvg
 					/* compute the deltas */
 					deltax = x * scale;
 					deltay = y * scale;
-					if (xflip != 0) deltax = -deltax;
+					if (xflip) deltax = -deltax;
 	
 					/* adjust the current position and compute timing */
 					currentx += deltax;
@@ -687,7 +687,7 @@ public class avgdvg
 					total_length += vector_timer(deltax, deltay);
 	
 					/* add the new point */
-					if (sparkle != 0)
+					if (sparkle)
 						avg_add_point_callback(currentx, currenty, sparkle_callback, z);
 					else
 						avg_add_point(currentx, currenty, colorram.read(color), z);
@@ -745,7 +745,7 @@ public class avgdvg
 	
 					/* Y-Window toggle for Major Havoc */
 					if (vector_engine == USE_AVG_MHAVOC || vector_engine == USE_AVG_ALPHAONE)
-						if ((firstwd & 0x0800) != 0)
+						if (firstwd & 0x0800)
 						{
 							int newymin = ymin;
 							logerror("CLIP %d\n", firstwd & 0x0800);
@@ -754,7 +754,7 @@ public class avgdvg
 							ywindow = !ywindow;
 	
 							/* adjust accordingly */
-							if (ywindow != 0)
+							if (ywindow)
 								newymin = (vector_engine == USE_AVG_MHAVOC) ? 0x0048 : 0x0083;
 							vector_add_clip(xmin << 16, newymin << 16,
 											xmax << 16, ymax << 16);
@@ -799,7 +799,7 @@ public class avgdvg
 					pc = stack[sp];
 	
 					/* debugging */
-					if ((firstwd & 0x1fff) != 0)
+					if (firstwd & 0x1fff)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -808,7 +808,7 @@ public class avgdvg
 					done = 1;
 	
 					/* debugging */
-					if ((firstwd & 0x1fff) != 0)
+					if (firstwd & 0x1fff)
 						VGLOG(("(%d?)", firstwd & 0x1fff));
 					break;
 	
@@ -883,12 +883,11 @@ public class avgdvg
 	}
 	
 	
-	public static WriteHandlerPtr avgdvg_go_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avgdvg_go_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int total_length;
 	
 		/* skip if already busy */
-		if (busy != 0)
+		if (busy)
 			return;
 	
 		/* count vector updates and mark ourselves busy */
@@ -932,8 +931,7 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	public static WriteHandlerPtr avgdvg_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr avgdvg_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		avgdvg_clr_busy(0);
 	} };
 	
@@ -994,10 +992,10 @@ public class avgdvg
 		busy = 0;
 	
 		/* compute the min/max values */
-		xmin = Machine.visible_area.min_x;
-		ymin = Machine.visible_area.min_y;
-		xmax = Machine.visible_area.max_x;
-		ymax = Machine.visible_area.max_y;
+		xmin = Machine->visible_area.min_x;
+		ymin = Machine->visible_area.min_y;
+		xmax = Machine->visible_area.max_x;
+		ymax = Machine->visible_area.max_y;
 		width = xmax - xmin;
 		height = ymax - ymin;
 	
@@ -1026,56 +1024,47 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	public static VideoStartHandlerPtr video_start_dvg  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_dvg  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_DVG);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_starwars  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_starwars  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_SWARS);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_tempest  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_tempest  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_TEMPEST);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_mhavoc  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_mhavoc  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_MHAVOC);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_alphaone  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_alphaone  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_ALPHAONE);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_bzone  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_bzone  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_BZONE);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_quantum  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_quantum  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_QUANTUM);
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_avg_redbaron  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_avg_redbaron  = new VideoStartHandlerPtr() { public int handler(){
 		return avgdvg_init(USE_AVG_RBARON);
 	} };
 	
@@ -1088,8 +1077,7 @@ public class avgdvg
 	 ************************************/
 	
 	/* Black and White vector colors for Asteroids, Lunar Lander, Omega Race */
-	public static PaletteInitHandlerPtr palette_init_avg_white  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_avg_white  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0; i < 32; i++)
 			colorram.write(i,MAKE_RGB(0xff, 0xff, 0xff));
@@ -1097,8 +1085,7 @@ public class avgdvg
 	
 	
 	/* Basic 8 rgb vector colors for Tempest, Gravitar, Major Havoc etc. */
-	public static PaletteInitHandlerPtr palette_init_avg_multi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_avg_multi  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		for (i = 0; i < 32; i++)
 			colorram.write(i,VECTOR_COLOR111(i));
@@ -1112,8 +1099,7 @@ public class avgdvg
 	 *
 	 ************************************/
 	
-	public static WriteHandlerPtr tempest_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tempest_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit3 = (~data >> 3) & 1;
 		int bit2 = (~data >> 2) & 1;
 		int bit1 = (~data >> 1) & 1;
@@ -1126,8 +1112,7 @@ public class avgdvg
 	} };
 	
 	
-	public static WriteHandlerPtr mhavoc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bit3 = (~data >> 3) & 1;
 		int bit2 = (~data >> 2) & 1;
 		int bit1 = (~data >> 1) & 1;
@@ -1142,7 +1127,7 @@ public class avgdvg
 	
 	WRITE16_HANDLER( quantum_colorram_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			int bit3 = (~data >> 3) & 1;
 			int bit2 = (~data >> 2) & 1;

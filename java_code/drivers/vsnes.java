@@ -127,7 +127,7 @@ Changes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -150,61 +150,52 @@ public class vsnes
 	static UINT8 *work_ram, *work_ram_1;
 	static int coin;
 	
-	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mirror_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return work_ram[ offset & 0x7ff ];
 	} };
 	
-	public static ReadHandlerPtr mirror_ram_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mirror_ram_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return work_ram[ offset & 0x7ff ];
 	} };
 	
-	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mirror_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		work_ram[ offset & 0x7ff ] = data;
 	} };
 	
-	public static WriteHandlerPtr mirror_ram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mirror_ram_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		work_ram[ offset & 0x7ff ] = data;
 	} };
 	
-	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprite_dma_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 0, &work_ram[source] );
 	} };
 	
-	public static WriteHandlerPtr sprite_dma_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprite_dma_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int source = ( data & 7 ) * 0x100;
 	
 		ppu2c03b_spriteram_dma( 1, &work_ram_1[source] );
 	} };
 	
-	public static WriteHandlerPtr vsnes_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsnes_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w( 0, data & 0x01 );
 		coin = data;
-		if ((data & 0xfe) != 0) //"bnglngby" and "cluclu"
+		if( data & 0xfe ) //"bnglngby" and "cluclu"
 		{
 			//do something?
 			logerror("vsnes_coin_counter_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);
 		}
 	} };
 	
-	public static ReadHandlerPtr vsnes_coin_counter_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr vsnes_coin_counter_r  = new ReadHandlerPtr() { public int handler(int offset){
 		//only for platoon
 		return coin;
 	} };
 	
-	public static WriteHandlerPtr vsnes_coin_counter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vsnes_coin_counter_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w( 1, data & 0x01 );
-		if ((data & 0xfe) != 0) //vsbball service mode
+		if( data & 0xfe ) //vsbball service mode
 		{
 			//do something?
 			logerror("vsnes_coin_counter_1_w: pc = 0x%04x - data = 0x%02x\n", activecpu_get_pc(), data);
@@ -479,7 +470,7 @@ public class vsnes
 		PORT_BIT ( 0x40, IP_ACTIVE_HIGH, IPT_COIN4 );\
 		PORT_BIT ( 0x80, IP_ACTIVE_HIGH, IPT_UNUSED );/* this bit masks irqs - dont change */ \
 	
-	static InputPortPtr input_ports_vsnes = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsnes = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsnes )
 		VS_CONTROLS( IPT_START1, IPT_BUTTON3 | IPF_PLAYER1, IPT_START2, IPT_BUTTON3 | IPF_PLAYER2 )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -509,7 +500,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_topgun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_topgun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( topgun )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -538,7 +529,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_platoon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_platoon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( platoon )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -584,7 +575,7 @@ public class vsnes
 	Lose Hole -1 -2
 	*/
 	
-	static InputPortPtr input_ports_golf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_golf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( golf )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -614,7 +605,7 @@ public class vsnes
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'golf', but 4 start buttons */
-	static InputPortPtr input_ports_golf4s = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_golf4s = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( golf4s )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_START3, IPT_START2, IPT_START4 )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -643,7 +634,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, "Hard" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vstennis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vstennis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vstennis )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -695,7 +686,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wrecking = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wrecking = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wrecking )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -752,7 +743,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_balonfgt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_balonfgt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( balonfgt )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -807,7 +798,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsmahjng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsmahjng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsmahjng )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -860,7 +851,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsbball = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsbball = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsbball )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -911,7 +902,7 @@ public class vsnes
 		PORT_DIPSETTING(	0xc0, "Very Strong" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsbballj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsbballj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsbballj )
 		VS_DUAL_CONTROLS_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -962,7 +953,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_iceclmrj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iceclmrj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iceclmrj )
 		VS_DUAL_CONTROLS_REVERSE_L /* left side controls */
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1018,7 +1009,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_drmario = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_drmario = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( drmario )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1045,7 +1036,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_rbibb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rbibb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rbibb )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1071,7 +1062,7 @@ public class vsnes
 		/* 0x60,0xa0,0xe0:again "Wrong 3" */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_btlecity = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_btlecity = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( btlecity )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1100,7 +1091,7 @@ public class vsnes
 		PORT_DIPSETTING(	0xc0, "Wrong 3" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cluclu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cluclu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cluclu )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1129,7 +1120,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_cstlevna = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cstlevna = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cstlevna )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1158,7 +1149,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_iceclimb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iceclimb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iceclimb )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1188,7 +1179,7 @@ public class vsnes
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'iceclimb', but different buttons mapping and input protection */
-	static InputPortPtr input_ports_iceclmbj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_iceclmbj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( iceclmbj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );/* BUTTON A on a nes */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );/* BUTTON B on a nes */
@@ -1245,7 +1236,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_excitebk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_excitebk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( excitebk )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1274,7 +1265,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_jajamaru = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jajamaru = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jajamaru )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );/* BUTTON A on a nes */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );/* BUTTON B on a nes */
@@ -1330,7 +1321,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_machridr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_machridr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( machridr )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1359,7 +1350,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_machridj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_machridj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( machridj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );/* BUTTON A on a nes */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );/* BUTTON B on a nes */
@@ -1414,7 +1405,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_suprmrio = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suprmrio = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suprmrio )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1443,7 +1434,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x00, "4" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_duckhunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_duckhunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( duckhunt )
 		VS_ZAPPER
 	
 		PORT_START();  /* IN3 */
@@ -1477,7 +1468,7 @@ public class vsnes
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 50, 30, 0, 255 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hogalley = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hogalley = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hogalley )
 		VS_ZAPPER
 	
 		PORT_START();  /* IN3 */
@@ -1511,7 +1502,7 @@ public class vsnes
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 50, 30, 0, 255 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsgshoe = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsgshoe = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsgshoe )
 		VS_ZAPPER
 	
 		PORT_START();  /* IN3 */
@@ -1546,7 +1537,7 @@ public class vsnes
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 50, 30, 0, 255 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsfdf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsfdf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsfdf )
 		VS_ZAPPER
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1582,7 +1573,7 @@ public class vsnes
 		PORT_ANALOG( 0xff, 0x80, IPT_LIGHTGUN_Y, 50, 30, 0, 255 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vstetris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vstetris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vstetris )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1609,7 +1600,7 @@ public class vsnes
 		/* 0x60,0xa0,0xe0:again "Wrong 3" */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsskykid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsskykid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsskykid )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_START2, IPT_UNKNOWN, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1636,7 +1627,7 @@ public class vsnes
 		/* 0x60,0xa0,0xe0:again "Normal" */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vspinbal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vspinbal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vspinbal )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1666,7 +1657,7 @@ public class vsnes
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'vspinbal', but different buttons mapping */
-	static InputPortPtr input_ports_vspinblj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vspinblj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vspinblj )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );	/* Right flipper */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );	/* Right flipper */
@@ -1723,7 +1714,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, "Fast" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_goonies = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_goonies = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( goonies )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1753,7 +1744,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vssoccer = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vssoccer = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vssoccer )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1781,7 +1772,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsgradus = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsgradus = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsgradus )
 		VS_CONTROLS_REVERSE( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1810,7 +1801,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vsslalom = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsslalom = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsslalom )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1839,7 +1830,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_starlstr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starlstr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starlstr )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1866,7 +1857,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tkoboxng = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tkoboxng = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tkoboxng )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1895,7 +1886,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bnglngby = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bnglngby = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bnglngby )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );/* BUTTON A on a nes */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER2 );/* BUTTON B on a nes */
@@ -1950,7 +1941,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mightybj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mightybj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mightybj )
 		VS_CONTROLS( IPT_START1, IPT_UNKNOWN, IPT_START2, IPT_UNKNOWN )
 	
 		PORT_START();  /* DSW0 - bit 0 and 1 read from bit 3 and 4 on $4016, rest of the bits read on $4017 */
@@ -1979,7 +1970,7 @@ public class vsnes
 		PORT_DIPSETTING(	0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_supxevs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_supxevs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( supxevs )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER1 );/* BUTTON A on a nes */
 		PORT_BIT ( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_PLAYER1 );/* BUTTON B on a nes */
@@ -2067,8 +2058,7 @@ public class vsnes
 		{ 25, 25 },
 	};
 	
-	public static MachineHandlerPtr machine_driver_vsnes = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vsnes )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(N2A03,N2A03_DEFAULTCLOCK)
@@ -2094,13 +2084,10 @@ public class vsnes
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_interface)
 		MDRV_SOUND_ADD(DAC, nes_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vsdual = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vsdual )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(N2A03,N2A03_DEFAULTCLOCK)
@@ -2130,9 +2117,7 @@ public class vsnes
 		/* sound hardware */
 		MDRV_SOUND_ADD(NES, nes_dual_interface)
 		MDRV_SOUND_ADD(DAC, nes_dual_dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/******************************************************************************/
@@ -2734,56 +2719,56 @@ public class vsnes
 	/******************************************************************************/
 	
 	/*    YEAR  NAME      PARENT    MACHINE  INPUT     INIT  	   MONITOR  */
-	public static GameDriver driver_btlecity	   = new GameDriver("1985"	,"btlecity"	,"vsnes.java"	,rom_btlecity,null	,machine_driver_vsnes	,input_ports_btlecity	,init_btlecity	,ROT0	,	"Namco",     "Vs. Battle City" )
-	public static GameDriver driver_starlstr	   = new GameDriver("1985"	,"starlstr"	,"vsnes.java"	,rom_starlstr,null	,machine_driver_vsnes	,input_ports_starlstr	,init_vsnormal	,ROT0	,	"Namco",     "Vs. Star Luster" )
-	public static GameDriver driver_cstlevna	   = new GameDriver("1987"	,"cstlevna"	,"vsnes.java"	,rom_cstlevna,null	,machine_driver_vsnes	,input_ports_cstlevna	,init_cstlevna	,ROT0	,	"Konami",    "Vs. Castlevania" )
-	public static GameDriver driver_cluclu	   = new GameDriver("1984"	,"cluclu"	,"vsnes.java"	,rom_cluclu,null	,machine_driver_vsnes	,input_ports_cluclu	,init_suprmrio	,ROT0	,	"Nintendo",  "Vs. Clu Clu Land" )
-	public static GameDriver driver_drmario	   = new GameDriver("1990"	,"drmario"	,"vsnes.java"	,rom_drmario,null	,machine_driver_vsnes	,input_ports_drmario	,init_drmario	,ROT0	,	"Nintendo",  "Vs. Dr. Mario" )
-	public static GameDriver driver_duckhunt	   = new GameDriver("1985"	,"duckhunt"	,"vsnes.java"	,rom_duckhunt,null	,machine_driver_vsnes	,input_ports_duckhunt	,init_duckhunt	,ROT0	,	"Nintendo",  "Vs. Duck Hunt" )
-	public static GameDriver driver_excitebk	   = new GameDriver("1984"	,"excitebk"	,"vsnes.java"	,rom_excitebk,null	,machine_driver_vsnes	,input_ports_excitebk	,init_excitebk	,ROT0	,	"Nintendo",  "Vs. Excitebike" )
-	public static GameDriver driver_excitbkj	   = new GameDriver("1984"	,"excitbkj"	,"vsnes.java"	,rom_excitbkj,driver_excitebk	,machine_driver_vsnes	,input_ports_excitebk	,init_excitbkj	,ROT0	,	"Nintendo",  "Vs. Excitebike (Japan)" )
-	public static GameDriver driver_goonies	   = new GameDriver("1986"	,"goonies"	,"vsnes.java"	,rom_goonies,null	,machine_driver_vsnes	,input_ports_goonies	,init_goonies	,ROT0	,	"Konami",    "Vs. The Goonies" )
-	public static GameDriver driver_hogalley	   = new GameDriver("1985"	,"hogalley"	,"vsnes.java"	,rom_hogalley,null	,machine_driver_vsnes	,input_ports_hogalley	,init_hogalley	,ROT0	,	"Nintendo",  "Vs. Hogan's Alley" )
-	public static GameDriver driver_iceclimb	   = new GameDriver("1984"	,"iceclimb"	,"vsnes.java"	,rom_iceclimb,null	,machine_driver_vsnes	,input_ports_iceclimb	,init_suprmrio	,ROT0	,	"Nintendo",  "Vs. Ice Climber" )
-	public static GameDriver driver_iceclmbj	   = new GameDriver("1984"	,"iceclmbj"	,"vsnes.java"	,rom_iceclmbj,driver_iceclimb	,machine_driver_vsnes	,input_ports_iceclmbj	,init_suprmrio	,ROT0	,	"Nintendo",  "Vs. Ice Climber (Japan)" )
-	public static GameDriver driver_ladygolf	   = new GameDriver("1984"	,"ladygolf"	,"vsnes.java"	,rom_ladygolf,null	,machine_driver_vsnes	,input_ports_golf	,init_machridr	,ROT0	,	"Nintendo",  "Vs. Stroke and Match Golf (Ladies Version)" )
-	public static GameDriver driver_machridr	   = new GameDriver("1985"	,"machridr"	,"vsnes.java"	,rom_machridr,null	,machine_driver_vsnes	,input_ports_machridr	,init_machridr	,ROT0	,	"Nintendo",  "Vs. Mach Rider (Endurance Course Version)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_machridj	   = new GameDriver("1985"	,"machridj"	,"vsnes.java"	,rom_machridj,driver_machridr	,machine_driver_vsnes	,input_ports_machridj	,init_vspinbal	,ROT0	,	"Nintendo",  "Vs. Mach Rider (Japan, Fighting Course Version)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_rbibb	   = new GameDriver("1986"	,"rbibb"	,"vsnes.java"	,rom_rbibb,null	,machine_driver_vsnes	,input_ports_rbibb	,init_rbibb	,ROT0	,	"Namco",     "Vs. Atari R.B.I. Baseball (set 1)" )
-	public static GameDriver driver_rbibba	   = new GameDriver("1986"	,"rbibba"	,"vsnes.java"	,rom_rbibba,driver_rbibb	,machine_driver_vsnes	,input_ports_rbibb	,init_rbibb	,ROT0	,	"Namco",     "Vs. Atari R.B.I. Baseball (set 2)" )
-	public static GameDriver driver_suprmrio	   = new GameDriver("1986"	,"suprmrio"	,"vsnes.java"	,rom_suprmrio,null	,machine_driver_vsnes	,input_ports_suprmrio	,init_suprmrio	,ROT0	,	"Nintendo",  "Vs. Super Mario Bros." )
-	public static GameDriver driver_vsskykid	   = new GameDriver("1985"	,"vsskykid"	,"vsnes.java"	,rom_vsskykid,null	,machine_driver_vsnes	,input_ports_vsskykid	,init_MMC3	,ROT0	,	"Namco",     "Vs. Super SkyKid"  )
-	public static GameDriver driver_tkoboxng	   = new GameDriver("1987"	,"tkoboxng"	,"vsnes.java"	,rom_tkoboxng,null	,machine_driver_vsnes	,input_ports_tkoboxng	,init_tkoboxng	,ROT0	,	"Namco LTD.","Vs. TKO Boxing", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_smgolf	   = new GameDriver("1984"	,"smgolf"	,"vsnes.java"	,rom_smgolf,null	,machine_driver_vsnes	,input_ports_golf4s	,init_machridr	,ROT0	,	"Nintendo",  "Vs. Stroke and Match Golf (Men Version)" )
-	public static GameDriver driver_smgolfj	   = new GameDriver("1984"	,"smgolfj"	,"vsnes.java"	,rom_smgolfj,driver_smgolf	,machine_driver_vsnes	,input_ports_golf	,init_vsnormal	,ROT0	,	"Nintendo",  "Vs. Stroke and Match Golf (Men Version) (Japan)" )
-	public static GameDriver driver_vspinbal	   = new GameDriver("1984"	,"vspinbal"	,"vsnes.java"	,rom_vspinbal,null	,machine_driver_vsnes	,input_ports_vspinbal	,init_vspinbal	,ROT0	,	"Nintendo",  "Vs. Pinball" )
-	public static GameDriver driver_vspinblj	   = new GameDriver("1984"	,"vspinblj"	,"vsnes.java"	,rom_vspinblj,driver_vspinbal	,machine_driver_vsnes	,input_ports_vspinblj	,init_vsnormal	,ROT0	,	"Nintendo",  "Vs. Pinball (Japan)" )
-	public static GameDriver driver_vsslalom	   = new GameDriver("1986"	,"vsslalom"	,"vsnes.java"	,rom_vsslalom,null	,machine_driver_vsnes	,input_ports_vsslalom	,init_vsslalom	,ROT0	,	"Rare LTD.", "Vs. Slalom", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_vssoccer	   = new GameDriver("1985"	,"vssoccer"	,"vsnes.java"	,rom_vssoccer,null	,machine_driver_vsnes	,input_ports_vssoccer	,init_excitebk	,ROT0	,	"Nintendo",  "Vs. Soccer" )
-	public static GameDriver driver_vsgradus	   = new GameDriver("1986"	,"vsgradus"	,"vsnes.java"	,rom_vsgradus,null	,machine_driver_vsnes	,input_ports_vsgradus	,init_vsgradus	,ROT0	,	"Konami",    "Vs. Gradius" )
-	public static GameDriver driver_platoon	   = new GameDriver("1987"	,"platoon"	,"vsnes.java"	,rom_platoon,null	,machine_driver_vsnes	,input_ports_platoon	,init_platoon	,ROT0	,	"Ocean Software Limited", "Vs. Platoon", GAME_WRONG_COLORS )
-	public static GameDriver driver_vstetris	   = new GameDriver("1987"	,"vstetris"	,"vsnes.java"	,rom_vstetris,null	,machine_driver_vsnes	,input_ports_vstetris	,init_vstetris	,ROT0	,	"Academysoft-Elory", "Vs. Tetris" , GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_mightybj	   = new GameDriver("1986"	,"mightybj"	,"vsnes.java"	,rom_mightybj,null	,machine_driver_vsnes	,input_ports_mightybj	,init_mightybj	,ROT0	,	"Tecmo",     "Vs. Mighty Bomb Jack (Japan)" )
-	public static GameDriver driver_jajamaru	   = new GameDriver("1985"	,"jajamaru"	,"vsnes.java"	,rom_jajamaru,null	,machine_driver_vsnes	,input_ports_jajamaru	,init_jajamaru	,ROT0	,	"Jaleco",    "Vs. Ninja Jajamaru Kun (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_topgun	   = new GameDriver("1987"	,"topgun"	,"vsnes.java"	,rom_topgun,null	,machine_driver_vsnes	,input_ports_topgun	,init_topgun	,ROT0	,	"Konami",    "Vs. Top Gun")
-	public static GameDriver driver_bnglngby	   = new GameDriver("1985"	,"bnglngby"	,"vsnes.java"	,rom_bnglngby,null	,machine_driver_vsnes	,input_ports_bnglngby	,init_bnglngby	,ROT0	,	"Nintendo / Broderbund Software Inc.",  "Vs. Raid on Bungeling Bay (Japan)" )
-	public static GameDriver driver_supxevs	   = new GameDriver("1986"	,"supxevs"	,"vsnes.java"	,rom_supxevs,null	,machine_driver_vsnes	,input_ports_supxevs	,init_supxevs	,ROT0	,	"Namco",		"Vs. Super Xevious" )
-	public static GameDriver driver_vsfdf	   = new GameDriver("1988"	,"vsfdf"	,"vsnes.java"	,rom_vsfdf,null	,machine_driver_vsnes	,input_ports_vsfdf	,init_vsfdf	,ROT0	,	"Konami",	"Vs. Freedom Force" )
+	GAME( 1985, btlecity, 0,        vsnes,   btlecity, btlecity, ROT0, "Namco",     "Vs. Battle City" )
+	GAME( 1985, starlstr, 0,        vsnes,   starlstr, vsnormal, ROT0, "Namco",     "Vs. Star Luster" )
+	GAME( 1987,	cstlevna, 0,        vsnes,   cstlevna, cstlevna, ROT0, "Konami",    "Vs. Castlevania" )
+	GAME( 1984, cluclu,   0,        vsnes,   cluclu,   suprmrio, ROT0, "Nintendo",  "Vs. Clu Clu Land" )
+	GAME( 1990,	drmario,  0,        vsnes,   drmario,  drmario,  ROT0, "Nintendo",  "Vs. Dr. Mario" )
+	GAME( 1985, duckhunt, 0,        vsnes,   duckhunt, duckhunt, ROT0, "Nintendo",  "Vs. Duck Hunt" )
+	GAME( 1984, excitebk, 0,        vsnes,   excitebk, excitebk, ROT0, "Nintendo",  "Vs. Excitebike" )
+	GAME( 1984, excitbkj, excitebk, vsnes,   excitebk, excitbkj, ROT0, "Nintendo",  "Vs. Excitebike (Japan)" )
+	GAME( 1986,	goonies,  0,        vsnes,   goonies,  goonies,  ROT0, "Konami",    "Vs. The Goonies" )
+	GAME( 1985, hogalley, 0,        vsnes,   hogalley, hogalley, ROT0, "Nintendo",  "Vs. Hogan's Alley" )
+	GAME( 1984, iceclimb, 0,        vsnes,   iceclimb, suprmrio, ROT0, "Nintendo",  "Vs. Ice Climber" )
+	GAME( 1984, iceclmbj, iceclimb, vsnes,   iceclmbj, suprmrio, ROT0, "Nintendo",  "Vs. Ice Climber (Japan)" )
+	GAME( 1984, ladygolf, 0,        vsnes,   golf,     machridr, ROT0, "Nintendo",  "Vs. Stroke and Match Golf (Ladies Version)" )
+	GAMEX(1985, machridr, 0,        vsnes,   machridr, machridr, ROT0, "Nintendo",  "Vs. Mach Rider (Endurance Course Version)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1985, machridj, machridr, vsnes,   machridj, vspinbal, ROT0, "Nintendo",  "Vs. Mach Rider (Japan, Fighting Course Version)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1986, rbibb,    0,        vsnes,   rbibb,    rbibb,    ROT0, "Namco",     "Vs. Atari R.B.I. Baseball (set 1)" )
+	GAME( 1986, rbibba,	  rbibb,    vsnes,   rbibb,    rbibb,    ROT0, "Namco",     "Vs. Atari R.B.I. Baseball (set 2)" )
+	GAME( 1986, suprmrio, 0,        vsnes,   suprmrio, suprmrio, ROT0, "Nintendo",  "Vs. Super Mario Bros." )
+	GAME( 1985, vsskykid, 0,        vsnes,   vsskykid, MMC3,	 ROT0, "Namco",     "Vs. Super SkyKid"  )
+	GAMEX(1987, tkoboxng, 0,        vsnes,   tkoboxng, tkoboxng, ROT0, "Namco LTD.","Vs. TKO Boxing", GAME_WRONG_COLORS | GAME_IMPERFECT_GRAPHICS )
+	GAME( 1984, smgolf,   0,        vsnes,   golf4s,   machridr, ROT0, "Nintendo",  "Vs. Stroke and Match Golf (Men Version)" )
+	GAME( 1984, smgolfj,  smgolf,   vsnes,   golf,     vsnormal, ROT0, "Nintendo",  "Vs. Stroke and Match Golf (Men Version) (Japan)" )
+	GAME( 1984, vspinbal, 0,        vsnes,   vspinbal, vspinbal, ROT0, "Nintendo",  "Vs. Pinball" )
+	GAME( 1984, vspinblj, vspinbal, vsnes,   vspinblj, vsnormal, ROT0, "Nintendo",  "Vs. Pinball (Japan)" )
+	GAMEX(1986, vsslalom, 0,        vsnes,   vsslalom, vsslalom, ROT0, "Rare LTD.", "Vs. Slalom", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1985, vssoccer, 0,        vsnes,   vssoccer, excitebk, ROT0, "Nintendo",  "Vs. Soccer" )
+	GAME( 1986, vsgradus, 0,        vsnes,   vsgradus, vsgradus, ROT0, "Konami",    "Vs. Gradius" )
+	GAMEX(1987, platoon,  0,        vsnes,   platoon,  platoon,  ROT0, "Ocean Software Limited", "Vs. Platoon", GAME_WRONG_COLORS )
+	GAMEX(1987, vstetris, 0,        vsnes,   vstetris, vstetris, ROT0, "Academysoft-Elory", "Vs. Tetris" , GAME_IMPERFECT_COLORS )
+	GAME( 1986, mightybj, 0,        vsnes,   mightybj, mightybj, ROT0, "Tecmo",     "Vs. Mighty Bomb Jack (Japan)" )
+	GAMEX(1985, jajamaru, 0,        vsnes,   jajamaru, jajamaru, ROT0, "Jaleco",    "Vs. Ninja Jajamaru Kun (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1987, topgun,   0,        vsnes,   topgun,   topgun,   ROT0, "Konami",    "Vs. Top Gun")
+	GAME( 1985, bnglngby, 0,        vsnes,   bnglngby, bnglngby, ROT0, "Nintendo / Broderbund Software Inc.",  "Vs. Raid on Bungeling Bay (Japan)" )
+	GAME( 1986, supxevs,  0,        vsnes,   supxevs,  supxevs,  ROT0, "Namco",		"Vs. Super Xevious" )
+	GAME( 1988, vsfdf,    0,        vsnes,   vsfdf,    vsfdf,	 ROT0, "Konami",	"Vs. Freedom Force" )
 	
 	/* Dual games */
-	public static GameDriver driver_vstennis	   = new GameDriver("1984"	,"vstennis"	,"vsnes.java"	,rom_vstennis,null	,machine_driver_vsdual	,input_ports_vstennis	,init_vstennis	,ROT0	,	"Nintendo",  "Vs. Tennis"  )
-	public static GameDriver driver_wrecking	   = new GameDriver("1984"	,"wrecking"	,"vsnes.java"	,rom_wrecking,null	,machine_driver_vsdual	,input_ports_wrecking	,init_wrecking	,ROT0	,	"Nintendo",  "Vs. Wrecking Crew" )
-	public static GameDriver driver_balonfgt	   = new GameDriver("1984"	,"balonfgt"	,"vsnes.java"	,rom_balonfgt,null	,machine_driver_vsdual	,input_ports_balonfgt	,init_balonfgt	,ROT0	,	"Nintendo",  "Vs. Balloon Fight" )
-	public static GameDriver driver_vsmahjng	   = new GameDriver("1984"	,"vsmahjng"	,"vsnes.java"	,rom_vsmahjng,null	,machine_driver_vsdual	,input_ports_vsmahjng	,init_vstennis	,ROT0	,	"Nintendo",  "Vs. Mahjang (Japan)"  )
-	public static GameDriver driver_vsbball	   = new GameDriver("1984"	,"vsbball"	,"vsnes.java"	,rom_vsbball,null	,machine_driver_vsdual	,input_ports_vsbball	,init_vsbball	,ROT0	,	"Nintendo of America",  "Vs. BaseBall" )
-	public static GameDriver driver_vsbballj	   = new GameDriver("1984"	,"vsbballj"	,"vsnes.java"	,rom_vsbballj,driver_vsbball	,machine_driver_vsdual	,input_ports_vsbballj	,init_vsbball	,ROT0	,	"Nintendo of America",  "Vs. BaseBall (Japan set 1)" )
-	public static GameDriver driver_vsbbalja	   = new GameDriver("1984"	,"vsbbalja"	,"vsnes.java"	,rom_vsbbalja,driver_vsbball	,machine_driver_vsdual	,input_ports_vsbballj	,init_vsbball	,ROT0	,	"Nintendo of America",  "Vs. BaseBall (Japan set 2)" )
-	public static GameDriver driver_iceclmrj	   = new GameDriver("1984"	,"iceclmrj"	,"vsnes.java"	,rom_iceclmrj,null	,machine_driver_vsdual	,input_ports_iceclmrj	,init_iceclmrj	,ROT0	,	"Nintendo",  "Vs. Ice Climber Dual (Japan)"  )
+	GAME( 1984, vstennis, 0,        vsdual,  vstennis, vstennis, ROT0, "Nintendo",  "Vs. Tennis"  )
+	GAME( 1984, wrecking, 0,        vsdual,  wrecking, wrecking, ROT0, "Nintendo",  "Vs. Wrecking Crew" )
+	GAME( 1984, balonfgt, 0,        vsdual,  balonfgt, balonfgt, ROT0, "Nintendo",  "Vs. Balloon Fight" )
+	GAME( 1984, vsmahjng, 0,        vsdual,  vsmahjng, vstennis, ROT0, "Nintendo",  "Vs. Mahjang (Japan)"  )
+	GAME( 1984, vsbball,  0,        vsdual,  vsbball,  vsbball,  ROT0, "Nintendo of America",  "Vs. BaseBall" )
+	GAME( 1984, vsbballj, vsbball,  vsdual,  vsbballj, vsbball,  ROT0, "Nintendo of America",  "Vs. BaseBall (Japan set 1)" )
+	GAME( 1984, vsbbalja, vsbball,  vsdual,  vsbballj, vsbball,  ROT0, "Nintendo of America",  "Vs. BaseBall (Japan set 2)" )
+	GAME( 1984, iceclmrj, 0,        vsdual,  iceclmrj, iceclmrj, ROT0, "Nintendo",  "Vs. Ice Climber Dual (Japan)"  )
 	
 	/* Partially working */
-	public static GameDriver driver_vsgshoe	   = new GameDriver("1986"	,"vsgshoe"	,"vsnes.java"	,rom_vsgshoe,null	,machine_driver_vsnes	,input_ports_vsgshoe	,init_vsgshoe	,ROT0	,	"Nintendo",  "Vs. Gumshoe" )
+	GAME( 1986, vsgshoe,  0,        vsnes,   vsgshoe,  vsgshoe,  ROT0, "Nintendo",  "Vs. Gumshoe" )
 	
 	/* Not Working */
-	public static GameDriver driver_smgolfb	   = new GameDriver("1985"	,"smgolfb"	,"vsnes.java"	,rom_smgolfb,driver_smgolf	,machine_driver_vsnes	,input_ports_golf	,init_machridr	,ROT0	,	"Nintendo",	"Vs. Stroke and Match Golf (Men set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_vsbbaljb	   = new GameDriver("1984"	,"vsbbaljb"	,"vsnes.java"	,rom_vsbbaljb,driver_vsbball	,machine_driver_vsdual	,input_ports_vsbballj	,init_vsbball	,ROT0	,	"Nintendo of America",  "Vs. BaseBall (Japan set 3)", GAME_NOT_WORKING )
+	GAMEX(1985, smgolfb,  smgolf,   vsnes,   golf,     machridr, ROT0, "Nintendo",	"Vs. Stroke and Match Golf (Men set 2)", GAME_NOT_WORKING )
+	GAMEX(1984, vsbbaljb, vsbball,  vsdual,  vsbballj, vsbball,  ROT0, "Nintendo of America",  "Vs. BaseBall (Japan set 3)", GAME_NOT_WORKING )
 }

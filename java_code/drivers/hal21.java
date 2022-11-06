@@ -10,8 +10,7 @@ Change Log
 AT08XX03:
 
 [Common]
- - cleaned and consolidated public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
- - added shadows and highlights
+ - cleaned and consolidated public static VideoUpdateHandlerPtr video_update_  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect) - added shadows and highlights
 
  * A.S.O and HAL21 do a lot of palette cycling therefore
    conversion to tilemaps may be disadvantageous.
@@ -54,7 +53,7 @@ AT08XX03:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -67,8 +66,7 @@ public class hal21
 	/**************************************************************************/
 	// Test Handlers
 	
-	public static WriteHandlerPtr aso_scroll_sync_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aso_scroll_sync_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == 0x7f && shared_auxram[0x04d2] & 1) data++;
 	
 		shared_auxram[0x04f8] = data;
@@ -99,14 +97,14 @@ public class hal21
 			break;
 	
 			case 2: // acknowledge
-				if (busy != 0) { busy = 0; hold = 4; }
+				if (busy) { busy = 0; hold = 4; }
 			return;
 	
 			case 3: // release
-				if (busy == 0)
+				if (!busy)
 				{
-					if (hold != 0) hold--; else
-					if (ffcount != 0)
+					if (hold) hold--; else
+					if (ffcount)
 					{
 						ffcount--;
 						data = hal21_sndfifo[fftail];
@@ -124,23 +122,22 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	public static ReadHandlerPtr hal21_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){ return videoram.read(offset); } };
-	public static WriteHandlerPtr hal21_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ videoram.write(offset,data); } };
-	public static ReadHandlerPtr hal21_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset){ return spriteram.read(offset); } };
-	public static WriteHandlerPtr hal21_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){ spriteram.write(offset,data); } };
+	public static ReadHandlerPtr hal21_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)return videoram.read(offset); }
+	public static WriteHandlerPtr hal21_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)videoram.write(offset,data); }
+	public static ReadHandlerPtr hal21_spriteram_r  = new ReadHandlerPtr() { public int handler(int offset)return spriteram.read(offset); }
+	public static WriteHandlerPtr hal21_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)spriteram.write(offset,data); }
 	
-	public static WriteHandlerPtr hal21_vreg0_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[0] = data; } };
-	public static WriteHandlerPtr hal21_vreg1_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[1] = data; } };
-	public static WriteHandlerPtr hal21_vreg2_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[2] = data; } };
-	public static WriteHandlerPtr hal21_vreg3_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[3] = data; } };
-	public static WriteHandlerPtr hal21_vreg4_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[4] = data; } };
-	public static WriteHandlerPtr hal21_vreg5_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[5] = data; } };
-	public static WriteHandlerPtr hal21_vreg6_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[6] = data; } };
-	public static WriteHandlerPtr hal21_vreg7_w = new WriteHandlerPtr() {public void handler(int offset, int data){ hal21_vreg[7] = data; } };
+	public static WriteHandlerPtr hal21_vreg0_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[0] = data; }
+	public static WriteHandlerPtr hal21_vreg1_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[1] = data; }
+	public static WriteHandlerPtr hal21_vreg2_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[2] = data; }
+	public static WriteHandlerPtr hal21_vreg3_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[3] = data; }
+	public static WriteHandlerPtr hal21_vreg4_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[4] = data; }
+	public static WriteHandlerPtr hal21_vreg5_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[5] = data; }
+	public static WriteHandlerPtr hal21_vreg6_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[6] = data; }
+	public static WriteHandlerPtr hal21_vreg7_w = new WriteHandlerPtr() {public void handler(int offset, int data)hal21_vreg[7] = data; }
 	
 	
-	public static PaletteInitHandlerPtr palette_init_aso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_aso  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int num_colors = 1024;
 	
@@ -181,8 +178,7 @@ public class hal21
 		gfx_drawmode_table[7] = DRAWMODE_NONE;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_aso  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_aso  = new VideoStartHandlerPtr() { public int handler(){
 		snk_blink_parity = 0;
 	
 		return 0;
@@ -196,10 +192,10 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = Machine.visible_area;
+		cliprect = Machine->visible_area;
 		bankbase = attrs<<3 & 0x100;
 		c = attrs & 0x0f;
-		if (c > 11) { fillbitmap(bitmap,Machine.pens[(c<<4)+8], cliprect); return; }
+		if (c > 11) { fillbitmap(bitmap,Machine->pens[(c<<4)+8], cliprect); return; }
 		if (c<8 || color[0]<14 || bankbase)
 		{
 			c ^= 0x08;
@@ -236,7 +232,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color, fy;
 	
-		cliprect = Machine.visible_area;
+		cliprect = Machine->visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	
@@ -267,7 +263,7 @@ public class hal21
 		struct rectangle *cliprect;
 		int bankbase, c, x, y, offsx, offsy, dx, dy, sx, sy, offs, tile_number;
 	
-		cliprect = Machine.visible_area;
+		cliprect = Machine->visible_area;
 		bankbase = attrs<<4 & 0x300;
 		c = attrs & 0x0f;
 		if (c == 7) c = 15;
@@ -300,7 +296,7 @@ public class hal21
 		UINT8 *sprptr, *endptr;
 		int attrs, tile, x, y, color;
 	
-		cliprect = Machine.visible_area;
+		cliprect = Machine->visible_area;
 		sprptr = spriteram;
 		endptr = spriteram + 0x100;
 	
@@ -324,8 +320,7 @@ public class hal21
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_aso  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT8 *ram = memory_region(REGION_CPU1);
 		int attr, msbs, spsy, spsx, bgsy, bgsx, bank, i;
 	
@@ -336,7 +331,7 @@ public class hal21
 		bgsy = (int)hal21_vreg[4] + (msbs<<4 & 0x100) - 8;
 		bgsx = (int)hal21_vreg[5] - 16;
 	
-		if (snk_gamegroup != 0)
+		if (snk_gamegroup)
 		{
 			hal21_draw_background(bitmap, bgsx+(msbs<<7 & 0x100), bgsy, attr, Machine.gfx[1]);
 	
@@ -358,7 +353,7 @@ public class hal21
 	} };
 	
 	
-	static InputPortPtr input_ports_hal21 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hal21 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hal21 )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_COIN2 );
@@ -424,7 +419,7 @@ public class hal21
 		PORT_DIPSETTING(    0x10, DEF_STR( "Demo_Sounds"));
 		PORT_DIPSETTING(    0x08, "Infinite Lives" );
 		PORT_DIPSETTING(    0x00, "Freeze" );
-		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Flip_Screen") ); // 0x20 . fe65
+		PORT_DIPNAME( 0x20, 0x20, DEF_STR( "Flip_Screen") ); // 0x20 -> fe65
 		PORT_DIPSETTING(    0x20, DEF_STR( "Off") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 		PORT_DIPNAME( 0x40, 0x40, DEF_STR( "Unused") );
@@ -437,7 +432,7 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	static InputPortPtr input_ports_aso = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_aso = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( aso )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW,  IPT_COIN2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW,  IPT_SERVICE1 );
@@ -568,35 +563,32 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	public static ReadHandlerPtr shared_auxram_r  = new ReadHandlerPtr() { public int handler(int offset) { return shared_auxram[offset]; } };
-	public static WriteHandlerPtr shared_auxram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { shared_auxram[offset] = data; } };
+	public static ReadHandlerPtr shared_auxram_r  = new ReadHandlerPtr() { public int handler(int offset) return shared_auxram[offset]; }
+	public static WriteHandlerPtr shared_auxram_w = new WriteHandlerPtr() {public void handler(int offset, int data) shared_auxram[offset] = data; }
 	
-	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset) { return shared_ram[offset]; } };
-	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data) { shared_ram[offset] = data; } };
+	public static ReadHandlerPtr shared_ram_r  = new ReadHandlerPtr() { public int handler(int offset) return shared_ram[offset]; }
+	public static WriteHandlerPtr shared_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data) shared_ram[offset] = data; }
 	
-	public static ReadHandlerPtr CPUC_ready_r  = new ReadHandlerPtr() { public int handler(int offset) { snk_sound_busy_bit = 0; return 0; } };
+	public static ReadHandlerPtr CPUC_ready_r  = new ReadHandlerPtr() { public int handler(int offset) snk_sound_busy_bit = 0; return 0; }
 	
-	public static ReadHandlerPtr hal21_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) { return input_port_0_r.handler(0) | snk_sound_busy_bit; } };
+	public static ReadHandlerPtr hal21_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset) return input_port_0_r.handler(0) | snk_sound_busy_bit; }
 	
-	public static WriteHandlerPtr hal21_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(1, data); } };
-	public static WriteHandlerPtr hal21_soundack_w = new WriteHandlerPtr() {public void handler(int offset, int data) { hal21_sound_scheduler(2, data); } };
+	public static WriteHandlerPtr hal21_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data) hal21_sound_scheduler(1, data); }
+	public static WriteHandlerPtr hal21_soundack_w = new WriteHandlerPtr() {public void handler(int offset, int data) hal21_sound_scheduler(2, data); }
 	
-	public static ReadHandlerPtr hal21_soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hal21_soundcommand_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = soundlatch_r(0);
 		soundlatch_clear_w(0, 0);
 		return data;
 	} };
 	
-	public static WriteHandlerPtr aso_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr aso_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		snk_sound_busy_bit = 0x20;
 		soundlatch_w.handler(0, data);
 		cpu_set_irq_line( 2, 0, HOLD_LINE );
 	} };
 	
-	public static InterruptHandlerPtr hal21_sound_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr hal21_sound_interrupt = new InterruptHandlerPtr() {public void handler(){
 		hal21_sound_scheduler(3, 0);
 	} };
 	
@@ -785,28 +777,24 @@ public class hal21
 	
 	/**************************************************************************/
 	
-	public static DriverInitHandlerPtr init_aso  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_aso  = new DriverInitHandlerPtr() { public void handler(){
 		hal21_vreg = auto_malloc(16);
 		snk_gamegroup = 0;
 	} };
 	
-	public static DriverInitHandlerPtr init_hal21  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hal21  = new DriverInitHandlerPtr() { public void handler(){
 		hal21_vreg = auto_malloc(24);
 		hal21_sndfifo = hal21_vreg + 8;
 		snk_gamegroup = 1;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_aso  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_aso  = new MachineInitHandlerPtr() { public void handler(){
 		memset(hal21_vreg, 0, 8);
 		hal21_sound_scheduler(0, 0);
 		snk_sound_busy_bit = 0;
 	} };
 	
-	public static MachineHandlerPtr machine_driver_aso = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( aso )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -841,12 +829,9 @@ public class hal21
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, ym3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_hal21 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hal21 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)
@@ -883,9 +868,7 @@ public class hal21
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**************************************************************************/
 	
@@ -993,7 +976,7 @@ public class hal21
 		ROM_LOAD( "up02_f14.rom",  0x800, 0x00400, CRC(c3fd1dd3) SHA1(c48030cc458f0bebea0ffccf3d3c43260da6a7fb) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_aso	   = new GameDriver("1985"	,"aso"	,"hal21.java"	,rom_aso,null	,machine_driver_aso	,input_ports_aso	,init_aso	,ROT270	,	"SNK", "ASO - Armored Scrum Object", GAME_NO_COCKTAIL )
-	public static GameDriver driver_hal21	   = new GameDriver("1985"	,"hal21"	,"hal21.java"	,rom_hal21,null	,machine_driver_hal21	,input_ports_hal21	,init_hal21	,ROT270	,	"SNK", "HAL21", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
-	public static GameDriver driver_hal21j	   = new GameDriver("1985"	,"hal21j"	,"hal21.java"	,rom_hal21j,driver_hal21	,machine_driver_hal21	,input_ports_hal21	,init_hal21	,ROT270	,	"SNK", "HAL21 (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1985, aso,    0,     aso,   aso,   aso,   ROT270, "SNK", "ASO - Armored Scrum Object", GAME_NO_COCKTAIL )
+	GAMEX( 1985, hal21,  0,     hal21, hal21, hal21, ROT270, "SNK", "HAL21", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
+	GAMEX( 1985, hal21j, hal21, hal21, hal21, hal21, ROT270, "SNK", "HAL21 (Japan)", GAME_IMPERFECT_COLORS | GAME_NO_COCKTAIL )
 }

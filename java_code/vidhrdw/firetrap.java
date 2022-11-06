@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -49,8 +49,7 @@ public class firetrap
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_firetrap  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_firetrap  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 	
@@ -102,8 +101,8 @@ public class firetrap
 	{
 		int code, color;
 	
-		code = firetrap_fgvideoram.read(tile_index);
-		color = firetrap_fgvideoram.read(tile_index + 0x400);
+		code = firetrap_fgvideoram[tile_index];
+		color = firetrap_fgvideoram[tile_index + 0x400];
 		SET_TILE_INFO(
 				0,
 				code | ((color & 0x01) << 8),
@@ -141,8 +140,7 @@ public class firetrap
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_firetrap  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_firetrap  = new VideoStartHandlerPtr() { public int handler(){
 		fg_tilemap  = tilemap_create(get_fg_tile_info, get_fg_memory_offset,TILEMAP_TRANSPARENT, 8, 8,32,32);
 		bg1_tilemap = tilemap_create(get_bg1_tile_info,get_bg_memory_offset,TILEMAP_TRANSPARENT,16,16,32,32);
 		bg2_tilemap = tilemap_create(get_bg2_tile_info,get_bg_memory_offset,TILEMAP_OPAQUE,     16,16,32,32);
@@ -163,51 +161,44 @@ public class firetrap
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr firetrap_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		firetrap_fgvideoram.write(data,data);
+	public static WriteHandlerPtr firetrap_fgvideoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		firetrap_fgvideoram[offset] = data;
 		tilemap_mark_tile_dirty(fg_tilemap,offset & 0x3ff);
 	} };
 	
-	public static WriteHandlerPtr firetrap_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg1videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrap_bg1videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg1_tilemap,offset & 0x6ff);
 	} };
 	
-	public static WriteHandlerPtr firetrap_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg2videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		firetrap_bg2videoram[offset] = data;
 		tilemap_mark_tile_dirty(bg2_tilemap,offset & 0x6ff);
 	} };
 	
 	
-	public static WriteHandlerPtr firetrap_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrollx(bg1_tilemap,0,scroll[0] | (scroll[1] << 8));
 	} };
 	
-	public static WriteHandlerPtr firetrap_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrolly(bg1_tilemap,0,-(scroll[0] | (scroll[1] << 8)));
 	} };
 	
-	public static WriteHandlerPtr firetrap_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg2_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
 		tilemap_set_scrollx(bg2_tilemap,0,scroll[0] | (scroll[1] << 8));
 	} };
 	
-	public static WriteHandlerPtr firetrap_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr firetrap_bg2_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char scroll[2];
 	
 		scroll[offset] = data;
@@ -239,7 +230,7 @@ public class firetrap
 			color = ((spriteram.read(offs + 1)& 0x08) >> 2) | (spriteram.read(offs + 1)& 0x01);
 			flipx = spriteram.read(offs + 1)& 0x04;
 			flipy = spriteram.read(offs + 1)& 0x02;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -249,15 +240,15 @@ public class firetrap
 	
 			if (spriteram.read(offs + 1)& 0x10)	/* double width */
 			{
-				if (flip_screen != 0) sy -= 16;
+				if (flip_screen()) sy -= 16;
 	
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code & ~1,
 						color,
 						flipx,flipy,
 						sx,flipy ? sy : sy + 16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code | 1,
 						color,
 						flipx,flipy,
@@ -265,13 +256,13 @@ public class firetrap
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code & ~1,
 						color,
 						flipx,flipy,
 						sx - 256,flipy ? sy : sy + 16,
 						cliprect,TRANSPARENCY_PEN,0);
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code | 1,
 						color,
 						flipx,flipy,
@@ -280,7 +271,7 @@ public class firetrap
 			}
 			else
 			{
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code,
 						color,
 						flipx,flipy,
@@ -288,7 +279,7 @@ public class firetrap
 						cliprect,TRANSPARENCY_PEN,0);
 	
 				/* redraw with wraparound */
-				drawgfx(bitmap,Machine.gfx[3],
+				drawgfx(bitmap,Machine->gfx[3],
 						code,
 						color,
 						flipx,flipy,
@@ -298,8 +289,7 @@ public class firetrap
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_firetrap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_firetrap  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg2_tilemap,0,0);
 		tilemap_draw(bitmap,cliprect,bg1_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);

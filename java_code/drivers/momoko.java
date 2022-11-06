@@ -18,7 +18,7 @@ Flipped screen looks wrong, but it is correct.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,12 +27,8 @@ public class momoko
 	
 	
 	
-	public static WriteHandlerPtr momoko_fg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data);
-	public static WriteHandlerPtr momoko_bg_select_w = new WriteHandlerPtr() {public void handler(int offset, int data);
-	public static WriteHandlerPtr momoko_bg_priority_w = new WriteHandlerPtr() {public void handler(int offset, int data);
 	
-	public static WriteHandlerPtr momoko_bg_read_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr momoko_bg_read_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *BG_MAP = memory_region(REGION_USER1);
 		int bank_address = (data & 0x1f) * 0x1000;
 		cpu_setbank(1, &BG_MAP[bank_address]);
@@ -116,7 +112,7 @@ public class momoko
 	
 	/****************************************************************************/
 	
-	static InputPortPtr input_ports_momoko = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_momoko = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( momoko )
 	    PORT_START(); 
 	    PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START2 );
 	    PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START1 );
@@ -260,8 +256,7 @@ public class momoko
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_momoko = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( momoko )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)	/* 5.0MHz */
@@ -287,9 +282,7 @@ public class momoko
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/****************************************************************************/
 	
@@ -334,5 +327,5 @@ public class momoko
 		ROM_LOAD( "momoko-b.bin", 0x0100,  0x0020, CRC(427b0e5c) SHA1(aa2797b899571527cc96013fd3420b841954ee67) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_momoko	   = new GameDriver("1986"	,"momoko"	,"momoko.java"	,rom_momoko,null	,machine_driver_momoko	,input_ports_momoko	,null	,ROT0	,	"Jaleco", "Momoko 120%" )
+	GAME( 1986, momoko, 0, momoko, momoko, 0, ROT0, "Jaleco", "Momoko 120%" )
 }

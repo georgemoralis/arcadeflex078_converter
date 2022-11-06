@@ -5,7 +5,7 @@
   Video functions
 
   SAA 5050 -- Character display  (TODO: fix up background colours)
-  S2636 (x2) -- Sprites, Sprite.Sprite collisions
+  S2636 (x2) -- Sprites, Sprite->Sprite collisions
   Playfield graphics generator 
       (TODO: probably best to switch this to tilemaps one day, figure out banking)
 
@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -63,8 +63,7 @@ public class malzak
 	unsigned char s2636_1_dirty[4];
 	unsigned char s2636_2_dirty[4];
 	
-	public static VideoStartHandlerPtr video_start_malzak  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_malzak  = new VideoStartHandlerPtr() { public int handler(){
 		video_start_generic.handler();
 	
 		if ((collision_bitmap = auto_bitmap_alloc_depth(Machine.drv.screen_width,Machine.drv.screen_height,8)) == 0)
@@ -77,8 +76,7 @@ public class malzak
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_malzak  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int code, colour;
 		int sx, sy;
 		int x,y;
@@ -171,7 +169,7 @@ public class malzak
 							code += 64;
 					}
 				}
-				if ((code & 0x80) != 0)
+				if (code & 0x80)
 					colour = (saa5050_state.saa5050_forecol << 3) | saa5050_state.saa5050_backcol;
 				else
 					colour = saa5050_state.saa5050_forecol | (saa5050_state.saa5050_backcol << 3);
@@ -224,8 +222,7 @@ public class malzak
 		Update_Bitmap(bitmap,s2636_2_ram,s2636_2_dirty,2,collision_bitmap);
 	} };
 	
-	public static WriteHandlerPtr playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr playfield_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int tile = ((temp_x / 16) * 16) + (offset / 16);
 	
 	//	field[tile].x = temp_x / 16;

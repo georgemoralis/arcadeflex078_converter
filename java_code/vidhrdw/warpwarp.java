@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -43,8 +43,7 @@ public class warpwarp
 	  Moreover, the bullet is pure white, obtained with three 220 ohm resistors.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_warpwarp  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -90,8 +89,7 @@ public class warpwarp
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_warpwarp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_warpwarp  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 	
@@ -158,7 +156,7 @@ public class warpwarp
 				{
 					for (j = 0;j < 4;j++)
 					{
-						plot_pixel.handler(bitmap, x+j, y+i, colour);
+						plot_pixel(bitmap, x+j, y+i, colour);
 					}
 				}
 			}
@@ -166,8 +164,7 @@ public class warpwarp
 	} };
 	
 	
-	public static WriteHandlerPtr warpwarp_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr warpwarp_flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data & 1);
 	} };
 	

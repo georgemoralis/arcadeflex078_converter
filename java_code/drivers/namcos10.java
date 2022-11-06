@@ -11,15 +11,14 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class namcos10
 {
 	
-	public static InterruptHandlerPtr namcos10_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos10_vblank = new InterruptHandlerPtr() {public void handler(){
 	} };
 	
 	static MEMORY_WRITE32_START( namcos10_writemem )
@@ -67,8 +66,7 @@ public class namcos10
 		{ 0xbfc00000, 0xbfffffff, MRA32_BANK6 },  /* bios */
 	MEMORY_END
 	
-	public static DriverInitHandlerPtr init_namcos10  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_namcos10  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		data16_t *RAM = (data16_t *)memory_region( REGION_USER2 );
 	
@@ -87,13 +85,11 @@ public class namcos10
 		cpu_setbank( 6, memory_region( REGION_USER2 ) );
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_namcos10  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_namcos10  = new MachineInitHandlerPtr() { public void handler(){
 		psx_machine_init();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_namcos10 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( namcos10 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD( PSXCPU, 33868800 / 2 ) /* 33MHz ?? */
 		MDRV_CPU_MEMORY( namcos10_readmem, namcos10_writemem )
@@ -123,11 +119,9 @@ public class namcos10
 	
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES( SOUND_SUPPORTS_STEREO )
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	static InputPortPtr input_ports_namcos10 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_namcos10 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( namcos10 )
 		/* IN 0 */
 		PORT_START(); 
 		PORT_BITX( 0x8000, IP_ACTIVE_HIGH, 0, "Test Switch", KEYCODE_F2, IP_JOY_NONE );
@@ -187,5 +181,5 @@ public class namcos10
 		ROM_LOAD( "dr21vera.1a",  0x000000, 0x800000, CRC(f93532a2) SHA1(8b72f2868978be1f0e0abd11425a3c8b2b0c4e99) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mrdrilr2	   = new GameDriver("2000"	,"mrdrilr2"	,"namcos10.java"	,rom_mrdrilr2,null	,machine_driver_namcos10	,input_ports_namcos10	,init_namcos10	,ROT0	,	"Namco", "Mr Driller 2", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 2000, mrdrilr2,  0,        namcos10, namcos10, namcos10, ROT0, "Namco", "Mr Driller 2", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

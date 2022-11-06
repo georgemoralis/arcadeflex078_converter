@@ -80,7 +80,7 @@ emulated now. ;)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -120,8 +120,7 @@ public class polyplay
 	};
 	
 	
-	public static MachineInitHandlerPtr machine_init_polyplay  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_polyplay  = new MachineInitHandlerPtr() { public void handler(){
 		channel1_active = 0;
 		channel1_const = 0;
 		channel2_active = 0;
@@ -136,14 +135,12 @@ public class polyplay
 	} };
 	
 	
-	public static InterruptHandlerPtr periodic_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr periodic_interrupt = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(0, 0, HOLD_LINE, 0x4e);
 	} };
 	
 	
-	public static InterruptHandlerPtr coin_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr coin_interrupt = new InterruptHandlerPtr() {public void handler(){
 		static int last = 0;
 	
 		if (readinputport(0) & 0x80)
@@ -201,7 +198,7 @@ public class polyplay
 		new IO_WritePort(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_polyplay = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_polyplay = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( polyplay )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY );
@@ -214,11 +211,10 @@ public class polyplay
 	INPUT_PORTS_END(); }}; 
 	
 	
-	public static WriteHandlerPtr polyplay_sound_channel = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polyplay_sound_channel = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch(offset) {
 		case 0x00:
-			if (channel1_const != 0) {
+			if (channel1_const) {
 				if (data <= 1) {
 					set_channel1(0);
 				}
@@ -228,7 +224,7 @@ public class polyplay
 			}
 			else {
 				prescale1 = (data & 0x20) ? 16 : 1;
-				if ((data & 0x04) != 0) {
+				if (data & 0x04) {
 					set_channel1(1);
 					channel1_const = 1;
 				}
@@ -239,7 +235,7 @@ public class polyplay
 			}
 			break;
 		case 0x01:
-			if (channel2_const != 0) {
+			if (channel2_const) {
 				if (data <= 1) {
 					set_channel2(0);
 				}
@@ -249,7 +245,7 @@ public class polyplay
 			}
 			else {
 				prescale2 = (data & 0x20) ? 16 : 1;
-				if ((data & 0x04) != 0) {
+				if (data & 0x04) {
 					set_channel2(1);
 					channel2_const = 1;
 				}
@@ -262,8 +258,7 @@ public class polyplay
 		}
 	} };
 	
-	public static WriteHandlerPtr polyplay_start_timer2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr polyplay_start_timer2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data == 0x03)
 			timer_adjust(polyplay_timer, TIME_NEVER, 0, 0);
 	
@@ -271,8 +266,7 @@ public class polyplay
 			timer_adjust(polyplay_timer, TIME_IN_HZ(40), 0, TIME_IN_HZ(40));
 	} };
 	
-	public static ReadHandlerPtr polyplay_random_read  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr polyplay_random_read  = new ReadHandlerPtr() { public int handler(int offset){
 		return rand() & 0xff;
 	} };
 	
@@ -309,8 +303,7 @@ public class polyplay
 	
 	/* the machine driver */
 	
-	public static MachineHandlerPtr machine_driver_polyplay = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( polyplay )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 9830400/4)
@@ -336,9 +329,7 @@ public class polyplay
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* ROM loading and mapping */
@@ -389,5 +380,5 @@ public class polyplay
 	}
 	
 	/* game driver */
-	public static GameDriver driver_polyplay	   = new GameDriver("1985"	,"polyplay"	,"polyplay.java"	,rom_polyplay,null	,machine_driver_polyplay	,input_ports_polyplay	,null	,ROT0	,	"VEB Polytechnik Karl-Marx-Stadt", "Poly-Play" )
+	GAME( 1985, polyplay, 0, polyplay, polyplay, 0, ROT0, "VEB Polytechnik Karl-Marx-Stadt", "Poly-Play" )
 }

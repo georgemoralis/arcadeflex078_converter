@@ -10,7 +10,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_arcadecl  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_arcadecl  = new VideoStartHandlerPtr() { public int handler(){
 		static const struct atarimo_desc modesc =
 		{
 			0,					/* index to which gfx system */
@@ -97,13 +96,12 @@ public class arcadecl
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_arcadecl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* draw the playfield */
 		rampart_bitmap_render(bitmap, cliprect);
 	
 		/* draw and merge the MO */
-		if (has_mo != 0)
+		if (has_mo)
 		{
 			struct atarimo_rect_list rectlist;
 			struct mame_bitmap *mobitmap;

@@ -10,7 +10,7 @@ Loosely based on the Kung Fu Master driver.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -55,7 +55,7 @@ public class yard
 	
 	
 	
-	static InputPortPtr input_ports_yard = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yard = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yard )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -157,7 +157,7 @@ public class yard
 	
 	/* exactly the same as yard, only difference is the Allow Continue dip switch */
 	/* Also, the Cabinet dip switch doesn't seem to work. */
-	static InputPortPtr input_ports_vsyard = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vsyard = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vsyard )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START2 );
@@ -293,8 +293,7 @@ public class yard
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_yard = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yard )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz (?) */
@@ -320,9 +319,7 @@ public class yard
 	
 		/* sound hardware */
 		MDRV_IMPORT_FROM(irem_audio)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -434,7 +431,7 @@ public class yard
 	
 	
 	
-	public static GameDriver driver_yard	   = new GameDriver("1983"	,"yard"	,"yard.java"	,rom_yard,null	,machine_driver_yard	,input_ports_yard	,null	,ROT0	,	"Irem", "10 Yard Fight (Japan)" )
-	public static GameDriver driver_vsyard	   = new GameDriver("1984"	,"vsyard"	,"yard.java"	,rom_vsyard,driver_yard	,machine_driver_yard	,input_ports_vsyard	,null	,ROT0	,	"Irem", "10 Yard Fight (Vs. version World, 11/05/84)" )
-	public static GameDriver driver_vsyard2	   = new GameDriver("1984"	,"vsyard2"	,"yard.java"	,rom_vsyard2,driver_yard	,machine_driver_yard	,input_ports_vsyard	,null	,ROT0	,	"Irem", "10 Yard Fight (Vs. version Japan, set 2)" )
+	GAME( 1983, yard,    0,    yard, yard,   0, ROT0, "Irem", "10 Yard Fight (Japan)" )
+	GAME( 1984, vsyard,  yard, yard, vsyard, 0, ROT0, "Irem", "10 Yard Fight (Vs. version World, 11/05/84)" )
+	GAME( 1984, vsyard2, yard, yard, vsyard, 0, ROT0, "Irem", "10 Yard Fight (Vs. version Japan, set 2)" )
 }

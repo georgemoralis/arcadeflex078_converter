@@ -4,22 +4,20 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
 public class grtwall
 {
 	
-	VIDEO_START(grtwall)
-	{
+	public static VideoStartHandlerPtr video_start_grtwall  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(grtwall)
-	{
+	public static VideoUpdateHandlerPtr video_update_grtwall  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	
-	}
+	} };
 	static MEMORY_READ16_START( grtwall_readmem )
 		{ 0x000000, 0x07ffff, MRA16_ROM },
 		{ 0x100000, 0x103fff, MRA16_RAM },
@@ -71,11 +69,10 @@ public class grtwall
 	};
 	
 	
-	static InputPortPtr input_ports_grtwall = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grtwall = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grtwall )
 	INPUT_PORTS_END(); }}; 
 	
-	public static MachineHandlerPtr machine_driver_grtwall = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( grtwall )
 		MDRV_CPU_ADD(M68000, 12000000)
 		MDRV_CPU_MEMORY(grtwall_readmem,grtwall_writemem)
 	//	MDRV_CPU_VBLANK_INT(irq6_line_hold,1)
@@ -94,9 +91,7 @@ public class grtwall
 		MDRV_VIDEO_UPDATE(grtwall)
 	
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	void gw_decrypt(void)
@@ -122,8 +117,7 @@ public class grtwall
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_grtwall  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_grtwall  = new DriverInitHandlerPtr() { public void handler(){
 		gw_decrypt();
 	} };
 	
@@ -139,5 +133,5 @@ public class grtwall
 		ROM_LOAD( "040-c3c2.snd",         0x00000, 0x100000, CRC(220949aa) SHA1(1e0dba168a0687d32aaaed42714ae24358f4a3e7) )  // 1ST+2ND IDENTICAL
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_grtwall	   = new GameDriver("1994"	,"grtwall"	,"grtwall.java"	,rom_grtwall,null	,machine_driver_grtwall	,input_ports_grtwall	,init_grtwall	,ROT0	,	"IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1994, grtwall, 0, grtwall, grtwall, grtwall, ROT0, "IGS", "The Great Wall", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

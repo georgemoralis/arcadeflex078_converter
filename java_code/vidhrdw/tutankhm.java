@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -34,25 +34,24 @@ public class tutankhm
 		x2 = x1 + 1;
 		y2 = y1;
 	
-		if (flip_screen_x != 0)
+		if (flip_screen_x)
 		{
 			x1 = 255 - x1;
 			x2 = 255 - x2;
 		}
-		if (flip_screen_y != 0)
+		if (flip_screen_y)
 		{
 			y1 = 255 - y1;
 			y2 = 255 - y2;
 		}
 	
-		plot_pixel(tmpbitmap,x1,y1,Machine.pens[data & 0x0f]);
-		plot_pixel(tmpbitmap,x2,y2,Machine.pens[data >> 4]);
+		plot_pixel(tmpbitmap,x1,y1,Machine->pens[data & 0x0f]);
+		plot_pixel(tmpbitmap,x2,y2,Machine->pens[data >> 4]);
 	}
 	
 	
 	
-	public static WriteHandlerPtr tutankhm_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tutankhm_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		videowrite(offset,data);
 	} };
@@ -66,14 +65,13 @@ public class tutankhm
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_tutankhm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (get_vh_global_attribute_changed() != 0)
+	public static VideoUpdateHandlerPtr video_update_tutankhm  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (get_vh_global_attribute_changed())
 		{
 			int offs;
 	
 			for (offs = 0;offs < videoram_size[0];offs++)
-				tutankhm_videoram_w.handler(offs,videoram.read(offs));
+				tutankhm_videoram_w(offs,videoram.read(offs));
 		}
 	
 		/* copy the temporary bitmap to the screen */
@@ -81,14 +79,14 @@ public class tutankhm
 			int scroll[32], i;
 	
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				for (i = 0;i < 8;i++)
 					scroll[i] = 0;
 				for (i = 8;i < 32;i++)
 				{
 					scroll[i] = -*tutankhm_scrollx;
-					if (flip_screen_y != 0) scroll[i] = -scroll[i];
+					if (flip_screen_y) scroll[i] = -scroll[i];
 				}
 			}
 			else
@@ -96,7 +94,7 @@ public class tutankhm
 				for (i = 0;i < 24;i++)
 				{
 					scroll[i] = -*tutankhm_scrollx;
-					if (flip_screen_y != 0) scroll[i] = -scroll[i];
+					if (flip_screen_y) scroll[i] = -scroll[i];
 				}
 				for (i = 24;i < 32;i++)
 					scroll[i] = 0;
@@ -112,8 +110,8 @@ public class tutankhm
 	
 		Juno First can blit a 16x16 graphics which comes from un-memory mapped graphics roms
 	
-		$8070.$8071 specifies the destination NIBBLE address
-		$8072.$8073 specifies the source NIBBLE address
+		$8070->$8071 specifies the destination NIBBLE address
+		$8072->$8073 specifies the source NIBBLE address
 	
 		Depending on bit 0 of the source address either the source pixels will be copied to
 		the destination address, or a zero will be written.
@@ -132,8 +130,7 @@ public class tutankhm
 			The clear works properly.
 	*/
 	
-	public static WriteHandlerPtr junofrst_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr junofrst_blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static unsigned char blitterdata[4];
 	
 	
@@ -160,12 +157,12 @@ public class tutankhm
 			destaddress >>= 1;
 			destaddress &= 0x7fff;
 	
-			if (srcflag != 0) {
+			if (srcflag) {
 				for (i=0;i<16;i++) {
 	
 	#define JUNOBLITPIXEL(x)									\
 		if (JunoBLTRom[srcaddress+x])							\
-			tutankhm_videoram_w.handler( destaddress+x,					\
+			tutankhm_videoram_w( destaddress+x,					\
 				((JunoBLTRom[srcaddress+x] & 0xf0) >> 4)		\
 				| ((JunoBLTRom[srcaddress+x] & 0x0f) << 4));
 	
@@ -186,10 +183,10 @@ public class tutankhm
 	
 	#define JUNOCLEARPIXEL(x) 						\
 		if ((JunoBLTRom[srcaddress+x] & 0xF0)) 		\
-			tutankhm_videoram_w.handler( destaddress+x,		\
+			tutankhm_videoram_w( destaddress+x,		\
 				videoram.read(destaddress+x)& 0xF0);	\
 		if ((JunoBLTRom[srcaddress+x] & 0x0F))		\
-			tutankhm_videoram_w.handler( destaddress+x,		\
+			tutankhm_videoram_w( destaddress+x,		\
 				videoram.read(destaddress+x)& 0x0F);
 	
 					JUNOCLEARPIXEL(0);

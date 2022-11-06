@@ -136,7 +136,7 @@ If someone could fix the protection it'd be fully playable with sound and music.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -165,13 +165,11 @@ public class nmk16
 	
 	static int respcount; // used with mcu function
 	
-	public static MachineInitHandlerPtr machine_init_nmk16  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_nmk16  = new MachineInitHandlerPtr() { public void handler(){
 		respcount = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_mustang_sound  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mustang_sound  = new MachineInitHandlerPtr() { public void handler(){
 		respcount = 0;
 		machine_init_seibu_sound_1();
 	} };
@@ -179,21 +177,20 @@ public class nmk16
 	WRITE16_HANDLER ( ssmissin_sound_w )
 	{
 		/* maybe .. */
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0, ASSERT_LINE);
 		}
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			if ((data >> 8) & 0x80)
 				cpu_set_irq_line(1,0, CLEAR_LINE);
 	}
 	
 	
 	
-	public static WriteHandlerPtr ssmissin_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ssmissin_soundbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_SOUND1);
 		int bank;
 	
@@ -222,8 +219,8 @@ public class nmk16
 		/* Note: this doesn't play correct samples, it plays drums and stuff.
 		   That's not quite right so I'm leaving it disabled */
 	#if 0
-		if (!strcmp(Machine.gamedrv.name,"gunnail")) {
-			if (ACCESSING_LSB != 0) {
+		if (!strcmp(Machine->gamedrv->name,"gunnail")) {
+			if (ACCESSING_LSB) {
 				if ((data & 0xff) == 0x00) { /* unknown */
 					/* ?? */
 				} else if ((data & 0xff) == 0xcc) { /* unknown */
@@ -256,8 +253,8 @@ public class nmk16
 		}
 	
 	
-		if (!strcmp(Machine.gamedrv.name,"macross")) {
-			if (ACCESSING_LSB != 0) {
+		if (!strcmp(Machine->gamedrv->name,"macross")) {
+			if (ACCESSING_LSB) {
 				if ((data & 0xff) == 0xc4) { /* unknown */
 					/* ?? */
 				} else if ((data & 0xff) == 0xc5) { /* with bomb? */
@@ -359,7 +356,7 @@ public class nmk16
 	
 	static WRITE16_HANDLER( macross2_sound_command_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			soundlatch_w(0,data & 0xff);
 	}
 	
@@ -368,15 +365,13 @@ public class nmk16
 		return soundlatch2_r(0);
 	}
 	
-	public static WriteHandlerPtr macross2_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr macross2_sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		const UINT8 *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + (data & 0x07) * 0x4000);
 	} };
 	
-	public static WriteHandlerPtr macross2_oki6295_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr macross2_oki6295_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* The OKI6295 ROM space is divided in four banks, each one indepentently
 		   controlled. The sample table at the beginning of the addressing space is
 		   divided in four pages as well, banked together with the sample data. */
@@ -398,7 +393,7 @@ public class nmk16
 	
 	static WRITE16_HANDLER( bjtwin_oki6295_bankswitch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			macross2_oki6295_bankswitch_w(offset,data & 0xff);
 	}
 	
@@ -816,7 +811,7 @@ public class nmk16
 	static MEMORY_WRITE16_START( strahl_writemem )
 		{ 0x00000, 0x3ffff, MWA16_ROM },
 		{ 0x80014, 0x80015, nmk_flipscreen_w },
-		{ 0x8001e, 0x8001f, MWA16_NOP }, /* . Sound cpu */
+		{ 0x8001e, 0x8001f, MWA16_NOP }, /* -> Sound cpu */
 		{ 0x84000, 0x84007, nmk_scroll_w },
 		{ 0x88000, 0x88007, nmk_scroll_2_w },
 		{ 0x8c000, 0x8c7ff, paletteram16_RRRRGGGGBBBBxxxx_word_w, &paletteram16 },
@@ -1013,7 +1008,7 @@ public class nmk16
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_vandyke = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vandyke = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vandyke )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1095,7 +1090,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x20, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_blkheart = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blkheart = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blkheart )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1174,7 +1169,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_manybloc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_manybloc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( manybloc )
 		PORT_START(); 	/* IN0 - 0x080000 */
 		PORT_BIT( 0x7fff, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BIT( 0x8000, IP_ACTIVE_LOW,  IPT_UNKNOWN );	// VBLANK ? Check code at 0x005640
@@ -1197,7 +1192,7 @@ public class nmk16
 		PORT_BIT( 0x4000, IP_ACTIVE_HIGH, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x8000, IP_ACTIVE_HIGH, IPT_COIN2 );
 	
-		PORT_START(); 	/* DSW - 0x080004 . 0x0f0036 */
+		PORT_START(); 	/* DSW - 0x080004 -> 0x0f0036 */
 		PORT_DIPNAME( 0x0001, 0x0000, "Slot System" );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Off") );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "On") );
@@ -1244,7 +1239,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x8000, "Best" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tharrier = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tharrier = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tharrier )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1332,7 +1327,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_mustang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mustang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mustang )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1410,7 +1405,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x0000, "5" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hachamf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hachamf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hachamf )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1490,7 +1485,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_strahl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_strahl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( strahl )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1567,7 +1562,7 @@ public class nmk16
 		PORT_SERVICE( 0x80, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_acrobatm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_acrobatm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( acrobatm )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1644,7 +1639,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, "5" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bioship = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bioship = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bioship )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1722,7 +1717,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x0020, DEF_STR( "1C_4C") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tdragon = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tdragon = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tdragon )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1850,7 +1845,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_ssmissin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssmissin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssmissin )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -1940,7 +1935,7 @@ public class nmk16
 		PORT_DIPSETTING(      0x0000, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_macross = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_macross = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( macross )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2028,7 +2023,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_macross2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_macross2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( macross2 )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2118,7 +2113,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tdragon2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tdragon2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tdragon2 )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2207,7 +2202,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gunnail = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gunnail = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gunnail )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2289,7 +2284,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sabotenb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sabotenb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sabotenb )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2363,7 +2358,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_bjtwin = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bjtwin = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bjtwin )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2443,7 +2438,7 @@ public class nmk16
 		PORT_DIPSETTING(    0x00, DEF_STR( "Free_Play") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nouryoku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nouryoku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nouryoku )
 		PORT_START(); 		/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -2631,8 +2626,7 @@ public class nmk16
 		{ 100 }				/* volume */
 	};
 	
-	public static InterruptHandlerPtr nmk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr nmk_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 4, HOLD_LINE);
 		else cpu_set_irq_line(0, 2, HOLD_LINE);
 	} };
@@ -2640,8 +2634,7 @@ public class nmk16
 	/* Parameters: YM3812 frequency, Oki frequency, Oki memory region */
 	SEIBU_SOUND_SYSTEM_YM3812_HARDWARE(14318180/4, 8000, REGION_SOUND1);
 	
-	public static MachineHandlerPtr machine_driver_urashima = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( urashima )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2665,13 +2658,10 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vandyke = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vandyke )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2697,13 +2687,10 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tharrier = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tharrier )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz */
@@ -2734,12 +2721,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_manybloc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( manybloc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10? MHz - check */
@@ -2769,12 +2753,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mustang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mustang )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2801,12 +2782,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mustangb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mustangb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -2834,12 +2812,9 @@ public class nmk16
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_acrobatm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( acrobatm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? 12 MHz? */
@@ -2865,13 +2840,10 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203? */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_bioship = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bioship )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000) /* 16 MHz ? */
@@ -2897,14 +2869,11 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* bootleg using Raiden sound hardware */
-	public static MachineHandlerPtr machine_driver_tdragonb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tdragonb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2931,12 +2900,9 @@ public class nmk16
 	
 		/* sound hardware */
 		SEIBU_SOUND_SYSTEM_YM3812_INTERFACE
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tdragon = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tdragon )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2960,12 +2926,9 @@ public class nmk16
 		MDRV_VIDEO_UPDATE(macross)
 	
 		/* sound hardware */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_ssmissin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssmissin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -2994,13 +2957,10 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_ssmissin)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_strahl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( strahl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* 12 MHz ? */
@@ -3026,13 +2986,10 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hachamf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hachamf )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3058,13 +3015,10 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_macross = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( macross )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3090,13 +3044,10 @@ public class nmk16
 		/* sound hardware */
 		/* there's also a YM2203 */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gunnail = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gunnail )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz? */
@@ -3121,13 +3072,10 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_macross2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( macross2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3158,12 +3106,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tdragon2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tdragon2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz ? */
@@ -3194,12 +3139,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_raphero = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( raphero )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000) /* 14 MHz measured */
@@ -3232,12 +3174,9 @@ public class nmk16
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface_15)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bjtwin = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bjtwin )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* 10 MHz? It's a P12, but xtals are 10MHz and 16MHz */
@@ -3262,9 +3201,7 @@ public class nmk16
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface_dual)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -4276,20 +4213,17 @@ public class nmk16
 	}
 	
 	
-	public static DriverInitHandlerPtr init_nmk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nmk  = new DriverInitHandlerPtr() { public void handler(){
 		decode_gfx();
 	} };
 	
-	public static DriverInitHandlerPtr init_hachamf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hachamf  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		rom[0x0006/2] = 0x7dc2;	/* replace reset vector with the "real" one */
 	} };
 	
-	public static DriverInitHandlerPtr init_acrobatm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_acrobatm  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		RAM[0x724/2] = 0x4e71; /* Protection */
@@ -4302,8 +4236,7 @@ public class nmk16
 		RAM[0x97e/2] = 0x0;
 	} };
 	
-	public static DriverInitHandlerPtr init_tdragonb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tdragonb  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *ROM = (data16_t *)memory_region(REGION_CPU1);
 	
 		decode_tdragonb();
@@ -4313,22 +4246,19 @@ public class nmk16
 		ROM[0x00308/2] = 0x4e71; /* Sprite Problem */
 	} };
 	
-	public static DriverInitHandlerPtr init_tdragon  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tdragon  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		RAM[0x94b0/2] = 0; /* Patch out JMP to shared memory (protection) */
 		RAM[0x94b2/2] = 0x92f4;
 	} };
 	
-	public static DriverInitHandlerPtr init_ssmissin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_ssmissin  = new DriverInitHandlerPtr() { public void handler(){
 		decode_ssmissin();
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_strahl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_strahl  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		RAM[0x79e/2] = 0x4e71; /* Protection */
@@ -4341,8 +4271,7 @@ public class nmk16
 		RAM[0x8e2/2] = 0x4e71;
 	} };
 	
-	public static DriverInitHandlerPtr init_bioship  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bioship  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		RAM[0xe78a/2] = 0x4e71; /* Protection */
@@ -4382,8 +4311,7 @@ public class nmk16
 	
 	}
 	
-	public static DriverInitHandlerPtr init_blkheart  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blkheart  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		is_blkheart = 1; // sprite enable is different?
@@ -4400,8 +4328,7 @@ public class nmk16
 		install_mem_write16_handler(0, 0xf902a, 0xf902b, test_2a_w );
 	} };
 	
-	public static DriverInitHandlerPtr init_mustang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mustang  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *RAM = (data16_t *)memory_region(REGION_CPU1);
 	
 		is_blkheart = 1; // sprite enable is different?
@@ -4417,8 +4344,7 @@ public class nmk16
 		install_mem_write16_handler(0, 0xf902a, 0xf902b, test_2a_mustang_w );
 	} };
 	
-	public static DriverInitHandlerPtr init_bjtwin  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bjtwin  = new DriverInitHandlerPtr() { public void handler(){
 		init_nmk();
 	
 		/* Patch rom to enable test mode */
@@ -4444,33 +4370,33 @@ public class nmk16
 	
 	
 	
-	public static GameDriver driver_urashima	   = new GameDriver("1989"	,"urashima"	,"nmk16.java"	,rom_urashima,null	,machine_driver_urashima	,input_ports_macross	,null	,ROT0	,	"UPL",							"Urashima Mahjong", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING ) /* Similar Hardware? */
-	public static GameDriver driver_tharrier	   = new GameDriver("1989"	,"tharrier"	,"nmk16.java"	,rom_tharrier,null	,machine_driver_tharrier	,input_ports_tharrier	,null	,ROT270	,	"UPL (American Sammy license)",	"Task Force Harrier", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_tharierj	   = new GameDriver("1989"	,"tharierj"	,"nmk16.java"	,rom_tharierj,driver_tharrier	,machine_driver_tharrier	,input_ports_tharrier	,null	,ROT270	,	"UPL",	                        "Task Force Harrier (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_mustang	   = new GameDriver("1990"	,"mustang"	,"nmk16.java"	,rom_mustang,null	,machine_driver_mustang	,input_ports_mustang	,init_mustang	,ROT0	,	"UPL",							"US AAF Mustang (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND) // Playable but there are Still Protection Problems
-	public static GameDriver driver_mustangs	   = new GameDriver("1990"	,"mustangs"	,"nmk16.java"	,rom_mustangs,driver_mustang	,machine_driver_mustang	,input_ports_mustang	,init_mustang	,ROT0	,	"UPL (Seoul Trading license)",	"US AAF Mustang (Seoul Trading)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND ) // Playable but there are Still Protection Problems
-	public static GameDriver driver_mustangb	   = new GameDriver("1990"	,"mustangb"	,"nmk16.java"	,rom_mustangb,driver_mustang	,machine_driver_mustangb	,input_ports_mustang	,init_mustang	,ROT0	,	"bootleg",						"US AAF Mustang (bootleg)", GAME_UNEMULATED_PROTECTION ) // Playable but there are Still Protection Problems
-	public static GameDriver driver_bioship	   = new GameDriver("1990"	,"bioship"	,"nmk16.java"	,rom_bioship,null	,machine_driver_bioship	,input_ports_bioship	,init_bioship	,ROT0	,	"UPL (American Sammy license)",	"Bio-ship Paladin", GAME_NO_SOUND )
-	public static GameDriver driver_vandyke	   = new GameDriver("1990"	,"vandyke"	,"nmk16.java"	,rom_vandyke,null	,machine_driver_vandyke	,input_ports_vandyke	,null	,ROT270	,	"UPL",							"Vandyke (Japan)",  GAME_NO_SOUND )
-	public static GameDriver driver_vandyjal	   = new GameDriver("1990"	,"vandyjal"	,"nmk16.java"	,rom_vandyjal,driver_vandyke	,machine_driver_vandyke	,input_ports_vandyke	,null	,ROT270	,	"UPL (Jaleco license)",           "Vandyke (Jaleco)",  GAME_NO_SOUND )
-	public static GameDriver driver_manybloc	   = new GameDriver("1991"	,"manybloc"	,"nmk16.java"	,rom_manybloc,null	,machine_driver_manybloc	,input_ports_manybloc	,null	,ROT270	,	"Bee-Oh",                         "Many Block", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_blkheart	   = new GameDriver("1991"	,"blkheart"	,"nmk16.java"	,rom_blkheart,null	,machine_driver_macross	,input_ports_blkheart	,init_blkheart	,ROT0	,	"UPL",							"Black Heart", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND  ) // Playable but there are Still Protection Problems
-	public static GameDriver driver_blkhearj	   = new GameDriver("1991"	,"blkhearj"	,"nmk16.java"	,rom_blkhearj,driver_blkheart	,machine_driver_macross	,input_ports_blkheart	,init_blkheart	,ROT0	,	"UPL",							"Black Heart (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND ) // Playable but there are Still Protection Problems
-	public static GameDriver driver_acrobatm	   = new GameDriver("1991"	,"acrobatm"	,"nmk16.java"	,rom_acrobatm,null	,machine_driver_acrobatm	,input_ports_acrobatm	,init_acrobatm	,ROT270	,	"UPL (Taito license)",			"Acrobat Mission", GAME_NO_SOUND )
-	public static GameDriver driver_strahl	   = new GameDriver("1992"	,"strahl"	,"nmk16.java"	,rom_strahl,null	,machine_driver_strahl	,input_ports_strahl	,init_strahl	,ROT0	,	"UPL",							"Koutetsu Yousai Strahl (Japan set 1)", GAME_NO_SOUND )
-	public static GameDriver driver_strahla	   = new GameDriver("1992"	,"strahla"	,"nmk16.java"	,rom_strahla,driver_strahl	,machine_driver_strahl	,input_ports_strahl	,init_strahl	,ROT0	,	"UPL",							"Koutetsu Yousai Strahl (Japan set 2)", GAME_NO_SOUND )
-	public static GameDriver driver_tdragon	   = new GameDriver("1991"	,"tdragon"	,"nmk16.java"	,rom_tdragon,null	,machine_driver_tdragon	,input_ports_tdragon	,init_tdragon	,ROT270	,	"NMK / Tecmo",					"Thunder Dragon", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_tdragonb	   = new GameDriver("1991"	,"tdragonb"	,"nmk16.java"	,rom_tdragonb,driver_tdragon	,machine_driver_tdragonb	,input_ports_tdragon	,init_tdragonb	,ROT270	,	"NMK / Tecmo",					"Thunder Dragon (Bootleg)" )
-	public static GameDriver driver_ssmissin	   = new GameDriver("1992"	,"ssmissin"	,"nmk16.java"	,rom_ssmissin,null	,machine_driver_ssmissin	,input_ports_ssmissin	,init_ssmissin	,ROT270	,	"Comad",				            "S.S. Mission", GAME_NO_COCKTAIL )
-	public static GameDriver driver_hachamf	   = new GameDriver("1991"	,"hachamf"	,"nmk16.java"	,rom_hachamf,null	,machine_driver_hachamf	,input_ports_hachamf	,init_hachamf	,ROT0	,	"NMK",							"Hacha Mecha Fighter", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_macross	   = new GameDriver("1992"	,"macross"	,"nmk16.java"	,rom_macross,null	,machine_driver_macross	,input_ports_macross	,init_nmk	,ROT270	,	"Banpresto",						"Super Spacefortress Macross / Chou-Jikuu Yousai Macross", GAME_NO_SOUND )
-	public static GameDriver driver_gunnail	   = new GameDriver("1993"	,"gunnail"	,"nmk16.java"	,rom_gunnail,null	,machine_driver_gunnail	,input_ports_gunnail	,init_nmk	,ROT270	,	"NMK / Tecmo",					"GunNail", GAME_NO_SOUND )
-	public static GameDriver driver_macross2	   = new GameDriver("1993"	,"macross2"	,"nmk16.java"	,rom_macross2,null	,machine_driver_macross2	,input_ports_macross2	,null	,ROT0	,	"Banpresto",						"Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II", GAME_NO_COCKTAIL )
-	public static GameDriver driver_tdragon2	   = new GameDriver("1993"	,"tdragon2"	,"nmk16.java"	,rom_tdragon2,null	,machine_driver_tdragon2	,input_ports_tdragon2	,null	,ROT270	,	"NMK",				         	"Thunder Dragon 2", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bigbang	   = new GameDriver("1993"	,"bigbang"	,"nmk16.java"	,rom_bigbang,driver_tdragon2	,machine_driver_tdragon2	,input_ports_tdragon2	,null	,ROT270	,	"NMK",				         	"Big Bang", GAME_NO_COCKTAIL )
-	public static GameDriver driver_raphero	   = new GameDriver("1994"	,"raphero"	,"nmk16.java"	,rom_raphero,null	,machine_driver_raphero	,input_ports_tdragon2	,null	,ROT270	,	"Media Trading Corp",             "Rapid Hero (Japan?)", GAME_NO_SOUND ) // 23rd July 1993 in test mode, (c)1994 on title screen
+	GAMEX( 1989, urashima, 0,       urashima, macross,  0,        ROT0,   "UPL",							"Urashima Mahjong", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING ) /* Similar Hardware? */
+	GAMEX( 1989, tharrier, 0,       tharrier, tharrier, 0,        ROT270, "UPL (American Sammy license)",	"Task Force Harrier", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1989, tharierj, tharrier,tharrier, tharrier, 0,        ROT270, "UPL",	                        "Task Force Harrier (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX( 1990, mustang,  0,       mustang,  mustang,  mustang,  ROT0,   "UPL",							"US AAF Mustang (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND) // Playable but there are Still Protection Problems
+	GAMEX( 1990, mustangs, mustang, mustang,  mustang,  mustang,  ROT0,   "UPL (Seoul Trading license)",	"US AAF Mustang (Seoul Trading)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND ) // Playable but there are Still Protection Problems
+	GAMEX( 1990, mustangb, mustang, mustangb, mustang,  mustang,  ROT0,   "bootleg",						"US AAF Mustang (bootleg)", GAME_UNEMULATED_PROTECTION ) // Playable but there are Still Protection Problems
+	GAMEX( 1990, bioship,  0,       bioship,  bioship,  bioship,  ROT0,   "UPL (American Sammy license)",	"Bio-ship Paladin", GAME_NO_SOUND )
+	GAMEX( 1990, vandyke,  0,       vandyke,  vandyke,  0,        ROT270, "UPL",							"Vandyke (Japan)",  GAME_NO_SOUND )
+	GAMEX( 1990, vandyjal, vandyke, vandyke,  vandyke,  0,        ROT270, "UPL (Jaleco license)",           "Vandyke (Jaleco)",  GAME_NO_SOUND )
+	GAMEX( 1991, manybloc, 0,       manybloc, manybloc, 0,        ROT270, "Bee-Oh",                         "Many Block", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1991, blkheart, 0,       macross,  blkheart, blkheart, ROT0,   "UPL",							"Black Heart", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND  ) // Playable but there are Still Protection Problems
+	GAMEX( 1991, blkhearj, blkheart,macross,  blkheart, blkheart, ROT0,   "UPL",							"Black Heart (Japan)", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND ) // Playable but there are Still Protection Problems
+	GAMEX( 1991, acrobatm, 0,       acrobatm, acrobatm, acrobatm, ROT270, "UPL (Taito license)",			"Acrobat Mission", GAME_NO_SOUND )
+	GAMEX( 1992, strahl,   0,       strahl,   strahl,   strahl,   ROT0,   "UPL",							"Koutetsu Yousai Strahl (Japan set 1)", GAME_NO_SOUND )
+	GAMEX( 1992, strahla,  strahl,  strahl,   strahl,   strahl,   ROT0,   "UPL",							"Koutetsu Yousai Strahl (Japan set 2)", GAME_NO_SOUND )
+	GAMEX( 1991, tdragon,  0,       tdragon,  tdragon,  tdragon,  ROT270, "NMK / Tecmo",					"Thunder Dragon", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAME(  1991, tdragonb, tdragon, tdragonb, tdragon,  tdragonb, ROT270, "NMK / Tecmo",					"Thunder Dragon (Bootleg)" )
+	GAMEX( 1992, ssmissin, 0,       ssmissin, ssmissin, ssmissin, ROT270, "Comad",				            "S.S. Mission", GAME_NO_COCKTAIL )
+	GAMEX( 1991, hachamf,  0,       hachamf,  hachamf,  hachamf,  ROT0,   "NMK",							"Hacha Mecha Fighter", GAME_UNEMULATED_PROTECTION | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1992, macross,  0,       macross,  macross,  nmk,      ROT270, "Banpresto",						"Super Spacefortress Macross / Chou-Jikuu Yousai Macross", GAME_NO_SOUND )
+	GAMEX( 1993, gunnail,  0,       gunnail,  gunnail,  nmk,      ROT270, "NMK / Tecmo",					"GunNail", GAME_NO_SOUND )
+	GAMEX( 1993, macross2, 0,       macross2, macross2, 0,        ROT0,   "Banpresto",						"Super Spacefortress Macross II / Chou-Jikuu Yousai Macross II", GAME_NO_COCKTAIL )
+	GAMEX( 1993, tdragon2, 0,       tdragon2, tdragon2, 0,        ROT270, "NMK",				         	"Thunder Dragon 2", GAME_NO_COCKTAIL )
+	GAMEX( 1993, bigbang,  tdragon2,tdragon2, tdragon2, 0,        ROT270, "NMK",				         	"Big Bang", GAME_NO_COCKTAIL )
+	GAMEX( 1994, raphero,  0,       raphero,  tdragon2, 0,        ROT270, "Media Trading Corp",             "Rapid Hero (Japan?)", GAME_NO_SOUND ) // 23rd July 1993 in test mode, (c)1994 on title screen
 	
-	public static GameDriver driver_sabotenb	   = new GameDriver("1992"	,"sabotenb"	,"nmk16.java"	,rom_sabotenb,null	,machine_driver_bjtwin	,input_ports_sabotenb	,init_nmk	,ROT0	,	"NMK / Tecmo",					"Saboten Bombers", GAME_NO_COCKTAIL )
-	public static GameDriver driver_bjtwin	   = new GameDriver("1993"	,"bjtwin"	,"nmk16.java"	,rom_bjtwin,null	,machine_driver_bjtwin	,input_ports_bjtwin	,init_bjtwin	,ROT270	,	"NMK",							"Bombjack Twin", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nouryoku	   = new GameDriver("1995"	,"nouryoku"	,"nmk16.java"	,rom_nouryoku,null	,machine_driver_bjtwin	,input_ports_nouryoku	,init_nmk	,ROT0	,	"Tecmo",							"Nouryoku Koujou Iinkai", GAME_NO_COCKTAIL )
+	GAMEX( 1992, sabotenb, 0,       bjtwin,   sabotenb, nmk,      ROT0,   "NMK / Tecmo",					"Saboten Bombers", GAME_NO_COCKTAIL )
+	GAMEX( 1993, bjtwin,   0,       bjtwin,   bjtwin,   bjtwin,   ROT270, "NMK",							"Bombjack Twin", GAME_NO_COCKTAIL )
+	GAMEX( 1995, nouryoku, 0,       bjtwin,   nouryoku, nmk,      ROT0,   "Tecmo",							"Nouryoku Koujou Iinkai", GAME_NO_COCKTAIL )
 }

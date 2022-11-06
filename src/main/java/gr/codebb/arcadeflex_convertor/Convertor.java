@@ -31,7 +31,7 @@ import java.util.Calendar;
 public class Convertor {
 
     static final String mameversion = "0.78";
-    static final String convertorversion="0.03";
+    static final String convertorversion="0.04";
     static FileInputStream fInput; //input 
     static FileOutputStream fOutput;//output streams
     

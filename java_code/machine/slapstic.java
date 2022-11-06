@@ -180,7 +180,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -803,8 +803,8 @@ public class slapstic
 		slapstic_reset();
 	
 		/* see if we're 68k or 6502/6809 based */
-		access_68k = (Machine.drv.cpu[0].cpu_type != CPU_M6809 &&
-					  Machine.drv.cpu[0].cpu_type != CPU_M6502);
+		access_68k = (Machine->drv->cpu[0].cpu_type != CPU_M6809 &&
+					  Machine->drv->cpu[0].cpu_type != CPU_M6502);
 	}
 	
 	
@@ -841,7 +841,7 @@ public class slapstic
 	static int alt2_kludge(offs_t offset)
 	{
 		/* 68k case is fairly complex: we need to look for special triplets */
-		if (access_68k != 0)
+		if (access_68k)
 		{
 			UINT32 pc = activecpu_get_previouspc();
 	
@@ -1115,9 +1115,9 @@ public class slapstic
 	{
 		static double last_time;
 	
-		if (slapsticlog == 0)
+		if (!slapsticlog)
 			slapsticlog = fopen("slapstic.log", "w");
-		if (slapsticlog != 0)
+		if (slapsticlog)
 		{
 			double time = timer_get_time();
 	

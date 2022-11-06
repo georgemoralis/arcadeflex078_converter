@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -46,8 +46,7 @@ public class karnov
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_karnov  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_karnov  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -91,7 +90,7 @@ public class karnov
 		int scrollx=karnov_scroll[0];
 		int scrolly=karnov_scroll[1];
 	
-		if (flipscreen != 0) fx=fy=1; else fx=fy=0;
+		if (flipscreen) fx=fy=1; else fx=fy=0;
 	
 		/* 1st area is stored along X-axis... */
 		mx=-1; my=0;
@@ -104,12 +103,12 @@ public class karnov
 			tile=karnov_pf_data[offs];
 			color = tile >> 12;
 			tile = tile&0x7ff;
-			if (flipscreen != 0)
-				drawgfx(bitmap_f,Machine.gfx[1],tile,
+			if (flipscreen)
+				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
 			else
-				drawgfx(bitmap_f,Machine.gfx[1],tile,
+				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 16*mx,16*my,
 			 		0,TRANSPARENCY_NONE,0);
 		}
@@ -126,17 +125,17 @@ public class karnov
 			color = tile >> 12;
 			tile=tile&0x7ff;
 	
-			if (flipscreen != 0)
-				drawgfx(bitmap_f,Machine.gfx[1],tile,
+			if (flipscreen)
+				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 496-16*mx,496-16*my,
 			 		0,TRANSPARENCY_NONE,0);
 			else
-				drawgfx(bitmap_f,Machine.gfx[1],tile,
+				drawgfx(bitmap_f,Machine->gfx[1],tile,
 					color, fx, fy, 16*mx,16*my,
 			 		0,TRANSPARENCY_NONE,0);
 		}
 	
-		if (flipscreen == 0) {
+		if (!flipscreen) {
 			scrolly=-scrolly;
 			scrollx=-scrollx;
 		} else {
@@ -167,19 +166,19 @@ public class karnov
 			fy=fx&0x2;
 			fx=fx&0x4;
 	
-			if (extra != 0) y=y+16;
+			if (extra) y=y+16;
 	
 		    /* Convert the co-ords..*/
 			x=(x+16)%0x200;
 			y=(y+16)%0x200;
 			x=256 - x;
 			y=256 - y;
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
-				if (extra != 0) y=y-16;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
+				if (extra) y=y-16;
 			}
 	
 			/* Y Flip determines order of multi-sprite */
@@ -189,14 +188,14 @@ public class karnov
 			}
 			else sprite2=sprite+1;
 	
-			drawgfx(bitmap,Machine.gfx[2],
+			drawgfx(bitmap,Machine->gfx[2],
 					sprite,
 					colour,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
-	    	if (extra != 0)
-	    		drawgfx(bitmap,Machine.gfx[2],
+	    	if (extra)
+	    		drawgfx(bitmap,Machine->gfx[2],
 					sprite2,
 					colour,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);
@@ -205,8 +204,7 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_karnov  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		draw_background(bitmap,cliprect);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fix_tilemap,0,0);
@@ -238,39 +236,37 @@ public class karnov
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_karnov  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_karnov  = new VideoStartHandlerPtr() { public int handler(){
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)
 			return 1;
 	
 		dirty_f=auto_malloc(0x800);
-		if (dirty_f == 0)
+		if (!dirty_f)
 			return 1;
 		memset(dirty_f,1,0x800);
 	
 		fix_tilemap=tilemap_create(get_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0) return 1;
+		if (!fix_tilemap) return 1;
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_wndrplnt  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wndrplnt  = new VideoStartHandlerPtr() { public int handler(){
 		/* Allocate bitmaps */
 		if ((bitmap_f = auto_bitmap_alloc(512,512)) == 0)
 			return 1;
 	
 		dirty_f=auto_malloc(0x800);
-		if (dirty_f == 0)
+		if (!dirty_f)
 			return 1;
 		memset(dirty_f,1,0x800);
 	
 		fix_tilemap=tilemap_create(get_fix_tile_info,tilemap_scan_cols,TILEMAP_TRANSPARENT,8,8,32,32);
 	
-		if (fix_tilemap == 0) return 1;
+		if (!fix_tilemap) return 1;
 		tilemap_set_transparent_pen(fix_tilemap,0);
 	
 		return 0;

@@ -76,7 +76,7 @@ quad primitives (n x 5 words) - indices of four verticies plus color code
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -173,9 +173,9 @@ public class namcos21
 					double y = (INT16)(pPointData[subAddr++]&0xffff);
 					double z = (INT16)(pPointData[subAddr++]&0xffff);
 					struct VerTex *pVertex = &vertex[count];
-					pVertex.x = M[0][0]*x + M[1][0]*y + M[2][0]*z + M[3][0];
-					pVertex.y = M[0][1]*x + M[1][1]*y + M[2][1]*z + M[3][1];
-					pVertex.z = M[0][2]*x + M[1][2]*y + M[2][2]*z + M[3][2];
+					pVertex->x = M[0][0]*x + M[1][0]*y + M[2][0]*z + M[3][0];
+					pVertex->y = M[0][1]*x + M[1][1]*y + M[2][1]*z + M[3][1];
+					pVertex->z = M[0][2]*x + M[1][2]*y + M[2][2]*z + M[3][2];
 				}
 				surfaceCount = pPointData[subAddr++]&0xff;
 				if( surfaceCount > MAX_SURFACE )
@@ -249,7 +249,7 @@ public class namcos21
 		ApplyRotation( &pDSPRAM[6], M );
 		matrix3d_Translate( M,pDSPRAM[3],pDSPRAM[4],pDSPRAM[5] );
 	
-		if (pCamera != 0)
+		if( pCamera )
 		{
 			ApplyCameraTransformation( pCamera, M );
 		}
@@ -301,7 +301,7 @@ public class namcos21
 	
 		/* press "U" to dump camera attributes and formatted object list */
 		bDebug = keyboard_pressed( KEYCODE_U );
-		if (bDebug != 0)
+		if( bDebug )
 		{
 			while( keyboard_pressed( KEYCODE_U ) ){}
 			logerror( "\nDSPRAM:\n" );
@@ -363,7 +363,7 @@ public class namcos21
 	
 			case 0x100: /* special end-marker for CyberSled? */
 			case (INT16)0xffff: /* end-of-list marker */
-				if (bDebug != 0)
+				if( bDebug )
 				{
 					logerror( "\n\n" );
 				}
@@ -376,8 +376,8 @@ public class namcos21
 					(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0],(UINT16)pDSPRAM[0]);
 				return;
 			}
-			if (mbDspError != 0) return;
-			if (bDebug != 0)
+			if( mbDspError ) return;
+			if( bDebug )
 			{
 				logerror( "obj: ");
 				for( i=0; i<size; i++ )
@@ -395,8 +395,7 @@ public class namcos21
 		return code;
 	}
 	
-	public static VideoStartHandlerPtr video_start_namcos21  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namcos21  = new VideoStartHandlerPtr() { public int handler(){
 		namcos3d_Init( kScreenWidth, kScreenHeight, NULL, NULL );
 	
 		namco_obj_init(
@@ -441,8 +440,7 @@ public class namcos21
 		}
 	} /* update_palette */
 	
-	public static VideoUpdateHandlerPtr video_update_namcos21_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos21_default  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int pri;
 	
 		update_palette();

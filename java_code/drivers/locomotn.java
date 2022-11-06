@@ -50,7 +50,7 @@ write:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -60,12 +60,10 @@ public class locomotn
 	
 	
 	
-	public static WriteHandlerPtr coin_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 1);
 	} };
-	public static WriteHandlerPtr coin_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(1,data & 1);
 	} };
 	
@@ -169,7 +167,7 @@ public class locomotn
 	
 	
 	
-	static InputPortPtr input_ports_jungler = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_jungler = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( jungler )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -222,7 +220,7 @@ public class locomotn
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_locomotn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_locomotn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( locomotn )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -302,7 +300,7 @@ public class locomotn
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_tactcian = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tactcian = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tactcian )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -384,7 +382,7 @@ public class locomotn
 	   In the IRQ handler (0x0038) of CPU0, there is code to give infinite lives for player 1
 	   when bit 3 of DSW0 is ON. I can't tell however when it is supposed to be called.
 	*/
-	static InputPortPtr input_ports_commsega = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_commsega = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( commsega )
 		PORT_START();       /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_4WAY | IPF_COCKTAIL );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -500,8 +498,7 @@ public class locomotn
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_tactcian = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tactcian )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", Z80, 18432000/6)	/* 3.072 MHz */
@@ -529,13 +526,10 @@ public class locomotn
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, timeplt_ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_jungler = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( jungler )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
@@ -544,26 +538,20 @@ public class locomotn
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(jungler)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_locomotn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( locomotn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 0*8, 28*8-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_commsega = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( commsega )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(tactcian)
@@ -573,9 +561,7 @@ public class locomotn
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0*8, 32*8-1, 0*8, 28*8-1)
 		MDRV_VIDEO_UPDATE(commsega)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -791,12 +777,12 @@ public class locomotn
 	
 	
 	
-	public static GameDriver driver_jungler	   = new GameDriver("1981"	,"jungler"	,"locomotn.java"	,rom_jungler,null	,machine_driver_jungler	,input_ports_jungler	,null	,ROT90	,	"Konami", "Jungler" )
-	public static GameDriver driver_junglers	   = new GameDriver("1981"	,"junglers"	,"locomotn.java"	,rom_junglers,driver_jungler	,machine_driver_jungler	,input_ports_jungler	,null	,ROT90	,	"[Konami] (Stern license)", "Jungler (Stern)" )
-	public static GameDriver driver_tactcian	   = new GameDriver("1982"	,"tactcian"	,"locomotn.java"	,rom_tactcian,null	,machine_driver_tactcian	,input_ports_tactcian	,null	,ROT90	,	"[Konami] (Sega license)", "Tactician (set 1)" )
-	public static GameDriver driver_tactcan2	   = new GameDriver("1981"	,"tactcan2"	,"locomotn.java"	,rom_tactcan2,driver_tactcian	,machine_driver_tactcian	,input_ports_tactcian	,null	,ROT90	,	"[Konami] (Sega license)", "Tactician (set 2)" )
-	public static GameDriver driver_locomotn	   = new GameDriver("1982"	,"locomotn"	,"locomotn.java"	,rom_locomotn,null	,machine_driver_locomotn	,input_ports_locomotn	,null	,ROT90	,	"Konami (Centuri license)", "Loco-Motion" )
-	public static GameDriver driver_gutangtn	   = new GameDriver("1982"	,"gutangtn"	,"locomotn.java"	,rom_gutangtn,driver_locomotn	,machine_driver_locomotn	,input_ports_locomotn	,null	,ROT90	,	"Konami (Sega license)", "Guttang Gottong" )
-	public static GameDriver driver_cottong	   = new GameDriver("1982"	,"cottong"	,"locomotn.java"	,rom_cottong,driver_locomotn	,machine_driver_locomotn	,input_ports_locomotn	,null	,ROT90	,	"bootleg", "Cotocoto Cottong" )
-	public static GameDriver driver_commsega	   = new GameDriver("1983"	,"commsega"	,"locomotn.java"	,rom_commsega,null	,machine_driver_commsega	,input_ports_commsega	,null	,ROT90	,	"Sega", "Commando (Sega)" )
+	GAME( 1981, jungler,  0,        jungler,  jungler,  0, ROT90, "Konami", "Jungler" )
+	GAME( 1981, junglers, jungler,  jungler,  jungler,  0, ROT90, "[Konami] (Stern license)", "Jungler (Stern)" )
+	GAME( 1982, tactcian, 0,        tactcian, tactcian, 0, ROT90, "[Konami] (Sega license)", "Tactician (set 1)" )
+	GAME( 1981, tactcan2, tactcian, tactcian, tactcian, 0, ROT90, "[Konami] (Sega license)", "Tactician (set 2)" )
+	GAME( 1982, locomotn, 0,        locomotn, locomotn, 0, ROT90, "Konami (Centuri license)", "Loco-Motion" )
+	GAME( 1982, gutangtn, locomotn, locomotn, locomotn, 0, ROT90, "Konami (Sega license)", "Guttang Gottong" )
+	GAME( 1982, cottong,  locomotn, locomotn, locomotn, 0, ROT90, "bootleg", "Cotocoto Cottong" )
+	GAME( 1983, commsega, 0,        commsega, commsega, 0, ROT90, "Sega", "Commando (Sega)" )
 }

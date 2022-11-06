@@ -19,7 +19,7 @@ sound banking (we have 2 oki roms ..)
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -30,16 +30,14 @@ public class funybubl
 	
 	
 	
-	static public static WriteHandlerPtr vidram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vidram_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data&1) == 0)
 			cpu_setbank(1,&banked_videoram[0x000000]);
 		else
 			cpu_setbank(1,&banked_videoram[0x001000]);
 	} };
 	
-	static public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr bank2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *rom = memory_region(REGION_CPU1);
 	
 			cpu_setbank(2,&rom[0x10000+0x4000*(data&0x3f)]);
@@ -49,8 +47,7 @@ public class funybubl
 	
 	
 	/* wrong i guess */
-	static public static WriteHandlerPtr funybubl_paldatawrite = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr funybubl_paldatawrite = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int colchanged ;
 	
 		UINT32 coldat;
@@ -71,8 +68,7 @@ public class funybubl
 	} };
 	
 	
-	static public static ReadHandlerPtr unk_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr unk_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return 0xff;
 	} };
 	
@@ -108,8 +104,7 @@ public class funybubl
 		new IO_ReadPort(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr funybubl_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr funybubl_soundcommand_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_irq_line(1,0, PULSE_LINE);
 	} };
@@ -149,7 +144,7 @@ public class funybubl
 	
 	
 	
-	static InputPortPtr input_ports_funybubl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_funybubl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( funybubl )
 		PORT_START(); 	/* DSW 1 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -276,8 +271,7 @@ public class funybubl
 		{ 100 }
 	};
 	
-	public static DriverInitHandlerPtr init_funybubl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_funybubl  = new DriverInitHandlerPtr() { public void handler(){
 	
 	
 	
@@ -289,10 +283,9 @@ public class funybubl
 	} };
 	
 	
-	VIDEO_START(funybubl)
-	{
+	public static VideoStartHandlerPtr video_start_funybubl  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
 	/* note, we're not using half the sprite data .. maybe one copy is a buffer, we could be using the wrong one .. */
 	static void funybubl_drawsprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
@@ -322,7 +315,7 @@ public class funybubl
 			xpos -= 8;
 			ypos -= 14;
 	
-			drawgfx(bitmap,Machine.gfx[1],tile,0,0,0,xpos,ypos,cliprect,TRANSPARENCY_PEN,255);
+			drawgfx(bitmap,Machine->gfx[1],tile,0,0,0,xpos,ypos,cliprect,TRANSPARENCY_PEN,255);
 	
 			source -= 0x20;
 		}
@@ -331,8 +324,7 @@ public class funybubl
 	
 	
 	
-	VIDEO_UPDATE(funybubl)
-	{
+	public static VideoUpdateHandlerPtr video_update_funybubl  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int x,y, offs;
 	
 		offs = 0;
@@ -362,7 +354,7 @@ public class funybubl
 			FILE *fp;
 	
 			fp=fopen("funnybubsprites", "w+b");
-			if (fp != 0)
+			if (fp)
 			{
 				fwrite(&banked_videoram[0x1000], 0x1000, 1, fp);
 				fclose(fp);
@@ -371,10 +363,9 @@ public class funybubl
 	*/
 	
 	
-	}
+	} };
 	
-	public static MachineHandlerPtr machine_driver_funybubl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( funybubl )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
@@ -403,9 +394,7 @@ public class funybubl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -443,5 +432,5 @@ public class funybubl
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_funybubl	   = new GameDriver("1999"	,"funybubl"	,"funybubl.java"	,rom_funybubl,null	,machine_driver_funybubl	,input_ports_funybubl	,init_funybubl	,ROT0	,	"Comad", "Funny Bubble", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
+	GAMEX( 1999, funybubl, 0, funybubl, funybubl, funybubl, ROT0, "Comad", "Funny Bubble", GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_SOUND )
 }

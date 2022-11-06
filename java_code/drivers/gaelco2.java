@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -99,7 +99,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_maniacsq = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_maniacsq = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( maniacsq )
 	PORT_START(); 	/* DSW #1 + 1P INPUTS */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -184,8 +184,7 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_maniacsq = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( maniacsq )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 26000000/2)		/* 13 MHz? */
 		MDRV_CPU_MEMORY(maniacsq_readmem, maniacsq_writemem)
@@ -208,9 +207,7 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_GAE1, maniacsq_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_maniacsq = new RomLoadPtr(){ public void handler(){ 
@@ -236,8 +233,7 @@ public class gaelco2
 	
 	static int clr_gun_int;
 	
-	public static DriverInitHandlerPtr init_bang  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bang  = new DriverInitHandlerPtr() { public void handler(){
 		clr_gun_int = 0;
 	} };
 	
@@ -246,15 +242,14 @@ public class gaelco2
 		clr_gun_int = 1;
 	}
 	
-	public static InterruptHandlerPtr bang_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bang_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0){
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 	
 			clr_gun_int = 0;
 		}
 		else if (cpu_getiloops() % 2){
-			if (clr_gun_int != 0){
+			if (clr_gun_int){
 				cpu_set_irq_line(0, 4, HOLD_LINE);
 			}
 		}
@@ -298,7 +293,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_bang = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bang = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bang )
 	PORT_START(); 	/* 1P INPUTS */
 		PORT_BIT_IMPULSE( 0x0080, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1, 1 );
 	
@@ -334,8 +329,7 @@ public class gaelco2
 		{ 100, 100 }											/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_bang = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bang )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 30000000/2)			/* 15 MHz */
 		MDRV_CPU_MEMORY(bang_readmem, bang_writemem)
@@ -360,9 +354,7 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_CG1V, bang_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_bang = new RomLoadPtr(){ public void handler(){ 
@@ -451,7 +443,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_alighunt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_alighunt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( alighunt )
 	
 	PORT_START(); 	/* DSW #1 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -536,8 +528,7 @@ public class gaelco2
 		{ 100, 100 }											/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_alighunt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alighunt )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 24000000/2)			/* 12 MHz */
 		MDRV_CPU_MEMORY(alighunt_readmem, alighunt_writemem)
@@ -560,9 +551,7 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_GAE1, alighunt_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*
@@ -681,7 +670,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_touchgo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_touchgo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( touchgo )
 	
 	PORT_START(); 	/* DSW #2 + 1P INPUTS */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -803,8 +792,7 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_touchgo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( touchgo )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 32000000/2)			/* 16 MHz */
 		MDRV_CPU_MEMORY(touchgo_readmem, touchgo_writemem)
@@ -836,9 +824,7 @@ public class gaelco2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	#endif
 		MDRV_SOUND_ADD(GAELCO_GAE1, touchgo_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*
 	PCB Layout:
@@ -939,7 +925,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_snowboar = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_snowboar = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( snowboar )
 	PORT_START(); 	/* 1P INPUTS */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -977,8 +963,7 @@ public class gaelco2
 		{ 100, 100 }							/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_snowboar = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( snowboar )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 30000000/2)			/* 15 MHz */
 		MDRV_CPU_MEMORY(snowboar_readmem, snowboar_writemem)
@@ -1003,9 +988,7 @@ public class gaelco2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(GAELCO_CG1V, snowboar_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*
@@ -1129,7 +1112,7 @@ public class gaelco2
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_wrally2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wrally2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wrally2 )
 	PORT_START(); 	/* DIPSW #2 + 1P INPUTS */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -1225,8 +1208,7 @@ public class gaelco2
 		{ 100, 100 }						/* volume */
 	};
 	
-	public static MachineHandlerPtr machine_driver_wrally2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wrally2 )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 26000000/2)			/* 13 MHz */
 		MDRV_CPU_MEMORY(wrally2_readmem, wrally2_writemem)
@@ -1260,9 +1242,7 @@ public class gaelco2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 	#endif
 		MDRV_SOUND_ADD(GAELCO_GAE1, wrally2_snd_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/*
 	PCB Layout:
@@ -1342,13 +1322,13 @@ public class gaelco2
 	
 	
 	
-	public static GameDriver driver_aligator	   = new GameDriver("1994"	,"aligator"	,"gaelco2.java"	,rom_aligator,null	,machine_driver_alighunt	,input_ports_alighunt	,init_alighunt	,ROT0	,	"Gaelco", "Alligator Hunt", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_aligatun	   = new GameDriver("1994"	,"aligatun"	,"gaelco2.java"	,rom_aligatun,driver_aligator	,machine_driver_alighunt	,input_ports_alighunt	,init_alighunt	,ROT0	,	"Gaelco", "Alligator Hunt (unprotected)" )
-	public static GameDriver driver_touchgo	   = new GameDriver("1995"	,"touchgo"	,"gaelco2.java"	,rom_touchgo,null	,machine_driver_touchgo	,input_ports_touchgo	,init_touchgo	,ROT0	,	"Gaelco", "Touch & Go", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_wrally2	   = new GameDriver("1995"	,"wrally2"	,"gaelco2.java"	,rom_wrally2,null	,machine_driver_wrally2	,input_ports_wrally2	,null	,ROT0	,	"Gaelco", "World Rally 2: Twin Racing", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_maniacsq	   = new GameDriver("1996"	,"maniacsq"	,"gaelco2.java"	,rom_maniacsq,null	,machine_driver_maniacsq	,input_ports_maniacsq	,null	,ROT0	,	"Gaelco", "Maniac Square (unprotected)" )
-	public static GameDriver driver_snowboar	   = new GameDriver("1996"	,"snowboar"	,"gaelco2.java"	,rom_snowboar,null	,machine_driver_snowboar	,input_ports_snowboar	,init_snowboar	,ROT0	,	"Gaelco", "Snow Board Championship (set 1)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_snowbalt	   = new GameDriver("1996"	,"snowbalt"	,"gaelco2.java"	,rom_snowbalt,driver_snowboar	,machine_driver_snowboar	,input_ports_snowboar	,null	,ROT0	,	"Gaelco", "Snow Board Championship (set 2)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_bang	   = new GameDriver("1998"	,"bang"	,"gaelco2.java"	,rom_bang,null	,machine_driver_bang	,input_ports_bang	,init_bang	,ROT0	,	"Gaelco", "Bang!" )
-	public static GameDriver driver_bangj	   = new GameDriver("1998"	,"bangj"	,"gaelco2.java"	,rom_bangj,driver_bang	,machine_driver_bang	,input_ports_bang	,init_bang	,ROT0	,	"Gaelco", "Gun Gabacho (Japan)" )
+	GAMEX(1994, aligator, 0,        alighunt, alighunt, alighunt, ROT0, "Gaelco", "Alligator Hunt", GAME_UNEMULATED_PROTECTION )
+	GAME( 1994, aligatun, aligator, alighunt, alighunt, alighunt, ROT0, "Gaelco", "Alligator Hunt (unprotected)" )
+	GAMEX(1995, touchgo,  0,        touchgo,  touchgo,  touchgo,  ROT0, "Gaelco", "Touch & Go", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(1995, wrally2,  0,        wrally2,  wrally2,  0,        ROT0, "Gaelco", "World Rally 2: Twin Racing", GAME_UNEMULATED_PROTECTION )
+	GAME( 1996, maniacsq, 0,        maniacsq, maniacsq, 0,        ROT0, "Gaelco", "Maniac Square (unprotected)" )
+	GAMEX(1996, snowboar, 0,        snowboar, snowboar, snowboar, ROT0, "Gaelco", "Snow Board Championship (set 1)", GAME_UNEMULATED_PROTECTION )
+	GAMEX(1996, snowbalt, snowboar, snowboar, snowboar, 0,        ROT0, "Gaelco", "Snow Board Championship (set 2)", GAME_UNEMULATED_PROTECTION )
+	GAME( 1998, bang,     0,        bang,     bang,     bang,     ROT0, "Gaelco", "Bang!" )
+	GAME( 1998, bangj,    bang,     bang,     bang,     bang,     ROT0, "Gaelco", "Gun Gabacho (Japan)" )
 }

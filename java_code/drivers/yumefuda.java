@@ -27,7 +27,7 @@ a6: Check for the Color RAM.Print "Video RAM N/G!!!" otherwise.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -49,18 +49,16 @@ public class yumefuda
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_yumefuda  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_yumefuda  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(y_get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32);
 	
-		if (bg_tilemap == 0)
+		if(!bg_tilemap)
 			return 1;
 	
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_yumefuda  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, get_black_pen(), Machine.visible_area);
 	
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
@@ -103,8 +101,7 @@ public class yumefuda
 	};
 	
 	
-	public static WriteHandlerPtr yumefuda_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr yumefuda_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if(videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -115,33 +112,28 @@ public class yumefuda
 	static UINT8 *cus_ram;
 	static UINT8 prot_lock,nvram_lock;
 	/*Custom RAM (Protection)*/
-	public static ReadHandlerPtr custom_ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr custom_ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("Custom RAM read at %02x PC = %x\n",offset+0xaf80,activecpu_get_pc());
 		return cus_ram[offset];// ^ 0x55;
 	} };
 	
-	public static WriteHandlerPtr custom_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr custom_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("Custom RAM write at %02x : %02x PC = %x\n",offset+0xaf80,data,activecpu_get_pc());
-		if (prot_lock != 0)	{ cus_ram[offset] = data; }
+		if(prot_lock)	{ cus_ram[offset] = data; }
 	} };
 	
 	/*this might be used as NVRAM commands btw*/
-	public static WriteHandlerPtr prot_lock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr prot_lock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//	logerror("PC %04x Prot lock value written %02x\n",activecpu_get_pc(),data);
 		prot_lock = data;
 	} };
 	
-	public static WriteHandlerPtr nvram_lock_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nvram_lock_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("PC %04x Nvram lock value written %02x\n",activecpu_get_pc(),data);
 		nvram_lock = data;
 	} };
 	
-	public static WriteHandlerPtr port_c0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr port_c0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
 	/***************************************************************************************/
@@ -199,8 +191,7 @@ public class yumefuda
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static MachineHandlerPtr machine_driver_yumefuda = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( yumefuda )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80 , 6000000)/*???*/
@@ -223,13 +214,11 @@ public class yumefuda
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************************/
 	
-	static InputPortPtr input_ports_yumefuda = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_yumefuda = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( yumefuda )
 		PORT_START(); 	/* DSW1 (00 - Port A) */
 		PORT_DIPNAME( 0x01, 0x01, DEF_STR( "Unused") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "Off") );
@@ -350,8 +339,7 @@ public class yumefuda
 		ROM_LOAD("zg001003.u3", 0xc000, 0x4000, CRC(5822ff27) SHA1(d40fa0790de3c912f770ef8f610bd8c42bc3500f))
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_yumefuda  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_yumefuda  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *ROM = memory_region(REGION_CPU1);
 		UINT32 bankaddress;
 	
@@ -362,5 +350,5 @@ public class yumefuda
 	} };
 	
 	
-	public static GameDriver driver_yumefuda	   = new GameDriver("199?"	,"yumefuda"	,"yumefuda.java"	,rom_yumefuda,null	,machine_driver_yumefuda	,input_ports_yumefuda	,init_yumefuda	,ROT0	,	"Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 199?, yumefuda, 0, 		yumefuda, yumefuda, yumefuda,	ROT0, "Alba", "(Medal) Yumefuda", GAME_NO_SOUND | GAME_NOT_WORKING )
 }

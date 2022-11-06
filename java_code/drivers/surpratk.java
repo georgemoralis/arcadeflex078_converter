@@ -10,7 +10,7 @@ driver by Nicola Salmoria
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -24,43 +24,39 @@ public class surpratk
 	static int videobank;
 	static unsigned char *ram;
 	
-	public static InterruptHandlerPtr surpratk_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
-		if (K052109_is_IRQ_enabled() != 0) cpu_set_irq_line(0,0,HOLD_LINE);
+	public static InterruptHandlerPtr surpratk_interrupt = new InterruptHandlerPtr() {public void handler(){
+		if (K052109_is_IRQ_enabled()) cpu_set_irq_line(0,0,HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((videobank & 0x02) != 0)
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (videobank & 0x02)
 		{
-			if ((videobank & 0x04) != 0)
+			if (videobank & 0x04)
 				return paletteram_r(offset + 0x0800);
 			else
 				return paletteram_r(offset);
 		}
-		else if ((videobank & 0x01) != 0)
+		else if (videobank & 0x01)
 			return K053245_r(offset);
 		else
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((videobank & 0x02) != 0)
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (videobank & 0x02)
 		{
-			if ((videobank & 0x04) != 0)
+			if (videobank & 0x04)
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset + 0x0800,data);
 			else
 				paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		}
-		else if ((videobank & 0x01) != 0)
+		else if (videobank & 0x01)
 			K053245_w(offset,data);
 		else
 			ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr surpratk_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr surpratk_videobank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	logerror("%04x: videobank = %02x\n",activecpu_get_pc(),data);
 		/* bit 0 = select 053245 at 0000-07ff */
 		/* bit 1 = select palette at 0000-07ff */
@@ -68,8 +64,7 @@ public class surpratk
 		videobank = data;
 	} };
 	
-	public static WriteHandlerPtr surpratk_5fc0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr surpratk_5fc0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if ((data & 0xf4) != 0x10) logerror("%04x: 3fc0 = %02x\n",activecpu_get_pc(),data);
 	
 		/* bit 0/1 = coin counters */
@@ -126,7 +121,7 @@ public class surpratk
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_surpratk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_surpratk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( surpratk )
 		PORT_START(); 	/* PLAYER 1 INPUTS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
@@ -241,8 +236,7 @@ public class surpratk
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_surpratk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( surpratk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)	/* 053248 */
@@ -266,9 +260,7 @@ public class surpratk
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -309,20 +301,18 @@ public class surpratk
 		cpu_setbank(1,&RAM[offs]);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_surpratk  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_surpratk  = new MachineInitHandlerPtr() { public void handler(){
 		konami_cpu_setlines_callback = surpratk_banking;
 	
 		paletteram = &memory_region(REGION_CPU1)[0x48000];
 	} };
 	
-	public static DriverInitHandlerPtr init_surpratk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_surpratk  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_surpratk	   = new GameDriver("1990"	,"surpratk"	,"surpratk.java"	,rom_surpratk,null	,machine_driver_surpratk	,input_ports_surpratk	,init_surpratk	,ROT0	,	"Konami", "Surprise Attack (Japan ver. M)" )
+	GAME( 1990, surpratk, 0, surpratk, surpratk, surpratk, ROT0, "Konami", "Surprise Attack (Japan ver. M)" )
 }

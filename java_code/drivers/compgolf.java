@@ -35,7 +35,7 @@ Dumped 01/11/2000
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -45,25 +45,21 @@ public class compgolf
 	data8_t *compgolf_bg_ram;
 	static struct tilemap *text_tilemap, *background_tilemap;
 	
-	public static WriteHandlerPtr compgolf_video_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr compgolf_video_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(text_tilemap, offset/2);
 	} };
 	
-	public static WriteHandlerPtr compgolf_back_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr compgolf_back_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		compgolf_bg_ram[offset] = data;
 		tilemap_mark_tile_dirty(background_tilemap, offset/2);
 	} };
 	
-	public static WriteHandlerPtr compgolf_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr compgolf_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(background_tilemap,0,data);
 	} };
 	
-	public static WriteHandlerPtr compgolf_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr compgolf_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(background_tilemap,0,data);
 	} };
 	
@@ -79,8 +75,7 @@ public class compgolf
 		SET_TILE_INFO(1, compgolf_bg_ram[cgindex+1]|(compgolf_bg_ram[cgindex]<<8), compgolf_bg_ram[cgindex]>>2, 0)
 	}
 	
-	public static PaletteInitHandlerPtr palette_init_compgolf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_compgolf  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -103,8 +98,7 @@ public class compgolf
 		}
 	} };
 	
-	public static VideoStartHandlerPtr video_start_compgolf  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_compgolf  = new VideoStartHandlerPtr() { public int handler(){
 		background_tilemap = tilemap_create(get_back_info,tilemap_scan_rows,TILEMAP_OPAQUE,16,16,32,32);
 		text_tilemap = tilemap_create(get_text_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,32,32);
 	
@@ -143,19 +137,19 @@ public class compgolf
 			/*Double Height*/
 			if(spriteram.read(offs)& 0x10)
 			{
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					sprite+1,
 					color,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);
 			}
 			else
 			{
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					sprite,
 					color,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
@@ -163,15 +157,13 @@ public class compgolf
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_compgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_compgolf  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, background_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, text_tilemap, 0, 0);
 		draw_sprites(bitmap,cliprect);
 	} };
 	
-	public static WriteHandlerPtr compgolf_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr compgolf_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* 0x28 written here - not sure what each bit is, the game doesn't seem
 		to have a flipscreen bit though */
 	} };
@@ -208,7 +200,7 @@ public class compgolf
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_compgolf = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_compgolf = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( compgolf )
 		/*Player 1 Port*/
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
@@ -342,8 +334,7 @@ public class compgolf
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_compgolf = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( compgolf )
 		MDRV_CPU_ADD(M6809, 2000000)
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(nmi_line_pulse,1)
@@ -363,9 +354,7 @@ public class compgolf
 		MDRV_VIDEO_UPDATE(compgolf)
 	
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************/
 	
@@ -410,10 +399,9 @@ public class compgolf
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_compgolf  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_compgolf  = new DriverInitHandlerPtr() { public void handler(){
 		compgolf_expand_bg();
 	} };
 	
-	public static GameDriver driver_compgolf	   = new GameDriver("1985"	,"compgolf"	,"compgolf.java"	,rom_compgolf,null	,machine_driver_compgolf	,input_ports_compgolf	,init_compgolf	,ROT0	,	"Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
+	GAMEX( 1985, compgolf, 0, compgolf, compgolf, compgolf, ROT0, "Data East", "Competition Golf Final Round (Japan)", GAME_NOT_WORKING )
 }

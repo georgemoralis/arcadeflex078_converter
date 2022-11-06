@@ -12,7 +12,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -27,20 +27,17 @@ public class timelimt
 	
 	static int nmi_enabled = 0;
 	
-	public static MachineInitHandlerPtr machine_init_timelimt  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_timelimt  = new MachineInitHandlerPtr() { public void handler(){
 		soundlatch_setclearedvalue( 0 );
 		nmi_enabled = 0;
 	} };
 	
-	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		nmi_enabled = data & 1;	/* bit 0 = nmi enable */
 	} };
 	
-	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0)
+	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if ( data & 1 )
 			cpu_set_reset_line( 1, PULSE_LINE );
 	} };
 	
@@ -116,7 +113,7 @@ public class timelimt
 	
 	/***************************************************************************/
 	
-	static InputPortPtr input_ports_timelimt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timelimt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timelimt )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_4WAY );
@@ -161,7 +158,7 @@ public class timelimt
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_progress = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_progress = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( progress )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT );
@@ -261,15 +258,14 @@ public class timelimt
 		new WriteHandlerPtr[] { 0 }
 	);
 	
-	public static InterruptHandlerPtr timelimt_irq = new InterruptHandlerPtr() {public void handler() {
-		if (nmi_enabled != 0)
+	public static InterruptHandlerPtr timelimt_irq = new InterruptHandlerPtr() {public void handler()
+		if ( nmi_enabled )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	}
 	
 	/***************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_timelimt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( timelimt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 5000000)	/* 5.000 MHz */
@@ -303,12 +299,9 @@ public class timelimt
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_progress = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( progress )
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(timelimt)
 	
@@ -316,9 +309,7 @@ public class timelimt
 		MDRV_PALETTE_LENGTH(96)
 		MDRV_COLORTABLE_LENGTH(96)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -385,6 +376,6 @@ public class timelimt
 		ROM_LOAD( "57.bin", 0x0040, 0x0020, CRC(18455a79) SHA1(e4d64368560e3116a922588129f5f91a4c520f7d) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_timelimt	   = new GameDriver("1983"	,"timelimt"	,"timelimt.java"	,rom_timelimt,null	,machine_driver_timelimt	,input_ports_timelimt	,null	,ROT90	,	"Chuo Co. Ltd", "Time Limit", GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_progress	   = new GameDriver("1984"	,"progress"	,"timelimt.java"	,rom_progress,null	,machine_driver_progress	,input_ports_progress	,null	,ROT90	,	"Chuo Co. Ltd", "Progress" )
+	GAMEX( 1983, timelimt, 0, timelimt, timelimt, 0, ROT90, "Chuo Co. Ltd", "Time Limit", GAME_IMPERFECT_COLORS )
+	GAME ( 1984, progress, 0, progress, progress, 0, ROT90, "Chuo Co. Ltd", "Progress" )
 }

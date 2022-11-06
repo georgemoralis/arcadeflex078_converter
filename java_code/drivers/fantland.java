@@ -31,7 +31,7 @@ Notes:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -47,15 +47,13 @@ public class fantland
 	
 	static data8_t fantland_nmi_enable;
 	
-	public static WriteHandlerPtr fantland_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fantland_nmi_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fantland_nmi_enable = data;
 	//	if ((fantland_nmi_enable != 0) && (fantland_nmi_enable != 8))
 	//		logerror("CPU #0 : nmi_enable = %02x - PC = %04X\n", data, activecpu_get_pc());
 	} };
 	
-	public static WriteHandlerPtr fantland_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fantland_soundlatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(0,data);
 		cpu_set_nmi_line(1,PULSE_LINE);
 	} };
@@ -176,7 +174,7 @@ public class fantland
 									Fantasy Land
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_fantland = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fantland = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fantland )
 		PORT_START(); 	/* IN0 - a3000 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1			);
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1			);
@@ -250,7 +248,7 @@ public class fantland
 									Galaxy Gunners
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_galaxygn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_galaxygn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( galaxygn )
 		PORT_START(); 	/* IN0 - 53000 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1			);
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_START1			);
@@ -350,19 +348,16 @@ public class fantland
 	
 	***************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_fantland  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fantland  = new MachineInitHandlerPtr() { public void handler(){
 		fantland_nmi_enable = 0;
 	} };
 	
-	public static InterruptHandlerPtr fantland_irq = new InterruptHandlerPtr() {public void handler()
-	{
-		if ((fantland_nmi_enable & 8) != 0)
+	public static InterruptHandlerPtr fantland_irq = new InterruptHandlerPtr() {public void handler(){
+		if (fantland_nmi_enable & 8)
 			cpu_set_nmi_line(0, PULSE_LINE);
 	} };
 	
-	public static InterruptHandlerPtr fantland_sound_irq = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr fantland_sound_irq = new InterruptHandlerPtr() {public void handler(){
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0x80/4);
 	} };
 	
@@ -380,8 +375,7 @@ public class fantland
 		{ 80 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_fantland = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fantland )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(I86, 8000000)        // ?
 		MDRV_CPU_MEMORY(fantland_readmem, fantland_writemem)
@@ -413,9 +407,7 @@ public class fantland
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151,	fantland_ym2151_interface	)
 		MDRV_SOUND_ADD(DAC,		fantland_dac_interface		)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static void galaxygn_sound_irq(int line)
@@ -431,8 +423,7 @@ public class fantland
 		{ galaxygn_sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_galaxygn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( galaxygn )
 		/* basic machine hardware */
 		MDRV_CPU_ADD(I86, 8000000)        // ?
 		MDRV_CPU_MEMORY(galaxygn_readmem, galaxygn_writemem)
@@ -460,9 +451,7 @@ public class fantland
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151,	galaxygn_ym2151_interface	)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -569,7 +558,7 @@ public class fantland
 		ROMX_LOAD( "gg30.bin", 0x180002, 0x10000, CRC(ded7cacf) SHA1(adbfaa8f46e5ce8df264d5b5a201d75ca2b3dbeb) , ROM_SKIP(2) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_fantland	   = new GameDriver("19??"	,"fantland"	,"fantland.java"	,rom_fantland,null	,machine_driver_fantland	,input_ports_fantland	,null	,ROT0	,	"Electronic Devices Italy", "Fantasy Land"   )
-	public static GameDriver driver_galaxygn	   = new GameDriver("1989"	,"galaxygn"	,"fantland.java"	,rom_galaxygn,null	,machine_driver_galaxygn	,input_ports_galaxygn	,null	,ROT90	,	"Electronic Devices Italy", "Galaxy Gunners" )
+	GAME( 19??, fantland, 0, fantland, fantland, 0, ROT0,  "Electronic Devices Italy", "Fantasy Land"   )
+	GAME( 1989, galaxygn, 0, galaxygn, galaxygn, 0, ROT90, "Electronic Devices Italy", "Galaxy Gunners" )
 	
 }

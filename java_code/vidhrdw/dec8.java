@@ -42,7 +42,7 @@ sprites.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -82,8 +82,7 @@ public class dec8
 	  bit 0 -- 2.2kohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_ghostb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ghostb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -110,62 +109,51 @@ public class dec8
 		}
 	} };
 	
-	public static WriteHandlerPtr dec8_bac06_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_bac06_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dec8_pf0_control[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr dec8_bac06_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_bac06_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dec8_pf1_control[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr dec8_pf0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_pf0_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dec8_pf0_data[offset]=data;
 		tilemap_mark_tile_dirty(dec8_pf0_tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr dec8_pf1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_pf1_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dec8_pf1_data[offset]=data;
 		tilemap_mark_tile_dirty(dec8_pf1_tilemap,offset/2);
 	} };
 	
-	public static ReadHandlerPtr dec8_pf0_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dec8_pf0_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dec8_pf0_data[offset];
 	} };
 	
-	public static ReadHandlerPtr dec8_pf1_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr dec8_pf1_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return dec8_pf1_data[offset];
 	} };
 	
-	public static WriteHandlerPtr dec8_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( dec8_fix_tilemap,offset/2 );
 	} };
 	
-	public static WriteHandlerPtr srdarwin_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srdarwin_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty( dec8_fix_tilemap,offset );
 	} };
 	
-	public static WriteHandlerPtr dec8_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll1[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr dec8_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr dec8_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll2[offset]=data;
 	} };
 	
-	public static WriteHandlerPtr srdarwin_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr srdarwin_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -182,8 +170,7 @@ public class dec8
 	    }
 	} };
 	
-	public static WriteHandlerPtr lastmiss_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lastmiss_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		/*
@@ -198,14 +185,13 @@ public class dec8
 		scroll2[0]=(data>>5)&1;
 		scroll2[2]=(data>>6)&1;
 	
-		if ((data & 0x80) != 0)
+		if (data&0x80)
 			cpu_set_reset_line(1,CLEAR_LINE);
 		else
 			cpu_set_reset_line(1,ASSERT_LINE);
 	} };
 	
-	public static WriteHandlerPtr shackled_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr shackled_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
@@ -217,18 +203,15 @@ public class dec8
 		scroll2[2]=(data>>6)&1;
 	} };
 	
-	public static WriteHandlerPtr lastmiss_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lastmiss_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll2[1]=data;
 	} };
 	
-	public static WriteHandlerPtr lastmiss_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr lastmiss_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll2[3]=data;
 	} };
 	
-	public static WriteHandlerPtr gondo_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gondo_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 			case 0x0:
 				scroll2[1]=data; /* X LSB */
@@ -271,7 +254,7 @@ public class dec8
 			sprite = buffered_spriteram[offs+7]+(buffered_spriteram[offs+6]<<8);
 			sprite &= 0x0fff;
 	
-			if (extra != 0) {y=y+16;sprite&=0xffe;}
+			if (extra) {y=y+16;sprite&=0xffe;}
 	
 			x = x & 0x01ff;
 			y = y & 0x01ff;
@@ -279,12 +262,12 @@ public class dec8
 			y=(y+16)%0x200;
 			x=256 - x;
 			y=256 - y;
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
-				if (extra != 0) y=y-16;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
+				if (extra) y=y-16;
 			}
 	
 			/* Y Flip determines order of multi-sprite */
@@ -295,14 +278,14 @@ public class dec8
 			else
 				sprite2=sprite+1;
 	
-			drawgfx(bitmap,Machine.gfx[1],
+			drawgfx(bitmap,Machine->gfx[1],
 					sprite,
 					colour,fx,fy,x,y,
 					cliprect,TRANSPARENCY_PEN,0);
 	
 	    	/* 1 more sprite drawn underneath */
-	    	if (extra != 0)
-	    		drawgfx(bitmap,Machine.gfx[1],
+	    	if (extra)
+	    		drawgfx(bitmap,Machine->gfx[1],
 					sprite2,
 					colour,fx,fy,x,y+16,
 					cliprect,TRANSPARENCY_PEN,0);
@@ -343,7 +326,7 @@ public class dec8
 			y = 240 - y;
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -351,18 +334,18 @@ public class dec8
 				inc = 1;
 			}
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -387,7 +370,7 @@ public class dec8
 			if (pri==1 && color==0) continue;
 	
 			code = buffered_spriteram[offs+3] + ( ( buffered_spriteram[offs+1] & 0xe0 ) << 3 );
-			if (code == 0) continue;
+			if (!code) continue;
 	
 			sy = buffered_spriteram[offs];
 			if (sy == 0xf8) continue;
@@ -397,22 +380,22 @@ public class dec8
 			fx = buffered_spriteram[offs+1] & 0x04;
 			multi = buffered_spriteram[offs+1] & 0x10;
 	
-			if (flip_screen != 0) {
+			if (flip_screen()) {
 				sy=240-sy;
 				sx=240-sx;
-				if (fx != 0) fx=0; else fx=1;
+				if (fx) fx=0; else fx=1;
 				sy2=sy-16;
 			}
 			else sy2=sy+16;
 	
-	    	drawgfx(bitmap,Machine.gfx[1],
+	    	drawgfx(bitmap,Machine->gfx[1],
 	        		code,
 					color,
 					fx,flip_screen(),
 					sx,sy,
 					cliprect,TRANSPARENCY_PEN,0);
-	        if (multi != 0)
-	    		drawgfx(bitmap,Machine.gfx[1],
+	        if (multi)
+	    		drawgfx(bitmap,Machine->gfx[1],
 					code+1,
 					color,
 					fx,flip_screen(),
@@ -430,13 +413,13 @@ public class dec8
 		for (offs = 0x800 - 2;offs >= 0;offs -= 2) {
 			tile=videoram.read(offs+1)+((videoram.read(offs)&0xf)<<8);
 	
-			if (tile == 0) continue;
+			if (!tile) continue;
 	
 			color=(videoram.read(offs)&mask)>>shift;
 			mx = (offs/2) % 32;
 			my = (offs/2) / 32;
 	
-			drawgfx(bitmap,Machine.gfx[0],
+			drawgfx(bitmap,Machine->gfx[0],
 					tile,color,0,0,8*mx,8*my,
 					cliprect,TRANSPARENCY_PEN,0);
 		}
@@ -445,8 +428,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_cobracom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_cobracom  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (dec8_pf0_control[0x10]<<8)+dec8_pf0_control[0x11] );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, (dec8_pf0_control[0x12]<<8)+dec8_pf0_control[0x13] );
 		tilemap_set_scrollx( dec8_pf1_tilemap,0, (dec8_pf1_control[0x10]<<8)+dec8_pf1_control[0x11] );
@@ -494,7 +476,7 @@ public class dec8
 	
 	static UINT32 bac0_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 5) + ((row & 0x10) << 4);
 	}
 	
@@ -511,8 +493,7 @@ public class dec8
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_cobracom  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_cobracom  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_pf1_tilemap = tilemap_create(get_bac1_tile_info,bac0_scan_rows,TILEMAP_TRANSPARENT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_cobracom_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
@@ -531,8 +512,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_ghostb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ghostb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	   if (dec8_pf0_control[0]&0x4) { /* Rowscroll */
 	 		int offs;
 	
@@ -563,8 +543,7 @@ public class dec8
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_ghostb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ghostb  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_ghostb_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		tilemap_set_transparent_pen(dec8_fix_tilemap,0);
@@ -580,8 +559,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_oscar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_oscar  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (dec8_pf0_control[0x10]<<8)+dec8_pf0_control[0x11] );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, (dec8_pf0_control[0x12]<<8)+dec8_pf0_control[0x13] );
 		flip_screen_set(dec8_pf0_control[1]>>7);
@@ -607,8 +585,7 @@ public class dec8
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_oscar  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_oscar  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_bac0_tile_info,bac0_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_oscar_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -626,8 +603,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_lastmiss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_lastmiss  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
 	
@@ -636,8 +612,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_shackled  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shackled  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
 	
@@ -651,7 +626,7 @@ public class dec8
 	
 	static UINT32 lastmiss_scan_rows(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return ((col & 0x0f) + ((row & 0x0f) << 4)) + ((col & 0x10) << 4) + ((row & 0x10) << 5);
 	}
 	
@@ -683,8 +658,7 @@ public class dec8
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_lastmiss  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_lastmiss  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,0,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -697,8 +671,7 @@ public class dec8
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_shackled  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_shackled  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_lastmiss_tile_info,lastmiss_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 		dec8_fix_tilemap = tilemap_create(get_lastmiss_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -714,8 +687,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_srdarwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_srdarwin  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, (scroll2[0]<<8)+scroll2[1] );
 	
 		tilemap_draw(bitmap,cliprect,dec8_pf0_tilemap,TILEMAP_BACK,0);
@@ -757,8 +729,7 @@ public class dec8
 				flag)
 	}
 	
-	public static VideoStartHandlerPtr video_start_srdarwin  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_srdarwin  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_pf0_tilemap = tilemap_create(get_srdarwin_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,16);
 		dec8_fix_tilemap = tilemap_create(get_srdarwin_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 	
@@ -776,8 +747,7 @@ public class dec8
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_gondo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_gondo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
 	
@@ -788,8 +758,7 @@ public class dec8
 		tilemap_draw(bitmap,cliprect,dec8_fix_tilemap,0,0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_garyoret  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_garyoret  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrollx( dec8_pf0_tilemap,0, ((scroll2[0]<<8)+scroll2[1]) );
 		tilemap_set_scrolly( dec8_pf0_tilemap,0, ((scroll2[2]<<8)+scroll2[3]) );
 	
@@ -827,8 +796,7 @@ public class dec8
 				0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_gondo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_gondo  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 	
@@ -842,8 +810,7 @@ public class dec8
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_garyoret  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_garyoret  = new VideoStartHandlerPtr() { public int handler(){
 		dec8_fix_tilemap=tilemap_create(get_gondo_fix_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,32,32);
 		dec8_pf0_tilemap=tilemap_create(get_gondo_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,16,16,32,32);
 	

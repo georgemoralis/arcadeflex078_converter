@@ -168,7 +168,7 @@ note: CLUT and color remap PROMs missing
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -194,16 +194,14 @@ public class alpha68k
 	/******************************************************************************/
 	
 	/* resets the values related to the microcontroller */
-	public static MachineInitHandlerPtr machine_init_common  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_common  = new MachineInitHandlerPtr() { public void handler(){
 		trigstate = 0;
 		deposits1 = 0;
 		deposits2 = 0;
 		credits   = 0;
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_tnexspce  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_tnexspce  = new MachineInitHandlerPtr() { public void handler(){
 		alpha68k_flipscreen_w(0);
 	} };
 	
@@ -235,7 +233,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_1_r )
 	{
-		if (invert_controls != 0)
+		if (invert_controls)
 			return ~(readinputport(0) + (readinputport(1) << 8));
 	
 		return (readinputport(0) + (readinputport(1) << 8));
@@ -243,7 +241,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_2_r )
 	{
-		if (invert_controls != 0)
+		if (invert_controls)
 			return ~(readinputport(3) + ((~(1 << (readinputport(5) * 12 / 256))) << 8));
 	
 		return readinputport(3) + /* Low byte of CN1 */
@@ -257,7 +255,7 @@ public class alpha68k
 	
 	static READ16_HANDLER( control_3_r )
 	{
-		if (invert_controls != 0)
+		if (invert_controls)
 			return ~((( ~(1 << (readinputport(6) * 12 / 256)) )<<8)&0xff00);
 	
 		return (( ~(1 << (readinputport(6) * 12 / 256)) )<<8)&0xff00;
@@ -266,7 +264,7 @@ public class alpha68k
 	/* High 4 bits of CN1 & CN2 */
 	static READ16_HANDLER( control_4_r )
 	{
-		if (invert_controls != 0)
+		if (invert_controls)
 			return ~(((( ~(1 << (readinputport(6) * 12 / 256))  ) <<4)&0xf000)
 			 + ((( ~(1 << (readinputport(5) * 12 / 256))  )    )&0x0f00));
 	
@@ -278,28 +276,28 @@ public class alpha68k
 	
 	static WRITE16_HANDLER( kyros_sound_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if(ACCESSING_MSB)
 			soundlatch_w(0, (data>>8)&0xff);
 	}
 	
 	static WRITE16_HANDLER( alpha68k_II_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			soundlatch_w(0, data&0xff);
 	}
 	
 	static WRITE16_HANDLER( alpha68k_V_sound_w )
 	{
 		/* Sound & fix bank select are in the same word */
-		if (ACCESSING_LSB != 0)
+		if(ACCESSING_LSB)
 			soundlatch_w(0,data&0xff);
-		if (ACCESSING_MSB != 0)
+		if(ACCESSING_MSB)
 			alpha68k_V_video_bank_w((data>>8)&0xff);
 	}
 	//AT
 	static WRITE16_HANDLER( paddlema_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0, data);
 			cpu_set_irq_line(1, 0, HOLD_LINE);
@@ -308,7 +306,7 @@ public class alpha68k
 	
 	static WRITE16_HANDLER( tnexspce_soundlatch_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0, data);
 			cpu_set_nmi_line(1, PULSE_LINE);
@@ -755,8 +753,7 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int bankaddress;
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
@@ -981,7 +978,7 @@ public class alpha68k
 		PORT_DIPSETTING(    0x00, "A 3C/2C B 8C/1C" );
 	
 	
-	static InputPortPtr input_ports_sstingry = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sstingry = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sstingry )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_SWAP_LR_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_HIGH )
 		ALPHA68K_PLAYER_INPUT_SWAP_LR_MSB( IPF_PLAYER2, IPT_UNKNOWN, IPT_START2, IP_ACTIVE_HIGH )
@@ -1008,7 +1005,7 @@ public class alpha68k
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kyros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kyros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kyros )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_SWAP_LR_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_HIGH )
 		ALPHA68K_PLAYER_INPUT_SWAP_LR_MSB( IPF_PLAYER2, IPT_UNKNOWN, IPT_START2, IP_ACTIVE_HIGH )
@@ -1035,7 +1032,7 @@ public class alpha68k
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_paddlema = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_paddlema = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( paddlema )
 		PORT_START(); 	// control port 0 (bottom players)
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_UNKNOWN, IP_ACTIVE_LOW )
 		ALPHA68K_PLAYER_INPUT_MSB( IPF_PLAYER2, IPT_UNKNOWN, IPT_UNKNOWN, IP_ACTIVE_LOW )
@@ -1108,7 +1105,7 @@ public class alpha68k
 		PORT_DIPSETTING(    0x00, DEF_STR( "Yes") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_timesold = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_timesold = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( timesold )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1162,7 +1159,7 @@ public class alpha68k
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'timesold' but different default settings for the "Language" Dip Switch */
-	static InputPortPtr input_ports_btlfield = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_btlfield = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( btlfield )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1215,7 +1212,7 @@ public class alpha68k
 		PORT_ANALOGX( 0xff, 0x00, IPT_DIAL | IPF_REVERSE | IPF_PLAYER2, 25, 8, 0, 0, KEYCODE_N, KEYCODE_M, IP_JOY_NONE, IP_JOY_NONE );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skysoldr = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skysoldr = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skysoldr )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1268,7 +1265,7 @@ public class alpha68k
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_goldmedl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_goldmedl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( goldmedl )
 		PORT_START();   /* 3 buttons per player, no joystick */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_PLAYER1 );
@@ -1334,7 +1331,7 @@ public class alpha68k
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_skyadvnt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyadvnt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyadvnt )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1382,7 +1379,7 @@ public class alpha68k
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'skyadvnt' but bits 0-3 of 2nd set of Dip Switches are different */
-	static InputPortPtr input_ports_skyadvnu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_skyadvnu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( skyadvnu )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1436,7 +1433,7 @@ public class alpha68k
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gangwars = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gangwars = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gangwars )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_BUTTON3, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1491,7 +1488,7 @@ public class alpha68k
 	INPUT_PORTS_END(); }}; 
 	
 	/* Same as 'gangwars' but bits 0-3 of 2nd set of Dip Switches are different */
-	static InputPortPtr input_ports_gangwarb = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gangwarb = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gangwarb )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_BUTTON3, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1547,7 +1544,7 @@ public class alpha68k
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sbasebal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sbasebal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sbasebal )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_BUTTON3, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1616,7 +1613,7 @@ public class alpha68k
 		PORT_BIT( 0xc0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_tnexspce = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_tnexspce = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( tnexspce )
 		PORT_START(); 
 		ALPHA68K_PLAYER_INPUT_LSB( IPF_PLAYER1, IPT_UNKNOWN, IPT_START1, IP_ACTIVE_LOW )
 	
@@ -1929,8 +1926,7 @@ public class alpha68k
 		{ YM3812_irq },
 	};
 	
-	public static InterruptHandlerPtr goldmedl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr goldmedl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 1, HOLD_LINE);
 		else
@@ -1944,8 +1940,7 @@ public class alpha68k
 		{ 75 }
 	};
 	
-	public static InterruptHandlerPtr kyros_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr kyros_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 			cpu_set_irq_line(0, 1, HOLD_LINE);
 		else
@@ -1955,8 +1950,7 @@ public class alpha68k
 	/******************************************************************************/
 	
 	
-	public static MachineHandlerPtr machine_driver_sstingry = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sstingry )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000) /* 24MHz/4? */
@@ -1997,12 +1991,9 @@ public class alpha68k
 		MDRV_SOUND_ADD(YM2203, sstingry_ym2203_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	//ZT
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_kyros = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kyros )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000) /* 24MHz/4? */
@@ -2042,12 +2033,9 @@ public class alpha68k
 		MDRV_SOUND_ADD(DAC, dac_interface)
 	//ZT
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_alpha68k_I = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alpha68k_I )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 6000000) /* 24MHz/4? */
@@ -2077,12 +2065,9 @@ public class alpha68k
 		/* sound hardware */
 		//MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM3812, ym3812_interface) //AT
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_alpha68k_II = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alpha68k_II )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000) /* Correct */
@@ -2115,13 +2100,10 @@ public class alpha68k
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	//AT
-	public static MachineHandlerPtr machine_driver_alpha68k_II_gm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alpha68k_II_gm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)
@@ -2153,13 +2135,10 @@ public class alpha68k
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	//ZT
 	
-	public static MachineHandlerPtr machine_driver_alpha68k_V = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alpha68k_V )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* ? */
@@ -2192,12 +2171,9 @@ public class alpha68k
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_alpha68k_V_sb = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( alpha68k_V_sb )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* ? */
@@ -2230,12 +2206,9 @@ public class alpha68k
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_tnexspce = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tnexspce )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 9000000) /* Confirmed 18 MHz/2 */
@@ -2265,9 +2238,7 @@ public class alpha68k
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/******************************************************************************/
@@ -2967,52 +2938,45 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_sstingry  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sstingry  = new DriverInitHandlerPtr() { public void handler(){
 		invert_controls=0;
 		microcontroller_id=0x00ff;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_kyros  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kyros  = new DriverInitHandlerPtr() { public void handler(){
 		invert_controls=0;
 		microcontroller_id=0x0012;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_paddlema  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_paddlema  = new DriverInitHandlerPtr() { public void handler(){
 		microcontroller_id=0;
 		coin_id=0;				// Not needed !
 	} };
 	
-	public static DriverInitHandlerPtr init_timesold  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_timesold  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, timesold_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_timesol1  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_timesol1  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, timesol1_cycle_r);
 		invert_controls=1;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_btlfield  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_btlfield  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, btlfield_cycle_r);
 		invert_controls=1;
 		microcontroller_id=0;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_skysoldr  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skysoldr  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, skysoldr_cycle_r);
 		cpu_setbank(8, (memory_region(REGION_USER1))+0x40000);
 		invert_controls=0;
@@ -3020,39 +2984,34 @@ public class alpha68k
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_goldmedl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_goldmedl  = new DriverInitHandlerPtr() { public void handler(){
 		invert_controls=0;
 		microcontroller_id=0x8803; //AT
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_goldmedb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_goldmedb  = new DriverInitHandlerPtr() { public void handler(){
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
 		microcontroller_id=0x8803; //Guess - routine to handle coinage is the same as in 'goldmedl'
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_skyadvnt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skyadvnt  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, skyadvnt_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0x8814;
 		coin_id=0x22|(0x22<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_skyadvnu  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_skyadvnu  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40008, 0x40009, skyadvnt_cycle_r);
 		invert_controls=0;
 		microcontroller_id=0x8814;
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_gangwars  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gangwars  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40206, 0x40207, gangwars_cycle_r);
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
@@ -3060,8 +3019,7 @@ public class alpha68k
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_gangwarb  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gangwarb  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler(0, 0x40206, 0x40207, gangwarb_cycle_r);
 		cpu_setbank(8, memory_region(REGION_USER1));
 		invert_controls=0;
@@ -3069,8 +3027,7 @@ public class alpha68k
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_sbasebal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sbasebal  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
 	
 		/* Game hangs on divide by zero?!  Patch it */
@@ -3092,8 +3049,7 @@ public class alpha68k
 		coin_id=0x23|(0x24<<8);
 	} };
 	
-	public static DriverInitHandlerPtr init_tnexspce  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_tnexspce  = new DriverInitHandlerPtr() { public void handler(){
 		invert_controls=0;
 		microcontroller_id=0x890a;
 		coin_id=0;				// Not needed !
@@ -3101,26 +3057,26 @@ public class alpha68k
 	
 	/******************************************************************************/
 	
-	public static GameDriver driver_sstingry	   = new GameDriver("1986"	,"sstingry"	,"alpha68k.java"	,rom_sstingry,null	,machine_driver_sstingry	,input_ports_sstingry	,init_sstingry	,ROT90	,	"Alpha Denshi Co.",   "Super Stingray", GAME_NO_COCKTAIL | GAME_WRONG_COLORS )
-	public static GameDriver driver_kyros	   = new GameDriver("1987"	,"kyros"	,"alpha68k.java"	,rom_kyros,null	,machine_driver_kyros	,input_ports_kyros	,init_kyros	,ROT90	,	"World Games Inc",    "Kyros", GAME_NO_COCKTAIL )
-	public static GameDriver driver_kyrosj	   = new GameDriver("1986"	,"kyrosj"	,"alpha68k.java"	,rom_kyrosj,driver_kyros	,machine_driver_kyros	,input_ports_kyros	,init_kyros	,ROT90	,	"Alpha Denshi Co.",    "Kyros No Yakata (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_paddlema	   = new GameDriver("1988"	,"paddlema"	,"alpha68k.java"	,rom_paddlema,null	,machine_driver_alpha68k_I	,input_ports_paddlema	,init_paddlema	,ROT90	,	"SNK",                "Paddle Mania" )
-	public static GameDriver driver_timesold	   = new GameDriver("1987"	,"timesold"	,"alpha68k.java"	,rom_timesold,null	,machine_driver_alpha68k_II	,input_ports_timesold	,init_timesold	,ROT90	,	"[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 3)" )
-	public static GameDriver driver_timesol1	   = new GameDriver("1987"	,"timesol1"	,"alpha68k.java"	,rom_timesol1,driver_timesold	,machine_driver_alpha68k_II	,input_ports_timesold	,init_timesol1	,ROT90	,	"[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 1)" )
-	public static GameDriver driver_btlfield	   = new GameDriver("1987"	,"btlfield"	,"alpha68k.java"	,rom_btlfield,driver_timesold	,machine_driver_alpha68k_II	,input_ports_btlfield	,init_btlfield	,ROT90	,	"[Alpha Denshi Co.] (SNK license)", "Battle Field (Japan)" )
-	public static GameDriver driver_skysoldr	   = new GameDriver("1988"	,"skysoldr"	,"alpha68k.java"	,rom_skysoldr,null	,machine_driver_alpha68k_II	,input_ports_skysoldr	,init_skysoldr	,ROT90	,	"[Alpha Denshi Co.] (SNK of America/Romstar license)", "Sky Soldiers (US)" )
-	public static GameDriver driver_goldmedl	   = new GameDriver("1988"	,"goldmedl"	,"alpha68k.java"	,rom_goldmedl,null	,machine_driver_alpha68k_II_gm	,input_ports_goldmedl	,init_goldmedl	,ROT0	,	"SNK",                "Gold Medalist" )
-	public static GameDriver driver_goldmedb	   = new GameDriver("1988"	,"goldmedb"	,"alpha68k.java"	,rom_goldmedb,driver_goldmedl	,machine_driver_alpha68k_II_gm	,input_ports_goldmedl	,init_goldmedb	,ROT0	,	"bootleg",            "Gold Medalist (bootleg)", GAME_NOT_WORKING )
-	public static GameDriver driver_skyadvnt	   = new GameDriver("1989"	,"skyadvnt"	,"alpha68k.java"	,rom_skyadvnt,null	,machine_driver_alpha68k_V	,input_ports_skyadvnt	,init_skyadvnt	,ROT90	,	"Alpha Denshi Co.",   "Sky Adventure (World)" )
-	public static GameDriver driver_skyadvnu	   = new GameDriver("1989"	,"skyadvnu"	,"alpha68k.java"	,rom_skyadvnu,driver_skyadvnt	,machine_driver_alpha68k_V	,input_ports_skyadvnu	,init_skyadvnu	,ROT90	,	"Alpha Denshi Co. (SNK of America license)", "Sky Adventure (US)" )
-	public static GameDriver driver_skyadvnj	   = new GameDriver("1989"	,"skyadvnj"	,"alpha68k.java"	,rom_skyadvnj,driver_skyadvnt	,machine_driver_alpha68k_V	,input_ports_skyadvnt	,init_skyadvnt	,ROT90	,	"Alpha Denshi Co.",   "Sky Adventure (Japan)" )
-	public static GameDriver driver_gangwars	   = new GameDriver("1989"	,"gangwars"	,"alpha68k.java"	,rom_gangwars,null	,machine_driver_alpha68k_V	,input_ports_gangwars	,init_gangwars	,ROT0	,	"Alpha Denshi Co.",   "Gang Wars (US)" )
-	public static GameDriver driver_gangwarb	   = new GameDriver("1989"	,"gangwarb"	,"alpha68k.java"	,rom_gangwarb,driver_gangwars	,machine_driver_alpha68k_V	,input_ports_gangwarb	,init_gangwarb	,ROT0	,	"bootleg",            "Gang Wars (bootleg)" )
+	GAMEX(1986, sstingry, 0,        sstingry,      sstingry, sstingry, ROT90, "Alpha Denshi Co.",   "Super Stingray", GAME_NO_COCKTAIL | GAME_WRONG_COLORS )
+	GAMEX(1987, kyros,    0,        kyros,         kyros,    kyros,    ROT90, "World Games Inc",    "Kyros", GAME_NO_COCKTAIL )
+	GAMEX(1986, kyrosj,   kyros,    kyros,         kyros,    kyros,    ROT90, "Alpha Denshi Co.",    "Kyros No Yakata (Japan)", GAME_NO_COCKTAIL )
+	GAME( 1988, paddlema, 0,        alpha68k_I,    paddlema, paddlema, ROT90, "SNK",                "Paddle Mania" )
+	GAME( 1987, timesold, 0,        alpha68k_II,   timesold, timesold, ROT90, "[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 3)" )
+	GAME( 1987, timesol1, timesold, alpha68k_II,   timesold, timesol1, ROT90, "[Alpha Denshi Co.] (SNK/Romstar license)", "Time Soldiers (US Rev 1)" )
+	GAME( 1987, btlfield, timesold, alpha68k_II,   btlfield, btlfield, ROT90, "[Alpha Denshi Co.] (SNK license)", "Battle Field (Japan)" )
+	GAME( 1988, skysoldr, 0,        alpha68k_II,   skysoldr, skysoldr, ROT90, "[Alpha Denshi Co.] (SNK of America/Romstar license)", "Sky Soldiers (US)" )
+	GAME( 1988, goldmedl, 0,        alpha68k_II_gm,goldmedl, goldmedl, ROT0,  "SNK",                "Gold Medalist" )
+	GAMEX(1988, goldmedb, goldmedl, alpha68k_II_gm,goldmedl, goldmedb, ROT0,  "bootleg",            "Gold Medalist (bootleg)", GAME_NOT_WORKING )
+	GAME( 1989, skyadvnt, 0,        alpha68k_V,    skyadvnt, skyadvnt, ROT90, "Alpha Denshi Co.",   "Sky Adventure (World)" )
+	GAME( 1989, skyadvnu, skyadvnt, alpha68k_V,    skyadvnu, skyadvnu, ROT90, "Alpha Denshi Co. (SNK of America license)", "Sky Adventure (US)" )
+	GAME( 1989, skyadvnj, skyadvnt, alpha68k_V,    skyadvnt, skyadvnt, ROT90, "Alpha Denshi Co.",   "Sky Adventure (Japan)" )
+	GAME( 1989, gangwars, 0,        alpha68k_V,    gangwars, gangwars, ROT0,  "Alpha Denshi Co.",   "Gang Wars (US)" )
+	GAME( 1989, gangwarb, gangwars, alpha68k_V,    gangwarb, gangwarb, ROT0,  "bootleg",            "Gang Wars (bootleg)" )
 	#if SBASEBAL_HACK
-	public static GameDriver driver_sbasebal	   = new GameDriver("1989"	,"sbasebal"	,"alpha68k.java"	,rom_sbasebal,null	,machine_driver_alpha68k_V_sb	,input_ports_sbasebal	,init_sbasebal	,ROT0	,	"Alpha Denshi Co.",   "Super Champion Baseball (Japan)" )
+	GAME( 1989, sbasebal, 0,        alpha68k_V_sb, sbasebal, sbasebal, ROT0,  "Alpha Denshi Co.",   "Super Champion Baseball (Japan)" )
 	#else
-	public static GameDriver driver_sbasebal	   = new GameDriver("1989"	,"sbasebal"	,"alpha68k.java"	,rom_sbasebal,null	,machine_driver_alpha68k_V_sb	,input_ports_sbasebal	,init_sbasebal	,ROT0	,	"Alpha Denshi Co. (SNK of America license)", "Super Champion Baseball (US)" )
+	GAME( 1989, sbasebal, 0,        alpha68k_V_sb, sbasebal, sbasebal, ROT0,  "Alpha Denshi Co. (SNK of America license)", "Super Champion Baseball (US)" )
 	#endif
-	public static GameDriver driver_tnexspce	   = new GameDriver("1989"	,"tnexspce"	,"alpha68k.java"	,rom_tnexspce,null	,machine_driver_tnexspce	,input_ports_tnexspce	,init_tnexspce	,ROT90	,	"SNK",                "The Next Space", GAME_NO_COCKTAIL )
+	GAMEX(1989, tnexspce, 0,        tnexspce,      tnexspce, tnexspce, ROT90, "SNK",                "The Next Space", GAME_NO_COCKTAIL )
 	
 }

@@ -28,7 +28,7 @@ Credits:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -40,8 +40,7 @@ public class thief
 	
 	
 	
-	public static InterruptHandlerPtr thief_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr thief_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* SLAM switch causes an NMI if it's pressed */
 		if( (input_port_3_r(0) & 0x10) == 0 )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
@@ -73,7 +72,7 @@ public class thief
 	
 	static void tape_set_motor( int bOn )
 	{
-		if (bOn != 0)
+		if( bOn )
 		{
 			sample_start( 0, 0, 1 );
 			sample_start( 1, 1, 1 );
@@ -87,13 +86,11 @@ public class thief
 	
 	/***********************************************************/
 	
-	public static WriteHandlerPtr thief_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr thief_input_select_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		thief_input_select = data;
 	} };
 	
-	public static WriteHandlerPtr tape_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tape_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch( data )
 		{
 		case 0x02: /* coin meter on */
@@ -131,8 +128,7 @@ public class thief
 		}
 	} };
 	
-	public static ReadHandlerPtr thief_io_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr thief_io_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch( thief_input_select )
 		{
 			case 0x01: return readinputport(0); /* dsw#1 */
@@ -212,7 +208,7 @@ public class thief
 	
 	/**********************************************************/
 	
-	static InputPortPtr input_ports_sharkatt = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sharkatt = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sharkatt )
 		PORT_START();       /* IN0 */
 		PORT_DIPNAME( 0x7f, 0x7f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "2C_1C") );
@@ -265,7 +261,7 @@ public class thief
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 | IPF_COCKTAIL );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_thief = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_thief = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( thief )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -334,7 +330,7 @@ public class thief
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_natodef = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_natodef = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( natodef )
 		PORT_START(); 
 		PORT_DIPNAME( 0x03, 0x00, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x01, DEF_STR( "2C_1C") );
@@ -467,8 +463,7 @@ public class thief
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_sharkatt = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sharkatt )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)        /* 4 MHz? */
@@ -491,13 +486,10 @@ public class thief
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(SAMPLES, sharkatt_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_thief = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( thief )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz? */
@@ -520,13 +512,10 @@ public class thief
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(SAMPLES, thief_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_natodef = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( natodef )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000) /* 4 MHz? */
@@ -549,9 +538,7 @@ public class thief
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(SAMPLES, natodef_samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************/
 	
@@ -648,8 +635,7 @@ public class thief
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_thief  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_thief  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *dest = memory_region( REGION_CPU1 );
 		const UINT8 *source = memory_region( REGION_CPU2 );
 	
@@ -658,8 +644,8 @@ public class thief
 	} };
 	
 	
-	public static GameDriver driver_sharkatt	   = new GameDriver("1980"	,"sharkatt"	,"thief.java"	,rom_sharkatt,null	,machine_driver_sharkatt	,input_ports_sharkatt	,null	,ROT0	,	"Pacific Novelty", "Shark Attack" )
-	public static GameDriver driver_thief	   = new GameDriver("1981"	,"thief"	,"thief.java"	,rom_thief,null	,machine_driver_thief	,input_ports_thief	,init_thief	,ROT0	,	"Pacific Novelty", "Thief" )
-	public static GameDriver driver_natodef	   = new GameDriver("1982"	,"natodef"	,"thief.java"	,rom_natodef,null	,machine_driver_natodef	,input_ports_natodef	,init_thief	,ROT0	,	"Pacific Novelty", "NATO Defense"  )
-	public static GameDriver driver_natodefa	   = new GameDriver("1982"	,"natodefa"	,"thief.java"	,rom_natodefa,driver_natodef	,machine_driver_natodef	,input_ports_natodef	,init_thief	,ROT0	,	"Pacific Novelty", "NATO Defense (alternate mazes)"  )
+	GAME( 1980, sharkatt, 0,       sharkatt, sharkatt, 0,     ROT0, "Pacific Novelty", "Shark Attack" )
+	GAME( 1981, thief,    0,       thief,    thief,    thief, ROT0, "Pacific Novelty", "Thief" )
+	GAME( 1982, natodef,  0,       natodef,  natodef,  thief, ROT0, "Pacific Novelty", "NATO Defense"  )
+	GAME( 1982, natodefa, natodef, natodef,  natodef,  thief, ROT0, "Pacific Novelty", "NATO Defense (alternate mazes)"  )
 }

@@ -274,7 +274,7 @@ int q = I.AF.b.h+R; 											\
 
 #define M_RET(cc)												\
 {																\
-	if (cc != 0) 													\
+	if (cc) 													\
 	{															\
 		i8085_ICount -= 6;										\
 		M_POP(PC);												\
@@ -283,7 +283,7 @@ int q = I.AF.b.h+R; 											\
 }
 
 #define M_JMP(cc) { 											\
-	if (cc != 0) {													\
+	if (cc) {													\
 		i8085_ICount -= 3;										\
 		I.PC.w.l = ARG16(); 									\
 		change_pc16(I.PC.d);									\
@@ -292,7 +292,7 @@ int q = I.AF.b.h+R; 											\
 
 #define M_CALL(cc)												\
 {																\
-	if (cc != 0) 													\
+	if (cc) 													\
 	{															\
 		UINT16 a = ARG16(); 									\
 		i8085_ICount -= 6;										\

@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -69,21 +69,18 @@ public class ticket
 	/***************************************************************************
 	  ticket_dispenser_r
 	***************************************************************************/
-	public static ReadHandlerPtr ticket_dispenser_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ticket_dispenser_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ticket_dispenser_0_r(offset);
 	} };
 	
-	public static ReadHandlerPtr ticket_dispenser_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ticket_dispenser_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef DEBUG_TICKET
 		logerror("PC: %04X  Ticket Status Read = %02X\n", activecpu_get_pc(), status);
 	#endif
 		return dispenser[0].status;
 	} };
 	
-	public static ReadHandlerPtr ticket_dispenser_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ticket_dispenser_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 	#ifdef DEBUG_TICKET
 		logerror("PC: %04X  Ticket Status Read = %02X\n", activecpu_get_pc(), status);
 	#endif
@@ -93,13 +90,11 @@ public class ticket
 	/***************************************************************************
 	  ticket_dispenser_w
 	***************************************************************************/
-	public static WriteHandlerPtr ticket_dispenser_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ticket_dispenser_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ticket_dispenser_0_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr ticket_dispenser_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ticket_dispenser_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* On an activate signal, start dispensing! */
 		if ((data & active_bit) == motoron)
 		{
@@ -128,8 +123,7 @@ public class ticket
 		}
 	} };
 	
-	public static WriteHandlerPtr ticket_dispenser_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ticket_dispenser_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* On an activate signal, start dispensing! */
 		if ((data & active_bit) == motoron)
 		{

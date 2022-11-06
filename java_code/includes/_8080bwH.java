@@ -30,6 +30,5 @@ void c8080bw_helifire_colors_change_w(int data);
 
 
 
-VIDEO_EOF (helifire);
 
 

@@ -27,7 +27,7 @@
  Remaining Issues:
  -1) IRQ & NMI code is totally guessed, and needs to be solved properly
 
-Measurements from Guru (someone needs to rewrite public static InterruptHandlerPtr  = new InterruptHandlerPtr() {public void handler() in vidhrdw/vball.c):
+Measurements from Guru (someone needs to rewrite public static InterruptHandlerPtr  = new InterruptHandlerPtr() {public void handler()n vidhrdw/vball.c):
 6502 /IRQ = 1.720kHz
 6202 /NMI = 58 Hz
 VBlank = 58Hz
@@ -89,7 +89,7 @@ VBlank = 58Hz
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -112,8 +112,7 @@ public class vball
 	   bit 6 = scroll y hi
 	   bit 7 = ?
 	*/
-	public static WriteHandlerPtr vb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vb_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 		cpu_setbank( 1,&RAM[ 0x10000 + ( 0x4000 * ( data & 1 ) ) ] );
 	
@@ -127,10 +126,10 @@ public class vball
 	/* The sound system comes all but verbatim from Double Dragon */
 	
 	
-	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr cpu_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		soundlatch_w.handler( offset, data );
 		cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
-	} };
+	}
 	
 	
 	/* bit 0 = flip screen
@@ -142,8 +141,7 @@ public class vball
 	   bit 6 = sp prom bank
 	   bit 7 = sp prom bank
 	*/
-	public static WriteHandlerPtr vb_scrollx_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vb_scrollx_hi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(~data&1);
 		vb_scrollx_hi = (data & 0x02) << 7;
 		vb_bgprombank_w((data >> 2)&0x07);
@@ -181,11 +179,10 @@ public class vball
 		new Memory_ReadAddress(MEMPORT_MARKER, 0)
 	};
 	
-	WRITE_HANDLER(vb_scrollx_lo_w)
-	{
+	public static WriteHandlerPtr vb_scrollx_lo_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		vb_scrollx_lo = data;
 		//logerror("%04x: vb_scrollx_lo =%d\n",activecpu_get_previouspc(), vb_scrollx_lo);
-	}
+	} };
 	
 	//Cheaters note: Scores are stored in ram @ 0x57-0x58 (though the space is used for other things between matches)
 	public static Memory_WriteAddress writemem[]={
@@ -403,8 +400,7 @@ public class vball
 		{ 100 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_vball = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vball )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(M6502, 2000000)	/* 2 MHz - measured by guru but it makes the game far far too slow ?! */
@@ -432,12 +428,9 @@ public class vball
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_vball2pj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vball2pj )
 	
 		/* basic machine hardware */
 	 	MDRV_CPU_ADD(M6502, 2000000)	/* 2.0 MHz */
@@ -465,9 +458,7 @@ public class vball
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -538,6 +529,6 @@ public class vball
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_vball	   = new GameDriver("1988"	,"vball"	,"vball.java"	,rom_vball,null	,machine_driver_vball	,input_ports_vball	,null	,ROT0	,	"Technos", "U.S. Championship V'ball (set 1)" )
-	public static GameDriver driver_vball2pj	   = new GameDriver("1988"	,"vball2pj"	,"vball.java"	,rom_vball2pj,driver_vball	,machine_driver_vball2pj	,input_ports_vball2pj	,null	,ROT0	,	"Technos", "U.S. Championship V'ball (Japan)" )
+	GAME( 1988, vball,    0,     vball,    vball,    0, ROT0, "Technos", "U.S. Championship V'ball (set 1)" )
+	GAME( 1988, vball2pj, vball, vball2pj, vball2pj, 0, ROT0, "Technos", "U.S. Championship V'ball (Japan)" )
 }

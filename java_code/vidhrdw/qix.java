@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,11 +37,10 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_qix  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_qix  = new VideoStartHandlerPtr() { public int handler(){
 		/* allocate memory for the full video RAM */
 		videoram = auto_malloc(256 * 256);
-		if (videoram == 0)
+		if (!videoram)
 			return 1;
 	
 		/* initialize the mask for games that don't use it */
@@ -77,8 +76,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qix_scanline_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_scanline_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int scanline = cpu_getscanline();
 		return (scanline <= 0xff) ? scanline : 0;
 	} };
@@ -91,8 +89,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr slither_vram_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr slither_vram_mask_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Slither appears to extend the basic hardware by providing */
 		/* a mask register which controls which data bits get written */
 		/* to video RAM */
@@ -116,16 +113,14 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* add in the upper bit of the address latch */
 		offset += (qix_videoaddress[0] & 0x80) << 8;
 		return videoram.read(offset);
 	} };
 	
 	
-	public static WriteHandlerPtr qix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* add in the upper bit of the address latch */
 		offset += (qix_videoaddress[0] & 0x80) << 8;
 	
@@ -150,8 +145,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr qix_addresslatch_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr qix_addresslatch_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* compute the value at the address latch */
 		offset = (qix_videoaddress[0] << 8) | qix_videoaddress[1];
 		return videoram.read(offset);
@@ -159,8 +153,7 @@ public class qix
 	
 	
 	
-	public static WriteHandlerPtr qix_addresslatch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_addresslatch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* compute the value at the address latch */
 		offset = (qix_videoaddress[0] << 8) | qix_videoaddress[1];
 	
@@ -176,8 +169,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr qix_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* this conversion table should be about right. It gives a reasonable */
 		/* gray scale in the test screen, and the red, green and blue squares */
 		/* in the same screen are barely visible, as the manual requires. */
@@ -203,7 +195,7 @@ public class qix
 		int bits, intensity, red, green, blue;
 	
 		/* set the palette RAM value */
-		paletteram[offset] = data;
+		paletteram.write(offset,data);
 	
 		/* compute R, G, B from the table */
 		intensity = (data >> 0) & 0x03;
@@ -219,8 +211,7 @@ public class qix
 	} };
 	
 	
-	public static WriteHandlerPtr qix_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr qix_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* set the bank value */
 		if (qix_palettebank != (data & 3))
 		{
@@ -239,8 +230,7 @@ public class qix
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_qix  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		pen_t *pens = Machine.pens[qix_palettebank * 256];
 		int y;
 	

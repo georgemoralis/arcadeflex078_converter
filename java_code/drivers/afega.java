@@ -27,7 +27,7 @@ The Sen Jin protection supplies some 68k code seen in the 2760-29cf range
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -62,7 +62,7 @@ public class afega
 	
 	WRITE16_HANDLER( afega_soundlatch_w )
 	{
-		if (ACCESSING_LSB && Machine.sample_rate)
+		if (ACCESSING_LSB && Machine->sample_rate)
 			soundlatch_w(0,data&0xff);
 	}
 	
@@ -189,7 +189,7 @@ public class afega
 									Stagger I
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_stagger1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stagger1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stagger1 )
 		PORT_START(); 	// IN0 - $080000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
@@ -272,7 +272,7 @@ public class afega
 								Sen Jin - Guardian Storm
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_grdnstrm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grdnstrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grdnstrm )
 		PORT_START(); 	// IN0 - $080000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
@@ -355,7 +355,7 @@ public class afega
 									Stagger I
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_bubl2000 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bubl2000 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bubl2000 )
 		PORT_START(); 	// IN0 - $080000.w
 		PORT_BIT(  0x0001, IP_ACTIVE_LOW, IPT_COIN1    );
 		PORT_BIT(  0x0002, IP_ACTIVE_LOW, IPT_COIN2    );
@@ -536,8 +536,7 @@ public class afega
 		{ 70 }
 	};
 	
-	public static InterruptHandlerPtr interrupt_afega = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr interrupt_afega = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:		irq2_line_hold();	break;
@@ -545,14 +544,12 @@ public class afega
 		}
 	} };
 	
-	public static MachineInitHandlerPtr machine_init_afega  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_afega  = new MachineInitHandlerPtr() { public void handler(){
 		/* Sprites Mirror required due to bug in the game code ( movem.w instead of movem.l ) */
 		cpu_setbank( 1, spriteram16 );
 	} };
 	
-	public static MachineHandlerPtr machine_driver_stagger1 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stagger1 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,10000000)	/* 3.072 MHz */
@@ -582,24 +579,18 @@ public class afega
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, afega_ym2151_intf)
 		MDRV_SOUND_ADD(OKIM6295, afega_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_redhawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( redhawk )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(stagger1)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(redhawk_readmem,redhawk_writemem)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_grdnstrm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( grdnstrm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -631,21 +622,16 @@ public class afega
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, afega_ym2151_intf)
 		MDRV_SOUND_ADD(OKIM6295, afega_m6295_intf)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_bubl2000 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bubl2000 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(grdnstrm)
 	
 		/* video hardware */
 		MDRV_VIDEO_UPDATE(bubl2000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -665,7 +651,7 @@ public class afega
 		size_t  size = memory_region_length( REGION_CPU1 );
 		data8_t *buffer = malloc( size );
 	
-		if (buffer != 0)
+		if( buffer )
 		{
 			memcpy( buffer, RAM, size );
 			for( i = 0; i < size; i++ )
@@ -758,8 +744,7 @@ public class afega
 		ROM_LOAD( "5", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_redhawk  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_redhawk  = new DriverInitHandlerPtr() { public void handler(){
 		decryptcode( 23, 22, 21, 20, 19, 18, 16, 15, 14, 17, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
 	} };
 	
@@ -815,8 +800,7 @@ public class afega
 		ROM_LOAD( "gst-02.u95", 0x00000, 0x40000, CRC(e911ce33) SHA1(a29c4dea98a22235122303325c63c15fadd3431d) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_grdnstrm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_grdnstrm  = new DriverInitHandlerPtr() { public void handler(){
 		decryptcode( 23, 22, 21, 20, 19, 18, 16, 17, 14, 15, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
 	} };
 	
@@ -888,8 +872,7 @@ public class afega
 		ROM_LOAD( "rom02.95", 0x00000, 0x40000, CRC(859a86e5) SHA1(7b51964227411a40aac54b9cd9ff64f091bdf2b0) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_bubl2000  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_bubl2000  = new DriverInitHandlerPtr() { public void handler(){
 		decryptcode( 23, 22, 21, 20, 19, 18, 13, 14, 15, 16, 17, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0 );
 	} };
 	
@@ -901,8 +884,8 @@ public class afega
 	
 	***************************************************************************/
 	
-	public static GameDriver driver_stagger1	   = new GameDriver("1998"	,"stagger1"	,"afega.java"	,rom_stagger1,null	,machine_driver_stagger1	,input_ports_stagger1	,null	,ROT270	,	"Afega", "Stagger I (Japan)",                GAME_NOT_WORKING )
-	public static GameDriver driver_redhawk	   = new GameDriver("1997"	,"redhawk"	,"afega.java"	,rom_redhawk,driver_stagger1	,machine_driver_redhawk	,input_ports_stagger1	,init_redhawk	,ROT270	,	"Afega", "Red Hawk (US)", GAME_NOT_WORKING )
-	public static GameDriver driver_grdnstrm	   = new GameDriver("1998"	,"grdnstrm"	,"afega.java"	,rom_grdnstrm,null	,machine_driver_grdnstrm	,input_ports_grdnstrm	,init_grdnstrm	,ROT270	,	"Afega", "Sen Jin - Guardian Storm (Korea)", GAME_NOT_WORKING )
-	public static GameDriver driver_bubl2000	   = new GameDriver("1998"	,"bubl2000"	,"afega.java"	,rom_bubl2000,null	,machine_driver_bubl2000	,input_ports_bubl2000	,init_bubl2000	,ROT0	,	"Tuning", "Bubble 2000", GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1998, stagger1, 0,        stagger1, stagger1, 0,        ROT270, "Afega", "Stagger I (Japan)",                GAME_NOT_WORKING )
+	GAMEX( 1997, redhawk,  stagger1, redhawk,  stagger1, redhawk,  ROT270, "Afega", "Red Hawk (US)", GAME_NOT_WORKING )
+	GAMEX( 1998, grdnstrm, 0,        grdnstrm, grdnstrm, grdnstrm, ROT270, "Afega", "Sen Jin - Guardian Storm (Korea)", GAME_NOT_WORKING )
+	GAMEX( 1998, bubl2000, 0,        bubl2000, bubl2000, bubl2000, ROT0,   "Tuning", "Bubble 2000", GAME_IMPERFECT_GRAPHICS )
 }

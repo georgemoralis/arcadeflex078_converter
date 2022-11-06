@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -37,8 +37,7 @@ public class ttmahjng
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_ttmahjng  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ttmahjng  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		ttmahjng_color_prom = color_prom;	/* we'll need this later */
 	} };
 	
@@ -48,8 +47,7 @@ public class ttmahjng
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_ttmahjng  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ttmahjng  = new VideoStartHandlerPtr() { public int handler(){
 		if ((tmpbitmap1 = auto_bitmap_alloc(Machine.drv.screen_width,Machine.drv.screen_height)) == 0)
 			return 1;
 	
@@ -68,8 +66,7 @@ public class ttmahjng
 	/***************************************************************************
 	  ttmahjng_out0_w
 	***************************************************************************/
-	public static WriteHandlerPtr ttmahjng_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ttmahjng_out0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_write = 0;
 	
 		if (data == last_write) return;
@@ -86,8 +83,7 @@ public class ttmahjng
 	/***************************************************************************
 	  ttmahjng_out1_w
 	***************************************************************************/
-	public static WriteHandlerPtr ttmahjng_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ttmahjng_out1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int last_write = 0;
 	
 		if (data == last_write) return;
@@ -106,53 +102,47 @@ public class ttmahjng
 	/***************************************************************************
 	  ttmahjng_sharedram_r
 	***************************************************************************/
-	public static ReadHandlerPtr ttmahjng_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr ttmahjng_sharedram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return ttmahjng_sharedram[offset];
 	} };
 	
 	/***************************************************************************
 	  ttmahjng_sharedram_w
 	***************************************************************************/
-	public static WriteHandlerPtr ttmahjng_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ttmahjng_sharedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ttmahjng_sharedram[offset] = data;
 	} };
 	
 	/***************************************************************************
 	  ttmahjng_videoram1_r
 	***************************************************************************/
-	public static ReadHandlerPtr ttmahjng_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return ttmahjng_videoram1.read(offset);
+	public static ReadHandlerPtr ttmahjng_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return ttmahjng_videoram1[offset];
 	} };
 	
 	/***************************************************************************
 	  ttmahjng_videoram2_r
 	***************************************************************************/
-	public static ReadHandlerPtr ttmahjng_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return ttmahjng_videoram1.read(offset);
+	public static ReadHandlerPtr ttmahjng_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return ttmahjng_videoram1[offset];
 	} };
 	
 	/***************************************************************************
 	  ttmahjng_videoram1_w
 	***************************************************************************/
-	public static WriteHandlerPtr ttmahjng_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		ttmahjng_videoram1.write(data,data);
+	public static WriteHandlerPtr ttmahjng_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		ttmahjng_videoram1[offset] = data;
 	
-		common_videoram_w.handler(offset, data, 0, tmpbitmap1);
+		common_videoram_w(offset, data, 0, tmpbitmap1);
 	} };
 	
 	/***************************************************************************
 	  ttmahjng_videoram2_w
 	***************************************************************************/
-	public static WriteHandlerPtr ttmahjng_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		ttmahjng_videoram2.write(data,data);
+	public static WriteHandlerPtr ttmahjng_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		ttmahjng_videoram2[offset] = data;
 	
-		common_videoram_w.handler(offset, data, 4, tmpbitmap2);
+		common_videoram_w(offset, data, 4, tmpbitmap2);
 	} };
 	
 	/***************************************************************************
@@ -166,7 +156,7 @@ public class ttmahjng
 		x = ((offset & 0x3f) << 2);
 		y = (offset & 0xffc0) >> 6;
 	
-		if (video_flip != 0)
+		if (video_flip)
 		{
 			x = 255 - x;
 			y = 255 - y;
@@ -177,19 +167,19 @@ public class ttmahjng
 		color2 = ((data & 0x20) >> 4) | ((data & 0x02) >> 1);
 		color1 = ((data & 0x10) >> 3) | ((data & 0x01)     );
 	
-		if (video_flip != 0)
+		if (video_flip)
 		{
-			plot_pixel(bitmap, x  , y, Machine.pens[color1 | coloroffset]);
-			plot_pixel(bitmap, x-1, y, Machine.pens[color2 | coloroffset]);
-			plot_pixel(bitmap, x-2, y, Machine.pens[color3 | coloroffset]);
-			plot_pixel(bitmap, x-3, y, Machine.pens[color4 | coloroffset]);
+			plot_pixel(bitmap, x  , y, Machine->pens[color1 | coloroffset]);
+			plot_pixel(bitmap, x-1, y, Machine->pens[color2 | coloroffset]);
+			plot_pixel(bitmap, x-2, y, Machine->pens[color3 | coloroffset]);
+			plot_pixel(bitmap, x-3, y, Machine->pens[color4 | coloroffset]);
 		}
 		else
 		{
-			plot_pixel(bitmap, x  , y, Machine.pens[color1 | coloroffset]);
-			plot_pixel(bitmap, x+1, y, Machine.pens[color2 | coloroffset]);
-			plot_pixel(bitmap, x+2, y, Machine.pens[color3 | coloroffset]);
-			plot_pixel(bitmap, x+3, y, Machine.pens[color4 | coloroffset]);
+			plot_pixel(bitmap, x  , y, Machine->pens[color1 | coloroffset]);
+			plot_pixel(bitmap, x+1, y, Machine->pens[color2 | coloroffset]);
+			plot_pixel(bitmap, x+2, y, Machine->pens[color3 | coloroffset]);
+			plot_pixel(bitmap, x+3, y, Machine->pens[color4 | coloroffset]);
 		}
 	}
 	
@@ -200,9 +190,8 @@ public class ttmahjng
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_ttmahjng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
-		if (video_remap_1 != 0)
+	public static VideoUpdateHandlerPtr video_update_ttmahjng  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
+		if (video_remap_1)
 		{
 			modify_pen(0, video_color_select_1 + 0);
 			modify_pen(1, video_color_select_1 + 1);
@@ -210,7 +199,7 @@ public class ttmahjng
 			modify_pen(3, video_color_select_1 + 3);
 		}
 	
-		if (video_remap_2 != 0)
+		if (video_remap_2)
 		{
 			modify_pen(4, video_color_select_2 + 0);
 			modify_pen(5, video_color_select_2 + 1);
@@ -226,8 +215,8 @@ public class ttmahjng
 			// redraw bitmaps
 			for (offs = 0; offs < ttmahjng_videoram_size; offs++)
 			{
-				ttmahjng_videoram1_w(offs, ttmahjng_videoram1.read(offs));
-				ttmahjng_videoram2_w(offs, ttmahjng_videoram2.read(offs));
+				ttmahjng_videoram1_w(offs, ttmahjng_videoram1[offs]);
+				ttmahjng_videoram2_w(offs, ttmahjng_videoram2[offs]);
 			}
 		}
 	

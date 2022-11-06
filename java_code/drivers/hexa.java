@@ -33,7 +33,7 @@ NOTES:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -69,7 +69,7 @@ public class hexa
 	
 	
 	
-	static InputPortPtr input_ports_hexa = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hexa = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hexa )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN | IPF_4WAY );
@@ -141,8 +141,7 @@ public class hexa
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_hexa = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hexa )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)		/* 4 MHz ??????? */
@@ -165,9 +164,7 @@ public class hexa
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -194,8 +191,7 @@ public class hexa
 	
 	
 	
-	public static DriverInitHandlerPtr init_hexa  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hexa  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 	
@@ -209,5 +205,5 @@ public class hexa
 	} };
 	
 	
-	public static GameDriver driver_hexa	   = new GameDriver("1986?"	,"hexa"	,"hexa.java"	,rom_hexa,null	,machine_driver_hexa	,input_ports_hexa	,init_hexa	,ROT0	,	"D. R. Korea", "Hexa" )
+	GAME( 1986?, hexa, 0, hexa, hexa, hexa, ROT0, "D. R. Korea", "Hexa" )
 }

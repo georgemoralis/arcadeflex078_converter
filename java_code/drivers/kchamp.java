@@ -63,7 +63,7 @@ IO ports and memory map changes. Dip switches differ too.
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -116,32 +116,32 @@ public class kchamp
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static WriteHandlerPtr control_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		nmi_enable = data & 1;
-	} };
+	}
 	
-	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sound_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if ( !( data & 1 ) )
 			cpu_set_reset_line(1,PULSE_LINE);
-	} };
+	}
 	
-	public static WriteHandlerPtr sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		MSM5205_reset_w( 0, !( data & 1 ) );
 		sound_nmi_enable = ( ( data >> 1 ) & 1 );
-	} };
+	}
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		soundlatch_w.handler( 0, data );
 		cpu_set_irq_line_and_vector( 1, 0, HOLD_LINE, 0xff );
-	} };
+	}
 	
 	static int msm_data = 0;
 	static int msm_play_lo_nibble = 1;
 	
-	public static WriteHandlerPtr sound_msm_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr sound_msm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		msm_data = data;
 		msm_play_lo_nibble = 1;
-	} };
+	}
 	
 	public static IO_ReadPort readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -218,17 +218,17 @@ public class kchamp
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	public static ReadHandlerPtr sound_reset_r  = new ReadHandlerPtr() { public int handler(int offset) {
+	public static ReadHandlerPtr sound_reset_r  = new ReadHandlerPtr() { public int handler(int offset)
 		cpu_set_reset_line(1,PULSE_LINE);
 		return 0;
-	} };
+	}
 	
-	public static WriteHandlerPtr kc_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data) {
+	public static WriteHandlerPtr kc_sound_control_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		if ( offset == 0 )
 			sound_nmi_enable = ( ( data >> 7 ) & 1 );
 	//	else
 	//		DAC_set_volume(0,( data == 1 ) ? 255 : 0,0);
-	} };
+	}
 	
 	public static IO_ReadPort kc_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -266,7 +266,7 @@ public class kchamp
 	};
 	
 	
-	static InputPortPtr input_ports_kchampvs = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kchampvs = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kchampvs )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_LEFT | IPF_4WAY );
@@ -326,7 +326,7 @@ public class kchamp
 	* 1 Player Version  *
 	********************/
 	
-	static InputPortPtr input_ports_kchamp = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kchamp = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kchamp )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_RIGHT | IPF_4WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_LEFT | IPF_4WAY );
@@ -418,17 +418,17 @@ public class kchamp
 	
 	
 	
-	public static InterruptHandlerPtr kc_interrupt = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr kc_interrupt = new InterruptHandlerPtr() {public void handler()
 	
-		if (nmi_enable != 0)
+		if ( nmi_enable )
 			cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	}
 	
 	static void msmint( int data ) {
 	
 		static int counter = 0;
 	
-		if (msm_play_lo_nibble != 0)
+		if ( msm_play_lo_nibble )
 			MSM5205_data_w( 0, msm_data & 0x0f );
 		else
 			MSM5205_data_w( 0, ( msm_data >> 4 ) & 0x0f );
@@ -436,10 +436,10 @@ public class kchamp
 		msm_play_lo_nibble ^= 1;
 	
 		if ( !( counter ^= 1 ) ) {
-			if (sound_nmi_enable != 0) {
+			if ( sound_nmi_enable ) {
 				cpu_set_irq_line( 1, IRQ_LINE_NMI, PULSE_LINE );
 			}
-		}
+		} };
 	}
 	
 	static AY8910interface ay8910_interface = new AY8910interface
@@ -466,21 +466,20 @@ public class kchamp
 	* 1 Player Version  *
 	********************/
 	
-	public static InterruptHandlerPtr sound_int = new InterruptHandlerPtr() {public void handler() {
+	public static InterruptHandlerPtr sound_int = new InterruptHandlerPtr() {public void handler()
 	
-		if (sound_nmi_enable != 0)
+		if ( sound_nmi_enable )
 			cpu_set_irq_line(1, IRQ_LINE_NMI, PULSE_LINE);
-	} };
+	}
 	
 	static struct DACinterface dac_interface =
 	{
 		1,
-		{ 50 }
+		{ 50 } };
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_kchampvs = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kchampvs )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 12MHz / 4 = 3.0 MHz */
@@ -512,16 +511,13 @@ public class kchamp
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/********************
 	* 1 Player Version  *
 	********************/
 	
-	public static MachineHandlerPtr machine_driver_kchamp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kchamp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3000000)	/* 12MHz / 4 = 3.0 MHz */
@@ -554,9 +550,7 @@ public class kchamp
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -733,8 +727,7 @@ public class kchamp
 	
 	
 	
-	public static DriverInitHandlerPtr init_kchampvs  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_kchampvs  = new DriverInitHandlerPtr() { public void handler(){
 		UINT8 *rom = memory_region(REGION_CPU1);
 		int diff = memory_region_length(REGION_CPU1) / 2;
 		int A;
@@ -767,8 +760,8 @@ public class kchamp
 	
 	
 	
-	public static GameDriver driver_kchamp	   = new GameDriver("1984"	,"kchamp"	,"kchamp.java"	,rom_kchamp,null	,machine_driver_kchamp	,input_ports_kchamp	,null	,ROT90	,	"Data East USA", "Karate Champ (US)" )
-	public static GameDriver driver_karatedo	   = new GameDriver("1984"	,"karatedo"	,"kchamp.java"	,rom_karatedo,driver_kchamp	,machine_driver_kchamp	,input_ports_kchamp	,null	,ROT90	,	"Data East Corporation", "Karate Dou (Japan)" )
-	public static GameDriver driver_kchampvs	   = new GameDriver("1984"	,"kchampvs"	,"kchamp.java"	,rom_kchampvs,driver_kchamp	,machine_driver_kchampvs	,input_ports_kchampvs	,init_kchampvs	,ROT90	,	"Data East USA", "Karate Champ (US VS version)" )
-	public static GameDriver driver_karatevs	   = new GameDriver("1984"	,"karatevs"	,"kchamp.java"	,rom_karatevs,driver_kchamp	,machine_driver_kchampvs	,input_ports_kchampvs	,init_kchampvs	,ROT90	,	"Data East Corporation", "Taisen Karate Dou (Japan VS version)" )
+	GAME( 1984, kchamp,   0,      kchamp,   kchamp,   0,        ROT90, "Data East USA", "Karate Champ (US)" )
+	GAME( 1984, karatedo, kchamp, kchamp,   kchamp,   0,        ROT90, "Data East Corporation", "Karate Dou (Japan)" )
+	GAME( 1984, kchampvs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East USA", "Karate Champ (US VS version)" )
+	GAME( 1984, karatevs, kchamp, kchampvs, kchampvs, kchampvs, ROT90, "Data East Corporation", "Taisen Karate Dou (Japan VS version)" )
 }

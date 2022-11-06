@@ -13,7 +13,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -57,8 +57,7 @@ public class pengo
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_pacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pacman  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -98,8 +97,7 @@ public class pengo
 			COLOR(0,i) = *(color_prom++) & 0x0f;
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_pengo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_pengo  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -157,16 +155,14 @@ public class pengo
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_pengo  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pengo  = new VideoStartHandlerPtr() { public int handler(){
 		gfx_bank = 0;
 		xoffsethack = 0;
 	
 	    return video_start_generic.handler();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_pacman  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_pacman  = new VideoStartHandlerPtr() { public int handler(){
 		gfx_bank = 0;
 		/* In the Pac Man based games (NOT Pengo) the first two sprites must be offset */
 		/* one pixel to the left to get a more correct placement */
@@ -177,8 +173,7 @@ public class pengo
 	
 	
 	
-	public static WriteHandlerPtr pengo_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pengo_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* the Pengo hardware can set independently the palette bank, color lookup */
 		/* table, and chars/sprites. However the game always set them together (and */
 		/* the only place where this is used is the intro screen) so I don't bother */
@@ -190,8 +185,7 @@ public class pengo
 		}
 	} };
 	
-	public static WriteHandlerPtr pengo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pengo_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flipscreen != (data & 1))
 		{
 			flipscreen = data & 1;
@@ -208,8 +202,7 @@ public class pengo
 	  the main emulation engine.
 	
 	***************************************************************************/
-	public static VideoUpdateHandlerPtr video_update_pengo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_pengo  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle spriteclip = spritevisiblearea;
 		int offs;
 		
@@ -243,7 +236,7 @@ public class pengo
 					sy = my - 2;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -260,7 +253,7 @@ public class pengo
 	
 		copybitmap(bitmap,tmpbitmap,0,0,0,0,cliprect,TRANSPARENCY_NONE,0);
 	
-		if (spriteram_size != 0)
+		if( spriteram_size[0] )
 		{
 			/* Draw the sprites. Note that it is important to draw them exactly in this */
 			/* order, to have the correct priorities. */
@@ -316,15 +309,13 @@ public class pengo
 	} };
 	
 	
-	public static WriteHandlerPtr vanvan_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((data & 1) != 0) palette_set_color(0,0xaa,0xaa,0xaa);
+	public static WriteHandlerPtr vanvan_bgcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (data & 1) palette_set_color(0,0xaa,0xaa,0xaa);
 		else          palette_set_color(0,0x00,0x00,0x00);
 	} };
 	
 	
-	public static VideoUpdateHandlerPtr video_update_vanvan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_vanvan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle spriteclip = spritevisiblearea;
 		int offs;
 		
@@ -358,7 +349,7 @@ public class pengo
 					sy = my - 2;
 				}
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 35 - sx;
 					sy = 27 - sy;
@@ -413,7 +404,7 @@ public class pengo
 		attr = colorram.read(tile_index & 0x1f);
 	
 		/* remove when we have proms dumps for it */
-		if (!strcmp(Machine.gamedrv.name, "8bpm"))
+		if (!strcmp(Machine->gamedrv->name, "8bpm"))
 		{
 			attr = 1;
 		}
@@ -421,43 +412,37 @@ public class pengo
 		SET_TILE_INFO(0,code,attr & 0x1f,0)
 	}
 	
-	public static WriteHandlerPtr s2650games_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650games_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr s2650games_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650games_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int i;
 		colorram.write(offset & 0x1f,data);
 		for (i = offset; i < 0x0400; i += 32)
 			tilemap_mark_tile_dirty(tilemap, i);
 	} };
 	
-	public static WriteHandlerPtr s2650games_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650games_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrolly(tilemap, offset, data);
 	} };
 	
-	public static WriteHandlerPtr s2650games_tilesbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650games_tilesbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tiles_bankram[offset] = data;
 		tilemap_mark_all_tiles_dirty(tilemap);
 	} };
 	
-	public static WriteHandlerPtr s2650games_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr s2650games_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
-	public static VideoStartHandlerPtr video_start_s2650games  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_s2650games  = new VideoStartHandlerPtr() { public int handler(){
 		xoffsethack = 1;
 	
 		tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,8,8,32,32 );
 	
-		if (tilemap == 0)
+		if( !tilemap )
 			return 1;
 	
 		colorram = auto_malloc(0x20);
@@ -467,8 +452,7 @@ public class pengo
 		return 0;
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_s2650games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_s2650games  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_draw(bitmap,cliprect,tilemap,0,0);

@@ -9,7 +9,7 @@ Preliminary driver by:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -22,20 +22,17 @@ public class crimfght
 	
 	
 	
-	public static WriteHandlerPtr crimfght_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crimfght_coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0,data & 1);
 		coin_counter_w(1,data & 2);
 	} };
 	
-	public static WriteHandlerPtr crimfght_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crimfght_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static WriteHandlerPtr crimfght_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr crimfght_snd_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* b1: bank for channel A */
 		/* b0: bank for channel B */
 	
@@ -47,8 +44,7 @@ public class crimfght
 	
 	/********************************************/
 	
-	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr speedup_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		int data = ( RAM[0x0414] << 8 ) | RAM[0x0415];
@@ -122,7 +118,7 @@ public class crimfght
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_crimfght = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crimfght = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crimfght )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -248,7 +244,7 @@ public class crimfght
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_SERVICE4 );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_crimfgtj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_crimfgtj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( crimfgtj )
 		PORT_START(); 	/* DSW #1 */
 		PORT_DIPNAME( 0x0f, 0x0f, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(    0x02, DEF_STR( "4C_1C") );
@@ -393,8 +389,7 @@ public class crimfght
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_crimfght = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( crimfght )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI, 3000000)		/* ? */
@@ -423,9 +418,7 @@ public class crimfght
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(K007232, k007232_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -514,7 +507,7 @@ public class crimfght
 		int offs = 0;
 	
 		/* bit 5 = select work RAM or palette */
-		if ((lines & 0x20) != 0){
+		if (lines & 0x20){
 			memory_set_bankhandler_r (1, 0, paletteram_r);							/* palette */
 			memory_set_bankhandler_w (1, 0, paletteram_xBBBBBGGGGGRRRRR_swap_w);	/* palette */
 		}
@@ -530,8 +523,7 @@ public class crimfght
 		cpu_setbank( 2, &RAM[offs] );
 	}
 	
-	public static MachineInitHandlerPtr machine_init_crimfght  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_crimfght  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = crimfght_banking;
@@ -540,15 +532,14 @@ public class crimfght
 		cpu_setbank( 2, &RAM[0x10000] );
 	} };
 	
-	public static DriverInitHandlerPtr init_crimfght  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_crimfght  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_crimfght	   = new GameDriver("1989"	,"crimfght"	,"crimfght.java"	,rom_crimfght,null	,machine_driver_crimfght	,input_ports_crimfght	,init_crimfght	,ROT0	,	"Konami", "Crime Fighters (US 4 players)" )
-	public static GameDriver driver_crimfgt2	   = new GameDriver("1989"	,"crimfgt2"	,"crimfght.java"	,rom_crimfgt2,driver_crimfght	,machine_driver_crimfght	,input_ports_crimfgtj	,init_crimfght	,ROT0	,	"Konami", "Crime Fighters (World 2 Players)" )
-	public static GameDriver driver_crimfgtj	   = new GameDriver("1989"	,"crimfgtj"	,"crimfght.java"	,rom_crimfgtj,driver_crimfght	,machine_driver_crimfght	,input_ports_crimfgtj	,init_crimfght	,ROT0	,	"Konami", "Crime Fighters (Japan 2 Players)" )
+	GAME( 1989, crimfght, 0,        crimfght, crimfght, crimfght, ROT0, "Konami", "Crime Fighters (US 4 players)" )
+	GAME( 1989, crimfgt2, crimfght, crimfght, crimfgtj, crimfght, ROT0, "Konami", "Crime Fighters (World 2 Players)" )
+	GAME( 1989, crimfgtj, crimfght, crimfght, crimfgtj, crimfght, ROT0, "Konami", "Crime Fighters (Japan 2 Players)" )
 }

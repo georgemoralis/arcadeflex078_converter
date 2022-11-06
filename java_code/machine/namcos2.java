@@ -11,7 +11,7 @@ Namco System II
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -73,7 +73,7 @@ public class namcos2
 	/* Perform basic machine initialisation 					 */
 	/*************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_namcos2  = new MachineInitHandlerPtr() { public void handler(){
+	public static MachineInitHandlerPtr machine_init_namcos2  = new MachineInitHandlerPtr() { public void handler()
 		int loop;
 	
 		mFinalLapProtCount = 0;
@@ -91,8 +91,8 @@ public class namcos2
 		{
 			namcos2_68k_master_C148[loop]=0;
 			namcos2_68k_slave_C148[loop]=0;
-		}
-	} };
+		} };
+	}
 	
 	/*************************************************************/
 	/* EEPROM Load/Save and read/write handling 				 */
@@ -101,12 +101,12 @@ public class namcos2
 	data16_t *namcos2_eeprom;
 	size_t namcos2_eeprom_size;
 	
-	public static NVRAMHandlerPtr nvram_handler_namcos2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
-		if (read_or_write != 0){
+	public static NVRAMHandlerPtr nvram_handler_namcos2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
+		if( read_or_write ){
 			mame_fwrite (file, namcos2_eeprom, namcos2_eeprom_size);
-		}
+		} };
 		else {
-			if (file != 0)
+			if (file)
 			{
 				mame_fread (file, namcos2_eeprom, namcos2_eeprom_size);
 			}
@@ -115,7 +115,7 @@ public class namcos2
 				memset (namcos2_eeprom, 0xff, namcos2_eeprom_size);
 			}
 		}
-	} };
+	}
 	
 	WRITE16_HANDLER( namcos2_68k_eeprom_w ){
 		COMBINE_DATA( &namcos2_eeprom[offset] );
@@ -474,7 +474,7 @@ public class namcos2
 		case 0x1e2000: /* Sound CPU Reset control */
 			if( cpu == CPU_MASTER )
 			{
-				if ((data & 0x01) != 0)
+				if(data&0x01)
 				{
 					/* Resume execution */
 					cpu_set_reset_line (NAMCOS2_CPU3, CLEAR_LINE);
@@ -498,7 +498,7 @@ public class namcos2
 		case 0x1e4000: /* Alt 68000 & IO CPU Reset */
 			if( cpu == CPU_MASTER )
 			{
-				if ((data & 0x01) != 0)
+				if(data&0x01)
 				{
 					/* Resume execution */
 					cpu_set_reset_line(altCPU, CLEAR_LINE);
@@ -572,8 +572,7 @@ public class namcos2
 		return scanline;
 	}
 	
-	public static InterruptHandlerPtr namcos2_68k_master_vblank = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr namcos2_68k_master_vblank = new InterruptHandlerPtr() {public void handler(){
 		if(namcos2_68k_master_C148[NAMCOS2_C148_POSIRQ])
 		{
 			int scanline = GetPosIRQScanline();
@@ -597,21 +596,20 @@ public class namcos2
 		cpu_set_irq_line(CPU_SLAVE , namcos2_68k_slave_C148[NAMCOS2_C148_POSIRQ] , ASSERT_LINE);
 	}
 	
-	public static InterruptHandlerPtr namcos2_68k_slave_vblank = new InterruptHandlerPtr() {public void handler(){
+	public static InterruptHandlerPtr namcos2_68k_slave_vblank = new InterruptHandlerPtr() {public void handler()
 		if(namcos2_68k_slave_C148[NAMCOS2_C148_POSIRQ])
 		{
 			int scanline = GetPosIRQScanline();
 			timer_set( cpu_getscanlinetime(scanline), scanline, namcos2_68k_slave_posirq );
-		}
+		} };
 		cpu_set_irq_line( CPU_SLAVE, namcos2_68k_slave_C148[NAMCOS2_C148_VBLANKIRQ], HOLD_LINE);
-	} };
+	}
 	
 	/**************************************************************/
 	/*	Sound sub-system										  */
 	/**************************************************************/
 	
-	public static WriteHandlerPtr namcos2_sound_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_sound_bankselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *RAM=memory_region(REGION_CPU3);
 		unsigned long max = (memory_region_length(REGION_CPU3) - 0x10000) / 0x4000;
 		int bank = ( data >> 4 ) % max;	/* 991104.CAB */
@@ -630,13 +628,12 @@ public class namcos2
 	static int namcos2_mcu_analog_data=0xaa;
 	static int namcos2_mcu_analog_complete=0;
 	
-	public static WriteHandlerPtr namcos2_mcu_analog_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_mcu_analog_ctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		namcos2_mcu_analog_ctrl=data&0xff;
 	
 		/* Check if this is a start of conversion */
 		/* Input ports 2 thru 9 are the analog channels */
-		if ((data & 0x40) != 0)
+		if(data&0x40)
 		{
 			/* Set the conversion complete flag */
 			namcos2_mcu_analog_complete=2;
@@ -678,20 +675,19 @@ public class namcos2
 			}
 	#endif
 			/* If the interrupt enable bit is set trigger an A/D IRQ */
-			if ((data & 0x20) != 0)
+			if(data&0x20)
 			{
 				cpu_set_irq_line( CPU_MCU, HD63705_INT_ADCONV , PULSE_LINE);
 			}
 		}
 	} };
 	
-	public static ReadHandlerPtr namcos2_mcu_analog_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_mcu_analog_ctrl_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data=0;
 	
 		/* ADEF flag is only cleared AFTER a read from control THEN a read from DATA */
 		if(namcos2_mcu_analog_complete==2) namcos2_mcu_analog_complete=1;
-		if (namcos2_mcu_analog_complete != 0) data|=0x80;
+		if(namcos2_mcu_analog_complete) data|=0x80;
 	
 		/* Mask on the lower 6 register bits, Irq EN/Channel/Clock */
 		data|=namcos2_mcu_analog_ctrl&0x3f;
@@ -699,23 +695,19 @@ public class namcos2
 		return data;
 	} };
 	
-	public static WriteHandlerPtr namcos2_mcu_analog_port_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_mcu_analog_port_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	} };
 	
-	public static ReadHandlerPtr namcos2_mcu_analog_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_mcu_analog_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		if(namcos2_mcu_analog_complete==1) namcos2_mcu_analog_complete=0;
 		return namcos2_mcu_analog_data;
 	} };
 	
-	public static WriteHandlerPtr namcos2_mcu_port_d_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_mcu_port_d_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Undefined operation on write */
 	} };
 	
-	public static ReadHandlerPtr namcos2_mcu_port_d_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_mcu_port_d_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Provides a digital version of the analog ports */
 		int threshold=0x7f;
 		int data=0;
@@ -734,8 +726,7 @@ public class namcos2
 		return data;
 	} };
 	
-	public static ReadHandlerPtr namcos2_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_input_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data=readinputport(0);
 	
 		int one_joy_trans0[2][10]={
@@ -761,8 +752,7 @@ public class namcos2
 		return data;
 	} };
 	
-	public static ReadHandlerPtr namcos2_input_port_10_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_input_port_10_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data=readinputport(10);
 	
 		int one_joy_trans10[2][10]={
@@ -787,8 +777,7 @@ public class namcos2
 		return data;
 	} };
 	
-	public static ReadHandlerPtr namcos2_input_port_12_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_input_port_12_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data=readinputport(12);
 	
 		int one_joy_trans12[2][4]={

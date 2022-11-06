@@ -7,7 +7,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -193,13 +193,12 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_itech32  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_itech32  = new VideoStartHandlerPtr() { public int handler(){
 		int i;
 	
 		/* allocate memory */
 		videoram16 = auto_malloc(VRAM_WIDTH * (itech32_vram_height + 16) * 2 * 2);
-		if (videoram16 == 0)
+		if (!videoram16)
 			return 1;
 		memset(videoram16, 0xff, VRAM_WIDTH * (itech32_vram_height + 16) * 2 * 2);
 	
@@ -244,7 +243,7 @@ public class itech32
 	
 	WRITE16_HANDLER( timekill_colora_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			enable_latch[0] = (~data >> 5) & 1;
 			enable_latch[1] = (~data >> 7) & 1;
@@ -255,14 +254,14 @@ public class itech32
 	
 	WRITE16_HANDLER( timekill_colorbc_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			color_latch[1] = ((data & 0xf0) << 4) | 0x1000;
 	}
 	
 	
 	WRITE16_HANDLER( timekill_intensity_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			double intensity = (double)(data & 0xff) / (double)0x60;
 			int i;
@@ -274,21 +273,21 @@ public class itech32
 	
 	WRITE16_HANDLER( bloodstm_color1_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			color_latch[0] = (data & 0x7f) << 8;
 	}
 	
 	
 	WRITE16_HANDLER( bloodstm_color2_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			color_latch[1] = (data & 0x7f) << 8;
 	}
 	
 	
 	WRITE16_HANDLER( bloodstm_plane_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			enable_latch[0] = (~data >> 1) & 1;
 			enable_latch[1] = (~data >> 2) & 1;
@@ -305,14 +304,14 @@ public class itech32
 	
 	WRITE32_HANDLER( itech020_color1_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 			color_latch[1] = (data & 0x7f) << 8;
 	}
 	
 	
 	WRITE32_HANDLER( itech020_color2_w )
 	{
-		if (ACCESSING_LSB32 != 0)
+		if (ACCESSING_LSB32)
 			color_latch[0] = (data & 0x7f) << 8;
 	}
 	
@@ -391,12 +390,12 @@ public class itech32
 	{
 		static FILE *blitlog;
 	
-		if (blitlog == 0) blitlog = fopen("blitter.log", "w");
+		if (!blitlog) blitlog = fopen("blitter.log", "w");
 		if (itech32_video[0x16/2] == 0x100 && itech32_video[0x18/2] == 0x100 &&
 			itech32_video[0x1a/2] == 0x000 && itech32_video[0x1c/2] == 0x100 &&
 			itech32_video[0x1e/2] == 0x000 && itech32_video[0x20/2] == 0x000)
 		{
-			logerror("%s: p=%d%d c=%02x%02x %02x%04x . (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x)\n", tag,
+			logerror("%s: p=%d%d c=%02x%02x %02x%04x -> (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x)\n", tag,
 					enable_latch[0], enable_latch[1],
 					color_latch[0] >> 8, color_latch[1] >> 8,
 					VIDEO_TRANSFER_ADDRHI, VIDEO_TRANSFER_ADDRLO,
@@ -406,7 +405,7 @@ public class itech32
 		}
 		else
 		{
-			logerror("%s: p=%d%d c=%02x%02x %02x%04x . (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x) s=%04x %04x %04x %04x %04x %04x\n", tag,
+			logerror("%s: p=%d%d c=%02x%02x %02x%04x -> (%03x,%03x) %3dx%3d f=%04x/%04x c=(%03x,%03x)-(%03x,%03x) s=%04x %04x %04x %04x %04x %04x\n", tag,
 					enable_latch[0], enable_latch[1],
 					color_latch[0] >> 8, color_latch[1] >> 8,
 					VIDEO_TRANSFER_ADDRHI, VIDEO_TRANSFER_ADDRLO,
@@ -480,13 +479,13 @@ public class itech32
 			disable_clipping();
 	
 		/* adjust for scaling */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_DSTXSCALE) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DSTXSCALE)
 			xdststep = VIDEO_DST_XSTEP;
 	
 		/* adjust for flipping */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP)
 			xdststep = -xdststep;
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP)
 			ydststep = -ydststep;
 	
 		/* loop over Y in src pixels */
@@ -558,7 +557,7 @@ public class itech32
 			}
 	
 			/* apply skew */
-			if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_DXDYSIGN) != 0)
+			if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DXDYSIGN)
 				startx += VIDEO_XSTEP_PER_Y;
 			else
 				startx -= VIDEO_XSTEP_PER_Y;
@@ -580,7 +579,7 @@ public class itech32
 	#define GET_NEXT_RUN(xleft, count, innercount, src)	\
 	do {												\
 		/* load next RLE chunk if needed */				\
-		if (count == 0)										\
+		if (!count)										\
 		{												\
 			count = *src++;								\
 			val = (count & 0x80) ? -1 : *src++;			\
@@ -636,7 +635,7 @@ public class itech32
 		sx += lclip;
 	
 		/* adjust for flipping */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP)
 			ydststep = -ydststep;
 	
 		/* loop over Y in src pixels */
@@ -713,7 +712,7 @@ public class itech32
 		sx -= lclip;
 	
 		/* adjust for flipping */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP)
 			ydststep = -ydststep;
 	
 		/* loop over Y in src pixels */
@@ -789,13 +788,13 @@ public class itech32
 		int startx = (VIDEO_TRANSFER_X & 0xfff) << 8;
 	
 		/* adjust for scaling */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_DSTXSCALE) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DSTXSCALE)
 			xdststep = VIDEO_DST_XSTEP;
 	
 		/* adjust for flipping */
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP)
 			xdststep = -xdststep;
-		if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP) != 0)
+		if (VIDEO_TRANSFER_FLAGS & XFERFLAG_YFLIP)
 			ydststep = -ydststep;
 	
 		/* loop over Y in src pixels */
@@ -845,7 +844,7 @@ public class itech32
 			}
 	
 			/* apply skew */
-			if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_DXDYSIGN) != 0)
+			if (VIDEO_TRANSFER_FLAGS & XFERFLAG_DXDYSIGN)
 				startx += VIDEO_XSTEP_PER_Y;
 			else
 				startx -= VIDEO_XSTEP_PER_Y;
@@ -865,7 +864,7 @@ public class itech32
 			draw_rle_slow(base, color);
 	
 		/* else draw it fast */
-		else if ((VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP) != 0)
+		else if (VIDEO_TRANSFER_FLAGS & XFERFLAG_XFLIP)
 			draw_rle_fast_xflip(base, color);
 		else
 			draw_rle_fast(base, color);
@@ -920,7 +919,7 @@ public class itech32
 			/* command 1: blit raw data */
 			case 1:
 				profiler_mark(PROFILER_USER1);
-				if (BLIT_LOGGING != 0) logblit("Blit Raw");
+				if (BLIT_LOGGING) logblit("Blit Raw");
 	
 				if (enable_latch[0]) draw_raw(videoplane[0], color_latch[0]);
 				if (enable_latch[1]) draw_raw(videoplane[1], color_latch[1]);
@@ -931,7 +930,7 @@ public class itech32
 			/* command 2: blit RLE-compressed data */
 			case 2:
 				profiler_mark(PROFILER_USER2);
-				if (BLIT_LOGGING != 0) logblit("Blit RLE");
+				if (BLIT_LOGGING) logblit("Blit RLE");
 	
 				if (enable_latch[0]) draw_rle(videoplane[0], color_latch[0]);
 				if (enable_latch[1]) draw_rle(videoplane[1], color_latch[1]);
@@ -941,7 +940,7 @@ public class itech32
 	
 			/* command 3: set up raw data transfer */
 			case 3:
-				if (BLIT_LOGGING != 0) logblit("Raw Xfer");
+				if (BLIT_LOGGING) logblit("Raw Xfer");
 				xfer_xcount = VIDEO_TRANSFER_WIDTH;
 				xfer_ycount = ADJUSTED_HEIGHT(VIDEO_TRANSFER_HEIGHT);
 				xfer_xcur = VIDEO_TRANSFER_X & 0xfff;
@@ -959,7 +958,7 @@ public class itech32
 			/* command 6: perform shift register copy */
 			case 6:
 				profiler_mark(PROFILER_USER3);
-				if (BLIT_LOGGING != 0) logblit("ShiftReg");
+				if (BLIT_LOGGING) logblit("ShiftReg");
 	
 				if (enable_latch[0]) shiftreg_clear(videoplane[0]);
 				if (enable_latch[1]) shiftreg_clear(videoplane[1]);
@@ -1085,7 +1084,7 @@ public class itech32
 	
 	WRITE32_HANDLER( itech020_video_w )
 	{
-		if (ACCESSING_MSW32 != 0)
+		if (ACCESSING_MSW32)
 			itech32_video_w(offset, data >> 16, mem_mask >> 16);
 		else
 			itech32_video_w(offset, data, mem_mask);
@@ -1106,8 +1105,7 @@ public class itech32
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_itech32  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int y;
 	
 		/* loop over height */

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sound;
 
@@ -144,7 +144,7 @@ public class bsmt2000
 		int v;
 	
 		/* skip if nothing to do */
-		if (samples == 0)
+		if (!samples)
 			return;
 	
 		/* clear out the accumulator */
@@ -152,19 +152,19 @@ public class bsmt2000
 		memset(right, 0, samples * sizeof(right[0]));
 	
 		/* loop over voices */
-		for (v = 0; v < chip.voices; v++)
+		for (v = 0; v < chip->voices; v++)
 		{
-			voice = &chip.voice[v];
+			voice = &chip->voice[v];
 			
 			/* compute the region base */
-			if (voice.reg[REG_BANK] < chip.total_banks)
+			if (voice->reg[REG_BANK] < chip->total_banks)
 			{
-				INT8 *base = &chip.region_base[voice.reg[REG_BANK] * 0x10000];
+				INT8 *base = &chip->region_base[voice->reg[REG_BANK] * 0x10000];
 				INT32 *lbuffer = left, *rbuffer = right;
-				UINT32 rate = voice.adjusted_rate;
-				UINT32 pos = voice.position;
-				INT32 lvol = voice.reg[REG_LEFTVOL];
-				INT32 rvol = voice.reg[REG_RIGHTVOL];
+				UINT32 rate = voice->adjusted_rate;
+				UINT32 pos = voice->position;
+				INT32 lvol = voice->reg[REG_LEFTVOL];
+				INT32 rvol = voice->reg[REG_RIGHTVOL];
 				int remaining = samples;
 	
 				/* loop while we still have samples to generate */
@@ -183,29 +183,29 @@ public class bsmt2000
 					*rbuffer++ += val1 * rvol;
 	
 					/* check for loop end */
-					if (pos >= voice.loop_stop_position)
-						pos += voice.loop_start_position - voice.loop_stop_position;
+					if (pos >= voice->loop_stop_position)
+						pos += voice->loop_start_position - voice->loop_stop_position;
 				}
 	
 				/* update the position */
-				voice.position = pos;
+				voice->position = pos;
 			}
 		}
 	
 		/* compressed voice (11-voice model only) */
-		voice = &chip.compressed;
-		if (chip.voices == 11 && voice.reg[REG_BANK] < chip.total_banks)
+		voice = &chip->compressed;
+		if (chip->voices == 11 && voice->reg[REG_BANK] < chip->total_banks)
 		{
-			INT8 *base = &chip.region_base[voice.reg[REG_BANK] * 0x10000];
+			INT8 *base = &chip->region_base[voice->reg[REG_BANK] * 0x10000];
 			INT32 *lbuffer = left, *rbuffer = right;
-			UINT32 rate = voice.adjusted_rate;
-			UINT32 pos = voice.position;
-			INT32 lvol = voice.reg[REG_LEFTVOL];
-			INT32 rvol = voice.reg[REG_RIGHTVOL];
+			UINT32 rate = voice->adjusted_rate;
+			UINT32 pos = voice->position;
+			INT32 lvol = voice->reg[REG_LEFTVOL];
+			INT32 rvol = voice->reg[REG_RIGHTVOL];
 			int remaining = samples;
 	
 			/* loop while we still have samples to generate */
-			while (remaining-- && pos < voice.loop_stop_position)
+			while (remaining-- && pos < voice->loop_stop_position)
 			{
 				/* fetch two samples -- note: this is wrong, just a guess!!!*/
 				INT32 val1 = (INT8)((base[pos >> 16] << ((pos >> 13) & 4)) & 0xf0);
@@ -221,7 +221,7 @@ public class bsmt2000
 			}
 	
 			/* update the position */
-			voice.position = pos;
+			voice->position = pos;
 		}
 	}
 	
@@ -237,10 +237,10 @@ public class bsmt2000
 	{
 		struct BSMT2000Chip *chip = &bsmt2000[num];
 		INT32 *lsrc = scratch, *rsrc = scratch;
-		INT32 lprev = chip.last_lsample;
-		INT32 rprev = chip.last_rsample;
-		INT32 lcurr = chip.curr_lsample;
-		INT32 rcurr = chip.curr_rsample;
+		INT32 lprev = chip->last_lsample;
+		INT32 rprev = chip->last_rsample;
+		INT32 lcurr = chip->curr_lsample;
+		INT32 rcurr = chip->curr_rsample;
 		INT16 *ldest = buffer[0];
 		INT16 *rdest = buffer[1];
 		INT32 interp;
@@ -249,15 +249,15 @@ public class bsmt2000
 	
 	#if MAKE_WAVS
 		/* start the logging once we have a sample rate */
-		if (chip.output_step)
+		if (chip->output_step)
 		{
-			if (!chip.wavraw)
+			if (!chip->wavraw)
 			{
-				int sample_rate = (int)((double)Machine.sample_rate / (double)(1 << FRAC_BITS) * (double)chip.output_step);
-				chip.wavraw = wav_open("raw.wav", sample_rate, 2);
+				int sample_rate = (int)((double)Machine->sample_rate / (double)(1 << FRAC_BITS) * (double)chip->output_step);
+				chip->wavraw = wav_open("raw.wav", sample_rate, 2);
 			}
-			if (!chip.wavresample)
-				chip.wavresample = wav_open("resamp.wav", Machine.sample_rate, 2);
+			if (!chip->wavresample)
+				chip->wavresample = wav_open("resamp.wav", Machine->sample_rate, 2);
 		}
 	#endif
 	
@@ -265,13 +265,13 @@ public class bsmt2000
 		while (remaining > 0)
 		{
 			/* if we're over, grab the next samples */
-			while (chip.output_pos >= FRAC_ONE)
+			while (chip->output_pos >= FRAC_ONE)
 			{
 				/* do we have any samples available? */
 				if (samples_left == 0)
 				{
 					/* compute how many new samples we need */
-					UINT32 final_pos = chip.output_pos + (remaining - 1) * chip.output_step;
+					UINT32 final_pos = chip->output_pos + (remaining - 1) * chip->output_step;
 					samples_left = final_pos >> FRAC_BITS;
 					if (samples_left > MAX_SAMPLE_CHUNK)
 						samples_left = MAX_SAMPLE_CHUNK;
@@ -283,13 +283,13 @@ public class bsmt2000
 	
 	#if MAKE_WAVS
 					/* log the raw data */
-					if (chip.wavraw)
-						wav_add_data_32lr(chip.wavraw, lsrc, rsrc, samples_left, 4);
+					if (chip->wavraw)
+						wav_add_data_32lr(chip->wavraw, lsrc, rsrc, samples_left, 4);
 	#endif
 				}
 	
 				/* adjust the positions */
-				chip.output_pos -= FRAC_ONE;
+				chip->output_pos -= FRAC_ONE;
 				lprev = lcurr;
 				rprev = rcurr;
 	
@@ -300,32 +300,32 @@ public class bsmt2000
 			}
 	
 			/* interpolate between the two current samples */
-			while (remaining > 0 && chip.output_pos < FRAC_ONE)
+			while (remaining > 0 && chip->output_pos < FRAC_ONE)
 			{
 				/* left channel */
-				interp = backend_interpolate(lprev, lcurr, chip.output_pos);
+				interp = backend_interpolate(lprev, lcurr, chip->output_pos);
 				*ldest++ = (interp < -32768) ? -32768 : (interp > 32767) ? 32767 : interp;
 	
 				/* right channel */
-				interp = backend_interpolate(rprev, rcurr, chip.output_pos);
+				interp = backend_interpolate(rprev, rcurr, chip->output_pos);
 				*rdest++ = (interp < -32768) ? -32768 : (interp > 32767) ? 32767 : interp;
 	
 				/* advance */
-				chip.output_pos += chip.output_step;
+				chip->output_pos += chip->output_step;
 				remaining--;
 			}
 		}
 	
 		/* remember the last samples */
-		chip.last_lsample = lprev;
-		chip.last_rsample = rprev;
-		chip.curr_lsample = lcurr;
-		chip.curr_rsample = rcurr;
+		chip->last_lsample = lprev;
+		chip->last_rsample = rprev;
+		chip->curr_lsample = lcurr;
+		chip->curr_rsample = rcurr;
 	
 	#if MAKE_WAVS
 		/* log the resampled data */
-		if (chip.wavresample)
-			wav_add_data_16lr(chip.wavresample, buffer[0], buffer[1], length);
+		if (chip->wavresample)
+			wav_add_data_16lr(chip->wavresample, buffer[0], buffer[1], length);
 	#endif
 	}
 	
@@ -339,11 +339,11 @@ public class bsmt2000
 	
 	INLINE void init_voice(struct BSMT2000Voice *voice)
 	{
-		memset(&voice.reg, 0, sizeof(voice.reg));
-		voice.position = 0;
-		voice.adjusted_rate = 0;
-		voice.reg[REG_LEFTVOL] = 0x7fff;
-		voice.reg[REG_RIGHTVOL] = 0x7fff;
+		memset(&voice->reg, 0, sizeof(voice->reg));
+		voice->position = 0;
+		voice->adjusted_rate = 0;
+		voice->reg[REG_LEFTVOL] = 0x7fff;
+		voice->reg[REG_RIGHTVOL] = 0x7fff;
 	}
 	
 	
@@ -352,17 +352,17 @@ public class bsmt2000
 	 	int i;
 	 
 	 	/* init the voices */
-	 	for (i = 0; i < chip.voices; i++)
-	 		init_voice(&chip.voice[i]);
+	 	for (i = 0; i < chip->voices; i++)
+	 		init_voice(&chip->voice[i]);
 	 
 	 	/* init the compressed voice (runs at a fixed rate of ~8kHz?) */
-	 	init_voice(&chip.compressed);
-	 	chip.compressed.adjusted_rate = 0x02aa << 4;
+	 	init_voice(&chip->compressed);
+	 	chip->compressed.adjusted_rate = 0x02aa << 4;
 	 }
 	 
 	int BSMT2000_sh_start(const struct MachineSound *msound)
 	{
-		const struct BSMT2000interface *intf = msound.sound_interface;
+		const struct BSMT2000interface *intf = msound->sound_interface;
 		char stream_name[2][40];
 		const char *stream_name_ptrs[2];
 		int vol[2];
@@ -370,10 +370,10 @@ public class bsmt2000
 		
 		/* initialize the chips */
 		memset(&bsmt2000, 0, sizeof(bsmt2000));
-		for (i = 0; i < intf.num; i++)
+		for (i = 0; i < intf->num; i++)
 		{
 			/* allocate the voices */
-			bsmt2000[i].voices = intf.voices[i];
+			bsmt2000[i].voices = intf->voices[i];
 			bsmt2000[i].voice = malloc(bsmt2000[i].voices * sizeof(struct BSMT2000Voice));
 			if (!bsmt2000[i].voice)
 				return 1;
@@ -385,21 +385,21 @@ public class bsmt2000
 			stream_name_ptrs[1] = stream_name[1];
 	
 			/* set the volumes */
-			vol[0] = MIXER(intf.mixing_level[i], MIXER_PAN_LEFT);
-			vol[1] = MIXER(intf.mixing_level[i], MIXER_PAN_RIGHT);
+			vol[0] = MIXER(intf->mixing_level[i], MIXER_PAN_LEFT);
+			vol[1] = MIXER(intf->mixing_level[i], MIXER_PAN_RIGHT);
 	
 			/* create the stream */
-			bsmt2000[i].stream = stream_init_multi(2, stream_name_ptrs, vol, Machine.sample_rate, i, bsmt2000_update);
+			bsmt2000[i].stream = stream_init_multi(2, stream_name_ptrs, vol, Machine->sample_rate, i, bsmt2000_update);
 			if (bsmt2000[i].stream == -1)
 				return 1;
 	
 			/* initialize the regions */
-			bsmt2000[i].region_base = (INT8 *)memory_region(intf.region[i]);
-			bsmt2000[i].total_banks = memory_region_length(intf.region[i]) / 0x10000;
+			bsmt2000[i].region_base = (INT8 *)memory_region(intf->region[i]);
+			bsmt2000[i].total_banks = memory_region_length(intf->region[i]) / 0x10000;
 	
 			/* initialize the rest of the structure */
-			bsmt2000[i].master_clock = (double)intf.baseclock[i];
-			bsmt2000[i].output_step = (int)((double)intf.baseclock[i] / 1024.0 * (double)(1 << FRAC_BITS) / (double)Machine.sample_rate);
+			bsmt2000[i].master_clock = (double)intf->baseclock[i];
+			bsmt2000[i].output_step = (int)((double)intf->baseclock[i] / 1024.0 * (double)(1 << FRAC_BITS) / (double)Machine->sample_rate);
 	
 			/* init the voices */
 			init_all_voices(&bsmt2000[i]);
@@ -428,11 +428,11 @@ public class bsmt2000
 		int i;
 	
 		/* free memory */
-		if (accumulator != 0)
+		if (accumulator)
 			free(accumulator);
 		accumulator = NULL;
 	
-		if (scratch != 0)
+		if (scratch)
 			free(scratch);
 		scratch = NULL;
 	
@@ -477,70 +477,70 @@ public class bsmt2000
 	
 	static void bsmt2000_reg_write(struct BSMT2000Chip *chip, offs_t offset, data16_t data, data16_t mem_mask)
 	{
-		struct BSMT2000Voice *voice = &chip.voice[offset % chip.voices];
-		int regindex = offset / chip.voices;
+		struct BSMT2000Voice *voice = &chip->voice[offset % chip->voices];
+		int regindex = offset / chip->voices;
 	
 	#if LOG_COMMANDS
-		logerror("BSMT#%d write: V%d R%d = %04X\n", chip - bsmt2000, offset % chip.voices, regindex, data);
+		logerror("BSMT#%d write: V%d R%d = %04X\n", chip - bsmt2000, offset % chip->voices, regindex, data);
 	#endif
 	
 		/* update the register */
 		if (regindex < REG_TOTAL)
-			COMBINE_DATA(&voice.reg[regindex]);
+			COMBINE_DATA(&voice->reg[regindex]);
 	
 		/* force an update */
-		stream_update(chip.stream, 0);
+		stream_update(chip->stream, 0);
 		
 		/* update parameters for standard voices */
 		switch (regindex)
 		{
 			case REG_CURRPOS:
-				voice.position = voice.reg[REG_CURRPOS] << 16;
+				voice->position = voice->reg[REG_CURRPOS] << 16;
 				break;
 	
 			case REG_RATE:
-				voice.adjusted_rate = voice.reg[REG_RATE] << 5;
+				voice->adjusted_rate = voice->reg[REG_RATE] << 5;
 				break;
 	
 			case REG_LOOPSTART:
-				voice.loop_start_position = voice.reg[REG_LOOPSTART] << 16;
+				voice->loop_start_position = voice->reg[REG_LOOPSTART] << 16;
 				break;
 	
 			case REG_LOOPEND:
-				voice.loop_stop_position = voice.reg[REG_LOOPEND] << 16;
+				voice->loop_stop_position = voice->reg[REG_LOOPEND] << 16;
 				break;
 	
 			case REG_ALT_RIGHTVOL:
-				COMBINE_DATA(&voice.reg[REG_RIGHTVOL]);
+				COMBINE_DATA(&voice->reg[REG_RIGHTVOL]);
 				break;
 		}
 		
 		/* update parameters for compressed voice (11-voice model only) */
-		if (chip.voices == 11 && offset >= 0x6d)
+		if (chip->voices == 11 && offset >= 0x6d)
 		{
-			voice = &chip.compressed;
+			voice = &chip->compressed;
 			switch (offset)
 			{
 				case 0x6d:
-					COMBINE_DATA(&voice.reg[REG_LOOPEND]);
-					voice.loop_stop_position = voice.reg[REG_LOOPEND] << 16;
+					COMBINE_DATA(&voice->reg[REG_LOOPEND]);
+					voice->loop_stop_position = voice->reg[REG_LOOPEND] << 16;
 					break;
 					
 				case 0x6f:
-					COMBINE_DATA(&voice.reg[REG_BANK]);
+					COMBINE_DATA(&voice->reg[REG_BANK]);
 					break;
 				
 				case 0x74:
-					COMBINE_DATA(&voice.reg[REG_RIGHTVOL]);
+					COMBINE_DATA(&voice->reg[REG_RIGHTVOL]);
 					break;
 	
 				case 0x75:
-					COMBINE_DATA(&voice.reg[REG_CURRPOS]);
-					voice.position = voice.reg[REG_CURRPOS] << 16;
+					COMBINE_DATA(&voice->reg[REG_CURRPOS]);
+					voice->position = voice->reg[REG_CURRPOS] << 16;
 					break;
 	
 				case 0x78:
-					COMBINE_DATA(&voice.reg[REG_LEFTVOL]);
+					COMBINE_DATA(&voice->reg[REG_LEFTVOL]);
 					break;
 			}
 		}

@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -115,15 +115,13 @@ public class galaxian
 		}
 	}
 	
-	public static WriteHandlerPtr galaxian_pitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_pitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(tone_stream,0);
 	
 		pitch = data;
 	} };
 	
-	public static WriteHandlerPtr galaxian_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_vol_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		stream_update(tone_stream,0);
 	
 		/* offset 0 = bit 0, offset 1 = bit 1 */
@@ -140,22 +138,21 @@ public class galaxian
 		}
 	}
 	
-	public static WriteHandlerPtr galaxian_noise_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_noise_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if SAMPLES
-		if (deathsampleloaded != 0)
+		if (deathsampleloaded)
 		{
 			if (data & 1 && !(last_port1 & 1))
-				mixer_play_sample(channelnoise,Machine.samples.sample[1].data,
-						Machine.samples.sample[1].length,
-						Machine.samples.sample[1].smpfreq,
+				mixer_play_sample(channelnoise,Machine->samples->sample[1]->data,
+						Machine->samples->sample[1]->length,
+						Machine->samples->sample[1]->smpfreq,
 						0);
 			last_port1=data;
 		}
 		else
 	#endif
 		{
-			if ((data & 1) != 0)
+			if( data & 1 )
 			{
 				timer_adjust(noisetimer, TIME_NEVER, 0, 0);
 				noisevolume = 100;
@@ -170,16 +167,15 @@ public class galaxian
 		}
 	} };
 	
-	public static WriteHandlerPtr galaxian_shoot_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_shoot_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( data & 1 && !(last_port2 & 1) )
 		{
 	#if SAMPLES
-			if (shootsampleloaded != 0)
+			if( shootsampleloaded )
 			{
-				mixer_play_sample(channelshoot,Machine.samples.sample[0].data,
-						Machine.samples.sample[0].length,
-						Machine.samples.sample[0].smpfreq,
+				mixer_play_sample(channelshoot,Machine->samples->sample[0]->data,
+						Machine->samples->sample[0]->length,
+						Machine->samples->sample[0]->smpfreq,
 						0);
 			}
 			else
@@ -213,7 +209,7 @@ public class galaxian
 		int lfovol[3] = {LFO_VOLUME,LFO_VOLUME,LFO_VOLUME};
 	
 	#if SAMPLES
-		Machine.samples = readsamples(galaxian_sample_names,Machine.gamedrv.name);
+		Machine->samples = readsamples(galaxian_sample_names,Machine->gamedrv->name);
 	#endif
 	
 		channelnoise = mixer_allocate_channel(NOISE_VOLUME);
@@ -226,12 +222,12 @@ public class galaxian
 		mixer_set_name(channellfo+2,"Background #2");
 	
 	#if SAMPLES
-		if (Machine.samples != 0 && Machine.samples.sample[0] != 0)	/* We should check also that Samplename[0] = 0 */
+		if (Machine->samples != 0 && Machine->samples->sample[0] != 0)	/* We should check also that Samplename[0] = 0 */
 			shootsampleloaded = 1;
 		else
 			shootsampleloaded = 0;
 	
-		if (Machine.samples != 0 && Machine.samples.sample[1] != 0)	/* We should check also that Samplename[0] = 0 */
+		if (Machine->samples != 0 && Machine->samples->sample[1] != 0)	/* We should check also that Samplename[0] = 0 */
 			deathsampleloaded = 1;
 		else
 			deathsampleloaded = 0;
@@ -244,7 +240,7 @@ public class galaxian
 	
 	#if NEW_SHOOT
 	#define SHOOT_SEC 2
-		shoot_rate = Machine.sample_rate;
+		shoot_rate = Machine->sample_rate;
 		shoot_length = SHOOT_SEC * shoot_rate;
 		if ((shootwave = auto_malloc(shoot_length * sizeof(INT16))) == 0)
 	#else
@@ -366,9 +362,9 @@ public class galaxian
 	#else
 		/*
 		 * Ra is 10k, Rb is 22k, C is 0.01uF
-		 * charge time t1 = 0.693 * (Ra + Rb) * C . 221.76us
-		 * discharge time t2 = 0.693 * (Rb) *  C . 152.46us
-		 * average period 374.22us . 2672Hz
+		 * charge time t1 = 0.693 * (Ra + Rb) * C -> 221.76us
+		 * discharge time t2 = 0.693 * (Rb) *  C -> 152.46us
+		 * average period 374.22us -> 2672Hz
 		 * I use an array of 10 values to define some points
 		 * of the charge/discharge curve. The wave is modulated
 		 * using the charge/discharge timing of C28, a 47uF capacitor,
@@ -418,7 +414,7 @@ public class galaxian
 			/* #0: VOL1=0 and VOL2=0
 			 * only the 33k and the 22k resistors R51 and R50
 			 */
-			if ((i & 1) != 0)
+			if( i & 1 )
 			{
 				r1a += 1.0/33000;
 				r1b += 1.0/33000;
@@ -428,7 +424,7 @@ public class galaxian
 				r0a += 1.0/33000;
 				r0b += 1.0/33000;
 			}
-			if ((i & 4) != 0)
+			if( i & 4 )
 			{
 				r1a += 1.0/22000;
 				r1b += 1.0/22000;
@@ -443,7 +439,7 @@ public class galaxian
 			/* #1: VOL1=1 and VOL2=0
 			 * add the 10k resistor R49 for bit QC
 			 */
-			if ((i & 4) != 0)
+			if( i & 4 )
 				r1a += 1.0/10000;
 			else
 				r0a += 1.0/10000;
@@ -452,7 +448,7 @@ public class galaxian
 			/* #2: VOL1=0 and VOL2=1
 			 * add the 15k resistor R52 for bit QD
 			 */
-			if ((i & 8) != 0)
+			if( i & 8 )
 				r1b += 1.0/15000;
 			else
 				r0b += 1.0/15000;
@@ -461,7 +457,7 @@ public class galaxian
 			/* #3: VOL1=1 and VOL2=1
 			 * add the 10k resistor R49 for QC
 			 */
-			if ((i & 4) != 0)
+			if( i & 4 )
 				r0b += 1.0/10000;
 			else
 				r1b += 1.0/10000;
@@ -475,14 +471,14 @@ public class galaxian
 		tone_stream = stream_init("Tone",TOOTHSAW_VOLUME,SOUND_CLOCK/STEPS,0,tone_update);
 	
 	#if SAMPLES
-		if (deathsampleloaded == 0)
+		if (!deathsampleloaded)
 	#endif
 		{
 			mixer_set_volume(channelnoise,0);
 			mixer_play_sample_16(channelnoise,noisewave,NOISE_LENGTH,NOISE_RATE,1);
 		}
 	#if SAMPLES
-		if (shootsampleloaded == 0)
+		if (!shootsampleloaded)
 	#endif
 		{
 			mixer_set_volume(channelshoot,0);
@@ -513,8 +509,7 @@ public class galaxian
 		mixer_stop_sample(channellfo+2);
 	}
 	
-	public static WriteHandlerPtr galaxian_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_background_enable_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		mixer_set_volume(channellfo+offset,(data & 1) ? 100 : 0);
 	} };
 	
@@ -526,8 +521,7 @@ public class galaxian
 			freq = MAXFREQ;
 	}
 	
-	public static WriteHandlerPtr galaxian_lfo_freq_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr galaxian_lfo_freq_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	#if NEW_LFO
 		static int lfobit[4];
 	
@@ -594,8 +588,8 @@ public class galaxian
 		 * charge time t1 = 0.693 * (Ra + Rb) * C
 		 * discharge time t2 = 0.693 * (Rb) *  C
 		 * period T = t1 + t2 = 0.693 * (Ra + 2 * Rb) * C
-		 * . min period: 0.693 * 100 kOhm * 1uF . 69300 us = 14.4Hz
-		 * . max period: no idea, since I don't know the max. value for Ra :(
+		 * -> min period: 0.693 * 100 kOhm * 1uF -> 69300 us = 14.4Hz
+		 * -> max period: no idea, since I don't know the max. value for Ra :(
 		 */
 	
 		lfobit[offset] = data & 1;
@@ -645,11 +639,11 @@ public class galaxian
 		/*
 		 * NE555 8R, 8S and 8T are used as pulse position modulators
 		 * FS1 Ra=100k, Rb=470k and C=0.01uF
-		 *	. 0.693 * 1040k * 0.01uF . 7207.2us = 139Hz
+		 *	-> 0.693 * 1040k * 0.01uF -> 7207.2us = 139Hz
 		 * FS2 Ra=100k, Rb=330k and C=0.01uF
-		 *	. 0.693 * 760k * 0.01uF . 5266.8us = 190Hz
+		 *	-> 0.693 * 760k * 0.01uF -> 5266.8us = 190Hz
 		 * FS2 Ra=100k, Rb=220k and C=0.01uF
-		 *	. 0.693 * 540k * 0.01uF . 3742.2us = 267Hz
+		 *	-> 0.693 * 540k * 0.01uF -> 3742.2us = 267Hz
 		 */
 	
 		mixer_set_sample_frequency(channellfo+0, sizeof(backgroundwave)*freq*(100+2*470)/(100+2*470) );

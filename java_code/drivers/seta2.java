@@ -167,7 +167,7 @@ Notes:	pzlbowl PCB with extra parts:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -184,7 +184,7 @@ public class seta2
 	
 	WRITE16_HANDLER( seta2_sound_bank_w )
 	{
-		if (ACCESSING_LSB && Machine.sample_rate)
+		if (ACCESSING_LSB && Machine->sample_rate)
 		{
 			data8_t *ROM = memory_region( REGION_SOUND1 );
 			int banks = (memory_region_length( REGION_SOUND1 ) - 0x100000) / 0x20000;
@@ -204,7 +204,7 @@ public class seta2
 	
 	static WRITE16_HANDLER( grdians_lockout_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			// initially 0, then either $25 (coin 1) or $2a (coin 2)
 			coin_counter_w(0,data & 0x01);	// or 0x04
@@ -298,7 +298,7 @@ public class seta2
 	
 	static WRITE16_HANDLER( mj4simai_keyboard_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			keyboard_row = data & 0xff;
 	}
 	
@@ -414,7 +414,7 @@ public class seta2
 	
 	WRITE16_HANDLER( pzlbowl_coin_counter_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			coin_counter_w(0,data & 0x10);
 			coin_counter_w(1,data & 0x20);
@@ -498,7 +498,7 @@ public class seta2
 							Mobile Suit Gundam EX Revue
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_gundamex = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gundamex = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gundamex )
 		PORT_START(); 	// IN0 - $600000.w
 		PORT_DIPNAME( 0x0001, 0x0001, "1" );
 		PORT_DIPSETTING(      0x0001, DEF_STR( "Off") );
@@ -611,7 +611,7 @@ public class seta2
 									Guardians
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_grdians = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_grdians = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( grdians )
 		PORT_START(); 	// IN0 - $600000.w
 		PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( "Difficulty") );
 		PORT_DIPSETTING(      0x0002, "Easy"    );// 0
@@ -716,7 +716,7 @@ public class seta2
 	                      Wakakusamonogatari Mahjong Yonshimai
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_mj4simai = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mj4simai = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mj4simai )
 		PORT_START(); 	// IN0 - $600300.w
 		PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( "Coinage") );
 		PORT_DIPSETTING(      0x0000, DEF_STR( "5C_1C") );
@@ -833,7 +833,7 @@ public class seta2
 								Kosodate Quiz My Angel
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_myangel = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_myangel = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( myangel )
 		PORT_START(); 	// IN0 - $700300.w
 		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x0002, 0x0002, "Unknown 1-1" );
@@ -934,7 +934,7 @@ public class seta2
 								Kosodate Quiz My Angel 2
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_myangel2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_myangel2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( myangel2 )
 		PORT_START(); 	// IN0 - $600300.w
 		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x0002, 0x0002, "Unknown 1-1" );
@@ -1035,7 +1035,7 @@ public class seta2
 									Puzzle De Bowling
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_pzlbowl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pzlbowl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pzlbowl )
 		PORT_START(); 	// IN0 - $400300.w
 		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x0002, 0x0002, DEF_STR( "Demo_Sounds") );
@@ -1136,7 +1136,7 @@ public class seta2
 								Penguin Bros
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_penbros = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_penbros = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( penbros )
 		PORT_START(); 	// IN0 - $500300.w
 		PORT_SERVICE( 0x0001, IP_ACTIVE_LOW );
 		PORT_DIPNAME( 0x0002, 0x0002, DEF_STR( "Flip_Screen") );
@@ -1326,8 +1326,7 @@ public class seta2
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr seta2_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr seta2_interrupt = new InterruptHandlerPtr() {public void handler(){
 		switch ( cpu_getiloops() )
 		{
 			case 0:
@@ -1345,8 +1344,7 @@ public class seta2
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_mj4simai = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mj4simai )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main",M68000,32530400 / 2)			/* !! TMP68301 !! */
@@ -1372,12 +1370,9 @@ public class seta2
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(X1_010, x1_010_sound_intf_16MHz)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gundamex = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gundamex )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mj4simai)
@@ -1387,12 +1382,9 @@ public class seta2
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0x00, 0x180-1, 0x100, 0x1e0-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_grdians = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( grdians )
 	
 		MDRV_IMPORT_FROM(mj4simai)
 		MDRV_CPU_MODIFY("main")
@@ -1400,13 +1392,10 @@ public class seta2
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0x80, 0x80 + 0x130 -1, 0x80, 0x80 + 0xe8 -1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_myangel = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( myangel )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mj4simai)
@@ -1417,13 +1406,10 @@ public class seta2
 		MDRV_VISIBLE_AREA(0, 0x178-1, 0x00, 0xf0-1)
 	
 		MDRV_VIDEO_START(seta2_offset)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_myangel2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( myangel2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mj4simai)
@@ -1434,13 +1420,10 @@ public class seta2
 		MDRV_VISIBLE_AREA(0, 0x178-1, 0x00, 0xf0-1)
 	
 		MDRV_VIDEO_START(seta2_offset)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_pzlbowl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pzlbowl )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mj4simai)
@@ -1449,13 +1432,10 @@ public class seta2
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0x10, 0x190-1, 0x100, 0x1f0-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_penbros = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( penbros )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(mj4simai)
@@ -1464,9 +1444,7 @@ public class seta2
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 0x140-1, 0x80, 0x160-1)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -1626,20 +1604,19 @@ public class seta2
 		ROM_LOAD( "u18.bin", 0x100000, 0x200000, CRC(de4e65e2) SHA1(82d4e590c714b3e9bf0ffaf1500deb24fd315595) )
 	ROM_END(); }}; 
 	
-	public static DriverInitHandlerPtr init_gundamex  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_gundamex  = new DriverInitHandlerPtr() { public void handler(){
 		data16_t *ROM = (data16_t *)memory_region( REGION_CPU1 );
 	
 		/* ??? doesn't boot otherwise */
 		ROM[0x0f98/2] = 0x4e71;
 	} };
 	
-	public static GameDriver driver_gundamex	   = new GameDriver("1994"	,"gundamex"	,"seta2.java"	,rom_gundamex,null	,machine_driver_gundamex	,input_ports_gundamex	,init_gundamex	,ROT0	,	"Banpresto",           "Mobile Suit Gundam EX Revue" )
-	public static GameDriver driver_grdians	   = new GameDriver("1995"	,"grdians"	,"seta2.java"	,rom_grdians,null	,machine_driver_grdians	,input_ports_grdians	,null	,ROT0	,	"Banpresto",           "Guardians / Denjin Makai II",                  GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )	// Displays (c) Winky Soft at game's end.
-	public static GameDriver driver_mj4simai	   = new GameDriver("1996"	,"mj4simai"	,"seta2.java"	,rom_mj4simai,null	,machine_driver_mj4simai	,input_ports_mj4simai	,null	,ROT0	,	"Maboroshi Ware",      "Wakakusamonogatari Mahjong Yonshimai (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_myangel	   = new GameDriver("1996"	,"myangel"	,"seta2.java"	,rom_myangel,null	,machine_driver_myangel	,input_ports_myangel	,null	,ROT0	,	"Namco",               "Kosodate Quiz My Angel (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_myangel2	   = new GameDriver("1997"	,"myangel2"	,"seta2.java"	,rom_myangel2,null	,machine_driver_myangel2	,input_ports_myangel2	,null	,ROT0	,	"Namco",               "Kosodate Quiz My Angel 2 (Japan)",             GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_pzlbowl	   = new GameDriver("1999"	,"pzlbowl"	,"seta2.java"	,rom_pzlbowl,null	,machine_driver_pzlbowl	,input_ports_pzlbowl	,null	,ROT0	,	"Nihon System / Moss", "Puzzle De Bowling (Japan)",                    GAME_NO_COCKTAIL )
-	public static GameDriver driver_penbros	   = new GameDriver("2000"	,"penbros"	,"seta2.java"	,rom_penbros,null	,machine_driver_penbros	,input_ports_penbros	,null	,ROT0	,	"Subsino",             "Penguin Brothers (Japan)",                     GAME_NO_COCKTAIL )
+	GAME(  1994, gundamex, 0, gundamex, gundamex, gundamex, ROT0, "Banpresto",           "Mobile Suit Gundam EX Revue" )
+	GAMEX( 1995, grdians,  0, grdians,  grdians,  0,  		ROT0, "Banpresto",           "Guardians / Denjin Makai II",                  GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )	// Displays (c) Winky Soft at game's end.
+	GAMEX( 1996, mj4simai, 0, mj4simai, mj4simai, 0,        ROT0, "Maboroshi Ware",      "Wakakusamonogatari Mahjong Yonshimai (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1996, myangel,  0, myangel,  myangel,  0,        ROT0, "Namco",               "Kosodate Quiz My Angel (Japan)",               GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1997, myangel2, 0, myangel2, myangel2, 0,        ROT0, "Namco",               "Kosodate Quiz My Angel 2 (Japan)",             GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1999, pzlbowl,  0, pzlbowl,  pzlbowl,  0,		ROT0, "Nihon System / Moss", "Puzzle De Bowling (Japan)",                    GAME_NO_COCKTAIL )
+	GAMEX( 2000, penbros,  0, penbros,  penbros,  0,  		ROT0, "Subsino",             "Penguin Brothers (Japan)",                     GAME_NO_COCKTAIL )
 	
 }

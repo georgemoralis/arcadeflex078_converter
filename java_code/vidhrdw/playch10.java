@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -11,9 +11,8 @@ public class playch10
 	
 	static struct tilemap *bg_tilemap;
 	
-	public static WriteHandlerPtr playch10_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (pc10_sdcs != 0)
+	public static WriteHandlerPtr playch10_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (pc10_sdcs)
 		{
 			if (videoram.read(offset)!= data)
 			{
@@ -23,8 +22,7 @@ public class playch10
 		}
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_playch10  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_playch10  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0; i < 256; i++)
@@ -94,12 +92,11 @@ public class playch10
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_playch10  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_playch10  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		if ( ppu2c03b_init( &ppu_interface ) )
@@ -114,8 +111,7 @@ public class playch10
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_playch10  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_playch10  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		struct rectangle top_monitor = Machine.visible_area;
 		struct rectangle bottom_monitor = Machine.visible_area;
 	
@@ -128,13 +124,13 @@ public class playch10
 		/* if the bit is not set, then we should display		*/
 		/* the PPU portion.										*/
 	
-		if (pc10_dispmask == 0)
+		if ( !pc10_dispmask )
 		{
 			/* render the ppu */
 			ppu2c03b_render( 0, bitmap, 0, 0, 0, 30*8 );
 	
 			/* if this is a gun game, draw a simple crosshair */
-			if (pc10_gun_controller != 0)
+			if ( pc10_gun_controller )
 			{
 				int x_center = readinputport( 5 );
 				int y_center = readinputport( 6 ) + 30*8;
@@ -145,7 +141,7 @@ public class playch10
 	
 		/* When the bios is accessing vram, the video circuitry cant access it */
 	
-		if (pc10_sdcs == 0)
+		if ( !pc10_sdcs )
 		{
 			tilemap_draw(bitmap, &top_monitor, bg_tilemap, 0, 0);
 		}

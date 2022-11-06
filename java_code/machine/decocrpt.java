@@ -43,7 +43,7 @@ Sotsugyo Shousho		1995
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -619,7 +619,7 @@ public class decocrpt
 		}
 	#endif
 	
-		if (buffer != 0)
+		if (buffer)
 		{
 			memcpy(buffer,rom,len*2);
 	

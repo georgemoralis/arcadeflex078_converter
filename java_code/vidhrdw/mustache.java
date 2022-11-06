@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -18,8 +18,7 @@ public class mustache
 	static struct tilemap *bg_tilemap;
 	static int control_byte;
 	
-	PALETTE_INIT(mustache)
-	{
+	public static PaletteInitHandlerPtr palette_init_mustache  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 	  int i;
 	
 	  for (i = 0;i < 256;i++)
@@ -49,10 +48,9 @@ public class mustache
 	
 		palette_set_color(i,r,g,b);
 	  }
-	}
+	} };
 	
-	public static WriteHandlerPtr mustache_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mustache_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -60,8 +58,7 @@ public class mustache
 		}
 	} };
 	
-	WRITE_HANDLER (mustache_video_control_w)
-	{
+	public static WriteHandlerPtr mustache_video_control_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 0x01))
 		{
 			flip_screen_set(data & 0x01);
@@ -75,10 +72,9 @@ public class mustache
 			control_byte = data;
 			tilemap_mark_all_tiles_dirty(ALL_TILEMAPS);
 		}
-	}
+	} };
 	
-	public static WriteHandlerPtr mustache_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mustache_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, 0x100 - data);
 		tilemap_set_scrollx(bg_tilemap, 1, 0x100 - data);
 		tilemap_set_scrollx(bg_tilemap, 2, 0x100 - data);
@@ -94,8 +90,7 @@ public class mustache
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mustache  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mustache  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows_flip_x,
 			TILEMAP_OPAQUE, 8, 8, 64, 32);
 	
@@ -107,7 +102,7 @@ public class mustache
 	static void mustache_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
 		struct rectangle clip = *cliprect;
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		int offs;
 	
 		for (offs = 0;offs < spriteram_size;offs += 4)
@@ -123,14 +118,14 @@ public class mustache
 			code+=(attr&0x0c)<<6;
 	
 			if ((control_byte & 0xa))
-				clip.max_y = Machine.visible_area.max_y;
+				clip.max_y = Machine->visible_area.max_y;
 			else
-				if (flip_screen != 0)
-					clip.min_y = Machine.visible_area.min_y + 56;
+				if (flip_screen())
+					clip.min_y = Machine->visible_area.min_y + 56;
 				else
-					clip.max_y = Machine.visible_area.max_y - 56;
+					clip.max_y = Machine->visible_area.max_y - 56;
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -145,8 +140,7 @@ public class mustache
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mustache  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mustache  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		mustache_draw_sprites(bitmap, cliprect);
 	} };

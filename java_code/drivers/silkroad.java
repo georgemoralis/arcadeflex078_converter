@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -140,8 +140,6 @@ public class silkroad
 	WRITE32_HANDLER( silkroad_fgram_w );
 	WRITE32_HANDLER( silkroad_fgram2_w );
 	WRITE32_HANDLER( silkroad_fgram3_w );
-	VIDEO_START(silkroad);
-	VIDEO_UPDATE(silkroad);
 	
 	static WRITE32_HANDLER( paletteram32_xRRRRRGGGGGBBBBB_dword_w )
 	{
@@ -273,7 +271,7 @@ public class silkroad
 	MEMORY_END
 	
 	
-	static InputPortPtr input_ports_silkroad = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_silkroad = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( silkroad )
 		PORT_START(); 	/* Players inputs */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_BUTTON3 | IPF_PLAYER2 );
@@ -399,8 +397,7 @@ public class silkroad
 		{ 45,45 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_silkroad = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( silkroad )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68EC020, 16000000)
@@ -424,9 +421,7 @@ public class silkroad
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, m6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -434,8 +429,7 @@ public class silkroad
 	  Game driver(s)
 	
 	***************************************************************************/
-	public static DriverInitHandlerPtr init_silkroad  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_silkroad  = new DriverInitHandlerPtr() { public void handler(){
 	
 		/* why? rom04.bin looks like a bad dump, but it seems not since it was
 		   verified as correct... problem with the original which the gfx
@@ -489,5 +483,5 @@ public class silkroad
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_silkroad	   = new GameDriver("1999"	,"silkroad"	,"silkroad.java"	,rom_silkroad,null	,machine_driver_silkroad	,input_ports_silkroad	,init_silkroad	,ROT0	,	"Unico", "The Legend of Silkroad" )
+	GAME( 1999, silkroad, 0, silkroad, silkroad, silkroad, ROT0, "Unico", "The Legend of Silkroad" )
 }

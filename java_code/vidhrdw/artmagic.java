@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -59,8 +59,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_artmagic  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_artmagic  = new VideoStartHandlerPtr() { public int handler(){
 		blitter_base = (UINT16 *)memory_region(REGION_GFX1);
 		blitter_mask = memory_region_length(REGION_GFX1)/2 - 1;
 		return 0;
@@ -77,7 +76,7 @@ public class artmagic
 	void artmagic_to_shiftreg(offs_t address, data16_t *data)
 	{
 		UINT16 *vram = address_to_vram(&address);
-		if (vram != 0)
+		if (vram)
 			memcpy(data, &vram[address], TOBYTE(0x2000));
 	}
 	
@@ -85,7 +84,7 @@ public class artmagic
 	void artmagic_from_shiftreg(offs_t address, data16_t *data)
 	{
 		UINT16 *vram = address_to_vram(&address);
-		if (vram != 0)
+		if (vram)
 			memcpy(&vram[address], data, TOBYTE(0x2000));
 	}
 	
@@ -123,7 +122,7 @@ public class artmagic
 					blitter_data[4], blitter_data[5],
 					blitter_data[6], blitter_data[7]);
 	
-		if (f == 0) f = fopen("artmagic.log", "w");
+		if (!f) f = fopen("artmagic.log", "w");
 	
 		for (i = 0; i < hit_index; i++)
 			if (hit_list[i] == offset)
@@ -157,7 +156,7 @@ public class artmagic
 				{
 					/* ultennis, stonebal */
 					last ^= (blitter_data[7] & 0x0001);
-					if (artmagic_is_stoneball != 0)
+					if (artmagic_is_stoneball)
 						last ^= ((blitter_data[0] & 0x0020) >> 3);
 					else	/* ultennis */
 						last ^= ((blitter_data[0] & 0x0040) >> 4);
@@ -226,7 +225,7 @@ public class artmagic
 					{
 						/* ultennis, stonebal */
 						last ^= (blitter_data[7] & 0x0001);
-						if (artmagic_is_stoneball != 0)
+						if (artmagic_is_stoneball)
 							last ^= ((blitter_data[0] & 0x0020) >> 3);
 						else	/* ultennis */
 							last ^= (((blitter_data[0] + 1) & 0x0040) >> 4);
@@ -349,8 +348,7 @@ public class artmagic
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_artmagic  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		UINT32 offset, dpytap;
 		UINT16 *vram;
 		int x, y;

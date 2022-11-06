@@ -40,7 +40,7 @@ The second CPU plays speech
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,8 +53,7 @@ public class champbas
 	
 	
 	
-	public static WriteHandlerPtr champbas_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr champbas_dac_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		DAC_signed_data_w(0,data<<2);
 	} };
 	
@@ -112,7 +111,7 @@ public class champbas
 	
 	
 	
-	static InputPortPtr input_ports_champbas = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_champbas = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( champbas )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_BUTTON1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON2 );
@@ -227,8 +226,7 @@ public class champbas
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_champbas = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( champbas )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3072000)	/* 3.072 MHz (?) */
@@ -257,9 +255,7 @@ public class champbas
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -360,8 +356,8 @@ public class champbas
 	
 	
 	
-	public static GameDriver driver_champbas	   = new GameDriver("1983"	,"champbas"	,"champbas.java"	,rom_champbas,null	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Sega", "Champion Baseball" )
-	public static GameDriver driver_champbbj	   = new GameDriver("1983"	,"champbbj"	,"champbas.java"	,rom_champbbj,driver_champbas	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Alpha Denshi Co.", "Champion Baseball (Japan set 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_champbja	   = new GameDriver("1983"	,"champbja"	,"champbas.java"	,rom_champbja,driver_champbas	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Alpha Denshi Co.", "Champion Baseball (Japan set 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_champbb2	   = new GameDriver("1983"	,"champbb2"	,"champbas.java"	,rom_champbb2,null	,machine_driver_champbas	,input_ports_champbas	,null	,ROT0	,	"Sega", "Champion Baseball II", GAME_NOT_WORKING )
+	GAME(1983, champbas, 0,        champbas, champbas, 0, ROT0, "Sega", "Champion Baseball" )
+	GAMEX(1983, champbbj, champbas, champbas, champbas, 0, ROT0, "Alpha Denshi Co.", "Champion Baseball (Japan set 1)", GAME_NOT_WORKING )
+	GAMEX(1983, champbja, champbas, champbas, champbas, 0, ROT0, "Alpha Denshi Co.", "Champion Baseball (Japan set 2)", GAME_NOT_WORKING )
+	GAMEX(1983, champbb2, 0,        champbas, champbas, 0, ROT0, "Sega", "Champion Baseball II", GAME_NOT_WORKING )
 }

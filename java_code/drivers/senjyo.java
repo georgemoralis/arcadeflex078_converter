@@ -70,7 +70,7 @@ I/O read/write
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -95,8 +95,7 @@ public class senjyo
 	
 	static int int_delay_kludge;
 	
-	public static MachineInitHandlerPtr machine_init_senjyo  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_senjyo  = new MachineInitHandlerPtr() { public void handler(){
 		/* we must avoid generating interrupts for the first few frames otherwise */
 		/* Senjyo locks up. There must be an interrupt enable port somewhere, */
 		/* or maybe interrupts are genenrated by the CTC. */
@@ -104,14 +103,12 @@ public class senjyo
 		int_delay_kludge = 10;
 	} };
 	
-	public static InterruptHandlerPtr senjyo_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr senjyo_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (int_delay_kludge == 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 		else int_delay_kludge--;
 	} };
 	
-	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flip_screen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_set(data);
 	} };
 	
@@ -207,7 +204,7 @@ public class senjyo
 	
 	
 	
-	static InputPortPtr input_ports_senjyo = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_senjyo = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( senjyo )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -288,7 +285,7 @@ public class senjyo
 		PORT_DIPSETTING(    0xc0, "Hardest" );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_starforc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_starforc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( starforc )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -369,7 +366,7 @@ public class senjyo
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_baluba = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_baluba = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( baluba )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT | IPF_8WAY );
@@ -555,8 +552,7 @@ public class senjyo
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_senjyo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( senjyo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* 4 MHz? */
@@ -587,9 +583,7 @@ public class senjyo
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -791,9 +785,9 @@ public class senjyo
 	
 	
 	
-	public static GameDriver driver_senjyo	   = new GameDriver("1983"	,"senjyo"	,"senjyo.java"	,rom_senjyo,null	,machine_driver_senjyo	,input_ports_senjyo	,init_senjyo	,ROT90	,	"Tehkan", "Senjyo" )
-	public static GameDriver driver_starforc	   = new GameDriver("1984"	,"starforc"	,"senjyo.java"	,rom_starforc,null	,machine_driver_senjyo	,input_ports_starforc	,init_starforc	,ROT90	,	"Tehkan", "Star Force" )
-	public static GameDriver driver_starfore	   = new GameDriver("1984"	,"starfore"	,"senjyo.java"	,rom_starfore,driver_starforc	,machine_driver_senjyo	,input_ports_starforc	,init_starfore	,ROT90	,	"Tehkan", "Star Force (encrypted)" )
-	public static GameDriver driver_megaforc	   = new GameDriver("1985"	,"megaforc"	,"senjyo.java"	,rom_megaforc,driver_starforc	,machine_driver_senjyo	,input_ports_starforc	,init_starforc	,ROT90	,	"Tehkan (Video Ware license)", "Mega Force" )
-	public static GameDriver driver_baluba	   = new GameDriver("1986"	,"baluba"	,"senjyo.java"	,rom_baluba,null	,machine_driver_senjyo	,input_ports_baluba	,init_starforc	,ROT90	,	"Able Corp, Ltd.", "Baluba-louk no Densetsu", GAME_IMPERFECT_COLORS )
+	GAME( 1983, senjyo,   0,        senjyo, senjyo,   senjyo,   ROT90, "Tehkan", "Senjyo" )
+	GAME( 1984, starforc, 0,        senjyo, starforc, starforc, ROT90, "Tehkan", "Star Force" )
+	GAME( 1984, starfore, starforc, senjyo, starforc, starfore, ROT90, "Tehkan", "Star Force (encrypted)" )
+	GAME( 1985, megaforc, starforc, senjyo, starforc, starforc, ROT90, "Tehkan (Video Ware license)", "Mega Force" )
+	GAMEX(1986, baluba,   0,        senjyo, baluba,   starforc, ROT90, "Able Corp, Ltd.", "Baluba-louk no Densetsu", GAME_IMPERFECT_COLORS )
 }

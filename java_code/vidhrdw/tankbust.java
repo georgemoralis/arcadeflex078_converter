@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -50,11 +50,11 @@ public class tankbust
 	
 	
 	#if 0
-		if ((attr & 0x08) != 0)	//priority bg/sprites (1 = this bg tile on top of sprites)
+		if (attr&0x08)	//priority bg/sprites (1 = this bg tile on top of sprites)
 		{
 			color = ((int)rand()) & 0x0f;
 		}
-		if ((attr & 0x80) != 0)  //al the roofs of all buildings have this bit set. What's this ???
+		if (attr&0x80)  //al the roofs of all buildings have this bit set. What's this ???
 		{
 			color = ((int)rand()) & 0x0f;
 		}
@@ -87,8 +87,7 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_tankbust  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_tankbust  = new VideoStartHandlerPtr() { public int handler(){
 		/* not scrollable */
 		txt_tilemap = tilemap_create(get_txt_tile_info, tilemap_scan_rows, TILEMAP_TRANSPARENT, 8, 8, 64, 32);
 	
@@ -111,50 +110,43 @@ public class tankbust
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr tankbust_background_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_background_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( videoram.read(offset)!=data )
 		{
 			videoram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
-	public static ReadHandlerPtr tankbust_background_videoram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbust_background_videoram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return videoram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr tankbust_background_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_background_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( colorram.read(offset)!=data )
 		{
 			colorram.write(offset,data);
 			tilemap_mark_tile_dirty(bg_tilemap, offset);
 		}
 	} };
-	public static ReadHandlerPtr tankbust_background_colorram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbust_background_colorram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return colorram.read(offset);
 	} };
 	
-	public static WriteHandlerPtr tankbust_txtram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_txtram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( txt_ram[offset]!=data )
 		{
 			txt_ram[offset] = data;
 			tilemap_mark_tile_dirty(txt_tilemap, offset);
 		}
 	} };
-	public static ReadHandlerPtr tankbust_txtram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr tankbust_txtram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return txt_ram[offset];
 	} };
 	
 	
 	static UINT8 xscroll[2];
 	
-	public static WriteHandlerPtr tankbust_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_xscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( xscroll[offset] != data )
 		{
 			int x;
@@ -170,8 +162,7 @@ public class tankbust
 	
 	static UINT8 yscroll[2];
 	
-	public static WriteHandlerPtr tankbust_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr tankbust_yscroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( yscroll[offset] != data )
 		{
 			int y;
@@ -239,7 +230,7 @@ public class tankbust
 			if ((spriteram.read(offs+1)!=4))	//otherwise - ghost sprites
 			{
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 					code, color,
 					flipx,flipy,
 					sx,sy,
@@ -249,8 +240,7 @@ public class tankbust
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tankbust  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	#if 0
 		int i;
 	

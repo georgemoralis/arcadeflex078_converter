@@ -39,7 +39,7 @@ ToDo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -116,8 +116,7 @@ public class bionicc
 	
 	********************************************************************/
 	
-	public static InterruptHandlerPtr bionicc_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr bionicc_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) 
 			cpu_set_irq_line(0, 2, HOLD_LINE);
 		else
@@ -178,7 +177,7 @@ public class bionicc
 	
 	
 	
-	static InputPortPtr input_ports_bionicc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_bionicc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( bionicc )
 		PORT_START(); 
 		PORT_BIT( 0x0fff, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x1000, IP_ACTIVE_LOW, IPT_START2 );
@@ -338,8 +337,7 @@ public class bionicc
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_bionicc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( bionicc )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000) /* ?? MHz ? */
@@ -366,9 +364,7 @@ public class bionicc
 		MDRV_VIDEO_UPDATE(bionicc)
 	
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -497,7 +493,7 @@ public class bionicc
 	
 	
 	
-	public static GameDriver driver_bionicc	   = new GameDriver("1987"	,"bionicc"	,"bionicc.java"	,rom_bionicc,null	,machine_driver_bionicc	,input_ports_bionicc	,null	,ROT0	,	"Capcom", "Bionic Commando (US set 1)" )
-	public static GameDriver driver_bionicc2	   = new GameDriver("1987"	,"bionicc2"	,"bionicc.java"	,rom_bionicc2,driver_bionicc	,machine_driver_bionicc	,input_ports_bionicc	,null	,ROT0	,	"Capcom", "Bionic Commando (US set 2)" )
-	public static GameDriver driver_topsecrt	   = new GameDriver("1987"	,"topsecrt"	,"bionicc.java"	,rom_topsecrt,driver_bionicc	,machine_driver_bionicc	,input_ports_bionicc	,null	,ROT0	,	"Capcom", "Top Secret (Japan)" )
+	GAME( 1987, bionicc,  0,       bionicc, bionicc, 0, ROT0, "Capcom", "Bionic Commando (US set 1)" )
+	GAME( 1987, bionicc2, bionicc, bionicc, bionicc, 0, ROT0, "Capcom", "Bionic Commando (US set 2)" )
+	GAME( 1987, topsecrt, bionicc, bionicc, bionicc, 0, ROT0, "Capcom", "Top Secret (Japan)" )
 }

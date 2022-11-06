@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -41,7 +41,7 @@ public class mhavoc
 	static void cpu_irq_clock(int param)
 	{
 		/* clock the LS161 driving the alpha CPU IRQ */
-		if (alpha_irq_clock_enable != 0)
+		if (alpha_irq_clock_enable)
 		{
 			alpha_irq_clock++;
 			if ((alpha_irq_clock & 0x0c) == 0x0c)
@@ -52,7 +52,7 @@ public class mhavoc
 		}
 	
 		/* clock the LS161 driving the gamma CPU IRQ */
-		if (has_gamma_cpu != 0)
+		if (has_gamma_cpu)
 		{
 			gamma_irq_clock++;
 			cpu_set_irq_line(1, 0, (gamma_irq_clock & 0x08) ? ASSERT_LINE : CLEAR_LINE);
@@ -60,8 +60,7 @@ public class mhavoc
 	}
 	
 	
-	public static WriteHandlerPtr mhavoc_alpha_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_alpha_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* clear the line and reset the clock */
 		cpu_set_irq_line(0, 0, CLEAR_LINE);
 		alpha_irq_clock = 0;
@@ -69,8 +68,7 @@ public class mhavoc
 	} };
 	
 	
-	public static WriteHandlerPtr mhavoc_gamma_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_gamma_irq_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* clear the line and reset the clock */
 		cpu_set_irq_line(1, 0, CLEAR_LINE);
 		gamma_irq_clock = 0;
@@ -84,8 +82,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_mhavoc  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mhavoc  = new MachineInitHandlerPtr() { public void handler(){
 		/* cache the base of memory region 1 */
 		ram_base = memory_region(REGION_CPU1);
 		has_gamma_cpu = (cpu_gettotalcpu() > 1);
@@ -120,7 +117,7 @@ public class mhavoc
 	
 	/*************************************
 	 *
-	 *	Alpha . gamma communications
+	 *	Alpha -> gamma communications
 	 *
 	 *************************************/
 	
@@ -139,15 +136,13 @@ public class mhavoc
 	}
 	
 	
-	public static WriteHandlerPtr mhavoc_gamma_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_gamma_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("  writing to gamma processor: %02x (%d %d)\n", data, gamma_rcvd, alpha_xmtd);
 		timer_set(TIME_NOW, data, delayed_gamma_w);
 	} };
 	
 	
-	public static ReadHandlerPtr mhavoc_alpha_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mhavoc_alpha_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("\t\t\t\t\treading from alpha processor: %02x (%d %d)\n", alpha_data, gamma_rcvd, alpha_xmtd);
 		gamma_rcvd = 1;
 		alpha_xmtd = 0;
@@ -158,12 +153,11 @@ public class mhavoc
 	
 	/*************************************
 	 *
-	 *	Gamma . alpha communications
+	 *	Gamma -> alpha communications
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mhavoc_alpha_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_alpha_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("\t\t\t\t\twriting to alpha processor: %02x %d %d\n", data, alpha_rcvd, gamma_xmtd);
 		alpha_rcvd = 0;
 		gamma_xmtd = 1;
@@ -171,8 +165,7 @@ public class mhavoc
 	} };
 	
 	
-	public static ReadHandlerPtr mhavoc_gamma_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mhavoc_gamma_r  = new ReadHandlerPtr() { public int handler(int offset){
 		logerror("  reading from gamma processor: %02x (%d %d)\n", gamma_data, alpha_rcvd, gamma_xmtd);
 		alpha_rcvd = 1;
 		gamma_xmtd = 0;
@@ -187,8 +180,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mhavoc_ram_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_ram_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const offs_t bank[2] = { 0x20200, 0x20800 };
 	
 		data &= 0x01;
@@ -197,8 +189,7 @@ public class mhavoc
 	} };
 	
 	
-	public static WriteHandlerPtr mhavoc_rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_rom_banksel_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const offs_t bank[4] = { 0x10000, 0x12000, 0x14000, 0x16000 };
 	
 		data &= 0x03;
@@ -214,23 +205,22 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr mhavoc_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mhavoc_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t res;
 	
 		/* Bits 7-6 = selected based on Player 1 */
 		/* Bits 5-4 = common */
-		if (player_1 != 0)
+		if (player_1)
 			res = (readinputport(0) & 0x30) | (readinputport(5) & 0xc0);
 		else
 			res = readinputport(0) & 0xf0;
 	
 		/* Bit 3 = Gamma rcvd flag */
-		if (gamma_rcvd != 0)
+		if (gamma_rcvd)
 			res |= 0x08;
 	
 		/* Bit 2 = Gamma xmtd flag */
-		if (gamma_xmtd != 0)
+		if (gamma_xmtd)
 			res |= 0x04;
 	
 		/* Bit 1 = 2.4kHz (divide 2.5MHz by 1024) */
@@ -238,15 +228,14 @@ public class mhavoc
 			res |= 0x02;
 	
 		/* Bit 0 = Vector generator halt flag */
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			res |= 0x01;
 	
 		return res;
 	} };
 	
 	
-	public static ReadHandlerPtr alphaone_port_0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr alphaone_port_0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Bits 7-2 = common */
 		data8_t res = readinputport(0) & 0xfc;
 	
@@ -255,15 +244,14 @@ public class mhavoc
 			res |= 0x02;
 	
 		/* Bit 0 = Vector generator halt flag */
-		if (avgdvg_done() != 0)
+		if (avgdvg_done())
 			res |= 0x01;
 	
 		return res;
 	} };
 	
 	
-	public static ReadHandlerPtr mhavoc_port_1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mhavoc_port_1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* Bits 7-2 = input switches */
 		data8_t res = readinputport(1) & 0xfc;
 	
@@ -286,8 +274,7 @@ public class mhavoc
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr mhavoc_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bit 7 = Invert Y -- unemulated */
 		/* Bit 6 = Invert X -- unemulated */
 	
@@ -310,8 +297,7 @@ public class mhavoc
 	} };
 	
 	
-	public static WriteHandlerPtr alphaone_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr alphaone_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bit 5 = P2 lamp */
 		set_led_status(0, ~data & 0x20);
 	
@@ -328,8 +314,7 @@ public class mhavoc
 	} };
 	
 	
-	public static WriteHandlerPtr mhavoc_out_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mhavoc_out_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Bit 1 = left coin counter */
 		coin_counter_w(0, data & 0x02);
 	

@@ -64,7 +64,7 @@ Change POLEPOS_TOGGLE to 0 if you are using the original gearshift
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -181,7 +181,7 @@ public class polepos
 	 * Input port definitions
 	 *********************************************************************/
 	
-	static InputPortPtr input_ports_polepos = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_polepos = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( polepos )
 		PORT_START(); 	/* IN0 - Mostly Fake - Handled by the MCU */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | POLEPOS_TOGGLE, "Gear Change", KEYCODE_SPACE, IP_JOY_DEFAULT );/* Gear */
@@ -255,7 +255,7 @@ public class polepos
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_polepos2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_polepos2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( polepos2 )
 		PORT_START(); 	/* IN0 - Mostly Fake - Handled by the MCU */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNUSED );
 		PORT_BITX(0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | POLEPOS_TOGGLE, "Gear Change", KEYCODE_SPACE, IP_JOY_DEFAULT );/* Gear */
@@ -426,8 +426,7 @@ public class polepos
 	 * Machine driver
 	 *********************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_polepos = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( polepos )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 3125000)	/* 3.125 MHz */
@@ -466,9 +465,7 @@ public class polepos
 		MDRV_SOUND_ADD(NAMCO, namco_interface)
 		MDRV_SOUND_ADD(CUSTOM, custom_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*********************************************************************
@@ -1022,8 +1019,7 @@ public class polepos
 	 * Initialization routines
 	 *********************************************************************/
 	
-	public static DriverInitHandlerPtr init_polepos2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_polepos2  = new DriverInitHandlerPtr() { public void handler(){
 		/* note that the bootleg versions don't need this custom IC; they have a hacked ROM in its place */
 		install_mem_read16_handler(1, 0x4000, 0x5fff, polepos2_ic25_r);
 	} };
@@ -1033,13 +1029,13 @@ public class polepos
 	 * Game drivers
 	 *********************************************************************/
 	
-	public static GameDriver driver_polepos	   = new GameDriver("1982"	,"polepos"	,"polepos.java"	,rom_polepos,null	,machine_driver_polepos	,input_ports_polepos	,null	,ROT0	,	"Namco", "Pole Position" )
-	public static GameDriver driver_poleposa	   = new GameDriver("1982"	,"poleposa"	,"polepos.java"	,rom_poleposa,driver_polepos	,machine_driver_polepos	,input_ports_polepos	,null	,ROT0	,	"Namco (Atari license)", "Pole Position (Atari version 2)" )
-	public static GameDriver driver_polepos1	   = new GameDriver("1982"	,"polepos1"	,"polepos.java"	,rom_polepos1,driver_polepos	,machine_driver_polepos	,input_ports_polepos	,null	,ROT0	,	"[Namco] (Atari license)", "Pole Position (Atari version 1)" )
-	public static GameDriver driver_topracer	   = new GameDriver("1982"	,"topracer"	,"polepos.java"	,rom_topracer,driver_polepos	,machine_driver_polepos	,input_ports_polepos	,null	,ROT0	,	"bootleg", "Top Racer" )
-	public static GameDriver driver_polepos2	   = new GameDriver("1983"	,"polepos2"	,"polepos.java"	,rom_polepos2,null	,machine_driver_polepos	,input_ports_polepos2	,init_polepos2	,ROT0	,	"Namco", "Pole Position II" )
-	public static GameDriver driver_poleps2a	   = new GameDriver("1983"	,"poleps2a"	,"polepos.java"	,rom_poleps2a,driver_polepos2	,machine_driver_polepos	,input_ports_polepos2	,init_polepos2	,ROT0	,	"Namco (Atari license)", "Pole Position II (Atari)" )
-	public static GameDriver driver_poleps2b	   = new GameDriver("1983"	,"poleps2b"	,"polepos.java"	,rom_poleps2b,driver_polepos2	,machine_driver_polepos	,input_ports_polepos2	,null	,ROT0	,	"Namco (Atari license)", "Pole Position II (Atari bootleg 1)" )
-	public static GameDriver driver_poleps2c	   = new GameDriver("1983"	,"poleps2c"	,"polepos.java"	,rom_poleps2c,driver_polepos2	,machine_driver_polepos	,input_ports_polepos2	,null	,ROT0	,	"Namco (Atari license)", "Pole Position II (Atari bootleg 2)" )
+	GAME( 1982, polepos,  0,		polepos, polepos,  0,		 ROT0, "Namco", "Pole Position" )
+	GAME( 1982, poleposa, polepos,	polepos, polepos,  0,		 ROT0, "Namco (Atari license)", "Pole Position (Atari version 2)" )
+	GAME( 1982, polepos1, polepos,	polepos, polepos,  0,		 ROT0, "[Namco] (Atari license)", "Pole Position (Atari version 1)" )
+	GAME( 1982, topracer, polepos,	polepos, polepos,  0,		 ROT0, "bootleg", "Top Racer" )
+	GAME( 1983, polepos2, 0,		polepos, polepos2, polepos2, ROT0, "Namco", "Pole Position II" )
+	GAME( 1983, poleps2a, polepos2, polepos, polepos2, polepos2, ROT0, "Namco (Atari license)", "Pole Position II (Atari)" )
+	GAME( 1983, poleps2b, polepos2, polepos, polepos2, 0,		 ROT0, "Namco (Atari license)", "Pole Position II (Atari bootleg 1)" )
+	GAME( 1983, poleps2c, polepos2, polepos, polepos2, 0,		 ROT0, "Namco (Atari license)", "Pole Position II (Atari bootleg 2)" )
 	
 }

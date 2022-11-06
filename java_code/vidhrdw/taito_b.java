@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -84,7 +84,7 @@ public class taito_b
 	
 		video_control = data;
 	
-		if ((video_control & 0x80) != 0)
+		if (video_control & 0x80)
 			framebuffer_page = (~video_control & 0x40) >> 6;
 	
 		tilemap_set_flip(ALL_TILEMAPS, (video_control & 0x10) ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0 );
@@ -102,7 +102,7 @@ public class taito_b
 	
 		COMBINE_DATA (&TC0180VCU_ctrl[offset]);
 	
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 		{
 			switch(offset)
 			{
@@ -182,8 +182,7 @@ public class taito_b
 	}
 	
 	
-	static public static VideoStartHandlerPtr video_start_taitob_core  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_taitob_core  = new VideoStartHandlerPtr() { public int handler(){
 		framebuffer[0] = auto_bitmap_alloc(512,256);
 		framebuffer[1] = auto_bitmap_alloc(512,256);
 		pixel_bitmap = NULL;  /* only hitice needs this */
@@ -205,8 +204,7 @@ public class taito_b
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitob_color_order0  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitob_color_order0  = new VideoStartHandlerPtr() { public int handler(){
 	  /*graphics are shared, only that they use different palette*/
 	  /*this is the basic layout used in: Nastar, Ashura Blaster, Hit the Ice, Rambo3, Tetris*/
 	
@@ -222,8 +220,7 @@ public class taito_b
 	  return video_start_taitob_core();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitob_color_order1  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitob_color_order1  = new VideoStartHandlerPtr() { public int handler(){
 	  /*and this is the reversed layout used in: Crime City, Puzzle Bobble*/
 	  b_bg_color_base = 0x00;
 	  b_fg_color_base = 0x40;
@@ -233,8 +230,7 @@ public class taito_b
 	  return video_start_taitob_core();
 	} };
 	
-	public static VideoStartHandlerPtr video_start_taitob_color_order2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_taitob_color_order2  = new VideoStartHandlerPtr() { public int handler(){
 	  /*this is used in: rambo3a, masterw, silentd, selfeena, ryujin */
 	  b_bg_color_base = 0x30;
 	  b_fg_color_base = 0x20;
@@ -245,14 +241,13 @@ public class taito_b
 	} };
 	
 	
-	public static VideoStartHandlerPtr video_start_hitice  = new VideoStartHandlerPtr() { public int handler()
-	{
-	  if (video_start_taitob_color_order0() != 0)
+	public static VideoStartHandlerPtr video_start_hitice  = new VideoStartHandlerPtr() { public int handler(){
+	  if (video_start_taitob_color_order0())
 	    return 1;
 	
 	  pixel_bitmap = auto_bitmap_alloc(1024,512);
 	
-	  if (pixel_bitmap == 0)
+	  if (!pixel_bitmap)
 	    return 1;
 	
 	  pixel_init = 1;
@@ -298,9 +293,9 @@ public class taito_b
 	  int sy = offset >> 8;
 	  int sx = 2*(offset & 0xff);
 	
-	  if (ACCESSING_MSB != 0)
+	  if (ACCESSING_MSB)
 	    plot_pixel(framebuffer[sy >> 8],sx,  sy & 0xff,data >> 8);
-	  if (ACCESSING_LSB != 0)
+	  if (ACCESSING_LSB)
 	    plot_pixel(framebuffer[sy >> 8],sx+1,sy & 0xff,data & 0xff);
 	}
 	
@@ -312,15 +307,15 @@ public class taito_b
 	
 	  COMBINE_DATA(&taitob_pixelram[offset]);
 	
-	  if (ACCESSING_LSB != 0)
+	  if (ACCESSING_LSB)
 	  {
 	    /* bit 15 of pixel_scroll[0] is probably flip screen */
 	
 	    /* I always draw flipped because the driver doesn't support flip screen yet */
-	    //plot_pixel(pixel_bitmap,1023-2*sx,  511-sy,Machine.pens[b_fg_color_base * 16 + (data & 0xff)]);
-	    //plot_pixel(pixel_bitmap,1023-2*sx-1,511-sy,Machine.pens[b_fg_color_base * 16 + (data & 0xff)]);
-	    plot_pixel(pixel_bitmap,2*sx,  sy,Machine.pens[b_fg_color_base * 16 + (data & 0xff)]);
-	    plot_pixel(pixel_bitmap,2*sx+1,sy,Machine.pens[b_fg_color_base * 16 + (data & 0xff)]);
+	    //plot_pixel(pixel_bitmap,1023-2*sx,  511-sy,Machine->pens[b_fg_color_base * 16 + (data & 0xff)]);
+	    //plot_pixel(pixel_bitmap,1023-2*sx-1,511-sy,Machine->pens[b_fg_color_base * 16 + (data & 0xff)]);
+	    plot_pixel(pixel_bitmap,2*sx,  sy,Machine->pens[b_fg_color_base * 16 + (data & 0xff)]);
+	    plot_pixel(pixel_bitmap,2*sx+1,sy,Machine->pens[b_fg_color_base * 16 + (data & 0xff)]);
 	  }
 	}
 	
@@ -374,7 +369,7 @@ public class taito_b
 	    flipy = color & 0x8000;
 	#if 0
 	/*check the unknown bits*/
-	    if ((color & 0x3fc0) != 0){
+	    if (color & 0x3fc0){
 	      logerror("sprite color (taitob)=%4x ofs=%4x\n",color,offs);
 	      color = rand()&0x3f;
 	    }
@@ -387,9 +382,9 @@ public class taito_b
 	    if (y >= 0x200)  y -= 0x400;
 	
 	    data = taitob_spriteram[offs+5];
-	    if (data != 0)
+	    if (data)
 	    {
-	      if (big_sprite == 0)
+	      if (!big_sprite)
 	      {
 	        x_num = (data>>8) & 0xff;
 	        y_num = (data) & 0xff;
@@ -410,7 +405,7 @@ public class taito_b
 	    zx = (0x100 - zoomx) / 16;
 	    zy = (0x100 - zoomy) / 16;
 	
-	    if (big_sprite != 0)
+	    if (big_sprite)
 	    {
 	      zoomx = zoomxlatch;
 	      zoomy = zoomylatch;
@@ -431,7 +426,7 @@ public class taito_b
 	
 	    if ( zoomx || zoomy )
 	    {
-	      drawgfxzoom (bitmap,Machine.gfx[1],
+	      drawgfxzoom (bitmap,Machine->gfx[1],
 	        code,
 	        color,
 	        flipx,flipy,
@@ -441,7 +436,7 @@ public class taito_b
 	    }
 	    else
 	    {
-	      drawgfx (bitmap,Machine.gfx[1],
+	      drawgfx (bitmap,Machine->gfx[1],
 	        code,
 	        color,
 	        flipx,flipy,
@@ -467,8 +462,8 @@ public class taito_b
 	  number_of_blocks = 256 / lines_per_block;
 	
 	
-	  my_clip.min_x =  cliprect.min_x;
-	  my_clip.max_x =  cliprect.max_x;
+	  my_clip.min_x =  cliprect->min_x;
+	  my_clip.max_x =  cliprect->max_x;
 	
 	  for (i = 0;i < number_of_blocks;i++)
 	  {
@@ -477,12 +472,12 @@ public class taito_b
 	
 	    my_clip.min_y = i*lines_per_block;
 	    my_clip.max_y = (i+1)*lines_per_block -1;
-		if ((video_control & 0x10) != 0)   /*flip screen*/
+		if (video_control&0x10)   /*flip screen*/
 		{
-			if (!(Machine.orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
+			if (!(Machine->orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
 			{
-				my_clip.min_y = bitmap.height - 1 - (i+1)*lines_per_block -1;
-				my_clip.max_y = bitmap.height - 1 - i*lines_per_block;
+				my_clip.min_y = bitmap->height - 1 - (i+1)*lines_per_block -1;
+				my_clip.max_y = bitmap->height - 1 - i*lines_per_block;
 			}
 		}
 	    sect_rect(&my_clip, cliprect);
@@ -507,7 +502,7 @@ public class taito_b
 	  priority <<= 4;
 	
 	
-	  if (Machine.orientation & ORIENTATION_SWAP_XY)
+	  if (Machine->orientation & ORIENTATION_SWAP_XY)
 	  {
 	    int temp;
 	
@@ -515,40 +510,40 @@ public class taito_b
 	    temp = myclip.max_x; myclip.max_x = myclip.max_y; myclip.max_y = temp;
 	  }
 	
-	  if (Machine.orientation & ORIENTATION_FLIP_X)
+	  if (Machine->orientation & ORIENTATION_FLIP_X)
 	  {
 	    int temp;
 	
-	    temp = myclip.min_x; myclip.min_x = bitmap.width-1 - myclip.max_x; myclip.max_x = bitmap.width-1 - temp;
+	    temp = myclip.min_x; myclip.min_x = bitmap->width-1 - myclip.max_x; myclip.max_x = bitmap->width-1 - temp;
 	  }
 	
-	  if (Machine.orientation & ORIENTATION_FLIP_Y)
+	  if (Machine->orientation & ORIENTATION_FLIP_Y)
 	  {
 	    int temp;
 	
-	    temp = myclip.min_y; myclip.min_y = bitmap.height-1 - myclip.max_y; myclip.max_y = bitmap.height-1 - temp;
+	    temp = myclip.min_y; myclip.min_y = bitmap->height-1 - myclip.max_y; myclip.max_y = bitmap->height-1 - temp;
 	  }
 	
 	
-		if ((video_control & 0x08) != 0)
+		if (video_control & 0x08)
 		{
-			if (priority != 0) return;
+			if (priority) return;
 	
-			if ((video_control & 0x10) != 0)   /*flip screen*/
+			if (video_control & 0x10)   /*flip screen*/
 			{
 				/*usrintf_showmessage("1. X[%3i;%3i] Y[%3i;%3i]", myclip.min_x, myclip.max_x, myclip.min_y, myclip.max_y);*/
 				for (y = myclip.min_y;y <= myclip.max_y;y++)
 				{
-					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page].line[y]) + myclip.min_x;
+					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page]->line[y]) + myclip.min_x;
 					UINT16 *dst;
 	
-					if (!(Machine.orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
+					if (!(Machine->orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
 					{
-						dst = ((UINT16 *)bitmap.line[bitmap.height-1-y]) + myclip.max_x;
+						dst = ((UINT16 *)bitmap->line[bitmap->height-1-y]) + myclip.max_x;
 					}
 					else	/*for ROT_270 games */
 					{
-						dst = ((UINT16 *)bitmap.line[bitmap.height-1-y+24*8]) + myclip.max_x;
+						dst = ((UINT16 *)bitmap->line[bitmap->height-1-y+24*8]) + myclip.max_x;
 					}
 	
 					for (x = myclip.min_x;x <= myclip.max_x;x++)
@@ -556,7 +551,7 @@ public class taito_b
 						UINT16 c = *src++;
 	
 						if (c != 0)
-							*dst = Machine.pens[b_sp_color_base + c];
+							*dst = Machine->pens[b_sp_color_base + c];
 	
 						dst--;
 					}
@@ -566,15 +561,15 @@ public class taito_b
 			{
 				for (y = myclip.min_y;y <= myclip.max_y;y++)
 				{
-					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page].line[y]) + myclip.min_x;
-					UINT16 *dst = ((UINT16 *)bitmap.line[y]) + myclip.min_x;
+					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page]->line[y]) + myclip.min_x;
+					UINT16 *dst = ((UINT16 *)bitmap->line[y]) + myclip.min_x;
 	
 					for (x = myclip.min_x;x <= myclip.max_x;x++)
 					{
 						UINT16 c = *src++;
 	
 						if (c != 0)
-							*dst = Machine.pens[b_sp_color_base + c];
+							*dst = Machine->pens[b_sp_color_base + c];
 	
 						dst++;
 					}
@@ -583,21 +578,21 @@ public class taito_b
 		}
 		else
 		{
-			if ((video_control & 0x10) != 0)   /*flip screen*/
+			if (video_control & 0x10)   /*flip screen*/
 			{
 				/*usrintf_showmessage("3. X[%3i;%3i] Y[%3i;%3i]", myclip.min_x, myclip.max_x, myclip.min_y, myclip.max_y);*/
 				for (y = myclip.min_y;y <= myclip.max_y;y++)
 				{
-					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page].line[y]) + myclip.min_x;
+					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page]->line[y]) + myclip.min_x;
 					UINT16 *dst;
 	
-					if (!(Machine.orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
+					if (!(Machine->orientation & ORIENTATION_FLIP_Y))	/*only for ROT_0 games*/
 					{
-						dst = ((UINT16 *)bitmap.line[bitmap.height-1-y]) + myclip.max_x;
+						dst = ((UINT16 *)bitmap->line[bitmap->height-1-y]) + myclip.max_x;
 					}
 					else	/*for ROT_270 games*/
 					{
-						dst = ((UINT16 *)bitmap.line[bitmap.height-1-y+24*8]) + myclip.max_x;
+						dst = ((UINT16 *)bitmap->line[bitmap->height-1-y+24*8]) + myclip.max_x;
 					}
 	
 					for (x = myclip.min_x;x <= myclip.max_x;x++)
@@ -605,7 +600,7 @@ public class taito_b
 						UINT16 c = *src++;
 	
 						if (c != 0 && (c & 0x10) == priority)
-							*dst = Machine.pens[b_sp_color_base + c];
+							*dst = Machine->pens[b_sp_color_base + c];
 	
 						dst--;
 					}
@@ -615,15 +610,15 @@ public class taito_b
 		    {
 		        for (y = myclip.min_y;y <= myclip.max_y;y++)
 				{
-					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page].line[y]) + myclip.min_x;
-					UINT16 *dst = ((UINT16 *)bitmap.line[y]) + myclip.min_x;
+					UINT16 *src = ((UINT16 *)framebuffer[framebuffer_page]->line[y]) + myclip.min_x;
+					UINT16 *dst = ((UINT16 *)bitmap->line[y]) + myclip.min_x;
 	
 					for (x = myclip.min_x;x <= myclip.max_x;x++)
 					{
 						UINT16 c = *src++;
 	
 						if (c != 0 && (c & 0x10) == priority)
-							*dst = Machine.pens[b_sp_color_base + c];
+							*dst = Machine->pens[b_sp_color_base + c];
 	
 						dst++;
 					}
@@ -633,8 +628,7 @@ public class taito_b
 	profiler_mark(PROFILER_END);
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_taitob  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	  if ((video_control & 0x20) == 0)
 	  {
 	    fillbitmap(bitmap,Machine.pens[0],cliprect);
@@ -648,13 +642,13 @@ public class taito_b
 	
 	  TC0180VCU_tilemap_draw(bitmap,cliprect,fg_tilemap,0);
 	
-	  if (pixel_bitmap != 0)  /* hitice only */
+	  if (pixel_bitmap)  /* hitice only */
 	  {
 	    int scrollx = -2*pixel_scroll[0]; //+320;
 	    int scrolly = -pixel_scroll[1]; //+240;
 	    /* bit 15 of pixel_scroll[0] is probably flip screen */
 	
-	    if (pixel_init != 0)
+	    if (pixel_init)
 	    {
 	      int i;
 	
@@ -675,15 +669,14 @@ public class taito_b
 	
 	
 	
-	public static VideoEofHandlerPtr video_eof_taitob  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_taitob  = new VideoEofHandlerPtr() { public void handler(){
 	  if (~video_control & 0x01)
-	    fillbitmap(framebuffer[framebuffer_page],0,Machine.visible_area);
+	    fillbitmap(framebuffer[framebuffer_page],0,Machine->visible_area);
 	
 	  if (~video_control & 0x80)
 	    framebuffer_page ^= 1;
 	
-	  taitob_draw_sprites(framebuffer[framebuffer_page],Machine.visible_area);
+	  taitob_draw_sprites(framebuffer[framebuffer_page],Machine->visible_area);
 	} };
 	
 }

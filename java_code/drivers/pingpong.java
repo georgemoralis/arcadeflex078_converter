@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -11,8 +11,7 @@ public class pingpong
 	
 	static int intenable;
 	
-	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr coin_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 2 = irq enable, bit 3 = nmi enable */
 		intenable = data & 0x0c;
 	
@@ -23,15 +22,14 @@ public class pingpong
 		/* other bits unknown */
 	} };
 	
-	public static InterruptHandlerPtr pingpong_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr pingpong_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0)
 		{
-			if ((intenable & 0x04) != 0) cpu_set_irq_line(0, 0, HOLD_LINE);
+			if (intenable & 0x04) cpu_set_irq_line(0, 0, HOLD_LINE);
 		}
 		else if (cpu_getiloops() % 2)
 		{
-			if ((intenable & 0x08) != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (intenable & 0x08) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
 	
@@ -66,7 +64,7 @@ public class pingpong
 	
 	
 	
-	static InputPortPtr input_ports_pingpong = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pingpong = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pingpong )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -184,8 +182,7 @@ public class pingpong
 	};
 	
 	
-	public static MachineHandlerPtr machine_driver_pingpong = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pingpong )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,18432000/6)		/* 3.072 MHz (probably) */
@@ -209,9 +206,7 @@ public class pingpong
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -240,5 +235,5 @@ public class pingpong
 	
 	
 	
-	public static GameDriver driver_pingpong	   = new GameDriver("1985"	,"pingpong"	,"pingpong.java"	,rom_pingpong,null	,machine_driver_pingpong	,input_ports_pingpong	,null	,ROT0	,	"Konami", "Ping Pong" )
+	GAME( 1985, pingpong, 0, pingpong, pingpong, 0, ROT0, "Konami", "Ping Pong" )
 }

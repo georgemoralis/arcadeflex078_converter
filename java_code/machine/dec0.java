@@ -8,7 +8,7 @@ Data East machine functions - Bryan McPhail, mish@tendril.co.uk
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -256,16 +256,14 @@ public class dec0
 	static int share[0xff];
 	static int hippodrm_msb,hippodrm_lsb;
 	
-	public static ReadHandlerPtr hippodrm_prot_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hippodrm_prot_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("6280 PC %06x - Read %06x\n",cpu_getpc(),offset+0x1d0000);
 		if (hippodrm_lsb==0x45) return 0x4e;
 		if (hippodrm_lsb==0x92) return 0x15;
 		return 0;
 	} };
 	
-	public static WriteHandlerPtr hippodrm_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hippodrm_prot_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 			case 4:	hippodrm_msb=data; break;
 			case 5:	hippodrm_lsb=data; break;
@@ -273,13 +271,11 @@ public class dec0
 	//logerror("6280 PC %06x - Wrote %06x to %04x\n",cpu_getpc(),data,offset+0x1d0000);
 	} };
 	
-	public static ReadHandlerPtr hippodrm_shared_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr hippodrm_shared_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return share[offset];
 	} };
 	
-	public static WriteHandlerPtr hippodrm_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hippodrm_shared_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		share[offset]=data;
 	} };
 	
@@ -389,7 +385,7 @@ public class dec0
 			case 0x75b: i8751_return=0x70f; break;
 		}
 	
-		if (i8751_return == 0) logerror("%04x: warning - write unknown command %02x to 8571\n",activecpu_get_pc(),data);
+		if (!i8751_return) logerror("%04x: warning - write unknown command %02x to 8571\n",activecpu_get_pc(),data);
 	}
 	
 	static void birdtry_i8751_write(int data)
@@ -412,7 +408,7 @@ public class dec0
 			/*Used on the title screen only(???)*/
 			case 0x31e: i8751_return = 0x200;     break;
 	
-	/*  0x100-0x10d values are for club power meters(1W=0x100<<-.>PT=0x10d).    *
+	/*  0x100-0x10d values are for club power meters(1W=0x100<<-->>PT=0x10d).    *
 	 *  Returned value to i8751 doesn't matter,but send the result to 0x481.     *
 	 *  Lower the value,stronger is the power.                                   */
 			case 0x100: pwr = 0x30; 			break; /*1W*/
@@ -431,7 +427,7 @@ public class dec0
 			case 0x10d: pwr = 0x80; 			break; /*PT*/
 			case 0x481: i8751_return = pwr;     break; /*Power meter*/
 	
-	/*  0x200-0x20f values are for shot height(STRONG=0x200<<-.>WEAK=0x20f).    *
+	/*  0x200-0x20f values are for shot height(STRONG=0x200<<-->>WEAK=0x20f).    *
 	 *  Returned value to i8751 doesn't matter,but send the result to 0x534.     *
 	 *  Higher the value,stronger is the height.                                 */
 			case 0x200: hgt = 0x5c0;  			break; /*H*/
@@ -483,7 +479,7 @@ public class dec0
 		cpu_set_irq_line(0,5,HOLD_LINE);
 	
 		/* Simulate the processing time of the i8751, time value is guessed
-		if (i8751_timer != 0)
+		if (i8751_timer)
 			logerror("i8751:  Missed a timer!!!\n");
 		else
 			i8751_timer = timer_set(TIME_NOW, 0, i8751_callback);*/
@@ -544,8 +540,7 @@ public class dec0
 			RAM[i]=(RAM[i] & 0x7e) | ((RAM[i] & 0x1) << 7) | ((RAM[i] & 0x80) >> 7);
 	}
 	
-	public static DriverInitHandlerPtr init_hippodrm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hippodrm  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU3);
 	
 		install_mem_read16_handler(0, 0x180000, 0x180fff, hippodrm_68000_share_r);
@@ -561,8 +556,7 @@ public class dec0
 		RAM[0x21a]=0x60; /* RTS prot area */
 	} };
 	
-	public static DriverInitHandlerPtr init_slyspy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_slyspy  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU2);
 	
 		h6280_decrypt(REGION_CPU2);
@@ -572,19 +566,16 @@ public class dec0
 		RAM[0xf2e]=0xea;
 	} };
 	
-	public static DriverInitHandlerPtr init_robocop  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_robocop  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read16_handler( 0, 0x180000, 0x180fff, robocop_68000_share_r);
 		install_mem_write16_handler(0, 0x180000, 0x180fff, robocop_68000_share_w);
 	} };
 	
-	public static DriverInitHandlerPtr init_baddudes  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_baddudes  = new DriverInitHandlerPtr() { public void handler(){
 		GAME=2;
 	} };
 	
-	public static DriverInitHandlerPtr init_hbarrel  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hbarrel  = new DriverInitHandlerPtr() { public void handler(){
 		GAME=1;
 	{ /* Remove this patch once processing time of i8751 is simulated */
 	data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
@@ -592,8 +583,7 @@ public class dec0
 	}
 	} };
 	
-	public static DriverInitHandlerPtr init_hbarrelw  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hbarrelw  = new DriverInitHandlerPtr() { public void handler(){
 		GAME=1;
 	{ /* Remove this patch once processing time of i8751 is simulated */
 	data16_t *rom = (data16_t *)memory_region(REGION_CPU1);
@@ -601,8 +591,7 @@ public class dec0
 	}
 	} };
 	
-	public static DriverInitHandlerPtr init_birdtry  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_birdtry  = new DriverInitHandlerPtr() { public void handler(){
 		GAME=3;
 	} };
 }

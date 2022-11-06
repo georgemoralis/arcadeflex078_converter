@@ -51,7 +51,7 @@ Mighty Guy board layout:
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -64,14 +64,12 @@ public class cop01
 	
 	
 	
-	public static WriteHandlerPtr cop01_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr cop01_sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		soundlatch_w.handler(offset,data);
 		cpu_set_irq_line_and_vector(1,0,HOLD_LINE,0xff);
 	} };
 	
-	public static ReadHandlerPtr cop01_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr cop01_sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int res;
 		static int pulse;
 	#define TIMER_RATE 12000	/* total guess */
@@ -91,8 +89,7 @@ public class cop01
 	} };
 	
 	
-	public static ReadHandlerPtr mightguy_dsw_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mightguy_dsw_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int data = 0xff;
 	
 		switch (offset)
@@ -187,7 +184,7 @@ public class cop01
 	};
 	
 	/* this just gets some garbage out of the YM3526 */
-	public static ReadHandlerPtr kludge  = new ReadHandlerPtr() { public int handler(int offset) { static int timer; return timer++; } };
+	public static ReadHandlerPtr kludge  = new ReadHandlerPtr() { public int handler(int offset) static int timer; return timer++; }
 	
 	public static IO_ReadPort mightguy_sound_readport[]={
 		new IO_ReadPort(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_IO | MEMPORT_WIDTH_8),
@@ -207,7 +204,7 @@ public class cop01
 	
 	
 	
-	static InputPortPtr input_ports_cop01 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_cop01 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( cop01 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -288,7 +285,7 @@ public class cop01
 	
 	/* There is an ingame bug at 0x00e4 to 0x00e6 that performs the 'rrca' instead of 'rlca'
 	   so you DSW1-8 has no effect and you can NOT start a game at areas 5 to 8. */
-	static InputPortPtr input_ports_mightguy = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mightguy = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mightguy )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -446,8 +443,7 @@ public class cop01
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_cop01 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( cop01 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* ???? */
@@ -477,12 +473,9 @@ public class cop01
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_mightguy = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mightguy )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 4000000)	/* ???? */
@@ -512,9 +505,7 @@ public class cop01
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3526, YM3526_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -624,8 +615,7 @@ public class cop01
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_mightguy  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mightguy  = new DriverInitHandlerPtr() { public void handler(){
 	#if MIGHTGUY_HACK
 		/* This is a hack to fix the game code to get a fully working
 		   "Starting Area" fake Dip Switch */
@@ -640,7 +630,7 @@ public class cop01
 	} };
 	
 	
-	public static GameDriver driver_cop01	   = new GameDriver("1985"	,"cop01"	,"cop01.java"	,rom_cop01,null	,machine_driver_cop01	,input_ports_cop01	,null	,ROT0	,	"Nichibutsu", "Cop 01 (set 1)" )
-	public static GameDriver driver_cop01a	   = new GameDriver("1985"	,"cop01a"	,"cop01.java"	,rom_cop01a,driver_cop01	,machine_driver_cop01	,input_ports_cop01	,null	,ROT0	,	"Nichibutsu", "Cop 01 (set 2)" )
-	public static GameDriver driver_mightguy	   = new GameDriver("1986"	,"mightguy"	,"cop01.java"	,rom_mightguy,null	,machine_driver_mightguy	,input_ports_mightguy	,init_mightguy	,ROT270	,	"Nichibutsu", "Mighty Guy", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
+	GAME( 1985, cop01,    0,     cop01,    cop01,    0,        ROT0,   "Nichibutsu", "Cop 01 (set 1)" )
+	GAME( 1985, cop01a,   cop01, cop01,    cop01,    0,        ROT0,   "Nichibutsu", "Cop 01 (set 2)" )
+	GAMEX(1986, mightguy, 0,     mightguy, mightguy, mightguy, ROT270, "Nichibutsu", "Mighty Guy", GAME_NOT_WORKING | GAME_UNEMULATED_PROTECTION | GAME_IMPERFECT_SOUND )
 }

@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -83,8 +83,7 @@ public class wrally
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_wrally  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_wrally  = new VideoStartHandlerPtr() { public int handler(){
 		pant[0] = tilemap_create(get_tile_info_wrally_screen0,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 		pant[1] = tilemap_create(get_tile_info_wrally_screen1,tilemap_scan_rows,TILEMAP_TRANSPARENT,16,16,64,32);
 	
@@ -127,7 +126,7 @@ public class wrally
 	static void gaelco_draw_sprites(struct mame_bitmap *bitmap, const struct rectangle *cliprect)
 	{
 		int i, x, y, ex, ey;
-		const struct GfxElement *gfx = Machine.gfx[0];
+		const struct GfxElement *gfx = Machine->gfx[0];
 	
 		static int x_offset[2] = {0x0,0x2};
 		static int y_offset[2] = {0x0,0x1};
@@ -154,7 +153,7 @@ public class wrally
 					drawgfx(bitmap,gfx,number + x_offset[ex] + y_offset[ey],
 							0x20 + color,xflip,yflip,
 							sx-0x0f+x*16,sy+y*16,
-							Machine.visible_area,TRANSPARENCY_PEN,0);
+							Machine->visible_area,TRANSPARENCY_PEN,0);
 				}
 			}
 		}
@@ -166,8 +165,7 @@ public class wrally
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_wrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_wrally  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* set scroll registers */
 		tilemap_set_scrolly(pant[0], 0, wrally_vregs[0]);
 		tilemap_set_scrollx(pant[0], 0, wrally_vregs[1]);

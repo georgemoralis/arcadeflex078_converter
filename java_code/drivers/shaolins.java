@@ -8,7 +8,7 @@ driver by Allard Van Der Bas
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -21,12 +21,11 @@ public class shaolins
 	
 	
 	
-	public static InterruptHandlerPtr shaolins_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr shaolins_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (cpu_getiloops() == 0) cpu_set_irq_line(0, 0, HOLD_LINE);
 		else if (cpu_getiloops() % 2)
 		{
-			if ((shaolins_nmi_enable & 0x02) != 0) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
+			if (shaolins_nmi_enable & 0x02) cpu_set_irq_line(0, IRQ_LINE_NMI, PULSE_LINE);
 		}
 	} };
 	
@@ -71,7 +70,7 @@ public class shaolins
 	
 	
 	
-	static InputPortPtr input_ports_shaolins = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_shaolins = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( shaolins )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -227,8 +226,7 @@ public class shaolins
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_shaolins = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( shaolins )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 1250000)        /* 1.25 MHz */
@@ -252,9 +250,7 @@ public class shaolins
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(SN76496, sn76496_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -309,6 +305,6 @@ public class shaolins
 	
 	
 	
-	public static GameDriver driver_kicker	   = new GameDriver("1985"	,"kicker"	,"shaolins.java"	,rom_kicker,null	,machine_driver_shaolins	,input_ports_shaolins	,null	,ROT90	,	"Konami", "Kicker" )
-	public static GameDriver driver_shaolins	   = new GameDriver("1985"	,"shaolins"	,"shaolins.java"	,rom_shaolins,driver_kicker	,machine_driver_shaolins	,input_ports_shaolins	,null	,ROT90	,	"Konami", "Shao-Lin's Road" )
+	GAME( 1985, kicker,   0,      shaolins, shaolins, 0, ROT90, "Konami", "Kicker" )
+	GAME( 1985, shaolins, kicker, shaolins, shaolins, 0, ROT90, "Konami", "Shao-Lin's Road" )
 }

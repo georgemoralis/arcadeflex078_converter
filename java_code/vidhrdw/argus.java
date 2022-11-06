@@ -116,7 +116,7 @@ BG0 palette intensity ( $C47F, $C4FF )
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -297,8 +297,7 @@ public class argus
 	  Initialize and destroy video hardware emulation
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_argus  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_argus  = new VideoStartHandlerPtr() { public int handler(){
 		lowbitscroll = 0;
 		/*                           info                      offset             type                  w   h  col  row */
 		bg0_tilemap = tilemap_create(argus_get_bg0_tile_info,  tilemap_scan_cols, TILEMAP_OPAQUE,      16, 16, 32, 32);
@@ -323,8 +322,7 @@ public class argus
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_valtric  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_valtric  = new VideoStartHandlerPtr() { public int handler(){
 		/*                           info                       offset             type                 w   h  col  row */
 		bg1_tilemap = tilemap_create(valtric_get_bg_tile_info,  tilemap_scan_cols, TILEMAP_OPAQUE,      16, 16, 32, 32);
 		tx_tilemap  = tilemap_create(valtric_get_tx_tile_info,  tilemap_scan_cols, TILEMAP_TRANSPARENT,  8,  8, 32, 32);
@@ -337,8 +335,7 @@ public class argus
 		return 0;
 	} };
 	
-	public static VideoStartHandlerPtr video_start_butasan  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_butasan  = new VideoStartHandlerPtr() { public int handler(){
 		/*                           info                       offset             type                 w   h  col  row */
 		bg0_tilemap = tilemap_create(butasan_get_bg0_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32);
 		bg1_tilemap = tilemap_create(butasan_get_bg1_tile_info, tilemap_scan_rows, TILEMAP_OPAQUE,      16, 16, 32, 32);
@@ -435,7 +432,7 @@ public class argus
 		g = (g - ig > 0) ? g - ig : 0;
 		b = (b - ib > 0) ? b - ib : 0;
 	
-		if ((argus_bg_status & 2) != 0)			/* Gray / purple scale */
+		if (argus_bg_status & 2)			/* Gray / purple scale */
 		{
 			r = (r + g + b) / 3;
 			g = b = r;
@@ -455,13 +452,11 @@ public class argus
 	  Memory handler
 	***************************************************************************/
 	
-	public static ReadHandlerPtr argus_txram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr argus_txram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return argus_txram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr argus_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_txram[ offset ] != data)
 		{
 			argus_txram[ offset ] = data;
@@ -469,13 +464,11 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr butasan_txram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_txram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return butasan_txram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr butasan_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_txram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_txram[ offset ] != data)
 		{
 			butasan_txram[ offset ] = data;
@@ -483,13 +476,11 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr argus_bg1ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr argus_bg1ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return argus_bg1ram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr argus_bg1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg1ram[ offset ] != data)
 		{
 			argus_bg1ram[ offset ] = data;
@@ -497,13 +488,11 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr butasan_bg0ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_bg0ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return butasan_bg0ram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr butasan_bg0ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg0ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_bg0ram[ offset ] != data)
 		{
 			int idx;
@@ -517,13 +506,11 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr butasan_bg1ram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_bg1ram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return butasan_bg1ram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr butasan_bg1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg1ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_bg1ram[ offset ] != data)
 		{
 			int idx;
@@ -537,72 +524,66 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_bg0_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg0_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg0_scrollx[ offset ] != data)
 		{
 			argus_bg0_scrollx[ offset ] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_bg0_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg0_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg0_scrolly[ offset ] != data)
 		{
 			int scrolly;
 			argus_bg0_scrolly[ offset ] = data;
 			scrolly = argus_bg0_scrolly[0] | ( (argus_bg0_scrolly[1] & 0x01) << 8);
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 				tilemap_set_scrolly( bg0_tilemap, 0, scrolly );
 			else
 				tilemap_set_scrolly( bg0_tilemap, 0, (scrolly + 256) & 0x1ff );
 		}
 	} };
 	
-	public static WriteHandlerPtr butasan_bg0_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg0_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg0_scrollx[ offset ] != data)
 		{
 			int scrollx;
 			argus_bg0_scrollx[ offset ] = data;
 			scrollx = argus_bg0_scrollx[0] | ( (argus_bg0_scrollx[1] & 0x01) << 8);
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 				tilemap_set_scrollx( bg0_tilemap, 0, scrollx );
 			else
 				tilemap_set_scrollx( bg0_tilemap, 0, (scrollx + 256) & 0x1ff );
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg1_scrollx_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg1_scrollx[ offset ] != data)
 		{
 			int scrollx;
 			argus_bg1_scrollx[ offset ] = data;
 			scrollx = argus_bg1_scrollx[0] | ( (argus_bg1_scrollx[1] & 0x01) << 8);
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 				tilemap_set_scrollx( bg1_tilemap, 0, scrollx );
 			else
 				tilemap_set_scrollx( bg1_tilemap, 0, (scrollx + 256) & 0x1ff );
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg1_scrolly_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg1_scrolly[ offset ] != data)
 		{
 			int scrolly;
 			argus_bg1_scrolly[ offset ] = data;
 			scrolly = argus_bg1_scrolly[0] | ( (argus_bg1_scrolly[1] & 0x01) << 8);
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 				tilemap_set_scrolly( bg1_tilemap, 0, scrolly );
 			else
 				tilemap_set_scrolly( bg1_tilemap, 0, (scrolly + 256) & 0x1ff );
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_bg_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_bg_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg_status != data)
 		{
 			argus_bg_status = data;
@@ -611,7 +592,7 @@ public class argus
 			tilemap_set_enable(bg1_tilemap, argus_bg_status & 1);
 	
 			/* Gray / purple scale */
-			if ((argus_bg_status & 2) != 0)
+			if (argus_bg_status & 2)
 			{
 				int offs;
 	
@@ -624,8 +605,7 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr valtric_bg_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr valtric_bg_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg_status != data)
 		{
 			argus_bg_status = data;
@@ -634,7 +614,7 @@ public class argus
 			tilemap_set_enable(bg1_tilemap, argus_bg_status & 1);
 	
 			/* Gray / purple scale */
-			if ((argus_bg_status & 2) != 0)
+			if (argus_bg_status & 2)
 			{
 				int offs;
 	
@@ -647,8 +627,7 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr butasan_bg0_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg0_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_bg_status != data)
 		{
 			argus_bg_status = data;
@@ -658,13 +637,12 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr argus_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (argus_flipscreen != (data >> 7))
 		{
 			argus_flipscreen = data >> 7;
 			tilemap_set_flip( ALL_TILEMAPS, (argus_flipscreen) ? TILEMAP_FLIPY | TILEMAP_FLIPX : 0);
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 			{
 				int scrollx, scrolly;
 	
@@ -703,13 +681,11 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr argus_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr argus_paletteram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return argus_paletteram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr argus_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr argus_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs;
 	
 		argus_paletteram[ offset ] = data;
@@ -718,7 +694,7 @@ public class argus
 		{
 			if (offset >= 0x0000 && offset <= 0x00ff)				/* sprite color */
 			{
-				if ((offset & 0x80) != 0)
+				if (offset & 0x80)
 					offset -= 0x80;
 	
 				argus_change_palette( offset,
@@ -769,8 +745,7 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr valtric_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr valtric_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int offs;
 	
 		argus_paletteram[ offset ] = data;
@@ -807,8 +782,7 @@ public class argus
 		}
 	} };
 	
-	public static WriteHandlerPtr butasan_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_paletteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		argus_paletteram[ offset ] = data;
 	
 		if (offset < 0x0200 )							/* BG1 color */
@@ -841,34 +815,29 @@ public class argus
 		}
 	} };
 	
-	public static ReadHandlerPtr butasan_txbackram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_txbackram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return butasan_txbackram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr butasan_txbackram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_txbackram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_txbackram[ offset ] != data)
 		{
 			butasan_txbackram[ offset ] = data;
 		}
 	} };
 	
-	public static ReadHandlerPtr butasan_bg0backram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr butasan_bg0backram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return butasan_bg0backram[ offset ];
 	} };
 	
-	public static WriteHandlerPtr butasan_bg0backram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg0backram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_bg0backram[ offset ] != data)
 		{
 			butasan_bg0backram[ offset ] = data;
 		}
 	} };
 	
-	public static WriteHandlerPtr butasan_bg1_status_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr butasan_bg1_status_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (butasan_bg1_status != data)
 		{
 			butasan_bg1_status = data;
@@ -978,7 +947,7 @@ public class argus
 			}
 		}
 	
-		if (argus_flipscreen == 0)
+		if (!argus_flipscreen)
 			tilemap_set_scrollx(bg0_tilemap, 0, scrollx & 0x1ff);
 		else
 			tilemap_set_scrollx(bg0_tilemap, 0, (scrollx + 256) & 0x1ff);
@@ -999,13 +968,13 @@ public class argus
 				sx = spriteram.read(offs + 1);
 				sy = spriteram.read(offs);
 	
-				if (argus_flipscreen != 0)
+				if (argus_flipscreen)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
 				}
 	
-				if (argus_flipscreen == 0)
+				if (!argus_flipscreen)
 				{
 					if (  spriteram.read(offs+2)& 0x01)  sx -= 256;
 					if (!(spriteram.read(offs+2)& 0x02)) sy -= 256;
@@ -1022,14 +991,14 @@ public class argus
 				color	 = spriteram.read(offs+4)& 0x07;
 				pri      = (spriteram.read(offs+4)& 0x08) >> 3;
 	
-				if (argus_flipscreen != 0)
+				if (argus_flipscreen)
 				{
 					flipx ^= 0x10;
 					flipy ^= 0x20;
 				}
 	
 				if (priority != pri)
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1055,13 +1024,13 @@ public class argus
 				sx = spriteram.read(offs + 1);
 				sy = spriteram.read(offs);
 	
-				if (argus_flipscreen != 0)
+				if (argus_flipscreen)
 				{
 					sx = 240 - sx;
 					sy = 240 - sy;
 				}
 	
-				if (argus_flipscreen == 0)
+				if (!argus_flipscreen)
 				{
 					if (  spriteram.read(offs+2)& 0x01)  sx -= 256;
 					if (!(spriteram.read(offs+2)& 0x02)) sy -= 256;
@@ -1077,13 +1046,13 @@ public class argus
 				flipy	 = spriteram.read(offs+2)& 0x20;
 				color	 = spriteram.read(offs+4)& 0x0f;
 	
-				if (argus_flipscreen != 0)
+				if (argus_flipscreen)
 				{
 					flipx ^= 0x10;
 					flipy ^= 0x20;
 				}
 	
-				drawgfx(bitmap,Machine.gfx[0],
+				drawgfx(bitmap,Machine->gfx[0],
 							tile,
 							color,
 							flipx, flipy,
@@ -1114,11 +1083,11 @@ public class argus
 			flipy	 = spriteram.read(offs + 0)& 0x04;
 			color	 = spriteram.read(offs + 1)& 0x0f;
 	
-			if (argus_flipscreen == 0)
+			if (!argus_flipscreen)
 			{
 				if ( (offs >= 0x100 && offs < 0x300) || (offs >= 0x400 && offs < 0x580) )
 				{
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1136,7 +1105,7 @@ public class argus
 	
 						td = (flipx) ? (1 - i) : i;
 	
-						drawgfx(bitmap,Machine.gfx[0],
+						drawgfx(bitmap,Machine->gfx[0],
 									tile + td,
 									color,
 									flipx, flipy,
@@ -1155,12 +1124,12 @@ public class argus
 						{
 							int td;
 	
-							if (flipy == 0)
+							if ( NOT(flipy) )
 								td = (flipx) ? (i * 2) + 1 - j : i * 2 + j;
 							else
 								td = (flipx) ? ( (1 - i) * 2 ) + 1 - j : (1 - i) * 2 + j;
 	
-							drawgfx(bitmap,Machine.gfx[0],
+							drawgfx(bitmap,Machine->gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1180,12 +1149,12 @@ public class argus
 						{
 							int td;
 	
-							if (flipy == 0)
+							if ( NOT(flipy) )
 								td = (flipx) ? (i * 4) + 3 - j : i * 4 + j;
 							else
 								td = (flipx) ? ( (3 - i) * 4 ) + 3 - j : (3 - i) * 4 + j;
 	
-							drawgfx(bitmap,Machine.gfx[0],
+							drawgfx(bitmap,Machine->gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1205,7 +1174,7 @@ public class argus
 	
 				if ( (offs >= 0x100 && offs < 0x300) || (offs >= 0x400 && offs < 0x580) )
 				{
-					drawgfx(bitmap,Machine.gfx[0],
+					drawgfx(bitmap,Machine->gfx[0],
 								tile,
 								color,
 								flipx, flipy,
@@ -1223,7 +1192,7 @@ public class argus
 	
 						td = (flipx) ? i : (1 - i);
 	
-						drawgfx(bitmap,Machine.gfx[0],
+						drawgfx(bitmap,Machine->gfx[0],
 									tile + td,
 									color,
 									flipx, flipy,
@@ -1242,12 +1211,12 @@ public class argus
 						{
 							int td;
 	
-							if (flipy == 0)
+							if ( NOT(flipy) )
 								td = (flipx) ? (1 - i) * 2 + j : ( (1 - i) * 2 ) + 1 - j;
 							else
 								td = (flipx) ? i * 2 + j : (i * 2) + 1 - j;
 	
-							drawgfx(bitmap,Machine.gfx[0],
+							drawgfx(bitmap,Machine->gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1267,12 +1236,12 @@ public class argus
 						{
 							int td;
 	
-							if (flipy == 0)
+							if ( NOT(flipy) )
 								td = (flipx) ? (3 - i) * 4 + j : ( (3 - i) * 4 ) + 3 - j;
 							else
 								td = (flipx) ? i * 4 + j : (i * 4) + 3 - j;
 	
-							drawgfx(bitmap,Machine.gfx[0],
+							drawgfx(bitmap,Machine->gfx[0],
 										tile + td,
 										color,
 										flipx, flipy,
@@ -1339,8 +1308,7 @@ public class argus
 	}
 	#endif
 	
-	public static VideoUpdateHandlerPtr video_update_argus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_argus  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		/* scroll BG0 and render tile at proper position */
 		argus_bg0_scroll_handle();
 	
@@ -1353,8 +1321,7 @@ public class argus
 		tilemap_draw(bitmap, cliprect, tx_tilemap,  0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_valtric  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_valtric  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);
@@ -1362,8 +1329,7 @@ public class argus
 		tilemap_draw(bitmap, cliprect, tx_tilemap,  0, 0);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_butasan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_butasan  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0], cliprect);
 	
 		tilemap_draw(bitmap, cliprect, bg1_tilemap, 0, 0);

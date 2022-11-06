@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -29,8 +29,7 @@ public class sprint2
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_sprint2  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_sprint2  = new VideoStartHandlerPtr() { public int handler(){
 		helper = auto_bitmap_alloc(Machine.drv.screen_width, Machine.drv.screen_height);
 	
 		if (helper == NULL)
@@ -49,28 +48,23 @@ public class sprint2
 	} };
 	
 	
-	public static ReadHandlerPtr sprint2_collision1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_collision1_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return collision[0];
 	} };
-	public static ReadHandlerPtr sprint2_collision2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sprint2_collision2_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return collision[1];
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_collision_reset1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_collision_reset1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		collision[0] = 0;
 	} };
-	public static WriteHandlerPtr sprint2_collision_reset2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_collision_reset2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		collision[1] = 0;
 	} };
 	
 	
-	public static WriteHandlerPtr sprint2_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sprint2_video_ram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (data != sprint2_video_ram[offset])
 		{
 			tilemap_mark_tile_dirty(tilemap, offset);
@@ -87,9 +81,9 @@ public class sprint2
 		int x;
 		int y;
 	
-		for (y = rect.min_y; y <= rect.max_y; y++)
+		for (y = rect->min_y; y <= rect->max_y; y++)
 		{
-			for (x = rect.min_x; x <= rect.max_x; x++)
+			for (x = rect->min_x; x <= rect->max_x; x++)
 			{
 				pen_t a = read_pixel(helper, x, y);
 	
@@ -122,8 +116,7 @@ public class sprint2
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_sprint2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_sprint2  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int i;
 	
 		tilemap_draw(bitmap, cliprect, tilemap, 0, 0);
@@ -143,8 +136,7 @@ public class sprint2
 	} };
 	
 	
-	public static VideoEofHandlerPtr video_eof_sprint2  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_sprint2  = new VideoEofHandlerPtr() { public void handler(){
 		int i;
 		int j;
 	
@@ -162,23 +154,23 @@ public class sprint2
 	
 			rect.min_x = get_sprite_x(i);
 			rect.min_y = get_sprite_y(i);
-			rect.max_x = get_sprite_x(i) + Machine.gfx[1].width - 1;
-			rect.max_y = get_sprite_y(i) + Machine.gfx[1].height - 1;
+			rect.max_x = get_sprite_x(i) + Machine->gfx[1]->width - 1;
+			rect.max_y = get_sprite_y(i) + Machine->gfx[1]->height - 1;
 	
-			if (rect.min_x < Machine.visible_area.min_x)
-				rect.min_x = Machine.visible_area.min_x;
-			if (rect.min_y < Machine.visible_area.min_y)
-				rect.min_y = Machine.visible_area.min_y;
-			if (rect.max_x > Machine.visible_area.max_x)
-				rect.max_x = Machine.visible_area.max_x;
-			if (rect.max_y > Machine.visible_area.max_y)
-				rect.max_y = Machine.visible_area.max_y;
+			if (rect.min_x < Machine->visible_area.min_x)
+				rect.min_x = Machine->visible_area.min_x;
+			if (rect.min_y < Machine->visible_area.min_y)
+				rect.min_y = Machine->visible_area.min_y;
+			if (rect.max_x > Machine->visible_area.max_x)
+				rect.max_x = Machine->visible_area.max_x;
+			if (rect.max_y > Machine->visible_area.max_y)
+				rect.max_y = Machine->visible_area.max_y;
 	
 			/* check for sprite-tilemap collisions */
 	
 			tilemap_draw(helper, &rect, tilemap, 0, 0);
 	
-			drawgfx(helper, Machine.gfx[1],
+			drawgfx(helper, Machine->gfx[1],
 				get_sprite_code(i),
 				0,
 				0, 0,
@@ -194,7 +186,7 @@ public class sprint2
 			{
 				if (j != i)
 				{
-					drawgfx(helper, Machine.gfx[1],
+					drawgfx(helper, Machine->gfx[1],
 						get_sprite_code(j),
 						1,
 						0, 0,
@@ -204,7 +196,7 @@ public class sprint2
 				}
 			}
 	
-			drawgfx(helper, Machine.gfx[1],
+			drawgfx(helper, Machine->gfx[1],
 				get_sprite_code(i),
 				0,
 				0, 0,

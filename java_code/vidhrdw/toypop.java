@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -28,8 +28,7 @@ public class toypop
 	
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_toypop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_toypop  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < 256;i++)
@@ -67,9 +66,8 @@ public class toypop
 		}
 	} };
 	
-	public static WriteHandlerPtr toypop_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (offset != 0)
+	public static WriteHandlerPtr toypop_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset)
 			palettebank = 1;
 		else
 			palettebank = 0;
@@ -93,17 +91,17 @@ public class toypop
 	WRITE16_HANDLER( toypop_merged_background_w )
 	{
 		// 0xabcd is written as 0x0a0b0c0d in the background image
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			toypop_bg_image[2*offset] = ((data & 0xf00) >> 8) | ((data & 0xf000) >> 4);
 	
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			toypop_bg_image[2*offset+1] = (data & 0xf) | ((data & 0xf0) << 4);
 	}
 	
 	INLINE void toypop_draw_sprite(struct mame_bitmap *dest,unsigned int code,unsigned int color,
 		int flipx,int flipy,int sx,int sy)
 	{
-		drawgfx(dest,Machine.gfx[1],code,color,flipx,flipy,sx,sy,Machine.visible_area,TRANSPARENCY_COLOR,0xff);
+		drawgfx(dest,Machine->gfx[1],code,color,flipx,flipy,sx,sy,Machine->visible_area,TRANSPARENCY_COLOR,0xff);
 	}
 	
 	void draw_background_and_characters(struct mame_bitmap *bitmap)
@@ -112,7 +110,7 @@ public class toypop
 		UINT8 scanline[288];
 	
 		// copy the background image from RAM (0x190200-0x19FDFF) to bitmap
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
 			offs = 0xFDFE/2;
 			for (y = 0; y < 224; y++)
@@ -124,7 +122,7 @@ public class toypop
 					scanline[x+1] = data >> 8;
 					offs--;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, Machine.pens[0x60 + 0x80*palettebank], -1);
+				draw_scanline8(bitmap, 0, y, 288, scanline, Machine->pens[0x60 + 0x80*palettebank], -1);
 			}
 		}
 		else
@@ -139,7 +137,7 @@ public class toypop
 					scanline[x+1] = data;
 					offs++;
 				}
-				draw_scanline8(bitmap, 0, y, 288, scanline, Machine.pens[0x60 + 0x80*palettebank], -1);
+				draw_scanline8(bitmap, 0, y, 288, scanline, Machine->pens[0x60 + 0x80*palettebank], -1);
 			}
 		}
 	
@@ -158,16 +156,15 @@ public class toypop
 				x = ((offs & 0x1f) + 2) << 3;
 				y = ((offs >> 5) - 2) << 3;
 			}
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				x = 280 - x;
 				y = 216 - y;
 			}
-			drawgfx(bitmap,Machine.gfx[0],videoram.read(offs),colorram.read(offs)+ 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
+			drawgfx(bitmap,Machine->gfx[0],videoram.read(offs),colorram.read(offs)+ 64*palettebank,flipscreen,flipscreen,x,y,0,TRANSPARENCY_PEN,0);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_toypop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_toypop  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		register int offs, x, y;
 	
 		draw_background_and_characters(bitmap);
@@ -183,7 +180,7 @@ public class toypop
 	
 				x = (spriteram_2.read(offs+1)| ((spriteram_3.read(offs+1)& 1) << 8)) - 71;
 				y = 217 - spriteram_2.read(offs);
-				if (flipscreen != 0) {
+				if (flipscreen) {
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
 				}
@@ -195,7 +192,7 @@ public class toypop
 						break;
 					case 4:		/* 2x horizontal */
 						sprite &= ~1;
-						if (flipx == 0) {
+						if (NOT(flipx)) {
 							toypop_draw_sprite(bitmap,1+sprite,color,0,flipy,x+16,y);
 							toypop_draw_sprite(bitmap,sprite,color,0,flipy,x,y);
 						} else {
@@ -205,7 +202,7 @@ public class toypop
 						break;
 					case 8:		/* 2x vertical */
 						sprite &= ~2;
-						if (flipy == 0) {
+						if (NOT(flipy)) {
 							toypop_draw_sprite(bitmap,sprite,color,flipx,0,x,y-16);
 							toypop_draw_sprite(bitmap,2+sprite,color,flipx,0,x,y);
 						} else {
@@ -225,7 +222,7 @@ public class toypop
 							toypop_draw_sprite(bitmap,sprite,color,1,1,x+16,y);
 							toypop_draw_sprite(bitmap,3+sprite,color,1,1,x,y-16);
 							toypop_draw_sprite(bitmap,2+sprite,color,1,1,x+16,y-16);
-						} else if (flipx != 0) {
+						} else if (flipx) {
 							toypop_draw_sprite(bitmap,3+sprite,color,1,0,x,y);
 							toypop_draw_sprite(bitmap,2+sprite,color,1,0,x+16,y);
 							toypop_draw_sprite(bitmap,1+sprite,color,1,0,x,y-16);

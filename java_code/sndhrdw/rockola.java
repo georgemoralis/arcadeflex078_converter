@@ -1,7 +1,7 @@
 /* from Andrew Scott (ascott@utkux.utcc.utk.edu) */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.sndhrdw;
 
@@ -84,12 +84,12 @@ public class rockola
 	
 		/* only update every second call (30 Hz update) */
 		count++;
-		if ((count & 1) != 0) return;
+		if (count & 1) return;
 	
 	
 		/* play musical tones according to tunes stored in ROM */
 	
-		if (NoSound0 == 0)
+		if (!NoSound0)
 		{
 	 		if (memory_region(REGION_SOUND1)[Sound0Base+Sound0Offset]!=0xff)
 			{
@@ -105,7 +105,7 @@ public class rockola
 		else
 			mixer_set_volume(tonechannels+0,0);
 	
-		if (NoSound1 == 0)
+		if (!NoSound1)
 		{
 			if (memory_region(REGION_SOUND1)[Sound1Base+Sound1Offset]!=0xff)
 			{
@@ -119,7 +119,7 @@ public class rockola
 		else
 			mixer_set_volume(tonechannels+1,0);
 	
-		if (NoSound2 == 0)
+		if (!NoSound2)
 		{
 			if (memory_region(REGION_SOUND1)[Sound2Base+Sound2Offset]!=0xff)
 			{
@@ -136,25 +136,24 @@ public class rockola
 	
 	
 	
-	public static WriteHandlerPtr satansat_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr satansat_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0 = analog sound trigger */
 	
 		/* bit 1 = to 76477 */
 	
 		/* bit 2 = analog sound trigger */
-		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
+		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
 		{
 			if (data & 0x04 && !(LastPort1 & 0x04))
 			{
-				mixer_play_sample(samplechannels+0,Machine.samples.sample[0].data,
-				                  Machine.samples.sample[0].length,
-				                  Machine.samples.sample[0].smpfreq,
+				mixer_play_sample(samplechannels+0,Machine->samples->sample[0]->data,
+				                  Machine->samples->sample[0]->length,
+				                  Machine->samples->sample[0]->smpfreq,
 				                  0);
 			}
 		}
 	
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 		{
 			NoSound0=1;
 			Sound0Offset = 0;
@@ -167,8 +166,7 @@ public class rockola
 		LastPort1 = data;
 	} };
 	
-	public static WriteHandlerPtr satansat_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr satansat_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select tune in ROM based on sound command byte */
 		Sound0Base = 0x0000 + ((data & 0x0e) << 7);
 		Sound0Mask = 0xff;
@@ -176,10 +174,10 @@ public class rockola
 		Sound1Base = 0x0800 + ((data & 0x60) << 4);
 		Sound1Mask = 0x1ff;
 	
-		if ((data & 0x01) != 0)
+		if (data & 0x01)
 			NoSound0=0;
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			NoSound1=0;
 		else
 		{
@@ -191,8 +189,7 @@ public class rockola
 	} };
 	
 	
-	public static WriteHandlerPtr vanguard_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vanguard_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select musical tune in ROM based on sound command byte */
 	
 		Sound0Base = ((data & 0x07) << 8);
@@ -200,39 +197,39 @@ public class rockola
 		Sound0StopOnRollover = 0;
 	
 		/* play noise samples requested by sound command byte */
-		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
+		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
 		{
 			if (data & 0x20 && !(LastPort1 & 0x20))
-				mixer_play_sample(samplechannels+2,Machine.samples.sample[1].data,
-				                  Machine.samples.sample[1].length,
-				                  Machine.samples.sample[1].smpfreq,
+				mixer_play_sample(samplechannels+2,Machine->samples->sample[1]->data,
+				                  Machine->samples->sample[1]->length,
+				                  Machine->samples->sample[1]->smpfreq,
 				                  0);
 			else if (!(data & 0x20) && LastPort1 & 0x20)
 				mixer_stop_sample(samplechannels+2);
 	
 			if (data & 0x40 && !(LastPort1 & 0x40))
-				mixer_play_sample(samplechannels+0,Machine.samples.sample[1].data,
-				                  Machine.samples.sample[1].length,
-				                  Machine.samples.sample[1].smpfreq,
+				mixer_play_sample(samplechannels+0,Machine->samples->sample[1]->data,
+				                  Machine->samples->sample[1]->length,
+				                  Machine->samples->sample[1]->smpfreq,
 				                  0);
 			else if (!(data & 0x20) && LastPort1 & 0x20)
 				mixer_stop_sample(samplechannels+0);
 	
 			if (data & 0x80 && !(LastPort1 & 0x80))
 			{
-				mixer_play_sample(samplechannels+1,Machine.samples.sample[0].data,
-				                  Machine.samples.sample[0].length,
-				                  Machine.samples.sample[0].smpfreq,
+				mixer_play_sample(samplechannels+1,Machine->samples->sample[0]->data,
+				                  Machine->samples->sample[0]->length,
+				                  Machine->samples->sample[0]->smpfreq,
 				                  0);
 			}
 		}
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 		{
 			NoSound0=0;
 		}
 	
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 		{
 			NoSound0=1;
 			Sound0Offset = 0;
@@ -241,13 +238,12 @@ public class rockola
 		LastPort1 = data;
 	} };
 	
-	public static WriteHandlerPtr vanguard_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr vanguard_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select tune in ROM based on sound command byte */
 		Sound1Base = 0x0800 + ((data & 0x07) << 8);
 		Sound1Mask = 0xff;
 	
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 			NoSound1=0;
 		else
 		{
@@ -258,26 +254,25 @@ public class rockola
 	
 	
 	
-	public static WriteHandlerPtr fantasy_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fantasy_sound0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select musical tune in ROM based on sound command byte */
 		Sound0Base = 0x0000 + ((data & 0x07) << 8);
 		Sound0Mask = 0xff;
 		Sound0StopOnRollover = 0;
 	
 		/* play noise samples requested by sound command byte */
-		if (Machine.samples!=0 && Machine.samples.sample[0]!=0)
+		if (Machine->samples!=0 && Machine->samples->sample[0]!=0)
 		{
 			if (data & 0x80 && !(LastPort1 & 0x80))
 			{
-				mixer_play_sample(samplechannels+0,Machine.samples.sample[0].data,
-				                  Machine.samples.sample[0].length,
-				                  Machine.samples.sample[0].smpfreq,
+				mixer_play_sample(samplechannels+0,Machine->samples->sample[0]->data,
+				                  Machine->samples->sample[0]->length,
+				                  Machine->samples->sample[0]->smpfreq,
 				                  0);
 			}
 		}
 	
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 			NoSound0=0;
 		else
 		{
@@ -285,7 +280,7 @@ public class rockola
 			NoSound0=1;
 		}
 	
-		if ((data & 0x10) != 0)
+		if (data & 0x10)
 			NoSound2=0;
 		else
 		{
@@ -296,13 +291,12 @@ public class rockola
 		LastPort1 = data;
 	} };
 	
-	public static WriteHandlerPtr fantasy_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fantasy_sound1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* select tune in ROM based on sound command byte */
 		Sound1Base = 0x0800 + ((data & 0x07) << 8);
 		Sound1Mask = 0xff;
 	
-		if ((data & 0x08) != 0)
+		if (data & 0x08)
 			NoSound1=0;
 		else
 		{
@@ -311,8 +305,7 @@ public class rockola
 		}
 	} };
 	
-	public static WriteHandlerPtr fantasy_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fantasy_sound2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		rockola_flipscreen_w(offset,data);
 	
 		/* select tune in ROM based on sound command byte */

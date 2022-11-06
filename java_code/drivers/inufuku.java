@@ -69,7 +69,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -103,7 +103,7 @@ public class inufuku
 	
 	static WRITE16_HANDLER( inufuku_soundcommand_w )
 	{
-		if (ACCESSING_LSB != 0) {
+		if (ACCESSING_LSB) {
 	
 			/* hack... sound doesn't work otherwise */
 			if (data == 0x08) return;
@@ -114,13 +114,11 @@ public class inufuku
 		}
 	}
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 	} };
 	
-	public static WriteHandlerPtr inufuku_soundrombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr inufuku_soundrombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *ROM = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1, ROM + (data & 0x03) * 0x8000);
@@ -133,13 +131,11 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	public static MachineInitHandlerPtr machine_init_inufuku  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_inufuku  = new MachineInitHandlerPtr() { public void handler(){
 		;
 	} };
 	
-	public static DriverInitHandlerPtr init_inufuku  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_inufuku  = new DriverInitHandlerPtr() { public void handler(){
 		pending_command = 1;
 		inufuku_soundrombank_w(0, 0);
 	} };
@@ -275,7 +271,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	static InputPortPtr input_ports_inufuku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_inufuku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( inufuku )
 		PORT_START(); 	// 0
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -412,8 +408,7 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_inufuku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( inufuku )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 32000000/2)	/* 16.00 MHz */
@@ -443,9 +438,7 @@ public class inufuku
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/******************************************************************************
@@ -486,5 +479,5 @@ public class inufuku
 	
 	******************************************************************************/
 	
-	public static GameDriver driver_inufuku	   = new GameDriver("1998"	,"inufuku"	,"inufuku.java"	,rom_inufuku,null	,machine_driver_inufuku	,input_ports_inufuku	,init_inufuku	,ROT0	,	"Video System Co.", "Quiz & Variety Sukusuku Inufuku (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1998, inufuku, 0, inufuku, inufuku, inufuku, ROT0, "Video System Co.", "Quiz & Variety Sukusuku Inufuku (Japan)", GAME_NO_COCKTAIL )
 }

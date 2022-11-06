@@ -47,7 +47,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -171,8 +171,7 @@ public class tms9928a
 	/*
 	** initialize the palette
 	*/
-	static public static PaletteInitHandlerPtr palette_init_tms9928a  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_tms9928a  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		palette_set_colors(0, TMS9928A_palette, TMS9928A_PALETTE_SIZE);
 	} };
 	
@@ -198,22 +197,22 @@ public class tms9928a
 	
 	static int TMS9928A_start (const TMS9928a_interface *intf) {
 	    /* 4, 8 or 16 kB vram please */
-	    if (! ((intf.vram == 0x1000) || (intf.vram == 0x2000) || (intf.vram == 0x4000)) )
+	    if (! ((intf->vram == 0x1000) || (intf->vram == 0x2000) || (intf->vram == 0x4000)) )
 	        return 1;
 	
-	    tms.model = intf.model;
+	    tms.model = intf->model;
 	
 		tms.top_border = TMS_50HZ ? TOP_BORDER_50HZ : TOP_BORDER_60HZ;
 		tms.bottom_border = TMS_50HZ ? BOTTOM_BORDER_50HZ : BOTTOM_BORDER_60HZ;
 	
-		tms.INTCallback = intf.int_callback;
+		tms.INTCallback = intf->int_callback;
 	
 	    /* Video RAM */
-	    tms.vramsize = intf.vram;
-	    tms.vMem = (UINT8*) auto_malloc (intf.vram);
+	    tms.vramsize = intf->vram;
+	    tms.vMem = (UINT8*) auto_malloc (intf->vram);
 	    if (!tms.vMem)
 			return 1;
-	    memset (tms.vMem, 0, intf.vram);
+	    memset (tms.vMem, 0, intf->vram);
 	
 	    /* Sprite back buffer */
 	    tms.dBackMem = (UINT8*)auto_malloc (IMAGE_SIZE);
@@ -255,7 +254,7 @@ public class tms9928a
 		state_save_register_UINT8 ("tms9928a", 0, "latch", &tms.latch, 1);
 		state_save_register_UINT16 ("tms9928a", 0, "vram_latch", (UINT16*)&tms.Addr, 1);
 		state_save_register_UINT8 ("tms9928a", 0, "interrupt_line", &tms.INT, 1);
-		state_save_register_UINT8 ("tms9928a", 0, "VRAM", tms.vMem, intf.vram);
+		state_save_register_UINT8 ("tms9928a", 0, "VRAM", tms.vMem, intf->vram);
 	
 	    return 0;
 	}
@@ -290,7 +289,7 @@ public class tms9928a
 	/*
 	** The I/O functions.
 	*/
-	READ_HANDLER (TMS9928A_vram_r) {
+	public static ReadHandlerPtr TMS9928A_vram_r  = new ReadHandlerPtr() { public int handler(int offset)
 	    UINT8 b;
 	    b = tms.ReadAhead;
 	    tms.ReadAhead = tms.vMem[tms.Addr];
@@ -299,7 +298,7 @@ public class tms9928a
 	    return b;
 	}
 	
-	WRITE_HANDLER (TMS9928A_vram_w) {
+	public static WriteHandlerPtr TMS9928A_vram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 	    int i;
 	
 	    if (tms.vMem[tms.Addr] != data) {
@@ -323,29 +322,29 @@ public class tms9928a
 	            tms.DirtyPattern[i] = 1;
 	            tms.anyDirtyPattern = 1;
 	        }
-	    }
+	    } };
 	    tms.Addr = (tms.Addr + 1) & (tms.vramsize - 1);
 	    tms.ReadAhead = data;
 	    tms.latch = 0;
 	}
 	
-	READ_HANDLER (TMS9928A_register_r) {
+	public static ReadHandlerPtr TMS9928A_register_r  = new ReadHandlerPtr() { public int handler(int offset)
 	    UINT8 b;
 	    b = tms.StatusReg;
 	    tms.StatusReg = 0x1f;
 	    if (tms.INT) {
 	        tms.INT = 0;
 	        if (tms.INTCallback) tms.INTCallback (tms.INT);
-	    }
+	    } };
 	    tms.latch = 0;
 	    return b;
 	}
 	
-	WRITE_HANDLER (TMS9928A_register_w) {
+	public static WriteHandlerPtr TMS9928A_register_w = new WriteHandlerPtr() {public void handler(int offset, int data)
 		int reg;
 	
 	    if (tms.latch) {
-	        if ((data & 0x80) != 0) {
+	        if (data & 0x80) {
 	            /* register write */
 				reg = data & 7;
 				/*if (tms.FirstByte != tms.Regs[reg])*/ /* Removed to fix ColecoVision MESS Driver*/
@@ -359,7 +358,7 @@ public class tms9928a
 	            }
 	        }
 	        tms.latch = 0;
-	    } else {
+	    } }; else {
 	        tms.FirstByte = data;
 			tms.latch = 1;
 	    }
@@ -385,7 +384,7 @@ public class tms9928a
 	    case 0:
 	        if (tms.mode != TMS_MODE) {
 	            /* re-calculate masks and pattern generator & colour */
-	            if ((val & 2) != 0) {
+	            if (val & 2) {
 	                tms.colour = ((tms.Regs[3] & 0x80) * 64) & (tms.vramsize - 1);
 	                tms.colourmask = (tms.Regs[3] & 0x7f) * 8 | 7;
 	                tms.pattern = ((tms.Regs[4] & 4) * 2048) & (tms.vramsize - 1);
@@ -468,12 +467,11 @@ public class tms9928a
 	/*
 	** Updates the screen (the dMem memory area).
 	*/
-	public static VideoUpdateHandlerPtr video_update_tms9928a  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_tms9928a  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 	    int c;
 	
 	    if (tms.Change) {
-	        c = tms.Regs[7] & 15; if (c == 0) c=1;
+	        c = tms.Regs[7] & 15; if (!c) c=1;
 	        if (tms.BackColour != c) {
 	            tms.BackColour = c;
 	            palette_set_color (0,
@@ -511,7 +509,7 @@ public class tms9928a
 				rt.min_x = LEFT_BORDER+256; rt.max_x = LEFT_BORDER+256+RIGHT_BORDER-1;
 				fillbitmap (bitmap, tms.BackColour, &rt);
 		    }
-			if (TMS_SPRITES_ENABLED != 0)
+			if (TMS_SPRITES_ENABLED)
 				_TMS9928A_sprites(bitmap);
 		}
 	
@@ -528,7 +526,7 @@ public class tms9928a
 	    /* when skipping frames, calculate sprite collision */
 	    if (osd_skip_this_frame() ) {
 	        if (tms.Change) {
-	            if (TMS_SPRITES_ENABLED != 0) {
+	            if (TMS_SPRITES_ENABLED) {
 	                _TMS9928A_sprites (NULL);
 	            }
 	        } else {
@@ -554,8 +552,8 @@ public class tms9928a
 	    if ( !(tms.anyDirtyColour || tms.anyDirtyName || tms.anyDirtyPattern) )
 	         return;
 	
-	    fg = Machine.pens[tms.Regs[7] / 16];
-	    bg = Machine.pens[tms.Regs[7] & 15];
+	    fg = Machine->pens[tms.Regs[7] / 16];
+	    bg = Machine->pens[tms.Regs[7] & 15];
 	
 	    if (tms.anyDirtyColour) {
 			/* colours at sides must be reset */
@@ -596,8 +594,8 @@ public class tms9928a
 	    if ( !(tms.anyDirtyColour || tms.anyDirtyName || tms.anyDirtyPattern) )
 	         return;
 	
-	    fg = Machine.pens[tms.Regs[7] / 16];
-	    bg = Machine.pens[tms.Regs[7] & 15];
+	    fg = Machine->pens[tms.Regs[7] / 16];
+	    bg = Machine->pens[tms.Regs[7] & 15];
 	
 	    if (tms.anyDirtyColour) {
 			/* colours at sides must be reset */
@@ -643,8 +641,8 @@ public class tms9928a
 	                continue;
 	            patternptr = tms.vMem + tms.pattern + charcode*8;
 	            colour = tms.vMem[tms.colour+charcode/8];
-	            fg = Machine.pens[colour / 16];
-	            bg = Machine.pens[colour & 15];
+	            fg = Machine->pens[colour / 16];
+	            bg = Machine->pens[colour & 15];
 	            for (yy=0;yy<8;yy++) {
 	                pattern=*patternptr++;
 	                for (xx=0;xx<8;xx++) {
@@ -680,8 +678,8 @@ public class tms9928a
 	            for (yy=0;yy<8;yy++) {
 	                pattern = *patternptr++;
 	                colour = *colourptr++;
-	                fg = Machine.pens[colour / 16];
-	                bg = Machine.pens[colour & 15];
+	                fg = Machine->pens[colour / 16];
+	                bg = Machine->pens[colour & 15];
 	                for (xx=0;xx<8;xx++) {
 			    		plot_pixel (bmp, x*8+xx, y*8+yy,
 							(pattern & 0x80) ? fg : bg);
@@ -709,8 +707,8 @@ public class tms9928a
 	                continue;
 	            patternptr = tms.vMem+tms.pattern+charcode*8+(y&3)*2;
 	            for (yy=0;yy<2;yy++) {
-	                fg = Machine.pens[(*patternptr / 16)];
-	                bg = Machine.pens[((*patternptr++) & 15)];
+	                fg = Machine->pens[(*patternptr / 16)];
+	                bg = Machine->pens[((*patternptr++) & 15)];
 	                for (yyy=0;yyy<4;yyy++) {
 			    plot_pixel (bmp, x*8+0, y*8+yy*4+yyy, fg);
 			    plot_pixel (bmp, x*8+1, y*8+yy*4+yyy, fg);
@@ -744,8 +742,8 @@ public class tms9928a
 	            patternptr = tms.vMem + tms.pattern +
 	                ((charcode+(y&3)*2+(y/8)*256)&tms.patternmask)*8;
 	            for (yy=0;yy<2;yy++) {
-	                fg = Machine.pens[(*patternptr / 16)];
-	                bg = Machine.pens[((*patternptr++) & 15)];
+	                fg = Machine->pens[(*patternptr / 16)];
+	                bg = Machine->pens[((*patternptr++) & 15)];
 	                for (yyy=0;yyy<4;yyy++) {
 			    plot_pixel (bmp, x*8+0, y*8+yy*4+yyy, fg);
 			    plot_pixel (bmp, x*8+1, y*8+yy*4+yyy, fg);
@@ -769,8 +767,8 @@ public class tms9928a
 	    if ( !(tms.anyDirtyColour || tms.anyDirtyName || tms.anyDirtyPattern) )
 	         return;
 	
-	    fg = Machine.pens[tms.Regs[7] / 16];
-	    bg = Machine.pens[tms.Regs[7] & 15];
+	    fg = Machine->pens[tms.Regs[7] / 16];
+	    bg = Machine->pens[tms.Regs[7] & 15];
 	
 	    for (y=0;y<192;y++) {
 	        xx=0;
@@ -826,7 +824,7 @@ public class tms9928a
 	        if (*attributeptr & 0x80) x -= 32;
 	        attributeptr++;
 	
-	        if (large == 0) {
+	        if (!large) {
 	            /* draw sprite (not enlarged) */
 	            for (yy=y;yy<(y+size);yy++) {
 	                if ( (yy < 0) || (yy > 191) ) continue;
@@ -844,7 +842,7 @@ public class tms9928a
 	                } else limit[yy]--;
 	                line = 256*patternptr[yy-y] + patternptr[yy-y+16];
 	                for (xx=x;xx<(x+size);xx++) {
-	                    if ((line & 0x8000) != 0) {
+	                    if (line & 0x8000) {
 	                        if ((xx >= 0) && (xx < 256)) {
 	                            if (tms.dBackMem[yy*256+xx]) {
 	                                tms.StatusReg |= 0x20;
@@ -854,8 +852,8 @@ public class tms9928a
 	                            if (c && ! (tms.dBackMem[yy*256+xx] & 0x02))
 	                            {
 	                            	tms.dBackMem[yy*256+xx] |= 0x02;
-	                            	if (bmp != 0)
-										plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine.pens[c]);
+	                            	if (bmp)
+										plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine->pens[c]);
 								}
 	                        }
 	                    }
@@ -883,7 +881,7 @@ public class tms9928a
 	                        } else limit[yy]--;
 	                        line = line2;
 	                        for (xx=x;xx<(x+size*2);xx+=2) {
-	                            if ((line & 0x8000) != 0) {
+	                            if (line & 0x8000) {
 	                                if ((xx >=0) && (xx < 256)) {
 	                                    if (tms.dBackMem[yy*256+xx]) {
 	                                        tms.StatusReg |= 0x20;
@@ -893,8 +891,8 @@ public class tms9928a
 			                            if (c && ! (tms.dBackMem[yy*256+xx] & 0x02))
 	        		                    {
 	                		            	tms.dBackMem[yy*256+xx] |= 0x02;
-	                                        if (bmp != 0)
-	                                        	plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine.pens[c]);
+	                                        if (bmp)
+	                                        	plot_pixel (bmp, LEFT_BORDER+xx, TOP_BORDER+yy, Machine->pens[c]);
 	                		            }
 	                                }
 	                                if (((xx+1) >=0) && ((xx+1) < 256)) {
@@ -906,8 +904,8 @@ public class tms9928a
 			                            if (c && ! (tms.dBackMem[yy*256+xx+1] & 0x02))
 	        		                    {
 	                		            	tms.dBackMem[yy*256+xx+1] |= 0x02;
-	                                        if (bmp != 0)
-	                                        	plot_pixel (bmp, LEFT_BORDER+xx+1, TOP_BORDER+yy, Machine.pens[c]);
+	                                        if (bmp)
+	                                        	plot_pixel (bmp, LEFT_BORDER+xx+1, TOP_BORDER+yy, Machine->pens[c]);
 										}
 	                                }
 	                            }
@@ -928,15 +926,14 @@ public class tms9928a
 	
 	static TMS9928a_interface sIntf;
 	
-	static public static VideoStartHandlerPtr video_start_TMS9928A_hack  = new VideoStartHandlerPtr() { public int handler()
-	{
+	static public static VideoStartHandlerPtr video_start_TMS9928A_hack  = new VideoStartHandlerPtr() { public int handler(){
 		return TMS9928A_start(&sIntf);
 	} };
 	
 	void mdrv_tms9928a(struct InternalMachineDriver *machine, const TMS9928a_interface *intf)
 	{
-		int top_border = ((intf.model == TMS9929) || (intf.model == TMS9929A)) ? TOP_BORDER_50HZ : TOP_BORDER_60HZ;
-		int bottom_border = ((intf.model == TMS9929) || (intf.model == TMS9929A)) ? BOTTOM_BORDER_50HZ : BOTTOM_BORDER_60HZ;
+		int top_border = ((intf->model == TMS9929) || (intf->model == TMS9929A)) ? TOP_BORDER_50HZ : TOP_BORDER_60HZ;
+		int bottom_border = ((intf->model == TMS9929) || (intf->model == TMS9929A)) ? BOTTOM_BORDER_50HZ : BOTTOM_BORDER_60HZ;
 	
 		sIntf = *intf;
 	

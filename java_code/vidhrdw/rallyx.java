@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -61,8 +61,7 @@ public class rallyx
 	  1 kohm pull-down is an all three RGB outputs.
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_rallyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_rallyx  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -108,8 +107,7 @@ public class rallyx
 			COLOR(2,i) = 16 + i;
 	} };
 	
-	public static PaletteInitHandlerPtr palette_init_locomotn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_locomotn  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -160,8 +158,7 @@ public class rallyx
 	  Start the video hardware emulation.
 	
 	***************************************************************************/
-	public static VideoStartHandlerPtr video_start_rallyx  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_rallyx  = new VideoStartHandlerPtr() { public int handler(){
 		if (video_start_generic.handler() != 0)
 			return 1;
 	
@@ -177,8 +174,7 @@ public class rallyx
 	
 	
 	
-	public static WriteHandlerPtr rallyx_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rallyx_videoram2[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
@@ -188,8 +184,7 @@ public class rallyx
 	} };
 	
 	
-	public static WriteHandlerPtr rallyx_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (rallyx_colorram2[offset] != data)
 		{
 			dirtybuffer2[offset] = 1;
@@ -200,8 +195,7 @@ public class rallyx
 	
 	
 	
-	public static WriteHandlerPtr rallyx_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rallyx_flipscreen_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (flip_screen() != (data & 1))
 		{
 			flip_screen_set(data & 1);
@@ -220,14 +214,13 @@ public class rallyx
 	
 	***************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_rallyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_rallyx  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 		int scrollx,scrolly;
 	const int displacement = 1;
 	
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			scrollx = (*rallyx_scrollx - displacement) + 32;
 			scrolly = (*rallyx_scrolly + 16) - 32;
@@ -255,7 +248,7 @@ public class rallyx
 				sy = offs / 32;
 				flipx = ~rallyx_colorram2[offs] & 0x40;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -286,7 +279,7 @@ public class rallyx
 				sy = offs / 32 - 2;
 				flipx = ~colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -335,7 +328,7 @@ public class rallyx
 			sy = offs / 32;
 			flipx = ~rallyx_colorram2[offs] & 0x40;
 			flipy = rallyx_colorram2[offs] & 0x80;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 31 - sx;
 				sy = 31 - sy;
@@ -359,7 +352,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen != 0)
+		if (flip_screen())
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -372,7 +365,7 @@ public class rallyx
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs] & 0x01) << 8);
 			y = 237 - rallyx_radary[offs];
-			if (flip_screen != 0) x -= 3;
+			if (flip_screen()) x -= 3;
 	
 			drawgfx(bitmap,Machine.gfx[2],
 					((rallyx_radarattr[offs] & 0x0e) >> 1) ^ 0x07,
@@ -385,14 +378,13 @@ public class rallyx
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_jungler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_jungler  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 		int scrollx,scrolly;
 	const int displacement = 0;
 	
 	
-		if (flip_screen != 0)
+		if (flip_screen())
 		{
 			scrollx = (*rallyx_scrollx - displacement) + 32;
 			scrolly = (*rallyx_scrolly + 16) - 32;
@@ -417,7 +409,7 @@ public class rallyx
 				sy = offs / 32;
 				flipx = ~rallyx_colorram2[offs] & 0x40;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -448,7 +440,7 @@ public class rallyx
 				sy = offs / 32 - 2;
 				flipx = ~colorram.read(offs)& 0x40;
 				flipy = colorram.read(offs)& 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -486,7 +478,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen != 0)
+		if (flip_screen())
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -511,8 +503,7 @@ public class rallyx
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_locomotn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_locomotn  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 	const int displacement = 0;
 	
@@ -533,7 +524,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = rallyx_colorram2[offs] & 0x80;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -565,7 +556,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = colorram.read(offs)& 0x80;
 				flipy = colorram.read(offs)& 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -588,7 +579,7 @@ public class rallyx
 			int scrollx,scrolly;
 	
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				scrollx = (*rallyx_scrollx) + 32;
 				scrolly = (*rallyx_scrolly + 16) - 32;
@@ -604,7 +595,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen != 0)
+		if (flip_screen())
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -635,7 +626,7 @@ public class rallyx
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs] & 0x08) << 5);
 			y = 237 - rallyx_radary[offs];
-			if (flip_screen != 0) x -= 3;
+			if (flip_screen()) x -= 3;
 	
 			/* handle reduced visible area in some games */
 			if (flip_screen() && Machine.drv.default_visible_area.max_x == 32*8-1) x += 32;
@@ -651,8 +642,7 @@ public class rallyx
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_commsega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_commsega  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs,sx,sy;
 	
 	
@@ -672,7 +662,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = rallyx_colorram2[offs] & 0x80;
 				flipy = rallyx_colorram2[offs] & 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 31 - sx;
 					sy = 31 - sy;
@@ -704,7 +694,7 @@ public class rallyx
 				/* not a mistake, one bit selects both  flips */
 				flipx = colorram.read(offs)& 0x80;
 				flipy = colorram.read(offs)& 0x80;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					sx = 7 - sx;
 					sy = 27 - sy;
@@ -727,7 +717,7 @@ public class rallyx
 			int scrollx,scrolly;
 	
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				scrollx = (*rallyx_scrollx) + 32;
 				scrolly = (*rallyx_scrolly + 16) - 32;
@@ -743,7 +733,7 @@ public class rallyx
 	
 	
 		/* radar */
-		if (flip_screen != 0)
+		if (flip_screen())
 			copybitmap(bitmap,tmpbitmap,0,0,0,0,&radarvisibleareaflip,TRANSPARENCY_NONE,0);
 		else
 			copybitmap(bitmap,tmpbitmap,0,0,28*8,0,&radarvisiblearea,TRANSPARENCY_NONE,0);
@@ -757,10 +747,10 @@ public class rallyx
 	
 			sx = spriteram.read(offs + 1)- 1;
 			sy = 224 - spriteram_2.read(offs);
-	if (flip_screen != 0) sx += 32;
+	if (flip_screen()) sx += 32;
 			flipx = ~spriteram.read(offs)& 1;
 			flipy = ~spriteram.read(offs)& 2;
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
@@ -790,7 +780,7 @@ public class rallyx
 			*/
 	
 			x = rallyx_radarx[offs] + ((~rallyx_radarattr[offs & 0x0f] & 0x08) << 5);
-			if (flip_screen != 0) x += 32;
+			if (flip_screen()) x += 32;
 			y = 237 - rallyx_radary[offs];
 	
 	

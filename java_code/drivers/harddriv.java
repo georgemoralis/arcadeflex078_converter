@@ -169,7 +169,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -480,7 +480,7 @@ public class harddriv
 		{ ADSP_PGM_ADDR_RANGE (0x0000, 0x3fff), MRA16_RAM },
 	//
 	//	/SIRQ2 = IRQ2
-	//	/SRES . RESET
+	//	/SRES -> RESET
 	//
 	//	2xx0 W = SWR0 (POUT)
 	//	2xx1 W = SWR1 (SINT)
@@ -497,7 +497,7 @@ public class harddriv
 	//	2xx7 R = SFWCLR
 	//
 	//
-	//	/XRES . RESET
+	//	/XRES -> RESET
 	//	communicate over serial I/O
 	
 	MEMORY_END
@@ -625,7 +625,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_harddriv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_harddriv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( harddriv )
 		PORT_START(); 		/* 600000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -681,7 +681,7 @@ public class harddriv
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_racedriv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_racedriv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( racedriv )
 		PORT_START(); 		/* 600000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -737,7 +737,7 @@ public class harddriv
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_racedrvc = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_racedrvc = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( racedrvc )
 		PORT_START(); 		/* 60c000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );/* diagnostic switch */
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -799,7 +799,7 @@ public class harddriv
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_stunrun = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stunrun = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stunrun )
 		PORT_START(); 		/* 60c000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -857,7 +857,7 @@ public class harddriv
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_steeltal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_steeltal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( steeltal )
 		PORT_START(); 		/* 60c000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -916,7 +916,7 @@ public class harddriv
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hdrivair = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hdrivair = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hdrivair )
 		PORT_START(); 		/* 60c000 */
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_SPECIAL );/* HBLANK */
@@ -1021,8 +1021,7 @@ public class harddriv
 	*/
 	
 	/* Driver board without MSP (used by Race Drivin' cockpit) */
-	public static MachineHandlerPtr machine_driver_driver_nomsp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( driver_nomsp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M68010, 32000000/4)
@@ -1050,14 +1049,11 @@ public class harddriv
 		MDRV_VIDEO_START(harddriv)
 		MDRV_VIDEO_EOF(harddriv)
 		MDRV_VIDEO_UPDATE(harddriv)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Driver board with MSP (used by Hard Drivin' cockpit) */
-	public static MachineHandlerPtr machine_driver_driver_msp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( driver_msp )
 		MDRV_IMPORT_FROM(driver_nomsp)
 	
 		/* basic machine hardware */
@@ -1067,14 +1063,11 @@ public class harddriv
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(89, 596, 0, 383)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Multisync board without MSP (used by STUN Runner, Steel Talons, Race Drivin' compact) */
-	public static MachineHandlerPtr machine_driver_multisync_nomsp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( multisync_nomsp )
 		MDRV_IMPORT_FROM(driver_nomsp)
 	
 		/* basic machine hardware */
@@ -1089,28 +1082,22 @@ public class harddriv
 		/* video hardware */
 		MDRV_SCREEN_SIZE(640, 288)
 		MDRV_VISIBLE_AREA(109, 620, 0, 287)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Multisync board with MSP (used by Hard Drivin' compact) */
-	public static MachineHandlerPtr machine_driver_multisync_msp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( multisync_msp )
 		MDRV_IMPORT_FROM(multisync_nomsp)
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("msp", TMS34010, 50000000/TMS34010_CLOCK_DIVIDER)
 		MDRV_CPU_MEMORY(multisync_readmem_msp,multisync_writemem_msp)
 		MDRV_CPU_CONFIG(msp_config)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* Multisync II board (used by Hard Drivin's Airborne) */
-	public static MachineHandlerPtr machine_driver_multisync2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( multisync2 )
 		MDRV_IMPORT_FROM(multisync_nomsp)
 	
 		/* basic machine hardware */
@@ -1119,9 +1106,7 @@ public class harddriv
 	
 		MDRV_CPU_MODIFY("gsp")
 		MDRV_CPU_MEMORY(multisync2_readmem_gsp,multisync2_writemem_gsp)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1132,34 +1117,27 @@ public class harddriv
 	 *************************************/
 	
 	/* ADSP/ADSP II boards (used by Hard/Race Drivin', STUN Runner) */
-	public static MachineHandlerPtr machine_driver_adsp = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( adsp )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2100, 8000000)
 		MDRV_CPU_MEMORY(adsp_readmem,adsp_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* DS III board (used by Steel Talons) */
-	public static MachineHandlerPtr machine_driver_ds3 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ds3 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2101, 12000000)
 		MDRV_CPU_MEMORY(ds3_readmem,ds3_writemem)
 		
 		MDRV_INTERLEAVE(1000)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* DS IV board (used by Hard Drivin's Airborne) */
-	public static MachineHandlerPtr machine_driver_ds4 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ds4 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("adsp", ADSP2101, 12000000)
@@ -1174,9 +1152,7 @@ public class harddriv
 	//	MDRV_CPU_MEMORY(ds3snd_readmem,ds3snd_writemem)
 	
 		MDRV_SOUND_ADD(DAC, dac2_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1187,29 +1163,23 @@ public class harddriv
 	 *************************************/
 	
 	/* DSK board (used by Race Drivin') */
-	public static MachineHandlerPtr machine_driver_dsk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dsk )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("dsp32", DSP32C, 40000000)
 		MDRV_CPU_CONFIG(dsp32c_config)
 		MDRV_CPU_MEMORY(dsk_readmem_dsp32,dsk_writemem_dsp32)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/* DSK II board (used by Hard Drivin's Airborne) */
-	public static MachineHandlerPtr machine_driver_dsk2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( dsk2 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("dsp32", DSP32C, 40000000)
 		MDRV_CPU_CONFIG(dsp32c_config)
 		MDRV_CPU_MEMORY(dsk2_readmem_dsp32,dsk2_writemem_dsp32)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1219,8 +1189,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_driversnd = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( driversnd )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("sound", M68000, 16000000/2)
@@ -1234,9 +1203,7 @@ public class harddriv
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1246,58 +1213,45 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_harddriv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( harddriv )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( driver_msp )		/* original driver board with MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_harddrvc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( harddrvc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_msp )	/* multisync board with MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_racedriv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( racedriv )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( driver_nomsp )	/* original driver board without MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( dsk )				/* DSK board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_racedrvc = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( racedrvc )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_nomsp )	/* multisync board without MSP */
 		MDRV_IMPORT_FROM( adsp )			/* ADSP board */
 		MDRV_IMPORT_FROM( dsk )				/* DSK board */
 		MDRV_IMPORT_FROM( driversnd )		/* driver sound board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_stunrun = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stunrun )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_nomsp )	/* multisync board without MSP */
@@ -1309,33 +1263,25 @@ public class harddriv
 		/* video hardware */
 		MDRV_SCREEN_SIZE(640, 240)
 		MDRV_VISIBLE_AREA(103, 614, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_steeltal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( steeltal )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync_msp )	/* multisync board with MSP */
 		MDRV_IMPORT_FROM( ds3 )				/* DS III board */
 		MDRV_IMPORT_FROM( jsa_iii_mono )	/* JSA III sound board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hdrivair = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hdrivair )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM( multisync2 )		/* multisync II board */
 		MDRV_IMPORT_FROM( ds4 )				/* DS IV board */
 		MDRV_IMPORT_FROM( dsk2 )			/* DSK II board */
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -3554,7 +3500,7 @@ public class harddriv
 		atarigen_eeprom_default = default_eeprom;
 	
 		/* install handlers for the compact driving games' inputs */
-		if (compact_inputs != 0)
+		if (compact_inputs)
 		{
 			install_mem_read16_handler(hdcpu_main, 0x400000, 0x400001, hdc68k_wheel_r);
 			install_mem_write16_handler(hdcpu_main, 0x408000, 0x408001, hdc68k_wheel_edge_reset_w);
@@ -3609,10 +3555,10 @@ public class harddriv
 		install_mem_write16_handler(hdcpu_main, 0x823800, 0x823fff, hd68k_ds3_control_w);
 	
 		/* if we have a sound DSP, boot it */
-		if (hdcpu_sound != -1 && Machine.drv.cpu[hdcpu_sound].cpu_type == CPU_ADSP2105)
+		if (hdcpu_sound != -1 && Machine->drv->cpu[hdcpu_sound].cpu_type == CPU_ADSP2105)
 			adsp2105_load_boot_data((data8_t *)(memory_region(REGION_CPU1 + hdcpu_sound) + ADSP2100_SIZE),
 									(data32_t *)(memory_region(REGION_CPU1 + hdcpu_sound) + ADSP2100_PGM_OFFSET));
-		if (hdcpu_sounddsp != -1 && Machine.drv.cpu[hdcpu_sounddsp].cpu_type == CPU_ADSP2105)
+		if (hdcpu_sounddsp != -1 && Machine->drv->cpu[hdcpu_sounddsp].cpu_type == CPU_ADSP2105)
 			adsp2105_load_boot_data((data8_t *)(memory_region(REGION_CPU1 + hdcpu_sounddsp) + ADSP2100_SIZE),
 									(data32_t *)(memory_region(REGION_CPU1 + hdcpu_sounddsp) + ADSP2100_PGM_OFFSET));
 	
@@ -3785,8 +3731,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_harddriv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_harddriv  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_driver();
 		init_adsp();
@@ -3808,8 +3753,7 @@ public class harddriv
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_harddrvc  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_harddrvc  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_multisync(1);
 		init_adsp();
@@ -3831,8 +3775,7 @@ public class harddriv
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_stunrun  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stunrun  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_multisync(0);
 		init_adsp();
@@ -3872,8 +3815,7 @@ public class harddriv
 	}
 	
 	
-	public static DriverInitHandlerPtr init_racedriv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_racedriv  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_driver();
 		init_adsp();
@@ -3931,8 +3873,8 @@ public class harddriv
 		rddsp32_speedup_pc = 0x6054b0;
 	}
 	
-	public static DriverInitHandlerPtr init_racedrvc  = new DriverInitHandlerPtr() { public void handler() { racedrvc_init_common(0xfff95cd0); } };
-	public static DriverInitHandlerPtr init_racedrc1  = new DriverInitHandlerPtr() { public void handler() { racedrvc_init_common(0xfff7ecd0); } };
+	public static DriverInitHandlerPtr init_racedrvc  = new DriverInitHandlerPtr() { public void handler() racedrvc_init_common(0xfff95cd0); }
+	public static DriverInitHandlerPtr init_racedrc1  = new DriverInitHandlerPtr() { public void handler() racedrvc_init_common(0xfff7ecd0); }
 	
 	
 	static READ16_HANDLER( steeltal_dummy_r )
@@ -3954,12 +3896,12 @@ public class harddriv
 		install_mem_read16_handler(hdcpu_main, 0x908000, 0x908001, steeltal_dummy_r);
 	
 		/* set up the SLOOP */
-		if (proto_sloop == 0)
+		if (!proto_sloop)
 		{
 			hd68k_slapstic_base = install_mem_read16_handler(hdcpu_main, 0xe0000, 0xfffff, st68k_sloop_r);
 			hd68k_slapstic_base = install_mem_write16_handler(hdcpu_main, 0xe0000, 0xfffff, st68k_sloop_w);
 			st68k_sloop_alt_base = install_mem_read16_handler(hdcpu_main, 0x4e000, 0x4ffff, st68k_sloop_alt_r);
-		}
+		} };
 		else
 		{
 			hd68k_slapstic_base = install_mem_read16_handler(hdcpu_main, 0xe0000, 0xfffff, st68k_protosloop_r);
@@ -3989,13 +3931,12 @@ public class harddriv
 	}
 	
 	
-	public static DriverInitHandlerPtr init_steeltal  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x4fc18, 0); } };
-	public static DriverInitHandlerPtr init_steelta1  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x4f9c6, 0); } };
-	public static DriverInitHandlerPtr init_steeltap  = new DriverInitHandlerPtr() { public void handler() { steeltal_init_common(0x52290, 1); } };
+	public static DriverInitHandlerPtr init_steeltal  = new DriverInitHandlerPtr() { public void handler() steeltal_init_common(0x4fc18, 0); }
+	public static DriverInitHandlerPtr init_steelta1  = new DriverInitHandlerPtr() { public void handler() steeltal_init_common(0x4f9c6, 0); }
+	public static DriverInitHandlerPtr init_steeltap  = new DriverInitHandlerPtr() { public void handler() steeltal_init_common(0x52290, 1); }
 	
 	
-	public static DriverInitHandlerPtr init_hdrivair  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hdrivair  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_multisync(1);
 		init_ds3();
@@ -4019,8 +3960,7 @@ public class harddriv
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_hdrivaip  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hdrivaip  = new DriverInitHandlerPtr() { public void handler(){
 		/* initialize the boards */
 		init_multisync(1);
 		init_ds3();
@@ -4051,61 +3991,61 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_harddriv	   = new GameDriver("1988"	,"harddriv"	,"harddriv.java"	,rom_harddriv,null	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, rev 7)" )
-	public static GameDriver driver_harddrvb	   = new GameDriver("1988"	,"harddrvb"	,"harddriv.java"	,rom_harddrvb,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, British, rev 7)" )
-	public static GameDriver driver_harddrvg	   = new GameDriver("1988"	,"harddrvg"	,"harddriv.java"	,rom_harddrvg,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, German, rev 7)" )
-	public static GameDriver driver_harddrvj	   = new GameDriver("1988"	,"harddrvj"	,"harddriv.java"	,rom_harddrvj,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, Japan, rev 7)" )
-	public static GameDriver driver_harddrb6	   = new GameDriver("1988"	,"harddrb6"	,"harddriv.java"	,rom_harddrb6,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, British, rev 6)" )
-	public static GameDriver driver_harddrj6	   = new GameDriver("1988"	,"harddrj6"	,"harddriv.java"	,rom_harddrj6,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, Japan, rev 6)" )
-	public static GameDriver driver_harddrb5	   = new GameDriver("1988"	,"harddrb5"	,"harddriv.java"	,rom_harddrb5,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, British, rev 5)" )
-	public static GameDriver driver_harddrg4	   = new GameDriver("1988"	,"harddrg4"	,"harddriv.java"	,rom_harddrg4,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, German, rev 4)" )
-	public static GameDriver driver_harddrv3	   = new GameDriver("1988"	,"harddrv3"	,"harddriv.java"	,rom_harddrv3,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, rev 3)" )
-	public static GameDriver driver_harddrv2	   = new GameDriver("1988"	,"harddrv2"	,"harddriv.java"	,rom_harddrv2,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, rev 2)" )
-	public static GameDriver driver_harddrv1	   = new GameDriver("1988"	,"harddrv1"	,"harddriv.java"	,rom_harddrv1,driver_harddriv	,machine_driver_harddriv	,input_ports_harddriv	,init_harddriv	,ROT0	,	"Atari Games", "Hard Drivin' (cockpit, rev 1)", GAME_NOT_WORKING )
+	GAME ( 1988, harddriv, 0,        harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, rev 7)" )
+	GAME ( 1988, harddrvb, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, British, rev 7)" )
+	GAME ( 1988, harddrvg, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, German, rev 7)" )
+	GAME ( 1988, harddrvj, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, Japan, rev 7)" )
+	GAME ( 1988, harddrb6, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, British, rev 6)" )
+	GAME ( 1988, harddrj6, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, Japan, rev 6)" )
+	GAME ( 1988, harddrb5, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, British, rev 5)" )
+	GAME ( 1988, harddrg4, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, German, rev 4)" )
+	GAME ( 1988, harddrv3, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, rev 3)" )
+	GAME ( 1988, harddrv2, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, rev 2)" )
+	GAMEX( 1988, harddrv1, harddriv, harddriv, harddriv, harddriv, ROT0, "Atari Games", "Hard Drivin' (cockpit, rev 1)", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_harddrvc	   = new GameDriver("1990"	,"harddrvc"	,"harddriv.java"	,rom_harddrvc,driver_harddriv	,machine_driver_harddrvc	,input_ports_racedrvc	,init_harddrvc	,ROT0	,	"Atari Games", "Hard Drivin' (compact, rev 2)" )
-	public static GameDriver driver_harddrcg	   = new GameDriver("1990"	,"harddrcg"	,"harddriv.java"	,rom_harddrcg,driver_harddriv	,machine_driver_harddrvc	,input_ports_racedrvc	,init_harddrvc	,ROT0	,	"Atari Games", "Hard Drivin' (compact, German, rev 2)" )
-	public static GameDriver driver_harddrcb	   = new GameDriver("1990"	,"harddrcb"	,"harddriv.java"	,rom_harddrcb,driver_harddriv	,machine_driver_harddrvc	,input_ports_racedrvc	,init_harddrvc	,ROT0	,	"Atari Games", "Hard Drivin' (compact, British, rev 2)" )
-	public static GameDriver driver_harddrc1	   = new GameDriver("1990"	,"harddrc1"	,"harddriv.java"	,rom_harddrc1,driver_harddriv	,machine_driver_harddrvc	,input_ports_racedrvc	,init_harddrvc	,ROT0	,	"Atari Games", "Hard Drivin' (compact, rev 1)" )
+	GAME ( 1990, harddrvc, harddriv, harddrvc, racedrvc, harddrvc, ROT0, "Atari Games", "Hard Drivin' (compact, rev 2)" )
+	GAME ( 1990, harddrcg, harddriv, harddrvc, racedrvc, harddrvc, ROT0, "Atari Games", "Hard Drivin' (compact, German, rev 2)" )
+	GAME ( 1990, harddrcb, harddriv, harddrvc, racedrvc, harddrvc, ROT0, "Atari Games", "Hard Drivin' (compact, British, rev 2)" )
+	GAME ( 1990, harddrc1, harddriv, harddrvc, racedrvc, harddrvc, ROT0, "Atari Games", "Hard Drivin' (compact, rev 1)" )
 	
-	public static GameDriver driver_stunrun	   = new GameDriver("1989"	,"stunrun"	,"harddriv.java"	,rom_stunrun,null	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 6)" )
-	public static GameDriver driver_stunrunj	   = new GameDriver("1989"	,"stunrunj"	,"harddriv.java"	,rom_stunrunj,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 7, Japan)" )
-	public static GameDriver driver_stunrun5	   = new GameDriver("1989"	,"stunrun5"	,"harddriv.java"	,rom_stunrun5,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 5)" )
-	public static GameDriver driver_stunrune	   = new GameDriver("1989"	,"stunrune"	,"harddriv.java"	,rom_stunrune,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 5, Europe)" )
-	public static GameDriver driver_stunrun4	   = new GameDriver("1989"	,"stunrun4"	,"harddriv.java"	,rom_stunrun4,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 4)" )
-	public static GameDriver driver_stunrun3	   = new GameDriver("1989"	,"stunrun3"	,"harddriv.java"	,rom_stunrun3,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 3)" )
-	public static GameDriver driver_stunrn3e	   = new GameDriver("1989"	,"stunrn3e"	,"harddriv.java"	,rom_stunrn3e,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 3, Europe)" )
-	public static GameDriver driver_stunrun2	   = new GameDriver("1989"	,"stunrun2"	,"harddriv.java"	,rom_stunrun2,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 2)" )
-	public static GameDriver driver_stunrn2e	   = new GameDriver("1989"	,"stunrn2e"	,"harddriv.java"	,rom_stunrn2e,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 2, Europe)" )
-	public static GameDriver driver_stunrun0	   = new GameDriver("1989"	,"stunrun0"	,"harddriv.java"	,rom_stunrun0,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (rev 0)" )
-	public static GameDriver driver_stunrunp	   = new GameDriver("1989"	,"stunrunp"	,"harddriv.java"	,rom_stunrunp,driver_stunrun	,machine_driver_stunrun	,input_ports_stunrun	,init_stunrun	,ROT0	,	"Atari Games", "S.T.U.N. Runner (upright prototype)" )
+	GAME ( 1989, stunrun,  0,        stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 6)" )
+	GAME ( 1989, stunrunj, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 7, Japan)" )
+	GAME ( 1989, stunrun5, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 5)" )
+	GAME ( 1989, stunrune, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 5, Europe)" )
+	GAME ( 1989, stunrun4, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 4)" )
+	GAME ( 1989, stunrun3, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 3)" )
+	GAME ( 1989, stunrn3e, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 3, Europe)" )
+	GAME ( 1989, stunrun2, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 2)" )
+	GAME ( 1989, stunrn2e, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 2, Europe)" )
+	GAME ( 1989, stunrun0, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (rev 0)" )
+	GAME ( 1989, stunrunp, stunrun,  stunrun,  stunrun,  stunrun,  ROT0, "Atari Games", "S.T.U.N. Runner (upright prototype)" )
 	
-	public static GameDriver driver_racedriv	   = new GameDriver("1990"	,"racedriv"	,"harddriv.java"	,rom_racedriv,null	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, rev 5)" )
-	public static GameDriver driver_racedrvb	   = new GameDriver("1990"	,"racedrvb"	,"harddriv.java"	,rom_racedrvb,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, British, rev 5)" )
-	public static GameDriver driver_racedrvg	   = new GameDriver("1990"	,"racedrvg"	,"harddriv.java"	,rom_racedrvg,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, German, rev 5)" )
-	public static GameDriver driver_racedrv4	   = new GameDriver("1990"	,"racedrv4"	,"harddriv.java"	,rom_racedrv4,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, rev 4)" )
-	public static GameDriver driver_racedrb4	   = new GameDriver("1990"	,"racedrb4"	,"harddriv.java"	,rom_racedrb4,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, British, rev 4)" )
-	public static GameDriver driver_racedrg4	   = new GameDriver("1990"	,"racedrg4"	,"harddriv.java"	,rom_racedrg4,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, German, rev 4)" )
-	public static GameDriver driver_racedrv3	   = new GameDriver("1990"	,"racedrv3"	,"harddriv.java"	,rom_racedrv3,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, rev 3)" )
-	public static GameDriver driver_racedrv2	   = new GameDriver("1990"	,"racedrv2"	,"harddriv.java"	,rom_racedrv2,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, rev 2)", GAME_NOT_WORKING )
-	public static GameDriver driver_racedrv1	   = new GameDriver("1990"	,"racedrv1"	,"harddriv.java"	,rom_racedrv1,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, rev 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_racedrb1	   = new GameDriver("1990"	,"racedrb1"	,"harddriv.java"	,rom_racedrb1,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, British, rev 1)", GAME_NOT_WORKING )
-	public static GameDriver driver_racedrg1	   = new GameDriver("1990"	,"racedrg1"	,"harddriv.java"	,rom_racedrg1,driver_racedriv	,machine_driver_racedriv	,input_ports_racedriv	,init_racedriv	,ROT0	,	"Atari Games", "Race Drivin' (cockpit, German, rev 2)", GAME_NOT_WORKING )
+	GAME ( 1990, racedriv, 0,        racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, rev 5)" )
+	GAME ( 1990, racedrvb, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, British, rev 5)" )
+	GAME ( 1990, racedrvg, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, German, rev 5)" )
+	GAME ( 1990, racedrv4, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, rev 4)" )
+	GAME ( 1990, racedrb4, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, British, rev 4)" )
+	GAME ( 1990, racedrg4, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, German, rev 4)" )
+	GAME ( 1990, racedrv3, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, rev 3)" )
+	GAMEX( 1990, racedrv2, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, rev 2)", GAME_NOT_WORKING )
+	GAMEX( 1990, racedrv1, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, rev 1)", GAME_NOT_WORKING )
+	GAMEX( 1990, racedrb1, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, British, rev 1)", GAME_NOT_WORKING )
+	GAMEX( 1990, racedrg1, racedriv, racedriv, racedriv, racedriv, ROT0, "Atari Games", "Race Drivin' (cockpit, German, rev 2)", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_racedrvc	   = new GameDriver("1990"	,"racedrvc"	,"harddriv.java"	,rom_racedrvc,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, rev 5)" )
-	public static GameDriver driver_racedrcb	   = new GameDriver("1990"	,"racedrcb"	,"harddriv.java"	,rom_racedrcb,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, British, rev 5)" )
-	public static GameDriver driver_racedrcg	   = new GameDriver("1990"	,"racedrcg"	,"harddriv.java"	,rom_racedrcg,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, German, rev 5)" )
-	public static GameDriver driver_racedrc4	   = new GameDriver("1990"	,"racedrc4"	,"harddriv.java"	,rom_racedrc4,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, rev 4)" )
-	public static GameDriver driver_racedcb4	   = new GameDriver("1990"	,"racedcb4"	,"harddriv.java"	,rom_racedcb4,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, British, rev 4)" )
-	public static GameDriver driver_racedcg4	   = new GameDriver("1990"	,"racedcg4"	,"harddriv.java"	,rom_racedcg4,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrvc	,ROT0	,	"Atari Games", "Race Drivin' (compact, German, rev 4)" )
-	public static GameDriver driver_racedrc2	   = new GameDriver("1990"	,"racedrc2"	,"harddriv.java"	,rom_racedrc2,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrc1	,ROT0	,	"Atari Games", "Race Drivin' (compact, rev 2)" )
-	public static GameDriver driver_racedrc1	   = new GameDriver("1990"	,"racedrc1"	,"harddriv.java"	,rom_racedrc1,driver_racedriv	,machine_driver_racedrvc	,input_ports_racedrvc	,init_racedrc1	,ROT0	,	"Atari Games", "Race Drivin' (compact, rev 1)" )
+	GAME ( 1990, racedrvc, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, rev 5)" )
+	GAME ( 1990, racedrcb, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, British, rev 5)" )
+	GAME ( 1990, racedrcg, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, German, rev 5)" )
+	GAME ( 1990, racedrc4, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, rev 4)" )
+	GAME ( 1990, racedcb4, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, British, rev 4)" )
+	GAME ( 1990, racedcg4, racedriv, racedrvc, racedrvc, racedrvc, ROT0, "Atari Games", "Race Drivin' (compact, German, rev 4)" )
+	GAME ( 1990, racedrc2, racedriv, racedrvc, racedrvc, racedrc1, ROT0, "Atari Games", "Race Drivin' (compact, rev 2)" )
+	GAME ( 1990, racedrc1, racedriv, racedrvc, racedrvc, racedrc1, ROT0, "Atari Games", "Race Drivin' (compact, rev 1)" )
 	
-	public static GameDriver driver_steeltal	   = new GameDriver("1991"	,"steeltal"	,"harddriv.java"	,rom_steeltal,null	,machine_driver_steeltal	,input_ports_steeltal	,init_steeltal	,ROT0	,	"Atari Games", "Steel Talons (rev 2)" )
-	public static GameDriver driver_steeltag	   = new GameDriver("1991"	,"steeltag"	,"harddriv.java"	,rom_steeltag,driver_steeltal	,machine_driver_steeltal	,input_ports_steeltal	,init_steeltal	,ROT0	,	"Atari Games", "Steel Talons (German, rev 2)" )
-	public static GameDriver driver_steelta1	   = new GameDriver("1991"	,"steelta1"	,"harddriv.java"	,rom_steelta1,driver_steeltal	,machine_driver_steeltal	,input_ports_steeltal	,init_steelta1	,ROT0	,	"Atari Games", "Steel Talons (rev 1)" )
-	public static GameDriver driver_steeltap	   = new GameDriver("1991"	,"steeltap"	,"harddriv.java"	,rom_steeltap,driver_steeltal	,machine_driver_steeltal	,input_ports_steeltal	,init_steeltap	,ROT0	,	"Atari Games", "Steel Talons (prototype)", GAME_NOT_WORKING )
+	GAME ( 1991, steeltal, 0,        steeltal, steeltal, steeltal, ROT0, "Atari Games", "Steel Talons (rev 2)" )
+	GAME ( 1991, steeltag, steeltal, steeltal, steeltal, steeltal, ROT0, "Atari Games", "Steel Talons (German, rev 2)" )
+	GAME ( 1991, steelta1, steeltal, steeltal, steeltal, steelta1, ROT0, "Atari Games", "Steel Talons (rev 1)" )
+	GAMEX( 1991, steeltap, steeltal, steeltal, steeltal, steeltap, ROT0, "Atari Games", "Steel Talons (prototype)", GAME_NOT_WORKING )
 	
-	public static GameDriver driver_hdrivair	   = new GameDriver("1993"	,"hdrivair"	,"harddriv.java"	,rom_hdrivair,null	,machine_driver_hdrivair	,input_ports_hdrivair	,init_hdrivair	,ROT0	,	"Atari Games", "Hard Drivin's Airborne (prototype)", GAME_NO_SOUND )
-	public static GameDriver driver_hdrivaip	   = new GameDriver("1993"	,"hdrivaip"	,"harddriv.java"	,rom_hdrivaip,driver_hdrivair	,machine_driver_hdrivair	,input_ports_hdrivair	,init_hdrivaip	,ROT0	,	"Atari Games", "Hard Drivin's Airborne (prototype, early rev)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1993, hdrivair, 0,        hdrivair, hdrivair, hdrivair, ROT0, "Atari Games", "Hard Drivin's Airborne (prototype)", GAME_NO_SOUND )
+	GAMEX( 1993, hdrivaip, hdrivair, hdrivair, hdrivair, hdrivaip, ROT0, "Atari Games", "Hard Drivin's Airborne (prototype, early rev)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

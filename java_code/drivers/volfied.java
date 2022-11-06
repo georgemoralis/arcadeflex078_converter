@@ -19,7 +19,7 @@ Volfied (c) 1989 Taito Corporation
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -125,7 +125,7 @@ public class volfied
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON1 | IPF_COCKTAIL );
 	
 	
-	static InputPortPtr input_ports_volfied = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_volfied = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( volfied )
 		PORT_START(); 	/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -174,7 +174,7 @@ public class volfied
 		VOLFIED_INPUT_BITS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_volfiedu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_volfiedu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( volfiedu )
 		PORT_START(); 	/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -224,7 +224,7 @@ public class volfied
 		VOLFIED_INPUT_BITS
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_volfiedj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_volfiedj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( volfiedj )
 		PORT_START(); 	/* DSW A */
 		PORT_DIPNAME( 0x01, 0x00, DEF_STR( "Cabinet") );
 		PORT_DIPSETTING(    0x00, DEF_STR( "Upright") );
@@ -324,13 +324,11 @@ public class volfied
 					MACHINE DRIVERS
 	***********************************************************/
 	
-	public static DriverInitHandlerPtr init_volfied  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_volfied  = new DriverInitHandlerPtr() { public void handler(){
 		volfied_cchip_init();
 	} };
 	
-	public static MachineHandlerPtr machine_driver_volfied = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( volfied )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 8000000)   /* 8MHz? */
@@ -356,9 +354,7 @@ public class volfied
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -441,7 +437,7 @@ public class volfied
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_volfied	   = new GameDriver("1989"	,"volfied"	,"volfied.java"	,rom_volfied,null	,machine_driver_volfied	,input_ports_volfied	,init_volfied	,ROT270	,	"Taito Corporation Japan", "Volfied (World)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_volfiedu	   = new GameDriver("1989"	,"volfiedu"	,"volfied.java"	,rom_volfiedu,driver_volfied	,machine_driver_volfied	,input_ports_volfiedu	,init_volfied	,ROT270	,	"Taito America Corporation", "Volfied (US)", GAME_UNEMULATED_PROTECTION )
-	public static GameDriver driver_volfiedj	   = new GameDriver("1989"	,"volfiedj"	,"volfied.java"	,rom_volfiedj,driver_volfied	,machine_driver_volfied	,input_ports_volfiedj	,init_volfied	,ROT270	,	"Taito Corporation", "Volfied (Japan)", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1989, volfied,  0,       volfied, volfied,  volfied, ROT270, "Taito Corporation Japan", "Volfied (World)", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1989, volfiedu, volfied, volfied, volfiedu, volfied, ROT270, "Taito America Corporation", "Volfied (US)", GAME_UNEMULATED_PROTECTION )
+	GAMEX( 1989, volfiedj, volfied, volfied, volfiedj, volfied, ROT270, "Taito Corporation", "Volfied (Japan)", GAME_UNEMULATED_PROTECTION )
 }

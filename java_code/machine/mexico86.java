@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -65,8 +65,7 @@ public class mexico86
 	
 	***************************************************************************/
 	
-	public static InterruptHandlerPtr mexico86_m68705_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr mexico86_m68705_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* I don't know how to handle the interrupt line so I just toggle it every time. */
 		if (cpu_getiloops() & 1)
 			cpu_set_irq_line(2,0,CLEAR_LINE);
@@ -78,20 +77,17 @@ public class mexico86
 	
 	static unsigned char portA_in,portA_out,ddrA;
 	
-	public static ReadHandlerPtr mexico86_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mexico86_68705_portA_r  = new ReadHandlerPtr() { public int handler(int offset){
 	//logerror("%04x: 68705 port A read %02x\n",activecpu_get_pc(),portA_in);
 		return (portA_out & ddrA) | (portA_in & ~ddrA);
 	} };
 	
-	public static WriteHandlerPtr mexico86_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_68705_portA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 68705 port A write %02x\n",activecpu_get_pc(),data);
 		portA_out = data;
 	} };
 	
-	public static WriteHandlerPtr mexico86_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_68705_ddrA_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrA = data;
 	} };
 	
@@ -115,15 +111,13 @@ public class mexico86
 	
 	static unsigned char portB_in,portB_out,ddrB;
 	
-	public static ReadHandlerPtr mexico86_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr mexico86_68705_portB_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return (portB_out & ddrB) | (portB_in & ~ddrB);
 	} };
 	
 	static int address,latch;
 	
-	public static WriteHandlerPtr mexico86_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_68705_portB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	//logerror("%04x: 68705 port B write %02x\n",activecpu_get_pc(),data);
 	
 		if ((ddrB & 0x01) && (~data & 0x01) && (portB_out & 0x01))
@@ -137,9 +131,9 @@ public class mexico86
 		}
 		if ((ddrB & 0x08) && (~data & 0x08) && (portB_out & 0x08))
 		{
-			if ((data & 0x10) != 0)    /* read */
+			if (data & 0x10)    /* read */
 			{
-				if ((data & 0x04) != 0)
+				if (data & 0x04)
 				{
 	//logerror("%04x: 68705 read %02x from address %04x\n",activecpu_get_pc(),shared[0x800+address],address);
 					latch = mexico86_protection_ram[address];
@@ -175,8 +169,7 @@ public class mexico86
 		portB_out = data;
 	} };
 	
-	public static WriteHandlerPtr mexico86_68705_ddrB_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mexico86_68705_ddrB_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		ddrB = data;
 	} };
 }

@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -41,7 +41,7 @@ public class klax
 		if (atarigen_video_int_state || atarigen_scanline_int_state)
 			newstate = 4;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -70,8 +70,7 @@ public class klax
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_klax  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_klax  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarigen_interrupt_reset(update_interrupts);
 		atarigen_scanline_timer_reset(scanline_update, 32);
@@ -93,7 +92,7 @@ public class klax
 	
 	static WRITE16_HANDLER( adpcm_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			OKIM6295_data_0_w(offset, data & 0xff);
 	}
 	
@@ -140,7 +139,7 @@ public class klax
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_klax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_klax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( klax )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_COIN1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_COIN2 );
@@ -215,8 +214,7 @@ public class klax
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_klax = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( klax )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz/2)
@@ -241,9 +239,7 @@ public class klax
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -375,8 +371,7 @@ public class klax
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_klax  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_klax  = new DriverInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_default = NULL;
 	} };
 	
@@ -388,9 +383,9 @@ public class klax
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_klax	   = new GameDriver("1989"	,"klax"	,"klax.java"	,rom_klax,null	,machine_driver_klax	,input_ports_klax	,init_klax	,ROT0	,	"Atari Games", "Klax (set 1)" )
-	public static GameDriver driver_klax2	   = new GameDriver("1989"	,"klax2"	,"klax.java"	,rom_klax2,driver_klax	,machine_driver_klax	,input_ports_klax	,init_klax	,ROT0	,	"Atari Games", "Klax (set 2)" )
-	public static GameDriver driver_klax3	   = new GameDriver("1989"	,"klax3"	,"klax.java"	,rom_klax3,driver_klax	,machine_driver_klax	,input_ports_klax	,init_klax	,ROT0	,	"Atari Games", "Klax (set 3)" )
-	public static GameDriver driver_klaxj	   = new GameDriver("1989"	,"klaxj"	,"klax.java"	,rom_klaxj,driver_klax	,machine_driver_klax	,input_ports_klax	,init_klax	,ROT0	,	"Atari Games", "Klax (Japan)" )
-	public static GameDriver driver_klaxd	   = new GameDriver("1989"	,"klaxd"	,"klax.java"	,rom_klaxd,driver_klax	,machine_driver_klax	,input_ports_klax	,init_klax	,ROT0	,	"Atari Games", "Klax (Germany)" )
+	GAME( 1989, klax,  0,    klax, klax, klax, ROT0, "Atari Games", "Klax (set 1)" )
+	GAME( 1989, klax2, klax, klax, klax, klax, ROT0, "Atari Games", "Klax (set 2)" )
+	GAME( 1989, klax3, klax, klax, klax, klax, ROT0, "Atari Games", "Klax (set 3)" )
+	GAME( 1989, klaxj, klax, klax, klax, klax, ROT0, "Atari Games", "Klax (Japan)" )
+	GAME( 1989, klaxd, klax, klax, klax, klax, ROT0, "Atari Games", "Klax (Germany)" )
 }

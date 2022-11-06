@@ -147,7 +147,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -217,7 +217,7 @@ public class itech8
 		if (blitter != -1) blitter_int = blitter;
 	
 		/* handle the 6809 case */
-		if (Machine.drv.cpu[0].cpu_type == CPU_M6809)
+		if (Machine->drv->cpu[0].cpu_type == CPU_M6809)
 		{
 			/* just modify lines that have changed */
 			if (periodic != -1) cpu_set_nmi_line(0, periodic ? ASSERT_LINE : CLEAR_LINE);
@@ -231,11 +231,11 @@ public class itech8
 			int level = 0;
 	
 			/* determine which level is active */
-			if (blitter_int != 0) level = 2;
-			if (periodic_int != 0) level = 3;
+			if (blitter_int) level = 2;
+			if (periodic_int) level = 3;
 	
 			/* update it */
-			if (level != 0)
+			if (level)
 				cpu_set_irq_line(0, level, ASSERT_LINE);
 			else
 				cpu_set_irq_line(0, 7, CLEAR_LINE);
@@ -250,18 +250,16 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static InterruptHandlerPtr generate_nmi = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr generate_nmi = new InterruptHandlerPtr() {public void handler(){
 		/* signal the NMI */
 		itech8_update_interrupts(1, -1, -1);
 		itech8_update_interrupts(0, -1, -1);
 	
-		if (FULL_LOGGING != 0) logerror("------------ VBLANK (%d) --------------\n", cpu_getscanline());
+		if (FULL_LOGGING) logerror("------------ VBLANK (%d) --------------\n", cpu_getscanline());
 	} };
 	
 	
-	public static WriteHandlerPtr itech8_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr itech8_nmi_ack_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 	/* doesn't seem to hold for every game (e.g., hstennis) */
 	/*	cpu_set_nmi_line(0, CLEAR_LINE);*/
 	} };
@@ -282,10 +280,9 @@ public class itech8
 	
 	static void via6522_timer_callback(int which);
 	
-	public static MachineInitHandlerPtr machine_init_itech8  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_itech8  = new MachineInitHandlerPtr() { public void handler(){
 		/* make sure bank 0 is selected */
-		if (Machine.drv.cpu[0].cpu_type == CPU_M6809)
+		if (Machine->drv->cpu[0].cpu_type == CPU_M6809)
 			cpu_setbank(1, &memory_region(REGION_CPU1)[0x4000]);
 	
 		/* reset the PIA (if used) */
@@ -314,8 +311,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blitter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* bit 0x20 on address 7 controls CPU banking */
 		if (offset / 2 == 7)
 			cpu_setbank(1, &memory_region(REGION_CPU1)[0x4000 + 0xc000 * ((data >> 5) & 1)]);
@@ -325,8 +321,7 @@ public class itech8
 	} };
 	
 	
-	public static WriteHandlerPtr rimrockn_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rimrockn_bank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* banking is controlled here instead of by the blitter output */
 		cpu_setbank(1, &memory_region(REGION_CPU1)[0x4000 + 0xc000 * (data & 3)]);
 	} };
@@ -339,8 +334,7 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr special_port0_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr special_port0_r  = new ReadHandlerPtr() { public int handler(int offset){
 		data8_t result = readinputport(0);
 		result = (result & 0xfe) | (pia_portb_data & 0x01);
 		return result;
@@ -354,15 +348,13 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr pia_porta_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pia_porta_out = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("PIA port A write = %02x\n", data);
 		pia_porta_data = data;
 	} };
 	
 	
-	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pia_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("PIA port B write = %02x\n", data);
 	
 		/* bit 0 provides feedback to the main CPU */
@@ -375,8 +367,7 @@ public class itech8
 	} };
 	
 	
-	public static WriteHandlerPtr ym2203_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr ym2203_portb_out = new WriteHandlerPtr() {public void handler(int offset, int data){
 		logerror("YM2203 port B write = %02x\n", data);
 	
 		/* bit 0 provides feedback to the main CPU */
@@ -403,14 +394,12 @@ public class itech8
 	}
 	
 	
-	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, delayed_sound_data_w);
 	} };
 	
 	
-	public static WriteHandlerPtr gtg2_sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gtg2_sound_data_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* on the later GTG2 board, they swizzle the data lines */
 		data = ((data & 0x80) >> 7) |
 		       ((data & 0x5d) << 1) |
@@ -420,8 +409,7 @@ public class itech8
 	} };
 	
 	
-	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_data_r  = new ReadHandlerPtr() { public int handler(int offset){
 		cpu_set_irq_line(1, M6809_IRQ_LINE, CLEAR_LINE);
 		return sound_data;
 	} };
@@ -451,8 +439,7 @@ public class itech8
 	}
 	
 	
-	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr via6522_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		double period;
 	
 		/* update the data */
@@ -480,14 +467,13 @@ public class itech8
 				break;
 	
 			default:	/* log everything else */
-				if (FULL_LOGGING != 0) logerror("VIA write(%02x) = %02x\n", offset, data);
+				if (FULL_LOGGING) logerror("VIA write(%02x) = %02x\n", offset, data);
 				break;
 		}
 	} };
 	
 	
-	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr via6522_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int result = 0;
 	
 		/* switch off the offset */
@@ -504,7 +490,7 @@ public class itech8
 				break;
 		}
 	
-		if (FULL_LOGGING != 0) logerror("VIA read(%02x) = %02x\n", offset, result);
+		if (FULL_LOGGING) logerror("VIA read(%02x) = %02x\n", offset, result);
 		return result;
 	} };
 	
@@ -539,53 +525,53 @@ public class itech8
 	
 	static WRITE16_HANDLER( sound_data16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			sound_data_w(0, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( grom_bank16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			*itech8_grom_bank = data >> 8;
 	}
 	
 	
 	static WRITE16_HANDLER( display_page16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			*itech8_display_page = ~data >> 8;
 	}
 	
 	
 	static WRITE16_HANDLER( tms34061_latch16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			tms34061_latch_w(0, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( blitter16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			itech8_blitter_w(offset * 2 + 0, data >> 8);
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 			itech8_blitter_w(offset * 2 + 1, data);
 	}
 	
 	
 	static WRITE16_HANDLER( palette16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			itech8_palette_w(offset / 8, data >> 8);
 	}
 	
 	
 	static WRITE16_HANDLER( tms34061_16_w )
 	{
-		if (ACCESSING_MSB != 0)
+		if (ACCESSING_MSB)
 			itech8_tms34061_w(offset * 2 + 0, data >> 8);
-		else if (ACCESSING_LSB != 0)
+		else if (ACCESSING_LSB)
 			itech8_tms34061_w(offset * 2 + 1, data);
 	}
 	
@@ -597,13 +583,12 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static NVRAMHandlerPtr nvram_handler_itech8  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
+	public static NVRAMHandlerPtr nvram_handler_itech8  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
 		int i;
 	
-		if (read_or_write != 0)
+		if (read_or_write)
 			mame_fwrite(file, main_ram, main_ram_size);
-		else if (file != 0)
+		else if (file)
 			mame_fread(file, main_ram, main_ram_size);
 		else
 			for (i = 0; i < main_ram_size; i++)
@@ -854,7 +839,7 @@ public class itech8
 		PORT_BIT( 0xff, IP_ACTIVE_LOW, IPT_UNUSED );
 	
 	
-	static InputPortPtr input_ports_stratab = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stratab = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stratab )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -891,7 +876,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_sstrike = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sstrike = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sstrike )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x7e, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -926,7 +911,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_wfortune = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wfortune = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wfortune )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -959,7 +944,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gtg = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gtg = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gtg )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -996,7 +981,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gtg2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gtg2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gtg2 )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_SERVICE_NO_TOGGLE( 0x02, IP_ACTIVE_LOW )
@@ -1036,7 +1021,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_gtg2t = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gtg2t = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gtg2t )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1073,7 +1058,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_slikshot = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_slikshot = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( slikshot )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x7e, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1108,7 +1093,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_dynobop = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dynobop = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dynobop )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x7e, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1143,7 +1128,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_arlingtn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_arlingtn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( arlingtn )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1179,7 +1164,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_neckneck = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_neckneck = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( neckneck )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1215,7 +1200,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_peggle = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_peggle = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( peggle )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x7e, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1240,7 +1225,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_pegglet = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pegglet = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pegglet )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x7e, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1265,7 +1250,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hstennis = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hstennis = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hstennis )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0x06, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -1305,7 +1290,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_rimrockn = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rimrockn = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rimrockn )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL );/* input from sound board */
 		PORT_BIT( 0xfe, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1368,7 +1353,7 @@ public class itech8
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_ninclown = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ninclown = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ninclown )
 		PORT_START(); 	/* 40 */
 		PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_SERVICE1 );
 		PORT_SERVICE_NO_TOGGLE( 0x0200, IP_ACTIVE_LOW )
@@ -1460,8 +1445,7 @@ public class itech8
 	
 	/************* core pieces ******************/
 	
-	public static MachineHandlerPtr machine_driver_itech8_core_lo = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( itech8_core_lo )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6809, CLOCK_8MHz/4)
@@ -1485,25 +1469,19 @@ public class itech8
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("oki", OKIM6295, oki6295_interface_high)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_itech8_core_hi = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( itech8_core_hi )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(tmshi_readmem,tmshi_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_itech8_sound_ym2203 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( itech8_sound_ym2203 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("sound", M6809, CLOCK_8MHz/4)
@@ -1511,13 +1489,10 @@ public class itech8
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("ym", YM2203, ym2203_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_itech8_sound_ym3812 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( itech8_sound_ym3812 )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("sound", M6809, CLOCK_8MHz/4)
@@ -1525,37 +1500,28 @@ public class itech8
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("ym", YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/************* full drivers ******************/
 	
-	public static MachineHandlerPtr machine_driver_tmslo2203 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tmslo2203 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
 		MDRV_IMPORT_FROM(itech8_sound_ym2203)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_tmshi2203 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( tmshi2203 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
 		MDRV_IMPORT_FROM(itech8_sound_ym2203)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_gtg2 = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gtg2 )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
@@ -1563,13 +1529,10 @@ public class itech8
 	
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_MEMORY(gtg2_readmem,gtg2_writemem)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_peggle = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( peggle )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
@@ -1577,13 +1540,10 @@ public class itech8
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(18, 367, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_arlingtn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( arlingtn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
@@ -1594,13 +1554,10 @@ public class itech8
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("oki", OKIM6295, oki6295_interface_low)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_neckneck = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( neckneck )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
@@ -1608,13 +1565,10 @@ public class itech8
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(8, 375, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hstennis = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hstennis )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
@@ -1622,13 +1576,10 @@ public class itech8
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(0, 375, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_rimrockn = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rimrockn )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
@@ -1638,13 +1589,10 @@ public class itech8
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(24, 375, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_ninclown = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ninclown )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
@@ -1655,13 +1603,10 @@ public class itech8
 	
 		/* video hardware */
 		MDRV_VISIBLE_AREA(64, 423, 0, 239)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_slikshot = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( slikshot )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_hi)
@@ -1676,13 +1621,10 @@ public class itech8
 		MDRV_PALETTE_LENGTH(256+1)
 	
 		MDRV_VIDEO_START(slikshot)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_sstrike = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sstrike )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(itech8_core_lo)
@@ -1697,9 +1639,7 @@ public class itech8
 		MDRV_PALETTE_LENGTH(256+1)
 	
 		MDRV_VIDEO_START(slikshot)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2221,32 +2161,28 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_viasound  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_viasound  = new DriverInitHandlerPtr() { public void handler(){
 		/* some games with a YM3812 use a VIA(6522) for timing and communication */
 		install_mem_read_handler (1, 0x5000, 0x500f, via6522_r);
 		via6522 = install_mem_write_handler(1, 0x5000, 0x500f, via6522_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_slikshot  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_slikshot  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler (0, 0x0180, 0x0180, slikshot_z80_r);
 		install_mem_read_handler (0, 0x01cf, 0x01cf, slikshot_z80_control_r);
 		install_mem_write_handler(0, 0x01cf, 0x01cf, slikshot_z80_control_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_sstrike  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_sstrike  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler (0, 0x1180, 0x1180, slikshot_z80_r);
 		install_mem_read_handler (0, 0x11cf, 0x11cf, slikshot_z80_control_r);
 		install_mem_write_handler(0, 0x11cf, 0x11cf, slikshot_z80_control_w);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_rimrockn  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rimrockn  = new DriverInitHandlerPtr() { public void handler(){
 		/* additional input ports */
 		install_mem_read_handler (0, 0x0161, 0x0161, input_port_3_r);
 		install_mem_read_handler (0, 0x0162, 0x0162, input_port_4_r);
@@ -2270,27 +2206,27 @@ public class itech8
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_wfortune	   = new GameDriver("1989"	,"wfortune"	,"itech8.java"	,rom_wfortune,null	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune" )
-	public static GameDriver driver_wfortuna	   = new GameDriver("1989"	,"wfortuna"	,"itech8.java"	,rom_wfortuna,driver_wfortune	,machine_driver_tmshi2203	,input_ports_wfortune	,null	,ROT0	,	"GameTek", "Wheel Of Fortune (alternate)" )
-	public static GameDriver driver_stratab	   = new GameDriver("1990"	,"stratab"	,"itech8.java"	,rom_stratab,null	,machine_driver_tmshi2203	,input_ports_stratab	,null	,ROT270	,	"Strata/Incredible Technologies", "Strata Bowling (V3)" )
-	public static GameDriver driver_stratab1	   = new GameDriver("1990"	,"stratab1"	,"itech8.java"	,rom_stratab1,driver_stratab	,machine_driver_tmshi2203	,input_ports_stratab	,null	,ROT270	,	"Strata/Incredible Technologies", "Strata Bowling (V1)" )
-	public static GameDriver driver_sstrike	   = new GameDriver("1990"	,"sstrike"	,"itech8.java"	,rom_sstrike,null	,machine_driver_sstrike	,input_ports_sstrike	,init_sstrike	,ROT270	,	"Strata/Incredible Technologies", "Super Strike Bowling", GAME_NOT_WORKING )
-	public static GameDriver driver_gtg	   = new GameDriver("1990"	,"gtg"	,"itech8.java"	,rom_gtg,null	,machine_driver_tmshi2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf (Joystick, v3.1)" )
-	public static GameDriver driver_slikshot	   = new GameDriver("1990"	,"slikshot"	,"itech8.java"	,rom_slikshot,null	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V2.2)" )
-	public static GameDriver driver_sliksh17	   = new GameDriver("1990"	,"sliksh17"	,"itech8.java"	,rom_sliksh17,driver_slikshot	,machine_driver_slikshot	,input_ports_slikshot	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Slick Shot (V1.7)" )
-	public static GameDriver driver_dynobop	   = new GameDriver("1990"	,"dynobop"	,"itech8.java"	,rom_dynobop,null	,machine_driver_slikshot	,input_ports_dynobop	,init_slikshot	,ROT90	,	"Grand Products/Incredible Technologies", "Dyno Bop", GAME_NOT_WORKING )
-	public static GameDriver driver_hstennis	   = new GameDriver("1990"	,"hstennis"	,"itech8.java"	,rom_hstennis,null	,machine_driver_hstennis	,input_ports_hstennis	,null	,ROT90	,	"Strata/Incredible Technologies", "Hot Shots Tennis (V1.1)" )
-	public static GameDriver driver_hstenn10	   = new GameDriver("1990"	,"hstenn10"	,"itech8.java"	,rom_hstenn10,driver_hstennis	,machine_driver_hstennis	,input_ports_hstennis	,null	,ROT90	,	"Strata/Incredible Technologies", "Hot Shots Tennis (V1.0)" )
-	public static GameDriver driver_arlingtn	   = new GameDriver("1991"	,"arlingtn"	,"itech8.java"	,rom_arlingtn,null	,machine_driver_arlingtn	,input_ports_arlingtn	,null	,ROT0	,	"Strata/Incredible Technologies", "Arlington Horse Racing (v1.21-D)" )
-	public static GameDriver driver_peggle	   = new GameDriver("1991"	,"peggle"	,"itech8.java"	,rom_peggle,null	,machine_driver_peggle	,input_ports_peggle	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Joystick, v1.0)" )
-	public static GameDriver driver_pegglet	   = new GameDriver("1991"	,"pegglet"	,"itech8.java"	,rom_pegglet,driver_peggle	,machine_driver_peggle	,input_ports_pegglet	,null	,ROT90	,	"Strata/Incredible Technologies", "Peggle (Trackball, v1.0)" )
-	public static GameDriver driver_rimrockn	   = new GameDriver("1991"	,"rimrockn"	,"itech8.java"	,rom_rimrockn,null	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.2)" )
-	public static GameDriver driver_rimrck20	   = new GameDriver("1991"	,"rimrck20"	,"itech8.java"	,rom_rimrck20,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.0)" )
-	public static GameDriver driver_rimrck16	   = new GameDriver("1991"	,"rimrck16"	,"itech8.java"	,rom_rimrck16,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.6)" )
-	public static GameDriver driver_rimrck12	   = new GameDriver("1991"	,"rimrck12"	,"itech8.java"	,rom_rimrck12,driver_rimrockn	,machine_driver_rimrockn	,input_ports_rimrockn	,init_rimrockn	,ROT0	,	"Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.2)" )
-	public static GameDriver driver_ninclown	   = new GameDriver("1991"	,"ninclown"	,"itech8.java"	,rom_ninclown,null	,machine_driver_ninclown	,input_ports_ninclown	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Ninja Clowns (08/27/91)" )
-	public static GameDriver driver_gtg2	   = new GameDriver("1992"	,"gtg2"	,"itech8.java"	,rom_gtg2,null	,machine_driver_gtg2	,input_ports_gtg2	,init_viasound	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V2.2)" )
-	public static GameDriver driver_gtg2t	   = new GameDriver("1989"	,"gtg2t"	,"itech8.java"	,rom_gtg2t,driver_gtg2	,machine_driver_tmshi2203	,input_ports_gtg2t	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V1.1)" )
-	public static GameDriver driver_gtg2j	   = new GameDriver("1991"	,"gtg2j"	,"itech8.java"	,rom_gtg2j,driver_gtg2	,machine_driver_tmslo2203	,input_ports_gtg	,null	,ROT0	,	"Strata/Incredible Technologies", "Golden Tee Golf II (Joystick, V1.0)" )
-	public static GameDriver driver_neckneck	   = new GameDriver("1992"	,"neckneck"	,"itech8.java"	,rom_neckneck,null	,machine_driver_neckneck	,input_ports_neckneck	,null	,ROT0	,	"Bundra Games/Incredible Technologies", "Neck-n-Neck (v1.2)" )
+	GAME ( 1989, wfortune, 0,        tmshi2203, wfortune, 0,        ROT0,   "GameTek", "Wheel Of Fortune" )
+	GAME ( 1989, wfortuna, wfortune, tmshi2203, wfortune, 0,        ROT0,   "GameTek", "Wheel Of Fortune (alternate)" )
+	GAME ( 1990, stratab,  0,        tmshi2203, stratab,  0,        ROT270, "Strata/Incredible Technologies", "Strata Bowling (V3)" )
+	GAME ( 1990, stratab1, stratab,  tmshi2203, stratab,  0,        ROT270, "Strata/Incredible Technologies", "Strata Bowling (V1)" )
+	GAMEX( 1990, sstrike,  0,        sstrike,   sstrike,  sstrike,  ROT270, "Strata/Incredible Technologies", "Super Strike Bowling", GAME_NOT_WORKING )
+	GAME ( 1990, gtg,      0,        tmshi2203, gtg,      0,        ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf (Joystick, v3.1)" )
+	GAME ( 1990, slikshot, 0,        slikshot,  slikshot, slikshot, ROT90,  "Grand Products/Incredible Technologies", "Slick Shot (V2.2)" )
+	GAME ( 1990, sliksh17, slikshot, slikshot,  slikshot, slikshot, ROT90,  "Grand Products/Incredible Technologies", "Slick Shot (V1.7)" )
+	GAMEX( 1990, dynobop,  0,        slikshot,  dynobop,  slikshot, ROT90,  "Grand Products/Incredible Technologies", "Dyno Bop", GAME_NOT_WORKING )
+	GAME ( 1990, hstennis, 0,        hstennis,  hstennis, 0,        ROT90,  "Strata/Incredible Technologies", "Hot Shots Tennis (V1.1)" )
+	GAME ( 1990, hstenn10, hstennis, hstennis,  hstennis, 0,        ROT90,  "Strata/Incredible Technologies", "Hot Shots Tennis (V1.0)" )
+	GAME ( 1991, arlingtn, 0,        arlingtn,  arlingtn, 0,        ROT0,   "Strata/Incredible Technologies", "Arlington Horse Racing (v1.21-D)" )
+	GAME ( 1991, peggle,   0,        peggle,    peggle,   0,        ROT90,  "Strata/Incredible Technologies", "Peggle (Joystick, v1.0)" )
+	GAME ( 1991, pegglet,  peggle,   peggle,    pegglet,  0,        ROT90,  "Strata/Incredible Technologies", "Peggle (Trackball, v1.0)" )
+	GAME ( 1991, rimrockn, 0,        rimrockn,  rimrockn, rimrockn, ROT0,   "Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.2)" )
+	GAME ( 1991, rimrck20, rimrockn, rimrockn,  rimrockn, rimrockn, ROT0,   "Strata/Incredible Technologies", "Rim Rockin' Basketball (V2.0)" )
+	GAME ( 1991, rimrck16, rimrockn, rimrockn,  rimrockn, rimrockn, ROT0,   "Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.6)" )
+	GAME ( 1991, rimrck12, rimrockn, rimrockn,  rimrockn, rimrockn, ROT0,   "Strata/Incredible Technologies", "Rim Rockin' Basketball (V1.2)" )
+	GAME ( 1991, ninclown, 0,        ninclown,  ninclown, viasound, ROT0,   "Strata/Incredible Technologies", "Ninja Clowns (08/27/91)" )
+	GAME ( 1992, gtg2,     0,        gtg2,      gtg2,     viasound, ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V2.2)" )
+	GAME ( 1989, gtg2t,    gtg2,     tmshi2203, gtg2t,    0,        ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf II (Trackball, V1.1)" )
+	GAME ( 1991, gtg2j,    gtg2,     tmslo2203, gtg,      0,        ROT0,   "Strata/Incredible Technologies", "Golden Tee Golf II (Joystick, V1.0)" )
+	GAME ( 1992, neckneck, 0,        neckneck,  neckneck, 0,        ROT0,   "Bundra Games/Incredible Technologies", "Neck-n-Neck (v1.2)" )
 }

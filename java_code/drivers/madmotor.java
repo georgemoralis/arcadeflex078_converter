@@ -14,7 +14,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,7 +39,7 @@ public class madmotor
 	
 	static WRITE16_HANDLER( madmotor_sound_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if (ACCESSING_LSB)
 		{
 			soundlatch_w(0,data & 0xff);
 			cpu_set_irq_line(1,0,HOLD_LINE);
@@ -83,8 +83,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2151_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2151_register_port_0_w(0,data);
@@ -95,8 +94,7 @@ public class madmotor
 		}
 	} };
 	
-	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr YM2203_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		switch (offset) {
 		case 0:
 			YM2203_control_port_0_w(0,data);
@@ -135,7 +133,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	static InputPortPtr input_ports_madmotor = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_madmotor = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( madmotor )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -308,8 +306,7 @@ public class madmotor
 		{ sound_irq }
 	};
 	
-	public static MachineHandlerPtr machine_driver_madmotor = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( madmotor )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 12000000) /* Custom chip 59, 24 MHz crystal */
@@ -337,9 +334,7 @@ public class madmotor
 		MDRV_SOUND_ADD(YM2203, ym2203_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/******************************************************************************/
 	
@@ -386,8 +381,7 @@ public class madmotor
 	
 	/******************************************************************************/
 	
-	public static DriverInitHandlerPtr init_madmotor  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_madmotor  = new DriverInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		int i;
 	
@@ -400,5 +394,5 @@ public class madmotor
 	
 	
 	 /* The title screen is undated, but it's (c) 1989 Data East at 0xefa0 */
-	public static GameDriver driver_madmotor	   = new GameDriver("1989"	,"madmotor"	,"madmotor.java"	,rom_madmotor,null	,machine_driver_madmotor	,input_ports_madmotor	,init_madmotor	,ROT0	,	"Mitchell", "Mad Motor" )
+	GAME( 1989, madmotor, 0, madmotor, madmotor, madmotor, ROT0, "Mitchell", "Mad Motor" )
 }

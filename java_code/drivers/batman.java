@@ -19,7 +19,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -48,20 +48,19 @@ public class batman
 	{
 		int newstate = 0;
 	
-		if (atarigen_scanline_int_state != 0)
+		if (atarigen_scanline_int_state)
 			newstate |= 4;
-		if (atarigen_sound_int_state != 0)
+		if (atarigen_sound_int_state)
 			newstate |= 6;
 	
-		if (newstate != 0)
+		if (newstate)
 			cpu_set_irq_line(0, newstate, ASSERT_LINE);
 		else
 			cpu_set_irq_line(0, 7, CLEAR_LINE);
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_batman  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_batman  = new MachineInitHandlerPtr() { public void handler(){
 		atarigen_eeprom_reset();
 		atarivc_reset(atarivc_eof_data, 2);
 		atarigen_interrupt_reset(update_interrupts);
@@ -80,8 +79,8 @@ public class batman
 	static READ16_HANDLER( special_port2_r )
 	{
 		int result = readinputport(2);
-		if (atarigen_sound_to_cpu_ready != 0) result ^= 0x0010;
-		if (atarigen_cpu_to_sound_ready != 0) result ^= 0x0020;
+		if (atarigen_sound_to_cpu_ready) result ^= 0x0010;
+		if (atarigen_cpu_to_sound_ready) result ^= 0x0020;
 		return result;
 	}
 	
@@ -92,7 +91,7 @@ public class batman
 		COMBINE_DATA(&latch_data);
 	
 		/* bit 4 is connected to the /RESET pin on the 6502 */
-		if ((latch_data & 0x0010) != 0)
+		if (latch_data & 0x0010)
 			cpu_set_reset_line(1, CLEAR_LINE);
 		else
 			cpu_set_reset_line(1, ASSERT_LINE);
@@ -156,7 +155,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_batman = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_batman = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( batman )
 		PORT_START(); 		/* 26000 */
 		PORT_BIT( 0x01ff, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_START1 );
@@ -229,8 +228,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_batman = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( batman )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, ATARI_CLOCK_14MHz)
@@ -255,9 +253,7 @@ public class batman
 		
 		/* sound hardware */
 		MDRV_IMPORT_FROM(jsa_iii_mono)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -318,8 +314,7 @@ public class batman
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_batman  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_batman  = new DriverInitHandlerPtr() { public void handler(){
 		static const data16_t default_eeprom[] =
 		{
 			0x0001,0x01F1,0x0154,0x01C5,0x0100,0x0113,0x0300,0x0173,
@@ -349,5 +344,5 @@ public class batman
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_batman	   = new GameDriver("1991"	,"batman"	,"batman.java"	,rom_batman,null	,machine_driver_batman	,input_ports_batman	,init_batman	,ROT0	,	"Atari Games", "Batman" )
+	GAME( 1991, batman, 0, batman, batman, batman, ROT0, "Atari Games", "Batman" )
 }

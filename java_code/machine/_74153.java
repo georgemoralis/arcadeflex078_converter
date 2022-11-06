@@ -35,7 +35,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -138,7 +138,7 @@ public class _74153
 		}
 	
 	
-		chips[which].output_cb = (intf ? intf.output_cb : 0);
+		chips[which].output_cb = (intf ? intf->output_cb : 0);
 		chips[which].a = 1;
 		chips[which].b = 1;
 		chips[which].enable[0] = 1;

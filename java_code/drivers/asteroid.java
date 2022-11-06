@@ -140,7 +140,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -155,8 +155,7 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr astdelux_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr astdelux_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -168,8 +167,7 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr llander_led_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr llander_led_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static const char *lampname[] =
 		{
 			"lamp0", "lamp1", "lamp2", "lamp3", "lamp4"
@@ -191,14 +189,12 @@ public class asteroid
 	
 	static data8_t *llander_zeropage;
 	
-	public static ReadHandlerPtr llander_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr llander_zeropage_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return llander_zeropage[offset & 0xff];
 	} };
 	
 	
-	public static WriteHandlerPtr llander_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr llander_zeropage_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		llander_zeropage[offset & 0xff] = data;
 	} };
 	
@@ -315,7 +311,7 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_asteroid = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asteroid = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asteroid )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		/* Bit 2 and 3 are handled in the machine dependent part. */
@@ -364,7 +360,7 @@ public class asteroid
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_asteroib = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asteroib = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asteroib )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );/* resets */
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );/* resets */
@@ -416,7 +412,7 @@ public class asteroid
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_asterock = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_asterock = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( asterock )
 		PORT_START();  /* IN0 */
 		/* Bit 0 is VG_HALT, handled in the machine dependant part */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -470,7 +466,7 @@ public class asteroid
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_astdelux = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_astdelux = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( astdelux )
 		PORT_START();  /* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 		/* Bit 2 and 3 are handled in the machine dependent part. */
@@ -539,7 +535,7 @@ public class asteroid
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_llander = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_llander = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( llander )
 		PORT_START();  /* IN0 */
 		/* Bit 0 is VG_HALT, handled in the machine dependant part */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -589,7 +585,7 @@ public class asteroid
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_llander1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_llander1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( llander1 )
 		PORT_START();  /* IN0 */
 		/* Bit 0 is VG_HALT, handled in the machine dependant part */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_UNKNOWN );
@@ -668,8 +664,7 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_asteroid = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( asteroid )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD_TAG("main", M6502, 1500000)
@@ -691,24 +686,18 @@ public class asteroid
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("disc", DISCRETE, asteroid_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_asterock = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( asterock )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(asteroid)
 		MDRV_CPU_MODIFY("main")
 		MDRV_CPU_VBLANK_INT(asterock_interrupt,4)	/* 250 Hz */	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_astdelux = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( astdelux )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(asteroid)
@@ -720,13 +709,10 @@ public class asteroid
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("disc", DISCRETE, astdelux_sound_interface)
 		MDRV_SOUND_ADD(POKEY, pokey_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_llander = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( llander )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(asteroid)
@@ -746,9 +732,7 @@ public class asteroid
 	
 		/* sound hardware */
 		MDRV_SOUND_REPLACE("disc", DISCRETE, llander_sound_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -871,22 +855,19 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_asteroib  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_asteroib  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0x2000, 0x2000, asteroib_IN0_r);
 		install_mem_read_handler(0, 0x2003, 0x2003, input_port_3_r);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_asterock  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_asterock  = new DriverInitHandlerPtr() { public void handler(){
 	
 		install_mem_read_handler(0, 0x2000, 0x2007, asterock_IN0_r);
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_astdelux  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_astdelux  = new DriverInitHandlerPtr() { public void handler(){
 		OVERLAY_START( astdelux_overlay )
 			OVERLAY_RECT( 0.0, 0.0, 1.0, 1.0, MAKE_ARGB(0x04,0x88,0xff,0xff) )
 		OVERLAY_END
@@ -902,13 +883,13 @@ public class asteroid
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_asteroid	   = new GameDriver("1979"	,"asteroid"	,"asteroid.java"	,rom_asteroid,null	,machine_driver_asteroid	,input_ports_asteroid	,null	,ROT0	,	"Atari", "Asteroids (rev 2)" )
-	public static GameDriver driver_asteroi1	   = new GameDriver("1979"	,"asteroi1"	,"asteroid.java"	,rom_asteroi1,driver_asteroid	,machine_driver_asteroid	,input_ports_asteroid	,null	,ROT0	,	"Atari", "Asteroids (rev 1)" )
-	public static GameDriver driver_asteroib	   = new GameDriver("1979"	,"asteroib"	,"asteroid.java"	,rom_asteroib,driver_asteroid	,machine_driver_asteroid	,input_ports_asteroib	,init_asteroib	,ROT0	,	"bootleg", "Asteroids (bootleg on Lunar Lander hardware)" )
-	public static GameDriver driver_asterock	   = new GameDriver("1979"	,"asterock"	,"asteroid.java"	,rom_asterock,driver_asteroid	,machine_driver_asterock	,input_ports_asterock	,init_asterock	,ROT0	,	"Sidam", "Asterock" )
-	public static GameDriver driver_astdelux	   = new GameDriver("1980"	,"astdelux"	,"asteroid.java"	,rom_astdelux,null	,machine_driver_astdelux	,input_ports_astdelux	,init_astdelux	,ROT0	,	"Atari", "Asteroids Deluxe (rev 2)" )
-	public static GameDriver driver_astdelu1	   = new GameDriver("1980"	,"astdelu1"	,"asteroid.java"	,rom_astdelu1,driver_astdelux	,machine_driver_astdelux	,input_ports_astdelux	,init_astdelux	,ROT0	,	"Atari", "Asteroids Deluxe (rev 1)" )
-	public static GameDriver driver_llander	   = new GameDriver("1979"	,"llander"	,"asteroid.java"	,rom_llander,null	,machine_driver_llander	,input_ports_llander	,null	,ROT0	,	"Atari", "Lunar Lander (rev 2)" )
-	public static GameDriver driver_llander1	   = new GameDriver("1979"	,"llander1"	,"asteroid.java"	,rom_llander1,driver_llander	,machine_driver_llander	,input_ports_llander1	,null	,ROT0	,	"Atari", "Lunar Lander (rev 1)" )
+	GAME( 1979, asteroid, 0,        asteroid, asteroid, 0,        ROT0, "Atari", "Asteroids (rev 2)" )
+	GAME( 1979, asteroi1, asteroid, asteroid, asteroid, 0,        ROT0, "Atari", "Asteroids (rev 1)" )
+	GAME( 1979, asteroib, asteroid, asteroid, asteroib, asteroib, ROT0, "bootleg", "Asteroids (bootleg on Lunar Lander hardware)" )
+	GAME( 1979, asterock, asteroid, asterock, asterock, asterock, ROT0, "Sidam", "Asterock" )
+	GAME( 1980, astdelux, 0,        astdelux, astdelux, astdelux, ROT0, "Atari", "Asteroids Deluxe (rev 2)" )
+	GAME( 1980, astdelu1, astdelux, astdelux, astdelux, astdelux, ROT0, "Atari", "Asteroids Deluxe (rev 1)" )
+	GAME( 1979, llander,  0,        llander,  llander,  0,        ROT0, "Atari", "Lunar Lander (rev 2)" )
+	GAME( 1979, llander1, llander,  llander,  llander1, 0,        ROT0, "Atari", "Lunar Lander (rev 1)" )
 	
 }

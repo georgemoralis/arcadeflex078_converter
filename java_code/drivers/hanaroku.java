@@ -12,7 +12,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -26,8 +26,7 @@ public class hanaroku
 	UINT8 *hanaroku_spriteram3;
 	
 	
-	public static PaletteInitHandlerPtr palette_init_hanaroku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_hanaroku  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int r,g,b;
 	
@@ -42,10 +41,9 @@ public class hanaroku
 	} };
 	
 	
-	VIDEO_START(hanaroku)
-	{
+	public static VideoStartHandlerPtr video_start_hanaroku  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
-	}
+	} };
 	
 	static void hanaroku_draw_sprites( struct mame_bitmap *bitmap, const struct rectangle *cliprect )
 	{
@@ -60,26 +58,24 @@ public class hanaroku
 			int sx = hanaroku_spriteram1[i + 0x200] | ((hanaroku_spriteram2[i + 0x200] & 0x07) << 8);
 			int sy = 242 - hanaroku_spriteram3[i];
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sy = 242 - sy;
 				flipx = NOT(flipx);
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[0], code, color, flipx, flipy,
+			drawgfx(bitmap, Machine->gfx[0], code, color, flipx, flipy,
 				sx, sy, cliprect, TRANSPARENCY_PEN, 0);
 		}
 	}
 	
-	VIDEO_UPDATE(hanaroku)
-	{
+	public static VideoUpdateHandlerPtr video_update_hanaroku  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(bitmap, Machine.pens[0x1f0], cliprect);	// ???
 		hanaroku_draw_sprites(bitmap, cliprect);
-	}
+	} };
 	
-	public static WriteHandlerPtr hanaroku_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanaroku_out_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			bit		description
 	
@@ -100,8 +96,7 @@ public class hanaroku
 		coin_counter_w(4, data & 0x80);
 	} };
 	
-	public static WriteHandlerPtr hanaroku_out_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanaroku_out_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			bit		description
 	
@@ -116,8 +111,7 @@ public class hanaroku
 		*/
 	} };
 	
-	public static WriteHandlerPtr hanaroku_out_2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr hanaroku_out_2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		// unused
 	} };
 	
@@ -159,7 +153,7 @@ public class hanaroku
 	};
 	
 	
-	static InputPortPtr input_ports_hanaroku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hanaroku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hanaroku )
 		PORT_START(); 	// IN0	(0xe000)
 		PORT_BIT(  0x01, IP_ACTIVE_LOW, IPT_COIN1 );	// adds n credits depending on "Coinage" Dip Switch
 		PORT_BIT(  0x02, IP_ACTIVE_LOW, IPT_COIN2 );	// adds 5 credits
@@ -252,8 +246,7 @@ public class hanaroku
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_hanaroku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hanaroku )
 		MDRV_CPU_ADD(Z80,6000000)		 /* ? MHz */
 		MDRV_CPU_MEMORY(readmem,writemem)
 		MDRV_CPU_VBLANK_INT(irq0_line_hold,1)
@@ -274,9 +267,7 @@ public class hanaroku
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	static RomLoadPtr rom_hanaroku = new RomLoadPtr(){ public void handler(){ 
@@ -295,5 +286,5 @@ public class hanaroku
 	ROM_END(); }}; 
 	
 	
-	public static GameDriver driver_hanaroku	   = new GameDriver("1988"	,"hanaroku"	,"hanaroku.java"	,rom_hanaroku,null	,machine_driver_hanaroku	,input_ports_hanaroku	,null	,ROT0	,	"Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
+	GAMEX( 1988, hanaroku, 0,        hanaroku, hanaroku, 0, ROT0, "Alba", "Hanaroku", GAME_NO_COCKTAIL | GAME_IMPERFECT_GRAPHICS | GAME_IMPERFECT_COLORS )
 }

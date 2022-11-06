@@ -105,7 +105,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -124,8 +124,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_pipedrm  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_pipedrm  = new MachineInitHandlerPtr() { public void handler(){
 		UINT8 *ram;
 	
 		/* initialize main Z80 bank */
@@ -138,8 +137,7 @@ public class pipedrm
 	} };
 	
 	
-	public static WriteHandlerPtr pipedrm_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pipedrm_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/*
 			Bit layout:
 	
@@ -161,8 +159,7 @@ public class pipedrm
 	} };
 	
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT8 *ram = memory_region(REGION_CPU2);
 		cpu_setbank(2, &ram[0x10000 + (data & 0x01) * 0x8000]);
 	} };
@@ -183,38 +180,33 @@ public class pipedrm
 		/* Hatris polls commands *and* listens to the NMI; this causes it to miss */
 		/* sound commands. It's possible the NMI isn't really hooked up on the YM2608 */
 		/* sound board. */
-		if ((data & 0x100) != 0)
+		if (data & 0x100)
 			cpu_set_nmi_line(1, ASSERT_LINE);
 	}
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data | 0x100, delayed_command_w);
 	} };
 	
 	
-	public static WriteHandlerPtr sound_command_nonmi_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_nonmi_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		timer_set(TIME_NOW, data, delayed_command_w);
 	} };
 	
 	
-	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr pending_command_clear_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		pending_command = 0;
 		cpu_set_nmi_line(1, CLEAR_LINE);
 	} };
 	
 	
-	public static ReadHandlerPtr pending_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr pending_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return pending_command;
 	} };
 	
 	
-	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr sound_command_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return sound_command;
 	} };
 	
@@ -345,7 +337,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_pipedrm = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_pipedrm = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( pipedrm )
 		PORT_START(); 	/* $20 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -436,7 +428,7 @@ public class pipedrm
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_hatris = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hatris = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hatris )
 		PORT_START(); 	/* $20 */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY | IPF_PLAYER1 );
@@ -625,8 +617,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_pipedrm = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( pipedrm )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)
@@ -656,13 +647,10 @@ public class pipedrm
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2610, ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hatris = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hatris )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)
@@ -692,9 +680,7 @@ public class pipedrm
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2608, ym2608_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -791,8 +777,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_pipedrm  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_pipedrm  = new DriverInitHandlerPtr() { public void handler(){
 		/* sprite RAM lives at the end of palette RAM */
 		spriteram = install_mem_read_handler(0, 0xcc00, 0xcfff, MRA_RAM);
 		spriteram = install_mem_write_handler(0, 0xcc00, 0xcfff, MWA_RAM);
@@ -800,8 +785,7 @@ public class pipedrm
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_hatris  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_hatris  = new DriverInitHandlerPtr() { public void handler(){
 		install_port_write_handler(0, 0x20, 0x20, sound_command_nonmi_w);
 		install_port_write_handler(0, 0x21, 0x21, fromance_gfxreg_w);
 	} };
@@ -814,7 +798,7 @@ public class pipedrm
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_pipedrm	   = new GameDriver("1990"	,"pipedrm"	,"pipedrm.java"	,rom_pipedrm,null	,machine_driver_pipedrm	,input_ports_pipedrm	,init_pipedrm	,ROT0	,	"Video System Co.", "Pipe Dream (US)" )
-	public static GameDriver driver_pipedrmj	   = new GameDriver("1990"	,"pipedrmj"	,"pipedrm.java"	,rom_pipedrmj,driver_pipedrm	,machine_driver_pipedrm	,input_ports_pipedrm	,init_pipedrm	,ROT0	,	"Video System Co.", "Pipe Dream (Japan)" )
-	public static GameDriver driver_hatris	   = new GameDriver("1990"	,"hatris"	,"pipedrm.java"	,rom_hatris,null	,machine_driver_hatris	,input_ports_hatris	,init_hatris	,ROT0	,	"Video System Co.", "Hatris (Japan)" )
+	GAME( 1990, pipedrm,  0,       pipedrm, pipedrm, pipedrm, ROT0, "Video System Co.", "Pipe Dream (US)" )
+	GAME( 1990, pipedrmj, pipedrm, pipedrm, pipedrm, pipedrm, ROT0, "Video System Co.", "Pipe Dream (Japan)" )
+	GAME( 1990, hatris,   0,       hatris,  hatris,  hatris,  ROT0, "Video System Co.", "Hatris (Japan)" )
 }

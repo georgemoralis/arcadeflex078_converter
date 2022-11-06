@@ -38,7 +38,7 @@ TODO:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -53,8 +53,7 @@ public class coolpool
 	static data16_t dpyadr;
 	static int dpyadrscan;
 	
-	public static VideoStartHandlerPtr video_start_coolpool  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_coolpool  = new VideoStartHandlerPtr() { public int handler(){
 		return 0;
 	} };
 	
@@ -95,13 +94,12 @@ public class coolpool
 	
 	void coolpool_dpyint_callback(int scanline)
 	{
-	//	if (scanline < Machine.visible_area.max_y)
+	//	if (scanline < Machine->visible_area.max_y)
 	//		force_partial_update(scanline - 1);
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_amerdart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_amerdart  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		data16_t *base = &ram_base[TOWORD(0x800)];
 		int x, y;
 	
@@ -123,22 +121,20 @@ public class coolpool
 		}
 	} };
 	
-	public static InterruptHandlerPtr coolpool_vblank_start = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr coolpool_vblank_start = new InterruptHandlerPtr() {public void handler(){
 		/* dpyadr is latched from dpystrt at the beginning of VBLANK every frame */
 		cpuintrf_push_context(0);
 	
 		/* due to timing issues, we sometimes set the DPYADR just before we get here;
 		   in order to avoid trouncing that value, we look for the last scanline */
-		if (dpyadrscan < Machine.visible_area.max_y)
+		if (dpyadrscan < Machine->visible_area.max_y)
 			dpyadr = ~tms34010_io_register_r(REG_DPYSTRT, 0) & 0xfffc;
 		dpyadrscan = 0;
 	
 		cpuintrf_pop_context();
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_coolpool  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_coolpool  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		data16_t dpytap, dudate, dumask;
 		int x, y, offset;
 	
@@ -192,8 +188,7 @@ public class coolpool
 	
 	static data16_t input_data;
 	
-	public static MachineInitHandlerPtr machine_init_coolpool  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_coolpool  = new MachineInitHandlerPtr() { public void handler(){
 		tlc34076_reset(6);
 	} };
 	
@@ -271,7 +266,7 @@ public class coolpool
 	
 	static READ16_HANDLER( dsp_bio_line_r )
 	{
-		if (cmd_pending != 0) return CLEAR_LINE;
+		if (cmd_pending) return CLEAR_LINE;
 		else return ASSERT_LINE;
 	}
 	
@@ -438,7 +433,7 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_amerdart = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_amerdart = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( amerdart )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_START1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_START2 );
@@ -517,7 +512,7 @@ public class coolpool
 		PORT_SERVICE( 0x8000, IP_ACTIVE_LOW );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_9ballsht = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_9ballsht = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( 9ballsht )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_SERVICE1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_SERVICE2 );
@@ -617,12 +612,9 @@ public class coolpool
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_coolpool = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( coolpool )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 40000000/TMS34010_CLOCK_DIVIDER)
@@ -651,12 +643,9 @@ public class coolpool
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_9ballsht = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( 9ballsht )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(TMS34010, 40000000/TMS34010_CLOCK_DIVIDER)
@@ -685,9 +674,7 @@ public class coolpool
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(DAC, dac_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -849,14 +836,12 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	public static DriverInitHandlerPtr init_amerdart  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_amerdart  = new DriverInitHandlerPtr() { public void handler(){
 		/* set up code ROMs */
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	} };
 	
-	public static DriverInitHandlerPtr init_coolpool  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_coolpool  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		/* remove IOP check */
@@ -884,15 +869,15 @@ public class coolpool
 			lo = code_rom[a] & 0xff;
 	
 			nhi = BITSWAP8(hi,5,2,0,7,6,4,3,1) ^ 0x29;
-			if ((hi & 0x01) != 0) nhi ^= 0x03;
-			if ((hi & 0x10) != 0) nhi ^= 0xc1;
-			if ((hi & 0x20) != 0) nhi ^= 0x40;
-			if ((hi & 0x40) != 0) nhi ^= 0x12;
+			if (hi & 0x01) nhi ^= 0x03;
+			if (hi & 0x10) nhi ^= 0xc1;
+			if (hi & 0x20) nhi ^= 0x40;
+			if (hi & 0x40) nhi ^= 0x12;
 	
 			nlo = BITSWAP8(lo,5,3,4,6,7,1,2,0) ^ 0x80;
 			if ((lo & 0x02) && (lo & 0x04)) nlo ^= 0x01;
-			if ((lo & 0x04) != 0) nlo ^= 0x0c;
-			if ((lo & 0x08) != 0) nlo ^= 0x10;
+			if (lo & 0x04) nlo ^= 0x0c;
+			if (lo & 0x08) nlo ^= 0x10;
 	
 			code_rom[a] = (nhi << 8) | nlo;
 		}
@@ -908,8 +893,7 @@ public class coolpool
 		}
 	}
 	
-	public static DriverInitHandlerPtr init_9ballsht  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_9ballsht  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		decode_9ballsht();
@@ -921,8 +905,7 @@ public class coolpool
 		code_rom[TOWORD(0xffe55430-0xffc00000)] = 0xc059;
 	} };
 	
-	public static DriverInitHandlerPtr init_9ballsh2  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_9ballsh2  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		decode_9ballsht();
@@ -934,8 +917,7 @@ public class coolpool
 		code_rom[TOWORD(0xffe54030-0xffc00000)] = 0xc059;
 	} };
 	
-	public static DriverInitHandlerPtr init_9ballsh3  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_9ballsh3  = new DriverInitHandlerPtr() { public void handler(){
 		memcpy(code_rom, memory_region(REGION_USER1), memory_region_length(REGION_USER1));
 	
 		decode_9ballsht();
@@ -956,9 +938,9 @@ public class coolpool
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_amerdart	   = new GameDriver("1989"	,"amerdart"	,"coolpool.java"	,rom_amerdart,null	,machine_driver_amerdart	,input_ports_amerdart	,init_amerdart	,ROT0	,	"Ameri",   "AmeriDarts", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS | GAME_NO_SOUND | GAME_NOT_WORKING )
-	public static GameDriver driver_coolpool	   = new GameDriver("1992"	,"coolpool"	,"coolpool.java"	,rom_coolpool,null	,machine_driver_coolpool	,input_ports_9ballsht	,init_coolpool	,ROT0	,	"Catalina", "Cool Pool", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_9ballsht	   = new GameDriver("1993"	,"9ballsht"	,"coolpool.java"	,rom_9ballsht,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsht	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 1)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_9ballsh2	   = new GameDriver("1993"	,"9ballsh2"	,"coolpool.java"	,rom_9ballsh2,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsh2	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 2)", GAME_NOT_WORKING | GAME_NO_SOUND )
-	public static GameDriver driver_9ballsh3	   = new GameDriver("1993"	,"9ballsh3"	,"coolpool.java"	,rom_9ballsh3,driver_coolpool	,machine_driver_9ballsht	,input_ports_9ballsht	,init_9ballsh3	,ROT0	,	"E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 3)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1989, amerdart, 0,        amerdart, amerdart, amerdart, ROT0, "Ameri",   "AmeriDarts", GAME_UNEMULATED_PROTECTION | GAME_WRONG_COLORS | GAME_NO_SOUND | GAME_NOT_WORKING )
+	GAMEX( 1992, coolpool, 0,        coolpool, 9ballsht, coolpool, ROT0, "Catalina", "Cool Pool", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1993, 9ballsht, coolpool, 9ballsht, 9ballsht, 9ballsht, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 1)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1993, 9ballsh2, coolpool, 9ballsht, 9ballsht, 9ballsh2, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 2)", GAME_NOT_WORKING | GAME_NO_SOUND )
+	GAMEX( 1993, 9ballsh3, coolpool, 9ballsht, 9ballsht, 9ballsh3, ROT0, "E-Scape EnterMedia (Bundra license)", "9-Ball Shootout (set 3)", GAME_NOT_WORKING | GAME_NO_SOUND )
 }

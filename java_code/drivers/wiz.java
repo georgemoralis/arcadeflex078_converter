@@ -159,7 +159,7 @@ Stephh's notes (based on the games Z80 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -168,8 +168,7 @@ public class wiz
 	
 	
 	
-	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_command_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		static int dsc0=1, dsc1=1;
 	
 		switch (offset)
@@ -193,8 +192,7 @@ public class wiz
 		}
 	} };
 	
-	public static ReadHandlerPtr wiz_protection_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr wiz_protection_r  = new ReadHandlerPtr() { public int handler(int offset){
 		switch (wiz_colorram2[0])
 		{
 		case 0x35: return 0x25;	/* FIX: sudden player death + free play afterwards   */
@@ -205,8 +203,7 @@ public class wiz
 		return wiz_colorram2[0];
 	} };
 	
-	public static WriteHandlerPtr wiz_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr wiz_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(offset,data);
 	} };
 	
@@ -275,7 +272,7 @@ public class wiz
 	
 	
 	
-	static InputPortPtr input_ports_stinger = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stinger = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stinger )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_COCKTAIL );
@@ -347,7 +344,7 @@ public class wiz
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_stinger2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_stinger2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( stinger2 )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_COCKTAIL );
@@ -420,7 +417,7 @@ public class wiz
 		PORT_DIPSETTING(    0x00, DEF_STR( "Cocktail") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_scion = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_scion = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( scion )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_COCKTAIL );
@@ -491,7 +488,7 @@ public class wiz
 	//	PORT_DIPSETTING(    0x80, DEF_STR( "On") );		/* See notes */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_kungfut = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_kungfut = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( kungfut )
 		PORT_START(); 	/* IN0 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON2 | IPF_PLAYER2 );
@@ -562,7 +559,7 @@ public class wiz
 		PORT_DIPSETTING(    0x80, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wiz = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wiz = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wiz )
 		PORT_START(); 	/* IN1 */
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
 		PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_BUTTON1 | IPF_COCKTAIL );
@@ -780,8 +777,7 @@ public class wiz
 	//* ANALOG SOUND ENDS
 	
 	
-	public static MachineHandlerPtr machine_driver_wiz = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wiz )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80, 18432000/6)	/* 3.072 MHz ??? */
@@ -811,13 +807,10 @@ public class wiz
 		/* sound hardware */
 		MDRV_SOUND_ADD_TAG("8910", AY8910, wiz_ay8910_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_stinger = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( stinger )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(wiz)
@@ -830,13 +823,10 @@ public class wiz
 		MDRV_SOUND_REPLACE("8910", AY8910, stinger_ay8910_interface)
 		MDRV_SOUND_ADD(DISCRETE, stinger_discrete_interface)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_scion = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( scion )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(stinger)
@@ -844,13 +834,10 @@ public class wiz
 		/* video hardware */
 		MDRV_VISIBLE_AREA(2*8, 32*8-1, 2*8, 30*8-1)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_kungfut = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( kungfut )
 	
 		/* basic machine hardware */
 		MDRV_IMPORT_FROM(wiz)
@@ -859,9 +846,7 @@ public class wiz
 		MDRV_GFXDECODE(stinger_gfxdecodeinfo)
 		MDRV_VIDEO_UPDATE(kungfut)
 	
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1062,8 +1047,7 @@ public class wiz
 	
 	
 	
-	public static DriverInitHandlerPtr init_stinger  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_stinger  = new DriverInitHandlerPtr() { public void handler(){
 		static const unsigned char swap_xor_table[4][4] =
 		{
 			{ 7,3,5, 0xa0 },
@@ -1085,7 +1069,7 @@ public class wiz
 			unsigned char src;
 	
 	
-			if ((A & 0x2040) != 0)
+			if (A & 0x2040)
 			{
 				/* not encrypted */
 				rom[A+diff] = rom[A];
@@ -1105,17 +1089,16 @@ public class wiz
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_wiz  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wiz  = new DriverInitHandlerPtr() { public void handler(){
 		install_mem_read_handler(0, 0xd400, 0xd400, wiz_protection_r);
 	} };
 	
 	
-	public static GameDriver driver_stinger	   = new GameDriver("1983"	,"stinger"	,"wiz.java"	,rom_stinger,null	,machine_driver_stinger	,input_ports_stinger	,init_stinger	,ROT90	,	"Seibu Denshi", "Stinger", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_stinger2	   = new GameDriver("1983"	,"stinger2"	,"wiz.java"	,rom_stinger2,driver_stinger	,machine_driver_stinger	,input_ports_stinger2	,init_stinger	,ROT90	,	"Seibu Denshi", "Stinger (prototype?)", GAME_IMPERFECT_SOUND )
-	public static GameDriver driver_scion	   = new GameDriver("1984"	,"scion"	,"wiz.java"	,rom_scion,null	,machine_driver_scion	,input_ports_scion	,null	,ROT0	,	"Seibu Denshi", "Scion", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_scionc	   = new GameDriver("1984"	,"scionc"	,"wiz.java"	,rom_scionc,driver_scion	,machine_driver_scion	,input_ports_scion	,null	,ROT0	,	"Seibu Denshi (Cinematronics license)", "Scion (Cinematronics)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
-	public static GameDriver driver_kungfut	   = new GameDriver("1984"	,"kungfut"	,"wiz.java"	,rom_kungfut,null	,machine_driver_kungfut	,input_ports_kungfut	,null	,ROT0	,	"Seibu Kaihatsu Inc.", "Kung-Fu Taikun" )
-	public static GameDriver driver_wiz	   = new GameDriver("1985"	,"wiz"	,"wiz.java"	,rom_wiz,null	,machine_driver_wiz	,input_ports_wiz	,init_wiz	,ROT270	,	"Seibu Kaihatsu Inc.", "Wiz" )
-	public static GameDriver driver_wizt	   = new GameDriver("1985"	,"wizt"	,"wiz.java"	,rom_wizt,driver_wiz	,machine_driver_wiz	,input_ports_wiz	,init_wiz	,ROT270	,	"[Seibu] (Taito license)", "Wiz (Taito)" )
+	GAMEX(1983, stinger,  0,       stinger, stinger,  stinger, ROT90,  "Seibu Denshi", "Stinger", GAME_IMPERFECT_SOUND )
+	GAMEX(1983, stinger2, stinger, stinger, stinger2, stinger, ROT90,  "Seibu Denshi", "Stinger (prototype?)", GAME_IMPERFECT_SOUND )
+	GAMEX(1984, scion,    0,       scion,   scion,    0,       ROT0,   "Seibu Denshi", "Scion", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
+	GAMEX(1984, scionc,   scion,   scion,   scion,    0,       ROT0,   "Seibu Denshi (Cinematronics license)", "Scion (Cinematronics)", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_COLORS )
+	GAME( 1984, kungfut,  0,       kungfut, kungfut,  0,       ROT0,   "Seibu Kaihatsu Inc.", "Kung-Fu Taikun" )
+	GAME( 1985, wiz,      0,       wiz,     wiz,      wiz,     ROT270, "Seibu Kaihatsu Inc.", "Wiz" )
+	GAME( 1985, wizt,     wiz,     wiz,     wiz,      wiz,     ROT270, "[Seibu] (Taito license)", "Wiz (Taito)" )
 }

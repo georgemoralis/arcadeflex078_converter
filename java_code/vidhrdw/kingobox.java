@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -35,8 +35,7 @@ public class kingobox
 	  bit 3 --  51 ohm resistor  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_kingofb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_kingofb  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -92,8 +91,7 @@ public class kingobox
 	
 	
 	/* Ring King has one 256x8 PROM instead of two 256x4 */
-	public static PaletteInitHandlerPtr palette_init_ringking  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_ringking  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -147,8 +145,7 @@ public class kingobox
 		}
 	} };
 	
-	public static WriteHandlerPtr kingofb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kingofb_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -156,8 +153,7 @@ public class kingobox
 		}
 	} };
 	
-	public static WriteHandlerPtr kingofb_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kingofb_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (colorram.read(offset)!= data)
 		{
 			colorram.write(offset,data);
@@ -165,17 +161,15 @@ public class kingobox
 		}
 	} };
 	
-	public static WriteHandlerPtr kingofb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (kingofb_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr kingofb_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (kingofb_videoram2[offset] != data)
 		{
-			kingofb_videoram2.write(offset,data);
+			kingofb_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(fg_tilemap, offset);
 		}
 	} };
 	
-	public static WriteHandlerPtr kingofb_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kingofb_colorram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (kingofb_colorram2[offset] != data)
 		{
 			kingofb_colorram2[offset] = data;
@@ -183,8 +177,7 @@ public class kingobox
 		}
 	} };
 	
-	public static WriteHandlerPtr kingofb_f800_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr kingofb_f800_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		kingofb_nmi_enable = data & 0x20;
 	
 		if (palette_bank != ((data & 0x18) >> 3))
@@ -214,24 +207,23 @@ public class kingobox
 	{
 		int attr = kingofb_colorram2[tile_index];
 		int bank = (attr & 0x02) >> 1;
-		int code = kingofb_videoram2.read(tile_index)+ ((attr & 0x01) << 8);
+		int code = kingofb_videoram2[tile_index] + ((attr & 0x01) << 8);
 		int color = (attr & 0x38) >> 3;
 	
 		SET_TILE_INFO(bank, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_kingofb  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_kingofb  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -253,7 +245,7 @@ public class kingobox
 			int sx = spriteram.read(offs+1);
 			int sy = spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -261,7 +253,7 @@ public class kingobox
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[2 + bank],
+			drawgfx(bitmap, Machine->gfx[2 + bank],
 				code, color,
 				flipx, flipy,
 				sx, sy,
@@ -269,8 +261,7 @@ public class kingobox
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_kingofb  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		kingofb_draw_sprites(bitmap);
@@ -287,18 +278,17 @@ public class kingobox
 		SET_TILE_INFO(4, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_ringking  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_ringking  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(ringking_get_bg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_OPAQUE, 16, 16, 16, 16);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_cols_flip_y, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(fg_tilemap, 0);
@@ -320,7 +310,7 @@ public class kingobox
 			int sx = spriteram.read(offs+2);
 			int sy = spriteram.read(offs);
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -328,7 +318,7 @@ public class kingobox
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[2 + bank],
+			drawgfx(bitmap, Machine->gfx[2 + bank],
 				code, color,
 				flipx, flipy,
 				sx, sy,
@@ -336,8 +326,7 @@ public class kingobox
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_ringking  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_set_scrolly(bg_tilemap, 0, -(*kingofb_scroll_y));
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		ringking_draw_sprites(bitmap);

@@ -31,7 +31,7 @@ HW info :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -39,30 +39,22 @@ public class ssrj
 {
 	
 	
-	WRITE_HANDLER(ssrj_vram1_w);
-	WRITE_HANDLER(ssrj_vram2_w);
-	WRITE_HANDLER(ssrj_vram4_w);
-	READ_HANDLER(ssrj_vram1_r);
-	READ_HANDLER(ssrj_vram2_r);
-	READ_HANDLER(ssrj_vram4_r);
 	
 	
 	static int oldport=0x80;
 	
-	MACHINE_INIT(ssrj)
-	{
+	public static MachineInitHandlerPtr machine_init_ssrj  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *rom = memory_region(REGION_CPU1);
 		memset(&rom[0xc000],0,0x3fff); /* req for some control types */
 		oldport=0x80;
-	}
+	} };
 	
-	static READ_HANDLER(ssrj_wheel_r)
-	{
-		int port= input_port_1_r(0) -0x80;
+	public static ReadHandlerPtr ssrj_wheel_r  = new ReadHandlerPtr() { public int handler(int offset){
+		int port= input_port_1_r.handler(0) -0x80;
 		int retval=port-oldport;
 		oldport=port;
 		return retval;
-	}
+	} };
 	
 	public static Memory_ReadAddress readmem[]={
 		new Memory_ReadAddress(MEMPORT_MARKER, MEMPORT_DIRECTION_READ | MEMPORT_TYPE_MEM | MEMPORT_WIDTH_8),
@@ -97,7 +89,7 @@ public class ssrj
 		new Memory_WriteAddress(MEMPORT_MARKER, 0)
 	};
 	
-	static InputPortPtr input_ports_ssrj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_ssrj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( ssrj )
 	
 	PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_COIN1 );
@@ -181,8 +173,7 @@ public class ssrj
 	);
 	
 	
-	public static MachineHandlerPtr machine_driver_ssrj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( ssrj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,8000000/2)
@@ -208,9 +199,7 @@ public class ssrj
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/***************************************************************************
 	
@@ -233,5 +222,5 @@ public class ssrj
 	
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_ssrj	   = new GameDriver("1985"	,"ssrj"	,"ssrj.java"	,rom_ssrj,null	,machine_driver_ssrj	,input_ports_ssrj	,null	,ORIENTATION_FLIP_X	,	"Taito Corporation", "Super Speed Race Junior (Japan)",GAME_WRONG_COLORS|GAME_IMPERFECT_GRAPHICS )
+	GAMEX( 1985, ssrj,  0,       ssrj,  ssrj,  0, ORIENTATION_FLIP_X, "Taito Corporation", "Super Speed Race Junior (Japan)",GAME_WRONG_COLORS|GAME_IMPERFECT_GRAPHICS )
 }

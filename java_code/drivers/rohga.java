@@ -17,7 +17,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -199,7 +199,7 @@ public class rohga
 	
 	/**********************************************************************************/
 	
-	static InputPortPtr input_ports_rohga = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rohga = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rohga )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -299,7 +299,7 @@ public class rohga
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_wizdfire = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_wizdfire = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( wizdfire )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -372,7 +372,7 @@ public class rohga
 		PORT_DIPSETTING(      0x0000, DEF_STR( "On") );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nitrobal = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nitrobal = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nitrobal )
 		PORT_START(); 
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_8WAY );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_8WAY );
@@ -553,8 +553,7 @@ public class rohga
 		cpu_set_irq_line(1,1,state); /* IRQ 2 */
 	}
 	
-	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sound_bankswitch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		OKIM6295_set_bank_base(0, ((data & 1)>>0) * 0x40000);
 		OKIM6295_set_bank_base(1, ((data & 2)>>1) * 0x40000);
 	} };
@@ -578,8 +577,7 @@ public class rohga
 	
 	/**********************************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_rohga = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rohga )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -607,12 +605,9 @@ public class rohga
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_wizdfire = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( wizdfire )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -640,12 +635,9 @@ public class rohga
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_nitrobal = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nitrobal )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 14000000)
@@ -673,9 +665,7 @@ public class rohga
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
 		MDRV_SOUND_ADD(OKIM6295, okim6295_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	/**********************************************************************************/
 	
@@ -931,30 +921,27 @@ public class rohga
 	
 	/**********************************************************************************/
 	
-	public static DriverInitHandlerPtr init_rohga  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_rohga  = new DriverInitHandlerPtr() { public void handler(){
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
 	} };
 	
-	public static DriverInitHandlerPtr init_wizdfire  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_wizdfire  = new DriverInitHandlerPtr() { public void handler(){
 		deco74_decrypt(REGION_GFX1);
 		deco74_decrypt(REGION_GFX2);
 		deco74_decrypt(REGION_GFX3);
 	} };
 	
-	public static DriverInitHandlerPtr init_nitrobal  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_nitrobal  = new DriverInitHandlerPtr() { public void handler(){
 		deco56_decrypt(REGION_GFX1);
 		deco56_decrypt(REGION_GFX2);
 		deco74_decrypt(REGION_GFX3);
 	} };
 	
-	public static GameDriver driver_rohga	   = new GameDriver("1991"	,"rohga"	,"rohga.java"	,rom_rohga,null	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (Asia/Europe v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
-	public static GameDriver driver_rohgah	   = new GameDriver("1991"	,"rohgah"	,"rohga.java"	,rom_rohgah,driver_rohga	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (Hong Kong v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_rohgau	   = new GameDriver("1991"	,"rohgau"	,"rohga.java"	,rom_rohgau,driver_rohga	,machine_driver_rohga	,input_ports_rohga	,init_rohga	,ROT0	,	"Data East Corporation", "Rohga Armour Force (US v1.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
-	public static GameDriver driver_wizdfire	   = new GameDriver("1992"	,"wizdfire"	,"rohga.java"	,rom_wizdfire,null	,machine_driver_wizdfire	,input_ports_wizdfire	,init_wizdfire	,ROT0	,	"Data East Corporation", "Wizard Fire (US v1.1)" )
-	public static GameDriver driver_darksel2	   = new GameDriver("1992"	,"darksel2"	,"rohga.java"	,rom_darksel2,driver_wizdfire	,machine_driver_wizdfire	,input_ports_wizdfire	,init_wizdfire	,ROT0	,	"Data East Corporation", "Dark Seal 2 (Japan v2.1)" )
-	public static GameDriver driver_nitrobal	   = new GameDriver("1992"	,"nitrobal"	,"rohga.java"	,rom_nitrobal,null	,machine_driver_nitrobal	,input_ports_nitrobal	,init_nitrobal	,ROT270	,	"Data East Corporation", "Nitro Ball (US)" )
+	GAMEX(1991, rohga,    0,       rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Asia/Europe v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING  )
+	GAMEX(1991, rohgah,   rohga,   rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (Hong Kong v3.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAMEX(1991, rohgau,   rohga,   rohga,    rohga,    rohga,    ROT0,   "Data East Corporation", "Rohga Armour Force (US v1.0)", GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING )
+	GAME( 1992, wizdfire, 0,       wizdfire, wizdfire, wizdfire, ROT0,   "Data East Corporation", "Wizard Fire (US v1.1)" )
+	GAME( 1992, darksel2, wizdfire,wizdfire, wizdfire, wizdfire, ROT0,   "Data East Corporation", "Dark Seal 2 (Japan v2.1)" )
+	GAME( 1992, nitrobal, 0,       nitrobal, nitrobal, nitrobal, ROT270, "Data East Corporation", "Nitro Ball (US)" )
 }

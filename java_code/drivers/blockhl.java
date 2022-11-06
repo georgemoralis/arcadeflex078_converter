@@ -21,7 +21,7 @@ found it.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -37,30 +37,26 @@ public class blockhl
 	static unsigned char *ram;
 	static int rombank;
 	
-	public static InterruptHandlerPtr blockhl_interrupt = new InterruptHandlerPtr() {public void handler()
-	{
+	public static InterruptHandlerPtr blockhl_interrupt = new InterruptHandlerPtr() {public void handler(){
 		if (K052109_is_IRQ_enabled() && rombank == 0)	/* kludge to prevent crashes */
 			cpu_set_irq_line(0, KONAMI_IRQ_LINE, HOLD_LINE);
 	} };
 	
-	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (palette_selected != 0)
+	public static ReadHandlerPtr bankedram_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (palette_selected)
 			return paletteram_r(offset);
 		else
 			return ram[offset];
 	} };
 	
-	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (palette_selected != 0)
+	public static WriteHandlerPtr bankedram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (palette_selected)
 			paletteram_xBBBBBGGGGGRRRRR_swap_w(offset,data);
 		else
 			ram[offset] = data;
 	} };
 	
-	public static WriteHandlerPtr blockhl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr blockhl_sh_irqtrigger_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		cpu_set_irq_line_and_vector(1, 0, HOLD_LINE, 0xff);
 	} };
 	
@@ -119,7 +115,7 @@ public class blockhl
 	
 	***************************************************************************/
 	
-	static InputPortPtr input_ports_blockhl = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_blockhl = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( blockhl )
 		PORT_START(); 	/* PLAYER 1 INPUTS */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT  | IPF_8WAY | IPF_PLAYER1 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT | IPF_8WAY | IPF_PLAYER1 );
@@ -234,8 +230,7 @@ public class blockhl
 		{ 0 }
 	};
 	
-	public static MachineHandlerPtr machine_driver_blockhl = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( blockhl )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(KONAMI,3000000)		/* Konami custom 052526 */
@@ -261,9 +256,7 @@ public class blockhl
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/***************************************************************************
@@ -354,8 +347,7 @@ public class blockhl
 		if ((lines & 0x84) != 0x80) logerror("%04x: setlines %02x\n",activecpu_get_pc(),lines);
 	}
 	
-	public static MachineInitHandlerPtr machine_init_blockhl  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_blockhl  = new MachineInitHandlerPtr() { public void handler(){
 		unsigned char *RAM = memory_region(REGION_CPU1);
 	
 		konami_cpu_setlines_callback = blockhl_banking;
@@ -364,14 +356,13 @@ public class blockhl
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_blockhl  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_blockhl  = new DriverInitHandlerPtr() { public void handler(){
 		konami_rom_deinterleave_2(REGION_GFX1);
 		konami_rom_deinterleave_2(REGION_GFX2);
 	} };
 	
 	
 	
-	public static GameDriver driver_blockhl	   = new GameDriver("1989"	,"blockhl"	,"blockhl.java"	,rom_blockhl,null	,machine_driver_blockhl	,input_ports_blockhl	,init_blockhl	,ROT0	,	"Konami", "Block Hole" )
-	public static GameDriver driver_quarth	   = new GameDriver("1989"	,"quarth"	,"blockhl.java"	,rom_quarth,driver_blockhl	,machine_driver_blockhl	,input_ports_blockhl	,init_blockhl	,ROT0	,	"Konami", "Quarth (Japan)" )
+	GAME( 1989, blockhl, 0,       blockhl, blockhl, blockhl, ROT0, "Konami", "Block Hole" )
+	GAME( 1989, quarth,  blockhl, blockhl, blockhl, blockhl, ROT0, "Konami", "Quarth (Japan)" )
 }

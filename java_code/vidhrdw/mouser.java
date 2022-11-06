@@ -15,15 +15,14 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
 public class mouser
 {
 	
-	public static PaletteInitHandlerPtr palette_init_mouser  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mouser  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 	
 		for (i = 0;i < Machine.drv.total_colors;i++)
@@ -50,18 +49,15 @@ public class mouser
 		}
 	} };
 	
-	public static WriteHandlerPtr mouser_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_flip_screen_x_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_x_set(~data & 1);
 	} };
 	
-	public static WriteHandlerPtr mouser_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_flip_screen_y_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flip_screen_y_set(~data & 1);
 	} };
 	
-	public static WriteHandlerPtr mouser_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_spriteram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* Mark the entire row as dirty if row scrollram is written */
 		/* Only used by the MOUSER logo */
 	
@@ -75,14 +71,12 @@ public class mouser
 		spriteram_w(offset, data);
 	} };
 	
-	public static WriteHandlerPtr mouser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mouser_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		dirtybuffer[offset] = 1;
 		colorram_w(offset, data);
 	} };
 	
-	public static VideoUpdateHandlerPtr video_update_mouser  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mouser  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int sx,sy;
 		int flipx,flipy;
@@ -101,12 +95,12 @@ public class mouser
 				sx = offs % 32;
 				sy = offs / 32;
 	
-				if (flip_screen_x != 0)
+				if (flip_screen_x)
 				{
 					sx = 31 - sx;
 				}
 	
-				if (flip_screen_y != 0)
+				if (flip_screen_y)
 				{
 					sy = 31 - sy;
 				}
@@ -142,13 +136,13 @@ public class mouser
 			flipx = (spriteram.read(offs)&0x40)>>6;
 			flipy = (spriteram.read(offs)&0x80)>>7;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 				sy = 238 - sy;
@@ -172,13 +166,13 @@ public class mouser
 			flipx = (spriteram.read(offs)&0x40)>>6;
 			flipy = (spriteram.read(offs)&0x80)>>7;
 	
-			if (flip_screen_x != 0)
+			if (flip_screen_x)
 			{
 				flipx = NOT(flipx);
 				sx = 240 - sx;
 			}
 	
-			if (flip_screen_y != 0)
+			if (flip_screen_y)
 			{
 				flipy = NOT(flipy);
 				sy = 238 - sy;

@@ -27,7 +27,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.m68000;
 
@@ -277,7 +277,7 @@ public class m68kdasm
 	
 		if(val == 0x80)
 			sprintf(str, "-$80");
-		else if ((val & 0x80) != 0)
+		else if(val & 0x80)
 			sprintf(str, "-$%x", (0-val) & 0x7f);
 		else
 			sprintf(str, "$%x", val & 0x7f);
@@ -293,7 +293,7 @@ public class m68kdasm
 	
 		if(val == 0x8000)
 			sprintf(str, "-$8000");
-		else if ((val & 0x8000) != 0)
+		else if(val & 0x8000)
 			sprintf(str, "-$%x", (0-val) & 0x7fff);
 		else
 			sprintf(str, "$%x", val & 0x7fff);
@@ -309,7 +309,7 @@ public class m68kdasm
 	
 		if(val == 0x80000000)
 			sprintf(str, "-$80000000");
-		else if ((val & 0x80000000) != 0)
+		else if(val & 0x80000000)
 			sprintf(str, "-$%x", (0-val) & 0x7fffffff);
 		else
 			sprintf(str, "$%x", val & 0x7fffffff);
@@ -419,38 +419,38 @@ public class m68kdasm
 					strcpy(mode, "(");
 					if(preindex || postindex)
 						strcat(mode, "[");
-					if (base != 0)
+					if(base)
 					{
 						strcat(mode, make_signed_hex_str_16(base));
 						comma = 1;
 					}
 					if(*base_reg)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, base_reg);
 						comma = 1;
 					}
-					if (postindex != 0)
+					if(postindex)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
 					if(*index_reg)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, index_reg);
 						comma = 1;
 					}
-					if (preindex != 0)
+					if(preindex)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
-					if (outer != 0)
+					if(outer)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, make_signed_hex_str_16(outer));
 					}
@@ -511,38 +511,38 @@ public class m68kdasm
 					strcpy(mode, "(");
 					if(preindex || postindex)
 						strcat(mode, "[");
-					if (base != 0)
+					if(base)
 					{
 						strcat(mode, make_signed_hex_str_16(base));
 						comma = 1;
 					}
 					if(*base_reg)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, base_reg);
 						comma = 1;
 					}
-					if (postindex != 0)
+					if(postindex)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
 					if(*index_reg)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, index_reg);
 						comma = 1;
 					}
-					if (preindex != 0)
+					if(preindex)
 					{
 						strcat(mode, "]");
 						comma = 1;
 					}
-					if (outer != 0)
+					if(outer)
 					{
-						if (comma != 0)
+						if(comma)
 							strcat(mode, ",");
 						strcat(mode, make_signed_hex_str_16(outer));
 					}
@@ -594,8 +594,8 @@ public class m68kdasm
 	 * mm  : memory to memory
 	 * r   : register
 	 * s   : static
-	 * er  : effective address . register
-	 * re  : register . effective address
+	 * er  : effective address -> register
+	 * re  : register -> effective address
 	 * ea  : using effective address mode of operation
 	 * d   : data register direct
 	 * a   : address register direct
@@ -3174,8 +3174,8 @@ public class m68kdasm
 	/* Used by qsort */
 	static int DECL_SPEC compare_nof_true_bits(const void *aptr, const void *bptr)
 	{
-		uint a = ((const opcode_struct*)aptr).mask;
-		uint b = ((const opcode_struct*)bptr).mask;
+		uint a = ((const opcode_struct*)aptr)->mask;
+		uint b = ((const opcode_struct*)bptr)->mask;
 	
 		a = ((a & 0xAAAA) >> 1) + (a & 0x5555);
 		a = ((a & 0xCCCC) >> 2) + (a & 0x3333);
@@ -3198,7 +3198,7 @@ public class m68kdasm
 		opcode_struct* ostruct;
 		uint opcode_info_length = 0;
 	
-		for(ostruct = g_opcode_info;ostruct.opcode_handler != 0;ostruct++)
+		for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
 			opcode_info_length++;
 	
 		qsort((void *)g_opcode_info, opcode_info_length, sizeof(g_opcode_info[0]), compare_nof_true_bits);
@@ -3208,20 +3208,20 @@ public class m68kdasm
 			g_instruction_table[i] = d68000_illegal; /* default to illegal */
 			opcode = i;
 			/* search through opcode info for a match */
-			for(ostruct = g_opcode_info;ostruct.opcode_handler != 0;ostruct++)
+			for(ostruct = g_opcode_info;ostruct->opcode_handler != 0;ostruct++)
 			{
 				/* match opcode mask and allowed ea modes */
-				if((opcode & ostruct.mask) == ostruct.match)
+				if((opcode & ostruct->mask) == ostruct->match)
 				{
 					/* Handle destination ea for move instructions */
-					if((ostruct.opcode_handler == d68000_move_8 ||
-						 ostruct.opcode_handler == d68000_move_16 ||
-						 ostruct.opcode_handler == d68000_move_32) &&
+					if((ostruct->opcode_handler == d68000_move_8 ||
+						 ostruct->opcode_handler == d68000_move_16 ||
+						 ostruct->opcode_handler == d68000_move_32) &&
 						 !valid_ea(((opcode>>9)&7) | ((opcode>>3)&0x38), 0xbf8))
 							continue;
-					if(valid_ea(opcode, ostruct.ea_mask))
+					if(valid_ea(opcode, ostruct->ea_mask))
 					{
-						g_instruction_table[i] = ostruct.opcode_handler;
+						g_instruction_table[i] = ostruct->opcode_handler;
 						break;
 					}
 				}
@@ -3238,7 +3238,7 @@ public class m68kdasm
 	/* Disasemble one instruction at pc and store in str_buff */
 	unsigned int m68k_disassemble(char* str_buff, unsigned int pc, unsigned int cpu_type)
 	{
-		if (g_initialized == 0)
+		if(!g_initialized)
 		{
 			build_opcode_table();
 			g_initialized = 1;
@@ -3292,7 +3292,7 @@ public class m68kdasm
 	/* Check if the instruction is a valid one */
 	unsigned int m68k_is_valid_instruction(unsigned int instruction, unsigned int cpu_type)
 	{
-		if (g_initialized == 0)
+		if(!g_initialized)
 		{
 			build_opcode_table();
 			g_initialized = 1;

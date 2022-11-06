@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,8 +39,7 @@ public class xevious
 	  bit 0 -- 2.2kohm resistor  -- RED/GREEN/BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_xevious  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_xevious  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -95,7 +94,7 @@ public class xevious
 		{
 			int c = (color_prom.read(0)& 0x0f) | ((color_prom.read(TOTAL_COLORS(2))& 0x0f) << 4);
 	
-			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
+			if (c & 0x80) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
 	
 			color_prom++;
@@ -112,8 +111,7 @@ public class xevious
 	
 	
 	
-	public static PaletteInitHandlerPtr palette_init_battles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_battles  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -168,7 +166,7 @@ public class xevious
 		{
 			int c = (color_prom.read(0)& 0x0f) | ((color_prom.read(0x400)& 0x0f) << 4);
 	
-			if ((c & 0x80) != 0) COLOR(2,i) = c & 0x7f;
+			if (c & 0x80) COLOR(2,i) = c & 0x7f;
 			else COLOR(2,i) = 0x80; /* transparent */
 	
 			color_prom++;
@@ -219,8 +217,7 @@ public class xevious
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_xevious  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_xevious  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE,     8,8,64,32);
 		fg_tilemap = tilemap_create(get_fg_tile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 	
@@ -242,8 +239,7 @@ public class xevious
 	
 	***************************************************************************/
 	
-	public static WriteHandlerPtr xevious_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_fg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xevious_fg_videoram[offset] != data)
 		{
 			xevious_fg_videoram[offset] = data;
@@ -251,8 +247,7 @@ public class xevious
 		}
 	} };
 	
-	public static WriteHandlerPtr xevious_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_fg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xevious_fg_colorram[offset] != data)
 		{
 			xevious_fg_colorram[offset] = data;
@@ -260,8 +255,7 @@ public class xevious
 		}
 	} };
 	
-	public static WriteHandlerPtr xevious_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_bg_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xevious_bg_videoram[offset] != data)
 		{
 			xevious_bg_videoram[offset] = data;
@@ -269,8 +263,7 @@ public class xevious
 		}
 	} };
 	
-	public static WriteHandlerPtr xevious_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_bg_colorram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (xevious_bg_colorram[offset] != data)
 		{
 			xevious_bg_colorram[offset] = data;
@@ -278,17 +271,16 @@ public class xevious
 		}
 	} };
 	
-	public static WriteHandlerPtr xevious_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr xevious_vh_latch_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		int reg;
-		int scroll = data + ((offset&0x01)<<8);   /* A0 . D8 */
+		int scroll = data + ((offset&0x01)<<8);   /* A0 -> D8 */
 	
 		reg = (offset&0xf0)>>4;
 	
 		switch (reg)
 		{
 		case 0:
-			if (flip_screen != 0)
+			if (flip_screen())
 				tilemap_set_scrollx(bg_tilemap,0,scroll-312);
 			else
 				tilemap_set_scrollx(bg_tilemap,0,scroll+20);
@@ -328,29 +320,29 @@ public class xevious
 	
 	seet 8A
 											2	  +-------+
-	COL0,1 --------------------------------------.|backg. |
+	COL0,1 --------------------------------------->|backg. |
 											1	  |color  |
-	PP7------------------------------------------.|replace|
+	PP7------------------------------------------->|replace|
 											4	  | ROM   |  6
-	AN0-3 ---------------------------------------.|  4H   |----. color code 6 bit
+	AN0-3 ---------------------------------------->|  4H   |-----> color code 6 bit
 			1  +-----------+	  +--------+	   |  4F   |
-	COL0  ---.|B8   ROM 3C| 16   |custom  |  2	|	   |
-			8  |		   |----.|shifter |-----.|	   |
-	PP0-7 ---.|B0-7 ROM 3D|	  |16.2*8 |	   |	   |
+	COL0  ---->|B8   ROM 3C| 16   |custom  |  2	|	   |
+			8  |		   |----->|shifter |------>|	   |
+	PP0-7 ---->|B0-7 ROM 3D|	  |16->2*8 |	   |	   |
 			   +-----------+	  +--------+	   +-------+
 	
 	font rom controller
 		   1  +--------+	 +--------+
-	ANF   --.| ROM	|  8  |shift   |  1
-		   8  | 3B	 |---.|reg	 |----. font data
-	PP0-7 --.|		|	 |8.1*8  |
+	ANF   --->| ROM	|  8  |shift   |  1
+		   8  | 3B	 |---->|reg	 |-----> font data
+	PP0-7 --->|		|	 |8->1*8  |
 			  +--------+	 +--------+
 	
 	font color ( not use color map )
 			2  |
-	COL0-1 --.|  color code 6 bit
+	COL0-1 --->|  color code 6 bit
 			4  |
-	AN0-3  --.|
+	AN0-3  --->|
 	
 	sprite
 	
@@ -395,7 +387,7 @@ public class xevious
 				color = spriteram.read(offs + 1)& 0x7f;
 				flipx = spriteram_3.read(offs)& 4;
 				flipy = spriteram_3.read(offs)& 8;
-				if (flip_screen != 0)
+				if (flip_screen())
 				{
 					flipx = NOT(flipx);
 					flipy = NOT(flipy);
@@ -407,21 +399,21 @@ public class xevious
 					if (spriteram_3.read(offs)& 1)  /* double width, double height */
 					{
 						code &= 0x7c;
-						drawgfx(bitmap,Machine.gfx[bank],
+						drawgfx(bitmap,Machine->gfx[bank],
 								code+3,color,flipx,flipy,
 								flipx ? sx : sx+16,flipy ? sy-16 : sy,
 								cliprect,TRANSPARENCY_COLOR,0x80);
-						drawgfx(bitmap,Machine.gfx[bank],
+						drawgfx(bitmap,Machine->gfx[bank],
 								code+1,color,flipx,flipy,
 								flipx ? sx : sx+16,flipy ? sy : sy-16,
 								cliprect,TRANSPARENCY_COLOR,0x80);
 					}
 					code &= 0x7d;
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 							code+2,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 							code,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy : sy-16,
 							cliprect,TRANSPARENCY_COLOR,0x80);
@@ -429,18 +421,18 @@ public class xevious
 				else if (spriteram_3.read(offs)& 1) /* double width */
 				{
 					code &= 0x7e;
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 							code,color,flipx,flipy,
 							flipx ? sx+16 : sx,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 							code+1,color,flipx,flipy,
 							flipx ? sx : sx+16,flipy ? sy-16 : sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
 				}
 				else	/* normal */
 				{
-					drawgfx(bitmap,Machine.gfx[bank],
+					drawgfx(bitmap,Machine->gfx[bank],
 							code,color,flipx,flipy,sx,sy,
 							cliprect,TRANSPARENCY_COLOR,0x80);
 				}
@@ -449,8 +441,7 @@ public class xevious
 	}
 	
 	
-	public static VideoUpdateHandlerPtr video_update_xevious  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_xevious  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,bg_tilemap,0,0);
 		draw_sprites(bitmap,cliprect);
 		tilemap_draw(bitmap,cliprect,fg_tilemap,0,0);

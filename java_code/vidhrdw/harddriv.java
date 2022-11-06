@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -74,8 +74,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static VideoStartHandlerPtr video_start_harddriv  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_harddriv  = new VideoStartHandlerPtr() { public int handler(){
 		UINT32 *destmask, mask;
 		int i;
 	
@@ -89,56 +88,56 @@ public class harddriv
 	
 		/* allocate the mask table */
 		mask_table = auto_malloc(sizeof(UINT32) * 4 * 65536);
-		if (mask_table == 0)
+		if (!mask_table)
 			return 1;
 	
 		/* fill in the mask table */
 		destmask = mask_table;
 		for (i = 0; i < 65536; i++)
-			if (hdgsp_multisync != 0)
+			if (hdgsp_multisync)
 			{
 				mask = 0;
-				if ((i & 0x0001) != 0) mask |= MASK(0);
-				if ((i & 0x0004) != 0) mask |= MASK(1);
-				if ((i & 0x0010) != 0) mask |= MASK(2);
-				if ((i & 0x0040) != 0) mask |= MASK(3);
+				if (i & 0x0001) mask |= MASK(0);
+				if (i & 0x0004) mask |= MASK(1);
+				if (i & 0x0010) mask |= MASK(2);
+				if (i & 0x0040) mask |= MASK(3);
 				*destmask++ = mask;
 	
 				mask = 0;
-				if ((i & 0x0100) != 0) mask |= MASK(0);
-				if ((i & 0x0400) != 0) mask |= MASK(1);
-				if ((i & 0x1000) != 0) mask |= MASK(2);
-				if ((i & 0x4000) != 0) mask |= MASK(3);
+				if (i & 0x0100) mask |= MASK(0);
+				if (i & 0x0400) mask |= MASK(1);
+				if (i & 0x1000) mask |= MASK(2);
+				if (i & 0x4000) mask |= MASK(3);
 				*destmask++ = mask;
 			}
 			else
 			{
 				mask = 0;
-				if ((i & 0x0001) != 0) mask |= MASK(0);
-				if ((i & 0x0002) != 0) mask |= MASK(1);
-				if ((i & 0x0004) != 0) mask |= MASK(2);
-				if ((i & 0x0008) != 0) mask |= MASK(3);
+				if (i & 0x0001) mask |= MASK(0);
+				if (i & 0x0002) mask |= MASK(1);
+				if (i & 0x0004) mask |= MASK(2);
+				if (i & 0x0008) mask |= MASK(3);
 				*destmask++ = mask;
 	
 				mask = 0;
-				if ((i & 0x0010) != 0) mask |= MASK(0);
-				if ((i & 0x0020) != 0) mask |= MASK(1);
-				if ((i & 0x0040) != 0) mask |= MASK(2);
-				if ((i & 0x0080) != 0) mask |= MASK(3);
+				if (i & 0x0010) mask |= MASK(0);
+				if (i & 0x0020) mask |= MASK(1);
+				if (i & 0x0040) mask |= MASK(2);
+				if (i & 0x0080) mask |= MASK(3);
 				*destmask++ = mask;
 	
 				mask = 0;
-				if ((i & 0x0100) != 0) mask |= MASK(0);
-				if ((i & 0x0200) != 0) mask |= MASK(1);
-				if ((i & 0x0400) != 0) mask |= MASK(2);
-				if ((i & 0x0800) != 0) mask |= MASK(3);
+				if (i & 0x0100) mask |= MASK(0);
+				if (i & 0x0200) mask |= MASK(1);
+				if (i & 0x0400) mask |= MASK(2);
+				if (i & 0x0800) mask |= MASK(3);
 				*destmask++ = mask;
 	
 				mask = 0;
-				if ((i & 0x1000) != 0) mask |= MASK(0);
-				if ((i & 0x2000) != 0) mask |= MASK(1);
-				if ((i & 0x4000) != 0) mask |= MASK(2);
-				if ((i & 0x8000) != 0) mask |= MASK(3);
+				if (i & 0x1000) mask |= MASK(0);
+				if (i & 0x2000) mask |= MASK(1);
+				if (i & 0x4000) mask |= MASK(2);
+				if (i & 0x8000) mask |= MASK(3);
 				*destmask++ = mask;
 			}
 	
@@ -184,7 +183,7 @@ public class harddriv
 	
 	void hdgsp_read_from_shiftreg(UINT32 address, UINT16 *shiftreg)
 	{
-		if (shiftreg_enable == 0)
+		if (!shiftreg_enable)
 			return;
 	
 		/* access to the 1bpp/2bpp area */
@@ -318,7 +317,7 @@ public class harddriv
 				break;
 	
 			case 0x04:
-				if (Machine.drv.total_colors >= 256 * 8)
+				if (Machine->drv->total_colors >= 256 * 8)
 					update_palette_bank((gfx_palettebank & ~4) | (val << 2));
 				break;
 	
@@ -466,8 +465,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static VideoEofHandlerPtr video_eof_harddriv  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_harddriv  = new VideoEofHandlerPtr() { public void handler(){
 		/* reset the display offset */
 		gfx_offsetscan = 0;
 	} };
@@ -480,8 +478,7 @@ public class harddriv
 	 *
 	 *************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_harddriv  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		pen_t *pens = Machine.pens[gfx_palettebank * 256];
 		pen_t black = get_black_pen();
 		offs_t adjusted_offs;

@@ -41,7 +41,7 @@ Memo:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -66,8 +66,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static MachineInitHandlerPtr machine_init_fromance  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_fromance  = new MachineInitHandlerPtr() { public void handler(){
 		fromance_directionflag = 0;
 		fromance_commanddata = 0;
 		fromance_portselect = 0;
@@ -85,8 +84,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr fromance_commanddata_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromance_commanddata_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return fromance_commanddata;
 	} };
 	
@@ -98,32 +96,28 @@ public class fromance
 	}
 	
 	
-	public static WriteHandlerPtr fromance_commanddata_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_commanddata_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* do this on a timer to let the slave CPU synchronize */
 		timer_set(TIME_NOW, data, deferred_commanddata_w);
 	} };
 	
 	
-	public static ReadHandlerPtr fromance_busycheck_main_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromance_busycheck_main_r  = new ReadHandlerPtr() { public int handler(int offset){
 		/* set a timer to force synchronization after the read */
 		timer_set(TIME_NOW, 0, NULL);
 	
-		if (fromance_directionflag == 0) return 0x00;		// standby
+		if (!fromance_directionflag) return 0x00;		// standby
 		else return 0xff;								// busy
 	} };
 	
 	
-	public static ReadHandlerPtr fromance_busycheck_sub_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if (fromance_directionflag != 0) return 0xff;		// standby
+	public static ReadHandlerPtr fromance_busycheck_sub_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (fromance_directionflag) return 0xff;		// standby
 		else return 0x00;								// busy
 	} };
 	
 	
-	public static WriteHandlerPtr fromance_busycheck_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_busycheck_sub_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromance_directionflag = 0;
 	} };
 	
@@ -135,8 +129,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fromance_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_rombank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		unsigned char *ROM = memory_region(REGION_CPU2);
 	
 		cpu_setbank(1, &ROM[0x010000 + (0x4000 * data)]);
@@ -150,8 +143,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fromance_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_adpcm_reset_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromance_adpcm_reset = (data & 0x01);
 		fromance_vclk_left = 0;
 	
@@ -159,8 +151,7 @@ public class fromance
 	} };
 	
 	
-	public static WriteHandlerPtr fromance_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_adpcm_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromance_adpcm_data = data;
 		fromance_vclk_left = 2;
 	} };
@@ -169,11 +160,11 @@ public class fromance
 	static void fromance_adpcm_int(int irq)
 	{
 		/* skip if we're reset */
-		if (fromance_adpcm_reset == 0)
+		if (!fromance_adpcm_reset)
 			return;
 	
 		/* clock the data through */
-		if (fromance_vclk_left != 0)
+		if (fromance_vclk_left)
 		{
 			MSM5205_data_w(0, (fromance_adpcm_data >> 4));
 			fromance_adpcm_data <<= 4;
@@ -181,7 +172,7 @@ public class fromance
 		}
 	
 		/* generate an NMI if we're out of data */
-		if (fromance_vclk_left == 0)
+		if (!fromance_vclk_left)
 			cpu_set_nmi_line(1, PULSE_LINE);
 	}
 	
@@ -193,25 +184,23 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fromance_portselect_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_portselect_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		fromance_portselect = data;
 	} };
 	
 	
-	public static ReadHandlerPtr fromance_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr fromance_keymatrix_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int ret = 0xff;
 	
-		if ((fromance_portselect & 0x01) != 0)
+		if (fromance_portselect & 0x01)
 			ret &= readinputport(4);
-		if ((fromance_portselect & 0x02) != 0)
+		if (fromance_portselect & 0x02)
 			ret &= readinputport(5);
-		if ((fromance_portselect & 0x04) != 0)
+		if (fromance_portselect & 0x04)
 			ret &= readinputport(6);
-		if ((fromance_portselect & 0x08) != 0)
+		if (fromance_portselect & 0x08)
 			ret &= readinputport(7);
-		if ((fromance_portselect & 0x10) != 0)
+		if (fromance_portselect & 0x10)
 			ret &= readinputport(8);
 	
 		return ret;
@@ -225,8 +214,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr fromance_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr fromance_coinctr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		//
 	} };
 	
@@ -469,7 +457,7 @@ public class fromance
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN );
 	
 	
-	static InputPortPtr input_ports_nekkyoku = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nekkyoku = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nekkyoku )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNUSED );
@@ -550,7 +538,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_idolmj = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_idolmj = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( idolmj )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -631,7 +619,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_fromance = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fromance = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fromance )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -710,7 +698,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_nmsengen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nmsengen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nmsengen )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -789,7 +777,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_daiyogen = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_daiyogen = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( daiyogen )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -870,7 +858,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mfunclub = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mfunclub = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mfunclub )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -951,7 +939,7 @@ public class fromance
 	INPUT_PORTS_END(); }}; 
 	
 	
-	static InputPortPtr input_ports_mjnatsu = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mjnatsu = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mjnatsu )
 		PORT_START(); 	/* (0) TEST SW */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_SERVICE3 );	// MEMORY RESET
@@ -1111,8 +1099,7 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_nekkyoku = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nekkyoku )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1141,13 +1128,10 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_idolmj = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( idolmj )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1176,13 +1160,10 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(AY8910, ay8910_interface)
 		MDRV_SOUND_ADD(MSM5205, msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_fromance = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( fromance )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(Z80,12000000/2)		/* 6.00 Mhz ? */
@@ -1211,9 +1192,7 @@ public class fromance
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM2413, ym2413_interface)
 		MDRV_SOUND_ADD(MSM5205, fromance_msm5205_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -1428,12 +1407,12 @@ public class fromance
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_nekkyoku	   = new GameDriver("1988"	,"nekkyoku"	,"fromance.java"	,rom_nekkyoku,null	,machine_driver_nekkyoku	,input_ports_nekkyoku	,null	,ROT0	,	"Video System Co.", "Rettou Juudan Nekkyoku Janshi - Higashi Nippon Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_idolmj	   = new GameDriver("1988"	,"idolmj"	,"fromance.java"	,rom_idolmj,null	,machine_driver_idolmj	,input_ports_idolmj	,null	,ROT0	,	"System Service", "Idol-Mahjong Housoukyoku (Japan)" )
-	public static GameDriver driver_mjnatsu	   = new GameDriver("1989"	,"mjnatsu"	,"fromance.java"	,rom_mjnatsu,null	,machine_driver_fromance	,input_ports_mjnatsu	,null	,ROT0	,	"Video System Co.", "Mahjong Natsu Monogatari (Japan)" )
-	public static GameDriver driver_natsuiro	   = new GameDriver("1989"	,"natsuiro"	,"fromance.java"	,rom_natsuiro,driver_mjnatsu	,machine_driver_fromance	,input_ports_mjnatsu	,null	,ROT0	,	"Video System Co.", "Natsuiro Mahjong (Japan)" )
-	public static GameDriver driver_mfunclub	   = new GameDriver("1989"	,"mfunclub"	,"fromance.java"	,rom_mfunclub,null	,machine_driver_fromance	,input_ports_mfunclub	,null	,ROT0	,	"Video System Co.", "Mahjong Fun Club - Idol Saizensen (Japan)" )
-	public static GameDriver driver_daiyogen	   = new GameDriver("1990"	,"daiyogen"	,"fromance.java"	,rom_daiyogen,null	,machine_driver_fromance	,input_ports_daiyogen	,null	,ROT0	,	"Video System Co.", "Mahjong Daiyogen (Japan)" )
-	public static GameDriver driver_nmsengen	   = new GameDriver("1991"	,"nmsengen"	,"fromance.java"	,rom_nmsengen,null	,machine_driver_fromance	,input_ports_nmsengen	,null	,ROT0	,	"Video System Co.", "Nekketsu Mahjong Sengen! AFTER 5 (Japan)" )
-	public static GameDriver driver_fromance	   = new GameDriver("1991"	,"fromance"	,"fromance.java"	,rom_fromance,null	,machine_driver_fromance	,input_ports_fromance	,null	,ROT0	,	"Video System Co.", "Idol-Mahjong Final Romance (Japan)" )
+	GAMEX(1988, nekkyoku,        0, nekkyoku, nekkyoku, 0, ROT0, "Video System Co.", "Rettou Juudan Nekkyoku Janshi - Higashi Nippon Hen (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1988, idolmj,          0, idolmj,   idolmj,   0, ROT0, "System Service", "Idol-Mahjong Housoukyoku (Japan)" )
+	GAME( 1989, mjnatsu,         0, fromance, mjnatsu,  0, ROT0, "Video System Co.", "Mahjong Natsu Monogatari (Japan)" )
+	GAME( 1989, natsuiro,  mjnatsu, fromance, mjnatsu,  0, ROT0, "Video System Co.", "Natsuiro Mahjong (Japan)" )
+	GAME( 1989, mfunclub,        0, fromance, mfunclub, 0, ROT0, "Video System Co.", "Mahjong Fun Club - Idol Saizensen (Japan)" )
+	GAME( 1990, daiyogen,        0, fromance, daiyogen, 0, ROT0, "Video System Co.", "Mahjong Daiyogen (Japan)" )
+	GAME( 1991, nmsengen,        0, fromance, nmsengen, 0, ROT0, "Video System Co.", "Nekketsu Mahjong Sengen! AFTER 5 (Japan)" )
+	GAME( 1991, fromance,        0, fromance, fromance, 0, ROT0, "Video System Co.", "Idol-Mahjong Final Romance (Japan)" )
 }

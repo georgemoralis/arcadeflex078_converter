@@ -6,7 +6,7 @@ Rolling Thunder Video Hardware
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -54,8 +54,7 @@ public class namcos86
 	
 	***************************************************************************/
 	
-	public static PaletteInitHandlerPtr palette_init_namcos86  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_namcos86  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		int totcolors,totlookup;
 	
@@ -117,7 +116,7 @@ public class namcos86
 	{
 		unsigned char attr = vram[2*tile_index + 1];
 		int tile_offs;
-		if ((layer & 2) != 0)
+		if (layer & 2)
 			tile_offs = ((tile_address_prom[((layer & 1) << 4) + (attr & 0x03)] & 0xe0) >> 5) * 0x100;
 		else
 			tile_offs = ((tile_address_prom[((layer & 1) << 4) + ((attr & 0x03) << 2)] & 0x0e) >> 1) * 0x100 + tilebank * 0x800;
@@ -129,10 +128,10 @@ public class namcos86
 				0)
 	}
 	
-	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,0,&rthunder_videoram1.read(0x0000)); }
-	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,1,&rthunder_videoram1.read(0x1000)); }
-	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,2,&rthunder_videoram2.read(0x0000)); }
-	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,3,&rthunder_videoram2.read(0x1000)); }
+	static void get_tile_info0(int tile_index) { get_tile_info(tile_index,0,&rthunder_videoram1[0x0000]); }
+	static void get_tile_info1(int tile_index) { get_tile_info(tile_index,1,&rthunder_videoram1[0x1000]); }
+	static void get_tile_info2(int tile_index) { get_tile_info(tile_index,2,&rthunder_videoram2[0x0000]); }
+	static void get_tile_info3(int tile_index) { get_tile_info(tile_index,3,&rthunder_videoram2[0x1000]); }
 	
 	
 	/***************************************************************************
@@ -141,8 +140,7 @@ public class namcos86
 	
 	***************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_namcos86  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_namcos86  = new VideoStartHandlerPtr() { public int handler(){
 		tilemap[0] = tilemap_create(get_tile_info0,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[1] = tilemap_create(get_tile_info1,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
 		tilemap[2] = tilemap_create(get_tile_info2,tilemap_scan_rows,TILEMAP_TRANSPARENT,8,8,64,32);
@@ -167,36 +165,31 @@ public class namcos86
 	
 	***************************************************************************/
 	
-	public static ReadHandlerPtr rthunder_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return rthunder_videoram1.read(offset);
+	public static ReadHandlerPtr rthunder_videoram1_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return rthunder_videoram1[offset];
 	} };
 	
-	public static WriteHandlerPtr rthunder_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (rthunder_videoram1.read(offset)!= data)
+	public static WriteHandlerPtr rthunder_videoram1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (rthunder_videoram1[offset] != data)
 		{
-			rthunder_videoram1.write(data,data);
+			rthunder_videoram1[offset] = data;
 			tilemap_mark_tile_dirty(tilemap[offset/0x1000],(offset & 0xfff)/2);
 		}
 	} };
 	
-	public static ReadHandlerPtr rthunder_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		return rthunder_videoram2.read(offset);
+	public static ReadHandlerPtr rthunder_videoram2_r  = new ReadHandlerPtr() { public int handler(int offset){
+		return rthunder_videoram2[offset];
 	} };
 	
-	public static WriteHandlerPtr rthunder_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if (rthunder_videoram2.read(offset)!= data)
+	public static WriteHandlerPtr rthunder_videoram2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (rthunder_videoram2[offset] != data)
 		{
-			rthunder_videoram2.write(data,data);
+			rthunder_videoram2[offset] = data;
 			tilemap_mark_tile_dirty(tilemap[2+offset/0x1000],(offset & 0xfff)/2);
 		}
 	} };
 	
-	public static WriteHandlerPtr rthunder_tilebank_select_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_tilebank_select_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tilebank != 0)
 		{
 			tilebank = 0;
@@ -205,8 +198,7 @@ public class namcos86
 		}
 	} };
 	
-	public static WriteHandlerPtr rthunder_tilebank_select_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_tilebank_select_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (tilebank != 1)
 		{
 			tilebank = 1;
@@ -237,7 +229,7 @@ public class namcos86
 	
 		scrollx = xscroll[layer]+xdisp[layer];
 		scrolly = yscroll[layer]+ydisp;
-		if (flipscreen != 0)
+		if (flipscreen)
 		{
 			scrollx = -scrollx+256;
 			scrolly = -scrolly;
@@ -246,26 +238,21 @@ public class namcos86
 		tilemap_set_scrolly(tilemap[layer],0,scrolly+16);
 	}
 	
-	public static WriteHandlerPtr rthunder_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_scroll0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(0,offset,data);
 	} };
-	public static WriteHandlerPtr rthunder_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_scroll1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(1,offset,data);
 	} };
-	public static WriteHandlerPtr rthunder_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_scroll2_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(2,offset,data);
 	} };
-	public static WriteHandlerPtr rthunder_scroll3_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_scroll3_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		scroll_w(3,offset,data);
 	} };
 	
 	
-	public static WriteHandlerPtr rthunder_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr rthunder_backcolor_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		backcolor = data;
 	} };
 	
@@ -318,7 +305,7 @@ public class namcos86
 				if (sy < -209-16) sy += 256;
 	
 				if (flipx && !wide) sx-=16;
-				if (tall == 0) sy+=16;
+				if (!tall) sy+=16;
 	//			if (flipy && !tall) sy+=16;
 	
 				sx += sprite_xoffs;
@@ -328,9 +315,9 @@ public class namcos86
 				{
 					for( col=0; col<=wide; col++ )
 					{
-						if (flipscreen != 0)
+						if (flipscreen)
 						{
-							drawgfx( bitmap, Machine.gfx[GFX_SPRITES+sprite_bank],
+							drawgfx( bitmap, Machine->gfx[GFX_SPRITES+sprite_bank],
 								sprite_number+2*row+col,
 								color,
 								NOT(flipx),NOT(flipy),
@@ -341,7 +328,7 @@ public class namcos86
 						}
 						else
 						{
-							drawgfx( bitmap, Machine.gfx[GFX_SPRITES+sprite_bank],
+							drawgfx( bitmap, Machine->gfx[GFX_SPRITES+sprite_bank],
 								sprite_number+2*row+col,
 								color,
 								flipx,flipy,
@@ -359,8 +346,7 @@ public class namcos86
 	
 	
 	
-	public static VideoUpdateHandlerPtr video_update_namcos86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_namcos86  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int layer;
 	
 		/* this is the global sprite Y offset, actually */

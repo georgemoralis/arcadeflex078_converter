@@ -65,7 +65,7 @@ To Do:
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -561,7 +561,7 @@ public class toaplan1
 		PORT_BIT( 0xfffe, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	
 	
-	static InputPortPtr input_ports_rallybik = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_rallybik = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( rallybik )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -618,7 +618,7 @@ public class toaplan1
 	
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_truxton = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_truxton = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( truxton )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -701,7 +701,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hellfire = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hellfire = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hellfire )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -770,7 +770,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_hellfir1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_hellfir1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( hellfir1 )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -839,7 +839,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_zerowing = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_zerowing = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( zerowing )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -908,7 +908,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_demonwld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_demonwld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( demonwld )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_BUTTON3 )
@@ -978,7 +978,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_demonwl1 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_demonwl1 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( demonwl1 )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_BUTTON3 )
@@ -1047,7 +1047,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_samesame = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_samesame = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( samesame )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -1131,7 +1131,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_samesam2 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_samesam2 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( samesam2 )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -1222,7 +1222,7 @@ public class toaplan1
 		PORT_BIT( 0xf2, IP_ACTIVE_HIGH, IPT_UNKNOWN );/* Mask bit 2 aswell */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fireshrk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fireshrk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fireshrk )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_UNKNOWN )
@@ -1290,7 +1290,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_outzone = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_outzone = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( outzone )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_BUTTON3 )
@@ -1358,7 +1358,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vimana = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vimana = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vimana )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_BUTTON3 )
@@ -1433,7 +1433,7 @@ public class toaplan1
 		PORT_BIT( 0xf0, IP_ACTIVE_HIGH, IPT_UNKNOWN );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_vimanan = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_vimanan = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( vimanan )
 		TOAPLAN1_VBLANK_INPUT
 	
 		TOAPLAN1_PLAYER_INPUT( IPF_PLAYER1, IPT_BUTTON3 )
@@ -1602,8 +1602,7 @@ public class toaplan1
 	
 	
 	
-	public static MachineHandlerPtr machine_driver_rallybik = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( rallybik )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1633,13 +1632,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_truxton = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( truxton )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1670,13 +1666,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_hellfire = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( hellfire )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1706,13 +1699,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_zerowing = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( zerowing )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1742,13 +1732,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_demonwld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( demonwld )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1782,13 +1769,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_samesame = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( samesame )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1813,13 +1797,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_outzone = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( outzone )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1849,13 +1830,10 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static MachineHandlerPtr machine_driver_vimana = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( vimana )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 10000000)
@@ -1880,9 +1858,7 @@ public class toaplan1
 	
 		/* sound hardware */
 		MDRV_SOUND_ADD(YM3812, ym3812_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -2304,19 +2280,19 @@ public class toaplan1
 	
 	
 	
-	public static GameDriver driver_rallybik	   = new GameDriver("1988"	,"rallybik"	,"toaplan1.java"	,rom_rallybik,null	,machine_driver_rallybik	,input_ports_rallybik	,null	,ROT270	,	"[Toaplan] Taito Corporation", "Rally Bike / Dash Yarou" )
-	public static GameDriver driver_truxton	   = new GameDriver("1988"	,"truxton"	,"toaplan1.java"	,rom_truxton,null	,machine_driver_truxton	,input_ports_truxton	,null	,ROT270	,	"[Toaplan] Taito Corporation", "Truxton / Tatsujin" )
-	public static GameDriver driver_hellfire	   = new GameDriver("1989"	,"hellfire"	,"toaplan1.java"	,rom_hellfire,null	,machine_driver_hellfire	,input_ports_hellfire	,null	,ROT0	,	"Toaplan (Taito license)", "Hellfire" )
-	public static GameDriver driver_hellfir1	   = new GameDriver("1989"	,"hellfir1"	,"toaplan1.java"	,rom_hellfir1,driver_hellfire	,machine_driver_hellfire	,input_ports_hellfir1	,null	,ROT0	,	"Toaplan (Taito license)", "Hellfire (1P Ver.)" )
-	public static GameDriver driver_zerowing	   = new GameDriver("1989"	,"zerowing"	,"toaplan1.java"	,rom_zerowing,null	,machine_driver_zerowing	,input_ports_zerowing	,null	,ROT0	,	"Toaplan", "Zero Wing" )
-	public static GameDriver driver_demonwld	   = new GameDriver("1990"	,"demonwld"	,"toaplan1.java"	,rom_demonwld,null	,machine_driver_demonwld	,input_ports_demonwld	,null	,ROT0	,	"Toaplan", "Demon's World / Horror Story" )
-	public static GameDriver driver_demonwl1	   = new GameDriver("1989"	,"demonwl1"	,"toaplan1.java"	,rom_demonwl1,driver_demonwld	,machine_driver_demonwld	,input_ports_demonwl1	,null	,ROT0	,	"Toaplan (Taito license)", "Demon's World / Horror Story (Taito license)" )
-	public static GameDriver driver_fireshrk	   = new GameDriver("1990"	,"fireshrk"	,"toaplan1.java"	,rom_fireshrk,null	,machine_driver_samesame	,input_ports_fireshrk	,null	,ROT270	,	"Toaplan", "Fire Shark", GAME_NO_SOUND )
-	public static GameDriver driver_samesame	   = new GameDriver("1989"	,"samesame"	,"toaplan1.java"	,rom_samesame,driver_fireshrk	,machine_driver_samesame	,input_ports_samesame	,null	,ROT270	,	"Toaplan", "Same! Same! Same!", GAME_NO_SOUND )
-	public static GameDriver driver_samesam2	   = new GameDriver("1989"	,"samesam2"	,"toaplan1.java"	,rom_samesam2,driver_fireshrk	,machine_driver_samesame	,input_ports_samesam2	,null	,ROT270	,	"Toaplan", "Same! Same! Same! (2P Ver.)", GAME_NO_SOUND )
-	public static GameDriver driver_outzone	   = new GameDriver("1990"	,"outzone"	,"toaplan1.java"	,rom_outzone,null	,machine_driver_outzone	,input_ports_outzone	,null	,ROT270	,	"Toaplan", "Out Zone (set 1)" )
-	public static GameDriver driver_outzonea	   = new GameDriver("1990"	,"outzonea"	,"toaplan1.java"	,rom_outzonea,driver_outzone	,machine_driver_outzone	,input_ports_outzone	,null	,ROT270	,	"Toaplan", "Out Zone (set 2)" )
-	public static GameDriver driver_vimana	   = new GameDriver("1991"	,"vimana"	,"toaplan1.java"	,rom_vimana,null	,machine_driver_vimana	,input_ports_vimana	,null	,ROT270	,	"Toaplan", "Vimana", GAME_NO_SOUND )
-	public static GameDriver driver_vimana1	   = new GameDriver("1991"	,"vimana1"	,"toaplan1.java"	,rom_vimana1,driver_vimana	,machine_driver_vimana	,input_ports_vimana	,null	,ROT270	,	"Toaplan", "Vimana (old set)", GAME_NO_SOUND )
-	public static GameDriver driver_vimanan	   = new GameDriver("1991"	,"vimanan"	,"toaplan1.java"	,rom_vimanan,driver_vimana	,machine_driver_vimana	,input_ports_vimanan	,null	,ROT270	,	"Toaplan (Nova Apparate GMBH & Co license)", "Vimana (Nova Apparate GMBH & Co)", GAME_NO_SOUND )
+	GAME ( 1988, rallybik, 0,        rallybik, rallybik, 0, ROT270, "[Toaplan] Taito Corporation", "Rally Bike / Dash Yarou" )
+	GAME ( 1988, truxton,  0,        truxton,  truxton,  0, ROT270, "[Toaplan] Taito Corporation", "Truxton / Tatsujin" )
+	GAME ( 1989, hellfire, 0,        hellfire, hellfire, 0, ROT0,   "Toaplan (Taito license)", "Hellfire" )
+	GAME ( 1989, hellfir1, hellfire, hellfire, hellfir1, 0, ROT0,   "Toaplan (Taito license)", "Hellfire (1P Ver.)" )
+	GAME ( 1989, zerowing, 0,        zerowing, zerowing, 0, ROT0,   "Toaplan", "Zero Wing" )
+	GAME ( 1990, demonwld, 0,        demonwld, demonwld, 0, ROT0,   "Toaplan", "Demon's World / Horror Story" )
+	GAME ( 1989, demonwl1, demonwld, demonwld, demonwl1, 0, ROT0,   "Toaplan (Taito license)", "Demon's World / Horror Story (Taito license)" )
+	GAMEX( 1990, fireshrk, 0,        samesame, fireshrk, 0, ROT270, "Toaplan", "Fire Shark", GAME_NO_SOUND )
+	GAMEX( 1989, samesame, fireshrk, samesame, samesame, 0, ROT270, "Toaplan", "Same! Same! Same!", GAME_NO_SOUND )
+	GAMEX( 1989, samesam2, fireshrk, samesame, samesam2, 0, ROT270, "Toaplan", "Same! Same! Same! (2P Ver.)", GAME_NO_SOUND )
+	GAME ( 1990, outzone,  0,        outzone,  outzone,  0, ROT270, "Toaplan", "Out Zone (set 1)" )
+	GAME ( 1990, outzonea, outzone,  outzone,  outzone,  0, ROT270, "Toaplan", "Out Zone (set 2)" )
+	GAMEX( 1991, vimana,   0,        vimana,   vimana,   0, ROT270, "Toaplan", "Vimana", GAME_NO_SOUND )
+	GAMEX( 1991, vimana1,  vimana,   vimana,   vimana,   0, ROT270, "Toaplan", "Vimana (old set)", GAME_NO_SOUND )
+	GAMEX( 1991, vimanan,  vimana,   vimana,   vimanan,  0, ROT270, "Toaplan (Nova Apparate GMBH & Co license)", "Vimana (Nova Apparate GMBH & Co)", GAME_NO_SOUND )
 }

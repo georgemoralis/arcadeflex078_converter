@@ -12,7 +12,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -145,20 +145,18 @@ public class snes
 	}
 	#endif	/* MESS */
 	
-	public static MachineInitHandlerPtr machine_init_snes  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_snes  = new MachineInitHandlerPtr() { public void handler(){
 		snes_init_ram();
 	
 		/* Set STAT78 to NTSC or PAL */
-		if( Machine.drv.frames_per_second == 60 )
+		if( Machine->drv->frames_per_second == 60 )
 			snes_ram[STAT78] = SNES_NTSC;
-		else /* if( Machine.drv.frames_per_second == 50 ) */
+		else /* if( Machine->drv->frames_per_second == 50 ) */
 			snes_ram[STAT78] = SNES_PAL;
 	} };
 	
 	#ifdef MESS
-	public static MachineStopHandlerPtr machine_stop_snes  = new MachineStopHandlerPtr() { public void handler()
-	{
+	public static MachineStopHandlerPtr machine_stop_snes  = new MachineStopHandlerPtr() { public void handler(){
 		/* Save SRAM */
 		if( cart.sram > 0 )
 			snes_save_sram();
@@ -167,8 +165,7 @@ public class snes
 	
 	/* Handle reading of Mode 20 SRAM */
 	/* 0x700000 - 0x77ffff */
-	public static ReadHandlerPtr snes_r_sram  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_sram  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 value = 0xff;
 	
 		if( cart.sram > 0 )
@@ -180,8 +177,7 @@ public class snes
 	} };
 	
 	/* 0x000000 - 0x2fffff */
-	public static ReadHandlerPtr snes_r_bank1  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_bank1  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT16 address = offset & 0xffff;
 	
 		if( address <= 0x1fff )								/* Mirror of Low RAM */
@@ -202,8 +198,7 @@ public class snes
 	} };
 	
 	/* 0x300000 - 0x3fffff */
-	public static ReadHandlerPtr snes_r_bank2  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_bank2  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT16 address = offset & 0xffff;
 	
 		if( address <= 0x1fff )								/* Mirror of Low RAM */
@@ -229,8 +224,7 @@ public class snes
 	} };
 	
 	/* 0x400000 - 0x5fffff */
-	public static ReadHandlerPtr snes_r_bank3  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_bank3  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT16 address = offset & 0xffff;
 	
 		if( cart.mode == SNES_MODE_20 )
@@ -249,8 +243,7 @@ public class snes
 	} };
 	
 	/* 0x800000 - 0xffffff */
-	public static ReadHandlerPtr snes_r_bank4  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_bank4  = new ReadHandlerPtr() { public int handler(int offset){
 		if( cart.mode == SNES_MODE_20 )
 		{
 			if( offset <= 0x5fffff )
@@ -270,8 +263,7 @@ public class snes
 	} };
 	
 	/* 0x000000 - 0x2fffff */
-	public static WriteHandlerPtr snes_w_bank1 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snes_w_bank1 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT16 address = offset & 0xffff;
 	
 		if( address <= 0x1fff )								/* Mirror of Low RAM */
@@ -285,8 +277,7 @@ public class snes
 	} };
 	
 	/* 0x300000 - 0x3fffff */
-	public static WriteHandlerPtr snes_w_bank2 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snes_w_bank2 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		UINT16 address = offset & 0xffff;
 	
 		if( address <= 0x1fff )								/* Mirror of Low RAM */
@@ -305,8 +296,7 @@ public class snes
 	} };
 	
 	/* 0x800000 - 0xffffff */
-	public static WriteHandlerPtr snes_w_bank4 = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snes_w_bank4 = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if( cart.mode == SNES_MODE_20 )
 		{
 			if( offset <= 0x2fffff )
@@ -331,8 +321,7 @@ public class snes
 	 * mid  - This is the middle byte of a 24 bit value
 	 * high - This is the high byte of a 16 or 24 bit value
 	 */
-	public static ReadHandlerPtr snes_r_io  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr snes_r_io  = new ReadHandlerPtr() { public int handler(int offset){
 		UINT8 value = 0;
 	
 		/* offset is from 0x000000 */
@@ -477,7 +466,7 @@ public class snes
 				{
 					/* FIXME: need to handle STAT78 reset */
 					static UINT8 read_ophct = 0;
-					if (read_ophct != 0)
+					if( read_ophct )
 					{
 						value = (snes_ppu.beam.latch_horz >> 8) & 0x1;
 						read_ophct = 0;
@@ -493,7 +482,7 @@ public class snes
 				{
 					/* FIXME: need to handle STAT78 reset */
 					static UINT8 read_opvct = 0;
-					if (read_opvct != 0)
+					if( read_opvct )
 					{
 						value = (snes_ppu.beam.latch_vert >> 8) & 0x1;
 						read_opvct = 0;
@@ -514,7 +503,7 @@ public class snes
 			case APU01:		/* Audio port register */
 			case APU02:		/* Audio port register */
 			case APU03:		/* Audio port register */
-				if (spc_usefakeapu != 0)
+				if( spc_usefakeapu )
 					return fakespc_port_r( offset & 0x3 );
 				else
 				return spc_port_out[offset & 0x3];
@@ -642,8 +631,7 @@ public class snes
 	 * mid  - This is the middle byte of a 24 bit value
 	 * high - This is the high byte of a 16 or 24 bit value
 	 */
-	public static WriteHandlerPtr snes_w_io = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr snes_w_io = new WriteHandlerPtr() {public void handler(int offset, int data){
 		/* offset is from 0x000000 */
 		switch( offset )
 		{
@@ -697,7 +685,7 @@ public class snes
 			case OAMADDH:	/* Address for accessing OAM (high) */
 				snes_ppu.oam.address_high = data & 0x1;
 				snes_ppu.oam.address = ((data & 0x1) << 8) + snes_ppu.oam.address_low;
-				if ((data & 0x80) != 0)
+				if( data & 0x80 )
 					snes_ppu.oam.high_priority = snes_ppu.oam.address;
 				snes_ram[OAMDATA] = 0;
 				break;
@@ -787,7 +775,7 @@ public class snes
 			case VMAIN:		/* VRAM address increment value designation */
 				{
 					/* FIXME: We don't support full graphic properly yet */
-					if ((data & 0xc) != 0)
+					if( data & 0xc )
 					{
 						vram_fg_incr = vram_fg_count = 0x10 << ((data & 0xc) >> 2);
 						vram_fg_cntr = 8;
@@ -971,11 +959,11 @@ public class snes
 					g = (snes_cgram[FIXED_COLOUR] & 0x3e0) >> 5;
 					b = (snes_cgram[FIXED_COLOUR] & 0x7c00) >> 10;
 					/* Set new value */
-					if ((data & 0x20) != 0)
+					if( data & 0x20 )
 						r = data & 0x1f;
-					if ((data & 0x40) != 0)
+					if( data & 0x40 )
 						g = data & 0x1f;
-					if ((data & 0x80) != 0)
+					if( data & 0x80 )
 						b = data & 0x1f;
 					snes_cgram[FIXED_COLOUR] = (r | (g << 5) | (b << 10));
 	
@@ -984,7 +972,7 @@ public class snes
 					r = (r * fade) >> 4;
 					g = (g * fade) >> 4;
 					b = (b * fade) >> 4;
-					Machine.remapped_colortable[FIXED_COLOUR] = ((r & 0x1f) | ((g & 0x1f) << 5) | ((b & 0x1f) << 10));
+					Machine->remapped_colortable[FIXED_COLOUR] = ((r & 0x1f) | ((g & 0x1f) << 5) | ((b & 0x1f) << 10));
 				} break;
 			case SETINI:	/* Screen mode/video select */
 				/* FIXME: We only support line count here */
@@ -998,7 +986,7 @@ public class snes
 			case APU01:		/* Audio port register */
 			case APU02:		/* Audio port register */
 			case APU03:		/* Audio port register */
-				if (spc_usefakeapu != 0)
+				if( spc_usefakeapu )
 					fakespc_port_w( offset & 0x3, data );
 				else
 				{
@@ -1378,8 +1366,7 @@ public class snes
 		return INIT_PASS;
 	}
 	#else /* for mame we use an init, maybe we will need more for the different games */
-	public static DriverInitHandlerPtr init_snes  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_snes  = new DriverInitHandlerPtr() { public void handler(){
 		int i;
 		UINT16 totalblocks, readblocks;
 		UINT8  *rom;
@@ -1432,8 +1419,7 @@ public class snes
 	} };
 	#endif	/* MESS */
 	
-	INTERRUPT_GEN(snes_scanline_interrupt)
-	{
+	public static InterruptHandlerPtr snes_scanline_interrupt = new InterruptHandlerPtr() {public void handler(){
 		/* Start of VBlank */
 		if( snes_ppu.beam.current_vert == snes_ppu.beam.last_visible_line )
 		{
@@ -1501,7 +1487,7 @@ public class snes
 			snes_ram[RDNMI]  &= 0x7f;		/* Clear nmi occured bit */
 			cpu_set_irq_line( 0, G65816_LINE_NMI, CLEAR_LINE );
 		}
-	}
+	} };
 	
 	void snes_hdma_init()
 	{
@@ -1530,7 +1516,7 @@ public class snes
 		/* Assume priority of the 8 DMA channels is 0-7 */
 		for( i = 0; i < 8; i++ )
 		{
-			if ((snes_hdma_chnl & mask) != 0)
+			if( snes_hdma_chnl & mask )
 			{
 				/* Check if we need to read a new line from the table */
 				if( !(snes_ram[SNES_DMA_BASE + dma + 0xa] & 0x7f ) )
@@ -1608,7 +1594,7 @@ public class snes
 				}
 	
 				/* Update address */
-				if (contmode != 0)
+				if( contmode )
 				{
 					if( snes_ram[SNES_DMA_BASE + dma] & 0x40 )	/* Indirect */
 					{
@@ -1626,7 +1612,7 @@ public class snes
 				{
 					if( !(snes_ram[SNES_DMA_BASE + dma] & 0x40) )	/* Absolute */
 					{
-						if (contmode == 0)
+						if( !contmode )
 						{
 							snes_ram[SNES_DMA_BASE + dma + 8] = abus & 0xff;
 							snes_ram[SNES_DMA_BASE + dma + 9] = (abus >> 8) & 0xff;
@@ -1649,7 +1635,7 @@ public class snes
 		/* Assume priority of the 8 DMA channels is 0-7 */
 		for( i = 0; i < 8; i++ )
 		{
-			if ((channels & mask) != 0)
+			if( channels & mask )
 			{
 				/* Find transfer addresses */
 				abus = (snes_ram[SNES_DMA_BASE + dma + 4] << 16) + (snes_ram[SNES_DMA_BASE + dma + 3] << 8) + snes_ram[SNES_DMA_BASE + dma + 2];
@@ -1670,11 +1656,11 @@ public class snes
 	
 				/* Number of bytes to transfer */
 				length = (snes_ram[SNES_DMA_BASE + dma + 6] << 8) + snes_ram[SNES_DMA_BASE + dma + 5];
-				if (length == 0)
+				if( !length )
 					length = 0x10000;	/* 0x0000 really means 0x10000 */
 	
 	#ifdef SNES_DBG_GDMA
-				printf( "GDMA-Ch %d: len: %X, abus: %X, bbus: %X, incr: %d, dir: %s, type: %d\n", i, length, abus, bbus, increment, snes_ram[SNES_DMA_BASE + dma] & 0x80 ? "PPU.CPU" : "CPU.PPU", snes_ram[SNES_DMA_BASE + dma] & 0x7 );
+				printf( "GDMA-Ch %d: len: %X, abus: %X, bbus: %X, incr: %d, dir: %s, type: %d\n", i, length, abus, bbus, increment, snes_ram[SNES_DMA_BASE + dma] & 0x80 ? "PPU->CPU" : "CPU->PPU", snes_ram[SNES_DMA_BASE + dma] & 0x7 );
 	#endif
 	
 				switch( snes_ram[SNES_DMA_BASE + dma] & 0x7 )
@@ -1684,9 +1670,9 @@ public class snes
 					{
 						while( length-- )
 						{
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus, cpu_readmem24(abus) );
 							abus += increment;
 						}
@@ -1695,16 +1681,16 @@ public class snes
 					{
 						while( length-- )
 						{
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 1) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 1, cpu_readmem24(abus) );
 							abus += increment;
 						}
@@ -1713,30 +1699,30 @@ public class snes
 					{
 						while( length-- )
 						{
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 1) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 1, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 1) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 1, cpu_readmem24(abus) );
 							abus += increment;
 						}
@@ -1745,30 +1731,30 @@ public class snes
 					{
 						while( length-- )
 						{
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 1) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 1, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 2) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 2, cpu_readmem24(abus) );
 							abus += increment;
 							if( !(length--) )
 								break;
-							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU.CPU */
+							if( snes_ram[SNES_DMA_BASE + dma] & 0x80 )	/* PPU->CPU */
 								cpu_writemem24( abus, cpu_readmem24(bbus + 3) );
-							else									/* CPU.PPU */
+							else									/* CPU->PPU */
 								cpu_writemem24( bbus + 3, cpu_readmem24(abus) );
 							abus += increment;
 						}

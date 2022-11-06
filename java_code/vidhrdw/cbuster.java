@@ -6,7 +6,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -27,7 +27,7 @@ public class cbuster
 	/* Function for all 16x16 1024 by 512 layers */
 	static UINT32 back_scan(UINT32 col,UINT32 row,UINT32 num_cols,UINT32 num_rows)
 	{
-		/* logical (col,row) . memory offset */
+		/* logical (col,row) -> memory offset */
 		return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 5);
 	}
 	
@@ -68,8 +68,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	public static VideoStartHandlerPtr video_start_twocrude  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_twocrude  = new VideoStartHandlerPtr() { public int handler(){
 		pf2_tilemap = tilemap_create(get_back_tile_info2,back_scan,        TILEMAP_OPAQUE,16,16,64,32);
 		pf3_tilemap = tilemap_create(get_back_tile_info3,back_scan,        TILEMAP_TRANSPARENT,16,16,64,32);
 		pf4_tilemap = tilemap_create(get_back_tile_info4,back_scan,        TILEMAP_TRANSPARENT,16,16,64,32);
@@ -170,7 +169,7 @@ public class cbuster
 			int x,y,sprite,colour,multi,fx,fy,inc,flash,mult;
 	
 			sprite = buffered_spriteram16[offs+1] & 0x7fff;
-			if (sprite == 0) continue;
+			if (!sprite) continue;
 	
 			y = buffered_spriteram16[offs];
 			x = buffered_spriteram16[offs+2];
@@ -179,7 +178,7 @@ public class cbuster
 			if (!(y&0x8000) && pri==0) continue;
 	
 			colour = (x >> 9) &0xf;
-			if ((x & 0x2000) != 0) colour+=64;
+			if (x&0x2000) colour+=64;
 	
 			flash=y&0x1000;
 			if (flash && (cpu_getcurrentframe() & 1)) continue;
@@ -198,7 +197,7 @@ public class cbuster
 			if (x>256) continue; /* Speedup */
 	
 			sprite &= ~multi;
-			if (fy != 0)
+			if (fy)
 				inc = -1;
 			else
 			{
@@ -206,18 +205,18 @@ public class cbuster
 				inc = 1;
 			}
 	
-			if (flipscreen != 0) {
+			if (flipscreen) {
 				y=240-y;
 				x=240-x;
-				if (fx != 0) fx=0; else fx=1;
-				if (fy != 0) fy=0; else fy=1;
+				if (fx) fx=0; else fx=1;
+				if (fy) fy=0; else fy=1;
 				mult=16;
 			}
 			else mult=-16;
 	
 			while (multi >= 0)
 			{
-				drawgfx(bitmap,Machine.gfx[4],
+				drawgfx(bitmap,Machine->gfx[4],
 						sprite - multi * inc,
 						colour,
 						fx,fy,
@@ -231,8 +230,7 @@ public class cbuster
 	
 	/******************************************************************************/
 	
-	public static VideoUpdateHandlerPtr video_update_twocrude  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_twocrude  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 		int pf23_control,pf14_control;
 	
@@ -247,7 +245,7 @@ public class cbuster
 		pf14_control=twocrude_control_1[6];
 	
 		/* Background - Rowscroll enable */
-		if ((pf23_control & 0x4000) != 0) {
+		if (pf23_control&0x4000) {
 			int scrollx=twocrude_control_0[3],rows;
 			tilemap_set_scroll_cols(pf2_tilemap,1);
 			tilemap_set_scrolly( pf2_tilemap,0, twocrude_control_0[4] );
@@ -277,7 +275,7 @@ public class cbuster
 		}
 	
 		/* Playfield 3 */
-		if ((pf23_control & 0x40) != 0) { /* Rowscroll */
+		if (pf23_control&0x40) { /* Rowscroll */
 			int scrollx=twocrude_control_0[1],rows;
 			tilemap_set_scroll_cols(pf3_tilemap,1);
 			tilemap_set_scrolly( pf3_tilemap,0, twocrude_control_0[2] );
@@ -299,7 +297,7 @@ public class cbuster
 			for (offs = 0;offs < rows;offs++)
 				tilemap_set_scrollx( pf3_tilemap,offs, scrollx + twocrude_pf3_rowscroll[offs] );
 		}
-		else if ((pf23_control & 0x20) != 0) { /* Colscroll */
+		else if (pf23_control&0x20) { /* Colscroll */
 			int scrolly=twocrude_control_0[2],cols;
 			tilemap_set_scroll_rows(pf3_tilemap,1);
 			tilemap_set_scrollx( pf3_tilemap,0, twocrude_control_0[1] );
@@ -329,7 +327,7 @@ public class cbuster
 		}
 	
 		/* Playfield 4 - Rowscroll enable */
-		if ((pf14_control & 0x4000) != 0) {
+		if (pf14_control&0x4000) {
 			int scrollx=twocrude_control_1[3],rows;
 			tilemap_set_scroll_cols(pf4_tilemap,1);
 			tilemap_set_scrolly( pf4_tilemap,0, twocrude_control_1[4] );
@@ -359,7 +357,7 @@ public class cbuster
 		}
 	
 		/* Playfield 1 */
-		if ((pf14_control & 0x40) != 0) { /* Rowscroll */
+		if (pf14_control&0x40) { /* Rowscroll */
 			int scrollx=twocrude_control_1[1],rows;
 			tilemap_set_scroll_cols(pf1_tilemap,1);
 			tilemap_set_scrolly( pf1_tilemap,0, twocrude_control_1[2] );
@@ -392,7 +390,7 @@ public class cbuster
 		tilemap_draw(bitmap,cliprect,pf2_tilemap,0,0);
 		twocrude_drawsprites(bitmap,cliprect,0);
 	
-		if (twocrude_pri != 0) {
+		if (twocrude_pri) {
 			tilemap_draw(bitmap,cliprect,pf4_tilemap,0,0);
 			tilemap_draw(bitmap,cliprect,pf3_tilemap,0,0);
 		}

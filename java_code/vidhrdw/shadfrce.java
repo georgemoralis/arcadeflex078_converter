@@ -1,6 +1,6 @@
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -41,7 +41,7 @@ public class shadfrce
 	
 		tileno = (shadfrce_bg0videoram[tile_index *2+1] & 0x3fff);
 		colour = shadfrce_bg0videoram[tile_index *2] & 0x001f;
-		if ((colour & 0x10) != 0) colour ^= 0x30;	/* skip hole */
+		if (colour & 0x10) colour ^= 0x30;	/* skip hole */
 		fyx = (shadfrce_bg0videoram[tile_index *2] & 0x00c0) >>6;
 	
 		SET_TILE_INFO(2,tileno,colour,TILE_FLIPYX(fyx))
@@ -78,8 +78,7 @@ public class shadfrce
 	
 	
 	
-	public static VideoStartHandlerPtr video_start_shadfrce  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_shadfrce  = new VideoStartHandlerPtr() { public int handler(){
 		shadfrce_fgtilemap = tilemap_create(get_shadfrce_fgtile_info,tilemap_scan_rows,TILEMAP_TRANSPARENT, 8, 8,64,32);
 			tilemap_set_transparent_pen(shadfrce_fgtilemap,0);
 	
@@ -133,7 +132,7 @@ public class shadfrce
 		   P = priority
 		*/
 	
-		const struct GfxElement *gfx = Machine.gfx[1];
+		const struct GfxElement *gfx = Machine->gfx[1];
 		data16_t *finish = shadfrce_spvideoram_old;
 		data16_t *source = finish + 0x2000/2 - 8;
 		int hcount;
@@ -149,10 +148,10 @@ public class shadfrce
 			int pal = ((source[4] & 0x003e));
 			int pri_mask = (source[4] & 0x0040) ? 0x02 : 0x00;
 	
-			if ((pal & 0x20) != 0) pal ^= 0x60;	/* skip hole */
+			if (pal & 0x20) pal ^= 0x60;	/* skip hole */
 	
 			height++;
-			if (enable != 0)	{
+			if (enable)	{
 				for (hcount=0;hcount<height;hcount++) {
 					pdrawgfx(bitmap,gfx,tile+hcount,pal,flipx,flipy,xpos,ypos-hcount*16-16,cliprect,TRANSPARENCY_PEN,0,pri_mask);
 					pdrawgfx(bitmap,gfx,tile+hcount,pal,flipx,flipy,xpos-0x200,ypos-hcount*16-16,cliprect,TRANSPARENCY_PEN,0,pri_mask);
@@ -164,8 +163,7 @@ public class shadfrce
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_shadfrce  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		fillbitmap(priority_bitmap,0,cliprect);
 	
 		tilemap_draw(bitmap,cliprect,shadfrce_bg1tilemap,0,0);
@@ -188,8 +186,7 @@ public class shadfrce
 	
 	} };
 	
-	public static VideoEofHandlerPtr video_eof_shadfrce  = new VideoEofHandlerPtr() { public void handler()
-	{
+	public static VideoEofHandlerPtr video_eof_shadfrce  = new VideoEofHandlerPtr() { public void handler(){
 		/* looks like sprites are *two* frames ahead */
 		memcpy(shadfrce_spvideoram_old,shadfrce_spvideoram,spriteram_size[0]);
 	} };

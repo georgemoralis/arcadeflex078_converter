@@ -79,7 +79,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -152,8 +152,7 @@ public class gridlee
 	}
 	
 	
-	public static MachineInitHandlerPtr machine_init_gridlee  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_gridlee  = new MachineInitHandlerPtr() { public void handler(){
 		/* start timers to generate interrupts */
 		timer_set(cpu_getscanlinetime(0), 0, irq_timer);
 		timer_set(cpu_getscanlinetime(FIRQ_SCANLINE), 0, firq_timer);
@@ -170,8 +169,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr analog_port_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr analog_port_r  = new ReadHandlerPtr() { public int handler(int offset){
 		int delta, sign, magnitude;
 		UINT8 newval;
 	
@@ -228,7 +226,7 @@ public class gridlee
 	
 		/* allocate memory */
 		p = poly17 = auto_malloc(2 * (POLY17_SIZE + 1));
-		if (poly17 == 0)
+		if (!poly17)
 			return;
 		r = rand17 = poly17 + POLY17_SIZE + 1;
 	
@@ -252,11 +250,10 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static ReadHandlerPtr random_num_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr random_num_r  = new ReadHandlerPtr() { public int handler(int offset){
 		unsigned int cc;
 	
-		/* CPU runs at 1.25MHz, noise source at 100kHz -. multiply by 12.5 */
+		/* CPU runs at 1.25MHz, noise source at 100kHz --> multiply by 12.5 */
 		cc = activecpu_gettotalcycles();
 	
 		/* 12.5 = 8 + 4 + 0.5 */
@@ -272,22 +269,19 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static WriteHandlerPtr led_0_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr led_0_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(0, data & 1);
 		logerror("LED 0 %s\n", (data & 1) ? "on" : "off");
 	} };
 	
 	
-	public static WriteHandlerPtr led_1_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr led_1_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		set_led_status(1, data & 1);
 		logerror("LED 1 %s\n", (data & 1) ? "on" : "off");
 	} };
 	
 	
-	public static WriteHandlerPtr gridlee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr gridlee_coin_counter_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		coin_counter_w(0, data & 1);
 		logerror("coin counter %s\n", (data & 1) ? "on" : "off");
 	} };
@@ -342,7 +336,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	static InputPortPtr input_ports_gridlee = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gridlee = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gridlee )
 		PORT_START(); 	/* 9500 (fake) */
 	    PORT_ANALOG( 0xff, 0, IPT_TRACKBALL_Y, 20, 8, 0x00, 0xff );
 	
@@ -439,8 +433,7 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static MachineHandlerPtr machine_driver_gridlee = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gridlee )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M6809, 5000000/4)
@@ -465,9 +458,7 @@ public class gridlee
 		/* sound hardware */
 		MDRV_SOUND_ADD(CUSTOM,  custom_interface)
 		MDRV_SOUND_ADD(SAMPLES, samples_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	
@@ -506,5 +497,5 @@ public class gridlee
 	 *
 	 *************************************/
 	
-	public static GameDriver driver_gridlee	   = new GameDriver("1983"	,"gridlee"	,"gridlee.java"	,rom_gridlee,null	,machine_driver_gridlee	,input_ports_gridlee	,null	,ROT0	,	"Videa", "Gridlee", GAME_IMPERFECT_SOUND )
+	GAMEX( 1983, gridlee, 0,        gridlee, gridlee, 0,     ROT0, "Videa", "Gridlee", GAME_IMPERFECT_SOUND )
 }

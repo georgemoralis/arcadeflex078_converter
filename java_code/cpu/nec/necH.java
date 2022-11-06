@@ -152,7 +152,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
 
 #define JMP(flag)							\
 	int tmp = (int)((INT8)FETCH);			\
-	if (flag != 0)								\
+	if (flag)								\
 	{										\
 		const UINT8 table[3]={3,10,10}; 	\
 		I.ip = (WORD)(I.ip+tmp);			\
@@ -285,7 +285,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
 	unsigned di = I.regs.w[IY];								\
 	unsigned si = I.regs.w[IX];								\
 	const UINT8 table[3]={18,19,19};	 					\
-	if (seg_prefix != 0) logerror("%06x: Warning: seg_prefix defined for add4s\n",activecpu_get_pc());	\
+	if (seg_prefix) logerror("%06x: Warning: seg_prefix defined for add4s\n",activecpu_get_pc());	\
 	I.ZeroVal = I.CarryVal = 0;								\
 	for (i=0;i<count;i++) {									\
 		nec_ICount-=table[cpu_type/8];						\
@@ -298,7 +298,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
 		result = result % 100;								\
 		v1 = ((result/10)<<4) | (result % 10);				\
 		PutMemB(ES, di,v1);									\
-		if (v1 != 0) I.ZeroVal = 1;								\
+		if (v1) I.ZeroVal = 1;								\
 		si++;												\
 		di++;												\
 	}														\
@@ -310,7 +310,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
     unsigned di = I.regs.w[IY];								\
 	unsigned si = I.regs.w[IX];								\
 	const UINT8 table[3]={18,19,19};	 					\
-	if (seg_prefix != 0) logerror("%06x: Warning: seg_prefix defined for sub4s\n",activecpu_get_pc());	\
+	if (seg_prefix) logerror("%06x: Warning: seg_prefix defined for sub4s\n",activecpu_get_pc());	\
 	I.ZeroVal = I.CarryVal = 0;								\
 	for (i=0;i<count;i++) {									\
 		nec_ICount-=table[cpu_type/8];						\
@@ -328,7 +328,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
 		}													\
 		v1 = ((result/10)<<4) | (result % 10);				\
 		PutMemB(ES, di,v1);									\
-		if (v1 != 0) I.ZeroVal = 1;								\
+		if (v1) I.ZeroVal = 1;								\
 		si++;												\
 		di++;												\
 	}														\
@@ -340,7 +340,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
     unsigned di = I.regs.w[IY];								\
 	unsigned si = I.regs.w[IX];								\
 	const UINT8 table[3]={14,19,19};						\
-	if (seg_prefix != 0) logerror("%06x: Warning: seg_prefix defined for cmp4s\n",activecpu_get_pc());	\
+	if (seg_prefix) logerror("%06x: Warning: seg_prefix defined for cmp4s\n",activecpu_get_pc());	\
 	I.ZeroVal = I.CarryVal = 0;								\
 	for (i=0;i<count;i++) {									\
 		nec_ICount-=table[cpu_type/8];						\
@@ -357,7 +357,7 @@ typedef enum { AH,AL,CH,CL,DH,DL,BH,BL,SPH,SPL,BPH,BPL,IXH,IXL,IYH,IYL } BREGS;
 			I.CarryVal = 0;									\
 		}													\
 		v1 = ((result/10)<<4) | (result % 10);				\
-		if (v1 != 0) I.ZeroVal = 1;								\
+		if (v1) I.ZeroVal = 1;								\
 		si++;												\
 		di++;												\
 	}														\

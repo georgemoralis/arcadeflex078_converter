@@ -4,7 +4,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.mame;
 
@@ -72,7 +72,7 @@ public class blitgen
 		int bpp;
 		int i;
 		FILE *f = fopen( "mameblit.c", "w" );
-		if (f != 0)
+		if( f )
 		{
 	fprintf( f, "/**\n" );
 	fprintf( f, " * Do not modify this module directly.  It is generated code, written by blitgen.c\n" );
@@ -123,7 +123,7 @@ public class blitgen
 								int bRemapPens;
 	
 	fprintf( f, "\n" );
-								if (i != 0)
+								if( i )
 								{
 	fprintf( f, "static void blitzoom" );
 								}
@@ -159,7 +159,7 @@ public class blitgen
 								switch( transparency_mode )
 								{
 								case TRANSPARENCY_COLOR:
-	fprintf( f, "	transp = Machine.pens[transp];\n" );
+	fprintf( f, "	transp = Machine->pens[transp];\n" );
 									break;
 								case TRANSPARENCY_ALPHAONE:
 	fprintf( f, "	int alpha_pen = transp>>8;\n" );
@@ -170,7 +170,7 @@ public class blitgen
 	fprintf( f, "	for( x=sx; x<ex; x++ )\n" );
 	fprintf( f, "	{\n" );
 	
-								if (i != 0)
+								if( i )
 								{
 									switch( source_type )
 									{
@@ -189,7 +189,7 @@ public class blitgen
 									{
 									case SOURCE_4BPP:
 	fprintf( f, "		int data = ((UINT8 *)pSrc)[x_index>>1];\n" );
-	fprintf( f, "		if ((x_index & 1) != 0) data>>=4; else data&=0xf;\n" );
+	fprintf( f, "		if( x_index&1 ) data>>=4; else data&=0xf;\n" );
 										break;
 									case SOURCE_8BPP:
 	fprintf( f, "		int data = ((UINT8 *)pSrc)[x_index];\n" );
@@ -204,7 +204,7 @@ public class blitgen
 									bRemapPens = 1;
 								/* fallthrough */
 								case TRANSPARENCY_NONE_RAW:		/* opaque with no remapping */
-	fprintf( f, "		if (1 != 0){\n" );
+	fprintf( f, "		if(1){\n" );
 									break;
 	
 								case TRANSPARENCY_COLOR:		/* single remapped pen transparency with remapping */
@@ -251,7 +251,7 @@ public class blitgen
 									break;
 								}
 	
-								if (bRemapPens != 0)
+								if( bRemapPens )
 								{
 	fprintf( f, "			data = pPal[data];\n" );
 								}
@@ -410,7 +410,7 @@ public class blitgen
 							int buf_type;
 							for( buf_type=0; buf_type<BUF_TYPES; buf_type++ )
 							{
-								if (i != 0)
+								if( i )
 								{
 	fprintf( f, "(blitter *)blitzoom" );
 								}

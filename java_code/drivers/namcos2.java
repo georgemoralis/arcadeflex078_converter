@@ -446,7 +446,7 @@ $a00000 checks have been seen on the Final Lap boards.
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -470,7 +470,7 @@ public class namcos2
 		{
 			artwork_show(zip100,i);
 			artwork_show(zip10,i);
-			if (i != 0) return;
+			if( i ) return;
 			sprintf( zip100, "zip100_%d",data>>4);
 			sprintf( zip10,  "zip10_%d", data&0xf);
 			i=1;
@@ -487,7 +487,7 @@ public class namcos2
 		{
 			artwork_show(zip1,i);
 			artwork_show(time10,i);
-			if (i != 0) return;
+			if( i ) return;
 			sprintf( zip1,   "zip1_%d",  data>>4);
 			sprintf( time10, "time10_%d",data&0xf);
 			i=1;
@@ -504,7 +504,7 @@ public class namcos2
 		{
 			artwork_show(time1,i);
 			artwork_show(zap100,i);
-			if (i != 0) return;
+			if( i ) return;
 			sprintf( time1,  "time1_%d", data>>4);
 			sprintf( zap100, "zap100_%d",data&0xf);
 			i=1;
@@ -521,7 +521,7 @@ public class namcos2
 		{
 			artwork_show(zap10,i);
 			artwork_show(zap1,i);
-			if (i != 0) return;
+			if( i ) return;
 			sprintf( zap10,  "zap10_%d", data>>4);
 			sprintf( zap1,   "zap1_%d",  data&0xf);
 			i=1;
@@ -531,7 +531,7 @@ public class namcos2
 	static void
 	GollyGhostUpdateDiorama_c0( int data )
 	{
-		if ((data & 0x80) != 0)
+		if( data&0x80 )
 		{
 			artwork_show("fulldark",0 );
 			artwork_show("dollhouse",1); /* diorama is lit up */
@@ -565,7 +565,7 @@ public class namcos2
 	
 	static WRITE16_HANDLER( namcos2_68k_dpram_word_w )
 	{
-		if (ACCESSING_LSB != 0)
+		if( ACCESSING_LSB )
 		{
 			namcos2_dpram[offset] = data&0xff;
 	
@@ -586,13 +586,11 @@ public class namcos2
 		}
 	}
 	
-	public static ReadHandlerPtr namcos2_dpram_byte_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr namcos2_dpram_byte_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return namcos2_dpram[offset];
 	} };
 	
-	public static WriteHandlerPtr namcos2_dpram_byte_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr namcos2_dpram_byte_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		namcos2_dpram[offset] = data;
 	} };
 	
@@ -1076,7 +1074,7 @@ public class namcos2
 	/*															 */
 	/*************************************************************/
 	
-	static InputPortPtr input_ports_default = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_default = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( default )
 		NAMCOS2_MCU_PORT_B_DEFAULT
 		NAMCOS2_MCU_PORT_C_DEFAULT
 		NAMCOS2_MCU_ANALOG_PORT_DEFAULT
@@ -1085,7 +1083,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_gollygho = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_gollygho = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( gollygho )
 		PORT_START(); 
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_UNKNOWN );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_UNKNOWN );
@@ -1122,7 +1120,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_finallap = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finallap = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finallap )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_DIPNAME( 0x01, 0x01, "PortB 0x01");
 		PORT_DIPSETTING(	0x01, "H" );
@@ -1189,7 +1187,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT  /* 63B05Z0 - $3000 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_finalap3 = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_finalap3 = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( finalap3 )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_DIPNAME( 0x01, 0x01, "PortB 0x01");
 		PORT_DIPSETTING(	0x01, "H" );
@@ -1251,7 +1249,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT  /* 63B05Z0 - $3000 */
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_fourtrax = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_fourtrax = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( fourtrax )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_DIPNAME( 0x01, 0x01, "PortB 0x01");
 		PORT_DIPSETTING(	0x01, "H" );
@@ -1336,7 +1334,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_assault = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_assault = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( assault )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_LEFT | IPF_PLAYER2 );
 		PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_JOYSTICKLEFT_LEFT );
@@ -1383,7 +1381,7 @@ public class namcos2
 		PORT_BIT( 0xe0, IP_ACTIVE_LOW, IPT_UNUSED );
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_suzuka = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_suzuka = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( suzuka )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );
@@ -1437,7 +1435,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_luckywld = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_luckywld = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( luckywld )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
@@ -1472,7 +1470,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_sgunner = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_sgunner = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( sgunner  )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x3f, IP_ACTIVE_LOW, IPT_UNUSED );
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
@@ -1509,7 +1507,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_dirtfox = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_dirtfox = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( dirtfox )
 		PORT_START(); 		/* 63B05Z0 - PORT B */ \
 		PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_UP );/* Gear shift up */
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN );/* Gear shift down */
@@ -1540,7 +1538,7 @@ public class namcos2
 		NAMCOS2_MCU_DIAL_DEFAULT
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_metlhawk = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_metlhawk = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( metlhawk )
 		PORT_START(); 		/* 63B05Z0 - PORT B */
 		PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_START2 );
 		PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_START1 );
@@ -1765,8 +1763,7 @@ public class namcos2
 	/*															 */
 	/*************************************************************/
 	
-	public static MachineHandlerPtr machine_driver_default = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( default )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_default,writemem_master_default)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1803,12 +1800,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_gollygho = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( gollygho )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_default,writemem_master_default)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1845,12 +1839,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_finallap = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( finallap )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_finallap,writemem_master_finallap)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1888,12 +1879,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_sgunner = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( sgunner )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_sgunner,writemem_master_sgunner)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1930,12 +1918,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_luckywld = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( luckywld )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_luckywld,writemem_master_luckywld)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -1972,12 +1957,9 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_metlhawk = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( metlhawk )
 		MDRV_CPU_ADD(M68000, 12288000)
 		MDRV_CPU_MEMORY(readmem_master_metlhawk,writemem_master_metlhawk)
 		MDRV_CPU_VBLANK_INT(namcos2_68k_master_vblank,1)
@@ -2016,9 +1998,7 @@ public class namcos2
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(C140, C140_interface)
 		MDRV_SOUND_ADD(YM2151, ym2151_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
 	/*************************************************************/
@@ -4231,71 +4211,71 @@ public class namcos2
 	ROM_END(); }}; 
 	
 	
-	public static DriverInitHandlerPtr init_assault  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_assault  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ASSAULT;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_assaultj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_assaultj  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ASSAULT_JP;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_assaultp  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_assaultp  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ASSAULT_PLUS;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_burnforc  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_burnforc  = new DriverInitHandlerPtr() { public void handler()
 	    namcos2_gametype=NAMCOS2_BURNING_FORCE;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_cosmogng  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_cosmogng  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_COSMO_GANG;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_dsaber  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_dsaber  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_DRAGON_SABER;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_dsaberj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_dsaberj  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_DRAGON_SABER;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_dirtfoxj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_dirtfoxj  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_DIRT_FOX_JP;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_finallap  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_finallap  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_FINAL_LAP;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_finalap2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_finalap2  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_FINAL_LAP_2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_finalap3  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_finalap3  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_FINAL_LAP_3;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_finehour  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_finehour  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_FINEST_HOUR;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_fourtrax  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_fourtrax  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_FOUR_TRAX;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_kyukaidk  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_kyukaidk  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_KYUUKAI_DOUCHUUKI;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_marvlanj  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_marvlanj  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_MARVEL_LAND;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_marvland  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_marvland  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_MARVEL_LAND;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_metlhawk  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_metlhawk  = new DriverInitHandlerPtr() { public void handler()
 		/* unscramble sprites */
 		int i, j, k, l;
 		unsigned char *data = memory_region(REGION_GFX1);
@@ -4335,7 +4315,7 @@ public class namcos2
 						data[a+l+32*3] = v;
 					}
 				}
-		}
+		} };
 		/* 90 degrees prepare a turned character */
 		for(i=0; i<0x200000; i+=32*32)
 		{
@@ -4348,127 +4328,127 @@ public class namcos2
 			}
 		}
 		namcos2_gametype=NAMCOS2_METAL_HAWK;
-	} };
+	}
 	
 	
-	public static DriverInitHandlerPtr init_mirninja  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_mirninja  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_MIRAI_NINJA;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_ordyne  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_ordyne  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ORDYNE;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_phelios  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_phelios  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_PHELIOS;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_rthun2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_rthun2  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ROLLING_THUNDER_2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_rthun2j  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_rthun2j  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_ROLLING_THUNDER_2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sgunner2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_sgunner2  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_STEEL_GUNNER_2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sws92  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_sws92  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_92;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sws92g  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_sws92g  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_92T;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_sws93  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_sws93  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_SUPER_WSTADIUM_93;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_suzuka8h  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_suzuka8h  = new DriverInitHandlerPtr() { public void handler()
 	        namcos2_gametype=NAMCOS2_SUZUKA_8_HOURS;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_suzuk8h2  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_suzuk8h2  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_SUZUKA_8_HOURS_2;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_valkyrie  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_valkyrie  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_VALKYRIE;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_gollygho  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_gollygho  = new DriverInitHandlerPtr() { public void handler()
 		namcos2_gametype=NAMCOS2_GOLLY_GHOST;
-	} };
+	}
 	
-	public static DriverInitHandlerPtr init_luckywld  = new DriverInitHandlerPtr() { public void handler(){
+	public static DriverInitHandlerPtr init_luckywld  = new DriverInitHandlerPtr() { public void handler()
 		UINT8 *pData = (UINT8 *)memory_region( REGION_GFX5 );
 		int i;
 		for( i=0; i<32*0x4000; i++ )
 		{ /* unscramble gfx mask */
 			int code = pData[i];
 			int out = 0;
-			if ((code & 0x01) != 0) out |= 0x80;
-			if ((code & 0x02) != 0) out |= 0x40;
-			if ((code & 0x04) != 0) out |= 0x20;
-			if ((code & 0x08) != 0) out |= 0x10;
-			if ((code & 0x10) != 0) out |= 0x08;
-			if ((code & 0x20) != 0) out |= 0x04;
-			if ((code & 0x40) != 0) out |= 0x02;
-			if ((code & 0x80) != 0) out |= 0x01;
+			if( code&0x01 ) out |= 0x80;
+			if( code&0x02 ) out |= 0x40;
+			if( code&0x04 ) out |= 0x20;
+			if( code&0x08 ) out |= 0x10;
+			if( code&0x10 ) out |= 0x08;
+			if( code&0x20 ) out |= 0x04;
+			if( code&0x40 ) out |= 0x02;
+			if( code&0x80 ) out |= 0x01;
 			pData[i] = out;
-		}
+		} };
 		namcos2_gametype=NAMCOS2_LUCKY_AND_WILD;
-	} };
+	}
 	
 	/* Based on the dumped BIOS versions it looks like Namco changed the BIOS rom */
 	/* from sys2c65b to sys2c65c sometime between 1988 and 1990 as mirai ninja	  */
 	/* and metal hawk have the B version and dragon saber has the C version 	  */
 	
 	/*    YEAR, NAME,     PARENT,   MACHINE,  INPUT,    INIT,     MONITOR, COMPANY, FULLNAME */
-	public static GameDriver driver_finallap	   = new GameDriver("1987"	,"finallap"	,"namcos2.java"	,rom_finallap,null	,machine_driver_finallap	,input_ports_finallap	,init_finallap	,ROT0	,	"Namco", "Final Lap (Rev E)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_finalapd	   = new GameDriver("1987"	,"finalapd"	,"namcos2.java"	,rom_finalapd,driver_finallap	,machine_driver_finallap	,input_ports_finallap	,init_finallap	,ROT0	,	"Namco", "Final Lap (Rev D)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_finalapc	   = new GameDriver("1987"	,"finalapc"	,"namcos2.java"	,rom_finalapc,driver_finallap	,machine_driver_finallap	,input_ports_finallap	,init_finallap	,ROT0	,	"Namco", "Final Lap (Rev C)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_finlapjc	   = new GameDriver("1987"	,"finlapjc"	,"namcos2.java"	,rom_finlapjc,driver_finallap	,machine_driver_finallap	,input_ports_finallap	,init_finallap	,ROT0	,	"Namco", "Final Lap (Japan - Rev C)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_finlapjb	   = new GameDriver("1987"	,"finlapjb"	,"namcos2.java"	,rom_finlapjb,driver_finallap	,machine_driver_finallap	,input_ports_finallap	,init_finallap	,ROT0	,	"Namco", "Final Lap (Japan - Rev B)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_assault	   = new GameDriver("1988"	,"assault"	,"namcos2.java"	,rom_assault,null	,machine_driver_default	,input_ports_assault	,init_assault	,	,	ROT90,  "Namco", "Assault" )
-	public static GameDriver driver_assaultj	   = new GameDriver("1988"	,"assaultj"	,"namcos2.java"	,rom_assaultj,driver_assault	,machine_driver_default	,input_ports_assault	,init_assaultj	,ROT90	,	"Namco", "Assault (Japan)" )
-	public static GameDriver driver_assaultp	   = new GameDriver("1988"	,"assaultp"	,"namcos2.java"	,rom_assaultp,driver_assault	,machine_driver_default	,input_ports_assault	,init_assaultp	,ROT90	,	"Namco", "Assault Plus (Japan)" )
-	public static GameDriver driver_metlhawk	   = new GameDriver("1988"	,"metlhawk"	,"namcos2.java"	,rom_metlhawk,null	,machine_driver_metlhawk	,input_ports_metlhawk	,init_metlhawk	,ROT90	,	"Namco", "Metal Hawk (Japan)")
-	public static GameDriver driver_ordyne	   = new GameDriver("1988"	,"ordyne"	,"namcos2.java"	,rom_ordyne,null	,machine_driver_default	,input_ports_default	,init_ordyne	,ROT180	,	"Namco", "Ordyne (Japan)" )
-	public static GameDriver driver_mirninja	   = new GameDriver("1988"	,"mirninja"	,"namcos2.java"	,rom_mirninja,null	,machine_driver_default	,input_ports_default	,init_mirninja	,ROT0	,	"Namco", "Mirai Ninja (Japan)" )
-	public static GameDriver driver_phelios	   = new GameDriver("1988"	,"phelios"	,"namcos2.java"	,rom_phelios,null	,machine_driver_default	,input_ports_default	,init_phelios	,	,	ROT90,  "Namco", "Phelios (Japan)" )
-	public static GameDriver driver_dirtfoxj	   = new GameDriver("1989"	,"dirtfoxj"	,"namcos2.java"	,rom_dirtfoxj,null	,machine_driver_default	,input_ports_dirtfox	,init_dirtfoxj	,ROT90	,	"Namco", "Dirt Fox (Japan)" )
-	public static GameDriver driver_fourtrax	   = new GameDriver("1989"	,"fourtrax"	,"namcos2.java"	,rom_fourtrax,null	,machine_driver_finallap	,input_ports_fourtrax	,init_fourtrax	,ROT0	,	"Namco", "Four Trax", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_valkyrie	   = new GameDriver("1989"	,"valkyrie"	,"namcos2.java"	,rom_valkyrie,null	,machine_driver_default	,input_ports_default	,init_valkyrie	,ROT90	,	"Namco", "Valkyrie No Densetsu (Japan)" )
-	public static GameDriver driver_finehour	   = new GameDriver("1989"	,"finehour"	,"namcos2.java"	,rom_finehour,null	,machine_driver_default	,input_ports_default	,init_finehour	,ROT0	,	"Namco", "Finest Hour (Japan)" )
-	public static GameDriver driver_burnforc	   = new GameDriver("1989"	,"burnforc"	,"namcos2.java"	,rom_burnforc,null	,machine_driver_default	,input_ports_default	,init_burnforc	,ROT0	,	"Namco", "Burning Force (Japan)" )
-	public static GameDriver driver_marvland	   = new GameDriver("1989"	,"marvland"	,"namcos2.java"	,rom_marvland,null	,machine_driver_default	,input_ports_default	,init_marvland	,ROT0	,	"Namco", "Marvel Land (US)" )
-	public static GameDriver driver_marvlanj	   = new GameDriver("1989"	,"marvlanj"	,"namcos2.java"	,rom_marvlanj,driver_marvland	,machine_driver_default	,input_ports_default	,init_marvlanj	,ROT0	,	"Namco", "Marvel Land (Japan)" )
-	public static GameDriver driver_kyukaidk	   = new GameDriver("1990"	,"kyukaidk"	,"namcos2.java"	,rom_kyukaidk,null	,machine_driver_default	,input_ports_default	,init_kyukaidk	,ROT0	,	"Namco", "Kyuukai Douchuuki (Japan new version)" )
-	public static GameDriver driver_kyukaido	   = new GameDriver("1990"	,"kyukaido"	,"namcos2.java"	,rom_kyukaido,driver_kyukaidk	,machine_driver_default	,input_ports_default	,init_kyukaidk	,ROT0	,	"Namco", "Kyuukai Douchuuki (Japan old version)" )
-	public static GameDriver driver_dsaber	   = new GameDriver("1990"	,"dsaber"	,"namcos2.java"	,rom_dsaber,null	,machine_driver_default	,input_ports_default	,init_dsaber	,ROT90	,	"Namco", "Dragon Saber" )
-	public static GameDriver driver_dsaberj	   = new GameDriver("1990"	,"dsaberj"	,"namcos2.java"	,rom_dsaberj,driver_dsaber	,machine_driver_default	,input_ports_default	,init_dsaberj	,ROT90	,	"Namco", "Dragon Saber (Japan)" )
-	public static GameDriver driver_finalap2	   = new GameDriver("1990"	,"finalap2"	,"namcos2.java"	,rom_finalap2,null	,machine_driver_finallap	,input_ports_finallap	,init_finalap2	,ROT0	,	"Namco", "Final Lap 2", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_finalp2j	   = new GameDriver("1990"	,"finalp2j"	,"namcos2.java"	,rom_finalp2j,driver_finalap2	,machine_driver_finallap	,input_ports_finallap	,init_finalap2	,ROT0	,	"Namco", "Final Lap 2 (Japan)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_gollygho	   = new GameDriver("1990"	,"gollygho"	,"namcos2.java"	,rom_gollygho,null	,machine_driver_gollygho	,input_ports_gollygho	,init_gollygho	,ROT180	,	"Namco", "Golly! Ghost!" )
+	GAMEX(1987, finallap, 0,        finallap, finallap, finallap, ROT0,   "Namco", "Final Lap (Rev E)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, finalapd, finallap, finallap, finallap, finallap, ROT0,   "Namco", "Final Lap (Rev D)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, finalapc, finallap, finallap, finallap, finallap, ROT0,   "Namco", "Final Lap (Rev C)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, finlapjc, finallap, finallap, finallap, finallap, ROT0,   "Namco", "Final Lap (Japan - Rev C)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1987, finlapjb, finallap, finallap, finallap, finallap, ROT0,   "Namco", "Final Lap (Japan - Rev B)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1988, assault,  0,        default,  assault,  assault , ROT90,  "Namco", "Assault" )
+	GAME( 1988, assaultj, assault,  default,  assault,  assaultj, ROT90,  "Namco", "Assault (Japan)" )
+	GAME( 1988, assaultp, assault,  default,  assault,  assaultp, ROT90,  "Namco", "Assault Plus (Japan)" )
+	GAME( 1988, metlhawk, 0,        metlhawk, metlhawk, metlhawk, ROT90,  "Namco", "Metal Hawk (Japan)")
+	GAME( 1988, ordyne,   0,        default,  default,  ordyne,   ROT180, "Namco", "Ordyne (Japan)" )
+	GAME( 1988, mirninja, 0,        default,  default,  mirninja, ROT0,   "Namco", "Mirai Ninja (Japan)" )
+	GAME( 1988, phelios,  0,        default,  default,  phelios , ROT90,  "Namco", "Phelios (Japan)" )
+	GAME( 1989, dirtfoxj, 0,        default,  dirtfox,  dirtfoxj, ROT90,  "Namco", "Dirt Fox (Japan)" )
+	GAMEX(1989, fourtrax, 0,        finallap, fourtrax, fourtrax, ROT0,   "Namco", "Four Trax", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1989, valkyrie, 0,        default,  default,  valkyrie, ROT90,  "Namco", "Valkyrie No Densetsu (Japan)" )
+	GAME( 1989, finehour, 0,        default,  default,  finehour, ROT0,   "Namco", "Finest Hour (Japan)" )
+	GAME( 1989, burnforc, 0,        default,  default,  burnforc, ROT0,   "Namco", "Burning Force (Japan)" )
+	GAME( 1989, marvland, 0,        default,  default,  marvland, ROT0,   "Namco", "Marvel Land (US)" )
+	GAME( 1989, marvlanj, marvland, default,  default,  marvlanj, ROT0,   "Namco", "Marvel Land (Japan)" )
+	GAME( 1990, kyukaidk, 0,        default,  default,  kyukaidk, ROT0,   "Namco", "Kyuukai Douchuuki (Japan new version)" )
+	GAME( 1990, kyukaido, kyukaidk, default,  default,  kyukaidk, ROT0,   "Namco", "Kyuukai Douchuuki (Japan old version)" )
+	GAME( 1990, dsaber,   0,        default,  default,  dsaber,   ROT90,  "Namco", "Dragon Saber" )
+	GAME( 1990, dsaberj,  dsaber,   default,  default,  dsaberj,  ROT90,  "Namco", "Dragon Saber (Japan)" )
+	GAMEX(1990, finalap2, 0,        finallap, finallap, finalap2, ROT0,   "Namco", "Final Lap 2", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
+	GAMEX(1990, finalp2j, finalap2, finallap, finallap, finalap2, ROT0,   "Namco", "Final Lap 2 (Japan)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
+	GAME( 1990, gollygho, 0,        gollygho, gollygho, gollygho, ROT180, "Namco", "Golly! Ghost!" )
 	/* Not dumped: Bubble Trouble (Golly Ghost II) */
-	public static GameDriver driver_rthun2	   = new GameDriver("1990"	,"rthun2"	,"namcos2.java"	,rom_rthun2,null	,machine_driver_default	,input_ports_default	,init_rthun2	,ROT0	,	"Namco", "Rolling Thunder 2" )
-	public static GameDriver driver_rthun2j	   = new GameDriver("1990"	,"rthun2j"	,"namcos2.java"	,rom_rthun2j,driver_rthun2	,machine_driver_default	,input_ports_default	,init_rthun2j	,ROT0	,	"Namco", "Rolling Thunder 2 (Japan)" )
-	public static GameDriver driver_sgunner	   = new GameDriver("1990"	,"sgunner"	,"namcos2.java"	,rom_sgunner,null	,machine_driver_sgunner	,input_ports_sgunner	,init_sgunner2	,ROT0	,	"Namco", "Steel Gunner" )
-	public static GameDriver driver_sgunner2	   = new GameDriver("1991"	,"sgunner2"	,"namcos2.java"	,rom_sgunner2,null	,machine_driver_sgunner	,input_ports_sgunner	,init_sgunner2	,ROT0	,	"Namco", "Steel Gunner 2 (US)" )
-	public static GameDriver driver_sgunnr2j	   = new GameDriver("1991"	,"sgunnr2j"	,"namcos2.java"	,rom_sgunnr2j,driver_sgunner2	,machine_driver_sgunner	,input_ports_sgunner	,init_sgunner2	,ROT0	,	"Namco", "Steel Gunner 2 (Japan)" )
-	public static GameDriver driver_cosmogng	   = new GameDriver("1991"	,"cosmogng"	,"namcos2.java"	,rom_cosmogng,null	,machine_driver_default	,input_ports_default	,init_cosmogng	,ROT90	,	"Namco", "Cosmo Gang the Video (US)" )
-	public static GameDriver driver_cosmognj	   = new GameDriver("1991"	,"cosmognj"	,"namcos2.java"	,rom_cosmognj,driver_cosmogng	,machine_driver_default	,input_ports_default	,init_cosmogng	,ROT90	,	"Namco", "Cosmo Gang the Video (Japan)" )
-	public static GameDriver driver_finalap3	   = new GameDriver("1992"	,"finalap3"	,"namcos2.java"	,rom_finalap3,null	,machine_driver_finallap	,input_ports_finalap3	,init_finalap3	,ROT0	,	"Namco", "Final Lap 3 (Japan set 1)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_finalp3a	   = new GameDriver("1992"	,"finalp3a"	,"namcos2.java"	,rom_finalp3a,driver_finalap3	,machine_driver_finallap	,input_ports_finalap3	,init_finalap3	,ROT0	,	"Namco", "Final Lap 3 (World)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_luckywld	   = new GameDriver("1992"	,"luckywld"	,"namcos2.java"	,rom_luckywld,null	,machine_driver_luckywld	,input_ports_luckywld	,init_luckywld	,ROT0	,	"Namco", "Lucky & Wild",GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_suzuka8h	   = new GameDriver("1992"	,"suzuka8h"	,"namcos2.java"	,rom_suzuka8h,null	,machine_driver_luckywld	,input_ports_suzuka	,init_suzuka8h	,ROT0	,	"Namco", "Suzuka 8 Hours (World?)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_suzuk8hj	   = new GameDriver("1992"	,"suzuk8hj"	,"namcos2.java"	,rom_suzuk8hj,driver_suzuka8h	,machine_driver_luckywld	,input_ports_suzuka	,init_suzuka8h	,ROT0	,	"Namco", "Suzuka 8 Hours (Japan)", GAME_IMPERFECT_GRAPHICS  )
-	public static GameDriver driver_sws92	   = new GameDriver("1992"	,"sws92"	,"namcos2.java"	,rom_sws92,null	,machine_driver_default	,input_ports_default	,init_sws92	,ROT0	,	"Namco", "Super World Stadium '92 (Japan)" )
-	public static GameDriver driver_sws92g	   = new GameDriver("1992"	,"sws92g"	,"namcos2.java"	,rom_sws92g,driver_sws92	,machine_driver_default	,input_ports_default	,init_sws92g	,ROT0	,	"Namco", "Super World Stadium '92 Gekitouban (Japan)" )
-	public static GameDriver driver_suzuk8h2	   = new GameDriver("1993"	,"suzuk8h2"	,"namcos2.java"	,rom_suzuk8h2,null	,machine_driver_luckywld	,input_ports_suzuka	,init_suzuk8h2	,ROT0	,	"Namco", "Suzuka 8 Hours 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
-	public static GameDriver driver_sws93	   = new GameDriver("1993"	,"sws93"	,"namcos2.java"	,rom_sws93,null	,machine_driver_default	,input_ports_default	,init_sws93	,ROT0	,	"Namco", "Super World Stadium '93 (Japan)" )
+	GAME( 1990, rthun2,   0,        default,  default,  rthun2,   ROT0,   "Namco", "Rolling Thunder 2" )
+	GAME( 1990, rthun2j,  rthun2,   default,  default,  rthun2j,  ROT0,   "Namco", "Rolling Thunder 2 (Japan)" )
+	GAME( 1990, sgunner,  0,        sgunner,  sgunner,  sgunner2, ROT0,   "Namco", "Steel Gunner" )
+	GAME( 1991, sgunner2, 0,        sgunner,  sgunner,  sgunner2, ROT0,   "Namco", "Steel Gunner 2 (US)" )
+	GAME( 1991, sgunnr2j, sgunner2, sgunner,  sgunner,  sgunner2, ROT0,   "Namco", "Steel Gunner 2 (Japan)" )
+	GAME( 1991, cosmogng, 0,        default,  default,  cosmogng, ROT90,  "Namco", "Cosmo Gang the Video (US)" )
+	GAME( 1991, cosmognj, cosmogng, default,  default,  cosmogng, ROT90,  "Namco", "Cosmo Gang the Video (Japan)" )
+	GAMEX(1992, finalap3, 0,        finallap, finalap3, finalap3, ROT0,   "Namco", "Final Lap 3 (Japan set 1)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
+	GAMEX(1992, finalp3a, finalap3, finallap, finalap3, finalap3, ROT0,   "Namco", "Final Lap 3 (World)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS  )
+	GAMEX(1992, luckywld, 0,        luckywld, luckywld, luckywld, ROT0,   "Namco", "Lucky & Wild",GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, suzuka8h, 0,        luckywld, suzuka,   suzuka8h, ROT0,   "Namco", "Suzuka 8 Hours (World?)", GAME_IMPERFECT_GRAPHICS )
+	GAMEX(1992, suzuk8hj, suzuka8h, luckywld, suzuka,   suzuka8h, ROT0,   "Namco", "Suzuka 8 Hours (Japan)", GAME_IMPERFECT_GRAPHICS  )
+	GAME( 1992, sws92,    0,        default,  default,  sws92,    ROT0,   "Namco", "Super World Stadium '92 (Japan)" )
+	GAME( 1992, sws92g,   sws92,    default,  default,  sws92g,   ROT0,   "Namco", "Super World Stadium '92 Gekitouban (Japan)" )
+	GAMEX(1993, suzuk8h2, 0,        luckywld, suzuka,   suzuk8h2, ROT0,   "Namco", "Suzuka 8 Hours 2 (Japan)", GAME_IMPERFECT_GRAPHICS )
+	GAME( 1993, sws93,    0,        default,  default,  sws93,    ROT0,   "Namco", "Super World Stadium '93 (Japan)" )
 }

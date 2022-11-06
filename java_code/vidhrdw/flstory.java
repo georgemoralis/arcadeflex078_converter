@@ -7,7 +7,7 @@
 ***************************************************************************/
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -36,8 +36,7 @@ public class flstory
 	}
 	
 	
-	public static VideoStartHandlerPtr video_start_flstory  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_flstory  = new VideoStartHandlerPtr() { public int handler(){
 	    tilemap = tilemap_create( get_tile_info,tilemap_scan_rows,TILEMAP_SPLIT,8,8,32,32 );
 	//	tilemap_set_transparent_pen( tilemap,15 );
 		tilemap_set_transmask(tilemap,0,0x3fff,0xc000);
@@ -48,30 +47,26 @@ public class flstory
 		return video_start_generic.handler();
 	} };
 	
-	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flstory_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		videoram.write(offset,data);
 		tilemap_mark_tile_dirty(tilemap,offset/2);
 	} };
 	
-	public static WriteHandlerPtr flstory_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
-		if ((offset & 0x100) != 0)
+	public static WriteHandlerPtr flstory_palette_w = new WriteHandlerPtr() {public void handler(int offset, int data){
+		if (offset & 0x100)
 			paletteram_xxxxBBBBGGGGRRRR_split2_w((offset & 0xff) + (palette_bank << 8),data);
 		else
 			paletteram_xxxxBBBBGGGGRRRR_split1_w((offset & 0xff) + (palette_bank << 8),data);
 	} };
 	
-	public static ReadHandlerPtr flstory_palette_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
-		if ((offset & 0x100) != 0)
+	public static ReadHandlerPtr flstory_palette_r  = new ReadHandlerPtr() { public int handler(int offset){
+		if (offset & 0x100)
 			return paletteram_2.read( (offset & 0xff) + (palette_bank << 8) );
 		else
 			return paletteram  [ (offset & 0xff) + (palette_bank << 8) ];
 	} };
 	
-	public static WriteHandlerPtr flstory_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flstory_gfxctrl_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfxctrl == data)
 			return;
 		gfxctrl = data;
@@ -86,13 +81,11 @@ public class flstory
 	
 	} };
 	
-	public static ReadHandlerPtr flstory_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset)
-	{
+	public static ReadHandlerPtr flstory_scrlram_r  = new ReadHandlerPtr() { public int handler(int offset){
 		return flstory_scrlram[offset];
 	} };
 	
-	public static WriteHandlerPtr flstory_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr flstory_scrlram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		flstory_scrlram[offset] = data;
 		tilemap_set_scrolly(tilemap, offset, data );
 	} };
@@ -122,7 +115,7 @@ public class flstory
 				sx = spriteram.read(offs+3);
 				sy = spriteram.read(offs+0);
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = (240 - sx) & 0xff ;
 					sy = sy - 1 ;
@@ -133,7 +126,7 @@ public class flstory
 				flipx = ((spriteram.read(offs+1)&0x40)>>6)^flipscreen;
 				flipy = ((spriteram.read(offs+1)&0x80)>>7)^flipscreen;
 	
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						code,
 						spriteram.read(offs+1)& 0x0f,
 						flipx,flipy,
@@ -141,7 +134,7 @@ public class flstory
 						cliprect,TRANSPARENCY_PEN,15);
 				/* wrap around */
 				if (sx > 240)
-					drawgfx(bitmap,Machine.gfx[1],
+					drawgfx(bitmap,Machine->gfx[1],
 							code,
 							spriteram.read(offs+1)& 0x0f,
 							flipx,flipy,
@@ -151,8 +144,7 @@ public class flstory
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_flstory  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		int offs;
 	
 		tilemap_draw(bitmap,cliprect,tilemap,TILEMAP_BACK,0);
@@ -172,7 +164,7 @@ public class flstory
 				sy = sy*8 - flstory_scrlram[sx];
 				sx = sx * 8;
 	
-				if (flipscreen != 0)
+				if (flipscreen)
 				{
 					sx = 248-sx;
 					sy = 248-sy;

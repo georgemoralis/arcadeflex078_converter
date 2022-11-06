@@ -2,7 +2,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -22,37 +22,32 @@ public class sbugger
 		SET_TILE_INFO(0,tileno,color,0)
 	}
 	
-	public static WriteHandlerPtr sbugger_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbugger_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sbugger_videoram[offset] = data;
 		tilemap_mark_tile_dirty(sbugger_tilemap,offset);
 	} };
 	
-	public static WriteHandlerPtr sbugger_videoram_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr sbugger_videoram_attr_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		sbugger_videoram_attr[offset] = data;
 		tilemap_mark_tile_dirty(sbugger_tilemap,offset);
 	} };
 	
-	VIDEO_START(sbugger)
-	{
+	public static VideoStartHandlerPtr video_start_sbugger  = new VideoStartHandlerPtr() { public int handler(){
 	
 		sbugger_tilemap = tilemap_create(get_sbugger_tile_info,tilemap_scan_rows,TILEMAP_OPAQUE, 8, 16,64,16);
 	
-		if (sbugger_tilemap == 0)
+		if (!sbugger_tilemap)
 			return 1;
 	
 		return 0;
-	}
+	} };
 	
-	VIDEO_UPDATE(sbugger)
-	{
+	public static VideoUpdateHandlerPtr video_update_sbugger  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap,cliprect,sbugger_tilemap,0,0);
-	}
+	} };
 	
 	/* not right but so we can see things ok */
-	PALETTE_INIT(sbugger)
-	{
+	public static PaletteInitHandlerPtr palette_init_sbugger  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		/* just some random colours for now */
 		int i;
 	
@@ -68,5 +63,5 @@ public class sbugger
 	
 		}
 	
-	}
+	} };
 }

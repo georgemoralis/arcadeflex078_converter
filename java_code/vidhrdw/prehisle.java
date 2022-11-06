@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -105,24 +105,23 @@ public class prehisle
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_prehisle  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_prehisle  = new VideoStartHandlerPtr() { public int handler(){
 		bg2_tilemap = tilemap_create(get_bg2_tile_info, tilemap_scan_cols, 
 			TILEMAP_OPAQUE, 16, 16, 1024, 32);
 	
-		if (bg2_tilemap == 0)
+		if ( !bg2_tilemap )
 			return 1;
 	
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_cols, 
 			TILEMAP_TRANSPARENT, 16, 16, 256, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		fg_tilemap = tilemap_create(get_fg_tile_info, tilemap_scan_rows, 
 			TILEMAP_TRANSPARENT, 8, 8, 32, 32);
 	
-		if (fg_tilemap == 0)
+		if ( !fg_tilemap )
 			return 1;
 	
 		tilemap_set_transparent_pen(bg_tilemap, 15);
@@ -145,9 +144,9 @@ public class prehisle
 			int sx = spriteram16[offs + 1];
 			int sy = spriteram16[offs];
 	
-			if ((sx & 0x200) != 0) sx = -(0xff - (sx & 0xff));	// wraparound
+			if (sx & 0x200) sx = -(0xff - (sx & 0xff));	// wraparound
 	
-			if (flip_screen != 0)
+			if (flip_screen())
 			{
 				sx = 240 - sx;
 				sy = 240 - sy;
@@ -155,13 +154,12 @@ public class prehisle
 				flipy = NOT(flipy);
 			}
 	
-			drawgfx(bitmap, Machine.gfx[3], code, color, flipx, flipy, sx, sy,
+			drawgfx(bitmap, Machine->gfx[3], code, color, flipx, flipy, sx, sy,
 				cliprect, TRANSPARENCY_PEN, 15);
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_prehisle  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, cliprect, bg2_tilemap, 0, 0);
 		tilemap_draw(bitmap, cliprect, bg_tilemap, 0, 0);
 		prehisle_draw_sprites(bitmap, cliprect);

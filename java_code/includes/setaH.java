@@ -21,10 +21,6 @@ WRITE16_HANDLER( seta_vram_2_w );
 WRITE16_HANDLER( seta_vregs_w );
 
 
-public static VideoStartHandlerPtr video_start_seta_no_layers  = new VideoStartHandlerPtr() { public int handler();
-public static VideoStartHandlerPtr video_start_twineagl_1_layer  = new VideoStartHandlerPtr() { public int handler();
-public static VideoStartHandlerPtr video_start_seta_1_layer  = new VideoStartHandlerPtr() { public int handler();
-public static VideoStartHandlerPtr video_start_seta_2_layers  = new VideoStartHandlerPtr() { public int handler();
 
 
 

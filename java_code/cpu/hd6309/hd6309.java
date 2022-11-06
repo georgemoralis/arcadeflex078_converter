@@ -85,7 +85,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.hd6309;
 
@@ -217,7 +217,7 @@ public class hd6309
 	#define CHANGE_PC change_pc16(PCD)
 	#if 0
 	#define CHANGE_PC	{			\
-		if (hd6309_slapstic != 0)		\
+		if( hd6309_slapstic )		\
 			cpu_setOPbase16(PCD);	\
 		else						\
 			change_pc16(PCD);		\
@@ -263,7 +263,7 @@ public class hd6309
 	#define CLR_ZC		CC&=~(CC_Z|CC_C)
 	
 	/* macros for CC -- CC bits affected should be reset before calling */
-	#define SET_Z(a)		if (a == 0)SEZ
+	#define SET_Z(a)		if(!a)SEZ
 	#define SET_Z8(a)		SET_Z((UINT8)a)
 	#define SET_Z16(a)		SET_Z((UINT16)a)
 	#define SET_N8(a)		CC|=((a&0x80)>>4)
@@ -338,7 +338,7 @@ public class hd6309
 	#define BRANCH(f) { 					\
 		UINT8 t;							\
 		IMMBYTE(t); 						\
-		if (f != 0) 							\
+		if( f ) 							\
 		{									\
 			PC += SIGNED(t);				\
 			CHANGE_PC;						\
@@ -348,7 +348,7 @@ public class hd6309
 	#define LBRANCH(f) {					\
 		PAIR t; 							\
 		IMMWORD(t); 						\
-		if (f != 0) 							\
+		if( f ) 							\
 		{									\
 			if( !(MD & MD_EM) )				\
 				hd6309_ICount -= 1;			\
@@ -377,17 +377,17 @@ public class hd6309
 	INLINE void WM16( UINT32 mAddr, PAIR *p );
 	INLINE void WM16( UINT32 mAddr, PAIR *p )
 	{
-		WM( mAddr, p.b.h );
-		WM( (mAddr+1)&0xffff, p.b.l );
+		WM( mAddr, p->b.h );
+		WM( (mAddr+1)&0xffff, p->b.l );
 	}
 	
 	INLINE void WM32( UINT32 mAddr, PAIR *p );
 	INLINE void WM32( UINT32 mAddr, PAIR *p )
 	{
-		WM( mAddr, p.b.h3 );
-		WM( (mAddr+1)&0xffff, p.b.h2 );
-		WM( (mAddr+2)&0xffff, p.b.h );
-		WM( (mAddr+3)&0xffff, p.b.l );
+		WM( mAddr, p->b.h3 );
+		WM( (mAddr+1)&0xffff, p->b.h2 );
+		WM( (mAddr+2)&0xffff, p->b.h );
+		WM( (mAddr+3)&0xffff, p->b.l );
 	}
 	
 	void UpdateState( void );
@@ -425,7 +425,7 @@ public class hd6309
 			}
 			else
 			{
-				if ((MD & MD_FM) != 0)
+				if ( MD & MD_FM )
 				{
 					CC |= CC_E; 				/* save entire state */
 					PUSHWORD(pPC);
@@ -433,7 +433,7 @@ public class hd6309
 					PUSHWORD(pY);
 					PUSHWORD(pX);
 					PUSHBYTE(DP);
-					if ((MD & MD_EM) != 0)
+					if ( MD & MD_EM )
 					{
 						PUSHBYTE(F);
 						PUSHBYTE(E);
@@ -475,7 +475,7 @@ public class hd6309
 				PUSHWORD(pY);
 				PUSHWORD(pX);
 				PUSHBYTE(DP);
-				if ((MD & MD_EM) != 0)
+				if ( MD & MD_EM )
 				{
 					PUSHBYTE(F);
 					PUSHBYTE(E);
@@ -498,7 +498,7 @@ public class hd6309
 	 ****************************************************************************/
 	unsigned hd6309_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			*(hd6309_Regs*)dst = hd6309;
 		return sizeof(hd6309_Regs);
 	}
@@ -508,7 +508,7 @@ public class hd6309
 	 ****************************************************************************/
 	void hd6309_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 			hd6309 = *(hd6309_Regs*)src;
 		CHANGE_PC;
 	
@@ -669,7 +669,7 @@ public class hd6309
 				PUSHWORD(pY);
 				PUSHWORD(pX);
 				PUSHBYTE(DP);
-				if ((MD & MD_EM) != 0)
+				if ( MD & MD_EM )
 				{
 					PUSHBYTE(F);
 					PUSHBYTE(E);
@@ -713,7 +713,7 @@ public class hd6309
 	
 		which = (which+1) % 16;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &hd6309;
 	
 		switch( regnum )
@@ -728,36 +728,36 @@ public class hd6309
 	
 			case CPU_INFO_FLAGS:
 				sprintf(buffer[which], "%c%c%c%c%c%c%c%c (MD:%c%c%c%c)",
-					r.cc & 0x80 ? 'E':'.',
-					r.cc & 0x40 ? 'F':'.',
-					r.cc & 0x20 ? 'H':'.',
-					r.cc & 0x10 ? 'I':'.',
-					r.cc & 0x08 ? 'N':'.',
-					r.cc & 0x04 ? 'Z':'.',
-					r.cc & 0x02 ? 'V':'.',
-					r.cc & 0x01 ? 'C':'.',
+					r->cc & 0x80 ? 'E':'.',
+					r->cc & 0x40 ? 'F':'.',
+					r->cc & 0x20 ? 'H':'.',
+					r->cc & 0x10 ? 'I':'.',
+					r->cc & 0x08 ? 'N':'.',
+					r->cc & 0x04 ? 'Z':'.',
+					r->cc & 0x02 ? 'V':'.',
+					r->cc & 0x01 ? 'C':'.',
 	
-					r.md & 0x80 ? 'E':'e',
-					r.md & 0x40 ? 'F':'f',
-					r.md & 0x02 ? 'I':'i',
-					r.md & 0x01 ? 'Z':'z');
+					r->md & 0x80 ? 'E':'e',
+					r->md & 0x40 ? 'F':'f',
+					r->md & 0x02 ? 'I':'i',
+					r->md & 0x01 ? 'Z':'z');
 				break;
-			case CPU_INFO_REG+HD6309_PC: sprintf(buffer[which], "PC:%04X", r.pc.w.l); break;
-			case CPU_INFO_REG+HD6309_S: sprintf(buffer[which], "S:%04X", r.s.w.l); break;
-			case CPU_INFO_REG+HD6309_CC: sprintf(buffer[which], "CC:%02X", r.cc); break;
-			case CPU_INFO_REG+HD6309_MD: sprintf(buffer[which], "MD:%02X", r.md); break;
-			case CPU_INFO_REG+HD6309_U: sprintf(buffer[which], "U:%04X", r.u.w.l); break;
-			case CPU_INFO_REG+HD6309_A: sprintf(buffer[which], "A:%02X", r.d.b.h); break;
-			case CPU_INFO_REG+HD6309_B: sprintf(buffer[which], "B:%02X", r.d.b.l); break;
-			case CPU_INFO_REG+HD6309_E: sprintf(buffer[which], "E:%02X", r.w.b.h); break;
-			case CPU_INFO_REG+HD6309_F: sprintf(buffer[which], "F:%02X", r.w.b.l); break;
-			case CPU_INFO_REG+HD6309_X: sprintf(buffer[which], "X:%04X", r.x.w.l); break;
-			case CPU_INFO_REG+HD6309_Y: sprintf(buffer[which], "Y:%04X", r.y.w.l); break;
-			case CPU_INFO_REG+HD6309_V: sprintf(buffer[which], "V:%04X", r.v.w.l); break;
-			case CPU_INFO_REG+HD6309_DP: sprintf(buffer[which], "DP:%02X", r.dp.b.h); break;
-			case CPU_INFO_REG+HD6309_NMI_STATE: sprintf(buffer[which], "NMI:%X", r.nmi_state); break;
-			case CPU_INFO_REG+HD6309_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r.irq_state[HD6309_IRQ_LINE]); break;
-			case CPU_INFO_REG+HD6309_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r.irq_state[HD6309_FIRQ_LINE]); break;
+			case CPU_INFO_REG+HD6309_PC: sprintf(buffer[which], "PC:%04X", r->pc.w.l); break;
+			case CPU_INFO_REG+HD6309_S: sprintf(buffer[which], "S:%04X", r->s.w.l); break;
+			case CPU_INFO_REG+HD6309_CC: sprintf(buffer[which], "CC:%02X", r->cc); break;
+			case CPU_INFO_REG+HD6309_MD: sprintf(buffer[which], "MD:%02X", r->md); break;
+			case CPU_INFO_REG+HD6309_U: sprintf(buffer[which], "U:%04X", r->u.w.l); break;
+			case CPU_INFO_REG+HD6309_A: sprintf(buffer[which], "A:%02X", r->d.b.h); break;
+			case CPU_INFO_REG+HD6309_B: sprintf(buffer[which], "B:%02X", r->d.b.l); break;
+			case CPU_INFO_REG+HD6309_E: sprintf(buffer[which], "E:%02X", r->w.b.h); break;
+			case CPU_INFO_REG+HD6309_F: sprintf(buffer[which], "F:%02X", r->w.b.l); break;
+			case CPU_INFO_REG+HD6309_X: sprintf(buffer[which], "X:%04X", r->x.w.l); break;
+			case CPU_INFO_REG+HD6309_Y: sprintf(buffer[which], "Y:%04X", r->y.w.l); break;
+			case CPU_INFO_REG+HD6309_V: sprintf(buffer[which], "V:%04X", r->v.w.l); break;
+			case CPU_INFO_REG+HD6309_DP: sprintf(buffer[which], "DP:%02X", r->dp.b.h); break;
+			case CPU_INFO_REG+HD6309_NMI_STATE: sprintf(buffer[which], "NMI:%X", r->nmi_state); break;
+			case CPU_INFO_REG+HD6309_IRQ_STATE: sprintf(buffer[which], "IRQ:%X", r->irq_state[HD6309_IRQ_LINE]); break;
+			case CPU_INFO_REG+HD6309_FIRQ_STATE: sprintf(buffer[which], "FIRQ:%X", r->irq_state[HD6309_FIRQ_LINE]); break;
 		}
 		return buffer[which];
 	}

@@ -9,7 +9,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.machine;
 
@@ -46,8 +46,7 @@ public class gaelco2
 	
 	***************************************************************************/
 	
-	public static DriverInitHandlerPtr init_alighunt  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_alighunt  = new DriverInitHandlerPtr() { public void handler(){
 		/*
 		For REGION_GFX2 we have this memory map:
 			0x0000000-0x03fffff	ROM u48
@@ -80,8 +79,7 @@ public class gaelco2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_touchgo  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_touchgo  = new DriverInitHandlerPtr() { public void handler(){
 		/*
 		For REGION_GFX2 we have this memory map:
 			0x0000000-0x03fffff	ROM ic65
@@ -108,8 +106,7 @@ public class gaelco2
 	} };
 	
 	
-	public static DriverInitHandlerPtr init_snowboar  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_snowboar  = new DriverInitHandlerPtr() { public void handler(){
 		/*
 		For REGION_GFX2 we have this memory map:
 			0x0000000-0x03fffff	ROM sb44
@@ -183,14 +180,13 @@ public class gaelco2
 	//	"*10010xxxxxx", /* erase all */
 	};
 	
-	public static NVRAMHandlerPtr nvram_handler_gaelco2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write)
-	{
-		if (read_or_write != 0){
+	public static NVRAMHandlerPtr nvram_handler_gaelco2  = new NVRAMHandlerPtr() { public void handler(mame_file file, int read_or_write){
+		if (read_or_write){
 			EEPROM_save(file);
 		} else {
 			EEPROM_init(&gaelco2_eeprom_interface);
 	
-			if (file != 0) EEPROM_load(file);
+			if (file) EEPROM_load(file);
 		}
 	} };
 	

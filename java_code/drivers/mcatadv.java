@@ -59,7 +59,7 @@ Stephh's notes (based on the games M68000 code and some tests) :
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.drivers;
 
@@ -89,7 +89,7 @@ public class mcatadv
 	
 	static WRITE16_HANDLER( mcat_coin_w )
 	{
-		if (ACCESSING_MSB16 != 0)
+		if(ACCESSING_MSB16)
 		{
 			coin_counter_w(0, data & 0x1000);
 			coin_counter_w(1, data & 0x2000);
@@ -156,8 +156,7 @@ public class mcatadv
 	
 	/*** Sound ***/
 	
-	static public static WriteHandlerPtr mcatadv_sound_bw_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mcatadv_sound_bw_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		data8_t *rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1,rom + data * 0x4000);
@@ -237,7 +236,7 @@ public class mcatadv
 	
 	/*** Inputs ***/
 	
-	static InputPortPtr input_ports_mcatadv = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_mcatadv = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( mcatadv )
 		PORT_START(); 	// IN0
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -320,7 +319,7 @@ public class mcatadv
 	//	PORT_DIPSETTING(    0x00, "Upright 2 Players" );	// duplicated setting (NEVER tested)
 	INPUT_PORTS_END(); }}; 
 	
-	static InputPortPtr input_ports_nost = new InputPortPtr(){ public void handler() { 
+	static InputPortPtr input_ports_nost = new InputPortPtr(){ public void handler() { INPUT_PORTS_START( nost )
 		PORT_START(); 	// IN0
 		PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP    | IPF_PLAYER1 );
 		PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN  | IPF_PLAYER1 );
@@ -437,14 +436,12 @@ public class mcatadv
 		{ YM3012_VOL(100,MIXER_PAN_LEFT,100,MIXER_PAN_RIGHT) }
 	};
 	
-	public static MachineInitHandlerPtr machine_init_mcatadv  = new MachineInitHandlerPtr() { public void handler()
-	{
+	public static MachineInitHandlerPtr machine_init_mcatadv  = new MachineInitHandlerPtr() { public void handler(){
 		watchdog_reset_r(0);
 	} };
 	
 	
-	public static MachineHandlerPtr machine_driver_mcatadv = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( mcatadv )
 	
 		/* basic machine hardware */
 		MDRV_CPU_ADD(M68000, 16000000)
@@ -474,24 +471,18 @@ public class mcatadv
 		/* sound hardware */
 		MDRV_SOUND_ATTRIBUTES(SOUND_SUPPORTS_STEREO)
 		MDRV_SOUND_ADD(YM2610, mcatadv_ym2610_interface)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
-	public static MachineHandlerPtr machine_driver_nost = new MachineHandlerPtr() {
-        public void handler(InternalMachineDriver machine) {
+	static MACHINE_DRIVER_START( nost )
 		MDRV_IMPORT_FROM( mcatadv )
 	
 		MDRV_CPU_MODIFY("sound")
 		MDRV_CPU_MEMORY(nost_sound_readmem,nost_sound_writemem)
 		MDRV_CPU_PORTS(nost_sound_readport,nost_sound_writeport)
-	MACHINE_DRIVER_END();
- }
-};
+	MACHINE_DRIVER_END
 	
 	
-	public static DriverInitHandlerPtr init_mcatadv  = new DriverInitHandlerPtr() { public void handler()
-	{
+	public static DriverInitHandlerPtr init_mcatadv  = new DriverInitHandlerPtr() { public void handler(){
 		data8_t *z80rom = memory_region(REGION_CPU2) + 0x10000;
 	
 		cpu_setbank(1, z80rom + 0x4000);
@@ -643,9 +634,9 @@ public class mcatadv
 		ROM_LOAD( "nossn-00.u53", 0x00000, 0x100000, CRC(3bd1bcbc) SHA1(1bcad43792e985402db4eca122676c2c555f3313) )
 	ROM_END(); }}; 
 	
-	public static GameDriver driver_mcatadv	   = new GameDriver("1993"	,"mcatadv"	,"mcatadv.java"	,rom_mcatadv,null	,machine_driver_mcatadv	,input_ports_mcatadv	,init_mcatadv	,ROT0	,	"Wintechno", "Magical Cat Adventure", GAME_NO_COCKTAIL )
-	public static GameDriver driver_mcatadvj	   = new GameDriver("1993"	,"mcatadvj"	,"mcatadv.java"	,rom_mcatadvj,driver_mcatadv	,machine_driver_mcatadv	,input_ports_mcatadv	,init_mcatadv	,ROT0	,	"Wintechno", "Magical Cat Adventure (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nost	   = new GameDriver("1993"	,"nost"	,"mcatadv.java"	,rom_nost,null	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nostj	   = new GameDriver("1993"	,"nostj"	,"mcatadv.java"	,rom_nostj,driver_nost	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus (Japan)", GAME_NO_COCKTAIL )
-	public static GameDriver driver_nostk	   = new GameDriver("1993"	,"nostk"	,"mcatadv.java"	,rom_nostk,driver_nost	,machine_driver_nost	,input_ports_nost	,init_mcatadv	,ROT270	,	"Face",      "Nostradamus (Korea)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, mcatadv,  0,       mcatadv, mcatadv, mcatadv, ROT0,   "Wintechno", "Magical Cat Adventure", GAME_NO_COCKTAIL )
+	GAMEX( 1993, mcatadvj, mcatadv, mcatadv, mcatadv, mcatadv, ROT0,   "Wintechno", "Magical Cat Adventure (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, nost,     0,       nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus", GAME_NO_COCKTAIL )
+	GAMEX( 1993, nostj,    nost,    nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus (Japan)", GAME_NO_COCKTAIL )
+	GAMEX( 1993, nostk,    nost,    nost,    nost,    mcatadv, ROT270, "Face",      "Nostradamus (Korea)", GAME_NO_COCKTAIL )
 }

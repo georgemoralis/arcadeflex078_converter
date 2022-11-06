@@ -8,7 +8,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.vidhrdw;
 
@@ -39,8 +39,7 @@ public class mario
 	  bit 0 -- 470 ohm resistor -- inverter  -- BLUE
 	
 	***************************************************************************/
-	public static PaletteInitHandlerPtr palette_init_mario  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom)
-	{
+	public static PaletteInitHandlerPtr palette_init_mario  = new PaletteInitHandlerPtr() { public void handler(char[] colortable, UBytePtr color_prom){
 		int i;
 		#define TOTAL_COLORS(gfxn) (Machine.gfx[gfxn].total_colors * Machine.gfx[gfxn].color_granularity)
 		#define COLOR(gfxn,offs) (colortable[Machine.drv.gfxdecodeinfo[gfxn].color_codes_start + offs])
@@ -92,8 +91,7 @@ public class mario
 			COLOR(1,i) = i;
 	} };
 	
-	public static WriteHandlerPtr mario_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_videoram_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (videoram.read(offset)!= data)
 		{
 			videoram.write(offset,data);
@@ -101,8 +99,7 @@ public class mario
 		}
 	} };
 	
-	public static WriteHandlerPtr mario_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_gfxbank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (gfx_bank != (data & 0x01))
 		{
 			gfx_bank = data & 0x01;
@@ -110,8 +107,7 @@ public class mario
 		}
 	} };
 	
-	public static WriteHandlerPtr mario_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_palettebank_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		if (palette_bank != (data & 0x01))
 		{
 			palette_bank = data & 0x01;
@@ -119,8 +115,7 @@ public class mario
 		}
 	} };
 	
-	public static WriteHandlerPtr mario_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data)
-	{
+	public static WriteHandlerPtr mario_scroll_w = new WriteHandlerPtr() {public void handler(int offset, int data){
 		tilemap_set_scrollx(bg_tilemap, 0, data + 17);
 	} };
 	
@@ -132,12 +127,11 @@ public class mario
 		SET_TILE_INFO(0, code, color, 0)
 	}
 	
-	public static VideoStartHandlerPtr video_start_mario  = new VideoStartHandlerPtr() { public int handler()
-	{
+	public static VideoStartHandlerPtr video_start_mario  = new VideoStartHandlerPtr() { public int handler(){
 		bg_tilemap = tilemap_create(get_bg_tile_info, tilemap_scan_rows, 
 			TILEMAP_OPAQUE, 8, 8, 32, 32);
 	
-		if (bg_tilemap == 0)
+		if ( !bg_tilemap )
 			return 1;
 	
 		return 0;
@@ -151,18 +145,17 @@ public class mario
 		{
 			if (spriteram.read(offs))
 			{
-				drawgfx(bitmap,Machine.gfx[1],
+				drawgfx(bitmap,Machine->gfx[1],
 						spriteram.read(offs + 2),
 						(spriteram.read(offs + 1)& 0x0f) + 16 * palette_bank,
 						spriteram.read(offs + 1)& 0x80,spriteram.read(offs + 1)& 0x40,
 						spriteram.read(offs + 3)- 8,240 - spriteram.read(offs)+ 8,
-						Machine.visible_area,TRANSPARENCY_PEN,0);
+						Machine->visible_area,TRANSPARENCY_PEN,0);
 			}
 		}
 	}
 	
-	public static VideoUpdateHandlerPtr video_update_mario  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect)
-	{
+	public static VideoUpdateHandlerPtr video_update_mario  = new VideoUpdateHandlerPtr() { public void handler(mame_bitmap bitmap, rectangle cliprect){
 		tilemap_draw(bitmap, Machine.visible_area, bg_tilemap, 0, 0);
 		mario_draw_sprites(bitmap);
 	} };

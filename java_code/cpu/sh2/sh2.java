@@ -96,7 +96,7 @@
 
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.cpu.sh2;
 
@@ -794,7 +794,7 @@ public class sh2
 	
 		sh2.r[n] = (sh2.r[n] << 1) | (sh2.sr & T);
 	
-		if (old_q == 0)
+		if (!old_q)
 		{
 			if (!(sh2.sr & M))
 			{
@@ -2316,8 +2316,8 @@ public class sh2
 		sh2.m = m;
 		memset(sh2.m, 0, 0x200);
 	
-		if (conf != 0)
-			sh2.is_slave = conf.is_slave;
+		if(conf)
+			sh2.is_slave = conf->is_slave;
 		else
 			sh2.is_slave = 0;
 	
@@ -2400,7 +2400,7 @@ public class sh2
 	/* Get registers, return context size */
 	unsigned sh2_get_context(void *dst)
 	{
-		if (dst != 0)
+		if( dst )
 			memcpy(dst, &sh2, sizeof(SH2));
 		return sizeof(SH2);
 	}
@@ -2408,7 +2408,7 @@ public class sh2
 	/* Set registers */
 	void sh2_set_context(void *src)
 	{
-		if (src != 0)
+		if( src )
 			memcpy(&sh2, src, sizeof(SH2));
 	}
 	
@@ -2417,7 +2417,7 @@ public class sh2
 		int divider = div_tab[(sh2.m[5] >> 8) & 3];
 		UINT32 cur_time = cpunum_gettotalcycles(sh2.cpu_number);
 	
-		if (divider != 0)
+		if(divider)
 			sh2.frc += (cur_time - sh2.frc_base) >> divider;
 		sh2.frc_base = cur_time;
 	}
@@ -2450,7 +2450,7 @@ public class sh2
 	
 		if(max_delta != 0xfffff) {
 			int divider = div_tab[(sh2.m[5] >> 8) & 3];
-			if (divider != 0) {
+			if(divider) {
 				max_delta <<= divider;
 				sh2.frc_base = cpunum_gettotalcycles(sh2.cpu_number);
 				timer_adjust(sh2.timer, TIME_IN_CYCLES(max_delta, sh2.cpu_number), sh2.cpu_number, 0);
@@ -2473,7 +2473,7 @@ public class sh2
 			{
 				int mask = (sh2.m[4]>>8) & sh2.m[4];
 				irq = level;
-				if ((mask & ICF) != 0)
+				if(mask & ICF)
 					vector = (sh2.m[0x19] >> 8) & 0x7f;
 				else if(mask & (OCFA|OCFB))
 					vector = sh2.m[0x19] & 0x7f;
@@ -2560,7 +2560,7 @@ public class sh2
 				src   = sh2.m[0x60+4*dma];
 				dst   = sh2.m[0x61+4*dma];
 				count = sh2.m[0x62+4*dma];
-				if (count == 0)
+				if(!count)
 					count = 0x1000000;
 	
 				LOG(("SH2: DMA %d start %x, %x, %x, %04x, %d, %d, %d\n", dma, src, dst, count, sh2.m[0x63+4*dma], incs, incd, size));
@@ -2717,7 +2717,7 @@ public class sh2
 				INT32 a = sh2.m[0x41];
 				INT32 b = sh2.m[0x40];
 				LOG(("SH2 #%d div+mod %d/%d\n", cpu_getactivecpu(), a, b));
-				if (b != 0)
+				if (b)
 				{
 					sh2.m[0x45] = a / b;
 					sh2.m[0x44] = a % b;
@@ -2745,7 +2745,7 @@ public class sh2
 				INT64 a = sh2.m[0x45] | ((UINT64)(sh2.m[0x44]) << 32);
 				INT64 b = sh2.m[0x40];
 				LOG(("SH2 #%d div+mod %lld/%lld\n", cpu_getactivecpu(), a, b));
-				if (b != 0)
+				if (b)
 				{
 					INT64 q = a / b;
 					if (q != (INT32)q)
@@ -3018,42 +3018,42 @@ public class sh2
 	
 		which = (which + 1) % 8;
 		buffer[which][0] = '\0';
-		if (context == 0)
+		if( !context )
 			r = &sh2;
 	
 		switch( regnum )
 		{
-		case CPU_INFO_REG+SH2_PC:  sprintf(buffer[which], "PC  :%08X", r.pc); break;
-		case CPU_INFO_REG+SH2_SR:  sprintf(buffer[which], "SR  :%08X", r.sr); break;
-		case CPU_INFO_REG+SH2_PR:  sprintf(buffer[which], "PR  :%08X", r.pr); break;
-		case CPU_INFO_REG+SH2_GBR: sprintf(buffer[which], "GBR :%08X", r.gbr); break;
-		case CPU_INFO_REG+SH2_VBR: sprintf(buffer[which], "VBR :%08X", r.vbr); break;
-		case CPU_INFO_REG+SH2_MACH:sprintf(buffer[which], "MACH:%08X", r.mach); break;
-		case CPU_INFO_REG+SH2_MACL:sprintf(buffer[which], "MACL:%08X", r.macl); break;
-		case CPU_INFO_REG+SH2_R0:  sprintf(buffer[which], "R0  :%08X", r.r[ 0]); break;
-		case CPU_INFO_REG+SH2_R1:  sprintf(buffer[which], "R1  :%08X", r.r[ 1]); break;
-		case CPU_INFO_REG+SH2_R2:  sprintf(buffer[which], "R2  :%08X", r.r[ 2]); break;
-		case CPU_INFO_REG+SH2_R3:  sprintf(buffer[which], "R3  :%08X", r.r[ 3]); break;
-		case CPU_INFO_REG+SH2_R4:  sprintf(buffer[which], "R4  :%08X", r.r[ 4]); break;
-		case CPU_INFO_REG+SH2_R5:  sprintf(buffer[which], "R5  :%08X", r.r[ 5]); break;
-		case CPU_INFO_REG+SH2_R6:  sprintf(buffer[which], "R6  :%08X", r.r[ 6]); break;
-		case CPU_INFO_REG+SH2_R7:  sprintf(buffer[which], "R7  :%08X", r.r[ 7]); break;
-		case CPU_INFO_REG+SH2_R8:  sprintf(buffer[which], "R8  :%08X", r.r[ 8]); break;
-		case CPU_INFO_REG+SH2_R9:  sprintf(buffer[which], "R9  :%08X", r.r[ 9]); break;
-		case CPU_INFO_REG+SH2_R10: sprintf(buffer[which], "R10 :%08X", r.r[10]); break;
-		case CPU_INFO_REG+SH2_R11: sprintf(buffer[which], "R11 :%08X", r.r[11]); break;
-		case CPU_INFO_REG+SH2_R12: sprintf(buffer[which], "R12 :%08X", r.r[12]); break;
-		case CPU_INFO_REG+SH2_R13: sprintf(buffer[which], "R13 :%08X", r.r[13]); break;
-		case CPU_INFO_REG+SH2_R14: sprintf(buffer[which], "R14 :%08X", r.r[14]); break;
-		case CPU_INFO_REG+SH2_R15: sprintf(buffer[which], "R15 :%08X", r.r[15]); break;
-		case CPU_INFO_REG+SH2_EA:  sprintf(buffer[which], "EA  :%08X", r.ea);    break;
+		case CPU_INFO_REG+SH2_PC:  sprintf(buffer[which], "PC  :%08X", r->pc); break;
+		case CPU_INFO_REG+SH2_SR:  sprintf(buffer[which], "SR  :%08X", r->sr); break;
+		case CPU_INFO_REG+SH2_PR:  sprintf(buffer[which], "PR  :%08X", r->pr); break;
+		case CPU_INFO_REG+SH2_GBR: sprintf(buffer[which], "GBR :%08X", r->gbr); break;
+		case CPU_INFO_REG+SH2_VBR: sprintf(buffer[which], "VBR :%08X", r->vbr); break;
+		case CPU_INFO_REG+SH2_MACH:sprintf(buffer[which], "MACH:%08X", r->mach); break;
+		case CPU_INFO_REG+SH2_MACL:sprintf(buffer[which], "MACL:%08X", r->macl); break;
+		case CPU_INFO_REG+SH2_R0:  sprintf(buffer[which], "R0  :%08X", r->r[ 0]); break;
+		case CPU_INFO_REG+SH2_R1:  sprintf(buffer[which], "R1  :%08X", r->r[ 1]); break;
+		case CPU_INFO_REG+SH2_R2:  sprintf(buffer[which], "R2  :%08X", r->r[ 2]); break;
+		case CPU_INFO_REG+SH2_R3:  sprintf(buffer[which], "R3  :%08X", r->r[ 3]); break;
+		case CPU_INFO_REG+SH2_R4:  sprintf(buffer[which], "R4  :%08X", r->r[ 4]); break;
+		case CPU_INFO_REG+SH2_R5:  sprintf(buffer[which], "R5  :%08X", r->r[ 5]); break;
+		case CPU_INFO_REG+SH2_R6:  sprintf(buffer[which], "R6  :%08X", r->r[ 6]); break;
+		case CPU_INFO_REG+SH2_R7:  sprintf(buffer[which], "R7  :%08X", r->r[ 7]); break;
+		case CPU_INFO_REG+SH2_R8:  sprintf(buffer[which], "R8  :%08X", r->r[ 8]); break;
+		case CPU_INFO_REG+SH2_R9:  sprintf(buffer[which], "R9  :%08X", r->r[ 9]); break;
+		case CPU_INFO_REG+SH2_R10: sprintf(buffer[which], "R10 :%08X", r->r[10]); break;
+		case CPU_INFO_REG+SH2_R11: sprintf(buffer[which], "R11 :%08X", r->r[11]); break;
+		case CPU_INFO_REG+SH2_R12: sprintf(buffer[which], "R12 :%08X", r->r[12]); break;
+		case CPU_INFO_REG+SH2_R13: sprintf(buffer[which], "R13 :%08X", r->r[13]); break;
+		case CPU_INFO_REG+SH2_R14: sprintf(buffer[which], "R14 :%08X", r->r[14]); break;
+		case CPU_INFO_REG+SH2_R15: sprintf(buffer[which], "R15 :%08X", r->r[15]); break;
+		case CPU_INFO_REG+SH2_EA:  sprintf(buffer[which], "EA  :%08X", r->ea);    break;
 		case CPU_INFO_FLAGS:
 			sprintf(buffer[which], "%c%c%d%c%c",
-					r.sr & M ? 'M':'.',
-					r.sr & Q ? 'Q':'.',
-					(r.sr & I) >> 4,
-					r.sr & S ? 'S':'.',
-					r.sr & T ? 'T':'.');
+					r->sr & M ? 'M':'.',
+					r->sr & Q ? 'Q':'.',
+					(r->sr & I) >> 4,
+					r->sr & S ? 'S':'.',
+					r->sr & T ? 'T':'.');
 			break;
 		case CPU_INFO_NAME: return "SH-2";
 		case CPU_INFO_FAMILY: return "Hitachi SH7600";

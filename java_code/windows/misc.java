@@ -31,7 +31,7 @@ Version 0.2, May 2000
 */
 /*
  * ported to v0.78
- * using automatic conversion tool v0.03
+ * using automatic conversion tool v0.04
  */ 
 package arcadeflex.v078.windows;
 
@@ -127,7 +127,7 @@ public class misc
 	              to_print--;
 	
 	           /* if it didn't work, just print the columnwidth */
-	           if (to_print == 0)
+	           if(!to_print)
 	              to_print = width[i]-1;
 	         }
 	         fprintf(f, "%-*.*s", width[i], to_print, text[i]);
